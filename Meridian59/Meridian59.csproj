@@ -1,0 +1,573 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E8223F3F-3F18-4F4C-9A8F-D9102B067BE3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Meridian59</RootNamespace>
+    <AssemblyName>Meridian59</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>Meridian59.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;WINCLR;DRAWING;CONCURRENT;X64</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>bin\x64\Debug\Meridian59.XML</DocumentationFile>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE;WINCLR;DRAWING;CONCURRENT;X64</DefineConstants>
+    <DocumentationFile>bin\x64\Release\Meridian59.XML</DocumentationFile>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;WINCLR;DRAWING;CONCURRENT;X86</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>bin\x86\Debug\Meridian59.XML</DocumentationFile>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;WINCLR;DRAWING;CONCURRENT;X86</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <DocumentationFile>bin\x86\Release\Meridian59.XML</DocumentationFile>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;ANYCPU</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>bin\Debug\Meridian59.XML</DocumentationFile>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;ANYCPU;CONCURRENT;</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>bin\Release\Meridian59.XML</DocumentationFile>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Client\BaseClient.cs" />
+    <Compile Include="Client\RootClient.cs" />
+    <Compile Include="Bot\BotConfig.cs" />
+    <Compile Include="Client\SingletonClient.cs" />
+    <Compile Include="Bot\BotServiceWrapper.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Common\Config.cs" />
+    <Compile Include="Common\Constants\ChatSubStrings.cs" />
+    <Compile Include="Common\Constants\ResourceStrings.cs" />
+    <Compile Include="Common\Crush32.cs" />
+    <Compile Include="Common\Enums\KnownHotspot.cs" />
+    <Compile Include="Common\Enums\HealthStatus.cs" />
+    <Compile Include="Common\Enums\RoomAnimationAction.cs" />
+    <Compile Include="Common\Enums\PlayerOverlayHotspot.cs" />
+    <Compile Include="Common\Enums\LogType.cs" />
+    <Compile Include="Common\Enums\UIMode.cs" />
+    <Compile Include="Common\Events\InventoryObjectEvent.cs" />
+    <Compile Include="Common\Events\ActionTypeEvent.cs" />
+    <Compile Include="Common\Events\AvatarActionEvent.cs" />
+    <Compile Include="Common\Flags.cs" />
+    <Compile Include="Common\GameTick.cs" />
+    <Compile Include="Common\Interfaces\ITickable.cs" />
+    <Compile Include="Common\LockingDictionary.cs" />
+    <Compile Include="Common\LockingQueue.cs" />
+    <Compile Include="Common\Logger.cs" />
+    <Compile Include="Common\MeridianMD5.cs" />
+    <Compile Include="Common\Outfitter.cs" />
+    <Compile Include="Common\Util.cs" />
+    <Compile Include="Data\Lists\MailList.cs" />
+    <Compile Include="Data\Lists\RoomObjectListFiltered.cs" />
+    <Compile Include="Data\Models\CharCreationInfo.cs" />
+    <Compile Include="Data\Models\ChatCommand\ChatCommandCast.cs" />
+    <Compile Include="Data\Models\ChatCommand\ChatCommandDM.cs" />
+    <Compile Include="Data\Models\ChatCommand\ChatCommandGo.cs" />
+    <Compile Include="Data\Models\ChatCommand\ChatCommandGoPlayer.cs" />
+    <Compile Include="Data\Models\ChatCommand\ChatCommandGetPlayer.cs" />
+    <Compile Include="Data\Models\ChatCommand\ChatCommandEmote.cs" />
+    <Compile Include="Data\Models\ChatCommand\ChatCommandWithDraw.cs" />
+    <Compile Include="Data\Models\ChatCommand\ChatCommandSuicide.cs" />
+    <Compile Include="Data\Models\ChatCommand\ChatCommandRest.cs" />
+    <Compile Include="Data\Models\ChatCommand\ChatCommandStand.cs" />
+    <Compile Include="Data\Models\Effect\Effects.cs" />
+    <Compile Include="Data\Models\Effect\DurationEffect.cs" />
+    <Compile Include="Data\Models\BuyInfo.cs" />
+    <Compile Include="Data\Models\GuildFlags.cs" />
+    <Compile Include="Data\Models\GuildAskData.cs" />
+    <Compile Include="Data\Models\GuildShieldInfo.cs" />
+    <Compile Include="Data\Models\ObjectContents.cs" />
+    <Compile Include="Data\Models\PlayerOverlay.cs" />
+    <Compile Include="Data\Models\RoomInfoFlags.cs" />
+    <Compile Include="Data\Models\UserCommand\UserCommandClaimShield.cs" />
+    <Compile Include="Data\Models\UserCommand\UserCommandSuicide.cs" />
+    <Compile Include="Data\Models\UserCommand\UserCommandWithDraw.cs" />
+    <Compile Include="Data\Models\UserCommand\UserCommandGuildExile.cs" />
+    <Compile Include="Data\Models\UserCommand\UserCommandGuildSetPassword.cs" />
+    <Compile Include="Data\Models\WelcomeInfo.cs" />
+    <Compile Include="Data\Models\LookTypeFlags.cs" />
+    <Compile Include="Data\Models\ResourceIDBGF.cs" />
+    <Compile Include="Data\Models\PlayMusic.cs" />
+    <Compile Include="Data\Models\SectorMove.cs" />
+    <Compile Include="Data\Models\TradeInfo.cs" />
+    <Compile Include="Data\Models\UserCommand\UserCommandChangeURL.cs" />
+    <Compile Include="Drawing2D\ColorTransformations.cs" />
+    <Compile Include="Common\Constants\Constants.cs" />
+    <Compile Include="Common\Constants\GeometryConstants.cs" />
+    <Compile Include="Common\Constants\FileExtensions.cs" />
+    <Compile Include="Common\Constants\TypeSizes.cs" />
+    <Compile Include="Common\Enums\AccountType.cs" />
+    <Compile Include="Common\Enums\ActionButtonType.cs" />
+    <Compile Include="Common\Enums\AnimationType.cs" />
+    <Compile Include="Common\Enums\AvatarAction.cs" />
+    <Compile Include="Common\Enums\ChatCommandType.cs" />
+    <Compile Include="Common\Enums\ChatColor.cs" />
+    <Compile Include="Common\Enums\HotSpotType.cs" />
+    <Compile Include="Common\Enums\WorldScaleType.cs" />
+    <Compile Include="Common\Enums\StatGroup.cs" />
+    <Compile Include="Common\Enums\BaseRenderType.cs" />
+    <Compile Include="Common\Enums\BuffType.cs" />
+    <Compile Include="Common\Enums\ChatMessageType.cs" />
+    <Compile Include="Common\Enums\ChatTransmissionType.cs" />
+    <Compile Include="Common\Enums\EffectType.cs" />
+    <Compile Include="Common\Enums\Gender.cs" />
+    <Compile Include="Common\Enums\InlineVariableType.cs" />
+    <Compile Include="Common\Enums\DMCommandType.cs" />
+    <Compile Include="Common\Enums\StatType.cs" />
+    <Compile Include="Common\Enums\TextureScrollSpeed.cs" />
+    <Compile Include="Common\Enums\TextureScrollDirection.cs" />
+    <Compile Include="Common\Enums\WallPartType.cs" />
+    <Compile Include="Common\Enums\MovementSpeed.cs" />
+    <Compile Include="Common\Enums\SchoolType.cs" />
+    <Compile Include="Common\Enums\UserCommandType.cs" />
+    <Compile Include="Common\Events\ObjectIDEvent.cs" />
+    <Compile Include="Common\Events\SpellObjectEvent.cs" />
+    <Compile Include="Common\Murmur3.cs" />
+    <Compile Include="Common\Interfaces\IByteSerializable.cs" />
+    <Compile Include="Common\Interfaces\IByteSerializableFast.cs" />
+    <Compile Include="Common\Interfaces\IClearable.cs" />
+    <Compile Include="Common\Interfaces\IGameFile.cs" />
+    <Compile Include="Common\Interfaces\IViewBinding.cs" />
+    <Compile Include="Common\Interfaces\IStringResolvable.cs" />
+    <Compile Include="Common\Interfaces\IUpdatable.cs" />
+    <Compile Include="Common\Interfaces\IRooIndicesResolvable.cs" />
+    <Compile Include="Common\Interfaces\IResourceResolvable.cs" />
+    <Compile Include="Common\Interfaces\ILightOwner.cs" />
+    <Compile Include="Common\MeridianDate.cs" />
+    <Compile Include="Common\V3.cs" />
+    <Compile Include="Common\LogMessage.cs" />
+    <Compile Include="Common\MathUtil.cs" />
+    <Compile Include="Common\V2.cs" />
+    <Compile Include="Data\DataController.cs" />
+    <Compile Include="Data\Lists\BackgroundOverlayList.cs" />
+    <Compile Include="Data\Lists\BaseList.cs" />
+    <Compile Include="Data\Lists\GuildMemberList.cs" />
+    <Compile Include="Data\Lists\InventoryObjectList.cs" />
+    <Compile Include="Data\Lists\ArticleHeadList.cs" />
+    <Compile Include="Data\Lists\ProjectileList.cs" />
+    <Compile Include="Data\Lists\ObjectBaseList.cs" />
+    <Compile Include="Data\Lists\ObjectIDList.cs" />
+    <Compile Include="Data\Lists\OnlinePlayerList.cs" />
+    <Compile Include="Data\Lists\RoomObjectList.cs" />
+    <Compile Include="Data\Lists\SkillList.cs" />
+    <Compile Include="Data\Lists\SpellObjectList.cs" />
+    <Compile Include="Data\Lists\StringList.cs" />
+    <Compile Include="Data\Lists\StatNumericList.cs" />
+    <Compile Include="Data\Models\ActionButtonConfig.cs" />
+    <Compile Include="Data\Lists\ActionButtonList.cs" />
+    <Compile Include="Data\Models\Animation.cs" />
+    <Compile Include="Data\Models\AnimationCycle.cs" />
+    <Compile Include="Data\Models\AnimationNone.cs" />
+    <Compile Include="Data\Models\AnimationOnce.cs" />
+    <Compile Include="Data\Models\ArticleHead.cs" />
+    <Compile Include="Data\Models\AvatarCreatorSkillObject.cs" />
+    <Compile Include="Data\Models\AvatarCreatorSpellObject.cs" />
+    <Compile Include="Data\Models\BackgroundOverlay.cs" />
+    <Compile Include="Data\Models\CharSelectAd.cs" />
+    <Compile Include="Data\Models\CharSelectItem.cs" />
+    <Compile Include="Data\Models\ChatCommand\ChatCommand.cs" />
+    <Compile Include="Data\Models\ChatCommand\ChatCommandSay.cs" />
+    <Compile Include="Data\Models\ChatCommand\ChatCommandYell.cs" />
+    <Compile Include="Data\Models\ChatCommand\ChatCommandBroadcast.cs" />
+    <Compile Include="Data\Models\ChatCommand\ChatCommandGuild.cs" />
+    <Compile Include="Data\Models\ChatCommand\ChatCommandTell.cs" />
+    <Compile Include="Data\Models\ChatCommand\ChatStyle.cs" />
+    <Compile Include="Data\Models\ChatMessage.cs" />
+    <Compile Include="Data\Models\ConnectionInfo.cs" />
+    <Compile Include="Data\Models\DiplomacyInfo.cs" />
+    <Compile Include="Data\Models\DownloadFileInfo.cs" />
+    <Compile Include="Data\Models\DownloadInfo.cs" />
+    <Compile Include="Data\Models\Effect\Effect.cs" />
+    <Compile Include="Data\Models\Effect\EffectBlind.cs" />
+    <Compile Include="Data\Models\Effect\EffectBlur.cs" />
+    <Compile Include="Data\Models\Effect\EffectClearSand.cs" />
+    <Compile Include="Data\Models\Effect\EffectClearWeather.cs" />
+    <Compile Include="Data\Models\Effect\EffectFlashXLat.cs" />
+    <Compile Include="Data\Models\Effect\EffectGeneric.cs" />
+    <Compile Include="Data\Models\Effect\EffectInvert.cs" />
+    <Compile Include="Data\Models\Effect\EffectPain.cs" />
+    <Compile Include="Data\Models\Effect\EffectParalyze.cs" />
+    <Compile Include="Data\Models\Effect\EffectRaining.cs" />
+    <Compile Include="Data\Models\Effect\EffectRelease.cs" />
+    <Compile Include="Data\Models\Effect\EffectSand.cs" />
+    <Compile Include="Data\Models\Effect\EffectSee.cs" />
+    <Compile Include="Data\Models\Effect\EffectShake.cs" />
+    <Compile Include="Data\Models\Effect\EffectSnowing.cs" />
+    <Compile Include="Data\Models\Effect\EffectWaver.cs" />
+    <Compile Include="Data\Models\Effect\EffectWhiteOut.cs" />
+    <Compile Include="Data\Models\Effect\EffectXLatOverride.cs" />
+    <Compile Include="Data\Models\GuildEntry.cs" />
+    <Compile Include="Data\Models\GuildInfo.cs" />
+    <Compile Include="Data\Models\GuildMemberEntry.cs" />
+    <Compile Include="Data\Models\InlineVariable.cs" />
+    <Compile Include="Data\Models\InventoryObject.cs" />
+    <Compile Include="Data\Models\TextureChangeInfo.cs" />
+    <Compile Include="Data\Models\NewsGroup.cs" />
+    <Compile Include="Data\Models\PlayerInfo.cs" />
+    <Compile Include="Data\Models\ObjectInfo.cs" />
+    <Compile Include="Data\Models\PlaySound.cs" />
+    <Compile Include="Data\Models\Stat.cs" />
+    <Compile Include="Data\Models\Mail.cs" />
+    <Compile Include="Data\Models\LightShading.cs" />
+    <Compile Include="Data\Models\ObjectBase.cs" />
+    <Compile Include="Data\Models\ObjectChatMessage.cs" />
+    <Compile Include="Data\Models\ObjectFlags.cs" />
+    <Compile Include="Data\Models\ObjectID.cs" />
+    <Compile Include="Data\Models\ObjectUpdate.cs" />
+    <Compile Include="Data\Models\OnlinePlayer.cs" />
+    <Compile Include="Data\Models\Projectile.cs" />
+    <Compile Include="Data\Models\ResourceID.cs" />
+    <Compile Include="Data\Models\RoomInfo.cs" />
+    <Compile Include="Data\Models\RoomObject.cs" />
+    <Compile Include="Data\Models\StatList.cs" />
+    <Compile Include="Data\Models\SpellObject.cs" />
+    <Compile Include="Data\Models\SpherePosition.cs" />
+    <Compile Include="Data\Models\SubOverlay.cs" />
+    <Compile Include="Data\Models\TradeOfferObject.cs" />
+    <Compile Include="Data\Models\UserCommand\UserCommand.cs" />
+    <Compile Include="Data\Models\UserCommand\UserCommandGeneric.cs" />
+    <Compile Include="Data\Models\UserCommand\UserCommandGuildAbdicate.cs" />
+    <Compile Include="Data\Models\UserCommand\UserCommandGuildAsk.cs" />
+    <Compile Include="Data\Models\UserCommand\UserCommandGuildCreate.cs" />
+    <Compile Include="Data\Models\UserCommand\UserCommandGuildDisband.cs" />
+    <Compile Include="Data\Models\UserCommand\UserCommandGuildEndAliance.cs" />
+    <Compile Include="Data\Models\UserCommand\UserCommandGuildEndEnemy.cs" />
+    <Compile Include="Data\Models\UserCommand\UserCommandGuildGuildList.cs" />
+    <Compile Include="Data\Models\UserCommand\UserCommandGuildGuildListReq.cs" />
+    <Compile Include="Data\Models\UserCommand\UserCommandGuildInfo.cs" />
+    <Compile Include="Data\Models\UserCommand\UserCommandGuildInfoReq.cs" />
+    <Compile Include="Data\Models\UserCommand\UserCommandGuildInvite.cs" />
+    <Compile Include="Data\Models\UserCommand\UserCommandGuildMakeAlliance.cs" />
+    <Compile Include="Data\Models\UserCommand\UserCommandGuildMakeEnemy.cs" />
+    <Compile Include="Data\Models\UserCommand\UserCommandGuildRenounce.cs" />
+    <Compile Include="Data\Models\UserCommand\UserCommandGuildSetRank.cs" />
+    <Compile Include="Data\Models\UserCommand\UserCommandGuildShieldInfo.cs" />
+    <Compile Include="Data\Models\UserCommand\UserCommandGuildShieldInfoReq.cs" />
+    <Compile Include="Data\Models\UserCommand\UserCommandGuildShieldList.cs" />
+    <Compile Include="Data\Models\UserCommand\UserCommandGuildShieldListReq.cs" />
+    <Compile Include="Data\Models\UserCommand\UserCommandGuildVote.cs" />
+    <Compile Include="Data\Models\UserCommand\UserCommandLookPlayer.cs" />
+    <Compile Include="Data\Models\UserCommand\UserCommandRest.cs" />
+    <Compile Include="Data\Models\UserCommand\UserCommandSafety.cs" />
+    <Compile Include="Data\Models\UserCommand\UserCommandStand.cs" />
+    <Compile Include="Data\Models\StatNumeric.cs" />
+    <Compile Include="Drawing2D\ImageComposer.cs" />
+    <Compile Include="Drawing2D\ImageComposerGDI.cs" />
+    <Compile Include="Drawing2D\MiniMap.cs" />
+    <Compile Include="Drawing2D\MiniMapGDI.cs" />
+    <Compile Include="Drawing2D\NameColors.cs" />
+    <Compile Include="Drawing2D\PalettesGDI.cs" />
+    <Compile Include="Files\BGF\BgfBitmap.cs" />
+    <Compile Include="Files\BGF\BgfBitmapHotspot.cs" />
+    <Compile Include="Files\BGF\BgfFile.cs" />
+    <Compile Include="Files\BGF\BgfFrameSet.cs" />
+    <Compile Include="Files\BSF\BsfFile.cs" />
+    <Compile Include="Files\ROO\SectorTextureChangedEvent.cs" />
+    <Compile Include="Files\ROO\RooGrids.cs" />
+    <Compile Include="Files\ROO\RooThingExtended.cs" />
+    <Compile Include="Files\ROO\SectorMovedEvent.cs" />
+    <Compile Include="Files\ROO\WallTextureChangedEvent.cs" />
+    <Compile Include="Native\Linux.cs" />
+    <Compile Include="Native\Windows.cs" />
+    <Compile Include="Native\Wrapper.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\CancelOfferMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\CounterOfferedMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\ChangePasswordMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\ReqDepositMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\WithdrawAlListMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\ReqWithdrawAltemsMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\ReqWithdrawAlMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\PasswordNotOKMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\PasswordOKMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\ReqCounterOfferMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\PlayMidiMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\ReqActivateMessage.cs" />
+    <Compile Include="Protocol\GameMessages\LoginMode\AdminMessageLoginMode.cs" />
+    <Compile Include="Protocol\GameMessages\LoginMode\NoCharactersMessage.cs" />
+    <Compile Include="Protocol\GameMessages\LoginMode\LoginModeMessageMessage.cs" />
+    <Compile Include="Protocol\GameMessages\LoginMode\ReqAdminMessageLoginMode.cs" />
+    <Compile Include="Protocol\MessageEnrichment.cs" />
+    <Compile Include="Files\ResourceManagerConfig.cs" />
+    <Compile Include="Files\ROO\BowtieFlags.cs" />
+    <Compile Include="Files\ROO\RooSectorFlags.cs" />
+    <Compile Include="Files\ROO\RooBSPItem.cs" />
+    <Compile Include="Files\ROO\RooFile.cs" />
+    <Compile Include="Files\ROO\RooWall.cs" />
+    <Compile Include="Files\ROO\RooPartitionLine.cs" />
+    <Compile Include="Files\ROO\RooWallEditor.cs" />
+    <Compile Include="Files\ROO\RooThing.cs" />
+    <Compile Include="Files\ROO\RooSector.cs" />
+    <Compile Include="Files\ROO\RooSectorSlopeInfo.cs" />
+    <Compile Include="Files\ROO\RooSideDef.cs" />
+    <Compile Include="Files\ROO\RooSideDefFlags.cs" />
+    <Compile Include="Files\ROO\RooSubSector.cs" />
+    <Compile Include="Files\ROO\RooVertex.cs" />
+    <Compile Include="Files\RSB\RsbFile.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Common\Enums\ActionType.cs" />
+    <Compile Include="Protocol\Enums\ConnectionState.cs" />
+    <Compile Include="Protocol\Enums\MessageDirection.cs" />
+    <Compile Include="Protocol\Enums\MessageTypeGameMode.cs" />
+    <Compile Include="Protocol\Enums\MessageTypeLoginMode.cs" />
+    <Compile Include="Protocol\Enums\ProtocolMode.cs" />
+    <Compile Include="Protocol\Events\CompletingSplittedMessage.cs" />
+    <Compile Include="Protocol\Events\ConnectionStateChanged.cs" />
+    <Compile Include="Protocol\Events\EmptyMessageFound.cs" />
+    <Compile Include="Protocol\Events\GameMessageEvent.cs" />
+    <Compile Include="Protocol\Events\HandlerError.cs" />
+    <Compile Include="Protocol\Events\MessageBufferEvent.cs" />
+    <Compile Include="Protocol\Events\MismatchMessageLengthFound.cs" />
+    <Compile Include="Protocol\Events\ServerSaveChanged.cs" />
+    <Compile Include="Protocol\Events\SplittedMessageFound.cs" />
+    <Compile Include="Protocol\Exceptions\MismatchLENException.cs" />
+    <Compile Include="Protocol\Exceptions\MismatchPIException.cs" />
+    <Compile Include="Protocol\GameMessages\GameMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameModeMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\AcceptOfferMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\ActionMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\AddBgOverlayMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\AddEnchantmentMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\ArticleMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\ArticlesMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\BackgroundMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\BuyListMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\ChangeBgOverlayMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\ChangeDescriptionMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\ChangeMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\ChangeResourceMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\ChangeTextureMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\CharactersMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\CharInfoMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\CharInfoNotOkMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\CharInfoOkMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\CounterOfferMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\CreateMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\EchoPingMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\EffectMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\InventoryAddMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\InventoryMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\InventoryRemoveMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\AdminMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\DeleteMailMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\InvalidateDataMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\PostArticleMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\UnwaitMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\WaitMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\SendPlayersMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\SendMailMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\ReqLookupNamesMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\LookupNamesMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\MailMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\ReqPutMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\ReqGetMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\ObjectContentsMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\ReqDMMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\ReqAdminMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\SendPlayerMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\SendRoomContentsMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\SendObjectContentsMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\WallAnimateMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\LightAmbientMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\LightPlayerMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\LightShadingMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\LoadModuleMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\LookMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\LookNewsGroupMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\MessageMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\MoveMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\OfferCanceledMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\OfferedMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\OfferMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\PingMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\PlayerAddMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\PlayerMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\PlayerOverlayMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\PlayerRemoveMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\PlayersMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\PlayMusicMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\PlayWaveMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\QuitMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\RemoveEnchantmentMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\RemoveMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\ReqApplyMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\ReqArticleMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\ReqArticlesMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\ReqAttackMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\ReqBuyItemsMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\ReqBuyMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\ReqCastMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\ReqDropMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\ReqGetMailMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\ReqGoMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\ReqInventoryMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\ReqLookMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\ReqMoveMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\ReqOfferMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\ReqQuitMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\ReqTurnMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\ReqUnuseMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\ReqUseMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\RoomContentsMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\SaidMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\SayGroupMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\SayToMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\SectorLightMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\SectorMoveMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\SendCharactersMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\SendEnchantmentsMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\SendSkillsMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\SendSpellsMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\SendStatGroupsMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\SendStatsMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\ShootMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\SkillAddMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\SkillRemoveMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\SkillsMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\SpellAddMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\SpellRemoveMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\SpellsMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\StatGroupMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\StatGroupsMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\StatMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\SysMessageMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\SystemMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\TurnMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\UnuseMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\UseCharacterMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\UseListMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\UseMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\UserCommandMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GenericMessage.cs" />
+    <Compile Include="Protocol\GameMessages\LoginModeMessage.cs" />
+    <Compile Include="Protocol\GameMessages\LoginMode\CreditsMessage.cs" />
+    <Compile Include="Protocol\GameMessages\LoginMode\DownloadMessage.cs" />
+    <Compile Include="Protocol\GameMessages\LoginMode\GameStateMessage.cs" />
+    <Compile Include="Protocol\GameMessages\LoginMode\GetChoiceMessage.cs" />
+    <Compile Include="Protocol\GameMessages\LoginMode\GetClientMessage.cs" />
+    <Compile Include="Protocol\GameMessages\LoginMode\GetLoginMessage.cs" />
+    <Compile Include="Protocol\GameMessages\LoginMode\LoginFailedMessage.cs" />
+    <Compile Include="Protocol\GameMessages\LoginMode\LoginMessage.cs" />
+    <Compile Include="Protocol\GameMessages\LoginMode\LoginOKMessage.cs" />
+    <Compile Include="Protocol\GameMessages\LoginMode\ReqGameStateMessage.cs" />
+    <Compile Include="Protocol\GameMessages\MessageHeader.cs" />
+    <Compile Include="Protocol\MessageController\MessageController.cs" />
+    <Compile Include="Protocol\MessageController\MessageControllerClient.cs" />
+    <Compile Include="Protocol\MessageController\MessageControllerHook.cs" />
+    <Compile Include="Protocol\MessageController\MessageParser.cs" />
+    <Compile Include="Protocol\SubMessage\SubMessage.cs" />
+    <Compile Include="Protocol\SubMessage\SubMessageGeneric.cs" />
+    <Compile Include="Protocol\SubMessage\SubMessageNewCharInfo.cs" />
+    <Compile Include="Protocol\SubMessage\SubMessageSendCharInfo.cs" />
+    <Compile Include="Protocol\ServerConnection.cs" />
+    <Compile Include="Common\Crc32.cs" />
+    <Compile Include="Protocol\Protection\CRCCreator.cs" />
+    <Compile Include="Protocol\Protection\PIDecoder.cs" />
+    <Compile Include="Protocol\Protection\PIEncoder.cs" />
+    <Compile Include="Protocol\Structs\HashTable.cs" />
+    <Compile Include="Protocol\Structs\PasswordHash.cs" />
+    <Compile Include="Files\ResourceManager.cs" />
+    <Compile Include="Drawing2D\RenderInfo.cs" />
+    <Compile Include="Bot\BotClient.cs" />
+    <Compile Include="zlib\Adler32.cs" />
+    <Compile Include="zlib\Deflate.cs" />
+    <Compile Include="zlib\InfBlocks.cs" />
+    <Compile Include="zlib\InfCodes.cs" />
+    <Compile Include="zlib\Inflate.cs" />
+    <Compile Include="zlib\InfTree.cs" />
+    <Compile Include="zlib\StaticTree.cs" />
+    <Compile Include="zlib\SupportClass.cs" />
+    <Compile Include="zlib\Tree.cs" />
+    <Compile Include="zlib\ZInputStream.cs" />
+    <Compile Include="zlib\Zlib.cs" />
+    <Compile Include="zlib\ZOutputStream.cs" />
+    <Compile Include="zlib\ZStream.cs" />
+    <Compile Include="zlib\ZStreamException.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="colortable.hex" />
+    <None Include="Design\ClientComponents.cd" />
+    <None Include="Design\ClientClassHierarchy.cd" />
+    <None Include="Design\FileFormats.cd" />
+    <None Include="Design\GameMessages.cd" />
+    <None Include="Design\ObjectClassHierarchy.cd" />
+    <None Include="Meridian59.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Design\STYLEGUIDE.txt" />
+    <Content Include="gpl-3.0.txt" />
+    <Content Include="zlib\license.txt" />
+    <None Include="Resources\Glow.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

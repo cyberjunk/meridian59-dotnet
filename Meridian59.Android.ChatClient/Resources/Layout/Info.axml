@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <TableLayout
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tableLayout1">
+        <TableRow
+            android:id="@+id/tableRow5">
+            <TextView
+                android:text="Latency"
+                android:layout_column="0"
+                android:id="@+id/textView21" />
+            <TextView
+                android:text="-"
+                android:layout_column="1"
+                android:id="@+id/txtLatency" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRow1">
+            <TextView
+                android:text="Room"
+                android:layout_column="0"
+                android:id="@+id/textView10"
+                android:width="100px" />
+            <TextView
+                android:text="-"
+                android:layout_column="1"
+                android:id="@+id/txtRoom" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRow2">
+            <TextView
+                android:text="HP"
+                android:layout_column="0"
+                android:id="@+id/textView11" />
+            <TextView
+                android:text="-"
+                android:layout_column="1"
+                android:id="@+id/txtHP" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRow3">
+            <TextView
+                android:text="MP"
+                android:layout_column="0"
+                android:id="@+id/textView12" />
+            <TextView
+                android:layout_column="1"
+                android:id="@+id/txtMP"
+                android:text="-" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRow4">
+            <TextView
+                android:text="Vigor"
+                android:layout_column="0"
+                android:id="@+id/textView18" />
+            <TextView
+                android:text="-"
+                android:layout_column="1"
+                android:id="@+id/txtVigor" />
+        </TableRow>
+    </TableLayout>
+    <Button
+        android:text="Rest"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnRest" />
+</LinearLayout>

@@ -1,0 +1,138 @@
+﻿	
+		Styleguide for Meridian 59 core library
+					Version 0.0
+
+---------------------------------------------------------------------
+
+) {} Brackets
+
+) Starting '{'
+	Generally use a separate line for the starting bracket.
+	No matter if it is: if, procedure, for, while, ....
+
+	Wrong:
+		if () {
+			..
+			..
+		}
+
+	Right:
+		if () 
+		{
+			..
+			..
+		}
+
+) Less brackets
+	Do not use brackets for e.g. a single conditional call
+
+	Wrong:
+		if (..)
+		{
+			DoSomething();
+		}
+
+	Right:
+		if (..)
+			DoSomething()
+---------------------------------------------------------------------
+
+) Uppercase/lowercase/CamelCase
+
+) Constants
+	Always write constants fully uppercase.
+
+	Wrong: public const int SpecialValue = 5;
+	Right: public const int SPECIALVALUE = 5;
+
+) Procedures
+	Always start with capital letter, regardless of visibility.
+	Then keep it CamelCase.
+
+	Wrong:	private void doSomething() { }
+	Right:	private void DoSomething() { }
+
+) Parameters
+	Always start method parameters with a capital letter.
+
+	Wrong:	private void DoSomething(int something)
+	Right:	private void DoSomething(int Something)
+
+) Local variables
+	Keep any local declared variable fully lowercase
+
+	Wrong:
+		private void DoSomething()
+		{
+			int Radius = 1;
+			...
+		}
+	
+	Right:
+		private void DoSomething()
+		{
+			int radius = 1;
+			...
+		}
+
+) Fields
+	Non public field names must start with a lowercase letter.
+
+	Wrong:	private int Counter;
+	Right:	private int counter;
+
+) Properties
+	All properties must start with a capital letter.
+	Generally avoid using non-public properties, rather
+	think about using a field instead or make the getter public.
+
+	Wrong:
+		protected int someProperty 
+		{ 
+			get 
+			{ 
+			} 
+			set 
+			{
+			} 
+		}
+
+	Right:
+		public int SomeProperty 
+		{ 
+			get 
+			{
+			} 
+			
+			protected set 
+			{ 
+			} 
+		}
+
+---------------------------------------------------------------------
+
+) Floating-Point values in code
+	Always write float values with a dot and a 'f'
+
+	Wrong:	float a = 0;
+	Right:	float a = 0.0f;
+
+---------------------------------------------------------------------
+
+) Eventhandlers
+	Use an "On" prefix when assigning an event handler method
+	and do not use a "_" char.
+	
+	Wrong:	protected void Object_SomethingHappened() { }
+	Right:	protected void OnObjectSomethingHappened() { }
+
+) Event raising
+	Events musst be nullchecked. So any class raising an event
+	should have this pattern:
+
+	public event EventHandlerType NameOfEvent;
+	protected void RaiseNameOfEvent(..)
+	{
+		if (NameOfEvent != null)
+			NameOfEvent(..)
+	}

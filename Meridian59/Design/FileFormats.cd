@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Comment CommentText="These are the implementations for the legacy resource formats of Meridian 59.">
+    <Position X="2.445" Y="0.5" Height="0.33" Width="4.863" />
+  </Comment>
+  <Class Name="Meridian59.Files.BGF.BgfFile">
+    <Position X="0.5" Y="2" Width="3" />
+    <TypeIdentifier>
+      <HashCode>JAABkKBCAABgQABQAQEUABQgiAEEEoEgAAIMhQBAEIE=</HashCode>
+      <FileName>Files\BGF\BgfFile.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Meridian59.Files.BsfFile">
+    <Position X="9.5" Y="2" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AABAgIIAAAAAQAAAAAAIAAAgAAAAAhAgAAAIAAAAAAA=</HashCode>
+      <FileName>Files\BSF\BsfFile.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Meridian59.Files.ROO.RooFile">
+    <Position X="3.75" Y="2" Width="2.75" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="Meridian59.Files.ROO.RooFile.TextureInfo" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Files\ROO\RooFile.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AkSMgIBAABAA5QlUAACQlAgwgAfEAxkoAgCoUkCECMw=</HashCode>
+      <FileName>Files\ROO\RooFile.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Meridian59.Files.RSB.RsbFile">
+    <Position X="6.75" Y="2" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAgIBCAAAAYAAAAQAAABAioABAAgAgAAAIgABgAAE=</HashCode>
+      <FileName>Files\RSB\RsbFile.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

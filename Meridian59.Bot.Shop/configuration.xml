@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  
+  <!-- 
+    CONNECTION:
+      host: DNS or IP of the M59 server
+      port: TCP port of the M59 server      
+      rsbfile: string-resources (get this from the "resource" folder of your client)  
+      username: your username
+      password: your password
+      character: your shopcharacter to log in
+      majorverson: see client menu help/about
+      minorversion: see client menu help/about
+      resourceversion: the Download= value from your client's meridian.ini
+      logfile: the bot will log also to this file (cleaned at startup, "" to disable)
+  -->
+  <connection
+    host="meridian103.openmeridian.org"
+    port="5903"
+    rsbfile="rsc0000-103.rsb"
+    username="username"
+    password="password"
+    character="charactername"
+    majorversion="80"
+    minorversion="2"
+    resourceversion="10016"
+    logfile="bot.log" />
+
+  <!--
+    ADMINS:
+      These players will have "admin" access to your bot. 
+      This will allow certain extra commands/interaction/information.    
+  -->
+  <admins>
+    <item name="Sha'Krune" />
+  </admins>
+  
+  <!--
+    BOT:
+      intervalbroadcast: broadcast offers that often (in seconds, default: 60min)
+      intervalsay: say offers that often (in seconds, default: 30min)
+      tellonenter: set whisper players when entering room on/off (True/False)
+      chatprefixstring: this will be added as a prefix to some chat the bot makes
+      shopname: this is added to your advertising
+  -->
+  <bot
+    intervalbroadcast="3600"
+    intervalsay="1800"
+    tellonenter="True"
+    chatprefixstring="~B~r"
+    shopname="~B~rS~n~khop~B~rB~n~kot">
+   
+    <!--
+    OFFERLIST:    
+      Add an <item ... /> entry for each TYPE of item you want to sell.
+      Do not add item types twice, not even for non-stackable ones.
+      If you want to sell 5 helm, you still need one <item ... /> entry.
+      
+    NAME:
+      Make sure the name you provide is 100% correct, otherwise
+      the item is not recognized.
+      Take care of plural (s) endings and special chars (-) etc.
+      Example: 
+        Wrong:   "inky-cap mushrooms" 
+        Correct: "Inky-cap mushroom"
+      
+    COUNT: 
+      An item will be sold to others, until
+      your inventory has reached 'count' of it.
+      Ex. 1) Set it to 0, if you want to sell all you have (including ones you might auto-buy).
+      Ex. 2) Set it to 20, if you want to keep at least 20 units yourself (sells the other N-20, or none if N < 20).
+      
+    UNITPRICE:
+      This is always the price for one unit of the item.
+      For stackable items it's the price for one of the stack.
+      For single items it's the price for one item.
+      Ex. 1) Selling 1 item-stack of 100 mushroom at unitprice of 10 gives you 1000sh
+      Ex. 2) Selling 5 helm items at unitprice of 200 gives you 1000sh
+
+    -->
+    <offerlist>
+      <item name="blue mushroom" unitprice="60" count="0" />
+      <item name="helm" unitprice="200" count="0" />
+      <item name="Jewel of Froz" unitprice="5000" count="0" />
+    </offerlist>
+
+    <!--
+    BUYLIST:    
+      Add an <item ... /> entry for each TYPE of item you want to buy.
+      Do not add item types twice, not even for non-stackable ones.
+      If you want to buy 5 helm, you still need one <item ... /> entry.
+      
+    NAME:
+      Make sure the name you provide is 100% correct, otherwise
+      the item is not recognized.
+      Take care of plural (s) endings and special chars (-) etc.
+      Example: 
+        Wrong:   "inky-cap mushrooms" 
+        Correct: "Inky-cap mushroom"
+      
+    COUNT: 
+      An item will be bought from others, until
+      your inventory has reached 'count' of it.      
+      Ex. 1) Setting it to 10 and having none of it makes your bot buy 10 of it.
+      Ex. 2) Setting it to 50 and already having 45 of it in inventory makes your bot buy 5 of it.
+      
+    UNITPRICE:
+      This is always the price for one unit of the item.
+      For stackable items it's the price for one of the stack.
+      For single items it's the price for one item.
+      Ex. 1) Buy 1 item-stack of 100 mushroom at unitprice of 10 costs you 1000sh
+      Ex. 2) Buying 5 helm items at unitprice of 200 costs you 1000sh
+      
+    -->
+    <buylist>
+      <item name="blue mushroom" unitprice="50" count="20" />
+      <item name="Jewel of Froz" unitprice="500" count="5" />
+    </buylist>
+    
+  </bot>
+</configuration>

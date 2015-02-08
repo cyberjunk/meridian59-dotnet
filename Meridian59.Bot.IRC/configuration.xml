@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  
+  <!-- 
+    CONNECTION:
+      host: DNS or IP of the M59 server
+      port: TCP port of the M59 server      
+      rsbfile: string-resources (get this from the "resource" folder of your client)  
+      username: your username
+      password: your password
+      character: your shopcharacter to log in
+      majorverson: see client menu help/about
+      minorversion: see client menu help/about
+      resourceversion: the Download= value from your client's meridian.ini
+      logfile: the bot will log also to this file (cleaned at startup, "" to disable)
+  -->
+  <connection
+    host="meridian103.openmeridian.org"
+    port="5903"
+    rsbfile="rsc0000-103.rsb"
+    username="username"
+    password="password"
+    character="charactername"
+    majorversion="70"
+    minorversion="1"
+    resourceversion="10016"
+    logfile="bot.log" />
+
+  <!--
+    ADMINS:
+      These players will have "admin" access to your bot from IRC.
+      The bot will try to forward their private messages as admin-console commands.
+      Also it will "broadcast" any response to ANY entry. DONT MAKE IT TOO MANY.
+  -->
+  <admins>
+    <item name="ShaKrune" />
+    <item name="Delerium" />
+    <item name="Gar" />
+    <item name="Daenks" />
+    <item name="Morbus" />
+  </admins>
+  
+  <!--
+    BOT:
+      ircserver: IP or DNS of irc server
+      ircport: port of irc server
+      channel: IRC channel to join
+      nickname: nickname to use for the bot
+      ircpassword: set this if you have registered the nick
+      chatprefix: a prefix all forwarded messages have
+      maxburst: the maximum amount of available tokens in the token-bucket (used to limit outflow peek)
+      refill: the ms delay until a new token is put into the token-bucket (used to limit min. outflow)
+      banner: this will be inserted into messages forwarded to M59
+  -->
+  <bot
+    ircserver="irc.esper.net"
+    ircport="7000"
+    channel="#Meridian59"
+    nickname="M59-Bot-103"
+    ircpassword=""
+    chatprefix="103"
+    maxburst="10"
+    refill="1000"
+    banner="~B~g[~kIRC~g]~r ">
+    
+    <!-- Allow only admin-console commands listed here -->
+    <admincommands>
+      <item name="help" />
+      <item name="show" />
+      <item name="who" />
+    </admincommands>  
+  
+  </bot>
+</configuration>

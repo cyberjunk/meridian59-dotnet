@@ -1,0 +1,301 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Sources">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ControllerEffects.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ControllerInput.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ControllerRoom.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ControllerSound.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ControllerUI.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageComposerCEGUI.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageComposerOgre.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshHotspot.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshInfo.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="MiniMapCEGUI.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Model3DInfo.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="OgreClient.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="OgreListeners.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="OISKeyBinding.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="OISListeners.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleSystemInfo.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectileNode2D.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="RemoteNode.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="RemoteNode2D.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="RemoteNode3D.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="RemoteNode3DSub.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="StringConvert.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="StringDefines.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Util.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="XmlReaderExtensions.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageBuilders.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GameTickOgre.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleUniverseEventHandlers.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManagerOgre.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="DataControllerOgre.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="app.rc">
+      <Filter>Resources</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AssemblyInfo.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Application.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="UIWelcome.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="UITrade.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="UITarget.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="UIStatusBar.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="UISplashNotifier.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="UISpells.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="UISkills.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="UIRoomEnchantments.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="UIPlayerDetails.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="UIOnlinePlayers.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="UIObjectDetails.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="UIMiniMap.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="UIMainButtonsRight.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="UIMainButtonsLeft.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="UILoadingBar.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="UIInventory.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="UIChat.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="UIBuy.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="UIAvatar.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="UIAttributes.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="UIAmount.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="UIActions.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="UIActionButtons.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="RemoteNode3DSub.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="RemoteNode3D.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="RemoteNode2D.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="RemoteNode.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectileNode2D.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="OISListeners.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="OISKeyBinding.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="OgreListeners.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="OgreClient.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="MiniMapCEGUI.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageComposerOgre.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageComposerCEGUI.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="ControllerUI.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="ControllerSound.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="ControllerRoom.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="ControllerInput.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="ControllerEffects.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="UINewsGroup.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="UIGuild.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="UINewsGroupCompose.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="UIAvatarCreateWizard.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="UIConfirmPopup.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="UIPlayerOverlays.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="UIMail.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="UIMailCompose.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="UIGuildCreate.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="UIObjectContents.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageBuilders.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="UIRoomObjects.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleUniverseEventHandlers.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="app.ico">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="glow.bmp">
+      <Filter>Resources</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="README.txt" />
+  </ItemGroup>
+</Project>

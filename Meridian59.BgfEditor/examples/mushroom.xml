@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<bgf version="9" shrink="4" maxindices="1">
+  <frames count="1" imageformat="bmp">
+    <frame width="64" height="64" xoffset="0" yoffset="0" file="mushroom-0.bmp">
+      <hotspots count="0" />
+    </frame>
+  </frames>
+  <framesets count="1">
+    <frameset indices="0" />
+  </framesets>
+</bgf>

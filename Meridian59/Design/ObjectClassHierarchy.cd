@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Comment CommentText="ObjectClass hierarchy. Starts with ObjectID. ObjectBase is often used, either directly or by deriving classes like the two examples shown.">
+    <Position X="1.837" Y="0.5" Height="0.295" Width="7.899" />
+  </Comment>
+  <Class Name="Meridian59.Data.Models.ObjectID">
+    <Position X="1" Y="1.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>IAAAEAACQAAAgAIEBAgAIIQggAAAAgBgBAAIEABAEgE=</HashCode>
+      <FileName>Data\Models\ObjectID.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Meridian59.Data.Models.ObjectBase">
+    <Position X="3.75" Y="1.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>Ja0AjAGBKAmQBCEikGwQFaRggMEEMwFhIBQBIiFIBIQ=</HashCode>
+      <FileName>Data\Models\ObjectBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Meridian59.Data.Models.RoomObject">
+    <Position X="7.25" Y="5.75" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>JHUEARJZ1AgwgCCoKDgAgYKgwJiEvglgitYLKCTMHJE=</HashCode>
+      <FileName>Data\Models\RoomObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Meridian59.Data.Models.SpellObject">
+    <Position X="7.25" Y="1.75" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAABAAAABAAAAAAAgBAAAAgAhAAAAAABQAAA=</HashCode>
+      <FileName>Data\Models\SpellObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Meridian59.Data.Models.OnlinePlayer">
+    <Position X="1" Y="9" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAEABAAAAAAAAAAAAAAQAQQgAAAEAwAgAAAAAABABAQ=</HashCode>
+      <FileName>Data\Models\OnlinePlayer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

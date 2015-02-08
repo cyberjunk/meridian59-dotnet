@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <TableLayout
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tableLayout1"
+        android:stretchColumns="*">
+        <TableRow
+            android:id="@+id/tableRow1">
+            <TextView
+                android:text="Username"
+                android:layout_column="0"
+                android:id="@+id/textView5" />
+            <EditText
+                android:id="@+id/txtUsername"
+                android:layout_column="1" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRow2">
+            <TextView
+                android:text="Password"
+                android:layout_column="0"
+                android:id="@+id/textView6" />
+            <EditText
+                android:inputType="textPassword"
+                android:id="@+id/txtPassword"
+                android:layout_column="1" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRow3">
+            <TextView
+                android:text="Server"
+                android:layout_column="0"
+                android:id="@+id/textView7" />
+            <EditText
+                android:layout_column="1"
+                android:id="@+id/txtHost"
+                android:text="meridian101.meridian59.com" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRow4">
+            <TextView
+                android:text="Port"
+                android:layout_column="0"
+                android:id="@+id/txtPortDesc" />
+            <EditText
+                android:inputType="number"
+                android:layout_column="1"
+                android:id="@+id/txtPort"
+                android:text="5901" />
+        </TableRow>
+    </TableLayout>
+    <Button
+        android:text="Login"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnLogin" />
+</LinearLayout>

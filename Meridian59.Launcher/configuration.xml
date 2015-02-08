@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  
+  <resources 
+    version="10016" 
+    path="../../../../Resources/"
+    preloadrooms="false" 
+    preloadobjects="false" 
+    preloadroomtextures="false"
+    preloadsound="false"
+    preloadmusic="false" />
+  
+  <connections count="6" lastindex="2">
+
+    <connection
+      name="101"
+      host="meridian101.meridian59.com"
+      port="5901"
+      stringdictionary="rsc0000.rsb"
+      username="user">
+      <ignorelist />
+    </connection>
+    
+    <connection 
+      name="102" 
+      host="meridian102.meridian59.com" 
+      port="5902" 
+      stringdictionary="rsc0000.rsb"
+      username="user">
+      <ignorelist />
+    </connection>
+    
+    <connection 
+      name="103" 
+      host="meridian103.openmeridian.org" 
+      port="5903" 
+      stringdictionary="rsc0000-103.rsb" 
+      username="user">
+      <ignorelist />
+    </connection>
+    
+    <connection 
+      name="104" 
+      host="meridian104.openmeridian.org" 
+      port="5904" 
+      stringdictionary="rsc0000-104.rsb" 
+      username="user">
+      <ignorelist />
+    </connection>
+
+    <connection
+      name="107"
+      host="meridian107.openmeridian.org"
+      port="5907"
+      stringdictionary="rsc0000-107.rsb"
+      username="user">
+      <ignorelist />
+    </connection>
+    
+    <connection 
+      name="localhost" 
+      host="127.0.0.1" 
+      port="5959" 
+      stringdictionary="rsc0000-git.rsb" 
+      username="user">
+      <ignorelist />
+    </connection>
+    
+  </connections>
+  <engine>
+    <display value="0" />
+    <resolution value="1280 x 720" />
+    <windowmode enabled="true" />
+    <windowframe enabled="true" />
+    <vsync enabled="false" />
+    <fsaa value="8" />
+    <nomipmaps value="false" />
+    <texturefiltering value="Anisotropic x16" />
+    <imagebuilder value="GDI" />
+    <bitmapscaling value="Default" />
+    <texturequality value="Default" />
+    <decorationintensity value="20" />
+    <decorationquality value="3" />
+    <disablenewroomtextures value="false" />
+    <disable3dmodels value="false" />
+    <disablenewsky value="false" />
+    <disableweathereffects value="False" />
+    <weatherparticles value="5000" />
+    <musicvolume value="10" />
+    <disableloopsounds value="false" />
+  </engine>
+  <input>
+    <mouseaimspeed value="25" />
+    <keyrotatespeed value="25" />
+    <keybinding rightclickaction="13">
+      <moveforward key="W" />
+      <movebackward key="S" />
+      <moveleft key="Q" />
+      <moveright key="E" />
+      <rotateleft key="A" />
+      <rotateright key="D" />
+      <walk key="ShiftKey" />
+      <automove key="NumLock" />
+      <nexttarget key="Tab" />
+      <selftarget key="Menu" />
+      <open key="N" />
+      <close key="Escape" />     
+      <action01 key="D1" />
+      <action02 key="D2" />
+      <action03 key="D3" />
+      <action04 key="D4" />
+      <action05 key="D5" />
+      <action06 key="D6" />
+      <action07 key="D7" />
+      <action08 key="D8" />
+      <action09 key="D9" />
+      <action10 key="D0" />
+      <action11 key="H" />
+      <action12 key="H" />
+      <action13 key="Space" />
+      <action14 key="R" />
+      <action15 key="G" />
+      <action16 key="I" />
+      <action17 key="U" />
+      <action18 key="B" />
+      <action19 key="T" />
+      <action20 key="F" />
+      <action21 key="C" />
+      <action22 key="V" />
+      <action23 key="J" />
+      <action24 key="J" />
+      <action25 key="None" />
+      <action26 key="None" />
+      <action27 key="None" />
+      <action28 key="None" />
+      <action29 key="None" />
+      <action30 key="None" />
+      <action31 key="None" />
+      <action32 key="None" />
+      <action33 key="None" />
+      <action34 key="None" />
+      <action35 key="None" />
+      <action36 key="None" />
+      <action37 key="None" />
+      <action38 key="None" />
+      <action39 key="None" />
+      <action40 key="None" />
+      <action41 key="None" />
+      <action42 key="None" />
+      <action43 key="None" />
+      <action44 key="None" />
+      <action45 key="None" />
+      <action46 key="None" />
+      <action47 key="None" />
+      <action48 key="None" />
+    </keybinding>
+    <actionbuttonsets />
+  </input>
+</configuration>

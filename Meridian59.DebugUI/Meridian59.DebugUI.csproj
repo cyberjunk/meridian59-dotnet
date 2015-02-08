@@ -1,0 +1,259 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C8938199-AB12-4A43-AAB0-C8F7043E46E9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Meridian59.DebugUI</RootNamespace>
+    <AssemblyName>Meridian59.DebugUI</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>Meridian59DebugUI.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BaseGridView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MiniMapForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MiniMapForm.Designer.cs">
+      <DependentUpon>MiniMapForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\BackgroundMusicView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Viewers\BackgroundMusicView.Designer.cs">
+      <DependentUpon>BackgroundMusicView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\BackgroundOverlayView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Viewers\BackgroundOverlayView.Designer.cs">
+      <DependentUpon>BackgroundOverlayView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\InventoryObjectView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Viewers\InventoryObjectView.Designer.cs">
+      <DependentUpon>InventoryObjectView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\LightShadingView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Viewers\LightShadingView.Designer.cs">
+      <DependentUpon>LightShadingView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\OnlinePlayersView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Viewers\OnlinePlayersView.Designer.cs">
+      <DependentUpon>OnlinePlayersView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\ObjectBaseView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Viewers\ObjectBaseView.Designer.cs">
+      <DependentUpon>ObjectBaseView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\AnimationView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Viewers\AnimationView.Designer.cs">
+      <DependentUpon>AnimationView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DebugForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DebugForm.Designer.cs">
+      <DependentUpon>DebugForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Events\EventArgs.cs" />
+    <Compile Include="Events\EventHandler.cs" />
+    <Compile Include="Generic\HexTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Generic\ThreadSafeLog.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ListViewers\GuildMemberListViewer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ListViewers\GuildListViewer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ListViewers\LogMessageViewer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ListViewers\ServerChatMessageViewer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ListViewers\GamePacketViewer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CustomDataGridColumns\InOutColumn.cs" />
+    <Compile Include="CustomDataGridColumns\ByteColumn.cs" />
+    <Compile Include="LoginControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Viewers\RoomInfoView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Viewers\RoomInfoView.Designer.cs">
+      <DependentUpon>RoomInfoView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\SpellsView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Viewers\SpellsView.Designer.cs">
+      <DependentUpon>SpellsView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\StatsListView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Viewers\StatsListView.Designer.cs">
+      <DependentUpon>StatsListView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\StatsNumericView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Viewers\StatsNumericView.Designer.cs">
+      <DependentUpon>StatsNumericView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\SubOverlayGrid.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Viewers\SubOverlayGrid.Designer.cs">
+      <DependentUpon>SubOverlayGrid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ListViewers\StringListViewer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Viewers\RoomObjectsView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Viewers\RoomObjectsView.Designer.cs">
+      <DependentUpon>RoomObjectsView.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Meridian59DebugUI.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DebugForm.resx">
+      <DependentUpon>DebugForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MiniMapForm.resx">
+      <DependentUpon>MiniMapForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Viewers\BackgroundMusicView.resx">
+      <DependentUpon>BackgroundMusicView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Viewers\BackgroundOverlayView.resx">
+      <DependentUpon>BackgroundOverlayView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Viewers\InventoryObjectView.resx">
+      <DependentUpon>InventoryObjectView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Viewers\LightShadingView.resx">
+      <DependentUpon>LightShadingView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Viewers\OnlinePlayersView.resx">
+      <DependentUpon>OnlinePlayersView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Viewers\AnimationView.resx">
+      <DependentUpon>AnimationView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Viewers\ObjectBaseView.resx">
+      <DependentUpon>ObjectBaseView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Viewers\RoomInfoView.resx">
+      <DependentUpon>RoomInfoView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Viewers\SpellsView.resx">
+      <DependentUpon>SpellsView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Viewers\StatsListView.resx">
+      <DependentUpon>StatsListView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Viewers\StatsNumericView.resx">
+      <DependentUpon>StatsNumericView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Viewers\SubOverlayGrid.resx">
+      <DependentUpon>SubOverlayGrid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Viewers\RoomObjectsView.resx">
+      <DependentUpon>RoomObjectsView.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="license_gpl3.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Meridian59\Meridian59.csproj">
+      <Project>{e8223f3f-3f18-4f4c-9a8f-d9102b067be3}</Project>
+      <Name>Meridian59</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

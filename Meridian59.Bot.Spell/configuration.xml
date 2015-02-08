@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  
+  <!-- 
+    CONNECTION:
+      host: DNS or IP of the M59 server
+      port: TCP port of the M59 server      
+      rsbfile: string-resources (get this from the "resource" folder of your client)  
+      username: your username
+      password: your password
+      character: your shopcharacter to log in
+      majorverson: see client menu help/about
+      minorversion: see client menu help/about
+      resourceversion: the Download= value from your client's meridian.ini
+      logfile: the bot will log also to this file (cleaned at startup, "" to disable)
+  -->
+  <connection
+    host="meridian103.openmeridian.org"
+    port="5903"
+    rsbfile="rsc0000-103.rsb"
+    username="username"
+    password="password"
+    character="charactername"
+    majorversion="80"
+    minorversion="1"
+    resourceversion="10016"
+    logfile="bot.log" />
+
+  <!--
+    ADMINS:
+      These players will have "admin" access to your bot. 
+      This will allow certain extra commands/interaction/information.
+      SpellBot so far only additionally accepts any offered items from admins.
+  -->
+  <admins>
+    <item name="Sha'Krune" />
+  </admins>
+  
+  <!--
+    BOT:
+      Set value of template to a valid template-name from below.
+      The bot will execute this template.
+  -->
+  <bot template="example">
+
+    <!--
+      TEMPLATES:    
+        This is a "library" of templates your bot can execute.
+        If you create nice ones, please send them to me so I can add it here :-)
+    -->
+    <templates>
+
+      <!--
+      EXAMPLE TEMPLATE:
+        Add a <task ... /> entry for each task you want to execute.
+        To wait between executing tasks, put a "sleep" task between them.
+        When the bottom is reached it starts from top again.
+      
+      TYPE:
+        1) rest     Start resting
+        2) stand    Stop resting
+        3) sleep    Sleep duration (secs) before go to next task
+        4) cast     Cast a spell with (name).
+                    optional (default ""): 
+                      on an object (target) in (room) or (inventory)
+                      when reached 99% (onmax) either (skip) the task or (quit) the bot.                   
+        5) use      Use/Unuse an item from inventory
+        6) say      Says the given text
+    
+      -->
+      <template name="example">
+        <task type="say" text="test" />
+        <task type="stand" />
+        <task type="cast" name="blink" target="" in="" onmax="skip" />
+        <task type="sleep" duration="15" />
+        <task type="cast" name="bless" target="Sha'Krune" in="room" onmax="" />
+        <task type="sleep" duration="15" />
+        <task type="cast" name="blink" target="" in="" onmax="quit" />
+        <task type="sleep" duration="15" />
+        <task type="rest" />
+        <task type="sleep" duration="60" />
+        <task type="use" name="apple" />      
+      </template>
+      
+    </templates>
+  </bot>
+</configuration>

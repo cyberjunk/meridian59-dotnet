@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Comment CommentText="These are the main components the BaseClient (and above) is using">
+    <Position X="5.022" Y="0.5" Height="0.33" Width="4.863" />
+  </Comment>
+  <Class Name="Meridian59.Data.Controller.DataController">
+    <Position X="0.75" Y="1.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>kF8wR4JO+DYUxvMWiuRKH/DBqMaAQlu2zJKDDQUS8k0=</HashCode>
+      <FileName>Data\DataController.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Meridian59.Protocol.MessageEnrichment">
+    <Position X="6.75" Y="1.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>ABAgAgCBAIJQBFIQBEAQQBgAAFgAoBBiAkAAEAgAhAA=</HashCode>
+      <FileName>Protocol\MessageEnrichment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Meridian59.Protocol.ServerConnection">
+    <Position X="3.75" Y="1.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>BAQAAAAAAKAAJEBABXSgAIgAIAgABBBMAAgAA4CIAQM=</HashCode>
+      <FileName>Protocol\ServerConnection.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Meridian59.Files.ResourceManager">
+    <Position X="9.75" Y="1.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAgUAEBAgAAIgAJAAIAAAADIAAAgAEAAACAAAIgAAA=</HashCode>
+      <FileName>Files\ResourceManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Meridian59.Common.GameTick">
+    <Position X="12.75" Y="1.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>CgUbDCRAiiCABCgABACAQABEAKAAEpAKEgRSKkMEREA=</HashCode>
+      <FileName>Common\GameTick.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

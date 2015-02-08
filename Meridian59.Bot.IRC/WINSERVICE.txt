@@ -1,0 +1,7 @@
+﻿To install the BOT as windows-service use the windows integrated "sc" tool.
+The bot will automatically detect when being executed as service.
+--------------------------------------------------------
+Example:
+
+sc create M59-IRC-BOT binPath="C:\IRCBot\Meridian59.IRC.Bot.exe"
+

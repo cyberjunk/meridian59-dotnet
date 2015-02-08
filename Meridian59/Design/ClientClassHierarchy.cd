@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Comment CommentText="This class is the base for the bot projects. It could also derive from SingletonClient instead, but due to the possibility several instances might run in one process it doesn't.">
+    <Position X="10.361" Y="3.284" Height="1.45" Width="1.7" />
+  </Comment>
+  <Comment CommentText="These are the classes from the client-hierarchy, incrementally extending functionality.">
+    <Position X="2.693" Y="0.5" Height="0.33" Width="5.359" />
+  </Comment>
+  <Comment CommentText="This class is the base for the new 3D client.">
+    <Position X="10.405" Y="1.027" Height="0.499" Width="1.7" />
+  </Comment>
+  <Class Name="Meridian59.Client.RootClient&lt;T, R, D&gt;">
+    <Position X="1" Y="1" Width="2" />
+    <TypeIdentifier>
+      <HashCode>gAQAEAAAACgAAAAABAAAWAAQgAgAABACAggCAkAAQAA=</HashCode>
+      <FileName>Client\RootClient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Meridian59.Client.BaseClient&lt;T, R, D&gt;">
+    <Position X="3.75" Y="1" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>WD1gTA4mWgmgYUghTLJ2R0hi9lhvIlhiSEibQNYCBwo=</HashCode>
+      <FileName>Client\BaseClient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Meridian59.Client.SingletonClient&lt;T, R, D, S&gt;">
+    <Position X="7.5" Y="1" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAA=</HashCode>
+      <FileName>Client\SingletonClient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Meridian59.Bot.BotClient&lt;T, R, D, K&gt;">
+    <Position X="7.5" Y="3.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>XARABQKgIiCgAhAZEAAQgSAwAElAiBAYTIBqDNYAAgI=</HashCode>
+      <FileName>Bot\BotClient.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
