@@ -2,6 +2,8 @@
 *.suo
 *.pdb
 *.opensdf
+/Meridian59/obj
+/Meridian59/bin
 /Meridian59.Android.ChatClient/bin
 /Meridian59.Android.ChatClient/obj
 /Meridian59.BgfEditor/obj
@@ -27,5 +29,13 @@
 /ircdotnet/bin
 /ircdotnet/lib/Samples/*.pdb
 /ircdotnet/src/IrcDotNet/obj
-/Meridian59/obj
-/Meridian59/bin
+/Meridian59-private.sln
+/Meridian59.Memory
+/Meridian59.Brain
+/Meridian59.Editor
+/Meridian59.Graph
+/Meridian59.Hack
+/Meridian59.Hacking
+/Meridian59.Hook
+/Meridian59.HookInterface
+/testapp
