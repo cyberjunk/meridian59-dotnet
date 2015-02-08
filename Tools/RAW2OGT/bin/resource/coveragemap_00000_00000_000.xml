@@ -1,0 +1,17 @@
+<coveragemaps sector_x="0" sector_y="0" patch_x="0" patch_y="0">
+	<coveragemap alphamap_texture="terra_05_rock_01_00000_00000_000.PNG">
+		<alphamap detail_texture="terra_05_rock_01.bmp" />
+	</coveragemap>
+	<coveragemap alphamap_texture="terra_01_gras_00000_00000_000.PNG">
+		<alphamap detail_texture="terra_01_gras.bmp" />
+	</coveragemap>
+	<coveragemap alphamap_texture="terra_06_rock_01_grass_00_00000_00000_000.PNG">
+		<alphamap detail_texture="terra_06_rock_01_grass_00.bmp" />
+	</coveragemap>
+	<coveragemap alphamap_texture="terra_08_grass_00_pepples_00_00000_00000_000.PNG">
+		<alphamap detail_texture="terra_08_grass_00_pepples_00.bmp" />
+	</coveragemap>
+	<coveragemap alphamap_texture="terra_02_grass_00_rock_01_00000_00000_000.PNG">
+		<alphamap detail_texture="terra_02_grass_00_rock_01.bmp" />
+	</coveragemap>
+</coveragemaps>

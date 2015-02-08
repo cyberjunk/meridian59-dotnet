@@ -1,0 +1,1 @@
+for /f %%a IN ('dir /b *.bmp') do call convertfile.cmd %%~na %%~xa

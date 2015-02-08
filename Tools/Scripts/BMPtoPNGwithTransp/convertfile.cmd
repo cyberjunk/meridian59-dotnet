@@ -1,0 +1,1 @@
+convert -transparent "#00FFFF" %1.bmp %1.png

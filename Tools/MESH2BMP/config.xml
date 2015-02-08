@@ -1,0 +1,14 @@
+<config>
+	<!-- hmap heights = mesh heights / scale_factor
+	can be overwritten by program argument
+	floating point values allowed
+	-->
+	<height scale_factor = "4.5" /> 
+	
+	<!-- increase this if small or relativly flat angular polygons produce just lines or even nothing. 
+	High value can cause other polygons to have unprecise heights 
+	yz=500 was a good value for settle1.mesh, but caused some polygons near the tower entrance to show the wrong height.
+	high values also heavily increase speed when the map has many angular polygons, so it's worth to experiment a bit with it-->
+	<area_interpolate xz="20" yz="20" /> 
+	
+</config>

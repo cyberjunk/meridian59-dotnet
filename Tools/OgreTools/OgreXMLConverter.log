@@ -1,0 +1,17 @@
+15:34:40: Creating resource group General
+15:34:40: Creating resource group Internal
+15:34:40: Creating resource group Autodetect
+15:34:40: Registering ResourceManager for type Mesh
+15:34:40: Registering ResourceManager for type Material
+15:34:40: Registering ResourceManager for type Skeleton
+15:34:40: WARNING: conversion is an older format ([MeshSerializer_v1.30]); you should upgrade it as soon as possible using the OgreMeshUpgrade tool.
+15:34:40: XMLMeshSerializer writing mesh data to c:\Meridian59\trunk\Resources\models\barrel\barrel.mesh.xml...
+15:34:40: Populating DOM...
+15:34:40: Writing submesh...
+15:34:40: Dedicated geometry bone assignments exported.
+15:34:40: Submesh exported.
+15:34:40: DOM populated, writing XML file..
+15:34:40: XMLMeshSerializer export successful.
+15:34:40: Unregistering ResourceManager for type Skeleton
+15:34:40: Unregistering ResourceManager for type Material
+15:34:40: Unregistering ResourceManager for type Mesh
