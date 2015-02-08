@@ -4,7 +4,6 @@
 *.opensdf
 /Meridian59.Android.ChatClient/bin
 /Meridian59.Android.ChatClient/obj
-/ircdotnet/bin
 /Meridian59.BgfEditor/obj
 /Meridian59.BgfEditor/bin
 /Meridian59.Bot.IRC/bin
@@ -25,7 +24,6 @@
 /Meridian59.Ogre.Client/app.aps
 /Meridian59.UnitTest/obj
 /Meridian59.UnitTest/bin
+/ircdotnet/bin
 /ircdotnet/lib/Samples/*.pdb
 /ircdotnet/src/IrcDotNet/obj
-/ircdotnet/src/IrcDotNet/obj/Release
-/ircdotnet/src/IrcDotNet/obj/Debug
