@@ -27,3 +27,5 @@
 /ircdotnet/bin
 /ircdotnet/lib/Samples/*.pdb
 /ircdotnet/src/IrcDotNet/obj
+/Meridian59/obj
+/Meridian59/bin
