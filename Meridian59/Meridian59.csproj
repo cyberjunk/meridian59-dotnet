@@ -557,7 +557,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Design\STYLEGUIDE.txt" />
-    <Content Include="gpl-3.0.txt" />
     <Content Include="zlib\license.txt" />
     <None Include="Resources\Glow.png" />
   </ItemGroup>
