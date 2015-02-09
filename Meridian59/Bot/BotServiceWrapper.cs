@@ -24,6 +24,7 @@ using Meridian59.Data;
 
 namespace Meridian59.Bot
 {
+#if WINCLR && (X86 || X64)
     /// <summary>
     /// Wraps a BotClient or deriving client class instance
     /// into a Windows service.
@@ -146,4 +147,5 @@ namespace Meridian59.Bot
             }           
         }
     }
+#endif
 }
