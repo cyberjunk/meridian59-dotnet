@@ -1,6 +1,6 @@
 [submodule "Engine"]
 	path = Engine
-	url = https://github.com/cyberjunk/Engine
+	url = https://github.com/cyberjunk/meridian59-engine
 [submodule "Resources"]
 	path = Resources
 	url = https://github.com/cyberjunk/meridian59-resources
