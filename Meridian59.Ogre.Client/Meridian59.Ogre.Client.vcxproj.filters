@@ -295,7 +295,4 @@
       <Filter>Resources</Filter>
     </Image>
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="README.txt" />
-  </ItemGroup>
 </Project>

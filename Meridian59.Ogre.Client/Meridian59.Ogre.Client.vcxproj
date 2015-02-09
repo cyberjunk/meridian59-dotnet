@@ -315,9 +315,6 @@
     <Image Include="glow.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="README.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Meridian59.DebugUI\Meridian59.DebugUI.csproj">
       <Project>{c8938199-ab12-4a43-aab0-c8f7043e46e9}</Project>
     </ProjectReference>
