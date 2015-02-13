@@ -531,7 +531,8 @@ namespace Meridian59 { namespace Ogre
 			// create an entry in our offerlist from the inventory datamodel
 			if (dataModels->Count > index)
 			{
-				OgreClient::Singleton->Data->Trade->ItemsYou->Add(dataModels[index]);					
+				if (!OgreClient::Singleton->Data->Trade->ItemsYou->Contains(dataModels[index]))
+					OgreClient::Singleton->Data->Trade->ItemsYou->Add(dataModels[index]);					
 			}
 		}
 
