@@ -1853,6 +1853,9 @@ namespace Meridian59.Client
                 // send/enqueue it (async)
                 ServerConnection.SendQueue.Enqueue(message);
 
+                // clear own items (will be echoed back)
+                Data.Trade.ItemsYou.Clear();
+
                 // hide it at that point, server possibly echos back our offer
                 // do NOT clear here because of TradePartner set earlier
                 Data.Trade.IsVisible = false;
