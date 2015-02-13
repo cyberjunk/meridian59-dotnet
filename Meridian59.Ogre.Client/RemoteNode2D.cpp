@@ -154,6 +154,24 @@ namespace Meridian59 { namespace Ogre
 			billboardSet->setMaterialName(*imageComposer->Image->MaterialNameInvisible);
 		}
 
+		// BLACK (e.g. shadowform)
+		else if (RoomObject->Flags->Drawing == ObjectFlags::DrawingType::Black)
+		{
+			billboardSet->setMaterialName(*imageComposer->Image->MaterialNameBlack);
+		}
+
+		// TARGET
+		else if (RoomObject->IsTarget)
+		{
+			billboardSet->setMaterialName(*imageComposer->Image->MaterialNameTarget);
+		}
+
+		// MOUSEOVER
+		else if (RoomObject->IsHighlighted)
+		{
+			billboardSet->setMaterialName(*imageComposer->Image->MaterialNameMouseOver);
+		}
+
 		// TRANSLUCENT		
 		// 75%
 		else if (RoomObject->Flags->Drawing == ObjectFlags::DrawingType::Translucent75)
@@ -172,12 +190,6 @@ namespace Meridian59 { namespace Ogre
 		{
 			billboardSet->setMaterialName(*imageComposer->Image->MaterialNameTranslucent25);
 		}
-		
-		// BLACK (e.g. shadowform)
-		else if (RoomObject->Flags->Drawing == ObjectFlags::DrawingType::Black)
-		{
-			billboardSet->setMaterialName(*imageComposer->Image->MaterialNameBlack);
-		}		
 
 		// DITHERINVIS (e.g. logoff ghost)
 		else if (RoomObject->Flags->Drawing == ObjectFlags::DrawingType::DitherInvis)
@@ -190,19 +202,7 @@ namespace Meridian59 { namespace Ogre
 		{
 			billboardSet->setMaterialName(*imageComposer->Image->MaterialNameTranslucent50);
 		}
-
-		// TARGET
-		else if (RoomObject->IsTarget)
-		{
-			billboardSet->setMaterialName(*imageComposer->Image->MaterialNameTarget);
-		}	
-
-		// MOUSEOVER
-		else if (RoomObject->IsHighlighted)
-		{
-			billboardSet->setMaterialName(*imageComposer->Image->MaterialNameMouseOver);
-		}
-
+		
 		// DEFAULT
 		else
 		{
