@@ -27,7 +27,7 @@ using Real = System.Single;
 namespace Meridian59.Drawing2D
 {
     /// <summary>
-    /// Handles Meridian 59 coloring.
+    /// Provides Meridian59 color palettes
     /// </summary>
     public static class ColorTransformation
     {
@@ -171,79 +171,78 @@ namespace Meridian59.Drawing2D
         /// </summary>
         public static readonly int NUMGUILDCOLORS = (int)Math.Sqrt((Real)(GUILDCOLOR_END - GUILDCOLOR_BASE + 1));
 
-        private static byte[] ramps = { 0x01, 0x02, 0x03, 0x04, 0x05, 0x07, 0x09, 0x0A, 0x0C, 0x0D, 0x0E };
+        /// <summary>
+        /// These are the real color ramp indices (red, blue, ...) from the palette.
+        /// Does not include rows with special purposes/colors.
+        /// </summary>
+        private static readonly byte[] RAMPS = { 0x01, 0x02, 0x03, 0x04, 0x05, 0x07, 0x09, 0x0A, 0x0C, 0x0D, 0x0E };
         
-        /* Palette indexes which are not found, computed or changed, ever.
-         * These are the magic four Windows colors, plus any colors reserved for
-         * special effects like luminant colors.
-         */
-        private static int[] _nevermap_list = new int[]
+        /// <summary>
+        /// Palette indexes which are not found, computed or changed, ever.
+        /// These are the magic four Windows colors, plus any colors reserved for
+        /// special effects like luminant colors.
+        /// </summary>
+        private static readonly int[] NEVERMAP_LIST = 
         {
 	        8, 9, 10, 11, 12, 13, 14, 15,
 	        247, 246, 245, 244,
 	        -1
         };
 
-        /// <summary>
-        /// 
-        /// </summary>
-        private static bool[] neverMap = new bool[COLORCOUNT];
-        #endregion
-
-        #region Custom Index sets
-        private static byte[] oldhair1_indexes = new byte[] {
+        private static readonly bool[] NEVERMAP = new bool[COLORCOUNT];
+        
+        private static readonly byte[] OLDHAIR1_INDEXES = {
            0x23, 0x32, 0x34, 0x36, 0x59, 0x39, 0x3A, 0x3B, 
            0x36, 0x38, 0x5B, 0x47, 0x3C, 0x5C, 0x5E, 0x5E,
         };
 
-        private static byte[] oldhair2_indexes = new byte[] {
+        private static readonly byte[] OLDHAIR2_INDEXES = {
            0x50, 0x23, 0x24, 0x33, 0x25, 0x34, 0x26, 0x35, 
            0x27, 0x36, 0x28, 0x37, 0x29, 0x38, 0x2A, 0x39,
         };
 
-        private static byte[] oldhair3_indexes = new byte[] {
+        private static readonly byte[] OLDHAIR3_INDEXES = {
            0xC4, 0x52, 0xC6, 0x53, 0xC8, 0x54, 0xCA, 0x55, 
            0x56, 0x57, 0x58, 0x58, 0x59, 0x59, 0x5A, 0x5B,
         };
 
-        private static byte[] platblond_indexes = new byte[] {
+        private static readonly byte[] PLATBLOND_INDEXES = {
            0xB0, 0xB0, 0xB1, 0xB1, 0xB2, 0xB2, 0xD0, 0xD1, 
            0xD2, 0xD3, 0xD4, 0xD5, 0xD6, 0xD7, 0xD9, 0xDA,
         };
 
-        private static byte[] skin1_indexes = new byte[] {
+        private static readonly byte[] SKIN1_INDEXES = {
             0x20, 0xF0, 0xF0, 0x21, 0x21, 0x22, 0x22, 0x23, 
             0x24, 0x25, 0x26, 0x27, 0x28, 0x29, 0x2A, 0x2B 
         };
 
-        private static byte[] skin2_indexes = new byte[] {
+        private static readonly byte[] SKIN2_INDEXES = {
            0x20, 0x20, 0xF0, 0x21, 0x22, 0x23, 0x23, 0x24, 
            0x25, 0x26, 0x27, 0x28, 0x29, 0x2A, 0x2B, 0x2C,
         };
 
-        private static byte[] green_skin_indexes = new byte[] {
+        private static readonly byte[] GREEN_SKIN_INDEXES = {
            0xD0, 0xD0, 0xB0, 0xB8, 0x60, 0x60, 0x61, 0x61, 
            0x62, 0x63, 0x64, 0x66, 0x67, 0x68, 0x6A, 0x6C,
         };
 
-        private static byte[] yellow_skin_indexes = new byte[] {
+        private static readonly byte[] YELLOW_SKIN_INDEXES = {
            0xD0, 0xD0, 0xB0, 0xB0, 0xB1, 0xB2, 0xB3, 0xC0, 
            0xC6, 0xC9, 0xCA, 0xCC, 0xCD, 0xCE, 0xCF, 0xCF,
         };
         #endregion
-
-        #region Static Constructor
+       
         /// <summary>
         /// Static constructor
         /// </summary>
         static ColorTransformation()
         {
             Palettes = new uint[PALETTECOUNT][];
+            LightPalettes = new uint[LIGHTLEVELS + 1][];
 
             // load default palette from resource (also called IDENTITY)
             Palettes[0] = GetDefaultPalette();
 
-            // ...
             BlockIndices();
 
             // create light palettes (must be done before normal palettes)
@@ -257,9 +256,36 @@ namespace Meridian59.Drawing2D
             DefaultPaletteBlackTransparency = ClonePalette(DefaultPalette);
             DefaultPaletteBlackTransparency[TRANSPARENTCOLORINDEX] = 0x00000000;
         }
-        #endregion
 
-        #region Manipulations
+        /// <summary>
+        /// All available, transformed colorpalettes
+        /// </summary>
+        public static readonly uint[][] Palettes;
+
+        /// <summary>
+        /// All brightened or darkened palette transformations
+        /// </summary>
+        public static readonly uint[][] LightPalettes;
+
+        /// <summary>
+        /// The default palette
+        /// </summary>
+        public static uint[] DefaultPalette
+        {
+            get { return Palettes[0]; }
+        }
+
+        /// <summary>
+        /// A clone of DefaultPalette but with color 254 set to
+        /// black instead of cyan.
+        /// </summary>
+        public static uint[] DefaultPaletteBlackTransparency
+        {
+            get;
+            private set;
+        }
+
+        #region Manipulations / XLats
         /// <summary>
         /// Writes all the colors (16) from one row to another
         /// </summary>
@@ -316,12 +342,12 @@ namespace Meridian59.Drawing2D
         /// <param name="FilterColor"></param>
         /// <param name="ToPalette"></param>
         private static void FilterXLat(uint[] FromPalette, uint FilterColor, uint[] ToPalette)
-        {            
+        {
             // taken from GetRGBLightness() in xlat.c
 
             int l;
             byte byLightness;
-            uint color;           
+            uint color;
             byte a, r, g, b;
             byte peRed, peGreen, peBlue;
             int colorindex;
@@ -332,7 +358,7 @@ namespace Meridian59.Drawing2D
 
                 // get alpha of this original color
                 a = (byte)((color & 0xFF000000) >> 24);
-                
+
                 // only continue to lookup for non transparent colors
                 // because we want the transparent color to stay transparent
                 if (a > 0)
@@ -341,10 +367,10 @@ namespace Meridian59.Drawing2D
                     r = (byte)((color & 0x00FF0000) >> 16);
                     g = (byte)((color & 0x0000FF00) >> 8);
                     b = (byte)(color & 0x000000FF);
-                                        
+
                     // calc ligtness by rgb
                     byLightness = (byte)(Math.Max(Math.Max(r, g), b) & 0xFF);
-                    
+
                     // get components of filter color                
                     peRed = (byte)((FilterColor & 0x00FF0000) >> 16);
                     peGreen = (byte)((FilterColor & 0x0000FF00) >> 8);
@@ -382,7 +408,7 @@ namespace Meridian59.Drawing2D
         private static void LightXLat(uint[] Palette, byte FromRamp, byte Light)
         {
             int offset = FromRamp * PALETTECOLUMNS;
-            
+
             for (int i = 0; i < PALETTECOLUMNS; i++)
             {
                 Palette[offset] = LightPalettes[Light][offset];
@@ -402,13 +428,13 @@ namespace Meridian59.Drawing2D
         {
             // taken from CalcBlendXlat() in xlat.c
 
-            int l;            
+            int l;
             byte r, g, b;
             byte peAlpha, peRed, peGreen, peBlue;
             uint color;
             int colorindex;
             uint sumweight = WeightOriginal + WeightBlend;
-            
+
             for (int i = 0; i < COLORCOUNT; i++)
             {
                 // get original color which is to be modified in this loop
@@ -416,7 +442,7 @@ namespace Meridian59.Drawing2D
 
                 // get alpha of this original color
                 peAlpha = (byte)((color & 0xFF000000) >> 24);
-                
+
                 // only continue to lookup for non transparent colors
                 // because we want the transparent color to stay transparent
                 if (peAlpha > 0)
@@ -449,9 +475,9 @@ namespace Meridian59.Drawing2D
                     // get closest color
                     colorindex = GetClosestPaletteIndex(DefaultPalette, color);
                 }
-                else             
+                else
                     colorindex = TRANSPARENTCOLORINDEX;
-                
+
                 // set output color
                 ToPalette[i] = FromPalette[colorindex];
             }
@@ -467,7 +493,7 @@ namespace Meridian59.Drawing2D
         {
             for (int i = 0; i < COLORCOUNT; i++)
                 if (i != TRANSPARENTCOLORINDEX)
-                    Palette[i] = Color;          
+                    Palette[i] = Color;
         }
 
         /// <summary>
@@ -485,20 +511,20 @@ namespace Meridian59.Drawing2D
             int rampidx;
 
             // walk ramps
-            for (int i = 0; i < ramps.Length; i++)
+            for (int i = 0; i < RAMPS.Length; i++)
             {
                 // get the index in ramps after applied offset
                 rampidx = i - RowOffset;
 
                 // map exceedings back (scroll out)
                 if (rampidx < 0)
-                    rampidx = ramps.Length + rampidx;
-                else if (rampidx >= ramps.Length)
-                    rampidx = rampidx - ramps.Length;
+                    rampidx = RAMPS.Length + rampidx;
+                else if (rampidx >= RAMPS.Length)
+                    rampidx = rampidx - RAMPS.Length;
 
                 // rows in the palette
-                srcrow = ramps[i];
-                dstrow = ramps[rampidx];
+                srcrow = RAMPS[i];
+                dstrow = RAMPS[rampidx];
 
                 // walk'n copy
                 for (int j = 0; j < PALETTECOLUMNS; j++)
@@ -512,36 +538,7 @@ namespace Meridian59.Drawing2D
                 }
             }
         }
-
         #endregion
-
-        /// <summary>
-        /// All available, transformed colorpalettes
-        /// </summary>
-        public static uint[][] Palettes;
-
-        /// <summary>
-        /// All brightened or darkened palette transformations
-        /// </summary>
-        public static uint[][] LightPalettes;
-
-        /// <summary>
-        /// The default palette
-        /// </summary>
-        public static uint[] DefaultPalette
-        {
-            get { return Palettes[0]; }
-        }
-
-        /// <summary>
-        /// A clone of DefaultPalette but with color 254 set to
-        /// black instead of cyan.
-        /// </summary>
-        public static uint[] DefaultPaletteBlackTransparency
-        {
-            get;
-            private set;
-        }
 
         /// <summary>
         /// Returns a cloned instance of ColorPalette
@@ -603,16 +600,16 @@ namespace Meridian59.Drawing2D
         }
 
         /// <summary>
-        /// 
+        /// Populates the NEVERMAP array.
         /// </summary>
         private static void BlockIndices()
         {
             int i;
             for (i = 0; i < COLORCOUNT; i++)
-                neverMap[i] = false;
+                NEVERMAP[i] = false;
 
-            for (i = 0; _nevermap_list[i] >= 0; i++)
-                neverMap[_nevermap_list[i]] = true;
+            for (i = 0; NEVERMAP_LIST[i] >= 0; i++)
+                NEVERMAP[NEVERMAP_LIST[i]] = true;
         }
 
         /// <summary>
@@ -643,9 +640,6 @@ namespace Meridian59.Drawing2D
         /// </summary>
         private static void CreateLightPalettes()
         {
-            // init light palettes
-            LightPalettes = new uint[LIGHTLEVELS + 1][];
-
             uint r, g, b;
             uint color;
             int index;
@@ -664,7 +658,7 @@ namespace Meridian59.Drawing2D
 
                 for (int j = 0; j < COLORCOUNT; j++)
                 {
-                    if (neverMap[j])
+                    if (NEVERMAP[j])
                         continue;
 
                     // color
@@ -699,7 +693,7 @@ namespace Meridian59.Drawing2D
             // Make inverted effect palette
             for (int j = 0; j < COLORCOUNT; j++)
             {
-                if (neverMap[LIGHTLEVELS])
+                if (NEVERMAP[LIGHTLEVELS])
                     continue;
 
                 // inverted components
@@ -730,12 +724,12 @@ namespace Meridian59.Drawing2D
             
             // (2) --- Manipulate the custom ones (incomplete)
                    
-            RampXLat(DefaultPalette, skin1_indexes, Palettes[DBLUETOSKIN1], 9);                 // 0x01
-            RampXLat(DefaultPalette, skin2_indexes, Palettes[DBLUETOSKIN2], 9);                 // 0x02
+            RampXLat(DefaultPalette, SKIN1_INDEXES, Palettes[DBLUETOSKIN1], 9);                 // 0x01
+            RampXLat(DefaultPalette, SKIN2_INDEXES, Palettes[DBLUETOSKIN2], 9);                 // 0x02
             RampXLat(DefaultPalette, 3, Palettes[DBLUETOSKIN3], 9);                             // 0x03
             RampXLat(DefaultPalette, 4, Palettes[DBLUETOSKIN4], 9);                             // 0x04
-            RampXLat(DefaultPalette, green_skin_indexes, Palettes[DBLUETOSICKGREEN], 9);        // 0x05
-            RampXLat(DefaultPalette, yellow_skin_indexes, Palettes[DBLUETOSICKYELLOW], 9);      // 0x06
+            RampXLat(DefaultPalette, GREEN_SKIN_INDEXES, Palettes[DBLUETOSICKGREEN], 9);        // 0x05
+            RampXLat(DefaultPalette, YELLOW_SKIN_INDEXES, Palettes[DBLUETOSICKYELLOW], 9);      // 0x06
             RampXLat(DefaultPalette, 13, Palettes[DBLUETOGRAY], 9);                             // 0x07
             RampXLat(DefaultPalette, 8, Palettes[DBLUETOLBLUE], 9);                             // 0x08
             
@@ -778,10 +772,10 @@ namespace Meridian59.Drawing2D
             HalfRampXLat(DefaultPalette, 1, Palettes[GRAYTOKRED], 13, 8);                       // 0x2A
             HalfRampXLat(DefaultPalette, 13, Palettes[GRAYTOKGRAY], 13, 8);                     // 0x2B
             LightXLat(Palettes[GRAYTOBLACK], 13, (byte)(LIGHTLEVELS / 6));                      // 0x2C
-            RampXLat(DefaultPalette, oldhair1_indexes, Palettes[GRAYTOOLDHAIR1], 13);           // 0x2D
-            RampXLat(DefaultPalette, oldhair2_indexes, Palettes[GRAYTOOLDHAIR2], 13);           // 0x2E
-            RampXLat(DefaultPalette, oldhair3_indexes, Palettes[GRAYTOOLDHAIR3], 13);           // 0x2F
-            RampXLat(DefaultPalette, platblond_indexes, Palettes[GRAYTOPLATBLOND], 13);         // 0x30          
+            RampXLat(DefaultPalette, OLDHAIR1_INDEXES, Palettes[GRAYTOOLDHAIR1], 13);           // 0x2D
+            RampXLat(DefaultPalette, OLDHAIR2_INDEXES, Palettes[GRAYTOOLDHAIR2], 13);           // 0x2E
+            RampXLat(DefaultPalette, OLDHAIR3_INDEXES, Palettes[GRAYTOOLDHAIR3], 13);           // 0x2F
+            RampXLat(DefaultPalette, PLATBLOND_INDEXES, Palettes[GRAYTOPLATBLOND], 13);         // 0x30          
             FilterXLat(DefaultPalette, 0xFFF0F0F0, Palettes[FILTERWHITE90]);                    // 0x31
             FilterXLat(DefaultPalette, 0xFFDCDCDC, Palettes[FILTERWHITE80]);                    // 0x32
             FilterXLat(DefaultPalette, 0xFFC8C8C8, Palettes[FILTERWHITE70]);                    // 0x33
@@ -877,14 +871,14 @@ namespace Meridian59.Drawing2D
 #endif
             // (3) --- Manipulate the systematical ones (swap red and blue rows)
 
-            for (int i = 0; i < ramps.Length; i++)
+            for (int i = 0; i < RAMPS.Length; i++)
             {
-                for (int j = 0; j < ramps.Length; j++)
+                for (int j = 0; j < RAMPS.Length; j++)
                 {
-                    byte val = (byte)(GUILDCOLOR_BASE + i * ramps.Length + j);
+                    byte val = (byte)(GUILDCOLOR_BASE + i * RAMPS.Length + j);
 
-                    RampXLat(DefaultPalette, ramps[i], Palettes[val], 1);    // red
-                    RampXLat(DefaultPalette, ramps[j], Palettes[val], 9);    // blue
+                    RampXLat(DefaultPalette, RAMPS[i], Palettes[val], 1);    // red
+                    RampXLat(DefaultPalette, RAMPS[j], Palettes[val], 9);    // blue
                 }
             }
         }
@@ -915,336 +909,130 @@ namespace Meridian59.Drawing2D
             {
                 switch (Index)
                 {
-                    case IDENTITY:
-                        return "IDENTITY";
-
-                    // 1 - 9
-                    case DBLUETOSKIN1:
-                        return "DBLUETOSKIN1";
-
-                    case DBLUETOSKIN2:
-                        return "DBLUETOSKIN2";
-
-                    case DBLUETOSKIN3:
-                        return "DBLUETOSKIN3";
-
-                    case DBLUETOSKIN4:
-                        return "DBLUETOSKIN4";
-
-                    case DBLUETOSICKGREEN:
-                        return "DBLUETOSICKGREEN";
-
-                    case DBLUETOSICKYELLOW:
-                        return "DBLUETOSICKYELLOW";
-
-                    case DBLUETOGRAY:
-                        return "DBLUETOGRAY";
-
-                    case DBLUETOLBLUE:
-                        return "DBLUETOLBLUE";
-
-                    case DBLUETOASHEN:
-                        return "DBLUETOASHEN";
-
-                    // 10 - 48
-                    case GRAYTOORANGE:
-                        return "GRAYTOORANGE";
-
-                    case GRAYTODGREEN:
-                        return "GRAYTODGREEN";
-
-                    case GRAYTOBGREEN:
-                        return "GRAYTOBGREEN";
-
-                    case GRAYTOSKY:
-                        return "GRAYTOSKY";
-
-                    case GRAYTODBLUE:
-                        return "GRAYTODBLUE";
-
-                    case GRAYTOPURPLE:
-                        return "GRAYTOPURPLE";
-
-                    case GRAYTOGOLD:
-                        return "GRAYTOGOLD";
-
-                    case GRAYTOBBLUE:
-                        return "GRAYTOBBLUE";
-
-                    case GRAYTORED:
-                        return "GRAYTORED";
-
-                    case GRAYTOLORANGE:
-                        return "GRAYTOLORANGE";
-
-                    case GRAYTOLGREEN:
-                        return "GRAYTOLGREEN";
-
-                    case GRAYTOLBGREEN:
-                        return "GRAYTOLBGREEN";
-
-                    case GRAYTOLSKY:
-                        return "GRAYTOLSKY";
-
-                    case GRAYTOLBLUE:
-                        return "GRAYTOLBLUE";
-
-                    case GRAYTOLPURPLE:
-                        return "GRAYTOLPURPLE";
-
-                    case GRAYTOLGOLD:
-                        return "GRAYTOLGOLD";
-
-                    case GRAYTOSKIN1:
-                        return "GRAYTOSKIN1";
-
-                    case GRAYTOSKIN2:
-                        return "GRAYTOSKIN2";
-
-                    case GRAYTOSKIN3:
-                        return "GRAYTOSKIN3";
-
-                    case GRAYTOSKIN4:
-                        return "GRAYTOSKIN4";
-
-                    case GRAYTOSKIN5:
-                        return "GRAYTOSKIN5";
-
-                    case GRAYTOLBBLUE:
-                        return "GRAYTOLBBLUE";
-
-                    case GRAYTOLRED:
-                        return "GRAYTOLRED";
-
-                    case GRAYTOKORANGE:
-                        return "GRAYTOKORANGE";
-
-                    case GRAYTOKGREEN:
-                        return "GRAYTOKGREEN";
-
-                    case GRAYTOKBGREEN:
-                        return "GRAYTOKBGREEN";
-
-                    case GRAYTOKSKY:
-                        return "GRAYTOKSKY";
-
-                    case GRAYTOKBLUE:
-                        return "GRAYTOKBLUE";
-
-                    case GRAYTOKPURPLE:
-                        return "GRAYTOKPURPLE";
-
-                    case GRAYTOKGOLD:
-                        return "GRAYTOKGOLD";
-
-                    case GRAYTOKBBLUE:
-                        return "GRAYTOKBBLUE";
-
-                    case GRAYTOKRED:
-                        return "GRAYTOKRED";
-
-                    case GRAYTOKGRAY:
-                        return "GRAYTOKGRAY";
-
-                    case GRAYTOBLACK:
-                        return "GRAYTOBLACK";
-
-                    case GRAYTOOLDHAIR1:
-                        return "GRAYTOOLDHAIR1";
-
-                    case GRAYTOOLDHAIR2:
-                        return "GRAYTOOLDHAIR2";
-
-                    case GRAYTOOLDHAIR3:
-                        return "GRAYTOOLDHAIR3";
-
-                    case GRAYTOPLATBLOND:
-                        return "GRAYTOPLATBLOND";
-
-                    //
-                    case FILTERWHITE90:
-                        return "FILTERWHITE90";
-
-                    case FILTERWHITE80:
-                        return "FILTERWHITE80";
-
-                    case FILTERWHITE70:
-                        return "FILTERWHITE70";
-
-                    case FILTERBRIGHT1:
-                        return "FILTERBRIGHT1";
-
-                    case FILTERBRIGHT2:
-                        return "FILTERBRIGHT2";
-
-                    case FILTERBRIGHT3:
-                        return "FILTERBRIGHT3";
-
-                    case BLEND25YELLOW:
-                        return "BLEND25YELLOW";
-
-                    case PURPLETOLBLUE:
-                        return "PURPLETOLBLUE";
-
-                    case PURPLETOBRED:
-                        return "PURPLETOBRED";
-
-                    case PURPLETOGREEN:
-                        return "PURPLETOGREEN";
-
-                    case PURPLETOYELLOW:
-                        return "PURPLETOYELLOW";
-
-                    case BLEND10RED:
-                        return "BLEND10RED";
-
-                    case BLEND20RED:
-                        return "BLEND20RED";
-
-                    case BLEND30RED:
-                        return "BLEND30RED";
-
-                    case BLEND40RED:
-                        return "BLEND40RED";
-
-                    case BLEND50RED:
-                        return "BLEND50RED";
-
-                    case BLEND60RED:
-                        return "BLEND60RED";
-
-                    case BLEND70RED:
-                        return "BLEND70RED";
-
-                    case BLEND80RED:
-                        return "BLEND80RED";
-
-                    case BLEND90RED:
-                        return "BLEND90RED";
-
-                    case BLEND100RED:
-                        return "BLEND100RED";
-
-                    case FILTERRED:
-                        return "FILTERRED";
-
-                    case FILTERBLUE:
-                        return "FILTERBLUE";
-
-                    case FILTERGREEN:
-                        return "FILTERGREEN";
-
-                    case BLEND25RED:
-                        return "BLEND25RED";
-
-                    case BLEND25BLUE:
-                        return "BLEND25BLUE";
-
-                    case BLEND25GREEN:
-                        return "BLEND25GREEN";
-
-                    case BLEND50BLUE:
-                        return "BLEND50BLUE";
-
-                    case BLEND50GREEN:
-                        return "BLEND50GREEN";
-
-                    case BLEND75RED:
-                        return "BLEND75RED";
-
-                    case BLEND75BLUE:
-                        return "BLEND75BLUE";
-
-                    case BLEND75GREEN:
-                        return "BLEND75GREEN";
+                    case IDENTITY:          return "IDENTITY";
+
+                    case DBLUETOSKIN1:      return "DBLUETOSKIN1";
+                    case DBLUETOSKIN2:      return "DBLUETOSKIN2";
+                    case DBLUETOSKIN3:      return "DBLUETOSKIN3";
+                    case DBLUETOSKIN4:      return "DBLUETOSKIN4";
+                    case DBLUETOSICKGREEN:  return "DBLUETOSICKGREEN";
+                    case DBLUETOSICKYELLOW: return "DBLUETOSICKYELLOW";
+                    case DBLUETOGRAY:       return "DBLUETOGRAY";
+                    case DBLUETOLBLUE:      return "DBLUETOLBLUE";
+                    case DBLUETOASHEN:      return "DBLUETOASHEN";
+
+                    case GRAYTOORANGE:      return "GRAYTOORANGE";
+                    case GRAYTODGREEN:      return "GRAYTODGREEN";
+                    case GRAYTOBGREEN:      return "GRAYTOBGREEN";
+                    case GRAYTOSKY:         return "GRAYTOSKY";
+                    case GRAYTODBLUE:       return "GRAYTODBLUE";
+                    case GRAYTOPURPLE:      return "GRAYTOPURPLE";
+                    case GRAYTOGOLD:        return "GRAYTOGOLD";
+                    case GRAYTOBBLUE:       return "GRAYTOBBLUE";
+                    case GRAYTORED:         return "GRAYTORED";
+                    case GRAYTOLORANGE:     return "GRAYTOLORANGE";
+                    case GRAYTOLGREEN:      return "GRAYTOLGREEN";
+                    case GRAYTOLBGREEN:     return "GRAYTOLBGREEN";
+                    case GRAYTOLSKY:        return "GRAYTOLSKY";
+                    case GRAYTOLBLUE:       return "GRAYTOLBLUE";
+                    case GRAYTOLPURPLE:     return "GRAYTOLPURPLE";
+                    case GRAYTOLGOLD:       return "GRAYTOLGOLD";
+                    case GRAYTOSKIN1:       return "GRAYTOSKIN1";
+                    case GRAYTOSKIN2:       return "GRAYTOSKIN2";
+                    case GRAYTOSKIN3:       return "GRAYTOSKIN3";
+                    case GRAYTOSKIN4:       return "GRAYTOSKIN4";
+                    case GRAYTOSKIN5:       return "GRAYTOSKIN5";
+                    case GRAYTOLBBLUE:      return "GRAYTOLBBLUE";
+                    case GRAYTOLRED:        return "GRAYTOLRED";
+                    case GRAYTOKORANGE:     return "GRAYTOKORANGE";
+                    case GRAYTOKGREEN:      return "GRAYTOKGREEN";
+                    case GRAYTOKBGREEN:     return "GRAYTOKBGREEN";
+                    case GRAYTOKSKY:        return "GRAYTOKSKY";
+                    case GRAYTOKBLUE:       return "GRAYTOKBLUE";
+                    case GRAYTOKPURPLE:     return "GRAYTOKPURPLE";
+                    case GRAYTOKGOLD:       return "GRAYTOKGOLD";
+                    case GRAYTOKBBLUE:      return "GRAYTOKBBLUE";
+                    case GRAYTOKRED:        return "GRAYTOKRED";
+                    case GRAYTOKGRAY:       return "GRAYTOKGRAY";
+                    case GRAYTOBLACK:       return "GRAYTOBLACK";
+                    case GRAYTOOLDHAIR1:    return "GRAYTOOLDHAIR1";
+                    case GRAYTOOLDHAIR2:    return "GRAYTOOLDHAIR2";
+                    case GRAYTOOLDHAIR3:    return "GRAYTOOLDHAIR3";
+                    case GRAYTOPLATBLOND:   return "GRAYTOPLATBLOND";
+
+                    case FILTERWHITE90:     return "FILTERWHITE90";
+                    case FILTERWHITE80:     return "FILTERWHITE80";
+                    case FILTERWHITE70:     return "FILTERWHITE70";
+                    case FILTERBRIGHT1:     return "FILTERBRIGHT1";
+                    case FILTERBRIGHT2:     return "FILTERBRIGHT2";
+                    case FILTERBRIGHT3:     return "FILTERBRIGHT3";
+
+                    case BLEND25YELLOW:     return "BLEND25YELLOW";
+                    
+                    case PURPLETOLBLUE:     return "PURPLETOLBLUE";
+                    case PURPLETOBRED:      return "PURPLETOBRED";
+                    case PURPLETOGREEN:     return "PURPLETOGREEN";
+                    case PURPLETOYELLOW:    return "PURPLETOYELLOW";
+
+                    case BLEND10RED:        return "BLEND10RED";
+                    case BLEND20RED:        return "BLEND20RED";
+                    case BLEND30RED:        return "BLEND30RED";
+                    case BLEND40RED:        return "BLEND40RED";
+                    case BLEND50RED:        return "BLEND50RED";
+                    case BLEND60RED:        return "BLEND60RED";
+                    case BLEND70RED:        return "BLEND70RED";
+                    case BLEND80RED:        return "BLEND80RED";
+                    case BLEND90RED:        return "BLEND90RED";
+                    case BLEND100RED:       return "BLEND100RED";
+
+                    case FILTERRED:         return "FILTERRED";
+                    case FILTERBLUE:        return "FILTERBLUE";
+                    case FILTERGREEN:       return "FILTERGREEN";
+                    case BLEND25RED:        return "BLEND25RED";
+                    case BLEND25BLUE:       return "BLEND25BLUE";
+                    case BLEND25GREEN:      return "BLEND25GREEN";
+                    case BLEND50BLUE:       return "BLEND50BLUE";
+                    case BLEND50GREEN:      return "BLEND50GREEN";
+                    case BLEND75RED:        return "BLEND75RED";
+                    case BLEND75BLUE:       return "BLEND75BLUE";
+                    case BLEND75GREEN:      return "BLEND75GREEN";
 #if !VANILLA
-                    case REDTOBLACK:
-                        return "REDTOBLACK";
-
-                    case BLUETOBLACK:
-                        return "BLUETOBLACK";
-
-                    case PURPLETOBLACK:
-                        return "PURPLETOBLACK";
+                    case REDTOBLACK:        return "REDTOBLACK";
+                    case BLUETOBLACK:       return "BLUETOBLACK";
+                    case PURPLETOBLACK:     return "PURPLETOBLACK";
 #endif
-                    case RAMPUP1:
-                        return "RAMPUP1";
-                    
-                    case RAMPUP2:
-                        return "RAMPUP2";
-                    
-                    case RAMPDOWN2:
-                        return "RAMPDOWN2";
-                    
-                    case RAMPDOWN1:
-                        return "RAMPDOWN1";
+                    case RAMPUP1:           return "RAMPUP1";                  
+                    case RAMPUP2:           return "RAMPUP2";                    
+                    case RAMPDOWN2:         return "RAMPDOWN2";                 
+                    case RAMPDOWN1:         return "RAMPDOWN1";
 
+                    case BLEND10WHITE:      return "BLEND10WHITE";
+                    case BLEND20WHITE:      return "BLEND20WHITE";
+                    case BLEND30WHITE:      return "BLEND30WHITE";
+                    case BLEND40WHITE:      return "BLEND40WHITE";
+                    case BLEND50WHITE:      return "BLEND50WHITE";
+                    case BLEND60WHITE:      return "BLEND60WHITE";
+                    case BLEND70WHITE:      return "BLEND70WHITE";
+                    case BLEND80WHITE:      return "BLEND80WHITE";
+                    case BLEND90WHITE:      return "BLEND90WHITE";
+                    case BLEND100WHITE:     return "BLEND100WHITE";
 
-                    case BLEND10WHITE:
-                        return "BLEND10WHITE";
+                    case REDTODGREEN1:      return "REDTODGREEN1";
+                    case REDTODGREEN2:      return "REDTODGREEN2";
+                    case REDTODGREEN3:      return "REDTODGREEN3";
 
-                    case BLEND20WHITE:
-                        return "BLEND20WHITE";
-
-                    case BLEND30WHITE:
-                        return "BLEND30WHITE";
-
-                    case BLEND40WHITE:
-                        return "BLEND40WHITE";
-
-                    case BLEND50WHITE:
-                        return "BLEND50WHITE";
-
-                    case BLEND60WHITE:
-                        return "BLEND60WHITE";
-
-                    case BLEND70WHITE:
-                        return "BLEND70WHITE";
-
-                    case BLEND80WHITE:
-                        return "BLEND80WHITE";
-
-                    case BLEND90WHITE:
-                        return "BLEND90WHITE";
-
-                    case BLEND100WHITE:
-                        return "BLEND100WHITE";
-
-                    case REDTODGREEN1:
-                        return "REDTODGREEN1";
-
-                    case REDTODGREEN2:
-                        return "REDTODGREEN2";
-
-                    case REDTODGREEN3:
-                        return "REDTODGREEN3";
-
-                    case REDTOBLACK1:
-                        return "REDTOBLACK1";
-
-                    case REDTOBLACK2:
-                        return "REDTOBLACK2";
-
-                    case REDTOBLACK3:
-                        return "REDTOBLACK3";
+                    case REDTOBLACK1:       return "REDTOBLACK1";
+                    case REDTOBLACK2:       return "REDTOBLACK2";
+                    case REDTOBLACK3:       return "REDTOBLACK3";
 #if !VANILLA
-                    case REDTODKBLACK1:
-                        return "REDTODKBLACK1";
+                    case REDTODKBLACK1:     return "REDTODKBLACK1";
+                    case REDTODKBLACK2:     return "REDTODKBLACK2";
+                    case REDTODKBLACK3:     return "REDTODKBLACK3";
 
-                    case REDTODKBLACK2:
-                        return "REDTODKBLACK2";
-
-                    case REDTODKBLACK3:
-                        return "REDTODKBLACK3";
-
-                    case REDBLK_BLWHT:
-                        return "REDBLK_BLWHT";
-
-                    case BLBLK_REDWHT:
-                        return "BLBLK_REDWHT";
+                    case REDBLK_BLWHT:      return "REDBLK_BLWHT";
+                    case BLBLK_REDWHT:      return "BLBLK_REDWHT";
 #endif
-                    default:
-                        return "UNSET";
+                    default:                return "UNSET";
                 }
             }
         }
