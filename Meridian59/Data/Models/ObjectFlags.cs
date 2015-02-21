@@ -36,7 +36,6 @@ namespace Meridian59.Data.Models
     [Serializable]
     public class ObjectFlags : Flags, IUpdatable<ObjectFlags>
     {
-
         //////////////////////////////////////////////////////////////////////////////////
         //////////////////////// IMPLEMENTATION FOR OPENMERIDIAN /////////////////////////
 #if !VANILLA      
@@ -154,7 +153,7 @@ namespace Meridian59.Data.Models
         protected MoveOnType moveon;
 
         /// <summary>
-        /// 
+        /// 32-Bit name color
         /// </summary>
         public uint NameColor
         {
@@ -171,7 +170,7 @@ namespace Meridian59.Data.Models
         }
 
         /// <summary>
-        /// 
+        /// Minimap flags
         /// </summary>
         public uint Minimap
         {
@@ -187,6 +186,57 @@ namespace Meridian59.Data.Models
             }
         }
         
+        /// <summary>
+        /// MoveOnType as embedded in this flags
+        /// </summary>
+        public MoveOnType MoveOn
+        {
+            get { return moveon; }
+
+            set
+            {
+                if (moveon != value)
+                {
+                    moveon = value;
+                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
+                }
+            }
+        }
+
+        /// <summary>
+        /// PlayerType as embedded in this flags
+        /// </summary>
+        public PlayerType Player
+        {
+            get { return player; }
+
+            set
+            {
+                if (player != value)
+                {
+                    player = value;
+                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
+                }
+            }
+        }
+
+        /// <summary>
+        /// DrawingType as embedded in this flags
+        /// </summary>
+        public DrawingType Drawing
+        {
+            get { return drawing; }
+
+            set
+            {
+                if (drawing != value)
+                {
+                    drawing = value;
+                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
+                }
+            }
+        }
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -211,6 +261,21 @@ namespace Meridian59.Data.Models
             player = Player;
             moveon = MoveOn;
         }
+        
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="Buffer"></param>
+        /// <param name="StartIndex"></param>
+        public ObjectFlags(byte[] Buffer, int StartIndex = 0)
+            : base(Buffer, StartIndex) { }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="Buffer"></param>
+        public unsafe ObjectFlags(ref byte* Buffer)
+            : base(ref Buffer) { }
 
         /// <summary>
         /// 
@@ -237,8 +302,7 @@ namespace Meridian59.Data.Models
                 MoveOn = MoveOnType.Yes;
             }
         }
-
-        #region IUpdatable
+       
         /// <summary>
         /// 
         /// </summary>
@@ -268,7 +332,6 @@ namespace Meridian59.Data.Models
                 moveon = Flags.MoveOn;
             }
         }
-        #endregion
 
         #region IByteSerializable
         public override int ByteLength
@@ -362,59 +425,6 @@ namespace Meridian59.Data.Models
 
             Buffer[0] = (byte)moveon;
             Buffer++;
-        }
-        #endregion
-
-        #region Enum properties
-        /// <summary>
-        /// MoveOnType as embedded in this flags
-        /// </summary>
-        public MoveOnType MoveOn
-        {
-            get { return moveon; }
-
-            set
-            {
-                if (moveon != value)
-                {
-                    moveon = value;
-                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
-                }
-            }
-        }
-
-        /// <summary>
-        /// PlayerType as embedded in this flags
-        /// </summary>
-        public PlayerType Player
-        {
-            get { return player; }
-
-            set
-            {
-                if (player != value)
-                {
-                    player = value;
-                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
-                }
-            }
-        }
-
-        /// <summary>
-        /// DrawingType as embedded in this flags
-        /// </summary>
-        public DrawingType Drawing
-        {
-            get { return drawing; }
-
-            set
-            {
-                if (drawing != value)
-                {
-                    drawing = value;
-                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
-                }
-            }
         }
         #endregion
 
@@ -817,6 +827,15 @@ namespace Meridian59.Data.Models
                 (moveon & Flags.MoveOn) == Flags.MoveOn));
         }
 
+        /// <summary>
+        /// True if attackable, not a player and moveon=no
+        /// </summary>     
+        public bool IsCreature
+        {
+            get { return MoveOn == MoveOnType.No && IsAttackable && !IsPlayer; }
+        }
+
+
         //////////////////////////////////////////////////////////////////////////////////
         /////////////////////////// IMPLEMENTATION FOR VANILLA ///////////////////////////
 #else
@@ -930,6 +949,21 @@ namespace Meridian59.Data.Models
         /// <param name="Value"></param>
         public ObjectFlags(uint Value = 0)
             : base(Value) { }
+        
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="Buffer"></param>
+        /// <param name="StartIndex"></param>
+        public ObjectFlags(byte[] Buffer, int StartIndex = 0)
+            : base(Buffer, StartIndex) { }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="Buffer"></param>
+        public unsafe ObjectFlags(ref byte* Buffer)
+            : base(ref Buffer) { }
 
         #region SECTION 1 - MoveOnType
         /// <summary>
@@ -1284,7 +1318,14 @@ namespace Meridian59.Data.Models
             return (Flags == null || ((flags & Flags.Value) == Flags.Value));
         }
 
-        #region IUpdatable
+        /// <summary>
+        /// True if attackable, not a player and moveon=no
+        /// </summary>     
+        public bool IsCreature
+        {
+            get { return MoveOn == MoveOnType.No && IsAttackable && !IsPlayer; }
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -1304,34 +1345,6 @@ namespace Meridian59.Data.Models
                 flags = Flags.Value;
             }
         }
-        #endregion
 #endif
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="Buffer"></param>
-        /// <param name="StartIndex"></param>
-        public ObjectFlags(byte[] Buffer, int StartIndex = 0)
-            : base(Buffer, StartIndex) { }
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="Buffer"></param>
-        public unsafe ObjectFlags(ref byte* Buffer)
-            : base(ref Buffer) { }
-    
-        #region COMBINED
-        
-
-        /// <summary>
-        /// True if attackable, not a player and moveon=no
-        /// </summary>     
-        public bool IsCreature
-        {
-            get { return MoveOn == MoveOnType.No && IsAttackable && !IsPlayer; }
-        }
-        #endregion
     }
 }
