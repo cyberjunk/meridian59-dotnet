@@ -34,8 +34,12 @@ namespace Meridian59.Files.RSB
     public class RsbFile : IGameFile, IByteSerializable, IXmlSerializable, INotifyPropertyChanged, IClearable
     {
         #region Constants
-        public const uint Signature     = 0x01435352;
-        public const uint Version       = 0x00000004;
+        public const uint SIGNATURE = 0x01435352;
+        public const uint VERSION4  = 0x00000004;
+        public const uint VERSION3  = 0x00000003;
+
+        public static readonly byte[] PASSWORDV3 = 
+            { 0x2F, 0xC6, 0x46, 0xDA, 0x20, 0x0E, 0x9F, 0xF9, 0x00 };
 
         public const string DEFAULTFILENAME             = "rsc0000.rsb";
         public const string PROPNAME_FILENAME           = "Filename";
@@ -70,10 +74,10 @@ namespace Meridian59.Files.RSB
         {
             int cursor = StartIndex;
 
-            Array.Copy(BitConverter.GetBytes(Signature), 0, Buffer, cursor, TypeSizes.INT);
+            Array.Copy(BitConverter.GetBytes(SIGNATURE), 0, Buffer, cursor, TypeSizes.INT);
             cursor += TypeSizes.INT;
 
-            Array.Copy(BitConverter.GetBytes(Version), 0, Buffer, cursor, TypeSizes.INT);
+            Array.Copy(BitConverter.GetBytes(VERSION4), 0, Buffer, cursor, TypeSizes.INT);
             cursor += TypeSizes.INT;
 
             Array.Copy(BitConverter.GetBytes(StringResources.Count), 0, Buffer, cursor, TypeSizes.INT);
@@ -101,38 +105,51 @@ namespace Meridian59.Files.RSB
             uint sig= BitConverter.ToUInt32(Buffer, cursor);
             cursor += TypeSizes.INT;
 
-            if (sig == Signature)
+            if (sig == SIGNATURE)
             {
                 uint ver = BitConverter.ToUInt32(Buffer, cursor);
                 cursor += TypeSizes.INT;
 
-                if (ver == Version)
+                uint entries = BitConverter.ToUInt32(Buffer, cursor);
+                cursor += TypeSizes.INT;
+
+                // decrypt old versions first (v4 first unencryted)
+                // note: this might need different passwords for other versions
+                if (ver <= VERSION3)
                 {
-                    uint entries = BitConverter.ToUInt32(Buffer, cursor);
+#if WINCLR && X86
+                    uint streamlength = BitConverter.ToUInt32(Buffer, cursor);
                     cursor += TypeSizes.INT;
 
-                    StringResources.Clear();
-                    for (int i = 0; i < entries; i++)
-                    {
-                        uint ID = BitConverter.ToUInt32(Buffer, cursor);
-                        cursor += TypeSizes.INT;
+                    uint expectedresponse = BitConverter.ToUInt32(Buffer, cursor);
+                    cursor += TypeSizes.INT;
 
-                        // look for terminating 0x00 (NULL)
-                        ushort strlen = 0;
-                        while ((Buffer.Length > cursor + strlen) && Buffer[cursor + strlen] != 0x00)
-                            strlen++;
-
-                        string Value = Encoding.Default.GetString(Buffer, cursor, strlen);
-                        cursor += strlen + TypeSizes.BYTE;
-
-                        StringResources.TryAdd(ID, Value);
-                    }
+                    Crush32.Decrypt(Buffer, cursor, (int)streamlength, ver, expectedresponse, PASSWORDV3);
+#else
+                    throw new Exception(RooFile.ERRORCRUSHPLATFORM);
+#endif
                 }
-                else
-                    throw new Exception("Wrong RSC file version: " + ver + " (expected " + Version + ").");
+
+                // now load strings                  
+                StringResources.Clear();
+                for (int i = 0; i < entries; i++)
+                {
+                    uint ID = BitConverter.ToUInt32(Buffer, cursor);
+                    cursor += TypeSizes.INT;
+
+                    // look for terminating 0x00 (NULL)
+                    ushort strlen = 0;
+                    while ((Buffer.Length > cursor + strlen) && Buffer[cursor + strlen] != 0x00)
+                        strlen++;
+
+                    string Value = Encoding.Default.GetString(Buffer, cursor, strlen);
+                    cursor += strlen + TypeSizes.BYTE;
+
+                    StringResources.TryAdd(ID, Value);
+                }               
             }
             else
-                throw new Exception("Wrong RSC file signature: " + sig + " (expected " + Signature + ").");
+                throw new Exception("Wrong RSC file signature: " + sig + " (expected " + SIGNATURE + ").");
            
             return cursor - StartIndex;
         }
