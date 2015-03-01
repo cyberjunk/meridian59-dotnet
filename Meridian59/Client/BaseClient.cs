@@ -1159,7 +1159,33 @@ namespace Meridian59.Client
             // send/enqueue it (async)
             ServerConnection.SendQueue.Enqueue(message);            
         }
+#if !VANILLA
+        /// <summary>
+        /// Disables or enables the temporary angel after being murdered.
+        /// </summary>
+        public virtual void SendUserCommandTempSafe(bool On)
+        {
+            // create message instance
+            UserCommand command = new UserCommandTempSafe(Convert.ToByte(On));
+            UserCommandMessage message = new UserCommandMessage(command, null);
 
+            // send/enqueue it (async)
+            ServerConnection.SendQueue.Enqueue(message);
+        }
+
+        /// <summary>
+        /// Disables or enables the grouping feature
+        /// </summary>
+        public virtual void SendUserCommandGrouping(bool On)
+        {
+            // create message instance
+            UserCommand command = new UserCommandGrouping(Convert.ToByte(On));
+            UserCommandMessage message = new UserCommandMessage(command, null);
+
+            // send/enqueue it (async)
+            ServerConnection.SendQueue.Enqueue(message);
+        }
+#endif
         /// <summary>
         /// Sends a custom Action request
         /// </summary>
@@ -2441,6 +2467,15 @@ namespace Meridian59.Client
                     case ChatCommandType.Stand:
                         SendUserCommandStand();
                         break;
+#if !VANILLA
+                    case ChatCommandType.TempSafe:
+                        SendUserCommandTempSafe(((ChatCommandTempSafe)chatCommand).On);
+                        break;
+
+                    case ChatCommandType.Grouping:
+                        SendUserCommandGrouping(((ChatCommandGrouping)chatCommand).On);
+                        break;
+#endif
                 }
             }    
         }

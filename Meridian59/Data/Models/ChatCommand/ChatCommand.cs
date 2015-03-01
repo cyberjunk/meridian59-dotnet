@@ -30,6 +30,8 @@ namespace Meridian59.Data.Models
     {
         public const char DELIMITER = ' ';
         public const char QUOTECHAR = '\"';
+        protected const string ON   = "on";
+        protected const string OFF  = "off";
 
         public abstract ChatCommandType CommandType { get; }
        
@@ -175,6 +177,15 @@ namespace Meridian59.Data.Models
                 case ChatCommandStand.KEY1:
                     returnValue = new ChatCommandStand();
                     break;
+#if !VANILLA
+                case ChatCommandTempSafe.KEY1:
+                    returnValue = ParseTempSafe(splitted, lower, DataController);
+                    break;
+
+                case ChatCommandGrouping.KEY1:
+                    returnValue = ParseGrouping(splitted, lower, DataController);
+                    break;
+#endif
             }               
             
             return returnValue;
@@ -531,5 +542,73 @@ namespace Meridian59.Data.Models
 
             return command;
         }
+
+#if !VANILLA
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Words"></param>
+        /// <param name="Text"></param>
+        /// <param name="Data"></param>
+        /// <returns></returns>
+        protected static ChatCommandTempSafe ParseTempSafe(string[] Words, string Text, DataController Data)
+        {
+            ChatCommandTempSafe command = null;
+
+            if (Words == null || Words.Length < 2)
+                return command;
+
+            string text = String.Join(DELIMITER.ToString(), Words, 1, Words.Length - 1);
+
+            if (text != null)
+                text = text.Trim();
+   
+            switch (text)
+            {
+                case ON:
+                    command = new ChatCommandTempSafe(true);
+                    break;
+
+                case OFF:
+                    command = new ChatCommandTempSafe(false);
+                    break;
+            }
+
+            return command;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Words"></param>
+        /// <param name="Text"></param>
+        /// <param name="Data"></param>
+        /// <returns></returns>
+        protected static ChatCommandGrouping ParseGrouping(string[] Words, string Text, DataController Data)
+        {
+            ChatCommandGrouping command = null;
+
+            if (Words == null || Words.Length < 2)
+                return command;
+
+            string text = String.Join(DELIMITER.ToString(), Words, 1, Words.Length - 1);
+
+            if (text != null)
+                text = text.Trim();
+   
+            switch (text)
+            {
+                case ON:
+                    command = new ChatCommandGrouping(true);
+                    break;
+
+                case OFF:
+                    command = new ChatCommandGrouping(false);
+                    break;
+            }
+
+            return command;
+        }
+#endif
     }
 }

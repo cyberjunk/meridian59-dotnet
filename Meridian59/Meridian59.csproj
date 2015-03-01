@@ -115,6 +115,8 @@
     <Compile Include="Data\Models\ChatCommand\ChatCommandCast.cs" />
     <Compile Include="Data\Models\ChatCommand\ChatCommandDM.cs" />
     <Compile Include="Data\Models\ChatCommand\ChatCommandGo.cs" />
+    <Compile Include="Data\Models\ChatCommand\ChatCommandGrouping.cs" />
+    <Compile Include="Data\Models\ChatCommand\ChatCommandTempSafe.cs" />
     <Compile Include="Data\Models\ChatCommand\ChatCommandGoPlayer.cs" />
     <Compile Include="Data\Models\ChatCommand\ChatCommandGetPlayer.cs" />
     <Compile Include="Data\Models\ChatCommand\ChatCommandEmote.cs" />
@@ -132,6 +134,8 @@
     <Compile Include="Data\Models\PlayerOverlay.cs" />
     <Compile Include="Data\Models\RoomInfoFlags.cs" />
     <Compile Include="Data\Models\UserCommand\UserCommandClaimShield.cs" />
+    <Compile Include="Data\Models\UserCommand\UserCommandGrouping.cs" />
+    <Compile Include="Data\Models\UserCommand\UserCommandTempSafe.cs" />
     <Compile Include="Data\Models\UserCommand\UserCommandSuicide.cs" />
     <Compile Include="Data\Models\UserCommand\UserCommandWithDraw.cs" />
     <Compile Include="Data\Models\UserCommand\UserCommandGuildExile.cs" />

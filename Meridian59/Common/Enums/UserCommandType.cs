@@ -30,7 +30,9 @@ namespace Meridian59.Common.Enums
         Stand               = 6,
         Safety              = 7,
         Suicide             = 8,
-
+#if !VANILLA
+        TempSafe            = 9,
+#endif
         ReqGuildInfo        = 10,
         GuildInfo           = 11,
         Invite              = 12,
@@ -55,7 +57,9 @@ namespace Meridian59.Common.Enums
         GuildShield         = 31,
         GuildShields        = 32,
         ClaimShield         = 33,
-
+#if !VANILLA
+        Grouping            = 34,
+#endif
         Deposit             = 35,
         WithDraw            = 36,
         Balance             = 37,
