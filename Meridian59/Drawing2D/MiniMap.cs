@@ -145,12 +145,15 @@ namespace Meridian59.Drawing2D
                 // start drawing lines from roo
                 foreach (RooWall rld in RoomFile.Walls)
                 {
-                    // Don't proceed if:
-                    // 1) line has no sides
-                    // 2) both sides are flagged to not be shown on map
-                    if ((rld.LeftSideReference == 0 && rld.RightSideReference == 0) ||
-                        ((rld.LeftSideReference > 0 && RoomFile.SideDefs[rld.LeftSideReference - 1].Flags.IsMapNever) &&
-                        (rld.RightSideReference > 0 && RoomFile.SideDefs[rld.RightSideReference - 1].Flags.IsMapNever)))
+                    // Don't show line if:
+                    // 1) both sides not set
+                    // 2) left side set to not show up on map, right side unset
+                    // 3) right side set to not show up on map, left side unset
+                    // 4) both sides set and set to not show up on map
+                    if ((rld.LeftSide == null && rld.RightSide == null) ||
+                        (rld.LeftSide != null && rld.RightSide == null && rld.LeftSide.Flags.IsMapNever) ||
+                        (rld.LeftSide == null && rld.RightSide != null && rld.RightSide.Flags.IsMapNever) ||
+                        (rld.LeftSide != null && rld.LeftSide != null && rld.LeftSide.Flags.IsMapNever && rld.RightSide.Flags.IsMapNever))
                         continue;
 
                     // convert to traffic-coords (/16 is RSHIFT 4, +64 offset):
