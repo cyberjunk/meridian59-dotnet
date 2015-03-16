@@ -1275,7 +1275,7 @@ namespace Meridian59.Client
         {
             if (SendPositionBefore)           
                 SendReqMoveMessage(true);
-            
+                        
             // create message instance
             ReqGoMessage message = new ReqGoMessage();
 
@@ -1349,8 +1349,8 @@ namespace Meridian59.Client
         /// <param name="ForceSend">Ignores the update-span, but no other conditions.</param>
         public virtual void SendReqMoveMessage(bool ForceSend = false)
         {
-            // must have avatar object
-            if (Data.AvatarObject == null)
+            // must have a moving avatar object
+            if (Data.AvatarObject == null || !Data.AvatarObject.IsMoving)
                 return;
 
             // use the generic variant with our updated values in datalayer

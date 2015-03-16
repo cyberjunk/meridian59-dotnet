@@ -34,8 +34,8 @@ namespace Meridian59.Common.Enums
         USER_WALKING_SPEED  = 25,
         USER_RUNNING_SPEED  = 50,
 
-        Teleport    = 0x00,
-        Walk        = 25,
-        Run         = 50
+        Teleport    = SPEED_NONE,
+        Walk        = USER_WALKING_SPEED,
+        Run         = USER_RUNNING_SPEED
     }
 }
