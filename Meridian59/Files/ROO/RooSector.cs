@@ -65,36 +65,36 @@ namespace Meridian59.Files.ROO
         {
             int cursor = StartIndex;
 
-            Array.Copy(BitConverter.GetBytes(ServerID), 0, Buffer, cursor, TypeSizes.SHORT);        // Unknown1         (2 bytes)
+            Array.Copy(BitConverter.GetBytes(ServerID), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(BitConverter.GetBytes(FloorTexture), 0, Buffer, cursor, TypeSizes.SHORT);    // FloorTexture     (2 bytes)
+            Array.Copy(BitConverter.GetBytes(FloorTexture), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(BitConverter.GetBytes(CeilingTexture), 0, Buffer, cursor, TypeSizes.SHORT);  // CeilingTexture   (2 bytes)
+            Array.Copy(BitConverter.GetBytes(CeilingTexture), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(BitConverter.GetBytes(TextureX), 0, Buffer, cursor, TypeSizes.SHORT);        // TextureX         (2 bytes)
+            Array.Copy(BitConverter.GetBytes(TextureX), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(BitConverter.GetBytes(TextureY), 0, Buffer, cursor, TypeSizes.SHORT);        // TextureY         (2 bytes)
+            Array.Copy(BitConverter.GetBytes(TextureY), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(BitConverter.GetBytes((short)FloorHeight), 0, Buffer, cursor, TypeSizes.SHORT);     // FloorHeight      (2 bytes)
+            Array.Copy(BitConverter.GetBytes((short)FloorHeight), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(BitConverter.GetBytes((short)CeilingHeight), 0, Buffer, cursor, TypeSizes.SHORT);   // CeilingHeight    (2 bytes)
+            Array.Copy(BitConverter.GetBytes((short)CeilingHeight), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
-            Buffer[cursor] = Light1;                                                                // Light1           (1 byte)
+            Buffer[cursor] = Light1;
             cursor++;
 
-            Array.Copy(BitConverter.GetBytes(Flags.Value), 0, Buffer, cursor, TypeSizes.INT);       // Flags            (4 bytes)
+            Array.Copy(BitConverter.GetBytes(Flags.Value), 0, Buffer, cursor, TypeSizes.INT);
             cursor += TypeSizes.INT;
 
             if (HasSpeed)
             {
-                Buffer[cursor] = Speed;                                                             // Speed            (1 bytes)
+                Buffer[cursor] = Speed;
                 cursor++;
             }
 
