@@ -432,30 +432,30 @@ namespace Meridian59.Files.ROO
             // only left sector? use heights from there and return
             if (RightSector == null)
             {
-                Z0 = Z1 = LeftSector.CalculateFloorHeight(X1, Y1);
-                Z2 = Z3 = LeftSector.CalculateCeilingHeight(X1, Y1);
-                ZZ0 = ZZ1 = LeftSector.CalculateFloorHeight(X2, Y2);
-                ZZ2 = ZZ3 = LeftSector.CalculateCeilingHeight(X2, Y2);
+                Z0 = Z1 = (int)LeftSector.CalculateFloorHeight(X1, Y1);
+                Z2 = Z3 = (int)LeftSector.CalculateCeilingHeight(X1, Y1);
+                ZZ0 = ZZ1 = (int)LeftSector.CalculateFloorHeight(X2, Y2);
+                ZZ2 = ZZ3 = (int)LeftSector.CalculateCeilingHeight(X2, Y2);
                 return;
             }
 
             // only right sector? use heights from there and return
             if (LeftSector == null)
             {
-                Z0 = Z1 = RightSector.CalculateFloorHeight(X1, Y1);
-                Z2 = Z3 = RightSector.CalculateCeilingHeight(X1, Y1);
-                ZZ0 = ZZ1 = RightSector.CalculateFloorHeight(X2, Y2);
-                ZZ2 = ZZ3 = RightSector.CalculateCeilingHeight(X2, Y2);
+                Z0 = Z1 = (int)RightSector.CalculateFloorHeight(X1, Y1);
+                Z2 = Z3 = (int)RightSector.CalculateCeilingHeight(X1, Y1);
+                ZZ0 = ZZ1 = (int)RightSector.CalculateFloorHeight(X2, Y2);
+                ZZ2 = ZZ3 = (int)RightSector.CalculateCeilingHeight(X2, Y2);
                 return;
             }
 
             // --  finally, if there are both sectors available ---
 
             // start with the floor handling
-            int S1_height0 = RightSector.CalculateFloorHeight(X1, Y1);
-            int S2_height0 = LeftSector.CalculateFloorHeight(X1, Y1);
-            int S1_height1 = RightSector.CalculateFloorHeight(X2, Y2);
-            int S2_height1 = LeftSector.CalculateFloorHeight(X2, Y2);
+            int S1_height0 = (int)RightSector.CalculateFloorHeight(X1, Y1);
+            int S2_height0 = (int)LeftSector.CalculateFloorHeight(X1, Y1);
+            int S1_height1 = (int)RightSector.CalculateFloorHeight(X2, Y2);
+            int S2_height1 = (int)LeftSector.CalculateFloorHeight(X2, Y2);
 
             // S1 is above S2 at first endpoint
             if (S1_height0 > S2_height0)
@@ -511,10 +511,10 @@ namespace Meridian59.Files.ROO
             }
 
             // start with ceiling handling
-            S1_height0 = RightSector.CalculateCeilingHeight(X1, Y1);
-            S2_height0 = LeftSector.CalculateCeilingHeight(X1, Y1);
-            S1_height1 = RightSector.CalculateCeilingHeight(X2, Y2);
-            S2_height1 = LeftSector.CalculateCeilingHeight(X2, Y2);
+            S1_height0 = (int)RightSector.CalculateCeilingHeight(X1, Y1);
+            S2_height0 = (int)LeftSector.CalculateCeilingHeight(X1, Y1);
+            S1_height1 = (int)RightSector.CalculateCeilingHeight(X2, Y2);
+            S2_height1 = (int)LeftSector.CalculateCeilingHeight(X2, Y2);
 
             if (S1_height0 > S2_height0)
             {
@@ -640,7 +640,7 @@ namespace Meridian59.Files.ROO
 
                     // still check the stepheight from oldheight to new floor if passable
                     // for too high steps                    
-                    int endheight = 0;
+                    Real endheight = 0.0f;
                     Real diff;
 
                     if (endside <= 0 && LeftSector != null)

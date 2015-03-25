@@ -999,8 +999,8 @@ namespace Meridian59.Data.Models
 #else
                 Real newheight = (Flags.IsHanging) ?                   
 #endif
-                    (Real)(RoomInfo.ResourceRoom.GetHeightAt(xint, yint, out subSector, false, false) >> 4) :
-                    (Real)(RoomInfo.ResourceRoom.GetHeightAt(xint, yint, out subSector, true, true) >> 4);
+                    (Real)(RoomInfo.ResourceRoom.GetHeightAt(xint, yint, out subSector, false, false) * 0.0625f) :
+                    (Real)(RoomInfo.ResourceRoom.GetHeightAt(xint, yint, out subSector, true, true) * 0.0625f);
 
                 // see if server overrides this depth type completely
                 // to another sector height
@@ -1070,8 +1070,8 @@ namespace Meridian59.Data.Models
 #else
             Real newheight = (Flags.IsHanging) ?
 #endif
-                (Real)(RoomInfo.ResourceRoom.GetHeightAt(xint, yint, out subSector, false, false) >> 4) :
-                (Real)(RoomInfo.ResourceRoom.GetHeightAt(xint, yint, out subSector, true, true) >> 4);
+                (Real)(RoomInfo.ResourceRoom.GetHeightAt(xint, yint, out subSector, false, false) * 0.0625f) :
+                (Real)(RoomInfo.ResourceRoom.GetHeightAt(xint, yint, out subSector, true, true) * 0.0625f);
 
             // see if server overrides this depth type completely
             // to another sector height

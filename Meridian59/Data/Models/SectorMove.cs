@@ -305,10 +305,10 @@ namespace Meridian59.Data.Models
             if (Speed == 0)
             {
                 if (type == AnimationType.FLOORLIFT)
-                    sector.FloorHeight = (short)Height;
+                    sector.FloorHeight = (Real)Height;
 
                 else if (type == AnimationType.CEILINGLIFT)
-                    sector.CeilingHeight = (short)Height;
+                    sector.CeilingHeight = (Real)Height;
 
                 // update wallside height values on attached walls
                 foreach (RooWall wall in walls)
@@ -337,10 +337,10 @@ namespace Meridian59.Data.Models
                     currentHeight += step;
 
                     if (type == AnimationType.FLOORLIFT)
-                        sector.FloorHeight = Convert.ToInt16(currentHeight);
+                        sector.FloorHeight = currentHeight;
 
                     else if (type == AnimationType.CEILINGLIFT)
-                        sector.CeilingHeight = Convert.ToInt16(currentHeight);
+                        sector.CeilingHeight = currentHeight;
 
                     // update wallside height values on attached walls
                     foreach (RooWall wall in walls)

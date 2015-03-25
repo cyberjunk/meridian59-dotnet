@@ -222,9 +222,9 @@ namespace Meridian59.Files.ROO
                     P[count].Y = (Real)Vertices[count].Y;
 
                     if (IsFloor)
-                        P[count].Z = (Real)(Sector.FloorHeight << 4);
+                        P[count].Z = (Real)(Sector.FloorHeight * 16.0f);
                     else
-                        P[count].Z = (Real)(Sector.CeilingHeight << 4);
+                        P[count].Z = (Real)(Sector.CeilingHeight * 16.0f);
                 }
 
                 Real U, temp;

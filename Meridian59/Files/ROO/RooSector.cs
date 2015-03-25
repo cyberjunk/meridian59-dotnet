@@ -80,10 +80,10 @@ namespace Meridian59.Files.ROO
             Array.Copy(BitConverter.GetBytes(TextureY), 0, Buffer, cursor, TypeSizes.SHORT);        // TextureY         (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(BitConverter.GetBytes(FloorHeight), 0, Buffer, cursor, TypeSizes.SHORT);     // FloorHeight      (2 bytes)
+            Array.Copy(BitConverter.GetBytes((short)FloorHeight), 0, Buffer, cursor, TypeSizes.SHORT);     // FloorHeight      (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(BitConverter.GetBytes(CeilingHeight), 0, Buffer, cursor, TypeSizes.SHORT);   // CeilingHeight    (2 bytes)
+            Array.Copy(BitConverter.GetBytes((short)CeilingHeight), 0, Buffer, cursor, TypeSizes.SHORT);   // CeilingHeight    (2 bytes)
             cursor += TypeSizes.SHORT;
 
             Buffer[cursor] = Light1;                                                                // Light1           (1 byte)
@@ -125,10 +125,10 @@ namespace Meridian59.Files.ROO
             *((short*)Buffer) = TextureY;
             Buffer += TypeSizes.SHORT;
 
-            *((short*)Buffer) = FloorHeight;
+            *((short*)Buffer) = (short)FloorHeight;
             Buffer += TypeSizes.SHORT;
 
-            *((short*)Buffer) = CeilingHeight;
+            *((short*)Buffer) = (short)CeilingHeight;
             Buffer += TypeSizes.SHORT;
 
             Buffer[0] = Light1;
@@ -170,10 +170,10 @@ namespace Meridian59.Files.ROO
             TextureY = BitConverter.ToInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            FloorHeight = BitConverter.ToInt16(Buffer, cursor);
+            FloorHeight = (Real)BitConverter.ToInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            CeilingHeight = BitConverter.ToInt16(Buffer, cursor);
+            CeilingHeight = (Real)BitConverter.ToInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
             Light1 = Buffer[cursor];
@@ -220,10 +220,10 @@ namespace Meridian59.Files.ROO
             TextureY = *((short*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            FloorHeight = *((short*)Buffer);
+            FloorHeight = (Real)(*((short*)Buffer));
             Buffer += TypeSizes.SHORT;
 
-            CeilingHeight = *((short*)Buffer);
+            CeilingHeight = (Real)(*((short*)Buffer));
             Buffer += TypeSizes.SHORT;
 
             Light1 = Buffer[0];
@@ -302,12 +302,12 @@ namespace Meridian59.Files.ROO
         /// <summary>
         /// Floor height
         /// </summary>
-        public short FloorHeight { get; set; }
+        public Real FloorHeight { get; set; }
 
         /// <summary>
         /// Ceiling height
         /// </summary>
-        public short CeilingHeight { get; set; }
+        public Real CeilingHeight { get; set; }
 
         /// <summary>
         /// Light value
@@ -463,7 +463,7 @@ namespace Meridian59.Files.ROO
         public RooSector(short ServerID, 
             ushort FloorTexture, ushort CeilingTexture,
             short TextureX, short TextureY, 
-            short FloorHeight, short CeilingHeight, 
+            Real FloorHeight, Real CeilingHeight, 
             byte Light1, byte Light2,
             uint Flags, byte Unknown4, bool HasSpeed = true)
         {
@@ -592,33 +592,33 @@ namespace Meridian59.Files.ROO
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <param name="WithSectorDepth"></param>
-        public int CalculateFloorHeight(int x, int y, bool WithSectorDepth = false)
+        public Real CalculateFloorHeight(int x, int y, bool WithSectorDepth = false)
         {
-            int height;
+            Real height;
 
             if (SlopeInfoFloor == null)
-                height = FloorHeight << 4;
+                height = FloorHeight * 16.0f;
             else
-                height = (int)CalculateHeight(SlopeInfoFloor, x, y);
+                height = CalculateHeight(SlopeInfoFloor, x, y);
 
             if (WithSectorDepth)
             {
                 switch (Flags.SectorDepth)
                 { 
                     case RooSectorFlags.DepthType.Depth0:
-                        height -= RooFile.SectorDepths[0];
+                        height -= (Real)RooFile.SectorDepths[0];
                         break;
 
                     case RooSectorFlags.DepthType.Depth1:
-                        height -= RooFile.SectorDepths[1];
+                        height -= (Real)RooFile.SectorDepths[1];
                         break;
 
                     case RooSectorFlags.DepthType.Depth2:
-                        height -= RooFile.SectorDepths[2];
+                        height -= (Real)RooFile.SectorDepths[2];
                         break;
 
                     case RooSectorFlags.DepthType.Depth3:
-                        height -= RooFile.SectorDepths[3];
+                        height -= (Real)RooFile.SectorDepths[3];
                         break;
                 }
             }
@@ -632,12 +632,12 @@ namespace Meridian59.Files.ROO
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
-        public int CalculateCeilingHeight(int x, int y)
+        public Real CalculateCeilingHeight(int x, int y)
         {
             if (SlopeInfoCeiling == null)
-                return CeilingHeight << 4;
+                return CeilingHeight * 16.0f;
             else
-                return (int)CalculateHeight(SlopeInfoCeiling, x, y);
+                return CalculateHeight(SlopeInfoCeiling, x, y);
         }
 
         /// <summary>

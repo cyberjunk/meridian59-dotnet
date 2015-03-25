@@ -1147,7 +1147,7 @@ namespace Meridian59.Files.ROO
         /// <param name="IsFloor"></param>
         /// <param name="WithSectorDepth"></param>
         /// <returns>Height of point or -1 if no sector found for point</returns>
-        public int GetHeightAt(int x, int y, out RooSubSector SubSector, bool IsFloor = true, bool WithSectorDepth = false)
+        public Real GetHeightAt(int x, int y, out RooSubSector SubSector, bool IsFloor = true, bool WithSectorDepth = false)
         {
             SubSector = null;
 
@@ -1246,8 +1246,8 @@ namespace Meridian59.Files.ROO
         /// <returns></returns>
         public Tuple<V3, V3> GetBoundingBox()
         {
-            int minheight = 0;
-            int maxheight = 1;
+            Real minheight = 0.0f;
+            Real maxheight = 1.0f;
 
             if (Sectors.Count > 0)
             {
@@ -1265,8 +1265,8 @@ namespace Meridian59.Files.ROO
             }
 
             // convert height to scale of width/length
-            minheight = minheight << 4;
-            maxheight = maxheight << 4;
+            minheight = minheight * 16.0f;
+            maxheight = maxheight * 16.0f;
 
             V3 min = new V3(0.0f, 1.0f, minheight);
             V3 max = new V3(0.0f, 1.0f, maxheight);
@@ -1417,10 +1417,10 @@ namespace Meridian59.Files.ROO
                     Real y = j * scale;
 
                     // lookup the height from roomdata
-                    int height = GetHeightAt(Convert.ToInt32(x), Convert.ToInt32(y), out subsector, IsFloor, WithSectorDepths);
+                    Real height = GetHeightAt(Convert.ToInt32(x), Convert.ToInt32(y), out subsector, IsFloor, WithSectorDepths);
                     
                     // process it
-                    if (height == -1 && (i > 0 || j > 0))
+                    if (height == -1.0f && (i > 0.0f || j > 0.0f))
                     {
                         // use prece
                         heights[(i * Size) + j] = heights[(i * Size) + j - 1];
