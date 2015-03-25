@@ -1422,6 +1422,21 @@ namespace Meridian59 { namespace Ogre
 		const bool showOctree = true;
 		SceneManager->setOption("ShowOctree", &showOctree);
 #endif
+
+		// update caelum heights
+		if (caelumSystem)
+		{
+			::Caelum::CloudSystem* clouds = caelumSystem->getCloudSystem();
+
+			if (clouds)
+			{
+				if (clouds->getLayerCount() > 0)
+					clouds->getLayer(0)->setHeight(newMax.y + 2000.0f);
+
+				if (clouds->getLayerCount() > 1)
+					clouds->getLayer(1)->setHeight(newMax.y + 5000.0f);
+			}
+		}
 	};
 
 	void ControllerRoom::AdjustAmbientLight()
