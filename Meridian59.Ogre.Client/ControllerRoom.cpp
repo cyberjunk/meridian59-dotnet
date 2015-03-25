@@ -831,20 +831,25 @@ namespace Meridian59 { namespace Ogre
 		}
 
 		// CASE 2: Different materials
-		else if (ostr_floor != ostr_ceiling &&
-			ostr_floor != STRINGEMPTY)
+		else if (ostr_floor != ostr_ceiling)
 		{
-			verticesProcessed = 0;
-			target->begin(ostr_floor, ::Ogre::RenderOperation::OT_TRIANGLE_LIST);
-			CreateSectorPart(target, Sector, true);
-			section = target->end();
-			Sector->UserDataFloor = (::System::IntPtr)section;
+			if (ostr_floor != STRINGEMPTY)
+			{
+				verticesProcessed = 0;
+				target->begin(ostr_floor, ::Ogre::RenderOperation::OT_TRIANGLE_LIST);
+				CreateSectorPart(target, Sector, true);
+				section = target->end();
+				Sector->UserDataFloor = (::System::IntPtr)section;
+			}
 
-			verticesProcessed = 0;
-			target->begin(ostr_ceiling, ::Ogre::RenderOperation::OT_TRIANGLE_LIST);
-			CreateSectorPart(target, Sector, false);
-			section = target->end();
-			Sector->UserDataCeiling = (::System::IntPtr)section;
+			if (ostr_ceiling != STRINGEMPTY)
+			{
+				verticesProcessed = 0;
+				target->begin(ostr_ceiling, ::Ogre::RenderOperation::OT_TRIANGLE_LIST);
+				CreateSectorPart(target, Sector, false);
+				section = target->end();
+				Sector->UserDataCeiling = (::System::IntPtr)section;
+			}
 		}
         
 		/******************************************************************************/
