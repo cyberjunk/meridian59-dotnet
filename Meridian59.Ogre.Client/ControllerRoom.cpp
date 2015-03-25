@@ -1238,17 +1238,16 @@ namespace Meridian59 { namespace Ogre
 
 	void ControllerRoom::OnRooFileSectorMoved(System::Object^ sender, SectorMovedEventArgs^ e)
 	{
-		if (!e || !e->SectorMove)
+		if (!e || !e->Sector)
 			return;
 
 		/******************************************************************************/
 
 		// recreate sector with changed vertexdata
-		if (e->SectorMove->Sector)
-			CreateSector(e->SectorMove->Sector);
+		CreateSector(e->Sector);
 
 		// recreate affected sides with changed vertexdata
-		for each(RooSideDef^ side in e->SectorMove->Sides)
+		for each(RooSideDef^ side in e->Sector->Sides)
 		{
 			if (side)
 				CreateSide(side);

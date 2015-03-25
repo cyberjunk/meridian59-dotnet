@@ -15,11 +15,13 @@
 */
 
 using System;
+using System.Collections.Generic;
 using Meridian59.Common.Constants;
 using Meridian59.Common.Interfaces;
-using Meridian59.Files.BGF;
 using Meridian59.Common.Enums;
 using Meridian59.Common;
+using Meridian59.Files.BGF;
+using Meridian59.Data.Models;
 
 // Switch FP precision based on architecture
 #if X64
@@ -34,7 +36,7 @@ namespace Meridian59.Files.ROO
     /// A sector definition in a map file.
     /// </summary>
     [Serializable]
-    public class RooSector : IByteSerializableFast, IResourceResolvable
+    public class RooSector : IByteSerializableFast, IResourceResolvable, ITickable
     {
         // from roomanim.h:
         // "Number of milliseconds per pixel scrolled for various scrolling texture speeds"
@@ -261,7 +263,25 @@ namespace Meridian59.Files.ROO
         }
         #endregion
 
+        /// <summary>
+        /// Raised when texture changed on this sector floor or ceiling.
+        /// </summary>
         public event SectorTextureChangedEventHandler TextureChanged;
+        
+        /// <summary>
+        /// Raised when calling Tick() and the sector moved a bit.
+        /// </summary>
+        public event EventHandler Moved;
+
+        /// <summary>
+        /// Adjacent walls
+        /// </summary>
+        protected readonly List<RooWall> walls = new List<RooWall>();
+
+        /// <summary>
+        /// Adjacent side-defs
+        /// </summary>
+        protected readonly List<RooSideDef> sides = new List<RooSideDef>();
 
         #region Properties
         /// <summary>
@@ -442,6 +462,58 @@ namespace Meridian59.Files.ROO
                     (Real)Light1 * (1.0f / 128.0f);
             }
         }
+
+        /// <summary>
+        /// Adjacent walls. Will be filled when ResolveIndices() on RooWall is called.
+        /// </summary>
+        public List<RooWall> Walls
+        {
+            get { return walls; }
+        }
+
+        /// <summary>
+        /// Adjacent side-defs. Will be filled when ResolveIndices() on RooWall is called.
+        /// </summary>
+        public List<RooSideDef> Sides
+        {
+            get { return sides; }
+        }
+
+        /// <summary>
+        /// True if floor or ceiling are moving
+        /// </summary>
+        public bool IsMoving { get { return IsMovingFloor || IsMovingCeiling; } }
+
+        /// <summary>
+        /// True if floor has active movement
+        /// </summary>
+        public bool IsMovingFloor { get; protected set; }
+
+        /// <summary>
+        /// True if ceiling has active movement
+        /// </summary>
+        public bool IsMovingCeiling { get; protected set; }
+        
+        /// <summary>
+        /// Floor target height of move
+        /// </summary>
+        public Real MoveFloorHeight { get; set; }
+
+        /// <summary>
+        /// Ceiling target height of move
+        /// </summary>
+        public Real MoveCeilingHeight { get; set; }
+
+        /// <summary>
+        /// Speed of a possible ongoing floor movement
+        /// </summary>
+        public byte MoveFloorSpeed { get; set; }
+
+        /// <summary>
+        /// Speed of a possible ongoing ceiling movement
+        /// </summary>
+        public byte MoveCeilingSpeed { get; set; }
+
         #endregion
 
         #region Constructors
@@ -583,6 +655,109 @@ namespace Meridian59.Files.ROO
                 MaterialNameCeiling = null;
                 SpeedCeiling = V2.ZERO;
             }
+        }
+
+        /// <summary>
+        /// Starts a movement of the sector
+        /// </summary>
+        /// <param name="SectorMove"></param>
+        public void StartMove(SectorMove SectorMove)
+        {
+            if (SectorMove.Type == AnimationType.FLOORLIFT)
+            {
+                // set target height and speed for floor
+                MoveFloorHeight = (Real)SectorMove.Height;
+                MoveFloorSpeed = SectorMove.Speed;
+                IsMovingFloor = true;
+            }
+            else if (SectorMove.Type == AnimationType.CEILINGLIFT)
+            {
+                // set target height and speed for ceiling
+                MoveCeilingHeight = (Real)SectorMove.Height;
+                MoveCeilingSpeed = SectorMove.Speed;
+                IsMovingCeiling = true;
+            }
+        }
+
+        /// <summary>
+        /// Updates the movement
+        /// </summary>
+        /// <param name="Tick"></param>
+        /// <param name="Span"></param>
+        public void Tick(long Tick, long Span)
+        {
+            const Real EPSILON = 0.01f;
+
+            // nothing to do unless moving at least floor or ceiling
+            if (!IsMoving)
+                return;
+
+            /************************* FLOOR *************************/
+            if (IsMovingFloor)
+            {
+                // instant update of floor to new height
+                if (MoveFloorSpeed == 0)
+                {
+                    FloorHeight = MoveFloorHeight;
+                    IsMovingFloor = false;
+                }
+                else
+                {
+                    Real delta = MoveFloorHeight - FloorHeight;
+                    Real step = GeometryConstants.SECTORMOVEBASECOEFF * (Real)Span * (Real)MoveFloorSpeed;
+
+                    if (Math.Abs(delta) > EPSILON)
+                    {
+                        if (Math.Abs(step) > Math.Abs(delta))
+                            step = delta;
+
+                        else if (delta < 0.0f)
+                            step = -step;
+
+                        // apply step on floor height
+                        FloorHeight += step;
+                    }
+                    else
+                        IsMovingFloor = false;
+                }
+            }
+
+            /************************* CEILING *************************/
+            if (IsMovingCeiling)
+            {
+                if (MoveCeilingSpeed == 0)
+                {
+                    CeilingHeight = MoveCeilingHeight;
+                    IsMovingCeiling = false;
+                }
+                else
+                {
+                    Real delta = MoveCeilingHeight - CeilingHeight;
+                    Real step = GeometryConstants.SECTORMOVEBASECOEFF * (Real)Span * (Real)MoveCeilingSpeed;
+
+                    if (Math.Abs(delta) > EPSILON)
+                    {
+                        if (Math.Abs(step) > Math.Abs(delta))
+                            step = delta;
+
+                        else if (delta < 0.0f)
+                            step = -step;
+
+                        // apply step on floor height
+                        CeilingHeight += step;
+                    }
+                    else
+                        IsMovingCeiling = false;
+                }
+            }
+
+            /************************* SIDES *************************/
+            foreach (RooWall wall in walls)
+                wall.CalculateWallSideHeights();
+
+            /************************* EVENT *************************/
+            if (Moved != null)
+                Moved(this, new EventArgs());         
         }
 
         /// <summary>

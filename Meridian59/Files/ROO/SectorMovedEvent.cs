@@ -23,11 +23,11 @@ namespace Meridian59.Files.ROO
 
     public class SectorMovedEventArgs : EventArgs
     {
-        public SectorMove SectorMove { get; protected set; }
+        public RooSector Sector { get; protected set; }
 
-        public SectorMovedEventArgs(SectorMove SectorMove)
+        public SectorMovedEventArgs(RooSector Sector)
         {
-            this.SectorMove = SectorMove;
+            this.Sector = Sector;
         }
     }
 }

@@ -559,6 +559,7 @@ namespace Meridian59.Files.ROO
 
                 sectorDef.Num = i + 1;
                 sectorDef.TextureChanged += OnSectorTextureChanged;
+                sectorDef.Moved += OnSectorMoved;
                 Sectors.Add(sectorDef);
             }
 
@@ -759,6 +760,7 @@ namespace Meridian59.Files.ROO
             {
                 RooSector sectorDef = new RooSector(ref Buffer, hasSpeed);
                 sectorDef.TextureChanged += OnSectorTextureChanged;
+                sectorDef.Moved += OnSectorMoved;
                 sectorDef.Num = i + 1;
                 Sectors.Add(sectorDef);
             }
@@ -1015,11 +1017,6 @@ namespace Meridian59.Files.ROO
         /// </summary>
         public bool IsResourcesResolved { get; protected set; }
 
-        /// <summary>
-        /// List of currently active sector movements
-        /// </summary>
-        public List<SectorMove> MovingSectors { get; protected set; }
-
         #endregion
 
         #region Constructors
@@ -1034,7 +1031,6 @@ namespace Meridian59.Files.ROO
             SideDefs = new List<RooSideDef>();
             Sectors = new List<RooSector>();
             Things = new List<RooThing>();
-            MovingSectors = new List<SectorMove>();
         }
 
         /// <summary>
@@ -1043,7 +1039,6 @@ namespace Meridian59.Files.ROO
         /// <param name="FilePath"></param>
         public RooFile(string FilePath)
         {
-            MovingSectors = new List<SectorMove>();
             Load(FilePath);
         }
         #endregion
@@ -1296,9 +1291,13 @@ namespace Meridian59.Files.ROO
                 if (wallSide.Animation != null)
                     wallSide.Animation.Tick(Tick, Span);
 
+            // update sectors
+            foreach (RooSector sector in Sectors)
+                sector.Tick(Tick, Span);
+
             // update sector movements
-            for (int i = MovingSectors.Count - 1; i >= 0; i--)
-                MovingSectors[i].Tick(Tick, Span);
+            //for (int i = MovingSectors.Count - 1; i >= 0; i--)
+            //    MovingSectors[i].Tick(Tick, Span);
         }
       
         /// <summary>
@@ -1443,27 +1442,10 @@ namespace Meridian59.Files.ROO
         /// <param name="e"></param>
         protected void OnSectorMoved(object sender, EventArgs e)
         {
-            SectorMove move = (SectorMove)sender;
+            RooSector sector = (RooSector)sender;
 
             if (SectorMoved != null)
-                SectorMoved(this, new SectorMovedEventArgs(move));
-        }
-
-        /// <summary>
-        /// Executed when sectormove finished
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void OnSectorMoveFinished(object sender, EventArgs e)
-        {
-            SectorMove move = (SectorMove)sender;
-
-            // detach listeners
-            move.Finished -= OnSectorMoveFinished;
-            move.Moved -= OnSectorMoved;
-
-            if (MovingSectors.Contains(move))
-                MovingSectors.Remove(move);
+                SectorMoved(this, new SectorMovedEventArgs(sector));
         }
 
         /// <summary>
@@ -1558,25 +1540,12 @@ namespace Meridian59.Files.ROO
         {
             SectorMove info = Message.SectorMove;
 
-            // first check if there is an existing move and if so adjust it
-            foreach (SectorMove obj in MovingSectors)
+            foreach (RooSector sector in Sectors)
             {
-                if (obj.SectorNr == info.SectorNr && obj.Type == info.Type)
-                {
-                    obj.Adjust(info);
-                    return;
-                }
+                // start / adjust movement on matching sectors
+                if (sector.ServerID == info.SectorNr)
+                    sector.StartMove(info);
             }
-
-            // if it's a new move -
-            // get affected sector reference and walls
-            info.ResolveAffected(this);
-
-            // hook up eventhandlers
-            info.Moved += OnSectorMoved;
-            info.Finished += OnSectorMoveFinished;
-
-            MovingSectors.Add(info);
         }
         #endregion
 

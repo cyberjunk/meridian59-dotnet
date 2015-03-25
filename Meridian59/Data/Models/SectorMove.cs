@@ -35,7 +35,7 @@ namespace Meridian59.Data.Models
     /// Sector movement info.
     /// </summary>
     [Serializable]
-    public class SectorMove : IByteSerializableFast, INotifyPropertyChanged, IClearable, ITickable
+    public class SectorMove : IByteSerializableFast, INotifyPropertyChanged, IClearable
     {
         #region Constants
         public const string PROPNAME_TYPE       = "Type";
@@ -43,16 +43,6 @@ namespace Meridian59.Data.Models
         public const string PROPNAME_HEIGHT     = "Height";
         public const string PROPNAME_SPEED      = "Speed";
         #endregion
-
-        /// <summary>
-        /// Raised when calling Tick() and the sector moved a bit.
-        /// </summary>
-        public event EventHandler Moved;
-
-        /// <summary>
-        /// Raised when calling Tick() and the sectormove finished.
-        /// </summary>
-        public event EventHandler Finished;
 
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -67,15 +57,10 @@ namespace Meridian59.Data.Models
         protected AnimationType type;
         protected ushort sectorNr;
         protected ushort height;
-        protected byte speed;
-        protected RooSector sector;
-        protected readonly List<RooWall> walls = new List<RooWall>();
-        protected readonly List<RooSideDef> sides = new List<RooSideDef>();
-        protected Real currentHeight;
+        protected byte speed;       
         #endregion
 
         #region Properties
-
         /// <summary>
         /// 
         /// </summary>
@@ -129,26 +114,6 @@ namespace Meridian59.Data.Models
                     RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_SPEED));
                 }
             }
-        }
-
-        public RooSector Sector
-        {
-            get { return sector; }
-        }
-
-        public List<RooWall> Walls
-        {
-            get { return walls; }
-        }
-
-        public List<RooSideDef> Sides
-        {
-            get { return sides; }
-        }
-
-        public Real CurrentHeight
-        {
-            get { return currentHeight; }
         }
         #endregion
 
@@ -278,8 +243,6 @@ namespace Meridian59.Data.Models
                 SectorNr = 0;
                 Height = 0;
                 Speed = 0;
-                sector = null;
-                walls.Clear();
             }
             else
             {
@@ -287,142 +250,8 @@ namespace Meridian59.Data.Models
                 sectorNr = 0;
                 height = 0;
                 speed = 0;
-                sector = null;
-                walls.Clear();
             }
         }
         #endregion
-
-        #region ITickable
-        /// <summary>
-        /// Updates the movement
-        /// </summary>
-        /// <param name="Tick"></param>
-        /// <param name="Span"></param>
-        public void Tick(long Tick, long Span)
-        {
-            // instant updates for speed = 0
-            if (Speed == 0)
-            {
-                if (type == AnimationType.FLOORLIFT)
-                    sector.FloorHeight = (Real)Height;
-
-                else if (type == AnimationType.CEILINGLIFT)
-                    sector.CeilingHeight = (Real)Height;
-
-                // update wallside height values on attached walls
-                foreach (RooWall wall in walls)
-                    wall.CalculateWallSideHeights();
-
-                if (Moved != null)
-                    Moved(this, new EventArgs());
-
-                if (Finished != null)
-                    Finished(this, new EventArgs());
-            }
-            else
-            {
-                Real delta = Height - currentHeight; ;
-                Real step = GeometryConstants.SECTORMOVEBASECOEFF * (Real)Span * (Real)speed;
-                const Real EPSILON = 0.01f;
-
-                if (Math.Abs(delta) > EPSILON)
-                {
-                    if (Math.Abs(step) > Math.Abs(delta))
-                        step = delta;
-
-                    else if (delta < 0)
-                        step = -step;
-
-                    currentHeight += step;
-
-                    if (type == AnimationType.FLOORLIFT)
-                        sector.FloorHeight = currentHeight;
-
-                    else if (type == AnimationType.CEILINGLIFT)
-                        sector.CeilingHeight = currentHeight;
-
-                    // update wallside height values on attached walls
-                    foreach (RooWall wall in walls)
-                        wall.CalculateWallSideHeights();
-
-                    if (Moved != null)
-                        Moved(this, new EventArgs());
-                }
-                else
-                {
-                    if (Finished != null)
-                        Finished(this, new EventArgs());
-                }
-            }
-        }
-        #endregion
-
-        /// <summary>
-        /// Adjusts a SectorMove by new SectorMove information,
-        /// e.g. starts moving down again before reached top and others.
-        /// </summary>
-        /// <param name="Move"></param>
-        public void Adjust(SectorMove Move)
-        {
-            // make sure this model fits the new one
-            if (SectorNr == Move.SectorNr && Type == Move.Type)
-            {
-                Type = Move.Type;
-                SectorNr = Move.SectorNr;
-                Height = Move.Height;
-                Speed = Move.Speed;
-            }
-        }
-
-        /// <summary>
-        /// Sets the Sector property and fills the Walls and Sides lists
-        /// with the elements affected by this sector move.
-        /// </summary>
-        /// <param name="RooFile">A roomfile this move is applied on</param>
-        public void ResolveAffected(RooFile RooFile)
-        {
-            sector = null;
-            walls.Clear();
-            sides.Clear();
-
-            // find sector
-            foreach (RooSector obj in RooFile.Sectors)
-            {
-                if (obj.ServerID == SectorNr)
-                {
-                    sector = obj;
-                    
-                    if (Type == AnimationType.FLOORLIFT)
-                        currentHeight = sector.FloorHeight;
-
-                    else if (Type == AnimationType.CEILINGLIFT)
-                        currentHeight = sector.CeilingHeight;
-
-                    break;
-                }
-            }
-
-            // if sector found, find walls
-            if (sector != null)
-            {
-                foreach (RooWall obj in RooFile.Walls)
-                {
-                    // if this wall is adjacent to the moving sector
-                    // it must be edited also
-                    if (obj.LeftSector == sector ||
-                        obj.RightSector == sector)
-                    {
-                        walls.Add(obj);
-
-                        if (obj.LeftSide != null && !sides.Contains(obj.LeftSide))
-                            sides.Add(obj.LeftSide);
-
-                        if (obj.RightSide != null && !sides.Contains(obj.RightSide))
-                            sides.Add(obj.RightSide);
-                    }
-                }
-            }
-        } 
     }
 }

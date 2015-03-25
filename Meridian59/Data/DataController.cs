@@ -1152,7 +1152,7 @@ namespace Meridian59.Data
                 // look for objects in this sector and update their height
                 foreach (RoomObject obj in RoomObjects)
                 {
-                    if (obj.SubSector != null && obj.SubSector.Sector == e.SectorMove.Sector)
+                    if (obj.SubSector != null && obj.SubSector.Sector == e.Sector)
                         obj.UpdateHeightPosition(RoomInformation);
                 }
             }

@@ -318,16 +318,16 @@ namespace Meridian59.Files.ROO
          */
 
         // Z-coordinates at (X1,Y1) 
-        public int Z0 { get; set; }      /* height of bottom of lower wall */
-        public int Z1 { get; set; }      /* height of top of lower wall / bottom of normal wall */
-        public int Z2 { get; set; }      /* height of top of normal wall / bottom of upper wall */
-        public int Z3 { get; set; }      /* height of top of upper wall */
+        public Real Z0 { get; set; }      /* height of bottom of lower wall */
+        public Real Z1 { get; set; }      /* height of top of lower wall / bottom of normal wall */
+        public Real Z2 { get; set; }      /* height of top of normal wall / bottom of upper wall */
+        public Real Z3 { get; set; }      /* height of top of upper wall */
 
         // Z-coordinates at (X2,Y2)
-        public int ZZ0 { get; set; }     /* height of bottom of lower wall */
-        public int ZZ1 { get; set; }     /* height of top of lower wall / bottom of normal wall */
-        public int ZZ2 { get; set; }     /* height of top of normal wall / bottom of upper wall */
-        public int ZZ3 { get; set; }     /* height of top of upper wall */
+        public Real ZZ0 { get; set; }     /* height of bottom of lower wall */
+        public Real ZZ1 { get; set; }     /* height of top of lower wall / bottom of normal wall */
+        public Real ZZ2 { get; set; }     /* height of top of normal wall / bottom of upper wall */
+        public Real ZZ3 { get; set; }     /* height of top of upper wall */
 
         #endregion
 
@@ -388,6 +388,10 @@ namespace Meridian59.Files.ROO
                 RooFile.Sectors.Count > RightSectorReference - 1)
             {
                 RightSector = RooFile.Sectors[RightSectorReference - 1];
+
+                // save as adjacent wall
+                if (!RightSector.Walls.Contains(this))
+                    RightSector.Walls.Add(this);
             }
 
             // get reference to left SectorDef
@@ -395,6 +399,10 @@ namespace Meridian59.Files.ROO
                 RooFile.Sectors.Count > LeftSectorReference - 1)
             {
                 LeftSector = RooFile.Sectors[LeftSectorReference - 1];
+
+                // save as adjacent wall
+                if (!LeftSector.Walls.Contains(this))
+                    LeftSector.Walls.Add(this);
             }
 
             // get reference to right SideDef
@@ -402,6 +410,14 @@ namespace Meridian59.Files.ROO
                 RooFile.SideDefs.Count > RightSideReference - 1)
             {
                 RightSide = RooFile.SideDefs[RightSideReference - 1];
+
+                // save as adjacent side
+                if (RightSector != null && !RightSector.Sides.Contains(RightSide))
+                    RightSector.Sides.Add(RightSide);
+
+                // save as adjacent side
+                if (LeftSector != null && !LeftSector.Sides.Contains(RightSide))
+                    LeftSector.Sides.Add(RightSide);
             }
 
             // get reference to left SideDef
@@ -409,6 +425,14 @@ namespace Meridian59.Files.ROO
                 RooFile.SideDefs.Count > LeftSideReference - 1)
             {
                 LeftSide = RooFile.SideDefs[LeftSideReference - 1];
+
+                // save as adjacent side
+                if (RightSector != null && !RightSector.Sides.Contains(LeftSide))
+                    RightSector.Sides.Add(LeftSide);
+
+                // save as adjacent side
+                if (LeftSector != null && !LeftSector.Sides.Contains(LeftSide))
+                    LeftSector.Sides.Add(LeftSide);
             }
         }
 
@@ -422,40 +446,40 @@ namespace Meridian59.Files.ROO
             // no sectors? we're screwed, use defaults and return
             if (RightSector == null && LeftSector == null)
             {
-                Z0 = Z1 = 0;
-                Z2 = Z3 = GeometryConstants.FINENESS;
-                ZZ0 = ZZ1 = 0;
-                ZZ2 = ZZ3 = GeometryConstants.FINENESS;
+                Z0 = Z1 = 0.0f;
+                Z2 = Z3 = (Real)GeometryConstants.FINENESS;
+                ZZ0 = ZZ1 = 0.0f;
+                ZZ2 = ZZ3 = (Real)GeometryConstants.FINENESS;
                 return;
             }
 
             // only left sector? use heights from there and return
             if (RightSector == null)
             {
-                Z0 = Z1 = (int)LeftSector.CalculateFloorHeight(X1, Y1);
-                Z2 = Z3 = (int)LeftSector.CalculateCeilingHeight(X1, Y1);
-                ZZ0 = ZZ1 = (int)LeftSector.CalculateFloorHeight(X2, Y2);
-                ZZ2 = ZZ3 = (int)LeftSector.CalculateCeilingHeight(X2, Y2);
+                Z0 = Z1 = LeftSector.CalculateFloorHeight(X1, Y1);
+                Z2 = Z3 = LeftSector.CalculateCeilingHeight(X1, Y1);
+                ZZ0 = ZZ1 = LeftSector.CalculateFloorHeight(X2, Y2);
+                ZZ2 = ZZ3 = LeftSector.CalculateCeilingHeight(X2, Y2);
                 return;
             }
 
             // only right sector? use heights from there and return
             if (LeftSector == null)
             {
-                Z0 = Z1 = (int)RightSector.CalculateFloorHeight(X1, Y1);
-                Z2 = Z3 = (int)RightSector.CalculateCeilingHeight(X1, Y1);
-                ZZ0 = ZZ1 = (int)RightSector.CalculateFloorHeight(X2, Y2);
-                ZZ2 = ZZ3 = (int)RightSector.CalculateCeilingHeight(X2, Y2);
+                Z0 = Z1 = RightSector.CalculateFloorHeight(X1, Y1);
+                Z2 = Z3 = RightSector.CalculateCeilingHeight(X1, Y1);
+                ZZ0 = ZZ1 = RightSector.CalculateFloorHeight(X2, Y2);
+                ZZ2 = ZZ3 = RightSector.CalculateCeilingHeight(X2, Y2);
                 return;
             }
 
             // --  finally, if there are both sectors available ---
 
             // start with the floor handling
-            int S1_height0 = (int)RightSector.CalculateFloorHeight(X1, Y1);
-            int S2_height0 = (int)LeftSector.CalculateFloorHeight(X1, Y1);
-            int S1_height1 = (int)RightSector.CalculateFloorHeight(X2, Y2);
-            int S2_height1 = (int)LeftSector.CalculateFloorHeight(X2, Y2);
+            Real S1_height0 = RightSector.CalculateFloorHeight(X1, Y1);
+            Real S2_height0 = LeftSector.CalculateFloorHeight(X1, Y1);
+            Real S1_height1 = RightSector.CalculateFloorHeight(X2, Y2);
+            Real S2_height1 = LeftSector.CalculateFloorHeight(X2, Y2);
 
             // S1 is above S2 at first endpoint
             if (S1_height0 > S2_height0)
@@ -511,10 +535,10 @@ namespace Meridian59.Files.ROO
             }
 
             // start with ceiling handling
-            S1_height0 = (int)RightSector.CalculateCeilingHeight(X1, Y1);
-            S2_height0 = (int)LeftSector.CalculateCeilingHeight(X1, Y1);
-            S1_height1 = (int)RightSector.CalculateCeilingHeight(X2, Y2);
-            S2_height1 = (int)LeftSector.CalculateCeilingHeight(X2, Y2);
+            S1_height0 = RightSector.CalculateCeilingHeight(X1, Y1);
+            S2_height0 = LeftSector.CalculateCeilingHeight(X1, Y1);
+            S1_height1 = RightSector.CalculateCeilingHeight(X2, Y2);
+            S2_height1 = LeftSector.CalculateCeilingHeight(X2, Y2);
 
             if (S1_height0 > S2_height0)
             {
@@ -729,10 +753,10 @@ namespace Meridian59.Files.ROO
                     // compare height with wallheights
                     // use average of both endpoints (in case its sloped)
                     // do not care about the sides
-                    int h3 = (Z3 + ZZ3) / 2;
-                    int h2 = (Z2 + ZZ2) / 2;
-                    int h1 = (Z1 + ZZ1) / 2;
-                    int h0 = (Z0 + ZZ0) / 2;
+                    Real h3 = (Z3 + ZZ3) / 2.0f;
+                    Real h2 = (Z2 + ZZ2) / 2.0f;
+                    Real h1 = (Z1 + ZZ1) / 2.0f;
+                    Real h0 = (Z0 + ZZ0) / 2.0f;
                     bool a, b;
                     
                     // test upper part
