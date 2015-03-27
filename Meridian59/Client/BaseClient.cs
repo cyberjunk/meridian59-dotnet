@@ -1349,15 +1349,19 @@ namespace Meridian59.Client
         /// <param name="ForceSend">Ignores the update-span, but no other conditions.</param>
         public virtual void SendReqMoveMessage(bool ForceSend = false)
         {
-            // must have a moving avatar object
-            if (Data.AvatarObject == null || !Data.AvatarObject.IsMoving)
+            // must have an avatar object
+            if (Data.AvatarObject == null)
                 return;
+
+            // use horizontalspeed or default to RUN for TELEPORT (0)
+            byte speed = ((byte)Data.AvatarObject.HorizontalSpeed == (byte)MovementSpeed.Teleport) ?
+                (byte)MovementSpeed.Run : (byte)Data.AvatarObject.HorizontalSpeed;
 
             // use the generic variant with our updated values in datalayer
             SendReqMoveMessage(
                 Data.AvatarObject.CoordinateX,
                 Data.AvatarObject.CoordinateY,
-                (byte)Data.AvatarObject.HorizontalSpeed,
+                speed,
                 ForceSend);           
         }
 
