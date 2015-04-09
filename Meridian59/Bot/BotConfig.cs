@@ -112,10 +112,7 @@ namespace Meridian59.Bot
         public override void ReadXml(XmlReader Reader)
         {
             base.ReadXml(Reader);
-
-            // rootnode
-            Reader.ReadToFollowing(XMLTAG_CONFIGURATION);
-
+           
             // connection
             Reader.ReadToFollowing(XMLTAG_CONNECTION);
             Host = Reader[XMLATTRIB_HOST];

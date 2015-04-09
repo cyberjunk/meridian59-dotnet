@@ -65,19 +65,6 @@ namespace Meridian59.Launcher.Models
         public const int    DEFAULT_MOUSEAIMSPEED       = 25;
         public const int    DEFAULT_KEYROTATESPEED      = 25;
         
-        public const string PROPNAME_RESOURCESPATH          = "ResourcesPath";
-        public const string PROPNAME_PRELOADROOMS           = "PreloadRooms";
-        public const string PROPNAME_PRELOADOBJECTS         = "PreloadObjects";
-        public const string PROPNAME_PRELOADROOMTEXTURES    = "PreloadRoomTextures";
-        public const string PROPNAME_PRELOADSOUND           = "PreloadSound";
-        public const string PROPNAME_PRELOADMUSIC           = "PreloadMusic";
-        public const string PROPNAME_RESOURCESVERSION       = "ResourcesVersion";
-        public const string PROPNAME_RESOURCEMANAGER        = "ResourceManager";
-        public const string PROPNAME_COUNTROOMS             = "CountRooms";
-        public const string PROPNAME_COUNTOBJECTS           = "CountObjects";
-        public const string PROPNAME_COUNTROOMTEXTURES      = "CountRoomTextures";
-        public const string PROPNAME_COUNTSOUNDS            = "CountSounds";
-        public const string PROPNAME_COUNTMUSIC             = "CountMusic";
         public const string PROPNAME_DISPLAY                = "Display";
         public const string PROPNAME_RESOLUTION             = "Resolution";
         public const string PROPNAME_WINDOWMODE             = "WindowMode";
@@ -85,7 +72,7 @@ namespace Meridian59.Launcher.Models
         public const string PROPNAME_VSYNC                  = "VSync";
         public const string PROPNAME_FSAA                   = "FSAA";
         public const string PROPNAME_NOMIPMAPS              = "NoMipmaps";
-        public const string PROPNAME_TEXTUREFILTERING = "TextureFiltering";
+        public const string PROPNAME_TEXTUREFILTERING       = "TextureFiltering";
         public const string PROPNAME_IMAGEBUILDER           = "ImageBuilder";
         public const string PROPNAME_BITMAPSCALING          = "BitmapScaling";
         public const string PROPNAME_TEXTUREQUALITY         = "TextureQuality";
@@ -114,7 +101,6 @@ namespace Meridian59.Launcher.Models
         #endregion
 
         #region XML constants        
-        protected const string TAG_RESOURCES        = "resources";
         protected const string TAG_CONNECTIONS      = "connections";
         protected const string TAG_CONNECTION       = "connection";
         protected const string TAG_IGNORELIST       = "ignorelist";
@@ -218,13 +204,6 @@ namespace Meridian59.Launcher.Models
         protected const string ATTRIB_VALUE                 = "value";
         protected const string ATTRIB_LASTCONNECTIONINDEX   = "lastindex";
         protected const string ATTRIB_KEY                   = "key";
-        protected const string ATTRIB_VERSION               = "version";
-        protected const string ATTRIB_PATH                  = "path";
-        protected const string ATTRIB_PRELOADROOMS          = "preloadrooms";
-        protected const string ATTRIB_PRELOADOBJECTS        = "preloadobjects";
-        protected const string ATTRIB_PRELOADROOMTEXTURES   = "preloadroomtextures";
-        protected const string ATTRIB_PRELOADSOUND          = "preloadsound";
-        protected const string ATTRIB_PRELOADMUSIC          = "preloadmusic";
         protected const string ATTRIB_TYPE                  = "type";
         protected const string ATTRIB_PLAYER                = "player";
         protected const string ATTRIB_NUM                   = "num";
@@ -232,14 +211,6 @@ namespace Meridian59.Launcher.Models
         #endregion
 
         #region Fields
-        protected Files.ResourceManager resourceManager;
-        protected uint resourcesversion;
-        protected string resourcespath;
-        protected bool preloadrooms;
-        protected bool preloadobjects;
-        protected bool preloadroomtextures;
-        protected bool preloadsound;
-        protected bool preloadmusic;
         protected int display;
         protected string resolution;
         protected bool windowMode;
@@ -270,139 +241,6 @@ namespace Meridian59.Launcher.Models
         #endregion
 
         #region Properties
-        public uint ResourcesVersion
-        {
-            get { return resourcesversion; }
-            set
-            {
-                if (resourcesversion != value)
-                {
-                    resourcesversion = value;
-                    
-                    if (resourceManager != null && resourceManager.Config != null)
-                        resourceManager.Config.DownloadVersion = value;
-                    
-                    OnPropertyChanged(new PropertyChangedEventArgs(PROPNAME_RESOURCESVERSION));
-                }
-            }
-        }
-
-        public string ResourcesPath
-        {
-            get { return resourcespath; }
-            set
-            {
-                if (resourcespath != value)
-                {
-                    resourcespath = value;
-                    OnPropertyChanged(new PropertyChangedEventArgs(PROPNAME_RESOURCESPATH));
-                }
-            }
-        }
-
-        public bool PreloadRooms
-        {
-            get { return preloadrooms; }
-            set
-            {
-                if (preloadrooms != value)
-                {
-                    preloadrooms = value;
-                    OnPropertyChanged(new PropertyChangedEventArgs(PROPNAME_PRELOADROOMS));
-                }
-            }
-        }
-
-        public bool PreloadObjects
-        {
-            get { return preloadobjects; }
-            set
-            {
-                if (preloadobjects != value)
-                {
-                    preloadobjects = value;
-                    OnPropertyChanged(new PropertyChangedEventArgs(PROPNAME_PRELOADOBJECTS));
-                }
-            }
-        }
-
-        public bool PreloadRoomTextures
-        {
-            get { return preloadroomtextures; }
-            set
-            {
-                if (preloadroomtextures != value)
-                {
-                    preloadroomtextures = value;
-                    OnPropertyChanged(new PropertyChangedEventArgs(PROPNAME_PRELOADROOMTEXTURES));
-                }
-            }
-        }
-
-        public bool PreloadSound
-        {
-            get { return preloadsound; }
-            set
-            {
-                if (preloadsound != value)
-                {
-                    preloadsound = value;
-                    OnPropertyChanged(new PropertyChangedEventArgs(PROPNAME_PRELOADSOUND));
-                }
-            }
-        }
-
-        public bool PreloadMusic
-        {
-            get { return preloadmusic; }
-            set
-            {
-                if (preloadmusic != value)
-                {
-                    preloadmusic = value;
-                    OnPropertyChanged(new PropertyChangedEventArgs(PROPNAME_PRELOADMUSIC));
-                }
-            }
-        }
-
-        public Files.ResourceManager ResourceManager
-        {
-            get { return resourceManager; }
-            set
-            {
-                if (resourceManager != value)
-                {
-                    resourceManager = value;
-                    OnPropertyChanged(new PropertyChangedEventArgs(PROPNAME_RESOURCEMANAGER));
-                }
-            }
-        }
-
-        public int CountRooms 
-        { 
-            get { return (resourceManager != null) ? resourceManager.Rooms.Count : 0; } 
-        }
-        
-        public int CountObjects 
-        { 
-            get { return (resourceManager != null) ? resourceManager.Objects.Count : 0; } 
-        }
-        
-        public int CountRoomTextures 
-        { 
-            get { return (resourceManager != null) ? resourceManager.RoomTextures.Count : 0; } 
-        }
-        
-        public int CountSounds 
-        { 
-            get { return (resourceManager != null) ? resourceManager.Wavs.Count : 0; } 
-        }
-
-        public int CountMusic
-        {
-            get { return (resourceManager != null) ? resourceManager.Music.Count : 0; }
-        }
-
         public int Display
         {
             get { return display; }
@@ -817,21 +655,6 @@ namespace Meridian59.Launcher.Models
         }
 
         /// <summary>
-        /// Save options to config file
-        /// </summary>
-        public void Save()
-        {
-            XmlWriterSettings settings = new XmlWriterSettings();
-            settings.Indent = true;
-            settings.IndentChars = "  ";
-
-            XmlWriter writer = XmlWriter.Create(CONFIGFILE, settings);
-            WriteXml(writer);
-
-            writer.Close();
-        }
-
-        /// <summary>
         /// Initializes the resourcemanager with the current options
         /// </summary>
         public void InitResourceManager()
@@ -846,9 +669,8 @@ namespace Meridian59.Launcher.Models
             {
                 ConnectionInfo info = Connections[index];
 
-                // initialize the resourcemanagerconfig
-                ResourceManagerConfig config = new ResourceManagerConfig(
-                    ResourcesVersion,
+                // init the legacy resources
+                ResourceManager.InitConfig(
                     ResourcesPath + "/" + SUBPATHSTRINGDICTIONARY + "/" + info.StringDictionary,
                     ResourcesPath + "/" + SUBPATHROOMS,
                     ResourcesPath + "/" + SUBPATHOBJECTS,
@@ -856,9 +678,6 @@ namespace Meridian59.Launcher.Models
                     ResourcesPath + "/" + SUBPATHSOUNDS,
                     ResourcesPath + "/" + SUBPATHMUSIC,
                     ResourcesPath + "/" + SUBPATHMAILS);
-
-                // init the legacy resources
-                ResourceManager.InitConfig(config);
 
                 // trigger propertychanged of counts for databinding refresh
                 OnPropertyChanged(new PropertyChangedEventArgs(PROPNAME_COUNTROOMS));
@@ -903,20 +722,7 @@ namespace Meridian59.Launcher.Models
         public override void ReadXml(XmlReader Reader)
         {
             base.ReadXml(Reader);
-
-            // rootnode
-            Reader.ReadToFollowing(XMLTAG_CONFIGURATION);
-
-            // resources
-            Reader.ReadToFollowing(TAG_RESOURCES);
-            ResourcesPath = Reader[ATTRIB_PATH];
-            ResourcesVersion = Convert.ToUInt32(Reader[ATTRIB_VERSION]);
-            PreloadRooms = Convert.ToBoolean(Reader[ATTRIB_PRELOADROOMS]);
-            PreloadObjects = Convert.ToBoolean(Reader[ATTRIB_PRELOADOBJECTS]);
-            PreloadRoomTextures = Convert.ToBoolean(Reader[ATTRIB_PRELOADROOMTEXTURES]);
-            PreloadSound = Convert.ToBoolean(Reader[ATTRIB_PRELOADSOUND]);
-            PreloadMusic = Convert.ToBoolean(Reader[ATTRIB_PRELOADMUSIC]);
-
+           
             // connections
             Reader.ReadToFollowing(TAG_CONNECTIONS);
             int count = Convert.ToInt32(Reader[ATTRIB_COUNT]);
@@ -1264,21 +1070,6 @@ namespace Meridian59.Launcher.Models
         {
             base.WriteXml(Writer);
 
-            // begin
-            Writer.WriteStartDocument();
-            Writer.WriteStartElement(XMLTAG_CONFIGURATION);
-            
-            // resources
-            Writer.WriteStartElement(TAG_RESOURCES);
-            Writer.WriteAttributeString(ATTRIB_VERSION, ResourcesVersion.ToString());
-            Writer.WriteAttributeString(ATTRIB_PATH, ResourcesPath.ToString().ToLower());
-            Writer.WriteAttributeString(ATTRIB_PRELOADROOMS, PreloadRooms.ToString().ToLower());
-            Writer.WriteAttributeString(ATTRIB_PRELOADOBJECTS, PreloadObjects.ToString().ToLower());
-            Writer.WriteAttributeString(ATTRIB_PRELOADROOMTEXTURES, PreloadRoomTextures.ToString().ToLower());
-            Writer.WriteAttributeString(ATTRIB_PRELOADSOUND, PreloadSound.ToString().ToLower());
-            Writer.WriteAttributeString(ATTRIB_PRELOADMUSIC, PreloadMusic.ToString().ToLower());
-            Writer.WriteEndElement();
-
             // connections
             Writer.WriteStartElement(TAG_CONNECTIONS);
             Writer.WriteAttributeString(ATTRIB_COUNT, Connections.Count.ToString());
@@ -1623,11 +1414,6 @@ namespace Meridian59.Launcher.Models
 
             // input end
             Writer.WriteEndElement();
-
-            // end
-            Writer.WriteEndElement();
-            Writer.WriteEndDocument();
         }
-
     }
 }

@@ -231,9 +231,8 @@ namespace Meridian59.Bot
             // load legacy resources before connecting
             if (!ResourceManager.Initialized)
             {
-                // initialize the resourcemanagerconfig
-                ResourceManagerConfig config = new ResourceManagerConfig(
-                    Config.ResourceVersion,
+                // init the legacy resources
+                ResourceManager.InitConfig(
                     "./" + Config.RSBFile,
                     "./",
                     "./",
@@ -241,9 +240,6 @@ namespace Meridian59.Bot
                     "./",
                     "./",
                     "./");
-
-                // init the legacy resources
-                ResourceManager.InitConfig(config);
             }
 
             Log("SYS", "Connecting to " + Config.Host + ":" + Config.Port);

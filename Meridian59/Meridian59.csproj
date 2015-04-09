@@ -343,7 +343,6 @@
     <Compile Include="Protocol\GameMessages\LoginMode\LoginModeMessageMessage.cs" />
     <Compile Include="Protocol\GameMessages\LoginMode\ReqAdminMessageLoginMode.cs" />
     <Compile Include="Protocol\MessageEnrichment.cs" />
-    <Compile Include="Files\ResourceManagerConfig.cs" />
     <Compile Include="Files\ROO\BowtieFlags.cs" />
     <Compile Include="Files\ROO\RooSectorFlags.cs" />
     <Compile Include="Files\ROO\RooBSPItem.cs" />

@@ -71,11 +71,6 @@ namespace Meridian59.Files
         public bool Initialized { get; protected set; }
 
         /// <summary>
-        /// Configuration for ResourceManager
-        /// </summary>
-        public ResourceManagerConfig Config { get; protected set; }
-
-        /// <summary>
         /// Stores the string resources from rsc0000.rsb
         /// </summary>
         public LockingDictionary<uint, string> StringResources { get; protected set; }
@@ -87,6 +82,40 @@ namespace Meridian59.Files
         /// </summary>
         public MailList Mails { get; protected set; }
 
+        /// <summary>
+        /// The file with all the strings (usually rsc0000.rsb)
+        /// </summary>
+        public string StringResourcesFile { get; set; }
+
+        /// <summary>
+        /// Folder containing all .roo files
+        /// </summary>
+        public string RoomsFolder { get; set; }
+
+        /// <summary>
+        /// Folder containing all object BGFs
+        /// </summary>
+        public string ObjectsFolder { get; set; }
+
+        /// <summary>
+        /// Folder containing all roomtexture BGFs
+        /// </summary>
+        public string RoomTexturesFolder { get; set; }
+
+        /// <summary>
+        /// Folder containing all WAV soundfiles
+        /// </summary>
+        public string WavFolder { get; set; }
+
+        /// <summary>
+        /// Folder containing music
+        /// </summary>
+        public string MusicFolder { get; set; }
+
+        /// <summary>
+        /// Folder containing mails
+        /// </summary>
+        public string MailFolder { get; set; }
         #endregion
 
         #region Methods
@@ -108,7 +137,7 @@ namespace Meridian59.Files
                 if (bgfFile == null)
                 {
                     // load it
-                    bgfFile = new BgfFile(Config.ObjectsFolder + "/" + File);
+                    bgfFile = new BgfFile(ObjectsFolder + "/" + File);
 
                     // update the registry                 
                     Objects.TryUpdate(File, bgfFile, null);
@@ -135,7 +164,7 @@ namespace Meridian59.Files
                 if (rooFile == null)
                 {                  
                     // load it
-                    rooFile = new RooFile(Config.RoomsFolder + "/" + File);
+                    rooFile = new RooFile(RoomsFolder + "/" + File);
 
                     // resolve resource references (may load texture bgfs)
                     rooFile.ResolveResources(this);
@@ -165,7 +194,7 @@ namespace Meridian59.Files
                 if (bgfFile == null)
                 {
                     // load it
-                    bgfFile = new BgfFile(Config.RoomTexturesFolder + "/" + File);
+                    bgfFile = new BgfFile(RoomTexturesFolder + "/" + File);
 
                     // update the registry
                     RoomTextures.TryUpdate(File, bgfFile, null);
@@ -204,7 +233,7 @@ namespace Meridian59.Files
                 if (wavData == null)
                 {
                     // load it
-                    wavData = Util.LoadFileToUnmanagedMem(Config.WavFolder + "/" + File);
+                    wavData = Util.LoadFileToUnmanagedMem(WavFolder + "/" + File);
                     
                     // update the registry
                     Wavs.TryUpdate(File, wavData, null);
@@ -231,7 +260,7 @@ namespace Meridian59.Files
                 if (musicData == null)
                 {
                     // load it
-                    musicData = Util.LoadFileToUnmanagedMem(Config.MusicFolder + "/" + File);
+                    musicData = Util.LoadFileToUnmanagedMem(MusicFolder + "/" + File);
 
                     // update the registry
                     Music.TryUpdate(File, musicData, null);
@@ -267,15 +296,34 @@ namespace Meridian59.Files
         }
 
         /// <summary>
-        /// Initializes the ResourceManager from given config.
+        /// Sets pathes to required resources.
+        /// Will also remove any existing resources from the current lists.
         /// </summary>
-        /// <param name="Config"></param>
-        public void InitConfig(ResourceManagerConfig Config)
+        /// <param name="Dictionary"></param>
+        /// <param name="PathRooms"></param>
+        /// <param name="PathObjects"></param>
+        /// <param name="PathRoomTextures"></param>
+        /// <param name="PathSounds"></param>
+        /// <param name="PathMusic"></param>
+        /// <param name="PathMails"></param>
+        public void InitConfig(
+            string Dictionary,
+            string PathRooms,
+            string PathObjects, 
+            string PathRoomTextures, 
+            string PathSounds, 
+            string PathMusic, 
+            string PathMails)        
         {
-            string[] files;
+            this.StringResourcesFile = Dictionary;
+            this.RoomsFolder = PathRooms;
+            this.ObjectsFolder = PathObjects;
+            this.RoomTexturesFolder = PathRoomTextures;
+            this.WavFolder = PathSounds;
+            this.MusicFolder = PathMusic;
+            this.MailFolder = PathMails;
 
-            // save new config
-            this.Config = Config;
+            string[] files;
 
             // already executed once?
             if (Initialized)
@@ -298,10 +346,10 @@ namespace Meridian59.Files
             }
 
             // register strings
-            if (File.Exists(Config.StringResourcesFile))
+            if (File.Exists(StringResourcesFile))
             {
                 // load string resources
-                RsbFile rsbFile = new RsbFile(Config.StringResourcesFile);
+                RsbFile rsbFile = new RsbFile(StringResourcesFile);
 
                 // add to dictionary
                 foreach (KeyValuePair<uint, string> pair in rsbFile.StringResources)
@@ -309,10 +357,10 @@ namespace Meridian59.Files
             }
 
             // register objects
-            if (Directory.Exists(Config.ObjectsFolder))
+            if (Directory.Exists(ObjectsFolder))
             {
                 // get available files
-                files = Directory.GetFiles(Config.ObjectsFolder, '*' + FileExtensions.BGF);
+                files = Directory.GetFiles(ObjectsFolder, '*' + FileExtensions.BGF);
                 
                 foreach (string s in files)
                 {
@@ -324,50 +372,50 @@ namespace Meridian59.Files
             }
 
             // register roomtextures
-            if (Directory.Exists(Config.RoomTexturesFolder))
+            if (Directory.Exists(RoomTexturesFolder))
             {
                 // get available files
-                files = Directory.GetFiles(Config.RoomTexturesFolder, "grd*" + FileExtensions.BGF);
+                files = Directory.GetFiles(RoomTexturesFolder, "grd*" + FileExtensions.BGF);
                 
                 foreach (string s in files)                
                     RoomTextures.TryAdd(Path.GetFileName(s), null);                
             }
 
             // register rooms           
-            if (Directory.Exists(Config.RoomsFolder))
+            if (Directory.Exists(RoomsFolder))
             {
                 // get available files
-                files = Directory.GetFiles(Config.RoomsFolder, '*' + FileExtensions.ROO);
+                files = Directory.GetFiles(RoomsFolder, '*' + FileExtensions.ROO);
                 
                 foreach (string s in files)               
                     Rooms.TryAdd(Path.GetFileName(s), null);              
             }
 
             // register wav sounds          
-            if (Directory.Exists(Config.WavFolder))
+            if (Directory.Exists(WavFolder))
             {
                 // get available files
-                files = Directory.GetFiles(Config.WavFolder, '*' + FileExtensions.WAV);
+                files = Directory.GetFiles(WavFolder, '*' + FileExtensions.WAV);
                 
                 foreach (string s in files)                                
                     Wavs.TryAdd(Path.GetFileName(s), null);                                  
             }
 
             // register music         
-            if (Directory.Exists(Config.MusicFolder))
+            if (Directory.Exists(MusicFolder))
             {
                 // get available files
-                files = Directory.GetFiles(Config.MusicFolder, '*' + FileExtensions.MP3);
+                files = Directory.GetFiles(MusicFolder, '*' + FileExtensions.MP3);
                 
                 foreach (string s in files)                
                     Music.TryAdd(Path.GetFileName(s), null);                                  
             }
 
             // load mails          
-            if (Directory.Exists(Config.MailFolder))
+            if (Directory.Exists(MailFolder))
             {
                 // read available mail files
-                files = Directory.GetFiles(Config.MailFolder, '*' + FileExtensions.XML);
+                files = Directory.GetFiles(MailFolder, '*' + FileExtensions.XML);
                 foreach (string s in files)
                 {
                     // create mail object
@@ -398,16 +446,16 @@ namespace Meridian59.Files
         public void ReloadStrings(string RsbFile)
         {
             // update stringfile
-            Config.StringResourcesFile = RsbFile;
+            StringResourcesFile = RsbFile;
 
             // clear old entries
             StringResources.Clear();
 
             // check if new string dictionary exists
-            if (File.Exists(Config.StringResourcesFile))
+            if (File.Exists(StringResourcesFile))
             {
                 // load string resources
-                RsbFile rsbFile = new RsbFile(Config.StringResourcesFile);
+                RsbFile rsbFile = new RsbFile(StringResourcesFile);
 
                 // add to dictionary
                 foreach (KeyValuePair<uint, string> pair in rsbFile.StringResources)
@@ -426,7 +474,7 @@ namespace Meridian59.Files
             while (it.MoveNext())
             {
                 // load
-                file = new BgfFile(Path.Combine(Config.ObjectsFolder, it.Current.Key));
+                file = new BgfFile(Path.Combine(ObjectsFolder, it.Current.Key));
                 file.DecompressAll();
 
                 // update
@@ -447,7 +495,7 @@ namespace Meridian59.Files
             while (it.MoveNext())
             {
                 // load
-                file = new BgfFile(Path.Combine(Config.RoomTexturesFolder, it.Current.Key));
+                file = new BgfFile(Path.Combine(RoomTexturesFolder, it.Current.Key));
                 file.DecompressAll();
 
                 // update
@@ -468,7 +516,7 @@ namespace Meridian59.Files
             while (it.MoveNext())
             {
                 // load
-                file = new RooFile(Path.Combine(Config.RoomsFolder, it.Current.Key));
+                file = new RooFile(Path.Combine(RoomsFolder, it.Current.Key));
                 
                 // update
                 Rooms.TryUpdate(it.Current.Key, file, null);
@@ -489,7 +537,7 @@ namespace Meridian59.Files
             {
                 // load it
                 wavData = Util.LoadFileToUnmanagedMem(
-                    Path.Combine(Config.WavFolder, it.Current.Key));
+                    Path.Combine(WavFolder, it.Current.Key));
 
                 // update
                 Wavs.TryUpdate(it.Current.Key, wavData, null);
@@ -510,7 +558,7 @@ namespace Meridian59.Files
             {
                 // load it
                 mp3Data = Util.LoadFileToUnmanagedMem(
-                    Path.Combine(Config.MusicFolder, it.Current.Key));
+                    Path.Combine(MusicFolder, it.Current.Key));
 
                 // update
                 Music.TryUpdate(it.Current.Key, mp3Data, null);
@@ -553,7 +601,7 @@ namespace Meridian59.Files
                 case ListChangedType.ItemAdded:                    
                     // get full path of new mail
                     file = Path.Combine(
-                        Config.MailFolder,
+                        MailFolder,
                         Mails.LastAddedItem.GetFilename());
 
                     // save it
@@ -563,7 +611,7 @@ namespace Meridian59.Files
                 case ListChangedType.ItemDeleted:
                     // get full path of deleted mail
                     file = Path.Combine(
-                        Config.MailFolder,
+                        MailFolder,
                         Mails.LastAddedItem.GetFilename());
 
                     // delete it

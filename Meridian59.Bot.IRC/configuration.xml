@@ -1,5 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <configuration>
+
+  <resources
+    version="10016"
+    path="./resources/"
+    preloadrooms="false"
+    preloadobjects="false"
+    preloadroomtextures="false"
+    preloadsound="false"
+    preloadmusic="false" />
   
   <!-- 
     CONNECTION:

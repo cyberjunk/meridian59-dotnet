@@ -97,9 +97,8 @@ namespace Meridian59.ExampleClient
             // load legacy resources before connecting
             if (!ResourceManager.Initialized)
             {
-                // initialize the resourcemanagerconfig
-                ResourceManagerConfig config = new ResourceManagerConfig(
-                    Properties.Settings.Default.DownloadVersion,
+                // init the legacy resources
+                ResourceManager.InitConfig(
                     "resource/rsc0000.rsb",
                     "resource/rooms",
                     "resource/objects",
@@ -107,9 +106,6 @@ namespace Meridian59.ExampleClient
                     "resource/wavs",
                     "resource/music",
                     "mail");
-
-                // init the legacy resources
-                ResourceManager.InitConfig(config);
             }
 
             // start connect to server

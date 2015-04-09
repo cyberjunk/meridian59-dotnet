@@ -632,7 +632,7 @@ namespace Meridian59.Client
         {
             // create message instance
             ReqGameStateMessage message = new ReqGameStateMessage(
-                ResourceManager.Config.DownloadVersion, 
+                Config.ResourcesVersion, 
                 AppVersionMajor, 
                 AppVersionMinor, 
                 String.Empty);
