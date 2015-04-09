@@ -38,49 +38,58 @@ namespace Meridian59.Files
         protected const string DEFAULTSTRINGFILE = "rsc0000.rsb";
         #endregion
 
+        #region Fields
+        protected readonly LockingDictionary<uint, string> stringResources = new LockingDictionary<uint, string>();
+        protected readonly LockingDictionary<string, BgfFile> objects = new LockingDictionary<string, BgfFile>(StringComparer.OrdinalIgnoreCase);
+        protected readonly LockingDictionary<string, BgfFile> roomTextures = new LockingDictionary<string, BgfFile>(StringComparer.OrdinalIgnoreCase);
+        protected readonly LockingDictionary<string, RooFile> rooms = new LockingDictionary<string, RooFile>(StringComparer.OrdinalIgnoreCase);
+        protected readonly LockingDictionary<string, Tuple<IntPtr, uint>> wavs = new LockingDictionary<string, Tuple<IntPtr, uint>>(StringComparer.OrdinalIgnoreCase);
+        protected readonly LockingDictionary<string, Tuple<IntPtr, uint>> music = new LockingDictionary<string, Tuple<IntPtr, uint>>(StringComparer.OrdinalIgnoreCase);
+        protected readonly MailList mails = new MailList(200);
+        #endregion
+
         #region Properties
+        /// <summary>
+        /// Stores the string resources from rsc0000.rsb
+        /// </summary>
+        public LockingDictionary<uint, string> StringResources { get { return stringResources; } }
 
         /// <summary>
         /// The dictionary containing all bgf filenames related to objects (no grdXXXX.bgf)
         /// </summary>
-        public LockingDictionary<string, BgfFile> Objects { get; protected set; }
+        public LockingDictionary<string, BgfFile> Objects { get { return objects; } }
 
         /// <summary>
         /// The dictionary containing all bgf filenames related to roomtextures (grdXXXX.bgf)
         /// </summary>
-        public LockingDictionary<string, BgfFile> RoomTextures { get; protected set; }
+        public LockingDictionary<string, BgfFile> RoomTextures { get { return roomTextures; } }
 
         /// <summary>
         /// The dictionary containing the room resources (filenames)
         /// </summary>
-        public LockingDictionary<string, RooFile> Rooms { get; protected set; }
+        public LockingDictionary<string, RooFile> Rooms { get { return rooms; } }
 
         /// <summary>
         /// WAV soundfiles
         /// </summary>
-        public LockingDictionary<string, Tuple<IntPtr, uint>> Wavs { get; protected set; }
+        public LockingDictionary<string, Tuple<IntPtr, uint>> Wavs { get { return wavs; } }
 
         /// <summary>
         /// Music
         /// </summary>
-        public LockingDictionary<string, Tuple<IntPtr, uint>> Music { get; protected set; }
-
-        /// <summary>
-        /// True if InitConfig was executed.
-        /// </summary>
-        public bool Initialized { get; protected set; }
-
-        /// <summary>
-        /// Stores the string resources from rsc0000.rsb
-        /// </summary>
-        public LockingDictionary<uint, string> StringResources { get; protected set; }
+        public LockingDictionary<string, Tuple<IntPtr, uint>> Music { get { return music; } }
 
         /// <summary>
         /// The mail objects.
         /// Adding or removing entries here will save/delete them also
         /// from the disk once InitConfig was called.
         /// </summary>
-        public MailList Mails { get; protected set; }
+        public MailList Mails { get { return mails; } }
+
+        /// <summary>
+        /// True if InitConfig was executed.
+        /// </summary>
+        public bool Initialized { get; protected set; }
 
         /// <summary>
         /// The file with all the strings (usually rsc0000.rsb)
@@ -119,7 +128,6 @@ namespace Meridian59.Files
         #endregion
 
         #region Methods
-
         /// <summary>
         /// Tries to retrieve a BGF file from the Objects dictionary.
         /// Will load the file from disk, if not yet loaded.
@@ -573,18 +581,6 @@ namespace Meridian59.Files
         /// </summary>
         public ResourceManager()
         {
-            // string lookup dictionary
-            StringResources = new LockingDictionary<uint, string>();
-
-            // maillist
-            Mails = new MailList(200);
-
-            // lookup dictionaries for resources
-            Objects = new LockingDictionary<string, BgfFile>(StringComparer.OrdinalIgnoreCase);
-            RoomTextures = new LockingDictionary<string, BgfFile>(StringComparer.OrdinalIgnoreCase);
-            Rooms = new LockingDictionary<string, RooFile>(StringComparer.OrdinalIgnoreCase);
-            Wavs = new LockingDictionary<string, Tuple<IntPtr, uint>>(StringComparer.OrdinalIgnoreCase);
-            Music = new LockingDictionary<string, Tuple<IntPtr, uint>>(StringComparer.OrdinalIgnoreCase);
         }
 
         /// <summary>
