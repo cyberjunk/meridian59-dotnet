@@ -1,6 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <configuration>
 
+  <!-- 
+    RESOURCES:
+      version: the Download= value from your client's meridian.ini
+      path: no need to touch this
+      preloadrooms/..: no need to touch these
+  -->
   <resources
     version="10016"
     path="./"
@@ -20,7 +26,6 @@
       character: your shopcharacter to log in
       majorverson: see client menu help/about
       minorversion: see client menu help/about
-      resourceversion: the Download= value from your client's meridian.ini
       logfile: the bot will log also to this file (cleaned at startup, "" to disable)
   -->
   <connection
@@ -32,7 +37,6 @@
     character="charactername"
     majorversion="70"
     minorversion="1"
-    resourceversion="10016"
     logfile="bot.log" />
 
   <!--

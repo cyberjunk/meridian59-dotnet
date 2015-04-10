@@ -41,7 +41,6 @@ namespace Meridian59.Bot
         protected const string XMLATTRIB_CHARACTER          = "character";
         protected const string XMLATTRIB_MAJORVERSION       = "majorversion";
         protected const string XMLATTRIB_MINORVERSION       = "minorversion";
-        protected const string XMLATTRIB_RESOURCEVERSION    = "resourceversion";
         protected const string XMLATTRIB_LOGFILE            = "logfile";
         protected const string XMLATTRIB_NAME               = "name";
         #endregion
@@ -55,7 +54,6 @@ namespace Meridian59.Bot
         public string Character { get; protected set; }
         public byte MajorVersion { get; protected set; }
         public byte MinorVersion { get; protected set; }
-        public uint ResourceVersion { get; protected set; }
         public string LogFile { get; protected set; }
         public List<String> Admins { get; protected set; }
         #endregion
@@ -123,7 +121,6 @@ namespace Meridian59.Bot
             Character = Reader[XMLATTRIB_CHARACTER];
             MajorVersion = Convert.ToByte(Reader[XMLATTRIB_MAJORVERSION]);
             MinorVersion = Convert.ToByte(Reader[XMLATTRIB_MINORVERSION]);
-            ResourceVersion = Convert.ToUInt32(Reader[XMLATTRIB_RESOURCEVERSION]);
             LogFile = Reader[XMLATTRIB_LOGFILE];
 
             // admins list
