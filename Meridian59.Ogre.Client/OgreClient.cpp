@@ -575,7 +575,7 @@ namespace Meridian59 { namespace Ogre
         ConnectionInfo^ info = Config->Connections[index];
 
         // make sure correct stringdictionary for this server is laoded
-        ResourceManager->ReloadStrings(Config->ResourcesPath + "/" + Options::SUBPATHSTRINGDICTIONARY
+        ResourceManager->ReloadStrings(Config->ResourcesPath + "/" + Options::SUBPATHSTRINGS
             + "/" + info->StringDictionary);
 
 		// create ignorelist

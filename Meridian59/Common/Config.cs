@@ -29,10 +29,15 @@ namespace Meridian59.Common
     public class Config : IXmlSerializable, INotifyPropertyChanged
     {
         #region Constants
-        /// <summary>
-        /// Filename of configuration to load
-        /// </summary>
         public const string CONFIGFILE = "configuration.xml";
+        
+        public const string SUBPATHSTRINGS          = "strings";
+        public const string SUBPATHROOMS            = "rooms";
+        public const string SUBPATHROOMTEXTURES     = "bgftextures";
+        public const string SUBPATHOBJECTS          = "bgfobjects";
+        public const string SUBPATHSOUNDS           = "sounds";
+        public const string SUBPATHMUSIC            = "music";
+        public const string SUBPATHMAILS            = "mails";
 
         public const string PROPNAME_RESOURCESPATH          = "ResourcesPath";
         public const string PROPNAME_PRELOADROOMS           = "PreloadRooms";

@@ -36,13 +36,6 @@ namespace Meridian59.Launcher.Models
     public class Options : Config, IClearable
     {
         #region Constants
-        public const string SUBPATHSTRINGDICTIONARY = "strings";
-        public const string SUBPATHROOMS            = "rooms";
-        public const string SUBPATHROOMTEXTURES     = "bgftextures";
-        public const string SUBPATHOBJECTS          = "bgfobjects";
-        public const string SUBPATHSOUNDS           = "sounds";
-        public const string SUBPATHMUSIC            = "music";
-        public const string SUBPATHMAILS            = "mails";
 
         public const int    DEFAULT_DISPLAY             = 0;
         public const string DEFAULT_RESOLUTION          = "1024 x 768";
@@ -671,7 +664,7 @@ namespace Meridian59.Launcher.Models
 
                 // init the legacy resources
                 ResourceManager.InitConfig(
-                    ResourcesPath + "/" + SUBPATHSTRINGDICTIONARY + "/" + info.StringDictionary,
+                    ResourcesPath + "/" + SUBPATHSTRINGS + "/" + info.StringDictionary,
                     ResourcesPath + "/" + SUBPATHROOMS,
                     ResourcesPath + "/" + SUBPATHOBJECTS,
                     ResourcesPath + "/" + SUBPATHROOMTEXTURES,
