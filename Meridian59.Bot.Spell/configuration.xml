@@ -15,6 +15,37 @@
     preloadroomtextures="false"
     preloadsound="false"
     preloadmusic="false" />
+
+  <!-- 
+    CONNECTIONS:
+      selectedindex: the 0-based entryindex to use from below
+  -->
+  <connections selectedindex="0"> 
+    <!-- 
+      CONNECTION:
+        name: just a name
+        host: DNS or IP of the M59 server
+        port: TCP port of the M59 server 
+        stringdictionary: string-resources (get this from the "resource" folder of your client)
+        username: your username
+    -->
+    <connection
+      name="103"
+      host="meridian103.openmeridian.org"
+      port="5903"
+      stringdictionary="rsc0000-103.rsb"
+      username="user">
+      <ignorelist />
+    </connection>
+    <connection
+      name="localhost"
+      host="127.0.0.1"
+      port="5959"
+      stringdictionary="rsc0000-git.rsb"
+      username="user">
+      <ignorelist />
+    </connection>
+  </connections>
   
   <!-- 
     CONNECTION:

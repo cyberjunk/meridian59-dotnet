@@ -478,10 +478,14 @@ namespace Meridian59 { namespace Ogre
         }
 
 		// update ignorelist from data to config
-		ConnectionInfo^ conInfo = Config->Connections[Config->SelectedConnectionIndex];
-		conInfo->IgnoreList->Clear();
-		for each(::System::String^ s in Data->IgnoreList)
-			conInfo->IgnoreList->Add(s);
+		ConnectionInfo^ conInfo = Config->SelectedConnectionInfo;
+
+		if (conInfo)
+		{
+			conInfo->IgnoreList->Clear();
+			for each(::System::String^ s in Data->IgnoreList)
+				conInfo->IgnoreList->Add(s);
+		}
 
         // save config
         Config->Save();
@@ -570,9 +574,11 @@ namespace Meridian59 { namespace Ogre
     };
 
 	void OgreClient::OnLauncherConnectRequest(::System::Object^ sender, ::System::EventArgs^ e)
-    {
-        int index = Config->SelectedConnectionIndex;           
-        ConnectionInfo^ info = Config->Connections[index];
+    {          
+		ConnectionInfo^ info = Config->SelectedConnectionInfo;
+
+		if (!info)
+			return;
 
         // make sure correct stringdictionary for this server is laoded
         ResourceManager->ReloadStrings(Config->ResourcesPath + "/" + Options::SUBPATHSTRINGS
@@ -897,8 +903,7 @@ namespace Meridian59 { namespace Ogre
 
 	void OgreClient::HandleGetLoginMessage(GetLoginMessage^ Message)
     {
-        int index = Config->SelectedConnectionIndex;
-        ConnectionInfo^ info = Config->Connections[index];
+        ConnectionInfo^ info = Config->SelectedConnectionInfo;
         SendLoginMessage(info->Username, info->Password);
     };
 

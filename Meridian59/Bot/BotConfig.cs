@@ -29,20 +29,15 @@ namespace Meridian59.Bot
     public abstract class BotConfig : Config
     {
         #region Constants
-        protected const string XMLTAG_CONNECTION            = "connection";
         protected const string XMLTAG_BOT                   = "bot";
         protected const string XMLTAG_ADMINS                = "admins";
         protected const string XMLTAG_ITEM                  = "item";
-        protected const string XMLATTRIB_HOST               = "host";
-        protected const string XMLATTRIB_PORT               = "port";
         protected const string XMLATTRIB_RSBFILE            = "rsbfile";
-        protected const string XMLATTRIB_USERNAME           = "username";
         protected const string XMLATTRIB_PASSWORD           = "password";
         protected const string XMLATTRIB_CHARACTER          = "character";
         protected const string XMLATTRIB_MAJORVERSION       = "majorversion";
         protected const string XMLATTRIB_MINORVERSION       = "minorversion";
         protected const string XMLATTRIB_LOGFILE            = "logfile";
-        protected const string XMLATTRIB_NAME               = "name";
         #endregion
 
         #region Properties

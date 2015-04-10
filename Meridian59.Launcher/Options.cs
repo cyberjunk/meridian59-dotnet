@@ -82,9 +82,7 @@ namespace Meridian59.Launcher.Models
         public const string PROPNAME_KEYBINDING             = "KeyBinding";
         public const string PROPNAME_MOUSEAIMSPEED          = "MouseAimSpeed";
         public const string PROPNAME_KEYROTATESPEED         = "KeyRotateSpeed";
-
-        public const string PROPNAME_CONNECTIONS                = "Connections";
-        public const string PROPNAME_SELECTEDCONNECTIONINDEX    = "SelectedConnectionIndex";
+       
         public const string PROPNAME_ACTIONBUTTONSETS           = "ActionButtonSets";
 
         public const string BUTTONTYPE_SPELL    = "spell";
@@ -94,10 +92,6 @@ namespace Meridian59.Launcher.Models
         #endregion
 
         #region XML constants        
-        protected const string TAG_CONNECTIONS      = "connections";
-        protected const string TAG_CONNECTION       = "connection";
-        protected const string TAG_IGNORELIST       = "ignorelist";
-        protected const string TAG_IGNORE           = "ignore";
         protected const string TAG_ENGINE           = "engine";
         protected const string TAG_DISPLAY          = "display";
         protected const string TAG_RESOLUTION       = "resolution";
@@ -189,13 +183,7 @@ namespace Meridian59.Launcher.Models
 
         protected const string ATTRIB_COUNT                 = "count";
         protected const string ATTRIB_ENABLED               = "enabled";
-        protected const string ATTRIB_NAME                  = "name";
-        protected const string ATTRIB_HOST                  = "host";
-        protected const string ATTRIB_PORT                  = "port";
-        protected const string ATTRIB_STRINGDICTIONARY      = "stringdictionary";
-        protected const string ATTRIB_USERNAME              = "username";
         protected const string ATTRIB_VALUE                 = "value";
-        protected const string ATTRIB_SELECTEDINDEX         = "selectedindex";
         protected const string ATTRIB_KEY                   = "key";
         protected const string ATTRIB_TYPE                  = "type";
         protected const string ATTRIB_PLAYER                = "player";
@@ -227,8 +215,7 @@ namespace Meridian59.Launcher.Models
         protected KeyBinding keyBinding;
         protected int mouseAimSpeed;
         protected int keyRotateSpeed;
-        protected BindingList<ConnectionInfo> connections = new BindingList<ConnectionInfo>();
-        protected int selectedConnectionIndex;
+
         protected KeysConverter keyConverter = new KeysConverter();
         protected List<ActionButtonList> actionButtonSets = new List<ActionButtonList>();
         #endregion
@@ -533,31 +520,7 @@ namespace Meridian59.Launcher.Models
             }
         }
 
-        public BindingList<ConnectionInfo> Connections
-        {
-            get { return connections; }
-            set
-            {
-                if (connections != value)
-                {
-                    connections = value;
-                    OnPropertyChanged(new PropertyChangedEventArgs(PROPNAME_CONNECTIONS));
-                }
-            }
-        }
-
-        public int SelectedConnectionIndex
-        {
-            get { return selectedConnectionIndex; }
-            set
-            {
-                if (selectedConnectionIndex != value)
-                {
-                    selectedConnectionIndex = value;
-                    OnPropertyChanged(new PropertyChangedEventArgs(PROPNAME_SELECTEDCONNECTIONINDEX));
-                }
-            }
-        }
+        
 
         public List<ActionButtonList> ActionButtonSets
         {
@@ -717,58 +680,7 @@ namespace Meridian59.Launcher.Models
             base.ReadXml(Reader);
 
             int count;
-
-            /******************************************************************************/
-
-            // connections
-            connections.Clear();
-
-            Reader.ReadToFollowing(TAG_CONNECTIONS);
-            SelectedConnectionIndex = Convert.ToInt32(Reader[ATTRIB_SELECTEDINDEX]);
-            
-            if (Reader.ReadToDescendant(TAG_CONNECTION))
-            {
-                do
-                {
-                    string name = Reader[ATTRIB_NAME];
-                    string host = Reader[ATTRIB_HOST];
-                    ushort port = Convert.ToUInt16(Reader[ATTRIB_PORT]);
-                    string stringdictionary = Reader[ATTRIB_STRINGDICTIONARY];
-                    string username = Reader[ATTRIB_USERNAME];
-                    List<string> ignorelist = new List<string>();
-
-                    if (Reader.ReadToDescendant(TAG_IGNORELIST))
-                    { 
-                        if (Reader.ReadToDescendant(TAG_IGNORE))
-                        {
-                            do
-                            {
-                                ignorelist.Add(Reader[ATTRIB_NAME]);
-                            }
-                            while (Reader.ReadToNextSibling(TAG_IGNORE));
-
-                            Reader.ReadEndElement();
-                        }
-                        else
-                        {
-                            Reader.ReadStartElement(TAG_IGNORELIST);
-                        }
-
-                        Reader.ReadEndElement();
-                    }
-
-                    // add connection
-                    connections.Add(new ConnectionInfo(
-                        name,
-                        host,
-                        port,
-                        stringdictionary,
-                        username,
-                        ignorelist));                  
-                }
-                while (Reader.ReadToNextSibling(TAG_CONNECTION));
-            }
-
+           
             /******************************************************************************/
 
             // engine
@@ -1071,7 +983,7 @@ namespace Meridian59.Launcher.Models
                     buttonSet.Add(new ActionButtonConfig(
                         Convert.ToInt32(Reader[ATTRIB_NUM]), 
                         GetButtonType(Reader[ATTRIB_TYPE]), 
-                        Reader[ATTRIB_NAME]));
+                        Reader[XMLATTRIB_NAME]));
                 }
                 
                 // add buttonset to known ones
@@ -1082,33 +994,6 @@ namespace Meridian59.Launcher.Models
         public override void WriteXml(XmlWriter Writer)
         {
             base.WriteXml(Writer);
-
-            // connections
-            Writer.WriteStartElement(TAG_CONNECTIONS);
-            Writer.WriteAttributeString(ATTRIB_COUNT, Connections.Count.ToString());
-            Writer.WriteAttributeString(ATTRIB_SELECTEDINDEX, SelectedConnectionIndex.ToString());
-
-            for (int i = 0; i < connections.Count; i++)
-            {
-                Writer.WriteStartElement(TAG_CONNECTION);
-                Writer.WriteAttributeString(ATTRIB_NAME, connections[i].Name);
-                Writer.WriteAttributeString(ATTRIB_HOST, connections[i].Host);
-                Writer.WriteAttributeString(ATTRIB_PORT, connections[i].Port.ToString());
-                Writer.WriteAttributeString(ATTRIB_STRINGDICTIONARY, connections[i].StringDictionary);
-                Writer.WriteAttributeString(ATTRIB_USERNAME, connections[i].Username);
-
-                Writer.WriteStartElement(TAG_IGNORELIST);
-                for (int j = 0; j < connections[i].IgnoreList.Count; j++)
-                {
-                    Writer.WriteStartElement(TAG_IGNORE);
-                    Writer.WriteAttributeString(ATTRIB_NAME, connections[i].IgnoreList[j]);
-                    Writer.WriteEndElement();
-                }
-                Writer.WriteEndElement();
-
-                Writer.WriteEndElement();
-            }
-            Writer.WriteEndElement();
 
             // engine
             Writer.WriteStartElement(TAG_ENGINE);
@@ -1414,7 +1299,7 @@ namespace Meridian59.Launcher.Models
                     Writer.WriteStartElement(TAG_ACTIONBUTTON);
                     Writer.WriteAttributeString(ATTRIB_NUM, actionButtonSets[i][j].Num.ToString());
                     Writer.WriteAttributeString(ATTRIB_TYPE, actionButtonSets[i][j].ButtonType.ToString().ToLower());
-                    Writer.WriteAttributeString(ATTRIB_NAME, actionButtonSets[i][j].Name.ToLower());
+                    Writer.WriteAttributeString(XMLATTRIB_NAME, actionButtonSets[i][j].Name.ToLower());
                     Writer.WriteEndElement();
                 }
 

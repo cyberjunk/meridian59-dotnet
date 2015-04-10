@@ -15,11 +15,13 @@
 */
 
 using System;
+using System.IO;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 using System.ComponentModel;
-using System.IO;
+using Meridian59.Data.Models;
+using System.Collections.Generic;
 
 namespace Meridian59.Common
 {
@@ -39,22 +41,28 @@ namespace Meridian59.Common
         public const string SUBPATHMUSIC            = "music";
         public const string SUBPATHMAILS            = "mails";
 
-        public const string PROPNAME_RESOURCESPATH          = "ResourcesPath";
-        public const string PROPNAME_PRELOADROOMS           = "PreloadRooms";
-        public const string PROPNAME_PRELOADOBJECTS         = "PreloadObjects";
-        public const string PROPNAME_PRELOADROOMTEXTURES    = "PreloadRoomTextures";
-        public const string PROPNAME_PRELOADSOUND           = "PreloadSound";
-        public const string PROPNAME_PRELOADMUSIC           = "PreloadMusic";
-        public const string PROPNAME_RESOURCESVERSION       = "ResourcesVersion";
-        public const string PROPNAME_RESOURCEMANAGER        = "ResourceManager";
-        public const string PROPNAME_COUNTROOMS             = "CountRooms";
-        public const string PROPNAME_COUNTOBJECTS           = "CountObjects";
-        public const string PROPNAME_COUNTROOMTEXTURES      = "CountRoomTextures";
-        public const string PROPNAME_COUNTSOUNDS            = "CountSounds";
-        public const string PROPNAME_COUNTMUSIC             = "CountMusic";
+        public const string PROPNAME_RESOURCESPATH              = "ResourcesPath";
+        public const string PROPNAME_PRELOADROOMS               = "PreloadRooms";
+        public const string PROPNAME_PRELOADOBJECTS             = "PreloadObjects";
+        public const string PROPNAME_PRELOADROOMTEXTURES        = "PreloadRoomTextures";
+        public const string PROPNAME_PRELOADSOUND               = "PreloadSound";
+        public const string PROPNAME_PRELOADMUSIC               = "PreloadMusic";
+        public const string PROPNAME_RESOURCESVERSION           = "ResourcesVersion";
+        public const string PROPNAME_RESOURCEMANAGER            = "ResourceManager";
+        public const string PROPNAME_COUNTROOMS                 = "CountRooms";
+        public const string PROPNAME_COUNTOBJECTS               = "CountObjects";
+        public const string PROPNAME_COUNTROOMTEXTURES          = "CountRoomTextures";
+        public const string PROPNAME_COUNTSOUNDS                = "CountSounds";
+        public const string PROPNAME_COUNTMUSIC                 = "CountMusic";
+        public const string PROPNAME_CONNECTIONS                = "Connections";
+        public const string PROPNAME_SELECTEDCONNECTIONINDEX    = "SelectedConnectionIndex";
 
         protected const string XMLTAG_CONFIGURATION             = "configuration";
         protected const string XMLTAG_RESOURCES                 = "resources";
+        protected const string XMLTAG_CONNECTIONS               = "connections";
+        protected const string XMLTAG_CONNECTION                = "connection";
+        protected const string XMLTAG_IGNORELIST                = "ignorelist";
+        protected const string XMLTAG_IGNORE                    = "ignore";       
         protected const string XMLATTRIB_VERSION                = "version";
         protected const string XMLATTRIB_PATH                   = "path";
         protected const string XMLATTRIB_PRELOADROOMS           = "preloadrooms";
@@ -62,10 +70,16 @@ namespace Meridian59.Common
         protected const string XMLATTRIB_PRELOADROOMTEXTURES    = "preloadroomtextures";
         protected const string XMLATTRIB_PRELOADSOUND           = "preloadsound";
         protected const string XMLATTRIB_PRELOADMUSIC           = "preloadmusic";
+        protected const string XMLATTRIB_NAME                   = "name";
+        protected const string XMLATTRIB_HOST                   = "host";
+        protected const string XMLATTRIB_PORT                   = "port";
+        protected const string XMLATTRIB_STRINGDICTIONARY       = "stringdictionary";
+        protected const string XMLATTRIB_USERNAME               = "username";
+        protected const string XMLATTRIB_SELECTEDINDEX          = "selectedindex";
         #endregion
       
         #region Fields
-        protected Files.ResourceManager resourceManager;
+        protected Meridian59.Files.ResourceManager resourceManager;
         protected uint resourcesversion;
         protected string resourcespath;
         protected bool preloadrooms;
@@ -73,6 +87,8 @@ namespace Meridian59.Common
         protected bool preloadroomtextures;
         protected bool preloadsound;
         protected bool preloadmusic;
+        protected readonly BindingList<ConnectionInfo> connections = new BindingList<ConnectionInfo>();
+        protected int selectedConnectionIndex;
         #endregion
 
         #region Properties
@@ -234,6 +250,43 @@ namespace Meridian59.Common
         {
             get { return (resourceManager != null) ? resourceManager.Music.Count : 0; }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public BindingList<ConnectionInfo> Connections
+        {
+            get { return connections; }          
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int SelectedConnectionIndex
+        {
+            get { return selectedConnectionIndex; }
+            set
+            {
+                if (selectedConnectionIndex != value)
+                {
+                    selectedConnectionIndex = value;
+                    OnPropertyChanged(new PropertyChangedEventArgs(PROPNAME_SELECTEDCONNECTIONINDEX));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Returns the entry from Connections based on SelectedConnectionIndex.
+        /// Or Null if this index does not exist.
+        /// </summary>
+        public ConnectionInfo SelectedConnectionInfo
+        {
+            get 
+            {
+                return (selectedConnectionIndex > -1 && connections.Count > selectedConnectionIndex) ?
+                    connections[selectedConnectionIndex] : null;
+            }
+        }
         #endregion
 
         #region INotifyPropertyChanged
@@ -289,15 +342,13 @@ namespace Meridian59.Common
             // create xml reader
             XmlReader reader = XmlReader.Create(CONFIGFILE);
             
-            /******************************************************************************/
-
-            // rootnode
+            // read rootnode
             if (!reader.ReadToFollowing(XMLTAG_CONFIGURATION))
                 return;
 
-            /******************************************************************************/
-            
-            // resources
+            /******************************************************************************/           
+            // PART I: RESOURCES
+
             if (!reader.ReadToFollowing(XMLTAG_RESOURCES))
                 return;
 
@@ -309,6 +360,58 @@ namespace Meridian59.Common
             PreloadSound        = Convert.ToBoolean(reader[XMLATTRIB_PRELOADSOUND]);
             PreloadMusic        = Convert.ToBoolean(reader[XMLATTRIB_PRELOADMUSIC]);
             
+            /******************************************************************************/
+            // PART II: Connections
+
+            if (!reader.ReadToFollowing(XMLTAG_CONNECTIONS))
+                return;
+
+            SelectedConnectionIndex = Convert.ToInt32(reader[XMLATTRIB_SELECTEDINDEX]);
+
+            connections.Clear();
+            if (reader.ReadToDescendant(XMLTAG_CONNECTION))
+            {
+                do
+                {
+                    string name             = reader[XMLATTRIB_NAME];
+                    string host             = reader[XMLATTRIB_HOST];
+                    ushort port             = Convert.ToUInt16(reader[XMLATTRIB_PORT]);
+                    string stringdictionary = reader[XMLATTRIB_STRINGDICTIONARY];
+                    string username         = reader[XMLATTRIB_USERNAME];
+
+                    List<string> ignorelist = new List<string>();
+                    if (reader.ReadToDescendant(XMLTAG_IGNORELIST))
+                    {
+                        if (reader.ReadToDescendant(XMLTAG_IGNORE))
+                        {
+                            do
+                            {
+                                ignorelist.Add(reader[XMLATTRIB_NAME]);
+                            }
+                            while (reader.ReadToNextSibling(XMLTAG_IGNORE));
+
+                            reader.ReadEndElement();
+                        }
+                        else
+                        {
+                            reader.ReadStartElement(XMLTAG_IGNORELIST);
+                        }
+
+                        reader.ReadEndElement();
+                    }
+
+                    // add connection
+                    connections.Add(new ConnectionInfo(
+                        name,
+                        host,
+                        port,
+                        stringdictionary,
+                        username,
+                        ignorelist));
+                }
+                while (reader.ReadToNextSibling(XMLTAG_CONNECTION));
+            }
+
             /******************************************************************************/
 
             // let deriving classes load their stuff
@@ -334,7 +437,9 @@ namespace Meridian59.Common
             writer.WriteStartDocument();
             writer.WriteStartElement(XMLTAG_CONFIGURATION);
 
-            // resources
+            /******************************************************************************/
+            // PART I: RESOURCES
+
             writer.WriteStartElement(XMLTAG_RESOURCES);
             writer.WriteAttributeString(XMLATTRIB_VERSION, ResourcesVersion.ToString());
             writer.WriteAttributeString(XMLATTRIB_PATH, ResourcesPath.ToString().ToLower());
@@ -344,6 +449,39 @@ namespace Meridian59.Common
             writer.WriteAttributeString(XMLATTRIB_PRELOADSOUND, PreloadSound.ToString().ToLower());
             writer.WriteAttributeString(XMLATTRIB_PRELOADMUSIC, PreloadMusic.ToString().ToLower());
             writer.WriteEndElement();
+
+            /******************************************************************************/
+            // PART II: Connections
+
+            writer.WriteStartElement(XMLTAG_CONNECTIONS);
+            writer.WriteAttributeString(XMLATTRIB_SELECTEDINDEX, SelectedConnectionIndex.ToString());
+
+            for (int i = 0; i < connections.Count; i++)
+            {
+                // connection
+                writer.WriteStartElement(XMLTAG_CONNECTION);
+                writer.WriteAttributeString(XMLATTRIB_NAME, connections[i].Name);
+                writer.WriteAttributeString(XMLATTRIB_HOST, connections[i].Host);
+                writer.WriteAttributeString(XMLATTRIB_PORT, connections[i].Port.ToString());
+                writer.WriteAttributeString(XMLATTRIB_STRINGDICTIONARY, connections[i].StringDictionary);
+                writer.WriteAttributeString(XMLATTRIB_USERNAME, connections[i].Username);
+
+                // ignorelist
+                writer.WriteStartElement(XMLTAG_IGNORELIST);
+                for (int j = 0; j < connections[i].IgnoreList.Count; j++)
+                {
+                    writer.WriteStartElement(XMLTAG_IGNORE);
+                    writer.WriteAttributeString(XMLATTRIB_NAME, connections[i].IgnoreList[j]);
+                    writer.WriteEndElement();
+                }
+                writer.WriteEndElement();
+
+                writer.WriteEndElement();
+            }
+
+            writer.WriteEndElement();
+
+            /******************************************************************************/
 
             // let deriving classes write their stuff
             WriteXml(writer);
