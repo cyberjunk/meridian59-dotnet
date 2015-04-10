@@ -96,11 +96,11 @@
     <Content Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Resources\Legacy\rsc0000-103.rsb">
+    <None Include="..\Resources\strings\rsc0000-103.rsb">
       <Link>rsc0000-103.rsb</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="..\Resources\Legacy\rsc0000.rsb">
+    <None Include="..\Resources\strings\rsc0000.rsb">
       <Link>rsc0000.rsb</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -36,12 +36,12 @@ namespace Meridian59.Launcher.Models
     public class Options : Config, IClearable
     {
         #region Constants
-        public const string SUBPATHSTRINGDICTIONARY = "legacy";
-        public const string SUBPATHROOMS            = "legacy/rooms";
-        public const string SUBPATHROOMTEXTURES     = "legacy/roomtextures";
-        public const string SUBPATHOBJECTS          = "legacy/objects";
-        public const string SUBPATHSOUNDS           = "legacy/sounds";
-        public const string SUBPATHMUSIC            = "legacy/music";
+        public const string SUBPATHSTRINGDICTIONARY = "strings";
+        public const string SUBPATHROOMS            = "rooms";
+        public const string SUBPATHROOMTEXTURES     = "bgftextures";
+        public const string SUBPATHOBJECTS          = "bgfobjects";
+        public const string SUBPATHSOUNDS           = "sounds";
+        public const string SUBPATHMUSIC            = "music";
         public const string SUBPATHMAILS            = "mails";
 
         public const int    DEFAULT_DISPLAY             = 0;

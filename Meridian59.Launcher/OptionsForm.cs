@@ -725,7 +725,7 @@ namespace Meridian59.Launcher
             {
                 connectionInfoView1.DataSource = DataSource.Connections[cbConnections.SelectedIndex];
 
-                string[] dictionaryFiles = Directory.GetFiles(dataSource.ResourcesPath + "/Legacy/", "*.rsb");
+                string[] dictionaryFiles = Directory.GetFiles(dataSource.ResourcesPath + "/strings/", "*.rsb");
                 for (int i = 0; i < dictionaryFiles.Length; i++)
                     dictionaryFiles[i] = Path.GetFileName(dictionaryFiles[i]);
 
