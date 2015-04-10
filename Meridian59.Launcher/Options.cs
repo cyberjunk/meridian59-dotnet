@@ -83,9 +83,9 @@ namespace Meridian59.Launcher.Models
         public const string PROPNAME_MOUSEAIMSPEED          = "MouseAimSpeed";
         public const string PROPNAME_KEYROTATESPEED         = "KeyRotateSpeed";
 
-        public const string PROPNAME_CONNECTIONS            = "Connections";
-        public const string PROPNAME_LASTCONNECTIONINDEX    = "LastConnectionIndex";
-        public const string PROPNAME_ACTIONBUTTONSETS       = "ActionButtonSets";
+        public const string PROPNAME_CONNECTIONS                = "Connections";
+        public const string PROPNAME_SELECTEDCONNECTIONINDEX    = "SelectedConnectionIndex";
+        public const string PROPNAME_ACTIONBUTTONSETS           = "ActionButtonSets";
 
         public const string BUTTONTYPE_SPELL    = "spell";
         public const string BUTTONTYPE_ACTION   = "action";
@@ -195,7 +195,7 @@ namespace Meridian59.Launcher.Models
         protected const string ATTRIB_STRINGDICTIONARY      = "stringdictionary";
         protected const string ATTRIB_USERNAME              = "username";
         protected const string ATTRIB_VALUE                 = "value";
-        protected const string ATTRIB_LASTCONNECTIONINDEX   = "lastindex";
+        protected const string ATTRIB_SELECTEDINDEX         = "selectedindex";
         protected const string ATTRIB_KEY                   = "key";
         protected const string ATTRIB_TYPE                  = "type";
         protected const string ATTRIB_PLAYER                = "player";
@@ -228,7 +228,7 @@ namespace Meridian59.Launcher.Models
         protected int mouseAimSpeed;
         protected int keyRotateSpeed;
         protected BindingList<ConnectionInfo> connections = new BindingList<ConnectionInfo>();
-        protected int lastConnectionIndex;
+        protected int selectedConnectionIndex;
         protected KeysConverter keyConverter = new KeysConverter();
         protected List<ActionButtonList> actionButtonSets = new List<ActionButtonList>();
         #endregion
@@ -546,15 +546,15 @@ namespace Meridian59.Launcher.Models
             }
         }
 
-        public int LastConnectionIndex
+        public int SelectedConnectionIndex
         {
-            get { return lastConnectionIndex; }
+            get { return selectedConnectionIndex; }
             set
             {
-                if (lastConnectionIndex != value)
+                if (selectedConnectionIndex != value)
                 {
-                    lastConnectionIndex = value;
-                    OnPropertyChanged(new PropertyChangedEventArgs(PROPNAME_LASTCONNECTIONINDEX));
+                    selectedConnectionIndex = value;
+                    OnPropertyChanged(new PropertyChangedEventArgs(PROPNAME_SELECTEDCONNECTIONINDEX));
                 }
             }
         }
@@ -656,7 +656,7 @@ namespace Meridian59.Launcher.Models
                 return;
 
             // currently selected connection entry
-            int index = lastConnectionIndex;
+            int index = selectedConnectionIndex;
 
             if (index < connections.Count)
             {
@@ -715,41 +715,61 @@ namespace Meridian59.Launcher.Models
         public override void ReadXml(XmlReader Reader)
         {
             base.ReadXml(Reader);
-           
+
+            int count;
+
+            /******************************************************************************/
+
             // connections
-            Reader.ReadToFollowing(TAG_CONNECTIONS);
-            int count = Convert.ToInt32(Reader[ATTRIB_COUNT]);
-            LastConnectionIndex = Convert.ToInt32(Reader[ATTRIB_LASTCONNECTIONINDEX]);
             connections.Clear();
 
-            for (int i = 0; i < count; i++)
+            Reader.ReadToFollowing(TAG_CONNECTIONS);
+            SelectedConnectionIndex = Convert.ToInt32(Reader[ATTRIB_SELECTEDINDEX]);
+            
+            if (Reader.ReadToDescendant(TAG_CONNECTION))
             {
-                Reader.ReadToFollowing(TAG_CONNECTION);
-                string name = Reader[ATTRIB_NAME];
-                string host = Reader[ATTRIB_HOST];
-                ushort port = Convert.ToUInt16(Reader[ATTRIB_PORT]);
-                string stringdictionary = Reader[ATTRIB_STRINGDICTIONARY];
-                string username = Reader[ATTRIB_USERNAME];
-                List<string> ignorelist = new List<string>();
-                
-                Reader.ReadToFollowing(TAG_IGNORELIST);
-                if (Reader.ReadToDescendant(TAG_IGNORE))
+                do
                 {
-                    do
-                    {
-                        ignorelist.Add(Reader[ATTRIB_NAME]);
-                    }
-                    while (Reader.ReadToNextSibling(TAG_IGNORE));
-                }
+                    string name = Reader[ATTRIB_NAME];
+                    string host = Reader[ATTRIB_HOST];
+                    ushort port = Convert.ToUInt16(Reader[ATTRIB_PORT]);
+                    string stringdictionary = Reader[ATTRIB_STRINGDICTIONARY];
+                    string username = Reader[ATTRIB_USERNAME];
+                    List<string> ignorelist = new List<string>();
 
-                connections.Add(new ConnectionInfo(
-                    name, 
-                    host, 
-                    port, 
-                    stringdictionary, 
-                    username,
-                    ignorelist));
+                    if (Reader.ReadToDescendant(TAG_IGNORELIST))
+                    { 
+                        if (Reader.ReadToDescendant(TAG_IGNORE))
+                        {
+                            do
+                            {
+                                ignorelist.Add(Reader[ATTRIB_NAME]);
+                            }
+                            while (Reader.ReadToNextSibling(TAG_IGNORE));
+
+                            Reader.ReadEndElement();
+                        }
+                        else
+                        {
+                            Reader.ReadStartElement(TAG_IGNORELIST);
+                        }
+
+                        Reader.ReadEndElement();
+                    }
+
+                    // add connection
+                    connections.Add(new ConnectionInfo(
+                        name,
+                        host,
+                        port,
+                        stringdictionary,
+                        username,
+                        ignorelist));                  
+                }
+                while (Reader.ReadToNextSibling(TAG_CONNECTION));
             }
+
+            /******************************************************************************/
 
             // engine
             Reader.ReadToFollowing(TAG_ENGINE);
@@ -1066,7 +1086,7 @@ namespace Meridian59.Launcher.Models
             // connections
             Writer.WriteStartElement(TAG_CONNECTIONS);
             Writer.WriteAttributeString(ATTRIB_COUNT, Connections.Count.ToString());
-            Writer.WriteAttributeString(ATTRIB_LASTCONNECTIONINDEX, LastConnectionIndex.ToString());
+            Writer.WriteAttributeString(ATTRIB_SELECTEDINDEX, SelectedConnectionIndex.ToString());
 
             for (int i = 0; i < connections.Count; i++)
             {

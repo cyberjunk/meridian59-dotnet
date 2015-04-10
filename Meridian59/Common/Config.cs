@@ -288,12 +288,19 @@ namespace Meridian59.Common
                 
             // create xml reader
             XmlReader reader = XmlReader.Create(CONFIGFILE);
+            
+            /******************************************************************************/
 
             // rootnode
-            reader.ReadToFollowing(XMLTAG_CONFIGURATION);
+            if (!reader.ReadToFollowing(XMLTAG_CONFIGURATION))
+                return;
 
+            /******************************************************************************/
+            
             // resources
-            reader.ReadToFollowing(XMLTAG_RESOURCES);
+            if (!reader.ReadToFollowing(XMLTAG_RESOURCES))
+                return;
+
             ResourcesPath       = reader[XMLATTRIB_PATH];
             ResourcesVersion    = Convert.ToUInt32(reader[XMLATTRIB_VERSION]);
             PreloadRooms        = Convert.ToBoolean(reader[XMLATTRIB_PRELOADROOMS]);
@@ -301,6 +308,8 @@ namespace Meridian59.Common
             PreloadRoomTextures = Convert.ToBoolean(reader[XMLATTRIB_PRELOADROOMTEXTURES]);
             PreloadSound        = Convert.ToBoolean(reader[XMLATTRIB_PRELOADSOUND]);
             PreloadMusic        = Convert.ToBoolean(reader[XMLATTRIB_PRELOADMUSIC]);
+            
+            /******************************************************************************/
 
             // let deriving classes load their stuff
             ReadXml(reader);

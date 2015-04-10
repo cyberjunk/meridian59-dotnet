@@ -40,7 +40,7 @@ namespace Meridian59.Launcher
 
                 cbServer.DataSource = options.Connections;
                 cbServer.DisplayMember = ConnectionInfo.PROPNAME_NAME;
-                cbServer.SelectedIndex = options.LastConnectionIndex;
+                cbServer.SelectedIndex = options.SelectedConnectionIndex;
             }
         }
 
@@ -114,7 +114,7 @@ namespace Meridian59.Launcher
                 txtPassword.DataBindings.Add("Text", info, ConnectionInfo.PROPNAME_PASSWORD);
 
                 // save lastselectedindex
-                options.LastConnectionIndex = index;
+                options.SelectedConnectionIndex = index;
             }
         }
 

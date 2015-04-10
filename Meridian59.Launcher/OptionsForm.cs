@@ -54,7 +54,7 @@ namespace Meridian59.Launcher
 
                 cbConnections.DataSource = DataSource.Connections;
                 cbConnections.DisplayMember = ConnectionInfo.PROPNAME_NAME;
-                cbConnections.SelectedIndex = DataSource.LastConnectionIndex;
+                cbConnections.SelectedIndex = DataSource.SelectedConnectionIndex;
 
                 // Engine tab
                 SetDisplay();
