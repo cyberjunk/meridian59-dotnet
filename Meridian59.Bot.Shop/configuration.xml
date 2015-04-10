@@ -49,10 +49,6 @@
   
   <!-- 
     CONNECTION:
-      host: DNS or IP of the M59 server
-      port: TCP port of the M59 server      
-      rsbfile: string-resources (get this from the "resource" folder of your client)  
-      username: your username
       password: your password
       character: your shopcharacter to log in
       majorverson: see client menu help/about
@@ -60,10 +56,6 @@
       logfile: the bot will log also to this file (cleaned at startup, "" to disable)
   -->
   <connection
-    host="meridian103.openmeridian.org"
-    port="5903"
-    rsbfile="rsc0000-103.rsb"
-    username="username"
     password="password"
     character="charactername"
     majorversion="80"

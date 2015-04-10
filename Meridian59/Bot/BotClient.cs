@@ -240,15 +240,16 @@ namespace Meridian59.Bot
                     Config.ResourcesPath,
                     Config.ResourcesPath,
                     Config.ResourcesPath);
-
-                // select dictionary from config
-                ResourceManager.SelectStringDictionary(Config.RSBFile);
             }
 
-            Log("SYS", "Connecting to " + Config.Host + ":" + Config.Port);
+            // connect to selected connection/server
+            if (Config.SelectedConnectionInfo != null)
+            {
+                Log("SYS", "Connecting to " + Config.SelectedConnectionInfo.Host + ":" + 
+                    Config.SelectedConnectionInfo.Port);
 
-            // start connect to server
-            ServerConnection.Connect(Config.Host, Config.Port);
+                Connect();
+            }
         }
 
         /// <summary>
@@ -321,7 +322,8 @@ namespace Meridian59.Bot
         protected override void HandleGetLoginMessage(GetLoginMessage Message)
         {
             // answer with our account credentials
-            SendLoginMessage(Config.Username, Config.Password);
+            if (Config.SelectedConnectionInfo != null)
+                SendLoginMessage(Config.SelectedConnectionInfo.Username, Config.Password);
         }
 
         /// <summary>

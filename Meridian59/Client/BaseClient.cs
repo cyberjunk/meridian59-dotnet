@@ -103,6 +103,30 @@ namespace Meridian59.Client
 
         #region Methods
         /// <summary>
+        /// Connects to the currently selected ConnectionInfo in Config
+        /// </summary>
+        public virtual void Connect()
+        {
+            // must have active connectionentry to connect
+            if (Config.SelectedConnectionInfo == null)
+                return;
+
+            // load the strings for this connectionentry
+		    ResourceManager.SelectStringDictionary(
+                Config.SelectedConnectionInfo.StringDictionary);
+
+		    // fill ignore list in datacontroller with ignored
+            // playernames for this connectionentry.
+		    Data.IgnoreList.Clear();
+            Data.IgnoreList.AddRange(Config.SelectedConnectionInfo.IgnoreList);
+
+            // connect to server
+            ServerConnection.Connect(
+                Config.SelectedConnectionInfo.Host, 
+                Config.SelectedConnectionInfo.Port);
+        }
+
+        /// <summary>
         /// Implement this with your code for each tick/update.
         /// </summary>
         public override void Update()

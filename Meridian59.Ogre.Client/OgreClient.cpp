@@ -574,21 +574,8 @@ namespace Meridian59 { namespace Ogre
     };
 
 	void OgreClient::OnLauncherConnectRequest(::System::Object^ sender, ::System::EventArgs^ e)
-    {          
-		ConnectionInfo^ info = Config->SelectedConnectionInfo;
-
-		if (!info)
-			return;
-
-        // make sure correct stringdictionary for this server is laoded
-		ResourceManager->SelectStringDictionary(info->StringDictionary);
-
-		// create ignorelist
-		Data->IgnoreList->Clear();
-		for each(::System::String^ s in info->IgnoreList)
-			Data->IgnoreList->Add(s);
-
-        ServerConnection->Connect(info->Host, info->Port);
+    {
+		Connect();
     };
 
 	void OgreClient::OnLauncherFormExit(::System::Object^ sender, ::System::EventArgs^ e)

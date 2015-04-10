@@ -32,7 +32,6 @@ namespace Meridian59.Bot
         protected const string XMLTAG_BOT                   = "bot";
         protected const string XMLTAG_ADMINS                = "admins";
         protected const string XMLTAG_ITEM                  = "item";
-        protected const string XMLATTRIB_RSBFILE            = "rsbfile";
         protected const string XMLATTRIB_PASSWORD           = "password";
         protected const string XMLATTRIB_CHARACTER          = "character";
         protected const string XMLATTRIB_MAJORVERSION       = "majorversion";
@@ -41,10 +40,6 @@ namespace Meridian59.Bot
         #endregion
 
         #region Properties
-        public string Host { get; protected set; }
-        public ushort Port { get; protected set; }
-        public string RSBFile { get; protected set; }
-        public string Username { get; protected set; }
         public string Password { get; protected set; }
         public string Character { get; protected set; }
         public byte MajorVersion { get; protected set; }
@@ -108,10 +103,6 @@ namespace Meridian59.Bot
            
             // connection
             Reader.ReadToFollowing(XMLTAG_CONNECTION);
-            Host = Reader[XMLATTRIB_HOST];
-            Port = Convert.ToUInt16(Reader[XMLATTRIB_PORT]);
-            RSBFile = Reader[XMLATTRIB_RSBFILE];
-            Username = Reader[XMLATTRIB_USERNAME];
             Password = Reader[XMLATTRIB_PASSWORD];
             Character = Reader[XMLATTRIB_CHARACTER];
             MajorVersion = Convert.ToByte(Reader[XMLATTRIB_MAJORVERSION]);
