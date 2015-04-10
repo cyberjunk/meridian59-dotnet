@@ -40,20 +40,26 @@ namespace Meridian59.Files
 
         #region Fields
         protected readonly LockingDictionary<uint, string> stringResources = new LockingDictionary<uint, string>();
+        protected readonly LockingDictionary<string, RsbFile> stringDictionaries = new LockingDictionary<string, RsbFile>(StringComparer.OrdinalIgnoreCase);
         protected readonly LockingDictionary<string, BgfFile> objects = new LockingDictionary<string, BgfFile>(StringComparer.OrdinalIgnoreCase);
         protected readonly LockingDictionary<string, BgfFile> roomTextures = new LockingDictionary<string, BgfFile>(StringComparer.OrdinalIgnoreCase);
         protected readonly LockingDictionary<string, RooFile> rooms = new LockingDictionary<string, RooFile>(StringComparer.OrdinalIgnoreCase);
-        protected readonly LockingDictionary<string, Tuple<IntPtr, uint>> wavs = new LockingDictionary<string, Tuple<IntPtr, uint>>(StringComparer.OrdinalIgnoreCase);
+        protected readonly LockingDictionary<string, Tuple<IntPtr, uint>> sounds = new LockingDictionary<string, Tuple<IntPtr, uint>>(StringComparer.OrdinalIgnoreCase);
         protected readonly LockingDictionary<string, Tuple<IntPtr, uint>> music = new LockingDictionary<string, Tuple<IntPtr, uint>>(StringComparer.OrdinalIgnoreCase);
         protected readonly MailList mails = new MailList(200);
         #endregion
 
         #region Properties
         /// <summary>
-        /// Stores the string resources from rsc0000.rsb
+        /// Provides the currently active string resources
         /// </summary>
         public LockingDictionary<uint, string> StringResources { get { return stringResources; } }
 
+        /// <summary>
+        /// All string dictionaries (.rsb) files found
+        /// </summary>
+        public LockingDictionary<string, RsbFile> StringDictionaries { get { return stringDictionaries; } }
+        
         /// <summary>
         /// The dictionary containing all bgf filenames related to objects (no grdXXXX.bgf)
         /// </summary>
@@ -72,7 +78,7 @@ namespace Meridian59.Files
         /// <summary>
         /// WAV soundfiles
         /// </summary>
-        public LockingDictionary<string, Tuple<IntPtr, uint>> Wavs { get { return wavs; } }
+        public LockingDictionary<string, Tuple<IntPtr, uint>> Wavs { get { return sounds; } }
 
         /// <summary>
         /// Music
@@ -92,9 +98,9 @@ namespace Meridian59.Files
         public bool Initialized { get; protected set; }
 
         /// <summary>
-        /// The file with all the strings (usually rsc0000.rsb)
+        /// Folder containing all .rsb files for different servers.
         /// </summary>
-        public string StringResourcesFile { get; set; }
+        public string StringsFolder { get; set; }
 
         /// <summary>
         /// Folder containing all .roo files
@@ -128,6 +134,33 @@ namespace Meridian59.Files
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Tries to retrieve a RSB file from the Strings dictionary.
+        /// Will load the file from disk, if not yet loaded.
+        /// </summary>
+        /// <param name="File">Plain filename with extension (e.g. rsc0000.rsb)</param>
+        /// <returns></returns>
+        public RsbFile GetStringDictionary(string File)
+        {
+            RsbFile rsbFile = null;
+
+            // if the file is known
+            if (StringDictionaries.TryGetValue(File, out rsbFile))
+            {
+                // haven't loaded it yet?
+                if (rsbFile == null)
+                {
+                    // load it
+                    rsbFile = new RsbFile(StringsFolder + "/" + File);
+
+                    // update the registry                 
+                    StringDictionaries.TryUpdate(File, rsbFile, null);
+                }
+            }
+
+            return rsbFile;
+        }
+
         /// <summary>
         /// Tries to retrieve a BGF file from the Objects dictionary.
         /// Will load the file from disk, if not yet loaded.
@@ -307,15 +340,15 @@ namespace Meridian59.Files
         /// Sets pathes to required resources.
         /// Will also remove any existing resources from the current lists.
         /// </summary>
-        /// <param name="Dictionary"></param>
+        /// <param name="PathStrings"></param>
         /// <param name="PathRooms"></param>
         /// <param name="PathObjects"></param>
         /// <param name="PathRoomTextures"></param>
         /// <param name="PathSounds"></param>
         /// <param name="PathMusic"></param>
         /// <param name="PathMails"></param>
-        public void InitConfig(
-            string Dictionary,
+        public void Init(
+            string PathStrings,
             string PathRooms,
             string PathObjects, 
             string PathRoomTextures, 
@@ -323,7 +356,7 @@ namespace Meridian59.Files
             string PathMusic, 
             string PathMails)        
         {
-            this.StringResourcesFile = Dictionary;
+            this.StringsFolder = PathStrings;
             this.RoomsFolder = PathRooms;
             this.ObjectsFolder = PathObjects;
             this.RoomTexturesFolder = PathRoomTextures;
@@ -336,10 +369,8 @@ namespace Meridian59.Files
             // already executed once?
             if (Initialized)
             {
-                // clear current string dictionary
                 StringResources.Clear();
-
-                // clear current lookup dictionaries
+                StringDictionaries.Clear();
                 Objects.Clear();
                 RoomTextures.Clear();
                 Rooms.Clear();
@@ -353,15 +384,14 @@ namespace Meridian59.Files
                 Mails.Clear();
             }
 
-            // register strings
-            if (File.Exists(StringResourcesFile))
+            // register string dictionaries for different servers
+            if (Directory.Exists(StringsFolder))
             {
-                // load string resources
-                RsbFile rsbFile = new RsbFile(StringResourcesFile);
+                // get available files
+                files = Directory.GetFiles(StringsFolder, '*' + FileExtensions.RSB);
 
-                // add to dictionary
-                foreach (KeyValuePair<uint, string> pair in rsbFile.StringResources)
-                    StringResources.TryAdd(pair.Key, pair.Value);
+                foreach (string s in files)               
+                    StringDictionaries.TryAdd(Path.GetFileName(s), null);               
             }
 
             // register objects
@@ -448,25 +478,22 @@ namespace Meridian59.Files
         }
 
         /// <summary>
-        /// Clears and reloads the strings from another dictionary file.
+        /// Clears and reloads the strings from another dictionary file within the strings folder,
+        /// which was previously initialized during Init()
         /// </summary>
-        /// <param name="RsbFile"></param>
-        public void ReloadStrings(string RsbFile)
+        /// <param name="RsbFile">Plain filename, like rsc0000.rsb</param>
+        public void SelectStringDictionary(string RsbFile)
         {
-            // update stringfile
-            StringResourcesFile = RsbFile;
-
             // clear old entries
             StringResources.Clear();
 
-            // check if new string dictionary exists
-            if (File.Exists(StringResourcesFile))
-            {
-                // load string resources
-                RsbFile rsbFile = new RsbFile(StringResourcesFile);
-
-                // add to dictionary
-                foreach (KeyValuePair<uint, string> pair in rsbFile.StringResources)
+            // try get the dictionary for argument
+            RsbFile file = GetStringDictionary(RsbFile);
+            
+            // add to dictionary in use
+            if (file != null)
+            {                
+                foreach (KeyValuePair<uint, string> pair in file.StringResources)
                     StringResources.TryAdd(pair.Key, pair.Value);
             }
         }

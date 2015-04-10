@@ -98,14 +98,16 @@ namespace Meridian59.ExampleClient
             if (!ResourceManager.Initialized)
             {
                 // init the legacy resources
-                ResourceManager.InitConfig(
-                    "resource/rsc0000.rsb",
+                ResourceManager.Init(
+                    "resource/",
                     "resource/rooms",
                     "resource/objects",
                     "resource/roomtextures",
                     "resource/wavs",
                     "resource/music",
                     "mail");
+
+                ResourceManager.SelectStringDictionary("rsc0000.rsb");
             }
 
             // start connect to server

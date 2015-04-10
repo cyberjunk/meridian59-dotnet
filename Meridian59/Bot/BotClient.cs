@@ -232,14 +232,17 @@ namespace Meridian59.Bot
             if (!ResourceManager.Initialized)
             {
                 // init the legacy resources
-                ResourceManager.InitConfig(
-                    Config.ResourcesPath + Config.RSBFile,
+                ResourceManager.Init(
+                    Config.ResourcesPath,
                     Config.ResourcesPath,
                     Config.ResourcesPath,
                     Config.ResourcesPath,
                     Config.ResourcesPath,
                     Config.ResourcesPath,
                     Config.ResourcesPath);
+
+                // select dictionary from config
+                ResourceManager.SelectStringDictionary(Config.RSBFile);
             }
 
             Log("SYS", "Connecting to " + Config.Host + ":" + Config.Port);

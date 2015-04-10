@@ -626,8 +626,8 @@ namespace Meridian59.Launcher.Models
                 ConnectionInfo info = Connections[index];
 
                 // init the legacy resources
-                ResourceManager.InitConfig(
-                    ResourcesPath + "/" + SUBPATHSTRINGS + "/" + info.StringDictionary,
+                ResourceManager.Init(
+                    ResourcesPath + "/" + SUBPATHSTRINGS,
                     ResourcesPath + "/" + SUBPATHROOMS,
                     ResourcesPath + "/" + SUBPATHOBJECTS,
                     ResourcesPath + "/" + SUBPATHROOMTEXTURES,

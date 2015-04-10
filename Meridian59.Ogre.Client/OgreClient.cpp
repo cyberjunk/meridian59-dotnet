@@ -581,8 +581,7 @@ namespace Meridian59 { namespace Ogre
 			return;
 
         // make sure correct stringdictionary for this server is laoded
-        ResourceManager->ReloadStrings(Config->ResourcesPath + "/" + Options::SUBPATHSTRINGS
-            + "/" + info->StringDictionary);
+		ResourceManager->SelectStringDictionary(info->StringDictionary);
 
 		// create ignorelist
 		Data->IgnoreList->Clear();
