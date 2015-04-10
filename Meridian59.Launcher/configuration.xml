@@ -36,10 +36,7 @@
       port="5903" 
       stringdictionary="rsc0000-103.rsb" 
       username="user">
-      <ignorelist>
-        <ignore name="Gotterdammerung" />
-        <ignore name="test2" />
-      </ignorelist>
+      <ignorelist />
     </connection>
     
     <connection 
