@@ -233,13 +233,13 @@ namespace Meridian59.Bot
             {
                 // init the legacy resources
                 ResourceManager.InitConfig(
-                    "./" + Config.RSBFile,
-                    "./",
-                    "./",
-                    "./",
-                    "./",
-                    "./",
-                    "./");
+                    Config.ResourcesPath + Config.RSBFile,
+                    Config.ResourcesPath,
+                    Config.ResourcesPath,
+                    Config.ResourcesPath,
+                    Config.ResourcesPath,
+                    Config.ResourcesPath,
+                    Config.ResourcesPath);
             }
 
             Log("SYS", "Connecting to " + Config.Host + ":" + Config.Port);

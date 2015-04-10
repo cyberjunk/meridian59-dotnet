@@ -3,7 +3,7 @@
 
   <resources
     version="10016"
-    path="./resources/"
+    path="./"
     preloadrooms="false"
     preloadobjects="false"
     preloadroomtextures="false"
