@@ -183,6 +183,10 @@ namespace Meridian59 { namespace Ogre
 			static void ResourceLoadStarted(ResourcePtr resource);
 			static void WorldGeometryStageStarted(const String* description);
 			static void WorldGeometryStageEnded();
+
+			static void OnPreloadingGroupStarted(Object^ sender, ::Meridian59::Files::ResourceManager::StringEventArgs^ e);
+			static void OnPreloadingGroupEnded(Object^ sender, ::Meridian59::Files::ResourceManager::StringEventArgs^ e);
+			static void OnPreloadingFile(Object^ sender, ::Meridian59::Files::ResourceManager::StringEventArgs^ e);
 		};
 
 		/// <summary>

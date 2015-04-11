@@ -33,6 +33,15 @@ namespace Meridian59.Files
     /// </summary>
     public class ResourceManager
     {
+        public class StringEventArgs : EventArgs
+        {
+            public string Value;
+            public StringEventArgs(string Value)
+            {
+                this.Value = Value;
+            }
+        }
+
         #region Constants
         protected const string NOTFOUND = "Error: StringResources file or Bgf/Roo/Wav/Music folder not found.";
         protected const string DEFAULTSTRINGFILE = "rsc0000.rsb";
@@ -140,6 +149,10 @@ namespace Meridian59.Files
         /// </summary>
         public string MailFolder { get; set; }
         #endregion
+
+        public event EventHandler<StringEventArgs> PreloadingGroupStarted;
+        public event EventHandler<StringEventArgs> PreloadingGroupEnded;
+        public event EventHandler<StringEventArgs> PreloadingFile;
 
         #region Methods
         /// <summary>
@@ -511,11 +524,17 @@ namespace Meridian59.Files
         /// </summary>
         public void PreloadObjects()
         {
+            if (PreloadingGroupStarted != null)
+                PreloadingGroupStarted(this, new StringEventArgs("Objects"));
+
             IEnumerator<KeyValuePair<string, BgfFile>> it = Objects.GetEnumerator();
             BgfFile file;
 
             while (it.MoveNext())
             {
+                if (PreloadingFile != null)
+                    PreloadingFile(this, new StringEventArgs(it.Current.Key));
+
                 // load
                 file = new BgfFile(Path.Combine(ObjectsFolder, it.Current.Key));
                 file.DecompressAll();
@@ -525,6 +544,9 @@ namespace Meridian59.Files
             }
 
             GC.Collect(2);
+
+            if (PreloadingGroupEnded != null)
+                PreloadingGroupEnded(this, new StringEventArgs("Objects"));
         }
 
         /// <summary>
@@ -532,11 +554,17 @@ namespace Meridian59.Files
         /// </summary>
         public void PreloadRoomTextures()
         {
+            if (PreloadingGroupStarted != null)
+                PreloadingGroupStarted(this, new StringEventArgs("RoomTextures"));
+
             IEnumerator<KeyValuePair<string, BgfFile>> it = RoomTextures.GetEnumerator();
             BgfFile file;
 
             while (it.MoveNext())
             {
+                if (PreloadingFile != null)
+                    PreloadingFile(this, new StringEventArgs(it.Current.Key));
+
                 // load
                 file = new BgfFile(Path.Combine(RoomTexturesFolder, it.Current.Key));
                 file.DecompressAll();
@@ -546,6 +574,9 @@ namespace Meridian59.Files
             }
 
             GC.Collect(2);
+
+            if (PreloadingGroupEnded != null)
+                PreloadingGroupEnded(this, new StringEventArgs("RoomTextures"));
         }
 
         /// <summary>
@@ -553,11 +584,17 @@ namespace Meridian59.Files
         /// </summary>
         public void PreloadRooms()
         {
+            if (PreloadingGroupStarted != null)
+                PreloadingGroupStarted(this, new StringEventArgs("Rooms"));
+
             IEnumerator<KeyValuePair<string, RooFile>> it = Rooms.GetEnumerator();
             RooFile file;
 
             while (it.MoveNext())
             {
+                if (PreloadingFile != null)
+                    PreloadingFile(this, new StringEventArgs(it.Current.Key));
+
                 // load
                 file = new RooFile(Path.Combine(RoomsFolder, it.Current.Key));
                 
@@ -566,6 +603,9 @@ namespace Meridian59.Files
             }
 
             GC.Collect(2);
+
+            if (PreloadingGroupEnded != null)
+                PreloadingGroupEnded(this, new StringEventArgs("Rooms"));
         }
 
         /// <summary>
@@ -573,11 +613,17 @@ namespace Meridian59.Files
         /// </summary>
         public void PreloadSounds()
         {
+            if (PreloadingGroupStarted != null)
+                PreloadingGroupStarted(this, new StringEventArgs("Sounds"));
+
             IEnumerator<KeyValuePair<string, Tuple<IntPtr, uint>>> it = Wavs.GetEnumerator();
             Tuple<IntPtr, uint> wavData = null;
 
             while (it.MoveNext())
             {
+                if (PreloadingFile != null)
+                    PreloadingFile(this, new StringEventArgs(it.Current.Key));
+
                 // load it
                 wavData = Util.LoadFileToUnmanagedMem(
                     Path.Combine(WavFolder, it.Current.Key));
@@ -587,6 +633,9 @@ namespace Meridian59.Files
             }
 
             GC.Collect(2);
+
+            if (PreloadingGroupEnded != null)
+                PreloadingGroupEnded(this, new StringEventArgs("Sounds"));
         }
 
         /// <summary>
@@ -594,11 +643,17 @@ namespace Meridian59.Files
         /// </summary>
         public void PreloadMusic()
         {
+            if (PreloadingGroupStarted != null)
+                PreloadingGroupStarted(this, new StringEventArgs("Music"));
+
             IEnumerator<KeyValuePair<string, Tuple<IntPtr, uint>>> it = Music.GetEnumerator();
             Tuple<IntPtr, uint> mp3Data = null;
 
             while (it.MoveNext())
             {
+                if (PreloadingFile != null)
+                    PreloadingFile(this, new StringEventArgs(it.Current.Key));
+
                 // load it
                 mp3Data = Util.LoadFileToUnmanagedMem(
                     Path.Combine(MusicFolder, it.Current.Key));
@@ -608,6 +663,9 @@ namespace Meridian59.Files
             }
 
             GC.Collect(2);
+
+            if (PreloadingGroupEnded != null)
+                PreloadingGroupEnded(this, new StringEventArgs("Music"));
         }
         #endregion
 
