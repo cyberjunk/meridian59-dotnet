@@ -567,6 +567,7 @@ namespace Meridian59 { namespace Ogre
         {
             launcherForm = gcnew LauncherForm();
             launcherForm->Options = Config;
+			launcherForm->ResourceManager = ResourceManager;
             launcherForm->ConnectRequest += gcnew ::System::EventHandler(this, &OgreClient::OnLauncherConnectRequest);
             launcherForm->Exit += gcnew ::System::EventHandler(this, &OgreClient::OnLauncherFormExit);
             launcherForm->Show();

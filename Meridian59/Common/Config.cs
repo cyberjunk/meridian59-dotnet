@@ -49,11 +49,6 @@ namespace Meridian59.Common
         public const string PROPNAME_PRELOADMUSIC               = "PreloadMusic";
         public const string PROPNAME_RESOURCESVERSION           = "ResourcesVersion";
         public const string PROPNAME_RESOURCEMANAGER            = "ResourceManager";
-        public const string PROPNAME_COUNTROOMS                 = "CountRooms";
-        public const string PROPNAME_COUNTOBJECTS               = "CountObjects";
-        public const string PROPNAME_COUNTROOMTEXTURES          = "CountRoomTextures";
-        public const string PROPNAME_COUNTSOUNDS                = "CountSounds";
-        public const string PROPNAME_COUNTMUSIC                 = "CountMusic";
         public const string PROPNAME_CONNECTIONS                = "Connections";
         public const string PROPNAME_SELECTEDCONNECTIONINDEX    = "SelectedConnectionIndex";
 
@@ -227,31 +222,6 @@ namespace Meridian59.Common
             }
         }
         
-        public int CountRooms
-        {
-            get { return (resourceManager != null) ? resourceManager.Rooms.Count : 0; }
-        }
-
-        public int CountObjects
-        {
-            get { return (resourceManager != null) ? resourceManager.Objects.Count : 0; }
-        }
-
-        public int CountRoomTextures
-        {
-            get { return (resourceManager != null) ? resourceManager.RoomTextures.Count : 0; }
-        }
-
-        public int CountSounds
-        {
-            get { return (resourceManager != null) ? resourceManager.Wavs.Count : 0; }
-        }
-
-        public int CountMusic
-        {
-            get { return (resourceManager != null) ? resourceManager.Music.Count : 0; }
-        }
-
         /// <summary>
         /// 
         /// </summary>

@@ -631,30 +631,16 @@ namespace Meridian59.Launcher.Models
         {
             if (resourceManager == null)
                 return;
-
-            // currently selected connection entry
-            int index = selectedConnectionIndex;
-
-            if (index < connections.Count)
-            {
-                ConnectionInfo info = Connections[index];
-
-                // init the legacy resources
-                ResourceManager.Init(
-                    ResourcesPath + "/" + SUBPATHSTRINGS,
-                    ResourcesPath + "/" + SUBPATHROOMS,
-                    ResourcesPath + "/" + SUBPATHOBJECTS,
-                    ResourcesPath + "/" + SUBPATHROOMTEXTURES,
-                    ResourcesPath + "/" + SUBPATHSOUNDS,
-                    ResourcesPath + "/" + SUBPATHMUSIC,
-                    ResourcesPath + "/" + SUBPATHMAILS);
-
-                // trigger propertychanged of counts for databinding refresh
-                OnPropertyChanged(new PropertyChangedEventArgs(PROPNAME_COUNTROOMS));
-                OnPropertyChanged(new PropertyChangedEventArgs(PROPNAME_COUNTOBJECTS));
-                OnPropertyChanged(new PropertyChangedEventArgs(PROPNAME_COUNTROOMTEXTURES));
-                OnPropertyChanged(new PropertyChangedEventArgs(PROPNAME_COUNTSOUNDS));
-            }
+                      
+            // init the legacy resources
+            ResourceManager.Init(
+                ResourcesPath + "/" + SUBPATHSTRINGS,
+                ResourcesPath + "/" + SUBPATHROOMS,
+                ResourcesPath + "/" + SUBPATHOBJECTS,
+                ResourcesPath + "/" + SUBPATHROOMTEXTURES,
+                ResourcesPath + "/" + SUBPATHSOUNDS,
+                ResourcesPath + "/" + SUBPATHMUSIC,
+                ResourcesPath + "/" + SUBPATHMAILS);           
         }
 
         /// <summary>

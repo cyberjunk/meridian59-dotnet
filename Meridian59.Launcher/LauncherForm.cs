@@ -30,6 +30,7 @@ namespace Meridian59.Launcher
         protected bool dragging;
         protected Point pointClicked;
         protected Options options;
+        protected Meridian59.Files.ResourceManager resourceManager;
 
         public Options Options
         {
@@ -44,6 +45,15 @@ namespace Meridian59.Launcher
             }
         }
 
+        public Meridian59.Files.ResourceManager ResourceManager
+        {
+            get { return resourceManager; }
+            set
+            {
+                resourceManager = value;
+            }
+        }
+
         public LauncherForm()
         {
             InitializeComponent();
@@ -52,7 +62,8 @@ namespace Meridian59.Launcher
         private void btnOptions_Click(object sender, EventArgs e)
         {
             OptionsForm optionsForm = new OptionsForm();
-            optionsForm.DataSource = Options;
+            optionsForm.Config = Options;
+            optionsForm.ResourceManager = ResourceManager;
             optionsForm.ShowDialog();
         }
 
