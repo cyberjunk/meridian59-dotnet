@@ -11,9 +11,6 @@ namespace Meridian59 { namespace Ogre
 		// Initialize MiniMap instance
 		miniMap = gcnew MiniMapCEGUI(Data, 256, 256);
 
-		// set resourcemanager on config
-		Config->ResourceManager = ResourceManager;
-        
 		SLEEPTIME = 0;
 		isEngineInitialized = false;
 		isWinCursorVisible = true;
@@ -21,8 +18,15 @@ namespace Meridian59 { namespace Ogre
 
 	void OgreClient::Init()
     {
-		// initialize legacy resources
-        Config->InitResourceManager();
+		// init the legacy resources
+		ResourceManager->Init(
+			Config->ResourcesPath + "/" + Meridian59::Common::Config::SUBPATHSTRINGS,
+			Config->ResourcesPath + "/" + Meridian59::Common::Config::SUBPATHROOMS,
+			Config->ResourcesPath + "/" + Meridian59::Common::Config::SUBPATHOBJECTS,
+			Config->ResourcesPath + "/" + Meridian59::Common::Config::SUBPATHROOMTEXTURES,
+			Config->ResourcesPath + "/" + Meridian59::Common::Config::SUBPATHSOUNDS,
+			Config->ResourcesPath + "/" + Meridian59::Common::Config::SUBPATHMUSIC,
+			Config->ResourcesPath + "/" + Meridian59::Common::Config::SUBPATHMAILS);
 
         // show launcher ui
         ShowLauncherForm();

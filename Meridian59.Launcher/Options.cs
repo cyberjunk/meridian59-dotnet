@@ -625,25 +625,6 @@ namespace Meridian59.Launcher.Models
         }
 
         /// <summary>
-        /// Initializes the resourcemanager with the current options
-        /// </summary>
-        public void InitResourceManager()
-        {
-            if (resourceManager == null)
-                return;
-                      
-            // init the legacy resources
-            ResourceManager.Init(
-                ResourcesPath + "/" + SUBPATHSTRINGS,
-                ResourcesPath + "/" + SUBPATHROOMS,
-                ResourcesPath + "/" + SUBPATHOBJECTS,
-                ResourcesPath + "/" + SUBPATHROOMTEXTURES,
-                ResourcesPath + "/" + SUBPATHSOUNDS,
-                ResourcesPath + "/" + SUBPATHMUSIC,
-                ResourcesPath + "/" + SUBPATHMAILS);           
-        }
-
-        /// <summary>
         /// 
         /// </summary>
         /// <param name="Name"></param>

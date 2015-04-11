@@ -828,7 +828,17 @@ namespace Meridian59.Launcher
         private void btnReload_Click(object sender, EventArgs e)
         {
             config.Load();
-            config.InitResourceManager();
+
+            // init the legacy resources
+            resourceManager.Init(
+                config.ResourcesPath + "/" + Meridian59.Common.Config.SUBPATHSTRINGS,
+                config.ResourcesPath + "/" + Meridian59.Common.Config.SUBPATHROOMS,
+                config.ResourcesPath + "/" + Meridian59.Common.Config.SUBPATHOBJECTS,
+                config.ResourcesPath + "/" + Meridian59.Common.Config.SUBPATHROOMTEXTURES,
+                config.ResourcesPath + "/" + Meridian59.Common.Config.SUBPATHSOUNDS,
+                config.ResourcesPath + "/" + Meridian59.Common.Config.SUBPATHMUSIC,
+                config.ResourcesPath + "/" + Meridian59.Common.Config.SUBPATHMAILS);
+
             Config = config;
         }
 

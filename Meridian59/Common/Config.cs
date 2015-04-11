@@ -48,7 +48,6 @@ namespace Meridian59.Common
         public const string PROPNAME_PRELOADSOUND               = "PreloadSound";
         public const string PROPNAME_PRELOADMUSIC               = "PreloadMusic";
         public const string PROPNAME_RESOURCESVERSION           = "ResourcesVersion";
-        public const string PROPNAME_RESOURCEMANAGER            = "ResourceManager";
         public const string PROPNAME_CONNECTIONS                = "Connections";
         public const string PROPNAME_SELECTEDCONNECTIONINDEX    = "SelectedConnectionIndex";
 
@@ -75,7 +74,6 @@ namespace Meridian59.Common
         #endregion
       
         #region Fields
-        protected Meridian59.Files.ResourceManager resourceManager;
         protected uint resourcesversion;
         protected string resourcespath;
         protected bool preloadrooms;
@@ -206,22 +204,6 @@ namespace Meridian59.Common
             }
         }
 
-        /// <summary>
-        /// ResourceManager instance
-        /// </summary>
-        public Meridian59.Files.ResourceManager ResourceManager
-        {
-            get { return resourceManager; }
-            set
-            {
-                if (resourceManager != value)
-                {
-                    resourceManager = value;
-                    OnPropertyChanged(new PropertyChangedEventArgs(PROPNAME_RESOURCEMANAGER));
-                }
-            }
-        }
-        
         /// <summary>
         /// 
         /// </summary>
