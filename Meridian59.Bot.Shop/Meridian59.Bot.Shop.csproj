@@ -100,6 +100,10 @@
       <Link>rsc0000-103.rsb</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="..\Resources\strings\rsc0000-git.rsb">
+      <Link>rsc0000-git.rsb</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="..\Resources\strings\rsc0000.rsb">
       <Link>rsc0000.rsb</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

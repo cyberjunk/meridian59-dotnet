@@ -66,13 +66,6 @@ namespace Meridian59.Bot.Spell
         protected override void HandleGameModeMessage(GameModeMessage Message)
         {
             base.HandleGameModeMessage(Message);
-
-            switch ((MessageTypeGameMode)Message.PI)
-            {
-                case MessageTypeGameMode.Message:
-                    HandleMessageMessage((MessageMessage)Message);
-                    break;
-            }
         }
 
         /// <summary>
