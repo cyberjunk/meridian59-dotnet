@@ -36,6 +36,14 @@ namespace Meridian59.Files
         #region Constants
         protected const string NOTFOUND = "Error: StringResources file or Bgf/Roo/Wav/Music folder not found.";
         protected const string DEFAULTSTRINGFILE = "rsc0000.rsb";
+
+        public const string SUBPATHSTRINGS = "strings";
+        public const string SUBPATHROOMS = "rooms";
+        public const string SUBPATHROOMTEXTURES = "bgftextures";
+        public const string SUBPATHOBJECTS = "bgfobjects";
+        public const string SUBPATHSOUNDS = "sounds";
+        public const string SUBPATHMUSIC = "music";
+        public const string SUBPATHMAILS = "mails";
         #endregion
 
         #region Fields

@@ -20,13 +20,13 @@ namespace Meridian59 { namespace Ogre
     {
 		// init the legacy resources
 		ResourceManager->Init(
-			Config->ResourcesPath + "/" + Meridian59::Common::Config::SUBPATHSTRINGS,
-			Config->ResourcesPath + "/" + Meridian59::Common::Config::SUBPATHROOMS,
-			Config->ResourcesPath + "/" + Meridian59::Common::Config::SUBPATHOBJECTS,
-			Config->ResourcesPath + "/" + Meridian59::Common::Config::SUBPATHROOMTEXTURES,
-			Config->ResourcesPath + "/" + Meridian59::Common::Config::SUBPATHSOUNDS,
-			Config->ResourcesPath + "/" + Meridian59::Common::Config::SUBPATHMUSIC,
-			Config->ResourcesPath + "/" + Meridian59::Common::Config::SUBPATHMAILS);
+			Config->ResourcesPath + "/" + Meridian59::Files::ResourceManager::SUBPATHSTRINGS,
+			Config->ResourcesPath + "/" + Meridian59::Files::ResourceManager::SUBPATHROOMS,
+			Config->ResourcesPath + "/" + Meridian59::Files::ResourceManager::SUBPATHOBJECTS,
+			Config->ResourcesPath + "/" + Meridian59::Files::ResourceManager::SUBPATHROOMTEXTURES,
+			Config->ResourcesPath + "/" + Meridian59::Files::ResourceManager::SUBPATHSOUNDS,
+			Config->ResourcesPath + "/" + Meridian59::Files::ResourceManager::SUBPATHMUSIC,
+			Config->ResourcesPath + "/" + Meridian59::Files::ResourceManager::SUBPATHMAILS);
 
         // show launcher ui
         ShowLauncherForm();
@@ -647,22 +647,6 @@ namespace Meridian59 { namespace Ogre
 		if (!Config->DisableNewRoomTextures)
 			InitResourceGroupManually(TEXTUREGROUP_ROOLOADER, true, Config->PreloadRoomTextures, "Texture", "*.png");
 	
-		// 
-		if (Config->PreloadObjects)
-			ResourceManager->PreloadObjects();
-
-		if (Config->PreloadRoomTextures)
-			ResourceManager->PreloadRoomTextures();
-
-		if (Config->PreloadRooms)
-			ResourceManager->PreloadRooms();
-
-		if (Config->PreloadSound)
-			ResourceManager->PreloadSounds();
-
-		if (Config->PreloadMusic)
-			ResourceManager->PreloadMusic();
-
 		// 7. initialize caelum group
 		if (!Config->DisableNewSky)		
 			InitResourceGroup("Caelum", true, false, System::IO::SearchOption::TopDirectoryOnly, true, true);
@@ -695,9 +679,25 @@ namespace Meridian59 { namespace Ogre
 			}
         }
 
-        // initialize general group
+		// 10. load legacy resources
+		if (Config->PreloadObjects)	
+			ResourceManager->PreloadObjects();
+
+		if (Config->PreloadRoomTextures)
+			ResourceManager->PreloadRoomTextures();
+
+		if (Config->PreloadRooms)
+			ResourceManager->PreloadRooms();
+
+		if (Config->PreloadSound)
+			ResourceManager->PreloadSounds();
+
+		if (Config->PreloadMusic)
+			ResourceManager->PreloadMusic();
+
+        // 10. initialize general group
         resMan->initialiseResourceGroup(RESOURCEGROUPGENERAL);
-			        
+			 
         // remove loadingbar
         ControllerUI::LoadingBar::Finish();
     };

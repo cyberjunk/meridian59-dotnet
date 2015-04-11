@@ -831,13 +831,13 @@ namespace Meridian59.Launcher
 
             // init the legacy resources
             resourceManager.Init(
-                config.ResourcesPath + "/" + Meridian59.Common.Config.SUBPATHSTRINGS,
-                config.ResourcesPath + "/" + Meridian59.Common.Config.SUBPATHROOMS,
-                config.ResourcesPath + "/" + Meridian59.Common.Config.SUBPATHOBJECTS,
-                config.ResourcesPath + "/" + Meridian59.Common.Config.SUBPATHROOMTEXTURES,
-                config.ResourcesPath + "/" + Meridian59.Common.Config.SUBPATHSOUNDS,
-                config.ResourcesPath + "/" + Meridian59.Common.Config.SUBPATHMUSIC,
-                config.ResourcesPath + "/" + Meridian59.Common.Config.SUBPATHMAILS);
+                config.ResourcesPath + "/" + Meridian59.Files.ResourceManager.SUBPATHSTRINGS,
+                config.ResourcesPath + "/" + Meridian59.Files.ResourceManager.SUBPATHROOMS,
+                config.ResourcesPath + "/" + Meridian59.Files.ResourceManager.SUBPATHOBJECTS,
+                config.ResourcesPath + "/" + Meridian59.Files.ResourceManager.SUBPATHROOMTEXTURES,
+                config.ResourcesPath + "/" + Meridian59.Files.ResourceManager.SUBPATHSOUNDS,
+                config.ResourcesPath + "/" + Meridian59.Files.ResourceManager.SUBPATHMUSIC,
+                config.ResourcesPath + "/" + Meridian59.Files.ResourceManager.SUBPATHMAILS);
 
             Config = config;
         }
@@ -852,13 +852,13 @@ namespace Meridian59.Launcher
             if (result == DialogResult.OK)
             {
                 string path         = fbResourcePath.SelectedPath;
-                string pathStrings  = path + "/" + Options.SUBPATHSTRINGS;
-                string pathObjects  = path + "/" + Options.SUBPATHOBJECTS; 
-                string pathRooms    = path + "/" + Options.SUBPATHROOMS;
-                string pathRoomTextures = path + "/" + Options.SUBPATHROOMTEXTURES;
-                string pathSounds   = path + "/" + Options.SUBPATHSOUNDS;
-                string pathMusic    = path + "/" + Options.SUBPATHMUSIC;
-                string pathMails    = path + "/" + Options.SUBPATHMAILS;
+                string pathStrings  = path + "/" + Meridian59.Files.ResourceManager.SUBPATHSTRINGS;
+                string pathObjects  = path + "/" + Meridian59.Files.ResourceManager.SUBPATHOBJECTS;
+                string pathRooms    = path + "/" + Meridian59.Files.ResourceManager.SUBPATHROOMS;
+                string pathRoomTextures = path + "/" + Meridian59.Files.ResourceManager.SUBPATHROOMTEXTURES;
+                string pathSounds   = path + "/" + Meridian59.Files.ResourceManager.SUBPATHSOUNDS;
+                string pathMusic    = path + "/" + Meridian59.Files.ResourceManager.SUBPATHMUSIC;
+                string pathMails    = path + "/" + Meridian59.Files.ResourceManager.SUBPATHMAILS;
 
                 if (Directory.Exists(pathStrings) &&
                     Directory.Exists(pathRooms) &&
@@ -884,13 +884,13 @@ namespace Meridian59.Launcher
                 {
                     string message = "The folder you've selected is missing at least one of these subfolders: " + 
                         Environment.NewLine + Environment.NewLine +
-                        Options.SUBPATHSTRINGS + Environment.NewLine +
-                        Options.SUBPATHROOMS + Environment.NewLine +
-                        Options.SUBPATHOBJECTS + Environment.NewLine +
-                        Options.SUBPATHROOMTEXTURES + Environment.NewLine +
-                        Options.SUBPATHSOUNDS + Environment.NewLine +
-                        Options.SUBPATHMUSIC + Environment.NewLine +
-                        Options.SUBPATHMAILS + Environment.NewLine;
+                        Meridian59.Files.ResourceManager.SUBPATHSTRINGS + Environment.NewLine +
+                        Meridian59.Files.ResourceManager.SUBPATHROOMS + Environment.NewLine +
+                        Meridian59.Files.ResourceManager.SUBPATHOBJECTS + Environment.NewLine +
+                        Meridian59.Files.ResourceManager.SUBPATHROOMTEXTURES + Environment.NewLine +
+                        Meridian59.Files.ResourceManager.SUBPATHSOUNDS + Environment.NewLine +
+                        Meridian59.Files.ResourceManager.SUBPATHMUSIC + Environment.NewLine +
+                        Meridian59.Files.ResourceManager.SUBPATHMAILS + Environment.NewLine;
 
                     // tell user about missing path
                     MessageBox.Show(message, "Error",
