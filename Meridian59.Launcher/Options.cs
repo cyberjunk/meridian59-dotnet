@@ -57,7 +57,8 @@ namespace Meridian59.Launcher.Models
         public const bool   DEFAULT_DISABLELOOPSOUNDS   = false;
         public const int    DEFAULT_MOUSEAIMSPEED       = 25;
         public const int    DEFAULT_KEYROTATESPEED      = 25;
-        
+        public const bool   DEFAULT_INVERTMOUSEY        = false;
+
         public const string PROPNAME_DISPLAY                = "Display";
         public const string PROPNAME_RESOLUTION             = "Resolution";
         public const string PROPNAME_WINDOWMODE             = "WindowMode";
@@ -82,7 +83,8 @@ namespace Meridian59.Launcher.Models
         public const string PROPNAME_KEYBINDING             = "KeyBinding";
         public const string PROPNAME_MOUSEAIMSPEED          = "MouseAimSpeed";
         public const string PROPNAME_KEYROTATESPEED         = "KeyRotateSpeed";
-       
+        public const string PROPNAME_INVERTMOUSEY           = "InvertMouseY";
+
         public const string PROPNAME_ACTIONBUTTONSETS           = "ActionButtonSets";
 
         public const string BUTTONTYPE_SPELL    = "spell";
@@ -116,6 +118,7 @@ namespace Meridian59.Launcher.Models
         protected const string TAG_INPUT            = "input";
         protected const string TAG_MOUSEAIMSPEED    = "mouseaimspeed";
         protected const string TAG_KEYROTATESPEED   = "keyrotatespeed";
+        protected const string TAG_INVERTMOUSEY     = "invertmousey";
         protected const string TAG_KEYBINDING       = "keybinding";
         protected const string TAG_MOVEFORWARD      = "moveforward";
         protected const string TAG_MOVEBACKWARD     = "movebackward";
@@ -215,6 +218,7 @@ namespace Meridian59.Launcher.Models
         protected KeyBinding keyBinding;
         protected int mouseAimSpeed;
         protected int keyRotateSpeed;
+        protected bool invertMouseY;
 
         protected KeysConverter keyConverter = new KeysConverter();
         protected List<ActionButtonList> actionButtonSets = new List<ActionButtonList>();
@@ -519,8 +523,18 @@ namespace Meridian59.Launcher.Models
                 }
             }
         }
-
-        
+        public bool InvertMouseY
+        {
+            get { return invertMouseY; }
+            set
+            {
+                if (invertMouseY != value)
+                {
+                    invertMouseY = value;
+                    OnPropertyChanged(new PropertyChangedEventArgs(PROPNAME_INVERTMOUSEY));
+                }
+            }
+        }    
 
         public List<ActionButtonList> ActionButtonSets
         {
@@ -773,6 +787,9 @@ namespace Meridian59.Launcher.Models
 
             Reader.ReadToFollowing(TAG_KEYROTATESPEED);
             KeyRotateSpeed = Convert.ToInt32(Reader[ATTRIB_VALUE]);
+
+            Reader.ReadToFollowing(TAG_INVERTMOUSEY);
+            InvertMouseY = Convert.ToBoolean(Reader[ATTRIB_VALUE]);
 
             Reader.ReadToFollowing(TAG_KEYBINDING);
                       
@@ -1092,6 +1109,11 @@ namespace Meridian59.Launcher.Models
             // keyrotatespeed
             Writer.WriteStartElement(TAG_KEYROTATESPEED);
             Writer.WriteAttributeString(ATTRIB_VALUE, keyRotateSpeed.ToString());
+            Writer.WriteEndElement();
+
+            // invertmousey
+            Writer.WriteStartElement(TAG_INVERTMOUSEY);
+            Writer.WriteAttributeString(ATTRIB_VALUE, invertMouseY.ToString());
             Writer.WriteEndElement();
 
             // keybinding

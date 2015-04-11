@@ -232,6 +232,7 @@
             this.numResourceVersion = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.fbResourcePath = new System.Windows.Forms.FolderBrowserDialog();
+            this.chkInvertMouseY = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitMain)).BeginInit();
             this.splitMain.Panel1.SuspendLayout();
             this.splitMain.Panel2.SuspendLayout();
@@ -879,6 +880,7 @@
             // 
             // tabInputMove
             // 
+            this.tabInputMove.Controls.Add(this.chkInvertMouseY);
             this.tabInputMove.Controls.Add(this.lblAutoMove);
             this.tabInputMove.Controls.Add(this.btnLearnAutoMove);
             this.tabInputMove.Controls.Add(this.lblKeyRotateSpeed);
@@ -2479,6 +2481,16 @@
             this.label1.TabIndex = 17;
             this.label1.Text = "Version:";
             // 
+            // chkInvertMouseY
+            // 
+            this.chkInvertMouseY.AutoSize = true;
+            this.chkInvertMouseY.Location = new System.Drawing.Point(216, 227);
+            this.chkInvertMouseY.Name = "chkInvertMouseY";
+            this.chkInvertMouseY.Size = new System.Drawing.Size(98, 17);
+            this.chkInvertMouseY.TabIndex = 44;
+            this.chkInvertMouseY.Text = "Invert Mouse Y";
+            this.chkInvertMouseY.UseVisualStyleBackColor = true;
+            // 
             // OptionsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2728,6 +2740,7 @@
         private System.Windows.Forms.TrackBar tbWeatherParticles;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.CheckBox chkInvertMouseY;
 
     }
 }

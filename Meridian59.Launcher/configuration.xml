@@ -98,6 +98,7 @@
   <input>
     <mouseaimspeed value="25" />
     <keyrotatespeed value="25" />
+    <invertmousey value="False" />
     <keybinding rightclickaction="13">
       <moveforward key="W" />
       <movebackward key="S" />

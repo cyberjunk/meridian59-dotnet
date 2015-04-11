@@ -401,6 +401,10 @@ namespace Meridian59 { namespace Ogre
 
 			if (dy != 0)
 			{
+				// invert mouse y if enabled in config
+				if (OgreClient::Singleton->Config->InvertMouseY)
+					dy = -dy;
+
 				// stop immediately if we switched directions
 				if (::System::Math::Sign(dy) != ::System::Math::Sign(cameraPitchDelta))
 					cameraPitchDelta = 0.0f;
@@ -429,6 +433,10 @@ namespace Meridian59 { namespace Ogre
 	
 			if (dy != 0)
 			{	
+				// invert mouse y if enabled in config
+				if (OgreClient::Singleton->Config->InvertMouseY)
+					dy = -dy;
+
 				// stop immediately if we switched directions
 				if (::System::Math::Sign(dy) != ::System::Math::Sign(cameraPitchDelta))
 					cameraPitchDelta = 0.0f;

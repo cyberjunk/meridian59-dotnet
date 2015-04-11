@@ -139,6 +139,9 @@ namespace Meridian59.Launcher
                 tbMouseAimSpeed.Value = dataSource.MouseAimSpeed;
                 tbKeyRotateSpeed.Value = dataSource.KeyRotateSpeed;
 
+                chkInvertMouseY.DataBindings.Clear();
+                chkInvertMouseY.DataBindings.Add("Checked", DataSource, Options.PROPNAME_INVERTMOUSEY);
+
                 btnLearnMoveForward.Text = dataSource.KeyBinding.MoveForward.ToString();
                 btnLearnMoveBackward.Text = dataSource.KeyBinding.MoveBackward.ToString();
                 btnLearnMoveLeft.Text = dataSource.KeyBinding.MoveLeft.ToString();
