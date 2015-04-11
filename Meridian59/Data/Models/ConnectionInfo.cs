@@ -164,6 +164,7 @@ namespace Meridian59.Data.Models
             ushort Port, 
             string StringDictionary, 
             string Username,
+            string Password,
             IEnumerable<string> IgnoreList)
         {
             ignoreList = new List<string>();
@@ -173,7 +174,7 @@ namespace Meridian59.Data.Models
             port = Port;
             stringdictionary = StringDictionary;
             username = Username;
-            password = String.Empty;
+            password = Password;
 
             foreach (string s in IgnoreList)
                 ignoreList.Add(s);

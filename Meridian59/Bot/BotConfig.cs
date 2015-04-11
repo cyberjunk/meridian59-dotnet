@@ -32,7 +32,6 @@ namespace Meridian59.Bot
         protected const string XMLTAG_BOT                   = "bot";
         protected const string XMLTAG_ADMINS                = "admins";
         protected const string XMLTAG_ITEM                  = "item";
-        protected const string XMLATTRIB_PASSWORD           = "password";
         protected const string XMLATTRIB_CHARACTER          = "character";
         protected const string XMLATTRIB_MAJORVERSION       = "majorversion";
         protected const string XMLATTRIB_MINORVERSION       = "minorversion";
@@ -40,7 +39,6 @@ namespace Meridian59.Bot
         #endregion
 
         #region Properties
-        public string Password { get; protected set; }
         public string Character { get; protected set; }
         public byte MajorVersion { get; protected set; }
         public byte MinorVersion { get; protected set; }
@@ -103,7 +101,6 @@ namespace Meridian59.Bot
            
             // connection
             Reader.ReadToFollowing(XMLTAG_CONNECTION);
-            Password = Reader[XMLATTRIB_PASSWORD];
             Character = Reader[XMLATTRIB_CHARACTER];
             MajorVersion = Convert.ToByte(Reader[XMLATTRIB_MAJORVERSION]);
             MinorVersion = Convert.ToByte(Reader[XMLATTRIB_MINORVERSION]);

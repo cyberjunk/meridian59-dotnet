@@ -75,6 +75,7 @@ namespace Meridian59.Common
         protected const string XMLATTRIB_PORT                   = "port";
         protected const string XMLATTRIB_STRINGDICTIONARY       = "stringdictionary";
         protected const string XMLATTRIB_USERNAME               = "username";
+        protected const string XMLATTRIB_PASSWORD               = "password";
         protected const string XMLATTRIB_SELECTEDINDEX          = "selectedindex";
         #endregion
       
@@ -378,6 +379,7 @@ namespace Meridian59.Common
                     ushort port             = Convert.ToUInt16(reader[XMLATTRIB_PORT]);
                     string stringdictionary = reader[XMLATTRIB_STRINGDICTIONARY];
                     string username         = reader[XMLATTRIB_USERNAME];
+                    string password         = reader[XMLATTRIB_PASSWORD];
 
                     List<string> ignorelist = new List<string>();
                     if (reader.ReadToDescendant(XMLTAG_IGNORELIST))
@@ -407,6 +409,7 @@ namespace Meridian59.Common
                         port,
                         stringdictionary,
                         username,
+                        password,
                         ignorelist));
                 }
                 while (reader.ReadToNextSibling(XMLTAG_CONNECTION));
@@ -465,6 +468,7 @@ namespace Meridian59.Common
                 writer.WriteAttributeString(XMLATTRIB_PORT, connections[i].Port.ToString());
                 writer.WriteAttributeString(XMLATTRIB_STRINGDICTIONARY, connections[i].StringDictionary);
                 writer.WriteAttributeString(XMLATTRIB_USERNAME, connections[i].Username);
+                writer.WriteAttributeString(XMLATTRIB_PASSWORD, String.Empty);
 
                 // ignorelist
                 writer.WriteStartElement(XMLTAG_IGNORELIST);

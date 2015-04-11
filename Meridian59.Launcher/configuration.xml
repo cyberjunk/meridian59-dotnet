@@ -17,7 +17,8 @@
       host="meridian101.meridian59.com"
       port="5901"
       stringdictionary="rsc0000.rsb"
-      username="user">
+      username="user"
+      password="">
       <ignorelist />
     </connection>
     
@@ -26,7 +27,8 @@
       host="meridian102.meridian59.com" 
       port="5902" 
       stringdictionary="rsc0000.rsb"
-      username="user">
+      username="user"
+      password="">
       <ignorelist />
     </connection>
     
@@ -35,7 +37,8 @@
       host="meridian103.openmeridian.org" 
       port="5903" 
       stringdictionary="rsc0000-103.rsb" 
-      username="user">
+      username="user"
+      password="">
       <ignorelist />
     </connection>
     
@@ -44,7 +47,8 @@
       host="meridian104.openmeridian.org" 
       port="5904" 
       stringdictionary="rsc0000-104.rsb" 
-      username="user">
+      username="user"
+      password="">
       <ignorelist />
     </connection>
 
@@ -53,7 +57,8 @@
       host="meridian107.openmeridian.org"
       port="5907"
       stringdictionary="rsc0000-107.rsb"
-      username="user">
+      username="user"
+      password="">
       <ignorelist />
     </connection>
     
@@ -62,7 +67,8 @@
       host="127.0.0.1" 
       port="5959" 
       stringdictionary="rsc0000-git.rsb" 
-      username="user">
+      username="user"
+      password="">
       <ignorelist />
     </connection>
     

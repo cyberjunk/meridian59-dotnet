@@ -390,12 +390,16 @@ namespace Meridian59.Bot.IRC
 
             string ver = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
-            // build the welcome-string
-            string welcomestr =
-                "Meridian 59 IRC BOT (" + ver + ") - Player " + Config.Character + " on host " + Config.Host + ":" + Config.Port;
+            if (Config.SelectedConnectionInfo != null)
+            {
+                // build the welcome-string
+                string welcomestr =
+                    "Meridian 59 IRC BOT (" + ver + ") - Player " + Config.Character + " on host " + 
+                    Config.SelectedConnectionInfo.Host + ":" + Config.SelectedConnectionInfo.Port;
 
-            // try to log the chatmessage to IRC
-            IrcClient.LocalUser.SendMessage(IrcChannel, welcomestr);
+                // try to log the chatmessage to IRC
+                IrcClient.LocalUser.SendMessage(IrcChannel, welcomestr);
+            }
         }
 
         /// <summary>

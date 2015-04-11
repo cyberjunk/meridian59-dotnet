@@ -323,7 +323,7 @@ namespace Meridian59.Bot
         {
             // answer with our account credentials
             if (Config.SelectedConnectionInfo != null)
-                SendLoginMessage(Config.SelectedConnectionInfo.Username, Config.Password);
+                SendLoginMessage(Config.SelectedConnectionInfo.Username, Config.SelectedConnectionInfo.Password);
         }
 
         /// <summary>

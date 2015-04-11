@@ -800,6 +800,7 @@ namespace Meridian59.Launcher
                 5959, 
                 "rsc0000.rsb", 
                 "username",
+                String.Empty,
                 new string[0]);
 
             dataSource.Connections.Add(newEntry);

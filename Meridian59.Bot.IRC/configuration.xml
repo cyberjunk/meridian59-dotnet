@@ -28,13 +28,15 @@
         port: TCP port of the M59 server 
         stringdictionary: string-resources (get this from the "resource" folder of your client)
         username: your username
+        password: your password
     -->
     <connection
       name="103"
       host="meridian103.openmeridian.org"
       port="5903"
       stringdictionary="rsc0000-103.rsb"
-      username="user">
+      username="user"
+      password="">
       <ignorelist />
     </connection>
     <connection
@@ -42,21 +44,20 @@
       host="127.0.0.1"
       port="5959"
       stringdictionary="rsc0000-git.rsb"
-      username="user">
+      username="user"
+      password="">
       <ignorelist />
     </connection>
   </connections>
   
   <!-- 
     CONNECTION:
-      password: your password
       character: your shopcharacter to log in
       majorverson: see client menu help/about
       minorversion: see client menu help/about
       logfile: the bot will log also to this file (cleaned at startup, "" to disable)
   -->
   <connection
-    password="password"
     character="charactername"
     majorversion="70"
     minorversion="1"
