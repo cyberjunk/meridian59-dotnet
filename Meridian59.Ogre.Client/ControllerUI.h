@@ -565,8 +565,9 @@ namespace Meridian59 { namespace Ogre
 		{
 		protected:
 			static array<ImageComposerCEGUI<InventoryObject^>^>^ imageComposers;
-			
+
 		public:
+			
 			static ::CEGUI::FrameWindow* Window = nullptr;
 			static ::CEGUI::ScrollablePane* Pane = nullptr;
 			static ::CEGUI::GridLayoutContainer* List = nullptr;
@@ -580,6 +581,7 @@ namespace Meridian59 { namespace Ogre
 			static void InventoryChange(int Index);
 
 			static void Update();
+			static void SwapImageComposers(unsigned int Index1, unsigned int Index2);
 			static long long TickMouseClick;
 			static bool DoClick;
 			static int ClickIndex;

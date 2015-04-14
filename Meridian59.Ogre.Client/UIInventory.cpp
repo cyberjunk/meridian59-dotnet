@@ -143,6 +143,7 @@ namespace Meridian59 { namespace Ogre
 			// set tooltip to name and mousecursor to target
 			dragger->setTooltipText(StringConvert::CLRToCEGUI(obj->Name));
 			dragger->setMouseCursor(UI_MOUSECURSOR_TARGET);	
+			dragger->setID(obj->ID);
 
 			if (obj->Count > 0)
 				imgButton->setText(CEGUI::PropertyHelper<unsigned int>::toString(obj->Count));				
@@ -178,10 +179,7 @@ namespace Meridian59 { namespace Ogre
 					List->getChildAtIdx(i), 
 					List->getChildAtIdx(i+1));
 
-				// swap composers
-				swap = imageComposers[i];
-				imageComposers[i] = imageComposers[i+1];
-				imageComposers[i+1] = swap;
+				SwapImageComposers(i, i + 1);
 			}
 		}
 	};
@@ -213,6 +211,18 @@ namespace Meridian59 { namespace Ogre
 
 			OgreClient::Singleton->Data->TargetID = 
 				OgreClient::Singleton->Data->InventoryObjects[ClickIndex]->ID;			
+		}
+	};
+
+	void ControllerUI::Inventory::SwapImageComposers(unsigned int Index1, unsigned int Index2)
+	{
+		if (Index1 < imageComposers->Length && 
+			Index2 < imageComposers->Length)
+		{
+			// swap composers
+			ImageComposerCEGUI<InventoryObject^>^ swap = imageComposers[Index1];
+			imageComposers[Index1] = imageComposers[Index2];
+			imageComposers[Index2] = swap;
 		}
 	};
 
@@ -309,17 +319,48 @@ namespace Meridian59 { namespace Ogre
 		{				
 			CEGUI::Window* wnd = dataView->getCurrentDropTarget();
 
-			// dropped on rootwindow? drop item
-			if (wnd == ControllerUI::GUIRoot)
+			if (wnd)
 			{
-				// drop directly
-				if (!dataItem->IsStackable)
-					OgreClient::Singleton->SendReqDropMessage(gcnew ObjectID(dataItem->ID, 0));
+				// dropped on rootwindow? drop item
+				if (wnd == ControllerUI::GUIRoot)
+				{
+					// drop directly
+					if (!dataItem->IsStackable)
+						OgreClient::Singleton->SendReqDropMessage(gcnew ObjectID(dataItem->ID, 0));
 
-				// show amount input
-				else			
-					ControllerUI::Amount::ShowValues(dataItem->ID, dataItem->Count);			
-			}
+					// show amount input
+					else
+						ControllerUI::Amount::ShowValues(dataItem->ID, dataItem->Count);
+				}
+#if !VANILLA
+				// other inventory slot?
+				else if (wnd->getParent() == ControllerUI::Inventory::List)
+				{
+					// try cast to other dragcontainer
+					CEGUI::DragContainer* destDrag = (::CEGUI::DragContainer*)wnd;
+
+					if (destDrag)
+					{
+						// determine the indices of the entries in the viewer/ui
+						size_t fromIndex = dataViews->getIdxOfChild(dataView);
+						size_t toIndex = dataViews->getIdxOfChild(destDrag);
+
+						// swap datamodels
+						dataModels->Swap(fromIndex, toIndex);
+
+						// swap views
+						ControllerUI::Inventory::List->swapChildren(dataView, destDrag);
+
+						// swap composers
+						ControllerUI::Inventory::SwapImageComposers(fromIndex, toIndex);
+
+						// tell server
+						OgreClient::Singleton->SendReqInventoryMoveMessage(
+							dataView->getID(), destDrag->getID());
+					}
+				}
+#endif
+			}			
 		}
 		
 		return true;

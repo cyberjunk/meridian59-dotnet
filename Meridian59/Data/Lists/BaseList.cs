@@ -215,6 +215,10 @@ namespace Meridian59.Data.Lists
 
             this[Index1] = this[Index2];
             this[Index2] = temp;
+
+            // trigger IBindingList item changed notifications
+            OnListChanged(this, new ListChangedEventArgs(ListChangedType.ItemChanged, Index1));
+            OnListChanged(this, new ListChangedEventArgs(ListChangedType.ItemChanged, Index2));
         }
         #endregion
 
