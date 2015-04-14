@@ -925,19 +925,33 @@ namespace Meridian59 { namespace Ogre
 
 	void ControllerRoom::CreateSubSector(ManualObject* Target, RooSubSector^ SubSector, bool IsFloor)
 	{
-		// get renderinfo for this subsector
-        RooSubSector::RenderInfo^ RI = SubSector->GetRenderInfo(IsFloor, SCALE);
+		// update vertexdata for this subsector
+        SubSector->UpdateVertexData(IsFloor, SCALE);
+		
+		// shortcuts to select basedon floor/ceiling
+		array<V3>^ P;
+		array<V2>^ UV;
+		V3 Normal;
 
-		// shortcuts
-        array<V3>^ P = RI->P;
-        array<V2>^ UV = RI->UV;
+		if (IsFloor)
+		{
+			P = SubSector->FloorP;
+			UV = SubSector->FloorUV;
+			Normal = SubSector->FloorNormal;
+		}
+		else
+		{
+			P = SubSector->CeilingP;
+			UV = SubSector->CeilingUV;
+			Normal = SubSector->CeilingNormal;
+		}
 
-        // add vertices from renderinfo
+		// add vertices from vertexdata
         for (int i = 0; i < P->Length; i++)
         {
             Target->position(P[i].X, P[i].Z, P[i].Y);
             Target->textureCoord(UV[i].Y, UV[i].X);
-            Target->normal(RI->Normal.X, RI->Normal.Z, RI->Normal.Y);
+            Target->normal(Normal.X, Normal.Z, Normal.Y);
         }
 
         // This is a simple triangulation algorithm for convex polygons (which subsectors guarantee to be)
@@ -958,15 +972,15 @@ namespace Meridian59 { namespace Ogre
         }
 
 		// create decoration objects on this subsector
-		CreateDecoration(SubSector, RI, IsFloor);
+		CreateDecoration(SubSector, IsFloor);
 
         // save the vertices we processed, so we know where to start triangulation next time this is called
         verticesProcessed += P->Length;
 	};
 	
-	void ControllerRoom::CreateDecoration(RooSubSector^ SubSector, RooSubSector::RenderInfo^ RI, bool IsFloor)
+	void ControllerRoom::CreateDecoration(RooSubSector^ SubSector, bool IsFloor)
 	{
-		array<V3>^ P  = RI->P;
+		array<V3>^ P  = (IsFloor) ? SubSector->FloorP : SubSector->CeilingP;
 		int intensity = OgreClient::Singleton->Config->DecorationIntensity;
 				
 		// no decoration if disabled or a ceiling

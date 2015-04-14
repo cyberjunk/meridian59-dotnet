@@ -169,9 +169,8 @@ namespace Meridian59 { namespace Ogre
 		/// Creates decorations on a subsector floor
 		/// </summary>
 		/// <param name="SubSector"></param>
-		/// <param name="RI"></param>
 		/// <param name="IsFloor"></param>
-		static void CreateDecoration(RooSubSector^ SubSector, RooSubSector::RenderInfo^ RI, bool IsFloor);
+		static void CreateDecoration(RooSubSector^ SubSector, bool IsFloor);
 
 		/// <summary>
         /// Possibly creates a single texture and material based on required info.

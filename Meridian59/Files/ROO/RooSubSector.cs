@@ -127,6 +127,14 @@ namespace Meridian59.Files.ROO
 
         public RooSector Sector { get; set; }
 
+        public V3[] FloorP;
+        public V2[] FloorUV;
+        public V3 FloorNormal;
+
+        public V3[] CeilingP;
+        public V2[] CeilingUV;
+        public V3 CeilingNormal;
+
         public RooSubSector( 
             int X1, int Y1, int X2, int Y2,
             ushort SectorDefReference,
@@ -159,31 +167,27 @@ namespace Meridian59.Files.ROO
         }
 
         /// <summary>
-        /// Creates RenderInfo data (containing points and uv coordinates).
-        /// Note: Z component is the height.
+        /// Updates the P, UV and Normal properties for either floor or ceiling.
+        /// Fills in current 3D data for the subsector vertices.
+        /// Note: Z component is the height here.
         /// </summary>
         /// <param name="IsFloor">Whether to create for floor or ceiling</param>
         /// <param name="Scale">Optional additional scale to apply.</param>
-        /// <returns></returns>
-        public RenderInfo GetRenderInfo(bool IsFloor, Real Scale = 1.0f)
+        public void UpdateVertexData(bool IsFloor, Real Scale = 1.0f)
         {
-            // get possible slopeinfo either for floor or ceiling
-            RooSectorSlopeInfo slopeInfo = null;
-            if (IsFloor) slopeInfo = Sector.SlopeInfoFloor;
-            if (!IsFloor) slopeInfo = Sector.SlopeInfoCeiling;
+            const Real INV64 = 1.0f / (Real)(64 << 4);  // from old code..
 
-            // initialize renderinfo keeping points and uv coordinates
-            RenderInfo RI = new RenderInfo(Vertices.Count);
-            V3[] P = RI.P;
-            V2[] UV = RI.UV;
+            V3 normal;
+            V3[] p          = new V3[Vertices.Count];
+            V2[] uv         = new V2[Vertices.Count];
+            int left        = 0;
+            int top         = 0;
+            Real oneOverC   = 0.0f;
 
-            // initialize some more vars
-            V3 intersectTop = new V3(0, 0, 0);
-            V3 intersectLeft = new V3(0, 0, 0);
-            int left = 0;
-            int top = 0;
-            Real inv64 = 1.0f / (Real)(64 << 4);
-            Real oneOverC = 0.0f;
+            RooSectorSlopeInfo slopeInfo = 
+                (IsFloor) ? Sector.SlopeInfoFloor : Sector.SlopeInfoCeiling;
+            
+            /*****************************************************************/
 
             // find most top left vertex and get its coordinates
             if (slopeInfo != null)
@@ -204,49 +208,45 @@ namespace Meridian59.Files.ROO
                 }
             }
 
-            // Start UV calculation
+            /*****************************************************************/
+
             for (int count = 0; count < Vertices.Count; count++)
             {
-                // fill in point coordinates
-                // this time we use the z as z and flip y/z (mogre!) when triangulating
-                // instead of changing all the following ported code
+                // 1: Fill in vertex coordinates
                 if (slopeInfo != null)
                 {
-                    P[count].X = (Real)Vertices[count].X;
-                    P[count].Y = (Real)Vertices[count].Y;
-                    P[count].Z = (-slopeInfo.A * P[count].X - slopeInfo.B * P[count].Y - slopeInfo.D) * oneOverC;
+                    p[count].X = (Real)Vertices[count].X;
+                    p[count].Y = (Real)Vertices[count].Y;
+                    p[count].Z = (-slopeInfo.A * p[count].X - slopeInfo.B * p[count].Y - slopeInfo.D) *oneOverC;
                 }
                 else
                 {
-                    P[count].X = (Real)Vertices[count].X;
-                    P[count].Y = (Real)Vertices[count].Y;
-
-                    if (IsFloor)
-                        P[count].Z = (Real)(Sector.FloorHeight * 16.0f);
-                    else
-                        P[count].Z = (Real)(Sector.CeilingHeight * 16.0f);
+                    p[count].X = (Real)Vertices[count].X;
+                    p[count].Y = (Real)Vertices[count].Y;
+                    p[count].Z = (IsFloor) ? (Real)(Sector.FloorHeight * 16.0f) : (Real)(Sector.CeilingHeight * 16.0f);                   
                 }
-
-                Real U, temp;
-
-                // start uv
+              
+                // 2.1: UV with slope
                 if (slopeInfo != null)
                 {
-                    V3 vectorU = new V3(0, 0, 0);
-                    V3 vectorV = new V3(0, 0, 0);
-                    V3 vector = new V3(0, 0, 0);
+                    V3 intersectTop;
+                    V3 intersectLeft;          
+                    V3 vectorU;
+                    V3 vectorV;
+                    V3 vector;
                     Real distance;
-
+                    Real U, temp;
+                    
                     // calc distance from top line (vector u)
-                    U = ((P[count].X - slopeInfo.P0.X) * (slopeInfo.P1.X - slopeInfo.P0.X)) +
-                        ((P[count].Z - slopeInfo.P0.Z) * (slopeInfo.P1.Z - slopeInfo.P0.Z)) +
-                        ((P[count].Y - slopeInfo.P0.Y) * (slopeInfo.P1.Y - slopeInfo.P0.Y));
+                    U = ((p[count].X - slopeInfo.P0.X) * (slopeInfo.P1.X - slopeInfo.P0.X)) +
+                        ((p[count].Z - slopeInfo.P0.Z) * (slopeInfo.P1.Z - slopeInfo.P0.Z)) +
+                        ((p[count].Y - slopeInfo.P0.Y) * (slopeInfo.P1.Y - slopeInfo.P0.Y));
 
                     temp = ((slopeInfo.P1.X - slopeInfo.P0.X) * (slopeInfo.P1.X - slopeInfo.P0.X)) +
                         ((slopeInfo.P1.Z - slopeInfo.P0.Z) * (slopeInfo.P1.Z - slopeInfo.P0.Z)) +
                         ((slopeInfo.P1.Y - slopeInfo.P0.Y) * (slopeInfo.P1.Y - slopeInfo.P0.Y));
 
-                    if (temp == 0)
+                    if (temp == 0.0f)
                         temp = 1.0f;
 
                     U /= temp;
@@ -255,21 +255,21 @@ namespace Meridian59.Files.ROO
                     intersectTop.Z = slopeInfo.P0.Z + U * (slopeInfo.P1.Z - slopeInfo.P0.Z);
                     intersectTop.Y = slopeInfo.P0.Y + U * (slopeInfo.P1.Y - slopeInfo.P0.Y);
 
-                    UV[count].X = (Real)System.Math.Sqrt(
-                                    (P[count].X - intersectTop.X) * (P[count].X - intersectTop.X) +
-                                    (P[count].Z - intersectTop.Z) * (P[count].Z - intersectTop.Z) +
-                                    (P[count].Y - intersectTop.Y) * (P[count].Y - intersectTop.Y));
+                    uv[count].X = (Real)System.Math.Sqrt(
+                                    (p[count].X - intersectTop.X) * (p[count].X - intersectTop.X) +
+                                    (p[count].Z - intersectTop.Z) * (p[count].Z - intersectTop.Z) +
+                                    (p[count].Y - intersectTop.Y) * (p[count].Y - intersectTop.Y));
 
                     // calc distance from left line (vector v)
-                    U = ((P[count].X - slopeInfo.P0.X) * (slopeInfo.P2.X - slopeInfo.P0.X)) +
-                        ((P[count].Z - slopeInfo.P0.Z) * (slopeInfo.P2.Z - slopeInfo.P0.Z)) +
-                        ((P[count].Y - slopeInfo.P0.Y) * (slopeInfo.P2.Y - slopeInfo.P0.Y));
+                    U = ((p[count].X - slopeInfo.P0.X) * (slopeInfo.P2.X - slopeInfo.P0.X)) +
+                        ((p[count].Z - slopeInfo.P0.Z) * (slopeInfo.P2.Z - slopeInfo.P0.Z)) +
+                        ((p[count].Y - slopeInfo.P0.Y) * (slopeInfo.P2.Y - slopeInfo.P0.Y));
 
                     temp = ((slopeInfo.P2.X - slopeInfo.P0.X) * (slopeInfo.P2.X - slopeInfo.P0.X)) +
                         ((slopeInfo.P2.Z - slopeInfo.P0.Z) * (slopeInfo.P2.Z - slopeInfo.P0.Z)) +
                         ((slopeInfo.P2.Y - slopeInfo.P0.Y) * (slopeInfo.P2.Y - slopeInfo.P0.Y));
 
-                    if (temp == 0)
+                    if (temp == 0.0f)
                         temp = 1.0f;
 
                     U /= temp;
@@ -278,13 +278,13 @@ namespace Meridian59.Files.ROO
                     intersectLeft.Z = slopeInfo.P0.Z + U * (slopeInfo.P2.Z - slopeInfo.P0.Z);
                     intersectLeft.Y = slopeInfo.P0.Y + U * (slopeInfo.P2.Y - slopeInfo.P0.Y);
 
-                    UV[count].Y = (Real)System.Math.Sqrt(
-                                    (P[count].X - intersectLeft.X) * (P[count].X - intersectLeft.X) +
-                                    (P[count].Z - intersectLeft.Z) * (P[count].Z - intersectLeft.Z) +
-                                    (P[count].Y - intersectLeft.Y) * (P[count].Y - intersectLeft.Y));
+                    uv[count].Y = (Real)System.Math.Sqrt(
+                                    (p[count].X - intersectLeft.X) * (p[count].X - intersectLeft.X) +
+                                    (p[count].Z - intersectLeft.Z) * (p[count].Z - intersectLeft.Z) +
+                                    (p[count].Y - intersectLeft.Y) * (p[count].Y - intersectLeft.Y));
 
-                    UV[count].X += (Sector.TextureY << 4) / 2.0f;
-                    UV[count].Y += (Sector.TextureX << 4) / 2.0f;
+                    uv[count].X += (Sector.TextureY << 4) / 2.0f;
+                    uv[count].Y += (Sector.TextureX << 4) / 2.0f;
 
                     vectorU.X = slopeInfo.P1.X - slopeInfo.P0.X;
                     vectorU.Z = slopeInfo.P1.Z - slopeInfo.P0.Z;
@@ -292,7 +292,7 @@ namespace Meridian59.Files.ROO
 
                     distance = (Real)System.Math.Sqrt((vectorU.X * vectorU.X) + (vectorU.Y * vectorU.Y));
 
-                    if (distance == 0)
+                    if (distance == 0.0f)
                         distance = 1.0f;
 
                     vectorU.X /= distance;
@@ -305,15 +305,15 @@ namespace Meridian59.Files.ROO
 
                     distance = (Real)System.Math.Sqrt((vectorV.X * vectorV.X) + (vectorV.Y * vectorV.Y));
 
-                    if (distance == 0)
+                    if (distance == 0.0f)
                         distance = 1.0f;
 
                     vectorV.X /= distance;
                     vectorV.Z /= distance;
                     vectorV.Y /= distance;
 
-                    vector.X = P[count].X - slopeInfo.P0.X;
-                    vector.Y = P[count].Y - slopeInfo.P0.Y;
+                    vector.X = p[count].X - slopeInfo.P0.X;
+                    vector.Y = p[count].Y - slopeInfo.P0.Y;
 
                     distance = (Real)System.Math.Sqrt((vector.X * vector.X) + (vector.Y * vector.Y));
 
@@ -325,73 +325,68 @@ namespace Meridian59.Files.ROO
 
                     if (((vector.X * vectorU.X) +
                         (vector.Y * vectorU.Y)) <= 0)
-                        UV[count].Y = -UV[count].Y;
+                        uv[count].Y = -uv[count].Y;
 
                     if (((vector.X * vectorV.X) +
                         (vector.Y * vectorV.Y)) > 0)
-                        UV[count].X = -UV[count].X;
+                        uv[count].X = -uv[count].X;
                 }
+
+                // 2.2: UV without slope
                 else
                 {
-                    UV[count].X = (Real)System.Math.Abs(Vertices[count].Y - top) - (Sector.TextureY << 4);
-                    UV[count].Y = (Real)System.Math.Abs(Vertices[count].X - left) - (Sector.TextureX << 4);
+                    uv[count].X = (Real)System.Math.Abs(Vertices[count].Y - top) - (Sector.TextureY << 4);
+                    uv[count].Y = (Real)System.Math.Abs(Vertices[count].X - left) - (Sector.TextureX << 4);
                 }
 
-                UV[count].X *= inv64;
-                UV[count].Y *= inv64;
+                uv[count].X *= INV64;
+                uv[count].Y *= INV64;
 
                 // apply additional userscale
-                P[count] *= Scale;
+                p[count] *= Scale;
             }
+
+            /*****************************************************************/
 
             // Calculate the normal
             if (slopeInfo != null)
             {
                 // if the sector is sloped, we get the normal from slopeinfo
-                RI.Normal.X = slopeInfo.A;
-                RI.Normal.Y = slopeInfo.B;
-                RI.Normal.Z = slopeInfo.C;
+                normal.X = slopeInfo.A;
+                normal.Y = slopeInfo.B;
+                normal.Z = slopeInfo.C;
 
-                RI.Normal.Normalize();
+                normal.Normalize();
             }
             else if (IsFloor)
             {
                 // default normal for non sloped floor
-                RI.Normal.X = 0.0f;
-                RI.Normal.Y = 0.0f;
-                RI.Normal.Z = 1.0f;
+                normal.X = 0.0f;
+                normal.Y = 0.0f;
+                normal.Z = 1.0f;
             }
             else
             {
                 // default normal for non sloped ceilings
-                RI.Normal.X = 0.0f;
-                RI.Normal.Y = 0.0f;
-                RI.Normal.Z = -1.0f;
+                normal.X = 0.0f;
+                normal.Y = 0.0f;
+                normal.Z = -1.0f;
             }
-            
-            return RI;
-        }
 
-        /// <summary>
-        /// RenderInformation for a SubSector
-        /// </summary>
-        public class RenderInfo
-        {
-            public V3[] P;
-            public V2[] UV;
-            public V3 Normal;
+            /*****************************************************************/
 
-            public RenderInfo(int Size)
+            // save in class properties depending on floor/ceiling
+            if (IsFloor)
             {
-                this.P = new V3[Size];
-                this.UV = new V2[Size];
-                this.Normal = new V3(0.0f, 0.0f, 0.0f);
-
-                for (int i = 0; i < Size; i++)
-                {
-                    P[i] = new V3(0.0f, 0.0f, 0.0f);
-                    UV[i] = new V2(0.0f, 0.0f);
-                }
+                FloorP = p;
+                FloorUV = uv;
+                FloorNormal = normal;
+            }
+            else
+            {
+                CeilingP = p;
+                CeilingUV = uv;
+                CeilingNormal = normal;
             }
         }
     }
