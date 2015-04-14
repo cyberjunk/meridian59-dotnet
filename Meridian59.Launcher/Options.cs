@@ -192,6 +192,7 @@ namespace Meridian59.Launcher.Models
         protected const string ATTRIB_PLAYER                = "player";
         protected const string ATTRIB_NUM                   = "num";
         protected const string ATTRIB_RIGHTCLICKACTION      = "rightclickaction";
+        protected const string ATTRIB_NUMOFSAMENAME         = "numofsamename";
         #endregion
 
         #region Fields
@@ -967,7 +968,10 @@ namespace Meridian59.Launcher.Models
                     buttonSet.Add(new ActionButtonConfig(
                         Convert.ToInt32(Reader[ATTRIB_NUM]), 
                         GetButtonType(Reader[ATTRIB_TYPE]), 
-                        Reader[XMLATTRIB_NAME]));
+                        Reader[XMLATTRIB_NAME], 
+                        null, 
+                        null,
+                        Convert.ToUInt32(Reader[ATTRIB_NUMOFSAMENAME])));
                 }
                 
                 // add buttonset to known ones
@@ -1289,6 +1293,7 @@ namespace Meridian59.Launcher.Models
                     Writer.WriteAttributeString(ATTRIB_NUM, actionButtonSets[i][j].Num.ToString());
                     Writer.WriteAttributeString(ATTRIB_TYPE, actionButtonSets[i][j].ButtonType.ToString().ToLower());
                     Writer.WriteAttributeString(XMLATTRIB_NAME, actionButtonSets[i][j].Name.ToLower());
+                    Writer.WriteAttributeString(ATTRIB_NUMOFSAMENAME, actionButtonSets[i][j].NumOfSameName.ToString());
                     Writer.WriteEndElement();
                 }
 

@@ -32,19 +32,51 @@ namespace Meridian59.Data.Lists
              
         }
 
-        public override void ApplySort(PropertyDescriptor Property, ListSortDirection Direction)
+        /// <summary>
+        /// Update the NumOfSameName property of all
+        /// items with the same name as the argument.
+        /// </summary>
+        /// <param name="Item"></param>
+        protected void RefreshNumOfSameName(InventoryObject Item)
         {
-            base.ApplySort(Property, Direction);     
+            if (Item == null)
+                return;
+
+            uint num = 0;
+
+            foreach (InventoryObject obj in this)
+            {
+                if (obj.Name == Item.Name)
+                {
+                    obj.NumOfSameName = num;
+                    num++;
+                }
+            }
+        }
+
+        public override void Add(InventoryObject Item)
+        {
+            base.Add(Item);
+            RefreshNumOfSameName(Item);
         }
 
         public override void Insert(int Index, InventoryObject Item)
         {
-            if (!isSorted)
-                base.Insert(Index, Item);
-            else
-            {
-                base.Insert(Index, Item);
-            }
+            base.Insert(Index, Item);
+            RefreshNumOfSameName(Item);
+        }
+
+        public override void RemoveAt(int Index)
+        {
+            base.RemoveAt(Index);
+            RefreshNumOfSameName(LastDeletedItem);
+        }
+
+        public override void Swap(int Index1, int Index2)
+        {
+            base.Swap(Index1, Index2);
+            RefreshNumOfSameName((Index1 > -1 && Index1 < this.Count) ? this[Index1] : null);
+            RefreshNumOfSameName((Index2 > -1 && Index2 < this.Count) ? this[Index2] : null);
         }
     }
 }

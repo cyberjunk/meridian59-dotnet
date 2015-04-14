@@ -62,6 +62,7 @@
             this.colEffect = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colAnimation = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colIsInUse = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colNumOfSameName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colAppearanceHash = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colOverlayFile = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -117,6 +118,7 @@
             this.colEffect,
             this.colAnimation,
             this.colIsInUse,
+            this.colNumOfSameName,
             this.colAppearanceHash,
             this.colName,
             this.colOverlayFile});
@@ -394,6 +396,15 @@
             this.colIsInUse.ReadOnly = true;
             this.colIsInUse.Width = 50;
             // 
+            // colNumOfSameName
+            // 
+            this.colNumOfSameName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colNumOfSameName.DataPropertyName = "NumOfSameName";
+            this.colNumOfSameName.HeaderText = "NOSN";
+            this.colNumOfSameName.Name = "colNumOfSameName";
+            this.colNumOfSameName.ReadOnly = true;
+            this.colNumOfSameName.Width = 35;
+            // 
             // colAppearanceHash
             // 
             this.colAppearanceHash.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
@@ -485,6 +496,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colEffect;
         private System.Windows.Forms.DataGridViewTextBoxColumn colAnimation;
         private System.Windows.Forms.DataGridViewTextBoxColumn colIsInUse;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colNumOfSameName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colAppearanceHash;
         private System.Windows.Forms.DataGridViewTextBoxColumn colName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colOverlayFile;

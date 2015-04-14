@@ -28,16 +28,13 @@ namespace Meridian59.Data.Models
     public class InventoryObject : ObjectBase
     {
         #region Constants
-        /* 
-         * These constants are used in databinding and avoid nasty and slow reflection calls
-         * Make sure to keep them in sync with the actual property names.
-         */
-
-        public const string PROPNAME_ISINUSE = "IsInUse";
+        public const string PROPNAME_ISINUSE        = "IsInUse";
+        public const string PROPNAME_NUMOFSAMENAME  = "NumOfSameName";
         #endregion
 
         #region Fields
         protected bool isInUse;
+        protected uint numOfSameName;
         #endregion
 
         #region Properties
@@ -54,6 +51,23 @@ namespace Meridian59.Data.Models
                     isInUse = value;
                     RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_ISINUSE));
                     appearanceChangeFlag = true;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Used to keep track if this is the first (0) , second (1), ... of
+        /// the item-name within a collection it is contained in.
+        /// </summary>
+        public uint NumOfSameName
+        {
+            get { return numOfSameName; }
+            set
+            {
+                if (numOfSameName != value)
+                {
+                    numOfSameName = value;
+                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_NUMOFSAMENAME));
                 }
             }
         }
@@ -129,11 +143,13 @@ namespace Meridian59.Data.Models
 
             if (RaiseChangedEvent)
             {
-                IsInUse = false;                
+                IsInUse = false;
+                NumOfSameName = 0;
             }
             else
             {
-                isInUse = false;               
+                isInUse = false;
+                numOfSameName = 0;
             }
         }
         #endregion

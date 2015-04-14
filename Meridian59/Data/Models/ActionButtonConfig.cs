@@ -32,6 +32,7 @@ namespace Meridian59.Data.Models
         public const string PROPNAME_NAME = "Name";
         public const string PROPNAME_DATA = "Data";
         public const string PROPNAME_LABEL = "Label";
+        public const string PROPNAME_NUMOFSAMENAME = "NumOfSameName";
         #endregion
 
         public event EventHandler Activated;
@@ -50,6 +51,7 @@ namespace Meridian59.Data.Models
         protected string name;
         protected object data;
         protected string label;
+        protected uint numOfSameName;
 
         #region Properties
         public int Num
@@ -116,6 +118,19 @@ namespace Meridian59.Data.Models
                 }
             }
         }
+
+        public uint NumOfSameName
+        {
+            get { return numOfSameName; }
+            set
+            {
+                if (numOfSameName != value)
+                {
+                    numOfSameName = value;
+                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_NUMOFSAMENAME));
+                }
+            }
+        }
         #endregion
 
         #region Constructors
@@ -124,14 +139,15 @@ namespace Meridian59.Data.Models
             Clear(false);
         }
 
-        public ActionButtonConfig(int Num, ActionButtonType ButtonType, string Name, object Data = null, string Label = null)
+        public ActionButtonConfig(int Num, ActionButtonType ButtonType, string Name, object Data = null, string Label = null, uint NumOfSameName = 0)
         {
             num = Num;
             buttonType = ButtonType;
+            numOfSameName = NumOfSameName;
 
             if (Label == null)
                 Label = String.Empty;
-            
+
             label = Label;
 
             if (ButtonType == ActionButtonType.Action)
@@ -156,6 +172,7 @@ namespace Meridian59.Data.Models
                 ButtonType = ActionButtonType.Unset;
                 Name = String.Empty;
                 Data = null;
+                NumOfSameName = 0;
             }
             else
             {
@@ -163,6 +180,7 @@ namespace Meridian59.Data.Models
                 buttonType = ActionButtonType.Unset;
                 name = String.Empty;
                 data = null;
+                numOfSameName = 0;
             }
         }
         #endregion
@@ -172,6 +190,7 @@ namespace Meridian59.Data.Models
             buttonType = ActionButtonType.Unset;
             name = String.Empty;
             Data = null;
+            numOfSameName = 0;
         }
 
         public void SetToAction(AvatarAction Action)
@@ -179,6 +198,7 @@ namespace Meridian59.Data.Models
             buttonType = ActionButtonType.Action;
             name = Action.ToString();
             Data = Action;
+            numOfSameName = 0;
         }
 
         public void SetToSpell(SpellObject Spell)
@@ -186,6 +206,7 @@ namespace Meridian59.Data.Models
             buttonType = ActionButtonType.Spell;
             name = Spell.Name;
             Data = Spell;
+            numOfSameName = 0;
         }
 
         public void SetToItem(InventoryObject Item)
@@ -193,6 +214,7 @@ namespace Meridian59.Data.Models
             buttonType = ActionButtonType.Item;
             name = Item.Name;
             Data = Item;
+            numOfSameName = Item.NumOfSameName;
         }
 
         public void Activate()

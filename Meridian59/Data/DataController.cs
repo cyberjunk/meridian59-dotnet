@@ -1692,7 +1692,8 @@ namespace Meridian59.Data
                 foreach (ActionButtonConfig button in ActionButtons)
                 {
                     if (button.ButtonType == ActionButtonType.Item &&
-                        button.Name.ToLower() == obj.Name.ToLower())
+                        button.Name.ToLower() == obj.Name.ToLower() &&
+                        button.NumOfSameName == obj.NumOfSameName)
                     {
                         button.SetToItem(obj);
                     }
@@ -1703,6 +1704,18 @@ namespace Meridian59.Data
         protected void HandleInventoryAdd(InventoryAddMessage Message)
         {
             InventoryObjects.Add(Message.NewInventoryObject);
+
+            // look up buttons which are assigned to this item
+            // lookup for items by name is with issues (non unique)!
+            foreach (ActionButtonConfig button in ActionButtons)
+            {
+                if (button.ButtonType == ActionButtonType.Item &&
+                    button.Name.ToLower() == Message.NewInventoryObject.Name.ToLower() &&
+                    button.NumOfSameName == Message.NewInventoryObject.NumOfSameName)
+                {
+                    button.SetToItem(Message.NewInventoryObject);
+                }
+            }
         }
 
         protected void HandleInventoryRemove(InventoryRemoveMessage Message)

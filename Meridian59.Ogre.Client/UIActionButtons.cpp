@@ -221,7 +221,8 @@ namespace Meridian59 { namespace Ogre
 			}
 			else if (dataModel->ButtonType == ActionButtonType::Item)
 			{
-				imageComposers[Index]->DataSource = (InventoryObject^)dataModel->Data;
+				if (dataModel->Data)
+					imageComposers[Index]->DataSource = (InventoryObject^)dataModel->Data;
 			}
 			else if (dataModel->ButtonType == ActionButtonType::Spell)
 			{
