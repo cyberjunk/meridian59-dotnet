@@ -345,14 +345,14 @@ namespace Meridian59 { namespace Ogre
 						size_t fromIndex = dataViews->getIdxOfChild(dataView);
 						size_t toIndex = dataViews->getIdxOfChild(destDrag);
 
-						// swap datamodels
-						dataModels->Swap(fromIndex, toIndex);
-
 						// swap views
 						ControllerUI::Inventory::List->swapChildren(dataView, destDrag);
 
 						// swap composers
 						ControllerUI::Inventory::SwapImageComposers(fromIndex, toIndex);
+
+						// swap datamodels
+						dataModels->Swap(fromIndex, toIndex);
 
 						// tell server
 						OgreClient::Singleton->SendReqInventoryMoveMessage(
