@@ -329,6 +329,7 @@
     <Compile Include="Protocol\GameMessages\GameMode\CancelOfferMessage.cs" />
     <Compile Include="Protocol\GameMessages\GameMode\CounterOfferedMessage.cs" />
     <Compile Include="Protocol\GameMessages\GameMode\ChangePasswordMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\ReqInventoryMoveMessage.cs" />
     <Compile Include="Protocol\GameMessages\GameMode\ReqDepositMessage.cs" />
     <Compile Include="Protocol\GameMessages\GameMode\WithdrawAlListMessage.cs" />
     <Compile Include="Protocol\GameMessages\GameMode\ReqWithdrawAltemsMessage.cs" />

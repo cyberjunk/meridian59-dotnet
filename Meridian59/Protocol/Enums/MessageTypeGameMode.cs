@@ -105,7 +105,9 @@ namespace Meridian59.Protocol.Enums
         ReqBuy              = 124,
         ReqBuyItems         = 125,
         ChangeDescription   = 126,
-
+#if !VANILLA
+        ReqInventoryMove    = 127,
+#endif
         Player              = 130,
         Stat                = 131,
         StatGroup           = 132,

@@ -555,7 +555,11 @@ namespace Meridian59.Protocol
                     case MessageTypeGameMode.ChangeDescription:                               // PI: 126
                         TypedMessage = new ChangeDescriptionMessage(e.MessageBuffer);
                         break;
-
+#if !VANILLA
+                    case MessageTypeGameMode.ReqInventoryMove:                                // PI: 127
+                        TypedMessage = new ReqInventoryMoveMessage(e.MessageBuffer);
+                        break;
+#endif
                     case MessageTypeGameMode.Player:                                          // PI: 130
                         TypedMessage = new PlayerMessage(ref pMessage);
                         HandlePlayer((PlayerMessage)TypedMessage);

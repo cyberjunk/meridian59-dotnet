@@ -1209,6 +1209,22 @@ namespace Meridian59.Client
             // send/enqueue it (async)
             ServerConnection.SendQueue.Enqueue(message);
         }
+
+        /// <summary>
+        /// Requests to swap inventory items.
+        /// </summary>
+        /// <param name="FromID">Item ID to swap</param>
+        /// <param name="ToID">Item ID to swap with</param>
+        public virtual void SendReqInventoryMoveMessage(uint FromID, uint ToID)
+        {
+            // create message instance
+            ReqInventoryMoveMessage message = new ReqInventoryMoveMessage(
+                FromID, ToID);
+
+            // send/enqueue it (async)
+            ServerConnection.SendQueue.Enqueue(message);
+        }
+
 #endif
         /// <summary>
         /// Sends a custom Action request
