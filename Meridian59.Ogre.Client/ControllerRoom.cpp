@@ -742,7 +742,7 @@ namespace Meridian59 { namespace Ogre
 			return;
 
 		// get vertexdata for this wallpart
-		RooWall::RenderInfo^ RI = Wall->GetRenderInfo(
+		RooWall::VertexData^ RI = Wall->GetVertexData(
 			PartType, 
 			IsLeftSide,
 			TextureWidth,

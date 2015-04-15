@@ -813,9 +813,9 @@ namespace Meridian59.Files.ROO
         /// <param name="TexShrink">Texture shrink</param>
         /// <param name="Scale">Additional scale for vertices</param>
         /// <returns></returns>
-        public RenderInfo GetRenderInfo(WallPartType PartType, bool IsLeftSide, int TexWidth, int TexHeight, int TexShrink, Real Scale = 1.0f)
+        public VertexData GetVertexData(WallPartType PartType, bool IsLeftSide, int TexWidth, int TexHeight, int TexShrink, Real Scale = 1.0f)
         {
-            RenderInfo RI = new RenderInfo();
+            VertexData RI = new VertexData();
             bool drawTopDown = true;
             RooSideDefFlags flags;
             int xoffset = 0;
@@ -1075,56 +1075,11 @@ namespace Meridian59.Files.ROO
         /// <summary>
         /// RenderInformation for a PART of a RooWall
         /// </summary>
-        public class RenderInfo
+        public struct VertexData
         {
             public V3 P0, P1, P2, P3;
             public V2 UV0, UV1, UV2, UV3;
             public V3 Normal;
-
-            public RenderInfo()
-            {
-                P0 = new V3(0.0f, 0.0f, 0.0f);
-                P3 = new V3(0.0f, 0.0f, 0.0f);
-                P1 = new V3(0.0f, 0.0f, 0.0f);
-                P2 = new V3(0.0f, 0.0f, 0.0f);
-
-                // defaults
-                UV0 = new V2(0.0f, 0.0f);
-                UV1 = new V2(0.0f, 1.0f);
-                UV3 = new V2(1.0f, 0.0f);
-                UV2 = new V2(1.0f, 1.0f);
-
-                Normal = new V3(0.0f, 0.0f, 0.0f);
-            }
-
-            /// <summary>
-            /// Scales the UV coordinates so they match
-            /// increased pow2 width / heights.
-            /// NOTE: This does not work if U or V is bigger than 1,
-            /// because it would use empty areas when clamping (repeating)
-            /// </summary>
-            /// <param name="Width">Non-Pow2 Width</param>
-            /// <param name="Height">Non-Po2 Height</param>
-            public void ScaleUVPow2(uint Width, uint Height)
-            {
-                uint pow2width = MathUtil.NextPowerOf2(Width);
-                uint pow2height = MathUtil.NextPowerOf2(Height);
-
-                Real wr = (Real)Width / (Real)pow2width;
-                Real hr = (Real)Height / (Real)pow2height;
-
-                UV0.X *= wr;
-                UV0.Y *= hr;
-
-                UV1.X *= wr;
-                UV1.Y *= hr;
-
-                UV3.X *= wr;
-                UV3.Y *= hr;
-
-                UV2.X *= wr;
-                UV2.Y *= hr;              
-            }
         }
 
         #endregion
