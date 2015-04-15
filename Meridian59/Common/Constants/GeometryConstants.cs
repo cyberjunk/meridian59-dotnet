@@ -36,13 +36,28 @@ namespace Meridian59.Common.Constants
     {
         /// <summary>
         /// Legacy FINENESS value from drawdefs.h
+        /// This is the highest resolution the legacy client and the rooms are operating in.
+        /// It means 1024 client rows/cols make 1 big row/col in the servergrid.
         /// </summary>
         public const int FINENESS = 1024;
 
         /// <summary>
-        /// Legacy KOD_FINESS value from drawdefs.h
+        /// Legacy KOD_FINESS value from drawdefs.h.
+        /// This is the highest resolution blakserv is running at.
+        /// It means 64 fine rows/cols make 1 big row/col in the servergrid.
+        /// The new client/renderer also operates in this scale, but with floating point type.
         /// </summary>
-        public const int KOD_FINESS = 64;
+        public const int KOD_FINENESS = 64;
+
+        /// <summary>
+        /// Multiply by this to scale from server and new client FINENESS to legacy client FINENESS
+        /// </summary>
+        public const Real KODFINETOCLIENTFINE = (Real)FINENESS / (Real)KOD_FINENESS;
+
+        /// <summary>
+        /// Multiply by this to scale from legacy client FINENESS to server and new client FINENESS
+        /// </summary>
+        public const Real CLIENTFINETOKODFINE = (Real)KOD_FINENESS / (Real)FINENESS;
 
         /// <summary>
         /// Legacy LOG_FINENESS value from drawdefs.h
@@ -151,7 +166,7 @@ namespace Meridian59.Common.Constants
         /// <remarks>
         /// See 'SetPlayerInfo()' in 'clientd3d/game.c'
         /// </remarks>
-        public const Real PLAYERWIDTH = 31.0f * (Real)KOD_FINESS / 4.0f;
+        public const Real PLAYERWIDTH = 31.0f * (Real)KOD_FINENESS / 4.0f;
 
         /// <summary>
         /// Minimum distance player has to stay away from wall.

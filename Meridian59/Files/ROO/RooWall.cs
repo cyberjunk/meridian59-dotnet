@@ -36,6 +36,16 @@ namespace Meridian59.Files.ROO
     [Serializable]
     public class RooWall : IByteSerializableFast, IRooIndicesResolvable
     {
+        /// <summary>
+        /// Stores 3D VertexData for a side-part of a RooWall
+        /// </summary>
+        public struct VertexData
+        {
+            public V3 P0, P1, P2, P3;
+            public V2 UV0, UV1, UV2, UV3;
+            public V3 Normal;
+        }
+
         #region IByteSerializable
         public int ByteLength 
         {
@@ -55,10 +65,10 @@ namespace Meridian59.Files.ROO
             Array.Copy(BitConverter.GetBytes(ServerID), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(BitConverter.GetBytes(RightSideReference), 0, Buffer, cursor, TypeSizes.SHORT);
+            Array.Copy(BitConverter.GetBytes(RightSideNum), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(BitConverter.GetBytes(LeftSideReference), 0, Buffer, cursor, TypeSizes.SHORT);
+            Array.Copy(BitConverter.GetBytes(LeftSideNum), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
             Array.Copy(BitConverter.GetBytes(X1), 0, Buffer, cursor, TypeSizes.INT);
@@ -88,10 +98,10 @@ namespace Meridian59.Files.ROO
             Array.Copy(BitConverter.GetBytes(LeftYOffset), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(BitConverter.GetBytes(RightSectorReference), 0, Buffer, cursor, TypeSizes.SHORT);
+            Array.Copy(BitConverter.GetBytes(RightSectorNum), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(BitConverter.GetBytes(LeftSectorReference), 0, Buffer, cursor, TypeSizes.SHORT);
+            Array.Copy(BitConverter.GetBytes(LeftSectorNum), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
             return cursor - StartIndex;
@@ -102,10 +112,10 @@ namespace Meridian59.Files.ROO
             *((short*)Buffer) = ServerID;
             Buffer += TypeSizes.SHORT;
 
-            *((ushort*)Buffer) = RightSideReference;
+            *((ushort*)Buffer) = RightSideNum;
             Buffer += TypeSizes.SHORT;
 
-            *((ushort*)Buffer) = LeftSideReference;
+            *((ushort*)Buffer) = LeftSideNum;
             Buffer += TypeSizes.SHORT;
 
             *((int*)Buffer) = X1;
@@ -135,10 +145,10 @@ namespace Meridian59.Files.ROO
             *((short*)Buffer) = LeftYOffset;
             Buffer += TypeSizes.SHORT;
 
-            *((ushort*)Buffer) = RightSectorReference;
+            *((ushort*)Buffer) = RightSectorNum;
             Buffer += TypeSizes.SHORT;
 
-            *((ushort*)Buffer) = LeftSectorReference;
+            *((ushort*)Buffer) = LeftSectorNum;
             Buffer += TypeSizes.SHORT;
         }
 
@@ -149,10 +159,10 @@ namespace Meridian59.Files.ROO
             ServerID = BitConverter.ToInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            RightSideReference = BitConverter.ToUInt16(Buffer, cursor);
+            RightSideNum = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            LeftSideReference = BitConverter.ToUInt16(Buffer, cursor);
+            LeftSideNum = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
             X1 = BitConverter.ToInt32(Buffer, cursor);
@@ -182,10 +192,10 @@ namespace Meridian59.Files.ROO
             LeftYOffset = BitConverter.ToInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            RightSectorReference = BitConverter.ToUInt16(Buffer, cursor);
+            RightSectorNum = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            LeftSectorReference = BitConverter.ToUInt16(Buffer, cursor);
+            LeftSectorNum = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
             return cursor - StartIndex;
@@ -196,10 +206,10 @@ namespace Meridian59.Files.ROO
             ServerID = *((short*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            RightSideReference = *((ushort*)Buffer);
+            RightSideNum = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            LeftSideReference = *((ushort*)Buffer);
+            LeftSideNum = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
             X1 = *((int*)Buffer);
@@ -229,10 +239,10 @@ namespace Meridian59.Files.ROO
             LeftYOffset = *((short*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            RightSectorReference = *((ushort*)Buffer);
+            RightSectorNum = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            LeftSectorReference = *((ushort*)Buffer);
+            LeftSectorNum = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
         }
 
@@ -251,56 +261,117 @@ namespace Meridian59.Files.ROO
         }
         #endregion
 
-        #region Properties
-        
+        #region Properties    
         /// <summary>
         /// Number of this wall (1 based)
         /// </summary>
         public int Num { get; set; }
         
         /// <summary>
-        /// ID on the server (0 if none)
+        /// ID on the server. This is used to modify the wall by server messages.
         /// </summary>
         public short ServerID { get; set; }
-        
-        /// <summary>
-        /// Index of right(pos) side in array/list
-        /// </summary>
-        public ushort RightSideReference { get; set; }
-        
-        /// <summary>
-        /// Index of left(neg) side in array/list
-        /// </summary>
-        public ushort LeftSideReference { get; set; }
 
-        // first point (from)
+        /// <summary>
+        /// X coordinate of first point (source) in client FINENESS (1:1024)
+        /// </summary>
         public int X1 { get; set; }
+
+        /// <summary>
+        /// Y coordinate of first point (source) in client FINENESS (1:1024)
+        /// </summary>
         public int Y1 { get; set; }
 
-        // second point (to)
+        /// <summary>
+        /// X coordinate of second point (destination) in client FINENESS (1:1024)
+        /// </summary>
         public int X2 { get; set; }
+
+        /// <summary>
+        /// Y coordinate of second point (destination) in client FINENESS (1:1024)
+        /// </summary>
         public int Y2 { get; set; }
 
-        // length
+        /// <summary>
+        /// Length of the wall in server FINENESS (1:64).
+        /// Note: Rather use the length of vector P1P2.
+        /// </summary>
         public ushort ClientLength { get; set; }
 
-        // texture offsets
+        /// <summary>
+        /// XOffset of the texture on the right side
+        /// </summary>
         public short RightXOffset { get; set; }
-        public short LeftXOffset { get; set; }
+        
+        /// <summary>
+        /// YOffset of the texture on the right side
+        /// </summary>
         public short RightYOffset { get; set; }
+        
+        /// <summary>
+        /// XOffset of the texture on the left side
+        /// </summary>
+        public short LeftXOffset { get; set; }
+
+        /// <summary>
+        /// YOffset of the texture on the left side
+        /// </summary>
         public short LeftYOffset { get; set; }
 
-        // indices of "sector" instances
-        public ushort RightSectorReference { get; set; }
-        public ushort LeftSectorReference { get; set; }
+        /// <summary>
+        /// Num (1 based) of sector to the right of this wall.
+        /// 0 is unset.
+        /// </summary>
+        public ushort RightSectorNum { get; set; }
+        
+        /// <summary>
+        /// Num (1 based) of the sector to the left of this wall.
+        /// 0 is unset.
+        /// </summary>
+        public ushort LeftSectorNum { get; set; }
 
+        /// <summary>
+        /// Num (1 based) of the right side of this wall.
+        /// 0 is unset.
+        /// </summary>
+        public ushort RightSideNum { get; set; }
+
+        /// <summary>
+        /// Num (1 based) of the left of left side of this wall.
+        /// 0 is unset.
+        /// </summary>
+        public ushort LeftSideNum { get; set; }
+
+        /// <summary>
+        /// Sector to the right of the wall.
+        /// Will be resolved from RightSectorNum within ResolveIndices().
+        /// </summary>
         public RooSector RightSector { get; set; }
+
+        /// <summary>
+        /// Sector to the left of the wall.
+        /// Will be resolved from LeftSectorNum within ResolveIndices().
+        /// </summary>
         public RooSector LeftSector { get; set; }
+
+        /// <summary>
+        /// Right side of the wall.
+        /// Will be resolved from RightSideNum within ResolveIndices().
+        /// </summary>
         public RooSideDef RightSide { get; set; }
+
+        /// <summary>
+        /// Left side of the wall.
+        /// Will be resolved from LeftSideNum within ReoslveIndices().
+        /// </summary>
         public RooSideDef LeftSide { get; set; }
 
-        #region Z-coordinates
+        /// <summary>
+        /// Flags describing special intersection cases.
+        /// </summary>
+        public BowtieFlags BowtieFlags { get; set; }
 
+        #region Z-coordinates
         /* 
          * There is an overall of 8 z-coordinates possible for a wall given by
          * its adjacents sectorheights/ceilings, so except for the
@@ -318,33 +389,53 @@ namespace Meridian59.Files.ROO
          */
 
         // Z-coordinates at (X1,Y1) 
-        public Real Z0 { get; set; }      /* height of bottom of lower wall */
-        public Real Z1 { get; set; }      /* height of top of lower wall / bottom of normal wall */
-        public Real Z2 { get; set; }      /* height of top of normal wall / bottom of upper wall */
-        public Real Z3 { get; set; }      /* height of top of upper wall */
+        protected Real z0;      /* height of bottom of lower wall */
+        protected Real z1;      /* height of top of lower wall / bottom of normal wall */
+        protected Real z2;      /* height of top of normal wall / bottom of upper wall */
+        protected Real z3;      /* height of top of upper wall */
 
         // Z-coordinates at (X2,Y2)
-        public Real ZZ0 { get; set; }     /* height of bottom of lower wall */
-        public Real ZZ1 { get; set; }     /* height of top of lower wall / bottom of normal wall */
-        public Real ZZ2 { get; set; }     /* height of top of normal wall / bottom of upper wall */
-        public Real ZZ3 { get; set; }     /* height of top of upper wall */
-
+        protected Real zz0;    /* height of bottom of lower wall */
+        protected Real zz1;    /* height of top of lower wall / bottom of normal wall */
+        protected Real zz2;     /* height of top of normal wall / bottom of upper wall */
+        protected Real zz3;     /* height of top of upper wall */
         #endregion
-
-        public BowtieFlags BowtieFlags { get; set; }
-
         #endregion
 
         #region Constructors
-        public RooWall(short ServerID, 
-            ushort RightSideReference, ushort LeftSideReference, 
-            int X1, int Y1, int X2, int Y2, ushort ClientLength, 
-            short RightXOffset, short LeftXOffset, short RightYOffset, short LeftYOffset,
-            ushort RightSectorReference, ushort LeftSectorReference)
+        /// <summary>
+        /// Constructor by values
+        /// </summary>
+        /// <param name="ServerID"></param>
+        /// <param name="RightSideNum"></param>
+        /// <param name="LeftSideNum"></param>
+        /// <param name="X1"></param>
+        /// <param name="Y1"></param>
+        /// <param name="X2"></param>
+        /// <param name="Y2"></param>
+        /// <param name="ClientLength"></param>
+        /// <param name="RightXOffset"></param>
+        /// <param name="LeftXOffset"></param>
+        /// <param name="RightYOffset"></param>
+        /// <param name="LeftYOffset"></param>
+        /// <param name="RightSectorNum"></param>
+        /// <param name="LeftSectorNum"></param>
+        public RooWall(
+            short ServerID, 
+            ushort RightSideNum, 
+            ushort LeftSideNum, 
+            int X1, int Y1, int X2, int Y2, 
+            ushort ClientLength, 
+            short RightXOffset, 
+            short LeftXOffset, 
+            short RightYOffset, 
+            short LeftYOffset,
+            ushort RightSectorNum, 
+            ushort LeftSectorNum)
         {
             this.ServerID = ServerID;
-            this.RightSideReference = RightSideReference;
-            this.LeftSideReference = LeftSideReference;
+            this.RightSideNum = RightSideNum;
+            this.LeftSideNum = LeftSideNum;
             this.X1 = X1;
             this.Y1 = Y1;
             this.X2 = X2;
@@ -354,18 +445,27 @@ namespace Meridian59.Files.ROO
             this.LeftXOffset = LeftXOffset;
             this.RightYOffset = RightYOffset;
             this.LeftYOffset = LeftYOffset;
-            this.RightSectorReference = RightSectorReference;
-            this.LeftSectorReference = LeftSectorReference;
+            this.RightSectorNum = RightSectorNum;
+            this.LeftSectorNum = LeftSectorNum;
 
             this.BowtieFlags = new BowtieFlags();
         }
 
+        /// <summary>
+        /// Constructor by managed parser
+        /// </summary>
+        /// <param name="Buffer"></param>
+        /// <param name="StartIndex"></param>
         public RooWall(byte[] Buffer, int StartIndex = 0)
         {
             BowtieFlags = new BowtieFlags();
             ReadFrom(Buffer, StartIndex);
         }
 
+        /// <summary>
+        /// Constructor by pointerbased parser
+        /// </summary>
+        /// <param name="Buffer"></param>
         public unsafe RooWall(ref byte* Buffer)
         {
             BowtieFlags = new BowtieFlags();
@@ -374,20 +474,19 @@ namespace Meridian59.Files.ROO
         #endregion
 
         #region Methods
-
         /// <summary>
-        /// Creates object references from the indices for easier access.
+        /// Creates object references from the Sector/Side Num references.
         /// </summary>
         /// <param name="RooFile"></param>
         public void ResolveIndices(RooFile RooFile)
         {
-            // indices properties are not zero-based, but the arrays/lists are
+            // num properties are not zero-based, but the arrays are
 
             // get reference to right SectorDef
-            if (RightSectorReference > 0 && 
-                RooFile.Sectors.Count > RightSectorReference - 1)
+            if (RightSectorNum > 0 && 
+                RooFile.Sectors.Count > RightSectorNum - 1)
             {
-                RightSector = RooFile.Sectors[RightSectorReference - 1];
+                RightSector = RooFile.Sectors[RightSectorNum - 1];
 
                 // save as adjacent wall
                 if (!RightSector.Walls.Contains(this))
@@ -395,10 +494,10 @@ namespace Meridian59.Files.ROO
             }
 
             // get reference to left SectorDef
-            if (LeftSectorReference > 0 &&
-                RooFile.Sectors.Count > LeftSectorReference - 1)
+            if (LeftSectorNum > 0 &&
+                RooFile.Sectors.Count > LeftSectorNum - 1)
             {
-                LeftSector = RooFile.Sectors[LeftSectorReference - 1];
+                LeftSector = RooFile.Sectors[LeftSectorNum - 1];
 
                 // save as adjacent wall
                 if (!LeftSector.Walls.Contains(this))
@@ -406,10 +505,10 @@ namespace Meridian59.Files.ROO
             }
 
             // get reference to right SideDef
-            if (RightSideReference > 0 &&
-                RooFile.SideDefs.Count > RightSideReference - 1)
+            if (RightSideNum > 0 &&
+                RooFile.SideDefs.Count > RightSideNum - 1)
             {
-                RightSide = RooFile.SideDefs[RightSideReference - 1];
+                RightSide = RooFile.SideDefs[RightSideNum - 1];
 
                 // save as adjacent side
                 if (RightSector != null && !RightSector.Sides.Contains(RightSide))
@@ -421,10 +520,10 @@ namespace Meridian59.Files.ROO
             }
 
             // get reference to left SideDef
-            if (LeftSideReference > 0 &&
-                RooFile.SideDefs.Count > LeftSideReference - 1)
+            if (LeftSideNum > 0 &&
+                RooFile.SideDefs.Count > LeftSideNum - 1)
             {
-                LeftSide = RooFile.SideDefs[LeftSideReference - 1];
+                LeftSide = RooFile.SideDefs[LeftSideNum - 1];
 
                 // save as adjacent side
                 if (RightSector != null && !RightSector.Sides.Contains(LeftSide))
@@ -446,30 +545,30 @@ namespace Meridian59.Files.ROO
             // no sectors? we're screwed, use defaults and return
             if (RightSector == null && LeftSector == null)
             {
-                Z0 = Z1 = 0.0f;
-                Z2 = Z3 = (Real)GeometryConstants.FINENESS;
-                ZZ0 = ZZ1 = 0.0f;
-                ZZ2 = ZZ3 = (Real)GeometryConstants.FINENESS;
+                z0 = z1 = 0.0f;
+                z2 = z3 = (Real)GeometryConstants.FINENESS;
+                zz0 = zz1 = 0.0f;
+                zz2 = zz3 = (Real)GeometryConstants.FINENESS;
                 return;
             }
 
             // only left sector? use heights from there and return
             if (RightSector == null)
             {
-                Z0 = Z1 = LeftSector.CalculateFloorHeight(X1, Y1);
-                Z2 = Z3 = LeftSector.CalculateCeilingHeight(X1, Y1);
-                ZZ0 = ZZ1 = LeftSector.CalculateFloorHeight(X2, Y2);
-                ZZ2 = ZZ3 = LeftSector.CalculateCeilingHeight(X2, Y2);
+                z0 = z1 = LeftSector.CalculateFloorHeight(X1, Y1);
+                z2 = z3 = LeftSector.CalculateCeilingHeight(X1, Y1);
+                zz0 = zz1 = LeftSector.CalculateFloorHeight(X2, Y2);
+                zz2 = zz3 = LeftSector.CalculateCeilingHeight(X2, Y2);
                 return;
             }
 
             // only right sector? use heights from there and return
             if (LeftSector == null)
             {
-                Z0 = Z1 = RightSector.CalculateFloorHeight(X1, Y1);
-                Z2 = Z3 = RightSector.CalculateCeilingHeight(X1, Y1);
-                ZZ0 = ZZ1 = RightSector.CalculateFloorHeight(X2, Y2);
-                ZZ2 = ZZ3 = RightSector.CalculateCeilingHeight(X2, Y2);
+                z0 = z1 = RightSector.CalculateFloorHeight(X1, Y1);
+                z2 = z3 = RightSector.CalculateCeilingHeight(X1, Y1);
+                zz0 = zz1 = RightSector.CalculateFloorHeight(X2, Y2);
+                zz2 = zz3 = RightSector.CalculateCeilingHeight(X2, Y2);
                 return;
             }
 
@@ -489,10 +588,10 @@ namespace Meridian59.Files.ROO
                     // normal wall - S1 higher at both ends
                     BowtieFlags.Value =  0;
 
-                    Z1 = S1_height0;
-                    ZZ1 = S1_height1;
-                    Z0 = S2_height0;
-                    ZZ0 = S2_height1;
+                    z1 = S1_height0;
+                    zz1 = S1_height1;
+                    z0 = S2_height0;
+                    zz0 = S2_height1;
                 }
                 else
                 {
@@ -500,10 +599,10 @@ namespace Meridian59.Files.ROO
                     BowtieFlags.IsBelowPos = true;
 
                     // no extra zNeg here
-                    Z1 = S1_height0;
-                    ZZ1 = S2_height1;
-                    Z0 = S2_height0;
-                    ZZ0 = S1_height1;
+                    z1 = S1_height0;
+                    zz1 = S2_height1;
+                    z0 = S2_height0;
+                    zz0 = S1_height1;
                 }
             }
 
@@ -515,10 +614,10 @@ namespace Meridian59.Files.ROO
                     // normal wall - S2 higher at both ends
                     BowtieFlags.Value = 0;
 
-                    Z1 = S2_height0;
-                    ZZ1 = S2_height1;
-                    Z0 = S1_height0;
-                    ZZ0 = S1_height1;
+                    z1 = S2_height0;
+                    zz1 = S2_height1;
+                    z0 = S1_height0;
+                    zz0 = S1_height1;
                 }
                 else
                 {
@@ -526,10 +625,10 @@ namespace Meridian59.Files.ROO
                     BowtieFlags.IsBelowNeg = true;
 
                     // no extra zNeg here
-                    Z1 = S2_height0;
-                    ZZ1 = S1_height1;
-                    Z0 = S1_height0;
-                    ZZ0 = S2_height1;
+                    z1 = S2_height0;
+                    zz1 = S1_height1;
+                    z0 = S1_height0;
+                    zz0 = S2_height1;
 
                 }
             }
@@ -548,10 +647,10 @@ namespace Meridian59.Files.ROO
                     //wall->bowtie_bits &= (BYTE)~BT_ABOVE_BOWTIE; // Clear above bowtie bits
                     BowtieFlags.IsAboveBowtie = false;
 
-                    Z3 = S1_height0;
-                    ZZ3 = S1_height1;
-                    Z2 = S2_height0;
-                    ZZ2 = S2_height1;
+                    z3 = S1_height0;
+                    zz3 = S1_height1;
+                    z2 = S2_height0;
+                    zz2 = S2_height1;
                 }
                 else
                 {
@@ -559,10 +658,10 @@ namespace Meridian59.Files.ROO
                     //wall->bowtie_bits |= (BYTE)BT_ABOVE_POS; // positive sector is on top at endpoint 0
                     BowtieFlags.IsAbovePos = true;
 
-                    Z3 = S1_height0;
-                    ZZ3 = S2_height1;
-                    Z2 = S2_height0;
-                    ZZ2 = S1_height1;
+                    z3 = S1_height0;
+                    zz3 = S2_height1;
+                    z2 = S2_height0;
+                    zz2 = S1_height1;
                 }
             }
             else
@@ -573,10 +672,10 @@ namespace Meridian59.Files.ROO
                     //wall->bowtie_bits &= (BYTE)~BT_ABOVE_BOWTIE;
                     BowtieFlags.IsAboveBowtie = false;
 
-                    Z3 = S2_height0;
-                    ZZ3 = S2_height1;
-                    Z2 = S1_height0;
-                    ZZ2 = S1_height1;
+                    z3 = S2_height0;
+                    zz3 = S2_height1;
+                    z2 = S1_height0;
+                    zz2 = S1_height1;
                 }
                 else
                 {
@@ -584,18 +683,16 @@ namespace Meridian59.Files.ROO
                     //wall->bowtie_bits |= (BYTE)BT_ABOVE_NEG; // negative sector is on top at endpoint 0
                     BowtieFlags.IsAboveNeg = true;
 
-                    Z3 = S2_height0;
-                    ZZ3 = S1_height1;
-                    Z2 = S1_height0;
-                    ZZ2 = S2_height1;
+                    z3 = S2_height0;
+                    zz3 = S1_height1;
+                    z2 = S1_height0;
+                    zz2 = S2_height1;
                 }
             }
         }
-
         #endregion
 
         #region V2 / Renderstuff
-
         /// <summary>
         /// Gets first point of wall (2D)
         /// </summary>
@@ -753,10 +850,10 @@ namespace Meridian59.Files.ROO
                     // compare height with wallheights
                     // use average of both endpoints (in case its sloped)
                     // do not care about the sides
-                    Real h3 = (Z3 + ZZ3) / 2.0f;
-                    Real h2 = (Z2 + ZZ2) / 2.0f;
-                    Real h1 = (Z1 + ZZ1) / 2.0f;
-                    Real h0 = (Z0 + ZZ0) / 2.0f;
+                    Real h3 = (z3 + zz3) / 2.0f;
+                    Real h2 = (z2 + zz2) / 2.0f;
+                    Real h1 = (z1 + zz1) / 2.0f;
+                    Real h0 = (z0 + zz0) / 2.0f;
                     bool a, b;
                     
                     // test upper part
@@ -841,26 +938,26 @@ namespace Meridian59.Files.ROO
                 switch (PartType)
                 {
                     case WallPartType.Upper:
-                        RI.P0.Z = Z3;
-                        RI.P3.Z = ZZ3;
-                        RI.P1.Z = Z2;
-                        RI.P2.Z = ZZ2;
+                        RI.P0.Z = z3;
+                        RI.P3.Z = zz3;
+                        RI.P1.Z = z2;
+                        RI.P2.Z = zz2;
                         drawTopDown = !RightSide.Flags.IsAboveBottomUp;
                         break;
 
                     case WallPartType.Middle:
-                        RI.P0.Z = Z2;
-                        RI.P3.Z = ZZ2;
-                        RI.P1.Z = Z1;
-                        RI.P2.Z = ZZ1;
+                        RI.P0.Z = z2;
+                        RI.P3.Z = zz2;
+                        RI.P1.Z = z1;
+                        RI.P2.Z = zz1;
                         drawTopDown = RightSide.Flags.IsNormalTopDown;
                         break;
 
                     case WallPartType.Lower:
-                        RI.P0.Z = Z1;
-                        RI.P3.Z = ZZ1;
-                        RI.P1.Z = Z0;
-                        RI.P2.Z = ZZ0;
+                        RI.P0.Z = z1;
+                        RI.P3.Z = zz1;
+                        RI.P1.Z = z0;
+                        RI.P2.Z = zz0;
                         drawTopDown = RightSide.Flags.IsBelowTopDown;
                         break;
                 }
@@ -884,26 +981,26 @@ namespace Meridian59.Files.ROO
                 switch (PartType)
                 {
                     case WallPartType.Upper:
-                        RI.P0.Z = ZZ3;
-                        RI.P3.Z = Z3;
-                        RI.P1.Z = ZZ2;
-                        RI.P2.Z = Z2;
+                        RI.P0.Z = zz3;
+                        RI.P3.Z = z3;
+                        RI.P1.Z = zz2;
+                        RI.P2.Z = z2;
                         drawTopDown = !LeftSide.Flags.IsAboveBottomUp;
                         break;
 
                     case WallPartType.Middle:
-                        RI.P0.Z = ZZ2;
-                        RI.P3.Z = Z2;
-                        RI.P1.Z = ZZ1;
-                        RI.P2.Z = Z1;
+                        RI.P0.Z = zz2;
+                        RI.P3.Z = z2;
+                        RI.P1.Z = zz1;
+                        RI.P2.Z = z1;
                         drawTopDown = LeftSide.Flags.IsNormalTopDown;
                         break;
 
                     case WallPartType.Lower:
-                        RI.P0.Z = ZZ1;
-                        RI.P3.Z = Z1;
-                        RI.P1.Z = ZZ0;
-                        RI.P2.Z = Z0;
+                        RI.P0.Z = zz1;
+                        RI.P3.Z = z1;
+                        RI.P1.Z = zz0;
+                        RI.P2.Z = z0;
                         drawTopDown = LeftSide.Flags.IsBelowTopDown;
                         break;
                 }
@@ -1072,17 +1169,6 @@ namespace Meridian59.Files.ROO
             return RI;
         }
 
-        /// <summary>
-        /// RenderInformation for a PART of a RooWall
-        /// </summary>
-        public struct VertexData
-        {
-            public V3 P0, P1, P2, P3;
-            public V2 UV0, UV1, UV2, UV3;
-            public V3 Normal;
-        }
-
         #endregion
-
     }
 }

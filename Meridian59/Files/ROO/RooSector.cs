@@ -320,12 +320,12 @@ namespace Meridian59.Files.ROO
         public short TextureY { get; set; }
 
         /// <summary>
-        /// Floor height
+        /// Floor height in server/new client FINENESS (1:64)
         /// </summary>
         public Real FloorHeight { get; set; }
 
         /// <summary>
-        /// Ceiling height
+        /// Ceiling height in server/new client FINENESS (1:64)
         /// </summary>
         public Real CeilingHeight { get; set; }
 
@@ -594,6 +594,7 @@ namespace Meridian59.Files.ROO
         /// <param name="RaiseChangedEvent"></param>
         public void ResolveResources(ResourceManager M59ResourceManager, bool RaiseChangedEvent)
         {
+            // floor
             if (FloorTexture > 0)
             { 
                 ResourceFloor = M59ResourceManager.GetRoomTexture(FloorTexture);
@@ -625,6 +626,7 @@ namespace Meridian59.Files.ROO
                 SpeedFloor = V2.ZERO;
             }
             
+            // ceiling
             if (CeilingTexture > 0)
             {
                 ResourceCeiling = M59ResourceManager.GetRoomTexture(CeilingTexture);
@@ -761,20 +763,19 @@ namespace Meridian59.Files.ROO
         }
 
         /// <summary>
-        /// Returns the floorheight for a given point in roo scale,
-        /// note: there is no check whether this is or isn't in the sector
+        /// Returns the floorheight for a given point in legacy client FINENESS (1:1024),
+        /// Note: There is no check if these coordinates are in the sector
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <param name="WithSectorDepth"></param>
+        /// <returns>Height of the floor in legacy client FINENESS (1:1024)</returns>
         public Real CalculateFloorHeight(int x, int y, bool WithSectorDepth = false)
         {
-            Real height;
-
-            if (SlopeInfoFloor == null)
-                height = FloorHeight * 16.0f;
-            else
-                height = CalculateHeight(SlopeInfoFloor, x, y);
+            // get height in client fineness
+            Real height = (SlopeInfoFloor == null) ? 
+                FloorHeight * GeometryConstants.KODFINETOCLIENTFINE :
+                CalculateSlopeHeight(SlopeInfoFloor, x, y);
 
             if (WithSectorDepth)
             {
@@ -802,17 +803,17 @@ namespace Meridian59.Files.ROO
         }
 
         /// <summary>
-        /// Returns the ceilingheight for a given point in roo scale,
-        /// note: there is no check whether this is or isn't in the sector
+        /// Returns the ceilingheight for a given point in legacy client FINENESS (1:1024),
+        /// Note: There is no check if these coordinates are in the sector
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
+        /// <returns>Height of the ceiling in legacy client FINENESS (1:1024)</returns>
         public Real CalculateCeilingHeight(int x, int y)
         {
-            if (SlopeInfoCeiling == null)
-                return CeilingHeight * 16.0f;
-            else
-                return CalculateHeight(SlopeInfoCeiling, x, y);
+            return (SlopeInfoCeiling == null) ? 
+                CeilingHeight * GeometryConstants.KODFINETOCLIENTFINE : 
+                CalculateSlopeHeight(SlopeInfoCeiling, x, y);
         }
 
         /// <summary>
@@ -822,8 +823,8 @@ namespace Meridian59.Files.ROO
         /// <param name="SlopeInfo"></param>
         /// <param name="x"></param>
         /// <param name="y"></param>
-        /// <returns></returns>
-        public static Real CalculateHeight(RooSectorSlopeInfo SlopeInfo, Real x, Real y)
+        /// <returns>Height of the point in legacy client FINENESS (1:1024)</returns>
+        public static Real CalculateSlopeHeight(RooSectorSlopeInfo SlopeInfo, Real x, Real y)
         {
             return (-SlopeInfo.A * x - SlopeInfo.B * y - SlopeInfo.D) / SlopeInfo.C;
         }
