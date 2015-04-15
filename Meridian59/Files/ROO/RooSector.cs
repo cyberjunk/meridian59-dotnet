@@ -382,21 +382,6 @@ namespace Meridian59.Files.ROO
         public object UserData { get; set; }
 
         /// <summary>
-        /// Some custom userdata
-        /// </summary>
-        public object UserData2 { get; set; }
-
-        /// <summary>
-        /// Some custom userdata for the floor
-        /// </summary>
-        public object UserDataFloor { get; set; }
-
-        /// <summary>
-        /// Some custom userdata for the ceiling
-        /// </summary>
-        public object UserDataCeiling { get; set; }
-
-        /// <summary>
         /// 
         /// </summary>
         public string MaterialNameFloor { get; protected set; }
@@ -942,6 +927,8 @@ namespace Meridian59.Files.ROO
         /// <param name="TextureFile"></param>
         public void SetFloorTexture(ushort TextureNum, BgfFile TextureFile)
         {
+            string oldmaterial = MaterialNameFloor;
+
             FloorTexture = TextureNum;
             ResourceFloor = TextureFile;
 
@@ -965,7 +952,7 @@ namespace Meridian59.Files.ROO
             }
 
             if (TextureChanged != null)
-                TextureChanged(this, new SectorTextureChangedEventArgs(this, true));
+                TextureChanged(this, new SectorTextureChangedEventArgs(this, true, oldmaterial));
         }
 
         /// <summary>
@@ -975,6 +962,8 @@ namespace Meridian59.Files.ROO
         /// <param name="TextureFile"></param>
         public void SetCeilingTexture(ushort TextureNum, BgfFile TextureFile)
         {
+            string oldmaterial = MaterialNameCeiling;
+
             CeilingTexture = TextureNum;
             ResourceCeiling = TextureFile;
 
@@ -998,7 +987,7 @@ namespace Meridian59.Files.ROO
             }
 
             if (TextureChanged != null)
-                TextureChanged(this, new SectorTextureChangedEventArgs(this, false));
+                TextureChanged(this, new SectorTextureChangedEventArgs(this, false, oldmaterial));
         }
         #endregion
     }

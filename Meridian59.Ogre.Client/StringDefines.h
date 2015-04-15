@@ -58,6 +58,7 @@
 #define NAME_AVATARLIGHT	"AvatarLight"
 #define NAME_ROOMNODE		"RoomNode"
 #define NAME_ROOMGEOMETRY	"RoomGeometry"
+#define NAME_ROOM			"Room"
 
 #define SKY_DAY_MAT			"Sky/Day"
 #define SKY_EVENING_MAT		"Sky/Evening"

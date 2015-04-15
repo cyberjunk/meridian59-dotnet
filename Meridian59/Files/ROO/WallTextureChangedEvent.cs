@@ -25,11 +25,13 @@ namespace Meridian59.Files.ROO
     {
         public RooSideDef ChangedSide { get; set; }
         public WallPartType WallPartType { get; set; }
+        public string OldMaterialName { get; set; }
 
-        public WallTextureChangedEventArgs(RooSideDef ChangedSide, WallPartType WallPartType)
+        public WallTextureChangedEventArgs(RooSideDef ChangedSide, WallPartType WallPartType, string OldMaterialName)
         {
             this.ChangedSide = ChangedSide;
             this.WallPartType = WallPartType;
+            this.OldMaterialName = OldMaterialName;
         }
     }
 }

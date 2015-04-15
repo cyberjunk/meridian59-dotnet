@@ -182,10 +182,6 @@ namespace Meridian59.Files.ROO
         public BgfFile ResourceLower { get; protected set; }
 
         public object UserData { get; set; }
-        public object UserData2 { get; set; }
-        public object UserDataUpper { get; set; }
-        public object UserDataMiddle { get; set; }
-        public object UserDataLower { get; set; }
 
         public V2 SpeedUpper { get; protected set; }
         public V2 SpeedMiddle { get; protected set; }
@@ -442,7 +438,8 @@ namespace Meridian59.Files.ROO
         {
             ushort group = (animation != null) ? animation.CurrentGroup : (ushort)1;
             int frameidx = 0;
-                      
+            string oldmaterial = MaterialNameLower;
+       
             LowerTexture = TextureNum;
             ResourceLower = TextureFile;
 
@@ -477,7 +474,7 @@ namespace Meridian59.Files.ROO
             }
 
             if (TextureChanged != null)
-                TextureChanged(this, new WallTextureChangedEventArgs(this, WallPartType.Lower));
+                TextureChanged(this, new WallTextureChangedEventArgs(this, WallPartType.Lower, oldmaterial));
         }
 
         /// <summary>
@@ -490,6 +487,7 @@ namespace Meridian59.Files.ROO
         {
             ushort group = (animation != null) ? animation.CurrentGroup : (ushort)1;
             int frameidx = 0;
+            string oldmaterial = MaterialNameMiddle;
 
             MiddleTexture = TextureNum;
             ResourceMiddle = TextureFile;
@@ -532,7 +530,7 @@ namespace Meridian59.Files.ROO
             }
 
             if (TextureChanged != null)
-                TextureChanged(this, new WallTextureChangedEventArgs(this, WallPartType.Middle));
+                TextureChanged(this, new WallTextureChangedEventArgs(this, WallPartType.Middle, oldmaterial));
         }
 
         /// <summary>
@@ -544,6 +542,7 @@ namespace Meridian59.Files.ROO
         {
             ushort group = (animation != null) ? animation.CurrentGroup : (ushort)1;
             int frameidx = 0;
+            string oldmaterial = MaterialNameUpper;
 
             UpperTexture = TextureNum;
             ResourceUpper = TextureFile;
@@ -579,7 +578,7 @@ namespace Meridian59.Files.ROO
             }
 
             if (TextureChanged != null)
-                TextureChanged(this, new WallTextureChangedEventArgs(this, WallPartType.Upper));
+                TextureChanged(this, new WallTextureChangedEventArgs(this, WallPartType.Upper, oldmaterial));
         }
 
         /// <summary>

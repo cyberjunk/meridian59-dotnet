@@ -6,6 +6,7 @@ namespace Meridian59 { namespace Ogre
 	{
 		roomGeometry			= nullptr;
 		roomNode				= nullptr;
+		roomManObj				= nullptr;
 		grassMaterials			= nullptr;
 		decoration				= nullptr;
 		caelumSystem			= nullptr;
@@ -38,11 +39,15 @@ namespace Meridian59 { namespace Ogre
 		roomGeometry = SceneManager->createStaticGeometry(NAME_ROOMGEOMETRY);
 		roomGeometry->setRegionDimensions(::Ogre::Vector3(5000.0f, 5000.0f, 5000.0f));
 
+		// a manualobject for the room geometry
+		roomManObj = OGRE_NEW ManualObject(NAME_ROOM);
+
 		// create room scenenode
 		roomNode = SceneManager->getRootSceneNode()->createChildSceneNode(NAME_ROOMNODE);
 		roomNode->setPosition(::Ogre::Vector3(64.0f, 0, 64.0f));
-        roomNode->setInitialState();
-        
+		roomNode->attachObject(roomManObj);
+		roomNode->setInitialState();
+
 		// create decoration mapping
 		LoadImproveData();
 
@@ -287,6 +292,9 @@ namespace Meridian59 { namespace Ogre
 		if (SceneManager->hasStaticGeometry(NAME_ROOMGEOMETRY))
 			SceneManager->destroyStaticGeometry(NAME_ROOMGEOMETRY);
 
+		if (SceneManager->hasManualObject(NAME_ROOM))
+			SceneManager->destroyManualObject(NAME_ROOM);
+
 		/******************************************************************/
 
 		delete grassMaterials;			
@@ -296,6 +304,7 @@ namespace Meridian59 { namespace Ogre
 
 		roomGeometry		= nullptr;
 		roomNode			= nullptr;
+		roomManObj			= nullptr;
 		decoration			= nullptr;
 		caelumSystem		= nullptr;
 		grassMaterials		= nullptr;
@@ -315,10 +324,11 @@ namespace Meridian59 { namespace Ogre
 		ManualObject* manObj;
 		MeshPtr temp_mesh;
 		Entity* temp_entity;
-		SceneNode* child;
+		::System::Collections::Generic::List<::System::String^>^ matlist;
 
 		/*********************************************************************************************/
 
+		// roomfile must be present
 		if (!Room)
 		{
 			// log
@@ -329,13 +339,14 @@ namespace Meridian59 { namespace Ogre
 			return;
 		}
 		else
-			Logger::Log(MODULENAME, LogType::Info,
-				"Loading map: " + Room->Filename);
+			Logger::Log(MODULENAME, LogType::Info, "Loading map: " + Room->Filename);
 
-		// attach handler for texture change on walls
-		Room->WallTextureChanged += gcnew WallTextureChangedEventHandler(OnRooFileWallTextureChanged);
-		Room->SectorTextureChanged += gcnew SectorTextureChangedEventHandler(OnRooFileSectorTextureChanged);
-		Room->SectorMoved += gcnew SectorMovedEventHandler(OnRooFileSectorMoved);
+		/*********************************************************************************************/
+
+		// attach handlers for changes in the room
+		Room->WallTextureChanged	+= gcnew WallTextureChangedEventHandler(OnRooFileWallTextureChanged);
+		Room->SectorTextureChanged	+= gcnew SectorTextureChangedEventHandler(OnRooFileSectorTextureChanged);
+		Room->SectorMoved			+= gcnew SectorMovedEventHandler(OnRooFileSectorMoved);
 
 		/*********************************************************************************************/
 
@@ -347,17 +358,16 @@ namespace Meridian59 { namespace Ogre
 
 		// set sky
 		UpdateSky();
-			
+		
 		/*********************************************************************************************/
-
-		// create all sides
-		for each(RooSideDef^ side in Room->SideDefs)
-			CreateSide(side);	
-
-		// create all sectors
-		for each (RooSector^ sector in Room->Sectors)
-            CreateSector(sector);
-
+		
+		// get used materials
+		matlist = Room->GetAllMaterialNames();
+		
+		// create room geometry chunks based on materials
+		for each(::System::String^ s in matlist)		
+			CreateMaterialChunk(s);
+		
 		/*********************************************************************************************/
 
 		// add decoration
@@ -416,47 +426,16 @@ namespace Meridian59 { namespace Ogre
 		if (roomGeometry)
 			roomGeometry->reset();
         
+		// clear room geometry
+		if (roomManObj)
+			roomManObj->clear();
+
 		if (Room)
 		{
 			// detach listeners
-			Room->WallTextureChanged -= gcnew WallTextureChangedEventHandler(OnRooFileWallTextureChanged);
-			Room->SectorTextureChanged -= gcnew SectorTextureChangedEventHandler(OnRooFileSectorTextureChanged);
-			Room->SectorMoved -= gcnew SectorMovedEventHandler(OnRooFileSectorMoved);
-
-			// destroy sides
-			for each(RooSideDef^ side in Room->SideDefs)
-			{
-				if (side->UserData)
-				{
-					manObj = (ManualObject*)((::System::IntPtr)side->UserData).ToPointer();
-
-					if (manObj)
-						OGRE_DELETE manObj;
-
-					side->UserData = nullptr;
-					side->UserData2 = nullptr;
-					side->UserDataLower = nullptr;
-					side->UserDataMiddle = nullptr;
-					side->UserDataUpper = nullptr;
-				}
-			}
-
-			// destroy sectors
-			for each(RooSector^ sector in Room->Sectors)
-			{
-				if (sector->UserData)
-				{
-					manObj = (ManualObject*)((::System::IntPtr)sector->UserData).ToPointer();
-
-					if (manObj)
-						OGRE_DELETE manObj;
-
-					sector->UserData = nullptr;
-					sector->UserData2 = nullptr;
-					sector->UserDataCeiling = nullptr;
-					sector->UserDataFloor = nullptr;
-				}
-			}
+			Room->WallTextureChanged	-= gcnew WallTextureChangedEventHandler(OnRooFileWallTextureChanged);
+			Room->SectorTextureChanged	-= gcnew SectorTextureChangedEventHandler(OnRooFileSectorTextureChanged);
+			Room->SectorMoved			-= gcnew SectorMovedEventHandler(OnRooFileSectorMoved);
 		}
 			
         // destroy decoration
@@ -471,6 +450,67 @@ namespace Meridian59 { namespace Ogre
 		decoration->clear();
     };
 
+	int ControllerRoom::GetRoomSectionByMaterial(::Ogre::String Name)
+	{
+		::Ogre::ManualObject::ManualObjectSection* section;
+
+		if (!roomManObj || Name == STRINGEMPTY)
+			return -1;
+
+		for (size_t i = 0; i < roomManObj->getNumSections(); i++)
+		{
+			section = roomManObj->getSection(i);
+
+			if (section->getMaterialName() == Name)
+				return i;
+		}
+
+		return -1;
+	};
+
+	void ControllerRoom::CreateMaterialChunk(::System::String^ MaterialName)
+	{
+		::Ogre::String material = StringConvert::CLRToOgre(MaterialName);
+		int sectionindex		= GetRoomSectionByMaterial(material);
+
+		// create new geometry chunk (vertexbuffer+indexbuffer+...)
+		// for this material or get existing one
+		if (sectionindex > -1)		
+			roomManObj->beginUpdate(sectionindex);
+		
+		else		
+			roomManObj->begin(material);
+
+		// reset vertex counter
+		verticesProcessed = 0;
+
+		// create all sector floors and ceilings using this material
+		for each (RooSector^ sector in Room->Sectors)
+		{
+			if (sector->MaterialNameFloor == MaterialName)
+				CreateSectorPart(sector, true);
+
+			if (sector->MaterialNameCeiling == MaterialName)
+				CreateSectorPart(sector, false);
+		}
+
+		// create all side parts using this material
+		for each(RooSideDef^ side in Room->SideDefs)
+		{
+			if (side->MaterialNameLower == MaterialName)
+				CreateSidePart(side, WallPartType::Lower);
+
+			if (side->MaterialNameMiddle == MaterialName)
+				CreateSidePart(side, WallPartType::Middle);
+
+			if (side->MaterialNameUpper == MaterialName)
+				CreateSidePart(side, WallPartType::Upper);
+		}
+
+		// finish this chunk
+		roomManObj->end();
+	}
+
 	void ControllerRoom::Tick(long long Tick, long long Span)
 	{		
 		if (!IsInitialized)
@@ -484,188 +524,7 @@ namespace Meridian59 { namespace Ogre
 		}
 	};
 
-	void ControllerRoom::CreateSide(RooSideDef^ Side)
-	{
-		SceneNode* scenenode;
-		ManualObject* target;
-		ManualObject::ManualObjectSection* section;
-		
-		/******************************************************************************/
-
-		// use existing ManualObject
-		if (Side->UserData)
-		{
-			target = (ManualObject*)((::System::IntPtr)Side->UserData).ToPointer();
-
-			if (!target)
-				return;
-
-			target->clear();
-		}
-		else
-		{
-			// build name
-			::Ogre::String ostr_sidename =
-				PREFIX_ROOM_SIDE + ::Ogre::StringConverter::toString(Side->Num);
-
-			// create a manualobject for the side
-			target = OGRE_NEW ManualObject(ostr_sidename);
-			
-			// save reference
-			Side->UserData = (::System::IntPtr)target;
-		}
-
-		/******************************************************************************/
-
-		::Ogre::String ostr_upper  = StringConvert::CLRToOgre(Side->MaterialNameUpper);
-		::Ogre::String ostr_middle = StringConvert::CLRToOgre(Side->MaterialNameMiddle);
-		::Ogre::String ostr_lower  = StringConvert::CLRToOgre(Side->MaterialNameLower);
-
-		// note: all sideparts using the same material will be put into the same
-		// ManualObject section (=Vertexbuffer+Indexbuffer), to keep batchcount low
-
-		// CASE 1: All 3 sideparts use same material
-		if (ostr_upper == ostr_middle &&
-			ostr_upper == ostr_lower &&
-			ostr_upper != STRINGEMPTY)
-		{
-			verticesProcessed = 0;
-			target->begin(ostr_upper, ::Ogre::RenderOperation::OT_TRIANGLE_LIST);
-			CreateSidePart(target, Side, WallPartType::Upper);
-			CreateSidePart(target, Side, WallPartType::Middle);
-			CreateSidePart(target, Side, WallPartType::Lower);
-			section = target->end();
-			Side->UserDataUpper = (::System::IntPtr)section;
-			Side->UserDataMiddle = (::System::IntPtr)section;
-			Side->UserDataLower = (::System::IntPtr)section;
-		}
-
-		// CASE 2: All different materials
-		else if (ostr_upper != ostr_middle &&
-			ostr_upper != ostr_lower &&
-			ostr_middle != ostr_lower)
-		{
-			if (ostr_upper != STRINGEMPTY)
-			{
-				verticesProcessed = 0;
-				target->begin(ostr_upper, ::Ogre::RenderOperation::OT_TRIANGLE_LIST);
-				CreateSidePart(target, Side, WallPartType::Upper);
-				section = target->end();
-				Side->UserDataUpper = (::System::IntPtr)section;
-			}
-
-			if (ostr_middle != STRINGEMPTY)
-			{
-				verticesProcessed = 0;
-				target->begin(ostr_middle, ::Ogre::RenderOperation::OT_TRIANGLE_LIST);
-				CreateSidePart(target, Side, WallPartType::Middle);
-				section = target->end();
-				Side->UserDataMiddle = (::System::IntPtr)section;
-			}
-
-			if (ostr_lower != STRINGEMPTY)
-			{
-				verticesProcessed = 0;
-				target->begin(ostr_lower, ::Ogre::RenderOperation::OT_TRIANGLE_LIST);
-				CreateSidePart(target, Side, WallPartType::Lower);
-				section = target->end();
-				Side->UserDataLower = (::System::IntPtr)section;
-			}
-		}
-
-		// CASE 3: Two have the same material, third is different
-		else if (ostr_upper == ostr_middle)
-		{
-			if (ostr_upper != STRINGEMPTY)
-			{
-				verticesProcessed = 0;
-				target->begin(ostr_upper, ::Ogre::RenderOperation::OT_TRIANGLE_LIST);
-				CreateSidePart(target, Side, WallPartType::Upper);			
-				CreateSidePart(target, Side, WallPartType::Middle);
-				section = target->end();
-				Side->UserDataUpper = (::System::IntPtr)section;
-				Side->UserDataMiddle = (::System::IntPtr)section;
-			}
-
-			if (ostr_lower != STRINGEMPTY)
-			{
-				verticesProcessed = 0;
-				target->begin(ostr_lower, ::Ogre::RenderOperation::OT_TRIANGLE_LIST);
-				CreateSidePart(target, Side, WallPartType::Lower);
-				section = target->end();
-				Side->UserDataLower = (::System::IntPtr)section;
-			}
-		}
-		else if (ostr_upper == ostr_lower)
-		{
-			if (ostr_upper != STRINGEMPTY)
-			{
-				verticesProcessed = 0;
-				target->begin(ostr_upper, ::Ogre::RenderOperation::OT_TRIANGLE_LIST);
-				CreateSidePart(target, Side, WallPartType::Upper);
-				CreateSidePart(target, Side, WallPartType::Lower);
-				section = target->end();
-				Side->UserDataUpper = (::System::IntPtr)section;
-				Side->UserDataLower = (::System::IntPtr)section;
-			}
-
-			if (ostr_middle != STRINGEMPTY)
-			{
-				verticesProcessed = 0;
-				target->begin(ostr_middle, ::Ogre::RenderOperation::OT_TRIANGLE_LIST);
-				CreateSidePart(target, Side, WallPartType::Middle);
-				section = target->end();
-				Side->UserDataMiddle = (::System::IntPtr)section;
-			}
-		}
-		else if (ostr_middle == ostr_lower)
-		{
-			if (ostr_upper != STRINGEMPTY)
-			{
-				verticesProcessed = 0;
-				target->begin(ostr_upper, ::Ogre::RenderOperation::OT_TRIANGLE_LIST);
-				CreateSidePart(target, Side, WallPartType::Upper);
-				section = target->end();
-				Side->UserDataUpper = (::System::IntPtr)section;		
-			}
-
-			if (ostr_middle != STRINGEMPTY)
-			{
-				verticesProcessed = 0;
-				target->begin(ostr_middle, ::Ogre::RenderOperation::OT_TRIANGLE_LIST);
-				CreateSidePart(target, Side, WallPartType::Middle);			
-				CreateSidePart(target, Side, WallPartType::Lower);
-				section = target->end();
-				Side->UserDataMiddle = (::System::IntPtr)section;
-				Side->UserDataLower = (::System::IntPtr)section;
-			}
-		}
-
-		/******************************************************************************/
-		
-		// use existing scenenode
-		if (Side->UserData2)
-		{
-			scenenode = (SceneNode*)((::System::IntPtr)Side->UserData2).ToPointer();
-		}
-		else
-		{
-			// add it to the scene
-			if (target->getNumSections() > 0)
-			{
-				scenenode = roomNode->createChildSceneNode();
-				scenenode->attachObject(target);
-				
-				Side->UserData2 = (::System::IntPtr)scenenode;
-
-			#ifdef _DEBUG
-				scenenode->showBoundingBox(true);
-			#endif
-			}
-		}
-	};
-
-	void ControllerRoom::CreateSidePart(ManualObject* Target, RooSideDef^ Side, WallPartType PartType)
+	void ControllerRoom::CreateSidePart(RooSideDef^ Side, WallPartType PartType)
     {
 		BgfFile^ textureFile		= nullptr;
 		BgfBitmap^ texture			= nullptr;
@@ -718,15 +577,14 @@ namespace Meridian59 { namespace Ogre
 		for each(RooWall^ wall in Room->Walls)
 		{
 			if (wall->LeftSide == Side)			
-				CreateWallPart(Target, wall, PartType, true, texture->Width, texture->Height, textureFile->ShrinkFactor);
+				CreateWallPart(wall, PartType, true, texture->Width, texture->Height, textureFile->ShrinkFactor);
 			
 			if (wall->RightSide == Side)
-				CreateWallPart(Target, wall, PartType, false, texture->Width, texture->Height, textureFile->ShrinkFactor);
+				CreateWallPart(wall, PartType, false, texture->Width, texture->Height, textureFile->ShrinkFactor);
 		}
 	};
 
-	void ControllerRoom::CreateWallPart(
-		ManualObject* Target, 
+	void ControllerRoom::CreateWallPart(		
 		RooWall^ Wall, 
 		WallPartType PartType, 
 		bool IsLeftSide, 
@@ -751,139 +609,41 @@ namespace Meridian59 { namespace Ogre
 			SCALE);
 			
 		// P0
-		Target->position(RI->P0.X, RI->P0.Z, RI->P0.Y);
-		Target->normal(RI->Normal.X, RI->Normal.Z, RI->Normal.Y);
-		Target->textureCoord(RI->UV0.Y, RI->UV0.X);
+		roomManObj->position(RI->P0.X, RI->P0.Z, RI->P0.Y);
+		roomManObj->normal(RI->Normal.X, RI->Normal.Z, RI->Normal.Y);
+		roomManObj->textureCoord(RI->UV0.Y, RI->UV0.X);
 
 		// P1
-		Target->position(RI->P1.X, RI->P1.Z, RI->P1.Y);
-		Target->normal(RI->Normal.X, RI->Normal.Z, RI->Normal.Y);
-		Target->textureCoord(RI->UV1.Y, RI->UV1.X);
+		roomManObj->position(RI->P1.X, RI->P1.Z, RI->P1.Y);
+		roomManObj->normal(RI->Normal.X, RI->Normal.Z, RI->Normal.Y);
+		roomManObj->textureCoord(RI->UV1.Y, RI->UV1.X);
 
 		// P2
-		Target->position(RI->P2.X, RI->P2.Z, RI->P2.Y);
-		Target->normal(RI->Normal.X, RI->Normal.Z, RI->Normal.Y);
-		Target->textureCoord(RI->UV2.Y, RI->UV2.X);
+		roomManObj->position(RI->P2.X, RI->P2.Z, RI->P2.Y);
+		roomManObj->normal(RI->Normal.X, RI->Normal.Z, RI->Normal.Y);
+		roomManObj->textureCoord(RI->UV2.Y, RI->UV2.X);
 
 		// P3
-		Target->position(RI->P3.X, RI->P3.Z, RI->P3.Y);
-		Target->normal(RI->Normal.X, RI->Normal.Z, RI->Normal.Y);
-		Target->textureCoord(RI->UV3.Y, RI->UV3.X);
+		roomManObj->position(RI->P3.X, RI->P3.Z, RI->P3.Y);
+		roomManObj->normal(RI->Normal.X, RI->Normal.Z, RI->Normal.Y);
+		roomManObj->textureCoord(RI->UV3.Y, RI->UV3.X);
 
 		// create the rectangle by 2 triangles
-		Target->triangle(verticesProcessed, verticesProcessed + 1, verticesProcessed + 2);
-		Target->triangle(verticesProcessed, verticesProcessed + 2, verticesProcessed + 3);
+		roomManObj->triangle(verticesProcessed, verticesProcessed + 1, verticesProcessed + 2);
+		roomManObj->triangle(verticesProcessed, verticesProcessed + 2, verticesProcessed + 3);
 
 		// increase counter
 		verticesProcessed += 4;	
 	};
-	
-	void ControllerRoom::CreateSector(RooSector^ Sector)
-	{
-		SceneNode* scenenode;
-		ManualObject* target;
-		ManualObject::ManualObjectSection* section;
-		
-		/******************************************************************************/
 
-		// use existing ManualObject
-		if (Sector->UserData)
-		{
-			target = (ManualObject*)((::System::IntPtr)Sector->UserData).ToPointer();
-
-			if (!target)
-				return;
-
-			target->clear();
-		}
-		else
-		{
-			// build name
-			::Ogre::String ostr_sectorname =
-				PREFIX_ROOM_SECTOR + ::Ogre::StringConverter::toString(Sector->Num);
-
-			// a manualobject for the sector
-			target = OGRE_NEW ManualObject(ostr_sectorname);
-
-			// attach reference to ManualObject
-			Sector->UserData = (::System::IntPtr)target;
-		}
-
-		/******************************************************************************/
-		
-		::Ogre::String ostr_floor	= StringConvert::CLRToOgre(Sector->MaterialNameFloor);
-		::Ogre::String ostr_ceiling = StringConvert::CLRToOgre(Sector->MaterialNameCeiling);
-
-		// note: if floor and ceiling share the same material, they will be put into the same
-		// ManualObject section (=VertexBuffer+IndexBuffer) - to keep batchcount low.
-
-		// CASE 1: Floor and Ceiling have same material
-		if (ostr_floor == ostr_ceiling &&
-			ostr_floor != STRINGEMPTY)
-		{
-			verticesProcessed = 0;
-			target->begin(ostr_floor, ::Ogre::RenderOperation::OT_TRIANGLE_LIST);
-			CreateSectorPart(target, Sector, true);
-			CreateSectorPart(target, Sector, false);
-			section = target->end();
-			Sector->UserDataFloor = (::System::IntPtr)section;
-			Sector->UserDataCeiling = (::System::IntPtr)section;
-		}
-
-		// CASE 2: Different materials
-		else if (ostr_floor != ostr_ceiling)
-		{
-			if (ostr_floor != STRINGEMPTY)
-			{
-				verticesProcessed = 0;
-				target->begin(ostr_floor, ::Ogre::RenderOperation::OT_TRIANGLE_LIST);
-				CreateSectorPart(target, Sector, true);
-				section = target->end();
-				Sector->UserDataFloor = (::System::IntPtr)section;
-			}
-
-			if (ostr_ceiling != STRINGEMPTY)
-			{
-				verticesProcessed = 0;
-				target->begin(ostr_ceiling, ::Ogre::RenderOperation::OT_TRIANGLE_LIST);
-				CreateSectorPart(target, Sector, false);
-				section = target->end();
-				Sector->UserDataCeiling = (::System::IntPtr)section;
-			}
-		}
-        
-		/******************************************************************************/
-
-		// use existing scenenode
-		if (Sector->UserData2)
-		{
-			scenenode = (SceneNode*)((::System::IntPtr)Sector->UserData2).ToPointer();
-		}
-		else
-		{
-			// add it to the scene
-			if (target->getNumSections() > 0)
-			{
-				scenenode = roomNode->createChildSceneNode();
-				scenenode->attachObject(target);
-
-				Sector->UserData2 = (::System::IntPtr)scenenode;
-			
-			#ifdef _DEBUG
-				scenenode->showBoundingBox(true);
-			#endif
-			}
-		}
-	};
-
-	void ControllerRoom::CreateSectorPart(ManualObject* Target, RooSector^ Sector, bool IsFloor)
+	void ControllerRoom::CreateSectorPart(RooSector^ Sector, bool IsFloor)
 	{
 		::System::String^ material		= nullptr;
 		::System::String^ texname		= nullptr;
 		V2 sp							= V2::ZERO;
 		BgfFile^ textureFile			= nullptr;
 		BgfBitmap^ texture				= nullptr;
-
+		
 		/******************************************************************************/
 
 		// ceiling
@@ -893,7 +653,7 @@ namespace Meridian59 { namespace Ogre
 			texture		= Sector->TextureCeiling;
 			texname		= Sector->TextureNameCeiling;
 			sp			= Sector->SpeedCeiling;
-			material	= Sector->MaterialNameCeiling;
+			material	= Sector->MaterialNameCeiling;		
 		}
 
 		// floor
@@ -903,7 +663,7 @@ namespace Meridian59 { namespace Ogre
 			texture		= Sector->TextureFloor;
 			texname		= Sector->TextureNameFloor;
 			sp			= Sector->SpeedFloor;
-			material	= Sector->MaterialNameFloor;
+			material	= Sector->MaterialNameFloor;		
 		}
 
 		/******************************************************************************/
@@ -916,14 +676,14 @@ namespace Meridian59 { namespace Ogre
 		CreateTextureAndMaterial(texture, texname, material, sp);
 
 		/******************************************************************************/
-		
-		// Add vertexdata of subsectors of this sector
+	
+		// add vertexdata of subsectors
 		for each (RooSubSector^ subSector in Room->BSPTreeLeaves)
 			if (subSector->Sector == Sector)
-				CreateSubSector(Target, subSector, IsFloor);		
+				CreateSubSector(subSector, IsFloor);
 	};
 
-	void ControllerRoom::CreateSubSector(ManualObject* Target, RooSubSector^ SubSector, bool IsFloor)
+	void ControllerRoom::CreateSubSector(RooSubSector^ SubSector, bool IsFloor)
 	{
 		// update vertexdata for this subsector
         SubSector->UpdateVertexData(IsFloor, SCALE);
@@ -949,9 +709,9 @@ namespace Meridian59 { namespace Ogre
 		// add vertices from vertexdata
         for (int i = 0; i < P->Length; i++)
         {
-            Target->position(P[i].X, P[i].Z, P[i].Y);
-            Target->textureCoord(UV[i].Y, UV[i].X);
-            Target->normal(Normal.X, Normal.Z, Normal.Y);
+			roomManObj->position(P[i].X, P[i].Z, P[i].Y);
+			roomManObj->textureCoord(UV[i].Y, UV[i].X);
+			roomManObj->normal(Normal.X, Normal.Z, Normal.Y);
         }
 
         // This is a simple triangulation algorithm for convex polygons (which subsectors guarantee to be)
@@ -962,13 +722,13 @@ namespace Meridian59 { namespace Ogre
         {
             // forward
             for (int j = 0; j < triangles; j++)
-                Target->triangle(verticesProcessed + j + 2, verticesProcessed + j + 1, verticesProcessed);
+				roomManObj->triangle(verticesProcessed + j + 2, verticesProcessed + j + 1, verticesProcessed);
         }
         else
         {
             // inverse
             for (int j = 0; j < triangles; j++)
-                Target->triangle(verticesProcessed, verticesProcessed + j + 1, verticesProcessed + j + 2);
+				roomManObj->triangle(verticesProcessed, verticesProcessed + j + 1, verticesProcessed + j + 2);
         }
 
 		// create decoration objects on this subsector
@@ -1110,79 +870,49 @@ namespace Meridian59 { namespace Ogre
 		
 		/******************************************************************************/
 
-		RooSideDef^ side			= e->ChangedSide;
 		::System::String^ material	= nullptr;
 		::System::String^ texname	= nullptr;
-		::System::Object^ userdata	= nullptr;
 		BgfBitmap^ texture			= nullptr;
 		V2 scrollspeed				= V2::ZERO;
-		::Ogre::ManualObject* manObj = nullptr;
-		::Ogre::ManualObject::ManualObjectSection* manSect = nullptr;
-
+		
 		/******************************************************************************/
 
-		void* ptr1 = side->UserDataUpper ? ((::System::IntPtr)side->UserDataUpper).ToPointer() : nullptr;
-		void* ptr2 = side->UserDataMiddle ? ((::System::IntPtr)side->UserDataMiddle).ToPointer() : nullptr;
-		void* ptr3 = side->UserDataLower ? ((::System::IntPtr)side->UserDataLower).ToPointer() : nullptr;
-
-		// this is a merged side and must be recreated due to possible split up
-		if ((ptr1 && ptr1 == ptr2) ||
-			(ptr1 && ptr1 == ptr3) ||
-			(ptr2 && ptr2 == ptr3))
+		switch (e->WallPartType)
 		{
-			CreateSide(e->ChangedSide);
+		case WallPartType::Upper:
+			texture		= e->ChangedSide->TextureUpper;
+			scrollspeed = e->ChangedSide->SpeedUpper;
+			texname		= e->ChangedSide->TextureNameUpper;
+			material	= e->ChangedSide->MaterialNameUpper;
+			break;
+
+		case WallPartType::Middle:
+			texture		= e->ChangedSide->TextureMiddle;
+			scrollspeed = e->ChangedSide->SpeedMiddle;
+			texname		= e->ChangedSide->TextureNameMiddle;
+			material	= e->ChangedSide->MaterialNameMiddle;
+			break;
+
+		case WallPartType::Lower:
+			texture		= e->ChangedSide->TextureLower;
+			scrollspeed = e->ChangedSide->SpeedLower;
+			texname		= e->ChangedSide->TextureNameLower;
+			material	= e->ChangedSide->MaterialNameLower;
+			break;
 		}
-		else
-		{
-			switch (e->WallPartType)
-			{
-			case WallPartType::Upper:
-				userdata = e->ChangedSide->UserDataUpper;
-				texture = e->ChangedSide->TextureUpper;
-				scrollspeed = e->ChangedSide->SpeedUpper;
-				texname = e->ChangedSide->TextureNameUpper;
-				material = e->ChangedSide->MaterialNameUpper;
-				break;
 
-			case WallPartType::Middle:
-				userdata = e->ChangedSide->UserDataMiddle;
-				texture = e->ChangedSide->TextureMiddle;
-				scrollspeed = e->ChangedSide->SpeedMiddle;
-				texname = e->ChangedSide->TextureNameMiddle;
-				material = e->ChangedSide->MaterialNameMiddle;
-				break;
+		// no materialchange? nothing to do
+		if (e->OldMaterialName == material)
+			return;
 
-			case WallPartType::Lower:
-				userdata = e->ChangedSide->UserDataLower;
-				texture = e->ChangedSide->TextureLower;
-				scrollspeed = e->ChangedSide->SpeedLower;
-				texname = e->ChangedSide->TextureNameLower;
-				material = e->ChangedSide->MaterialNameLower;
-				break;
-			}
+		// possibly create new texture and material
+		CreateTextureAndMaterial(texture, texname, material, scrollspeed);
 
-			/******************************************************************************/
+		// recreate the previous chunk (removes the element from the old chunk)
+		CreateMaterialChunk(e->OldMaterialName);
 
-			// must have userdata
-			if (!userdata)
-				return;
-
-			// try get native instance from it
-			manSect = (::Ogre::ManualObject::ManualObjectSection*)((::System::IntPtr)userdata).ToPointer();
-
-			if (!manSect)
-				return;
-
-			// possibly create textures and materials for new side
-			CreateTextureAndMaterial(texture, texname, material, scrollspeed);
-
-			// turn empty material strings into transparent materialname
-			// because we've already created the side and not destroy it, just "hide"
-			material = (!material || material == STRINGEMPTY) ? TRANSPARENTMATERIAL : material;
-
-			// set to new material
-			manSect->setMaterialName(StringConvert::CLRToOgre(material));
-		}
+		// recreate the new chunk (adds the element to the new chunk)
+		CreateMaterialChunk(material);
 	};
 
 	void ControllerRoom::OnRooFileSectorTextureChanged(System::Object^ sender, SectorTextureChangedEventArgs^ e)
@@ -1192,67 +922,43 @@ namespace Meridian59 { namespace Ogre
 
 		/******************************************************************************/
 
-		RooSector^ sector			= e->ChangedSector;
 		::System::String^ material	= nullptr;
 		::System::String^ texname	= nullptr;
-		::System::Object^ userdata	= nullptr;
 		BgfBitmap^ texture			= nullptr;
 		V2 scrollspeed				= V2::ZERO;
-		::Ogre::ManualObject::ManualObjectSection* manSect = nullptr;
-
+		
 		/******************************************************************************/
 
-		void* ptr1 = sector->UserDataFloor ? ((::System::IntPtr)sector->UserDataFloor).ToPointer() : nullptr;
-		void* ptr2 = sector->UserDataCeiling ? ((::System::IntPtr)sector->UserDataCeiling).ToPointer() : nullptr;
+		// floor
+		if (e->IsFloor)
+		{
+			texture		= e->ChangedSector->TextureFloor;
+			scrollspeed = e->ChangedSector->SpeedFloor;
+			texname		= e->ChangedSector->TextureNameFloor;
+			material	= e->ChangedSector->MaterialNameFloor;
+		}
+
+		// ceiling
+		else if (!e->IsFloor)
+		{
+			texture		= e->ChangedSector->TextureCeiling;
+			scrollspeed = e->ChangedSector->SpeedCeiling;
+			texname		= e->ChangedSector->TextureNameCeiling;
+			material	= e->ChangedSector->MaterialNameCeiling;
+		}
+
+		// no materialchange? nothing to do
+		if (e->OldMaterialName == material)
+			return;
+
+		// possibly create new texture and material
+		CreateTextureAndMaterial(texture, texname, material, scrollspeed);
 		
-		// this is a merged sector and must be recreated due to possible split up
-		if (ptr1 && ptr1 == ptr2)
-		{
-			CreateSector(sector);
-		}
-		else
-		{
-			// floor
-			if (e->IsFloor && e->ChangedSector->UserDataFloor)
-			{
-				userdata	= e->ChangedSector->UserDataFloor;
-				texture		= e->ChangedSector->TextureFloor;
-				scrollspeed = e->ChangedSector->SpeedFloor;
-				texname		= e->ChangedSector->TextureNameFloor;
-				material	= e->ChangedSector->MaterialNameFloor;
-			}
+		// recreate the previous chunk (removes the element from the old chunk)
+		CreateMaterialChunk(e->OldMaterialName);
 
-			// ceiling
-			else if (!e->IsFloor && e->ChangedSector->UserDataCeiling)
-			{
-				userdata	= e->ChangedSector->UserDataCeiling;
-				texture		= e->ChangedSector->TextureCeiling;
-				scrollspeed = e->ChangedSector->SpeedCeiling;
-				texname		= e->ChangedSector->TextureNameCeiling;
-				material	= e->ChangedSector->MaterialNameCeiling;
-			}
-
-			/******************************************************************************/
-
-			// must have userdata
-			if (!userdata)
-				return;
-
-			// try get native instance from it
-			manSect = (::Ogre::ManualObject::ManualObjectSection*)((::System::IntPtr)userdata).ToPointer();
-
-			if (!manSect)
-				return;
-
-			// possibly create textures and materials
-			CreateTextureAndMaterial(texture, texname, material, scrollspeed);
-
-			// turn empty material strings into transparent materialname
-			material = (!material || material == STRINGEMPTY) ? TRANSPARENTMATERIAL : material;
-
-			// set to new material
-			manSect->setMaterialName(StringConvert::CLRToOgre(material));
-		}
+		// recreate the new chunk (adds the element to the new chunk)
+		CreateMaterialChunk(material);
 	};
 
 	void ControllerRoom::OnRooFileSectorMoved(System::Object^ sender, SectorMovedEventArgs^ e)
@@ -1262,15 +968,48 @@ namespace Meridian59 { namespace Ogre
 
 		/******************************************************************************/
 
-		// recreate sector with changed vertexdata
-		CreateSector(e->Sector);
+		::System::Collections::Generic::List<::System::String^>^ affectedsections =
+			gcnew ::System::Collections::Generic::List<::System::String^>();
+		
+		// possibly add floor material to recreation
+		if (e->Sector->MaterialNameFloor != STRINGEMPTY && 
+			!affectedsections->Contains(e->Sector->MaterialNameFloor))
+		{
+			affectedsections->Add(e->Sector->MaterialNameFloor);
+		}
 
-		// recreate affected sides with changed vertexdata
+		// possibly add ceiling material to recreation
+		if (e->Sector->MaterialNameCeiling != STRINGEMPTY &&
+			!affectedsections->Contains(e->Sector->MaterialNameCeiling))
+		{
+			affectedsections->Add(e->Sector->MaterialNameCeiling);
+		}
+
+		// possibly affected sides to recreation
 		for each(RooSideDef^ side in e->Sector->Sides)
 		{
-			if (side)
-				CreateSide(side);
-		}	
+			if (side->MaterialNameLower != STRINGEMPTY &&
+				!affectedsections->Contains(side->MaterialNameLower))
+			{
+				affectedsections->Add(side->MaterialNameLower);
+			}
+
+			if (side->MaterialNameMiddle != STRINGEMPTY &&
+				!affectedsections->Contains(side->MaterialNameMiddle))
+			{
+				affectedsections->Add(side->MaterialNameMiddle);
+			}
+
+			if (side->MaterialNameUpper != STRINGEMPTY &&
+				!affectedsections->Contains(side->MaterialNameUpper))
+			{
+				affectedsections->Add(side->MaterialNameUpper);
+			}
+		}
+
+		// now recreate the subsections with the geometries affected
+		for each(::System::String^ section in affectedsections)
+			CreateMaterialChunk(section);
 	};
 	
 	void ControllerRoom::OnDataPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)

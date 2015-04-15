@@ -26,10 +26,13 @@ namespace Meridian59.Files.ROO
         public RooSector ChangedSector { get; set; }
         public bool IsFloor { get; set; }
 
-        public SectorTextureChangedEventArgs(RooSector ChangedSector, bool IsFloor = true)
+        public string OldMaterialName { get; set; }
+
+        public SectorTextureChangedEventArgs(RooSector ChangedSector, bool IsFloor, string OldMaterialName)
         {
             this.ChangedSector = ChangedSector;
             this.IsFloor = IsFloor;
+            this.OldMaterialName = OldMaterialName;
         }
     }
 }

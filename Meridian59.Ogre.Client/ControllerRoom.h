@@ -75,6 +75,7 @@ namespace Meridian59 { namespace Ogre
 
 		static ::Ogre::StaticGeometry*				roomGeometry;
 		static ::Ogre::SceneNode*					roomNode;
+		static ::Ogre::ManualObject*				roomManObj;
 		static ::Caelum::CaelumSystem*				caelumSystem;
 		static ::Meridian59::Ogre::RemoteNode^		avatarObject;		
 		static ::std::vector<ManualObject*>*		decoration;
@@ -82,6 +83,7 @@ namespace Meridian59 { namespace Ogre
 
 		static ::std::vector<::ParticleUniverse::ParticleEventHandler*>* customParticleHandlers;
 
+		
         /// <summary>
         /// Helper to store vertices processed of a sector
         /// </summary>
@@ -100,6 +102,7 @@ namespace Meridian59 { namespace Ogre
 		static void UpdateSky();
 		static void AdjustOctree();
 		static void AdjustAmbientLight();
+		static int GetRoomSectionByMaterial(::Ogre::String Name);
 
 		/// <summary>
         /// Static constructor
@@ -107,25 +110,17 @@ namespace Meridian59 { namespace Ogre
 		static ControllerRoom();
 
 		/// <summary>
-		/// Creates a side.
-		/// </summary>
-		/// <param name="Side"></param>
-		static void CreateSide(RooSideDef^ Side);
-
-		/// <summary>
         /// Creates all walls belonging to a part of a side.
 		/// Called from CreateSide()
         /// </summary>
-		/// <param name="Target"></param>
         /// <param name="Side"></param>
 		/// <param name="PartType"></param>
-		static void CreateSidePart(ManualObject* Target, RooSideDef^ Side, WallPartType PartType);
+		static void CreateSidePart(RooSideDef^ Side, WallPartType PartType);
 
 		/// <summary>
         /// Creates a part of a wall.
 		/// Called from CreateSidePart()
         /// </summary>
-		/// <param name="Target">Will put vertices into this</param>
         /// <param name="Wall">Which wall to create a part from</param>
         /// <param name="PartType">Upper, Middle, Lower</param>
 		/// <param name="IsLeftSide">Whether to create left or right side</param>
@@ -133,7 +128,6 @@ namespace Meridian59 { namespace Ogre
 		/// <param name="TextureHeight">TextureHeight</param>
 		/// <param name="TextureShrink">TextureShrink</param>
 		static void CreateWallPart(
-			ManualObject* Target, 
 			RooWall^ Wall, 
 			WallPartType PartType, 
 			bool IsLeftSide, 
@@ -142,28 +136,26 @@ namespace Meridian59 { namespace Ogre
 			int TextureShrink);
 
 		/// <summary>
-        /// Creates a sector
-        /// </summary>
-        /// <param name="Sector"></param>
-        static void CreateSector(RooSector^ Sector);
-
-		/// <summary>
 		/// Creates a sector floor or ceiling
 		/// Called from CreateSector()
 		/// </summary>
-		/// <param name="Target"></param>
 		/// <param name="Sector"></param>
 		/// <param name="IsFloor"></param>
-		static void CreateSectorPart(ManualObject* Target, RooSector^ Sector, bool IsFloor);
+		static void CreateSectorPart(RooSector^ Sector, bool IsFloor);
 
 		/// <summary>
         /// Creates a subsector of a floor or ceiling
 		/// Called from CreateSectorPart()
         /// </summary>
-        /// <param name="Target"></param>
         /// <param name="SubSector"></param>
         /// <param name="IsFloor"></param>
-        static void CreateSubSector(ManualObject* Target, RooSubSector^ SubSector, bool IsFloor);
+        static void CreateSubSector(RooSubSector^ SubSector, bool IsFloor);
+
+		/// <summary>
+		/// Creates all sectors and sides using specific materialname
+		/// </summary>
+		/// <param name="MaterialName"></param>
+		static void CreateMaterialChunk(::System::String^ MaterialName);
 
 		/// <summary>
 		/// Creates decorations on a subsector floor

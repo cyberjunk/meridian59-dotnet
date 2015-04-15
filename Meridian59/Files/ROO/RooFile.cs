@@ -58,7 +58,7 @@ namespace Meridian59.Files.ROO
         public const string ERRORCRUSHPLATFORM  = "Crusher is only supported in x86 builds on Windows.";      
         public static byte[] PASSWORDV12 = new byte[] { 0x6F, 0xCA, 0x54, 0xB7, 0xEC, 0x64, 0xB7, 0x00 };
         public static byte[] PASSWORDV10 = new byte[] { 0x15, 0x20, 0x53, 0x01, 0xFC, 0xAA, 0x64, 0x00 };
-        public static readonly int[] SectorDepths = new int[] { DEFAULTDEPTH0, DEFAULTDEPTH1, DEFAULTDEPTH2, DEFAULTDEPTH3 };
+        public static readonly int[] SectorDepths = new int[] { DEFAULTDEPTH0, DEFAULTDEPTH1, DEFAULTDEPTH2, DEFAULTDEPTH3 };     
         #endregion
 
         #region Events
@@ -1294,12 +1294,42 @@ namespace Meridian59.Files.ROO
             // update sectors
             foreach (RooSector sector in Sectors)
                 sector.Tick(Tick, Span);
-
-            // update sector movements
-            //for (int i = MovingSectors.Count - 1; i >= 0; i--)
-            //    MovingSectors[i].Tick(Tick, Span);
         }
-      
+
+        /// <summary>
+        /// Returns a list of strings representing all used material names.
+        /// </summary>
+        /// <returns></returns>
+        public List<string> GetAllMaterialNames()
+        {
+            List<string> list = new List<string>();
+
+            // add materials used on sector floors & ceilings
+            foreach (RooSector obj in Sectors)
+            {
+                if (!list.Contains(obj.MaterialNameFloor))
+                    list.Add(obj.MaterialNameFloor);
+
+                if (!list.Contains(obj.MaterialNameCeiling))
+                    list.Add(obj.MaterialNameCeiling);
+            }
+
+            // add materials used on sides
+            foreach (RooSideDef obj in SideDefs)
+            {
+                if (!list.Contains(obj.MaterialNameLower))
+                    list.Add(obj.MaterialNameLower);
+
+                if (!list.Contains(obj.MaterialNameMiddle))
+                    list.Add(obj.MaterialNameMiddle);
+
+                if (!list.Contains(obj.MaterialNameUpper))
+                    list.Add(obj.MaterialNameUpper);
+            }
+
+            return list;
+        }
+
         /// <summary>
         /// Checks a movement vector (Start->End) for wall collisions and
         /// returns a possibly adjusted movement vector to use instead.
