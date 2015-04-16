@@ -733,6 +733,7 @@ namespace Meridian59.Launcher.Models
             WindowMode = wndmode;
             WindowFrame = wndframeenabled;
             FSAA = fsaa_tmp;
+            VSync = vsync;
             NoMipmaps = Convert.ToBoolean(nomipmaps_tmp);
             TextureFiltering = anisop_tmp;
             ImageBuilder = imagebuilder;
