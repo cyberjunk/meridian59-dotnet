@@ -79,6 +79,8 @@ namespace Meridian59 { namespace Ogre
 		static ::Caelum::CaelumSystem*				caelumSystem;
 		static ::Meridian59::Ogre::RemoteNode^		avatarObject;		
 		static ::ParticleUniverse::ParticleSystem*	particleSysSnow;
+		
+		static ::System::Collections::Generic::List<::System::String^>^ recreatequeue;
 
 		static Dictionary<unsigned short, array<System::String^>^>^ grassMaterials;
 		static Dictionary<::System::String^, ::System::Collections::Generic::List<V3>^>^ grassPoints;

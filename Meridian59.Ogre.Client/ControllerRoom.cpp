@@ -12,7 +12,8 @@ namespace Meridian59 { namespace Ogre
 		caelumSystem			= nullptr;
 		avatarObject			= nullptr;
 		particleSysSnow			= nullptr;
-		customParticleHandlers	= nullptr;		
+		customParticleHandlers	= nullptr;
+		recreatequeue			= nullptr;
 		verticesProcessed		= 0;
 	};
 	
@@ -35,11 +36,17 @@ namespace Meridian59 { namespace Ogre
 		grassMaterials	= gcnew ::System::Collections::Generic::Dictionary<unsigned short, array<System::String^>^>();
 		grassPoints = gcnew ::System::Collections::Generic::Dictionary<::System::String^, ::System::Collections::Generic::List<V3>^>();
 
+		// create the queue storing materialnames (chunks of the room) which will be recreated
+		// at the end of the tick
+		recreatequeue = gcnew ::System::Collections::Generic::List<::System::String^>();
+
 		// a manualobject for the room geometry
 		roomManObj = OGRE_NEW ManualObject(NAME_ROOM);
+		roomManObj->setDynamic(true);
 
 		// a manualobject for the room decoration
 		roomDecoration = OGRE_NEW ManualObject(NAME_ROOMDECORATION);
+		roomDecoration->setDynamic(false);
 
 		// create room scenenode
 		roomNode = SceneManager->getRootSceneNode()->createChildSceneNode(NAME_ROOMNODE);
@@ -299,6 +306,7 @@ namespace Meridian59 { namespace Ogre
 
 		delete grassMaterials;			
 		delete grassPoints;
+		delete recreatequeue;
 
 		/******************************************************************/
 
@@ -309,6 +317,7 @@ namespace Meridian59 { namespace Ogre
 		grassMaterials		= nullptr;
 		grassPoints			= nullptr;
 		avatarObject		= nullptr;
+		recreatequeue		= nullptr;
 		verticesProcessed	= 0;
 		
 		/******************************************************************/
@@ -531,6 +540,13 @@ namespace Meridian59 { namespace Ogre
 	{		
 		if (!IsInitialized)
 			return;
+
+		// process the queued subsections for recreation
+		for each(::System::String^ s in recreatequeue)
+			CreateGeometryChunk(s);
+
+		// clear recreate queue
+		recreatequeue->Clear();
 
 		if (caelumSystem && OgreClient::Singleton->Camera)
 		{
@@ -959,11 +975,13 @@ namespace Meridian59 { namespace Ogre
 		// possibly create new texture and material
 		CreateTextureAndMaterial(texture, texname, material, scrollspeed);
 
-		// recreate the previous chunk (removes the element from the old chunk)
-		CreateGeometryChunk(e->OldMaterialName);
+		// enqueue old material subsection for recreation
+		if (!recreatequeue->Contains(e->OldMaterialName))
+			recreatequeue->Add(e->OldMaterialName);
 
-		// recreate the new chunk (adds the element to the new chunk)
-		CreateGeometryChunk(material);
+		// enqueue new material subsection for recreation
+		if (!recreatequeue->Contains(material))
+			recreatequeue->Add(material);
 	};
 
 	void ControllerRoom::OnRooFileSectorTextureChanged(System::Object^ sender, SectorTextureChangedEventArgs^ e)
@@ -1005,11 +1023,13 @@ namespace Meridian59 { namespace Ogre
 		// possibly create new texture and material
 		CreateTextureAndMaterial(texture, texname, material, scrollspeed);
 		
-		// recreate the previous chunk (removes the element from the old chunk)
-		CreateGeometryChunk(e->OldMaterialName);
+		// enqueue old material subsection for recreation
+		if (!recreatequeue->Contains(e->OldMaterialName))
+			recreatequeue->Add(e->OldMaterialName);
 
-		// recreate the new chunk (adds the element to the new chunk)
-		CreateGeometryChunk(material);
+		// enqueue new material subsection for recreation
+		if (!recreatequeue->Contains(material))
+			recreatequeue->Add(material);
 	};
 
 	void ControllerRoom::OnRooFileSectorMoved(System::Object^ sender, SectorMovedEventArgs^ e)
@@ -1019,23 +1039,20 @@ namespace Meridian59 { namespace Ogre
 
 		/******************************************************************************/
 
-		::System::Collections::Generic::List<::System::String^>^ affectedsections =
-			gcnew ::System::Collections::Generic::List<::System::String^>();
-		
 		// possibly add floor material to recreation
 		if (e->Sector->MaterialNameFloor &&
 			e->Sector->MaterialNameFloor != STRINGEMPTY && 
-			!affectedsections->Contains(e->Sector->MaterialNameFloor))
+			!recreatequeue->Contains(e->Sector->MaterialNameFloor))
 		{
-			affectedsections->Add(e->Sector->MaterialNameFloor);
+			recreatequeue->Add(e->Sector->MaterialNameFloor);
 		}
 
 		// possibly add ceiling material to recreation
 		if (e->Sector->MaterialNameCeiling &&
 			e->Sector->MaterialNameCeiling != STRINGEMPTY &&
-			!affectedsections->Contains(e->Sector->MaterialNameCeiling))
+			!recreatequeue->Contains(e->Sector->MaterialNameCeiling))
 		{
-			affectedsections->Add(e->Sector->MaterialNameCeiling);
+			recreatequeue->Add(e->Sector->MaterialNameCeiling);
 		}
 
 		// possibly affected sides to recreation
@@ -1043,29 +1060,25 @@ namespace Meridian59 { namespace Ogre
 		{
 			if (side->MaterialNameLower &&
 				side->MaterialNameLower != STRINGEMPTY &&
-				!affectedsections->Contains(side->MaterialNameLower))
+				!recreatequeue->Contains(side->MaterialNameLower))
 			{
-				affectedsections->Add(side->MaterialNameLower);
+				recreatequeue->Add(side->MaterialNameLower);
 			}
 
 			if (side->MaterialNameMiddle &&
 				side->MaterialNameMiddle != STRINGEMPTY &&
-				!affectedsections->Contains(side->MaterialNameMiddle))
+				!recreatequeue->Contains(side->MaterialNameMiddle))
 			{
-				affectedsections->Add(side->MaterialNameMiddle);
+				recreatequeue->Add(side->MaterialNameMiddle);
 			}
 
 			if (side->MaterialNameUpper &&
 				side->MaterialNameUpper != STRINGEMPTY &&
-				!affectedsections->Contains(side->MaterialNameUpper))
+				!recreatequeue->Contains(side->MaterialNameUpper))
 			{
-				affectedsections->Add(side->MaterialNameUpper);
+				recreatequeue->Add(side->MaterialNameUpper);
 			}
 		}
-
-		// now recreate the subsections with the geometries affected
-		for each(::System::String^ section in affectedsections)
-			CreateGeometryChunk(section);
 	};
 	
 	void ControllerRoom::OnDataPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
