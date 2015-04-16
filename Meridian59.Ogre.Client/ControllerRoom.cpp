@@ -318,8 +318,7 @@ namespace Meridian59 { namespace Ogre
 	
 	void ControllerRoom::LoadRoom()
 	{
-		ManualObject* manObj;
-		long tick1, tick2, span;
+		long long tick1, tick2, span;
 
 		/*********************************************************************************************/
 
@@ -400,6 +399,7 @@ namespace Meridian59 { namespace Ogre
 		
 		tick1 = tick2;
 
+		// create room decoration
 		CreateDecoration();
 
 		tick2 = OgreClient::Singleton->GameTick->GetUpdatedTick();
@@ -754,80 +754,103 @@ namespace Meridian59 { namespace Ogre
 	void ControllerRoom::CreateDecoration()
 	{		
 		const float WIDTH = 10.0f;
-		const float HEIGHT = 10.0f;		
+		const float HEIGHT = 10.0f;
+		const float HALFWIDTH = WIDTH / 2.0f;
+
 		int intensity = OgreClient::Singleton->Config->DecorationIntensity;
 		int numplanes = OgreClient::Singleton->Config->DecorationQuality;
 		::Ogre::Vector3 vec(WIDTH / 2, 0, 0);
-		
+		::Ogre::Quaternion rot;
+
+		array<::System::String^>^ items;
+		V2 A, B, C, rnd2D;
+		V3 rnd3D;
+
+		float area;
+		int num;
+		int randomindex;
+		int vertexindex;
+		::System::Collections::Generic::List<V3>^ points;
+
 		if (intensity <= 0)
 			return;
 		
 		/**************************************************************************************/
+		/*                     GENERATE RANDOM POINTS FOR GRASS MATERIALS                     */
+		/**************************************************************************************/
 
+		// loop all subsectors
 		for each(RooSubSector^ subsect in Room->BSPTreeLeaves)
 		{
-			array<::System::String^>^ items;
-			
 			// try to find a decoration definition for this floortexture from lookup dictionary
-			if (grassMaterials->TryGetValue(subsect->Sector->FloorTexture, items) && items->Length > 0)
+			if (!grassMaterials->TryGetValue(subsect->Sector->FloorTexture, items))
+				continue;
+
+			// process triangles of this subsector
+			for (int i = 0; i < subsect->Vertices->Count - 2; i++)
 			{
-				// process triangles of this subsector
-				for (int i = 0; i < subsect->Vertices->Count - 2; i++)
+				// pick a 2D triangle for this iteration
+				// of subsector by using next 3 points of it
+				A.X = (float)subsect->Vertices[0]->X;
+				A.Y = (float)subsect->Vertices[0]->Y;
+				B.X = (float)subsect->Vertices[i + 1]->X;
+				B.Y = (float)subsect->Vertices[i + 1]->Y;
+				C.X = (float)subsect->Vertices[i + 2]->X;
+				C.Y = (float)subsect->Vertices[i + 2]->Y;
+
+				// calc area
+				area = MathUtil::TriangleArea(A, B, C);
+
+				// create an amount of grass to create for this triangle
+				// scaled by the area of the triangle and intensity
+				num = (int)(0.0000001f * intensity * area) + 1;
+
+				// create num random points in triangle
+				for (int k = 0; k < num; k++)
 				{
-					// 2D triangle of subsector for this iteration
-					V2 A = V2(subsect->Vertices[0]->X, subsect->Vertices[0]->Y);
-					V2 B = V2(subsect->Vertices[i + 1]->X, subsect->Vertices[i + 1]->Y);
-					V2 C = V2(subsect->Vertices[i + 2]->X, subsect->Vertices[i + 2]->Y);
-
-					// calc area
-					float area = MathUtil::TriangleArea(A, B, C);
-
-					// map to num of decoration with intensity
-					int num = (int)(0.0000001f * intensity * area) + 1;
-
-					// create num random points in triangle
-					for (int k = 0; k < num; k++)
-					{
-						// random 2D point
-						V2 rnd2D = MathUtil::RandomPointInTriangle(A, B, C);
+					// generate random 2D point in triangle
+					rnd2D = MathUtil::RandomPointInTriangle(A, B, C);
 						
-						// retrieve height for random coordinates
-						float y	 = subsect->Sector->CalculateFloorHeight((int)rnd2D.X, (int)rnd2D.Y, false);
-						V3 rnd3D = V3(rnd2D.X, y, rnd2D.Y);
-						rnd3D.Scale(GeometryConstants::CLIENTFINETOKODFINE);
+					// retrieve height for random coordinates
+					// also flip y/z and scale to server/newclient
+					rnd3D.X = rnd2D.X;
+					rnd3D.Y = subsect->Sector->CalculateFloorHeight((int)rnd2D.X, (int)rnd2D.Y, false);
+					rnd3D.Z = rnd2D.Y;
+					rnd3D.Scale(GeometryConstants::CLIENTFINETOKODFINE);
 
-						// pick random decoration from mapping
-						int randomindex = ::System::Convert::ToInt32(
-							MathUtil::Random->NextDouble() * (items->Length - 1));
+					// pick random decoration from mapping
+					randomindex = ::System::Convert::ToInt32(
+						MathUtil::Random->NextDouble() * (items->Length - 1));
 
-						::System::Collections::Generic::List<V3>^ points;
-						if (!grassPoints->TryGetValue(items[randomindex], points))
-						{
-							points = gcnew ::System::Collections::Generic::List<V3>();
-							grassPoints->Add(items[randomindex], points);
-						}
-
-						points->Add(rnd3D);
+					// if this material does not yet have a section, create one
+					if (!grassPoints->TryGetValue(items[randomindex], points))
+					{
+						points = gcnew ::System::Collections::Generic::List<V3>();
+						grassPoints->Add(items[randomindex], points);
 					}
-				}
+
+					// add random point to according materiallist
+					points->Add(rnd3D);
+				}			
 			}
 		}
 
 		/**************************************************************************************/
+		/*                                 GENERATE GRASS                                     */
+		/**************************************************************************************/
 
+		// loop grass materials with their attached randompoints
 		for each(KeyValuePair<::System::String^, ::System::Collections::Generic::List<V3>^> pair in grassPoints)
 		{
-			::Ogre::String material = StringConvert::CLRToOgre(pair.Key);
+			// create a new subsection for all grass using this material
+			roomDecoration->begin(StringConvert::CLRToOgre(pair.Key), ::Ogre::RenderOperation::OT_TRIANGLE_LIST);
 
-			roomDecoration->begin(material, ::Ogre::RenderOperation::OT_TRIANGLE_LIST);
+			// reset vertexcounter
+			vertexindex = 0;
 
-			int offset = 0;
-
+			// loop points
 			for each(V3 p in pair.Value)
-			{
-				
-				::Ogre::Quaternion rot;
-
+			{				
 				// rotate by this for each grassplane
 				rot.FromAngleAxis(
 					::Ogre::Degree(180.0f / (float)numplanes), ::Ogre::Vector3::UNIT_Y);
@@ -847,20 +870,22 @@ namespace Meridian59 { namespace Ogre
 					roomDecoration->textureCoord(1, 1);
 
 					// front side
-					roomDecoration->triangle(offset, offset + 3, offset + 1);
-					roomDecoration->triangle(offset, offset + 2, offset + 3);
+					roomDecoration->triangle(vertexindex, vertexindex + 3, vertexindex + 1);
+					roomDecoration->triangle(vertexindex, vertexindex + 2, vertexindex + 3);
 
 					// back side
-					roomDecoration->triangle(offset + 1, offset + 3, offset);
-					roomDecoration->triangle(offset + 3, offset + 2, offset);
+					roomDecoration->triangle(vertexindex + 1, vertexindex + 3, vertexindex);
+					roomDecoration->triangle(vertexindex + 3, vertexindex + 2, vertexindex);
 
 					// rotate grassplane for next iteration
 					vec = rot * vec;
 
-					offset += 4;
+					// increase vertexcounter
+					vertexindex += 4;
 				}
 			}
 
+			// finish this subsection
 			roomDecoration->end();
 		}
 	};
