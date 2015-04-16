@@ -9,7 +9,7 @@
   -->
   <resources
     version="10016"
-    path="./"
+    path="../../../../Resources/"
     preloadrooms="false"
     preloadobjects="false"
     preloadroomtextures="false"

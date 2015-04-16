@@ -18,6 +18,9 @@ namespace Meridian59 { namespace Ogre
 
 	void OgreClient::Init()
     {
+		// call base init
+		SingletonClient::Init();
+
 		// init the legacy resources
 		ResourceManager->Init(
 			Config->ResourcesPath + "/" + Meridian59::Files::ResourceManager::SUBPATHSTRINGS,

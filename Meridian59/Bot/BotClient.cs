@@ -205,6 +205,8 @@ namespace Meridian59.Bot
         /// </summary>
         public override void Init()
         {
+            base.Init();
+
             if (!IsService)
             {
                 Console.CursorVisible = false;
@@ -226,20 +228,6 @@ namespace Meridian59.Bot
                     logWriter.AutoFlush = true;
                 }
                 catch (Exception) { }
-            }
-
-            // load legacy resources before connecting
-            if (!ResourceManager.Initialized)
-            {
-                // init the legacy resources
-                ResourceManager.Init(
-                    Config.ResourcesPath,
-                    Config.ResourcesPath,
-                    Config.ResourcesPath,
-                    Config.ResourcesPath,
-                    Config.ResourcesPath,
-                    Config.ResourcesPath,
-                    Config.ResourcesPath);
             }
 
             // connect to selected connection/server

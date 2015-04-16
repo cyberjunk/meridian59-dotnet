@@ -126,6 +126,19 @@ namespace Meridian59.Client
                 Config.SelectedConnectionInfo.Port);
         }
 
+        public override void Init()
+        {
+            // init the legacy resources
+		    ResourceManager.Init(
+			    Config.ResourcesPath + "/" + Meridian59.Files.ResourceManager.SUBPATHSTRINGS,
+			    Config.ResourcesPath + "/" + Meridian59.Files.ResourceManager.SUBPATHROOMS,
+			    Config.ResourcesPath + "/" + Meridian59.Files.ResourceManager.SUBPATHOBJECTS,
+			    Config.ResourcesPath + "/" + Meridian59.Files.ResourceManager.SUBPATHROOMTEXTURES,
+			    Config.ResourcesPath + "/" + Meridian59.Files.ResourceManager.SUBPATHSOUNDS,
+			    Config.ResourcesPath + "/" + Meridian59.Files.ResourceManager.SUBPATHMUSIC,
+                Config.ResourcesPath + "/" + Meridian59.Files.ResourceManager.SUBPATHMAILS);
+        }
+
         /// <summary>
         /// Implement this with your code for each tick/update.
         /// </summary>

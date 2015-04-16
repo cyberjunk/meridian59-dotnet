@@ -77,20 +77,6 @@
     <Content Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Resources\strings\rsc0000-103.rsb">
-      <Link>rsc0000-103.rsb</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="..\Resources\strings\rsc0000-git.rsb">
-      <Link>rsc0000-git.rsb</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="..\Resources\strings\rsc0000.rsb">
-      <Link>rsc0000.rsb</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Meridian59\Meridian59.csproj">
       <Project>{e8223f3f-3f18-4f4c-9a8f-d9102b067be3}</Project>
       <Name>Meridian59</Name>

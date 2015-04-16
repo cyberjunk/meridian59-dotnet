@@ -91,16 +91,16 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="resource\objects\avsham.bgf">
+    <None Include="resources\bgfobjects\avsham.bgf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="resource\rooms\tos.roo">
+    <None Include="resources\rooms\tos.roo">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="resource\roomtextures\grd01020.bgf">
+    <None Include="resources\bgftextures\grd01020.bgf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="resource\rsc0000.rsb">
+    <None Include="resources\strings\rsc0000.rsb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -116,12 +116,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="README.txt" />
-    <Content Include="resource\wavs\ac_atkm.wav">
+    <Content Include="resources\sounds\ac_atkm.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="mail\" />
+    <Folder Include="resources\mails\" />
+    <Folder Include="resources\music\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
