@@ -21,16 +21,6 @@ namespace Meridian59 { namespace Ogre
 		// call base init
 		SingletonClient::Init();
 
-		// init the legacy resources
-		ResourceManager->Init(
-			Config->ResourcesPath + "/" + Meridian59::Files::ResourceManager::SUBPATHSTRINGS,
-			Config->ResourcesPath + "/" + Meridian59::Files::ResourceManager::SUBPATHROOMS,
-			Config->ResourcesPath + "/" + Meridian59::Files::ResourceManager::SUBPATHOBJECTS,
-			Config->ResourcesPath + "/" + Meridian59::Files::ResourceManager::SUBPATHROOMTEXTURES,
-			Config->ResourcesPath + "/" + Meridian59::Files::ResourceManager::SUBPATHSOUNDS,
-			Config->ResourcesPath + "/" + Meridian59::Files::ResourceManager::SUBPATHMUSIC,
-			Config->ResourcesPath + "/" + Meridian59::Files::ResourceManager::SUBPATHMAILS);
-
         // show launcher ui
         ShowLauncherForm();
 
