@@ -4,11 +4,11 @@ namespace Meridian59 { namespace Ogre
 {
 	static ControllerRoom::ControllerRoom()
 	{
-		roomGeometry			= nullptr;
+		roomDecoration			= nullptr;
 		roomNode				= nullptr;
 		roomManObj				= nullptr;
 		grassMaterials			= nullptr;
-		decoration				= nullptr;
+		grassPoints				= nullptr;
 		caelumSystem			= nullptr;
 		avatarObject			= nullptr;
 		particleSysSnow			= nullptr;
@@ -33,19 +33,19 @@ namespace Meridian59 { namespace Ogre
 		
 		// init collections
 		grassMaterials	= gcnew ::System::Collections::Generic::Dictionary<unsigned short, array<System::String^>^>();
-		decoration		= new ::std::vector<ManualObject*>();
-		
-		// create static geometry
-		roomGeometry = SceneManager->createStaticGeometry(NAME_ROOMGEOMETRY);
-		roomGeometry->setRegionDimensions(::Ogre::Vector3(5000.0f, 5000.0f, 5000.0f));
+		grassPoints = gcnew ::System::Collections::Generic::Dictionary<::System::String^, ::System::Collections::Generic::List<V3>^>();
 
 		// a manualobject for the room geometry
 		roomManObj = OGRE_NEW ManualObject(NAME_ROOM);
+
+		// a manualobject for the room decoration
+		roomDecoration = OGRE_NEW ManualObject(NAME_ROOMDECORATION);
 
 		// create room scenenode
 		roomNode = SceneManager->getRootSceneNode()->createChildSceneNode(NAME_ROOMNODE);
 		roomNode->setPosition(::Ogre::Vector3(64.0f, 0, 64.0f));
 		roomNode->attachObject(roomManObj);
+		roomNode->attachObject(roomDecoration);
 		roomNode->setInitialState();
 
 		// create decoration mapping
@@ -289,8 +289,8 @@ namespace Meridian59 { namespace Ogre
 		if (SceneManager->hasSceneNode(NAME_ROOMNODE))
 			SceneManager->destroySceneNode(NAME_ROOMNODE);
 
-		if (SceneManager->hasStaticGeometry(NAME_ROOMGEOMETRY))
-			SceneManager->destroyStaticGeometry(NAME_ROOMGEOMETRY);
+		if (SceneManager->hasManualObject(NAME_ROOMDECORATION))
+			SceneManager->destroyManualObject(NAME_ROOMDECORATION);
 
 		if (SceneManager->hasManualObject(NAME_ROOM))
 			SceneManager->destroyManualObject(NAME_ROOM);
@@ -298,16 +298,16 @@ namespace Meridian59 { namespace Ogre
 		/******************************************************************/
 
 		delete grassMaterials;			
-		delete decoration;
-		
+		delete grassPoints;
+
 		/******************************************************************/
 
-		roomGeometry		= nullptr;
+		roomDecoration		= nullptr;
 		roomNode			= nullptr;
 		roomManObj			= nullptr;
-		decoration			= nullptr;
 		caelumSystem		= nullptr;
 		grassMaterials		= nullptr;
+		grassPoints			= nullptr;
 		avatarObject		= nullptr;
 		verticesProcessed	= 0;
 		
@@ -318,12 +318,7 @@ namespace Meridian59 { namespace Ogre
 	
 	void ControllerRoom::LoadRoom()
 	{
-		MeshManager* meshMan = MeshManager::getSingletonPtr();
-		std::list<MeshPtr> tempMeshs = std::list<MeshPtr>();
-		std::list<Entity*> tempEntities = std::list<Entity*>();
 		ManualObject* manObj;
-		MeshPtr temp_mesh;
-		Entity* temp_entity;
 		long tick1, tick2, span;
 
 		/*********************************************************************************************/
@@ -405,39 +400,7 @@ namespace Meridian59 { namespace Ogre
 		
 		tick1 = tick2;
 
-		// add decoration
-		for (std::vector<ManualObject*>::iterator it = decoration->begin(); it != decoration->end(); it++)
-		{
-			manObj = (*it);
-
-			if (manObj->getNumSections() > 0)
-			{
-				// convert to mesh
-				temp_mesh = manObj->convertToMesh(manObj->getName() + "/TempMesh");
-				temp_entity = SceneManager->createEntity(temp_mesh);
-
-				// add to geometry
-				roomGeometry->addEntity(temp_entity, ::Ogre::Vector3(64, 0, 64));
-
-				tempMeshs.push_back(temp_mesh);
-				tempEntities.push_back(temp_entity);
-			}
-		}
-
-		// build geometry
-        roomGeometry->build();
-
-		// clean temporary
-		for (std::list<Entity*>::iterator it = tempEntities.begin(); it != tempEntities.end(); it++)		
-			SceneManager->destroyEntity(*it);                
-
-		// clean temporary
-		for (std::list<MeshPtr>::iterator it = tempMeshs.begin(); it != tempMeshs.end(); it++)
-		{
-			temp_mesh = (*it);
-			temp_mesh->unload();
-			meshMan->remove((ResourcePtr)temp_mesh);                               
-		}
+		CreateDecoration();
 
 		tick2 = OgreClient::Singleton->GameTick->GetUpdatedTick();
 		span = tick2 - tick1;
@@ -452,8 +415,6 @@ namespace Meridian59 { namespace Ogre
 
     void ControllerRoom::UnloadRoom()
     {	
-		ManualObject* manObj;
-		
 		// stop all particle systems
 		if (particleSysSnow)
 		{
@@ -467,13 +428,16 @@ namespace Meridian59 { namespace Ogre
 		if (roomNode)
 			roomNode->removeAllChildren();
 
-        // static geometry
-		if (roomGeometry)
-			roomGeometry->reset();
+        // clear room decoration
+		if (roomDecoration)
+			roomDecoration->clear();
         
 		// clear room geometry
 		if (roomManObj)
 			roomManObj->clear();
+
+		if (grassPoints)
+			grassPoints->Clear();
 
 		if (Room)
 		{
@@ -482,17 +446,6 @@ namespace Meridian59 { namespace Ogre
 			Room->SectorTextureChanged	-= gcnew SectorTextureChangedEventHandler(OnRooFileSectorTextureChanged);
 			Room->SectorMoved			-= gcnew SectorMovedEventHandler(OnRooFileSectorMoved);
 		}
-			
-        // destroy decoration
-		for (std::vector<ManualObject*>::iterator it = decoration->begin(); it != decoration->end(); it++)
-		{
-			manObj = (*it);
-
-			OGRE_DELETE manObj;
-		}
-				
-		// clear lists
-		decoration->clear();
     };
 
 	int ControllerRoom::GetRoomSectionByMaterial(::Ogre::String Name)
@@ -505,6 +458,24 @@ namespace Meridian59 { namespace Ogre
 		for (size_t i = 0; i < roomManObj->getNumSections(); i++)
 		{
 			section = roomManObj->getSection(i);
+
+			if (section->getMaterialName() == Name)
+				return i;
+		}
+
+		return -1;
+	};
+
+	int ControllerRoom::GetDecorationSectionByMaterial(::Ogre::String Name)
+	{
+		::Ogre::ManualObject::ManualObjectSection* section;
+
+		if (!roomDecoration || Name == STRINGEMPTY)
+			return -1;
+
+		for (size_t i = 0; i < roomDecoration->getNumSections(); i++)
+		{
+			section = roomDecoration->getSection(i);
 
 			if (section->getMaterialName() == Name)
 				return i;
@@ -776,112 +747,122 @@ namespace Meridian59 { namespace Ogre
 				roomManObj->triangle(verticesProcessed, verticesProcessed + j + 1, verticesProcessed + j + 2);
         }
 
-		// create decoration objects on this subsector
-		CreateDecoration(SubSector, IsFloor);
-
         // save the vertices we processed, so we know where to start triangulation next time this is called
         verticesProcessed += P->Length;
 	};
 	
-	void ControllerRoom::CreateDecoration(RooSubSector^ SubSector, bool IsFloor)
-	{
-		array<V3>^ P  = (IsFloor) ? SubSector->FloorP : SubSector->CeilingP;
+	void ControllerRoom::CreateDecoration()
+	{		
+		const float WIDTH = 10.0f;
+		const float HEIGHT = 10.0f;		
 		int intensity = OgreClient::Singleton->Config->DecorationIntensity;
-				
-		// no decoration if disabled or a ceiling
-		if (intensity <= 0 || !IsFloor || SubSector->Sector->SlopeInfoFloor)
+		int numplanes = OgreClient::Singleton->Config->DecorationQuality;
+		::Ogre::Vector3 vec(WIDTH / 2, 0, 0);
+		
+		if (intensity <= 0)
 			return;
+		
+		/**************************************************************************************/
 
-		array<System::String^>^ items;
-
-		// try to find a decoration definition for this floortexture from lookup dictionary
-		if (grassMaterials->TryGetValue(SubSector->Sector->FloorTexture, items) && items->Length > 0)
+		for each(RooSubSector^ subsect in Room->BSPTreeLeaves)
 		{
-			// create grass geometry object
-			::Ogre::String s = "Decoration_";
-			ManualObject* grass = OGRE_NEW ManualObject(
-				s.append(::Ogre::StringConverter::toString(decoration->size())));
-
-			// process triangles of this subsector
-			for (int i = 0; i < P->Length - 2; i++)
+			array<::System::String^>^ items;
+			
+			// try to find a decoration definition for this floortexture from lookup dictionary
+			if (grassMaterials->TryGetValue(subsect->Sector->FloorTexture, items) && items->Length > 0)
 			{
-				// 2D triangle of subsector for this iteration
-				V2 A = V2(P[0].X, P[0].Y);
-				V2 B = V2(P[i + 1].X, P[i + 1].Y);
-				V2 C = V2(P[i + 2].X, P[i + 2].Y);
-
-				// calc area
-				float area = MathUtil::TriangleArea(A, B, C);
-
-				// map to num of decoration with intensity
-				int num = (int)(0.00002f * intensity * area) + 1;
-
-				// create num random points in triangle
-				for (int k = 0; k < num; k++)
+				// process triangles of this subsector
+				for (int i = 0; i < subsect->Vertices->Count - 2; i++)
 				{
-					// random point
-					V2 rnd2D = MathUtil::RandomPointInTriangle(A, B, C);
+					// 2D triangle of subsector for this iteration
+					V2 A = V2(subsect->Vertices[0]->X, subsect->Vertices[0]->Y);
+					V2 B = V2(subsect->Vertices[i + 1]->X, subsect->Vertices[i + 1]->Y);
+					V2 C = V2(subsect->Vertices[i + 2]->X, subsect->Vertices[i + 2]->Y);
 
-					// make 3D by using height from first P
-					::Ogre::Vector3 rnd3D = ::Ogre::Vector3(
-						rnd2D.X, P[0].Z, rnd2D.Y);
+					// calc area
+					float area = MathUtil::TriangleArea(A, B, C);
 
-					// pick random decoration from mapping
-					int randomindex = ::System::Convert::ToInt32(
-						MathUtil::Random->NextDouble() * (items->Length - 1));
-					
-					// decoration size (numplanes is quality)
-					const float width = 10;
-					const float height = 10;
-					int numplanes = OgreClient::Singleton->Config->DecorationQuality;
+					// map to num of decoration with intensity
+					int num = (int)(0.0000001f * intensity * area) + 1;
 
-					::Ogre::Vector3 vec(width / 2, 0, 0);
-					::Ogre::Quaternion rot;
-
-					// rotate by this for each grassplane
-					rot.FromAngleAxis(
-						::Ogre::Degree(180.0f / (float)numplanes), ::Ogre::Vector3::UNIT_Y);
-
-					// begin grass object creation
-					grass->begin(StringConvert::CLRToOgre(items[randomindex]), ::Ogre::RenderOperation::OT_TRIANGLE_LIST);
-
-					for (int j = 0; j < numplanes; ++j)
+					// create num random points in triangle
+					for (int k = 0; k < num; k++)
 					{
-						grass->position(rnd3D.x - vec.x, P[0].Z + height, rnd3D.z - vec.z);
-						grass->textureCoord(0, 0);
+						// random 2D point
+						V2 rnd2D = MathUtil::RandomPointInTriangle(A, B, C);
+						
+						// retrieve height for random coordinates
+						float y	 = subsect->Sector->CalculateFloorHeight((int)rnd2D.X, (int)rnd2D.Y, false);
+						V3 rnd3D = V3(rnd2D.X, y, rnd2D.Y);
+						rnd3D.Scale(GeometryConstants::CLIENTFINETOKODFINE);
 
-						grass->position(rnd3D.x + vec.x, P[0].Z + height, rnd3D.z + vec.z);
-						grass->textureCoord(1, 0);
+						// pick random decoration from mapping
+						int randomindex = ::System::Convert::ToInt32(
+							MathUtil::Random->NextDouble() * (items->Length - 1));
 
-						grass->position(rnd3D.x - vec.x, P[0].Z, rnd3D.z - vec.z);
-						grass->textureCoord(0, 1);
+						::System::Collections::Generic::List<V3>^ points;
+						if (!grassPoints->TryGetValue(items[randomindex], points))
+						{
+							points = gcnew ::System::Collections::Generic::List<V3>();
+							grassPoints->Add(items[randomindex], points);
+						}
 
-						grass->position(rnd3D.x + vec.x, P[0].Z, rnd3D.z + vec.z);
-						grass->textureCoord(1, 1);
-
-						int offset = j * 4;
-
-						// front side
-						grass->triangle(offset, offset + 3, offset + 1);
-						grass->triangle(offset, offset + 2, offset + 3);
-
-						// back side
-						grass->triangle(offset + 1, offset + 3, offset);
-						grass->triangle(offset + 3, offset + 2, offset);
-
-						// rotate grassplane for next iteration
-						vec = rot * vec;
+						points->Add(rnd3D);
 					}
+				}
+			}
+		}
 
-					grass->end();
+		/**************************************************************************************/
 
+		for each(KeyValuePair<::System::String^, ::System::Collections::Generic::List<V3>^> pair in grassPoints)
+		{
+			::Ogre::String material = StringConvert::CLRToOgre(pair.Key);
+
+			roomDecoration->begin(material, ::Ogre::RenderOperation::OT_TRIANGLE_LIST);
+
+			int offset = 0;
+
+			for each(V3 p in pair.Value)
+			{
+				
+				::Ogre::Quaternion rot;
+
+				// rotate by this for each grassplane
+				rot.FromAngleAxis(
+					::Ogre::Degree(180.0f / (float)numplanes), ::Ogre::Vector3::UNIT_Y);
+
+				for (int j = 0; j < numplanes; ++j)
+				{
+					roomDecoration->position(p.X - vec.x, p.Y + HEIGHT, p.Z - vec.z);
+					roomDecoration->textureCoord(0, 0);
+
+					roomDecoration->position(p.X + vec.x, p.Y + HEIGHT, p.Z + vec.z);
+					roomDecoration->textureCoord(1, 0);
+
+					roomDecoration->position(p.X - vec.x, p.Y, p.Z - vec.z);
+					roomDecoration->textureCoord(0, 1);
+
+					roomDecoration->position(p.X + vec.x, p.Y, p.Z + vec.z);
+					roomDecoration->textureCoord(1, 1);
+
+					// front side
+					roomDecoration->triangle(offset, offset + 3, offset + 1);
+					roomDecoration->triangle(offset, offset + 2, offset + 3);
+
+					// back side
+					roomDecoration->triangle(offset + 1, offset + 3, offset);
+					roomDecoration->triangle(offset + 3, offset + 2, offset);
+
+					// rotate grassplane for next iteration
+					vec = rot * vec;
+
+					offset += 4;
 				}
 			}
 
-			// add to list
-			decoration->push_back(grass);
+			roomDecoration->end();
 		}
-		
 	};
 
 	void ControllerRoom::CreateTextureAndMaterial(BgfBitmap^ Texture, ::System::String^ TextureName, ::System::String^ MaterialName, V2 ScrollSpeed)

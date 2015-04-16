@@ -73,26 +73,22 @@ namespace Meridian59 { namespace Ogre
 		literal float SCALE						= 0.0625f;
 		literal ::Ogre::Real PARTICLESYSCAMERAOFFSET = (::Ogre::Real)200.f;
 
-		static ::Ogre::StaticGeometry*				roomGeometry;
+		static ::Ogre::ManualObject*				roomDecoration;
 		static ::Ogre::SceneNode*					roomNode;
 		static ::Ogre::ManualObject*				roomManObj;
 		static ::Caelum::CaelumSystem*				caelumSystem;
 		static ::Meridian59::Ogre::RemoteNode^		avatarObject;		
-		static ::std::vector<ManualObject*>*		decoration;
 		static ::ParticleUniverse::ParticleSystem*	particleSysSnow;
+
+		static Dictionary<unsigned short, array<System::String^>^>^ grassMaterials;
+		static Dictionary<::System::String^, ::System::Collections::Generic::List<V3>^>^ grassPoints;
 
 		static ::std::vector<::ParticleUniverse::ParticleEventHandler*>* customParticleHandlers;
 
-		
         /// <summary>
         /// Helper to store vertices processed of a sector
         /// </summary>
         static unsigned int verticesProcessed;
-
-		/// <summary>
-        /// Stores an array of grass materials for a roomtexture grdXXXXX key
-        /// </summary>
-		static Dictionary<unsigned short, array<System::String^>^>^ grassMaterials;
 
 		static void HandlePlayerMessage(PlayerMessage^ Message);
 		static void HandleLightAmbient(LightAmbientMessage^ Message);
@@ -103,6 +99,7 @@ namespace Meridian59 { namespace Ogre
 		static void AdjustOctree();
 		static void AdjustAmbientLight();
 		static int GetRoomSectionByMaterial(::Ogre::String Name);
+		static int GetDecorationSectionByMaterial(::Ogre::String Name);
 
 		/// <summary>
         /// Static constructor
@@ -158,11 +155,9 @@ namespace Meridian59 { namespace Ogre
 		static void CreateGeometryChunk(::System::String^ MaterialName);
 
 		/// <summary>
-		/// Creates decorations on a subsector floor
+		/// Creates decorations
 		/// </summary>
-		/// <param name="SubSector"></param>
-		/// <param name="IsFloor"></param>
-		static void CreateDecoration(RooSubSector^ SubSector, bool IsFloor);
+		static void CreateDecoration();
 
 		/// <summary>
         /// Possibly creates a single texture and material based on required info.
