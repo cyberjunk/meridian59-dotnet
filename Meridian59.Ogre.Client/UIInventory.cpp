@@ -171,7 +171,6 @@ namespace Meridian59 { namespace Ogre
 			imageComposers[Index]->DataSource = nullptr;
 
 			// rearrange
-			ImageComposerCEGUI<InventoryObject^>^ swap;
 			for (int i = Index; i < childcount - 1; i++)
 			{
 				// swap views
@@ -216,8 +215,8 @@ namespace Meridian59 { namespace Ogre
 
 	void ControllerUI::Inventory::SwapImageComposers(unsigned int Index1, unsigned int Index2)
 	{
-		if (Index1 < imageComposers->Length && 
-			Index2 < imageComposers->Length)
+		if ((int)Index1 < imageComposers->Length && 
+			(int)Index2 < imageComposers->Length)
 		{
 			// swap composers
 			ImageComposerCEGUI<InventoryObject^>^ swap = imageComposers[Index1];

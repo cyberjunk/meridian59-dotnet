@@ -43,7 +43,7 @@ namespace Meridian59 { namespace Ogre
 		// a manualobject for the room geometry
 		roomManObj = OGRE_NEW ManualObject(NAME_ROOM);
 		roomManObj->setDynamic(true);
-
+		
 		// a manualobject for the room decoration
 		roomDecoration = OGRE_NEW ManualObject(NAME_ROOMDECORATION);
 		roomDecoration->setDynamic(false);
