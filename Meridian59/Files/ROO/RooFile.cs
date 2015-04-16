@@ -41,6 +41,29 @@ namespace Meridian59.Files.ROO
     [Serializable]
     public class RooFile : IGameFile, IByteSerializableFast, ITickable
     {
+        /// <summary>
+        /// Bundles some info, used as return type in GetMaterialInfos()
+        /// </summary>
+        public struct MaterialInfo
+        {
+            public BgfBitmap Texture;
+            public string TextureName;
+            public string MaterialName;          
+            public V2 ScrollSpeed;
+
+            public MaterialInfo(
+                BgfBitmap Texture,
+                string TextureName,
+                string MaterialName,          
+                V2 ScrollSpeed)
+            {
+                this.Texture = Texture;
+                this.TextureName = TextureName;
+                this.MaterialName = MaterialName;
+                this.ScrollSpeed = ScrollSpeed;
+            }
+        }
+
         #region Constants
         public const uint SIGNATURE             = 0xB14F4F52;   // first expected bytes in file
         public const uint VERSION               = 13;           // current
@@ -1016,7 +1039,6 @@ namespace Meridian59.Files.ROO
         /// See ResolveResources().
         /// </summary>
         public bool IsResourcesResolved { get; protected set; }
-
         #endregion
 
         #region Constructors
@@ -1297,34 +1319,75 @@ namespace Meridian59.Files.ROO
         }
 
         /// <summary>
-        /// Returns a list of strings representing all used material names.
+        /// Returns a MaterialInfo dictionary with all materials used in this roofile.
         /// </summary>
         /// <returns></returns>
-        public List<string> GetAllMaterialNames()
+        public Dictionary<string, MaterialInfo> GetMaterialInfos()
         {
-            List<string> list = new List<string>();
-
+            Dictionary<string, MaterialInfo> list =
+                new Dictionary<string, MaterialInfo>();
+            
             // add materials used on sector floors & ceilings
             foreach (RooSector obj in Sectors)
             {
-                if (!list.Contains(obj.MaterialNameFloor))
-                    list.Add(obj.MaterialNameFloor);
+                if (obj.MaterialNameFloor != null && 
+                    obj.MaterialNameFloor != String.Empty && 
+                    !list.ContainsKey(obj.MaterialNameFloor))
+                { 
+                    list.Add(obj.MaterialNameFloor, new MaterialInfo(
+                        obj.TextureFloor,
+                        obj.TextureNameFloor,
+                        obj.MaterialNameFloor,
+                        obj.SpeedFloor));
+                }
 
-                if (!list.Contains(obj.MaterialNameCeiling))
-                    list.Add(obj.MaterialNameCeiling);
+                if (obj.MaterialNameCeiling != null && 
+                    obj.MaterialNameCeiling != String.Empty && 
+                    !list.ContainsKey(obj.MaterialNameCeiling))
+                { 
+                    list.Add(obj.MaterialNameCeiling, new MaterialInfo(
+                        obj.TextureCeiling,
+                        obj.TextureNameCeiling,
+                        obj.MaterialNameCeiling,
+                        obj.SpeedCeiling));
+                }
             }
 
             // add materials used on sides
             foreach (RooSideDef obj in SideDefs)
             {
-                if (!list.Contains(obj.MaterialNameLower))
-                    list.Add(obj.MaterialNameLower);
+                if (obj.MaterialNameLower != null && 
+                    obj.MaterialNameLower != String.Empty && 
+                    !list.ContainsKey(obj.MaterialNameLower))
+                { 
+                    list.Add(obj.MaterialNameLower, new MaterialInfo(
+                        obj.TextureLower,
+                        obj.TextureNameLower,
+                        obj.MaterialNameLower,
+                        obj.SpeedLower));
+                }
 
-                if (!list.Contains(obj.MaterialNameMiddle))
-                    list.Add(obj.MaterialNameMiddle);
+                if (obj.MaterialNameMiddle != null && 
+                    obj.MaterialNameMiddle != String.Empty &&
+                    !list.ContainsKey(obj.MaterialNameMiddle))
+                {
+                    list.Add(obj.MaterialNameMiddle, new MaterialInfo(
+                        obj.TextureMiddle,
+                        obj.TextureNameMiddle,
+                        obj.MaterialNameMiddle,
+                        obj.SpeedMiddle));
+                }
 
-                if (!list.Contains(obj.MaterialNameUpper))
-                    list.Add(obj.MaterialNameUpper);
+                if (obj.MaterialNameUpper != null && 
+                    obj.MaterialNameUpper != String.Empty &&
+                    !list.ContainsKey(obj.MaterialNameUpper))
+                { 
+                    list.Add(obj.MaterialNameUpper, new MaterialInfo(
+                        obj.TextureUpper,
+                        obj.TextureNameUpper,
+                        obj.MaterialNameUpper,
+                        obj.SpeedUpper));
+                }
             }
 
             return list;

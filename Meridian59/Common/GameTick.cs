@@ -237,6 +237,16 @@ namespace Meridian59.Common
             Span = Current - Last;           
         }
 
+        /// <summary>
+        /// Returns a dedicated ms tick for this moment from the clock.
+        /// This might be later than Current, depending on thread cycle duration.
+        /// </summary>
+        /// <returns></returns>
+        public long GetUpdatedTick()
+        {
+            return watch.ElapsedTicks / MSTICKDIVISOR;
+        }
+
         #region Can
         /// <summary>
         /// Call this to know if you can measure TPS

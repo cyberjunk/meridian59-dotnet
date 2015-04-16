@@ -152,10 +152,10 @@ namespace Meridian59 { namespace Ogre
         static void CreateSubSector(RooSubSector^ SubSector, bool IsFloor);
 
 		/// <summary>
-		/// Creates all sectors and sides using specific materialname
+		/// Creates all floors and sides using specific materialname
 		/// </summary>
 		/// <param name="MaterialName"></param>
-		static void CreateMaterialChunk(::System::String^ MaterialName);
+		static void CreateGeometryChunk(::System::String^ MaterialName);
 
 		/// <summary>
 		/// Creates decorations on a subsector floor

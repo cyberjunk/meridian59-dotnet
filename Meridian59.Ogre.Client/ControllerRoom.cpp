@@ -324,7 +324,7 @@ namespace Meridian59 { namespace Ogre
 		ManualObject* manObj;
 		MeshPtr temp_mesh;
 		Entity* temp_entity;
-		::System::Collections::Generic::List<::System::String^>^ matlist;
+		long tick1, tick2, span;
 
 		/*********************************************************************************************/
 
@@ -333,14 +333,11 @@ namespace Meridian59 { namespace Ogre
 		{
 			// log
 			Logger::Log(MODULENAME, LogType::Error,
-				"Error: Map resource not attached to RoomInformation.");
+				"Error: Room (.roo) resource not attached to RoomInformation.");
 
-			// don't go on
 			return;
 		}
-		else
-			Logger::Log(MODULENAME, LogType::Info, "Loading map: " + Room->Filename);
-
+			
 		/*********************************************************************************************/
 
 		// attach handlers for changes in the room
@@ -358,17 +355,55 @@ namespace Meridian59 { namespace Ogre
 
 		// set sky
 		UpdateSky();
+
+		// get materialinfos
+		::System::Collections::Generic::Dictionary<::System::String^, RooFile::MaterialInfo>^ dict =
+			Room->GetMaterialInfos();
 		
+		Logger::Log(MODULENAME, LogType::Info, "Start loading room: " + Room->Filename + FileExtensions::ROO);
+
+		/*********************************************************************************************/
+		/*                              ROOM TEXTURES                                                */
+		/*********************************************************************************************/
+
+		tick1 = OgreClient::Singleton->GameTick->GetUpdatedTick();
+
+		// create the materials & textures
+		for each(KeyValuePair<::System::String^, RooFile::MaterialInfo> pair in dict)
+		{
+			// create texture & material
+			CreateTextureAndMaterial(
+				pair.Value.Texture,
+				pair.Value.TextureName,
+				pair.Value.MaterialName,
+				pair.Value.ScrollSpeed);
+		}
+
+		tick2 = OgreClient::Singleton->GameTick->GetUpdatedTick();
+		span = tick2 - tick1;
+		
+		Logger::Log(MODULENAME, LogType::Info, "Textures: " + span.ToString() + " ms");
+
+		/*********************************************************************************************/
+		/*                              ROOM GEOMETRY                                                */
+		/*********************************************************************************************/
+
+		tick1 = tick2;
+
+		// create room geometry
+		for each(KeyValuePair<::System::String^, RooFile::MaterialInfo> pair in dict)
+			CreateGeometryChunk(pair.Value.MaterialName);
+						
+		tick2 = OgreClient::Singleton->GameTick->GetUpdatedTick();
+		span = tick2 - tick1;
+
+		Logger::Log(MODULENAME, LogType::Info, "Geometry: " + span.ToString() + " ms");
+
+		/*********************************************************************************************/
+		/*                               ROOM DECORATION                                             */
 		/*********************************************************************************************/
 		
-		// get used materials
-		matlist = Room->GetAllMaterialNames();
-		
-		// create room geometry chunks based on materials
-		for each(::System::String^ s in matlist)		
-			CreateMaterialChunk(s);
-		
-		/*********************************************************************************************/
+		tick1 = tick2;
 
 		// add decoration
 		for (std::vector<ManualObject*>::iterator it = decoration->begin(); it != decoration->end(); it++)
@@ -403,6 +438,16 @@ namespace Meridian59 { namespace Ogre
 			temp_mesh->unload();
 			meshMan->remove((ResourcePtr)temp_mesh);                               
 		}
+
+		tick2 = OgreClient::Singleton->GameTick->GetUpdatedTick();
+		span = tick2 - tick1;
+
+		Logger::Log(MODULENAME, LogType::Info, "Decoration: " + span.ToString() + " ms");
+
+		/*********************************************************************************************/
+		/*                                    OTHERS                                                 */
+		/*********************************************************************************************/
+
     };
 
     void ControllerRoom::UnloadRoom()
@@ -468,7 +513,7 @@ namespace Meridian59 { namespace Ogre
 		return -1;
 	};
 
-	void ControllerRoom::CreateMaterialChunk(::System::String^ MaterialName)
+	void ControllerRoom::CreateGeometryChunk(::System::String^ MaterialName)
 	{
 		::Ogre::String material = StringConvert::CLRToOgre(MaterialName);
 		int sectionindex		= GetRoomSectionByMaterial(material);
@@ -909,10 +954,10 @@ namespace Meridian59 { namespace Ogre
 		CreateTextureAndMaterial(texture, texname, material, scrollspeed);
 
 		// recreate the previous chunk (removes the element from the old chunk)
-		CreateMaterialChunk(e->OldMaterialName);
+		CreateGeometryChunk(e->OldMaterialName);
 
 		// recreate the new chunk (adds the element to the new chunk)
-		CreateMaterialChunk(material);
+		CreateGeometryChunk(material);
 	};
 
 	void ControllerRoom::OnRooFileSectorTextureChanged(System::Object^ sender, SectorTextureChangedEventArgs^ e)
@@ -955,10 +1000,10 @@ namespace Meridian59 { namespace Ogre
 		CreateTextureAndMaterial(texture, texname, material, scrollspeed);
 		
 		// recreate the previous chunk (removes the element from the old chunk)
-		CreateMaterialChunk(e->OldMaterialName);
+		CreateGeometryChunk(e->OldMaterialName);
 
 		// recreate the new chunk (adds the element to the new chunk)
-		CreateMaterialChunk(material);
+		CreateGeometryChunk(material);
 	};
 
 	void ControllerRoom::OnRooFileSectorMoved(System::Object^ sender, SectorMovedEventArgs^ e)
@@ -972,14 +1017,16 @@ namespace Meridian59 { namespace Ogre
 			gcnew ::System::Collections::Generic::List<::System::String^>();
 		
 		// possibly add floor material to recreation
-		if (e->Sector->MaterialNameFloor != STRINGEMPTY && 
+		if (e->Sector->MaterialNameFloor &&
+			e->Sector->MaterialNameFloor != STRINGEMPTY && 
 			!affectedsections->Contains(e->Sector->MaterialNameFloor))
 		{
 			affectedsections->Add(e->Sector->MaterialNameFloor);
 		}
 
 		// possibly add ceiling material to recreation
-		if (e->Sector->MaterialNameCeiling != STRINGEMPTY &&
+		if (e->Sector->MaterialNameCeiling &&
+			e->Sector->MaterialNameCeiling != STRINGEMPTY &&
 			!affectedsections->Contains(e->Sector->MaterialNameCeiling))
 		{
 			affectedsections->Add(e->Sector->MaterialNameCeiling);
@@ -988,19 +1035,22 @@ namespace Meridian59 { namespace Ogre
 		// possibly affected sides to recreation
 		for each(RooSideDef^ side in e->Sector->Sides)
 		{
-			if (side->MaterialNameLower != STRINGEMPTY &&
+			if (side->MaterialNameLower &&
+				side->MaterialNameLower != STRINGEMPTY &&
 				!affectedsections->Contains(side->MaterialNameLower))
 			{
 				affectedsections->Add(side->MaterialNameLower);
 			}
 
-			if (side->MaterialNameMiddle != STRINGEMPTY &&
+			if (side->MaterialNameMiddle &&
+				side->MaterialNameMiddle != STRINGEMPTY &&
 				!affectedsections->Contains(side->MaterialNameMiddle))
 			{
 				affectedsections->Add(side->MaterialNameMiddle);
 			}
 
-			if (side->MaterialNameUpper != STRINGEMPTY &&
+			if (side->MaterialNameUpper &&
+				side->MaterialNameUpper != STRINGEMPTY &&
 				!affectedsections->Contains(side->MaterialNameUpper))
 			{
 				affectedsections->Add(side->MaterialNameUpper);
@@ -1009,7 +1059,7 @@ namespace Meridian59 { namespace Ogre
 
 		// now recreate the subsections with the geometries affected
 		for each(::System::String^ section in affectedsections)
-			CreateMaterialChunk(section);
+			CreateGeometryChunk(section);
 	};
 	
 	void ControllerRoom::OnDataPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
@@ -1250,8 +1300,8 @@ namespace Meridian59 { namespace Ogre
         if (ResourceGroupManager::getSingletonPtr()->resourceExists(RESOURCEGROUPMODELS, ostr_mainOverlay))
         {
             // log
-			Logger::Log(MODULENAME, LogType::Info,
-                "Adding 3D object " + roomObject->ID.ToString() + " (" + roomObject->Name + ") to scene.");
+			//Logger::Log(MODULENAME, LogType::Info,
+            //    "Adding 3D object " + roomObject->ID.ToString() + " (" + roomObject->Name + ") to scene.");
 
             // 3d model
             newObject = gcnew RemoteNode3D(roomObject, SceneManager);
@@ -1259,8 +1309,8 @@ namespace Meridian59 { namespace Ogre
         else
         {
             // log
-            Logger::Log(MODULENAME, LogType::Info,
-                "Adding 2D object " + roomObject->ID.ToString() + " (" + roomObject->Name + ") to scene.");
+            //Logger::Log(MODULENAME, LogType::Info,
+            //    "Adding 2D object " + roomObject->ID.ToString() + " (" + roomObject->Name + ") to scene.");
 
             // legacy object
             newObject = gcnew RemoteNode2D(roomObject, SceneManager);
@@ -1274,7 +1324,7 @@ namespace Meridian59 { namespace Ogre
         {
             // log
             Logger::Log(MODULENAME, LogType::Info,
-				"New AvatarObject: " + roomObject->ID.ToString() + " (" + roomObject->Name + ")");
+				"Found own avatar: " + roomObject->ID.ToString() + " (" + roomObject->Name + ")");
 
             // save a reference to the avatar object
             AvatarObject = newObject;
@@ -1300,8 +1350,8 @@ namespace Meridian59 { namespace Ogre
 	void ControllerRoom::RoomObjectRemove(RoomObject^ roomObject)
     {
         // log
-        Logger::Log(MODULENAME, LogType::Info,
-            "Removing object " + roomObject->ID.ToString() + " (" + roomObject->Name + ")" + " from scene.");
+        //Logger::Log(MODULENAME, LogType::Info,
+        //    "Removing object " + roomObject->ID.ToString() + " (" + roomObject->Name + ")" + " from scene.");
 
         // reset avatar reference in case it was removed
 		if (roomObject->IsAvatar)
