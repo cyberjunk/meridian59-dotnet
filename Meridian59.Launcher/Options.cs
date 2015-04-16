@@ -741,8 +741,8 @@ namespace Meridian59.Launcher.Models
             TextureQuality = texturequality;
             DecorationIntensity = decorationintensity;
             DecorationQuality = decorationquality;
-            DisableNewRoomTextures = disableNewRoomTextures;
-            Disable3DModels = disable3DModels;
+            DisableNewRoomTextures = disablenewroomtextures;
+            Disable3DModels = disable3dmodels;
             DisableNewSky = disablenewsky;
             DisableWeatherEffects = disableweathereffects;
             WeatherParticles = weatherparticles;
