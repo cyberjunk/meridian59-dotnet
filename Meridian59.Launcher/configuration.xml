@@ -53,10 +53,10 @@
     </connection>
 
     <connection
-      name="107"
-      host="meridian107.openmeridian.org"
-      port="5907"
-      stringdictionary="rsc0000-107.rsb"
+      name="112"
+      host="arantis.org"
+      port="5912"
+      stringdictionary="rsc0000-112.rsb"
       username="user"
       password="">
       <ignorelist />
