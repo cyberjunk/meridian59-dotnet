@@ -62,6 +62,16 @@
       <ignorelist />
     </connection>
     
+    <connection
+      name="115"
+      host="proxy03.zyres.net"
+      port="5959"
+      stringdictionary="rsc0000-115.rsb"
+      username="user"
+      password="">
+      <ignorelist />
+    </connection>
+    
     <connection 
       name="localhost" 
       host="127.0.0.1" 
