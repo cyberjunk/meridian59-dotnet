@@ -31,6 +31,7 @@ namespace Meridian59.Data.Models
         public const string PROPNAME_NAME   = "Name";
         public const string PROPNAME_HOST   = "Host";
         public const string PROPNAME_PORT   = "Port";
+        public const string PROPNAME_USEIPV6 = "UseIPv6";
         public const string PROPNAME_STRINGDICTIONARY   = "StringDictionary";
         public const string PROPNAME_USERNAME           = "Username";
         public const string PROPNAME_PASSWORD           = "Password";
@@ -41,6 +42,7 @@ namespace Meridian59.Data.Models
         protected string name;
         protected string host;
         protected ushort port;
+        protected bool useIPv6;
         protected string stringdictionary;
         protected string username;
         protected string password;
@@ -83,6 +85,19 @@ namespace Meridian59.Data.Models
                 {
                     port = value;
                     RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_PORT));
+                }
+            }
+        }
+
+        public bool UseIPv6
+        {
+            get { return useIPv6; }
+            set
+            {
+                if (useIPv6 != value)
+                {
+                    useIPv6 = value;
+                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_USEIPV6));
                 }
             }
         }
@@ -161,7 +176,8 @@ namespace Meridian59.Data.Models
         public ConnectionInfo(
             string Name, 
             string Host, 
-            ushort Port, 
+            ushort Port,
+            bool UseIPv6,
             string StringDictionary, 
             string Username,
             string Password,
@@ -172,6 +188,7 @@ namespace Meridian59.Data.Models
             name = Name;
             host = Host;
             port = Port;
+            useIPv6 = UseIPv6;
             stringdictionary = StringDictionary;
             username = Username;
             password = Password;
@@ -187,6 +204,7 @@ namespace Meridian59.Data.Models
                 Name = String.Empty;
                 Host = String.Empty;
                 Port = DEFAULTPORT;
+                UseIPv6 = false;
                 StringDictionary = String.Empty;
                 Username = String.Empty;
                 Password = String.Empty;
@@ -197,6 +215,7 @@ namespace Meridian59.Data.Models
                 name = String.Empty;
                 host = String.Empty;
                 port = DEFAULTPORT;
+                useIPv6 = false;
                 stringdictionary = String.Empty;
                 username = String.Empty;
                 password = String.Empty;

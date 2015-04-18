@@ -59,6 +59,7 @@ namespace Meridian59.Common
         protected const string XMLATTRIB_NAME                   = "name";
         protected const string XMLATTRIB_HOST                   = "host";
         protected const string XMLATTRIB_PORT                   = "port";
+        protected const string XMLATTRIB_USEIPV6                = "useipv6";
         protected const string XMLATTRIB_STRINGDICTIONARY       = "stringdictionary";
         protected const string XMLATTRIB_USERNAME               = "username";
         protected const string XMLATTRIB_PASSWORD               = "password";
@@ -321,6 +322,7 @@ namespace Meridian59.Common
                     string name             = reader[XMLATTRIB_NAME];
                     string host             = reader[XMLATTRIB_HOST];
                     ushort port             = Convert.ToUInt16(reader[XMLATTRIB_PORT]);
+                    bool useipv6            = Convert.ToBoolean(reader[XMLATTRIB_USEIPV6]);
                     string stringdictionary = reader[XMLATTRIB_STRINGDICTIONARY];
                     string username         = reader[XMLATTRIB_USERNAME];
                     string password         = reader[XMLATTRIB_PASSWORD];
@@ -351,6 +353,7 @@ namespace Meridian59.Common
                         name,
                         host,
                         port,
+                        useipv6,
                         stringdictionary,
                         username,
                         password,
@@ -410,6 +413,7 @@ namespace Meridian59.Common
                 writer.WriteAttributeString(XMLATTRIB_NAME, connections[i].Name);
                 writer.WriteAttributeString(XMLATTRIB_HOST, connections[i].Host);
                 writer.WriteAttributeString(XMLATTRIB_PORT, connections[i].Port.ToString());
+                writer.WriteAttributeString(XMLATTRIB_USEIPV6, connections[i].UseIPv6.ToString());
                 writer.WriteAttributeString(XMLATTRIB_STRINGDICTIONARY, connections[i].StringDictionary);
                 writer.WriteAttributeString(XMLATTRIB_USERNAME, connections[i].Username);
                 writer.WriteAttributeString(XMLATTRIB_PASSWORD, String.Empty);

@@ -123,7 +123,8 @@ namespace Meridian59.Client
             // connect to server
             ServerConnection.Connect(
                 Config.SelectedConnectionInfo.Host, 
-                Config.SelectedConnectionInfo.Port);
+                Config.SelectedConnectionInfo.Port,
+                Config.SelectedConnectionInfo.UseIPv6);
         }
 
         public override void Init()

@@ -34,6 +34,7 @@
       name="103"
       host="meridian103.openmeridian.org"
       port="5903"
+      useipv6="false"
       stringdictionary="rsc0000-103.rsb"
       username="user"
       password="">
@@ -43,6 +44,7 @@
       name="localhost"
       host="127.0.0.1"
       port="5959"
+      useipv6="false"
       stringdictionary="rsc0000-git.rsb"
       username="user"
       password="">

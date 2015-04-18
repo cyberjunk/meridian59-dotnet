@@ -41,12 +41,14 @@ namespace Meridian59.Launcher.Controls
                 txtName.DataBindings.Clear();
                 txtHost.DataBindings.Clear();
                 numPort.DataBindings.Clear();
-                
+                chkUseIPv6.DataBindings.Clear();
+
                 if (dataSource != null)
                 {
                     txtName.DataBindings.Add("Text", DataSource, ConnectionInfo.PROPNAME_NAME);
                     txtHost.DataBindings.Add("Text", DataSource, ConnectionInfo.PROPNAME_HOST);
-                    numPort.DataBindings.Add("Text", DataSource, ConnectionInfo.PROPNAME_PORT);                   
+                    numPort.DataBindings.Add("Text", DataSource, ConnectionInfo.PROPNAME_PORT);
+                    chkUseIPv6.DataBindings.Add("Checked", DataSource, ConnectionInfo.PROPNAME_USEIPV6);
                 } 
             }
         }

@@ -36,6 +36,7 @@
             this.txtName = new System.Windows.Forms.TextBox();
             this.cbStringDictionary = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.chkUseIPv6 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numPort)).BeginInit();
             this.SuspendLayout();
             // 
@@ -121,10 +122,21 @@
             this.label1.TabIndex = 7;
             this.label1.Text = "Dictionary:";
             // 
+            // chkUseIPv6
+            // 
+            this.chkUseIPv6.AutoSize = true;
+            this.chkUseIPv6.Location = new System.Drawing.Point(173, 69);
+            this.chkUseIPv6.Name = "chkUseIPv6";
+            this.chkUseIPv6.Size = new System.Drawing.Size(70, 17);
+            this.chkUseIPv6.TabIndex = 8;
+            this.chkUseIPv6.Text = "Use IPv6";
+            this.chkUseIPv6.UseVisualStyleBackColor = true;
+            // 
             // ConnectionInfoView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.chkUseIPv6);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cbStringDictionary);
             this.Controls.Add(this.txtName);
@@ -151,5 +163,6 @@
         private System.Windows.Forms.TextBox txtName;
         private System.Windows.Forms.ComboBox cbStringDictionary;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox chkUseIPv6;
     }
 }
