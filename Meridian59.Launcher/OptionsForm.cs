@@ -815,7 +815,8 @@ namespace Meridian59.Launcher
             ConnectionInfo newEntry = new ConnectionInfo(
                 "NewEntry", 
                 "host.example.com", 
-                5959, 
+                5959,
+                false,
                 "rsc0000.rsb", 
                 "username",
                 String.Empty,
