@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using Meridian59.Common.Interfaces;
 using Meridian59.Common.Constants;
 using Meridian59.Common;
+using Meridian59.Files.ROO;
 
 namespace Meridian59.Files.RSB
 {
