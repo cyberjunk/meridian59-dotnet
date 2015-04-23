@@ -438,6 +438,15 @@ namespace Meridian59.Bot
         /// <param name="Message"></param>
         protected virtual void HandleSaidMessage(SaidMessage Message)
         {
+            // try get player for this message
+            OnlinePlayer player = Data.OnlinePlayers.GetItemByID(Message.Message.SourceObjectID);
+
+            // skip ignored players
+            if (player != null && Data.IgnoreList.Contains(player.Name))
+                return;
+
+            /**************************************************************************/
+
             // check if this is a whisper to us
             // by loooking for a substring in the plain rsc text
             if (Message.Message.ResourceName.Contains("tells you"))
