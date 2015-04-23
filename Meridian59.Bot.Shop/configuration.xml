@@ -4,7 +4,7 @@
   <!-- 
     RESOURCES:
       version: the Download= value from your client's meridian.ini
-      path: no need to touch this
+      path: folder containing resources in subfolders
       preloadrooms/..: no need to touch these
   -->
   <resources
@@ -23,12 +23,14 @@
   <connections selectedindex="0">
     <!-- 
       CONNECTION:
-        name: just a name
+        name: just a name for this connection
         host: DNS or IP of the M59 server
         port: TCP port of the M59 server 
+        useipv6: if true will use ipv6 to connect
         stringdictionary: string-resources (get this from the "resource" folder of your client)
         username: your username
         password: your password
+        ignorelist: these players will be ignored
     -->
     <connection
       name="103"
@@ -38,7 +40,9 @@
       stringdictionary="rsc0000-103.rsb"
       username="user"
       password="">
-      <ignorelist />
+      <ignorelist>
+        <ignore name="PathethicTroll0815" />
+      </ignorelist>
     </connection>
     <connection
       name="localhost"
@@ -51,10 +55,10 @@
       <ignorelist />
     </connection>
   </connections>
-  
+
   <!-- 
     CONNECTION:
-      character: your shopcharacter to log in
+      character: name of your character to log in
       majorverson: see client menu help/about
       minorversion: see client menu help/about
       logfile: the bot will log also to this file (cleaned at startup, "" to disable)
