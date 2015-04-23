@@ -383,6 +383,10 @@ namespace Meridian59.Client
                     HandleLookupNamesMessage((LookupNamesMessage)Message);
                     break;
 
+                case MessageTypeGameMode.Said:                              // 206
+                    HandleSaidMessage((SaidMessage)Message);
+                    break;
+
                 case MessageTypeGameMode.WallAnimate:                       // 225
                     HandleWallAnimateMessage((WallAnimateMessage)Message);
                     break;
@@ -552,6 +556,20 @@ namespace Meridian59.Client
         /// <param name="Message"></param>
         protected virtual void HandleLookupNamesMessage(LookupNamesMessage Message)
         {
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Message"></param>
+        protected virtual void HandleSaidMessage(SaidMessage Message)
+        {
+            // try get player for this message
+            OnlinePlayer player = Data.OnlinePlayers.GetItemByID(Message.Message.SourceObjectID);
+
+            // skip ignored players
+            if (player != null && Data.IgnoreList.Contains(player.Name))
+                return;
         }
 
         /// <summary>

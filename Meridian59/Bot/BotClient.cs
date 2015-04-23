@@ -268,10 +268,6 @@ namespace Meridian59.Bot
                     HandlePlayerMessage((PlayerMessage)Message);
                     break;
 
-                case MessageTypeGameMode.Said:
-                    HandleSaidMessage((SaidMessage)Message);
-                    break;
-
                 case MessageTypeGameMode.Offer:
                     HandleOfferMessage((OfferMessage)Message);
                     break;
@@ -438,14 +434,7 @@ namespace Meridian59.Bot
         /// <param name="Message"></param>
         protected virtual void HandleSaidMessage(SaidMessage Message)
         {
-            // try get player for this message
-            OnlinePlayer player = Data.OnlinePlayers.GetItemByID(Message.Message.SourceObjectID);
-
-            // skip ignored players
-            if (player != null && Data.IgnoreList.Contains(player.Name))
-                return;
-
-            /**************************************************************************/
+            base.HandleSaidMessage(Message);
 
             // check if this is a whisper to us
             // by loooking for a substring in the plain rsc text
