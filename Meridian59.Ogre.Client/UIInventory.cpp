@@ -344,9 +344,15 @@ namespace Meridian59 { namespace Ogre
 						size_t fromIndex = dataViews->getIdxOfChild(dataView);
 						size_t toIndex = dataViews->getIdxOfChild(destDrag);
 
+						// beware: these can point to empty ui inventory slots 
+						// (out of bound indices in data).
+						if (fromIndex < 0 || fromIndex >= dataModels->Count ||
+							toIndex < 0 || toIndex >= dataModels->Count)
+							return true;
+
 						// swap views
 						ControllerUI::Inventory::List->swapChildren(dataView, destDrag);
-
+						
 						// swap composers
 						ControllerUI::Inventory::SwapImageComposers(fromIndex, toIndex);
 
