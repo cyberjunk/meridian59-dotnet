@@ -432,7 +432,7 @@ namespace Meridian59.Bot
         /// 
         /// </summary>
         /// <param name="Message"></param>
-        protected virtual void HandleSaidMessage(SaidMessage Message)
+        protected override void HandleSaidMessage(SaidMessage Message)
         {
             base.HandleSaidMessage(Message);
 
