@@ -21,7 +21,7 @@ using System;
 namespace Meridian59.Files.ROO
 {
     /// <summary>
-    /// A PartitionLine is a tree node in BSP-Tree
+    /// A PartitionLine is a tree node in BSP-Tree.
     /// </summary>
     [Serializable]
     public class RooPartitionLine : RooBSPItem
@@ -137,20 +137,57 @@ namespace Meridian59.Files.ROO
         #endregion
 
         #region Properties
+        /// <summary>
+        /// PartitionLineType for RooPartitionLine
+        /// </summary>
         public override byte Type { get { return RooBSPItem.PartitionLineType; } }
         
+        /// <summary>
+        /// 'a' variable for line equation ax+bc+c=0
+        /// </summary>
         public int A { get; set; }
+
+        /// <summary>
+        /// 'b' variable for line equation ax+bc+c=0
+        /// </summary>
         public int B { get; set; }
+
+        /// <summary>
+        /// 'c' variable for line equation ax+bc+c=0
+        /// </summary>
         public int C { get; set; }
         
-        // tree children
+        /// <summary>
+        /// Index of right child
+        /// </summary>
         public ushort Right { get; set; }
+
+        /// <summary>
+        /// Index of left child
+        /// </summary>
         public ushort Left { get; set; }
         
+        /// <summary>
+        /// Index of wall used as splitter
+        /// </summary>
         public ushort WallReference { get; set; }
+
+        /// <summary>
+        /// Reference to wall used as splitter or NULL.
+        /// Will be filled in ResolveIndices().
+        /// </summary>
         public RooWall Wall { get; set; }
 
+        /// <summary>
+        /// Reference to right child.
+        /// Will be filled in ResolveIndices().
+        /// </summary>
         public RooBSPItem RightChild { get; set; }
+
+        /// <summary>
+        /// Reference to left child.
+        /// Will be filled in ResolveIndices().
+        /// </summary>
         public RooBSPItem LeftChild { get; set; }
 
         #endregion

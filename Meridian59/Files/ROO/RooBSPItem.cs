@@ -129,9 +129,24 @@ namespace Meridian59.Files.ROO
 
         public abstract byte Type { get; }
         
+        /// <summary>
+        /// BoundingBox minimum X of this node (or leaf).
+        /// </summary>
         public int X1 { get; set; }
+
+        /// <summary>
+        /// BoundingBox minimum Y of this node (or leaf).
+        /// </summary>
         public int Y1 { get; set; }
+
+        /// <summary>
+        /// BoundingBox maximum X of this node (or leaf).
+        /// </summary>
         public int X2 { get; set; }
+
+        /// <summary>
+        /// BoundingBox maximum Y of this node (or leaf).
+        /// </summary>
         public int Y2 { get; set; }
 
         public RooBSPItem(int X1, int X2, int Y1, int Y2)
