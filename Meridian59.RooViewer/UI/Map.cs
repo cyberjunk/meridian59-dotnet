@@ -23,7 +23,7 @@ using Meridian59.Files.ROO;
 using Meridian59.Common;
 using System.Drawing.Drawing2D;
 
-namespace Meridian59.Editor.UI
+namespace Meridian59.RooViewer.UI
 {
     public partial class Map : UserControl
     {

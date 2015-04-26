@@ -1,4 +1,4 @@
-﻿namespace Meridian59.Editor.UI
+﻿namespace Meridian59.RooViewer.UI
 {
     partial class Map
     {

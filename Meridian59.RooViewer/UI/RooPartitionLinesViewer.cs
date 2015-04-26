@@ -20,7 +20,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using Meridian59.Files.ROO;
 
-namespace Meridian59.Editor.UI
+namespace Meridian59.RooViewer.UI
 {
     public partial class RooPartitionLinesViewer : UserControl
     {

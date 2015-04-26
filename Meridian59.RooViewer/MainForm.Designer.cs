@@ -1,4 +1,4 @@
-﻿namespace Meridian59.Editor
+﻿namespace Meridian59.RooViewer
 {
     partial class MainForm
     {
@@ -40,13 +40,13 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.viewerRooSectors = new Meridian59.Editor.UI.RooSectorsViewer();
-            this.viewerRooSides = new Meridian59.Editor.UI.RooSidesViewer();
-            this.viewerRooWalls = new Meridian59.Editor.UI.RooWallsViewer();
-            this.viewerRooSubSectors = new Meridian59.Editor.UI.RooSubSectorsViewer();
-            this.viewerRooVertices = new Meridian59.Editor.UI.RooVerticesViewer();
-            this.viewerRooPartitionLines = new Meridian59.Editor.UI.RooPartitionLinesViewer();
-            this.map = new Meridian59.Editor.UI.Map();
+            this.viewerRooSectors = new Meridian59.RooViewer.UI.RooSectorsViewer();
+            this.viewerRooSides = new Meridian59.RooViewer.UI.RooSidesViewer();
+            this.viewerRooWalls = new Meridian59.RooViewer.UI.RooWallsViewer();
+            this.viewerRooSubSectors = new Meridian59.RooViewer.UI.RooSubSectorsViewer();
+            this.viewerRooVertices = new Meridian59.RooViewer.UI.RooVerticesViewer();
+            this.viewerRooPartitionLines = new Meridian59.RooViewer.UI.RooPartitionLinesViewer();
+            this.map = new Meridian59.RooViewer.UI.Map();
             ((System.ComponentModel.ISupportInitialize)(this.splitMain)).BeginInit();
             this.splitMain.Panel1.SuspendLayout();
             this.splitMain.Panel2.SuspendLayout();

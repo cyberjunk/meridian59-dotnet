@@ -19,7 +19,7 @@ using System.Windows.Forms;
 using Meridian59.Files;
 using Meridian59.Files.ROO;
 
-namespace Meridian59.Editor
+namespace Meridian59.RooViewer
 {
     static class Program
     {

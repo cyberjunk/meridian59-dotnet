@@ -25,7 +25,7 @@ using System.Collections.Generic;
 using Meridian59.Files.ROO;
 using Meridian59.Common;
 
-namespace Meridian59.Editor
+namespace Meridian59.RooViewer
 {
     /// <summary>
     /// 
