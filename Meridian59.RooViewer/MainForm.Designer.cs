@@ -47,6 +47,7 @@
             this.viewerRooVertices = new Meridian59.RooViewer.UI.RooVerticesViewer();
             this.viewerRooPartitionLines = new Meridian59.RooViewer.UI.RooPartitionLinesViewer();
             this.map = new Meridian59.RooViewer.UI.Map();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitMain)).BeginInit();
             this.splitMain.Panel1.SuspendLayout();
             this.splitMain.Panel2.SuspendLayout();
@@ -182,7 +183,8 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openToolStripMenuItem});
+            this.openToolStripMenuItem,
+            this.saveToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -190,7 +192,7 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.OnMenuFileOpen);
             // 
@@ -261,6 +263,13 @@
             this.map.SelectedSubSectorChanged += new System.EventHandler(this.OnMapSelectedSubSectorChanged);
             this.map.SelectedSectorChanged += new System.EventHandler(this.OnMapSelectedSectorChanged);
             // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.OnMenuFileSave);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -313,6 +322,7 @@
         private UI.RooPartitionLinesViewer viewerRooPartitionLines;
         private UI.RooSubSectorsViewer viewerRooSubSectors;
         private UI.RooVerticesViewer viewerRooVertices;
+        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         
     }
 }

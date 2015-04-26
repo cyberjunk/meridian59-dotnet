@@ -64,6 +64,11 @@ namespace Meridian59.RooViewer
             openFileDialog.ShowDialog();
         }
 
+        private void OnMenuFileSave(object sender, EventArgs e)
+        {
+            Room.Save(openFileDialog.FileName);
+        }
+
         protected void OnOpenFileDialogFileOk(object sender, CancelEventArgs e)
         {
             this.Room = new RooFile(openFileDialog.FileName);
@@ -112,5 +117,6 @@ namespace Meridian59.RooViewer
         {
             viewerRooSubSectors.SelectedItem = map.SelectedSubSector;
         }
+
     }
 }
