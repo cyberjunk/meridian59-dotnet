@@ -52,8 +52,11 @@ namespace Meridian59.RooViewer.UI
         protected Pen penLightBlue1 = new Pen(Color.LightBlue, 1f);
         protected Pen penOrange2 = new Pen(Color.Orange, 2f);
         
-        protected SolidBrush brushGreen2 = new SolidBrush(Color.Green);
-        protected SolidBrush brushPaleGreen2 = new SolidBrush(Color.PaleGreen);
+        protected SolidBrush brushSolidGreen = new SolidBrush(Color.Green);
+        protected SolidBrush brushSolidPaleGreen = new SolidBrush(Color.PaleGreen);
+        protected SolidBrush brushSolidRed = new SolidBrush(Color.Red);
+
+        protected Font fontDefault = new Font("Arial", 16, FontStyle.Regular, GraphicsUnit.Pixel);
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), DefaultValue(null), Browsable(true)]
         public RooFile Room
@@ -201,6 +204,11 @@ namespace Meridian59.RooViewer.UI
             if (oldMousePosition == e.Location)
                 return;
 
+            float mapx = ((float)e.Location.X / ZoomInv + (float)boxMin.X);
+            float mapy = ((float)e.Location.Y / ZoomInv + (float)boxMin.Y);
+
+            lblMouseCoordinates.Text = '(' + ((int)mapx).ToString() + '/' + ((int)mapy).ToString() + ')';
+            
             if (e.Button == MouseButtons.Right)
             { 
                 center.X += (oldMousePosition.X - e.Location.X) * zoom;
@@ -216,8 +224,17 @@ namespace Meridian59.RooViewer.UI
         {
             base.OnMouseWheel(e);
 
-            Zoom -= (float)e.Delta * 0.05f;
-
+            // step big
+            if (zoom > 16.0f)
+            {
+                Zoom -= (float)e.Delta * 0.05f;           
+            }
+            // step small
+            else
+            {
+                Zoom -= (float)e.Delta * 0.01f;
+            }
+            
             Invalidate();
         }
 
@@ -310,7 +327,7 @@ namespace Meridian59.RooViewer.UI
                         points[i].Y = (int)(((float)obj.Vertices[i].Y - boxMin.Y) * ZoomInv);
                     }
 
-                    G.FillPolygon(brushGreen2, points);
+                    G.FillPolygon(brushSolidGreen, points);
                 }
             } 
 
@@ -325,7 +342,7 @@ namespace Meridian59.RooViewer.UI
                     points[i].Y = (int)(((float)selectedSubSector.Vertices[i].Y - boxMin.Y) * ZoomInv);
                 }
 
-                G.FillPolygon(brushPaleGreen2, points);               
+                G.FillPolygon(brushSolidPaleGreen, points);               
             } 
 
 
@@ -383,7 +400,41 @@ namespace Meridian59.RooViewer.UI
                         G.DrawLine(penWhite1, transx1, transy1, transx2, transy2); 
                     }                                          
                 }
-            }                     
+            }
+            
+            /*foreach(RooSector sector in Room.Sectors)
+            {
+                foreach(RooSubSector subsect in Room.BSPTreeLeaves)
+                {
+                    if (subsect.Sector != sector)
+                        continue;
+
+                    foreach(RooVertex vertex in subsect.Vertices)
+                    {
+                        foreach(RooSubSector subsect2 in Room.BSPTreeLeaves)
+                        {
+                            if (subsect2.Sector != sector ||
+                                subsect == subsect2)
+                                continue;
+
+                            foreach(RooVertex vertex2 in subsect2.Vertices)
+                            {
+                                int dx = Math.Abs(vertex.X - vertex2.X);
+                                int dy = Math.Abs(vertex.Y - vertex2.Y);
+
+                                if (dx > 0 && dx < 2 && dy > 0 && dy < 2)
+                                {
+                                    float transx1 = ((float)vertex.X - (float)boxMin.X) * ZoomInv;
+                                    float transy1 = ((float)vertex.Y - (float)boxMin.Y) * ZoomInv;
+
+                                    G.DrawRectangle(penRed2, transx1 - 5, transy1 - 5, 10, 10);
+                                    G.DrawString(sector.Num.ToString(), fontDefault, brushGreen2, transx1, transy1);  
+                                }
+                            }
+                        }
+                    }
+                }
+            }*/
         }
     }
 }
