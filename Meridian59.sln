@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meridian59.Bot.IRC", "Merid
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meridian59.UnitTest", "Meridian59.UnitTest\Meridian59.UnitTest.csproj", "{8FBE0255-812F-45F4-9CC2-094A9F34DCCC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meridian59.RooViewer", "Meridian59.RooViewer\Meridian59.RooViewer.csproj", "{EDD8A1EF-0E47-4567-BF78-7A7DF8E5BEA0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -126,7 +128,6 @@ Global
 		{98701DA6-B2D8-4251-8FF3-1A49A52D727D}.Release|x86.ActiveCfg = Release|x86
 		{98701DA6-B2D8-4251-8FF3-1A49A52D727D}.Release|x86.Build.0 = Release|x86
 		{8FBE0255-812F-45F4-9CC2-094A9F34DCCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8FBE0255-812F-45F4-9CC2-094A9F34DCCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8FBE0255-812F-45F4-9CC2-094A9F34DCCC}.Debug|x64.ActiveCfg = Debug|x64
 		{8FBE0255-812F-45F4-9CC2-094A9F34DCCC}.Debug|x64.Build.0 = Debug|x64
 		{8FBE0255-812F-45F4-9CC2-094A9F34DCCC}.Debug|x86.ActiveCfg = Debug|x86
@@ -136,6 +137,16 @@ Global
 		{8FBE0255-812F-45F4-9CC2-094A9F34DCCC}.Release|x64.Build.0 = Release|x64
 		{8FBE0255-812F-45F4-9CC2-094A9F34DCCC}.Release|x86.ActiveCfg = Release|x86
 		{8FBE0255-812F-45F4-9CC2-094A9F34DCCC}.Release|x86.Build.0 = Release|x86
+		{EDD8A1EF-0E47-4567-BF78-7A7DF8E5BEA0}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{EDD8A1EF-0E47-4567-BF78-7A7DF8E5BEA0}.Debug|x64.ActiveCfg = Debug|x64
+		{EDD8A1EF-0E47-4567-BF78-7A7DF8E5BEA0}.Debug|x64.Build.0 = Debug|x64
+		{EDD8A1EF-0E47-4567-BF78-7A7DF8E5BEA0}.Debug|x86.ActiveCfg = Debug|x86
+		{EDD8A1EF-0E47-4567-BF78-7A7DF8E5BEA0}.Debug|x86.Build.0 = Debug|x86
+		{EDD8A1EF-0E47-4567-BF78-7A7DF8E5BEA0}.Release|Any CPU.ActiveCfg = Release|x86
+		{EDD8A1EF-0E47-4567-BF78-7A7DF8E5BEA0}.Release|x64.ActiveCfg = Release|x64
+		{EDD8A1EF-0E47-4567-BF78-7A7DF8E5BEA0}.Release|x64.Build.0 = Release|x64
+		{EDD8A1EF-0E47-4567-BF78-7A7DF8E5BEA0}.Release|x86.ActiveCfg = Release|x86
+		{EDD8A1EF-0E47-4567-BF78-7A7DF8E5BEA0}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
