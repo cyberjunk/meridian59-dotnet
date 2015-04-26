@@ -2,9 +2,6 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Meridian59.RooViewer.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="PathRooms" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">../../../../resources/rooms</Value>
-    </Setting>
     <Setting Name="PathTextures" Type="System.String" Scope="Application">
       <Value Profile="(Default)">../../../../resources/bgftextures</Value>
     </Setting>

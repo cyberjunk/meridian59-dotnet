@@ -37,7 +37,7 @@ namespace Meridian59.RooViewer
             ResourceManager = new ResourceManager();
             ResourceManager.Init(
                 "",
-                Properties.Settings.Default.PathRooms,
+                "",
                 "",
                 Properties.Settings.Default.PathTextures,
                 "",
