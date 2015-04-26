@@ -41,9 +41,7 @@ namespace Meridian59.RooViewer
             }
 
             set
-            {
-                Program.Room = value;
-
+            {               
                 viewerRooWalls.DataSource = value.Walls;
                 viewerRooSides.DataSource = value.SideDefs;
                 viewerRooSectors.DataSource = value.Sectors;
@@ -66,12 +64,12 @@ namespace Meridian59.RooViewer
 
         private void OnMenuFileSave(object sender, EventArgs e)
         {
-            Room.Save(openFileDialog.FileName);
+            Program.SaveRoom(openFileDialog.FileName);
         }
 
         protected void OnOpenFileDialogFileOk(object sender, CancelEventArgs e)
         {
-            this.Room = new RooFile(openFileDialog.FileName);
+            Program.OpenRoom(openFileDialog.FileName);
         }
 
         protected void OnViewerRooSectorsSelectedItemChanged(object sender, EventArgs e)
@@ -117,6 +115,5 @@ namespace Meridian59.RooViewer
         {
             viewerRooSubSectors.SelectedItem = map.SelectedSubSector;
         }
-
     }
 }

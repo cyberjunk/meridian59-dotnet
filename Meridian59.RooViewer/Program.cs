@@ -36,19 +36,32 @@ namespace Meridian59.RooViewer
             // init resources
             ResourceManager = new ResourceManager();
             ResourceManager.Init(
-                Properties.Settings.Default.Resources + '/' + ResourceManager.SUBPATHSTRINGS,
-                Properties.Settings.Default.Resources + '/' + ResourceManager.SUBPATHROOMS,
-                Properties.Settings.Default.Resources + '/' + ResourceManager.SUBPATHOBJECTS,
-                Properties.Settings.Default.Resources + '/' + ResourceManager.SUBPATHROOMTEXTURES,
-                Properties.Settings.Default.Resources + '/' + ResourceManager.SUBPATHSOUNDS,
-                Properties.Settings.Default.Resources + '/' + ResourceManager.SUBPATHMUSIC,
-                Properties.Settings.Default.Resources + '/' + ResourceManager.SUBPATHMAILS);
+                "",
+                Properties.Settings.Default.PathRooms,
+                "",
+                Properties.Settings.Default.PathTextures,
+                "",
+                "",
+                "");
 
             // create ui
             MainForm = new MainForm();
 
             // run
             Application.Run(MainForm);
+        }
+
+        public static void OpenRoom(string File)
+        {
+            Room = new RooFile(File);
+            Room.ResolveResources(ResourceManager);
+
+            MainForm.Room = Room;          
+        }
+
+        public static void SaveRoom(string File)
+        {
+            Room.Save(File);
         }
     }
 }

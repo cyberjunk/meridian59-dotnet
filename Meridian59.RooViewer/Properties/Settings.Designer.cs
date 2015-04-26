@@ -25,10 +25,19 @@ namespace Meridian59.RooViewer.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("../../../../resources")]
-        public string Resources {
+        [global::System.Configuration.DefaultSettingValueAttribute("../../../../resources/rooms")]
+        public string PathRooms {
             get {
-                return ((string)(this["Resources"]));
+                return ((string)(this["PathRooms"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("../../../../resources/bgftextures")]
+        public string PathTextures {
+            get {
+                return ((string)(this["PathTextures"]));
             }
         }
     }
