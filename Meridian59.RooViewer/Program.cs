@@ -15,9 +15,14 @@
 */
 
 using System;
+using System.Drawing;
 using System.Windows.Forms;
+using System.Drawing.Imaging;
+using System.Collections.Generic;
+using Meridian59.Files.BGF;
 using Meridian59.Files;
 using Meridian59.Files.ROO;
+using Meridian59.Drawing2D;
 
 namespace Meridian59.RooViewer
 {
@@ -32,6 +37,8 @@ namespace Meridian59.RooViewer
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            PalettesGDI.Initialize();
 
             // init resources
             ResourceManager = new ResourceManager();
@@ -62,6 +69,29 @@ namespace Meridian59.RooViewer
         public static void SaveRoom(string File)
         {
             Room.Save(File);
+        }
+
+        public static void ExtractAllTextures(string Folder)
+        {
+            if (Room == null)
+                return;
+
+            Dictionary<string, RooFile.MaterialInfo> textures = Room.GetMaterialInfos();
+            BgfBitmap bgfbmp;
+            Bitmap bmp;
+
+            foreach(KeyValuePair<string, RooFile.MaterialInfo> obj in textures)
+            {
+                bgfbmp = obj.Value.Texture;
+
+                if (bgfbmp == null)
+                    continue;
+                
+                bmp = bgfbmp.GetBitmap();
+                bmp.MakeTransparent(Color.Cyan);
+                bmp.Save(Folder + '/' + obj.Value.TextureName, ImageFormat.Png);
+                bmp.Dispose();
+            }
         }
     }
 }

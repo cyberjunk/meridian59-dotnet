@@ -66,6 +66,18 @@ namespace Meridian59.RooViewer
         {
             Program.SaveRoom(openFileDialog.FileName);
         }
+        protected void OnMenuExtractAllUsedTextures(object sender, EventArgs e)
+        {
+            if (Room == null)
+                return;
+
+            // let pick outputfolder
+            DialogResult result = folderBrowser.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                Program.ExtractAllTextures(folderBrowser.SelectedPath);
+            }
+        }
 
         protected void OnOpenFileDialogFileOk(object sender, CancelEventArgs e)
         {

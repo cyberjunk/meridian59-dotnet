@@ -39,7 +39,11 @@
             this.menu = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.extractAllUsedTexturesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.folderBrowser = new System.Windows.Forms.FolderBrowserDialog();
             this.viewerRooSectors = new Meridian59.RooViewer.UI.RooSectorsViewer();
             this.viewerRooSides = new Meridian59.RooViewer.UI.RooSidesViewer();
             this.viewerRooWalls = new Meridian59.RooViewer.UI.RooWallsViewer();
@@ -47,7 +51,6 @@
             this.viewerRooVertices = new Meridian59.RooViewer.UI.RooVerticesViewer();
             this.viewerRooPartitionLines = new Meridian59.RooViewer.UI.RooPartitionLinesViewer();
             this.map = new Meridian59.RooViewer.UI.Map();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitMain)).BeginInit();
             this.splitMain.Panel1.SuspendLayout();
             this.splitMain.Panel2.SuspendLayout();
@@ -173,7 +176,8 @@
             // menu
             // 
             this.menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
+            this.fileToolStripMenuItem,
+            this.toolsToolStripMenuItem});
             this.menu.Location = new System.Drawing.Point(0, 0);
             this.menu.Name = "menu";
             this.menu.Size = new System.Drawing.Size(1424, 24);
@@ -192,9 +196,31 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.OnMenuFileOpen);
+            // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.OnMenuFileSave);
+            // 
+            // toolsToolStripMenuItem
+            // 
+            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.extractAllUsedTexturesToolStripMenuItem});
+            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.toolsToolStripMenuItem.Text = "Tools";
+            // 
+            // extractAllUsedTexturesToolStripMenuItem
+            // 
+            this.extractAllUsedTexturesToolStripMenuItem.Name = "extractAllUsedTexturesToolStripMenuItem";
+            this.extractAllUsedTexturesToolStripMenuItem.Size = new System.Drawing.Size(325, 22);
+            this.extractAllUsedTexturesToolStripMenuItem.Text = "Extract textures of this room to transparent PNG";
+            this.extractAllUsedTexturesToolStripMenuItem.Click += new System.EventHandler(this.OnMenuExtractAllUsedTextures);
             // 
             // openFileDialog
             // 
@@ -263,13 +289,6 @@
             this.map.SelectedSubSectorChanged += new System.EventHandler(this.OnMapSelectedSubSectorChanged);
             this.map.SelectedSectorChanged += new System.EventHandler(this.OnMapSelectedSectorChanged);
             // 
-            // saveToolStripMenuItem
-            // 
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.saveToolStripMenuItem.Text = "Save";
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.OnMenuFileSave);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -323,6 +342,9 @@
         private UI.RooSubSectorsViewer viewerRooSubSectors;
         private UI.RooVerticesViewer viewerRooVertices;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem extractAllUsedTexturesToolStripMenuItem;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowser;
         
     }
 }
