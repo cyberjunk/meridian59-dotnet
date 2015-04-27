@@ -49,7 +49,75 @@ namespace Meridian59.UnitTest.Common
             Assert.AreEqual(retvalExpected, retvalReturned);
             Assert.AreEqual(intersectExpected.X, intersectReturned.X, EPSILON);
             Assert.AreEqual(intersectExpected.Y, intersectReturned.Y, EPSILON);
-            
+
+            // --- TEST ---
+
+            // lines are on same infinite line and touch at P1=Q1
+            P1 = new V2(1.0f, 1.0f);
+            P2 = new V2(1.0f, 2.0f);
+            Q1 = new V2(1.0f, 1.0f);
+            Q2 = new V2(1.0f, 0.0f);
+
+            intersectExpected = new V2(1.0f, 1.0f);
+            intersectReturned = new V2(0.0f, 0.0f);
+            retvalExpected = LineLineIntersectionType.OneIntersection;
+            retvalReturned = MathUtil.IntersectLineLine(P1, P2, Q1, Q2, out intersectReturned);
+
+            Assert.AreEqual(retvalExpected, retvalReturned);
+            Assert.AreEqual(intersectExpected.X, intersectReturned.X, EPSILON);
+            Assert.AreEqual(intersectExpected.Y, intersectReturned.Y, EPSILON);
+
+            // --- TEST ---
+
+            // lines are on same infinite line and touch at P1=Q2
+            P1 = new V2(1.0f, 1.0f);
+            P2 = new V2(1.0f, 2.0f);
+            Q1 = new V2(1.0f, 0.0f);
+            Q2 = new V2(1.0f, 1.0f);
+
+            intersectExpected = new V2(1.0f, 1.0f);
+            intersectReturned = new V2(0.0f, 0.0f);
+            retvalExpected = LineLineIntersectionType.OneIntersection;
+            retvalReturned = MathUtil.IntersectLineLine(P1, P2, Q1, Q2, out intersectReturned);
+
+            Assert.AreEqual(retvalExpected, retvalReturned);
+            Assert.AreEqual(intersectExpected.X, intersectReturned.X, EPSILON);
+            Assert.AreEqual(intersectExpected.Y, intersectReturned.Y, EPSILON);
+
+            // --- TEST ---
+
+            // lines are on same infinite line and touch at P2=Q1
+            P1 = new V2(1.0f, 0.0f);
+            P2 = new V2(1.0f, 1.0f);
+            Q1 = new V2(1.0f, 1.0f);
+            Q2 = new V2(1.0f, 2.0f);
+
+            intersectExpected = new V2(1.0f, 1.0f);
+            intersectReturned = new V2(0.0f, 0.0f);
+            retvalExpected = LineLineIntersectionType.OneIntersection;
+            retvalReturned = MathUtil.IntersectLineLine(P1, P2, Q1, Q2, out intersectReturned);
+
+            Assert.AreEqual(retvalExpected, retvalReturned);
+            Assert.AreEqual(intersectExpected.X, intersectReturned.X, EPSILON);
+            Assert.AreEqual(intersectExpected.Y, intersectReturned.Y, EPSILON);
+
+            // --- TEST ---
+
+            // lines are on same infinite line and touch at P2=Q2
+            P1 = new V2(1.0f, 0.0f);
+            P2 = new V2(1.0f, 1.0f);
+            Q1 = new V2(1.0f, 2.0f);
+            Q2 = new V2(1.0f, 1.0f);
+
+            intersectExpected = new V2(1.0f, 1.0f);
+            intersectReturned = new V2(0.0f, 0.0f);
+            retvalExpected = LineLineIntersectionType.OneIntersection;
+            retvalReturned = MathUtil.IntersectLineLine(P1, P2, Q1, Q2, out intersectReturned);
+
+            Assert.AreEqual(retvalExpected, retvalReturned);
+            Assert.AreEqual(intersectExpected.X, intersectReturned.X, EPSILON);
+            Assert.AreEqual(intersectExpected.Y, intersectReturned.Y, EPSILON);
+
             // --- TEST ---
 
             // lines are parallel
@@ -60,7 +128,7 @@ namespace Meridian59.UnitTest.Common
 
             intersectExpected = new V2(0.0f, 0.0f);
             intersectReturned = new V2(0.0f, 0.0f);
-            retvalExpected = LineLineIntersectionType.Parallel;
+            retvalExpected = LineLineIntersectionType.NoIntersection;
             retvalReturned = MathUtil.IntersectLineLine(P1, P2, Q1, Q2, out intersectReturned);
 
             Assert.AreEqual(retvalExpected, retvalReturned);

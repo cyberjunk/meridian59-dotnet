@@ -32,7 +32,7 @@ namespace Meridian59.Common
     /// </summary>
     public enum LineLineIntersectionType
     {
-        NoIntersection, OneIntersection, FullyCoincide, PartiallyCoincide, Parallel
+        NoIntersection, OneIntersection, FullyCoincide, PartiallyCoincide
     }
 
     /// <summary>
@@ -186,12 +186,6 @@ namespace Meridian59.Common
         /// <summary>
         /// Checks two finite line segments for intersection.
         /// </summary>
-        /// <remarks>
-        /// There are 3 cases:
-        ///  (1) No intersection
-        ///  (2) One intersection
-        ///  (3) Coincide
-        /// </remarks>
         /// <param name="P1">First point of first line segment</param>
         /// <param name="P2">Second point of first line segment</param>
         /// <param name="Q1">First point of second line segment</param>
@@ -203,71 +197,110 @@ namespace Meridian59.Common
             Intersect.X = 0.0f;
             Intersect.Y = 0.0f;
 
+            /*****************************************************************/
+
+            // fully coincide, lines are equal
+            if ((P1 == Q1 && P2 == Q2) || (P1 == Q2 && P2 == Q1))
+            {
+                // use one point as intersection
+                Intersect.X = P1.X;
+                Intersect.Y = P1.Y;
+
+                return LineLineIntersectionType.FullyCoincide;
+            }
+
+            /*****************************************************************/
+
             V2 b = P2 - P1;
             V2 d = Q2 - Q1;
             Real bDotDPerp = b.X * d.Y - b.Y * d.X;
 
-            // if b dot d == 0, lines can be:
-            // (a) parallel
-            // (b) fully or partially coincide
-            // (c) are on same infinite line, but don't overlap
-            if (bDotDPerp == 0)
+            /******************************************************************
+             *                 SPECIAL CASE: b dot d == 0                     *
+             ******************************************************************/
+
+            // three subcases:
+            // (a) no intersect: parallel or on same infinite line but don't overlap
+            // (b) partially coincide with many intersections
+            // (c) touch each other at one endpoint
+            if (bDotDPerp == 0.0f)
             {
-                // full coincide
-                if (P1 == Q1 && P2 == Q2)
-                {
-                    // use first startpoint as intersect
-                    Intersect.X = P1.X;
-                    Intersect.Y = P1.Y;
+                bool isP1onQ1Q2 = P1.IsOnLineSegment(Q1, Q2);
+                bool isP2onQ1Q2 = P2.IsOnLineSegment(Q1, Q2);
+                bool isQ1onP1P2 = Q1.IsOnLineSegment(P1, P2);
+                bool isQ2onP1P2 = Q2.IsOnLineSegment(P1, P2);
 
-                    return LineLineIntersectionType.FullyCoincide;
+                // subcase (a): p1p2 and q1q2 don't share a point
+                if (!isP1onQ1Q2 && !isP2onQ1Q2 && !isQ1onP1P2 && !isQ2onP1P2)
+                {
+                    return LineLineIntersectionType.NoIntersection;
                 }
 
-                // partially coincide: at least P1 lies on line Q1Q2
-                else if (P1.IsOnLineSegment(Q1, Q2))
+                // subcase (b): P1P2 fully inside Q1Q2
+                if (isP1onQ1Q2 && isP2onQ1Q2)
                 {
+                    // use p1 for intersection
                     Intersect.X = P1.X;
                     Intersect.Y = P1.Y;
 
                     return LineLineIntersectionType.PartiallyCoincide;
                 }
 
-                // partially coincide: at least P2 lies on segment Q1Q2
-                else if (P2.IsOnLineSegment(Q1, Q2))
+                // subcase (b): Q1Q2 fully inside P1P2
+                if (isQ1onP1P2 && isQ2onP1P2)
                 {
-                    Intersect.X = P2.X;
-                    Intersect.Y = P2.Y;
-
-                    return LineLineIntersectionType.PartiallyCoincide;
-                }
-
-                // partially coincide: at least Q1 lies on segment P1P2
-                else if (Q1.IsOnLineSegment(P1, P2))
-                {
+                    // use p1 for intersection
                     Intersect.X = Q1.X;
                     Intersect.Y = Q1.Y;
 
                     return LineLineIntersectionType.PartiallyCoincide;
                 }
 
-                // partially coincide: Q2 lies on segment P1P2
-                else if (Q2.IsOnLineSegment(P1, P2))
+                // subcase (c): touch at P1
+                if (isP1onQ1Q2 && !isP2onQ1Q2)
                 {
+                    // use p1 for intersection
+                    Intersect.X = P1.X;
+                    Intersect.Y = P1.Y;
+
+                    return LineLineIntersectionType.OneIntersection;
+                }
+
+                // subcase (c): touch at P2
+                if (!isP1onQ1Q2 && isP2onQ1Q2)
+                {
+                    // use p1 for intersection
+                    Intersect.X = P2.X;
+                    Intersect.Y = P2.Y;
+
+                    return LineLineIntersectionType.OneIntersection;
+                }
+
+                // subcase (c): touch at Q1
+                if (isQ1onP1P2 && !isQ2onP1P2)
+                {
+                    // use p1 for intersection
+                    Intersect.X = Q1.X;
+                    Intersect.Y = Q1.Y;
+
+                    return LineLineIntersectionType.OneIntersection;
+                }
+
+                // subcase (c): touch at Q2
+                if (!isQ1onP1P2 && isQ2onP1P2)
+                {
+                    // use p1 for intersection
                     Intersect.X = Q2.X;
                     Intersect.Y = Q2.Y;
 
-                    return LineLineIntersectionType.PartiallyCoincide;
-                }
-
-                // parallel
-                else
-                {
-                    return LineLineIntersectionType.Parallel;
+                    return LineLineIntersectionType.OneIntersection;
                 }
             }
 
-            // -- here infinite lines cross, but finite lines may not --
-
+            /******************************************************************
+             *             DEFAULT CASE: INFINITE LINES CROSS                 *
+             ******************************************************************/
+           
             V2 c = Q1 - P1;
             Real t = (c.X * d.Y - c.Y * d.X) / bDotDPerp;
             if (t < 0.0f || t > 1.0f)
