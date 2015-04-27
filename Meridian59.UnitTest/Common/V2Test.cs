@@ -277,5 +277,144 @@ namespace Meridian59.UnitTest
 
             Assert.AreEqual(expected, returned, EPSILON);
         }
+
+        /// <summary>
+        /// Test for IsOnLineSegment()
+        /// </summary>
+        [TestMethod]
+        public void IsOnLineSegment()
+        {
+            bool expected;
+            bool returned;
+            V2 s, p1, p2;
+
+            /**************************************************/
+
+            // --- TEST ---
+            // p1=p2=s=0, no line
+
+            s = new V2(0.0f, 0.0f);
+            p1 = new V2(0.0f, 0.0f);
+            p2 = new V2(0.0f, 0.0f);
+            expected = true;
+            returned = s.IsOnLineSegment(p1, p2);
+
+            Assert.AreEqual(expected, returned);
+
+            // --- TEST ---
+            // p1=s
+
+            s = new V2(0.0f, 0.0f);
+            p1 = new V2(0.0f, 0.0f);
+            p2 = new V2(0.0f, 1.0f);
+            expected = true;
+            returned = s.IsOnLineSegment(p1, p2);
+
+            Assert.AreEqual(expected, returned);
+
+            // --- TEST ---
+            // p2=s
+
+            s = new V2(0.0f, 1.0f);
+            p1 = new V2(0.0f, 0.0f);
+            p2 = new V2(0.0f, 1.0f);
+            expected = true;
+            returned = s.IsOnLineSegment(p1, p2);
+
+            Assert.AreEqual(expected, returned);
+
+            /**************************************************/
+
+            // --- TEST ---
+            // s is somewhere on line
+            
+            s = new V2(0.5f, 0.5f);
+            p1 = new V2(0.0f, 0.0f);
+            p2 = new V2(1.0f, 1.0f);
+            expected = true;
+            returned = s.IsOnLineSegment(p1, p2);
+
+            Assert.AreEqual(expected, returned);
+
+            // --- TEST ---
+            // s is somewhere on line
+            
+            s = new V2(-0.5f, -0.5f);
+            p1 = new V2(0.0f, 0.0f);
+            p2 = new V2(-1.0f, -1.0f);
+            expected = true;
+            returned = s.IsOnLineSegment(p1, p2);
+
+            Assert.AreEqual(expected, returned);
+
+            // --- TEST ---
+            // s is somewhere on line
+            
+            s = new V2(-0.5f, 0.5f);
+            p1 = new V2(0.0f, 0.0f);
+            p2 = new V2(-1.0f, 1.0f);
+            expected = true;
+            returned = s.IsOnLineSegment(p1, p2);
+
+            Assert.AreEqual(expected, returned);
+
+            // --- TEST ---
+            // s is somewhere on line
+
+            s = new V2(0.5f, -0.5f);
+            p1 = new V2(0.0f, 0.0f);
+            p2 = new V2(1.0f, -1.0f);
+            expected = true;
+            returned = s.IsOnLineSegment(p1, p2);
+
+            Assert.AreEqual(expected, returned);
+
+            /**************************************************/
+
+            // --- TEST ---
+            // s is not on line segment, but on same infinite line
+
+            s = new V2(2.0f, 2.0f);
+            p1 = new V2(0.0f, 0.0f);
+            p2 = new V2(1.0f, 1.0f);
+            expected = false;
+            returned = s.IsOnLineSegment(p1, p2);
+
+            Assert.AreEqual(expected, returned);
+
+            // --- TEST ---
+            // s is not on line segment, but on same infinite line
+
+            s = new V2(-2.0f, -2.0f);
+            p1 = new V2(0.0f, 0.0f);
+            p2 = new V2(1.0f, 1.0f);
+            expected = false;
+            returned = s.IsOnLineSegment(p1, p2);
+
+            Assert.AreEqual(expected, returned);
+
+
+            // --- TEST ---
+            // s is not on line, but close aside of it (in bbox)
+
+            s = new V2(0.45f, 0.55f);
+            p1 = new V2(0.0f, 0.0f);
+            p2 = new V2(1.0f, 1.0f);
+            expected = false;
+            returned = s.IsOnLineSegment(p1, p2);
+
+            Assert.AreEqual(expected, returned);
+
+            // --- TEST ---
+            // s is not on line and far (outside bbox)
+
+            s = new V2(0.0f, 1000.0f);
+            p1 = new V2(0.0f, 0.0f);
+            p2 = new V2(1.0f, 1.0f);
+            expected = false;
+            returned = s.IsOnLineSegment(p1, p2);
+
+            Assert.AreEqual(expected, returned);
+        }
     }
 }

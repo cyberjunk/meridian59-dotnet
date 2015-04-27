@@ -748,8 +748,13 @@ namespace Meridian59.Files.ROO
             {
                 // verify also the finite line segments cross
                 V2 intersect;
-                
-                if (MathUtil.IntersectLineLine(Start2D, End, P1, P2, out intersect))
+
+                LineLineIntersectionType intersecttype = 
+                    MathUtil.IntersectLineLine(Start2D, End, P1, P2, out intersect);
+
+                if (intersecttype == LineLineIntersectionType.OneIntersection ||
+                    intersecttype == LineLineIntersectionType.FullyCoincide ||
+                    intersecttype == LineLineIntersectionType.PartiallyCoincide)
                 {
                     // verify the side we've crossed is flaggged as "nonpassable"
                     // if so, we actually have a collision
@@ -818,8 +823,12 @@ namespace Meridian59.Files.ROO
             {
                 // verify also the finite line segments cross
                 V2 intersect;
-                
-                if (MathUtil.IntersectLineLine(Start2D, End2D, P1, P2, out intersect))
+                LineLineIntersectionType intersecttype = 
+                    MathUtil.IntersectLineLine(Start2D, End2D, P1, P2, out intersect);
+
+                if (intersecttype == LineLineIntersectionType.OneIntersection ||
+                    intersecttype == LineLineIntersectionType.FullyCoincide ||
+                    intersecttype == LineLineIntersectionType.PartiallyCoincide)
                 {
                     // the vector/ray between start and end
                     V3 diff = End - Start;

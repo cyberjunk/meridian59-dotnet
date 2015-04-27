@@ -377,6 +377,31 @@ namespace Meridian59.Common
         }
 
         /// <summary>
+        /// Tests whether this V2 instance lies on a line segment
+        /// given by points P1 and P2.
+        /// </summary>
+        /// <param name="P1"></param>
+        /// <param name="P2"></param>
+        /// <returns></returns>
+        public bool IsOnLineSegment(V2 P1, V2 P2)
+        {
+            // the point is not even on the infinite line given by P1P2
+            if (GetSide(P1, P2) != 0)
+                return false;
+
+            // if on infinite line, must also be in boundingbox
+            V2 min, max;
+            min.X = Math.Min(P1.X, P2.X);
+            min.Y = Math.Min(P1.Y, P2.Y);
+            max.X = Math.Max(P1.X, P2.X);
+            max.Y = Math.Max(P1.Y, P2.Y);
+
+            return
+                min.X <= X && X <= max.X &&
+                min.Y <= Y && Y <= max.Y;
+        }
+
+        /// <summary>
         /// Returns a projection of this instance on another vector.
         /// </summary>
         /// <param name="Vector"></param>

@@ -28,6 +28,14 @@ using Real = System.Single;
 namespace Meridian59.Common
 {
     /// <summary>
+    /// Different cases two finite line segments can 'cross' each other.
+    /// </summary>
+    public enum LineLineIntersectionType
+    {
+        NoIntersection, OneIntersection, FullyCoincide, PartiallyCoincide, Parallel
+    }
+
+    /// <summary>
     /// Contains some static math util functions
     /// </summary>
     public static class MathUtil
@@ -178,13 +186,19 @@ namespace Meridian59.Common
         /// <summary>
         /// Checks two finite line segments for intersection.
         /// </summary>
+        /// <remarks>
+        /// There are 3 cases:
+        ///  (1) No intersection
+        ///  (2) One intersection
+        ///  (3) Coincide
+        /// </remarks>
         /// <param name="P1">First point of first line segment</param>
         /// <param name="P2">Second point of first line segment</param>
         /// <param name="Q1">First point of second line segment</param>
         /// <param name="Q2">Second point of second line segment</param>
         /// <param name="Intersect">Intersection point</param>
-        /// <returns>True if interesction, false if none.</returns>
-        public static bool IntersectLineLine(V2 P1, V2 P2, V2 Q1, V2 Q2, out V2 Intersect)
+        /// <returns>LineLineIntersectionType</returns>
+        public static LineLineIntersectionType IntersectLineLine(V2 P1, V2 P2, V2 Q1, V2 Q2, out V2 Intersect)
         {
             Intersect.X = 0.0f;
             Intersect.Y = 0.0f;
@@ -193,24 +207,82 @@ namespace Meridian59.Common
             V2 d = Q2 - Q1;
             Real bDotDPerp = b.X * d.Y - b.Y * d.X;
 
-            // if b dot d == 0, it means the lines are parallel/collapse
-            // so have infinite intersection points or none
+            // if b dot d == 0, lines can be:
+            // (a) parallel
+            // (b) fully or partially coincide
+            // (c) are on same infinite line, but don't overlap
             if (bDotDPerp == 0)
-                return false;
+            {
+                // full coincide
+                if (P1 == Q1 && P2 == Q2)
+                {
+                    // use first startpoint as intersect
+                    Intersect.X = P1.X;
+                    Intersect.Y = P1.Y;
+
+                    return LineLineIntersectionType.FullyCoincide;
+                }
+
+                // partially coincide: at least P1 lies on line Q1Q2
+                else if (P1.IsOnLineSegment(Q1, Q2))
+                {
+                    Intersect.X = P1.X;
+                    Intersect.Y = P1.Y;
+
+                    return LineLineIntersectionType.PartiallyCoincide;
+                }
+
+                // partially coincide: at least P2 lies on segment Q1Q2
+                else if (P2.IsOnLineSegment(Q1, Q2))
+                {
+                    Intersect.X = P2.X;
+                    Intersect.Y = P2.Y;
+
+                    return LineLineIntersectionType.PartiallyCoincide;
+                }
+
+                // partially coincide: at least Q1 lies on segment P1P2
+                else if (Q1.IsOnLineSegment(P1, P2))
+                {
+                    Intersect.X = Q1.X;
+                    Intersect.Y = Q1.Y;
+
+                    return LineLineIntersectionType.PartiallyCoincide;
+                }
+
+                // partially coincide: Q2 lies on segment P1P2
+                else if (Q2.IsOnLineSegment(P1, P2))
+                {
+                    Intersect.X = Q2.X;
+                    Intersect.Y = Q2.Y;
+
+                    return LineLineIntersectionType.PartiallyCoincide;
+                }
+
+                // parallel
+                else
+                {
+                    return LineLineIntersectionType.Parallel;
+                }
+            }
+
+            // -- here infinite lines cross, but finite lines may not --
 
             V2 c = Q1 - P1;
             Real t = (c.X * d.Y - c.Y * d.X) / bDotDPerp;
             if (t < 0.0f || t > 1.0f)
-                return false;
+                return LineLineIntersectionType.NoIntersection;
 
             Real u = (c.X * b.Y - c.Y * b.X) / bDotDPerp;
             if (u < 0.0f || u > 1.0f)
-                return false;
+                return LineLineIntersectionType.NoIntersection;
+
+            // -- finite line segments cross! --
 
             b.Scale(t);
             Intersect = P1 + b;
 
-            return true;
+            return LineLineIntersectionType.OneIntersection;
         }
 
         /// <summary>

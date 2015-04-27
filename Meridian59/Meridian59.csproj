@@ -108,6 +108,7 @@
     <Compile Include="Common\Logger.cs" />
     <Compile Include="Common\MeridianMD5.cs" />
     <Compile Include="Common\Outfitter.cs" />
+    <Compile Include="Common\Polygon.cs" />
     <Compile Include="Common\Util.cs" />
     <Compile Include="Data\Lists\MailList.cs" />
     <Compile Include="Data\Lists\RoomObjectListFiltered.cs" />

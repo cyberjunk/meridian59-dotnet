@@ -89,6 +89,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Common\MathUtilTest.cs" />
     <Compile Include="Common\V2Test.cs" />
     <Compile Include="Common\UtilTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
