@@ -22,6 +22,7 @@ using System.Windows.Forms;
 using Meridian59.Files.ROO;
 using Meridian59.Common;
 using System.Drawing.Drawing2D;
+using System.Collections.Generic;
 
 namespace Meridian59.RooViewer.UI
 {
@@ -46,10 +47,12 @@ namespace Meridian59.RooViewer.UI
         protected RooSideDef selectedSide;
 
         protected Pen penWhite1 = new Pen(Color.White, 1f);
+        protected Pen penRed1 = new Pen(Color.Red, 1f);
         protected Pen penRed2 = new Pen(Color.Red, 2f);
         protected Pen penBlue1 = new Pen(Color.Blue, 1f);
         protected Pen penBlue2 = new Pen(Color.Blue, 2f);
         protected Pen penLightBlue1 = new Pen(Color.LightBlue, 1f);
+        protected Pen penOrange1 = new Pen(Color.Orange, 1f);
         protected Pen penOrange2 = new Pen(Color.Orange, 2f);
         
         protected SolidBrush brushSolidGreen = new SolidBrush(Color.Green);
@@ -287,6 +290,11 @@ namespace Meridian59.RooViewer.UI
             Invalidate();
         }
 
+        protected void OnVertexMismatchesCheckedChanged(object sender, EventArgs e)
+        {
+            Invalidate();
+        }
+
         public new void Invalidate()
         {
             float deltax = 0.5f * zoom * (float)Width;
@@ -401,40 +409,29 @@ namespace Meridian59.RooViewer.UI
                     }                                          
                 }
             }
-            
-            /*foreach(RooSector sector in Room.Sectors)
-            {
-                foreach(RooSubSector subsect in Room.BSPTreeLeaves)
-                {
-                    if (subsect.Sector != sector)
-                        continue;
 
+            //
+            if (chkVertexMismatches.Checked)
+            { 
+                List<Tuple<RooSubSector, RooVertex, int>> vertexmismatch;
+                foreach(RooSubSector subsect in Room.BSPTreeLeaves)
+                {                    
                     foreach(RooVertex vertex in subsect.Vertices)
                     {
-                        foreach(RooSubSector subsect2 in Room.BSPTreeLeaves)
+                        vertexmismatch = Program.FindVertexMismatches(vertex);
+
+                        if (vertexmismatch.Count > 0)
                         {
-                            if (subsect2.Sector != sector ||
-                                subsect == subsect2)
-                                continue;
+                            float transx1 = ((float)vertex.X - (float)boxMin.X) * ZoomInv;
+                            float transy1 = ((float)vertex.Y - (float)boxMin.Y) * ZoomInv;
 
-                            foreach(RooVertex vertex2 in subsect2.Vertices)
-                            {
-                                int dx = Math.Abs(vertex.X - vertex2.X);
-                                int dy = Math.Abs(vertex.Y - vertex2.Y);
+                            Pen pen = (vertexmismatch[0].Item3 == 2) ? penRed1 : penOrange1;
 
-                                if (dx > 0 && dx < 2 && dy > 0 && dy < 2)
-                                {
-                                    float transx1 = ((float)vertex.X - (float)boxMin.X) * ZoomInv;
-                                    float transy1 = ((float)vertex.Y - (float)boxMin.Y) * ZoomInv;
-
-                                    G.DrawRectangle(penRed2, transx1 - 5, transy1 - 5, 10, 10);
-                                    G.DrawString(sector.Num.ToString(), fontDefault, brushGreen2, transx1, transy1);  
-                                }
-                            }
+                            G.DrawRectangle(pen, transx1 - 5, transy1 - 5, 10, 10);                       
                         }
                     }
                 }
-            }*/
-        }
+            }
+        }       
     }
 }

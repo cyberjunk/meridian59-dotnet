@@ -23,6 +23,7 @@ using Meridian59.Files.BGF;
 using Meridian59.Files;
 using Meridian59.Files.ROO;
 using Meridian59.Drawing2D;
+using Meridian59.Common;
 
 namespace Meridian59.RooViewer
 {
@@ -93,5 +94,77 @@ namespace Meridian59.RooViewer
                 bmp.Dispose();
             }
         }
+
+        public static List<Tuple<RooSubSector, RooVertex, int>> FindVertexMismatches(RooVertex Vertex)
+        {
+            const int CLOSE = 2;
+
+            List<Tuple<RooSubSector, RooVertex, int>> list = new List<Tuple<RooSubSector, RooVertex, int>>();
+
+            foreach (RooSubSector s in Room.BSPTreeLeaves)
+            {
+                foreach (RooVertex v in s.Vertices)
+                {
+                    int absdx = Math.Abs(v.X - Vertex.X);
+                    int absdy = Math.Abs(v.Y - Vertex.Y);
+
+                    // must be very close but not same pos
+                    if (absdx <= CLOSE && absdy <= CLOSE && (absdx > 0 || absdy > 0))
+                        list.Add(new Tuple<RooSubSector, RooVertex, int>(s, v, Math.Max(absdx, absdy)));
+                }
+            }
+
+            return list;
+        }
+        /*public static V2 FindClosestLineEndpoint(RooVertex Vertex)
+        {            
+            V2 p1, p2, p1p2;
+            float len;
+            float min = 9999999999f;
+            V2 val = new V2();
+            RooWall closest;
+
+            //val.X = 0;
+            //val.Y = 0;
+
+            //if (Room.Walls.Count == 0)
+            //    return val;
+
+            p1.X = Vertex.X;
+            p1.Y = Vertex.Y;
+
+            foreach(RooWall wall in Room.Walls)
+            {
+                // first point
+                p2.X = wall.X1;
+                p2.Y = wall.Y1;
+
+                p1p2 = p2 - p1;
+                len = p1p2.LengthSquared;
+
+                if (len < min)
+                {
+                    min = len;
+                    closest = wall;
+                    val = p2;
+                }
+
+                // second
+                p2.X = wall.X2;
+                p2.Y = wall.Y2;
+
+                p1p2 = p2 - p1;
+                len = p1p2.LengthSquared;
+
+                if (len < min)
+                {
+                    min = len;
+                    closest = wall;
+                    val = p2;
+                }
+            }
+
+            return val;
+        }*/     
     }
 }
