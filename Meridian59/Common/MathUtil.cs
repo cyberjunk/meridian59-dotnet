@@ -29,6 +29,12 @@ namespace Meridian59.Common
 {
     /// <summary>
     /// Different cases two finite line segments can 'cross' each other.
+    /// <remarks>
+    /// NoIntersection: No intersection or touch point
+    /// OneIntersection: Exactly one intersection or touch point
+    /// FullyCoincide: Lines are exactly equal
+    /// PartiallyCoincide: Lines partially overlap
+    /// </remarks>
     /// </summary>
     public enum LineLineIntersectionType
     {
