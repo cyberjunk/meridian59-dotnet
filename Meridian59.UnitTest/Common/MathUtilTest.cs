@@ -120,6 +120,41 @@ namespace Meridian59.UnitTest.Common
 
             // --- TEST ---
 
+            // lines are perpendicular and P1 touches Q1
+            P1 = new V2(1.0f, 1.0f);
+            P2 = new V2(1.0f, 2.0f);
+            Q1 = new V2(1.0f, 1.0f);
+            Q2 = new V2(0.0f, 1.0f);
+
+            intersectExpected = new V2(1.0f, 1.0f);
+            intersectReturned = new V2(0.0f, 0.0f);
+            retvalExpected = LineLineIntersectionType.OneIntersection;
+            retvalReturned = MathUtil.IntersectLineLine(P1, P2, Q1, Q2, out intersectReturned);
+
+            Assert.AreEqual(retvalExpected, retvalReturned);
+            Assert.AreEqual(intersectExpected.X, intersectReturned.X, EPSILON);
+            Assert.AreEqual(intersectExpected.Y, intersectReturned.Y, EPSILON);
+
+            // --- TEST ---
+
+            // lines have a weird angle and P1 touches Q1
+            P1 = new V2(1.0f, 1.0f);
+            P2 = new V2(1.0f, 2.0f);
+            Q1 = new V2(1.0f, 1.0f);
+            Q2 = new V2(0.51f, 4.2f);
+
+            intersectExpected = new V2(1.0f, 1.0f);
+            intersectReturned = new V2(0.0f, 0.0f);
+            retvalExpected = LineLineIntersectionType.OneIntersection;
+            retvalReturned = MathUtil.IntersectLineLine(P1, P2, Q1, Q2, out intersectReturned);
+
+            Assert.AreEqual(retvalExpected, retvalReturned);
+            Assert.AreEqual(intersectExpected.X, intersectReturned.X, EPSILON);
+            Assert.AreEqual(intersectExpected.Y, intersectReturned.Y, EPSILON);
+
+
+            // --- TEST ---
+
             // lines are parallel
             P1 = new V2(0.0f, 0.0f);
             P2 = new V2(0.0f, 1.0f);
