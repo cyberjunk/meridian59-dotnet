@@ -1257,45 +1257,46 @@ namespace Meridian59.Files.ROO
         }
         
         /// <summary>
-        /// Returns the boundingbox of this room.
-        /// Z is height. Scale is ROO.
+        /// Returns two points describing the boundingbox of the room.
+        /// This box is created using the maximum and minimums in
+        /// sector heights and wall endpoints.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>BoundingBox in 1:1024 (legacy oldclient FINENESS) scale</returns>
         public Tuple<V3, V3> GetBoundingBox()
         {
-            Real minheight = 0.0f;
-            Real maxheight = 1.0f;
+            V3 min;
+            V3 max;
 
-            if (Sectors.Count > 0)
+            // initial values
+            min.X = min.Y = min.Z =  99999999f;
+            max.X = max.Y = max.Z = -99999999f;
+
+            // determine min/max length and width (based on walls)
+            foreach(RooWall wall in Walls)
             {
-                minheight = Sectors[0].FloorHeight;
-                maxheight = Sectors[0].CeilingHeight;
+                // p1
+                if ((Real)wall.X1 < min.X) min.X = (Real)wall.X1;
+                if ((Real)wall.X1 > max.X) max.X = (Real)wall.X1;
+                if ((Real)wall.Y1 < min.Y) min.Y = (Real)wall.Y1;
+                if ((Real)wall.Y1 > max.Y) max.Y = (Real)wall.Y1;
 
-                foreach (RooSector sector in Sectors)
-                {
-                    if (sector.FloorHeight < minheight)
-                        minheight = sector.FloorHeight;
-
-                    if (sector.CeilingHeight > maxheight)
-                        maxheight = sector.CeilingHeight;
-                }
+                // p2
+                if ((Real)wall.X2 < min.X) min.X = (Real)wall.X2;
+                if ((Real)wall.X2 > max.X) max.X = (Real)wall.X2;
+                if ((Real)wall.Y2 < min.Y) min.Y = (Real)wall.Y2;
+                if ((Real)wall.Y2 > max.Y) max.Y = (Real)wall.Y2;
             }
 
-            // convert height to scale of width/length
-            minheight = minheight * 16.0f;
-            maxheight = maxheight * 16.0f;
-
-            V3 min = new V3(0.0f, 1.0f, minheight);
-            V3 max = new V3(0.0f, 1.0f, maxheight);
-
-            if (BSPTree.Count > 0)
+            // determine min/max height (based on sectors)
+            foreach (RooSector sector in Sectors)
             {
-                min.X = BSPTree[0].X1;
-                min.Y = BSPTree[0].Y1;
-
-                max.X = BSPTree[0].X2;
-                max.Y = BSPTree[0].Y2;
+                if (sector.FloorHeight < min.Z) min.Z = sector.FloorHeight;
+                if (sector.CeilingHeight > max.Z) max.Z = sector.CeilingHeight;
             }
+
+            // scale height from kod fineness (1:64) to oldclient fineness (1:1024)
+            min.Z *= 16f;
+            max.Z *= 16f;
 
             return new Tuple<V3, V3>(min, max);
         }
