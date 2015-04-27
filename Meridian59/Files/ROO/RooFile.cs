@@ -1264,36 +1264,57 @@ namespace Meridian59.Files.ROO
         /// <returns>BoundingBox in 1:1024 (legacy oldclient FINENESS) scale</returns>
         public Tuple<V3, V3> GetBoundingBox()
         {
+            const Real MININIT =  99999999f;
+            const Real MAXINIT = -99999999f;
+
             V3 min;
             V3 max;
 
-            // initial values
-            min.X = min.Y = min.Z =  99999999f;
-            max.X = max.Y = max.Z = -99999999f;
+            // zero boundingbox by default
+            min.X = min.Y = min.Z = 0f;
+            max.X = max.Y = max.Z = 0f;
 
-            // determine min/max length and width (based on walls)
-            foreach(RooWall wall in Walls)
+            // at least one wall -> nonzero bbox on x/y
+            if (Walls.Count > 0)
             {
-                // p1
-                if ((Real)wall.X1 < min.X) min.X = (Real)wall.X1;
-                if ((Real)wall.X1 > max.X) max.X = (Real)wall.X1;
-                if ((Real)wall.Y1 < min.Y) min.Y = (Real)wall.Y1;
-                if ((Real)wall.Y1 > max.Y) max.Y = (Real)wall.Y1;
+                // initial values
+                min.X = min.Y = MININIT;
+                max.X = max.Y = MAXINIT;
 
-                // p2
-                if ((Real)wall.X2 < min.X) min.X = (Real)wall.X2;
-                if ((Real)wall.X2 > max.X) max.X = (Real)wall.X2;
-                if ((Real)wall.Y2 < min.Y) min.Y = (Real)wall.Y2;
-                if ((Real)wall.Y2 > max.Y) max.Y = (Real)wall.Y2;
+                // determine min/max length and width (based on walls)
+                foreach (RooWall wall in Walls)
+                {
+                    // p1
+                    if ((Real)wall.X1 < min.X) min.X = (Real)wall.X1;
+                    if ((Real)wall.X1 > max.X) max.X = (Real)wall.X1;
+                    if ((Real)wall.Y1 < min.Y) min.Y = (Real)wall.Y1;
+                    if ((Real)wall.Y1 > max.Y) max.Y = (Real)wall.Y1;
+
+                    // p2
+                    if ((Real)wall.X2 < min.X) min.X = (Real)wall.X2;
+                    if ((Real)wall.X2 > max.X) max.X = (Real)wall.X2;
+                    if ((Real)wall.Y2 < min.Y) min.Y = (Real)wall.Y2;
+                    if ((Real)wall.Y2 > max.Y) max.Y = (Real)wall.Y2;
+                }
             }
 
-            // determine min/max height (based on sectors)
-            foreach (RooSector sector in Sectors)
+            // at least one sector -> nonezero bbox on z
+            if (Sectors.Count > 0)
             {
-                if (sector.FloorHeight < min.Z) min.Z = sector.FloorHeight;
-                if (sector.CeilingHeight > max.Z) max.Z = sector.CeilingHeight;
-            }
+                // initial values
+                min.Z = MININIT;
+                max.Z = MAXINIT;
 
+                // determine min/max height (based on sectors)
+                foreach (RooSector sector in Sectors)
+                {
+                    if (sector.FloorHeight < min.Z) min.Z = sector.FloorHeight;
+                    if (sector.FloorHeight > max.Z) max.Z = sector.FloorHeight;
+                    if (sector.CeilingHeight < min.Z) min.Z = sector.CeilingHeight;
+                    if (sector.CeilingHeight > max.Z) max.Z = sector.CeilingHeight;
+                }
+            }
+            
             // scale height from kod fineness (1:64) to oldclient fineness (1:1024)
             min.Z *= 16f;
             max.Z *= 16f;
