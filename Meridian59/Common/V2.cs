@@ -151,6 +151,28 @@ namespace Meridian59.Common
         {
             return new V2(v1.X * scalar, v1.Y * scalar);
         }
+
+        /// <summary>
+        /// Implemented operator
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
+        public static bool operator ==(V2 v1, V2 v2)
+        {
+            return v1.Equals(v2);
+        }
+
+        /// <summary>
+        /// Implemented operator
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
+        public static bool operator !=(V2 v1, V2 v2)
+        {
+            return !v1.Equals(v2);
+        }
         #endregion
 
         /// <summary>
