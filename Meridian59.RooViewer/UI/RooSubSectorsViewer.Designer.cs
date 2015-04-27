@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGrid = new System.Windows.Forms.DataGridView();
             this.colSectorNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colBoxMinX = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -60,7 +60,6 @@
             this.dataGrid.Location = new System.Drawing.Point(0, 0);
             this.dataGrid.MultiSelect = false;
             this.dataGrid.Name = "dataGrid";
-            this.dataGrid.ReadOnly = true;
             this.dataGrid.RowHeadersVisible = false;
             this.dataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGrid.Size = new System.Drawing.Size(650, 256);
@@ -70,11 +69,10 @@
             // 
             this.colSectorNum.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colSectorNum.DataPropertyName = "SectorDefReference";
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Turquoise;
-            this.colSectorNum.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Turquoise;
+            this.colSectorNum.DefaultCellStyle = dataGridViewCellStyle1;
             this.colSectorNum.HeaderText = "SECT";
             this.colSectorNum.Name = "colSectorNum";
-            this.colSectorNum.ReadOnly = true;
             this.colSectorNum.Width = 50;
             // 
             // colBoxMinX
@@ -109,8 +107,8 @@
             // 
             this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.dataGridViewTextBoxColumn1.DataPropertyName = "SectorDefReference";
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.Turquoise;
-            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Turquoise;
+            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridViewTextBoxColumn1.HeaderText = "SECT";
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             this.dataGridViewTextBoxColumn1.Width = 50;
