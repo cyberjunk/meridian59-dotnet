@@ -14,6 +14,7 @@
  If not, see http://www.gnu.org/licenses/.
 */
 
+using Meridian59.Common;
 using Meridian59.Common.Constants;
 using Meridian59.Common.Interfaces;
 using System;
@@ -134,28 +135,45 @@ namespace Meridian59.Files.ROO
         }
         #endregion
 
+        protected BoundingBox2D boundingBox;
+
+        /// <summary>
+        /// Abstract. Type to set by deriving subclasses.
+        /// </summary>
         public abstract NodeType Type { get; }
-        
+
+        /// <summary>
+        /// A 2D boundingbox of this BSP node (splitter or leaf).
+        /// </summary>
+        public BoundingBox2D BoundingBox { get { return boundingBox; } set { boundingBox = value; } }
+
         /// <summary>
         /// BoundingBox minimum X of this node (or leaf).
         /// </summary>
-        public int X1 { get; set; }
+        public int X1 { get { return (int)boundingBox.Min.X; } set { boundingBox.Min.X = value; } }
 
         /// <summary>
         /// BoundingBox minimum Y of this node (or leaf).
         /// </summary>
-        public int Y1 { get; set; }
+        public int Y1 { get { return (int)boundingBox.Min.Y; } set { boundingBox.Min.Y = value; } }
 
         /// <summary>
         /// BoundingBox maximum X of this node (or leaf).
         /// </summary>
-        public int X2 { get; set; }
+        public int X2 { get { return (int)boundingBox.Max.X; } set { boundingBox.Max.X = value; } }
 
         /// <summary>
         /// BoundingBox maximum Y of this node (or leaf).
         /// </summary>
-        public int Y2 { get; set; }
+        public int Y2 { get { return (int)boundingBox.Max.Y; } set { boundingBox.Max.Y = value; } }
 
+        /// <summary>
+        /// Constructor by values
+        /// </summary>
+        /// <param name="X1"></param>
+        /// <param name="X2"></param>
+        /// <param name="Y1"></param>
+        /// <param name="Y2"></param>
         public RooBSPItem(int X1, int X2, int Y1, int Y2)
         {
             this.X1 = X1;
@@ -164,18 +182,37 @@ namespace Meridian59.Files.ROO
             this.Y2 = Y2;
         }
 
+        /// <summary>
+        /// Constructor by managed parser
+        /// </summary>
+        /// <param name="Buffer"></param>
+        /// <param name="StartIndex"></param>
         public RooBSPItem(byte[] Buffer, int StartIndex = 0)
         {
             ReadFrom(Buffer, StartIndex);
         }
 
+        /// <summary>
+        /// Constructor by native parser
+        /// </summary>
+        /// <param name="Buffer"></param>
         public unsafe RooBSPItem(ref byte* Buffer)
         {
             ReadFrom(ref Buffer);
         }
 
+        /// <summary>
+        /// Abstract. Must be implemented.
+        /// </summary>
+        /// <param name="RooFile"></param>
         public abstract void ResolveIndices(RooFile RooFile);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Buffer"></param>
+        /// <param name="StartIndex"></param>
+        /// <returns></returns>
         public static RooBSPItem ExtractBSPItem(byte[] Buffer, int StartIndex)
         {          
             switch ((NodeType)Buffer[StartIndex])
@@ -191,6 +228,11 @@ namespace Meridian59.Files.ROO
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Buffer"></param>
+        /// <returns></returns>
         public static unsafe RooBSPItem ExtractBSPItem(ref byte* Buffer)
         {
             switch ((NodeType)Buffer[0])
