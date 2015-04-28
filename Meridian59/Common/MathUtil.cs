@@ -42,6 +42,19 @@ namespace Meridian59.Common
     }
 
     /// <summary>
+    /// Different cases a finite line segment can intersect with an infinite line.
+    /// </summary>
+    /// <remarks>
+    /// NoIntersection: No intersection or touch point
+    /// OneIntersection: Exactly one intersection or touch point
+    /// FullyCoincide: Finite line segment is included in infinite line
+    /// </remarks>
+    public enum LineInfiniteLineIntersectionType
+    {
+        NoIntersection, OneIntersection, FullyCoincide
+    }
+
+    /// <summary>
     /// Contains some static math util functions
     /// </summary>
     public static class MathUtil
@@ -201,6 +214,73 @@ namespace Meridian59.Common
             A = P1.Y - P2.Y;
             B = P2.X - P1.X;
             C = (P1.X - P2.X) * P1.Y + (P2.Y - P1.Y) * P1.X;
+        }
+
+        public static LineInfiniteLineIntersectionType IntersectLineInfiniteLine(V2 P1, V2 P2, V2 Q1, V2 Q2, out V2 Intersect)
+        {
+            Intersect.X = 0.0f;
+            Intersect.Y = 0.0f;
+
+            /*****************************************************************/
+
+            int sideP1 = P1.GetSide(Q1, Q2);
+            int sideP2 = P2.GetSide(Q1, Q2);
+
+            // case (a): no intersection
+            // both finite line endpoints are on the same side of the infinite line
+            if (sideP1 == sideP2 && sideP1 != 0)
+            {
+                return LineInfiniteLineIntersectionType.NoIntersection;
+            }
+
+            // case (b): real intersection (not only touch)
+            // both finite line endpoints are on different sides
+            if (sideP1 != sideP2 && sideP1 != 0 && sideP2 != 0)
+            {
+                Real denom = (P1.X - P2.X) * (Q1.Y - Q2.Y) - (P1.Y - P2.Y) * (Q1.X - Q2.X);                
+                Real num;
+                
+                num = (P1.X * P2.Y - P1.Y * P2.X) * (Q1.X - Q2.X) - (P1.X - P2.X) * (Q1.X * Q2.Y - Q1.Y * Q2.X);                
+                Intersect.X = num / denom;
+
+                num = (P1.X * P2.Y - P1.Y * P2.X) * (Q1.Y - Q2.Y) - (P1.Y - P2.Y) * (Q1.X * Q2.Y - Q1.Y * Q2.X);
+                Intersect.Y = num / denom;
+
+                return LineInfiniteLineIntersectionType.OneIntersection;
+            }
+
+            // case (c): fully coincide
+            // both finite line endpoints are on the infinite line
+            if (sideP1 == 0 && sideP2 == 0)
+            {
+                Intersect.X = P1.X;
+                Intersect.Y = P1.Y;
+
+                return LineInfiniteLineIntersectionType.FullyCoincide;
+            }
+           
+            // case (d):
+            // finite line endpoint P1 touches infinite line
+            if (sideP1 != sideP2 && sideP1 == 0)
+            {
+                Intersect.X = P1.X;
+                Intersect.Y = P1.Y;
+
+                return LineInfiniteLineIntersectionType.OneIntersection;
+            }
+
+            // case (d):
+            // finite line endpoint P2 touches infinite line
+            if (sideP1 != sideP2 && sideP2 == 0)
+            {
+                Intersect.X = P2.X;
+                Intersect.Y = P2.Y;
+
+                return LineInfiniteLineIntersectionType.OneIntersection;
+            }
+
+            // huh? something wrong?
+            throw new Exception("Unknown intersection");
         }
 
         /// <summary>

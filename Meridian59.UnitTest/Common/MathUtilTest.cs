@@ -257,6 +257,105 @@ namespace Meridian59.UnitTest.Common
         }
 
         /// <summary>
+        /// Test for IntersectLineInfiniteLine()
+        /// </summary>
+        [TestMethod]
+        public void IntersectLineInfiniteLine()
+        {
+            V2 P1, P2, Q1, Q2;
+
+            V2 intersectExpected;
+            V2 intersectReturned;
+            LineInfiniteLineIntersectionType retvalExpected;
+            LineInfiniteLineIntersectionType retvalReturned;
+
+            // --- TEST ---
+
+            // finite line P1P2 intersects infinite line Q1Q2 perpendicular
+            P1 = new V2(-1.0f, 0.0f);
+            P2 = new V2(1.0f, 0.0f);
+            Q1 = new V2(0.0f, 5.0f);
+            Q2 = new V2(0.0f, 6.0f);
+
+            intersectExpected = new V2(0.0f, 0.0f);
+            intersectReturned = new V2(0.0f, 0.0f);
+            retvalExpected = LineInfiniteLineIntersectionType.OneIntersection;
+            retvalReturned = MathUtil.IntersectLineInfiniteLine(P1, P2, Q1, Q2, out intersectReturned);
+
+            Assert.AreEqual(retvalExpected, retvalReturned);
+            Assert.AreEqual(intersectExpected.X, intersectReturned.X, EPSILON);
+            Assert.AreEqual(intersectExpected.Y, intersectReturned.Y, EPSILON);
+
+            // --- TEST ---
+
+            // finite line P1P2 does not intersect, both endpoints far away
+            P1 = new V2(-1000.0f, -1000.0f);
+            P2 = new V2(-1002.0f, -1002.0f);
+            Q1 = new V2(1.0f, 5.0f);
+            Q2 = new V2(1.0f, 6.0f);
+
+            intersectExpected = new V2(0.0f, 0.0f);
+            intersectReturned = new V2(0.0f, 0.0f);
+            retvalExpected = LineInfiniteLineIntersectionType.NoIntersection;
+            retvalReturned = MathUtil.IntersectLineInfiniteLine(P1, P2, Q1, Q2, out intersectReturned);
+
+            Assert.AreEqual(retvalExpected, retvalReturned);
+            //Assert.AreEqual(intersectExpected.X, intersectReturned.X, EPSILON);
+            //Assert.AreEqual(intersectExpected.Y, intersectReturned.Y, EPSILON);
+
+            // --- TEST ---
+
+            // finite P1P2 touches infinite Q1Q2 at P1
+            P1 = new V2(1.0f, 5.0f);
+            P2 = new V2(2.0f, 8.0f);
+            Q1 = new V2(1.0f, 5.0f);
+            Q2 = new V2(1.0f, 6.0f);
+
+            intersectExpected = new V2(1.0f, 5.0f);
+            intersectReturned = new V2(0.0f, 0.0f);
+            retvalExpected = LineInfiniteLineIntersectionType.OneIntersection;
+            retvalReturned = MathUtil.IntersectLineInfiniteLine(P1, P2, Q1, Q2, out intersectReturned);
+
+            Assert.AreEqual(retvalExpected, retvalReturned);
+            Assert.AreEqual(intersectExpected.X, intersectReturned.X, EPSILON);
+            Assert.AreEqual(intersectExpected.Y, intersectReturned.Y, EPSILON);
+
+            // --- TEST ---
+
+            // finite P1P2 touches infinite Q1Q2 at P2
+            P1 = new V2(1.0f, 5.0f);
+            P2 = new V2(2.0f, 8.0f);
+            Q1 = new V2(2.0f, 55.0f);
+            Q2 = new V2(2.0f, 56.0f);
+
+            intersectExpected = new V2(2.0f, 8.0f);
+            intersectReturned = new V2(0.0f, 0.0f);
+            retvalExpected = LineInfiniteLineIntersectionType.OneIntersection;
+            retvalReturned = MathUtil.IntersectLineInfiniteLine(P1, P2, Q1, Q2, out intersectReturned);
+
+            Assert.AreEqual(retvalExpected, retvalReturned);
+            Assert.AreEqual(intersectExpected.X, intersectReturned.X, EPSILON);
+            Assert.AreEqual(intersectExpected.Y, intersectReturned.Y, EPSILON);
+
+            // --- TEST ---
+
+            // finite P1P2 is included in infinite Q1Q2
+            P1 = new V2(3.0f, 5.0f);
+            P2 = new V2(3.0f, 8.0f);
+            Q1 = new V2(3.0f, 21.0f);
+            Q2 = new V2(3.0f, 25.0f);
+
+            intersectExpected = new V2(3.0f, 5.0f);
+            intersectReturned = new V2(0.0f, 0.0f);
+            retvalExpected = LineInfiniteLineIntersectionType.FullyCoincide;
+            retvalReturned = MathUtil.IntersectLineInfiniteLine(P1, P2, Q1, Q2, out intersectReturned);
+
+            Assert.AreEqual(retvalExpected, retvalReturned);
+            //Assert.AreEqual(intersectExpected.X, intersectReturned.X, EPSILON);
+            //Assert.AreEqual(intersectExpected.Y, intersectReturned.Y, EPSILON);
+        }
+        
+        /// <summary>
         /// Test for GetLineEquation2DCoefficients()
         /// </summary>
         [TestMethod]
