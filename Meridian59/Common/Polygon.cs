@@ -99,6 +99,23 @@ namespace Meridian59.Common
         }
 
         /// <summary>
+        /// Returns a boundingbox of this polygon.
+        /// </summary>
+        /// <returns></returns>
+        public BoundingBox2D GetBoundingBox()
+        {
+            if (Count < 2)
+                return BoundingBox2D.NULL;
+
+            BoundingBox2D box = new BoundingBox2D(this[0], this[1]);
+
+            for (int i = 2; i < Count; i++)
+                box.ExtendByPoint(this[i]);
+
+            return box;
+        }
+
+        /// <summary>
         /// Checks if this polygon is convex.
         /// </summary>
         /// <remarks>
