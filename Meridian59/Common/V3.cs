@@ -66,6 +66,21 @@ namespace Meridian59.Common
         public Real Z;
 
         /// <summary>
+        /// X as a property
+        /// </summary>
+        public Real XProp { get { return X; } set { X = value; } }
+
+        /// <summary>
+        /// Y as a property
+        /// </summary>
+        public Real YProp { get { return Y; } set { Y = value; } }
+
+        /// <summary>
+        /// Z as a property
+        /// </summary>
+        public Real ZProp { get { return Z; } set { Z = value; } }
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="X"></param>

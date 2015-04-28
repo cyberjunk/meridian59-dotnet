@@ -57,6 +57,16 @@ namespace Meridian59.Common
         public Real Y;
 
         /// <summary>
+        /// X as a property
+        /// </summary>
+        public Real XProp { get { return X; } set { X = value; } }
+
+        /// <summary>
+        /// Y as a property
+        /// </summary>
+        public Real YProp { get { return Y; } set { Y = value; } }
+
+        /// <summary>
         /// The length of the vector. Calculated on the fly.
         /// </summary>
         public Real Length
