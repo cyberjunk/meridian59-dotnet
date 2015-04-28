@@ -217,6 +217,15 @@ namespace Meridian59.Common
             C = (P1.X - P2.X) * P1.Y + (P2.Y - P1.Y) * P1.X;
         }
 
+        /// <summary>
+        /// Checks a finite line segment for intersection with infinite line.
+        /// </summary>
+        /// <param name="P1">First point of finite line segment</param>
+        /// <param name="P2">Second point of finite line segment</param>
+        /// <param name="Q1">First point in infinte line</param>
+        /// <param name="Q2">Second point in infinite line</param>
+        /// <param name="Intersect"></param>
+        /// <returns></returns>
         public static LineInfiniteLineIntersectionType IntersectLineInfiniteLine(V2 P1, V2 P2, V2 Q1, V2 Q2, out V2 Intersect)
         {
             Intersect.X = 0.0f;
