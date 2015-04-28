@@ -1262,39 +1262,38 @@ namespace Meridian59.Files.ROO
         /// sector heights and wall endpoints.
         /// </summary>
         /// <returns>BoundingBox in 1:1024 (legacy oldclient FINENESS) scale</returns>
-        public Tuple<V3, V3> GetBoundingBox()
+        public BoundingBox3D GetBoundingBox()
         {
             const Real MININIT =  99999999f;
             const Real MAXINIT = -99999999f;
 
-            V3 min;
-            V3 max;
+            BoundingBox3D box;
 
             // zero boundingbox by default
-            min.X = min.Y = min.Z = 0f;
-            max.X = max.Y = max.Z = 0f;
+            box.Min.X = box.Min.Y = box.Min.Z = 0f;
+            box.Max.X = box.Max.Y = box.Max.Z = 0f;
 
             // at least one wall -> nonzero bbox on x/y
             if (Walls.Count > 0)
             {
                 // initial values
-                min.X = min.Y = MININIT;
-                max.X = max.Y = MAXINIT;
+                box.Min.X = box.Min.Y = MININIT;
+                box.Max.X = box.Max.Y = MAXINIT;
 
                 // determine min/max length and width (based on walls)
                 foreach (RooWall wall in Walls)
                 {
                     // p1
-                    if ((Real)wall.X1 < min.X) min.X = (Real)wall.X1;
-                    if ((Real)wall.X1 > max.X) max.X = (Real)wall.X1;
-                    if ((Real)wall.Y1 < min.Y) min.Y = (Real)wall.Y1;
-                    if ((Real)wall.Y1 > max.Y) max.Y = (Real)wall.Y1;
+                    if ((Real)wall.X1 < box.Min.X) box.Min.X = (Real)wall.X1;
+                    if ((Real)wall.X1 > box.Max.X) box.Max.X = (Real)wall.X1;
+                    if ((Real)wall.Y1 < box.Min.Y) box.Min.Y = (Real)wall.Y1;
+                    if ((Real)wall.Y1 > box.Max.Y) box.Max.Y = (Real)wall.Y1;
 
                     // p2
-                    if ((Real)wall.X2 < min.X) min.X = (Real)wall.X2;
-                    if ((Real)wall.X2 > max.X) max.X = (Real)wall.X2;
-                    if ((Real)wall.Y2 < min.Y) min.Y = (Real)wall.Y2;
-                    if ((Real)wall.Y2 > max.Y) max.Y = (Real)wall.Y2;
+                    if ((Real)wall.X2 < box.Min.X) box.Min.X = (Real)wall.X2;
+                    if ((Real)wall.X2 > box.Max.X) box.Max.X = (Real)wall.X2;
+                    if ((Real)wall.Y2 < box.Min.Y) box.Min.Y = (Real)wall.Y2;
+                    if ((Real)wall.Y2 > box.Max.Y) box.Max.Y = (Real)wall.Y2;
                 }
             }
 
@@ -1302,24 +1301,24 @@ namespace Meridian59.Files.ROO
             if (Sectors.Count > 0)
             {
                 // initial values
-                min.Z = MININIT;
-                max.Z = MAXINIT;
+                box.Min.Z = MININIT;
+                box.Max.Z = MAXINIT;
 
                 // determine min/max height (based on sectors)
                 foreach (RooSector sector in Sectors)
                 {
-                    if (sector.FloorHeight < min.Z) min.Z = sector.FloorHeight;
-                    if (sector.FloorHeight > max.Z) max.Z = sector.FloorHeight;
-                    if (sector.CeilingHeight < min.Z) min.Z = sector.CeilingHeight;
-                    if (sector.CeilingHeight > max.Z) max.Z = sector.CeilingHeight;
+                    if (sector.FloorHeight < box.Min.Z) box.Min.Z = sector.FloorHeight;
+                    if (sector.FloorHeight > box.Max.Z) box.Max.Z = sector.FloorHeight;
+                    if (sector.CeilingHeight < box.Min.Z) box.Min.Z = sector.CeilingHeight;
+                    if (sector.CeilingHeight > box.Max.Z) box.Max.Z = sector.CeilingHeight;
                 }
             }
             
             // scale height from kod fineness (1:64) to oldclient fineness (1:1024)
-            min.Z *= 16f;
-            max.Z *= 16f;
+            box.Min.Z *= 16f;
+            box.Max.Z *= 16f;
 
-            return new Tuple<V3, V3>(min, max);
+            return box;
         }
 
         /// <summary>

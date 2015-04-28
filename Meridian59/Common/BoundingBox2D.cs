@@ -117,8 +117,8 @@ namespace Meridian59.Common
         /// <summary>
         /// Implemented operator
         /// </summary>
-        /// <param name="v1"></param>
-        /// <param name="v2"></param>
+        /// <param name="box1"></param>
+        /// <param name="box2"></param>
         /// <returns></returns>
         public static bool operator ==(BoundingBox2D box1, BoundingBox2D box2)
         {
@@ -128,12 +128,21 @@ namespace Meridian59.Common
         /// <summary>
         /// Implemented operator
         /// </summary>
-        /// <param name="v1"></param>
-        /// <param name="v2"></param>
+        /// <param name="box1"></param>
+        /// <param name="box2"></param>
         /// <returns></returns>
         public static bool operator !=(BoundingBox2D box1, BoundingBox2D box2)
         {
             return !box1.Equals(box2);
+        }
+
+        /// <summary>
+        /// Overriden
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

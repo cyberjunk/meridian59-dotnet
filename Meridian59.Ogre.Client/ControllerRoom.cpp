@@ -1158,11 +1158,10 @@ namespace Meridian59 { namespace Ogre
 						if (observer)
 						{
 							// get room bounding box
-							::System::Tuple<::Meridian59::Common::V3, ::Meridian59::Common::V3>^ bBox = 
-								Room->GetBoundingBox();
+							BoundingBox3D^ bBox = Room->GetBoundingBox();
 
 							// turn max into ogre world (scale, flip)
-							::Ogre::Vector3 max = Util::ToOgreYZFlipped(bBox->Item2) * SCALE;
+							::Ogre::Vector3 max = Util::ToOgreYZFlipped(bBox->Max) * SCALE;
 
 							// set threshold
 							observer->setPositionYThreshold(max.y + 5.0f);		
@@ -1223,11 +1222,11 @@ namespace Meridian59 { namespace Ogre
 	void ControllerRoom::AdjustOctree()
 	{
 		// get room boundingbox
-		System::Tuple<V3, V3>^ bbBox = Room->GetBoundingBox();
-
+		BoundingBox3D^ bbBox = Room->GetBoundingBox();
+		
 		// scaled and flipped ogre variants
-		::Ogre::Vector3 min = Util::ToOgreYZFlipped(bbBox->Item1) * 0.0625f + ::Ogre::Vector3(64.0f, 0, 64.0f) + ::Ogre::Vector3(-1.0f, -1.0f, -1.0f);
-		::Ogre::Vector3 max = Util::ToOgreYZFlipped(bbBox->Item2) * 0.0625f + ::Ogre::Vector3(64.0f, 0, 64.0f) + ::Ogre::Vector3(1.0f, 1.0f, 1.0f);
+		::Ogre::Vector3 min = Util::ToOgreYZFlipped(bbBox->Min) * 0.0625f + ::Ogre::Vector3(64.0f, 0, 64.0f) + ::Ogre::Vector3(-1.0f, -1.0f, -1.0f);
+		::Ogre::Vector3 max = Util::ToOgreYZFlipped(bbBox->Max) * 0.0625f + ::Ogre::Vector3(64.0f, 0, 64.0f) + ::Ogre::Vector3(1.0f, 1.0f, 1.0f);
 		::Ogre::Vector3 diff = max - min;
 		
 		// get biggest side
