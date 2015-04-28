@@ -45,13 +45,14 @@ namespace Meridian59.Common
     /// Different cases a finite line segment can intersect with an infinite line.
     /// </summary>
     /// <remarks>
-    /// NoIntersection: No intersection or touch point
-    /// OneIntersection: Exactly one intersection or touch point
+    /// NoIntersection: No intersection or boundary point
+    /// OneIntersection: Exactly one intersection
+    /// OneBoundaryPoint: Exactly one boundary point
     /// FullyCoincide: Finite line segment is included in infinite line
     /// </remarks>
     public enum LineInfiniteLineIntersectionType
     {
-        NoIntersection, OneIntersection, FullyCoincide
+        NoIntersection, OneIntersection, OneBoundaryPoint, FullyCoincide
     }
 
     /// <summary>
@@ -266,7 +267,7 @@ namespace Meridian59.Common
                 Intersect.X = P1.X;
                 Intersect.Y = P1.Y;
 
-                return LineInfiniteLineIntersectionType.OneIntersection;
+                return LineInfiniteLineIntersectionType.OneBoundaryPoint;
             }
 
             // case (d):
@@ -276,7 +277,7 @@ namespace Meridian59.Common
                 Intersect.X = P2.X;
                 Intersect.Y = P2.Y;
 
-                return LineInfiniteLineIntersectionType.OneIntersection;
+                return LineInfiniteLineIntersectionType.OneBoundaryPoint;
             }
 
             // huh? something wrong?
