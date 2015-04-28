@@ -159,5 +159,72 @@ namespace Meridian59.UnitTest
 
             Assert.AreEqual(expected, returned);
         }
+
+        /// <summary>
+        /// Test for IsConvexPolygon()
+        /// </summary>
+        [TestMethod]
+        public void IsConvexPolygon()
+        {
+            Polygon poly = new Polygon();
+
+            bool expected;
+            bool returned;
+
+            // --- TEST ---
+            // 3 points, valid triangle
+            poly.Clear();
+            poly.Add(new V2(10.0f, 10.0f));
+            poly.Add(new V2(5.0f, 0.0f));
+            poly.Add(new V2(10.0f, -10.0f));
+
+            expected = true;
+            returned = poly.IsConvexPolygon();
+
+            Assert.AreEqual(expected, returned);
+
+            // --- TEST ---
+            // 4 points, valid rectangle
+            poly.Clear();
+            poly.Add(new V2(0.0f, 0.0f));
+            poly.Add(new V2(0.0f, 5.0f));
+            poly.Add(new V2(5.0f, 5.0f));
+            poly.Add(new V2(5.0f, 0.0f));
+
+            expected = true;
+            returned = poly.IsConvexPolygon();
+
+            Assert.AreEqual(expected, returned);
+
+            // --- TEST ---
+            // 4 points, no rectangle ordered, not convex
+            poly.Clear();
+            poly.Add(new V2(0.0f, 0.0f));
+            poly.Add(new V2(5.0f, 5.0f));
+            poly.Add(new V2(0.0f, 5.0f));
+            poly.Add(new V2(5.0f, 0.0f));
+
+            expected = false;
+            returned = poly.IsConvexPolygon();
+
+            Assert.AreEqual(expected, returned);
+
+            // --- TEST ---
+            // n points, concave polygon
+            poly.Clear();
+            poly.Add(new V2(0.0f, 0.0f));
+            poly.Add(new V2(10.0f, 0.0f));
+            poly.Add(new V2(10.0f, 5.0f));
+            poly.Add(new V2(5.0f, 5.0f));
+            poly.Add(new V2(5.0f, 10.0f));
+            poly.Add(new V2(10.0f, 10.0f));
+            poly.Add(new V2(10.0f, 15.0f));
+            poly.Add(new V2(0.0f, 15.0f));
+
+            expected = false;
+            returned = poly.IsConvexPolygon();
+
+            Assert.AreEqual(expected, returned);
+        }
     }
 }
