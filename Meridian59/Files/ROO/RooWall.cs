@@ -753,6 +753,7 @@ namespace Meridian59.Files.ROO
                     MathUtil.IntersectLineLine(Start2D, End, P1, P2, out intersect);
 
                 if (intersecttype == LineLineIntersectionType.OneIntersection ||
+                    intersecttype == LineLineIntersectionType.OneBoundaryPoint ||
                     intersecttype == LineLineIntersectionType.FullyCoincide ||
                     intersecttype == LineLineIntersectionType.PartiallyCoincide)
                 {
@@ -827,6 +828,7 @@ namespace Meridian59.Files.ROO
                     MathUtil.IntersectLineLine(Start2D, End2D, P1, P2, out intersect);
 
                 if (intersecttype == LineLineIntersectionType.OneIntersection ||
+                    intersecttype == LineLineIntersectionType.OneBoundaryPoint ||
                     intersecttype == LineLineIntersectionType.FullyCoincide ||
                     intersecttype == LineLineIntersectionType.PartiallyCoincide)
                 {

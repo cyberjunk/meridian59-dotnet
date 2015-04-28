@@ -60,7 +60,7 @@ namespace Meridian59.UnitTest.Common
 
             intersectExpected = new V2(1.0f, 1.0f);
             intersectReturned = new V2(0.0f, 0.0f);
-            retvalExpected = LineLineIntersectionType.OneIntersection;
+            retvalExpected = LineLineIntersectionType.OneBoundaryPoint;
             retvalReturned = MathUtil.IntersectLineLine(P1, P2, Q1, Q2, out intersectReturned);
 
             Assert.AreEqual(retvalExpected, retvalReturned);
@@ -77,7 +77,7 @@ namespace Meridian59.UnitTest.Common
 
             intersectExpected = new V2(1.0f, 1.0f);
             intersectReturned = new V2(0.0f, 0.0f);
-            retvalExpected = LineLineIntersectionType.OneIntersection;
+            retvalExpected = LineLineIntersectionType.OneBoundaryPoint;
             retvalReturned = MathUtil.IntersectLineLine(P1, P2, Q1, Q2, out intersectReturned);
 
             Assert.AreEqual(retvalExpected, retvalReturned);
@@ -94,7 +94,7 @@ namespace Meridian59.UnitTest.Common
 
             intersectExpected = new V2(1.0f, 1.0f);
             intersectReturned = new V2(0.0f, 0.0f);
-            retvalExpected = LineLineIntersectionType.OneIntersection;
+            retvalExpected = LineLineIntersectionType.OneBoundaryPoint;
             retvalReturned = MathUtil.IntersectLineLine(P1, P2, Q1, Q2, out intersectReturned);
 
             Assert.AreEqual(retvalExpected, retvalReturned);
@@ -111,7 +111,7 @@ namespace Meridian59.UnitTest.Common
 
             intersectExpected = new V2(1.0f, 1.0f);
             intersectReturned = new V2(0.0f, 0.0f);
-            retvalExpected = LineLineIntersectionType.OneIntersection;
+            retvalExpected = LineLineIntersectionType.OneBoundaryPoint;
             retvalReturned = MathUtil.IntersectLineLine(P1, P2, Q1, Q2, out intersectReturned);
 
             Assert.AreEqual(retvalExpected, retvalReturned);
@@ -128,7 +128,7 @@ namespace Meridian59.UnitTest.Common
 
             intersectExpected = new V2(1.0f, 1.0f);
             intersectReturned = new V2(0.0f, 0.0f);
-            retvalExpected = LineLineIntersectionType.OneIntersection;
+            retvalExpected = LineLineIntersectionType.OneBoundaryPoint;
             retvalReturned = MathUtil.IntersectLineLine(P1, P2, Q1, Q2, out intersectReturned);
 
             Assert.AreEqual(retvalExpected, retvalReturned);
@@ -145,7 +145,7 @@ namespace Meridian59.UnitTest.Common
 
             intersectExpected = new V2(1.0f, 1.0f);
             intersectReturned = new V2(0.0f, 0.0f);
-            retvalExpected = LineLineIntersectionType.OneIntersection;
+            retvalExpected = LineLineIntersectionType.OneBoundaryPoint;
             retvalReturned = MathUtil.IntersectLineLine(P1, P2, Q1, Q2, out intersectReturned);
 
             Assert.AreEqual(retvalExpected, retvalReturned);

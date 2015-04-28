@@ -31,14 +31,15 @@ namespace Meridian59.Common
     /// Different cases two finite line segments can intersect.
     /// </summary>
     /// <remarks>
-    /// NoIntersection: No intersection or touch point
-    /// OneIntersection: Exactly one intersection or touch point
-    /// FullyCoincide: Lines are exactly equal
-    /// PartiallyCoincide: Lines partially overlap
+    /// NoIntersection: No intersection or boundary point
+    /// OneIntersection: Exactly one intersection
+    /// OneBoundaryPoint: Exactly one boundary point
+    /// FullyCoincide: Finite lines are exactly equal
+    /// PartiallyCoincide: Finite lines partially overlap
     /// </remarks>
     public enum LineLineIntersectionType
     {
-        NoIntersection, OneIntersection, FullyCoincide, PartiallyCoincide
+        NoIntersection, OneIntersection, OneBoundaryPoint, FullyCoincide, PartiallyCoincide
     }
 
     /// <summary>
@@ -373,7 +374,7 @@ namespace Meridian59.Common
                     Intersect.X = P1.X;
                     Intersect.Y = P1.Y;
 
-                    return LineLineIntersectionType.OneIntersection;
+                    return LineLineIntersectionType.OneBoundaryPoint;
                 }
 
                 // subcase (c): touch at P2
@@ -383,7 +384,7 @@ namespace Meridian59.Common
                     Intersect.X = P2.X;
                     Intersect.Y = P2.Y;
 
-                    return LineLineIntersectionType.OneIntersection;
+                    return LineLineIntersectionType.OneBoundaryPoint;
                 }
 
                 // subcase (c): touch at Q1
@@ -393,7 +394,7 @@ namespace Meridian59.Common
                     Intersect.X = Q1.X;
                     Intersect.Y = Q1.Y;
 
-                    return LineLineIntersectionType.OneIntersection;
+                    return LineLineIntersectionType.OneBoundaryPoint;
                 }
 
                 // subcase (c): touch at Q2
@@ -403,7 +404,7 @@ namespace Meridian59.Common
                     Intersect.X = Q2.X;
                     Intersect.Y = Q2.Y;
 
-                    return LineLineIntersectionType.OneIntersection;
+                    return LineLineIntersectionType.OneBoundaryPoint;
                 }
             }
 
@@ -420,11 +421,17 @@ namespace Meridian59.Common
             if (u < 0.0f || u > 1.0f)
                 return LineLineIntersectionType.NoIntersection;
 
-            // -- finite line segments cross! --
+            // -- finite line segments cross or boundary point! --
 
             b.Scale(t);
             Intersect = P1 + b;
 
+            // if the intersection point is also the endpoint of
+            // one of the finite lines, it's a boundary point
+            if (Intersect == P1 || Intersect == P2 || Intersect == Q1 || Intersect == Q2)          
+                return LineLineIntersectionType.OneBoundaryPoint;
+            
+            // true intersection
             return LineLineIntersectionType.OneIntersection;
         }
 
