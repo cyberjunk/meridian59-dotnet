@@ -28,14 +28,14 @@ using Real = System.Single;
 namespace Meridian59.Common
 {
     /// <summary>
-    /// Different cases two finite line segments can 'cross' each other.
+    /// Different cases two finite line segments can intersect.
+    /// </summary>
     /// <remarks>
     /// NoIntersection: No intersection or touch point
     /// OneIntersection: Exactly one intersection or touch point
     /// FullyCoincide: Lines are exactly equal
     /// PartiallyCoincide: Lines partially overlap
     /// </remarks>
-    /// </summary>
     public enum LineLineIntersectionType
     {
         NoIntersection, OneIntersection, FullyCoincide, PartiallyCoincide
@@ -188,6 +188,20 @@ namespace Meridian59.Common
             return 0.5f * AB.CrossProduct(AC);
         }
 
+        /// <summary>
+        /// Returns the A, B, C coefficients of the general 2D line equation: Ax+By+C=0
+        /// </summary>
+        /// <param name="P1"></param>
+        /// <param name="P2"></param>
+        /// <param name="A"></param>
+        /// <param name="B"></param>
+        /// <param name="C"></param>
+        public static void GetLineEquation2DCoefficients(V2 P1, V2 P2, out Real A, out Real B, out Real C)
+        {
+            A = P1.Y - P2.Y;
+            B = P2.X - P1.X;
+            C = (P1.X - P2.X) * P1.Y + (P2.Y - P1.Y) * P1.X;
+        }
 
         /// <summary>
         /// Checks two finite line segments for intersection.
