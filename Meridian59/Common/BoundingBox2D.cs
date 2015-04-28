@@ -80,6 +80,17 @@ namespace Meridian59.Common
         }
 
         /// <summary>
+        /// Possibly extends the Min and Max by the
+        /// Min and Max of parameter.
+        /// </summary>
+        /// <param name="Box"></param>
+        public void ExtendByBoundingBox(BoundingBox2D Box)
+        {
+            ExtendByPoint(Box.Min);
+            ExtendByPoint(Box.Max);
+        }
+
+        /// <summary>
         /// True if all components of Min are
         /// smaller than the components of Max.
         /// No valid box if both are the same (point) or
