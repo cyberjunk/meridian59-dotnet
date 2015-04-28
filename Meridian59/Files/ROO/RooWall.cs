@@ -261,7 +261,10 @@ namespace Meridian59.Files.ROO
         }
         #endregion
 
-        #region Properties    
+        #region Properties
+        protected V2 p1;
+        protected V2 p2;
+
         /// <summary>
         /// Number of this wall (1 based)
         /// </summary>
@@ -273,24 +276,34 @@ namespace Meridian59.Files.ROO
         public short ServerID { get; set; }
 
         /// <summary>
-        /// X coordinate of first point (source) in client FINENESS (1:1024)
+        /// First wall point (source)(oldclient FINENESS 1:1024)
         /// </summary>
-        public int X1 { get; set; }
+        public V2 P1 { get { return p1; } set { p1 = value; } }
 
         /// <summary>
-        /// Y coordinate of first point (source) in client FINENESS (1:1024)
+        /// Value of P1.X converted from and to integer
         /// </summary>
-        public int Y1 { get; set; }
+        public int X1 { get { return (int)p1.X; } set { p1.X = value; } }
 
         /// <summary>
-        /// X coordinate of second point (destination) in client FINENESS (1:1024)
+        /// Value of P1.Y converted from and to integer
         /// </summary>
-        public int X2 { get; set; }
+        public int Y1 { get { return (int)p1.Y; } set { p1.Y = value; } }
 
         /// <summary>
-        /// Y coordinate of second point (destination) in client FINENESS (1:1024)
+        /// Second wall point (dest)(oldclient FINENESS 1:1024)
         /// </summary>
-        public int Y2 { get; set; }
+        public V2 P2 { get { return p2; } set { p2 = value; } }
+
+        /// <summary>
+        /// Value of P2.X converted from and to integer
+        /// </summary>
+        public int X2 { get { return (int)p2.X; } set { p2.X = value; } }
+
+        /// <summary>
+        /// Value of P2.Y converted from and to integer
+        /// </summary>
+        public int Y2 { get { return (int)p2.Y; } set { p2.Y = value; } }
 
         /// <summary>
         /// Length of the wall in server FINENESS (1:64).
@@ -692,34 +705,13 @@ namespace Meridian59.Files.ROO
         }
         #endregion
 
-        #region V2 / Renderstuff
-        /// <summary>
-        /// Gets first point of wall (2D)
-        /// </summary>
-        /// <returns></returns>
-        public V2 GetP1()
-        {
-            return new V2(X1, Y1);
-        }
-
-        /// <summary>
-        /// Gets second point of wall (2D)
-        /// </summary>
-        /// <returns></returns>
-        public V2 GetP2()
-        {
-            return new V2(X2, Y2);
-        }
-
+        #region V2 / Renderstuff       
         /// <summary>
         /// Gets line segment of wall (2D)
         /// </summary>
         /// <returns></returns>
         public V2 GetP1P2()
         {
-            V2 P1 = GetP1();
-            V2 P2 = GetP2();
-
             return P2 - P1;
         }
 
@@ -733,9 +725,6 @@ namespace Meridian59.Files.ROO
         /// <returns></returns>
         public bool IsBlocking(V3 Start, V2 End, Real PlayerHeight)
         {
-            V2 P1 = GetP1();
-            V2 P2 = GetP2();
-
             V2 Start2D = new V2(Start.X, Start.Z);
 
             // calculate the sides of the points (returns -1, 0 or 1)
@@ -807,9 +796,6 @@ namespace Meridian59.Files.ROO
         /// <returns>True if blocked, false if OK</returns>
         public bool IsBlockingSight(V3 Start, V3 End)
         {
-            V2 P1 = GetP1();
-            V2 P2 = GetP2();
-
             // 2D
             V2 Start2D = new V2(Start.X, Start.Z);
             V2 End2D = new V2(End.X, End.Z);
