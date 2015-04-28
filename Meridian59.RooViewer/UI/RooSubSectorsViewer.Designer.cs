@@ -28,19 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGrid = new System.Windows.Forms.DataGridView();
-            this.colSectorNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colBoxMinX = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colBoxMinY = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colBoxMaxX = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colBoxMaxY = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSectorNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colBoxMinX = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colBoxMinY = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colBoxMaxX = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colBoxMaxY = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -64,44 +64,6 @@
             this.dataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGrid.Size = new System.Drawing.Size(650, 256);
             this.dataGrid.TabIndex = 0;
-            // 
-            // colSectorNum
-            // 
-            this.colSectorNum.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colSectorNum.DataPropertyName = "SectorDefReference";
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Turquoise;
-            this.colSectorNum.DefaultCellStyle = dataGridViewCellStyle1;
-            this.colSectorNum.HeaderText = "SECT";
-            this.colSectorNum.Name = "colSectorNum";
-            this.colSectorNum.Width = 50;
-            // 
-            // colBoxMinX
-            // 
-            this.colBoxMinX.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colBoxMinX.DataPropertyName = "X1";
-            this.colBoxMinX.HeaderText = "BOXMINX";
-            this.colBoxMinX.Name = "colBoxMinX";
-            // 
-            // colBoxMinY
-            // 
-            this.colBoxMinY.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colBoxMinY.DataPropertyName = "Y1";
-            this.colBoxMinY.HeaderText = "BOXMINY";
-            this.colBoxMinY.Name = "colBoxMinY";
-            // 
-            // colBoxMaxX
-            // 
-            this.colBoxMaxX.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colBoxMaxX.DataPropertyName = "X2";
-            this.colBoxMaxX.HeaderText = "BOXMAXX";
-            this.colBoxMaxX.Name = "colBoxMaxX";
-            // 
-            // colBoxMaxY
-            // 
-            this.colBoxMaxY.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colBoxMaxY.DataPropertyName = "Y2";
-            this.colBoxMaxY.HeaderText = "BOXMAXY";
-            this.colBoxMaxY.Name = "colBoxMaxY";
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -141,6 +103,44 @@
             this.dataGridViewTextBoxColumn5.HeaderText = "BOXMAXY";
             this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
             // 
+            // colSectorNum
+            // 
+            this.colSectorNum.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colSectorNum.DataPropertyName = "SectorNum";
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Turquoise;
+            this.colSectorNum.DefaultCellStyle = dataGridViewCellStyle1;
+            this.colSectorNum.HeaderText = "SECT";
+            this.colSectorNum.Name = "colSectorNum";
+            this.colSectorNum.Width = 50;
+            // 
+            // colBoxMinX
+            // 
+            this.colBoxMinX.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colBoxMinX.DataPropertyName = "X1";
+            this.colBoxMinX.HeaderText = "BOXMINX";
+            this.colBoxMinX.Name = "colBoxMinX";
+            // 
+            // colBoxMinY
+            // 
+            this.colBoxMinY.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colBoxMinY.DataPropertyName = "Y1";
+            this.colBoxMinY.HeaderText = "BOXMINY";
+            this.colBoxMinY.Name = "colBoxMinY";
+            // 
+            // colBoxMaxX
+            // 
+            this.colBoxMaxX.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colBoxMaxX.DataPropertyName = "X2";
+            this.colBoxMaxX.HeaderText = "BOXMAXX";
+            this.colBoxMaxX.Name = "colBoxMaxX";
+            // 
+            // colBoxMaxY
+            // 
+            this.colBoxMaxY.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colBoxMaxY.DataPropertyName = "Y2";
+            this.colBoxMaxY.HeaderText = "BOXMAXY";
+            this.colBoxMaxY.Name = "colBoxMaxY";
+            // 
             // RooSubSectorsViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -156,15 +156,15 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dataGrid;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colSectorNum;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colBoxMinX;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colBoxMinY;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colBoxMaxX;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colBoxMaxY;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colSectorNum;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colBoxMinX;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colBoxMinY;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colBoxMaxX;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colBoxMaxY;
     }
 }

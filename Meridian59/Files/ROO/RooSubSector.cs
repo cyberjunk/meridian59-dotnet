@@ -55,7 +55,7 @@ namespace Meridian59.Files.ROO
 
             cursor += base.WriteTo(Buffer, cursor);
 
-            Array.Copy(BitConverter.GetBytes(SectorDefReference), 0, Buffer, cursor, TypeSizes.SHORT);
+            Array.Copy(BitConverter.GetBytes(SectorNum), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(Vertices.Count)), 0, Buffer, cursor, TypeSizes.SHORT);
@@ -77,7 +77,7 @@ namespace Meridian59.Files.ROO
         {
             base.WriteTo(ref Buffer);
 
-            *((ushort*)Buffer) = SectorDefReference;
+            *((ushort*)Buffer) = SectorNum;
             Buffer += TypeSizes.SHORT;
 
             *((ushort*)Buffer) = (ushort)Vertices.Count;
@@ -99,7 +99,7 @@ namespace Meridian59.Files.ROO
 
             cursor += base.ReadFrom(Buffer, cursor);
 
-            SectorDefReference = BitConverter.ToUInt16(Buffer, cursor);
+            SectorNum = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
             ushort len = BitConverter.ToUInt16(Buffer, cursor);
@@ -124,7 +124,7 @@ namespace Meridian59.Files.ROO
         {
             base.ReadFrom(ref Buffer);
 
-            SectorDefReference = *((ushort*)Buffer);
+            SectorNum = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
             ushort len = *((ushort*)Buffer);
@@ -144,33 +144,65 @@ namespace Meridian59.Files.ROO
         }
         #endregion
 
+        /// <summary>
+        /// This is a a 'leaf' type node / subclass.
+        /// </summary>
         public override byte Type { get { return RooBSPItem.SubSectorType; } }
-        public ushort SectorDefReference { get; set; }
+        
+        /// <summary>
+        /// The 1 based num of the sector this leaf is part of.
+        /// </summary>
+        public ushort SectorNum { get; set; }
+        
+        /// <summary>
+        /// The polygon points describing this leaf.
+        /// </summary>
         public Polygon Vertices { get; set; }
 
+        /// <summary>
+        /// Reference to the Sector this leaf is part of.
+        /// Will be resolved from SectorNum within ResolveIndices().
+        /// </summary>
         public RooSector Sector { get; set; }
 
         public V3[] FloorP;
         public V2[] FloorUV;
         public V3 FloorNormal;
-
         public V3[] CeilingP;
         public V2[] CeilingUV;
         public V3 CeilingNormal;
 
+        /// <summary>
+        /// Constructor by values
+        /// </summary>
+        /// <param name="X1"></param>
+        /// <param name="Y1"></param>
+        /// <param name="X2"></param>
+        /// <param name="Y2"></param>
+        /// <param name="SectorNum"></param>
+        /// <param name="Vertices"></param>
         public RooSubSector( 
             int X1, int Y1, int X2, int Y2,
-            ushort SectorDefReference,
+            ushort SectorNum,
             Polygon Vertices)
             : base(X1, Y1, X2, Y2)
         {          
-            this.SectorDefReference = SectorDefReference; 
+            this.SectorNum = SectorNum; 
             this.Vertices = Vertices;                  
         }
 
+        /// <summary>
+        /// Constructor by managed parser
+        /// </summary>
+        /// <param name="Buffer"></param>
+        /// <param name="StartIndex"></param>
         public RooSubSector(byte[] Buffer, int StartIndex = 0)
             : base(Buffer, StartIndex) { }
 
+        /// <summary>
+        /// Constructor by native parser
+        /// </summary>
+        /// <param name="Buffer"></param>
         public unsafe RooSubSector(ref byte* Buffer)
             : base(ref Buffer) { }
 
@@ -182,10 +214,10 @@ namespace Meridian59.Files.ROO
         {
             // indices properties are not zero-based, but the arrays/lists are
             // get reference to parent Sector
-            if (SectorDefReference > 0 &&
-                RooFile.Sectors.Count > SectorDefReference - 1)
+            if (SectorNum > 0 &&
+                RooFile.Sectors.Count > SectorNum - 1)
             {
-                Sector = RooFile.Sectors[SectorDefReference - 1];
+                Sector = RooFile.Sectors[SectorNum - 1];
             }
         }
 
