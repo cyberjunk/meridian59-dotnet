@@ -87,8 +87,8 @@
     <Compile Include="Bot\BotServiceWrapper.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Common\Box3D.cs" />
-    <Compile Include="Common\Box2D.cs" />
+    <Compile Include="Common\BoundingBox3D.cs" />
+    <Compile Include="Common\BoundingBox2D.cs" />
     <Compile Include="Common\Config.cs" />
     <Compile Include="Common\Constants\ChatSubStrings.cs" />
     <Compile Include="Common\Constants\ResourceStrings.cs" />
