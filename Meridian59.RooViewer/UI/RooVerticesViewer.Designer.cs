@@ -55,16 +55,16 @@
             // colX
             // 
             this.colX.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colX.DataPropertyName = "X";
+            this.colX.DataPropertyName = "XProp";
             this.colX.HeaderText = "X";
             this.colX.Name = "colX";
             // 
             // colY
             // 
             this.colY.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colY.DataPropertyName = "Y";
+            this.colY.DataPropertyName = "YProp";
             this.colY.HeaderText = "Y";
-            this.colY.Name = "colY";           
+            this.colY.Name = "colY";
             // 
             // RooVerticesViewer
             // 

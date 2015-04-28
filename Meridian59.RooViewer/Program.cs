@@ -95,22 +95,22 @@ namespace Meridian59.RooViewer
             }
         }
 
-        public static List<Tuple<RooSubSector, RooVertex, int>> FindVertexMismatches(RooVertex Vertex)
+        public static List<Tuple<RooSubSector, V2, float>> FindVertexMismatches(V2 Vertex)
         {
-            const int CLOSE = 2;
+            const float CLOSE = 2;
 
-            List<Tuple<RooSubSector, RooVertex, int>> list = new List<Tuple<RooSubSector, RooVertex, int>>();
+            List<Tuple<RooSubSector, V2, float>> list = new List<Tuple<RooSubSector, V2, float>>();
 
             foreach (RooSubSector s in Room.BSPTreeLeaves)
             {
-                foreach (RooVertex v in s.Vertices)
+                foreach (V2 v in s.Vertices)
                 {
-                    int absdx = Math.Abs(v.X - Vertex.X);
-                    int absdy = Math.Abs(v.Y - Vertex.Y);
+                    float absdx = Math.Abs(v.X - Vertex.X);
+                    float absdy = Math.Abs(v.Y - Vertex.Y);
 
                     // must be very close but not same pos
                     if (absdx <= CLOSE && absdy <= CLOSE && (absdx > 0 || absdy > 0))
-                        list.Add(new Tuple<RooSubSector, RooVertex, int>(s, v, Math.Max(absdx, absdy)));
+                        list.Add(new Tuple<RooSubSector, V2, float>(s, v, Math.Max(absdx, absdy)));
                 }
             }
 

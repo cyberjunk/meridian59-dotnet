@@ -40,10 +40,10 @@ namespace Meridian59.Files.ROO
             get { 
                 int len = base.ByteLength + TypeSizes.SHORT;
                 
-                // vertices
+                // vertices are saved as INT
                 len += TypeSizes.SHORT;
-                foreach (RooVertex vertex in Vertices)
-                    len += vertex.ByteLength;
+                foreach (V2 vertex in Vertices)
+                    len += TypeSizes.INT + TypeSizes.INT;
 
                 return len;
             }
@@ -61,8 +61,14 @@ namespace Meridian59.Files.ROO
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(Vertices.Count)), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
-            foreach (RooVertex vertex in Vertices)
-                cursor += vertex.WriteTo(Buffer, cursor);
+            foreach (V2 vertex in Vertices)
+            {
+                Array.Copy(BitConverter.GetBytes(Convert.ToInt32(vertex.X)), 0, Buffer, cursor, TypeSizes.INT);
+                cursor += TypeSizes.INT;
+
+                Array.Copy(BitConverter.GetBytes(Convert.ToInt32(vertex.Y)), 0, Buffer, cursor, TypeSizes.INT);
+                cursor += TypeSizes.INT;
+            }
             
             return cursor - StartIndex;
         }
@@ -77,8 +83,14 @@ namespace Meridian59.Files.ROO
             *((ushort*)Buffer) = (ushort)Vertices.Count;
             Buffer += TypeSizes.SHORT;
 
-            foreach (RooVertex vertex in Vertices)
-                vertex.WriteTo(ref Buffer);
+            foreach (V2 vertex in Vertices)
+            {
+                *((int*)Buffer) = (int)vertex.X;
+                Buffer += TypeSizes.INT;
+
+                *((int*)Buffer) = (int)vertex.Y;
+                Buffer += TypeSizes.INT;
+            }
         }
 
         public override int ReadFrom(byte[] Buffer, int StartIndex = 0)
@@ -93,13 +105,16 @@ namespace Meridian59.Files.ROO
             ushort len = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            Vertices = new List<RooVertex>(len);
+            Vertices = new Polygon();
             for(int i = 0; i < len; i++)
             {
-                RooVertex vertex = new RooVertex(Buffer, cursor);
-                cursor += vertex.ByteLength;
+                int x = BitConverter.ToInt32(Buffer, cursor);
+                cursor += TypeSizes.INT;
 
-                Vertices.Add(vertex);
+                int y = BitConverter.ToInt32(Buffer, cursor);
+                cursor += TypeSizes.INT;
+
+                Vertices.Add(new V2(x, y));
             }             
             
             return cursor - StartIndex;
@@ -115,15 +130,23 @@ namespace Meridian59.Files.ROO
             ushort len = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            Vertices = new List<RooVertex>(len);
-            for (int i = 0; i < len; i++)                      
-                Vertices.Add(new RooVertex(ref Buffer));             
+            Vertices = new Polygon();
+            for (int i = 0; i < len; i++)
+            {
+                int x = *((int*)Buffer);
+                Buffer += TypeSizes.INT;
+
+                int y = *((int*)Buffer);
+                Buffer += TypeSizes.INT;
+
+                Vertices.Add(new V2(x, y));
+            }
         }
         #endregion
 
         public override byte Type { get { return RooBSPItem.SubSectorType; } }
         public ushort SectorDefReference { get; set; }
-        public List<RooVertex> Vertices { get; set; }
+        public Polygon Vertices { get; set; }
 
         public RooSector Sector { get; set; }
 
@@ -138,7 +161,7 @@ namespace Meridian59.Files.ROO
         public RooSubSector( 
             int X1, int Y1, int X2, int Y2,
             ushort SectorDefReference,
-            List<RooVertex> Vertices)
+            Polygon Vertices)
             : base(X1, Y1, X2, Y2)
         {          
             this.SectorDefReference = SectorDefReference; 
@@ -180,8 +203,8 @@ namespace Meridian59.Files.ROO
             V3 normal;
             V3[] p          = new V3[Vertices.Count];
             V2[] uv         = new V2[Vertices.Count];
-            int left        = 0;
-            int top         = 0;
+            Real left        = 0;
+            Real top         = 0;
             Real oneOverC   = 0.0f;
 
             RooSectorSlopeInfo slopeInfo = 
@@ -215,15 +238,15 @@ namespace Meridian59.Files.ROO
                 // 1: Fill in vertex coordinates
                 if (slopeInfo != null)
                 {
-                    p[count].X = (Real)Vertices[count].X;
-                    p[count].Y = (Real)Vertices[count].Y;
+                    p[count].X = Vertices[count].X;
+                    p[count].Y = Vertices[count].Y;
                     p[count].Z = (-slopeInfo.A * p[count].X - slopeInfo.B * p[count].Y - slopeInfo.D) *oneOverC;
                 }
                 else
                 {
-                    p[count].X = (Real)Vertices[count].X;
-                    p[count].Y = (Real)Vertices[count].Y;
-                    p[count].Z = (IsFloor) ? (Real)(Sector.FloorHeight * 16.0f) : (Real)(Sector.CeilingHeight * 16.0f);                   
+                    p[count].X = Vertices[count].X;
+                    p[count].Y = Vertices[count].Y;
+                    p[count].Z = (IsFloor) ? (Sector.FloorHeight * 16.0f) : (Sector.CeilingHeight * 16.0f);                   
                 }
               
                 // 2.1: UV with slope
@@ -335,8 +358,8 @@ namespace Meridian59.Files.ROO
                 // 2.2: UV without slope
                 else
                 {
-                    uv[count].X = (Real)System.Math.Abs(Vertices[count].Y - top) - (Sector.TextureY << 4);
-                    uv[count].Y = (Real)System.Math.Abs(Vertices[count].X - left) - (Sector.TextureX << 4);
+                    uv[count].X = System.Math.Abs(Vertices[count].Y - top) - (Sector.TextureY << 4);
+                    uv[count].Y = System.Math.Abs(Vertices[count].X - left) - (Sector.TextureX << 4);
                 }
 
                 uv[count].X *= INV64;

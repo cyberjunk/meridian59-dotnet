@@ -360,7 +360,6 @@
     <Compile Include="Files\ROO\RooSideDef.cs" />
     <Compile Include="Files\ROO\RooSideDefFlags.cs" />
     <Compile Include="Files\ROO\RooSubSector.cs" />
-    <Compile Include="Files\ROO\RooVertex.cs" />
     <Compile Include="Files\RSB\RsbFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

@@ -413,10 +413,10 @@ namespace Meridian59.RooViewer.UI
             //
             if (chkVertexMismatches.Checked)
             { 
-                List<Tuple<RooSubSector, RooVertex, int>> vertexmismatch;
+                List<Tuple<RooSubSector, V2, float>> vertexmismatch;
                 foreach(RooSubSector subsect in Room.BSPTreeLeaves)
                 {                    
-                    foreach(RooVertex vertex in subsect.Vertices)
+                    foreach(V2 vertex in subsect.Vertices)
                     {
                         vertexmismatch = Program.FindVertexMismatches(vertex);
 

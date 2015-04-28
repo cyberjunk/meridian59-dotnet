@@ -807,12 +807,12 @@ namespace Meridian59 { namespace Ogre
 			{
 				// pick a 2D triangle for this iteration
 				// of subsector by using next 3 points of it
-				A.X = (float)subsect->Vertices[0]->X;
-				A.Y = (float)subsect->Vertices[0]->Y;
-				B.X = (float)subsect->Vertices[i + 1]->X;
-				B.Y = (float)subsect->Vertices[i + 1]->Y;
-				C.X = (float)subsect->Vertices[i + 2]->X;
-				C.Y = (float)subsect->Vertices[i + 2]->Y;
+				A.X = (float)subsect->Vertices[0].X;
+				A.Y = (float)subsect->Vertices[0].Y;
+				B.X = (float)subsect->Vertices[i + 1].X;
+				B.Y = (float)subsect->Vertices[i + 1].Y;
+				C.X = (float)subsect->Vertices[i + 2].X;
+				C.Y = (float)subsect->Vertices[i + 2].Y;
 
 				// calc area
 				area = MathUtil::TriangleArea(A, B, C);

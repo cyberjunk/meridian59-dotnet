@@ -18,15 +18,16 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
 using Meridian59.Files.ROO;
+using Meridian59.Common;
 
 namespace Meridian59.RooViewer.UI
 {
     public partial class RooVerticesViewer : UserControl
     {
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), DefaultValue(null), Browsable(true)]
-        public List<RooVertex> DataSource
+        public Polygon DataSource
         {
-            get { return (dataGrid.DataSource != null) ? (List<RooVertex>)dataGrid.DataSource : null; }
+            get { return (dataGrid.DataSource != null) ? (Polygon)dataGrid.DataSource : null; }
             set
             {
                 if (dataGrid.DataSource != value)
