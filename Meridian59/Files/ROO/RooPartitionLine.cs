@@ -140,7 +140,7 @@ namespace Meridian59.Files.ROO
         /// <summary>
         /// PartitionLineType for RooPartitionLine
         /// </summary>
-        public override byte Type { get { return RooBSPItem.PartitionLineType; } }
+        public override NodeType Type { get { return RooBSPItem.NodeType.Node; } }
         
         /// <summary>
         /// 'a' variable for line equation ax+bc+c=0

@@ -1000,7 +1000,7 @@ namespace Meridian59.Files.ROO
 
                 foreach (RooBSPItem item in BSPTree)
                 {
-                    if (item.Type == RooBSPItem.PartitionLineType)
+                    if (item.Type == RooBSPItem.NodeType.Node)
                         list.Add((RooPartitionLine)item);
                 }
 
@@ -1020,7 +1020,7 @@ namespace Meridian59.Files.ROO
 
                 foreach (RooBSPItem item in BSPTree)
                 {
-                    if (item.Type == RooBSPItem.SubSectorType)
+                    if (item.Type == RooBSPItem.NodeType.Leaf)
                         list.Add((RooSubSector)item);
                 }
 
@@ -1213,7 +1213,7 @@ namespace Meridian59.Files.ROO
 
             int side;
 
-            if (node.Type == RooBSPItem.SubSectorType)
+            if (node.Type == RooBSPItem.NodeType.Leaf)
                 return node;
             else
             {

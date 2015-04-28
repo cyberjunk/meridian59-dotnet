@@ -147,7 +147,7 @@ namespace Meridian59.Files.ROO
         /// <summary>
         /// This is a a 'leaf' type node / subclass.
         /// </summary>
-        public override byte Type { get { return RooBSPItem.SubSectorType; } }
+        public override NodeType Type { get { return RooBSPItem.NodeType.Leaf; } }
         
         /// <summary>
         /// The 1 based num of the sector this leaf is part of.

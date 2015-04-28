@@ -23,8 +23,15 @@ namespace Meridian59.Files.ROO
     [Serializable]
     public abstract class RooBSPItem : IByteSerializableFast, IRooIndicesResolvable
     {
-        public const byte PartitionLineType = 0x01;
-        public const byte SubSectorType = 0x02;
+        /// <summary>
+        /// Different types of nodes in a tree.
+        /// Node = Has at least one child.
+        /// Leaf = Has no children
+        /// </summary>
+        public enum NodeType : byte
+        {
+            Node = 0x01, Leaf=0x02
+        }
 
         #region IByteSerializable
         public virtual int ByteLength
@@ -36,7 +43,7 @@ namespace Meridian59.Files.ROO
         {
             int cursor = StartIndex;
 
-            Buffer[cursor] = Type;
+            Buffer[cursor] = (byte)Type;
             cursor++;
 
             Array.Copy(BitConverter.GetBytes(X1), 0, Buffer, cursor, TypeSizes.INT);
@@ -56,7 +63,7 @@ namespace Meridian59.Files.ROO
 
         public virtual unsafe void WriteTo(ref byte* Buffer)
         {
-            Buffer[0] = Type;
+            Buffer[0] = (byte)Type;
             Buffer++;
 
             *((int*)Buffer) = X1;
@@ -127,7 +134,7 @@ namespace Meridian59.Files.ROO
         }
         #endregion
 
-        public abstract byte Type { get; }
+        public abstract NodeType Type { get; }
         
         /// <summary>
         /// BoundingBox minimum X of this node (or leaf).
@@ -171,12 +178,12 @@ namespace Meridian59.Files.ROO
 
         public static RooBSPItem ExtractBSPItem(byte[] Buffer, int StartIndex)
         {          
-            switch (Buffer[StartIndex])
+            switch ((NodeType)Buffer[StartIndex])
             {
-                case PartitionLineType:
+                case NodeType.Node:
                     return new RooPartitionLine(Buffer, StartIndex);
                     
-                case SubSectorType:
+                case NodeType.Leaf:
                     return new RooSubSector(Buffer, StartIndex);
 
                 default:
@@ -186,12 +193,12 @@ namespace Meridian59.Files.ROO
 
         public static unsafe RooBSPItem ExtractBSPItem(ref byte* Buffer)
         {
-            switch (Buffer[0])
+            switch ((NodeType)Buffer[0])
             {
-                case PartitionLineType:
+                case NodeType.Node:
                     return new RooPartitionLine(ref Buffer);
 
-                case SubSectorType:
+                case NodeType.Leaf:
                     return new RooSubSector(ref Buffer);
 
                 default:
