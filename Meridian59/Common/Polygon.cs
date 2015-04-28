@@ -89,5 +89,124 @@ namespace Meridian59.Common
 
             return true;
         }
+
+        /// <summary>
+        /// Removes points from the list, which share coordinates with their successor/predecessor
+        /// </summary>
+        /// <returns>Amount of removed points</returns>
+        public int RemoveZeroEdges()
+        {
+            int removed = 0;
+
+            // backward due to removing items
+            for(int i = Count - 1; i >= 1; i--)
+            {
+                if (this[i] == this[i - 1])
+                { 
+                    RemoveAt(i);
+                    removed++;
+                }
+            }
+
+            return removed;
+        }
+
+        /*public Tuple<Polygon, Polygon> SplitConvexPolygon(V2 P1, V2 P2)
+        {
+            // make sure this is a convex polygon
+            if (!IsConvexPolygon())
+                return null;
+
+            V2 intersect;
+            LineInfiniteLineIntersectionType intersecttype;
+            List<V2> intersections  = new List<V2>();
+            List<V2> boundarypoints = new List<V2>();
+            int numcoincides      = 0;
+            
+            // create left and right polygons
+            Polygon polyRight = new Polygon();
+            Polygon polyLeft = new Polygon();
+            
+            Tuple<Polygon, Polygon> splitted = 
+                new Tuple<Polygon, Polygon>(polyRight, polyLeft);
+
+            // test intersection of all polygon edges (finite lines) with infinite line p1p2
+            for (int i = 0; i < Count - 1; i++)
+            {
+                intersecttype = MathUtil.IntersectLineInfiniteLine(this[i], this[i + 1], P1, P2, out intersect);
+
+                // count intersection
+                if (intersecttype == LineInfiniteLineIntersectionType.OneIntersection)
+                    intersections.Add(intersect);
+
+                // count boundarypoints (will be counted twice, for each of the two edges)
+                else if (intersecttype == LineInfiniteLineIntersectionType.OneBoundaryPoint)
+                    boundarypoints.Add(intersect);
+
+                // count coincides
+                else if (intersecttype == LineInfiniteLineIntersectionType.FullyCoincide)
+                    numcoincides++;
+            }
+
+            // also test the edge from last point to first point
+            intersecttype = MathUtil.IntersectLineInfiniteLine(this[Count-1], this[0], P1, P2, out intersect);
+            if (intersecttype == LineInfiniteLineIntersectionType.OneIntersection)
+                intersections.Add(intersect);
+            else if (intersecttype == LineInfiniteLineIntersectionType.OneBoundaryPoint)
+                boundarypoints.Add(intersect);
+            else if (intersecttype == LineInfiniteLineIntersectionType.FullyCoincide)
+                numcoincides++;
+
+            // case (1): all on one side
+            // (a) no intersection, no boundary point and no coincide edge (trivial)
+            // (b) one edge is coincide with splitter
+            //     =two edge-endpoints also touch it, endpoints of coincide edge are not counted
+            // (c) exactly one polygon point is a boundarypoint on the splitter (both edge endpoints counted
+            if ((numcoincides == 0 && intersections.Count == 0 && boundarypoints.Count == 0) ||
+                (numcoincides == 1 && intersections.Count == 0 && boundarypoints.Count == 2) ||
+                (numcoincides == 0 && intersections.Count == 0 && boundarypoints.Count == 2))
+            {
+                // determine side by finding first point not on splitter
+                for (int i = 0; i < Count - 1; i++)
+                {
+                    int side = this[i].GetSide(P1, P2);
+
+                    // add verything to right poly and return
+                    if (side > 0)
+                    {
+                        polyRight.AddRange(this);
+                        return splitted;
+                    }
+
+                    // add everything to left poly and return
+                    else if (side < 0)
+                    {
+                        polyLeft.AddRange(this);
+                        return splitted;
+                    }
+                }
+            }
+
+            // case (2): infinite line intersects two polygon edges
+            else if (numcoincides == 0 && intersections.Count == 2 && boundarypoints.Count == 0)
+            {
+                // split up
+            }
+
+            // case (3): infinite line intersects two polygon vertices (4 endpoints lie on splitter)
+            else if (numcoincides == 0 && intersections.Count == 0 && boundarypoints.Count == 4)
+            {
+                // split up
+            }
+
+            // case (3): infinite line intersects one polygon edge and one vertex (2 endpoints there)
+            else if (numcoincides == 0 && intersections.Count == 1 && boundarypoints.Count == 2)
+            {
+                // split up
+            }
+
+            // something wrong
+            return null;
+        }*/
     }
 }

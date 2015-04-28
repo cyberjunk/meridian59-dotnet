@@ -161,6 +161,63 @@ namespace Meridian59.UnitTest
         }
 
         /// <summary>
+        /// Test for RemoveZeroEdges()
+        /// </summary>
+        [TestMethod]
+        public void RemoveZeroEdges()
+        {
+            Polygon poly = new Polygon();
+
+            int expected;
+            int returned;
+
+            // --- TEST ---
+            // 5 points, rectangle, but two points not of first three in on same coords
+            poly.Clear();
+            poly.Add(new V2(0.0f, 0.0f));
+            poly.Add(new V2(0.0f, 5.0f));
+            poly.Add(new V2(5.0f, 5.0f));
+            poly.Add(new V2(5.0f, 0.0f));
+            poly.Add(new V2(5.0f, 0.0f));
+
+            expected = 1;
+            returned = poly.RemoveZeroEdges();
+
+            Assert.AreEqual(expected, returned);
+
+            // --- TEST ---
+            // 5 points, rectangle, but two points not of first three in on same coords
+            poly.Clear();
+            poly.Add(new V2(0.0f, 0.0f));
+            poly.Add(new V2(0.0f, 5.0f));
+            poly.Add(new V2(5.0f, 5.0f));
+            poly.Add(new V2(5.0f, 0.0f));
+            poly.Add(new V2(5.0f, 0.0f));
+
+            expected = 1;
+            returned = poly.RemoveZeroEdges();
+
+            Assert.AreEqual(expected, returned);
+
+            // --- TEST ---
+            // n points, concave polygon
+            poly.Clear();
+            poly.Add(new V2(0.0f, 0.0f));
+            poly.Add(new V2(10.0f, 0.0f));
+            poly.Add(new V2(10.0f, 5.0f));
+            poly.Add(new V2(5.0f, 5.0f));
+            poly.Add(new V2(5.0f, 10.0f));
+            poly.Add(new V2(10.0f, 10.0f));
+            poly.Add(new V2(10.0f, 15.0f));
+            poly.Add(new V2(0.0f, 15.0f));
+
+            expected = 0;
+            returned = poly.RemoveZeroEdges();
+
+            Assert.AreEqual(expected, returned);
+        }
+
+        /// <summary>
         /// Test for IsConvexPolygon()
         /// </summary>
         [TestMethod]
@@ -192,6 +249,20 @@ namespace Meridian59.UnitTest
             poly.Add(new V2(5.0f, 0.0f));
 
             expected = true;
+            returned = poly.IsConvexPolygon();
+
+            Assert.AreEqual(expected, returned);
+
+            // --- TEST ---
+            // 5 points, rectangle, but two points not of first three in on same coords
+            poly.Clear();
+            poly.Add(new V2(0.0f, 0.0f));
+            poly.Add(new V2(0.0f, 5.0f));
+            poly.Add(new V2(5.0f, 5.0f));
+            poly.Add(new V2(5.0f, 0.0f));
+            poly.Add(new V2(5.0f, 0.0f));
+
+            expected = false;
             returned = poly.IsConvexPolygon();
 
             Assert.AreEqual(expected, returned);
