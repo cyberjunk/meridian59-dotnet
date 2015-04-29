@@ -419,26 +419,23 @@ namespace Meridian59.Files.ROO
         /// <summary>
         /// Constructor by values
         /// </summary>
-        /// <param name="ServerID"></param>
-        /// <param name="RightSideNum"></param>
-        /// <param name="LeftSideNum"></param>
-        /// <param name="X1"></param>
-        /// <param name="Y1"></param>
-        /// <param name="X2"></param>
-        /// <param name="Y2"></param>
-        /// <param name="ClientLength"></param>
+        /// <param name="ServerID">Sometimes also called UserID, used to reference wall by server.</param>
+        /// <param name="RightSideNum">Num of the right side of the wall (1=first, 0=unset)</param>
+        /// <param name="LeftSideNum">Num of the left side of the wall (1=first, 0=unset)</param>
+        /// <param name="P1">2D coordinates of startpoint, must be in 1:1024 units</param>
+        /// <param name="P2">2D coordinates of endpoint, must be in 1:1024 units</param>
         /// <param name="RightXOffset"></param>
         /// <param name="LeftXOffset"></param>
         /// <param name="RightYOffset"></param>
         /// <param name="LeftYOffset"></param>
-        /// <param name="RightSectorNum"></param>
-        /// <param name="LeftSectorNum"></param>
+        /// <param name="RightSectorNum">Num of the sector right to the wall (1=first, 0=unset)</param>
+        /// <param name="LeftSectorNum">Num of the sector left to the wall (1=first, 0=unset)</param>
         public RooWall(
             short ServerID, 
             ushort RightSideNum, 
             ushort LeftSideNum, 
-            int X1, int Y1, int X2, int Y2, 
-            ushort ClientLength, 
+            V2 P1, 
+            V2 P2, 
             short RightXOffset, 
             short LeftXOffset, 
             short RightYOffset, 
@@ -449,11 +446,12 @@ namespace Meridian59.Files.ROO
             this.ServerID = ServerID;
             this.RightSideNum = RightSideNum;
             this.LeftSideNum = LeftSideNum;
-            this.X1 = X1;
-            this.Y1 = Y1;
-            this.X2 = X2;
-            this.Y2 = Y2;
-            this.ClientLength = ClientLength;
+            this.P1 = P1;
+            this.P2 = P2;
+
+            // set clientlength stored in 16 bit in 1:64 units (convert from 1:1024)
+            this.ClientLength = (ushort)((P1-P2).Length * 0.0625f);
+
             this.RightXOffset = RightXOffset;
             this.LeftXOffset = LeftXOffset;
             this.RightYOffset = RightYOffset;
