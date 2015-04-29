@@ -1164,7 +1164,7 @@ namespace Meridian59.Files.ROO
         /// <param name="IsFloor"></param>
         /// <param name="WithSectorDepth"></param>
         /// <returns>Height of point or -1 if no sector found for point</returns>
-        public Real GetHeightAt(int x, int y, out RooSubSector SubSector, bool IsFloor = true, bool WithSectorDepth = false)
+        public Real GetHeightAt(Real x, Real y, out RooSubSector SubSector, bool IsFloor = true, bool WithSectorDepth = false)
         {
             SubSector = null;
 
@@ -1180,7 +1180,7 @@ namespace Meridian59.Files.ROO
                     return SubSector.Sector.CalculateCeilingHeight(x, y);
             }
 
-            return -1;
+            return -1.0f;
         }
         
         /// <summary>
@@ -1190,7 +1190,7 @@ namespace Meridian59.Files.ROO
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns>SubSector (leaf) or null</returns>
-        public RooSubSector GetSubSectorAt(int x, int y)
+        public RooSubSector GetSubSectorAt(Real x, Real y)
         {
             if (BSPTree.Count > 0)
                 return (RooSubSector)GetSubSectorAt(BSPTree[0], x, y);
@@ -1206,7 +1206,7 @@ namespace Meridian59.Files.ROO
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        protected RooBSPItem GetSubSectorAt(RooBSPItem node, int x, int y)
+        protected RooBSPItem GetSubSectorAt(RooBSPItem node, Real x, Real y)
         {
             if (node == null)
                 return null;
@@ -1218,7 +1218,7 @@ namespace Meridian59.Files.ROO
             else
             {
                 RooPartitionLine line = (RooPartitionLine)node;
-                side = line.A * x + line.B * y + line.C;
+                side = Convert.ToInt32((Real)line.A * x + (Real)line.B * y + (Real)line.C);
 
                 if (side == 0)
                 {
@@ -1530,7 +1530,7 @@ namespace Meridian59.Files.ROO
                     Real y = j * scale;
 
                     // lookup the height from roomdata
-                    Real height = GetHeightAt(Convert.ToInt32(x), Convert.ToInt32(y), out subsector, IsFloor, WithSectorDepths);
+                    Real height = GetHeightAt(x, y, out subsector, IsFloor, WithSectorDepths);
                     
                     // process it
                     if (height == -1.0f && (i > 0.0f || j > 0.0f))

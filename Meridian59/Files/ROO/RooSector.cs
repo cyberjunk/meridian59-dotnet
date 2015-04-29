@@ -755,7 +755,7 @@ namespace Meridian59.Files.ROO
         /// <param name="y"></param>
         /// <param name="WithSectorDepth"></param>
         /// <returns>Height of the floor in legacy client FINENESS (1:1024)</returns>
-        public Real CalculateFloorHeight(int x, int y, bool WithSectorDepth = false)
+        public Real CalculateFloorHeight(Real x, Real y, bool WithSectorDepth = false)
         {
             // get height in client fineness
             Real height = (SlopeInfoFloor == null) ? 
@@ -794,7 +794,7 @@ namespace Meridian59.Files.ROO
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns>Height of the ceiling in legacy client FINENESS (1:1024)</returns>
-        public Real CalculateCeilingHeight(int x, int y)
+        public Real CalculateCeilingHeight(Real x, Real y)
         {
             return (SlopeInfoCeiling == null) ? 
                 CeilingHeight * GeometryConstants.KODFINETOCLIENTFINE : 

@@ -830,7 +830,7 @@ namespace Meridian59 { namespace Ogre
 					// retrieve height for random coordinates
 					// also flip y/z and scale to server/newclient
 					rnd3D.X = rnd2D.X;
-					rnd3D.Y = subsect->Sector->CalculateFloorHeight((int)rnd2D.X, (int)rnd2D.Y, false);
+					rnd3D.Y = subsect->Sector->CalculateFloorHeight(rnd2D.X, rnd2D.Y, false);
 					rnd3D.Z = rnd2D.Y;
 					rnd3D.Scale(GeometryConstants::CLIENTFINETOKODFINE);
 

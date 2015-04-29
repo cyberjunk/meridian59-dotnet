@@ -987,8 +987,8 @@ namespace Meridian59.Data.Models
 
                 // get height at destination from roo
                 // convert to ROO coordinates
-                int xint = Convert.ToInt32((Position3D.X - 64.0f) * 16.0f);
-                int yint = Convert.ToInt32((Position3D.Z - 64.0f) * 16.0f);
+                Real xint = (Position3D.X - 64.0f) * 16.0f;
+                Real yint = (Position3D.Z - 64.0f) * 16.0f;
 
                 // get height from ROO and update subsector reference
                 Real oldheight = Position3D.Y;
@@ -1058,8 +1058,8 @@ namespace Meridian59.Data.Models
 
             // get height at destination from roo
             // convert to ROO coordinates
-            int xint = Convert.ToInt32((Position3D.X - 64.0f) * 16.0f);
-            int yint = Convert.ToInt32((Position3D.Z - 64.0f) * 16.0f);
+            Real xint = (Position3D.X - 64.0f) * 16.0f;
+            Real yint = (Position3D.Z - 64.0f) * 16.0f;
 
             // get height from ROO
             Real oldheight = Position3D.Y;
