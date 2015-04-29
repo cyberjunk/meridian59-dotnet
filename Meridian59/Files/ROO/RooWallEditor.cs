@@ -330,5 +330,48 @@ namespace Meridian59.Files.ROO
         {
             ReadFrom(ref Buffer);
         }
+
+        /// <summary>
+        /// Creates a RooWall instance based on this RooWallEditor instance.
+        /// </summary>
+        /// <param name="Room"></param>
+        /// <param name="RoomBoundingBox"></param>
+        /// <returns></returns>
+        public RooWall ToRooWall(RooFile Room, BoundingBox2D RoomBoundingBox)
+        {
+            V2 q1, q2;
+
+            // 1) Convert from 1:64 to 1:1024
+            // 2) Modify coordinate system (y-axis different)
+            // 3) 64 offset
+            q1.X = (P0.X - RoomBoundingBox.Min.X + 64f) * 16f;
+            q1.Y = (RoomBoundingBox.Max.Y - P0.Y + 64f) * 16f;
+            q2.X = (P1.X - RoomBoundingBox.Min.X + 64f) * 16f;
+            q2.Y = (RoomBoundingBox.Max.Y - P1.Y + 64f) * 16f;
+
+            // sidenum in editorwall is  0 to n ( 0=unset)
+            // sectnum in editorwall is -1 to n (-1=unset)
+
+            RooWall wall = new RooWall(
+                0,
+                (ushort)this.FileSideDef1, // no +1
+                (ushort)this.FileSideDef2, // no +1
+                q1, 
+                q2,
+                Side1XOffset, 
+                Side2XOffset, 
+                Side1YOffset, 
+                Side2YOffset,
+                (ushort)(Side1Sector + 1),  // +1 mapping 
+                (ushort)(Side2Sector + 1)); // +1 mapping
+
+            // now resolve the object references from indices
+            // and fill in heights
+            wall.ResolveIndices(Room);
+            wall.CalculateWallSideHeights();
+
+            // done
+            return wall;
+        }
     }
 }
