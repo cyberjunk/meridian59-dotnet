@@ -170,16 +170,10 @@ namespace Meridian59.Files.ROO
         /// <summary>
         /// Constructor by values
         /// </summary>
-        /// <param name="X1"></param>
-        /// <param name="X2"></param>
-        /// <param name="Y1"></param>
-        /// <param name="Y2"></param>
-        public RooBSPItem(int X1, int X2, int Y1, int Y2)
+        /// <param name="BoundingBox"></param>
+        public RooBSPItem(BoundingBox2D BoundingBox)
         {
-            this.X1 = X1;
-            this.X1 = X2;
-            this.Y1 = Y1;
-            this.Y2 = Y2;
+            boundingBox = BoundingBox;
         }
 
         /// <summary>

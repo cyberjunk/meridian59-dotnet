@@ -14,6 +14,7 @@
  If not, see http://www.gnu.org/licenses/.
 */
 
+using Meridian59.Common;
 using Meridian59.Common.Constants;
 using Meridian59.Common.Interfaces;
 using System;
@@ -192,12 +193,22 @@ namespace Meridian59.Files.ROO
 
         #endregion
 
+        /// <summary>
+        /// Constructor by values
+        /// </summary>
+        /// <param name="BoundingBox"></param>
+        /// <param name="A"></param>
+        /// <param name="B"></param>
+        /// <param name="C"></param>
+        /// <param name="Right"></param>
+        /// <param name="Left"></param>
+        /// <param name="LineDefReference"></param>
         public RooPartitionLine( 
-            int X1, int Y1, int X2, int Y2,
+            BoundingBox2D BoundingBox,
             int A, int B, int C,
             ushort Right, ushort Left, 
             ushort LineDefReference)
-            : base(X1, X2, Y1, Y2)
+            : base(BoundingBox)
         {
             this.A = A;
             this.B = B;
@@ -207,12 +218,25 @@ namespace Meridian59.Files.ROO
             this.WallReference = LineDefReference;            
         }
 
+        /// <summary>
+        /// Constructor by managed parser
+        /// </summary>
+        /// <param name="Buffer"></param>
+        /// <param name="StartIndex"></param>
         public RooPartitionLine(byte[] Buffer, int StartIndex = 0)
             : base(Buffer, StartIndex) { }
 
+        /// <summary>
+        /// Constructor by native parser
+        /// </summary>
+        /// <param name="Buffer"></param>
         public unsafe RooPartitionLine(ref byte* Buffer)
             : base(ref Buffer) { }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="RooFile"></param>
         public override void ResolveIndices(RooFile RooFile)
         {
             // indices properties are not zero-based, but the arrays/lists are
