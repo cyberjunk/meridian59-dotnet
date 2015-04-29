@@ -1164,6 +1164,92 @@ namespace Meridian59.Files.ROO
             return RI;
         }
 
+        /// <summary>
+        /// Splits this wall into two using infinite line given by Q1Q2.
+        /// </summary>
+        /// <param name="Q1"></param>
+        /// <param name="Q2"></param>
+        /// <returns></returns>
+        public Tuple<RooWall, RooWall> Split(V2 Q1, V2 Q2)
+        {
+            V2 intersect;
+
+            // intersect this wall (finite line) with the infinite line given by Q1Q2
+            LineInfiniteLineIntersectionType intersecttype = 
+                MathUtil.IntersectLineInfiniteLine(P1, P2, Q1, Q2, out intersect);
+
+            // must have a real intersection, not only boundarypoint or even coincide
+            if (intersecttype != LineInfiniteLineIntersectionType.OneIntersection)
+                return null;
+
+            /*****************************************************************/
+
+            // 1) Piece from P1 to intersection
+            RooWall wall1 = new RooWall(
+                ServerID,
+                RightSideNum,
+                LeftSideNum,
+                P1,
+                intersect,
+                RightXOffset,  // readjust below
+                LeftXOffset,   // readjust below
+                RightYOffset,  // readjust below
+                LeftYOffset,   // readjust below
+                RightSectorNum,
+                LeftSectorNum
+                );
+
+            // also keep references of old wall
+            wall1.RightSector = RightSector;
+            wall1.LeftSector = LeftSector;
+            wall1.RightSide = RightSide;
+            wall1.LeftSide = LeftSide;
+            wall1.BowtieFlags = BowtieFlags;
+            wall1.CalculateWallSideHeights();
+            
+            /*****************************************************************/
+
+            // 2) Piece from intersection to P2
+            RooWall wall2 = new RooWall(
+                ServerID,
+                RightSideNum,
+                LeftSideNum,
+                intersect,
+                P2,
+                RightXOffset,  // readjust below
+                LeftXOffset,   // readjust below
+                RightYOffset,  // readjust below
+                LeftYOffset,   // readjust below
+                RightSectorNum,
+                LeftSectorNum
+                );
+
+            // also keep references of old wall
+            wall2.RightSector = RightSector;
+            wall2.LeftSector = LeftSector;
+            wall2.RightSide = RightSide;
+            wall2.LeftSide = LeftSide;
+            wall2.BowtieFlags = BowtieFlags;
+            wall2.CalculateWallSideHeights();
+            
+            /*****************************************************************/
+
+            // 3) Readjust texture offsets to accoutn for split
+
+            // RightSide
+            if (wall1.RightSide != null && wall1.RightSide.Flags.IsBackwards)
+                wall1.RightXOffset += (short)wall2.ClientLength;
+            else wall2.RightXOffset += (short)wall1.ClientLength;
+
+            // LeftSide (Do this backwards, because client exchanges vertices of negative walls)
+            if (wall1.LeftSide != null && wall1.LeftSide.Flags.IsBackwards)
+                wall2.LeftXOffset += (short)wall1.ClientLength;
+            else wall1.LeftXOffset += (short)wall2.ClientLength;
+
+            /*****************************************************************/
+
+            return new Tuple<RooWall, RooWall>(wall1, wall2);
+        }
         #endregion
     }
 }
