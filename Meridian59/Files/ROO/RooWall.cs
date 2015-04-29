@@ -83,7 +83,7 @@ namespace Meridian59.Files.ROO
             Array.Copy(BitConverter.GetBytes(Y2), 0, Buffer, cursor, TypeSizes.INT);
             cursor += TypeSizes.INT;
 
-            Array.Copy(BitConverter.GetBytes(ClientLength), 0, Buffer, cursor, TypeSizes.SHORT);
+            Array.Copy(BitConverter.GetBytes((ushort)ClientLength), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
             Array.Copy(BitConverter.GetBytes(RightXOffset), 0, Buffer, cursor, TypeSizes.SHORT);
@@ -130,7 +130,7 @@ namespace Meridian59.Files.ROO
             *((int*)Buffer) = Y2;
             Buffer += TypeSizes.INT;
 
-            *((ushort*)Buffer) = ClientLength;
+            *((ushort*)Buffer) = (ushort)ClientLength;
             Buffer += TypeSizes.SHORT;
 
             *((short*)Buffer) = RightXOffset;
@@ -177,7 +177,7 @@ namespace Meridian59.Files.ROO
             Y2 = BitConverter.ToInt32(Buffer, cursor);
             cursor += TypeSizes.INT;
 
-            ClientLength = BitConverter.ToUInt16(Buffer, cursor);
+            ClientLength = (Real)BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
             RightXOffset = BitConverter.ToInt16(Buffer, cursor);
@@ -224,7 +224,7 @@ namespace Meridian59.Files.ROO
             Y2 = *((int*)Buffer);
             Buffer += TypeSizes.INT;
 
-            ClientLength = *((ushort*)Buffer);
+            ClientLength = (Real)(*((ushort*)Buffer));
             Buffer += TypeSizes.SHORT;
 
             RightXOffset = *((short*)Buffer);
@@ -309,7 +309,7 @@ namespace Meridian59.Files.ROO
         /// Length of the wall in server FINENESS (1:64).
         /// Note: Rather use the length of vector P1P2.
         /// </summary>
-        public ushort ClientLength { get; set; }
+        public Real ClientLength { get; set; }
 
         /// <summary>
         /// XOffset of the texture on the right side
@@ -449,8 +449,8 @@ namespace Meridian59.Files.ROO
             this.P1 = P1;
             this.P2 = P2;
 
-            // set clientlength stored in 16 bit in 1:64 units (convert from 1:1024)
-            this.ClientLength = (ushort)((P1-P2).Length * 0.0625f);
+            // set clientlength stored in 1:64 units (convert from 1:1024)
+            this.ClientLength = (P1-P2).Length * 0.0625f;
 
             this.RightXOffset = RightXOffset;
             this.LeftXOffset = LeftXOffset;
@@ -1009,7 +1009,7 @@ namespace Meridian59.Files.ROO
 
             // Start with UV calculation, see d3drender.c ---           
             Real u1 = (Real)xoffset * (Real)TexShrink * invHeight;
-            Real u2 = u1 + ((Real)ClientLength * (Real)TexShrink * invHeight);
+            Real u2 = u1 + (ClientLength * (Real)TexShrink * invHeight);
 
             // set U
             RI.UV0.X = u1;
