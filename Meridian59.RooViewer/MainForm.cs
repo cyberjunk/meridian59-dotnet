@@ -120,6 +120,11 @@ namespace Meridian59.RooViewer
             map.SelectedPartitionLine = viewerRooPartitionLines.SelectedItem;
         }
 
+        protected void OnViewerRooWallsEditorSelectedItemChanged(object sender, EventArgs e)
+        {
+            map.SelectedWallEditor = viewerRooWallsEditor.SelectedItem;
+        }
+
         protected void OnMapSelectedSectorChanged(object sender, EventArgs e)
         {
             viewerRooSectors.SelectedItem = map.SelectedSector;

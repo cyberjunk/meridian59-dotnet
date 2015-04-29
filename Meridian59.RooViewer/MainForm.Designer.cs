@@ -266,6 +266,7 @@
             this.viewerRooWallsEditor.Name = "viewerRooWallsEditor";
             this.viewerRooWallsEditor.Size = new System.Drawing.Size(615, 91);
             this.viewerRooWallsEditor.TabIndex = 0;
+            this.viewerRooWallsEditor.SelectedItemChanged += new System.EventHandler(this.OnViewerRooWallsEditorSelectedItemChanged);
             // 
             // viewerRooWalls
             // 

@@ -44,6 +44,7 @@ namespace Meridian59.RooViewer.UI
         protected RooSubSector selectedSubSector;
         protected RooSector selectedSector;
         protected RooWall selectedWall;
+        protected RooWallEditor selectedWallEditor;
         protected RooSideDef selectedSide;
 
         protected Pen penWhite1 = new Pen(Color.White, 1f);
@@ -54,7 +55,8 @@ namespace Meridian59.RooViewer.UI
         protected Pen penLightBlue1 = new Pen(Color.LightBlue, 1f);
         protected Pen penOrange1 = new Pen(Color.Orange, 1f);
         protected Pen penOrange2 = new Pen(Color.Orange, 2f);
-        
+        protected Pen penPurple2 = new Pen(Color.Purple, 2f);
+
         protected SolidBrush brushSolidGreen = new SolidBrush(Color.Green);
         protected SolidBrush brushSolidPaleGreen = new SolidBrush(Color.PaleGreen);
         protected SolidBrush brushSolidRed = new SolidBrush(Color.Red);
@@ -131,6 +133,20 @@ namespace Meridian59.RooViewer.UI
                 if (selectedWall != value)
                 {
                     selectedWall = value;
+                    Invalidate();
+                }
+            }
+        }
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), DefaultValue(null), Browsable(true)]
+        public RooWallEditor SelectedWallEditor
+        {
+            get { return selectedWallEditor; }
+            set
+            {
+                if (selectedWallEditor != value)
+                {
+                    selectedWallEditor = value;
                     Invalidate();
                 }
             }
@@ -295,6 +311,11 @@ namespace Meridian59.RooViewer.UI
             Invalidate();
         }
 
+        private void OnUseEditorWallsCheckedChanged(object sender, EventArgs e)
+        {
+            Invalidate();
+        } 
+
         public new void Invalidate()
         {
             float deltax = 0.5f * zoom * (float)Width;
@@ -353,9 +374,52 @@ namespace Meridian59.RooViewer.UI
                 G.FillPolygon(brushSolidPaleGreen, points);               
             }
 
-            // draw lines
+            if (chkUseEditorWalls.Checked || selectedWallEditor != null)
+            {
+                V2 q1, q2;
+                BoundingBox2D roombbox = Room.GetBoundingBox2D(false);
+
+                // draw editor walls
+                foreach (RooWallEditor rld in Room.WallsEditor)
+                {
+                    q1.X = (rld.P0.X - roombbox.Min.X + 64f) * 16f;
+                    q1.Y = (roombbox.Max.Y - rld.P0.Y + 64f) * 16f;
+                    q2.X = (rld.P1.X - roombbox.Min.X + 64f) * 16f;
+                    q2.Y = (roombbox.Max.Y - rld.P1.Y + 64f) * 16f;
+
+                    // expressions whether point is in rectangle
+                    bool isX1inScope = ((float)q1.X >= boxMin.X && (float)q1.X <= boxMax.X);
+                    bool isY1inScope = ((float)q1.Y >= boxMin.Y && (float)q1.Y <= boxMax.Y);
+                    bool isX2inScope = ((float)q2.X >= boxMin.X && (float)q2.X <= boxMax.X);
+                    bool isY2inScope = ((float)q2.Y >= boxMin.Y && (float)q2.Y <= boxMax.Y);
+
+                    // if at least one of the line points is in the mapscope, draw the line
+                    if ((isX1inScope && isY1inScope) || (isX2inScope && isY2inScope))
+                    {
+                        // transform points to match world of pixeldrawing
+                        float transx1 = ((float)q1.X - (float)boxMin.X) * ZoomInv;
+                        float transy1 = ((float)q1.Y - (float)boxMin.Y) * ZoomInv;
+                        float transx2 = ((float)q2.X - (float)boxMin.X) * ZoomInv;
+                        float transy2 = ((float)q2.Y - (float)boxMin.Y) * ZoomInv;
+
+                        // selected walleditor
+                        if (selectedWallEditor == rld)
+                        {
+                            G.DrawLine(penPurple2, transx1, transy1, transx2, transy2);
+                        }
+
+                        // normal wall only if not drawn by editorwall
+                        else if (chkUseEditorWalls.Checked)
+                        {
+                            G.DrawLine(penWhite1, transx1, transy1, transx2, transy2);
+                        }
+                    }
+                }
+            }
+
+            // draw client walls
             foreach (RooWall rld in Room.Walls)
-            {                
+            {
                 // expressions whether point is in rectangle
                 bool isX1inScope = ((float)rld.X1 >= boxMin.X && (float)rld.X1 <= boxMax.X);
                 bool isY1inScope = ((float)rld.Y1 >= boxMin.Y && (float)rld.Y1 <= boxMax.Y);
@@ -371,14 +435,12 @@ namespace Meridian59.RooViewer.UI
                     float transx2 = ((float)rld.X2 - (float)boxMin.X) * ZoomInv;
                     float transy2 = ((float)rld.Y2 - (float)boxMin.Y) * ZoomInv;
 
-                    Pen pen = penWhite1;
-
                     // selected wall
                     if (selectedWall == rld)
                     {
                         G.DrawLine(penRed2, transx1, transy1, transx2, transy2);
                     }
-                    
+
                     // bsp splitter
                     else if (selectedPartitionLine != null &&
                             (rld == selectedPartitionLine.Wall))
@@ -386,12 +448,12 @@ namespace Meridian59.RooViewer.UI
                         V2 p1 = new V2(transx1, transy1);
                         V2 p2 = new V2(transx2, transy2);
                         V2 p1p2 = p2 - p1;
-                        
+
                         p2 += 1000f * p1p2;
                         p1 -= 1000f * p1p2;
 
                         G.DrawLine(penLightBlue1, (float)p1.X, (float)p1.Y, (float)p2.X, (float)p2.Y);
-                        G.DrawLine(penBlue2, transx1, transy1, transx2, transy2);                       
+                        G.DrawLine(penBlue2, transx1, transy1, transx2, transy2);
                     }
 
                     // selected side
@@ -401,14 +463,14 @@ namespace Meridian59.RooViewer.UI
                         G.DrawLine(penOrange2, transx1, transy1, transx2, transy2);
                     }
 
-                    // normal wall
-                    else
+                    // normal wall only if not drawn by editorwall
+                    else if (!chkUseEditorWalls.Checked)
                     {
-                        G.DrawLine(penWhite1, transx1, transy1, transx2, transy2); 
-                    }                                          
+                        G.DrawLine(penWhite1, transx1, transy1, transx2, transy2);
+                    }
                 }
             }
-
+            
             //
             if (chkVertexMismatches.Checked)
             { 
@@ -431,6 +493,6 @@ namespace Meridian59.RooViewer.UI
                     }
                 }
             }
-        }       
+        }      
     }
 }

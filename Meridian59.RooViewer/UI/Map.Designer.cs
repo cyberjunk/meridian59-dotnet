@@ -30,6 +30,7 @@
         {
             this.lblMouseCoordinates = new System.Windows.Forms.Label();
             this.chkVertexMismatches = new System.Windows.Forms.CheckBox();
+            this.chkUseEditorWalls = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // lblMouseCoordinates
@@ -37,7 +38,7 @@
             this.lblMouseCoordinates.AutoSize = true;
             this.lblMouseCoordinates.BackColor = System.Drawing.Color.Transparent;
             this.lblMouseCoordinates.ForeColor = System.Drawing.Color.Gold;
-            this.lblMouseCoordinates.Location = new System.Drawing.Point(24, 16);
+            this.lblMouseCoordinates.Location = new System.Drawing.Point(3, 0);
             this.lblMouseCoordinates.Name = "lblMouseCoordinates";
             this.lblMouseCoordinates.Size = new System.Drawing.Size(28, 13);
             this.lblMouseCoordinates.TabIndex = 0;
@@ -48,7 +49,7 @@
             this.chkVertexMismatches.AutoSize = true;
             this.chkVertexMismatches.BackColor = System.Drawing.Color.Transparent;
             this.chkVertexMismatches.ForeColor = System.Drawing.Color.Gold;
-            this.chkVertexMismatches.Location = new System.Drawing.Point(256, 16);
+            this.chkVertexMismatches.Location = new System.Drawing.Point(121, -1);
             this.chkVertexMismatches.Name = "chkVertexMismatches";
             this.chkVertexMismatches.Size = new System.Drawing.Size(114, 17);
             this.chkVertexMismatches.TabIndex = 1;
@@ -56,10 +57,24 @@
             this.chkVertexMismatches.UseVisualStyleBackColor = false;
             this.chkVertexMismatches.CheckedChanged += new System.EventHandler(this.OnVertexMismatchesCheckedChanged);
             // 
+            // chkUseEditorWalls
+            // 
+            this.chkUseEditorWalls.AutoSize = true;
+            this.chkUseEditorWalls.BackColor = System.Drawing.Color.Transparent;
+            this.chkUseEditorWalls.ForeColor = System.Drawing.Color.Gold;
+            this.chkUseEditorWalls.Location = new System.Drawing.Point(257, -1);
+            this.chkUseEditorWalls.Name = "chkUseEditorWalls";
+            this.chkUseEditorWalls.Size = new System.Drawing.Size(100, 17);
+            this.chkUseEditorWalls.TabIndex = 2;
+            this.chkUseEditorWalls.Text = "Use editor walls";
+            this.chkUseEditorWalls.UseVisualStyleBackColor = false;
+            this.chkUseEditorWalls.CheckedChanged += new System.EventHandler(this.OnUseEditorWallsCheckedChanged);
+            // 
             // Map
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.chkUseEditorWalls);
             this.Controls.Add(this.chkVertexMismatches);
             this.Controls.Add(this.lblMouseCoordinates);
             this.Name = "Map";
@@ -73,5 +88,6 @@
 
         private System.Windows.Forms.Label lblMouseCoordinates;
         private System.Windows.Forms.CheckBox chkVertexMismatches;
+        private System.Windows.Forms.CheckBox chkUseEditorWalls;
     }
 }
