@@ -1345,6 +1345,29 @@ namespace Meridian59.Files.ROO
         }
 
         /// <summary>
+        /// Returns the two dimensional boundingbox as stored
+        /// in Things section.
+        /// </summary>
+        /// <returns></returns>
+        public BoundingBox2D GetBoundingBox2DFromThings()
+        {
+            if (Things.Count < 2)
+                return BoundingBox2D.NULL;
+
+            BoundingBox2D box;
+            box.Min.X = (Real)Things[0].PositionX;
+            box.Min.Y = (Real)Things[0].PositionY;
+            box.Max.X = (Real)Things[0].PositionX;
+            box.Max.Y = (Real)Things[0].PositionY;
+            box.Min.X = Math.Min(box.Min.X, (Real)Things[1].PositionX);
+            box.Min.Y = Math.Min(box.Min.Y, (Real)Things[1].PositionY);
+            box.Max.X = Math.Max(box.Max.X, (Real)Things[1].PositionX);
+            box.Max.Y = Math.Max(box.Max.Y, (Real)Things[1].PositionY);
+            
+            return box;
+        }
+
+        /// <summary>
         /// Processes updates at runtime, like animations.
         /// Call regularly.
         /// </summary>

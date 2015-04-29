@@ -19,6 +19,13 @@ using Meridian59.Common.Constants;
 using Meridian59.Common.Interfaces;
 using Meridian59.Common;
 
+// Switch FP precision based on architecture
+#if X64
+using Real = System.Double;
+#else
+using Real = System.Single;
+#endif
+
 namespace Meridian59.Files.ROO
 {
     /// <summary>
@@ -335,19 +342,27 @@ namespace Meridian59.Files.ROO
         /// Creates a RooWall instance based on this RooWallEditor instance.
         /// </summary>
         /// <param name="Room"></param>
-        /// <param name="RoomBoundingBox"></param>
         /// <returns></returns>
-        public RooWall ToRooWall(RooFile Room, BoundingBox2D RoomBoundingBox)
+        public RooWall ToRooWall(RooFile Room)
         {
+            if (Room == null)
+                return null;
+
             V2 q1, q2;
 
+            // first try get boundingbox as defined by 'Things'
+            BoundingBox2D box = Room.GetBoundingBox2DFromThings();
+            
+            // no thingsbox? build based on editorwalls
+            if (box == BoundingBox2D.NULL)
+                box = Room.GetBoundingBox2D(false);
+   
             // 1) Convert from 1:64 to 1:1024
             // 2) Modify coordinate system (y-axis different)
-            // 3) 64 offset
-            q1.X = (P0.X - RoomBoundingBox.Min.X + 64f) * 16f;
-            q1.Y = (RoomBoundingBox.Max.Y - P0.Y + 64f) * 16f;
-            q2.X = (P1.X - RoomBoundingBox.Min.X + 64f) * 16f;
-            q2.Y = (RoomBoundingBox.Max.Y - P1.Y + 64f) * 16f;
+            q1.X = (P0.X - box.Min.X) * 16f;
+            q1.Y = (box.Max.Y - P0.Y) * 16f;
+            q2.X = (P1.X - box.Min.X) * 16f;
+            q2.Y = (box.Max.Y - P1.Y) * 16f;
 
             // sidenum in editorwall is  0 to n ( 0=unset)
             // sectnum in editorwall is -1 to n (-1=unset)
