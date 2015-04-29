@@ -148,16 +148,16 @@ namespace Meridian59.Files.ROO
             Side2Sector = BitConverter.ToInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            X0 = BitConverter.ToInt32(Buffer, cursor);
+            X0 = BitConverter.ToInt16(Buffer, cursor); // editor only saves 2 bytes into 4
             cursor += TypeSizes.INT;
 
-            Y0 = BitConverter.ToInt32(Buffer, cursor);
+            Y0 = BitConverter.ToInt16(Buffer, cursor);
             cursor += TypeSizes.INT;
 
-            X1 = BitConverter.ToInt32(Buffer, cursor);
+            X1 = BitConverter.ToInt16(Buffer, cursor);
             cursor += TypeSizes.INT;
 
-            Y1 = BitConverter.ToInt32(Buffer, cursor);
+            Y1 = BitConverter.ToInt16(Buffer, cursor);
             cursor += TypeSizes.INT;
             
             return cursor - StartIndex;
@@ -189,16 +189,16 @@ namespace Meridian59.Files.ROO
             Side2Sector = *((short*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            X0 = *((int*)Buffer);
+            X0 = *((short*)Buffer);  // editor only saves 2 bytes into 4
             Buffer += TypeSizes.INT;
 
-            Y0 = *((int*)Buffer);
+            Y0 = *((short*)Buffer);
             Buffer += TypeSizes.INT;
 
-            X1 = *((int*)Buffer);
+            X1 = *((short*)Buffer);
             Buffer += TypeSizes.INT;
 
-            Y1 = *((int*)Buffer);
+            Y1 = *((short*)Buffer);
             Buffer += TypeSizes.INT;
         }
 
