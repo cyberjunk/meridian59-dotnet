@@ -14,15 +14,22 @@
  If not, see http://www.gnu.org/licenses/.
 */
 
+using System;
 using Meridian59.Common.Constants;
 using Meridian59.Common.Interfaces;
-using System;
 
 namespace Meridian59.Files.ROO
 {
     /// <summary>
-    /// This kind of data is used by the original WINDEU for linedefs/walls.
+    /// This class implements a wall as it is saved and shown by the old roomedit.
     /// </summary>
+    /// <remarks>
+    /// They significantly differ from RooWall:
+    ///  (a) They can start or end at negative coordinates
+    ///  (b) Their Y axis/coordinate is flipped
+    ///  (c) Their scale is 1:64 rather than 1:1024
+    ///  (d) They can get split up into two or more RooWall in BSP building
+    /// </remarks>
     [Serializable]
     public class RooWallEditor : IByteSerializableFast
     {
@@ -148,7 +155,11 @@ namespace Meridian59.Files.ROO
             Side2Sector = BitConverter.ToInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            X0 = BitConverter.ToInt16(Buffer, cursor); // editor only saves 2 bytes into 4
+            // roomedit uses 16 bit coordinates for own walls, roo format has 32 bit
+            // early editors write garbage into the high 16 bit (fix is up..)
+            // so we ignore them here for now
+
+            X0 = BitConverter.ToInt16(Buffer, cursor);
             cursor += TypeSizes.INT;
 
             Y0 = BitConverter.ToInt16(Buffer, cursor);
@@ -189,7 +200,11 @@ namespace Meridian59.Files.ROO
             Side2Sector = *((short*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            X0 = *((short*)Buffer);  // editor only saves 2 bytes into 4
+            // roomedit uses 16 bit coordinates for own walls, roo format has 32 bit
+            // early editors write garbage into the high 16 bit (fix is up..)
+            // so we ignore them here for now
+
+            X0 = *((short*)Buffer);  
             Buffer += TypeSizes.INT;
 
             Y0 = *((short*)Buffer);
