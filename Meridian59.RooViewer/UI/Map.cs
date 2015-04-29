@@ -71,7 +71,7 @@ namespace Meridian59.RooViewer.UI
                 {
                     room = value;
 
-                    BoundingBox3D bBox = room.GetBoundingBox();
+                    BoundingBox3D bBox = room.GetBoundingBox3D();
                     center.X = bBox.Min.X + 0.5f * (bBox.Max.X - bBox.Min.X);
                     center.Y = bBox.Min.Y + 0.5f * (bBox.Max.Y - bBox.Min.Y);
 
@@ -351,8 +351,7 @@ namespace Meridian59.RooViewer.UI
                 }
 
                 G.FillPolygon(brushSolidPaleGreen, points);               
-            } 
-
+            }
 
             // draw lines
             foreach (RooWall rld in Room.Walls)

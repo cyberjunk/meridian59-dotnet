@@ -1257,96 +1257,91 @@ namespace Meridian59.Files.ROO
         }
         
         /// <summary>
-        /// Returns two points describing the 3D boundingbox of the room.
-        /// This box is calculated using the maximum and minimums in
-        /// sector heights and either RooWall or RooWallEditor endpoints.
+        /// Calculates a two dimensional boundingbox for this room
+        /// on the fly - either based on walls or editor walls.
+        /// </summary>
+        /// <param name="UseClientWalls"></param>
+        /// <returns>
+        /// If UseClientWalls=true, BoundingBox in 1:1024 scale based on RooWalls,
+        /// else BoundingBox in 1:64 based on RooEditorWalls
+        /// </returns>
+        public BoundingBox2D GetBoundingBox2D(bool UseClientWalls = true)
+        {
+            BoundingBox2D box;
+
+            // must have at least a wall 'or' editorwall
+            if ((UseClientWalls && Walls.Count == 0) || (!UseClientWalls && WallsEditor.Count == 0))
+                return BoundingBox2D.NULL;
+
+            // build based on clientwalls (1:1024)
+            if (UseClientWalls)
+            {
+                box = new BoundingBox2D(Walls[0].P1, Walls[0].P2);
+
+                for(int i = 1; i < Walls.Count; i++)
+                {
+                    box.ExtendByPoint(Walls[i].P1);
+                    box.ExtendByPoint(Walls[i].P2);
+                }
+            }
+
+            // build based on editorwalls (1:64)
+            else
+            {
+                box = new BoundingBox2D(WallsEditor[0].P0, WallsEditor[0].P1);
+
+                for(int i = 1; i < WallsEditor.Count; i++)
+                {
+                    box.ExtendByPoint(WallsEditor[i].P0);
+                    box.ExtendByPoint(WallsEditor[i].P1);
+                }
+            }
+
+            return box;          
+        }
+
+        /// <summary>
+        /// Calculates a three dimensional boundingbox for this room
+        /// on the fly - either based on walls or editor walls and on sectors.
         /// Note: Z is the height.
         /// </summary>
         /// <returns>
         /// If UseClientWalls=true, BoundingBox in 1:1024 scale based on RooWalls,
         /// else BoundingBox in 1:64 based on RooEditorWalls
         /// </returns>
-        public BoundingBox3D GetBoundingBox(bool UseClientWalls = true)
+        public BoundingBox3D GetBoundingBox3D(bool UseClientWalls = true)
         {
-            const Real MININIT =  99999999f;
-            const Real MAXINIT = -99999999f;
+            // must have at least a sector
+            if (Sectors.Count == 0)
+                return BoundingBox3D.NULL;
 
-            BoundingBox3D box;
+            // get 2D boundingbox
+            BoundingBox2D box2D = GetBoundingBox2D(UseClientWalls);
 
-            // zero boundingbox by default
-            box.Min.X = box.Min.Y = box.Min.Z = 0f;
-            box.Max.X = box.Max.Y = box.Max.Z = 0f;
+            // zero 2d box -> zero 3d box
+            if (box2D == BoundingBox2D.NULL)
+                return BoundingBox3D.NULL;
 
-            // at least one wall -> nonzero bbox on x/y
-            if (Walls.Count > 0)
+            // initial 3d box based on 2d box and first sector
+            BoundingBox3D box3D = new BoundingBox3D(
+                new V3(box2D.Min.X, box2D.Min.Y, Sectors[0].FloorHeight),
+                new V3(box2D.Max.X, box2D.Max.Y, Sectors[0].CeilingHeight));
+
+            // extend by sector heights
+            for(int i = 1; i < Sectors.Count; i++)
             {
-                // initial values
-                box.Min.X = box.Min.Y = MININIT;
-                box.Max.X = box.Max.Y = MAXINIT;
-
-                if (UseClientWalls)
-                {
-                    // determine min/max length and width (based on walls)
-                    foreach (RooWall wall in Walls)
-                    {
-                        // p1
-                        if (wall.P1.X < box.Min.X) box.Min.X = wall.P1.X;
-                        if (wall.P1.X > box.Max.X) box.Max.X = wall.P1.X;
-                        if (wall.P1.Y < box.Min.Y) box.Min.Y = wall.P1.Y;
-                        if (wall.P1.Y > box.Max.Y) box.Max.Y = wall.P1.Y;
-
-                        // p2
-                        if (wall.P2.X < box.Min.X) box.Min.X = wall.P2.X;
-                        if (wall.P2.X > box.Max.X) box.Max.X = wall.P2.X;
-                        if (wall.P2.Y < box.Min.Y) box.Min.Y = wall.P2.Y;
-                        if (wall.P2.Y > box.Max.Y) box.Max.Y = wall.P2.Y;
-                    }
-                }
-                else
-                {
-                    // determine min/max length and width (based on editorwalls)
-                    foreach (RooWallEditor wall in WallsEditor)
-                    {
-                        // p0
-                        if (wall.P0.X < box.Min.X) box.Min.X = wall.P0.X;
-                        if (wall.P0.X > box.Max.X) box.Max.X = wall.P0.X;
-                        if (wall.P0.Y < box.Min.Y) box.Min.Y = wall.P0.Y;
-                        if (wall.P0.Y > box.Max.Y) box.Max.Y = wall.P0.Y;
-
-                        // p1
-                        if (wall.P1.X < box.Min.X) box.Min.X = wall.P1.X;
-                        if (wall.P1.X > box.Max.X) box.Max.X = wall.P1.X;
-                        if (wall.P1.Y < box.Min.Y) box.Min.Y = wall.P1.Y;
-                        if (wall.P1.Y > box.Max.Y) box.Max.Y = wall.P1.Y;
-                    }
-                }
+                box3D.ExtendByPoint(new V3(box3D.Min.X, box3D.Min.Y, Sectors[i].FloorHeight));
+                box3D.ExtendByPoint(new V3(box3D.Max.X, box3D.Max.Y, Sectors[i].CeilingHeight));
             }
-
-            // at least one sector -> nonezero bbox on z
-            if (Sectors.Count > 0)
-            {
-                // initial values
-                box.Min.Z = MININIT;
-                box.Max.Z = MAXINIT;
-
-                // determine min/max height (based on sectors)
-                foreach (RooSector sector in Sectors)
-                {
-                    if (sector.FloorHeight < box.Min.Z) box.Min.Z = sector.FloorHeight;
-                    if (sector.FloorHeight > box.Max.Z) box.Max.Z = sector.FloorHeight;
-                    if (sector.CeilingHeight < box.Min.Z) box.Min.Z = sector.CeilingHeight;
-                    if (sector.CeilingHeight > box.Max.Z) box.Max.Z = sector.CeilingHeight;
-                }
-            }
-            
+           
             // scale height from kod/editor fineness (1:64) to oldclient fineness (1:1024)
             if (UseClientWalls)
             {
-                box.Min.Z *= 16f;
-                box.Max.Z *= 16f;
+                box3D.Min.Z *= 16f;
+                box3D.Max.Z *= 16f;
             }
 
-            return box;
+            return box3D;
         }
 
         /// <summary>
