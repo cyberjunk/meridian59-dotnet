@@ -71,7 +71,7 @@ namespace Meridian59.RooViewer.UI
                 {
                     room = value;
 
-                    BoundingBox3D bBox = room.GetBoundingBox3D();
+                    BoundingBox2D bBox = room.GetBoundingBox2D();
                     center.X = bBox.Min.X + 0.5f * (bBox.Max.X - bBox.Min.X);
                     center.Y = bBox.Min.Y + 0.5f * (bBox.Max.Y - bBox.Min.Y);
 
