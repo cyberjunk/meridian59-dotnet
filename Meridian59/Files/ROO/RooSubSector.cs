@@ -175,17 +175,18 @@ namespace Meridian59.Files.ROO
         /// <summary>
         /// Constructor by values
         /// </summary>
-        /// <param name="BoundingBox"></param>
         /// <param name="SectorNum"></param>
         /// <param name="Vertices"></param>
-        public RooSubSector( 
-            BoundingBox2D BoundingBox,
-            ushort SectorNum,
-            Polygon Vertices)
-            : base(BoundingBox)
+        public RooSubSector(ushort SectorNum, Polygon Vertices) : base()
         {
             this.SectorNum = SectorNum; 
             this.Vertices = Vertices;
+
+            if (Vertices != null && Vertices.Count > 0)            
+                boundingBox = Vertices.GetBoundingBox();
+            
+            else
+                boundingBox = BoundingBox2D.NULL;
         }
 
         /// <summary>

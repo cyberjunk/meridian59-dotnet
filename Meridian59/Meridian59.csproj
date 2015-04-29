@@ -321,6 +321,7 @@
     <Compile Include="Files\BGF\BgfFile.cs" />
     <Compile Include="Files\BGF\BgfFrameSet.cs" />
     <Compile Include="Files\BSF\BsfFile.cs" />
+    <Compile Include="Files\ROO\BSPBuilder.cs" />
     <Compile Include="Files\ROO\SectorTextureChangedEvent.cs" />
     <Compile Include="Files\ROO\RooGrids.cs" />
     <Compile Include="Files\ROO\RooThingExtended.cs" />

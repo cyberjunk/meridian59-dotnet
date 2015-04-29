@@ -207,15 +207,15 @@ namespace Meridian59.Files.ROO
             BoundingBox2D BoundingBox,
             int A, int B, int C,
             ushort Right, ushort Left, 
-            ushort LineDefReference)
-            : base(BoundingBox)
+            ushort LineDefReference) : base()
         {
             this.A = A;
             this.B = B;
             this.C = C;
             this.Right = Right;
             this.Left = Left;
-            this.WallReference = LineDefReference;            
+            this.WallReference = LineDefReference;
+            this.BoundingBox = BoundingBox;
         }
 
         /// <summary>
