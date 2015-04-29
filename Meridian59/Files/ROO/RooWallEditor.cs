@@ -17,6 +17,7 @@
 using System;
 using Meridian59.Common.Constants;
 using Meridian59.Common.Interfaces;
+using Meridian59.Common;
 
 namespace Meridian59.Files.ROO
 {
@@ -33,7 +34,7 @@ namespace Meridian59.Files.ROO
     [Serializable]
     public class RooWallEditor : IByteSerializableFast
     {
-        #region IByteSerializable implementation
+        #region IByteSerializable
         public int ByteLength 
         {
             get 
@@ -232,6 +233,9 @@ namespace Meridian59.Files.ROO
         }
         #endregion
 
+        protected V2 p0;
+        protected V2 p1;
+
         public short FileSideDef1 { get; set; }
         public short FileSideDef2 { get; set; }
         public short Side1XOffset { get; set; }
@@ -240,11 +244,52 @@ namespace Meridian59.Files.ROO
         public short Side2YOffset { get; set; }
         public short Side1Sector { get; set; }
         public short Side2Sector { get; set; }
-        public int X0 { get; set; }
-        public int Y0 { get; set; }
-        public int X1 { get; set; }
-        public int Y1 { get; set; }
+
+        /// <summary>
+        /// Start point of this line
+        /// </summary>
+        public V2 P0 { get { return p0; } set { p0 = value; } }
+
+        /// <summary>
+        /// End point of this line.
+        /// </summary>
+        public V2 P1 { get { return p1; } set { p1 = value; } }
+
+        /// <summary>
+        /// Returns or sets X component of P0 as integer
+        /// </summary>
+        public int X0 { get { return (int)p0.X; } set { p0.X = value; } }
+
+        /// <summary>
+        /// Returns or sets Y component of P0 as integer
+        /// </summary>
+        public int Y0 { get { return (int)p0.Y; } set { p0.Y = value; } }
+
+        /// <summary>
+        /// Returns or sets X component of P1 as integer
+        /// </summary>
+        public int X1 { get { return (int)p1.X; } set { p1.X = value; } }
+
+        /// <summary>
+        /// Returns or sets Y component of P1 as integer
+        /// </summary>
+        public int Y1 { get { return (int)p1.Y; } set { p1.Y = value; } }
         
+        /// <summary>
+        /// Constructor by values
+        /// </summary>
+        /// <param name="FileSideDef1"></param>
+        /// <param name="FileSideDef2"></param>
+        /// <param name="Side1XOffset"></param>
+        /// <param name="Side2XOffset"></param>
+        /// <param name="Side1YOffset"></param>
+        /// <param name="Side2YOffset"></param>
+        /// <param name="Side1Sector"></param>
+        /// <param name="Side2Sector"></param>
+        /// <param name="X0"></param>
+        /// <param name="Y0"></param>
+        /// <param name="X1"></param>
+        /// <param name="Y1"></param>
         public RooWallEditor(
             short FileSideDef1, short FileSideDef2,
             short Side1XOffset, short Side2XOffset,
@@ -267,11 +312,20 @@ namespace Meridian59.Files.ROO
             this.Y1 = Y1;            
         }
 
+        /// <summary>
+        /// Constructor by managed parser
+        /// </summary>
+        /// <param name="Buffer"></param>
+        /// <param name="StartIndex"></param>
         public RooWallEditor(byte[] Buffer, int StartIndex = 0)
         {
             ReadFrom(Buffer, StartIndex);
         }
 
+        /// <summary>
+        /// Constructor by native parser
+        /// </summary>
+        /// <param name="Buffer"></param>
         public unsafe RooWallEditor(ref byte* Buffer)
         {
             ReadFrom(ref Buffer);
