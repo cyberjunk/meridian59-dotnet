@@ -1158,7 +1158,7 @@ namespace Meridian59 { namespace Ogre
 						if (observer)
 						{
 							// get room bounding box
-							BoundingBox3D^ bBox = Room->GetBoundingBox();
+							BoundingBox3D^ bBox = Room->GetBoundingBox(true);
 
 							// turn max into ogre world (scale, flip)
 							::Ogre::Vector3 max = Util::ToOgreYZFlipped(bBox->Max) * SCALE;
@@ -1222,7 +1222,7 @@ namespace Meridian59 { namespace Ogre
 	void ControllerRoom::AdjustOctree()
 	{
 		// get room boundingbox
-		BoundingBox3D^ bbBox = Room->GetBoundingBox();
+		BoundingBox3D^ bbBox = Room->GetBoundingBox(true);
 		
 		// scaled and flipped ogre variants
 		::Ogre::Vector3 min = Util::ToOgreYZFlipped(bbBox->Min) * 0.0625f + ::Ogre::Vector3(64.0f, 0, 64.0f) + ::Ogre::Vector3(-1.0f, -1.0f, -1.0f);

@@ -1257,12 +1257,16 @@ namespace Meridian59.Files.ROO
         }
         
         /// <summary>
-        /// Returns two points describing the boundingbox of the room.
-        /// This box is created using the maximum and minimums in
-        /// sector heights and wall endpoints.
+        /// Returns two points describing the 3D boundingbox of the room.
+        /// This box is calculated using the maximum and minimums in
+        /// sector heights and either RooWall or RooWallEditor endpoints.
+        /// Note: Z is the height.
         /// </summary>
-        /// <returns>BoundingBox in 1:1024 (legacy oldclient FINENESS) scale</returns>
-        public BoundingBox3D GetBoundingBox()
+        /// <returns>
+        /// If UseClientWalls=true, BoundingBox in 1:1024 scale based on RooWalls,
+        /// else BoundingBox in 1:64 based on RooEditorWalls
+        /// </returns>
+        public BoundingBox3D GetBoundingBox(bool UseClientWalls = true)
         {
             const Real MININIT =  99999999f;
             const Real MAXINIT = -99999999f;
@@ -1280,20 +1284,41 @@ namespace Meridian59.Files.ROO
                 box.Min.X = box.Min.Y = MININIT;
                 box.Max.X = box.Max.Y = MAXINIT;
 
-                // determine min/max length and width (based on walls)
-                foreach (RooWall wall in Walls)
+                if (UseClientWalls)
                 {
-                    // p1
-                    if ((Real)wall.X1 < box.Min.X) box.Min.X = (Real)wall.X1;
-                    if ((Real)wall.X1 > box.Max.X) box.Max.X = (Real)wall.X1;
-                    if ((Real)wall.Y1 < box.Min.Y) box.Min.Y = (Real)wall.Y1;
-                    if ((Real)wall.Y1 > box.Max.Y) box.Max.Y = (Real)wall.Y1;
+                    // determine min/max length and width (based on walls)
+                    foreach (RooWall wall in Walls)
+                    {
+                        // p1
+                        if (wall.P1.X < box.Min.X) box.Min.X = wall.P1.X;
+                        if (wall.P1.X > box.Max.X) box.Max.X = wall.P1.X;
+                        if (wall.P1.Y < box.Min.Y) box.Min.Y = wall.P1.Y;
+                        if (wall.P1.Y > box.Max.Y) box.Max.Y = wall.P1.Y;
 
-                    // p2
-                    if ((Real)wall.X2 < box.Min.X) box.Min.X = (Real)wall.X2;
-                    if ((Real)wall.X2 > box.Max.X) box.Max.X = (Real)wall.X2;
-                    if ((Real)wall.Y2 < box.Min.Y) box.Min.Y = (Real)wall.Y2;
-                    if ((Real)wall.Y2 > box.Max.Y) box.Max.Y = (Real)wall.Y2;
+                        // p2
+                        if (wall.P2.X < box.Min.X) box.Min.X = wall.P2.X;
+                        if (wall.P2.X > box.Max.X) box.Max.X = wall.P2.X;
+                        if (wall.P2.Y < box.Min.Y) box.Min.Y = wall.P2.Y;
+                        if (wall.P2.Y > box.Max.Y) box.Max.Y = wall.P2.Y;
+                    }
+                }
+                else
+                {
+                    // determine min/max length and width (based on editorwalls)
+                    foreach (RooWallEditor wall in WallsEditor)
+                    {
+                        // p0
+                        if (wall.P0.X < box.Min.X) box.Min.X = wall.P0.X;
+                        if (wall.P0.X > box.Max.X) box.Max.X = wall.P0.X;
+                        if (wall.P0.Y < box.Min.Y) box.Min.Y = wall.P0.Y;
+                        if (wall.P0.Y > box.Max.Y) box.Max.Y = wall.P0.Y;
+
+                        // p1
+                        if (wall.P1.X < box.Min.X) box.Min.X = wall.P1.X;
+                        if (wall.P1.X > box.Max.X) box.Max.X = wall.P1.X;
+                        if (wall.P1.Y < box.Min.Y) box.Min.Y = wall.P1.Y;
+                        if (wall.P1.Y > box.Max.Y) box.Max.Y = wall.P1.Y;
+                    }
                 }
             }
 
@@ -1314,9 +1339,12 @@ namespace Meridian59.Files.ROO
                 }
             }
             
-            // scale height from kod fineness (1:64) to oldclient fineness (1:1024)
-            box.Min.Z *= 16f;
-            box.Max.Z *= 16f;
+            // scale height from kod/editor fineness (1:64) to oldclient fineness (1:1024)
+            if (UseClientWalls)
+            {
+                box.Min.Z *= 16f;
+                box.Max.Z *= 16f;
+            }
 
             return box;
         }
