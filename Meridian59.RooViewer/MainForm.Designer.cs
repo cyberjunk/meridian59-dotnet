@@ -31,6 +31,7 @@
             this.splitMain = new System.Windows.Forms.SplitContainer();
             this.grpBoxSectors = new System.Windows.Forms.GroupBox();
             this.grpBoxSides = new System.Windows.Forms.GroupBox();
+            this.grpBoxWallsEditor = new System.Windows.Forms.GroupBox();
             this.grpBoxWalls = new System.Windows.Forms.GroupBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
@@ -46,6 +47,7 @@
             this.folderBrowser = new System.Windows.Forms.FolderBrowserDialog();
             this.viewerRooSectors = new Meridian59.RooViewer.UI.RooSectorsViewer();
             this.viewerRooSides = new Meridian59.RooViewer.UI.RooSidesViewer();
+            this.viewerRooWallsEditor = new Meridian59.RooViewer.UI.RooWallsEditorViewer();
             this.viewerRooWalls = new Meridian59.RooViewer.UI.RooWallsViewer();
             this.viewerRooSubSectors = new Meridian59.RooViewer.UI.RooSubSectorsViewer();
             this.viewerRooVertices = new Meridian59.RooViewer.UI.RooVerticesViewer();
@@ -57,6 +59,7 @@
             this.splitMain.SuspendLayout();
             this.grpBoxSectors.SuspendLayout();
             this.grpBoxSides.SuspendLayout();
+            this.grpBoxWallsEditor.SuspendLayout();
             this.grpBoxWalls.SuspendLayout();
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
@@ -78,6 +81,7 @@
             // 
             this.splitMain.Panel1.Controls.Add(this.grpBoxSectors);
             this.splitMain.Panel1.Controls.Add(this.grpBoxSides);
+            this.splitMain.Panel1.Controls.Add(this.grpBoxWallsEditor);
             this.splitMain.Panel1.Controls.Add(this.grpBoxWalls);
             this.splitMain.Panel1.Controls.Add(this.groupBox5);
             this.splitMain.Panel1.Controls.Add(this.groupBox4);
@@ -93,9 +97,9 @@
             // 
             this.grpBoxSectors.Controls.Add(this.viewerRooSectors);
             this.grpBoxSectors.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.grpBoxSectors.Location = new System.Drawing.Point(0, 566);
+            this.grpBoxSectors.Location = new System.Drawing.Point(0, 676);
             this.grpBoxSectors.Name = "grpBoxSectors";
-            this.grpBoxSectors.Size = new System.Drawing.Size(621, 222);
+            this.grpBoxSectors.Size = new System.Drawing.Size(621, 112);
             this.grpBoxSectors.TabIndex = 1;
             this.grpBoxSectors.TabStop = false;
             this.grpBoxSectors.Text = "Sectors";
@@ -104,12 +108,23 @@
             // 
             this.grpBoxSides.Controls.Add(this.viewerRooSides);
             this.grpBoxSides.Dock = System.Windows.Forms.DockStyle.Top;
-            this.grpBoxSides.Location = new System.Drawing.Point(0, 410);
+            this.grpBoxSides.Location = new System.Drawing.Point(0, 520);
             this.grpBoxSides.Name = "grpBoxSides";
             this.grpBoxSides.Size = new System.Drawing.Size(621, 156);
             this.grpBoxSides.TabIndex = 2;
             this.grpBoxSides.TabStop = false;
             this.grpBoxSides.Text = "Sides";
+            // 
+            // grpBoxWallsEditor
+            // 
+            this.grpBoxWallsEditor.Controls.Add(this.viewerRooWallsEditor);
+            this.grpBoxWallsEditor.Dock = System.Windows.Forms.DockStyle.Top;
+            this.grpBoxWallsEditor.Location = new System.Drawing.Point(0, 410);
+            this.grpBoxWallsEditor.Name = "grpBoxWallsEditor";
+            this.grpBoxWallsEditor.Size = new System.Drawing.Size(621, 110);
+            this.grpBoxWallsEditor.TabIndex = 1;
+            this.grpBoxWallsEditor.TabStop = false;
+            this.grpBoxWallsEditor.Text = "Walls (Editor)";
             // 
             // grpBoxWalls
             // 
@@ -231,7 +246,7 @@
             this.viewerRooSectors.Dock = System.Windows.Forms.DockStyle.Fill;
             this.viewerRooSectors.Location = new System.Drawing.Point(3, 16);
             this.viewerRooSectors.Name = "viewerRooSectors";
-            this.viewerRooSectors.Size = new System.Drawing.Size(615, 203);
+            this.viewerRooSectors.Size = new System.Drawing.Size(615, 93);
             this.viewerRooSectors.TabIndex = 0;
             this.viewerRooSectors.SelectedItemChanged += new System.EventHandler(this.OnViewerRooSectorsSelectedItemChanged);
             // 
@@ -243,6 +258,14 @@
             this.viewerRooSides.Size = new System.Drawing.Size(615, 137);
             this.viewerRooSides.TabIndex = 0;
             this.viewerRooSides.SelectedItemChanged += new System.EventHandler(this.OnViewerRooSidesSelectedItemChanged);
+            // 
+            // viewerRooWallsEditor
+            // 
+            this.viewerRooWallsEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.viewerRooWallsEditor.Location = new System.Drawing.Point(3, 16);
+            this.viewerRooWallsEditor.Name = "viewerRooWallsEditor";
+            this.viewerRooWallsEditor.Size = new System.Drawing.Size(615, 91);
+            this.viewerRooWallsEditor.TabIndex = 0;
             // 
             // viewerRooWalls
             // 
@@ -305,6 +328,7 @@
             this.splitMain.ResumeLayout(false);
             this.grpBoxSectors.ResumeLayout(false);
             this.grpBoxSides.ResumeLayout(false);
+            this.grpBoxWallsEditor.ResumeLayout(false);
             this.grpBoxWalls.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
@@ -345,6 +369,8 @@
         private System.Windows.Forms.ToolStripMenuItem menuTools;
         private System.Windows.Forms.ToolStripMenuItem menuItemExtractAllUsedTextures;
         private System.Windows.Forms.FolderBrowserDialog folderBrowser;
+        private System.Windows.Forms.GroupBox grpBoxWallsEditor;
+        private UI.RooWallsEditorViewer viewerRooWallsEditor;
         
     }
 }

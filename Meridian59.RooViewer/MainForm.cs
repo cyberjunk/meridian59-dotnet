@@ -43,6 +43,7 @@ namespace Meridian59.RooViewer
             set
             {               
                 viewerRooWalls.DataSource = value.Walls;
+                viewerRooWallsEditor.DataSource = value.WallsEditor;
                 viewerRooSides.DataSource = value.SideDefs;
                 viewerRooSectors.DataSource = value.Sectors;
                 viewerRooPartitionLines.DataSource = value.BSPTreeNodes;
