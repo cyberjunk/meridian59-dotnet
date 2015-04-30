@@ -105,8 +105,8 @@ namespace Meridian59.RooViewer
             {
                 foreach (V2 v in s.Vertices)
                 {
-                    float absdx = Math.Abs(v.X - Vertex.X);
-                    float absdy = Math.Abs(v.Y - Vertex.Y);
+                    float absdx = (float)Math.Abs(v.X - Vertex.X);
+                    float absdy = (float)Math.Abs(v.Y - Vertex.Y);
 
                     // must be very close but not same pos
                     if (absdx <= CLOSE && absdy <= CLOSE && (absdx > 0 || absdy > 0))
