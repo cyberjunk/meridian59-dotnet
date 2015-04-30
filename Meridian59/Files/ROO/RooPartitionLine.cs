@@ -19,6 +19,13 @@ using Meridian59.Common.Constants;
 using Meridian59.Common.Interfaces;
 using System;
 
+// Switch FP precision based on architecture
+#if X64
+using Real = System.Double;
+#else
+using Real = System.Single;
+#endif
+
 namespace Meridian59.Files.ROO
 {
     /// <summary>
@@ -41,13 +48,13 @@ namespace Meridian59.Files.ROO
 
             cursor += base.WriteTo(Buffer, cursor);
 
-            Array.Copy(BitConverter.GetBytes(A), 0, Buffer, cursor, TypeSizes.INT);
+            Array.Copy(BitConverter.GetBytes((int)A), 0, Buffer, cursor, TypeSizes.INT);
             cursor += TypeSizes.INT;
 
-            Array.Copy(BitConverter.GetBytes(B), 0, Buffer, cursor, TypeSizes.INT);
+            Array.Copy(BitConverter.GetBytes((int)B), 0, Buffer, cursor, TypeSizes.INT);
             cursor += TypeSizes.INT;
 
-            Array.Copy(BitConverter.GetBytes(C), 0, Buffer, cursor, TypeSizes.INT);
+            Array.Copy(BitConverter.GetBytes((int)C), 0, Buffer, cursor, TypeSizes.INT);
             cursor += TypeSizes.INT;
 
             Array.Copy(BitConverter.GetBytes(Right), 0, Buffer, cursor, TypeSizes.SHORT);
@@ -66,13 +73,13 @@ namespace Meridian59.Files.ROO
         {
             base.WriteTo(ref Buffer);
 
-            *((int*)Buffer) = A;
+            *((int*)Buffer) = (int)A;
             Buffer += TypeSizes.INT;
 
-            *((int*)Buffer) = B;
+            *((int*)Buffer) = (int)B;
             Buffer += TypeSizes.INT;
 
-            *((int*)Buffer) = C;
+            *((int*)Buffer) = (int)C;
             Buffer += TypeSizes.INT;
 
             *((ushort*)Buffer) = Right;
@@ -91,13 +98,13 @@ namespace Meridian59.Files.ROO
 
             cursor += base.ReadFrom(Buffer, cursor);
 
-            A = BitConverter.ToInt32(Buffer, cursor);
+            A = (Real)BitConverter.ToInt32(Buffer, cursor);
             cursor += TypeSizes.INT;
 
-            B = BitConverter.ToInt32(Buffer, cursor);
+            B = (Real)BitConverter.ToInt32(Buffer, cursor);
             cursor += TypeSizes.INT;
 
-            C = BitConverter.ToInt32(Buffer, cursor);
+            C = (Real)BitConverter.ToInt32(Buffer, cursor);
             cursor += TypeSizes.INT;
 
             Right = BitConverter.ToUInt16(Buffer, cursor);
@@ -116,13 +123,13 @@ namespace Meridian59.Files.ROO
         {
             base.ReadFrom(ref Buffer);
 
-            A = *((int*)Buffer);
+            A = (Real)(*((int*)Buffer));
             Buffer += TypeSizes.INT;
 
-            B = *((int*)Buffer);
+            B = (Real)(*((int*)Buffer));
             Buffer += TypeSizes.INT;
 
-            C = *((int*)Buffer);
+            C = (Real)(*((int*)Buffer));
             Buffer += TypeSizes.INT;
 
             Right = *((ushort*)Buffer);
@@ -144,19 +151,19 @@ namespace Meridian59.Files.ROO
         public override NodeType Type { get { return RooBSPItem.NodeType.Node; } }
         
         /// <summary>
-        /// 'a' variable for line equation ax+bc+c=0
+        /// 'a' variable for line equation ax+by+c=0
         /// </summary>
-        public int A { get; set; }
+        public Real A { get; set; }
 
         /// <summary>
-        /// 'b' variable for line equation ax+bc+c=0
+        /// 'b' variable for line equation ax+by+c=0
         /// </summary>
-        public int B { get; set; }
+        public Real B { get; set; }
 
         /// <summary>
-        /// 'c' variable for line equation ax+bc+c=0
+        /// 'c' variable for line equation ax+by+c=0
         /// </summary>
-        public int C { get; set; }
+        public Real C { get; set; }
         
         /// <summary>
         /// Index of right child
@@ -205,7 +212,7 @@ namespace Meridian59.Files.ROO
         /// <param name="LineDefReference"></param>
         public RooPartitionLine( 
             BoundingBox2D BoundingBox,
-            int A, int B, int C,
+            Real A, Real B, Real C,
             ushort Right, ushort Left, 
             ushort LineDefReference) : base()
         {

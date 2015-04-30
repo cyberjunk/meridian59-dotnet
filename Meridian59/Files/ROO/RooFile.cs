@@ -1218,7 +1218,7 @@ namespace Meridian59.Files.ROO
             else
             {
                 RooPartitionLine line = (RooPartitionLine)node;
-                side = Convert.ToInt32((Real)line.A * x + (Real)line.B * y + (Real)line.C);
+                side = Convert.ToInt32(line.A * x + line.B * y + line.C);
 
                 if (side == 0)
                 {
