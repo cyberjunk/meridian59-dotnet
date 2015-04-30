@@ -113,6 +113,168 @@ namespace Meridian59.UnitTest
         }
 
         /// <summary>
+        /// Test for GetSide()
+        /// </summary>
+        [TestMethod]
+        public void GetSide()
+        {
+            int expected;
+            int returned;
+            V2 s;
+            V2 p1, p2;
+
+            /**************************************************/
+
+            // --- TEST ---
+            // p1=p2=s=0, no line
+
+            s = new V2(0.0f, 0.0f);
+            p1 = new V2(0.0f, 0.0f);
+            p2 = new V2(0.0f, 0.0f);
+            expected = 0;
+            returned = s.GetSide(p1, p2);
+
+            Assert.AreEqual(expected, returned);
+
+            // --- TEST ---
+            // p1=s
+
+            s = new V2(0.0f, 0.0f);
+            p1 = new V2(0.0f, 0.0f);
+            p2 = new V2(0.0f, 1.0f);
+            expected = 0;
+            returned = s.GetSide(p1, p2);
+
+            Assert.AreEqual(expected, returned);
+
+            // --- TEST ---
+            // p2=s
+
+            s = new V2(0.0f, 1.0f);
+            p1 = new V2(0.0f, 0.0f);
+            p2 = new V2(0.0f, 1.0f);
+            expected = 0;
+            returned = s.GetSide(p1, p2);
+
+            Assert.AreEqual(expected, returned);
+
+            /**************************************************/
+
+            // --- TEST ---
+            // s is somewhere on line
+
+            s = new V2(0.5f, 0.5f);
+            p1 = new V2(0.0f, 0.0f);
+            p2 = new V2(1.0f, 1.0f);
+            expected = 0;
+            returned = s.GetSide(p1, p2);
+
+            Assert.AreEqual(expected, returned);
+
+            // --- TEST ---
+            // s is somewhere on line
+
+            s = new V2(-0.5f, -0.5f);
+            p1 = new V2(0.0f, 0.0f);
+            p2 = new V2(-1.0f, -1.0f);
+            expected = 0;
+            returned = s.GetSide(p1, p2);
+
+            Assert.AreEqual(expected, returned);
+
+            // --- TEST ---
+            // s is somewhere on line
+
+            s = new V2(-0.5f, 0.5f);
+            p1 = new V2(0.0f, 0.0f);
+            p2 = new V2(-1.0f, 1.0f);
+            expected = 0;
+            returned = s.GetSide(p1, p2);
+
+            Assert.AreEqual(expected, returned);
+
+            // --- TEST ---
+            // s is somewhere on line
+
+            s = new V2(0.5f, -0.5f);
+            p1 = new V2(0.0f, 0.0f);
+            p2 = new V2(1.0f, -1.0f);
+            expected = 0;
+            returned = s.GetSide(p1, p2);
+
+            Assert.AreEqual(expected, returned);
+
+            /**************************************************/
+
+            // --- TEST ---
+            // s is not on line segment, but on same infinite line
+
+            s = new V2(2.0f, 2.0f);
+            p1 = new V2(0.0f, 0.0f);
+            p2 = new V2(1.0f, 1.0f);
+            expected = 0;
+            returned = s.GetSide(p1, p2);
+
+            Assert.AreEqual(expected, returned);
+
+            // --- TEST ---
+            // s is not on line segment, but on same infinite line
+
+            s = new V2(-2.0f, -2.0f);
+            p1 = new V2(0.0f, 0.0f);
+            p2 = new V2(1.0f, 1.0f);
+            expected = 0;
+            returned = s.GetSide(p1, p2);
+
+            Assert.AreEqual(expected, returned);
+
+            // --- TEST ---
+            // s is not on line segment, but very far on same infinite line
+
+            s = new V2(-2000000.0f, -2000000.0f);
+            p1 = new V2(0.0f, 0.0f);
+            p2 = new V2(1.0f, 1.0f);
+            expected = 0;
+            returned = s.GetSide(p1, p2);
+
+            Assert.AreEqual(expected, returned);
+
+            // --- TEST ---
+            // s is left of line, but close (in bbox)
+
+            s = new V2(0.45f, 0.55f);
+            p1 = new V2(0.0f, 0.0f);
+            p2 = new V2(1.0f, 1.0f);
+            expected = 1;
+            returned = s.GetSide(p1, p2);
+
+            Assert.AreEqual(expected, returned);
+
+            // --- TEST ---
+            // s is left of line and far away (outside bbox)
+
+            s = new V2(0.0f, 1000.0f);
+            p1 = new V2(0.0f, 0.0f);
+            p2 = new V2(1.0f, 1.0f);
+            expected = 1;
+            returned = s.GetSide(p1, p2);
+
+            Assert.AreEqual(expected, returned);
+
+            // --- TEST ---
+            // s is on line
+
+            s = new V2(14304f, 32512f);
+            p1 = new V2(15872f, 32512f);
+            p2 = new V2(3433.6f, 32512f);
+            expected = 0;
+            returned = s.GetSide(p1, p2);
+
+            Assert.AreEqual(expected, returned);
+
+        }
+
+        /// <summary>
         /// Test for MinDistanceToLineSegment()
         /// </summary>
         [TestMethod]
