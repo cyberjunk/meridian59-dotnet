@@ -256,7 +256,7 @@ namespace Meridian59.Common
             // make sure this is a convex polygon
             if (!IsConvexPolygon())
                 return null;
-            
+
             /***************************************************************/
 
             Polygon poly;
@@ -357,13 +357,14 @@ namespace Meridian59.Common
                 int idx  = -1;
                 int idx1 = -1;
                 int idx2 = -1;
+                bool p1added, p2added;
 
                 // case (2a): infinite line intersects two polygon edges
                 // -> add both intersection vertices, then use them
                 if (case2a)
                 {
-                    AddPointOnEdge(intersections[0]);
-                    AddPointOnEdge(intersections[1]);
+                    p1added = AddPointOnEdge(intersections[0]);
+                    p2added = AddPointOnEdge(intersections[1]);
                     idx1 = IndexOf(intersections[0]);
                     idx2 = IndexOf(intersections[1]);
                 }
@@ -379,7 +380,7 @@ namespace Meridian59.Common
                 // case (2c): infinite line intersects one polygon edge and one vertex
                 else if (case2c)
                 {
-                    AddPointOnEdge(intersections[0]);
+                    p1added = AddPointOnEdge(intersections[0]);
                     idx1 = IndexOf(intersections[0]);
                     idx2 = IndexOf(boundarypoints[0]);
                 }
