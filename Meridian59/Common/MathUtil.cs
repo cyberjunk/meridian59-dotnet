@@ -213,9 +213,9 @@ namespace Meridian59.Common
         /// <param name="C"></param>
         public static void GetLineEquation2DCoefficients(V2 P1, V2 P2, out Real A, out Real B, out Real C)
         {
-            A = P1.Y - P2.Y;
-            B = P2.X - P1.X;
-            C = (P1.X - P2.X) * P1.Y + (P2.Y - P1.Y) * P1.X;
+            A = P2.Y - P1.Y;
+            B = P1.X - P2.X;
+            C = A * P1.X + B * P1.Y;
         }
 
         /// <summary>
@@ -248,6 +248,20 @@ namespace Meridian59.Common
             // both finite line endpoints are on different sides
             if (sideP1 != sideP2 && sideP1 != 0 && sideP2 != 0)
             {
+                // variant 1
+                /*Real A1, B1, C1;
+                Real A2, B2, C2;
+                MathUtil.GetLineEquation2DCoefficients(P1, P2, out A1, out B1, out C1);
+                MathUtil.GetLineEquation2DCoefficients(Q1, Q2, out A2, out B2, out C2);
+               
+                Real delta = A1*B2 - A2*B1;
+                if(delta == 0.0f)
+                    throw new Exception("Parallel lines where they should not be."); // WTF? 
+                
+                Intersect.X = (B2*C1 - B1*C2)/delta;
+                Intersect.Y = (A1*C2 - A2*C1)/delta;*/
+
+                // variant 2
                 Real denom = (P1.X - P2.X) * (Q1.Y - Q2.Y) - (P1.Y - P2.Y) * (Q1.X - Q2.X);                
                 Real num;
                 

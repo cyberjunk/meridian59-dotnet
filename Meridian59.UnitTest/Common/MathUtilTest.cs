@@ -371,7 +371,7 @@ namespace Meridian59.UnitTest.Common
             P1 = new V2(0.0f, 0.0f);
             P2 = new V2(1.0f, 0.0f);
             aExpected = 0.0f;
-            bExpected = 1.0f;
+            bExpected = -1.0f;
             cExpected = 0.0f;
             aReturned = bReturned = cReturned = 0;
 
@@ -386,7 +386,7 @@ namespace Meridian59.UnitTest.Common
             // y-axis
             P1 = new V2(0.0f, 0.0f);
             P2 = new V2(0.0f, 1.0f);
-            aExpected = -1.0f;
+            aExpected = 1.0f;
             bExpected = 0.0f;
             cExpected = 0.0f;
             aReturned = bReturned = cReturned = 0;
@@ -403,8 +403,8 @@ namespace Meridian59.UnitTest.Common
             // 45° angle
             P1 = new V2(0.0f, 1.0f);
             P2 = new V2(1.0f, 2.0f);
-            aExpected = -1.0f;
-            bExpected = 1.0f;
+            aExpected = 1.0f;
+            bExpected = -1.0f;
             cExpected = -1.0f;
             aReturned = bReturned = cReturned = 0;
 
