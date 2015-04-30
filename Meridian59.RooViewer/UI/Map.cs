@@ -446,10 +446,10 @@ namespace Meridian59.RooViewer.UI
         protected void DrawWall(Graphics G, RooWall Wall, Pen Pen, bool Infinite, Pen PenInfinite)
         {            
             // transform points to match world of pixeldrawing
-            float transx1 = (Wall.P1.X - boxMin.X) * ZoomInv;
-            float transy1 = (Wall.P1.Y - boxMin.Y) * ZoomInv;
-            float transx2 = (Wall.P2.X - boxMin.X) * ZoomInv;
-            float transy2 = (Wall.P2.Y - boxMin.Y) * ZoomInv;
+            float transx1 = (float)(Wall.P1.X - boxMin.X) * ZoomInv;
+            float transy1 = (float)(Wall.P1.Y - boxMin.Y) * ZoomInv;
+            float transx2 = (float)(Wall.P2.X - boxMin.X) * ZoomInv;
+            float transy2 = (float)(Wall.P2.Y - boxMin.Y) * ZoomInv;
 
             // draw extensions of line
             if (Infinite)
