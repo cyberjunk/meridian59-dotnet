@@ -415,6 +415,17 @@ namespace Meridian59.UnitTest
             returned = s.IsOnLineSegment(p1, p2);
 
             Assert.AreEqual(expected, returned);
+
+            // --- TEST ---
+            // s is on line
+
+            s = new V2(14304f, 32512f);
+            p1 = new V2(15872f, 32512f);
+            p2 = new V2(3433.6f, 32512f);
+            expected = true;
+            returned = s.IsOnLineSegment(p1, p2);
+
+            Assert.AreEqual(expected, returned);
         }
     }
 }
