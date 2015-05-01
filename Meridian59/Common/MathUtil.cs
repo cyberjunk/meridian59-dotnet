@@ -158,6 +158,66 @@ namespace Meridian59.Common
         }
 
         /// <summary>
+        /// Returns the Greatest Common Divisor
+        /// </summary>
+        /// <param name="a">Number a</param>
+        /// <param name="b">Number b</param>
+        /// <returns></returns>
+        public static long GCD(long a, long b)
+        {
+            long tmp;
+            while (b != 0)
+            {
+                tmp = b;
+                b = a % b;
+                a = tmp;
+            }
+
+            return a;
+        }
+
+        /// <summary>
+        /// Returns the Greatest Common Divisor
+        /// </summary>
+        /// <param name="a">Number a</param>
+        /// <param name="b">Number b</param>
+        /// <returns></returns>
+        public static int GCD(int a, int b)
+        {
+            int tmp;
+            while (b != 0)
+            {
+                tmp = b;
+                b = a % b;
+                a = tmp;
+            }
+
+            return a;
+        }
+
+        /// <summary>
+        /// Returns the Least Common Multiple
+        /// </summary>
+        /// <param name="a">Number a</param>
+        /// <param name="b">Number b</param>
+        /// <returns></returns>
+        public static long LCM(long a, long b)
+        {
+            return (a * b) / GCD(a, b);
+        }
+
+        /// <summary>
+        /// Returns the Least Common Multiple
+        /// </summary>
+        /// <param name="a">Number a</param>
+        /// <param name="b">Number b</param>
+        /// <returns></returns>
+        public static int LCM(int a, int b)
+        {
+            return (a * b) / GCD(a, b);
+        }
+
+        /// <summary>
         /// Returns a random point within a 2D triangle.
         /// </summary>
         /// <remarks>
@@ -249,27 +309,28 @@ namespace Meridian59.Common
             if (sideP1 != sideP2 && sideP1 != 0 && sideP2 != 0)
             {
                 // variant 1
-                /*Real A1, B1, C1;
+                Real A1, B1, C1;
                 Real A2, B2, C2;
                 MathUtil.GetLineEquation2DCoefficients(P1, P2, out A1, out B1, out C1);
                 MathUtil.GetLineEquation2DCoefficients(Q1, Q2, out A2, out B2, out C2);
-               
+                
+                
                 Real delta = A1*B2 - A2*B1;
                 if(delta == 0.0f)
                     throw new Exception("Parallel lines where they should not be."); // WTF? 
                 
                 Intersect.X = (B2*C1 - B1*C2)/delta;
-                Intersect.Y = (A1*C2 - A2*C1)/delta;*/
+                Intersect.Y = (A1*C2 - A2*C1)/delta;
 
                 // variant 2
-                Real denom = (P1.X - P2.X) * (Q1.Y - Q2.Y) - (P1.Y - P2.Y) * (Q1.X - Q2.X);                
+                /*Real denom = (P1.X - P2.X) * (Q1.Y - Q2.Y) - (P1.Y - P2.Y) * (Q1.X - Q2.X);                
                 Real num;
                 
                 num = (P1.X * P2.Y - P1.Y * P2.X) * (Q1.X - Q2.X) - (P1.X - P2.X) * (Q1.X * Q2.Y - Q1.Y * Q2.X);                
                 Intersect.X = num / denom;
 
                 num = (P1.X * P2.Y - P1.Y * P2.X) * (Q1.Y - Q2.Y) - (P1.Y - P2.Y) * (Q1.X * Q2.Y - Q1.Y * Q2.X);
-                Intersect.Y = num / denom;
+                Intersect.Y = num / denom;*/
 
                 return LineInfiniteLineIntersectionType.OneIntersection;
             }
