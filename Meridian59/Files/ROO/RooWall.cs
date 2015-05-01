@@ -1169,7 +1169,7 @@ namespace Meridian59.Files.ROO
         /// </summary>
         /// <param name="Q1"></param>
         /// <param name="Q2"></param>
-        /// <returns></returns>
+        /// <returns>Item1: P1 to I. Item2: I to P2</returns>
         public Tuple<RooWall, RooWall> Split(V2 Q1, V2 Q2)
         {
             V2 intersect;
