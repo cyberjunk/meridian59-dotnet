@@ -31,6 +31,8 @@ namespace Meridian59.Common
     /// </summary>
     public struct V2
     {
+        const Real EPSILON = 0.000001f;
+
         /// <summary>
         /// The zero vector (0,0)
         /// </summary>
@@ -205,7 +207,9 @@ namespace Meridian59.Common
         /// <returns></returns>
         public bool Equals(V2 obj)
         {
-            return (obj.X == X && obj.Y == Y);
+            return 
+                Math.Abs(obj.X-X) <= EPSILON && 
+                Math.Abs(obj.Y-Y) <= EPSILON;
         }
 
         /// <summary>
@@ -383,7 +387,16 @@ namespace Meridian59.Common
         /// <returns></returns>
         public int GetSide(V2 P1, V2 P2)
         {
-            return Math.Sign((P2.X - P1.X) * (Y - P1.Y) - (P2.Y - P1.Y) * (X - P1.X));
+            Real val = (P2.X - P1.X) * (Y - P1.Y) - (P2.Y - P1.Y) * (X - P1.X);
+
+            if (val >= EPSILON)
+                return 1;
+
+            else if (val <= -EPSILON)
+               return -1;
+
+            else
+                return 0;
         }
 
         /// <summary>
