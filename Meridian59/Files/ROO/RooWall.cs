@@ -375,7 +375,7 @@ namespace Meridian59.Files.ROO
 
         /// <summary>
         /// Left side of the wall.
-        /// Will be resolved from LeftSideNum within ReoslveIndices().
+        /// Will be resolved from LeftSideNum within ResolveIndices().
         /// </summary>
         public RooSideDef LeftSide { get; set; }
 
@@ -383,6 +383,12 @@ namespace Meridian59.Files.ROO
         /// Flags describing special intersection cases.
         /// </summary>
         public BowtieFlags BowtieFlags { get; set; }
+
+        /// <summary>
+        /// Next wall on same infinite line.
+        /// Will be resolved from NextWallNumInPlane within ResolveIndices().
+        /// </summary>
+        public RooWall NextWallInPlane { get; set; }
 
         #region Z-coordinates
         /* 
@@ -543,6 +549,13 @@ namespace Meridian59.Files.ROO
                 // save as adjacent side
                 if (LeftSector != null && !LeftSector.Sides.Contains(LeftSide))
                     LeftSector.Sides.Add(LeftSide);
+            }
+
+            // get reference to next wall in same plane
+            if (NextWallNumInPlane > 0 &&
+                RooFile.Walls.Count > NextWallNumInPlane - 1)
+            {
+                NextWallInPlane = RooFile.Walls[NextWallNumInPlane - 1];
             }
         }
 
