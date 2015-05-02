@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -41,13 +42,11 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGrid = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -65,7 +64,7 @@
             this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colServerID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colNextWallNumInPlane = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colRightSideNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colLeftSideNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colRightSectorNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -90,7 +89,7 @@
             this.dataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colNum,
-            this.colServerID,
+            this.colNextWallNumInPlane,
             this.colRightSideNum,
             this.colLeftSideNum,
             this.colRightSectorNum,
@@ -117,8 +116,8 @@
             // 
             this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.dataGridViewTextBoxColumn1.DataPropertyName = "Num";
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.Thistle;
-            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.Thistle;
+            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle6;
             this.dataGridViewTextBoxColumn1.HeaderText = "#";
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             this.dataGridViewTextBoxColumn1.Width = 50;
@@ -127,8 +126,8 @@
             // 
             this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.dataGridViewTextBoxColumn2.DataPropertyName = "ServerID";
-            dataGridViewCellStyle8.BackColor = System.Drawing.Color.Silver;
-            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle7.BackColor = System.Drawing.Color.Silver;
+            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle7;
             this.dataGridViewTextBoxColumn2.HeaderText = "SID";
             this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             this.dataGridViewTextBoxColumn2.Width = 30;
@@ -137,8 +136,8 @@
             // 
             this.dataGridViewTextBoxColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.dataGridViewTextBoxColumn3.DataPropertyName = "X1";
-            dataGridViewCellStyle9.BackColor = System.Drawing.Color.PaleGreen;
-            this.dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle8.BackColor = System.Drawing.Color.PaleGreen;
+            this.dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle8;
             this.dataGridViewTextBoxColumn3.HeaderText = "X1";
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             this.dataGridViewTextBoxColumn3.Width = 75;
@@ -147,8 +146,8 @@
             // 
             this.dataGridViewTextBoxColumn4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.dataGridViewTextBoxColumn4.DataPropertyName = "Y1";
-            dataGridViewCellStyle10.BackColor = System.Drawing.Color.PaleGreen;
-            this.dataGridViewTextBoxColumn4.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle9.BackColor = System.Drawing.Color.PaleGreen;
+            this.dataGridViewTextBoxColumn4.DefaultCellStyle = dataGridViewCellStyle9;
             this.dataGridViewTextBoxColumn4.HeaderText = "Y1";
             this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
             this.dataGridViewTextBoxColumn4.Width = 75;
@@ -157,8 +156,8 @@
             // 
             this.dataGridViewTextBoxColumn5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.dataGridViewTextBoxColumn5.DataPropertyName = "X2";
-            dataGridViewCellStyle11.BackColor = System.Drawing.Color.PaleTurquoise;
-            this.dataGridViewTextBoxColumn5.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle10.BackColor = System.Drawing.Color.PaleTurquoise;
+            this.dataGridViewTextBoxColumn5.DefaultCellStyle = dataGridViewCellStyle10;
             this.dataGridViewTextBoxColumn5.HeaderText = "X2";
             this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
             this.dataGridViewTextBoxColumn5.Width = 75;
@@ -167,8 +166,8 @@
             // 
             this.dataGridViewTextBoxColumn6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.dataGridViewTextBoxColumn6.DataPropertyName = "Y2";
-            dataGridViewCellStyle12.BackColor = System.Drawing.Color.PaleTurquoise;
-            this.dataGridViewTextBoxColumn6.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle11.BackColor = System.Drawing.Color.PaleTurquoise;
+            this.dataGridViewTextBoxColumn6.DefaultCellStyle = dataGridViewCellStyle11;
             this.dataGridViewTextBoxColumn6.HeaderText = "Y2";
             this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
             this.dataGridViewTextBoxColumn6.Width = 75;
@@ -177,8 +176,8 @@
             // 
             this.dataGridViewTextBoxColumn7.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.dataGridViewTextBoxColumn7.DataPropertyName = "X1";
-            dataGridViewCellStyle13.BackColor = System.Drawing.Color.Khaki;
-            this.dataGridViewTextBoxColumn7.DefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle12.BackColor = System.Drawing.Color.Khaki;
+            this.dataGridViewTextBoxColumn7.DefaultCellStyle = dataGridViewCellStyle12;
             this.dataGridViewTextBoxColumn7.HeaderText = "X1";
             this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
             // 
@@ -186,8 +185,8 @@
             // 
             this.dataGridViewTextBoxColumn8.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.dataGridViewTextBoxColumn8.DataPropertyName = "Y1";
-            dataGridViewCellStyle14.BackColor = System.Drawing.Color.Khaki;
-            this.dataGridViewTextBoxColumn8.DefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle13.BackColor = System.Drawing.Color.Khaki;
+            this.dataGridViewTextBoxColumn8.DefaultCellStyle = dataGridViewCellStyle13;
             this.dataGridViewTextBoxColumn8.HeaderText = "Y1";
             this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
             // 
@@ -195,8 +194,8 @@
             // 
             this.dataGridViewTextBoxColumn9.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.dataGridViewTextBoxColumn9.DataPropertyName = "X2";
-            dataGridViewCellStyle15.BackColor = System.Drawing.Color.DarkKhaki;
-            this.dataGridViewTextBoxColumn9.DefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle14.BackColor = System.Drawing.Color.DarkKhaki;
+            this.dataGridViewTextBoxColumn9.DefaultCellStyle = dataGridViewCellStyle14;
             this.dataGridViewTextBoxColumn9.HeaderText = "X2";
             this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
             // 
@@ -204,8 +203,8 @@
             // 
             this.dataGridViewTextBoxColumn10.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.dataGridViewTextBoxColumn10.DataPropertyName = "Y2";
-            dataGridViewCellStyle16.BackColor = System.Drawing.Color.DarkKhaki;
-            this.dataGridViewTextBoxColumn10.DefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle15.BackColor = System.Drawing.Color.DarkKhaki;
+            this.dataGridViewTextBoxColumn10.DefaultCellStyle = dataGridViewCellStyle15;
             this.dataGridViewTextBoxColumn10.HeaderText = "Y2";
             this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
             // 
@@ -221,8 +220,8 @@
             // 
             this.dataGridViewTextBoxColumn12.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.dataGridViewTextBoxColumn12.DataPropertyName = "RightXOffset";
-            dataGridViewCellStyle17.BackColor = System.Drawing.Color.LightSteelBlue;
-            this.dataGridViewTextBoxColumn12.DefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle16.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.dataGridViewTextBoxColumn12.DefaultCellStyle = dataGridViewCellStyle16;
             this.dataGridViewTextBoxColumn12.HeaderText = "RXO";
             this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
             this.dataGridViewTextBoxColumn12.Width = 35;
@@ -231,8 +230,8 @@
             // 
             this.dataGridViewTextBoxColumn13.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.dataGridViewTextBoxColumn13.DataPropertyName = "RightYOffset";
-            dataGridViewCellStyle18.BackColor = System.Drawing.Color.LightSteelBlue;
-            this.dataGridViewTextBoxColumn13.DefaultCellStyle = dataGridViewCellStyle18;
+            dataGridViewCellStyle17.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.dataGridViewTextBoxColumn13.DefaultCellStyle = dataGridViewCellStyle17;
             this.dataGridViewTextBoxColumn13.HeaderText = "RYO";
             this.dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
             this.dataGridViewTextBoxColumn13.Width = 35;
@@ -241,8 +240,8 @@
             // 
             this.dataGridViewTextBoxColumn14.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.dataGridViewTextBoxColumn14.DataPropertyName = "LeftXOffset";
-            dataGridViewCellStyle19.BackColor = System.Drawing.Color.Thistle;
-            this.dataGridViewTextBoxColumn14.DefaultCellStyle = dataGridViewCellStyle19;
+            dataGridViewCellStyle18.BackColor = System.Drawing.Color.Thistle;
+            this.dataGridViewTextBoxColumn14.DefaultCellStyle = dataGridViewCellStyle18;
             this.dataGridViewTextBoxColumn14.HeaderText = "LXO";
             this.dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
             this.dataGridViewTextBoxColumn14.Width = 35;
@@ -251,8 +250,8 @@
             // 
             this.dataGridViewTextBoxColumn15.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.dataGridViewTextBoxColumn15.DataPropertyName = "LeftYOffset";
-            dataGridViewCellStyle20.BackColor = System.Drawing.Color.Thistle;
-            this.dataGridViewTextBoxColumn15.DefaultCellStyle = dataGridViewCellStyle20;
+            dataGridViewCellStyle19.BackColor = System.Drawing.Color.Thistle;
+            this.dataGridViewTextBoxColumn15.DefaultCellStyle = dataGridViewCellStyle19;
             this.dataGridViewTextBoxColumn15.HeaderText = "LYO";
             this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
             this.dataGridViewTextBoxColumn15.Width = 35;
@@ -267,22 +266,20 @@
             this.colNum.Name = "colNum";
             this.colNum.Width = 35;
             // 
-            // colServerID
+            // colNextWallNumInPlane
             // 
-            this.colServerID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colServerID.DataPropertyName = "NextWallNumInPlane";
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Silver;
-            this.colServerID.DefaultCellStyle = dataGridViewCellStyle2;
-            this.colServerID.HeaderText = "NWIP";
-            this.colServerID.Name = "colServerID";
-            this.colServerID.Width = 40;
+            this.colNextWallNumInPlane.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colNextWallNumInPlane.DataPropertyName = "NextWallNumInPlane";
+            this.colNextWallNumInPlane.HeaderText = "NWIP";
+            this.colNextWallNumInPlane.Name = "colNextWallNumInPlane";
+            this.colNextWallNumInPlane.Width = 40;
             // 
             // colRightSideNum
             // 
             this.colRightSideNum.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colRightSideNum.DataPropertyName = "RightSideNum";
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.PaleGreen;
-            this.colRightSideNum.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.PaleGreen;
+            this.colRightSideNum.DefaultCellStyle = dataGridViewCellStyle2;
             this.colRightSideNum.HeaderText = "RSIDE";
             this.colRightSideNum.Name = "colRightSideNum";
             this.colRightSideNum.Width = 45;
@@ -291,8 +288,8 @@
             // 
             this.colLeftSideNum.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colLeftSideNum.DataPropertyName = "LeftSideNum";
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.PaleGreen;
-            this.colLeftSideNum.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.PaleGreen;
+            this.colLeftSideNum.DefaultCellStyle = dataGridViewCellStyle3;
             this.colLeftSideNum.HeaderText = "LSIDE";
             this.colLeftSideNum.Name = "colLeftSideNum";
             this.colLeftSideNum.Width = 45;
@@ -301,8 +298,8 @@
             // 
             this.colRightSectorNum.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colRightSectorNum.DataPropertyName = "RightSectorNum";
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.Turquoise;
-            this.colRightSectorNum.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.Turquoise;
+            this.colRightSectorNum.DefaultCellStyle = dataGridViewCellStyle4;
             this.colRightSectorNum.HeaderText = "RSECT";
             this.colRightSectorNum.Name = "colRightSectorNum";
             this.colRightSectorNum.Width = 45;
@@ -311,8 +308,8 @@
             // 
             this.colLeftSectorNum.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colLeftSectorNum.DataPropertyName = "LeftSectorNum";
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.Turquoise;
-            this.colLeftSectorNum.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.Turquoise;
+            this.colLeftSectorNum.DefaultCellStyle = dataGridViewCellStyle5;
             this.colLeftSectorNum.HeaderText = "LSECT";
             this.colLeftSectorNum.Name = "colLeftSectorNum";
             this.colLeftSectorNum.Width = 45;
@@ -416,7 +413,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn14;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn15;
         private System.Windows.Forms.DataGridViewTextBoxColumn colNum;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colServerID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colNextWallNumInPlane;
         private System.Windows.Forms.DataGridViewTextBoxColumn colRightSideNum;
         private System.Windows.Forms.DataGridViewTextBoxColumn colLeftSideNum;
         private System.Windows.Forms.DataGridViewTextBoxColumn colRightSectorNum;
