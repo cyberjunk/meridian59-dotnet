@@ -262,7 +262,7 @@ namespace Meridian59.UnitTest
             poly.Add(new V2(5.0f, 0.0f));
             poly.Add(new V2(5.0f, 0.0f));
 
-            expected = false;
+            expected = true;
             returned = poly.IsConvexPolygon();
 
             Assert.AreEqual(expected, returned);
@@ -296,6 +296,35 @@ namespace Meridian59.UnitTest
             returned = poly.IsConvexPolygon();
 
             Assert.AreEqual(expected, returned);
+
+            // --- TEST ---
+            // 5 points, convex
+            poly.Clear();
+            poly.Add(new V2(2512.0f, 5490.0f));
+            poly.Add(new V2(2304.0f, 5568.0f));
+            poly.Add(new V2(2304.0f, 5376.0f));
+            poly.Add(new V2(2304.0f, 5120.0f));
+            poly.Add(new V2(2512.0f, 5120.0f));
+
+            expected = true;
+            returned = poly.IsConvexPolygon();
+
+            Assert.AreEqual(expected, returned);
+
+            // --- TEST ---
+            // 6 points, convex
+            poly.Clear();
+            poly.Add(new V2(5376f, 6032f));
+            poly.Add(new V2(5376f, 7936f));
+            poly.Add(new V2(5376f, 8192f));
+            poly.Add(new V2(5136f, 8192f));
+            poly.Add(new V2(4752f, 6656f));
+            poly.Add(new V2(4940.339f, 6467.661f));
+
+            expected = true;
+            returned = poly.IsConvexPolygon();
+
+            Assert.AreEqual(expected, returned);
         }
 
         /// <summary>
@@ -310,7 +339,7 @@ namespace Meridian59.UnitTest
             V2 p1, p2;
 
             Tuple<Polygon, Polygon> returned;
-
+            
             // --- TEST ---
             // 4 points, valid clockwise rectangle ABCD
             // intersect nothing from south to north
@@ -502,6 +531,39 @@ namespace Meridian59.UnitTest
             Assert.AreEqual(returned.Item2.IsIdentical(expectedLeft), true);
 
             // --- TEST ---
+            // 5 points, valid clockwise rectangle ABCDE
+            // edge CD and edge DE coincide with splitter from south to north
+            //              |
+            //   B----------C
+            //   |          |
+            //   |          D
+            //   |          |
+            //   A----------E
+            //              |
+            p1 = new V2(5.0f, -10.0f);
+            p2 = new V2(5.0f, 3.0f);
+            poly.Clear();
+            expectedLeft.Clear();
+            expectedRight.Clear();
+            poly.Add(new V2(0.0f, 0.0f)); // A
+            poly.Add(new V2(0.0f, 5.0f)); // B
+            poly.Add(new V2(5.0f, 5.0f)); // C
+            poly.Add(new V2(5.0f, 2.5f)); // D
+            poly.Add(new V2(5.0f, 0.0f)); // E          
+            // right empty
+            // left old
+            expectedLeft.Add(new V2(0.0f, 0.0f));
+            expectedLeft.Add(new V2(0.0f, 5.0f));
+            expectedLeft.Add(new V2(5.0f, 5.0f));
+            expectedLeft.Add(new V2(5.0f, 2.5f));
+            expectedLeft.Add(new V2(5.0f, 0.0f));
+
+            returned = poly.SplitConvexPolygon(p1, p2);
+
+            Assert.AreEqual(returned.Item1.IsIdentical(expectedRight), true);
+            Assert.AreEqual(returned.Item2.IsIdentical(expectedLeft), true);
+
+            // --- TEST ---
             // 4 points, valid clockwise rectangle ABCD
             // two boundary points at vertices A and C
             // by diagonal infinite line AC
@@ -562,6 +624,70 @@ namespace Meridian59.UnitTest
             expectedLeft.Add(new V2(0.0f, 0.0f)); // A
             expectedLeft.Add(new V2(0.0f, 5.0f)); // B
             expectedLeft.Add(new V2(2.5f, 5.0f)); // I1
+
+            returned = poly.SplitConvexPolygon(p1, p2);
+
+            Assert.AreEqual(returned.Item1.IsIdentical(expectedRight), true);
+            Assert.AreEqual(returned.Item2.IsIdentical(expectedLeft), true);
+
+            // --- TEST ---
+            // 3 points, valid clockwise triangle ABC
+            // one boundarypoint at C by infinite p1p2 from south to north
+
+            //        | 
+            //   B----C
+            //   |   /|
+            //   |  / |
+            //   | /
+            //   |/
+            //   A
+            //           
+            p1 = new V2(5.0f, -1.0f);
+            p2 = new V2(5.0f, 1.0f);
+            poly.Clear();
+            expectedLeft.Clear();
+            expectedRight.Clear();
+            poly.Add(new V2(0.0f, 0.0f)); // A
+            poly.Add(new V2(0.0f, 5.0f)); // B
+            poly.Add(new V2(5.0f, 5.0f)); // C
+            // right empty
+            expectedLeft.Add(new V2(0.0f, 0.0f)); // A
+            expectedLeft.Add(new V2(0.0f, 5.0f)); // B
+            expectedLeft.Add(new V2(5.0f, 5.0f)); // C
+
+            returned = poly.SplitConvexPolygon(p1, p2);
+
+            Assert.AreEqual(returned.Item1.IsIdentical(expectedRight), true);
+            Assert.AreEqual(returned.Item2.IsIdentical(expectedLeft), true);
+
+            // --- TEST ---
+            // 3 points, valid clockwise triangle ABC
+            // two intersection points at I1 and I2
+            // by infinite p1p2 from north to south
+
+            //      |   
+            //   B--I1-C
+            //   |  | /
+            //   |  I2 
+            //   | /|
+            //   |/ |
+            //   A
+            //           
+            p1 = new V2(2.5f, 1.0f);
+            p2 = new V2(2.5f, -1.0f);
+            poly.Clear();
+            expectedLeft.Clear();
+            expectedRight.Clear();
+            poly.Add(new V2(0.0f, 0.0f)); // A
+            poly.Add(new V2(0.0f, 5.0f)); // B
+            poly.Add(new V2(5.0f, 5.0f)); // C
+            expectedRight.Add(new V2(2.5f, 2.5f)); // I2
+            expectedRight.Add(new V2(0.0f, 0.0f)); // A
+            expectedRight.Add(new V2(0.0f, 5.0f)); // B
+            expectedRight.Add(new V2(2.5f, 5.0f)); // I1
+            expectedLeft.Add(new V2(2.5f, 5.0f)); // I1
+            expectedLeft.Add(new V2(5.0f, 5.0f)); // C
+            expectedLeft.Add(new V2(2.5f, 2.5f)); // I2
 
             returned = poly.SplitConvexPolygon(p1, p2);
 

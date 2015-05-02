@@ -32,6 +32,41 @@ namespace Meridian59.Common
     public class Polygon : List<V2>
     {
         /// <summary>
+        /// Overriden index getter.
+        /// You can use indices above maximum to cycle across the end.
+        /// Or negative ones to cycle across beginning.
+        /// </summary>
+        /// <param name="i"></param>
+        /// <returns></returns>
+        public new V2 this[int i]
+        {
+            get
+            {
+                if (Count == 0)
+                    throw new IndexOutOfRangeException();
+
+                int idx = i % Count;
+
+                if (idx < 0)
+                    idx = Count + idx;
+
+                return base[idx]; 
+            }
+            set 
+            {
+                if (Count == 0)
+                    throw new IndexOutOfRangeException();
+                
+                int idx = i % Count;
+
+                if (idx < 0)
+                    idx = Count + idx;
+
+                base[idx] = value;
+            }                
+        }
+
+        /// <summary>
         /// Returns true if two polygons are exactly identical.
         /// Note: The ordering/start of points also matters here.
         /// If two polygons contain the same points but indices are shifted,
@@ -127,35 +162,26 @@ namespace Meridian59.Common
             V2 v1, v2;
             int i, val, lastval;
 
-            // will make sure there is at least a valid triangle
-            if (!IsPolygon())
+            if (Count < 3)
                 return false;
 
-            // first
+            // first two edges
             v1 = this[1] - this[0];
             v2 = this[2] - this[1];
             lastval = Math.Sign(v1.CrossProduct(v2));
-
-            // middle
-            for (i = 1; i < Count - 2; i++)
+            
+            // others (access across boundary maps back, see Items property)
+            for (i = 1; i < Count - 1; i++)
             {
                 v1 = this[i + 1] - this[i];
                 v2 = this[i + 2] - this[i + 1];
                 val = Math.Sign(v1.CrossProduct(v2));
 
-                if (val != lastval)
+                if ((val > 0 && lastval < 0) || (val < 0 && lastval > 0))
                     return false;
 
                 lastval = val;
             }
-
-            // last with first
-            v1 = this[0] - this[Count-1];
-            v2 = this[1] - this[0];
-            val = Math.Sign(v1.CrossProduct(v2));
-
-            if (val != lastval)
-                return false;
 
             return true;
         }
@@ -168,16 +194,20 @@ namespace Meridian59.Common
         {
             int removed = 0;
 
-            // backward due to removing items
-            for(int i = Count - 1; i >= 1; i--)
-            {
-                if (this[i] == this[i - 1])
-                { 
-                    RemoveAt(i);
-                    removed++;
+            if (this.Count > 0)
+            { 
+                // backward due to removing items
+                // can iterate into negative here, see items[] getter
+                for(int i = Count - 1; i >= 0; i--)
+                {
+                    if (this[i] == this[i - 1])
+                    { 
+                        Remove(this[i]);
+                        removed++;
+                    }
                 }
             }
-
+            
             return removed;
         }
 
@@ -221,7 +251,6 @@ namespace Meridian59.Common
         /// <param name="Target"></param>
         protected void AddIndexRangeToOtherPolygon(int FromIndex, int ToIndex, Polygon Target)
         {
-            // seamless range
             if (FromIndex < ToIndex)
             {
                 for (int i = FromIndex; i <= ToIndex; i++)
@@ -253,19 +282,18 @@ namespace Meridian59.Common
         /// </returns>
         public Tuple<Polygon, Polygon> SplitConvexPolygon(V2 P1, V2 P2)
         {
-            // make sure this is a convex polygon
-            if (!IsConvexPolygon())
-                return null;
-
             /***************************************************************/
 
-            Polygon poly;
+            Polygon poly = null;
             V2 intersect;
             LineInfiniteLineIntersectionType intersecttype;
             List<V2> intersections  = new List<V2>();
             List<V2> boundarypoints = new List<V2>();
             int numcoincides      = 0;
             int side;
+
+            int idxintersect1 = -1;
+            int idxintersect2 = -1;
 
             // create left and right polygons
             Polygon polyRight = new Polygon();
@@ -280,8 +308,16 @@ namespace Meridian59.Common
 
                 // intersection
                 if (intersecttype == LineInfiniteLineIntersectionType.OneIntersection &&
-                    !intersections.Contains(intersect))               
-                        intersections.Add(intersect);
+                    !intersections.Contains(intersect))
+                {
+                    intersections.Add(intersect);
+
+                    // save at which index we should add the point to the poly
+                    if (idxintersect1 == -1)
+                        idxintersect1 = i + 1;
+                    else if (idxintersect2 == -1)
+                        idxintersect2 = i + 1;                    
+                }
                 
                 // boundarypoint
                 // note: in case we tried to add a boundarypoint which is already there
@@ -299,7 +335,13 @@ namespace Meridian59.Common
             intersecttype = MathUtil.IntersectLineInfiniteLine(this[Count-1], this[0], P1, P2, out intersect);
             if (intersecttype == LineInfiniteLineIntersectionType.OneIntersection &&
                 !intersections.Contains(intersect))
-                    intersections.Add(intersect);
+            {
+                intersections.Add(intersect);
+                if (idxintersect1 == -1)
+                    idxintersect1 = 0;
+                else if (idxintersect2 == -1)                
+                    idxintersect2 = 0;
+            }
             else if (intersecttype == LineInfiniteLineIntersectionType.OneBoundaryPoint &&
                 !boundarypoints.Contains(intersect))
                     boundarypoints.Add(intersect);
@@ -310,7 +352,7 @@ namespace Meridian59.Common
           
             bool case1 = 
                 (numcoincides == 0 && intersections.Count == 0 && boundarypoints.Count == 0) ||
-                (numcoincides == 1 && intersections.Count == 0 && boundarypoints.Count == 2) ||
+                (numcoincides > 0 && intersections.Count == 0 && boundarypoints.Count == 2) ||
                 (numcoincides == 0 && intersections.Count == 0 && boundarypoints.Count == 1);
 
             bool case2a = 
@@ -324,7 +366,7 @@ namespace Meridian59.Common
 
             // case (1): all on one side
             // (a) no intersection, no boundary point and no coincide edge (trivial)
-            // (b) one edge is coincide with splitter
+            // (b) adjacent edges are coincide with splitter
             // (c) exactly one polygon point is a boundarypoint on the splitter
             if (case1)
             {
@@ -354,17 +396,25 @@ namespace Meridian59.Common
             // case (2)
             else if (case2a || case2b || case2c)
             {
-                int idx  = -1;
+                //int idx  = -1;
                 int idx1 = -1;
                 int idx2 = -1;
-                bool p1added, p2added;
-
+                
                 // case (2a): infinite line intersects two polygon edges
                 // -> add both intersection vertices, then use them
                 if (case2a)
                 {
-                    p1added = AddPointOnEdge(intersections[0]);
-                    p2added = AddPointOnEdge(intersections[1]);
+                    if (idxintersect1 < idxintersect2)
+                    { 
+                        this.Insert(idxintersect2, intersections[1]);
+                        this.Insert(idxintersect1, intersections[0]);
+                    }
+                    else
+                    {
+                        this.Insert(idxintersect1, intersections[0]);
+                        this.Insert(idxintersect2, intersections[1]);
+                    }
+
                     idx1 = IndexOf(intersections[0]);
                     idx2 = IndexOf(intersections[1]);
                 }
@@ -380,7 +430,8 @@ namespace Meridian59.Common
                 // case (2c): infinite line intersects one polygon edge and one vertex
                 else if (case2c)
                 {
-                    p1added = AddPointOnEdge(intersections[0]);
+                    this.Insert(idxintersect1, intersections[0]);
+
                     idx1 = IndexOf(intersections[0]);
                     idx2 = IndexOf(boundarypoints[0]);
                 }
@@ -390,29 +441,98 @@ namespace Meridian59.Common
 
                 // now add points to each poly
 
+                //////////
+
                 // poly 1
-                // use side of next point
-                idx = (idx1 + 1 < Count) ? idx1 + 1 : 0;
-                side = this[idx].GetSide(P1, P2);
+                if (idx2 > idx1)
+                {
+                    side = 0;
+                    
+                    // determine side by finding first point not on line
+                    for (int i = idx1; i < idx2; i++)
+                    {
+                        side = this[i].GetSide(P1, P2);
 
-                if (side < 0) poly = polyRight;
-                else if (side > 0) poly = polyLeft;
+                        if (side < 0) { poly = polyRight; break; }
+                        else if (side > 0) { poly = polyLeft; break; }
+                    }
+                }
+                else 
+                {
+                    side = 0;
+
+                    // determine side by finding first point not on line
+                    for (int i = idx1; i < Count; i++)
+                    {
+                        side = this[i].GetSide(P1, P2);
+
+                        if (side < 0) { poly = polyRight; break; }
+                        else if (side > 0) { poly = polyLeft; break; }
+                    }
+
+                    if (side == 0)
+                        for (int i = 0; i <= idx2; i++)
+                        {
+                            side = this[i].GetSide(P1, P2);
+
+                            if (side < 0) { poly = polyRight; break; }
+                            else if (side > 0) { poly = polyLeft; break; }
+                        }
+                }
+
+                if (poly != null)
+                    AddIndexRangeToOtherPolygon(idx1, idx2, poly);
                 else
-                    return null; // WTF?
+                    return null; //WTF?
 
-                AddIndexRangeToOtherPolygon(idx1, idx2, poly);
+                poly = null;
+
+                //////////
 
                 // poly 2
-                // use side of next point
-                idx = (idx2 + 1 < Count) ? idx2 + 1 : 0;
-                side = this[idx].GetSide(P1, P2);
+                if (idx2 < idx1)
+                {
+                    side = 0;
 
-                if (side < 0) poly = polyRight;
-                else if (side > 0) poly = polyLeft;
+                    // determine side by finding first point not on line
+                    for (int i = idx2; i < idx1; i++)
+                    {
+                        side = this[i].GetSide(P1, P2);
+
+                        if (side < 0) { poly = polyRight; break; }
+                        else if (side > 0) { poly = polyLeft; break; }
+                    }
+                }
+                else
+                {
+                    side = 0;
+
+                    // determine side by finding first point not on line
+                    for (int i = idx2; i < Count; i++)
+                    {
+                        side = this[i].GetSide(P1, P2);
+
+                        if (side < 0) { poly = polyRight; break; }
+                        else if (side > 0) { poly = polyLeft; break; }
+                    }
+
+                    if (side == 0)
+                        for (int i = 0; i <= idx1; i++)
+                        {
+                            side = this[i].GetSide(P1, P2);
+
+                            if (side < 0) { poly = polyRight; break; }
+                            else if (side > 0) { poly = polyLeft; break; }
+                        }
+                }
+
+                if (poly != null)
+                    AddIndexRangeToOtherPolygon(idx2, idx1, poly);
+
                 else
                     return null; // WTF?
-
-                AddIndexRangeToOtherPolygon(idx2, idx1, poly);
+                
+                //////////
 
                 // return both new polys
                 return new Tuple<Polygon, Polygon>(polyRight, polyLeft);
