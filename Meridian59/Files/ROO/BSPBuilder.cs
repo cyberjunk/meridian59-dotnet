@@ -30,6 +30,8 @@ namespace Meridian59.Files.ROO
 {
     public static class BSPBuilder
     {
+        private static RooFile room;
+
         public class PolygonEventArgs : EventArgs
         {
             public Polygon Polygon;
@@ -42,30 +44,54 @@ namespace Meridian59.Files.ROO
 
         public static EventHandler<PolygonEventArgs> FoundNonConvexPolygon;
 
-        public static RooBSPItem Build(RooFile Room)
+        public static EventHandler BuildStarted;
+
+        public static void Build(RooFile Room)
         {
             if (Room == null)
-                return null;
-            
-            BoundingBox2D box = Room.GetBoundingBox2D();
+                return;
+
+            room = Room;
+
+            if (BuildStarted != null)
+                BuildStarted(null, new EventArgs());
+
+            ///////////////////////////////////////////////////////////////
+
+            BoundingBox2D box = Room.GetBoundingBox2D(true);
             
             Polygon poly = new Polygon();           
             poly.Add(box.Min);
             poly.Add(box.Min + new V2(box.Max.X - box.Min.X, 0f));
             poly.Add(box.Max);
             poly.Add(box.Max - new V2(box.Max.X - box.Min.X, 0f));
+            
+            ///////////////////////////////////////////////////////////////
+
+            // clean up old data from room
+            Room.Walls.Clear();
+            Room.BSPTree.Clear();
+            foreach (RooSector sector in Room.Sectors)
+            {
+                sector.Walls.Clear();
+                sector.Sides.Clear();
+            }
 
             // convert roomeditor walls to roowall
-            //List<RooWall> convertedWalls = new List<RooWall>();
-            //foreach (RooWallEditor editorwall in Room.WallsEditor)
-            //    convertedWalls.Add(editorwall.ToRooWall(Room));
+            for (int i = 0; i < Room.WallsEditor.Count; i++)
+            {
+                RooWall wall = Room.WallsEditor[i].ToRooWall(Room);
+                Room.Walls.Add(wall);
+            }
+
+            ///////////////////////////////////////////////////////////////
 
             RooBSPItem tree = BuildNode(Room.Walls, poly, 0);
 
-            Room.BSPTree.Clear();
-            FillNode(tree, Room.BSPTree);
+            ///////////////////////////////////////////////////////////////
 
-            return tree;
+            FillNode(tree, Room.BSPTree);
+            SetNums(Room.BSPTree);
         }
 
         private static RooWall ChooseSplitter(IEnumerable<RooWall> Walls)
@@ -127,22 +153,48 @@ namespace Meridian59.Files.ROO
             return best_splitter;
         }
 
-        private static Tuple<List<RooWall>, List<RooWall>> SplitWalls(IEnumerable<RooWall> Walls, RooWall Splitter)
+        private static Tuple<List<RooWall>, List<RooWall>> SplitWalls(List<RooWall> Walls, RooWall Splitter)
         {
             int side0, side1;
             List<RooWall> wallsRight = new List<RooWall>();
             List<RooWall> wallsLeft  = new List<RooWall>();
-
-            foreach(RooWall wall in Walls)
+            
+            // backwards due to removing items
+            for(int i = Walls.Count - 1 ; i >= 0; i--)
             {
+                RooWall wall = Walls[i];
+
+                if (wall == Splitter)
+                    continue;
+
                 side0 = wall.P1.GetSide(Splitter.P1, Splitter.P2);
                 side1 = wall.P2.GetSide(Splitter.P1, Splitter.P2);
 
                 // coincide =
                 // both endpoints on wall
                 if (side0 == 0 && side1 == 0)
-                    continue;
+                {
+                    // attach at end of linked list if not already included
+                    bool add = true;
+                    RooWall next = Splitter;
+                    while (next.NextWallInPlane != null) 
+                    {
+                        // already in there
+                        if (next.NextWallInPlane == wall)
+                        {
+                            add = false;
+                            break;
+                        }
 
+                        next = next.NextWallInPlane;
+                    }
+
+                    if (add)
+                        next.NextWallInPlane = wall;
+                    
+                    continue;
+                }
+                
                 // on right side =
                 // both endpoints right side, or one right, one on line
                 if (side0 <= 0 && side1 <= 0)
@@ -161,6 +213,13 @@ namespace Meridian59.Files.ROO
 
                 // intersection - split the wall
                 Tuple<RooWall, RooWall> splitWall = wall.Split(Splitter.P1, Splitter.P2);
+
+                // remove old wall and add new chunks
+                // second first so first will be first
+                int idx = room.Walls.IndexOf(wall);
+                room.Walls.RemoveAt(idx);
+                room.Walls.Insert(idx, splitWall.Item2);
+                room.Walls.Insert(idx, splitWall.Item1);
 
                 if (splitWall != null)
                 {
@@ -203,7 +262,14 @@ namespace Meridian59.Files.ROO
 
             // No walls left ==> leaf
             if (Walls.Count == 0)
-                return new RooSubSector((ushort)Sector, Polygon);
+            {
+                RooSubSector leaf = new RooSubSector((ushort)Sector, Polygon);
+
+                // fills in sector reference
+                leaf.ResolveIndices(room);
+                
+                return leaf;
+            }
 
             // get best splitter of remaining walls
             RooWall splitter = ChooseSplitter(Walls);
@@ -227,6 +293,9 @@ namespace Meridian59.Files.ROO
             RooPartitionLine node = new RooPartitionLine(
                 Polygon.GetBoundingBox(), (int)a, (int)b, (int)c, 0, 0, (ushort)splitter.Num);
 
+            // fills in wall reference
+            node.Wall = splitter;
+
             // recursively descend to children
             node.LeftChild = BuildNode(splitWalls.Item1, splitPolygons.Item1, splitter.LeftSectorNum);
             node.RightChild  = BuildNode(splitWalls.Item2, splitPolygons.Item2, splitter.RightSectorNum);
@@ -248,6 +317,59 @@ namespace Meridian59.Files.ROO
                 FillNode(node.RightChild, NodeList);
                 FillNode(node.LeftChild, NodeList);
             }
+        }
+
+        private static void SetNums(List<RooBSPItem> Nodes)
+        {
+            int idx;
+            RooPartitionLine splitter;
+
+            // set wall nums
+            for (int i = 0; i < room.Walls.Count; i++)
+            {
+                RooWall wall = room.Walls[i];
+                wall.Num = i + 1;
+
+                if (wall.NextWallInPlane != null)
+                {
+                    // set 1-based num (0=unset)
+                    idx = room.Walls.IndexOf(wall.NextWallInPlane);
+
+                    wall.NextWallNumInPlane = (short)((idx >= 0) ? idx + 1 : 0);
+                }
+            }
+
+            foreach(RooBSPItem node in Nodes)
+            {
+                if (node.Type == RooBSPItem.NodeType.Node)
+                {
+                    splitter = (RooPartitionLine)node;
+
+                    if (splitter.RightChild != null)
+                    {
+                        idx = Nodes.IndexOf(splitter.RightChild);
+
+                        // set 1-based num (0=unset)
+                        splitter.Right = (ushort)((idx >= 0) ? idx + 1 : 0);
+                    }
+
+                    if (splitter.LeftChild != null)
+                    {
+                        idx = Nodes.IndexOf(splitter.LeftChild);
+
+                        // set 1-based num (0=unset)
+                        splitter.Left = (ushort)((idx >= 0) ? idx + 1 : 0);
+                    }
+
+                    if (splitter.Wall != null)
+                    {
+                        idx = room.Walls.IndexOf(splitter.Wall);
+
+                        // set 1-based num (0=unset)
+                        splitter.WallReference = (ushort)((idx >= 0) ? idx + 1 : 0);
+                    }
+                }
+            }  
         }
     }
 }

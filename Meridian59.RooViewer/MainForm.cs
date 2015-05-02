@@ -134,5 +134,24 @@ namespace Meridian59.RooViewer
         {
             viewerRooSubSectors.SelectedItem = map.SelectedSubSector;
         }
+
+        protected void OnMenuRebuildBSPTreeClick(object sender, EventArgs e)
+        {
+            BSPBuilder.Build(Room);
+
+            viewerRooPartitionLines.DataSource = null;
+            viewerRooPartitionLines.DataSource = Room.BSPTreeNodes;
+
+            viewerRooSubSectors.DataSource = null;
+            viewerRooSubSectors.DataSource = Room.BSPTreeLeaves;
+
+            viewerRooWalls.DataSource = null;
+            viewerRooWalls.DataSource = Room.Walls;
+        }
+
+        private void OnBSPBuilderFoundNonConvexPolygon(object sender, Polygon e)
+        {
+
+        }
     }
 }

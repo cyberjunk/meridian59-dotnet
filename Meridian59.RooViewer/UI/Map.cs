@@ -18,11 +18,11 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Drawing.Drawing2D;
+using System.Collections.Generic;
 
 using Meridian59.Files.ROO;
 using Meridian59.Common;
-using System.Drawing.Drawing2D;
-using System.Collections.Generic;
 
 namespace Meridian59.RooViewer.UI
 {
@@ -46,6 +46,8 @@ namespace Meridian59.RooViewer.UI
         protected RooWall selectedWall;
         protected RooWallEditor selectedWallEditor;
         protected RooSideDef selectedSide;
+
+        protected List<Polygon> bspBuilderNonConvexPolygons = new List<Polygon>();
 
         protected Pen penWhite1 = new Pen(Color.White, 1f);
         protected Pen penRed1 = new Pen(Color.Red, 1f);
@@ -76,6 +78,8 @@ namespace Meridian59.RooViewer.UI
                     BoundingBox2D bBox = room.GetBoundingBox2D();
                     center.X = bBox.Min.X + 0.5f * (bBox.Max.X - bBox.Min.X);
                     center.Y = bBox.Min.Y + 0.5f * (bBox.Max.Y - bBox.Min.Y);
+                    
+                    bspBuilderNonConvexPolygons.Clear();
 
                     Invalidate();
                 }
@@ -205,6 +209,9 @@ namespace Meridian59.RooViewer.UI
             DoubleBuffered = true;
 
             InitializeComponent();
+
+            BSPBuilder.FoundNonConvexPolygon += OnBSPBuilderFoundNonConvexPolygon;
+            BSPBuilder.BuildStarted += OnBSPBuilderBuildStarted;
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -311,7 +318,7 @@ namespace Meridian59.RooViewer.UI
             Invalidate();
         }
 
-        private void OnUseEditorWallsCheckedChanged(object sender, EventArgs e)
+        protected void OnUseEditorWallsCheckedChanged(object sender, EventArgs e)
         {
             Invalidate();
         } 
@@ -376,6 +383,22 @@ namespace Meridian59.RooViewer.UI
                 }
 
                 G.FillPolygon(brushSolidPaleGreen, points);               
+            }
+
+            // draw polys in non convex poly list from bspbuilder
+            foreach (Polygon poly in bspBuilderNonConvexPolygons)
+            {
+                points = new Point[poly.Count];
+
+                for (int i = 0; i < poly.Count; i++)
+                {
+                    points[i].X = (int)(((float)poly[i].X - boxMin.X) * ZoomInv);
+                    points[i].Y = (int)(((float)poly[i].Y - boxMin.Y) * ZoomInv);
+
+                    G.DrawRectangle(penWhite1, points[i].X - 1, points[i].Y - 1, 2, 2);
+                }
+
+                G.FillPolygon(brushSolidRed, points);
             }
 
             /**********************************************************************************/
@@ -466,6 +489,17 @@ namespace Meridian59.RooViewer.UI
 
             // draw line
             G.DrawLine(Pen, transx1, transy1, transx2, transy2);          
+        }
+
+        protected void OnBSPBuilderFoundNonConvexPolygon(object sender, BSPBuilder.PolygonEventArgs e)
+        {
+            bspBuilderNonConvexPolygons.Add(e.Polygon);
+            Invalidate();
+        }
+
+        protected void OnBSPBuilderBuildStarted(object sender, EventArgs e)
+        {
+            bspBuilderNonConvexPolygons.Clear();
         }
     }
 }

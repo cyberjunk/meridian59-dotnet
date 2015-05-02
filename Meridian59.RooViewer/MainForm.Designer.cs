@@ -53,6 +53,7 @@
             this.viewerRooVertices = new Meridian59.RooViewer.UI.RooVerticesViewer();
             this.viewerRooPartitionLines = new Meridian59.RooViewer.UI.RooPartitionLinesViewer();
             this.map = new Meridian59.RooViewer.UI.Map();
+            this.rebuildBSPTreeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitMain)).BeginInit();
             this.splitMain.Panel1.SuspendLayout();
             this.splitMain.Panel2.SuspendLayout();
@@ -225,7 +226,8 @@
             // menuTools
             // 
             this.menuTools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItemExtractAllUsedTextures});
+            this.menuItemExtractAllUsedTextures,
+            this.rebuildBSPTreeToolStripMenuItem});
             this.menuTools.Name = "menuTools";
             this.menuTools.Size = new System.Drawing.Size(48, 20);
             this.menuTools.Text = "Tools";
@@ -313,6 +315,13 @@
             this.map.SelectedSubSectorChanged += new System.EventHandler(this.OnMapSelectedSubSectorChanged);
             this.map.SelectedSectorChanged += new System.EventHandler(this.OnMapSelectedSectorChanged);
             // 
+            // rebuildBSPTreeToolStripMenuItem
+            // 
+            this.rebuildBSPTreeToolStripMenuItem.Name = "rebuildBSPTreeToolStripMenuItem";
+            this.rebuildBSPTreeToolStripMenuItem.Size = new System.Drawing.Size(325, 22);
+            this.rebuildBSPTreeToolStripMenuItem.Text = "Rebuild BSP tree";
+            this.rebuildBSPTreeToolStripMenuItem.Click += new System.EventHandler(this.OnMenuRebuildBSPTreeClick);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -372,6 +381,7 @@
         private System.Windows.Forms.FolderBrowserDialog folderBrowser;
         private System.Windows.Forms.GroupBox grpBoxWallsEditor;
         private UI.RooWallsEditorViewer viewerRooWallsEditor;
+        private System.Windows.Forms.ToolStripMenuItem rebuildBSPTreeToolStripMenuItem;
         
     }
 }
