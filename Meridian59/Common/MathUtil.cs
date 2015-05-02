@@ -275,6 +275,22 @@ namespace Meridian59.Common
         {
             A = P2.Y - P1.Y;
             B = P1.X - P2.X;
+
+            // if the float values represent full integers
+            // try to reduce the fraction
+            int intdy = (int)A;
+            int intdx = (int)B;
+            if (A == (Real)intdy && B == (Real)intdx)
+            {
+                int gcd = MathUtil.GCD(intdx, intdy);
+
+                if (gcd != 0)
+                {
+                    A /= (Real)gcd;
+                    B /= (Real)gcd;
+                }
+            }
+
             C = A * P1.X + B * P1.Y;
         }
 
