@@ -31,6 +31,7 @@
             this.lblMouseCoordinates = new System.Windows.Forms.Label();
             this.chkVertexMismatches = new System.Windows.Forms.CheckBox();
             this.chkUseEditorWalls = new System.Windows.Forms.CheckBox();
+            this.chkVertHortLines = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // lblMouseCoordinates
@@ -49,7 +50,7 @@
             this.chkVertexMismatches.AutoSize = true;
             this.chkVertexMismatches.BackColor = System.Drawing.Color.Transparent;
             this.chkVertexMismatches.ForeColor = System.Drawing.Color.Gold;
-            this.chkVertexMismatches.Location = new System.Drawing.Point(121, -1);
+            this.chkVertexMismatches.Location = new System.Drawing.Point(101, -1);
             this.chkVertexMismatches.Name = "chkVertexMismatches";
             this.chkVertexMismatches.Size = new System.Drawing.Size(114, 17);
             this.chkVertexMismatches.TabIndex = 1;
@@ -62,7 +63,7 @@
             this.chkUseEditorWalls.AutoSize = true;
             this.chkUseEditorWalls.BackColor = System.Drawing.Color.Transparent;
             this.chkUseEditorWalls.ForeColor = System.Drawing.Color.Gold;
-            this.chkUseEditorWalls.Location = new System.Drawing.Point(257, -1);
+            this.chkUseEditorWalls.Location = new System.Drawing.Point(389, 0);
             this.chkUseEditorWalls.Name = "chkUseEditorWalls";
             this.chkUseEditorWalls.Size = new System.Drawing.Size(100, 17);
             this.chkUseEditorWalls.TabIndex = 2;
@@ -70,10 +71,24 @@
             this.chkUseEditorWalls.UseVisualStyleBackColor = false;
             this.chkUseEditorWalls.CheckedChanged += new System.EventHandler(this.OnUseEditorWallsCheckedChanged);
             // 
+            // chkVertHortLines
+            // 
+            this.chkVertHortLines.AutoSize = true;
+            this.chkVertHortLines.BackColor = System.Drawing.Color.Transparent;
+            this.chkVertHortLines.ForeColor = System.Drawing.Color.Gold;
+            this.chkVertHortLines.Location = new System.Drawing.Point(239, -1);
+            this.chkVertHortLines.Name = "chkVertHortLines";
+            this.chkVertHortLines.Size = new System.Drawing.Size(144, 17);
+            this.chkVertHortLines.TabIndex = 3;
+            this.chkVertHortLines.Text = "Almost vertical/horizontal";
+            this.chkVertHortLines.UseVisualStyleBackColor = false;
+            this.chkVertHortLines.CheckedChanged += new System.EventHandler(this.OnVertHortLinesCheckedChanged);
+            // 
             // Map
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.chkVertHortLines);
             this.Controls.Add(this.chkUseEditorWalls);
             this.Controls.Add(this.chkVertexMismatches);
             this.Controls.Add(this.lblMouseCoordinates);
@@ -89,5 +104,6 @@
         private System.Windows.Forms.Label lblMouseCoordinates;
         private System.Windows.Forms.CheckBox chkVertexMismatches;
         private System.Windows.Forms.CheckBox chkUseEditorWalls;
+        private System.Windows.Forms.CheckBox chkVertHortLines;
     }
 }

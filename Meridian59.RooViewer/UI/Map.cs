@@ -24,6 +24,13 @@ using System.Collections.Generic;
 using Meridian59.Files.ROO;
 using Meridian59.Common;
 
+// Switch FP precision based on architecture
+#if X64
+using Real = System.Double;
+#else
+using Real = System.Single;
+#endif
+
 namespace Meridian59.RooViewer.UI
 {
     public partial class Map : UserControl
@@ -321,7 +328,12 @@ namespace Meridian59.RooViewer.UI
         protected void OnUseEditorWallsCheckedChanged(object sender, EventArgs e)
         {
             Invalidate();
-        } 
+        }
+
+        protected void OnVertHortLinesCheckedChanged(object sender, EventArgs e)
+        {
+            Invalidate();
+        }
 
         public new void Invalidate()
         {
@@ -467,7 +479,9 @@ namespace Meridian59.RooViewer.UI
         }
 
         protected void DrawWall(Graphics G, RooWall Wall, Pen Pen, bool Infinite, Pen PenInfinite)
-        {            
+        {
+            V2 p1p2;
+
             // transform points to match world of pixeldrawing
             float transx1 = (float)(Wall.P1.X - boxMin.X) * ZoomInv;
             float transy1 = (float)(Wall.P1.Y - boxMin.Y) * ZoomInv;
@@ -479,7 +493,7 @@ namespace Meridian59.RooViewer.UI
             {
                 V2 p1 = new V2(transx1, transy1);
                 V2 p2 = new V2(transx2, transy2);
-                V2 p1p2 = p2 - p1;
+                p1p2 = p2 - p1;
 
                 p2 += 1000f * p1p2;
                 p1 -= 1000f * p1p2;
@@ -487,8 +501,19 @@ namespace Meridian59.RooViewer.UI
                 G.DrawLine(PenInfinite, (float)p1.X, (float)p1.Y, (float)p2.X, (float)p2.Y);
             }
 
+            // check if this is an issue line (almost horizontal or vertical, but not fully)
+            p1p2 = Wall.GetP1P2();
+            if (chkVertHortLines.Checked && p1p2.X != 0.0f && p1p2.Y != 0.0f)
+            {
+                Real m = p1p2.Y / p1p2.X;
+
+                if ((m > -0.125f && m < 0.125f) ||
+                    (m > 8.0f || m < -8.0f))
+                        Pen = penRed2;
+            }
+            
             // draw line
-            G.DrawLine(Pen, transx1, transy1, transx2, transy2);          
+            G.DrawLine(Pen, transx1, transy1, transx2, transy2);           
         }
 
         protected void OnBSPBuilderFoundNonConvexPolygon(object sender, BSPBuilder.PolygonEventArgs e)
@@ -501,5 +526,6 @@ namespace Meridian59.RooViewer.UI
         {
             bspBuilderNonConvexPolygons.Clear();
         }
+
     }
 }
