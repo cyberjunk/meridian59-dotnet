@@ -291,7 +291,7 @@ namespace Meridian59.Files.ROO
 
             // create new splitter node
             RooPartitionLine node = new RooPartitionLine(
-                Polygon.GetBoundingBox(), (int)a, (int)b, (int)c, 0, 0, (ushort)splitter.Num);
+                Polygon.GetBoundingBox(), a, b, c, 0, 0, (ushort)splitter.Num);
 
             // fills in wall reference
             node.Wall = splitter;
