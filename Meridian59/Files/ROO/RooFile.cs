@@ -538,7 +538,7 @@ namespace Meridian59.Files.ROO
                 Walls.Add(lineDef);               
             }
 
-            // Section 3: Unknown
+            // Section 3: WallsEditor
             cursor = OffsetWallsEditor + (Convert.ToByte(EncryptionEnabled) * 12);
             len = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
@@ -546,10 +546,11 @@ namespace Meridian59.Files.ROO
             WallsEditor = new List<RooWallEditor>(len);
             for (int i = 0; i < len; i++)
             {
-                RooWallEditor section3Item = new RooWallEditor(Buffer, cursor);
-                cursor += section3Item.ByteLength;
+                RooWallEditor wallEditor = new RooWallEditor(Buffer, cursor);
+                cursor += wallEditor.ByteLength;
 
-                WallsEditor.Add(section3Item);
+                wallEditor.Num = i + 1;
+                WallsEditor.Add(wallEditor);
             }
 
             // Section 4: SideDefs
@@ -747,16 +748,17 @@ namespace Meridian59.Files.ROO
                 Walls.Add(lineDef);
             }
 
-            // Section 3: Unknown
+            // Section 3: WallsEditor
             len = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
             WallsEditor = new List<RooWallEditor>(len);
             for (int i = 0; i < len; i++)
             {
-                RooWallEditor section3Item = new RooWallEditor(ref Buffer);
-                
-                WallsEditor.Add(section3Item);
+                RooWallEditor wallEditor = new RooWallEditor(ref Buffer);
+
+                wallEditor.Num = i + 1;
+                WallsEditor.Add(wallEditor);
             }
 
             // Section 4: SideDefs

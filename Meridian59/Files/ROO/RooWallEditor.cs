@@ -243,6 +243,7 @@ namespace Meridian59.Files.ROO
         protected V2 p0;
         protected V2 p1;
 
+        public int Num { get; set; }
         public short FileSideDef1 { get; set; }
         public short FileSideDef2 { get; set; }
         public short Side1XOffset { get; set; }

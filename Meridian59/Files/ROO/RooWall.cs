@@ -1219,7 +1219,7 @@ namespace Meridian59.Files.ROO
             wall1.LeftSide = LeftSide;
             wall1.BowtieFlags = BowtieFlags;
             wall1.CalculateWallSideHeights();
-            
+
             /*****************************************************************/
 
             // 2) Piece from intersection to P2
@@ -1244,7 +1244,7 @@ namespace Meridian59.Files.ROO
             wall2.LeftSide = LeftSide;
             wall2.BowtieFlags = BowtieFlags;
             wall2.CalculateWallSideHeights();
-            
+
             /*****************************************************************/
 
             // 3) Readjust texture offsets to accoutn for split
