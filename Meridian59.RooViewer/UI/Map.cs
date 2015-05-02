@@ -505,7 +505,7 @@ namespace Meridian59.RooViewer.UI
             p1p2 = Wall.GetP1P2();
             if (chkVertHortLines.Checked && p1p2.X != 0.0f && p1p2.Y != 0.0f)
             {
-                Real m = p1p2.Y / p1p2.X;
+                Real m = (Real)(p1p2.Y / p1p2.X);
 
                 if ((m > -0.125f && m < 0.125f) ||
                     (m > 8.0f || m < -8.0f))

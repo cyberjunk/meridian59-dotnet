@@ -94,6 +94,37 @@ namespace Meridian59.Files.ROO
             SetNums(Room.BSPTree);
         }
 
+        /// <summary>
+        /// Returns the A, B, C coefficients of the general 2D line equation: Ax+By+C=0
+        /// </summary>
+        /// <param name="P1"></param>
+        /// <param name="P2"></param>
+        /// <param name="A"></param>
+        /// <param name="B"></param>
+        /// <param name="C"></param>
+        public static void GetLineEquation2DCoefficients(V2 P1, V2 P2, out Real A, out Real B, out Real C)
+        {
+            A = P2.Y - P1.Y;
+            B = P1.X - P2.X;
+
+            // if the float values represent full integers
+            // try to reduce the fraction
+            int intdy = (int)A;
+            int intdx = (int)B;
+            if (A == (Real)intdy && B == (Real)intdx)
+            {
+                int gcd = MathUtil.GCD(intdx, intdy);
+
+                if (gcd != 0)
+                {
+                    A /= (Real)gcd;
+                    B /= (Real)gcd;
+                }
+            }
+
+            C = A * P1.X + B * P1.Y;
+        }
+
         private static RooWall ChooseSplitter(IEnumerable<RooWall> Walls)
         {
             RooWall best_splitter = null;
@@ -286,7 +317,7 @@ namespace Meridian59.Files.ROO
                 Polygon.SplitConvexPolygon(splitter.P1, splitter.P2);
 
             Real a, b, c;
-            MathUtil.GetLineEquation2DCoefficients(splitter.P1, splitter.P2,
+            GetLineEquation2DCoefficients(splitter.P1, splitter.P2,
                 out a, out b, out c);
 
             // create new splitter node
