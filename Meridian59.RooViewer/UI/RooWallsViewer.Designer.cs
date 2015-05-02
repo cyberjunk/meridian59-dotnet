@@ -28,12 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -48,22 +42,13 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGrid = new System.Windows.Forms.DataGridView();
-            this.colNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colServerID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colRightSideNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colLeftSideNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colRightSectorNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colLeftSectorNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colX1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colY1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colX2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colY2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colClientLength = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colRXO = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colRYO = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colLXO = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colLYO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -79,6 +64,21 @@
             this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colServerID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colRightSideNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colLeftSideNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colRightSectorNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colLeftSectorNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colX1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colY1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colX2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colY2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colClientLength = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colRXO = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colRYO = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colLXO = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colLYO = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -112,134 +112,6 @@
             this.dataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGrid.Size = new System.Drawing.Size(650, 256);
             this.dataGrid.TabIndex = 0;
-            // 
-            // colNum
-            // 
-            this.colNum.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colNum.DataPropertyName = "Num";
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Thistle;
-            this.colNum.DefaultCellStyle = dataGridViewCellStyle1;
-            this.colNum.HeaderText = "#";
-            this.colNum.Name = "colNum";
-            this.colNum.Width = 35;
-            // 
-            // colServerID
-            // 
-            this.colServerID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colServerID.DataPropertyName = "ServerID";
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Silver;
-            this.colServerID.DefaultCellStyle = dataGridViewCellStyle2;
-            this.colServerID.HeaderText = "UID";
-            this.colServerID.Name = "colServerID";
-            this.colServerID.Width = 35;
-            // 
-            // colRightSideNum
-            // 
-            this.colRightSideNum.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colRightSideNum.DataPropertyName = "RightSideNum";
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.PaleGreen;
-            this.colRightSideNum.DefaultCellStyle = dataGridViewCellStyle3;
-            this.colRightSideNum.HeaderText = "RSIDE";
-            this.colRightSideNum.Name = "colRightSideNum";
-            this.colRightSideNum.Width = 45;
-            // 
-            // colLeftSideNum
-            // 
-            this.colLeftSideNum.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colLeftSideNum.DataPropertyName = "LeftSideNum";
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.PaleGreen;
-            this.colLeftSideNum.DefaultCellStyle = dataGridViewCellStyle4;
-            this.colLeftSideNum.HeaderText = "LSIDE";
-            this.colLeftSideNum.Name = "colLeftSideNum";
-            this.colLeftSideNum.Width = 45;
-            // 
-            // colRightSectorNum
-            // 
-            this.colRightSectorNum.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colRightSectorNum.DataPropertyName = "RightSectorNum";
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.Turquoise;
-            this.colRightSectorNum.DefaultCellStyle = dataGridViewCellStyle5;
-            this.colRightSectorNum.HeaderText = "RSECT";
-            this.colRightSectorNum.Name = "colRightSectorNum";
-            this.colRightSectorNum.Width = 45;
-            // 
-            // colLeftSectorNum
-            // 
-            this.colLeftSectorNum.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colLeftSectorNum.DataPropertyName = "LeftSectorNum";
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.Turquoise;
-            this.colLeftSectorNum.DefaultCellStyle = dataGridViewCellStyle6;
-            this.colLeftSectorNum.HeaderText = "LSECT";
-            this.colLeftSectorNum.Name = "colLeftSectorNum";
-            this.colLeftSectorNum.Width = 45;
-            // 
-            // colX1
-            // 
-            this.colX1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colX1.DataPropertyName = "X1";
-            this.colX1.HeaderText = "X1";
-            this.colX1.Name = "colX1";
-            // 
-            // colY1
-            // 
-            this.colY1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colY1.DataPropertyName = "Y1";
-            this.colY1.HeaderText = "Y1";
-            this.colY1.Name = "colY1";
-            // 
-            // colX2
-            // 
-            this.colX2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colX2.DataPropertyName = "X2";
-            this.colX2.HeaderText = "X2";
-            this.colX2.Name = "colX2";
-            // 
-            // colY2
-            // 
-            this.colY2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colY2.DataPropertyName = "Y2";
-            this.colY2.HeaderText = "Y2";
-            this.colY2.Name = "colY2";
-            // 
-            // colClientLength
-            // 
-            this.colClientLength.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colClientLength.DataPropertyName = "ClientLength";
-            this.colClientLength.HeaderText = "LEN";
-            this.colClientLength.Name = "colClientLength";
-            this.colClientLength.Width = 35;
-            // 
-            // colRXO
-            // 
-            this.colRXO.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colRXO.DataPropertyName = "RightXOffset";
-            this.colRXO.HeaderText = "RXO";
-            this.colRXO.Name = "colRXO";
-            this.colRXO.Width = 35;
-            // 
-            // colRYO
-            // 
-            this.colRYO.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colRYO.DataPropertyName = "RightYOffset";
-            this.colRYO.HeaderText = "RYO";
-            this.colRYO.Name = "colRYO";
-            this.colRYO.Width = 35;
-            // 
-            // colLXO
-            // 
-            this.colLXO.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colLXO.DataPropertyName = "LeftXOffset";
-            this.colLXO.HeaderText = "LXO";
-            this.colLXO.Name = "colLXO";
-            this.colLXO.Width = 35;
-            // 
-            // colLYO
-            // 
-            this.colLYO.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colLYO.DataPropertyName = "LeftYOffset";
-            this.colLYO.HeaderText = "LYO";
-            this.colLYO.Name = "colLYO";
-            this.colLYO.Width = 35;
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -384,6 +256,134 @@
             this.dataGridViewTextBoxColumn15.HeaderText = "LYO";
             this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
             this.dataGridViewTextBoxColumn15.Width = 35;
+            // 
+            // colNum
+            // 
+            this.colNum.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colNum.DataPropertyName = "Num";
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Thistle;
+            this.colNum.DefaultCellStyle = dataGridViewCellStyle1;
+            this.colNum.HeaderText = "#";
+            this.colNum.Name = "colNum";
+            this.colNum.Width = 35;
+            // 
+            // colServerID
+            // 
+            this.colServerID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colServerID.DataPropertyName = "NextWallNumInPlane";
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Silver;
+            this.colServerID.DefaultCellStyle = dataGridViewCellStyle2;
+            this.colServerID.HeaderText = "NWIP";
+            this.colServerID.Name = "colServerID";
+            this.colServerID.Width = 40;
+            // 
+            // colRightSideNum
+            // 
+            this.colRightSideNum.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colRightSideNum.DataPropertyName = "RightSideNum";
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.PaleGreen;
+            this.colRightSideNum.DefaultCellStyle = dataGridViewCellStyle3;
+            this.colRightSideNum.HeaderText = "RSIDE";
+            this.colRightSideNum.Name = "colRightSideNum";
+            this.colRightSideNum.Width = 45;
+            // 
+            // colLeftSideNum
+            // 
+            this.colLeftSideNum.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colLeftSideNum.DataPropertyName = "LeftSideNum";
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.PaleGreen;
+            this.colLeftSideNum.DefaultCellStyle = dataGridViewCellStyle4;
+            this.colLeftSideNum.HeaderText = "LSIDE";
+            this.colLeftSideNum.Name = "colLeftSideNum";
+            this.colLeftSideNum.Width = 45;
+            // 
+            // colRightSectorNum
+            // 
+            this.colRightSectorNum.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colRightSectorNum.DataPropertyName = "RightSectorNum";
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.Turquoise;
+            this.colRightSectorNum.DefaultCellStyle = dataGridViewCellStyle5;
+            this.colRightSectorNum.HeaderText = "RSECT";
+            this.colRightSectorNum.Name = "colRightSectorNum";
+            this.colRightSectorNum.Width = 45;
+            // 
+            // colLeftSectorNum
+            // 
+            this.colLeftSectorNum.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colLeftSectorNum.DataPropertyName = "LeftSectorNum";
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.Turquoise;
+            this.colLeftSectorNum.DefaultCellStyle = dataGridViewCellStyle6;
+            this.colLeftSectorNum.HeaderText = "LSECT";
+            this.colLeftSectorNum.Name = "colLeftSectorNum";
+            this.colLeftSectorNum.Width = 45;
+            // 
+            // colX1
+            // 
+            this.colX1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colX1.DataPropertyName = "X1";
+            this.colX1.HeaderText = "X1";
+            this.colX1.Name = "colX1";
+            // 
+            // colY1
+            // 
+            this.colY1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colY1.DataPropertyName = "Y1";
+            this.colY1.HeaderText = "Y1";
+            this.colY1.Name = "colY1";
+            // 
+            // colX2
+            // 
+            this.colX2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colX2.DataPropertyName = "X2";
+            this.colX2.HeaderText = "X2";
+            this.colX2.Name = "colX2";
+            // 
+            // colY2
+            // 
+            this.colY2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colY2.DataPropertyName = "Y2";
+            this.colY2.HeaderText = "Y2";
+            this.colY2.Name = "colY2";
+            // 
+            // colClientLength
+            // 
+            this.colClientLength.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colClientLength.DataPropertyName = "ClientLength";
+            this.colClientLength.HeaderText = "LEN";
+            this.colClientLength.Name = "colClientLength";
+            this.colClientLength.Width = 35;
+            // 
+            // colRXO
+            // 
+            this.colRXO.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colRXO.DataPropertyName = "RightXOffset";
+            this.colRXO.HeaderText = "RXO";
+            this.colRXO.Name = "colRXO";
+            this.colRXO.Width = 35;
+            // 
+            // colRYO
+            // 
+            this.colRYO.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colRYO.DataPropertyName = "RightYOffset";
+            this.colRYO.HeaderText = "RYO";
+            this.colRYO.Name = "colRYO";
+            this.colRYO.Width = 35;
+            // 
+            // colLXO
+            // 
+            this.colLXO.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colLXO.DataPropertyName = "LeftXOffset";
+            this.colLXO.HeaderText = "LXO";
+            this.colLXO.Name = "colLXO";
+            this.colLXO.Width = 35;
+            // 
+            // colLYO
+            // 
+            this.colLYO.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colLYO.DataPropertyName = "LeftYOffset";
+            this.colLYO.HeaderText = "LYO";
+            this.colLYO.Name = "colLYO";
+            this.colLYO.Width = 35;
             // 
             // RooWallsViewer
             // 

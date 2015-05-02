@@ -62,7 +62,7 @@ namespace Meridian59.Files.ROO
         {
             int cursor = StartIndex;
 
-            Array.Copy(BitConverter.GetBytes(ServerID), 0, Buffer, cursor, TypeSizes.SHORT);
+            Array.Copy(BitConverter.GetBytes(NextWallNumInPlane), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
             Array.Copy(BitConverter.GetBytes(RightSideNum), 0, Buffer, cursor, TypeSizes.SHORT);
@@ -109,7 +109,7 @@ namespace Meridian59.Files.ROO
 
         public unsafe void WriteTo(ref byte* Buffer)
         {            
-            *((short*)Buffer) = ServerID;
+            *((short*)Buffer) = NextWallNumInPlane;
             Buffer += TypeSizes.SHORT;
 
             *((ushort*)Buffer) = RightSideNum;
@@ -156,7 +156,7 @@ namespace Meridian59.Files.ROO
         {
             int cursor = StartIndex;
 
-            ServerID = BitConverter.ToInt16(Buffer, cursor);
+            NextWallNumInPlane = BitConverter.ToInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
             RightSideNum = BitConverter.ToUInt16(Buffer, cursor);
@@ -203,7 +203,7 @@ namespace Meridian59.Files.ROO
 
         public unsafe void ReadFrom(ref byte* Buffer)
         {
-            ServerID = *((short*)Buffer);
+            NextWallNumInPlane = *((short*)Buffer);
             Buffer += TypeSizes.SHORT;
 
             RightSideNum = *((ushort*)Buffer);
@@ -271,9 +271,9 @@ namespace Meridian59.Files.ROO
         public int Num { get; set; }
         
         /// <summary>
-        /// ID on the server. This is used to modify the wall by server messages.
+        /// 
         /// </summary>
-        public short ServerID { get; set; }
+        public short NextWallNumInPlane { get; set; }
 
         /// <summary>
         /// First wall point (source)(oldclient FINENESS 1:1024)
@@ -443,7 +443,7 @@ namespace Meridian59.Files.ROO
             ushort RightSectorNum, 
             ushort LeftSectorNum)
         {
-            this.ServerID = ServerID;
+            this.NextWallNumInPlane = ServerID;
             this.RightSideNum = RightSideNum;
             this.LeftSideNum = LeftSideNum;
             this.P1 = P1;
@@ -1186,7 +1186,7 @@ namespace Meridian59.Files.ROO
 
             // 1) Piece from P1 to intersection
             RooWall wall1 = new RooWall(
-                ServerID,
+                NextWallNumInPlane,
                 RightSideNum,
                 LeftSideNum,
                 P1,
@@ -1211,7 +1211,7 @@ namespace Meridian59.Files.ROO
 
             // 2) Piece from intersection to P2
             RooWall wall2 = new RooWall(
-                ServerID,
+                NextWallNumInPlane,
                 RightSideNum,
                 LeftSideNum,
                 intersect,
