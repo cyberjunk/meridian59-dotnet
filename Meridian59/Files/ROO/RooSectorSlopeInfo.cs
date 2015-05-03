@@ -48,17 +48,34 @@ namespace Meridian59.Files.ROO
         {
             int cursor = StartIndex;
 
-            Array.Copy(BitConverter.GetBytes(MathUtil.FloatToM59FP(A)), 0, Buffer, cursor, TypeSizes.INT);
-            cursor += TypeSizes.INT;
+            if (RooVersion < RooFile.VERSIONFLOATCOORDS)
+            {
+                Array.Copy(BitConverter.GetBytes(MathUtil.FloatToM59FP(A)), 0, Buffer, cursor, TypeSizes.INT);
+                cursor += TypeSizes.INT;
 
-            Array.Copy(BitConverter.GetBytes(MathUtil.FloatToM59FP(B)), 0, Buffer, cursor, TypeSizes.INT);
-            cursor += TypeSizes.INT;
+                Array.Copy(BitConverter.GetBytes(MathUtil.FloatToM59FP(B)), 0, Buffer, cursor, TypeSizes.INT);
+                cursor += TypeSizes.INT;
 
-            Array.Copy(BitConverter.GetBytes(MathUtil.FloatToM59FP(C)), 0, Buffer, cursor, TypeSizes.INT);
-            cursor += TypeSizes.INT;
+                Array.Copy(BitConverter.GetBytes(MathUtil.FloatToM59FP(C)), 0, Buffer, cursor, TypeSizes.INT);
+                cursor += TypeSizes.INT;
 
-            Array.Copy(BitConverter.GetBytes(MathUtil.FloatToM59FP(D)), 0, Buffer, cursor, TypeSizes.INT);
-            cursor += TypeSizes.INT;
+                Array.Copy(BitConverter.GetBytes(MathUtil.FloatToM59FP(D)), 0, Buffer, cursor, TypeSizes.INT);
+                cursor += TypeSizes.INT;
+            }
+            else
+            {
+                Array.Copy(BitConverter.GetBytes((float)A), 0, Buffer, cursor, TypeSizes.FLOAT);
+                cursor += TypeSizes.FLOAT;
+
+                Array.Copy(BitConverter.GetBytes((float)B), 0, Buffer, cursor, TypeSizes.FLOAT);
+                cursor += TypeSizes.FLOAT;
+
+                Array.Copy(BitConverter.GetBytes((float)C), 0, Buffer, cursor, TypeSizes.FLOAT);
+                cursor += TypeSizes.FLOAT;
+
+                Array.Copy(BitConverter.GetBytes((float)D), 0, Buffer, cursor, TypeSizes.FLOAT);
+                cursor += TypeSizes.FLOAT;
+            }
 
             Array.Copy(BitConverter.GetBytes(X0), 0, Buffer, cursor, TypeSizes.INT);
             cursor += TypeSizes.INT;
@@ -69,7 +86,7 @@ namespace Meridian59.Files.ROO
             Array.Copy(BitConverter.GetBytes(TextureAngle), 0, Buffer, cursor, TypeSizes.INT);
             cursor += TypeSizes.INT;
 
-            // skip 3*6 unused bytes
+            // skip 3*6 unused bytes (vertex indices for roomeditor)
             cursor += (3 * PAYLOADSIZE);
 
             return cursor - StartIndex;
@@ -77,17 +94,34 @@ namespace Meridian59.Files.ROO
 
         public unsafe void WriteTo(ref byte* Buffer)
         {
-            *((int*)Buffer) = MathUtil.FloatToM59FP(A);
-            Buffer += TypeSizes.INT;
+            if (RooVersion < RooFile.VERSIONFLOATCOORDS)
+            {
+                *((int*)Buffer) = MathUtil.FloatToM59FP(A);
+                Buffer += TypeSizes.INT;
 
-            *((int*)Buffer) = MathUtil.FloatToM59FP(B);
-            Buffer += TypeSizes.INT;
+                *((int*)Buffer) = MathUtil.FloatToM59FP(B);
+                Buffer += TypeSizes.INT;
 
-            *((int*)Buffer) = MathUtil.FloatToM59FP(C);
-            Buffer += TypeSizes.INT;
+                *((int*)Buffer) = MathUtil.FloatToM59FP(C);
+                Buffer += TypeSizes.INT;
 
-            *((int*)Buffer) = MathUtil.FloatToM59FP(D);
-            Buffer += TypeSizes.INT;
+                *((int*)Buffer) = MathUtil.FloatToM59FP(D);
+                Buffer += TypeSizes.INT;
+            }
+            else
+            {
+                *((float*)Buffer) = (float)A;
+                Buffer += TypeSizes.INT;
+
+                *((float*)Buffer) = (float)B;
+                Buffer += TypeSizes.INT;
+
+                *((float*)Buffer) = (float)C;
+                Buffer += TypeSizes.INT;
+
+                *((float*)Buffer) = (float)D;
+                Buffer += TypeSizes.INT;
+            }
 
             *((int*)Buffer) = X0;
             Buffer += TypeSizes.INT;
@@ -98,7 +132,7 @@ namespace Meridian59.Files.ROO
             *((int*)Buffer) = TextureAngle;
             Buffer += TypeSizes.INT;
 
-            // skip 3*6 unused bytes
+            // skip 3*6 unused bytes (vertex indices for roomeditor)
             Buffer += (3 * PAYLOADSIZE);
         }
 
@@ -106,17 +140,34 @@ namespace Meridian59.Files.ROO
         {
             int cursor = StartIndex;
 
-            A = MathUtil.M59FPToFloat(BitConverter.ToInt32(Buffer, cursor));
-            cursor += TypeSizes.INT;
+            if (RooVersion < RooFile.VERSIONFLOATCOORDS)
+            {
+                A = MathUtil.M59FPToFloat(BitConverter.ToInt32(Buffer, cursor));
+                cursor += TypeSizes.INT;
 
-            B = MathUtil.M59FPToFloat(BitConverter.ToInt32(Buffer, cursor));
-            cursor += TypeSizes.INT;
+                B = MathUtil.M59FPToFloat(BitConverter.ToInt32(Buffer, cursor));
+                cursor += TypeSizes.INT;
 
-            C = MathUtil.M59FPToFloat(BitConverter.ToInt32(Buffer, cursor));
-            cursor += TypeSizes.INT;
+                C = MathUtil.M59FPToFloat(BitConverter.ToInt32(Buffer, cursor));
+                cursor += TypeSizes.INT;
 
-            D = MathUtil.M59FPToFloat(BitConverter.ToInt32(Buffer, cursor));
-            cursor += TypeSizes.INT;
+                D = MathUtil.M59FPToFloat(BitConverter.ToInt32(Buffer, cursor));
+                cursor += TypeSizes.INT;
+            }
+            else
+            {
+                A = (Real)BitConverter.ToSingle(Buffer, cursor);
+                cursor += TypeSizes.FLOAT;
+
+                B = (Real)BitConverter.ToSingle(Buffer, cursor);
+                cursor += TypeSizes.FLOAT;
+
+                C = (Real)BitConverter.ToSingle(Buffer, cursor);
+                cursor += TypeSizes.FLOAT;
+
+                D = (Real)BitConverter.ToSingle(Buffer, cursor);
+                cursor += TypeSizes.FLOAT;
+            }
 
             X0 = BitConverter.ToInt32(Buffer, cursor);
             cursor += TypeSizes.INT;
@@ -127,7 +178,7 @@ namespace Meridian59.Files.ROO
             TextureAngle = BitConverter.ToInt32(Buffer, cursor);
             cursor += TypeSizes.INT;
 
-            // skip 3*6 unused bytes
+            // skip 3*6 unused bytes (vertex indices for roomeditor)
             cursor += (3 * PAYLOADSIZE);
 
             return cursor - StartIndex;
@@ -135,17 +186,34 @@ namespace Meridian59.Files.ROO
 
         public unsafe void ReadFrom(ref byte* Buffer)
         {
-            A = MathUtil.M59FPToFloat(*((int*)Buffer));
-            Buffer += TypeSizes.INT;
+            if (RooVersion < RooFile.VERSIONFLOATCOORDS)
+            {
+                A = MathUtil.M59FPToFloat(*((int*)Buffer));
+                Buffer += TypeSizes.INT;
 
-            B = MathUtil.M59FPToFloat(*((int*)Buffer));
-            Buffer += TypeSizes.INT;
+                B = MathUtil.M59FPToFloat(*((int*)Buffer));
+                Buffer += TypeSizes.INT;
 
-            C = MathUtil.M59FPToFloat(*((int*)Buffer));
-            Buffer += TypeSizes.INT;
+                C = MathUtil.M59FPToFloat(*((int*)Buffer));
+                Buffer += TypeSizes.INT;
 
-            D = MathUtil.M59FPToFloat(*((int*)Buffer));
-            Buffer += TypeSizes.INT;
+                D = MathUtil.M59FPToFloat(*((int*)Buffer));
+                Buffer += TypeSizes.INT;
+            }
+            else
+            {
+                A = (Real)(*((float*)Buffer));
+                Buffer += TypeSizes.FLOAT;
+
+                B = (Real)(*((float*)Buffer));
+                Buffer += TypeSizes.FLOAT;
+
+                C = (Real)(*((float*)Buffer));
+                Buffer += TypeSizes.FLOAT;
+
+                D = (Real)(*((float*)Buffer));
+                Buffer += TypeSizes.FLOAT;
+            }
 
             X0 = *((int*)Buffer);
             Buffer += TypeSizes.INT;
@@ -156,7 +224,7 @@ namespace Meridian59.Files.ROO
             TextureAngle = *((int*)Buffer);
             Buffer += TypeSizes.INT;
 
-            // skip 3*6 unused bytes
+            // skip 3*6 unused bytes (vertex indices for roomeditor)
             Buffer += (3 * PAYLOADSIZE);
         }
 
@@ -174,6 +242,8 @@ namespace Meridian59.Files.ROO
             }
         }
         #endregion
+
+        public uint RooVersion { get; set; }
 
         // plane equation constants (normal-vector variant)
         // (n1,n2,n3) * (x,y,z) - d = 0
@@ -197,8 +267,9 @@ namespace Meridian59.Files.ROO
         public V3 P2 { get; set; } /* v axis end point */
         public V3 TextureOrientation { get; set; }
 
-        public RooSectorSlopeInfo()
+        public RooSectorSlopeInfo(uint RooVersion)
         {
+            this.RooVersion = RooVersion;
             this.A = 0;
             this.B = 0;
             this.C = 0;
@@ -209,9 +280,11 @@ namespace Meridian59.Files.ROO
         }
 
         public RooSectorSlopeInfo(
+            uint RooVersion,
             int A, int B, int C, int D,
             int X, int Y, int TextureAngle)
         {
+            this.RooVersion = RooVersion;
             this.A = A;
             this.B = B;
             this.C = C;
@@ -223,14 +296,16 @@ namespace Meridian59.Files.ROO
             Calculate();
         }
 
-        public RooSectorSlopeInfo(byte[] Buffer, int StartIndex = 0)
+        public RooSectorSlopeInfo(uint RoVersion, byte[] Buffer, int StartIndex = 0)
         {
+            this.RooVersion = RooVersion;
             ReadFrom(Buffer, StartIndex);
             Calculate();
         }
 
-        public unsafe RooSectorSlopeInfo(ref byte* Buffer)
+        public unsafe RooSectorSlopeInfo(uint RooVersion, ref byte* Buffer)
         {
+            this.RooVersion = RooVersion;
             ReadFrom(ref Buffer);
             Calculate();
         }

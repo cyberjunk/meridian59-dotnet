@@ -342,9 +342,10 @@ namespace Meridian59.Files.ROO
         /// <summary>
         /// Creates a RooWall instance based on this RooWallEditor instance.
         /// </summary>
+        /// <param name="RooVersion"></param>
         /// <param name="Room"></param>
         /// <returns></returns>
-        public RooWall ToRooWall(RooFile Room)
+        public RooWall ToRooWall(uint RooVersion, RooFile Room)
         {
             if (Room == null)
                 return null;
@@ -369,6 +370,7 @@ namespace Meridian59.Files.ROO
             // sectnum in editorwall is -1 to n (-1=unset)
 
             RooWall wall = new RooWall(
+                RooVersion,
                 0,
                 (ushort)this.FileSideDef1, // no +1
                 (ushort)this.FileSideDef2, // no +1

@@ -421,7 +421,7 @@ namespace Meridian59.RooViewer.UI
                 foreach (RooWallEditor rld in Room.WallsEditor)
                 {
                     // convert to roowall
-                    RooWall wall = rld.ToRooWall(Room);
+                    RooWall wall = rld.ToRooWall(RooFile.VERSIONHIGHRESGRID, Room);
 
                     // selected walleditor
                     if (selectedWallEditor == rld)

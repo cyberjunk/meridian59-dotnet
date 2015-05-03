@@ -67,10 +67,11 @@ namespace Meridian59.Files.ROO
         #region Constants
         public const uint SIGNATURE             = 0xB14F4F52;   // first expected bytes in file
         public const uint VERSION               = 13;           // current
+        public const uint VERSIONSPEED          = 10;           // first one that has additional "speed" values
         public const uint VERSIONMONSTERGRID    = 12;           // first one with monster grid
         public const uint VERSIONHIGHRESGRID    = 13;           // first one with highres grid
-        public const uint VERSIONSPEED          = 10;           // first one that has additional "speed" values
-        public const uint MINVERSION            = 9;            // absolute minimum
+        public const uint VERSIONFLOATCOORDS    = 14;           // first one with floating points
+        public const uint MINVERSION            = 9;            // absolute minimum we can handle
         public const uint ENCRYPTIONFLAG        = 0xFFFFFFFF;
         public const byte ENCRYPTIONINFOLENGTH  = 12;
         public const int DEFAULTCLIENTOFFSET    = 20;
@@ -517,7 +518,7 @@ namespace Meridian59.Files.ROO
             BSPTree = new List<RooBSPItem>(len);
             for (int i = 0; i < len; i++)
             {
-                RooBSPItem bspItem = RooBSPItem.ExtractBSPItem(Buffer, cursor);
+                RooBSPItem bspItem = RooBSPItem.ExtractBSPItem(RooVersion, Buffer, cursor);
                 cursor += bspItem.ByteLength;
 
                 BSPTree.Add(bspItem);     
@@ -531,7 +532,7 @@ namespace Meridian59.Files.ROO
             Walls = new List<RooWall>(len);           
             for (int i = 0; i < len; i++)
             {
-                RooWall lineDef = new RooWall(Buffer, cursor);               
+                RooWall lineDef = new RooWall(RooVersion, Buffer, cursor);               
                 cursor += lineDef.ByteLength;
 
                 lineDef.Num = i + 1;
@@ -578,7 +579,7 @@ namespace Meridian59.Files.ROO
             Sectors = new List<RooSector>(len);
             for (int i = 0; i < len; i++)
             {
-                RooSector sectorDef = new RooSector(Buffer, cursor, hasSpeed);
+                RooSector sectorDef = new RooSector(RooVersion, Buffer, cursor, hasSpeed);
                 cursor += sectorDef.ByteLength;
 
                 sectorDef.Num = i + 1;
@@ -730,7 +731,7 @@ namespace Meridian59.Files.ROO
             BSPTree = new List<RooBSPItem>(len);
             for (int i = 0; i < len; i++)
             {
-                RooBSPItem bspItem = RooBSPItem.ExtractBSPItem(ref Buffer);
+                RooBSPItem bspItem = RooBSPItem.ExtractBSPItem(RooVersion, ref Buffer);
                 
                 BSPTree.Add(bspItem);
             }
@@ -742,7 +743,7 @@ namespace Meridian59.Files.ROO
             Walls = new List<RooWall>(len);
             for (int i = 0; i < len; i++)
             {
-                RooWall lineDef = new RooWall(ref Buffer);
+                RooWall lineDef = new RooWall(RooVersion, ref Buffer);
                 
                 lineDef.Num = i + 1;
                 Walls.Add(lineDef);
@@ -783,7 +784,7 @@ namespace Meridian59.Files.ROO
             Sectors = new List<RooSector>(len);
             for (int i = 0; i < len; i++)
             {
-                RooSector sectorDef = new RooSector(ref Buffer, hasSpeed);
+                RooSector sectorDef = new RooSector(RooVersion, ref Buffer, hasSpeed);
                 sectorDef.TextureChanged += OnSectorTextureChanged;
                 sectorDef.Moved += OnSectorMoved;
                 sectorDef.Num = i + 1;

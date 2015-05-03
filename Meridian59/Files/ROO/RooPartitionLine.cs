@@ -48,14 +48,28 @@ namespace Meridian59.Files.ROO
 
             cursor += base.WriteTo(Buffer, cursor);
 
-            Array.Copy(BitConverter.GetBytes((int)A), 0, Buffer, cursor, TypeSizes.INT);
-            cursor += TypeSizes.INT;
+            if (RooVersion < RooFile.VERSIONFLOATCOORDS)
+            { 
+                Array.Copy(BitConverter.GetBytes(Convert.ToInt32(A)), 0, Buffer, cursor, TypeSizes.INT);
+                cursor += TypeSizes.INT;
 
-            Array.Copy(BitConverter.GetBytes((int)B), 0, Buffer, cursor, TypeSizes.INT);
-            cursor += TypeSizes.INT;
+                Array.Copy(BitConverter.GetBytes(Convert.ToInt32(B)), 0, Buffer, cursor, TypeSizes.INT);
+                cursor += TypeSizes.INT;
 
-            Array.Copy(BitConverter.GetBytes((int)C), 0, Buffer, cursor, TypeSizes.INT);
-            cursor += TypeSizes.INT;
+                Array.Copy(BitConverter.GetBytes(Convert.ToInt32(C)), 0, Buffer, cursor, TypeSizes.INT);
+                cursor += TypeSizes.INT;
+            }
+            else
+            {
+                Array.Copy(BitConverter.GetBytes((float)A), 0, Buffer, cursor, TypeSizes.FLOAT);
+                cursor += TypeSizes.FLOAT;
+
+                Array.Copy(BitConverter.GetBytes((float)B), 0, Buffer, cursor, TypeSizes.FLOAT);
+                cursor += TypeSizes.FLOAT;
+
+                Array.Copy(BitConverter.GetBytes((float)C), 0, Buffer, cursor, TypeSizes.FLOAT);
+                cursor += TypeSizes.FLOAT;
+            }
 
             Array.Copy(BitConverter.GetBytes(Right), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
@@ -73,14 +87,28 @@ namespace Meridian59.Files.ROO
         {
             base.WriteTo(ref Buffer);
 
-            *((int*)Buffer) = (int)A;
-            Buffer += TypeSizes.INT;
+            if (RooVersion < RooFile.VERSIONFLOATCOORDS)
+            {
+                *((int*)Buffer) = Convert.ToInt32(A);
+                Buffer += TypeSizes.INT;
 
-            *((int*)Buffer) = (int)B;
-            Buffer += TypeSizes.INT;
+                *((int*)Buffer) = Convert.ToInt32(B);
+                Buffer += TypeSizes.INT;
 
-            *((int*)Buffer) = (int)C;
-            Buffer += TypeSizes.INT;
+                *((int*)Buffer) = Convert.ToInt32(C);
+                Buffer += TypeSizes.INT;
+            }
+            else
+            {
+                *((float*)Buffer) = (float)A;
+                Buffer += TypeSizes.FLOAT;
+
+                *((float*)Buffer) = (float)B;
+                Buffer += TypeSizes.FLOAT;
+
+                *((float*)Buffer) = (float)C;
+                Buffer += TypeSizes.FLOAT;
+            }
 
             *((ushort*)Buffer) = Right;
             Buffer += TypeSizes.SHORT;
@@ -98,14 +126,28 @@ namespace Meridian59.Files.ROO
 
             cursor += base.ReadFrom(Buffer, cursor);
 
-            A = (Real)BitConverter.ToInt32(Buffer, cursor);
-            cursor += TypeSizes.INT;
+            if (RooVersion < RooFile.VERSIONFLOATCOORDS)
+            {
+                A = (Real)BitConverter.ToInt32(Buffer, cursor);
+                cursor += TypeSizes.INT;
 
-            B = (Real)BitConverter.ToInt32(Buffer, cursor);
-            cursor += TypeSizes.INT;
+                B = (Real)BitConverter.ToInt32(Buffer, cursor);
+                cursor += TypeSizes.INT;
 
-            C = (Real)BitConverter.ToInt32(Buffer, cursor);
-            cursor += TypeSizes.INT;
+                C = (Real)BitConverter.ToInt32(Buffer, cursor);
+                cursor += TypeSizes.INT;
+            }
+            else
+            {
+                A = (Real)BitConverter.ToSingle(Buffer, cursor);
+                cursor += TypeSizes.FLOAT;
+
+                B = (Real)BitConverter.ToSingle(Buffer, cursor);
+                cursor += TypeSizes.FLOAT;
+
+                C = (Real)BitConverter.ToSingle(Buffer, cursor);
+                cursor += TypeSizes.FLOAT;
+            }
 
             Right = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
@@ -123,14 +165,28 @@ namespace Meridian59.Files.ROO
         {
             base.ReadFrom(ref Buffer);
 
-            A = (Real)(*((int*)Buffer));
-            Buffer += TypeSizes.INT;
+            if (RooVersion < RooFile.VERSIONFLOATCOORDS)
+            {
+                A = (Real)(*((int*)Buffer));
+                Buffer += TypeSizes.INT;
 
-            B = (Real)(*((int*)Buffer));
-            Buffer += TypeSizes.INT;
+                B = (Real)(*((int*)Buffer));
+                Buffer += TypeSizes.INT;
 
-            C = (Real)(*((int*)Buffer));
-            Buffer += TypeSizes.INT;
+                C = (Real)(*((int*)Buffer));
+                Buffer += TypeSizes.INT;
+            }
+            else
+            {
+                A = (Real)(*((float*)Buffer));
+                Buffer += TypeSizes.FLOAT;
+
+                B = (Real)(*((float*)Buffer));
+                Buffer += TypeSizes.FLOAT;
+
+                C = (Real)(*((float*)Buffer));
+                Buffer += TypeSizes.FLOAT;
+            }
 
             Right = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
@@ -149,7 +205,7 @@ namespace Meridian59.Files.ROO
         /// PartitionLineType for RooPartitionLine
         /// </summary>
         public override NodeType Type { get { return RooBSPItem.NodeType.Node; } }
-        
+
         /// <summary>
         /// 'a' variable for line equation ax+by+c=0
         /// </summary>
@@ -203,6 +259,7 @@ namespace Meridian59.Files.ROO
         /// <summary>
         /// Constructor by values
         /// </summary>
+        /// <param name="RooVersion"></param>
         /// <param name="BoundingBox"></param>
         /// <param name="A"></param>
         /// <param name="B"></param>
@@ -210,11 +267,12 @@ namespace Meridian59.Files.ROO
         /// <param name="Right"></param>
         /// <param name="Left"></param>
         /// <param name="LineDefReference"></param>
-        public RooPartitionLine( 
+        public RooPartitionLine(
+            uint RooVersion,
             BoundingBox2D BoundingBox,
             Real A, Real B, Real C,
             ushort Right, ushort Left, 
-            ushort LineDefReference) : base()
+            ushort LineDefReference) : base(RooVersion)
         {
             this.A = A;
             this.B = B;
@@ -228,17 +286,19 @@ namespace Meridian59.Files.ROO
         /// <summary>
         /// Constructor by managed parser
         /// </summary>
+        /// <param name="RooVersion"></param>
         /// <param name="Buffer"></param>
         /// <param name="StartIndex"></param>
-        public RooPartitionLine(byte[] Buffer, int StartIndex = 0)
-            : base(Buffer, StartIndex) { }
+        public RooPartitionLine(uint RooVersion, byte[] Buffer, int StartIndex = 0)
+            : base(RooVersion, Buffer, StartIndex) { }
 
         /// <summary>
         /// Constructor by native parser
         /// </summary>
+        /// <param name="RooVersion"></param>
         /// <param name="Buffer"></param>
-        public unsafe RooPartitionLine(ref byte* Buffer)
-            : base(ref Buffer) { }
+        public unsafe RooPartitionLine(uint RooVersion, ref byte* Buffer)
+            : base(RooVersion, ref Buffer) { }
 
         /// <summary>
         /// 

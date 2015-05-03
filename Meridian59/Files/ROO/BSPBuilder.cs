@@ -80,7 +80,7 @@ namespace Meridian59.Files.ROO
             // convert roomeditor walls to roowall
             for (int i = 0; i < Room.WallsEditor.Count; i++)
             {
-                RooWall wall = Room.WallsEditor[i].ToRooWall(Room);
+                RooWall wall = Room.WallsEditor[i].ToRooWall(RooFile.VERSIONHIGHRESGRID, Room);
                 Room.Walls.Add(wall);
             }
 
@@ -294,7 +294,7 @@ namespace Meridian59.Files.ROO
             // No walls left ==> leaf
             if (Walls.Count == 0)
             {
-                RooSubSector leaf = new RooSubSector((ushort)Sector, Polygon);
+                RooSubSector leaf = new RooSubSector(RooFile.VERSIONHIGHRESGRID, (ushort)Sector, Polygon);
 
                 // fills in sector reference
                 leaf.ResolveIndices(room);
@@ -321,7 +321,7 @@ namespace Meridian59.Files.ROO
                 out a, out b, out c);
 
             // create new splitter node
-            RooPartitionLine node = new RooPartitionLine(
+            RooPartitionLine node = new RooPartitionLine(RooFile.VERSIONHIGHRESGRID,
                 Polygon.GetBoundingBox(), a, b, c, 0, 0, (ushort)splitter.Num);
 
             // fills in wall reference

@@ -24,6 +24,7 @@ namespace Meridian59.Common.Constants
         public const byte BYTE = 1;
         public const byte SHORT = 2;
         public const byte INT = 4;
+        public const byte FLOAT = 4;
         public const byte LONG = 8;
     }
 }

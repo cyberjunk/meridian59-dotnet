@@ -40,7 +40,7 @@ namespace Meridian59.Files.ROO
             get { 
                 int len = base.ByteLength + TypeSizes.SHORT;
                 
-                // vertices are saved as INT
+                // vertices are saved as INT32 for < v14 or FLOAT32 for >= v14
                 len += TypeSizes.SHORT;
                 foreach (V2 vertex in Vertices)
                     len += TypeSizes.INT + TypeSizes.INT;
@@ -61,15 +61,29 @@ namespace Meridian59.Files.ROO
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(Vertices.Count)), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
-            foreach (V2 vertex in Vertices)
+            if (RooVersion < RooFile.VERSIONFLOATCOORDS)
             {
-                Array.Copy(BitConverter.GetBytes(Convert.ToInt32(vertex.X)), 0, Buffer, cursor, TypeSizes.INT);
-                cursor += TypeSizes.INT;
+                foreach (V2 vertex in Vertices)
+                {
+                    Array.Copy(BitConverter.GetBytes(Convert.ToInt32(vertex.X)), 0, Buffer, cursor, TypeSizes.INT);
+                    cursor += TypeSizes.INT;
 
-                Array.Copy(BitConverter.GetBytes(Convert.ToInt32(vertex.Y)), 0, Buffer, cursor, TypeSizes.INT);
-                cursor += TypeSizes.INT;
+                    Array.Copy(BitConverter.GetBytes(Convert.ToInt32(vertex.Y)), 0, Buffer, cursor, TypeSizes.INT);
+                    cursor += TypeSizes.INT;
+                }
             }
-            
+            else
+            {
+                foreach (V2 vertex in Vertices)
+                {
+                    Array.Copy(BitConverter.GetBytes((float)vertex.X), 0, Buffer, cursor, TypeSizes.FLOAT);
+                    cursor += TypeSizes.FLOAT;
+
+                    Array.Copy(BitConverter.GetBytes((float)vertex.Y), 0, Buffer, cursor, TypeSizes.FLOAT);
+                    cursor += TypeSizes.FLOAT;
+                }
+            }
+
             return cursor - StartIndex;
         }
 
@@ -83,13 +97,27 @@ namespace Meridian59.Files.ROO
             *((ushort*)Buffer) = (ushort)Vertices.Count;
             Buffer += TypeSizes.SHORT;
 
-            foreach (V2 vertex in Vertices)
+            if (RooVersion < RooFile.VERSIONFLOATCOORDS)
             {
-                *((int*)Buffer) = (int)vertex.X;
-                Buffer += TypeSizes.INT;
+                foreach (V2 vertex in Vertices)
+                {
+                    *((int*)Buffer) = Convert.ToInt32(vertex.X);
+                    Buffer += TypeSizes.INT;
 
-                *((int*)Buffer) = (int)vertex.Y;
-                Buffer += TypeSizes.INT;
+                    *((int*)Buffer) = Convert.ToInt32(vertex.Y);
+                    Buffer += TypeSizes.INT;
+                }
+            }
+            else
+            {
+                foreach (V2 vertex in Vertices)
+                {
+                    *((float*)Buffer) = (float)vertex.X;
+                    Buffer += TypeSizes.FLOAT;
+
+                    *((float*)Buffer) = (float)vertex.Y;
+                    Buffer += TypeSizes.FLOAT;
+                }
             }
         }
 
@@ -106,17 +134,34 @@ namespace Meridian59.Files.ROO
             cursor += TypeSizes.SHORT;
 
             Vertices = new Polygon();
-            for(int i = 0; i < len; i++)
+
+            if (RooVersion < RooFile.VERSIONFLOATCOORDS)
             {
-                int x = BitConverter.ToInt32(Buffer, cursor);
-                cursor += TypeSizes.INT;
+                for (int i = 0; i < len; i++)
+                {
+                    int x = BitConverter.ToInt32(Buffer, cursor);
+                    cursor += TypeSizes.INT;
 
-                int y = BitConverter.ToInt32(Buffer, cursor);
-                cursor += TypeSizes.INT;
+                    int y = BitConverter.ToInt32(Buffer, cursor);
+                    cursor += TypeSizes.INT;
 
-                Vertices.Add(new V2(x, y));
-            }             
-            
+                    Vertices.Add(new V2(x, y));
+                }
+            }
+            else
+            {
+                for (int i = 0; i < len; i++)
+                {
+                    float x = BitConverter.ToSingle(Buffer, cursor);
+                    cursor += TypeSizes.FLOAT;
+
+                    float y = BitConverter.ToSingle(Buffer, cursor);
+                    cursor += TypeSizes.FLOAT;
+
+                    Vertices.Add(new V2(x, y));
+                }
+            }
+
             return cursor - StartIndex;
         }
 
@@ -131,15 +176,32 @@ namespace Meridian59.Files.ROO
             Buffer += TypeSizes.SHORT;
 
             Vertices = new Polygon();
-            for (int i = 0; i < len; i++)
+
+            if (RooVersion < RooFile.VERSIONFLOATCOORDS)
             {
-                int x = *((int*)Buffer);
-                Buffer += TypeSizes.INT;
+                for (int i = 0; i < len; i++)
+                {
+                    int x = *((int*)Buffer);
+                    Buffer += TypeSizes.INT;
 
-                int y = *((int*)Buffer);
-                Buffer += TypeSizes.INT;
+                    int y = *((int*)Buffer);
+                    Buffer += TypeSizes.INT;
 
-                Vertices.Add(new V2(x, y));
+                    Vertices.Add(new V2(x, y));
+                }
+            }
+            else
+            {
+                for (int i = 0; i < len; i++)
+                {
+                    float x = *((float*)Buffer);
+                    Buffer += TypeSizes.FLOAT;
+
+                    float y = *((float*)Buffer);
+                    Buffer += TypeSizes.FLOAT;
+
+                    Vertices.Add(new V2(x, y));
+                }
             }
         }
         #endregion
@@ -175,9 +237,11 @@ namespace Meridian59.Files.ROO
         /// <summary>
         /// Constructor by values
         /// </summary>
+        /// <param name="RooVersion"></param>
         /// <param name="SectorNum"></param>
         /// <param name="Vertices"></param>
-        public RooSubSector(ushort SectorNum, Polygon Vertices) : base()
+        public RooSubSector(uint RooVersion, ushort SectorNum, Polygon Vertices) 
+            : base(RooVersion)
         {
             this.SectorNum = SectorNum; 
             this.Vertices = Vertices;
@@ -192,17 +256,19 @@ namespace Meridian59.Files.ROO
         /// <summary>
         /// Constructor by managed parser
         /// </summary>
+        /// <param name="RooVersion"></param>
         /// <param name="Buffer"></param>
         /// <param name="StartIndex"></param>
-        public RooSubSector(byte[] Buffer, int StartIndex = 0)
-            : base(Buffer, StartIndex) { }
+        public RooSubSector(uint RooVersion, byte[] Buffer, int StartIndex = 0)
+            : base(RooVersion, Buffer, StartIndex) { }
 
         /// <summary>
         /// Constructor by native parser
         /// </summary>
+        /// <param name="RooVersion"></param>
         /// <param name="Buffer"></param>
-        public unsafe RooSubSector(ref byte* Buffer)
-            : base(ref Buffer) { }
+        public unsafe RooSubSector(uint RooVersion, ref byte* Buffer)
+            : base(RooVersion, ref Buffer) { }
 
         /// <summary>
         /// Resolve all index references to object references

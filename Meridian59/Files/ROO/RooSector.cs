@@ -193,12 +193,12 @@ namespace Meridian59.Files.ROO
             // Check for attached subinfo
             if (Flags.IsSlopedFloor)
             {
-                SlopeInfoFloor = new RooSectorSlopeInfo(Buffer, cursor);
+                SlopeInfoFloor = new RooSectorSlopeInfo(RooVersion, Buffer, cursor);
                 cursor += SlopeInfoFloor.ByteLength;
             }
             if (Flags.IsSlopedCeiling)
             {
-                SlopeInfoCeiling = new RooSectorSlopeInfo(Buffer, cursor);
+                SlopeInfoCeiling = new RooSectorSlopeInfo(RooVersion, Buffer, cursor);
                 cursor += SlopeInfoCeiling.ByteLength;
             }
 
@@ -242,10 +242,10 @@ namespace Meridian59.Files.ROO
 
             // Check for attached subinfo
             if (Flags.IsSlopedFloor)           
-                SlopeInfoFloor = new RooSectorSlopeInfo(ref Buffer);
+                SlopeInfoFloor = new RooSectorSlopeInfo(RooVersion, ref Buffer);
                            
             if (Flags.IsSlopedCeiling)
-                SlopeInfoCeiling = new RooSectorSlopeInfo(ref Buffer);
+                SlopeInfoCeiling = new RooSectorSlopeInfo(RooVersion, ref Buffer);
         }
 
         public byte[] Bytes
@@ -284,6 +284,11 @@ namespace Meridian59.Files.ROO
         protected readonly List<RooSideDef> sides = new List<RooSideDef>();
 
         #region Properties
+        /// <summary>
+        /// 
+        /// </summary>
+        public uint RooVersion { get; set; }
+
         /// <summary>
         /// Version9 does not have the speed byte
         /// </summary>
@@ -505,6 +510,7 @@ namespace Meridian59.Files.ROO
         /// <summary>
         /// Create instance from values
         /// </summary>
+        /// <param name="RooVersion"></param>
         /// <param name="ServerID"></param>
         /// <param name="FloorTexture"></param>
         /// <param name="CeilingTexture"></param>
@@ -517,13 +523,15 @@ namespace Meridian59.Files.ROO
         /// <param name="Flags"></param>
         /// <param name="Unknown4"></param>
         /// <param name="HasSpeed"></param>
-        public RooSector(short ServerID, 
+        public RooSector(uint RooVersion, 
+            short ServerID, 
             ushort FloorTexture, ushort CeilingTexture,
             short TextureX, short TextureY, 
             Real FloorHeight, Real CeilingHeight, 
             byte Light1, byte Light2,
             uint Flags, byte Unknown4, bool HasSpeed = true)
         {
+            this.RooVersion = RooVersion;
             this.ServerID = ServerID;
             this.FloorTexture = FloorTexture;
             this.CeilingTexture = CeilingTexture;
@@ -544,11 +552,14 @@ namespace Meridian59.Files.ROO
         /// <summary>
         /// Create instance from parser
         /// </summary>
+        /// <param name="RooVersion"></param>
         /// <param name="Buffer"></param>
         /// <param name="StartIndex"></param>
         /// <param name="HasSpeed"></param>
-        public RooSector(byte[] Buffer, int StartIndex = 0, bool HasSpeed = true)
+        public RooSector(uint RooVersion, byte[] Buffer, int StartIndex = 0, bool HasSpeed = true)
         {
+            this.RooVersion = RooVersion;
+
             SpeedCeiling = V2.ZERO;
             SpeedFloor = V2.ZERO;
 
@@ -559,10 +570,13 @@ namespace Meridian59.Files.ROO
         /// <summary>
         /// Create instance from parser
         /// </summary>
+        /// <param name="RooVersion"></param>
         /// <param name="Buffer"></param>
         /// <param name="HasSpeed"></param>
-        public unsafe RooSector(ref byte* Buffer, bool HasSpeed = true)
+        public unsafe RooSector(uint RooVersion, ref byte* Buffer, bool HasSpeed = true)
         {
+            this.RooVersion = RooVersion;
+
             SpeedCeiling = V2.ZERO;
             SpeedFloor = V2.ZERO;
 
