@@ -353,66 +353,6 @@ namespace Meridian59.UnitTest.Common
             Assert.AreEqual(retvalExpected, retvalReturned);
             //Assert.AreEqual(intersectExpected.X, intersectReturned.X, EPSILON);
             //Assert.AreEqual(intersectExpected.Y, intersectReturned.Y, EPSILON);
-        }
-        
-        /// <summary>
-        /// Test for GetLineEquation2DCoefficients()
-        /// </summary>
-        [TestMethod]
-        public void GetLineEquation2DCoefficients()
-        {
-            V2 P1, P2;
-            Real aExpected, bExpected, cExpected;
-            Real aReturned, bReturned, cReturned;
-
-            // --- TEST ---
-
-            // x-axis
-            P1 = new V2(0.0f, 0.0f);
-            P2 = new V2(1.0f, 0.0f);
-            aExpected = 0.0f;
-            bExpected = -1.0f;
-            cExpected = 0.0f;
-            aReturned = bReturned = cReturned = 0;
-
-            MathUtil.GetLineEquation2DCoefficients(P1, P2, out aReturned, out bReturned, out cReturned);
-
-            Assert.AreEqual(aExpected, aReturned);
-            Assert.AreEqual(bExpected, bReturned);
-            Assert.AreEqual(cExpected, cReturned);
-
-            // --- TEST ---
-
-            // y-axis
-            P1 = new V2(0.0f, 0.0f);
-            P2 = new V2(0.0f, 1.0f);
-            aExpected = 1.0f;
-            bExpected = 0.0f;
-            cExpected = 0.0f;
-            aReturned = bReturned = cReturned = 0;
-
-            MathUtil.GetLineEquation2DCoefficients(P1, P2, out aReturned, out bReturned, out cReturned);
-
-            Assert.AreEqual(aExpected, aReturned);
-            Assert.AreEqual(bExpected, bReturned);
-            Assert.AreEqual(cExpected, cReturned);
-
-
-            // --- TEST ---
-
-            // 45° angle
-            P1 = new V2(0.0f, 1.0f);
-            P2 = new V2(1.0f, 2.0f);
-            aExpected = 1.0f;
-            bExpected = -1.0f;
-            cExpected = -1.0f;
-            aReturned = bReturned = cReturned = 0;
-
-            MathUtil.GetLineEquation2DCoefficients(P1, P2, out aReturned, out bReturned, out cReturned);
-
-            Assert.AreEqual(aExpected, aReturned);
-            Assert.AreEqual(bExpected, bReturned);
-            Assert.AreEqual(cExpected, cReturned);
-        }
+        }        
     }
 }
