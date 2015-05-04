@@ -853,6 +853,20 @@ namespace Meridian59.Client
         }
 
         /// <summary>
+        /// Requests to deposit something to the closest NPC? (no ID!)
+        /// </summary>
+        /// <param name="Amount">Amount to try to deposit</param>
+        public virtual void SendUserCommandDeposit(uint Amount)
+        {
+            // create message instance
+            UserCommandDeposit userCommand = new UserCommandDeposit(Amount);
+            UserCommandMessage message = new UserCommandMessage(userCommand, null);
+
+            // send/enqueue it (async)
+            ServerConnection.SendQueue.Enqueue(message);
+        }
+
+        /// <summary>
         /// Requests to withdraw something from the closest NPC (no ID!)
         /// </summary>
         /// <param name="Amount">Amount to try to withdraw</param>
@@ -2502,6 +2516,11 @@ namespace Meridian59.Client
                     case ChatCommandType.Cast:
                         ChatCommandCast chatCommandCast = (ChatCommandCast)chatCommand;
                         SendReqCastMessage(chatCommandCast.Spell);
+                        break;
+
+                    case ChatCommandType.Deposit:
+                        ChatCommandDeposit chatCommandDeposit = (ChatCommandDeposit)chatCommand;
+                        SendUserCommandDeposit(chatCommandDeposit.Amount);
                         break;
 
                     case ChatCommandType.WithDraw:

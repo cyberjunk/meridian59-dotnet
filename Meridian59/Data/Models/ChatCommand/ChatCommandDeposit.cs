@@ -14,17 +14,29 @@
  If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Meridian59.Common.Enums
-{
-    /// <summary>
-    /// Different types of chatcommands
-    /// </summary>
-    public enum ChatCommandType
-    {
-        Say, Emote, Yell, Broadcast, Tell, Guild, Cast, DM, Go, GoPlayer, GetPlayer, WithDraw, Deposit, Suicide, Rest, Stand
+using System;
+using Meridian59.Common.Enums;
 
-#if !VANILLA
-        , TempSafe, Grouping
-#endif
+namespace Meridian59.Data.Models
+{
+    [Serializable]
+    public class ChatCommandDeposit : ChatCommand
+    {
+        public const string KEY1 = "deposit";
+
+        public override ChatCommandType CommandType { get { return ChatCommandType.Deposit; } }
+        
+        public uint Amount { get; set; }
+
+        public ChatCommandDeposit()
+        {
+            Amount = 0;
+        }
+
+        public ChatCommandDeposit(uint Amount)
+        {
+            this.Amount = Amount;
+
+        }
     }
 }

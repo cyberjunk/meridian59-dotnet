@@ -187,6 +187,10 @@ namespace Meridian59.Data.Models
                     returnValue = new UserCommandGrouping(Buffer, StartIndex);
                     break;
 #endif
+                case UserCommandType.Deposit:                                                           // 35
+                    returnValue = new UserCommandDeposit(Buffer, StartIndex);
+                    break;
+
                 case UserCommandType.WithDraw:                                                          // 36
                     returnValue = new UserCommandWithDraw(Buffer, StartIndex);
                     break;

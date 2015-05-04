@@ -123,6 +123,7 @@
     <Compile Include="Data\Models\ChatCommand\ChatCommandGoPlayer.cs" />
     <Compile Include="Data\Models\ChatCommand\ChatCommandGetPlayer.cs" />
     <Compile Include="Data\Models\ChatCommand\ChatCommandEmote.cs" />
+    <Compile Include="Data\Models\ChatCommand\ChatCommandDeposit.cs" />
     <Compile Include="Data\Models\ChatCommand\ChatCommandWithDraw.cs" />
     <Compile Include="Data\Models\ChatCommand\ChatCommandSuicide.cs" />
     <Compile Include="Data\Models\ChatCommand\ChatCommandRest.cs" />
@@ -140,6 +141,7 @@
     <Compile Include="Data\Models\UserCommand\UserCommandGrouping.cs" />
     <Compile Include="Data\Models\UserCommand\UserCommandTempSafe.cs" />
     <Compile Include="Data\Models\UserCommand\UserCommandSuicide.cs" />
+    <Compile Include="Data\Models\UserCommand\UserCommandDeposit.cs" />
     <Compile Include="Data\Models\UserCommand\UserCommandWithDraw.cs" />
     <Compile Include="Data\Models\UserCommand\UserCommandGuildExile.cs" />
     <Compile Include="Data\Models\UserCommand\UserCommandGuildSetPassword.cs" />

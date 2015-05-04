@@ -128,6 +128,16 @@ namespace Meridian59.Data.Models
                     returnValue = ParseCast(splitted, lower, DataController);
                     break;
 
+                case ChatCommandDeposit.KEY1:
+                    if (splitted.Length == 2)
+                    {
+                        uint amount = 0;
+
+                        if (UInt32.TryParse(splitted[1], out amount))
+                            returnValue = new ChatCommandDeposit(amount);
+                    }
+                    break;
+
                 case ChatCommandWithDraw.KEY1:
                     if (splitted.Length == 2)
                     {
