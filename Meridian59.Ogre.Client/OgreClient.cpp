@@ -9,7 +9,7 @@ namespace Meridian59 { namespace Ogre
         XmlReaderExtensions::NumberFormatInfo->NumberDecimalSeparator = ".";
 
 		// Initialize MiniMap instance
-		miniMap = gcnew MiniMapCEGUI(Data, 256, 256);
+		miniMap = gcnew MiniMapCEGUI(Data, 256, 256, 4.0f);
 
 		SLEEPTIME = 0;
 		isEngineInitialized = false;

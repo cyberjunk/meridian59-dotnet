@@ -57,7 +57,7 @@ namespace Meridian59 { namespace Ogre
 		/// <summary>
         /// Constructor
         /// </summary>
-		MiniMapCEGUI(::Meridian59::Data::DataController^ Data, int Width, int Height);
+		MiniMapCEGUI(::Meridian59::Data::DataController^ Data, int Width, int Height, CLRReal Zoom);
 
 		virtual void SetDimension(int Width, int Height) override;
 		virtual void PrepareDraw() override;

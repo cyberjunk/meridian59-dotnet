@@ -38,7 +38,7 @@ namespace Meridian59.Drawing2D
     {
         #region Constants
         public const long UPDATEINVERVALMS = 150;
-        public const Real DEFAULTZOOM = 1.0f;
+        public const Real DEFAULTZOOM = 4.0f;
         public const Real MINZOOM = 0.05f;
         public const Real MAXZOOM = 20.0f;
         public const int DEFAULTWIDTH  = 256;

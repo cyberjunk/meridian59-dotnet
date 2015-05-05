@@ -2,8 +2,8 @@
 
 namespace Meridian59 { namespace Ogre 
 {
-	MiniMapCEGUI::MiniMapCEGUI(::Meridian59::Data::DataController^ Data, int Width, int Height)
-		: MiniMap<::System::Drawing::Bitmap^>(Data, Width, Height, 1.0f) 
+	MiniMapCEGUI::MiniMapCEGUI(::Meridian59::Data::DataController^ Data, int Width, int Height, CLRReal Zoom)
+		: MiniMap<::System::Drawing::Bitmap^>(Data, Width, Height, Zoom) 
 	{
 		// default background
         backgroundColor = Color::Transparent;
