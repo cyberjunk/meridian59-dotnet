@@ -110,12 +110,14 @@ namespace Meridian59 { namespace Ogre
 			::Caelum::CaelumSystem::CaelumComponent::CAELUM_COMPONENT_SKY_DOME |
 			::Caelum::CaelumSystem::CaelumComponent::CAELUM_COMPONENT_MOON |
 			::Caelum::CaelumSystem::CaelumComponent::CAELUM_COMPONENT_SUN |
-			//::Caelum::CaelumSystem::CaelumComponent::CAELUM_COMPONENT_IMAGE_STARFIELD |
 			::Caelum::CaelumSystem::CaelumComponent::CAELUM_COMPONENT_POINT_STARFIELD |
-			::Caelum::CaelumSystem::CaelumComponent::CAELUM_COMPONENT_PRECIPITATION | 
-			//::Caelum::CaelumSystem::CaelumComponent::CAELUM_COMPONENT_SCREEN_SPACE_FOG |
-			//::Caelum::CaelumSystem::CaelumComponent::CAELUM_COMPONENT_GROUND_FOG |
 			::Caelum::CaelumSystem::CaelumComponent::CAELUM_COMPONENT_CLOUDS);
+
+		// the ones we don't use 
+		//CaelumComponent::CAELUM_COMPONENT_IMAGE_STARFIELD
+		//CaelumComponent::CAELUM_COMPONENT_PRECIPITATION
+		//CaelumComponent::CAELUM_COMPONENT_SCREEN_SPACE_FOG
+		//CaelumComponent::CAELUM_COMPONENT_GROUND_FOG
 
 		// init caelumsystem
 		caelumSystem = new ::Caelum::CaelumSystem(
