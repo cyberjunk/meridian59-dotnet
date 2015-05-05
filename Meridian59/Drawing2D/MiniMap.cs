@@ -15,6 +15,7 @@
 */
 
 using System;
+using Meridian59.Common;
 using Meridian59.Common.Interfaces;
 using Meridian59.Data;
 using Meridian59.Data.Models;
@@ -37,23 +38,16 @@ namespace Meridian59.Drawing2D
     {
         #region Constants
         public const long UPDATEINVERVALMS = 150;
-        public const Real ZOOMBASE = 4.0f;
         public const Real DEFAULTZOOM = 1.0f;
         public const Real MINZOOM = 0.05f;
         public const Real MAXZOOM = 20.0f;
-        public const int DEFAULTWIDTH = 256;
+        public const int DEFAULTWIDTH  = 256;
         public const int DEFAULTHEIGHT = 256;
         #endregion
 
-        /// <summary>
-        /// Last tick we updated the map picture
-        /// </summary>
         protected long tickLastUpdate;
-
-        /// <summary>
-        /// Zoom level
-        /// </summary>
         protected Real zoom;
+        protected BoundingBox2D scope;
 
         /// <summary>
         /// Fired when there is an update image to show
@@ -93,6 +87,14 @@ namespace Meridian59.Drawing2D
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        public float ZoomInv
+        {
+            get { return 1.0f / zoom; }
+        }
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="DataController"></param>
@@ -112,98 +114,93 @@ namespace Meridian59.Drawing2D
         /// </summary>
         public void Tick(long Tick, long Span)
         {
+            Real deltax, deltay;
+            Real transx1, transy1, transx2, transy2;
+            RooFile room;
+            RoomObject avatar;
+
             // get elapsed ms since last image draw
             long msspan = Tick - tickLastUpdate;
 
-            if (DataController != null && 
-                DataController.AvatarObject != null && 
-                DataController.RoomInformation != null &&
-                DataController.RoomInformation.ResourceRoom != null &&
-                msspan >= UPDATEINVERVALMS)
-            {
-                RooFile RoomFile = DataController.RoomInformation.ResourceRoom;
+            // basic checks
+            if (msspan < UPDATEINVERVALMS ||
+                DataController == null ||
+                DataController.AvatarObject == null ||
+                DataController.RoomInformation == null ||
+                DataController.RoomInformation.ResourceRoom == null)
+                    return;
 
-                // get the deltas based on zoom, zoombase and mapsize
-                // the center of the bounding box is the player position
-                Real deltax = Zoom * ZOOMBASE * (Real)Width;
-                Real deltay = Zoom * ZOOMBASE * (Real)Height;
+            /***************************************************************************/
 
-                // the top left corner of bounding box
-                int topx = Convert.ToInt32((Real)DataController.AvatarObject.CoordinateX - deltax);
-                int topy = Convert.ToInt32((Real)DataController.AvatarObject.CoordinateY - deltay);
+            room   = DataController.RoomInformation.ResourceRoom;
+            avatar = DataController.AvatarObject;
 
-                // bottom right corner of bounding box
-                int bottomx = Convert.ToInt32((Real)DataController.AvatarObject.CoordinateX + deltax);
-                int bottomy = Convert.ToInt32((Real)DataController.AvatarObject.CoordinateY + deltay);
-               
-                // get scale between actual pixelsize of image to show and the bounding box
-                Real boxscale = (Real)Width / (Real)(bottomx - topx);
+            // get the deltas based on zoom, zoombase and mapsize
+            // the center of the bounding box is the player position
+            deltax = 0.5f * zoom * (Real)Width;
+            deltay = 0.5f * zoom * (Real)Height;
 
-                // prepare drawing
-                PrepareDraw();
+            // update box boundaries (box = what to draw from map)
+            scope.Min.X = avatar.Position3D.X - deltax;
+            scope.Min.Y = avatar.Position3D.Z - deltay;
+            scope.Max.X = avatar.Position3D.X + deltax;
+            scope.Max.Y = avatar.Position3D.Z + deltay;
+
+            // prepare drawing
+            PrepareDraw();
             
-                // start drawing lines from roo
-                foreach (RooWall rld in RoomFile.Walls)
-                {
-                    // Don't show line if:
-                    // 1) both sides not set
-                    // 2) left side set to not show up on map, right side unset
-                    // 3) right side set to not show up on map, left side unset
-                    // 4) both sides set and set to not show up on map
-                    if ((rld.LeftSide == null && rld.RightSide == null) ||
-                        (rld.LeftSide != null && rld.RightSide == null && rld.LeftSide.Flags.IsMapNever) ||
-                        (rld.LeftSide == null && rld.RightSide != null && rld.RightSide.Flags.IsMapNever) ||
-                        (rld.LeftSide != null && rld.LeftSide != null && rld.LeftSide.Flags.IsMapNever && rld.RightSide.Flags.IsMapNever))
-                        continue;
-
-                    // convert to traffic-coords (/16 is RSHIFT 4, +64 offset):
-                    int x1 = (rld.X1 >> 4) + 64;
-                    int y1 = (rld.Y1 >> 4) + 64;
-                    int x2 = (rld.X2 >> 4) + 64;
-                    int y2 = (rld.Y2 >> 4) + 64;
-
-                    // expressions whether point is in rectangle
-                    bool isX1inScope = (x1 >= topx && x1 <= bottomx);
-                    bool isY1inScope = (y1 >= topy && y1 <= bottomy);
-                    bool isX2inScope = (x2 >= topx && x2 <= bottomx);
-                    bool isY2inScope = (y2 >= topy && y2 <= bottomy);
-
-                    // if at least one of the line points is in the mapscope, draw the line
-                    if ((isX1inScope && isY1inScope) || (isX2inScope && isY2inScope))
-                    {
-                        // transform points to match world of pixeldrawing
-                        Real transx1 = (x1 - topx) * boxscale;
-                        Real transy1 = (y1 - topy) * boxscale;
-                        Real transx2 = (x2 - topx) * boxscale;
-                        Real transy2 = (y2 - topy) * boxscale;
-
-                        // draw wall
-                        DrawWall(rld, transx1, transy1, transx2, transy2);
-                    }
-                }
-
-                // draw roomobjects
-                foreach (RoomObject obj in DataController.RoomObjects)
-                {
-                    Real objx = (obj.CoordinateX - topx) * boxscale;
-                    Real objy = (obj.CoordinateY - topy) * boxscale;
-                    int width = Convert.ToInt32(50.0f * boxscale);
-                    Real widthhalf = (Real)width / 2.0f;
-                    int rectx = Convert.ToInt32((Real)objx - widthhalf);
-                    int recty = Convert.ToInt32((Real)objy - widthhalf);
-
-                    DrawObject(obj, rectx, recty, width, width);
-                }
+            /***************************************************************************/
                 
+            // start drawing walls from roo
+            foreach (RooWall rld in room.Walls)
+            {
+                // Don't show line if:
+                // 1) both sides not set
+                // 2) left side set to not show up on map, right side unset
+                // 3) right side set to not show up on map, left side unset
+                // 4) both sides set and set to not show up on map
+                if ((rld.LeftSide == null && rld.RightSide == null) ||
+                    (rld.LeftSide != null && rld.RightSide == null && rld.LeftSide.Flags.IsMapNever) ||
+                    (rld.LeftSide == null && rld.RightSide != null && rld.RightSide.Flags.IsMapNever) ||
+                    (rld.LeftSide != null && rld.LeftSide != null && rld.LeftSide.Flags.IsMapNever && rld.RightSide.Flags.IsMapNever))
+                    continue;
+                   
+                // transform wall points
+                transx1 = (rld.X1 * 0.0625f + 64f - scope.Min.X) * ZoomInv;
+                transy1 = (rld.Y1 * 0.0625f + 64f - scope.Min.Y) * ZoomInv;
+                transx2 = (rld.X2 * 0.0625f + 64f - scope.Min.X) * ZoomInv;
+                transy2 = (rld.Y2 * 0.0625f + 64f - scope.Min.Y) * ZoomInv;
 
-                FinishDraw();
-               
-                // trigger event
-                RaiseImageChanged();
-
-                // save this update tick
-                tickLastUpdate = Tick;
+                // draw wall
+                DrawWall(rld, transx1, transy1, transx2, transy2);
             }
+
+            /***************************************************************************/
+                
+            // draw roomobjects
+            foreach (RoomObject obj in DataController.RoomObjects)
+            {
+                transx1 = (obj.Position3D.X - scope.Min.X) * ZoomInv;
+                transy1 = (obj.Position3D.Z - scope.Min.Y) * ZoomInv;
+
+                Real width      = 50.0f * ZoomInv;
+                Real widthhalf  = width / 2.0f;
+                Real rectx      = transx1 - widthhalf;
+                Real recty      = transy1 - widthhalf;
+
+                DrawObject(obj, rectx, recty, width, width);
+            }
+
+            /***************************************************************************/
+                
+            FinishDraw();
+               
+            // trigger event
+            RaiseImageChanged();
+
+            // save this update tick
+            tickLastUpdate = Tick;
+            
         }
 
         /// <summary>
