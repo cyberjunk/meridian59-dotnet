@@ -533,6 +533,22 @@ namespace Meridian59.Common
         }
 
         /// <summary>
+        /// Converts radian angle to V2 direction
+        /// </summary>
+        /// <param name="Angle">Direction in angle 0-2pi</param>
+        /// <returns>Direction vector with length 1</returns>
+        public static V2 GetDirectionForRadian(Real Angle)
+        {
+            // start with unitx vector length 1
+            V2 direction = V2.UNITX;
+
+            // rotate by given angle
+            direction.Rotate(Angle);
+
+            return direction;
+        }
+
+        /// <summary>
         /// Converts V2 direction to radian angle.
         /// </summary>
         /// <param name="Direction">Direction vector</param>

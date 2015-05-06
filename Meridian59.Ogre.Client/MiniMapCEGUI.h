@@ -43,11 +43,14 @@ namespace Meridian59 { namespace Ogre
 		::System::Drawing::Color backgroundColor;
 		::System::Drawing::Graphics^ g;
         ::System::Drawing::Pen^ wallPen;
+		::System::Drawing::Pen^ purplePen1;
         ::System::Drawing::SolidBrush^ purpleBrush;
         ::System::Drawing::SolidBrush^ redBrush;
         ::System::Drawing::SolidBrush^ blueBrush;
         ::System::Drawing::SolidBrush^ greenBrush;
         ::System::Drawing::SolidBrush^ orangeBrush;
+
+		array<::System::Drawing::PointF>^ playerArrowPts;
 
 		void RecreateImageAndGraphics();
 
@@ -63,6 +66,7 @@ namespace Meridian59 { namespace Ogre
 		virtual void PrepareDraw() override;
 		virtual void DrawWall(RooWall^ Wall, CLRReal x1, CLRReal y1, CLRReal x2, CLRReal y2) override;
 		virtual void DrawObject(RoomObject^ RoomObject, CLRReal x, CLRReal y, CLRReal width, CLRReal height) override;
+		virtual void DrawAvatar(RoomObject^ RoomObject, V2 P1, V2 P2, V2 P3) override;
 		virtual void FinishDraw() override;
 	};
 

@@ -9,11 +9,14 @@ namespace Meridian59 { namespace Ogre
         backgroundColor = Color::Transparent;
 
 		wallPen = gcnew Pen(Color::Black, 1.0f);
+		purplePen1 = gcnew Pen(Color::Purple, 1.0f);
         purpleBrush = gcnew SolidBrush(Color::Purple);
         redBrush = gcnew SolidBrush(Color::Red);
         blueBrush = gcnew SolidBrush(Color::Blue);
         greenBrush = gcnew SolidBrush(Color::Green);
         orangeBrush = gcnew SolidBrush(Color::Orange);
+
+		playerArrowPts = gcnew array<::System::Drawing::PointF>(3);
 	};
 
 	void MiniMapCEGUI::SetDimension(int Width, int Height)
@@ -132,43 +135,43 @@ namespace Meridian59 { namespace Ogre
 	};
 
 	void MiniMapCEGUI::DrawObject(RoomObject^ RoomObject, CLRReal x, CLRReal y, CLRReal width, CLRReal height)
+	{		
+		// skip invisible ones
+        if (RoomObject->Flags->Drawing == ObjectFlags::DrawingType::Invisible)
+            return;
+
+        if (RoomObject->Flags->IsEnemy)
+        {
+            // guildenemy
+            g->FillEllipse(orangeBrush, (float)x, (float)y, (float)width, (float)width);
+        }
+
+        else if (RoomObject->Flags->IsGuildMate)
+        {
+            // guildmate
+            g->FillEllipse(greenBrush, (float)x, (float)y, (float)width, (float)width);
+        }
+
+        else if (RoomObject->Flags->IsPlayer)
+        {
+            // player
+            g->FillEllipse(blueBrush, (float)x, (float)y, (float)width, (float)width);
+        }
+
+        else if (RoomObject->Flags->IsAttackable)
+        {
+            // attackable: red
+            g->FillEllipse(redBrush, (float)x, (float)y, (float)width, (float)width);
+        }       
+	};
+
+	void MiniMapCEGUI::DrawAvatar(RoomObject^ RoomObject, V2 P1, V2 P2, V2 P3)
 	{
-		// any object not ourself
-        if (RoomObject->ID != DataController->AvatarID)
-        {
-			// skip invisible ones
-            if (RoomObject->Flags->Drawing == ObjectFlags::DrawingType::Invisible)
-                return;
+		playerArrowPts[0] = PointF(P1.X, P1.Y);
+		playerArrowPts[1] = PointF(P2.X, P2.Y);
+		playerArrowPts[2] = PointF(P3.X, P3.Y);
 
-            if (RoomObject->Flags->IsEnemy)
-            {
-                // guildenemy
-                g->FillEllipse(orangeBrush, (float)x, (float)y, (float)width, (float)width);
-            }
-
-            else if (RoomObject->Flags->IsGuildMate)
-            {
-                // guildmate
-                g->FillEllipse(greenBrush, (float)x, (float)y, (float)width, (float)width);
-            }
-
-            else if (RoomObject->Flags->IsPlayer)
-            {
-                // player
-                g->FillEllipse(blueBrush, (float)x, (float)y, (float)width, (float)width);
-            }
-
-            else if (RoomObject->Flags->IsAttackable)
-            {
-                // attackable: red
-                g->FillEllipse(redBrush, (float)x, (float)y, (float)width, (float)width);
-            }
-        }
-        else
-        {
-            // our player = purple
-            g->FillEllipse(purpleBrush, (float)x, (float)y, (float)width, (float)width);
-        }
+		g->FillPolygon(purpleBrush, playerArrowPts);
 	};
 
 	void MiniMapCEGUI::FinishDraw()

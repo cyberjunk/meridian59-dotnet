@@ -315,7 +315,6 @@
     <Compile Include="Drawing2D\ImageComposer.cs" />
     <Compile Include="Drawing2D\ImageComposerGDI.cs" />
     <Compile Include="Drawing2D\MiniMap.cs" />
-    <Compile Include="Drawing2D\MiniMapGDI.cs" />
     <Compile Include="Drawing2D\NameColors.cs" />
     <Compile Include="Drawing2D\PalettesGDI.cs" />
     <Compile Include="Files\BGF\BgfBitmap.cs" />

@@ -16,6 +16,7 @@
 
 using System;
 using Meridian59.Common;
+using Meridian59.Common.Constants;
 using Meridian59.Common.Interfaces;
 using Meridian59.Data;
 using Meridian59.Data.Models;
@@ -183,12 +184,27 @@ namespace Meridian59.Drawing2D
                 transx1 = (obj.Position3D.X - scope.Min.X) * ZoomInv;
                 transy1 = (obj.Position3D.Z - scope.Min.Y) * ZoomInv;
 
-                Real width      = 50.0f * ZoomInv;
-                Real widthhalf  = width / 2.0f;
-                Real rectx      = transx1 - widthhalf;
-                Real recty      = transy1 - widthhalf;
+                if (!obj.IsAvatar)
+                {
+                    Real width = 50.0f * ZoomInv;
+                    Real widthhalf = width / 2.0f;
+                    Real rectx = transx1 - widthhalf;
+                    Real recty = transy1 - widthhalf;
 
-                DrawObject(obj, rectx, recty, width, width);
+                    DrawObject(obj, rectx, recty, width, width);
+                }
+                else
+                {
+                    V2 pos   = new V2(transx1, transy1);
+                    V2 line1 = MathUtil.GetDirectionForRadian(obj.Angle) * 50.0f * ZoomInv;
+                    V2 line2 = line1.Clone();
+                    V2 line3 = line1.Clone();
+
+                    line2.Rotate(GeometryConstants.HALFPERIOD - 0.5f);
+                    line3.Rotate(-GeometryConstants.HALFPERIOD + 0.5f);
+
+                    DrawAvatar(obj, pos + line1, pos + line2, pos + line3);
+                }                
             }
 
             /***************************************************************************/
@@ -243,6 +259,15 @@ namespace Meridian59.Drawing2D
         /// <param name="width"></param>
         /// <param name="height"></param>
         public abstract void DrawObject(RoomObject RoomObject, Real x, Real y, Real width, Real height);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="RoomObject"></param>
+        /// <param name="P1">Triangle point 1</param>
+        /// <param name="P2">Triangle point 2</param>
+        /// <param name="P3">Triangle point 3</param>
+        public abstract void DrawAvatar(RoomObject RoomObject, V2 P1, V2 P2, V2 P3);
 
         /// <summary>
         /// Triggers ImageChanged event
