@@ -414,6 +414,7 @@ namespace Meridian59 { namespace Ogre
 		// create painer
 		graphics = ::System::Drawing::Graphics::FromImage(dest);
 		graphics->InterpolationMode = InterpolationMode;
+		graphics->SmoothingMode = SmoothingMode::HighQuality;
 
 #ifdef _DEBUG
 		graphics->Clear(Color::Black);

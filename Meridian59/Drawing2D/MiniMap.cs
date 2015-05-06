@@ -38,7 +38,7 @@ namespace Meridian59.Drawing2D
     public abstract class MiniMap<T> : ITickable
     {
         #region Constants
-        public const long UPDATEINVERVALMS = 150;
+        public const long UPDATEINVERVALMS = 100;
         public const Real DEFAULTZOOM = 4.0f;
         public const Real MINZOOM = 0.05f;
         public const Real MAXZOOM = 20.0f;
