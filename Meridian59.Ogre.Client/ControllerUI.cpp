@@ -138,6 +138,7 @@ namespace Meridian59 { namespace Ogre
 		ConfirmPopup::Initialize();
 		PlayerOverlays::Initialize();
 		ObjectContents::Initialize();
+		Login::Initialize();
 		Options::Initialize();
 
 		// attach listener to Data
@@ -192,6 +193,7 @@ namespace Meridian59 { namespace Ogre
 		ConfirmPopup::Destroy();
 		PlayerOverlays::Destroy();
 		ObjectContents::Destroy();
+		Login::Destroy();
 		Options::Destroy();
 
 		// destroy cegui system
@@ -451,6 +453,7 @@ namespace Meridian59 { namespace Ogre
 			AvatarCreateWizard::Window->setVisible(mode == UIMode::AvatarCreation);
 			ConfirmPopup::Window->setVisible(false);
 			ObjectContents::Window->setVisible(false);
+			//Login::Window->setVisible(mode == UIMode::Login);
 			Options::Window->setVisible(false);
 		}
 	};

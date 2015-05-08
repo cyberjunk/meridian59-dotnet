@@ -290,6 +290,7 @@
     <ClCompile Include="UIGuildCreate.cpp" />
     <ClCompile Include="UIInventory.cpp" />
     <ClCompile Include="UILoadingBar.cpp" />
+    <ClCompile Include="UILogin.cpp" />
     <ClCompile Include="UIMail.cpp" />
     <ClCompile Include="UIMailCompose.cpp" />
     <ClCompile Include="UIMainButtonsLeft.cpp" />

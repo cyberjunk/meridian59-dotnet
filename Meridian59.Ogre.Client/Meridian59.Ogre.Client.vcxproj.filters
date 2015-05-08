@@ -295,6 +295,9 @@
     <ClCompile Include="OgreClientConfig.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="UILogin.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="app.ico">

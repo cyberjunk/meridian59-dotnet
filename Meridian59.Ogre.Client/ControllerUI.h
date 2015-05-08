@@ -1002,6 +1002,24 @@ namespace Meridian59 { namespace Ogre
 			static void ItemRemove(int Index);
 			static void ItemChange(int Index);
 		};
+		
+		/// <summary>
+		/// Login window
+		/// </summary>
+		ref class Login abstract sealed
+		{
+		public:
+			static ::CEGUI::FrameWindow* Window = nullptr;
+			static ::CEGUI::Combobox* Server = nullptr;
+			static ::CEGUI::Editbox* Username = nullptr;
+			static ::CEGUI::Editbox* Password = nullptr;
+
+			static ::CEGUI::PushButton* Connect = nullptr;
+			static ::CEGUI::PushButton* Options = nullptr;
+
+			static void Initialize();
+			static void Destroy();
+		};
 
 		/// <summary>
 		/// Options window
@@ -1528,6 +1546,19 @@ namespace Meridian59 { namespace Ogre
 			static bool OnWindowKeyUp(const CEGUI::EventArgs& e);
 		};
 
+		/// <summary>
+		/// Login event handlers
+		/// </summary>
+		class Login
+		{
+		public:
+			static bool OnServerChanged(const CEGUI::EventArgs& e);
+			static bool OnConnectClicked(const CEGUI::EventArgs& e);
+			static bool OnOptionsClicked(const CEGUI::EventArgs& e);
+
+			static bool OnPasswordTextAccepted(const CEGUI::EventArgs& e);			
+		};
+		
 		/// <summary>
 		/// Options event handlers
 		/// </summary>

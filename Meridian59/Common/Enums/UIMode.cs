@@ -21,6 +21,6 @@ namespace Meridian59.Common.Enums
     /// </summary>
     public enum UIMode
     {
-        None, LoadingBar, AvatarSelection, AvatarCreation, Playing
+        None, Login, LoadingBar, AvatarSelection, AvatarCreation, Playing
     }
 }
