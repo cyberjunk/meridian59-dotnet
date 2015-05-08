@@ -32,7 +32,7 @@ namespace Meridian59 { namespace Ogre
 	/// <summary>
 	/// 
 	/// </summary>
-	public ref class OgreClientConfig : Config
+	public ref class OgreClientConfig : public Config
 	{
 	public:
 		literal int    DEFAULT_DISPLAY = 0;

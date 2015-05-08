@@ -74,7 +74,7 @@ namespace Meridian59 { namespace Ogre
 		::Meridian59::Ogre::GameTickOgre^, 
 		::Meridian59::Ogre::ResourceManagerOgre^, 
 		::Meridian59::Ogre::DataControllerOgre^,
-		::Meridian59::Launcher::Models::Options^,
+		::Meridian59::Ogre::OgreClientConfig^,
 		::Meridian59::Ogre::OgreClient^>
 	{
 	protected:
