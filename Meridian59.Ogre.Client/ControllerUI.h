@@ -1051,6 +1051,12 @@ namespace Meridian59 { namespace Ogre
 			static ::CEGUI::Slider* SoundVolume = nullptr;
 			static ::CEGUI::ToggleButton* DisableLoopSounds = nullptr;
 
+			static ::CEGUI::ToggleButton* PreloadRooms = nullptr;
+			static ::CEGUI::ToggleButton* PreloadRoomTextures = nullptr;
+			static ::CEGUI::ToggleButton* PreloadObjects = nullptr;
+			static ::CEGUI::ToggleButton* PreloadSounds = nullptr;
+			static ::CEGUI::ToggleButton* PreloadMusic = nullptr;
+
 			//
 
 			static ::CEGUI::PushButton* LearnMoveForward = nullptr;
@@ -1558,6 +1564,7 @@ namespace Meridian59 { namespace Ogre
 			static bool OnMusicVolumeChanged(const CEGUI::EventArgs& e);
 			static bool OnSoundVolumeChanged(const CEGUI::EventArgs& e);
 			static bool OnDisableLoopSoundsChanged(const CEGUI::EventArgs& e);
+			static bool OnPreloadChanged(const CEGUI::EventArgs& e);
 
 			static bool OnRightClickActionChanged(const CEGUI::EventArgs& e);
 			static bool OnInvertMouseYChanged(const CEGUI::EventArgs& e);

@@ -561,6 +561,11 @@
 #define UI_NAME_OPTIONS_TABENGINE_MUSICVOLUME				"Options.TabEngine.MusicVolume"
 #define UI_NAME_OPTIONS_TABENGINE_SOUNDVOLUME				"Options.TabEngine.SoundVolume"
 #define UI_NAME_OPTIONS_TABENGINE_DISABLELOOPSOUNDS			"Options.TabEngine.DisableLoopSounds"
+#define UI_NAME_OPTIONS_TABENGINE_PRELOADROOMS				"Options.TabEngine.PreloadRooms"
+#define UI_NAME_OPTIONS_TABENGINE_PRELOADROOMTEXTURES		"Options.TabEngine.PreloadRoomTextures"
+#define UI_NAME_OPTIONS_TABENGINE_PRELOADOBJECTS			"Options.TabEngine.PreloadObjects"
+#define UI_NAME_OPTIONS_TABENGINE_PRELOADSOUNDS				"Options.TabEngine.PreloadSounds"
+#define UI_NAME_OPTIONS_TABENGINE_PRELOADMUSIC				"Options.TabEngine.PreloadMusic"
 
 
 #define UI_BUFFICON_WIDTH					16

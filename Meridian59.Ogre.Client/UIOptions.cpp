@@ -124,6 +124,12 @@ namespace Meridian59 { namespace Ogre
 		MusicVolume		= static_cast<CEGUI::Slider*>(TabEngine->getChild(UI_NAME_OPTIONS_TABENGINE_MUSICVOLUME));
 		SoundVolume		= static_cast<CEGUI::Slider*>(TabEngine->getChild(UI_NAME_OPTIONS_TABENGINE_SOUNDVOLUME));
 		DisableLoopSounds = static_cast<CEGUI::ToggleButton*>(TabEngine->getChild(UI_NAME_OPTIONS_TABENGINE_DISABLELOOPSOUNDS));
+		
+		PreloadRooms = static_cast<CEGUI::ToggleButton*>(TabEngine->getChild(UI_NAME_OPTIONS_TABENGINE_PRELOADROOMS));
+		PreloadRoomTextures = static_cast<CEGUI::ToggleButton*>(TabEngine->getChild(UI_NAME_OPTIONS_TABENGINE_PRELOADROOMTEXTURES));
+		PreloadObjects = static_cast<CEGUI::ToggleButton*>(TabEngine->getChild(UI_NAME_OPTIONS_TABENGINE_PRELOADOBJECTS));
+		PreloadSounds = static_cast<CEGUI::ToggleButton*>(TabEngine->getChild(UI_NAME_OPTIONS_TABENGINE_PRELOADSOUNDS));
+		PreloadMusic = static_cast<CEGUI::ToggleButton*>(TabEngine->getChild(UI_NAME_OPTIONS_TABENGINE_PRELOADMUSIC));
 
 		
 		/******************************************************************************************************/
@@ -216,8 +222,13 @@ namespace Meridian59 { namespace Ogre
 		Decoration->setCurrentValue(OgreClient::Singleton->Config->DecorationIntensity);
 		MusicVolume->setCurrentValue(OgreClient::Singleton->Config->MusicVolume);
 		//SoundVolume->setCurrentValue(OgreClient::Singleton->Config->SoundVolume);
-
 		DisableLoopSounds->setSelected(OgreClient::Singleton->Config->DisableLoopSounds);
+		
+		PreloadRooms->setSelected(OgreClient::Singleton->Config->PreloadRooms);
+		PreloadRoomTextures->setSelected(OgreClient::Singleton->Config->PreloadRoomTextures);
+		PreloadObjects->setSelected(OgreClient::Singleton->Config->PreloadObjects);
+		PreloadSounds->setSelected(OgreClient::Singleton->Config->PreloadSound);
+		PreloadMusic->setSelected(OgreClient::Singleton->Config->PreloadMusic);
 
 		/******************************************************************************************************/
 		/*                                  PREPARE / SET: INPUT                                              */
@@ -341,6 +352,11 @@ namespace Meridian59 { namespace Ogre
 		MusicVolume->subscribeEvent(CEGUI::Slider::EventValueChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnMusicVolumeChanged));
 		SoundVolume->subscribeEvent(CEGUI::Slider::EventValueChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnSoundVolumeChanged));
 		DisableLoopSounds->subscribeEvent(CEGUI::ToggleButton::EventSelectStateChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnDisableLoopSoundsChanged));
+		PreloadRooms->subscribeEvent(CEGUI::ToggleButton::EventSelectStateChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnPreloadChanged));
+		PreloadRoomTextures->subscribeEvent(CEGUI::ToggleButton::EventSelectStateChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnPreloadChanged));
+		PreloadObjects->subscribeEvent(CEGUI::ToggleButton::EventSelectStateChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnPreloadChanged));
+		PreloadSounds->subscribeEvent(CEGUI::ToggleButton::EventSelectStateChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnPreloadChanged));
+		PreloadMusic->subscribeEvent(CEGUI::ToggleButton::EventSelectStateChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnPreloadChanged));
 
 		/******************************************************************************************************/
 
@@ -736,6 +752,29 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::ToggleButton* btn		= (const CEGUI::ToggleButton*)args.window;
 
 		OgreClient::Singleton->Config->DisableLoopSounds = btn->isSelected();
+
+		return true;
+	};
+
+	bool UICallbacks::Options::OnPreloadChanged(const CEGUI::EventArgs& e)
+	{
+		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
+		const CEGUI::ToggleButton* btn		= (const CEGUI::ToggleButton*)args.window;
+
+		if (btn == ControllerUI::Options::PreloadRooms)
+			OgreClient::Singleton->Config->PreloadRooms = btn->isSelected();
+
+		else if (btn == ControllerUI::Options::PreloadRoomTextures)
+			OgreClient::Singleton->Config->PreloadRoomTextures = btn->isSelected();
+
+		else if (btn == ControllerUI::Options::PreloadObjects)
+			OgreClient::Singleton->Config->PreloadObjects = btn->isSelected();
+
+		else if (btn == ControllerUI::Options::PreloadSounds)
+			OgreClient::Singleton->Config->PreloadSound = btn->isSelected();
+
+		else if (btn == ControllerUI::Options::PreloadMusic)
+			OgreClient::Singleton->Config->PreloadMusic = btn->isSelected();
 
 		return true;
 	};
