@@ -19,6 +19,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using Meridian59.Launcher.Models;
 using Meridian59.Data.Models;
+using Meridian59.Common;
 
 namespace Meridian59.Launcher
 {
@@ -29,10 +30,10 @@ namespace Meridian59.Launcher
 
         protected bool dragging;
         protected Point pointClicked;
-        protected Options options;
+        protected Config options;
         protected Meridian59.Files.ResourceManager resourceManager;
 
-        public Options Options
+        public Config Options
         {
             get { return options; }
             set
@@ -61,10 +62,10 @@ namespace Meridian59.Launcher
 
         private void btnOptions_Click(object sender, EventArgs e)
         {
-            OptionsForm optionsForm = new OptionsForm();
+            /*OptionsForm optionsForm = new OptionsForm();
             optionsForm.Config = Options;
             optionsForm.ResourceManager = ResourceManager;
-            optionsForm.ShowDialog();
+            optionsForm.ShowDialog();*/
         }
 
         private void btnConnect_Click(object sender, EventArgs e)
