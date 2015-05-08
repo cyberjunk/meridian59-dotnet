@@ -13,12 +13,14 @@ namespace Meridian59 { namespace Ogre
 		Guild	= static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_MAINBUTTONSLEFT_GUILD));
 		Mail	= static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_MAINBUTTONSLEFT_MAIL));
 		Map		= static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_MAINBUTTONSLEFT_MAP));
+		Options = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_MAINBUTTONSLEFT_OPTIONS));
 
 		// subscribe click to head
 		Chat->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::MainButtonsLeft::OnItemClicked));
 		Guild->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::MainButtonsLeft::OnItemClicked));
 		Mail->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::MainButtonsLeft::OnItemClicked));
 		Map->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::MainButtonsLeft::OnItemClicked));
+		Options->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::MainButtonsLeft::OnItemClicked));
 
 		// subscribe mouse events
 		Window->subscribeEvent(CEGUI::Window::EventMouseButtonDown, CEGUI::Event::Subscriber(UICallbacks::MainButtonsLeft::OnMouseDown));
@@ -71,6 +73,12 @@ namespace Meridian59 { namespace Ogre
 		else if (args.window == ControllerUI::MainButtonsLeft::Map)
 		{
 			ControllerUI::ToggleVisibility(ControllerUI::MiniMap::Window);
+		}
+
+		// options clicked
+		else if (args.window == ControllerUI::MainButtonsLeft::Options)
+		{
+			ControllerUI::ToggleVisibility(ControllerUI::Options::Window);
 		}
 
 		return true;

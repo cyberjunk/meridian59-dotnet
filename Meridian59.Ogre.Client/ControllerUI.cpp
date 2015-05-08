@@ -138,7 +138,7 @@ namespace Meridian59 { namespace Ogre
 		ConfirmPopup::Initialize();
 		PlayerOverlays::Initialize();
 		ObjectContents::Initialize();
-		//...
+		Options::Initialize();
 
 		// attach listener to Data
 		OgreClient::Singleton->Data->PropertyChanged += 
@@ -192,6 +192,7 @@ namespace Meridian59 { namespace Ogre
 		ConfirmPopup::Destroy();
 		PlayerOverlays::Destroy();
 		ObjectContents::Destroy();
+		Options::Destroy();
 
 		// destroy cegui system
 		renderer->destroySystem();

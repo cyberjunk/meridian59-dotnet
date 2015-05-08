@@ -286,6 +286,9 @@
     <ClCompile Include="ParticleUniverseEventHandlers.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="UIOptions.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="app.ico">

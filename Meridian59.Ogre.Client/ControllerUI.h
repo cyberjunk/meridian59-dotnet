@@ -598,7 +598,7 @@ namespace Meridian59 { namespace Ogre
 			static ::CEGUI::Window* Guild = nullptr;
 			static ::CEGUI::Window* Mail = nullptr;
 			static ::CEGUI::Window* Map = nullptr;
-			//static ::CEGUI::Window* Empty = nullptr;
+			static ::CEGUI::Window* Options = nullptr;
 
 			static void Initialize();
 			static void Destroy();
@@ -1002,6 +1002,127 @@ namespace Meridian59 { namespace Ogre
 			static void ItemRemove(int Index);
 			static void ItemChange(int Index);
 		};
+
+		/// <summary>
+		/// Options window
+		/// </summary>
+		ref class Options abstract sealed
+		{
+		public:
+			static ::CEGUI::FrameWindow* Window = nullptr;
+			
+			static ::CEGUI::PushButton* Connections = nullptr;
+			static ::CEGUI::PushButton* Engine = nullptr;
+			static ::CEGUI::PushButton* Input = nullptr;
+			static ::CEGUI::PushButton* Resources = nullptr;
+
+			static ::CEGUI::TabControl* TabControl = nullptr;
+			static ::CEGUI::Window* TabConnections = nullptr;
+			static ::CEGUI::Window* TabEngine = nullptr;
+			static ::CEGUI::Window* TabInput = nullptr;
+			static ::CEGUI::Window* TabResources = nullptr;
+			
+			static ::CEGUI::TabControl* TabInputTabControl = nullptr;
+			static ::CEGUI::Window* TabInputTabGeneral = nullptr;
+			static ::CEGUI::Window* TabInputTabActionButtons1 = nullptr;
+			static ::CEGUI::Window* TabInputTabActionButtons2 = nullptr;
+
+			//
+			static ::CEGUI::Combobox* Display = nullptr;
+			static ::CEGUI::Combobox* Resolution = nullptr;
+			static ::CEGUI::ToggleButton* WindowMode = nullptr;
+			static ::CEGUI::ToggleButton* WindowBorders = nullptr;
+			static ::CEGUI::ToggleButton* VSync = nullptr;
+			static ::CEGUI::Combobox* FSAA = nullptr;
+			static ::CEGUI::Combobox* Filtering = nullptr;
+			static ::CEGUI::Combobox* ImageBuilder = nullptr;
+			static ::CEGUI::Combobox* ScalingQuality = nullptr;
+			static ::CEGUI::Combobox* TextureQuality = nullptr;
+
+			static ::CEGUI::ToggleButton* DisableMipmaps = nullptr;
+			static ::CEGUI::ToggleButton* DisableNewRoomTextures = nullptr;
+			static ::CEGUI::ToggleButton* Disable3DModels = nullptr;
+			static ::CEGUI::ToggleButton* DisableNewSky = nullptr;
+			static ::CEGUI::ToggleButton* DisableWeather = nullptr;
+
+			static ::CEGUI::Slider* Particles = nullptr;
+			static ::CEGUI::Slider* Decoration = nullptr;
+			static ::CEGUI::Slider* MusicVolume = nullptr;
+			static ::CEGUI::Slider* SoundVolume = nullptr;
+			static ::CEGUI::ToggleButton* DisableLoopSounds = nullptr;
+
+			//
+
+			static ::CEGUI::PushButton* LearnMoveForward = nullptr;
+			static ::CEGUI::PushButton* LearnMoveBackward = nullptr;
+			static ::CEGUI::PushButton* LearnMoveLeft = nullptr;
+			static ::CEGUI::PushButton* LearnMoveRight = nullptr;
+			static ::CEGUI::PushButton* LearnRotateLeft = nullptr;
+			static ::CEGUI::PushButton* LearnRotateRight = nullptr;
+			static ::CEGUI::PushButton* LearnWalk = nullptr;
+			static ::CEGUI::PushButton* LearnAutoMove = nullptr;
+			static ::CEGUI::PushButton* LearnNextTarget = nullptr;
+			static ::CEGUI::PushButton* LearnSelfTarget = nullptr;
+			static ::CEGUI::PushButton* LearnOpen = nullptr;
+			static ::CEGUI::PushButton* LearnClose = nullptr;
+			static ::CEGUI::Slider* MouseAimSpeed = nullptr;
+			static ::CEGUI::Slider* KeyRotateSpeed = nullptr;
+			static ::CEGUI::Combobox* RightClickAction = nullptr;
+			static ::CEGUI::ToggleButton* InvertMouseY = nullptr;
+			static ::CEGUI::PushButton* LearnAction01 = nullptr;
+			static ::CEGUI::PushButton* LearnAction02 = nullptr;
+			static ::CEGUI::PushButton* LearnAction03 = nullptr;
+			static ::CEGUI::PushButton* LearnAction04 = nullptr;
+			static ::CEGUI::PushButton* LearnAction05 = nullptr;
+			static ::CEGUI::PushButton* LearnAction06 = nullptr;
+			static ::CEGUI::PushButton* LearnAction07 = nullptr;
+			static ::CEGUI::PushButton* LearnAction08 = nullptr;
+			static ::CEGUI::PushButton* LearnAction09 = nullptr;
+			static ::CEGUI::PushButton* LearnAction10 = nullptr;
+			static ::CEGUI::PushButton* LearnAction11 = nullptr;
+			static ::CEGUI::PushButton* LearnAction12 = nullptr;
+			static ::CEGUI::PushButton* LearnAction13 = nullptr;
+			static ::CEGUI::PushButton* LearnAction14 = nullptr;
+			static ::CEGUI::PushButton* LearnAction15 = nullptr;
+			static ::CEGUI::PushButton* LearnAction16 = nullptr;
+			static ::CEGUI::PushButton* LearnAction17 = nullptr;
+			static ::CEGUI::PushButton* LearnAction18 = nullptr;
+			static ::CEGUI::PushButton* LearnAction19 = nullptr;
+			static ::CEGUI::PushButton* LearnAction20 = nullptr;
+			static ::CEGUI::PushButton* LearnAction21 = nullptr;
+			static ::CEGUI::PushButton* LearnAction22 = nullptr;
+			static ::CEGUI::PushButton* LearnAction23 = nullptr;
+			static ::CEGUI::PushButton* LearnAction24 = nullptr;
+			static ::CEGUI::PushButton* LearnAction25 = nullptr;
+			static ::CEGUI::PushButton* LearnAction26 = nullptr;
+			static ::CEGUI::PushButton* LearnAction27 = nullptr;
+			static ::CEGUI::PushButton* LearnAction28 = nullptr;
+			static ::CEGUI::PushButton* LearnAction29 = nullptr;
+			static ::CEGUI::PushButton* LearnAction30 = nullptr;
+			static ::CEGUI::PushButton* LearnAction31 = nullptr;
+			static ::CEGUI::PushButton* LearnAction32 = nullptr;
+			static ::CEGUI::PushButton* LearnAction33 = nullptr;
+			static ::CEGUI::PushButton* LearnAction34 = nullptr;
+			static ::CEGUI::PushButton* LearnAction35 = nullptr;
+			static ::CEGUI::PushButton* LearnAction36 = nullptr;
+			static ::CEGUI::PushButton* LearnAction37 = nullptr;
+			static ::CEGUI::PushButton* LearnAction38 = nullptr;
+			static ::CEGUI::PushButton* LearnAction39 = nullptr;
+			static ::CEGUI::PushButton* LearnAction40 = nullptr;
+			static ::CEGUI::PushButton* LearnAction41 = nullptr;
+			static ::CEGUI::PushButton* LearnAction42 = nullptr;
+			static ::CEGUI::PushButton* LearnAction43 = nullptr;
+			static ::CEGUI::PushButton* LearnAction44 = nullptr;
+			static ::CEGUI::PushButton* LearnAction45 = nullptr;
+			static ::CEGUI::PushButton* LearnAction46 = nullptr;
+			static ::CEGUI::PushButton* LearnAction47 = nullptr;
+			static ::CEGUI::PushButton* LearnAction48 = nullptr;
+
+			static void OnConfigPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
+
+			static void Initialize();
+			static void Destroy();			
+		};
 #pragma endregion
 	};
 
@@ -1399,6 +1520,36 @@ namespace Meridian59 { namespace Ogre
 			static bool OnGetClicked(const CEGUI::EventArgs& e);
 			static bool OnWindowClosed(const CEGUI::EventArgs& e);
 			static bool OnWindowKeyUp(const CEGUI::EventArgs& e);
+		};
+
+		/// <summary>
+		/// Options event handlers
+		/// </summary>
+		class Options
+		{
+		public:
+			//static bool OnWindowClosed(const CEGUI::EventArgs& e);
+			//static bool OnWindowKeyUp(const CEGUI::EventArgs& e);
+			static bool OnKeyLearnButtonClicked(const CEGUI::EventArgs& e);
+			static bool OnCategoryButtonClicked(const CEGUI::EventArgs& e);
+
+			static bool OnDisplayChanged(const CEGUI::EventArgs& e);
+			static bool OnResolutionChanged(const CEGUI::EventArgs& e);
+			static bool OnWindowModeChanged(const CEGUI::EventArgs& e);
+			static bool OnWindowBordersChanged(const CEGUI::EventArgs& e);
+			static bool OnVSyncChanged(const CEGUI::EventArgs& e);
+			
+			static bool OnFSAAChanged(const CEGUI::EventArgs& e);
+			static bool OnFilteringChanged(const CEGUI::EventArgs& e);
+			static bool OnImageBuilderChanged(const CEGUI::EventArgs& e);
+			static bool OnScalingQualityChanged(const CEGUI::EventArgs& e);
+			static bool OnTextureQualityChanged(const CEGUI::EventArgs& e);
+
+
+			static bool OnRightClickActionChanged(const CEGUI::EventArgs& e);
+			static bool OnInvertMouseYChanged(const CEGUI::EventArgs& e);
+			static bool OnMouseAimSpeedChanged(const CEGUI::EventArgs& e);
+			static bool OnKeyRotateSpeedChanged(const CEGUI::EventArgs& e);
 		};
 	};
 #pragma endregion

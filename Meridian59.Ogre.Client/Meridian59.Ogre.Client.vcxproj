@@ -298,6 +298,7 @@
     <ClCompile Include="UIObjectContents.cpp" />
     <ClCompile Include="UIObjectDetails.cpp" />
     <ClCompile Include="UIOnlinePlayers.cpp" />
+    <ClCompile Include="UIOptions.cpp" />
     <ClCompile Include="UIPlayerDetails.cpp" />
     <ClCompile Include="UIPlayerOverlays.cpp" />
     <ClCompile Include="UIRoomEnchantments.cpp" />
