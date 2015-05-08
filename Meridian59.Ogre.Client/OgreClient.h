@@ -48,6 +48,7 @@
 #include "GameTickOgre.h"
 #include "ResourceManagerOgre.h"
 #include "DataControllerOgre.h"
+#include "OgreClientConfig.h"
 
 namespace Meridian59 { namespace Ogre
 {

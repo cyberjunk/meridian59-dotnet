@@ -111,6 +111,9 @@
     <ClInclude Include="DataControllerOgre.h">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="OgreClientConfig.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="app.rc">
@@ -287,6 +290,9 @@
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="UIOptions.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="OgreClientConfig.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>

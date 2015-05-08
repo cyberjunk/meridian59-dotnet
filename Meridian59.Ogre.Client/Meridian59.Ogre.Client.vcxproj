@@ -226,6 +226,7 @@
     <ClInclude Include="MiniMapCEGUI.h" />
     <ClInclude Include="Model3DInfo.h" />
     <ClInclude Include="OgreClient.h" />
+    <ClInclude Include="OgreClientConfig.h" />
     <ClInclude Include="OgreListeners.h" />
     <ClInclude Include="OISKeyBinding.h" />
     <ClInclude Include="OISListeners.h" />
@@ -260,6 +261,7 @@
     <ClCompile Include="ImageComposerOgre.cpp" />
     <ClCompile Include="MiniMapCEGUI.cpp" />
     <ClCompile Include="OgreClient.cpp" />
+    <ClCompile Include="OgreClientConfig.cpp" />
     <ClCompile Include="OgreListeners.cpp" />
     <ClCompile Include="OISKeyBinding.cpp" />
     <ClCompile Include="OISListeners.cpp" />
