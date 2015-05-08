@@ -57,7 +57,6 @@ namespace Meridian59 { namespace Ogre
 		static OISMouseListener* mouselistener;
 
 		static LPPOINT mouseDownWindowsPosition;
-		static OISKeyBinding^ activeKeyBinding;
 		static long long tickMouseDownLeft;
 		static long long tickMouseDownRight;
 		static bool isCameraFirstPerson;
@@ -166,12 +165,11 @@ namespace Meridian59 { namespace Ogre
 		};
 
 		/// <summary>
-        /// Currently loaded keybinding
+        /// Currently loaded keybinding (from OgreClient::Singleton->Config)
         /// </summary>
 		static property OISKeyBinding^ ActiveKeyBinding 
 		{ 
-			public: OISKeyBinding^ get() { return activeKeyBinding; }
-			private: void set(OISKeyBinding^ value) { activeKeyBinding = value; } 
+			public: OISKeyBinding^ get();
 		};
 
 		/// <summary>

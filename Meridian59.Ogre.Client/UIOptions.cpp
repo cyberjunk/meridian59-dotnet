@@ -245,66 +245,69 @@ namespace Meridian59 { namespace Ogre
 		
 		/******************************************************************************************************/
 
-		LearnMoveForward->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->MoveForward.ToString()));
-		LearnMoveBackward->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->MoveBackward.ToString()));
-		LearnMoveLeft->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->MoveLeft.ToString()));
-		LearnMoveRight->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->MoveRight.ToString()));
-		LearnRotateLeft->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->RotateLeft.ToString()));
-		LearnRotateRight->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->RotateRight.ToString()));
-		LearnWalk->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->Walk.ToString()));
-		LearnAutoMove->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->AutoMove.ToString()));
-		LearnNextTarget->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->NextTarget.ToString()));
-		LearnOpen->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ReqGo.ToString()));
-		LearnClose->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->Close.ToString()));
+		OISKeyBinding^ keybinding = OgreClient::Singleton->Config->KeyBinding;
+		::OIS::Keyboard* keyboard = ControllerInput::OISKeyboard;
+		
+		LearnMoveForward->setText(keyboard->getAsString(keybinding->MoveForward));
+		LearnMoveBackward->setText(keyboard->getAsString(keybinding->MoveBackward));
+		LearnMoveLeft->setText(keyboard->getAsString(keybinding->MoveLeft));
+		LearnMoveRight->setText(keyboard->getAsString(keybinding->MoveRight));
+		LearnRotateLeft->setText(keyboard->getAsString(keybinding->RotateLeft));
+		LearnRotateRight->setText(keyboard->getAsString(keybinding->RotateRight));
+		LearnWalk->setText(keyboard->getAsString(keybinding->Walk));
+		LearnAutoMove->setText(keyboard->getAsString(keybinding->AutoMove));
+		LearnNextTarget->setText(keyboard->getAsString(keybinding->NextTarget));
+		LearnOpen->setText(keyboard->getAsString(keybinding->ReqGo));
+		LearnClose->setText(keyboard->getAsString(keybinding->Close));
 
-		LearnAction01->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton01.ToString()));
-		LearnAction02->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton02.ToString()));
-		LearnAction03->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton03.ToString()));
-		LearnAction04->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton04.ToString()));
-		LearnAction05->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton05.ToString()));
-		LearnAction06->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton06.ToString()));
-		LearnAction07->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton07.ToString()));
-		LearnAction08->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton08.ToString()));
-		LearnAction09->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton09.ToString()));
-		LearnAction10->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton10.ToString()));
-		LearnAction11->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton11.ToString()));
-		LearnAction12->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton12.ToString()));
-		LearnAction13->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton13.ToString()));
-		LearnAction14->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton14.ToString()));
-		LearnAction15->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton15.ToString()));
-		LearnAction16->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton16.ToString()));
-		LearnAction17->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton17.ToString()));
-		LearnAction18->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton18.ToString()));
-		LearnAction19->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton19.ToString()));
-		LearnAction20->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton20.ToString()));
-		LearnAction21->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton21.ToString()));
-		LearnAction22->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton22.ToString()));
-		LearnAction23->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton23.ToString()));
-		LearnAction24->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton24.ToString()));
-		LearnAction25->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton25.ToString()));
-		LearnAction26->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton26.ToString()));
-		LearnAction27->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton27.ToString()));
-		LearnAction28->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton28.ToString()));
-		LearnAction29->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton29.ToString()));
-		LearnAction30->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton30.ToString()));
-		LearnAction31->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton31.ToString()));
-		LearnAction32->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton32.ToString()));
-		LearnAction33->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton33.ToString()));
-		LearnAction34->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton34.ToString()));
-		LearnAction35->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton35.ToString()));
-		LearnAction36->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton36.ToString()));
-		LearnAction37->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton37.ToString()));
-		LearnAction38->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton38.ToString()));
-		LearnAction39->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton39.ToString()));
-		LearnAction40->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton40.ToString()));
-		LearnAction41->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton41.ToString()));
-		LearnAction42->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton42.ToString()));
-		LearnAction43->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton43.ToString()));
-		LearnAction44->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton44.ToString()));
-		LearnAction45->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton45.ToString()));
-		LearnAction46->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton46.ToString()));
-		LearnAction47->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton47.ToString()));
-		LearnAction48->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->KeyBinding->ActionButton48.ToString()));
+		LearnAction01->setText(keyboard->getAsString(keybinding->ActionButton01));
+		LearnAction02->setText(keyboard->getAsString(keybinding->ActionButton02));
+		LearnAction03->setText(keyboard->getAsString(keybinding->ActionButton03));
+		LearnAction04->setText(keyboard->getAsString(keybinding->ActionButton04));
+		LearnAction05->setText(keyboard->getAsString(keybinding->ActionButton05));
+		LearnAction06->setText(keyboard->getAsString(keybinding->ActionButton06));
+		LearnAction07->setText(keyboard->getAsString(keybinding->ActionButton07));
+		LearnAction08->setText(keyboard->getAsString(keybinding->ActionButton08));
+		LearnAction09->setText(keyboard->getAsString(keybinding->ActionButton09));
+		LearnAction10->setText(keyboard->getAsString(keybinding->ActionButton10));
+		LearnAction11->setText(keyboard->getAsString(keybinding->ActionButton11));
+		LearnAction12->setText(keyboard->getAsString(keybinding->ActionButton12));
+		LearnAction13->setText(keyboard->getAsString(keybinding->ActionButton13));
+		LearnAction14->setText(keyboard->getAsString(keybinding->ActionButton14));
+		LearnAction15->setText(keyboard->getAsString(keybinding->ActionButton15));
+		LearnAction16->setText(keyboard->getAsString(keybinding->ActionButton16));
+		LearnAction17->setText(keyboard->getAsString(keybinding->ActionButton17));
+		LearnAction18->setText(keyboard->getAsString(keybinding->ActionButton18));
+		LearnAction19->setText(keyboard->getAsString(keybinding->ActionButton19));
+		LearnAction20->setText(keyboard->getAsString(keybinding->ActionButton20));
+		LearnAction21->setText(keyboard->getAsString(keybinding->ActionButton21));
+		LearnAction22->setText(keyboard->getAsString(keybinding->ActionButton22));
+		LearnAction23->setText(keyboard->getAsString(keybinding->ActionButton23));
+		LearnAction24->setText(keyboard->getAsString(keybinding->ActionButton24));
+		LearnAction25->setText(keyboard->getAsString(keybinding->ActionButton25));
+		LearnAction26->setText(keyboard->getAsString(keybinding->ActionButton26));
+		LearnAction27->setText(keyboard->getAsString(keybinding->ActionButton27));
+		LearnAction28->setText(keyboard->getAsString(keybinding->ActionButton28));
+		LearnAction29->setText(keyboard->getAsString(keybinding->ActionButton29));
+		LearnAction30->setText(keyboard->getAsString(keybinding->ActionButton30));
+		LearnAction31->setText(keyboard->getAsString(keybinding->ActionButton31));
+		LearnAction32->setText(keyboard->getAsString(keybinding->ActionButton32));
+		LearnAction33->setText(keyboard->getAsString(keybinding->ActionButton33));
+		LearnAction34->setText(keyboard->getAsString(keybinding->ActionButton34));
+		LearnAction35->setText(keyboard->getAsString(keybinding->ActionButton35));
+		LearnAction36->setText(keyboard->getAsString(keybinding->ActionButton36));
+		LearnAction37->setText(keyboard->getAsString(keybinding->ActionButton37));
+		LearnAction38->setText(keyboard->getAsString(keybinding->ActionButton38));
+		LearnAction39->setText(keyboard->getAsString(keybinding->ActionButton39));
+		LearnAction40->setText(keyboard->getAsString(keybinding->ActionButton40));
+		LearnAction41->setText(keyboard->getAsString(keybinding->ActionButton41));
+		LearnAction42->setText(keyboard->getAsString(keybinding->ActionButton42));
+		LearnAction43->setText(keyboard->getAsString(keybinding->ActionButton43));
+		LearnAction44->setText(keyboard->getAsString(keybinding->ActionButton44));
+		LearnAction45->setText(keyboard->getAsString(keybinding->ActionButton45));
+		LearnAction46->setText(keyboard->getAsString(keybinding->ActionButton46));
+		LearnAction47->setText(keyboard->getAsString(keybinding->ActionButton47));
+		LearnAction48->setText(keyboard->getAsString(keybinding->ActionButton48));
 
 		MouseAimSpeed->setCurrentValue((float)OgreClient::Singleton->Config->MouseAimSpeed);
 		KeyRotateSpeed->setCurrentValue((float)OgreClient::Singleton->Config->KeyRotateSpeed);
@@ -422,6 +425,65 @@ namespace Meridian59 { namespace Ogre
 		LearnAction48->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
 
 		LearnMoveForward->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnMoveBackward->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnMoveLeft->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnMoveRight->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnRotateLeft->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnRotateRight->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnWalk->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAutoMove->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnNextTarget->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnOpen->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnClose->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction01->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction02->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction03->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction04->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction05->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction06->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction07->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction08->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction09->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction10->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction11->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction12->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction13->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction14->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction15->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction16->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction17->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction18->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction19->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction20->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction21->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction22->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction23->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction24->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction25->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction26->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction27->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction28->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction29->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction30->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction31->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction32->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction33->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction34->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction35->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction36->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction37->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction38->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction39->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction40->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction41->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction42->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction43->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction44->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction45->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction46->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction47->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnAction48->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+
 
 		/******************************************************************************************************/
 
@@ -481,11 +543,314 @@ namespace Meridian59 { namespace Ogre
 	{
 		const CEGUI::KeyEventArgs& args = (const CEGUI::KeyEventArgs&)e;
 		const CEGUI::PushButton* btn	= (const CEGUI::PushButton*)args.window;
+		::OIS::Keyboard* keyboard		= ControllerInput::OISKeyboard;
+		OISKeyBinding^ keybinding		= OgreClient::Singleton->Config->KeyBinding;
+		const std::string keystr		= keyboard->getAsString((::OIS::KeyCode)args.scancode);
 
+		// basic movement
 		if (btn == ControllerUI::Options::LearnMoveForward)
 		{
-			ControllerUI::Options::LearnMoveForward->setText(ControllerInput::OISKeyboard->getAsString((::OIS::KeyCode)args.scancode));
-			//OgreClient::Singleton->Config->KeyBinding->MoveForward
+			keybinding->MoveForward = (::OIS::KeyCode)args.scancode;			
+			ControllerUI::Options::LearnMoveForward->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnMoveBackward)
+		{
+			keybinding->MoveBackward = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnMoveBackward->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnMoveLeft)
+		{
+			keybinding->MoveLeft = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnMoveLeft->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnMoveRight)
+		{
+			keybinding->MoveRight = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnMoveRight->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnRotateLeft)
+		{
+			keybinding->RotateLeft = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnRotateLeft->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnRotateRight)
+		{
+			keybinding->RotateRight = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnRotateRight->setText(keystr);
+		}
+
+		// others
+		else if (btn == ControllerUI::Options::LearnWalk)
+		{
+			keybinding->Walk = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnWalk->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAutoMove)
+		{
+			keybinding->AutoMove = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAutoMove->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnNextTarget)
+		{
+			keybinding->NextTarget = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnNextTarget->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnSelfTarget)
+		{
+			keybinding->SelfTarget = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnSelfTarget->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnOpen)
+		{
+			keybinding->ReqGo = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnOpen->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnClose)
+		{
+			keybinding->Close = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnClose->setText(keystr);
+		}
+
+		// actionbuttons
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton01 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction01->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton02 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction02->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton03 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction03->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton04 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction04->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton05 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction05->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton06 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction06->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton07 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction07->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton08 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction08->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton09 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction09->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton10 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction10->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton11 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction11->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton12 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction12->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton13 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction13->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton14 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction14->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton15 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction15->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton16 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction16->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton17 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction17->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton18 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction18->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton19 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction19->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton20 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction20->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton21 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction21->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton22 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction22->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton23 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction23->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton24 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction24->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton25 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction25->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton26 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction26->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton27 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction27->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton28 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction28->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton29 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction29->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton30 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction30->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton31 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction31->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton32 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction32->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton33 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction33->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton34 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction34->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton35 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction35->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton36 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction36->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton37 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction37->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton38 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction38->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton39 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction39->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton40 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction40->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton41 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction41->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton42 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction42->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton43 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction43->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton44 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction44->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton45 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction45->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton46 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction46->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton47 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction47->setText(keystr);
+		}
+		else if (btn == ControllerUI::Options::LearnAction01)
+		{
+			keybinding->ActionButton48 = (::OIS::KeyCode)args.scancode;
+			ControllerUI::Options::LearnAction48->setText(keystr);
 		}
 
 		return true;
@@ -497,7 +862,7 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::PushButton* btn		= (const CEGUI::PushButton*)args.window;
 
 		//if (btn == ControllerUI::Options::LearnMoveForward)
-		//	ControllerUI::Options::TabControl->setSelectedTabAtIndex(0);
+		//	ControllerUI::Options::LearnMoveForward->setProperty(UI_PROPNAME_NORMALTEXTCOLOUR, "Red");
 
 		//else if (btn == ControllerUI::Options::Engine)
 		//	ControllerUI::Options::TabControl->setSelectedTabAtIndex(1);

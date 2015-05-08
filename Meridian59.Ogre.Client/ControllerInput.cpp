@@ -9,7 +9,6 @@ namespace Meridian59 { namespace Ogre
 		oisMouse			= nullptr;	
 		keylistener			= nullptr;
 		mouselistener		= nullptr;
-		activeKeyBinding	= nullptr;
 
 		tickMouseDownLeft	= 0;
 		tickMouseDownRight	= 0;
@@ -40,9 +39,6 @@ namespace Meridian59 { namespace Ogre
 
 	void ControllerInput::Initialize()
 	{	
-		// load OIS binding from Config binding
-		activeKeyBinding = OISKeyBinding::FromKeyBinding(OgreClient::Singleton->Config->KeyBinding);
-
 		std::ostringstream windowHndStr;
 		windowHndStr << (size_t)OgreClient::Singleton->RenderWindowHandle;
 		
@@ -111,7 +107,6 @@ namespace Meridian59 { namespace Ogre
 		oisMouse			= nullptr;
 		keylistener			= nullptr;
 		mouselistener		= nullptr;
-		activeKeyBinding	= nullptr;
 
 		tickMouseDownLeft	= 0;
 		tickMouseDownRight	= 0;
@@ -141,6 +136,11 @@ namespace Meridian59 { namespace Ogre
 		// mark not initialized
 		IsInitialized = false;
     };
+	
+	OISKeyBinding^ ControllerInput::ActiveKeyBinding::get()
+	{
+		return OgreClient::Singleton->Config->KeyBinding;
+	};
 
 	void ControllerInput::PerformMouseOver(int MouseX, int MouseY, bool IsClick)
 	{
@@ -282,7 +282,7 @@ namespace Meridian59 { namespace Ogre
 			OgreClient::Singleton->Data->IsNextAttackApplyCastOnHighlightedObject = true;
 
 			// activate the mapped acton for rightlicck
-			OgreClient::Singleton->Data->ActionButtons[activeKeyBinding->RightClickAction - 1]->Activate();		
+			OgreClient::Singleton->Data->ActionButtons[ActiveKeyBinding->RightClickAction - 1]->Activate();		
 		}
 
 		isMouseWentDownOnUI = false;

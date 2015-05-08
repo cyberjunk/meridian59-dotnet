@@ -165,7 +165,6 @@ namespace Meridian59 { namespace Ogre
 
 	protected:
 		ActionButtonType GetButtonType(::System::String^ ButtonType);
-		KeysConverter^ keyConverter = gcnew KeysConverter();
 
 	public:
 		int Display;
@@ -188,10 +187,11 @@ namespace Meridian59 { namespace Ogre
 		int WeatherParticles;
 		int MusicVolume;
 		bool DisableLoopSounds;
-		KeyBinding^ KeyBinding;
+		OISKeyBinding^ KeyBinding;
 		int MouseAimSpeed;
 		int KeyRotateSpeed;
 		bool InvertMouseY;
+
 		::System::Collections::Generic::List<ActionButtonList^>^ ActionButtonSets =
 			gcnew ::System::Collections::Generic::List<ActionButtonList^>();
 

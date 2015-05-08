@@ -296,6 +296,8 @@ namespace Meridian59 { namespace Ogre
 		/*                                                                                                      */
 		/********************************************************************************************************/
 		
+		ControllerInput::Initialize();
+
 		// init cegui
 		ControllerUI::Initialize((::Ogre::RenderTarget*)renderWindow);
 		
@@ -315,8 +317,7 @@ namespace Meridian59 { namespace Ogre
 			
             // Init controllers
             ControllerRoom::Initialize();
-            ControllerInput::Initialize();
-			ControllerEffects::Initialize();
+            ControllerEffects::Initialize();
 		
 			// set UI to avatarselect
 			Data->UIMode = UIMode::AvatarSelection;
@@ -919,54 +920,57 @@ namespace Meridian59 { namespace Ogre
         // set labels to keybinding strings
         if (foundset != nullptr && foundset->Count > 47)
         {
-            foundset[0]->Label = Config->KeyBinding->ActionButton01.ToString();
-            foundset[1]->Label = Config->KeyBinding->ActionButton02.ToString();
-            foundset[2]->Label = Config->KeyBinding->ActionButton03.ToString();
-            foundset[3]->Label = Config->KeyBinding->ActionButton04.ToString();
-            foundset[4]->Label = Config->KeyBinding->ActionButton05.ToString();
-            foundset[5]->Label = Config->KeyBinding->ActionButton06.ToString();
-            foundset[6]->Label = Config->KeyBinding->ActionButton07.ToString();
-            foundset[7]->Label = Config->KeyBinding->ActionButton08.ToString();
-            foundset[8]->Label = Config->KeyBinding->ActionButton09.ToString();
-            foundset[9]->Label = Config->KeyBinding->ActionButton10.ToString();
-            foundset[10]->Label = Config->KeyBinding->ActionButton11.ToString();
-            foundset[11]->Label = Config->KeyBinding->ActionButton12.ToString();
-            foundset[12]->Label = Config->KeyBinding->ActionButton13.ToString();
-            foundset[13]->Label = Config->KeyBinding->ActionButton14.ToString();
-            foundset[14]->Label = Config->KeyBinding->ActionButton15.ToString();
-            foundset[15]->Label = Config->KeyBinding->ActionButton16.ToString();
-            foundset[16]->Label = Config->KeyBinding->ActionButton17.ToString();
-            foundset[17]->Label = Config->KeyBinding->ActionButton18.ToString();
-            foundset[18]->Label = Config->KeyBinding->ActionButton19.ToString();
-            foundset[19]->Label = Config->KeyBinding->ActionButton20.ToString();
-            foundset[20]->Label = Config->KeyBinding->ActionButton21.ToString();
-            foundset[21]->Label = Config->KeyBinding->ActionButton22.ToString();
-            foundset[22]->Label = Config->KeyBinding->ActionButton23.ToString();
-            foundset[23]->Label = Config->KeyBinding->ActionButton24.ToString();
-            foundset[24]->Label = Config->KeyBinding->ActionButton25.ToString();
-            foundset[25]->Label = Config->KeyBinding->ActionButton26.ToString();
-            foundset[26]->Label = Config->KeyBinding->ActionButton27.ToString();
-            foundset[27]->Label = Config->KeyBinding->ActionButton28.ToString();
-            foundset[28]->Label = Config->KeyBinding->ActionButton29.ToString();
-            foundset[29]->Label = Config->KeyBinding->ActionButton30.ToString();
-            foundset[30]->Label = Config->KeyBinding->ActionButton31.ToString();
-            foundset[31]->Label = Config->KeyBinding->ActionButton32.ToString();
-            foundset[32]->Label = Config->KeyBinding->ActionButton33.ToString();
-            foundset[33]->Label = Config->KeyBinding->ActionButton34.ToString();
-            foundset[34]->Label = Config->KeyBinding->ActionButton35.ToString();
-            foundset[35]->Label = Config->KeyBinding->ActionButton36.ToString();
-            foundset[36]->Label = Config->KeyBinding->ActionButton37.ToString();
-            foundset[37]->Label = Config->KeyBinding->ActionButton38.ToString();
-            foundset[38]->Label = Config->KeyBinding->ActionButton39.ToString();
-            foundset[39]->Label = Config->KeyBinding->ActionButton40.ToString();
-            foundset[40]->Label = Config->KeyBinding->ActionButton41.ToString();
-            foundset[41]->Label = Config->KeyBinding->ActionButton42.ToString();
-            foundset[42]->Label = Config->KeyBinding->ActionButton43.ToString();
-            foundset[43]->Label = Config->KeyBinding->ActionButton44.ToString();
-            foundset[44]->Label = Config->KeyBinding->ActionButton45.ToString();
-            foundset[45]->Label = Config->KeyBinding->ActionButton46.ToString();
-            foundset[46]->Label = Config->KeyBinding->ActionButton47.ToString();
-            foundset[47]->Label = Config->KeyBinding->ActionButton48.ToString();
+			OISKeyBinding^ keybinding = Config->KeyBinding;
+			::OIS::Keyboard* keyboard = ControllerInput::OISKeyboard;
+			
+			foundset[0]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton01));
+            foundset[1]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton02));
+            foundset[2]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton03));
+            foundset[3]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton04));
+            foundset[4]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton05));
+            foundset[5]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton06));
+            foundset[6]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton07));
+            foundset[7]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton08));
+            foundset[8]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton09));
+            foundset[9]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton10));
+            foundset[10]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton11));
+            foundset[11]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton12));
+            foundset[12]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton13));
+            foundset[13]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton14));
+            foundset[14]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton15));
+            foundset[15]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton16));
+            foundset[16]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton17));
+            foundset[17]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton18));
+            foundset[18]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton19));
+            foundset[19]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton20));
+            foundset[20]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton21));
+            foundset[21]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton22));
+            foundset[22]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton23));
+            foundset[23]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton24));
+            foundset[24]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton25));
+            foundset[25]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton26));
+            foundset[26]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton27));
+            foundset[27]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton28));
+            foundset[28]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton29));
+            foundset[29]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton30));
+            foundset[30]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton31));
+            foundset[31]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton32));
+            foundset[32]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton33));
+            foundset[33]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton34));
+            foundset[34]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton35));
+            foundset[35]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton36));
+            foundset[36]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton37));
+            foundset[37]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton38));
+            foundset[38]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton39));
+            foundset[39]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton40));
+            foundset[40]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton41));
+            foundset[41]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton42));
+            foundset[42]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton43));
+            foundset[43]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton44));
+            foundset[44]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton45));
+            foundset[45]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton46));
+            foundset[46]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton47));
+            foundset[47]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton48));
         }
     };
 
