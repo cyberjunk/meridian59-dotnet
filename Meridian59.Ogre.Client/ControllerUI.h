@@ -1530,6 +1530,8 @@ namespace Meridian59 { namespace Ogre
 		public:
 			//static bool OnWindowClosed(const CEGUI::EventArgs& e);
 			//static bool OnWindowKeyUp(const CEGUI::EventArgs& e);
+
+			static bool OnKeyLearnKeyUp(const CEGUI::EventArgs& e);
 			static bool OnKeyLearnButtonClicked(const CEGUI::EventArgs& e);
 			static bool OnCategoryButtonClicked(const CEGUI::EventArgs& e);
 
@@ -1545,6 +1547,17 @@ namespace Meridian59 { namespace Ogre
 			static bool OnScalingQualityChanged(const CEGUI::EventArgs& e);
 			static bool OnTextureQualityChanged(const CEGUI::EventArgs& e);
 
+			static bool OnDisableMipmapsChanged(const CEGUI::EventArgs& e);
+			static bool OnDisableNewRoomTexturesChanged(const CEGUI::EventArgs& e);
+			static bool OnDisable3DModelsChanged(const CEGUI::EventArgs& e);
+			static bool OnDisableNewSkyChanged(const CEGUI::EventArgs& e);
+			static bool OnDisableWeatherEffectsChanged(const CEGUI::EventArgs& e);
+
+			static bool OnParticlesChanged(const CEGUI::EventArgs& e);
+			static bool OnDecorationChanged(const CEGUI::EventArgs& e);
+			static bool OnMusicVolumeChanged(const CEGUI::EventArgs& e);
+			static bool OnSoundVolumeChanged(const CEGUI::EventArgs& e);
+			static bool OnDisableLoopSoundsChanged(const CEGUI::EventArgs& e);
 
 			static bool OnRightClickActionChanged(const CEGUI::EventArgs& e);
 			static bool OnInvertMouseYChanged(const CEGUI::EventArgs& e);

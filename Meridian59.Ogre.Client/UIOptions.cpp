@@ -326,13 +326,21 @@ namespace Meridian59 { namespace Ogre
 		WindowMode->subscribeEvent(CEGUI::ToggleButton::EventSelectStateChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnWindowModeChanged));
 		WindowBorders->subscribeEvent(CEGUI::ToggleButton::EventSelectStateChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnWindowBordersChanged));
 		VSync->subscribeEvent(CEGUI::ToggleButton::EventSelectStateChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnVSyncChanged));
-
 		FSAA->subscribeEvent(CEGUI::Combobox::EventListSelectionAccepted, CEGUI::Event::Subscriber(UICallbacks::Options::OnFSAAChanged));
 		Filtering->subscribeEvent(CEGUI::Combobox::EventListSelectionAccepted, CEGUI::Event::Subscriber(UICallbacks::Options::OnFilteringChanged));
 		ImageBuilder->subscribeEvent(CEGUI::Combobox::EventListSelectionAccepted, CEGUI::Event::Subscriber(UICallbacks::Options::OnImageBuilderChanged));
 		ScalingQuality->subscribeEvent(CEGUI::Combobox::EventListSelectionAccepted, CEGUI::Event::Subscriber(UICallbacks::Options::OnScalingQualityChanged));
 		TextureQuality->subscribeEvent(CEGUI::Combobox::EventListSelectionAccepted, CEGUI::Event::Subscriber(UICallbacks::Options::OnTextureQualityChanged));
-
+		DisableMipmaps->subscribeEvent(CEGUI::ToggleButton::EventSelectStateChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnDisableMipmapsChanged));
+		DisableNewRoomTextures->subscribeEvent(CEGUI::ToggleButton::EventSelectStateChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnDisableNewRoomTexturesChanged));
+		Disable3DModels->subscribeEvent(CEGUI::ToggleButton::EventSelectStateChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnDisable3DModelsChanged));
+		DisableNewSky->subscribeEvent(CEGUI::ToggleButton::EventSelectStateChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnDisableNewSkyChanged));
+		DisableWeather->subscribeEvent(CEGUI::ToggleButton::EventSelectStateChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnDisableWeatherEffectsChanged));
+		Particles->subscribeEvent(CEGUI::Slider::EventValueChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnParticlesChanged));
+		Decoration->subscribeEvent(CEGUI::Slider::EventValueChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnDecorationChanged));
+		MusicVolume->subscribeEvent(CEGUI::Slider::EventValueChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnMusicVolumeChanged));
+		SoundVolume->subscribeEvent(CEGUI::Slider::EventValueChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnSoundVolumeChanged));
+		DisableLoopSounds->subscribeEvent(CEGUI::ToggleButton::EventSelectStateChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnDisableLoopSoundsChanged));
 
 		/******************************************************************************************************/
 
@@ -397,6 +405,8 @@ namespace Meridian59 { namespace Ogre
 		LearnAction47->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
 		LearnAction48->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
 
+		LearnMoveForward->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+
 		/******************************************************************************************************/
 
 		// subscribe other events
@@ -447,6 +457,20 @@ namespace Meridian59 { namespace Ogre
 
 		else if (btn == ControllerUI::Options::Resources)
 			ControllerUI::Options::TabControl->setSelectedTabAtIndex(3);
+
+		return true;
+	};
+
+	bool UICallbacks::Options::OnKeyLearnKeyUp(const CEGUI::EventArgs& e)
+	{
+		const CEGUI::KeyEventArgs& args = (const CEGUI::KeyEventArgs&)e;
+		const CEGUI::PushButton* btn	= (const CEGUI::PushButton*)args.window;
+
+		if (btn == ControllerUI::Options::LearnMoveForward)
+		{
+			ControllerUI::Options::LearnMoveForward->setText(ControllerInput::OISKeyboard->getAsString((::OIS::KeyCode)args.scancode));
+			//OgreClient::Singleton->Config->KeyBinding->MoveForward
+		}
 
 		return true;
 	};
@@ -614,6 +638,106 @@ namespace Meridian59 { namespace Ogre
 			ImageComposerCEGUI<RoomObject^>::DefaultQuality		 = 1.0f; // used in CEGUI
 			ImageComposerCEGUI<InventoryObject^>::DefaultQuality = 1.0f; // used in CEGUI
 		}
+
+		return true;
+	};
+
+	bool UICallbacks::Options::OnDisableMipmapsChanged(const CEGUI::EventArgs& e)
+	{
+		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
+		const CEGUI::ToggleButton* btn		= (const CEGUI::ToggleButton*)args.window;
+
+		OgreClient::Singleton->Config->NoMipmaps = !btn->isSelected();
+
+		return true;
+	};
+
+	bool UICallbacks::Options::OnDisableNewRoomTexturesChanged(const CEGUI::EventArgs& e)
+	{
+		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
+		const CEGUI::ToggleButton* btn		= (const CEGUI::ToggleButton*)args.window;
+
+		OgreClient::Singleton->Config->DisableNewRoomTextures = !btn->isSelected();
+
+		return true;
+	};
+
+	bool UICallbacks::Options::OnDisable3DModelsChanged(const CEGUI::EventArgs& e)
+	{
+		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
+		const CEGUI::ToggleButton* btn		= (const CEGUI::ToggleButton*)args.window;
+
+		OgreClient::Singleton->Config->Disable3DModels = !btn->isSelected();
+
+		return true;
+	};
+
+	bool UICallbacks::Options::OnDisableNewSkyChanged(const CEGUI::EventArgs& e)
+	{
+		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
+		const CEGUI::ToggleButton* btn		= (const CEGUI::ToggleButton*)args.window;
+
+		OgreClient::Singleton->Config->DisableNewSky = !btn->isSelected();
+
+		return true;
+	};
+
+	bool UICallbacks::Options::OnDisableWeatherEffectsChanged(const CEGUI::EventArgs& e)
+	{
+		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
+		const CEGUI::ToggleButton* btn		= (const CEGUI::ToggleButton*)args.window;
+
+		OgreClient::Singleton->Config->DisableWeatherEffects = !btn->isSelected();
+
+		return true;
+	};
+
+	bool UICallbacks::Options::OnParticlesChanged(const CEGUI::EventArgs& e)
+	{
+		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
+		const CEGUI::Slider* slider			= (const CEGUI::Slider*)args.window;
+
+		OgreClient::Singleton->Config->WeatherParticles = (int)slider->getCurrentValue();
+
+		return true;
+	};
+
+	bool UICallbacks::Options::OnDecorationChanged(const CEGUI::EventArgs& e)
+	{
+		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
+		const CEGUI::Slider* slider			= (const CEGUI::Slider*)args.window;
+
+		OgreClient::Singleton->Config->DecorationIntensity = (int)slider->getCurrentValue();
+
+		return true;
+	};
+
+	bool UICallbacks::Options::OnMusicVolumeChanged(const CEGUI::EventArgs& e)
+	{
+		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
+		const CEGUI::Slider* slider			= (const CEGUI::Slider*)args.window;
+
+		OgreClient::Singleton->Config->MusicVolume = (int)slider->getCurrentValue();
+
+		return true;
+	};
+
+	bool UICallbacks::Options::OnSoundVolumeChanged(const CEGUI::EventArgs& e)
+	{
+		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
+		const CEGUI::Slider* slider			= (const CEGUI::Slider*)args.window;
+
+		//OgreClient::Singleton->Config->SoundVolume = (int)slider->getCurrentValue();
+
+		return true;
+	};
+
+	bool UICallbacks::Options::OnDisableLoopSoundsChanged(const CEGUI::EventArgs& e)
+	{
+		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
+		const CEGUI::ToggleButton* btn		= (const CEGUI::ToggleButton*)args.window;
+
+		OgreClient::Singleton->Config->DisableLoopSounds = btn->isSelected();
 
 		return true;
 	};
