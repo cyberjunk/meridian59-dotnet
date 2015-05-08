@@ -221,10 +221,7 @@ namespace Meridian59 { namespace Ogre
         viewport = renderWindow->addViewport(camera, 0);
 
 		// set camera aspect ratio based on viewport
-		::Ogre::Real aspectRatio = 
-			::Ogre::Real(viewport->getActualWidth()) / Ogre::Real(viewport->getActualHeight());
-        
-		camera->setAspectRatio(aspectRatio);
+		camera->setAspectRatio(::Ogre::Real(viewport->getActualWidth()) / Ogre::Real(viewport->getActualHeight()));
 
 		/********************************************************************************************************/
 		/*                          APPLY TEXTUREFILTERING SETTINGS                                             */

@@ -885,8 +885,23 @@ namespace Meridian59 { namespace Ogre
 	{
 		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
 		const CEGUI::Combobox* combobox		= (const CEGUI::Combobox*)args.window;
+		OgreClientConfig^ config			= OgreClient::Singleton->Config;
 
-		OgreClient::Singleton->Config->Resolution = StringConvert::CEGUIToCLR(combobox->getText());
+		config->Resolution = StringConvert::CEGUIToCLR(combobox->getText());
+		
+		// get window height & width from options
+		/*int idx1 = config->Resolution->IndexOf('x');
+		int idx2 = config->Resolution->IndexOf('@');
+		System::UInt32 windowwidth = System::Convert::ToUInt32(config->Resolution->Substring(0, idx1 - 1));
+		System::UInt32 windowheight = System::Convert::ToUInt32(config->Resolution->Substring(idx1 + 2, idx2 - idx1 - 2));
+
+		OgreClient::Singleton->RenderWindow->resize(windowwidth, windowheight);
+
+		::Ogre::Real aspectRatio = ::Ogre::Real(OgreClient::Singleton->Viewport->getActualWidth()) / 
+			Ogre::Real(OgreClient::Singleton->Viewport->getActualHeight());
+
+		// set camera aspect ratio based on viewport
+		OgreClient::Singleton->Camera->setAspectRatio(aspectRatio);*/
 
 		return true;
 	};
