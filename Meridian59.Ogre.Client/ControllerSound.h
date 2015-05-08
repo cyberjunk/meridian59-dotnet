@@ -67,11 +67,6 @@ namespace Meridian59 { namespace Ogre
 
 	public:
 		/// <summary>
-        /// Volume for playback of music (not sound!), 0 is disabled.
-        /// </summary>
-		static float MusicVolume = 1.0f;
-
-		/// <summary>
         /// All sounds not attached to roomobject IDs (i.e. mapsounds)
         /// </summary>
         static property std::list<::irrklang::ISound*>* Sounds 
@@ -101,6 +96,8 @@ namespace Meridian59 { namespace Ogre
         /// </summary>
         /// <param name="AvatarNode"></param>
         static void SetListenerNode(RemoteNode^ AvatarNode);
+
+		static void AdjustMusicVolume();
 
 		static void HandleGameModeMessage(GameModeMessage^ Message);
 	};

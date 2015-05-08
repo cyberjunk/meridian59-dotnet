@@ -141,6 +141,14 @@ namespace Meridian59 { namespace Ogre
 		soundEngine->setListenerPosition(pos, look);	
     };
 
+	void ControllerSound::AdjustMusicVolume()
+	{
+		if (!backgroundMusic)
+			return;
+
+		backgroundMusic->setVolume(OgreClient::Singleton->Config->MusicVolume / 10.0f);
+	};
+
 	void ControllerSound::HandleGameModeMessage(GameModeMessage^ Message)
     {
 		if (!IsInitialized || !soundEngine)
@@ -199,7 +207,7 @@ namespace Meridian59 { namespace Ogre
 		if (!IsInitialized || !soundEngine || !Info || !Info->Resource || !Info->ResourceName)
 			return;
 
-		if (MusicVolume > 0.0f)
+		if (OgreClient::Singleton->Config->MusicVolume > 0.0f)
 		{			
 			// native string
 			::Ogre::String o_str = StringConvert::CLRToOgre(Info->ResourceName);
@@ -229,7 +237,7 @@ namespace Meridian59 { namespace Ogre
 				backgroundMusic = soundEngine->play2D(soundsrc, true, false, true, false);
 
 				if (backgroundMusic)
-					backgroundMusic->setVolume(MusicVolume);
+					backgroundMusic->setVolume(OgreClient::Singleton->Config->MusicVolume / 10.0f);
 			}
 			
 			// stop old background music if another one is to be played
@@ -241,7 +249,7 @@ namespace Meridian59 { namespace Ogre
 				backgroundMusic = soundEngine->play2D(soundsrc, true, false, true, false);
 
 				if (backgroundMusic)
-					backgroundMusic->setVolume(MusicVolume);
+					backgroundMusic->setVolume(OgreClient::Singleton->Config->MusicVolume / 10.0f);
 			}
 		}
 	};

@@ -312,9 +312,7 @@ namespace Meridian59 { namespace Ogre
 
         // don't go on if window doesn't exit anymore
         if (!renderWindow->isClosed())
-        {            
-			ControllerSound::MusicVolume = (float)Config->MusicVolume / 10.0f;
-			
+        {            			
             // Init controllers
             ControllerRoom::Initialize();
             ControllerEffects::Initialize();

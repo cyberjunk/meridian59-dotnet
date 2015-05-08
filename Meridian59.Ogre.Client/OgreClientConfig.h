@@ -185,7 +185,7 @@ namespace Meridian59 { namespace Ogre
 		bool DisableNewSky;
 		bool DisableWeatherEffects;
 		int WeatherParticles;
-		int MusicVolume;
+		float MusicVolume;
 		bool DisableLoopSounds;
 		OISKeyBinding^ KeyBinding;
 		int MouseAimSpeed;

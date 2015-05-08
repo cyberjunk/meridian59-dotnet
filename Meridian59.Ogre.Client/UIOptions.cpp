@@ -160,6 +160,7 @@ namespace Meridian59 { namespace Ogre
 		// maxvalues for particles & decoration sliders
 		Particles->setMaxValue(50000.0f);
 		Decoration->setMaxValue(100.0f);
+		MusicVolume->setMaxValue(10.0f);
 
 		/******************************************************************************************************/
 
@@ -929,7 +930,13 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
 		const CEGUI::Combobox* combobox		= (const CEGUI::Combobox*)args.window;
 
-		//OgreClient::Singleton->Config->FSAA = combobox->getSelectionStartIndex();;
+		::System::String^ newval = StringConvert::CEGUIToCLR(combobox->getText());
+		::System::String^ oldval = OgreClient::Singleton->Config->TextureQuality;
+
+		if (oldval == newval)
+			return true;
+
+		OgreClient::Singleton->Config->FSAA = newval;
 
 		return true;
 	};
@@ -939,7 +946,13 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
 		const CEGUI::Combobox* combobox		= (const CEGUI::Combobox*)args.window;
 
-		//OgreClient::Singleton->Config->TextureFiltering = combobox->getSelectionStartIndex();;
+		::System::String^ newval = StringConvert::CEGUIToCLR(combobox->getText());
+		::System::String^ oldval = OgreClient::Singleton->Config->TextureQuality;
+
+		if (oldval == newval)
+			return true;
+
+		OgreClient::Singleton->Config->TextureFiltering = newval;
 
 		return true;
 	};
@@ -1097,6 +1110,9 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::Slider* slider			= (const CEGUI::Slider*)args.window;
 
 		OgreClient::Singleton->Config->MusicVolume = (int)slider->getCurrentValue();
+
+		// applies the new musicvolume on playing sound
+		ControllerSound::AdjustMusicVolume();
 
 		return true;
 	};

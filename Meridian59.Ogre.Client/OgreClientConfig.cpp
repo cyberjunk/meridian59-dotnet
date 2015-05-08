@@ -81,7 +81,7 @@ namespace Meridian59 { namespace Ogre
 		WeatherParticles = ::System::Convert::ToInt32(Reader[ATTRIB_VALUE]);
 
 		Reader->ReadToFollowing(TAG_MUSICVOLUME);
-		MusicVolume = ::System::Convert::ToInt32(Reader[ATTRIB_VALUE]);
+		MusicVolume = ::System::Convert::ToSingle(Reader[ATTRIB_VALUE]);
 
 		Reader->ReadToFollowing(TAG_DISABLELOOPSOUNDS);
 		DisableLoopSounds = ::System::Convert::ToBoolean(Reader[ATTRIB_VALUE]);
