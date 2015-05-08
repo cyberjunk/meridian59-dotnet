@@ -237,7 +237,8 @@ namespace Meridian59 { namespace Ogre
 
 				processingInput = 
 					(type.compare(UI_WINDOWTYPE_EDITBOX) == 0) ||
-					(type.compare(UI_WINDOWTYPE_MULTILINEEDITBOX) == 0);
+					(type.compare(UI_WINDOWTYPE_MULTILINEEDITBOX) == 0) ||
+					(type.compare(UI_WINDOWTYPE_BUTTON) == 0);
 			}
 		}
 

@@ -187,6 +187,7 @@
 #define UI_WINDOWTYPE_ROOMOBJECTLISTBOXITEM		"TaharezLook/RoomObjectListboxItem"
 #define UI_WINDOWTYPE_BUYLISTBOXITEM			"TaharezLook/BuyListboxItem"
 #define UI_WINDOWTYPE_BUFFICON					"TaharezLook/ImageButton"
+#define UI_WINDOWTYPE_BUTTON					"TaharezLook/Button"
 #define UI_WINDOWTYPE_AVATARCONDITIONITEM		"TaharezLook/AvatarConditionItem"
 #define UI_WINDOWTYPE_AVATARATTRIBUTEITEM		"TaharezLook/AvatarAttributeItem"
 #define UI_WINDOWTYPE_AVATARSKILLITEM			"TaharezLook/AvatarSkillItem"
