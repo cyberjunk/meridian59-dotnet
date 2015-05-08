@@ -185,7 +185,7 @@ namespace Meridian59 { namespace Ogre
 				FSAA->addItem(new::CEGUI::ListboxTextItem(i->c_str()));
 		}
 
-		Display->setSelection(OgreClient::Singleton->Config->Display, OgreClient::Singleton->Config->Display);
+		Display->setItemSelectState(Display->getListboxItemFromIndex(OgreClient::Singleton->Config->Display), true);
 		Resolution->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->Resolution));
 
 		WindowMode->setSelected(OgreClient::Singleton->Config->WindowMode);
@@ -494,7 +494,7 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
 		const CEGUI::Combobox* combobox		= (const CEGUI::Combobox*)args.window;
 
-		//OgreClient::Singleton->Config->Display = combobox->getSelectionStartIndex();;
+		OgreClient::Singleton->Config->Display = combobox->getItemIndex(combobox->getSelectedItem());
 
 		return true;
 	};
