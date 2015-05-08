@@ -144,9 +144,10 @@ namespace Meridian59 { namespace Ogre
 		misc["monitorIndex"]	= ::Ogre::StringConverter::toString(Config->Display);
 				
 		// get window height & width from options
-        int index = Config->Resolution->IndexOf('x');
-		System::UInt32 windowwidth = System::Convert::ToUInt32(Config->Resolution->Substring(0, index - 1));
-        System::UInt32 windowheight = System::Convert::ToUInt32(Config->Resolution->Substring(index + 2));
+        int idx1 = Config->Resolution->IndexOf('x');
+		int idx2 = Config->Resolution->IndexOf('@');
+		System::UInt32 windowwidth = System::Convert::ToUInt32(Config->Resolution->Substring(0, idx1 - 1));
+        System::UInt32 windowheight = System::Convert::ToUInt32(Config->Resolution->Substring(idx1 + 2, idx2 - idx1 - 2));
 		
 		// create the main (but not primary) renderwindow
         renderWindow = root->createRenderWindow(

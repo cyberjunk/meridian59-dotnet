@@ -504,7 +504,7 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
 		const CEGUI::Combobox* combobox		= (const CEGUI::Combobox*)args.window;
 
-		//OgreClient::Singleton->Config->Resolution = combobox->getSelectionStartIndex();;
+		OgreClient::Singleton->Config->Resolution = StringConvert::CEGUIToCLR(combobox->getText());
 
 		return true;
 	};
@@ -539,9 +539,7 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::ToggleButton* toggleb = (const CEGUI::ToggleButton*)args.window;
 
 		OgreClient::Singleton->Config->VSync = toggleb->isSelected();
-		//OgreClient::Singleton->RenderWindow->setVSyncEnabled(toggleb->isSelected());
-		//OgreClient::Singleton->RenderWindow->setVSyncInterval(1);
-		
+
 		return true;
 	};
 

@@ -265,7 +265,7 @@ namespace Meridian59.Launcher
             for(int i = 0; i < screenInfos.Count; i++)
             {
                 Windows.User32.DEVMODE screenInfo = screenInfos[i];
-                string val = screenInfo.dmPelsWidth.ToString() + " x " + screenInfo.dmPelsHeight.ToString();
+                string val = screenInfo.dmPelsWidth.ToString() + " x " + screenInfo.dmPelsHeight.ToString() + " @ 32-bit colour";
                 cbResolution.Items.Add(val);
 
                 if (String.Equals(val, config.Resolution))
