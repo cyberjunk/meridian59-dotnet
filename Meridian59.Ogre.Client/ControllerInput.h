@@ -178,7 +178,7 @@ namespace Meridian59 { namespace Ogre
 		{ 
 			bool get() 
 			{ 
-				return oisMouse->getMouseState().buttonDown(OIS::MouseButtonID::MB_Left);
+				return oisMouse && oisMouse->getMouseState().buttonDown(OIS::MouseButtonID::MB_Left);
 			} 
 		};
 
@@ -189,7 +189,7 @@ namespace Meridian59 { namespace Ogre
 		{ 
 			bool get() 
 			{ 
-				return oisMouse->getMouseState().buttonDown(OIS::MouseButtonID::MB_Right); 
+				return oisMouse && oisMouse->getMouseState().buttonDown(OIS::MouseButtonID::MB_Right); 
 			} 
 		};
         
@@ -222,7 +222,7 @@ namespace Meridian59 { namespace Ogre
 		{ 
 			bool get() 
 			{ 
-				return OISKeyboard->isKeyDown(ActiveKeyBinding->Walk); 
+				return oisKeyboard && oisKeyboard->isKeyDown(ActiveKeyBinding->Walk); 
 			} 
 		};
         
@@ -234,10 +234,13 @@ namespace Meridian59 { namespace Ogre
         {
             bool get()
             {
-                if (OISKeyboard->isKeyDown(ActiveKeyBinding->MoveForward) ||
-                    OISKeyboard->isKeyDown(ActiveKeyBinding->MoveBackward) ||
-                    OISKeyboard->isKeyDown(ActiveKeyBinding->MoveLeft) ||
-                    OISKeyboard->isKeyDown(ActiveKeyBinding->MoveRight) ||
+				if (!oisKeyboard)
+					return false;
+
+                if (oisKeyboard->isKeyDown(ActiveKeyBinding->MoveForward) ||
+                    oisKeyboard->isKeyDown(ActiveKeyBinding->MoveBackward) ||
+                    oisKeyboard->isKeyDown(ActiveKeyBinding->MoveLeft) ||
+                    oisKeyboard->isKeyDown(ActiveKeyBinding->MoveRight) ||
                     IsBothMouseDown)
                     return true;
                 else return false;
@@ -251,8 +254,11 @@ namespace Meridian59 { namespace Ogre
         {
             bool get()
             {
-                if (OISKeyboard->isKeyDown(ActiveKeyBinding->RotateLeft) ||
-                    OISKeyboard->isKeyDown(ActiveKeyBinding->RotateRight))
+				if (!oisKeyboard)
+					return false;
+
+                if (oisKeyboard->isKeyDown(ActiveKeyBinding->RotateLeft) ||
+                    oisKeyboard->isKeyDown(ActiveKeyBinding->RotateRight))
                     return true;
                 else return false;
             }
@@ -265,7 +271,10 @@ namespace Meridian59 { namespace Ogre
         {
             bool get()
             {
-                if (OISKeyboard->isKeyDown(ActiveKeyBinding->SelfTarget))
+				if (!oisKeyboard)
+					return false;
+
+                if (oisKeyboard->isKeyDown(ActiveKeyBinding->SelfTarget))
                     return true;
                 else return false;
             }

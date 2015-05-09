@@ -877,6 +877,7 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::Combobox* combobox		= (const CEGUI::Combobox*)args.window;
 
 		OgreClient::Singleton->Config->Display = combobox->getItemIndex(combobox->getSelectedItem());
+		OgreClient::Singleton->RecreateWindow = true;
 
 		return true;
 	};
@@ -888,7 +889,8 @@ namespace Meridian59 { namespace Ogre
 		OgreClientConfig^ config			= OgreClient::Singleton->Config;
 
 		config->Resolution = StringConvert::CEGUIToCLR(combobox->getText());
-		
+		OgreClient::Singleton->RecreateWindow = true;
+
 		// live apply testing
 
 		// get window height & width from options
@@ -922,6 +924,7 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::ToggleButton* toggleb = (const CEGUI::ToggleButton*)args.window;
 
 		OgreClient::Singleton->Config->WindowMode = toggleb->isSelected();
+		OgreClient::Singleton->RecreateWindow = true;
 
 		// live apply testing
 
@@ -952,6 +955,7 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::ToggleButton* toggleb = (const CEGUI::ToggleButton*)args.window;
 
 		OgreClient::Singleton->Config->WindowFrame = toggleb->isSelected();
+		OgreClient::Singleton->RecreateWindow = true;
 
 		return true;
 	};
@@ -962,6 +966,7 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::ToggleButton* toggleb = (const CEGUI::ToggleButton*)args.window;
 
 		OgreClient::Singleton->Config->VSync = toggleb->isSelected();
+		OgreClient::Singleton->RecreateWindow = true;
 
 		return true;
 	};

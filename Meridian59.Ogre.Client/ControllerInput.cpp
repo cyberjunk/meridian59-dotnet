@@ -51,7 +51,7 @@ namespace Meridian59 { namespace Ogre
         InputManager = OIS::InputManager::createInputSystem(oisParameters);
         OISKeyboard	 = (OIS::Keyboard*)InputManager->createInputObject(OIS::Type::OISKeyboard, true);
         OISMouse	 = (OIS::Mouse*)InputManager->createInputObject(OIS::Type::OISMouse, true);
-       
+
 		// sets boundaries for mouse from current viewport
 		SetDisplaySize();
 
@@ -77,7 +77,7 @@ namespace Meridian59 { namespace Ogre
 			{	
 				// remove eventcallback
 				oisKeyboard->setEventCallback(0);
-				
+
 				// destroy keyboard (will also free)
 				inputManager->destroyInputObject(oisKeyboard);
 			}
@@ -258,7 +258,8 @@ namespace Meridian59 { namespace Ogre
 	bool ControllerInput::OISMouse_MouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
     {		
 		// exit conditions
-		if (OgreClient::Singleton->Data->IsWaiting || 
+		if (OgreClient::Singleton->Data->IsWaiting ||
+			!OgreClient::Singleton->RenderWindow ||
 			!OgreClient::Singleton->RenderWindow->isVisible() ||
 			!OgreClient::Singleton->RenderWindow->isActive() ||
 			!OgreClient::Singleton->HasFocus ||
@@ -299,7 +300,8 @@ namespace Meridian59 { namespace Ogre
 	bool ControllerInput::OISMouse_MousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
     {   
 		// exit conditions
-		if (OgreClient::Singleton->Data->IsWaiting || 
+		if (OgreClient::Singleton->Data->IsWaiting ||
+			!OgreClient::Singleton->RenderWindow ||
 			!OgreClient::Singleton->RenderWindow->isVisible() ||
 			!OgreClient::Singleton->RenderWindow->isActive() ||
 			!OgreClient::Singleton->HasFocus ||
@@ -365,7 +367,8 @@ namespace Meridian59 { namespace Ogre
 		}
 
 		// exit conditions
-		if (!OgreClient::Singleton->RenderWindow->isVisible() ||
+		if (!OgreClient::Singleton->RenderWindow ||
+			!OgreClient::Singleton->RenderWindow->isVisible() ||
 			!OgreClient::Singleton->RenderWindow->isActive() ||
 			!OgreClient::Singleton->HasFocus ||
 			!isMouseInWindow)
@@ -485,6 +488,7 @@ namespace Meridian59 { namespace Ogre
 		// exit conditions
 		if (ControllerUI::ProcessingInput ||
 			OgreClient::Singleton->Data->IsWaiting ||
+			!OgreClient::Singleton->RenderWindow ||
 			!OgreClient::Singleton->RenderWindow->isActive() ||
 			!OgreClient::Singleton->HasFocus ||
 			OgreClient::Singleton->CameraNode == nullptr ||
@@ -533,6 +537,7 @@ namespace Meridian59 { namespace Ogre
 		// exit conditions
 		if (ControllerUI::ProcessingInput ||
 			OgreClient::Singleton->Data->IsWaiting ||
+			!OgreClient::Singleton->RenderWindow ||
 			!OgreClient::Singleton->RenderWindow->isActive() ||
 			!OgreClient::Singleton->HasFocus ||
 			OgreClient::Singleton->CameraNode == nullptr ||
@@ -667,6 +672,7 @@ namespace Meridian59 { namespace Ogre
 		/******************************************************/
 		
 		if (OgreClient::Singleton->Data->IsWaiting ||
+			!OgreClient::Singleton->RenderWindow ||
 			!OgreClient::Singleton->RenderWindow->isVisible() ||
 			!OgreClient::Singleton->RenderWindow->isActive() ||
 			!OgreClient::Singleton->HasFocus ||

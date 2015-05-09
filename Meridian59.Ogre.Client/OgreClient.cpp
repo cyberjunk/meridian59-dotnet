@@ -163,58 +163,12 @@ namespace Meridian59 { namespace Ogre
 		/*                                     CREATE RENDERWINDOW                                              */
 		/********************************************************************************************************/
 
-		// settings for the main (but not primary) renderwindow
-		::Ogre::NameValuePairList misc2;
-		misc2["FSAA"] = StringConvert::CLRToOgre(Config->FSAA);
-		misc2["vsync"] = StringConvert::CLRToOgre(Config->VSync.ToString());
-		misc2["border"] = Config->WindowFrame ? "fixed" : "none";
-		misc2["monitorIndex"] = ::Ogre::StringConverter::toString(Config->Display);
-
-		// get window height & width from options
-		int idx1 = Config->Resolution->IndexOf('x');
-		int idx2 = Config->Resolution->IndexOf('@');
-		System::UInt32 windowwidth = System::Convert::ToUInt32(Config->Resolution->Substring(0, idx1 - 1));
-		System::UInt32 windowheight = System::Convert::ToUInt32(Config->Resolution->Substring(idx1 + 2, idx2 - idx1 - 2));
-
-		// create the main (but not primary) renderwindow
-		renderWindow = (::Ogre::D3D9RenderWindow*)root->createRenderWindow(
-			WINDOWNAME,
-			windowwidth,
-			windowheight,
-			!Config->WindowMode,
-			&misc2);
-
-		// get window handle and save as HWND
-		size_t val = 0;
-		renderWindow->getCustomAttribute("WINDOW", &val);
-		renderWindowHandle = (HWND)val;
-
-		// keep rendering without focus
-		renderWindow->setDeactivateOnFocusChange(false);
-
-		// create window event listener
-		windowListener = new MyWindowEventListener();
-
-		// attach window event listener
-		::Ogre::WindowEventUtilities::addWindowEventListener(
-			renderWindow, windowListener);
-
-		// set icon on gamewindow
-		LONG iconID = (LONG)LoadIcon(GetModuleHandle(0), MAKEINTRESOURCE(1));
-		SetClassLongPtr(renderWindowHandle, GCLP_HICON, iconID);
+		RenderWindowCreate();
 
 
 		/********************************************************************************************************/
 		/*                                CREATE SCENEMANAGER, CAMERA, VIEWPORT                                 */
 		/********************************************************************************************************/
-
-		
-
-		// create viewport
-		viewport = renderWindow->addViewport(camera, 0);
-
-		// set camera aspect ratio based on viewport
-		camera->setAspectRatio(::Ogre::Real(viewport->getActualWidth()) / Ogre::Real(viewport->getActualHeight()));
 
 		/********************************************************************************************************/
 		/*                          APPLY TEXTUREFILTERING SETTINGS                                             */
@@ -318,6 +272,101 @@ namespace Meridian59 { namespace Ogre
 		// set UI intially to login panel
 		Data->UIMode = UIMode::Login;		
     };
+	
+	void OgreClient::RenderWindowCreate()
+	{
+		if (renderWindow)
+			return;
+
+		// settings for the main (but not primary) renderwindow
+		::Ogre::NameValuePairList misc2;
+		misc2["FSAA"]			= StringConvert::CLRToOgre(Config->FSAA);
+		misc2["vsync"]			= StringConvert::CLRToOgre(Config->VSync.ToString());
+		misc2["border"]			= Config->WindowFrame ? "fixed" : "none";
+		misc2["monitorIndex"]	= ::Ogre::StringConverter::toString(Config->Display);
+
+		// get window height & width from options
+		int idx1 = Config->Resolution->IndexOf('x');
+		int idx2 = Config->Resolution->IndexOf('@');
+		System::UInt32 windowwidth = System::Convert::ToUInt32(Config->Resolution->Substring(0, idx1 - 1));
+		System::UInt32 windowheight = System::Convert::ToUInt32(Config->Resolution->Substring(idx1 + 2, idx2 - idx1 - 2));
+
+		// create the main (but not primary) renderwindow
+		renderWindow = (::Ogre::D3D9RenderWindow*)root->createRenderWindow(
+			WINDOWNAME,
+			windowwidth,
+			windowheight,
+			!Config->WindowMode,
+			&misc2);
+
+		// get window handle and save as HWND
+		size_t val = 0;
+		renderWindow->getCustomAttribute("WINDOW", &val);
+		renderWindowHandle = (HWND)val;
+
+		// keep rendering without focus
+		renderWindow->setDeactivateOnFocusChange(false);
+
+		// create window event listener
+		windowListener = new MyWindowEventListener();
+
+		// attach window event listener
+		::Ogre::WindowEventUtilities::addWindowEventListener(
+			renderWindow, windowListener);
+
+		// set icon on gamewindow
+		LONG iconID = (LONG)LoadIcon(GetModuleHandle(0), MAKEINTRESOURCE(1));
+		SetClassLongPtr(renderWindowHandle, GCLP_HICON, iconID);
+
+		// create viewport
+		viewport = renderWindow->addViewport(camera, 0);
+
+		int actualwidth = viewport->getActualWidth();
+		int actualheight = viewport->getActualHeight();
+
+		::Ogre::Real aspectRatio = ::Ogre::Real(actualwidth) / ::Ogre::Real(actualheight);
+
+		// set camera aspect ratio based on viewport
+		camera->setAspectRatio(aspectRatio);
+
+		// make sure to reinit stuff in case of a window recreate
+		// cegui survives renderwindow change applying new renderwindow and size
+		if (ControllerUI::IsInitialized)
+		{
+			ControllerUI::Renderer->setDefaultRootRenderTarget(*((::Ogre::RenderTarget*)renderWindow));
+			ControllerUI::Renderer->setDisplaySize(::CEGUI::Sizef((float)actualwidth, (float)actualheight));
+		}
+	};
+
+	void OgreClient::RenderWindowDestroy()
+	{
+		if (!renderWindow)
+			return;
+		
+		// compositors are linked to renderwindow viewports
+		ControllerEffects::Destroy();
+		
+		// input is linked to the renderwindow
+		ControllerInput::Destroy();
+
+		if (windowListener)
+		{
+			::Ogre::WindowEventUtilities::removeWindowEventListener(
+				renderWindow, windowListener);
+
+			OGRE_DELETE windowListener;
+		}
+
+		// detach all viewports from window
+		renderWindow->removeAllListeners();
+		renderWindow->removeAllViewports();
+
+		if (root)
+			root->destroyRenderTarget(renderWindow);
+
+		renderWindow	= nullptr;
+		windowListener	= nullptr;
+	};
 
 	void OgreClient::Update()
     {		
@@ -328,6 +377,20 @@ namespace Meridian59 { namespace Ogre
 		// is supposed to shut down completely
 		if (!IsRunning)
 			return;
+
+		/********************************************************************************************************/
+
+		if (RecreateWindow)
+		{
+			RenderWindowDestroy();
+			RenderWindowCreate();
+
+			// must reinit effects and input due to recreated window
+			ControllerEffects::Initialize();
+			ControllerInput::Initialize();
+
+			RecreateWindow = false;
+		}
 
 		/********************************************************************************************************/
 		/*                               UPDATE FOCUSSTATE AND CURSOR                                           */
@@ -416,24 +479,7 @@ namespace Meridian59 { namespace Ogre
 		// destroy scenemanager
 		root->destroySceneManager(sceneManager);
 
-		// cleanup renderwindow
-		if (renderWindow)
-		{
-			if (windowListener)
-			{
-				::Ogre::WindowEventUtilities::removeWindowEventListener(
-					renderWindow, windowListener);
-
-				OGRE_DELETE windowListener;
-			}
-
-			// detach all viewports from window
-			renderWindow->removeAllListeners();
-			renderWindow->removeAllViewports();
-
-			if (root)
-				root->destroyRenderTarget(renderWindow);
-		}
+		RenderWindowDestroy();
 
 		if (cameraListener)
 			OGRE_DELETE cameraListener;
@@ -444,10 +490,8 @@ namespace Meridian59 { namespace Ogre
 		ImageComposerOgre<RoomObject^>::Cache->Clear();
 
 		cameraListener = nullptr;
-		windowListener = nullptr;
 		camera = nullptr;
 		cameraNode = nullptr;
-		renderWindow = nullptr;
 		viewport = nullptr;
 		viewportInvis = nullptr;
 		sceneManager = nullptr;

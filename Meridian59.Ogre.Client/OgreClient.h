@@ -109,6 +109,9 @@ namespace Meridian59 { namespace Ogre
         /// </summary>
 		virtual void Cleanup() override;
 
+		void RenderWindowCreate();
+		void RenderWindowDestroy();
+
 		/// <summary>
         /// Handle network client exception
         /// </summary>
@@ -210,6 +213,8 @@ namespace Meridian59 { namespace Ogre
 #endif
 
 	public:
+		bool RecreateWindow = false;
+
 		property unsigned char AppVersionMajor
 		{ 
 			public: virtual unsigned char get() override { return 90; } 			
@@ -300,7 +305,7 @@ namespace Meridian59 { namespace Ogre
         /// Called each mainthread loop
         /// </summary>
         virtual void Update() override;
-		
+
 		/// <summary>
         /// Overwritten from base class to also set the 
 		/// ActionButtons from Config.
