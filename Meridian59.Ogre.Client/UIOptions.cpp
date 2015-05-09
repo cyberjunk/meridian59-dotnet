@@ -219,8 +219,8 @@ namespace Meridian59 { namespace Ogre
 		DisableNewSky->setSelected(!OgreClient::Singleton->Config->DisableNewSky);
 		DisableWeather->setSelected(!OgreClient::Singleton->Config->DisableWeatherEffects);
 
-		Particles->setCurrentValue(OgreClient::Singleton->Config->WeatherParticles);
-		Decoration->setCurrentValue(OgreClient::Singleton->Config->DecorationIntensity);
+		Particles->setCurrentValue((float)OgreClient::Singleton->Config->WeatherParticles);
+		Decoration->setCurrentValue((float)OgreClient::Singleton->Config->DecorationIntensity);
 		MusicVolume->setCurrentValue(OgreClient::Singleton->Config->MusicVolume);
 		//SoundVolume->setCurrentValue(OgreClient::Singleton->Config->SoundVolume);
 		DisableLoopSounds->setSelected(OgreClient::Singleton->Config->DisableLoopSounds);
@@ -1124,7 +1124,7 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
 		const CEGUI::Slider* slider			= (const CEGUI::Slider*)args.window;
 
-		OgreClient::Singleton->Config->MusicVolume = (int)slider->getCurrentValue();
+		OgreClient::Singleton->Config->MusicVolume = slider->getCurrentValue();
 
 		// applies the new musicvolume on playing sound
 		ControllerSound::AdjustMusicVolume();

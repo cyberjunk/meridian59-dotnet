@@ -29,7 +29,7 @@ namespace Meridian59 { namespace Ogre
 		yint = (int)((particle->position.z - 64.0f) * 16.0f);
 
 		// retrieve the floorheight and the subsector(leaf) for the roo coordinates	
-		floorheight = (float)rooFile->GetHeightAt(xint, yint, subSector, true, false) * 0.0625f;
+		floorheight = (float)rooFile->GetHeightAt((float)xint, (float)yint, subSector, true, false) * 0.0625f;
 
 		// no subsector/sector
 		if (!subSector || !subSector->Sector)

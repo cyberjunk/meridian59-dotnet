@@ -346,8 +346,8 @@ namespace Meridian59 { namespace Ogre
 
 						// beware: these can point to empty ui inventory slots 
 						// (out of bound indices in data).
-						if (fromIndex < 0 || fromIndex >= dataModels->Count ||
-							toIndex < 0 || toIndex >= dataModels->Count)
+						if ((int)fromIndex < 0 || (int)fromIndex >= dataModels->Count ||
+							(int)toIndex < 0 || (int)toIndex >= dataModels->Count)
 							return true;
 
 						// swap views
