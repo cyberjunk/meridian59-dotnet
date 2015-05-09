@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meridian59.BgfEditor", "Mer
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meridian59.DebugUI", "Meridian59.DebugUI\Meridian59.DebugUI.csproj", "{C8938199-AB12-4A43-AAB0-C8F7043E46E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meridian59.Launcher", "Meridian59.Launcher\Meridian59.Launcher.csproj", "{19CB4098-CE21-4C84-9613-A8F7F7FE7983}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meridian59.ExampleClient", "Meridian59.ExampleClient\Meridian59.ExampleClient.csproj", "{EA1643C9-481D-4D23-B21B-2CC7DE34291D}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Meridian59.Ogre.Client", "Meridian59.Ogre.Client\Meridian59.Ogre.Client.vcxproj", "{96EEE7B3-2425-4686-8DC3-44405E00641D}"
@@ -67,16 +65,6 @@ Global
 		{C8938199-AB12-4A43-AAB0-C8F7043E46E9}.Release|x64.Build.0 = Release|x64
 		{C8938199-AB12-4A43-AAB0-C8F7043E46E9}.Release|x86.ActiveCfg = Release|x86
 		{C8938199-AB12-4A43-AAB0-C8F7043E46E9}.Release|x86.Build.0 = Release|x86
-		{19CB4098-CE21-4C84-9613-A8F7F7FE7983}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{19CB4098-CE21-4C84-9613-A8F7F7FE7983}.Debug|x64.ActiveCfg = Debug|x64
-		{19CB4098-CE21-4C84-9613-A8F7F7FE7983}.Debug|x64.Build.0 = Debug|x64
-		{19CB4098-CE21-4C84-9613-A8F7F7FE7983}.Debug|x86.ActiveCfg = Debug|x86
-		{19CB4098-CE21-4C84-9613-A8F7F7FE7983}.Debug|x86.Build.0 = Debug|x86
-		{19CB4098-CE21-4C84-9613-A8F7F7FE7983}.Release|Any CPU.ActiveCfg = Release|x86
-		{19CB4098-CE21-4C84-9613-A8F7F7FE7983}.Release|x64.ActiveCfg = Release|x64
-		{19CB4098-CE21-4C84-9613-A8F7F7FE7983}.Release|x64.Build.0 = Release|x64
-		{19CB4098-CE21-4C84-9613-A8F7F7FE7983}.Release|x86.ActiveCfg = Release|x86
-		{19CB4098-CE21-4C84-9613-A8F7F7FE7983}.Release|x86.Build.0 = Release|x86
 		{EA1643C9-481D-4D23-B21B-2CC7DE34291D}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{EA1643C9-481D-4D23-B21B-2CC7DE34291D}.Debug|x64.ActiveCfg = Debug|x64
 		{EA1643C9-481D-4D23-B21B-2CC7DE34291D}.Debug|x64.Build.0 = Debug|x64
