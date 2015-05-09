@@ -277,6 +277,11 @@ namespace Meridian59 { namespace Ogre
 		static void Initialize();
 	
 		/// <summary>
+		/// Initialize.
+		/// </summary>
+		static void SetDisplaySize();
+
+		/// <summary>
         /// This is executed by OIS listener once during capture() when mouse button is released.
         /// </summary>
 		static bool OISMouse_MouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);

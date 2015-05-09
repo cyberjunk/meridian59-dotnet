@@ -52,9 +52,8 @@ namespace Meridian59 { namespace Ogre
         OISKeyboard	 = (OIS::Keyboard*)InputManager->createInputObject(OIS::Type::OISKeyboard, true);
         OISMouse	 = (OIS::Mouse*)InputManager->createInputObject(OIS::Type::OISMouse, true);
        
-        const OIS::MouseState &mouseState = OISMouse->getMouseState();
-		mouseState.width = OgreClient::Singleton->Viewport->getActualWidth();
-        mouseState.height = OgreClient::Singleton->Viewport->getActualHeight();
+		// sets boundaries for mouse from current viewport
+		SetDisplaySize();
 
         // setup callbacks for keyboard and mouse events	
 		keylistener = new OISKeyListener();
@@ -137,6 +136,13 @@ namespace Meridian59 { namespace Ogre
 		IsInitialized = false;
     };
 	
+	void ControllerInput::SetDisplaySize()
+	{
+		const OIS::MouseState &mouseState = OISMouse->getMouseState();
+		mouseState.width = OgreClient::Singleton->Viewport->getActualWidth();
+		mouseState.height = OgreClient::Singleton->Viewport->getActualHeight();
+	};
+
 	OISKeyBinding^ ControllerInput::ActiveKeyBinding::get()
 	{
 		return OgreClient::Singleton->Config->KeyBinding;

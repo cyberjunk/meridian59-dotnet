@@ -30,7 +30,7 @@ namespace Meridian59 { namespace Ogre
 		system		= ::CEGUI::System::getSingletonPtr();
 		guiContext	= &system->getDefaultGUIContext();
 		mouseCursor = &guiContext->getMouseCursor();
-
+		
 		// load resource to ogre
 		::Ogre::ResourceGroupManager* resMan = 
 			::Ogre::ResourceGroupManager::getSingletonPtr();

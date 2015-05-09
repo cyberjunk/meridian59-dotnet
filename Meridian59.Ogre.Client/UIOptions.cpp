@@ -889,6 +889,8 @@ namespace Meridian59 { namespace Ogre
 
 		config->Resolution = StringConvert::CEGUIToCLR(combobox->getText());
 		
+		// live apply testing
+
 		// get window height & width from options
 		/*int idx1 = config->Resolution->IndexOf('x');
 		int idx2 = config->Resolution->IndexOf('@');
@@ -897,11 +899,19 @@ namespace Meridian59 { namespace Ogre
 
 		OgreClient::Singleton->RenderWindow->resize(windowwidth, windowheight);
 
-		::Ogre::Real aspectRatio = ::Ogre::Real(OgreClient::Singleton->Viewport->getActualWidth()) / 
-			Ogre::Real(OgreClient::Singleton->Viewport->getActualHeight());
+		//
+
+		int actualwidth = OgreClient::Singleton->Viewport->getActualWidth();
+		int actualheight = OgreClient::Singleton->Viewport->getActualHeight();
+
+		::Ogre::Real aspectRatio = ::Ogre::Real(actualwidth) / ::Ogre::Real(actualheight);
 
 		// set camera aspect ratio based on viewport
-		OgreClient::Singleton->Camera->setAspectRatio(aspectRatio);*/
+		OgreClient::Singleton->Camera->setAspectRatio(aspectRatio);
+		
+		// update ui size and moues input boundaries
+		ControllerUI::Renderer->setDisplaySize(::CEGUI::Sizef((float)actualwidth, (float)actualheight));
+		ControllerInput::SetDisplaySize();*/
 
 		return true;
 	};
@@ -912,10 +922,26 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::ToggleButton* toggleb = (const CEGUI::ToggleButton*)args.window;
 
 		OgreClient::Singleton->Config->WindowMode = toggleb->isSelected();
-		
-		/*OgreClient::Singleton->RenderWindow->setFullscreen(toggleb->isSelected(),
+
+		// live apply testing
+
+		/*OgreClient::Singleton->RenderWindow->setFullscreen(!toggleb->isSelected(),
 			OgreClient::Singleton->RenderWindow->getWidth(),
-			OgreClient::Singleton->RenderWindow->getHeight());*/
+			OgreClient::Singleton->RenderWindow->getHeight());
+
+		
+
+		int actualwidth = OgreClient::Singleton->Viewport->getActualWidth();
+		int actualheight = OgreClient::Singleton->Viewport->getActualHeight();
+
+		::Ogre::Real aspectRatio = ::Ogre::Real(actualwidth) / ::Ogre::Real(actualheight);
+
+		// set camera aspect ratio based on viewport
+		OgreClient::Singleton->Camera->setAspectRatio(aspectRatio);
+
+		// update ui size and moues input boundaries
+		ControllerUI::Renderer->setDisplaySize(::CEGUI::Sizef((float)actualwidth, (float)actualheight));
+		ControllerInput::SetDisplaySize();*/
 
 		return true;
 	};
@@ -946,12 +972,19 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::Combobox* combobox		= (const CEGUI::Combobox*)args.window;
 
 		::System::String^ newval = StringConvert::CEGUIToCLR(combobox->getText());
-		::System::String^ oldval = OgreClient::Singleton->Config->TextureQuality;
+		::System::String^ oldval = OgreClient::Singleton->Config->FSAA;
 
 		if (oldval == newval)
 			return true;
-
+		
 		OgreClient::Singleton->Config->FSAA = newval;
+
+		/*array<::System::String^>^ vals = newval->Split(' ');
+		unsigned int fsaa = 0;
+		::Ogre::String fsaahint = "";
+
+		if (vals->Length > 0) fsaa = ::System::Convert::ToUInt32(vals[0]);
+		if (vals->Length > 1) fsaahint = StringConvert::CLRToOgre(vals[1]);*/
 
 		return true;
 	};
@@ -962,7 +995,7 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::Combobox* combobox		= (const CEGUI::Combobox*)args.window;
 
 		::System::String^ newval = StringConvert::CEGUIToCLR(combobox->getText());
-		::System::String^ oldval = OgreClient::Singleton->Config->TextureQuality;
+		::System::String^ oldval = OgreClient::Singleton->Config->TextureFiltering;
 
 		if (oldval == newval)
 			return true;

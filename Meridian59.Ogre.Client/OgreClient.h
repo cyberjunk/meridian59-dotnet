@@ -27,6 +27,7 @@
 #include "OgreString.h"
 #include "OgreConfigFile.h"
 #include "OgreD3D9RenderSystem.h"
+#include "OgreD3D9RenderWindow.h"
 #include "OgreOctreePlugin.h"
 #include "OgreCgPlugin.h"
 #include "ParticleUniversePlugin.h"
@@ -77,18 +78,18 @@ namespace Meridian59 { namespace Ogre
 		::Meridian59::Ogre::OgreClient^>
 	{
 	protected:
-        ::Ogre::Root*			root;
-		::Ogre::RenderWindow*	renderWindowDummy;
-        ::Ogre::RenderWindow*	renderWindow;
-        ::Ogre::RenderSystem*	renderSystem;
-		::Ogre::Camera*			camera;
-        ::Ogre::SceneNode*		cameraNode;
-        ::Ogre::Viewport*		viewport;
-		::Ogre::Viewport*		viewportInvis;
-        ::Ogre::SceneManager*	sceneManager;
-		::Ogre::OctreePlugin*	pluginOctree;
-		::Ogre::CgPlugin*		pluginCG;
-		::Caelum::CaelumPlugin*	pluginCaelum;
+        ::Ogre::Root*				root;
+		::Ogre::D3D9RenderWindow*	renderWindowDummy;
+        ::Ogre::D3D9RenderWindow*	renderWindow;
+        ::Ogre::D3D9RenderSystem*	renderSystem;
+		::Ogre::Camera*				camera;
+        ::Ogre::SceneNode*			cameraNode;
+        ::Ogre::Viewport*			viewport;
+		::Ogre::Viewport*			viewportInvis;
+        ::Ogre::SceneManager*		sceneManager;
+		::Ogre::OctreePlugin*		pluginOctree;
+		::Ogre::CgPlugin*			pluginCG;
+		::Caelum::CaelumPlugin*		pluginCaelum;
 		::ParticleUniverse::ParticleUniversePlugin* pluginParticleUniverse;
 
 		HWND					renderWindowHandle;
@@ -225,16 +226,16 @@ namespace Meridian59 { namespace Ogre
 			protected: void set(Ogre::Root* value) { root = value; }
 		};
 
-		property ::Ogre::RenderWindow* RenderWindow 
+		property ::Ogre::D3D9RenderWindow* RenderWindow 
 		{ 
-			public: ::Ogre::RenderWindow* get() { return renderWindow; } 
-			protected: void set(Ogre::RenderWindow* value) { renderWindow = value; }
+			public: ::Ogre::D3D9RenderWindow* get() { return renderWindow; }
+			protected: void set(Ogre::D3D9RenderWindow* value) { renderWindow = value; }
 		};
 		
-		property ::Ogre::RenderSystem* RenderSystem 
+		property ::Ogre::D3D9RenderSystem* RenderSystem 
 		{ 
-			public: ::Ogre::RenderSystem* get() { return renderSystem; } 
-			protected: void set(Ogre::RenderSystem* value) { renderSystem = value; }
+			public: ::Ogre::D3D9RenderSystem* get() { return renderSystem; }
+			protected: void set(Ogre::D3D9RenderSystem* value) { renderSystem = value; }
 		};
 
 		property ::Ogre::Camera* Camera 

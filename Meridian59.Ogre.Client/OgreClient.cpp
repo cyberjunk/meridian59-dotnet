@@ -54,10 +54,17 @@ namespace Meridian59 { namespace Ogre
 		// init root
 		root->initialise(false, WINDOWNAME);
 
+		// get ogre singleton managers
+		::Ogre::ResourceGroupManager* resMan	= ::Ogre::ResourceGroupManager::getSingletonPtr();
+		::Ogre::TextureManager* texMan			= ::Ogre::TextureManager::getSingletonPtr();
+		::Ogre::MaterialManager* matMan			= ::Ogre::MaterialManager::getSingletonPtr();
+
 		/********************************************************************************************************/
 
 		// settings for the dummy renderwindow
 		// which serves as hidden primary window
+		// the purpose: holds dx9 resources, therefore
+		// allows us to destroy/recreate the actual renderwindow
         ::Ogre::NameValuePairList misc;
         misc["FSAA"]			= "0";
         misc["monitorIndex"]	= "0";
@@ -66,20 +73,15 @@ namespace Meridian59 { namespace Ogre
 		misc["hidden"]			= "true";
 		
 		// create the hidden, primary dummy renderwindow
-        renderWindowDummy = root->createRenderWindow(
+        renderWindowDummy = (D3D9RenderWindow*)root->createRenderWindow(
             "PrimaryWindowDummy", 1, 1, false, &misc);
 
 		renderWindowDummy->setActive(false);
 		renderWindowDummy->setAutoUpdated(false);
 
 		/********************************************************************************************************/
-
-		// get singleton managers
-		::Ogre::ResourceGroupManager* resMan = ::Ogre::ResourceGroupManager::getSingletonPtr();
-
-		/********************************************************************************************************/
-
-		// make sure some resource groups are created
+		
+		// make sure basic resource groups are created
 		if (!resMan->resourceGroupExists(RESOURCEGROUPSHADER))
             resMan->createResourceGroup(RESOURCEGROUPSHADER);
 		
@@ -109,26 +111,53 @@ namespace Meridian59 { namespace Ogre
 
 		if (!resMan->resourceGroupExists(TEXTUREGROUP_ROOLOADER))
 			resMan->createResourceGroup(TEXTUREGROUP_ROOLOADER);
-
-		/********************************************************************************************************/
-		/********************************************************************************************************/
+		
 		/********************************************************************************************************/
 
-		::Ogre::MaterialManager* matMan = ::Ogre::MaterialManager::getSingletonPtr();
-		::Ogre::TextureManager* texMan = ::Ogre::TextureManager::getSingletonPtr();
+		// init scenemanager
+		sceneManager = root->createSceneManager(SceneType::ST_GENERIC);
+		sceneManager->setCameraRelativeRendering(true);
 
 		/********************************************************************************************************/
-		/*                                       INIT IMAGEBUILDER                                              */
+
+		// create camera listener
+		cameraListener = new CameraListener();
+
+		// create camera
+		camera = sceneManager->createCamera(CAMERANAME);
+		camera->setPosition(::Ogre::Vector3(0, 0, 0));
+		camera->setNearClipDistance(1.0f);
+		camera->setListener(cameraListener);
+
+		// create camera node
+		cameraNode = sceneManager->createSceneNode(AVATARCAMNODE);
+		cameraNode->attachObject(camera);
+		cameraNode->setFixedYawAxis(true);
+
 		/********************************************************************************************************/
 
-		if (::System::String::Equals(Config->ImageBuilder, "GDI"))
-			ImageBuilder::Initialize(ImageBuilderType::GDI);
+		// create invis refraction texture required for invis shader
+		// this must be loaded before InitResources()
+		TexturePtr texPtr = texMan->createManual(
+			"refraction",
+			RESOURCEGROUPSHADER,
+			TextureType::TEX_TYPE_2D,
+			512, 512, 0,
+			::Ogre::PixelFormat::PF_R8G8B8,
+			TU_RENDERTARGET, 0, false, 0);
 
-		else if (::System::String::Equals(Config->ImageBuilder, "DirectDraw"))
-			ImageBuilder::Initialize(ImageBuilderType::DirectDraw);
+		RenderTarget* rtt = texPtr->getBuffer()->getRenderTarget();
 
-		else if (::System::String::Equals(Config->ImageBuilder, "DirectX"))
-			ImageBuilder::Initialize(ImageBuilderType::DirectX);
+		// create viewport for invis effect
+		// this must happen before the real viewport
+		// or Caelum will accidentally grab it.
+		viewportInvis = rtt->addViewport(camera);
+		viewportInvis->setOverlaysEnabled(false);
+		viewportInvis->setAutoUpdated(false);
+
+		/********************************************************************************************************/
+
+
 
 		/********************************************************************************************************/
 		/*                                     CREATE RENDERWINDOW                                              */
@@ -148,7 +177,7 @@ namespace Meridian59 { namespace Ogre
 		System::UInt32 windowheight = System::Convert::ToUInt32(Config->Resolution->Substring(idx1 + 2, idx2 - idx1 - 2));
 
 		// create the main (but not primary) renderwindow
-		renderWindow = root->createRenderWindow(
+		renderWindow = (::Ogre::D3D9RenderWindow*)root->createRenderWindow(
 			WINDOWNAME,
 			windowwidth,
 			windowheight,
@@ -174,46 +203,12 @@ namespace Meridian59 { namespace Ogre
 		LONG iconID = (LONG)LoadIcon(GetModuleHandle(0), MAKEINTRESOURCE(1));
 		SetClassLongPtr(renderWindowHandle, GCLP_HICON, iconID);
 
+
 		/********************************************************************************************************/
 		/*                                CREATE SCENEMANAGER, CAMERA, VIEWPORT                                 */
 		/********************************************************************************************************/
 
-		// init scenemanager
-		sceneManager = root->createSceneManager(SceneType::ST_GENERIC);
-		sceneManager->setCameraRelativeRendering(true);
-
-		// create camera listener
-		cameraListener = new CameraListener();
-
-		// create camera
-		camera = sceneManager->createCamera(CAMERANAME);
-		camera->setPosition(::Ogre::Vector3(0, 0, 0));
-		camera->setNearClipDistance(1.0f);
-		camera->setListener(cameraListener);
-
-		// create camera node
-		cameraNode = sceneManager->createSceneNode(AVATARCAMNODE);
-		cameraNode->attachObject(camera);
-		cameraNode->setFixedYawAxis(true);
-
-		// create invis refraction texture required for invis shader
-		// this must be loaded before InitResources()
-		TexturePtr texPtr = texMan->createManual(
-			"refraction",
-			RESOURCEGROUPSHADER,
-			TextureType::TEX_TYPE_2D,
-			512, 512, 0,
-			::Ogre::PixelFormat::PF_R8G8B8,
-			TU_RENDERTARGET, 0, false, 0);
-
-		RenderTarget* rtt = texPtr->getBuffer()->getRenderTarget();
-
-		// create viewport for invis effect
-		// this must happen before the real viewport
-		// or Caelum will accidentally grab it.
-		viewportInvis = rtt->addViewport(camera);
-		viewportInvis->setOverlaysEnabled(false);
-		viewportInvis->setAutoUpdated(false);
+		
 
 		// create viewport
 		viewport = renderWindow->addViewport(camera, 0);
@@ -251,6 +246,15 @@ namespace Meridian59 { namespace Ogre
 		/********************************************************************************************************/
 		/*                             APPLY BITMAPSCALING SETTINGS                                             */
 		/********************************************************************************************************/
+
+		if (::System::String::Equals(Config->ImageBuilder, "GDI"))
+			ImageBuilder::Initialize(ImageBuilderType::GDI);
+
+		else if (::System::String::Equals(Config->ImageBuilder, "DirectDraw"))
+			ImageBuilder::Initialize(ImageBuilderType::DirectDraw);
+
+		else if (::System::String::Equals(Config->ImageBuilder, "DirectX"))
+			ImageBuilder::Initialize(ImageBuilderType::DirectX);
 
 		if (System::String::Equals(Config->BitmapScaling, "Low"))
 		{
@@ -304,17 +308,15 @@ namespace Meridian59 { namespace Ogre
 
 		// initialize resources
 		InitResources();
+	
+		// Init controllers
+		ControllerRoom::Initialize();
+		ControllerEffects::Initialize();
 
-		// don't go on if window doesn't exit anymore
-		if (!renderWindow->isClosed())
-		{
-			// Init controllers
-			ControllerRoom::Initialize();
-			ControllerEffects::Initialize();
+		/********************************************************************************************************/
 
-			// set UI to avatarselect
-			Data->UIMode = UIMode::Login;
-		}
+		// set UI intially to login panel
+		Data->UIMode = UIMode::Login;		
     };
 
 	void OgreClient::Update()
