@@ -96,8 +96,7 @@ namespace Meridian59 { namespace Ogre
 		MyWindowEventListener*	windowListener;
         MiniMapCEGUI^			miniMap;
 
-        bool isEngineInitialized;
-		bool hasFocus;
+        bool hasFocus;
 		bool isWinCursorVisible;
 		bool invisViewportUpdateFlip;
 
@@ -108,11 +107,6 @@ namespace Meridian59 { namespace Ogre
         /// 
         /// </summary>
 		virtual void Cleanup() override;
-		
-		/// <summary>
-        /// 
-        /// </summary>
-		void CleanupEngine();
 
 		/// <summary>
         /// Handle network client exception
@@ -300,11 +294,6 @@ namespace Meridian59 { namespace Ogre
         /// Custom startup code
         /// </summary>
 		virtual void Init() override;
-
-		/// <summary>
-        /// Initializes the engine
-        /// </summary>
-        void InitEngine();
 
 		/// <summary>
         /// Called each mainthread loop

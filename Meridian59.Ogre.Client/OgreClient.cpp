@@ -12,7 +12,6 @@ namespace Meridian59 { namespace Ogre
 		miniMap = gcnew MiniMapCEGUI(Data, 256, 256, 4.0f);
 
 		SLEEPTIME = 0;
-		isEngineInitialized = false;
 		isWinCursorVisible = true;
 	};
 
@@ -25,8 +24,12 @@ namespace Meridian59 { namespace Ogre
         // initialize the DebugForm
         ShowDebugForm(); 
 #endif	
+		/********************************************************************************************************/
+
 		// init sound-engine (irrklang)
         ControllerSound::Initialize();
+
+		/********************************************************************************************************/
 
 		// init the ogre root object, dx9 rendersystem and plugins
 		root					= OGRE_NEW ::Ogre::Root();
@@ -42,20 +45,19 @@ namespace Meridian59 { namespace Ogre
 		root->installPlugin(pluginCaelum);
 		root->installPlugin(pluginParticleUniverse);
 
-		// set static config options on RenderSystem
+		// set basic config options on RenderSystem
+		// some of these are required for multi monitor support
 		renderSystem->setConfigOption("Resource Creation Policy", "Create on all devices");
 		renderSystem->setConfigOption("Multi device memory hint", "Auto hardware buffers management");
 		renderSystem->setConfigOption("Use Multihead", "Yes");
-		//renderSystem->setConfigOption("Allow DirectX9Ex", "Yes");
-		//renderSystem->setConfigOption("Full Screen", isFullScreen);
-		//renderSystem->setConfigOption("Video Mode", "640 x 480 @ 32-bit colour");
-		//renderSystem->setConfigOption("FSAA", "0");
 
 		// set rendersystem
 		root->setRenderSystem(renderSystem);
 		
 		// init root
 		root->initialise(false, WINDOWNAME);
+
+		/********************************************************************************************************/
 
 		// settings for the dummy renderwindow
 		// which serves as hidden primary window
@@ -73,8 +75,12 @@ namespace Meridian59 { namespace Ogre
 		renderWindowDummy->setActive(false);
 		renderWindowDummy->setAutoUpdated(false);
 
+		/********************************************************************************************************/
+
 		// get singleton managers
 		::Ogre::ResourceGroupManager* resMan = ::Ogre::ResourceGroupManager::getSingletonPtr();
+
+		/********************************************************************************************************/
 
 		// make sure some resource groups are created
 		if (!resMan->resourceGroupExists(RESOURCEGROUPSHADER))
@@ -107,61 +113,56 @@ namespace Meridian59 { namespace Ogre
 		if (!resMan->resourceGroupExists(TEXTUREGROUP_ROOLOADER))
 			resMan->createResourceGroup(TEXTUREGROUP_ROOLOADER);
 
-		if (Data->UIMode == UIMode::None)
-			InitEngine();
-    };
+		/********************************************************************************************************/
+		/********************************************************************************************************/
+		/********************************************************************************************************/
 
-	void OgreClient::InitEngine()
-	{
-		if (isEngineInitialized)
-			return;
-										
-		::Ogre::MaterialManager* matMan	= ::Ogre::MaterialManager::getSingletonPtr();
-		::Ogre::TextureManager* texMan	= ::Ogre::TextureManager::getSingletonPtr();
-		
+		::Ogre::MaterialManager* matMan = ::Ogre::MaterialManager::getSingletonPtr();
+		::Ogre::TextureManager* texMan = ::Ogre::TextureManager::getSingletonPtr();
+
 		/********************************************************************************************************/
 		/*                                       INIT IMAGEBUILDER                                              */
 		/********************************************************************************************************/
 
-		if (::System::String::Equals(Config->ImageBuilder, "GDI"))  
+		if (::System::String::Equals(Config->ImageBuilder, "GDI"))
 			ImageBuilder::Initialize(ImageBuilderType::GDI);
-		
+
 		else if (::System::String::Equals(Config->ImageBuilder, "DirectDraw"))
 			ImageBuilder::Initialize(ImageBuilderType::DirectDraw);
 
 		else if (::System::String::Equals(Config->ImageBuilder, "DirectX"))
 			ImageBuilder::Initialize(ImageBuilderType::DirectX);
-		
+
 		/********************************************************************************************************/
 		/*                                     CREATE RENDERWINDOW                                              */
 		/********************************************************************************************************/
 
 		// settings for the main (but not primary) renderwindow
-        ::Ogre::NameValuePairList misc;
-        misc["FSAA"]			= StringConvert::CLRToOgre(Config->FSAA);
-        misc["vsync"]			= StringConvert::CLRToOgre(Config->VSync.ToString());
-        misc["border"]			= Config->WindowFrame ? "fixed" : "none";
-		misc["monitorIndex"]	= ::Ogre::StringConverter::toString(Config->Display);
-				
+		::Ogre::NameValuePairList misc2;
+		misc2["FSAA"] = StringConvert::CLRToOgre(Config->FSAA);
+		misc2["vsync"] = StringConvert::CLRToOgre(Config->VSync.ToString());
+		misc2["border"] = Config->WindowFrame ? "fixed" : "none";
+		misc2["monitorIndex"] = ::Ogre::StringConverter::toString(Config->Display);
+
 		// get window height & width from options
-        int idx1 = Config->Resolution->IndexOf('x');
+		int idx1 = Config->Resolution->IndexOf('x');
 		int idx2 = Config->Resolution->IndexOf('@');
 		System::UInt32 windowwidth = System::Convert::ToUInt32(Config->Resolution->Substring(0, idx1 - 1));
-        System::UInt32 windowheight = System::Convert::ToUInt32(Config->Resolution->Substring(idx1 + 2, idx2 - idx1 - 2));
-		
+		System::UInt32 windowheight = System::Convert::ToUInt32(Config->Resolution->Substring(idx1 + 2, idx2 - idx1 - 2));
+
 		// create the main (but not primary) renderwindow
-        renderWindow = root->createRenderWindow(
-            WINDOWNAME,
-            windowwidth,
-            windowheight,
-            !Config->WindowMode,
-            &misc);
-				
+		renderWindow = root->createRenderWindow(
+			WINDOWNAME,
+			windowwidth,
+			windowheight,
+			!Config->WindowMode,
+			&misc2);
+
 		// get window handle and save as HWND
 		size_t val = 0;
 		renderWindow->getCustomAttribute("WINDOW", &val);
 		renderWindowHandle = (HWND)val;
-		
+
 		// keep rendering without focus
 		renderWindow->setDeactivateOnFocusChange(false);
 
@@ -173,43 +174,43 @@ namespace Meridian59 { namespace Ogre
 			renderWindow, windowListener);
 
 		// set icon on gamewindow
-		LONG iconID = (LONG)LoadIcon( GetModuleHandle(0), MAKEINTRESOURCE(1) );
-		SetClassLongPtr(renderWindowHandle, GCLP_HICON, iconID );
-		
+		LONG iconID = (LONG)LoadIcon(GetModuleHandle(0), MAKEINTRESOURCE(1));
+		SetClassLongPtr(renderWindowHandle, GCLP_HICON, iconID);
+
 		/********************************************************************************************************/
 		/*                                CREATE SCENEMANAGER, CAMERA, VIEWPORT                                 */
 		/********************************************************************************************************/
-		
-        // init scenemanager
-        sceneManager = root->createSceneManager(SceneType::ST_GENERIC);
-        sceneManager->setCameraRelativeRendering(true);
 
-        // create camera listener
-        cameraListener = new CameraListener();
+		// init scenemanager
+		sceneManager = root->createSceneManager(SceneType::ST_GENERIC);
+		sceneManager->setCameraRelativeRendering(true);
 
-        // create camera
-        camera = sceneManager->createCamera(CAMERANAME);
-        camera->setPosition(::Ogre::Vector3(0, 0, 0));
-        camera->setNearClipDistance(1.0f);
-        camera->setListener(cameraListener);
-		
-        // create camera node
-        cameraNode = sceneManager->createSceneNode(AVATARCAMNODE);
-        cameraNode->attachObject(camera);
+		// create camera listener
+		cameraListener = new CameraListener();
+
+		// create camera
+		camera = sceneManager->createCamera(CAMERANAME);
+		camera->setPosition(::Ogre::Vector3(0, 0, 0));
+		camera->setNearClipDistance(1.0f);
+		camera->setListener(cameraListener);
+
+		// create camera node
+		cameraNode = sceneManager->createSceneNode(AVATARCAMNODE);
+		cameraNode->attachObject(camera);
 		cameraNode->setFixedYawAxis(true);
-			   
+
 		// create invis refraction texture required for invis shader
 		// this must be loaded before InitResources()
 		TexturePtr texPtr = texMan->createManual(
-            "refraction",
-            RESOURCEGROUPSHADER,
-            TextureType::TEX_TYPE_2D,
-            512, 512, 0,
-            ::Ogre::PixelFormat::PF_R8G8B8,
-			TU_RENDERTARGET, 0, false, 0);		
+			"refraction",
+			RESOURCEGROUPSHADER,
+			TextureType::TEX_TYPE_2D,
+			512, 512, 0,
+			::Ogre::PixelFormat::PF_R8G8B8,
+			TU_RENDERTARGET, 0, false, 0);
 
 		RenderTarget* rtt = texPtr->getBuffer()->getRenderTarget();
-			
+
 		// create viewport for invis effect
 		// this must happen before the real viewport
 		// or Caelum will accidentally grab it.
@@ -217,8 +218,8 @@ namespace Meridian59 { namespace Ogre
 		viewportInvis->setOverlaysEnabled(false);
 		viewportInvis->setAutoUpdated(false);
 
-        // create viewport
-        viewport = renderWindow->addViewport(camera, 0);
+		// create viewport
+		viewport = renderWindow->addViewport(camera, 0);
 
 		// set camera aspect ratio based on viewport
 		camera->setAspectRatio(::Ogre::Real(viewport->getActualWidth()) / Ogre::Real(viewport->getActualHeight()));
@@ -230,96 +231,94 @@ namespace Meridian59 { namespace Ogre
 		// set default mipmaps count
 		texMan->setDefaultNumMipmaps(Config->NoMipmaps ? 0 : 5);
 
-        if (::System::String::Equals(Config->TextureFiltering, "Off"))        
-			matMan->setDefaultTextureFiltering(TextureFilterOptions::TFO_NONE);                   
-		
-		else if (::System::String::Equals(Config->TextureFiltering, "Bilinear"))		
-            matMan->setDefaultTextureFiltering(TextureFilterOptions::TFO_BILINEAR);                   
-		
-		else if (::System::String::Equals(Config->TextureFiltering, "Trilinear"))		
-            matMan->setDefaultTextureFiltering(TextureFilterOptions::TFO_TRILINEAR);
-		
+		if (::System::String::Equals(Config->TextureFiltering, "Off"))
+			matMan->setDefaultTextureFiltering(TextureFilterOptions::TFO_NONE);
+
+		else if (::System::String::Equals(Config->TextureFiltering, "Bilinear"))
+			matMan->setDefaultTextureFiltering(TextureFilterOptions::TFO_BILINEAR);
+
+		else if (::System::String::Equals(Config->TextureFiltering, "Trilinear"))
+			matMan->setDefaultTextureFiltering(TextureFilterOptions::TFO_TRILINEAR);
+
 		else if (::System::String::Equals(Config->TextureFiltering, "Anisotropic x4"))
-		{              
-            matMan->setDefaultTextureFiltering(TextureFilterOptions::TFO_ANISOTROPIC);
-            matMan->setDefaultAnisotropy(4);
+		{
+			matMan->setDefaultTextureFiltering(TextureFilterOptions::TFO_ANISOTROPIC);
+			matMan->setDefaultAnisotropy(4);
 		}
 		else if (::System::String::Equals(Config->TextureFiltering, "Anisotropic x16"))
 		{
 			matMan->setDefaultTextureFiltering(TextureFilterOptions::TFO_ANISOTROPIC);
-            matMan->setDefaultAnisotropy(16);
+			matMan->setDefaultAnisotropy(16);
 		}
 
 		/********************************************************************************************************/
 		/*                             APPLY BITMAPSCALING SETTINGS                                             */
 		/********************************************************************************************************/
-		
+
 		if (System::String::Equals(Config->BitmapScaling, "Low"))
 		{
-			ImageBuilder::GDI::InterpolationMode = ::System::Drawing::Drawing2D::InterpolationMode::NearestNeighbor;						
-		}            
-        else if (System::String::Equals(Config->BitmapScaling, "Default"))
-		{
-			ImageBuilder::GDI::InterpolationMode = ::System::Drawing::Drawing2D::InterpolationMode::Default;			
-		}               
-        else if (System::String::Equals(Config->BitmapScaling, "High"))
-		{
-			ImageBuilder::GDI::InterpolationMode = ::System::Drawing::Drawing2D::InterpolationMode::HighQualityBicubic;			
+			ImageBuilder::GDI::InterpolationMode = ::System::Drawing::Drawing2D::InterpolationMode::NearestNeighbor;
 		}
-        
+		else if (System::String::Equals(Config->BitmapScaling, "Default"))
+		{
+			ImageBuilder::GDI::InterpolationMode = ::System::Drawing::Drawing2D::InterpolationMode::Default;
+		}
+		else if (System::String::Equals(Config->BitmapScaling, "High"))
+		{
+			ImageBuilder::GDI::InterpolationMode = ::System::Drawing::Drawing2D::InterpolationMode::HighQualityBicubic;
+		}
+
 		if (System::String::Equals(Config->TextureQuality, "Low"))
 		{
-			ImageComposerOgre<RoomObject^>::DefaultQuality		 = 0.25f; // used in RemoteNode2D		
-			ImageComposerCEGUI<ObjectBase^>::DefaultQuality		 = 0.25f; // used in CEGUI
-			ImageComposerCEGUI<RoomObject^>::DefaultQuality		 = 0.25f; // used in CEGUI
+			ImageComposerOgre<RoomObject^>::DefaultQuality = 0.25f; // used in RemoteNode2D		
+			ImageComposerCEGUI<ObjectBase^>::DefaultQuality = 0.25f; // used in CEGUI
+			ImageComposerCEGUI<RoomObject^>::DefaultQuality = 0.25f; // used in CEGUI
 			ImageComposerCEGUI<InventoryObject^>::DefaultQuality = 0.25f; // used in CEGUI
 		}
 		else if (System::String::Equals(Config->TextureQuality, "Default"))
 		{
-			ImageComposerOgre<RoomObject^>::DefaultQuality		 = 0.5f; // used in RemoteNode2D
-			ImageComposerCEGUI<ObjectBase^>::DefaultQuality		 = 0.5f; // used in CEGUI
-			ImageComposerCEGUI<RoomObject^>::DefaultQuality		 = 0.5f; // used in CEGUI
+			ImageComposerOgre<RoomObject^>::DefaultQuality = 0.5f; // used in RemoteNode2D
+			ImageComposerCEGUI<ObjectBase^>::DefaultQuality = 0.5f; // used in CEGUI
+			ImageComposerCEGUI<RoomObject^>::DefaultQuality = 0.5f; // used in CEGUI
 			ImageComposerCEGUI<InventoryObject^>::DefaultQuality = 0.5f; // used in CEGUI
 		}
 		else if (System::String::Equals(Config->TextureQuality, "High"))
 		{
-			ImageComposerOgre<RoomObject^>::DefaultQuality		 = 1.0f; // used in RemoteNode2D
-			ImageComposerCEGUI<ObjectBase^>::DefaultQuality		 = 1.0f; // used in CEGUI
-			ImageComposerCEGUI<RoomObject^>::DefaultQuality		 = 1.0f; // used in CEGUI
+			ImageComposerOgre<RoomObject^>::DefaultQuality = 1.0f; // used in RemoteNode2D
+			ImageComposerCEGUI<ObjectBase^>::DefaultQuality = 1.0f; // used in CEGUI
+			ImageComposerCEGUI<RoomObject^>::DefaultQuality = 1.0f; // used in CEGUI
 			ImageComposerCEGUI<InventoryObject^>::DefaultQuality = 1.0f; // used in CEGUI
 		}
 
 		/********************************************************************************************************/
 		/*                                                                                                      */
 		/********************************************************************************************************/
-		
+
 		ControllerInput::Initialize();
 
 		// init cegui
 		ControllerUI::Initialize((::Ogre::RenderTarget*)renderWindow);
-		
+
 		// set ui to loadingbar
 		Data->UIMode = UIMode::LoadingBar;
-			
+
 		// initial framerendering (no loop yet)
 		root->renderOneFrame();
-		
-        // initialize resources
-        InitResources();
 
-        // don't go on if window doesn't exit anymore
-        if (!renderWindow->isClosed())
-        {            			
-            // Init controllers
-            ControllerRoom::Initialize();
-            ControllerEffects::Initialize();
-		
+		// initialize resources
+		InitResources();
+
+		// don't go on if window doesn't exit anymore
+		if (!renderWindow->isClosed())
+		{
+			// Init controllers
+			ControllerRoom::Initialize();
+			ControllerEffects::Initialize();
+
 			// set UI to avatarselect
 			Data->UIMode = UIMode::Login;
-        }
-
-		isEngineInitialized = true;
-	};
+		}
+    };
 
 	void OgreClient::Update()
     {		
@@ -360,8 +359,8 @@ namespace Meridian59 { namespace Ogre
 		ControllerUI::Tick(GameTick->Current, GameTick->Span);
 		ControllerRoom::Tick(GameTick->Current, GameTick->Span);
 				
-		if (isEngineInitialized)
-			miniMap->Tick(GameTick->Current, GameTick->Span);
+
+		miniMap->Tick(GameTick->Current, GameTick->Span);
 
 		// update the invis viewport every second frame
 		// and only if there's an invis object
@@ -392,8 +391,65 @@ namespace Meridian59 { namespace Ogre
 
 	void OgreClient::Cleanup()
     {
-		CleanupEngine();
-		
+		// cleanup imagebuilder
+		ImageBuilder::Destroy();
+
+		// cleanup sub controllers
+		ControllerInput::Destroy();
+		ControllerEffects::Destroy();
+		ControllerUI::Destroy();
+		ControllerRoom::Destroy();
+
+		// cleanup camera
+		if (sceneManager->hasCamera(CAMERANAME))
+			sceneManager->destroyCamera(camera);
+
+		// cleanup cameranode
+		if (sceneManager->hasSceneNode(AVATARCAMNODE))
+			sceneManager->destroySceneNode(cameraNode);
+
+		// clear all remaining stuff
+		sceneManager->clearScene();
+
+		// destroy scenemanager
+		root->destroySceneManager(sceneManager);
+
+		// cleanup renderwindow
+		if (renderWindow)
+		{
+			if (windowListener)
+			{
+				::Ogre::WindowEventUtilities::removeWindowEventListener(
+					renderWindow, windowListener);
+
+				OGRE_DELETE windowListener;
+			}
+
+			// detach all viewports from window
+			renderWindow->removeAllListeners();
+			renderWindow->removeAllViewports();
+
+			if (root)
+				root->destroyRenderTarget(renderWindow);
+		}
+
+		if (cameraListener)
+			OGRE_DELETE cameraListener;
+
+		ImageComposerCEGUI<ObjectBase^>::Cache->Clear();
+		ImageComposerCEGUI<RoomObject^>::Cache->Clear();
+		ImageComposerCEGUI<InventoryObject^>::Cache->Clear();
+		ImageComposerOgre<RoomObject^>::Cache->Clear();
+
+		cameraListener = nullptr;
+		windowListener = nullptr;
+		camera = nullptr;
+		cameraNode = nullptr;
+		renderWindow = nullptr;
+		viewport = nullptr;
+		viewportInvis = nullptr;
+		sceneManager = nullptr;
+
 		/********************************************************************************************************/
 		/*                                 ENGINE FINALIZATION                                                  */
 		/********************************************************************************************************/
@@ -484,75 +540,10 @@ namespace Meridian59 { namespace Ogre
         // save config
         Config->Save();
 
+		/********************************************************************************************************/
+
 		// base class call
 		SingletonClient::Cleanup();      
-    };
-
-	void OgreClient::CleanupEngine()
-    {
-		if (!isEngineInitialized)
-			return;
-				
-		// cleanup imagebuilder
-		ImageBuilder::Destroy();
-
-		// cleanup sub controllers
-		ControllerInput::Destroy();
-		ControllerEffects::Destroy();
-		ControllerUI::Destroy();
-		ControllerRoom::Destroy();
-		
-		// cleanup camera
-		if (sceneManager->hasCamera(CAMERANAME))
-			sceneManager->destroyCamera(camera);
-
-		// cleanup cameranode
-		if (sceneManager->hasSceneNode(AVATARCAMNODE))
-			sceneManager->destroySceneNode(cameraNode);
-
-		// clear all remaining stuff
-		sceneManager->clearScene();
-		
-		// destroy scenemanager
-		root->destroySceneManager(sceneManager);
-		
-		// cleanup renderwindow
-		if (renderWindow)
-		{
-			if (windowListener)
-			{
-				::Ogre::WindowEventUtilities::removeWindowEventListener(
-					renderWindow, windowListener);
-				
-				OGRE_DELETE windowListener;
-			}
-
-			// detach all viewports from window
-			renderWindow->removeAllListeners();
-			renderWindow->removeAllViewports();
-
-			if (root)
-				root->destroyRenderTarget(renderWindow);
-		}
-       
-		if (cameraListener)
-			OGRE_DELETE cameraListener;
-
-		ImageComposerCEGUI<ObjectBase^>::Cache->Clear();
-		ImageComposerCEGUI<RoomObject^>::Cache->Clear();
-		ImageComposerCEGUI<InventoryObject^>::Cache->Clear();
-		ImageComposerOgre<RoomObject^>::Cache->Clear();
-		
-		cameraListener	= nullptr;
-		windowListener	= nullptr;
-		camera			= nullptr;
-		cameraNode		= nullptr;		
-        renderWindow	= nullptr;       
-		viewport		= nullptr;
-		viewportInvis	= nullptr;
-		sceneManager	= nullptr;
-		
-		isEngineInitialized = false;
     };
 
 	void OgreClient::OnServerConnectionException(System::Exception^ Error)
@@ -568,17 +559,8 @@ namespace Meridian59 { namespace Ogre
             ::System::Windows::Forms::MessageBoxOptions::DefaultDesktopOnly, 
 			false);
 
-        Data->UIMode = UIMode::Login;
-
-        // reenable launcher controls
-        //launcherForm->SwitchEnabled();
-
-
 		Data->Reset();
-
-        //CleanupEngine();
-
-        //ShowLauncherForm();
+		Data->UIMode = UIMode::Login;
     };
 	
 	void OgreClient::InitResources()
@@ -844,12 +826,6 @@ namespace Meridian59 { namespace Ogre
 		
 	void OgreClient::HandleCharactersMessage(CharactersMessage^ Message)
     {
-		// execute parentclass handler
-        //LauncherClient::HandleCharactersMessage(Message);
-
-		// close launcher
-        //launcherForm->Close();
-   
 		// switch ui to avatar selection
         Data->UIMode = UIMode::AvatarSelection;        
 	};
