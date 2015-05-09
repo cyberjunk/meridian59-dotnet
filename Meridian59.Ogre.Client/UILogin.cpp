@@ -13,11 +13,11 @@ namespace Meridian59 { namespace Ogre
 		Connect = static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_LOGIN_CONNECT));
 		Options = static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_LOGIN_OPTIONS));
 
-		// fill servers
-		for each(ConnectionInfo^ coninfo in OgreClient::Singleton->Config->Connections)
-			Server->addItem(new ::CEGUI::ListboxTextItem(StringConvert::CLRToCEGUI(coninfo->Name)));
+		OgreClientConfig^ config = OgreClient::Singleton->Config;
 
-		Server->setItemSelectState(Server->getListboxItemFromIndex(OgreClient::Singleton->Config->SelectedConnectionIndex), true);
+		// fill servers
+		for each(ConnectionInfo^ coninfo in config->Connections)
+			Server->addItem(new ::CEGUI::ListboxTextItem(StringConvert::CLRToCEGUI(coninfo->Name)));
 
 		// subscribe server selection change
 		Server->subscribeEvent(CEGUI::Combobox::EventListSelectionAccepted, CEGUI::Event::Subscriber(UICallbacks::Login::OnServerChanged));
@@ -55,6 +55,14 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
 		const CEGUI::Editbox* editbox		= (const CEGUI::Editbox*)args.window;
 
+		OgreClient::Singleton->Config->SelectedConnectionInfo->Username =
+			StringConvert::CEGUIToCLR(ControllerUI::Login::Username->getText());
+
+		OgreClient::Singleton->Config->SelectedConnectionInfo->Password =
+			StringConvert::CEGUIToCLR(ControllerUI::Login::Password->getText());
+
+		OgreClient::Singleton->Connect();
+
 		return true;
 	};
 
@@ -62,6 +70,14 @@ namespace Meridian59 { namespace Ogre
 	{
 		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
 		const CEGUI::PushButton* btn		= (const CEGUI::PushButton*)args.window;
+
+		OgreClient::Singleton->Config->SelectedConnectionInfo->Username =
+			StringConvert::CEGUIToCLR(ControllerUI::Login::Username->getText());
+
+		OgreClient::Singleton->Config->SelectedConnectionInfo->Password =
+			StringConvert::CEGUIToCLR(ControllerUI::Login::Password->getText());
+
+		OgreClient::Singleton->Connect();
 
 		return true;
 	};

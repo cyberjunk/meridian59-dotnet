@@ -57,7 +57,6 @@ namespace Meridian59 { namespace Ogre
 	using namespace System::Collections::Generic;
 	using namespace Meridian59::Protocol::Events;
 	using namespace Meridian59::Protocol::GameMessages;
-	using namespace Meridian59::Launcher;
 	using namespace Meridian59::Data::Models;
 	using namespace Meridian59::Drawing2D;
 	using namespace Meridian59::Ogre;
@@ -96,7 +95,6 @@ namespace Meridian59 { namespace Ogre
 		CameraListener*			cameraListener;
 		MyWindowEventListener*	windowListener;
         MiniMapCEGUI^			miniMap;
-		LauncherForm^			launcherForm;
 
         bool isEngineInitialized;
 		bool hasFocus;
@@ -115,11 +113,6 @@ namespace Meridian59 { namespace Ogre
         /// 
         /// </summary>
 		void CleanupEngine();
-		
-		/// <summary>
-        /// Shows the launcher form
-        /// </summary>
-		void ShowLauncherForm();
 
 		/// <summary>
         /// Handle network client exception
@@ -127,16 +120,6 @@ namespace Meridian59 { namespace Ogre
         /// <param name="Error"></param>
         virtual void OnServerConnectionException(System::Exception^ Error) override;
 		
-		/// <summary>
-        /// 
-        /// </summary>
-		void OnLauncherConnectRequest(::System::Object^ sender, ::System::EventArgs^ e);
-		
-		/// <summary>
-        /// 
-        /// </summary>
-		void OnLauncherFormExit(::System::Object^ sender, ::System::EventArgs^ e);
-
 		/// <summary>
         /// Initializes resouces
         /// </summary>

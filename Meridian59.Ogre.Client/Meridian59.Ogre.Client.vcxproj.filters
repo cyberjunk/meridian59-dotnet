@@ -307,4 +307,7 @@
       <Filter>Resources</Filter>
     </Image>
   </ItemGroup>
+  <ItemGroup>
+    <Xml Include="configuration.xml" />
+  </ItemGroup>
 </Project>

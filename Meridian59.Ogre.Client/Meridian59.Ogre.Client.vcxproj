@@ -322,12 +322,18 @@
     <ProjectReference Include="..\Meridian59.DebugUI\Meridian59.DebugUI.csproj">
       <Project>{c8938199-ab12-4a43-aab0-c8f7043e46e9}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\Meridian59.Launcher\Meridian59.Launcher.csproj">
-      <Project>{19cb4098-ce21-4c84-9613-a8f7f7fe7983}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\Meridian59\Meridian59.csproj">
       <Project>{e8223f3f-3f18-4f4c-9a8f-d9102b067be3}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="configuration.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="configuration.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

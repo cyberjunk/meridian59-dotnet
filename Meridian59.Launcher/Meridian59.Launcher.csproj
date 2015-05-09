@@ -110,10 +110,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="configuration.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </Content>
     <None Include="Resources\splashscreen.png" />
   </ItemGroup>
   <ItemGroup />

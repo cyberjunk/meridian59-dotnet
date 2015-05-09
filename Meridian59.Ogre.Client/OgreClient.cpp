@@ -21,9 +21,6 @@ namespace Meridian59 { namespace Ogre
 		// call base init
 		SingletonClient::Init();
 
-        // show launcher ui
-        ShowLauncherForm();
-
 #ifdef _DEBUG
         // initialize the DebugForm
         ShowDebugForm(); 
@@ -109,6 +106,9 @@ namespace Meridian59 { namespace Ogre
 
 		if (!resMan->resourceGroupExists(TEXTUREGROUP_ROOLOADER))
 			resMan->createResourceGroup(TEXTUREGROUP_ROOLOADER);
+
+		if (Data->UIMode == UIMode::None)
+			InitEngine();
     };
 
 	void OgreClient::InitEngine()
@@ -315,7 +315,7 @@ namespace Meridian59 { namespace Ogre
             ControllerEffects::Initialize();
 		
 			// set UI to avatarselect
-			Data->UIMode = UIMode::AvatarSelection;
+			Data->UIMode = UIMode::Login;
         }
 
 		isEngineInitialized = true;
@@ -555,30 +555,6 @@ namespace Meridian59 { namespace Ogre
 		isEngineInitialized = false;
     };
 
-	void OgreClient::ShowLauncherForm()
-    {
-        if (launcherForm == nullptr || launcherForm->IsDisposed)
-        {
-            launcherForm = gcnew LauncherForm();
-            launcherForm->Options = Config;
-			launcherForm->ResourceManager = ResourceManager;
-            launcherForm->ConnectRequest += gcnew ::System::EventHandler(this, &OgreClient::OnLauncherConnectRequest);
-            launcherForm->Exit += gcnew ::System::EventHandler(this, &OgreClient::OnLauncherFormExit);
-            launcherForm->Show();
-        }
-    };
-
-	void OgreClient::OnLauncherConnectRequest(::System::Object^ sender, ::System::EventArgs^ e)
-    {
-		Connect();
-    };
-
-	void OgreClient::OnLauncherFormExit(::System::Object^ sender, ::System::EventArgs^ e)
-    {
-        // exit app when user exits launcherform
-        IsRunning = false;
-    };
-
 	void OgreClient::OnServerConnectionException(System::Exception^ Error)
     {
         //LauncherClient::OnServerConnectionException(Error);
@@ -592,17 +568,17 @@ namespace Meridian59 { namespace Ogre
             ::System::Windows::Forms::MessageBoxOptions::DefaultDesktopOnly, 
 			false);
 
-        Data->UIMode = UIMode::None;
+        Data->UIMode = UIMode::Login;
 
         // reenable launcher controls
-        launcherForm->SwitchEnabled();
+        //launcherForm->SwitchEnabled();
 
 
 		Data->Reset();
 
-        CleanupEngine();
+        //CleanupEngine();
 
-        ShowLauncherForm();
+        //ShowLauncherForm();
     };
 	
 	void OgreClient::InitResources()
@@ -815,8 +791,8 @@ namespace Meridian59 { namespace Ogre
         // tell user about wrong credentials
         ::System::Windows::Forms::MessageBox::Show(WRONGCREDENTIALS);
 
-        // reenable launchercontrols
-        launcherForm->SwitchEnabled();
+		// reset to login
+		Data->UIMode = UIMode::Login;
 	};
 
 	void OgreClient::HandleNoCharactersMessage(NoCharactersMessage^ Message)
@@ -827,8 +803,8 @@ namespace Meridian59 { namespace Ogre
         // tell user about wrong credentials
         ::System::Windows::Forms::MessageBox::Show(NOCHARACTERS);
 
-        // reenable launchercontrols
-        launcherForm->SwitchEnabled();
+		// reset to login
+		Data->UIMode = UIMode::Login;
     };
 
 	void OgreClient::HandleLoginModeMessageMessage(LoginModeMessageMessage^ Message)
@@ -836,8 +812,8 @@ namespace Meridian59 { namespace Ogre
         // tell user about wrong credentials
         ::System::Windows::Forms::MessageBox::Show(Message->Message);
 
-        // reenable launchercontrols
-        launcherForm->SwitchEnabled();
+		// reset to login
+		Data->UIMode = UIMode::Login;
     };
 
 	void OgreClient::HandleGetClientMessage(GetClientMessage^ Message)
@@ -848,8 +824,8 @@ namespace Meridian59 { namespace Ogre
         // close connection, we're not going to download the proposed meridian.exe
         ServerConnection->Disconnect();
 
-        // reenable launcher controls
-        launcherForm->SwitchEnabled();
+		// reset to login
+		Data->UIMode = UIMode::Login;
 	};
 
 	void OgreClient::HandleDownloadMessage(DownloadMessage^ Message)
@@ -862,8 +838,8 @@ namespace Meridian59 { namespace Ogre
         // close connection, we're not going to download
         ServerConnection->Disconnect();
 
-        // reenable launcher controls
-        launcherForm->SwitchEnabled();
+		// reset to login
+		Data->UIMode = UIMode::Login;
 	};
 		
 	void OgreClient::HandleCharactersMessage(CharactersMessage^ Message)
@@ -872,14 +848,10 @@ namespace Meridian59 { namespace Ogre
         //LauncherClient::HandleCharactersMessage(Message);
 
 		// close launcher
-        launcherForm->Close();
-
-        // call engine initialization
-        if (Data->UIMode == UIMode::None)      
-            InitEngine();
-        
-        else      
-            Data->UIMode = UIMode::AvatarSelection;        
+        //launcherForm->Close();
+   
+		// switch ui to avatar selection
+        Data->UIMode = UIMode::AvatarSelection;        
 	};
 
 	void OgreClient::HandleGetLoginMessage(GetLoginMessage^ Message)

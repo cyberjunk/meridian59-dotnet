@@ -23,8 +23,6 @@
 namespace Meridian59 { namespace Ogre
 {
 	using namespace OIS;
-	using namespace Meridian59::Launcher::Models;
-	using namespace System::Windows::Forms;
 
 	/// <summary>
     /// A keybinding for typical actions,

@@ -30,7 +30,6 @@
 namespace Meridian59 { namespace Ogre
 {	
 	using namespace Meridian59::Data;
-	using namespace Meridian59::Launcher::Models;
 	using namespace Meridian59::Common;
 	using namespace Meridian59::Common::Enums;
 

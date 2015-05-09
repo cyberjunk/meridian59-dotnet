@@ -453,7 +453,7 @@ namespace Meridian59 { namespace Ogre
 			AvatarCreateWizard::Window->setVisible(mode == UIMode::AvatarCreation);
 			ConfirmPopup::Window->setVisible(false);
 			ObjectContents::Window->setVisible(false);
-			//Login::Window->setVisible(mode == UIMode::Login);
+			Login::Window->setVisible(mode == UIMode::Login);
 			Options::Window->setVisible(false);
 		}
 	};
