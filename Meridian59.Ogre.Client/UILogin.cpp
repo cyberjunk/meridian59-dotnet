@@ -15,7 +15,7 @@ namespace Meridian59 { namespace Ogre
 
 		OgreClientConfig^ config = OgreClient::Singleton->Config;
 
-		// fill servers
+		// fill server combobox values
 		for each(ConnectionInfo^ coninfo in config->Connections)
 			Server->addItem(new ::CEGUI::ListboxTextItem(StringConvert::CLRToCEGUI(coninfo->Name)));
 
@@ -28,6 +28,15 @@ namespace Meridian59 { namespace Ogre
 		// subscribe buttons
 		Connect->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Login::OnConnectClicked));
 		Options->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Login::OnOptionsClicked));
+
+		/**********************************************************************************************************/
+		// set values
+
+		Server->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->SelectedConnectionInfo->Name));
+		Server->selectListItemWithEditboxText();
+
+		Username->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->SelectedConnectionInfo->Username));
+		Password->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->SelectedConnectionInfo->Password));
 	};
 
 	void ControllerUI::Login::Destroy()
