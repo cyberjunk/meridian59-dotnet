@@ -386,7 +386,10 @@ namespace Meridian59 { namespace Ogre
 		/*                                      WM_MESSAGES                                                     */
 		/********************************************************************************************************/
 		
-		::System::Windows::Forms::Application::DoEvents();
+		::Ogre::WindowEventUtilities::messagePump();
+
+		// .NET alternative
+		//::System::Windows::Forms::Application::DoEvents();
     };
 
 	void OgreClient::Cleanup()
