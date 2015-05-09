@@ -23,7 +23,8 @@ namespace Meridian59 { namespace Ogre
 		Server->subscribeEvent(CEGUI::Combobox::EventListSelectionAccepted, CEGUI::Event::Subscriber(UICallbacks::Login::OnServerChanged));
 		
 		// subscribe return on passwordbox
-		Password->subscribeEvent(CEGUI::Editbox::EventTextAccepted, CEGUI::Event::Subscriber(UICallbacks::Login::OnPasswordTextAccepted));
+		Username->subscribeEvent(CEGUI::Editbox::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Login::OnUsernameKeyUp));
+		Password->subscribeEvent(CEGUI::Editbox::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Login::OnPasswordKeyUp));
 
 		// subscribe buttons
 		Connect->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Login::OnConnectClicked));
@@ -59,18 +60,32 @@ namespace Meridian59 { namespace Ogre
 		return true;
 	};
 	
-	bool UICallbacks::Login::OnPasswordTextAccepted(const CEGUI::EventArgs& e)
+	bool UICallbacks::Login::OnUsernameKeyUp(const CEGUI::EventArgs& e)
 	{
-		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
+		const CEGUI::KeyEventArgs& args = (const CEGUI::KeyEventArgs&)e;
+		const CEGUI::Editbox* editbox	= (const CEGUI::Editbox*)args.window;
+
+		if (args.scancode == ::CEGUI::Key::Scan::Tab)
+			ControllerUI::Login::Password->activate();
+
+		return true;
+	};
+
+	bool UICallbacks::Login::OnPasswordKeyUp(const CEGUI::EventArgs& e)
+	{
+		const CEGUI::KeyEventArgs& args		= (const CEGUI::KeyEventArgs&)e;
 		const CEGUI::Editbox* editbox		= (const CEGUI::Editbox*)args.window;
 
-		OgreClient::Singleton->Config->SelectedConnectionInfo->Username =
-			StringConvert::CEGUIToCLR(ControllerUI::Login::Username->getText());
+		if (args.scancode == ::CEGUI::Key::Scan::Return)
+		{
+			OgreClient::Singleton->Config->SelectedConnectionInfo->Username =
+				StringConvert::CEGUIToCLR(ControllerUI::Login::Username->getText());
 
-		OgreClient::Singleton->Config->SelectedConnectionInfo->Password =
-			StringConvert::CEGUIToCLR(ControllerUI::Login::Password->getText());
+			OgreClient::Singleton->Config->SelectedConnectionInfo->Password =
+				StringConvert::CEGUIToCLR(ControllerUI::Login::Password->getText());
 
-		OgreClient::Singleton->Connect();
+			OgreClient::Singleton->Connect();
+		}
 
 		return true;
 	};

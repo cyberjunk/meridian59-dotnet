@@ -1556,7 +1556,8 @@ namespace Meridian59 { namespace Ogre
 			static bool OnConnectClicked(const CEGUI::EventArgs& e);
 			static bool OnOptionsClicked(const CEGUI::EventArgs& e);
 
-			static bool OnPasswordTextAccepted(const CEGUI::EventArgs& e);			
+			static bool OnUsernameKeyUp(const CEGUI::EventArgs& e);
+			static bool OnPasswordKeyUp(const CEGUI::EventArgs& e);			
 		};
 		
 		/// <summary>
