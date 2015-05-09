@@ -36,8 +36,14 @@ namespace Meridian59 { namespace Ogre
         /// <summary>
         /// Number format used (e.g. ',' or '.')
         /// </summary>
-        static ::System::Globalization::NumberFormatInfo^ NumberFormatInfo = 
-			gcnew ::System::Globalization::NumberFormatInfo();
+		static ::System::Globalization::NumberFormatInfo^ NumberFormatInfo;
+
+		static XmlReaderExtensions()
+		{
+			// set separator for xml files
+			NumberFormatInfo = gcnew ::System::Globalization::NumberFormatInfo();
+			NumberFormatInfo->NumberDecimalSeparator = ".";
+		};
 
         /// <summary>
         /// Extracts a ColourValue from a XmlReaders current position

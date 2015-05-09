@@ -5,9 +5,6 @@ namespace Meridian59 { namespace Ogre
 	OgreClient::OgreClient()
 		: SingletonClient()
 	{							
-        // set separator for xml files
-        XmlReaderExtensions::NumberFormatInfo->NumberDecimalSeparator = ".";
-
 		// Initialize MiniMap instance
 		miniMap = gcnew MiniMapCEGUI(Data, 256, 256, 4.0f);
 
