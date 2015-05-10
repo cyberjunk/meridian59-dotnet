@@ -632,7 +632,7 @@ namespace Meridian59 { namespace Ogre
         InitResourceGroup(RESOURCEGROUPPARTICLES, true, false, System::IO::SearchOption::TopDirectoryOnly, true, false);
 
         // 4. initialize legacy sky textures
-        InitResourceGroup(RESOURCEGROUPSKY, true, false, System::IO::SearchOption::TopDirectoryOnly, true, true);
+        InitResourceGroup(RESOURCEGROUPSKY, true, false, System::IO::SearchOption::TopDirectoryOnly, true, false);
 		
 		// 5. initialize decoration
 		InitResourceGroup(RESOURCEGROUPDECORATION, true, true, System::IO::SearchOption::TopDirectoryOnly, true, true);
@@ -642,8 +642,7 @@ namespace Meridian59 { namespace Ogre
 			InitResourceGroupManually(TEXTUREGROUP_ROOLOADER, true, Config->PreloadRoomTextures, "Texture", "*.png");
 	
 		// 7. initialize caelum group
-		if (!Config->DisableNewSky)		
-			InitResourceGroup("Caelum", true, false, System::IO::SearchOption::TopDirectoryOnly, true, true);
+		InitResourceGroup("Caelum", true, false, System::IO::SearchOption::TopDirectoryOnly, true, true);
 		
         // 8. init addition resources from resources.cfg
         // they go into ogre's default "General" group

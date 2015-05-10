@@ -97,7 +97,6 @@ namespace Meridian59 { namespace Ogre
 		static void HandleLightPlayer(LightPlayerMessage^ Message);
 		static void HandleBackground(BackgroundMessage^ Message);
 		
-		static void UpdateSky();
 		static void AdjustOctree();
 		static void AdjustAmbientLight();
 		static int GetRoomSectionByMaterial(::Ogre::String Name);
@@ -174,16 +173,6 @@ namespace Meridian59 { namespace Ogre
         /// Loads the room improvement data (grass, ...) from xml files
         /// </summary>
 		static void LoadImproveData();
-
-		/// <summary>
-        /// Inits Caelum
-        /// </summary>
-		static void InitCaelum();
-
-		/// <summary>
-        /// Destroys Caelum
-        /// </summary>
-		static void DestroyCaelum();
 
 		/// <summary>
         /// Inits room based particle systems
@@ -319,7 +308,22 @@ namespace Meridian59 { namespace Ogre
         /// Initialization state
         /// </summary>
 		static bool IsInitialized = false;
+
+		/// <summary>
+		/// Inits Caelum
+		/// </summary>
+		static void InitCaelum();
+
+		/// <summary>
+		/// Destroys Caelum
+		/// </summary>
+		static void DestroyCaelum();
 		
+		/// <summary>
+		/// Refreshs the sky after a change between legacy/caelum
+		/// </summary>
+		static void UpdateSky();
+
 		/// <summary>
         /// Loads the current room
         /// </summary>

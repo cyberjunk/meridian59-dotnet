@@ -876,7 +876,13 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
 		const CEGUI::Combobox* combobox		= (const CEGUI::Combobox*)args.window;
 
-		OgreClient::Singleton->Config->Display = combobox->getItemIndex(combobox->getSelectedItem());
+		int newval = (int)combobox->getItemIndex(combobox->getSelectedItem());
+		int oldval = OgreClient::Singleton->Config->Display;
+
+		if (newval < 0 || oldval == newval)
+			return true;
+
+		OgreClient::Singleton->Config->Display = newval;
 		OgreClient::Singleton->RecreateWindow = true;
 
 		return true;
@@ -886,34 +892,15 @@ namespace Meridian59 { namespace Ogre
 	{
 		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
 		const CEGUI::Combobox* combobox		= (const CEGUI::Combobox*)args.window;
-		OgreClientConfig^ config			= OgreClient::Singleton->Config;
 
-		config->Resolution = StringConvert::CEGUIToCLR(combobox->getText());
+		::System::String^ newval = StringConvert::CEGUIToCLR(combobox->getText());
+		::System::String^ oldval = OgreClient::Singleton->Config->Resolution;
+
+		if (!newval || newval == STRINGEMPTY || oldval == newval)
+			return true;
+
+		OgreClient::Singleton->Config->Resolution = newval;
 		OgreClient::Singleton->RecreateWindow = true;
-
-		// live apply testing
-
-		// get window height & width from options
-		/*int idx1 = config->Resolution->IndexOf('x');
-		int idx2 = config->Resolution->IndexOf('@');
-		System::UInt32 windowwidth = System::Convert::ToUInt32(config->Resolution->Substring(0, idx1 - 1));
-		System::UInt32 windowheight = System::Convert::ToUInt32(config->Resolution->Substring(idx1 + 2, idx2 - idx1 - 2));
-
-		OgreClient::Singleton->RenderWindow->resize(windowwidth, windowheight);
-
-		//
-
-		int actualwidth = OgreClient::Singleton->Viewport->getActualWidth();
-		int actualheight = OgreClient::Singleton->Viewport->getActualHeight();
-
-		::Ogre::Real aspectRatio = ::Ogre::Real(actualwidth) / ::Ogre::Real(actualheight);
-
-		// set camera aspect ratio based on viewport
-		OgreClient::Singleton->Camera->setAspectRatio(aspectRatio);
-		
-		// update ui size and moues input boundaries
-		ControllerUI::Renderer->setDisplaySize(::CEGUI::Sizef((float)actualwidth, (float)actualheight));
-		ControllerInput::SetDisplaySize();*/
 
 		return true;
 	};
@@ -923,28 +910,14 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::WindowEventArgs& args = (const CEGUI::WindowEventArgs&)e;
 		const CEGUI::ToggleButton* toggleb = (const CEGUI::ToggleButton*)args.window;
 
-		OgreClient::Singleton->Config->WindowMode = toggleb->isSelected();
+		bool newval = toggleb->isSelected();
+		bool oldval = OgreClient::Singleton->Config->WindowMode;
+
+		if (oldval == newval)
+			return true;
+
+		OgreClient::Singleton->Config->WindowMode = newval;
 		OgreClient::Singleton->RecreateWindow = true;
-
-		// live apply testing
-
-		/*OgreClient::Singleton->RenderWindow->setFullscreen(!toggleb->isSelected(),
-			OgreClient::Singleton->RenderWindow->getWidth(),
-			OgreClient::Singleton->RenderWindow->getHeight());
-
-		
-
-		int actualwidth = OgreClient::Singleton->Viewport->getActualWidth();
-		int actualheight = OgreClient::Singleton->Viewport->getActualHeight();
-
-		::Ogre::Real aspectRatio = ::Ogre::Real(actualwidth) / ::Ogre::Real(actualheight);
-
-		// set camera aspect ratio based on viewport
-		OgreClient::Singleton->Camera->setAspectRatio(aspectRatio);
-
-		// update ui size and moues input boundaries
-		ControllerUI::Renderer->setDisplaySize(::CEGUI::Sizef((float)actualwidth, (float)actualheight));
-		ControllerInput::SetDisplaySize();*/
 
 		return true;
 	};
@@ -954,7 +927,13 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::WindowEventArgs& args = (const CEGUI::WindowEventArgs&)e;
 		const CEGUI::ToggleButton* toggleb = (const CEGUI::ToggleButton*)args.window;
 
-		OgreClient::Singleton->Config->WindowFrame = toggleb->isSelected();
+		bool newval = toggleb->isSelected();
+		bool oldval = OgreClient::Singleton->Config->WindowFrame;
+
+		if (oldval == newval)
+			return true;
+
+		OgreClient::Singleton->Config->WindowFrame = newval;
 		OgreClient::Singleton->RecreateWindow = true;
 
 		return true;
@@ -965,7 +944,13 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::WindowEventArgs& args = (const CEGUI::WindowEventArgs&)e;
 		const CEGUI::ToggleButton* toggleb = (const CEGUI::ToggleButton*)args.window;
 
-		OgreClient::Singleton->Config->VSync = toggleb->isSelected();
+		bool newval = toggleb->isSelected();
+		bool oldval = OgreClient::Singleton->Config->VSync;
+
+		if (oldval == newval)
+			return true;
+
+		OgreClient::Singleton->Config->VSync = newval;
 		OgreClient::Singleton->RecreateWindow = true;
 
 		return true;
@@ -983,13 +968,7 @@ namespace Meridian59 { namespace Ogre
 			return true;
 		
 		OgreClient::Singleton->Config->FSAA = newval;
-
-		/*array<::System::String^>^ vals = newval->Split(' ');
-		unsigned int fsaa = 0;
-		::Ogre::String fsaahint = "";
-
-		if (vals->Length > 0) fsaa = ::System::Convert::ToUInt32(vals[0]);
-		if (vals->Length > 1) fsaahint = StringConvert::CLRToOgre(vals[1]);*/
+		OgreClient::Singleton->RecreateWindow = true;
 
 		return true;
 	};
@@ -998,6 +977,7 @@ namespace Meridian59 { namespace Ogre
 	{
 		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
 		const CEGUI::Combobox* combobox		= (const CEGUI::Combobox*)args.window;
+		::Ogre::MaterialManager* matMan		= ::Ogre::MaterialManager::getSingletonPtr();
 
 		::System::String^ newval = StringConvert::CEGUIToCLR(combobox->getText());
 		::System::String^ oldval = OgreClient::Singleton->Config->TextureFiltering;
@@ -1005,7 +985,29 @@ namespace Meridian59 { namespace Ogre
 		if (oldval == newval)
 			return true;
 
+		// save in config
 		OgreClient::Singleton->Config->TextureFiltering = newval;
+		
+		// apply
+		if (::System::String::Equals(newval, "Off"))
+			matMan->setDefaultTextureFiltering(TextureFilterOptions::TFO_NONE);
+
+		else if (::System::String::Equals(newval, "Bilinear"))
+			matMan->setDefaultTextureFiltering(TextureFilterOptions::TFO_BILINEAR);
+
+		else if (::System::String::Equals(newval, "Trilinear"))
+			matMan->setDefaultTextureFiltering(TextureFilterOptions::TFO_TRILINEAR);
+
+		else if (::System::String::Equals(newval, "Anisotropic x4"))
+		{
+			matMan->setDefaultTextureFiltering(TextureFilterOptions::TFO_ANISOTROPIC);
+			matMan->setDefaultAnisotropy(4);
+		}
+		else if (::System::String::Equals(newval, "Anisotropic x16"))
+		{
+			matMan->setDefaultTextureFiltering(TextureFilterOptions::TFO_ANISOTROPIC);
+			matMan->setDefaultAnisotropy(16);
+		}
 
 		return true;
 	};
@@ -1015,7 +1017,14 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
 		const CEGUI::Combobox* combobox		= (const CEGUI::Combobox*)args.window;
 
-		OgreClient::Singleton->Config->ImageBuilder = StringConvert::CEGUIToCLR(combobox->getText());
+		::System::String^ newval = StringConvert::CEGUIToCLR(combobox->getText());
+		::System::String^ oldval = OgreClient::Singleton->Config->ImageBuilder;
+
+		if (oldval == newval)
+			return true;
+
+		OgreClient::Singleton->Config->ImageBuilder = newval;
+		// todo
 
 		return true;
 	};
@@ -1032,7 +1041,7 @@ namespace Meridian59 { namespace Ogre
 			return true;
 
 		// save new value
-		OgreClient::Singleton->Config->BitmapScaling = StringConvert::CEGUIToCLR(combobox->getText());
+		OgreClient::Singleton->Config->BitmapScaling = newval;
 
 		// apply new value
 		if (newval == "Low")		
@@ -1090,9 +1099,18 @@ namespace Meridian59 { namespace Ogre
 	bool UICallbacks::Options::OnDisableMipmapsChanged(const CEGUI::EventArgs& e)
 	{
 		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
-		const CEGUI::ToggleButton* btn		= (const CEGUI::ToggleButton*)args.window;
+		const CEGUI::ToggleButton* toggleb  = (const CEGUI::ToggleButton*)args.window;
 
-		OgreClient::Singleton->Config->NoMipmaps = !btn->isSelected();
+		bool newval = !toggleb->isSelected();
+		bool oldval = OgreClient::Singleton->Config->NoMipmaps;
+
+		if (oldval == newval)
+			return true;
+
+		OgreClient::Singleton->Config->NoMipmaps = newval;
+
+		// apply value
+		::Ogre::TextureManager::getSingletonPtr()->setDefaultNumMipmaps(newval ? 0 : 5);
 
 		return true;
 	};
@@ -1100,9 +1118,16 @@ namespace Meridian59 { namespace Ogre
 	bool UICallbacks::Options::OnDisableNewRoomTexturesChanged(const CEGUI::EventArgs& e)
 	{
 		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
-		const CEGUI::ToggleButton* btn		= (const CEGUI::ToggleButton*)args.window;
+		const CEGUI::ToggleButton* toggleb  = (const CEGUI::ToggleButton*)args.window;
 
-		OgreClient::Singleton->Config->DisableNewRoomTextures = !btn->isSelected();
+		bool newval = !toggleb->isSelected();
+		bool oldval = OgreClient::Singleton->Config->DisableNewRoomTextures;
+
+		if (oldval == newval)
+			return true;
+
+		OgreClient::Singleton->Config->DisableNewRoomTextures = newval;
+		// todo
 
 		return true;
 	};
@@ -1110,9 +1135,16 @@ namespace Meridian59 { namespace Ogre
 	bool UICallbacks::Options::OnDisable3DModelsChanged(const CEGUI::EventArgs& e)
 	{
 		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
-		const CEGUI::ToggleButton* btn		= (const CEGUI::ToggleButton*)args.window;
+		const CEGUI::ToggleButton* toggleb  = (const CEGUI::ToggleButton*)args.window;
 
-		OgreClient::Singleton->Config->Disable3DModels = !btn->isSelected();
+		bool newval = !toggleb->isSelected();
+		bool oldval = OgreClient::Singleton->Config->Disable3DModels;
+
+		if (oldval == newval)
+			return true;
+
+		OgreClient::Singleton->Config->Disable3DModels = newval;
+		// todo
 
 		return true;
 	};
@@ -1120,9 +1152,22 @@ namespace Meridian59 { namespace Ogre
 	bool UICallbacks::Options::OnDisableNewSkyChanged(const CEGUI::EventArgs& e)
 	{
 		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
-		const CEGUI::ToggleButton* btn		= (const CEGUI::ToggleButton*)args.window;
+		const CEGUI::ToggleButton* toggleb  = (const CEGUI::ToggleButton*)args.window;
 
-		OgreClient::Singleton->Config->DisableNewSky = !btn->isSelected();
+		bool newval = !toggleb->isSelected();
+		bool oldval = OgreClient::Singleton->Config->DisableNewSky;
+
+		if (oldval == newval)
+			return true;
+
+		OgreClient::Singleton->Config->DisableNewSky = newval;
+		
+		if (newval)
+			ControllerRoom::DestroyCaelum(); 
+		else
+			ControllerRoom::InitCaelum();
+
+		ControllerRoom::UpdateSky();
 
 		return true;
 	};
@@ -1130,9 +1175,16 @@ namespace Meridian59 { namespace Ogre
 	bool UICallbacks::Options::OnDisableWeatherEffectsChanged(const CEGUI::EventArgs& e)
 	{
 		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
-		const CEGUI::ToggleButton* btn		= (const CEGUI::ToggleButton*)args.window;
+		const CEGUI::ToggleButton* toggleb  = (const CEGUI::ToggleButton*)args.window;
 
-		OgreClient::Singleton->Config->DisableWeatherEffects = !btn->isSelected();
+		bool newval = !toggleb->isSelected();
+		bool oldval = OgreClient::Singleton->Config->DisableWeatherEffects;
+
+		if (oldval == newval)
+			return true;
+
+		OgreClient::Singleton->Config->DisableWeatherEffects = newval;
+		// todo
 
 		return true;
 	};
