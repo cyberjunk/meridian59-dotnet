@@ -1064,7 +1064,7 @@ namespace Meridian59 { namespace Ogre
 		brazier->LightFlags = 1;
 		brazier->LightIntensity = 40;
 		brazier->LightColor = 32518;
-		brazier->Position3D = V3(1464.0f, 360.0f, 1130.0f);
+		brazier->Position3D = V3(1430.0f, 360.0f, 1120.0f);
 		brazier->ResolveResources(OgreClient::Singleton->ResourceManager, false);
 		Data->RoomObjects->Add(brazier);
 
@@ -1082,6 +1082,19 @@ namespace Meridian59 { namespace Ogre
 		lich->ResolveResources(OgreClient::Singleton->ResourceManager, false);
 		Data->RoomObjects->Add(lich);
 
+		// narthyl worm
+		RoomObject^ worm = gcnew RoomObject();
+		worm->ID = 5;
+		worm->Animation = gcnew AnimationCycle(150, 1, 4);
+		worm->OverlayFile = "darkbeas.bgf";
+		worm->Flags->Value = 0;
+		worm->Angle = 2.8f;
+		worm->LightFlags = 0;
+		worm->LightIntensity = 0;
+		worm->LightColor = 0;
+		worm->Position3D = V3(1500.0f, 360.0f, 1130.0f);
+		worm->ResolveResources(OgreClient::Singleton->ResourceManager, false);
+		Data->RoomObjects->Add(worm);
 
 		PlayMusic^ music = gcnew PlayMusic();
 		music->ResourceName = "nec02.mp3";
