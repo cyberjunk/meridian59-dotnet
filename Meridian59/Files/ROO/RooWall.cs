@@ -675,30 +675,30 @@ namespace Meridian59.Files.ROO
             // only left sector? use heights from there and return
             if (RightSector == null)
             {
-                z0 = z1 = LeftSector.CalculateFloorHeight(X1, Y1);
-                z2 = z3 = LeftSector.CalculateCeilingHeight(X1, Y1);
-                zz0 = zz1 = LeftSector.CalculateFloorHeight(X2, Y2);
-                zz2 = zz3 = LeftSector.CalculateCeilingHeight(X2, Y2);
+                z0 = z1 = LeftSector.CalculateFloorHeight(P1.X, P1.Y);
+                z2 = z3 = LeftSector.CalculateCeilingHeight(P1.X, P1.Y);
+                zz0 = zz1 = LeftSector.CalculateFloorHeight(P2.X, P2.Y);
+                zz2 = zz3 = LeftSector.CalculateCeilingHeight(P2.X, P2.Y);
                 return;
             }
 
             // only right sector? use heights from there and return
             if (LeftSector == null)
             {
-                z0 = z1 = RightSector.CalculateFloorHeight(X1, Y1);
-                z2 = z3 = RightSector.CalculateCeilingHeight(X1, Y1);
-                zz0 = zz1 = RightSector.CalculateFloorHeight(X2, Y2);
-                zz2 = zz3 = RightSector.CalculateCeilingHeight(X2, Y2);
+                z0 = z1 = RightSector.CalculateFloorHeight(P1.X, P1.Y);
+                z2 = z3 = RightSector.CalculateCeilingHeight(P1.X, P1.Y);
+                zz0 = zz1 = RightSector.CalculateFloorHeight(P2.X, P2.Y);
+                zz2 = zz3 = RightSector.CalculateCeilingHeight(P2.X, P2.Y);
                 return;
             }
 
             // --  finally, if there are both sectors available ---
 
             // start with the floor handling
-            Real S1_height0 = RightSector.CalculateFloorHeight(X1, Y1);
-            Real S2_height0 = LeftSector.CalculateFloorHeight(X1, Y1);
-            Real S1_height1 = RightSector.CalculateFloorHeight(X2, Y2);
-            Real S2_height1 = LeftSector.CalculateFloorHeight(X2, Y2);
+            Real S1_height0 = RightSector.CalculateFloorHeight(P1.X, P1.Y);
+            Real S2_height0 = LeftSector.CalculateFloorHeight(P1.X, P1.Y);
+            Real S1_height1 = RightSector.CalculateFloorHeight(P2.X, P2.Y);
+            Real S2_height1 = LeftSector.CalculateFloorHeight(P2.X, P2.Y);
 
             // S1 is above S2 at first endpoint
             if (S1_height0 > S2_height0)
@@ -754,10 +754,10 @@ namespace Meridian59.Files.ROO
             }
 
             // start with ceiling handling
-            S1_height0 = RightSector.CalculateCeilingHeight(X1, Y1);
-            S2_height0 = LeftSector.CalculateCeilingHeight(X1, Y1);
-            S1_height1 = RightSector.CalculateCeilingHeight(X2, Y2);
-            S2_height1 = LeftSector.CalculateCeilingHeight(X2, Y2);
+            S1_height0 = RightSector.CalculateCeilingHeight(P1.X, P1.Y);
+            S2_height0 = LeftSector.CalculateCeilingHeight(P1.X, P1.Y);
+            S1_height1 = RightSector.CalculateCeilingHeight(P2.X, P2.Y);
+            S2_height1 = LeftSector.CalculateCeilingHeight(P2.X, P2.Y);
 
             if (S1_height0 > S2_height0)
             {
@@ -1025,15 +1025,15 @@ namespace Meridian59.Files.ROO
             // fill vars based on left or right side
             if (!IsLeftSide)
             {
-                RI.P0.X = X1;
-                RI.P3.X = X2;
-                RI.P1.X = X1;
-                RI.P2.X = X2;
+                RI.P0.X = P1.X;
+                RI.P3.X = P2.X;
+                RI.P1.X = P1.X;
+                RI.P2.X = P2.X;
 
-                RI.P0.Y = Y1;
-                RI.P3.Y = Y2;
-                RI.P1.Y = Y1;
-                RI.P2.Y = Y2;
+                RI.P0.Y = P1.Y;
+                RI.P3.Y = P2.Y;
+                RI.P1.Y = P1.Y;
+                RI.P2.Y = P2.Y;
 
                 flags = RightSide.Flags;
                 xoffset = RightXOffset;
@@ -1068,15 +1068,15 @@ namespace Meridian59.Files.ROO
             }
             else
             {
-                RI.P0.X = X2;
-                RI.P3.X = X1;
-                RI.P1.X = X2;
-                RI.P2.X = X1;
+                RI.P0.X = P2.X;
+                RI.P3.X = P1.X;
+                RI.P1.X = P2.X;
+                RI.P2.X = P1.X;
 
-                RI.P0.Y = Y2;
-                RI.P3.Y = Y1;
-                RI.P1.Y = Y2;
-                RI.P2.Y = Y1;
+                RI.P0.Y = P2.Y;
+                RI.P3.Y = P1.Y;
+                RI.P1.Y = P2.Y;
+                RI.P2.Y = P1.Y;
 
                 flags = LeftSide.Flags;
                 xoffset = LeftXOffset;

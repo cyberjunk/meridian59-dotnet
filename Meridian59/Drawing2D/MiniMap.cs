@@ -167,10 +167,10 @@ namespace Meridian59.Drawing2D
                     continue;
                    
                 // transform wall points
-                transx1 = (rld.X1 * 0.0625f + 64f - scope.Min.X) * ZoomInv;
-                transy1 = (rld.Y1 * 0.0625f + 64f - scope.Min.Y) * ZoomInv;
-                transx2 = (rld.X2 * 0.0625f + 64f - scope.Min.X) * ZoomInv;
-                transy2 = (rld.Y2 * 0.0625f + 64f - scope.Min.Y) * ZoomInv;
+                transx1 = (rld.P1.X * 0.0625f + 64f - scope.Min.X) * ZoomInv;
+                transy1 = (rld.P1.Y * 0.0625f + 64f - scope.Min.Y) * ZoomInv;
+                transx2 = (rld.P2.X * 0.0625f + 64f - scope.Min.X) * ZoomInv;
+                transy2 = (rld.P2.Y * 0.0625f + 64f - scope.Min.Y) * ZoomInv;
 
                 // draw wall
                 DrawWall(rld, transx1, transy1, transx2, transy2);
