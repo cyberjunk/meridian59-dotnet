@@ -1009,7 +1009,7 @@ namespace Meridian59 { namespace Ogre
 		ref class Login abstract sealed
 		{
 		public:
-			static ::CEGUI::FrameWindow* Window = nullptr;
+			static ::CEGUI::Window* Window = nullptr;
 			static ::CEGUI::Combobox* Server = nullptr;
 			static ::CEGUI::Editbox* Username = nullptr;
 			static ::CEGUI::Editbox* Password = nullptr;

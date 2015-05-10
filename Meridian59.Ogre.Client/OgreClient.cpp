@@ -6,7 +6,7 @@ namespace Meridian59 { namespace Ogre
 		: SingletonClient()
 	{							
 		// Initialize MiniMap instance
-		miniMap = gcnew MiniMapCEGUI(Data, 256, 256, 4.0f);
+		miniMap = gcnew MiniMapCEGUI(Data, 256, 256, 8.0f);
 
 		SLEEPTIME = 0;
 		isWinCursorVisible = true;
@@ -133,6 +133,7 @@ namespace Meridian59 { namespace Ogre
 		cameraNode = sceneManager->createSceneNode(AVATARCAMNODE);
 		cameraNode->attachObject(camera);
 		cameraNode->setFixedYawAxis(true);
+		cameraNode->setInitialState();
 
 		/********************************************************************************************************/
 
@@ -266,6 +267,9 @@ namespace Meridian59 { namespace Ogre
 		// Init controllers
 		ControllerRoom::Initialize();
 		ControllerEffects::Initialize();
+
+		// load demoscene
+		DemoSceneLoadBrax();
 
 		/********************************************************************************************************/
 
@@ -607,6 +611,9 @@ namespace Meridian59 { namespace Ogre
 
 		Data->Reset();
 		Data->UIMode = UIMode::Login;
+
+		// load demoscene
+		DemoSceneLoadBrax();
     };
 	
 	void OgreClient::InitResources()
@@ -891,6 +898,9 @@ namespace Meridian59 { namespace Ogre
 
 	void OgreClient::SendUseCharacterMessage(ObjectID^ ID, bool RequestBasicInfo, ::System::String^ Name)
     {
+		// destroy the demo scene, we're going to play!
+		DemoSceneDestroy();
+
         // call base method
         SingletonClient::SendUseCharacterMessage(ID, RequestBasicInfo, Name);
 
@@ -996,4 +1006,86 @@ namespace Meridian59 { namespace Ogre
         ServerConnection->SendQueue->Enqueue(e->Message);
     };
 #endif
+
+
+	void OgreClient::DemoSceneDestroy()
+	{
+		CameraNode->resetToInitialState();
+		
+		ControllerRoom::UnloadRoom();
+	};
+
+	void OgreClient::DemoSceneLoadBrax()
+	{
+		RoomInfo^ roomInfo = Data->RoomInformation;
+
+
+		CameraNode->setPosition(1266, 460, 1344);
+		CameraNode->rotate(::Ogre::Vector3::UNIT_Y, ::Ogre::Radian(-0.55f));
+		
+		roomInfo->RoomFile = "necarea3.roo";
+		roomInfo->AmbientLight = 40;
+		roomInfo->ResolveResources(OgreClient::Singleton->ResourceManager, false);
+
+		ControllerRoom::LoadRoom();
+
+		// tree1
+		RoomObject^ tree1 = gcnew RoomObject();
+		tree1->ID = 1;
+		tree1->Animation = gcnew AnimationNone(1);
+		tree1->OverlayFile = "nectree3.bgf";
+		tree1->Flags->Value = 131136;
+		tree1->LightFlags = 1;
+		tree1->LightIntensity = 50;
+		tree1->LightColor = 320;
+		tree1->Position3D = V3(1696.0f, 360.0f, 1120.0f);
+		tree1->ResolveResources(OgreClient::Singleton->ResourceManager, false);
+		Data->RoomObjects->Add(tree1);
+
+		// tree2
+		RoomObject^ tree2 = gcnew RoomObject();
+		tree2->ID = 2;
+		tree2->Animation = gcnew AnimationNone(1);
+		tree2->OverlayFile = "nectree2.bgf";
+		tree2->Flags->Value = 131136;
+		tree2->LightFlags = 1;
+		tree2->LightIntensity = 50;
+		tree2->LightColor = 15360;
+		tree2->Position3D = V3(1280.0f, 357.25f, 896.0f);
+		tree2->ResolveResources(OgreClient::Singleton->ResourceManager, false);
+		Data->RoomObjects->Add(tree2);
+
+		// brazier
+		RoomObject^ brazier = gcnew RoomObject();
+		brazier->ID = 3;
+		brazier->Animation = gcnew AnimationCycle(120, 2, 7);
+		brazier->OverlayFile = "brazier.bgf";
+		brazier->Flags->Value = 131136;
+		brazier->LightFlags = 1;
+		brazier->LightIntensity = 40;
+		brazier->LightColor = 32518;
+		brazier->Position3D = V3(1464.0f, 360.0f, 1130.0f);
+		brazier->ResolveResources(OgreClient::Singleton->ResourceManager, false);
+		Data->RoomObjects->Add(brazier);
+
+		// venya'cyr
+		RoomObject^ lich = gcnew RoomObject();
+		lich->ID = 4;
+		lich->Animation = gcnew AnimationNone(1);
+		lich->OverlayFile = "licha.bgf";
+		lich->Flags->Value = 1544;
+		lich->Angle = 1.49f;
+		lich->LightFlags = 0;
+		lich->LightIntensity = 0;
+		lich->LightColor = 0;
+		lich->Position3D = V3(1400.0f, 360.0f, 1080.0f);
+		lich->ResolveResources(OgreClient::Singleton->ResourceManager, false);
+		Data->RoomObjects->Add(lich);
+
+
+		PlayMusic^ music = gcnew PlayMusic();
+		music->ResourceName = "nec02.mp3";
+		music->ResolveResources(OgreClient::Singleton->ResourceManager, false);
+		ControllerSound::StartMusic(music);
+	};
 };};

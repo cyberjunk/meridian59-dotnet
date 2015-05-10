@@ -269,6 +269,10 @@ namespace Meridian59 { namespace Ogre
 		// inject mouseup to cegui
 		ControllerUI::InjectMouseButtonUp(GetCEGUIMouseButton(id));
 		
+		// below here must be in playing mode (no login etc.)
+		if (OgreClient::Singleton->Data->UIMode != UIMode::Playing)
+			return true;
+
 		// perform leftclick select
         if (id == OIS::MouseButtonID::MB_Left &&
 			!isMouseWentDownOnUI && 

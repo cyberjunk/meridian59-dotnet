@@ -63,8 +63,6 @@ namespace Meridian59 { namespace Ogre
 		static void HandlePlayMusicMessage(PlayMusicMessage^ Message);
 		static void HandlePlayMidiMessage(PlayMidiMessage^ Message);
 
-		static void StartMusic(PlayMusic^ Info);
-
 	public:
 		/// <summary>
         /// All sounds not attached to roomobject IDs (i.e. mapsounds)
@@ -89,6 +87,8 @@ namespace Meridian59 { namespace Ogre
         /// Initialization state
         /// </summary>
 		static bool IsInitialized;
+
+		static void StartMusic(PlayMusic^ Info);
 
 		/// <summary>
         /// Sets the node which position and orientation is observed

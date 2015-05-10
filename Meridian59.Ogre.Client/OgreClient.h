@@ -112,6 +112,9 @@ namespace Meridian59 { namespace Ogre
 		void RenderWindowCreate();
 		void RenderWindowDestroy();
 
+		void DemoSceneDestroy();
+		void DemoSceneLoadBrax();
+
 		/// <summary>
         /// Handle network client exception
         /// </summary>

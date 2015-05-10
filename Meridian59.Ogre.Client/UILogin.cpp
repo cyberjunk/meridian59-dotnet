@@ -5,7 +5,7 @@ namespace Meridian59 { namespace Ogre
 	void ControllerUI::Login::Initialize()
 	{
 		// setup references to children from xml nodes
-		Window = static_cast<CEGUI::FrameWindow*>(guiRoot->getChild(UI_NAME_LOGIN_WINDOW));
+		Window = static_cast<CEGUI::Window*>(guiRoot->getChild(UI_NAME_LOGIN_WINDOW));
 		Server = static_cast<CEGUI::Combobox*>(Window->getChild(UI_NAME_LOGIN_SERVER));
 		Username = static_cast<CEGUI::Editbox*>(Window->getChild(UI_NAME_LOGIN_USERNAME));
 		Password = static_cast<CEGUI::Editbox*>(Window->getChild(UI_NAME_LOGIN_PASSWORD));
