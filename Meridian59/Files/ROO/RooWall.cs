@@ -507,6 +507,11 @@ namespace Meridian59.Files.ROO
         protected Real zz1;    /* height of top of lower wall / bottom of normal wall */
         protected Real zz2;     /* height of top of normal wall / bottom of upper wall */
         protected Real zz3;     /* height of top of upper wall */
+
+        protected Real z0Neg;       /* height of bottom of lower wall */
+        protected Real z1Neg;       /* height of top of lower wall / bottom of normal wall */
+        protected Real zz0Neg;      /* height of bottom of lower wall */
+        protected Real zz1Neg;      /* height of top of lower wall / bottom of normal wall */
         #endregion
         #endregion
 
@@ -718,11 +723,22 @@ namespace Meridian59.Files.ROO
                     // bowtie handling
                     BowtieFlags.IsBelowPos = true;
 
-                    // no extra zNeg here
+                    // this is the variant for gD3DEnabled in the old code
                     z1 = S1_height0;
-                    zz1 = S2_height1;
+                    zz1 = S1_height1;
                     z0 = S2_height0;
                     zz0 = S1_height1;
+
+                    z1Neg = S2_height0;
+                    zz1Neg = S2_height1;
+                    z0Neg = S2_height0;
+                    zz0Neg = S1_height1;
+
+                    // other variant
+                    /*z1 = S1_height0;
+                    zz1 = S2_height1;
+                    z0 = S2_height0;
+                    zz0 = S1_height1;*/
                 }
             }
 
@@ -744,12 +760,22 @@ namespace Meridian59.Files.ROO
                     // bowtie handling
                     BowtieFlags.IsBelowNeg = true;
 
-                    // no extra zNeg here
-                    z1 = S2_height0;
+                    // this is the variant for gD3DEnabled in the old code
+                    z1 = S1_height0;
                     zz1 = S1_height1;
                     z0 = S1_height0;
                     zz0 = S2_height1;
 
+                    z1Neg = S2_height0;
+                    zz1Neg = S2_height1;
+                    z0Neg = S1_height0;
+                    zz0Neg = S2_height1;
+
+                    // other variant
+                    /*z1 = S2_height0;
+                    zz1 = S1_height1;
+                    z0 = S1_height0;
+                    zz0 = S2_height1;*/
                 }
             }
 
@@ -1058,8 +1084,17 @@ namespace Meridian59.Files.ROO
                         break;
 
                     case WallPartType.Lower:
-                        RI.P0.Z = z1;
-                        RI.P3.Z = zz1;
+                        if (BowtieFlags.IsBelowPos || BowtieFlags.IsBelowNeg)
+                        {
+                            RI.P0.Z = z1Neg;
+                            RI.P3.Z = zz1Neg;
+                        }
+                        else
+                        {
+                            RI.P0.Z = z1;
+                            RI.P3.Z = zz1;
+                        }
+
                         RI.P1.Z = z0;
                         RI.P2.Z = zz0;
                         drawTopDown = RightSide.Flags.IsBelowTopDown;
@@ -1155,8 +1190,8 @@ namespace Meridian59.Files.ROO
                 {
                     RI.UV1.Y = 1.0f - ((Real)yoffset * (Real)TexShrink * invWidth);
                     RI.UV2.Y = 1.0f - ((Real)yoffset * (Real)TexShrink * invWidth);
-                    RI.UV1.Y -= ((Real)RI.P1.Y - bottom) * (Real)TexShrink * invWidthFudge;
-                    RI.UV2.Y -= ((Real)RI.P2.Y - bottom) * (Real)TexShrink * invWidthFudge;
+                    RI.UV1.Y -= ((Real)RI.P1.Z - bottom) * (Real)TexShrink * invWidthFudge;
+                    RI.UV2.Y -= ((Real)RI.P2.Z - bottom) * (Real)TexShrink * invWidthFudge;
                 }
 
                 RI.UV0.Y = RI.UV1.Y - ((Real)(RI.P0.Z - RI.P1.Z) * (Real)TexShrink * invWidthFudge);
