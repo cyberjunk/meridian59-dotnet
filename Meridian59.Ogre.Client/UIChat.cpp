@@ -277,6 +277,7 @@ namespace Meridian59 { namespace Ogre
 					::CEGUI::String ceguistr = StringConvert::CLRToCEGUI(str);
 
 					chatInput->setText(ceguistr);
+					chatInput->setCaretIndex(ceguistr.length());
 				}
 				break;
 
@@ -288,6 +289,7 @@ namespace Meridian59 { namespace Ogre
 					::CEGUI::String ceguistr = StringConvert::CLRToCEGUI(str);
 
 					chatInput->setText(ceguistr);
+					chatInput->setCaretIndex(ceguistr.length());
 				}
 				else
 				{
