@@ -97,7 +97,10 @@ namespace Meridian59.Data.Models
 	    private const uint MM_MONSTER       = 0x00000020; // Default monster dot
 	    private const uint MM_NPC           = 0x00000040; // NPC
 	    private const uint MM_MINION_OTHER  = 0x00000080; // Set if monster is other's minion
-        private const uint MM_MINION_SELF   = 0x00000100; // Set if a monster is our minion   
+        private const uint MM_MINION_SELF   = 0x00000100; // Set if a monster is our minion
+        private const uint MM_TEMPSAFE      = 0x00000200; // Set if player has a temporary angel.
+        private const uint MM_MINIBOSS      = 0x00000400; // Set if mob is a miniboss (survival arena).
+        private const uint MM_BOSS          = 0x00000800; // Set if mob is a boss (survival arena).
         #endregion
 
         #region Enums
@@ -803,6 +806,51 @@ namespace Meridian59.Data.Models
             {
                 if (value) minimap |= MM_MINION_OTHER;
                 else minimap &= ~MM_MINION_OTHER;
+
+                RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
+            }
+        }
+
+        /// <summary>
+        /// Set if player has a temporary angel.
+        /// </summary>
+        public bool IsTempSafe
+        {
+            get { return (minimap & MM_TEMPSAFE) == MM_TEMPSAFE; }
+            set
+            {
+                if (value) minimap |= MM_TEMPSAFE;
+                else minimap &= ~MM_TEMPSAFE;
+
+                RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
+            }
+        }
+
+        /// <summary>
+        /// Set if mob is a miniboss (survival arena).
+        /// </summary>
+        public bool IsMiniBoss
+        {
+            get { return (minimap & MM_MINIBOSS) == MM_MINIBOSS; }
+            set
+            {
+                if (value) minimap |= MM_MINIBOSS;
+                else minimap &= ~MM_MINIBOSS;
+
+                RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
+            }
+        }
+
+        /// <summary>
+        /// Set if mob is a boss (survival arena).
+        /// </summary>
+        public bool IsBoss
+        {
+            get { return (minimap & MM_BOSS) == MM_BOSS; }
+            set
+            {
+                if (value) minimap |= MM_BOSS;
+                else minimap &= ~MM_BOSS;
 
                 RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
             }
