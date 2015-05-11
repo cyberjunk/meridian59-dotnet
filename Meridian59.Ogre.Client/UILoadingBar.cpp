@@ -72,6 +72,7 @@ namespace Meridian59 { namespace Ogre
 
 			// render a frame to update (not yet in apploop)
 			OgreClient::Singleton->Root->renderOneFrame();
+			::Ogre::WindowEventUtilities::messagePump();
 		}
     };
 
@@ -92,6 +93,7 @@ namespace Meridian59 { namespace Ogre
 			
 			// render a frame to update (not yet in apploop)
 			OgreClient::Singleton->Root->renderOneFrame();
+			::Ogre::WindowEventUtilities::messagePump();
 		}
     };
 
@@ -108,6 +110,7 @@ namespace Meridian59 { namespace Ogre
 
 			// render a frame to update (not yet in apploop)
 			OgreClient::Singleton->Root->renderOneFrame();
+			::Ogre::WindowEventUtilities::messagePump();
 		}
     };
 
@@ -150,6 +153,7 @@ namespace Meridian59 { namespace Ogre
 
 			// render a frame to update (not yet in apploop)
 			OgreClient::Singleton->Root->renderOneFrame();
+			::Ogre::WindowEventUtilities::messagePump();
 		}
 	};
 
@@ -166,6 +170,7 @@ namespace Meridian59 { namespace Ogre
 
 			// render a frame to update (not yet in apploop)
 			OgreClient::Singleton->Root->renderOneFrame();
+			::Ogre::WindowEventUtilities::messagePump();
 		}
 	};
 };};
