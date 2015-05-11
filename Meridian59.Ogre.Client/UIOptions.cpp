@@ -252,67 +252,67 @@ namespace Meridian59 { namespace Ogre
 		OISKeyBinding^ keybinding = OgreClient::Singleton->Config->KeyBinding;
 		::OIS::Keyboard* keyboard = ControllerInput::OISKeyboard;
 		
-		LearnMoveForward->setText(keyboard->getAsString(keybinding->MoveForward));
-		LearnMoveBackward->setText(keyboard->getAsString(keybinding->MoveBackward));
-		LearnMoveLeft->setText(keyboard->getAsString(keybinding->MoveLeft));
-		LearnMoveRight->setText(keyboard->getAsString(keybinding->MoveRight));
-		LearnRotateLeft->setText(keyboard->getAsString(keybinding->RotateLeft));
-		LearnRotateRight->setText(keyboard->getAsString(keybinding->RotateRight));
-		LearnWalk->setText(keyboard->getAsString(keybinding->Walk));
-		LearnAutoMove->setText(keyboard->getAsString(keybinding->AutoMove));
-		LearnNextTarget->setText(keyboard->getAsString(keybinding->NextTarget));
-		LearnSelfTarget->setText(keyboard->getAsString(keybinding->SelfTarget));
-		LearnOpen->setText(keyboard->getAsString(keybinding->ReqGo));
-		LearnClose->setText(keyboard->getAsString(keybinding->Close));
+		LearnMoveForward->setText(keybinding->MoveForward == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->MoveForward));
+		LearnMoveBackward->setText(keybinding->MoveBackward == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->MoveBackward));
+		LearnMoveLeft->setText(keybinding->MoveLeft == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->MoveLeft));
+		LearnMoveRight->setText(keybinding->MoveRight == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->MoveRight));
+		LearnRotateLeft->setText(keybinding->RotateLeft == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->RotateLeft));
+		LearnRotateRight->setText(keybinding->RotateRight == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->RotateRight));
+		LearnWalk->setText(keybinding->Walk == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->Walk));
+		LearnAutoMove->setText(keybinding->AutoMove == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->AutoMove));
+		LearnNextTarget->setText(keybinding->NextTarget == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->NextTarget));
+		LearnSelfTarget->setText(keybinding->SelfTarget == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->SelfTarget));
+		LearnOpen->setText(keybinding->ReqGo == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ReqGo));
+		LearnClose->setText(keybinding->Close == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->Close));
 
-		LearnAction01->setText(keyboard->getAsString(keybinding->ActionButton01));
-		LearnAction02->setText(keyboard->getAsString(keybinding->ActionButton02));
-		LearnAction03->setText(keyboard->getAsString(keybinding->ActionButton03));
-		LearnAction04->setText(keyboard->getAsString(keybinding->ActionButton04));
-		LearnAction05->setText(keyboard->getAsString(keybinding->ActionButton05));
-		LearnAction06->setText(keyboard->getAsString(keybinding->ActionButton06));
-		LearnAction07->setText(keyboard->getAsString(keybinding->ActionButton07));
-		LearnAction08->setText(keyboard->getAsString(keybinding->ActionButton08));
-		LearnAction09->setText(keyboard->getAsString(keybinding->ActionButton09));
-		LearnAction10->setText(keyboard->getAsString(keybinding->ActionButton10));
-		LearnAction11->setText(keyboard->getAsString(keybinding->ActionButton11));
-		LearnAction12->setText(keyboard->getAsString(keybinding->ActionButton12));
-		LearnAction13->setText(keyboard->getAsString(keybinding->ActionButton13));
-		LearnAction14->setText(keyboard->getAsString(keybinding->ActionButton14));
-		LearnAction15->setText(keyboard->getAsString(keybinding->ActionButton15));
-		LearnAction16->setText(keyboard->getAsString(keybinding->ActionButton16));
-		LearnAction17->setText(keyboard->getAsString(keybinding->ActionButton17));
-		LearnAction18->setText(keyboard->getAsString(keybinding->ActionButton18));
-		LearnAction19->setText(keyboard->getAsString(keybinding->ActionButton19));
-		LearnAction20->setText(keyboard->getAsString(keybinding->ActionButton20));
-		LearnAction21->setText(keyboard->getAsString(keybinding->ActionButton21));
-		LearnAction22->setText(keyboard->getAsString(keybinding->ActionButton22));
-		LearnAction23->setText(keyboard->getAsString(keybinding->ActionButton23));
-		LearnAction24->setText(keyboard->getAsString(keybinding->ActionButton24));
-		LearnAction25->setText(keyboard->getAsString(keybinding->ActionButton25));
-		LearnAction26->setText(keyboard->getAsString(keybinding->ActionButton26));
-		LearnAction27->setText(keyboard->getAsString(keybinding->ActionButton27));
-		LearnAction28->setText(keyboard->getAsString(keybinding->ActionButton28));
-		LearnAction29->setText(keyboard->getAsString(keybinding->ActionButton29));
-		LearnAction30->setText(keyboard->getAsString(keybinding->ActionButton30));
-		LearnAction31->setText(keyboard->getAsString(keybinding->ActionButton31));
-		LearnAction32->setText(keyboard->getAsString(keybinding->ActionButton32));
-		LearnAction33->setText(keyboard->getAsString(keybinding->ActionButton33));
-		LearnAction34->setText(keyboard->getAsString(keybinding->ActionButton34));
-		LearnAction35->setText(keyboard->getAsString(keybinding->ActionButton35));
-		LearnAction36->setText(keyboard->getAsString(keybinding->ActionButton36));
-		LearnAction37->setText(keyboard->getAsString(keybinding->ActionButton37));
-		LearnAction38->setText(keyboard->getAsString(keybinding->ActionButton38));
-		LearnAction39->setText(keyboard->getAsString(keybinding->ActionButton39));
-		LearnAction40->setText(keyboard->getAsString(keybinding->ActionButton40));
-		LearnAction41->setText(keyboard->getAsString(keybinding->ActionButton41));
-		LearnAction42->setText(keyboard->getAsString(keybinding->ActionButton42));
-		LearnAction43->setText(keyboard->getAsString(keybinding->ActionButton43));
-		LearnAction44->setText(keyboard->getAsString(keybinding->ActionButton44));
-		LearnAction45->setText(keyboard->getAsString(keybinding->ActionButton45));
-		LearnAction46->setText(keyboard->getAsString(keybinding->ActionButton46));
-		LearnAction47->setText(keyboard->getAsString(keybinding->ActionButton47));
-		LearnAction48->setText(keyboard->getAsString(keybinding->ActionButton48));
+		LearnAction01->setText(keybinding->ActionButton01 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton01));
+		LearnAction02->setText(keybinding->ActionButton02 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton02));
+		LearnAction03->setText(keybinding->ActionButton03 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton03));
+		LearnAction04->setText(keybinding->ActionButton04 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton04));
+		LearnAction05->setText(keybinding->ActionButton05 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton05));
+		LearnAction06->setText(keybinding->ActionButton06 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton06));
+		LearnAction07->setText(keybinding->ActionButton07 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton07));
+		LearnAction08->setText(keybinding->ActionButton08 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton08));
+		LearnAction09->setText(keybinding->ActionButton09 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton09));
+		LearnAction10->setText(keybinding->ActionButton10 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton10));
+		LearnAction11->setText(keybinding->ActionButton11 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton11));
+		LearnAction12->setText(keybinding->ActionButton12 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton12));
+		LearnAction13->setText(keybinding->ActionButton13 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton13));
+		LearnAction14->setText(keybinding->ActionButton14 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton14));
+		LearnAction15->setText(keybinding->ActionButton15 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton15));
+		LearnAction16->setText(keybinding->ActionButton16 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton16));
+		LearnAction17->setText(keybinding->ActionButton17 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton17));
+		LearnAction18->setText(keybinding->ActionButton18 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton18));
+		LearnAction19->setText(keybinding->ActionButton19 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton19));
+		LearnAction20->setText(keybinding->ActionButton20 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton20));
+		LearnAction21->setText(keybinding->ActionButton21 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton21));
+		LearnAction22->setText(keybinding->ActionButton22 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton22));
+		LearnAction23->setText(keybinding->ActionButton23 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton23));
+		LearnAction24->setText(keybinding->ActionButton24 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton24));
+		LearnAction25->setText(keybinding->ActionButton25 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton25));
+		LearnAction26->setText(keybinding->ActionButton26 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton26));
+		LearnAction27->setText(keybinding->ActionButton27 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton27));
+		LearnAction28->setText(keybinding->ActionButton28 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton28));
+		LearnAction29->setText(keybinding->ActionButton29 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton29));
+		LearnAction30->setText(keybinding->ActionButton30 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton30));
+		LearnAction31->setText(keybinding->ActionButton31 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton31));
+		LearnAction32->setText(keybinding->ActionButton32 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton32));
+		LearnAction33->setText(keybinding->ActionButton33 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton33));
+		LearnAction34->setText(keybinding->ActionButton34 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton34));
+		LearnAction35->setText(keybinding->ActionButton35 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton35));
+		LearnAction36->setText(keybinding->ActionButton36 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton36));
+		LearnAction37->setText(keybinding->ActionButton37 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton37));
+		LearnAction38->setText(keybinding->ActionButton38 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton38));
+		LearnAction39->setText(keybinding->ActionButton39 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton39));
+		LearnAction40->setText(keybinding->ActionButton40 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton40));
+		LearnAction41->setText(keybinding->ActionButton41 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton41));
+		LearnAction42->setText(keybinding->ActionButton42 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton42));
+		LearnAction43->setText(keybinding->ActionButton43 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton43));
+		LearnAction44->setText(keybinding->ActionButton44 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton44));
+		LearnAction45->setText(keybinding->ActionButton45 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton45));
+		LearnAction46->setText(keybinding->ActionButton46 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton46));
+		LearnAction47->setText(keybinding->ActionButton47 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton47));
+		LearnAction48->setText(keybinding->ActionButton48 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton48));
 
 		MouseAimSpeed->setCurrentValue((float)OgreClient::Singleton->Config->MouseAimSpeed);
 		KeyRotateSpeed->setCurrentValue((float)OgreClient::Singleton->Config->KeyRotateSpeed);
@@ -370,66 +370,66 @@ namespace Meridian59 { namespace Ogre
 		/******************************************************************************************************/
 
 		// hookup keylearn button events
-		LearnMoveForward->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnMoveBackward->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnMoveLeft->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnMoveRight->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnRotateLeft->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnRotateRight->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnWalk->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAutoMove->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnNextTarget->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnSelfTarget->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnOpen->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnClose->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction01->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction02->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction03->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction04->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction05->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction06->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction07->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction08->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction09->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction10->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction11->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction12->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction13->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction14->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction15->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction16->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction17->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction18->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction19->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction20->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction21->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction22->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction23->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction24->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction25->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction26->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction27->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction28->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction29->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction30->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction31->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction32->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction33->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction34->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction35->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction36->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction37->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction38->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction39->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction40->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction41->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction42->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction43->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction44->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction45->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction46->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction47->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
-		LearnAction48->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnMoveForward->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnMoveBackward->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnMoveLeft->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnMoveRight->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnRotateLeft->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnRotateRight->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnWalk->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAutoMove->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnNextTarget->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnSelfTarget->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnOpen->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnClose->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction01->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction02->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction03->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction04->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction05->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction06->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction07->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction08->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction09->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction10->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction11->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction12->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction13->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction14->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction15->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction16->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction17->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction18->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction19->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction20->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction21->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction22->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction23->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction24->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction25->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction26->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction27->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction28->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction29->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction30->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction31->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction32->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction33->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction34->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction35->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction36->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction37->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction38->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction39->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction40->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction41->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction42->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction43->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction44->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction45->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction46->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction47->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnAction48->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
 
 		LearnMoveForward->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
 		LearnMoveBackward->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
@@ -934,8 +934,322 @@ namespace Meridian59 { namespace Ogre
 	{
 		const CEGUI::MouseEventArgs& args	= (const CEGUI::MouseEventArgs&)e;
 		CEGUI::PushButton* btn				= (CEGUI::PushButton*)args.window;
+		OISKeyBinding^ keybinding			= OgreClient::Singleton->Config->KeyBinding;
 
-		ControllerUI::SplashNotifier::ShowNotification("PRESS A KEY");
+		// left click gives focus to button (assign handled in KeyUp)
+		// also show notification
+		if (args.button == ::CEGUI::MouseButton::LeftButton)
+			ControllerUI::SplashNotifier::ShowNotification(UI_NOTIFICATION_PRESSAKEY);
+
+		// right click clears assignment
+		else if (args.button == ::CEGUI::MouseButton::RightButton)
+		{
+			// basic movement
+			if (btn == ControllerUI::Options::LearnMoveForward)
+			{
+				keybinding->MoveForward = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnMoveForward->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnMoveBackward)
+			{
+				keybinding->MoveBackward = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnMoveBackward->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnMoveLeft)
+			{
+				keybinding->MoveLeft = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnMoveLeft->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnMoveRight)
+			{
+				keybinding->MoveRight = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnMoveRight->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnRotateLeft)
+			{
+				keybinding->RotateLeft = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnRotateLeft->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnRotateRight)
+			{
+				keybinding->RotateRight = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnRotateRight->setText(STRINGEMPTY);
+			}
+
+			// others
+			else if (btn == ControllerUI::Options::LearnWalk)
+			{
+				keybinding->Walk = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnWalk->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAutoMove)
+			{
+				keybinding->AutoMove = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAutoMove->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnNextTarget)
+			{
+				keybinding->NextTarget = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnNextTarget->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnSelfTarget)
+			{
+				keybinding->SelfTarget = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnSelfTarget->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnOpen)
+			{
+				keybinding->ReqGo = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnOpen->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnClose)
+			{
+				keybinding->Close = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnClose->setText(STRINGEMPTY);
+			}
+
+			// actionbuttons
+			else if (btn == ControllerUI::Options::LearnAction01)
+			{
+				keybinding->ActionButton01 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction01->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction02)
+			{
+				keybinding->ActionButton02 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction02->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction03)
+			{
+				keybinding->ActionButton03 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction03->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction04)
+			{
+				keybinding->ActionButton04 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction04->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction05)
+			{
+				keybinding->ActionButton05 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction05->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction06)
+			{
+				keybinding->ActionButton06 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction06->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction07)
+			{
+				keybinding->ActionButton07 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction07->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction08)
+			{
+				keybinding->ActionButton08 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction08->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction09)
+			{
+				keybinding->ActionButton09 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction09->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction10)
+			{
+				keybinding->ActionButton10 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction10->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction11)
+			{
+				keybinding->ActionButton11 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction11->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction12)
+			{
+				keybinding->ActionButton12 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction12->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction13)
+			{
+				keybinding->ActionButton13 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction13->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction14)
+			{
+				keybinding->ActionButton14 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction14->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction15)
+			{
+				keybinding->ActionButton15 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction15->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction16)
+			{
+				keybinding->ActionButton16 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction16->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction17)
+			{
+				keybinding->ActionButton17 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction17->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction18)
+			{
+				keybinding->ActionButton18 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction18->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction19)
+			{
+				keybinding->ActionButton19 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction19->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction20)
+			{
+				keybinding->ActionButton20 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction20->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction21)
+			{
+				keybinding->ActionButton21 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction21->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction22)
+			{
+				keybinding->ActionButton22 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction22->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction23)
+			{
+				keybinding->ActionButton23 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction23->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction24)
+			{
+				keybinding->ActionButton24 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction24->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction25)
+			{
+				keybinding->ActionButton25 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction25->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction26)
+			{
+				keybinding->ActionButton26 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction26->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction27)
+			{
+				keybinding->ActionButton27 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction27->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction28)
+			{
+				keybinding->ActionButton28 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction28->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction29)
+			{
+				keybinding->ActionButton29 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction29->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction30)
+			{
+				keybinding->ActionButton30 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction30->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction31)
+			{
+				keybinding->ActionButton31 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction31->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction32)
+			{
+				keybinding->ActionButton32 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction32->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction33)
+			{
+				keybinding->ActionButton33 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction33->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction34)
+			{
+				keybinding->ActionButton34 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction34->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction35)
+			{
+				keybinding->ActionButton35 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction35->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction36)
+			{
+				keybinding->ActionButton36 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction36->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction37)
+			{
+				keybinding->ActionButton37 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction37->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction38)
+			{
+				keybinding->ActionButton38 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction38->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction39)
+			{
+				keybinding->ActionButton39 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction39->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction40)
+			{
+				keybinding->ActionButton40 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction40->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction41)
+			{
+				keybinding->ActionButton41 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction41->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction42)
+			{
+				keybinding->ActionButton42 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction42->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction43)
+			{
+				keybinding->ActionButton43 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction43->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction44)
+			{
+				keybinding->ActionButton44 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction44->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction45)
+			{
+				keybinding->ActionButton45 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction45->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction46)
+			{
+				keybinding->ActionButton46 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction46->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction47)
+			{
+				keybinding->ActionButton47 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction47->setText(STRINGEMPTY);
+			}
+			else if (btn == ControllerUI::Options::LearnAction48)
+			{
+				keybinding->ActionButton48 = ::OIS::KeyCode::KC_UNASSIGNED;
+				ControllerUI::Options::LearnAction48->setText(STRINGEMPTY);
+			}
+		}
 
 		return true;
 	};
@@ -945,7 +1259,7 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
 		const CEGUI::PushButton* btn		= (const CEGUI::PushButton*)args.window;
 
-		ControllerUI::SplashNotifier::HideNotification("PRESS A KEY");
+		ControllerUI::SplashNotifier::HideNotification(UI_NOTIFICATION_PRESSAKEY);
 
 		return true;
 	};
