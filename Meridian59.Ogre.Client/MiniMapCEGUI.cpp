@@ -183,11 +183,11 @@ namespace Meridian59 { namespace Ogre
 		else if (RoomObject->Flags->IsMinimapTempSafe)
 			g->FillEllipse(brushTempSafe, (float)x, (float)y, (float)width, (float)width);
 #endif
-        else if (RoomObject->Flags->IsAttackable)
-			g->FillEllipse(brushEnemy, (float)x, (float)y, (float)width, (float)width);
-
 		else if (RoomObject->Flags->IsPlayer)
 			g->FillEllipse(brushPlayer, (float)x, (float)y, (float)width, (float)width);
+
+		else if (RoomObject->Flags->IsAttackable)
+			g->FillEllipse(brushEnemy, (float)x, (float)y, (float)width, (float)width);
 	};
 
 	void MiniMapCEGUI::DrawAvatar(RoomObject^ RoomObject, V2 P1, V2 P2, V2 P3)
