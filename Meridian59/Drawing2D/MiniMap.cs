@@ -44,6 +44,24 @@ namespace Meridian59.Drawing2D
         public const Real MAXZOOM = 20.0f;
         public const int DEFAULTWIDTH  = 256;
         public const int DEFAULTHEIGHT = 256;
+
+        //                                              AARRGGBB
+        public const uint COLOR_MAP_WALL            = 0xFF000000; //PALETTERGB(0, 0, 0)
+        public const uint COLOR_MAP_PLAYER          = 0xFF0000FF; //PALETTERGB(0, 0, 255)
+        public const uint COLOR_MAP_PLAYER_FRONT    = 0xFF000000; //PALETTERGB(0, 0, 0)      // Pixel at front of player
+        public const uint COLOR_MAP_OBJECT          = 0xFFFF0000; //PALETTERGB(255, 0, 0)    // Red
+        public const uint COLOR_MAP_FRIEND          = 0xFF00FF78; //PALETTERGB(0, 255, 120)  // Green with blue tint
+        public const uint COLOR_MAP_ENEMY           = 0xFFFF0000; //PALETTERGB(255, 0, 0)    // Red
+        public const uint COLOR_MAP_GUILDMATE       = 0xFFFFFF00; //PALETTERGB(255, 255, 0)  // Yellow
+#if !VANILLA        
+        public const uint COLOR_MAP_MINION          = 0xFF00C800; //PALETTERGB(0, 200, 0)    // Green
+        public const uint COLOR_MAP_MINION_OTH      = 0xFF460582; //PALETTERGB(70,5,130)     // Purple
+        public const uint COLOR_MAP_BUILDGRP        = 0xFF00FF00; //PALETTERGB(0, 255, 0)    // Bright Green
+        public const uint COLOR_MAP_NPC             = 0xFF000000; //PALETTERGB(0, 0, 0)      // Black
+        public const uint COLOR_MAP_TEMPSAFE        = 0xFF00AAFF; //PALETTERGB(0,170,255)    // Cyan
+        public const uint COLOR_MAP_MINIBOSS        = 0xFFA042C2; //PALETTERGB(160, 66, 194) // Purple
+        public const uint COLOR_MAP_BOSS            = 0xFF7F0000; //PALETTERGB(127, 0, 0)    // Dark Red
+#endif
         #endregion
 
         protected long tickLastUpdate;

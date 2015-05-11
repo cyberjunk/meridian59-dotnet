@@ -870,7 +870,7 @@ namespace Meridian59.Data
 
                 foreach (RoomObject obj in candidates)
                 {
-                    if ((obj.Flags.IsAttackable || obj.Flags.IsEnemy) && !VisitedTargets.Contains(obj))
+                    if ((obj.Flags.IsAttackable || obj.Flags.IsMinimapEnemy) && !VisitedTargets.Contains(obj))
                         bettercandidates.Add(obj);
                 }
 
@@ -880,7 +880,7 @@ namespace Meridian59.Data
                 {
                     VisitedTargets.Clear();
                     foreach (RoomObject obj in candidates)
-                        if ((obj.Flags.IsAttackable || obj.Flags.IsEnemy))
+                        if ((obj.Flags.IsAttackable || obj.Flags.IsMinimapEnemy))
                             bettercandidates.Add(obj);
                 }
 
@@ -891,7 +891,7 @@ namespace Meridian59.Data
                 RoomObject minObj = null;
                 foreach (RoomObject obj in bettercandidates)
                 {                    
-                    if (obj.Flags.IsEnemy)
+                    if (obj.Flags.IsMinimapEnemy)
                     {
                         // mark found
                         found = true;

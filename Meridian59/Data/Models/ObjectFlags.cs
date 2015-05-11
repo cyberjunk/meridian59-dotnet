@@ -694,7 +694,7 @@ namespace Meridian59.Data.Models
         /// <summary>
         /// True if the object is an enemy player.
         /// </summary>
-        public bool IsEnemy
+        public bool IsMinimapEnemy
         {
             get { return (minimap & MM_ENEMY) == MM_ENEMY; }
             set
@@ -709,7 +709,7 @@ namespace Meridian59.Data.Models
         /// <summary>
         /// True if the object is a friendly player.
         /// </summary>
-        public bool IsFriend
+        public bool IsMinimapFriend
         {
             get { return (minimap & MM_FRIEND) == MM_FRIEND; }
             set
@@ -724,7 +724,7 @@ namespace Meridian59.Data.Models
         /// <summary>
         /// True if the object is a guildmate.
         /// </summary>
-        public bool IsGuildMate
+        public bool IsMinimapGuildMate
         {
             get { return (minimap & MM_GUILDMATE) == MM_GUILDMATE; }
             set
@@ -739,7 +739,7 @@ namespace Meridian59.Data.Models
         /// <summary>
         /// True if the minimap should show buildergroup dot
         /// </summary>
-        public bool IsBuilderGroup
+        public bool IsMinimapBuilderGroup
         {
             get { return (minimap & MM_BUILDER_GROUP) == MM_BUILDER_GROUP; }
             set
@@ -754,7 +754,7 @@ namespace Meridian59.Data.Models
         /// <summary>
         /// True if the object should get a monster minimap dot.
         /// </summary>
-        public bool IsMonster
+        public bool IsMinimapMonster
         {
             get { return (minimap & MM_MONSTER) == MM_MONSTER; }
             set
@@ -784,7 +784,7 @@ namespace Meridian59.Data.Models
         /// <summary>
         /// Set if a monster is our minion
         /// </summary>
-        public bool IsMinionSelf
+        public bool IsMinimapMinionSelf
         {
             get { return (minimap & MM_MINION_SELF) == MM_MINION_SELF; }
             set
@@ -799,7 +799,7 @@ namespace Meridian59.Data.Models
         /// <summary>
         /// Set if monster is other's minion
         /// </summary>
-        public bool IsMinionOther
+        public bool IsMinimapMinionOther
         {
             get { return (minimap & MM_MINION_OTHER) == MM_MINION_OTHER; }
             set
@@ -814,7 +814,7 @@ namespace Meridian59.Data.Models
         /// <summary>
         /// Set if player has a temporary angel.
         /// </summary>
-        public bool IsTempSafe
+        public bool IsMinimapTempSafe
         {
             get { return (minimap & MM_TEMPSAFE) == MM_TEMPSAFE; }
             set
@@ -829,7 +829,7 @@ namespace Meridian59.Data.Models
         /// <summary>
         /// Set if mob is a miniboss (survival arena).
         /// </summary>
-        public bool IsMiniBoss
+        public bool IsMinimapMiniBoss
         {
             get { return (minimap & MM_MINIBOSS) == MM_MINIBOSS; }
             set
@@ -844,7 +844,7 @@ namespace Meridian59.Data.Models
         /// <summary>
         /// Set if mob is a boss (survival arena).
         /// </summary>
-        public bool IsBoss
+        public bool IsMinimapBoss
         {
             get { return (minimap & MM_BOSS) == MM_BOSS; }
             set
@@ -1311,7 +1311,7 @@ namespace Meridian59.Data.Models
         /// <summary>
         /// True if the object is an enemy player.
         /// </summary>
-        public bool IsEnemy
+        public bool IsMinimapEnemy
         {
             get { return (flags & OF_ENEMY) == OF_ENEMY; }
             set
@@ -1326,7 +1326,7 @@ namespace Meridian59.Data.Models
         /// <summary>
         /// True if the object is a friendly player.
         /// </summary>
-        public bool IsFriend
+        public bool IsMinimapFriend
         {
             get { return (flags & OF_FRIEND) == OF_FRIEND; }
             set
@@ -1341,7 +1341,7 @@ namespace Meridian59.Data.Models
         /// <summary>
         /// True if the object is a guildmate.
         /// </summary>
-        public bool IsGuildMate
+        public bool IsMinimapGuildMate
         {
             get { return (flags & OF_GUILDMATE) == OF_GUILDMATE; }
             set

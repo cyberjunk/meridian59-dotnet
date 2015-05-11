@@ -42,13 +42,24 @@ namespace Meridian59 { namespace Ogre
 		
 		::System::Drawing::Color backgroundColor;
 		::System::Drawing::Graphics^ g;
-        ::System::Drawing::Pen^ wallPen;
-		::System::Drawing::Pen^ purplePen1;
-        ::System::Drawing::SolidBrush^ purpleBrush;
-        ::System::Drawing::SolidBrush^ redBrush;
-        ::System::Drawing::SolidBrush^ blueBrush;
-        ::System::Drawing::SolidBrush^ greenBrush;
-        ::System::Drawing::SolidBrush^ orangeBrush;
+        
+		::System::Drawing::Pen^ penWall;
+		
+		::System::Drawing::SolidBrush^ brushPlayer;
+        ::System::Drawing::SolidBrush^ brushObject;
+        ::System::Drawing::SolidBrush^ brushFriend;
+        ::System::Drawing::SolidBrush^ brushEnemy;
+        ::System::Drawing::SolidBrush^ brushGuildMate;
+
+#if !VANILLA
+		::System::Drawing::SolidBrush^ brushMinion;
+		::System::Drawing::SolidBrush^ brushMinionOther;
+		::System::Drawing::SolidBrush^ brushBuildGroup;
+		::System::Drawing::SolidBrush^ brushNPC;
+		::System::Drawing::SolidBrush^ brushTempSafe;
+		::System::Drawing::SolidBrush^ brushMiniBoss;
+		::System::Drawing::SolidBrush^ brushBoss;
+#endif
 
 		array<::System::Drawing::PointF>^ playerArrowPts;
 

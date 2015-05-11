@@ -8,14 +8,24 @@ namespace Meridian59 { namespace Ogre
 		// default background
         backgroundColor = Color::Transparent;
 
-		wallPen = gcnew Pen(Color::Black, 1.0f);
-		purplePen1 = gcnew Pen(Color::Purple, 1.0f);
-        purpleBrush = gcnew SolidBrush(Color::Purple);
-        redBrush = gcnew SolidBrush(Color::Red);
-        blueBrush = gcnew SolidBrush(Color::Blue);
-        greenBrush = gcnew SolidBrush(Color::Green);
-        orangeBrush = gcnew SolidBrush(Color::Orange);
+		penWall = gcnew Pen(Color::Black, 1.0f);
 
+		brushPlayer		= gcnew SolidBrush(::System::Drawing::Color::FromArgb(MiniMap::COLOR_MAP_PLAYER));
+		brushObject		= gcnew SolidBrush(::System::Drawing::Color::FromArgb(MiniMap::COLOR_MAP_OBJECT));
+		brushFriend		= gcnew SolidBrush(::System::Drawing::Color::FromArgb(MiniMap::COLOR_MAP_FRIEND));
+		brushEnemy		= gcnew SolidBrush(::System::Drawing::Color::FromArgb(MiniMap::COLOR_MAP_ENEMY));
+		brushGuildMate	= gcnew SolidBrush(::System::Drawing::Color::FromArgb(MiniMap::COLOR_MAP_GUILDMATE));
+
+#ifndef VANILLA
+		brushMinion		= gcnew SolidBrush(::System::Drawing::Color::FromArgb(MiniMap::COLOR_MAP_MINION));
+		brushMinionOther= gcnew SolidBrush(::System::Drawing::Color::FromArgb(MiniMap::COLOR_MAP_MINION_OTH));
+		brushBuildGroup = gcnew SolidBrush(::System::Drawing::Color::FromArgb(MiniMap::COLOR_MAP_BUILDGRP));
+		brushNPC		= gcnew SolidBrush(::System::Drawing::Color::FromArgb(MiniMap::COLOR_MAP_NPC));
+		brushTempSafe	= gcnew SolidBrush(::System::Drawing::Color::FromArgb(MiniMap::COLOR_MAP_TEMPSAFE));
+		brushMiniBoss	= gcnew SolidBrush(::System::Drawing::Color::FromArgb(MiniMap::COLOR_MAP_MINIBOSS));
+		brushBoss		= gcnew SolidBrush(::System::Drawing::Color::FromArgb(MiniMap::COLOR_MAP_BOSS));
+#endif
+		
 		playerArrowPts = gcnew array<::System::Drawing::PointF>(3);
 	};
 
@@ -132,7 +142,7 @@ namespace Meridian59 { namespace Ogre
 	void MiniMapCEGUI::DrawWall(RooWall^ Wall, CLRReal x1, CLRReal y1, CLRReal x2, CLRReal y2)
 	{
 		// draw
-        g->DrawLine(wallPen, (float)x1, (float)y1, (float)x2, (float)y2);
+        g->DrawLine(penWall, (float)x1, (float)y1, (float)x2, (float)y2);
 	};
 
 	void MiniMapCEGUI::DrawObject(RoomObject^ RoomObject, CLRReal x, CLRReal y, CLRReal width, CLRReal height)
@@ -141,29 +151,43 @@ namespace Meridian59 { namespace Ogre
         if (RoomObject->Flags->Drawing == ObjectFlags::DrawingType::Invisible)
             return;
 
-        if (RoomObject->Flags->IsEnemy)
-        {
-            // guildenemy
-            g->FillEllipse(orangeBrush, (float)x, (float)y, (float)width, (float)width);
-        }
+		/**********************************************************************************/
 
-        else if (RoomObject->Flags->IsGuildMate)
-        {
-            // guildmate
-            g->FillEllipse(greenBrush, (float)x, (float)y, (float)width, (float)width);
-        }
+#ifndef VANILLA
+		if (RoomObject->Flags->IsMinimapMinionSelf)
+			g->FillEllipse(brushMinion, (float)x, (float)y, (float)width, (float)width);
 
-        else if (RoomObject->Flags->IsPlayer)
-        {
-            // player
-            g->FillEllipse(blueBrush, (float)x, (float)y, (float)width, (float)width);
-        }
+		else if (RoomObject->Flags->IsMinimapMinionOther)
+			g->FillEllipse(brushMinionOther, (float)x, (float)y, (float)width, (float)width);
 
+		else if (RoomObject->Flags->IsMinimapBoss)
+			g->FillEllipse(brushBoss, (float)x, (float)y, (float)width, (float)width);
+
+		else if (RoomObject->Flags->IsMinimapMiniBoss)
+			g->FillEllipse(brushMiniBoss, (float)x, (float)y, (float)width, (float)width);
+
+		else if (RoomObject->Flags->IsMinimapBuilderGroup)
+			g->FillEllipse(brushBuildGroup, (float)x, (float)y, (float)width, (float)width);
+
+		else if (RoomObject->Flags->IsMinimapNPC)
+			g->FillEllipse(brushNPC, (float)x, (float)y, (float)width, (float)width);
+
+		else
+#endif
+		if (RoomObject->Flags->IsMinimapEnemy)
+            g->FillEllipse(brushEnemy, (float)x, (float)y, (float)width, (float)width);
+
+		else if (RoomObject->Flags->IsMinimapGuildMate)
+            g->FillEllipse(brushFriend, (float)x, (float)y, (float)width, (float)width);
+#ifndef VANILLA
+		else if (RoomObject->Flags->IsMinimapTempSafe)
+			g->FillEllipse(brushTempSafe, (float)x, (float)y, (float)width, (float)width);
+#endif
         else if (RoomObject->Flags->IsAttackable)
-        {
-            // attackable: red
-            g->FillEllipse(redBrush, (float)x, (float)y, (float)width, (float)width);
-        }       
+			g->FillEllipse(brushEnemy, (float)x, (float)y, (float)width, (float)width);
+
+		else if (RoomObject->Flags->IsPlayer)
+			g->FillEllipse(brushPlayer, (float)x, (float)y, (float)width, (float)width);
 	};
 
 	void MiniMapCEGUI::DrawAvatar(RoomObject^ RoomObject, V2 P1, V2 P2, V2 P3)
@@ -172,7 +196,7 @@ namespace Meridian59 { namespace Ogre
 		playerArrowPts[1] = PointF(P2.X, P2.Y);
 		playerArrowPts[2] = PointF(P3.X, P3.Y);
 
-		g->FillPolygon(purpleBrush, playerArrowPts);
+		g->FillPolygon(brushPlayer, playerArrowPts);
 	};
 
 	void MiniMapCEGUI::FinishDraw()

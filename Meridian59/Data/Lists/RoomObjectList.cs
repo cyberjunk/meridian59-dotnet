@@ -137,9 +137,9 @@ namespace Meridian59.Data.Lists
 
             foreach (RoomObject entry in this)
             {
-                if (entry.Flags.IsEnemy ||
-                    entry.Flags.IsGuildMate ||
-                    entry.Flags.IsFriend)
+                if (entry.Flags.IsMinimapEnemy ||
+                    entry.Flags.IsMinimapGuildMate ||
+                    entry.Flags.IsMinimapFriend)
                 {
                     list.Add(entry);
                 }    
