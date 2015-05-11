@@ -1029,17 +1029,19 @@ namespace Meridian59 { namespace Ogre
 		public:
 			static ::CEGUI::FrameWindow* Window = nullptr;
 			
-			static ::CEGUI::PushButton* Connections = nullptr;
 			static ::CEGUI::PushButton* Engine = nullptr;
 			static ::CEGUI::PushButton* Input = nullptr;
-			static ::CEGUI::PushButton* Resources = nullptr;
+			static ::CEGUI::PushButton* UI = nullptr;
+			static ::CEGUI::PushButton* Aliases = nullptr;
+			static ::CEGUI::PushButton* About = nullptr;
 
 			static ::CEGUI::TabControl* TabControl = nullptr;
-			static ::CEGUI::Window* TabConnections = nullptr;
 			static ::CEGUI::Window* TabEngine = nullptr;
 			static ::CEGUI::Window* TabInput = nullptr;
-			static ::CEGUI::Window* TabResources = nullptr;
-			
+			static ::CEGUI::Window* TabUI = nullptr;
+			static ::CEGUI::Window* TabAliases = nullptr;
+			static ::CEGUI::Window* TabAbout = nullptr;
+
 			static ::CEGUI::TabControl* TabInputTabControl = nullptr;
 			static ::CEGUI::Window* TabInputTabGeneral = nullptr;
 			static ::CEGUI::Window* TabInputTabActionButtons1 = nullptr;

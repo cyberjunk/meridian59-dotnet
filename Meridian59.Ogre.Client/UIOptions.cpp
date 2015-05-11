@@ -12,17 +12,19 @@ namespace Meridian59 { namespace Ogre
 		Window = static_cast<CEGUI::FrameWindow*>(guiRoot->getChild(UI_NAME_OPTIONS_WINDOW));
 
 		// category buttons
-		Connections = static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_OPTIONS_CONNECTIONS));
 		Engine		= static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_OPTIONS_ENGINE));
 		Input		= static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_OPTIONS_INPUT));
-		Resources	= static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_OPTIONS_RESOURCES));
+		UI			= static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_OPTIONS_UI));
+		Aliases		= static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_OPTIONS_ALIASES));
+		About		= static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_OPTIONS_ABOUT));
 
 		// tabcontrol and tabs
-		TabControl		= static_cast<CEGUI::TabControl*>(Window->getChild(UI_NAME_OPTIONS_TABCONTROL));		
-		TabConnections	= static_cast<CEGUI::Window*>(TabControl->getChild(UI_NAME_OPTIONS_TABCONNECTIONS));
-		TabEngine		= static_cast<CEGUI::Window*>(TabControl->getChild(UI_NAME_OPTIONS_TABENGINE));
-		TabInput		= static_cast<CEGUI::Window*>(TabControl->getChild(UI_NAME_OPTIONS_TABINPUT));
-		TabResources	= static_cast<CEGUI::Window*>(TabControl->getChild(UI_NAME_OPTIONS_TABRESOURCES));
+		TabControl	= static_cast<CEGUI::TabControl*>(Window->getChild(UI_NAME_OPTIONS_TABCONTROL));		
+		TabEngine	= static_cast<CEGUI::Window*>(TabControl->getChild(UI_NAME_OPTIONS_TABENGINE));
+		TabInput	= static_cast<CEGUI::Window*>(TabControl->getChild(UI_NAME_OPTIONS_TABINPUT));
+		TabUI		= static_cast<CEGUI::Window*>(TabControl->getChild(UI_NAME_OPTIONS_TABUI));
+		TabAliases	= static_cast<CEGUI::Window*>(TabControl->getChild(UI_NAME_OPTIONS_TABALIASES));
+		TabAbout	= static_cast<CEGUI::Window*>(TabControl->getChild(UI_NAME_OPTIONS_TABABOUT));
 
 		/******************************************************************************************************/
 
@@ -42,6 +44,7 @@ namespace Meridian59 { namespace Ogre
 		LearnWalk			= static_cast<CEGUI::PushButton*>(TabInputTabGeneral->getChild(UI_NAME_OPTIONS_TABINPUT_TABGENERAL_WALK));
 		LearnAutoMove		= static_cast<CEGUI::PushButton*>(TabInputTabGeneral->getChild(UI_NAME_OPTIONS_TABINPUT_TABGENERAL_AUTOMOVE));
 		LearnNextTarget		= static_cast<CEGUI::PushButton*>(TabInputTabGeneral->getChild(UI_NAME_OPTIONS_TABINPUT_TABGENERAL_NEXTTARGET));
+		LearnSelfTarget		= static_cast<CEGUI::PushButton*>(TabInputTabGeneral->getChild(UI_NAME_OPTIONS_TABINPUT_TABGENERAL_SELFTARGET));
 		LearnOpen			= static_cast<CEGUI::PushButton*>(TabInputTabGeneral->getChild(UI_NAME_OPTIONS_TABINPUT_TABGENERAL_OPEN));
 		LearnClose			= static_cast<CEGUI::PushButton*>(TabInputTabGeneral->getChild(UI_NAME_OPTIONS_TABINPUT_TABGENERAL_CLOSE));
 		MouseAimSpeed		= static_cast<CEGUI::Slider*>(TabInputTabGeneral->getChild(UI_NAME_OPTIONS_TABINPUT_TABGENERAL_MOUSEAIMSPEED));
@@ -258,6 +261,7 @@ namespace Meridian59 { namespace Ogre
 		LearnWalk->setText(keyboard->getAsString(keybinding->Walk));
 		LearnAutoMove->setText(keyboard->getAsString(keybinding->AutoMove));
 		LearnNextTarget->setText(keyboard->getAsString(keybinding->NextTarget));
+		LearnSelfTarget->setText(keyboard->getAsString(keybinding->SelfTarget));
 		LearnOpen->setText(keyboard->getAsString(keybinding->ReqGo));
 		LearnClose->setText(keyboard->getAsString(keybinding->Close));
 
@@ -329,10 +333,11 @@ namespace Meridian59 { namespace Ogre
 		/******************************************************************************************************/
 
 		// subscribe category buttons
-		Connections->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnCategoryButtonClicked));
 		Engine->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnCategoryButtonClicked));
 		Input->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnCategoryButtonClicked));
-		Resources->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnCategoryButtonClicked));
+		UI->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnCategoryButtonClicked));
+		Aliases->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnCategoryButtonClicked));
+		About->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnCategoryButtonClicked));
 
 		/******************************************************************************************************/
 		
@@ -374,6 +379,7 @@ namespace Meridian59 { namespace Ogre
 		LearnWalk->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
 		LearnAutoMove->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
 		LearnNextTarget->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+		LearnSelfTarget->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
 		LearnOpen->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
 		LearnClose->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
 		LearnAction01->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
@@ -434,6 +440,7 @@ namespace Meridian59 { namespace Ogre
 		LearnWalk->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
 		LearnAutoMove->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
 		LearnNextTarget->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+		LearnSelfTarget->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
 		LearnOpen->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
 		LearnClose->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
 		LearnAction01->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
@@ -525,17 +532,20 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
 		const CEGUI::PushButton* btn		= (const CEGUI::PushButton*)args.window;
 
-		if (btn == ControllerUI::Options::Connections)
+		if (btn == ControllerUI::Options::Engine)
 			ControllerUI::Options::TabControl->setSelectedTabAtIndex(0);
 
-		else if (btn == ControllerUI::Options::Engine)
-			ControllerUI::Options::TabControl->setSelectedTabAtIndex(1);
-
 		else if (btn == ControllerUI::Options::Input)
+			ControllerUI::Options::TabControl->setSelectedTabAtIndex(1);
+		
+		else if (btn == ControllerUI::Options::UI)
 			ControllerUI::Options::TabControl->setSelectedTabAtIndex(2);
 
-		else if (btn == ControllerUI::Options::Resources)
+		else if (btn == ControllerUI::Options::Aliases)
 			ControllerUI::Options::TabControl->setSelectedTabAtIndex(3);
+		
+		else if (btn == ControllerUI::Options::About)
+			ControllerUI::Options::TabControl->setSelectedTabAtIndex(4);
 
 		return true;
 	};
@@ -618,237 +628,237 @@ namespace Meridian59 { namespace Ogre
 			keybinding->ActionButton01 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction01->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction02)
 		{
 			keybinding->ActionButton02 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction02->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction03)
 		{
 			keybinding->ActionButton03 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction03->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction04)
 		{
 			keybinding->ActionButton04 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction04->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction05)
 		{
 			keybinding->ActionButton05 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction05->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction06)
 		{
 			keybinding->ActionButton06 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction06->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction07)
 		{
 			keybinding->ActionButton07 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction07->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction08)
 		{
 			keybinding->ActionButton08 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction08->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction09)
 		{
 			keybinding->ActionButton09 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction09->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction10)
 		{
 			keybinding->ActionButton10 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction10->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction11)
 		{
 			keybinding->ActionButton11 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction11->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction12)
 		{
 			keybinding->ActionButton12 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction12->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction13)
 		{
 			keybinding->ActionButton13 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction13->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction14)
 		{
 			keybinding->ActionButton14 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction14->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction15)
 		{
 			keybinding->ActionButton15 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction15->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction16)
 		{
 			keybinding->ActionButton16 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction16->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction17)
 		{
 			keybinding->ActionButton17 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction17->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction18)
 		{
 			keybinding->ActionButton18 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction18->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction19)
 		{
 			keybinding->ActionButton19 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction19->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction20)
 		{
 			keybinding->ActionButton20 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction20->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction21)
 		{
 			keybinding->ActionButton21 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction21->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction22)
 		{
 			keybinding->ActionButton22 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction22->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction23)
 		{
 			keybinding->ActionButton23 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction23->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction24)
 		{
 			keybinding->ActionButton24 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction24->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction25)
 		{
 			keybinding->ActionButton25 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction25->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction26)
 		{
 			keybinding->ActionButton26 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction26->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction27)
 		{
 			keybinding->ActionButton27 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction27->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction28)
 		{
 			keybinding->ActionButton28 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction28->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction29)
 		{
 			keybinding->ActionButton29 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction29->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction30)
 		{
 			keybinding->ActionButton30 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction30->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction31)
 		{
 			keybinding->ActionButton31 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction31->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction32)
 		{
 			keybinding->ActionButton32 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction32->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction33)
 		{
 			keybinding->ActionButton33 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction33->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction34)
 		{
 			keybinding->ActionButton34 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction34->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction35)
 		{
 			keybinding->ActionButton35 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction35->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction36)
 		{
 			keybinding->ActionButton36 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction36->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction37)
 		{
 			keybinding->ActionButton37 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction37->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction38)
 		{
 			keybinding->ActionButton38 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction38->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction39)
 		{
 			keybinding->ActionButton39 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction39->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction40)
 		{
 			keybinding->ActionButton40 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction40->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction41)
 		{
 			keybinding->ActionButton41 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction41->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction42)
 		{
 			keybinding->ActionButton42 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction42->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction43)
 		{
 			keybinding->ActionButton43 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction43->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction44)
 		{
 			keybinding->ActionButton44 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction44->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction45)
 		{
 			keybinding->ActionButton45 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction45->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction46)
 		{
 			keybinding->ActionButton46 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction46->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction47)
 		{
 			keybinding->ActionButton47 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction47->setText(keystr);
 		}
-		else if (btn == ControllerUI::Options::LearnAction01)
+		else if (btn == ControllerUI::Options::LearnAction48)
 		{
 			keybinding->ActionButton48 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction48->setText(keystr);
