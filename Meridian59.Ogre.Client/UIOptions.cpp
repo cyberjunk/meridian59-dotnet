@@ -553,7 +553,7 @@ namespace Meridian59 { namespace Ogre
 	bool UICallbacks::Options::OnKeyLearnKeyUp(const CEGUI::EventArgs& e)
 	{
 		const CEGUI::KeyEventArgs& args = (const CEGUI::KeyEventArgs&)e;
-		const CEGUI::PushButton* btn	= (const CEGUI::PushButton*)args.window;
+		CEGUI::PushButton* btn			= (CEGUI::PushButton*)args.window;
 		::OIS::Keyboard* keyboard		= ControllerInput::OISKeyboard;
 		OISKeyBinding^ keybinding		= OgreClient::Singleton->Config->KeyBinding;
 		const std::string keystr		= keyboard->getAsString((::OIS::KeyCode)args.scancode);
@@ -863,6 +863,9 @@ namespace Meridian59 { namespace Ogre
 			keybinding->ActionButton48 = (::OIS::KeyCode)args.scancode;
 			ControllerUI::Options::LearnAction48->setText(keystr);
 		}
+
+		// deactivate focus
+		btn->deactivate();
 
 		return true;
 	};
