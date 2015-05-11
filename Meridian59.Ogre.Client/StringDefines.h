@@ -633,9 +633,9 @@
 
 #define UI_MINIMAP_CLIPPADDING		13
 
-#define UI_NOTIFICATION_RESTING			"Resting"
-#define UI_NOTIFICATION_PARALYZED		"Paralyzed"
-#define UI_NOTIFICATION_SAVING			"Saving"
+#define UI_NOTIFICATION_RESTING			"RESTING"
+#define UI_NOTIFICATION_PARALYZED		"PARALYZED"
+#define UI_NOTIFICATION_SAVING			"SAVING"
 
 #define UI_TOOLTIPTEXT_HPBAR			"Your hitpoints. Fight monsters to get tougher."
 #define UI_TOOLTIPTEXT_MPBAR			"Your manapoints. Find mana nodes to get more powerful."

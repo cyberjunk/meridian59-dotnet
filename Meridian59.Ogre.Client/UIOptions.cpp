@@ -492,6 +492,66 @@ namespace Meridian59 { namespace Ogre
 		LearnAction47->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
 		LearnAction48->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
 
+		LearnMoveForward->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnMoveBackward->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnMoveLeft->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnMoveRight->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnRotateLeft->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnRotateRight->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnWalk->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAutoMove->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnNextTarget->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnSelfTarget->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnOpen->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnClose->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction01->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction02->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction03->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction04->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction05->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction06->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction07->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction08->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction09->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction10->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction11->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction12->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction13->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction14->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction15->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction16->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction17->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction18->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction19->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction20->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction21->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction22->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction23->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction24->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction25->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction26->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction27->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction28->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction29->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction30->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction31->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction32->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction33->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction34->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction35->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction36->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction37->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction38->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction39->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction40->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction41->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction42->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction43->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction44->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction45->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction46->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction47->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+		LearnAction48->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
 
 		/******************************************************************************************************/
 
@@ -872,14 +932,20 @@ namespace Meridian59 { namespace Ogre
 
 	bool UICallbacks::Options::OnKeyLearnButtonClicked(const CEGUI::EventArgs& e)
 	{
+		const CEGUI::MouseEventArgs& args	= (const CEGUI::MouseEventArgs&)e;
+		CEGUI::PushButton* btn				= (CEGUI::PushButton*)args.window;
+
+		ControllerUI::SplashNotifier::ShowNotification("PRESS A KEY");
+
+		return true;
+	};
+
+	bool UICallbacks::Options::OnKeyLearnButtonDeactivated(const CEGUI::EventArgs& e)
+	{
 		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
 		const CEGUI::PushButton* btn		= (const CEGUI::PushButton*)args.window;
 
-		//if (btn == ControllerUI::Options::LearnMoveForward)
-		//	ControllerUI::Options::LearnMoveForward->setProperty(UI_PROPNAME_NORMALTEXTCOLOUR, "Red");
-
-		//else if (btn == ControllerUI::Options::Engine)
-		//	ControllerUI::Options::TabControl->setSelectedTabAtIndex(1);
+		ControllerUI::SplashNotifier::HideNotification("PRESS A KEY");
 
 		return true;
 	};

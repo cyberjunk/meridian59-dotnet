@@ -10,6 +10,9 @@ namespace Meridian59 { namespace Ogre
 		// setup references to children from xml nodes
 		Window		= static_cast<CEGUI::Window*>(guiRoot->getChild(UI_NAME_SPLASHNOTIFIER_WINDOW));
 		
+		Window->setAlwaysOnTop(true);
+		Window->show();
+
 		// create list with notifications
 		notifications = gcnew ::System::Collections::Generic::List<::System::String^>();
 
@@ -39,15 +42,27 @@ namespace Meridian59 { namespace Ogre
         {
             // set last added notification
             Window->setText(StringConvert::CLRToCEGUI(notifications[notifications->Count - 1]));
-				
-            // show
-			Window->show();
-			Window->moveToFront();
         }
         else
 		{
-            Window->hide();
+			Window->setText(STRINGEMPTY);
 		}
+	};
+
+	void ControllerUI::SplashNotifier::ShowNotification(::System::String^ Text)
+	{
+		if (!notifications->Contains(Text))
+			notifications->Add(Text);
+
+		UpdateNotification();
+	};
+
+	void ControllerUI::SplashNotifier::HideNotification(::System::String^ Text)
+	{
+		if (notifications->Contains(Text))
+			notifications->Remove(Text);
+
+		UpdateNotification();
 	};
 
 	void ControllerUI::SplashNotifier::OnDataPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)

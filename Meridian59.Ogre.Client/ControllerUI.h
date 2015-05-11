@@ -427,6 +427,8 @@ namespace Meridian59 { namespace Ogre
 			static void Initialize();
 			static void Destroy();
 			static void UpdateNotification();
+			static void ShowNotification(::System::String^ Text);
+			static void HideNotification(::System::String^ Text);
 			static void OnDataPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
 			static void OnParalyzePropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
 		};
@@ -1573,6 +1575,8 @@ namespace Meridian59 { namespace Ogre
 
 			static bool OnKeyLearnKeyUp(const CEGUI::EventArgs& e);
 			static bool OnKeyLearnButtonClicked(const CEGUI::EventArgs& e);
+			static bool OnKeyLearnButtonDeactivated(const CEGUI::EventArgs& e);
+
 			static bool OnCategoryButtonClicked(const CEGUI::EventArgs& e);
 
 			static bool OnDisplayChanged(const CEGUI::EventArgs& e);
