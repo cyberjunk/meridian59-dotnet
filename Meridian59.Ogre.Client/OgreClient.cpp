@@ -339,6 +339,7 @@ namespace Meridian59 { namespace Ogre
 		{
 			ControllerUI::Renderer->setDefaultRootRenderTarget(*((::Ogre::RenderTarget*)renderWindow));
 			ControllerUI::Renderer->setDisplaySize(::CEGUI::Sizef((float)actualwidth, (float)actualheight));
+			ControllerUI::PlayerOverlays::WindowResized(actualwidth, actualheight);
 		}
 	};
 

@@ -5,7 +5,7 @@ namespace Meridian59 { namespace Ogre
 	void ControllerUI::PlayerOverlays::Initialize()
 	{	
 		// images are so small for big renderwindows... let's scale them all up a bit
-		scale = 1.5f;
+		scale = guiRoot->getPixelSize().d_width / 800.0f;
 
 		// init imagecomposers list
 		imageComposers = gcnew ::System::Collections::Generic::List<ImageComposerCEGUI<PlayerOverlay^>^>();
@@ -161,10 +161,6 @@ namespace Meridian59 { namespace Ogre
 	{
 		::CEGUI::UVector2 value = ::CEGUI::UVector2();
 
-		// just offsets, no relative
-		value.d_x.d_scale = 0.0f;
-		value.d_y.d_scale = 0.0f;
-
 		// build x-offset
 		switch (ImageComposer->DataSource->RenderPosition)
 		{
@@ -209,10 +205,12 @@ namespace Meridian59 { namespace Ogre
 				break;
 		}
 
-		/*obj_area->x += DibXOffset(pdib);
-		obj_area->y += DibYOffset(pdib);
-		obj_area->cx = DibWidth(pdib);
-		obj_area->cy = DibHeight(pdib);*/
+		// build relative from absolute
+		value.d_x.d_scale = value.d_x.d_offset / guiRoot->getPixelSize().d_width;
+		value.d_y.d_scale = value.d_y.d_offset / guiRoot->getPixelSize().d_height;
+
+		value.d_x.d_offset = 0;
+		value.d_y.d_offset = 0;
 
 		return value;
 	};
@@ -227,5 +225,30 @@ namespace Meridian59 { namespace Ogre
 	{
 		for(int i = 0; i < (int)overlayWindows->size(); i++)		
 			overlayWindows->at(i)->hide();
+	};
+
+	void ControllerUI::PlayerOverlays::WindowResized(int Width, int Height)
+	{
+		if ((int)overlayWindows->size() != imageComposers->Count)
+			return;
+
+		scale = (float)Width / 800.0f;
+
+		for (int i = 0; i < (int)overlayWindows->size(); i++)
+		{
+			// get overlay window
+			CEGUI::Window* window = overlayWindows->at(i);
+			ImageComposerCEGUI<PlayerOverlay^>^ imageComposer = imageComposers[i];
+
+			// calc size with scale
+			float x = scale * imageComposer->RenderInfo->Dimension.X;
+			float y = scale * imageComposer->RenderInfo->Dimension.Y;
+
+			// set size
+			window->setSize(CEGUI::USize(CEGUI::UDim(0, x), CEGUI::UDim(0, y)));
+
+			// set position
+			window->setPosition(GetScreenPositionForHotspot(imageComposer));
+		}
 	};
 };};

@@ -980,6 +980,7 @@ namespace Meridian59 { namespace Ogre
 			static void OnImageAvailable(Object^ sender, ::System::EventArgs^ e);
 			static void HideOverlays();
 			static void ShowOverlays();
+			static void WindowResized(int Width, int Height);
 		};
 
 		/// <summary>
