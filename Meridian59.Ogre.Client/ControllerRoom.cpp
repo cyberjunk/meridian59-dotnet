@@ -9,6 +9,7 @@ namespace Meridian59 { namespace Ogre
 		roomManObj				= nullptr;
 		grassMaterials			= nullptr;
 		grassPoints				= nullptr;
+		waterTextures			= nullptr;
 		caelumSystem			= nullptr;
 		avatarObject			= nullptr;
 		particleSysSnow			= nullptr;
@@ -35,6 +36,7 @@ namespace Meridian59 { namespace Ogre
 		// init collections
 		grassMaterials	= gcnew ::System::Collections::Generic::Dictionary<unsigned short, array<System::String^>^>();
 		grassPoints = gcnew ::System::Collections::Generic::Dictionary<::System::String^, ::System::Collections::Generic::List<V3>^>();
+		waterTextures = gcnew ::System::Collections::Generic::List<::System::String^>();
 
 		// create the queue storing materialnames (chunks of the room) which will be recreated
 		// at the end of the tick
@@ -309,6 +311,7 @@ namespace Meridian59 { namespace Ogre
 		delete grassMaterials;			
 		delete grassPoints;
 		delete recreatequeue;
+		delete waterTextures;
 
 		/******************************************************************/
 
@@ -318,6 +321,7 @@ namespace Meridian59 { namespace Ogre
 		caelumSystem		= nullptr;
 		grassMaterials		= nullptr;
 		grassPoints			= nullptr;
+		waterTextures		= nullptr;
 		avatarObject		= nullptr;
 		recreatequeue		= nullptr;
 		verticesProcessed	= 0;
@@ -915,7 +919,7 @@ namespace Meridian59 { namespace Ogre
 
 		::Ogre::String ostr_texname = StringConvert::CLRToOgre(TextureName);
 		::Ogre::String ostr_matname = StringConvert::CLRToOgre(MaterialName);
-
+		
 		// possibly create texture
         Util::CreateTextureA8R8G8B8(Texture, ostr_texname, TEXTUREGROUP_ROOLOADER);
         
@@ -925,11 +929,20 @@ namespace Meridian59 { namespace Ogre
 		//if (TextureInfo->ScrollSpeed != nullptr)
 		scrollSpeed = &Util::ToOgre(ScrollSpeed);
 
+		if (waterTextures->Contains(TextureName))
+		{
+			Util::CreateMaterialWater(
+				ostr_matname, ostr_texname,
+				MATERIALGROUP_ROOLOADER,
+				scrollSpeed);
+		}
 		// possibly create material			
-		Util::CreateMaterial(
-			ostr_matname, ostr_texname, 
-			MATERIALGROUP_ROOLOADER,
-			scrollSpeed, nullptr, 1.0f);
+		else
+			Util::CreateMaterial(
+				ostr_matname, ostr_texname, 
+				MATERIALGROUP_ROOLOADER,
+				scrollSpeed, nullptr, 1.0f);
+		
 	};
 
 	void ControllerRoom::OnRooFileWallTextureChanged(System::Object^ sender, WallTextureChangedEventArgs^ e)
@@ -1565,5 +1578,39 @@ namespace Meridian59 { namespace Ogre
 
 		// finish read
         reader->Close();
+
+		/////////////////////// WATER ///////////////////////////////////////////////
+
+		// path to water.xml
+		System::String^ waterpath = Path::Combine(path, "water.xml");
+
+		// dont go on if file missing
+		if (!System::IO::File::Exists(waterpath))
+		{
+			// log
+			Logger::Log(MODULENAME, LogType::Warning,
+				"water.xml file missing");
+
+			return;
+		}
+
+		// create reader
+		reader = XmlReader::Create(waterpath);
+
+		// rootnode
+		reader->ReadToFollowing("water");
+
+		// loop entries
+		if (reader->ReadToDescendant("texture"))
+		{
+			do
+			{
+				waterTextures->Add(reader["name"]);
+
+			} while (reader->ReadToNextSibling("texture"));
+		}
+
+		// finish read
+		reader->Close();
 	};
 };};

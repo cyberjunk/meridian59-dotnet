@@ -12,6 +12,7 @@
 
 #define BASEMATERIAL				"base_material"
 #define BASEMATERIALINVISIBLE		"base_material_invisible"
+#define BASEMATERIALWATER			"base_material_water"
 #define TRANSPARENTMATERIAL			"transparent"
 #define TEXTUREUNITALIAS			"diffuseMap"
 #define SHADERCOLORMODIFIER			"colormodifier"

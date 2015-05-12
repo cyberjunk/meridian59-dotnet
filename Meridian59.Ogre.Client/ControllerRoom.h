@@ -84,7 +84,7 @@ namespace Meridian59 { namespace Ogre
 
 		static Dictionary<unsigned short, array<System::String^>^>^ grassMaterials;
 		static Dictionary<::System::String^, ::System::Collections::Generic::List<V3>^>^ grassPoints;
-
+		static List<::System::String^>^ waterTextures;
 		static ::std::vector<::ParticleUniverse::ParticleEventHandler*>* customParticleHandlers;
 
         /// <summary>
