@@ -1310,7 +1310,16 @@ namespace Meridian59.Client
             else if (Data.TargetObject != null)
             {
                 SendReqAttackMessage(Data.TargetObject.ID);
-            }           
+            }     
+      
+            // else attack attackable in front
+            else
+            {
+                RoomObject obj = Data.ClosestAttackableInFront();
+
+                if (obj != null)
+                    SendReqAttackMessage(obj.ID);
+            }
         }
 
         /// <summary>

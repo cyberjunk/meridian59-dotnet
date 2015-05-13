@@ -994,6 +994,44 @@ namespace Meridian59.Data
         }
 
         /// <summary>
+        /// Returns the closest attackble roomobject in front of the avatar.
+        /// </summary>
+        /// <returns></returns>
+        public RoomObject ClosestAttackableInFront()
+        {
+            if (RoomInformation.ResourceRoom == null || AvatarObject == null)
+                return null;
+           
+            // get visible objects within distances
+            List<RoomObject> candidates = avatarObject.GetObjectsWithinDistance(RoomObjects, RoomInformation.ResourceRoom,
+                32.0f, 512.0f, false);
+
+            // get the closest
+            Real dist2;
+            Real mindist2 = Real.MaxValue;
+            RoomObject minObj = null;
+
+            foreach (RoomObject obj in candidates)
+            {
+                if (obj.Flags.IsAttackable)
+                {
+                    // get distsquared
+                    dist2 = AvatarObject.GetDistanceSquared(obj);
+
+                    // closer than last candidate?
+                    if (dist2 < mindist2)
+                    {
+                        // save obj and min dist
+                        mindist2 = dist2;
+                        minObj = obj;
+                    }
+                }
+            }
+
+            return minObj;
+        }
+
+        /// <summary>
         /// Adds a string at the beginning of the chatcommandhistory.
         /// May remove the last element.
         /// </summary>
