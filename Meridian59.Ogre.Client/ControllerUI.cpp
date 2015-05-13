@@ -575,13 +575,16 @@ namespace Meridian59 { namespace Ogre
 	bool UICallbacks::OnRootKeyDown(const CEGUI::EventArgs& e)
 	{
 		const CEGUI::KeyEventArgs& args = static_cast<const CEGUI::KeyEventArgs&>(e);
-
-		// close window on ESC
+		
 		if (args.scancode == CEGUI::Key::Return ||
 			args.scancode == CEGUI::Key::NumpadEnter)
 		{
-			ControllerUI::Chat::Window->setVisible(true);
-			ControllerUI::Chat::Input->activate();
+			// show chatwindow
+			if (OgreClient::Singleton->Data->UIMode == UIMode::Playing)
+			{
+				ControllerUI::Chat::Window->setVisible(true);
+				ControllerUI::Chat::Input->activate();
+			}
 		}
 
 		return true;
