@@ -38,7 +38,6 @@ namespace Meridian59.Drawing2D
     public abstract class MiniMap<T> : ITickable
     {
         #region Constants
-        public const long UPDATEINVERVALMS = 100;
         public const Real DEFAULTZOOM = 4.0f;
         public const Real MINZOOM = 0.05f;
         public const Real MAXZOOM = 20.0f;
@@ -64,7 +63,6 @@ namespace Meridian59.Drawing2D
 #endif
         #endregion
 
-        protected long tickLastUpdate;
         protected Real zoom;
         protected BoundingBox2D scope;
 
@@ -138,12 +136,8 @@ namespace Meridian59.Drawing2D
             RooFile room;
             RoomObject avatar;
 
-            // get elapsed ms since last image draw
-            long msspan = Tick - tickLastUpdate;
-
             // basic checks
-            if (msspan < UPDATEINVERVALMS ||
-                DataController == null ||
+            if (DataController == null ||
                 DataController.AvatarObject == null ||
                 DataController.RoomInformation == null ||
                 DataController.RoomInformation.ResourceRoom == null)
@@ -230,11 +224,7 @@ namespace Meridian59.Drawing2D
             FinishDraw();
                
             // trigger event
-            RaiseImageChanged();
-
-            // save this update tick
-            tickLastUpdate = Tick;
-            
+            RaiseImageChanged();         
         }
 
         /// <summary>
