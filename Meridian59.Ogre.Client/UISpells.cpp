@@ -155,7 +155,7 @@ namespace Meridian59 { namespace Ogre
 		SkillList^ spells = OgreClient::Singleton->Data->AvatarSpells;
 
 		// 1) Return/Enter
-		if (args.scancode == CEGUI::Key::Return ||
+		/*if (args.scancode == CEGUI::Key::Return ||
 			args.scancode == CEGUI::Key::NumpadEnter)
 		{
 			::CEGUI::ItemEntry* itm = list->getFirstSelectedItem();
@@ -171,10 +171,10 @@ namespace Meridian59 { namespace Ogre
 			else			
 				OgreClient::Singleton->SendReqCastMessage(itm->getID());
 			
-		}
+		}*/
 
 		// 2) ESC
-		else if (args.scancode == CEGUI::Key::Escape)
+		if (args.scancode == CEGUI::Key::Escape)
 		{
 			::CEGUI::ItemEntry* itm = list->getFirstSelectedItem();
 

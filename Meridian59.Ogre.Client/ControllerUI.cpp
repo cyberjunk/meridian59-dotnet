@@ -92,7 +92,7 @@ namespace Meridian59 { namespace Ogre
 		// load layout/rootelement
 		guiRoot = CEGUI::WindowManager::getSingleton().loadLayoutFromFile(UI_FILE_LAYOUT); 
 		guiRoot->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::OnRootClicked));
-		guiRoot->subscribeEvent(CEGUI::Window::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::OnKeyUp));
+		guiRoot->subscribeEvent(CEGUI::Window::EventKeyDown, CEGUI::Event::Subscriber(UICallbacks::OnRootKeyDown));
 
 		// set mouse defaultcursor image
 		mouseCursor->setDefaultImage(UI_DEFAULTARROW);		
@@ -582,25 +582,10 @@ namespace Meridian59 { namespace Ogre
 		// close window on ESC
 		if (args.scancode == CEGUI::Key::Escape)
 		{
-			// for windows not rootwindow itself
-			if (args.window != ControllerUI::GUIRoot)
-			{
-				args.window->hide();
+			args.window->hide();
 
-				// mark GUIroot active
-				ControllerUI::ActivateRoot();
-			}
-		}
-
-		// activate chat on return
-		else if (args.scancode == CEGUI::Key::Return || args.scancode == CEGUI::Key::NumpadEnter)
-		{
-			// show chatwindow
-			if (OgreClient::Singleton->Data->UIMode == UIMode::Playing)
-			{
-				ControllerUI::Chat::Window->setVisible(true);
-				ControllerUI::Chat::Input->activate();
-			}
+			// mark GUIroot active
+			ControllerUI::ActivateRoot();
 		}
 
 		return true;
@@ -611,6 +596,24 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::MouseEventArgs& args = static_cast<const CEGUI::MouseEventArgs&>(e);
 
 		ControllerUI::ActivateRoot();
+
+		return true;
+	};
+
+	bool UICallbacks::OnRootKeyDown(const CEGUI::EventArgs& e)
+	{
+		const CEGUI::KeyEventArgs& args = static_cast<const CEGUI::KeyEventArgs&>(e);
+		
+		if (args.scancode == CEGUI::Key::Return ||
+			args.scancode == CEGUI::Key::NumpadEnter)
+		{
+			// show chatwindow
+			if (OgreClient::Singleton->Data->UIMode == UIMode::Playing)
+			{
+				ControllerUI::Chat::Window->setVisible(true);
+				ControllerUI::Chat::Input->activate();
+			}
+		}
 
 		return true;
 	};

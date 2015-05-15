@@ -1165,6 +1165,7 @@ namespace Meridian59 { namespace Ogre
 		static bool OnWindowClosed(const CEGUI::EventArgs& e);
 		static bool OnKeyUp(const CEGUI::EventArgs& e);
 		static bool OnRootClicked(const CEGUI::EventArgs& e);
+		static bool OnRootKeyDown(const CEGUI::EventArgs& e);
 		static bool OnCopyPasteKeyDown(const CEGUI::EventArgs& e);
 		
 		/// <summary>
