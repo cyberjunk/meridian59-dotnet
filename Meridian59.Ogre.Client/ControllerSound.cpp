@@ -25,7 +25,11 @@ namespace Meridian59 { namespace Ogre
 		if (devicecount > 0)
 		{
 			// sound engine options, may be adjusted
-			E_SOUND_ENGINE_OPTIONS options = E_SOUND_ENGINE_OPTIONS::ESEO_DEFAULT_OPTIONS;
+			E_SOUND_ENGINE_OPTIONS options = (E_SOUND_ENGINE_OPTIONS)
+				(E_SOUND_ENGINE_OPTIONS::ESEO_MULTI_THREADED |
+				E_SOUND_ENGINE_OPTIONS::ESEO_LOAD_PLUGINS |
+				E_SOUND_ENGINE_OPTIONS::ESEO_USE_3D_BUFFERS);
+			
 			E_SOUND_OUTPUT_DRIVER driver = E_SOUND_OUTPUT_DRIVER::ESOD_AUTO_DETECT;
 		
 			// try to initialize irrKlang
@@ -38,7 +42,7 @@ namespace Meridian59 { namespace Ogre
 				// sound engine properties
 				soundEngine->setDefault3DSoundMaxDistance(2000.0f);
 				soundEngine->setDefault3DSoundMinDistance(0.0f);
-				soundEngine->setRolloffFactor(0.0f);
+				soundEngine->setRolloffFactor(0.005f);
 			}
 		}
 		else
