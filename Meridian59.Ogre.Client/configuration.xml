@@ -109,6 +109,7 @@
     <disableweathereffects value="False" />
     <weatherparticles value="5000" />
     <musicvolume value="10.0" />
+    <soundvolume value="10.0" />
     <disableloopsounds value="false" />
   </engine>
   <input>

@@ -82,6 +82,7 @@ namespace Meridian59 { namespace Ogre
 		literal ::System::String^ TAG_DISABLEWEATHEREFFECTS = "disableweathereffects";
 		literal ::System::String^ TAG_WEATHERPARTICLES = "weatherparticles";
 		literal ::System::String^ TAG_MUSICVOLUME = "musicvolume";
+		literal ::System::String^ TAG_SOUNDVOLUME = "soundvolume";
 		literal ::System::String^ TAG_DISABLELOOPSOUNDS = "disableloopsounds";
 		literal ::System::String^ TAG_INPUT = "input";
 		literal ::System::String^ TAG_MOUSEAIMSPEED = "mouseaimspeed";
@@ -184,6 +185,7 @@ namespace Meridian59 { namespace Ogre
 		bool DisableWeatherEffects;
 		int WeatherParticles;
 		float MusicVolume;
+		float SoundVolume;
 		bool DisableLoopSounds;
 		OISKeyBinding^ KeyBinding;
 		int MouseAimSpeed;

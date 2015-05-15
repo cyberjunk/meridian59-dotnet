@@ -88,6 +88,9 @@ namespace Meridian59 { namespace Ogre
         /// </summary>
 		static bool IsInitialized;
 
+		/// <summary>
+		/// Manually starts to play given music data
+		/// </summary>
 		static void StartMusic(PlayMusic^ Info);
 
 		/// <summary>
@@ -98,6 +101,7 @@ namespace Meridian59 { namespace Ogre
         static void SetListenerNode(RemoteNode^ AvatarNode);
 
 		static void AdjustMusicVolume();
+		static void AdjustSoundVolume();
 
 		static void HandleGameModeMessage(GameModeMessage^ Message);
 	};

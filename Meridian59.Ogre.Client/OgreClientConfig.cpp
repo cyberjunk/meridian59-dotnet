@@ -79,6 +79,9 @@ namespace Meridian59 { namespace Ogre
 
 		Reader->ReadToFollowing(TAG_MUSICVOLUME);
 		MusicVolume = ::System::Convert::ToSingle(Reader[ATTRIB_VALUE]);
+		
+		Reader->ReadToFollowing(TAG_SOUNDVOLUME);
+		SoundVolume = ::System::Convert::ToSingle(Reader[ATTRIB_VALUE]);
 
 		Reader->ReadToFollowing(TAG_DISABLELOOPSOUNDS);
 		DisableLoopSounds = ::System::Convert::ToBoolean(Reader[ATTRIB_VALUE]);
@@ -398,6 +401,10 @@ namespace Meridian59 { namespace Ogre
 
 		Writer->WriteStartElement(TAG_MUSICVOLUME);
 		Writer->WriteAttributeString(ATTRIB_VALUE, MusicVolume.ToString());
+		Writer->WriteEndElement();
+
+		Writer->WriteStartElement(TAG_SOUNDVOLUME);
+		Writer->WriteAttributeString(ATTRIB_VALUE, SoundVolume.ToString());
 		Writer->WriteEndElement();
 
 		Writer->WriteStartElement(TAG_DISABLELOOPSOUNDS);
