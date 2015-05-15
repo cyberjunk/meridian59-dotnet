@@ -62,9 +62,6 @@ namespace Meridian59 { namespace Ogre
 		Reader->ReadToFollowing(TAG_DECORATIONINTENSITY);
 		DecorationIntensity = ::System::Convert::ToInt32(Reader[ATTRIB_VALUE]);
 
-		Reader->ReadToFollowing(TAG_DECORATIONQUALITY);
-		DecorationQuality = ::System::Convert::ToInt32(Reader[ATTRIB_VALUE]);
-
 		Reader->ReadToFollowing(TAG_DISABLENEWROOMTEXTURES);
 		DisableNewRoomTextures = ::System::Convert::ToBoolean(Reader[ATTRIB_VALUE]);
 
@@ -377,10 +374,6 @@ namespace Meridian59 { namespace Ogre
 
 		Writer->WriteStartElement(TAG_DECORATIONINTENSITY);
 		Writer->WriteAttributeString(ATTRIB_VALUE, DecorationIntensity.ToString());
-		Writer->WriteEndElement();
-
-		Writer->WriteStartElement(TAG_DECORATIONQUALITY);
-		Writer->WriteAttributeString(ATTRIB_VALUE, DecorationQuality.ToString());
 		Writer->WriteEndElement();
 
 		Writer->WriteStartElement(TAG_DISABLENEWROOMTEXTURES);

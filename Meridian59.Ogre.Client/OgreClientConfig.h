@@ -76,7 +76,6 @@ namespace Meridian59 { namespace Ogre
 		literal ::System::String^ TAG_BITMAPSCALING = "bitmapscaling";
 		literal ::System::String^ TAG_TEXTUREQUALITY = "texturequality";
 		literal ::System::String^ TAG_DECORATIONINTENSITY = "decorationintensity";
-		literal ::System::String^ TAG_DECORATIONQUALITY = "decorationquality";
 		literal ::System::String^ TAG_DISABLENEWROOMTEXTURES = "disablenewroomtextures";
 		literal ::System::String^ TAG_DISABLENEWSKY = "disablenewsky";
 		literal ::System::String^ TAG_DISABLE3DMODELS = "disable3dmodels";
@@ -179,7 +178,6 @@ namespace Meridian59 { namespace Ogre
 		::System::String^ BitmapScaling;
 		::System::String^ TextureQuality;
 		int DecorationIntensity;
-		int DecorationQuality;
 		bool DisableNewRoomTextures;
 		bool Disable3DModels;
 		bool DisableNewSky;

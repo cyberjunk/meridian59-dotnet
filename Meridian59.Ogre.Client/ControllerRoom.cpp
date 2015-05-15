@@ -780,7 +780,7 @@ namespace Meridian59 { namespace Ogre
 		const float HALFWIDTH = WIDTH / 2.0f;
 
 		int intensity = OgreClient::Singleton->Config->DecorationIntensity;
-		int numplanes = OgreClient::Singleton->Config->DecorationQuality;
+		int numplanes = 3;
 		::Ogre::Vector3 vec(WIDTH / 2, 0, 0);
 		::Ogre::Quaternion rot;
 
