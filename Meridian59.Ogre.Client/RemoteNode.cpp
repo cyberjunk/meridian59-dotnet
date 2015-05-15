@@ -294,7 +294,7 @@ namespace Meridian59 { namespace Ogre
 			vec3df irrpos;
 			irrpos.X = pos.x;
 			irrpos.Y = pos.y;
-			irrpos.Z = pos.z;
+			irrpos.Z = -pos.z;
 
 			ISound* sound;
 

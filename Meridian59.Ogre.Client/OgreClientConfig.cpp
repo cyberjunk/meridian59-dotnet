@@ -78,10 +78,10 @@ namespace Meridian59 { namespace Ogre
 		WeatherParticles = ::System::Convert::ToInt32(Reader[ATTRIB_VALUE]);
 
 		Reader->ReadToFollowing(TAG_MUSICVOLUME);
-		MusicVolume = ::System::Convert::ToSingle(Reader[ATTRIB_VALUE]);
+		MusicVolume = ::System::Convert::ToSingle(Reader[ATTRIB_VALUE], Config::NumberFormatInfo);
 		
 		Reader->ReadToFollowing(TAG_SOUNDVOLUME);
-		SoundVolume = ::System::Convert::ToSingle(Reader[ATTRIB_VALUE]);
+		SoundVolume = ::System::Convert::ToSingle(Reader[ATTRIB_VALUE], Config::NumberFormatInfo);
 
 		Reader->ReadToFollowing(TAG_DISABLELOOPSOUNDS);
 		DisableLoopSounds = ::System::Convert::ToBoolean(Reader[ATTRIB_VALUE]);
@@ -400,11 +400,11 @@ namespace Meridian59 { namespace Ogre
 		Writer->WriteEndElement();
 
 		Writer->WriteStartElement(TAG_MUSICVOLUME);
-		Writer->WriteAttributeString(ATTRIB_VALUE, MusicVolume.ToString());
+		Writer->WriteAttributeString(ATTRIB_VALUE, MusicVolume.ToString(Config::NumberFormatInfo));
 		Writer->WriteEndElement();
 
 		Writer->WriteStartElement(TAG_SOUNDVOLUME);
-		Writer->WriteAttributeString(ATTRIB_VALUE, SoundVolume.ToString());
+		Writer->WriteAttributeString(ATTRIB_VALUE, SoundVolume.ToString(Config::NumberFormatInfo));
 		Writer->WriteEndElement();
 
 		Writer->WriteStartElement(TAG_DISABLELOOPSOUNDS);

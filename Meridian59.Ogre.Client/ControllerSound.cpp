@@ -125,20 +125,22 @@ namespace Meridian59 { namespace Ogre
 		if (!IsInitialized || !soundEngine || !AvatarNode || !AvatarNode->SceneNode)
 			return;
 		
-		::Ogre::Vector3 position = AvatarNode->SceneNode->getPosition();
-		::Ogre::Vector3 orient = AvatarNode->SceneNode->getOrientation().xAxis();
+		RoomObject^ avatar = OgreClient::Singleton->Data->AvatarObject;
+
+		V3 pos = avatar->Position3D;
+		V2 dir = MathUtil::GetDirectionForRadian(avatar->Angle);
+	
+		vec3df irrpos;
+		irrpos.X = pos.X;
+		irrpos.Y = pos.Y;
+		irrpos.Z = -pos.Z;
+
+		vec3df irrlook;
+		irrlook.X = dir.X;
+		irrlook.Y = 0.0f;
+		irrlook.Z = -dir.Y;
 		
-		vec3df pos;
-		pos.X = position.x;
-		pos.Y = position.y;
-		pos.Z = position.z;
-
-		vec3df look;
-		look.X = orient.x;
-		look.Y = orient.y;
-		look.Z = -orient.z;
-
-		soundEngine->setListenerPosition(pos, look);	
+		soundEngine->setListenerPosition(irrpos, irrlook);
     };
 
 	void ControllerSound::AdjustMusicVolume()
@@ -257,7 +259,7 @@ namespace Meridian59 { namespace Ogre
 					::Ogre::Vector3 pos = attachNode->SceneNode->getPosition();
 					x = pos.x;
 					y = pos.y;
-					z = pos.z;
+					z = -pos.z;
 				}
 			}
 		}
@@ -265,7 +267,19 @@ namespace Meridian59 { namespace Ogre
 		// source given by row/col
 		else if (Message->PlayInfo->Row > 0 && Message->PlayInfo->Column > 0)
 		{
+			// convert the center of the server grid square to coords of roo file
+			x = (float)(Message->PlayInfo->Column - 1) * 1024.0f + 512.0f;
+			z = (float)(Message->PlayInfo->Row - 1) * 1024.0f + 512.0f;
 
+			RooSubSector^ out;
+			
+			if (OgreClient::Singleton->CurrentRoom)
+				y = OgreClient::Singleton->CurrentRoom->GetHeightAt(x, z, out, true, false);
+
+			// scale from roo to client and add 1 based num offset
+			x = (x * 0.0625f) + 64.0f;
+			y = (y * 0.0625f);
+			z = -((z * 0.0625f) + 64.0f);
 		}
 
 		// source is own avatar
@@ -281,7 +295,7 @@ namespace Meridian59 { namespace Ogre
 					::Ogre::Vector3 pos = attachNode->SceneNode->getPosition();
 					x = pos.x;
 					y = pos.y;
-					z = pos.z;
+					z = -pos.z;
 				}
 			}
 		}

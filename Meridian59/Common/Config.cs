@@ -22,6 +22,7 @@ using System.Xml.Serialization;
 using System.ComponentModel;
 using Meridian59.Data.Models;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace Meridian59.Common
 {
@@ -76,6 +77,7 @@ namespace Meridian59.Common
         protected bool preloadmusic;
         protected readonly BindingList<ConnectionInfo> connections = new BindingList<ConnectionInfo>();
         protected int selectedConnectionIndex;
+        public static readonly NumberFormatInfo NumberFormatInfo = new NumberFormatInfo();
         #endregion
 
         #region Properties
@@ -256,6 +258,8 @@ namespace Meridian59.Common
         /// </summary>
         public Config()
         {
+            NumberFormatInfo.NumberDecimalSeparator = ".";
+
             // allow subclasses to init stuff before loading config file
             InitPreConfig();
 
