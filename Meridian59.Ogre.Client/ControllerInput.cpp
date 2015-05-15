@@ -683,7 +683,14 @@ namespace Meridian59 { namespace Ogre
 			Avatar == nullptr ||
 			Avatar->SceneNode == nullptr)
 			return;
-      
+		
+		/*************** SELF TARGET MODIFIER *****************/
+		/*         Process keydown of some specific keys      */
+		/******************************************************/
+
+		// update flag whether selftarget modifier key is down     
+		OgreClient::Singleton->Data->SelfTarget = IsSelfTargetDown;
+
 		/****************** CAMERA PITCH/YAW ******************/
 		/*      Apply frame-based smooth camera pitch/yaw     */
 		/******************************************************/	
@@ -820,14 +827,6 @@ namespace Meridian59 { namespace Ogre
 			}
 		}
 
-		/*************** SPECIAL KEYBOARD KEYS ****************/
-		/*         Process keydown of some specific keys      */
-		/******************************************************/	
-
-		// update flag whether selftarget modifier key is down     
-		if (!ControllerUI::ProcessingInput)
-			OgreClient::Singleton->Data->SelfTarget = IsSelfTargetDown;
-		
 		/********************* MOVEMENT INPUT *****************/
 		/*  left, right, up, down keys or both mouse buttons  */
 		/******************************************************/	
