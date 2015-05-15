@@ -106,13 +106,20 @@ namespace Meridian59.Data.Lists
             if (Prefix == null)
                 return list;
 
-            // possible convert to lowercase
-            string lookfor = (CaseSensitive) ? Prefix : Prefix.ToLower();
-
-            // add matches
-            foreach (StatList entry in this)
-                if (entry.ResourceName != null && entry.ResourceName.IndexOf(lookfor) == 0)
-                    list.Add(entry);
+            if (CaseSensitive)
+            { 
+                // add matches
+                foreach (StatList entry in this)
+                    if (entry.ResourceName != null && entry.ResourceName.IndexOf(Prefix) == 0)
+                        list.Add(entry);
+            }
+            else
+            {
+                // add matches
+                foreach (StatList entry in this)
+                    if (entry.ResourceName != null && entry.ResourceName.ToLower().IndexOf(Prefix.ToLower()) == 0)
+                        list.Add(entry);
+            }
 
             return list;
         }
