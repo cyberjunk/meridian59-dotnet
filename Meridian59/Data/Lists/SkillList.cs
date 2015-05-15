@@ -99,6 +99,24 @@ namespace Meridian59.Data.Lists
             return null;
         }
 
+        public SkillList GetItemsByPrefix(string Prefix, bool CaseSensitive = true)
+        {
+            SkillList list = new SkillList();
+
+            if (Prefix == null)
+                return list;
+
+            // possible convert to lowercase
+            string lookfor = (CaseSensitive) ? Prefix : Prefix.ToLower();
+
+            // add matches
+            foreach (StatList entry in this)
+                if (entry.ResourceName != null && entry.ResourceName.IndexOf(lookfor) == 0)
+                    list.Add(entry);
+
+            return list;
+        }
+
         public bool RemoveByNum(uint Num)
         {
             bool returnValue = false;
