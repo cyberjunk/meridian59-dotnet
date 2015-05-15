@@ -11,12 +11,12 @@ namespace Meridian59 { namespace Ogre
 		// attach listener to avatar spells
 		OgreClient::Singleton->Data->AvatarSpells->ListChanged += 
 			gcnew ListChangedEventHandler(OnSpellsListChanged);
-		
+
 		// subscribe close button
 		Window->subscribeEvent(CEGUI::FrameWindow::EventCloseClicked, CEGUI::Event::Subscriber(UICallbacks::OnWindowClosed));
 
 		// subscribe keyup
-		Window->subscribeEvent(CEGUI::FrameWindow::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::OnKeyUp));
+		Window->subscribeEvent(CEGUI::FrameWindow::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Spells::OnKeyUp));
 	};
 
 	void ControllerUI::Spells::Destroy()
@@ -146,6 +146,127 @@ namespace Meridian59 { namespace Ogre
 				}
 			}
 		}
+	};
+
+	bool UICallbacks::Spells::OnKeyUp(const CEGUI::EventArgs& e)
+	{
+		const CEGUI::KeyEventArgs& args = (const CEGUI::KeyEventArgs&)e;
+		::CEGUI::ItemListbox* list = ControllerUI::Spells::List;
+		SkillList^ spells = OgreClient::Singleton->Data->AvatarSpells;
+
+		// 1) Return/Enter
+		if (args.scancode == CEGUI::Key::Return ||
+			args.scancode == CEGUI::Key::NumpadEnter)
+		{
+			::CEGUI::ItemEntry* itm = list->getFirstSelectedItem();
+
+			// activate chat if no selection
+			if (!itm)
+			{
+				ControllerUI::Chat::Window->setVisible(true);
+				ControllerUI::Chat::Input->activate();			
+			}
+
+			// otherwise try to cast the spell
+			else			
+				OgreClient::Singleton->SendReqCastMessage(itm->getID());
+			
+		}
+
+		// 2) ESC
+		else if (args.scancode == CEGUI::Key::Escape)
+		{
+			::CEGUI::ItemEntry* itm = list->getFirstSelectedItem();
+
+			// if selection, unset
+			if (itm)			
+				list->clearAllSelections();
+			
+			// if no selection, close window
+			else
+			{
+				args.window->hide();
+
+				// mark GUIroot active
+				ControllerUI::ActivateRoot();
+			}
+		}
+
+		// 3) ArrowDown
+		else if (args.scancode == CEGUI::Key::ArrowDown)
+		{
+			::CEGUI::ItemEntry* itm = list->getFirstSelectedItem();
+			
+			if (itm)
+			{
+				size_t idx = list->getItemIndex(itm);
+				idx++;
+
+				if (idx < list->getItemCount())
+				{
+					::CEGUI::ItemEntry* nextitm = list->getItemFromIndex(idx);
+					nextitm->setSelected(true);
+					list->ensureItemIsVisibleVert(*nextitm);
+				}
+			}		
+		}
+
+		// 4) ArrowUp
+		else if (args.scancode == CEGUI::Key::ArrowUp)
+		{
+			::CEGUI::ItemEntry* itm = list->getFirstSelectedItem();
+
+			if (itm)
+			{
+				size_t idx = list->getItemIndex(itm);
+				
+				if (idx > 0)
+				{
+					idx--;
+
+					if (idx < list->getItemCount())
+					{
+						::CEGUI::ItemEntry* nextitm = list->getItemFromIndex(idx);
+						nextitm->setSelected(true);
+						list->ensureItemIsVisibleVert(*nextitm);
+					}
+				}
+			}
+		}
+
+		// 5) Jump to item with startletter
+		else
+		{
+			if (!ControllerInput::OISKeyboard)
+				return true;
+
+			// convert keycode to char
+			const ::std::string cstr = ControllerInput::OISKeyboard->getAsString((::OIS::KeyCode)args.scancode);
+
+			// get spells with prefix
+			SkillList^ items = spells->GetItemsByPrefix(StringConvert::OgreToCLR(cstr), false);
+
+			// must have 1 match
+			if (items->Count == 0)
+				return true;
+
+			// look it up by id
+			for (size_t i = 0; i < list->getItemCount(); i++)
+			{
+				::CEGUI::ItemEntry* itm = list->getItemFromIndex(i);
+
+				if (itm->getID() != items[0]->ObjectID)
+					continue;
+
+				// select & scroll
+				itm->setSelected(true);
+				list->ensureItemIsVisibleVert(*itm);
+				
+				break;
+			}
+		}
+
+		return true;
 	};
 
 	bool UICallbacks::Spells::OnItemClicked(const CEGUI::EventArgs& e)

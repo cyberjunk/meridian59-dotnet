@@ -67,8 +67,8 @@ namespace Meridian59 { namespace Ogre
 		static void Destroy();
 		static void Tick(long long Tick, long long Span);
 		static void ToggleVisibility(::CEGUI::Window* Window);
+		static bool IsRecursiveChildOf(::CEGUI::Window* Child, ::CEGUI::Window* Parent);
 		static void ActivateRoot();
-		
 		static void PasteFromClipboard(::CEGUI::Window* EditBox);
 		static void CopyToClipboard(::CEGUI::Window* EditBox, bool Cut);
 		
@@ -1165,7 +1165,7 @@ namespace Meridian59 { namespace Ogre
 		static bool OnWindowClosed(const CEGUI::EventArgs& e);
 		static bool OnKeyUp(const CEGUI::EventArgs& e);
 		static bool OnRootClicked(const CEGUI::EventArgs& e);
-		static bool OnRootKeyDown(const CEGUI::EventArgs& e);
+		static bool OnRootKeyUp(const CEGUI::EventArgs& e);
 		static bool OnCopyPasteKeyDown(const CEGUI::EventArgs& e);
 		
 		/// <summary>
@@ -1334,6 +1334,7 @@ namespace Meridian59 { namespace Ogre
 		class Spells
 		{
 		public:
+			static bool OnKeyUp(const CEGUI::EventArgs& e);
 			static bool OnItemClicked(const CEGUI::EventArgs& e);
 			static bool OnItemDoubleClicked(const CEGUI::EventArgs& e);
 		};

@@ -92,7 +92,7 @@ namespace Meridian59 { namespace Ogre
 		// load layout/rootelement
 		guiRoot = CEGUI::WindowManager::getSingleton().loadLayoutFromFile(UI_FILE_LAYOUT); 
 		guiRoot->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::OnRootClicked));
-		guiRoot->subscribeEvent(CEGUI::Window::EventKeyDown, CEGUI::Event::Subscriber(UICallbacks::OnRootKeyDown));
+		guiRoot->subscribeEvent(CEGUI::Window::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::OnRootKeyUp));
 
 		// set mouse defaultcursor image
 		mouseCursor->setDefaultImage(UI_DEFAULTARROW);		
@@ -228,11 +228,20 @@ namespace Meridian59 { namespace Ogre
 			focusedControl = guiRoot->getActiveChild();
 			processingInput = false;
 
+			// 1) Null focus, make sure the root is the focused window
 			if (!focusedControl)
 			{
 				guiRoot->activate();
 				focusedControl = guiRoot;
 			}
+
+			// 2) A subwindow is selected which consumes all input
+			else if (IsRecursiveChildOf(focusedControl, Spells::Window))
+			{
+				processingInput = true;
+			}
+
+			// 3) Specifi UI elements always consume all input (like textboxes)
 			else
 			{			
 				const CEGUI::String type = focusedControl->getType();
@@ -290,6 +299,25 @@ namespace Meridian59 { namespace Ogre
 				Window->moveToFront();
 			}
 		}
+	};
+	
+	bool ControllerUI::IsRecursiveChildOf(::CEGUI::Window* Child, ::CEGUI::Window* Parent)
+	{
+		if (!Child || !Parent)
+			return false;
+
+		if (Child == Parent)
+			return true;
+
+		while (Child->getParent())	
+		{
+			if (Child->getParent() == Parent)
+				return true;
+
+			Child = Child->getParent();
+		}
+
+		return false;
 	};
 
 	void ControllerUI::ActivateRoot()
@@ -572,7 +600,7 @@ namespace Meridian59 { namespace Ogre
 		return true;
 	};
 
-	bool UICallbacks::OnRootKeyDown(const CEGUI::EventArgs& e)
+	bool UICallbacks::OnRootKeyUp(const CEGUI::EventArgs& e)
 	{
 		const CEGUI::KeyEventArgs& args = static_cast<const CEGUI::KeyEventArgs&>(e);
 		
