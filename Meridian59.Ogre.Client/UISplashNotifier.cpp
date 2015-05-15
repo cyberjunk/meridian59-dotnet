@@ -13,6 +13,9 @@ namespace Meridian59 { namespace Ogre
 		Window->setAlwaysOnTop(true);
 		Window->show();
 
+		// must disable so not recognized as TopControl on hittest
+		Window->disable();
+
 		// create list with notifications
 		notifications = gcnew ::System::Collections::Generic::List<::System::String^>();
 
