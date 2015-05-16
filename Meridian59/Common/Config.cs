@@ -476,6 +476,22 @@ namespace Meridian59.Common
             writer.WriteEndElement();
 
             /******************************************************************************/
+            // PART III: Aliases
+
+            writer.WriteStartElement(XMLTAG_ALIASES);
+
+            for (int i = 0; i < aliases.Count; i++)
+            {
+                // alias
+                writer.WriteStartElement(XMLTAG_ALIAS);
+                writer.WriteAttributeString(XMLATTRIB_KEY, aliases[i].Key);
+                writer.WriteAttributeString(XMLATTRIB_VALUE, aliases[i].Value);
+                writer.WriteEndElement();
+            }
+
+            writer.WriteEndElement();
+
+            /******************************************************************************/
 
             // let deriving classes write their stuff
             WriteXml(writer);
