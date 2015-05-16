@@ -270,11 +270,18 @@ namespace Meridian59.Common
         #endregion
 
         /// <summary>
+        /// Static constructor
+        /// </summary>
+        static Config()
+        {
+            NumberFormatInfo.NumberDecimalSeparator = ".";
+        }
+
+        /// <summary>
         /// Constructor. Will load configuration file directly.
         /// </summary>
         public Config()
         {
-            NumberFormatInfo.NumberDecimalSeparator = ".";
 
             // keep aliases sorted by key
             aliases.SortByKey();
