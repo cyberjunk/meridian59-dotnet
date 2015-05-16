@@ -1147,7 +1147,14 @@ namespace Meridian59 { namespace Ogre
 			static ::CEGUI::PushButton* LearnAction47 = nullptr;
 			static ::CEGUI::PushButton* LearnAction48 = nullptr;
 
+			//
+			static ::CEGUI::ItemListbox* ListAliases = nullptr;
+
+			static void AliasAdd(int Index);
+			static void AliasRemove(int Index);
+
 			static void OnConfigPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
+			static void OnAliasListChanged(Object^ sender, ListChangedEventArgs^ e);
 
 			static void Initialize();
 			static void Destroy();			
@@ -1610,6 +1617,8 @@ namespace Meridian59 { namespace Ogre
 			static bool OnInvertMouseYChanged(const CEGUI::EventArgs& e);
 			static bool OnMouseAimSpeedChanged(const CEGUI::EventArgs& e);
 			static bool OnKeyRotateSpeedChanged(const CEGUI::EventArgs& e);
+
+			static bool OnAliasDeleteClicked(const CEGUI::EventArgs& e);
 		};
 	};
 #pragma endregion

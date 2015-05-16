@@ -128,12 +128,16 @@ namespace Meridian59 { namespace Ogre
 		SoundVolume		= static_cast<CEGUI::Slider*>(TabEngine->getChild(UI_NAME_OPTIONS_TABENGINE_SOUNDVOLUME));
 		DisableLoopSounds = static_cast<CEGUI::ToggleButton*>(TabEngine->getChild(UI_NAME_OPTIONS_TABENGINE_DISABLELOOPSOUNDS));
 		
-		PreloadRooms = static_cast<CEGUI::ToggleButton*>(TabEngine->getChild(UI_NAME_OPTIONS_TABENGINE_PRELOADROOMS));
+		PreloadRooms	= static_cast<CEGUI::ToggleButton*>(TabEngine->getChild(UI_NAME_OPTIONS_TABENGINE_PRELOADROOMS));
 		PreloadRoomTextures = static_cast<CEGUI::ToggleButton*>(TabEngine->getChild(UI_NAME_OPTIONS_TABENGINE_PRELOADROOMTEXTURES));
-		PreloadObjects = static_cast<CEGUI::ToggleButton*>(TabEngine->getChild(UI_NAME_OPTIONS_TABENGINE_PRELOADOBJECTS));
-		PreloadSounds = static_cast<CEGUI::ToggleButton*>(TabEngine->getChild(UI_NAME_OPTIONS_TABENGINE_PRELOADSOUNDS));
-		PreloadMusic = static_cast<CEGUI::ToggleButton*>(TabEngine->getChild(UI_NAME_OPTIONS_TABENGINE_PRELOADMUSIC));
+		PreloadObjects	= static_cast<CEGUI::ToggleButton*>(TabEngine->getChild(UI_NAME_OPTIONS_TABENGINE_PRELOADOBJECTS));
+		PreloadSounds	= static_cast<CEGUI::ToggleButton*>(TabEngine->getChild(UI_NAME_OPTIONS_TABENGINE_PRELOADSOUNDS));
+		PreloadMusic	= static_cast<CEGUI::ToggleButton*>(TabEngine->getChild(UI_NAME_OPTIONS_TABENGINE_PRELOADMUSIC));
 
+		/******************************************************************************************************/
+
+		// tabaliases
+		ListAliases = static_cast<CEGUI::ItemListbox*>(TabAliases->getChild(UI_NAME_OPTIONS_TABALIASES_ALIASES));
 		
 		/******************************************************************************************************/
 		/*                                  PREPARE / SET: ENGINE                                             */
@@ -234,6 +238,13 @@ namespace Meridian59 { namespace Ogre
 		PreloadObjects->setSelected(OgreClient::Singleton->Config->PreloadObjects);
 		PreloadSounds->setSelected(OgreClient::Singleton->Config->PreloadSound);
 		PreloadMusic->setSelected(OgreClient::Singleton->Config->PreloadMusic);
+
+		/******************************************************************************************************/
+		/*                                  PREPARE / SET: ALIASES                                            */
+		/******************************************************************************************************/
+
+		for (int i = 0; i < OgreClient::Singleton->Config->Aliases->Count; i++)		
+			AliasAdd(i);		
 
 		/******************************************************************************************************/
 		/*                                  PREPARE / SET: INPUT                                              */
@@ -574,6 +585,10 @@ namespace Meridian59 { namespace Ogre
 		// attach listener to config
 		OgreClient::Singleton->Config->PropertyChanged +=
 			gcnew PropertyChangedEventHandler(OnConfigPropertyChanged);
+
+		// attach listener to aliases
+		OgreClient::Singleton->Config->Aliases->ListChanged +=
+			gcnew ListChangedEventHandler(OnAliasListChanged);
 	};
 
 	void ControllerUI::Options::Destroy()
@@ -582,10 +597,75 @@ namespace Meridian59 { namespace Ogre
 		OgreClient::Singleton->Config->PropertyChanged -=
 			gcnew PropertyChangedEventHandler(OnConfigPropertyChanged);
 
+		// detach listener from aliases
+		OgreClient::Singleton->Config->Aliases->ListChanged -=
+			gcnew ListChangedEventHandler(OnAliasListChanged);
 	};
 
 	void ControllerUI::Options::OnConfigPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{
+	};
+
+	void ControllerUI::Options::OnAliasListChanged(Object^ sender, ListChangedEventArgs^ e)
+	{
+		switch (e->ListChangedType)
+		{
+		case ::System::ComponentModel::ListChangedType::ItemAdded:
+			AliasAdd(e->NewIndex);
+			break;
+
+		case ::System::ComponentModel::ListChangedType::ItemDeleted:
+			AliasRemove(e->NewIndex);
+			break;
+		}
+	};
+
+	void ControllerUI::Options::AliasAdd(int Index)
+	{
+		CEGUI::WindowManager* wndMgr	= CEGUI::WindowManager::getSingletonPtr();
+		KeyValuePairString^ alias		= OgreClient::Singleton->Config->Aliases[Index];
+
+		// create widget (item)
+		CEGUI::ItemEntry* widget = (CEGUI::ItemEntry*)wndMgr->createWindow(
+			UI_WINDOWTYPE_ALIASLISTBOXITEM);
+
+		// get children
+		CEGUI::PushButton* del	= (CEGUI::PushButton*)widget->getChildAtIdx(UI_OPTIONS_CHILDINDEX_ALIAS_DELETE);
+		CEGUI::Editbox* key		= (CEGUI::Editbox*)widget->getChildAtIdx(UI_OPTIONS_CHILDINDEX_ALIAS_KEY);
+		CEGUI::Editbox* value	= (CEGUI::Editbox*)widget->getChildAtIdx(UI_OPTIONS_CHILDINDEX_ALIAS_VALUE);
+
+		// set values
+		key->setText(StringConvert::CLRToCEGUI(alias->Key));
+		value->setText(StringConvert::CLRToCEGUI(alias->Value));
+
+		// subscribe del event
+		del->subscribeEvent(
+			CEGUI::PushButton::EventClicked,
+			CEGUI::Event::Subscriber(UICallbacks::Options::OnAliasDeleteClicked));
+
+		// subscribe events
+		/*rank->subscribeEvent(
+		CEGUI::Combobox::EventListSelectionAccepted,
+		CEGUI::Event::Subscriber(UICallbacks::Guild::OnRankSelectionChanged));
+
+		// subscribe checked event
+		supported->subscribeEvent(
+		CEGUI::ToggleButton::EventSelectStateChanged,
+		CEGUI::Event::Subscriber(UICallbacks::Guild::OnSupportedSelectStateChanged));*/
+
+		// insert in ui-list
+		if ((int)ListAliases->getItemCount() > Index)
+			ListAliases->insertItem(widget, ListAliases->getItemFromIndex(Index));
+
+		// or add
+		else
+			ListAliases->addItem(widget);
+	};
+
+	void ControllerUI::Options::AliasRemove(int Index)
+	{
+		if ((int)ListAliases->getItemCount() > Index)
+			ListAliases->removeItem(ListAliases->getItemFromIndex(Index));
 	};
 
 	bool UICallbacks::Options::OnCategoryButtonClicked(const CEGUI::EventArgs& e)
@@ -1698,6 +1778,20 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::Slider* slider			= (const CEGUI::Slider*)args.window;
 
 		OgreClient::Singleton->Config->KeyRotateSpeed = (int)slider->getCurrentValue();
+
+		return true;
+	};
+
+	bool UICallbacks::Options::OnAliasDeleteClicked(const CEGUI::EventArgs& e)
+	{
+		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
+		const CEGUI::PushButton* btn		= (const CEGUI::PushButton*)args.window;
+
+		CEGUI::ItemListbox* list = ControllerUI::Options::ListAliases;
+
+		size_t idx = list->getItemIndex((CEGUI::ItemEntry*)btn->getParent());
+
+		OgreClient::Singleton->Config->Aliases->RemoveAt(idx);
 
 		return true;
 	};
