@@ -68,8 +68,10 @@ namespace Meridian59.Data.Models
             { 
                 alias = lower.Substring(0, idx);
 
-                if (Config.Aliases.TryGetValue(alias, out alias))               
-                    lower = alias + lower.Substring(idx + 1);            
+                KeyValuePairString aliascmd = Config.Aliases.GetItemByKey(alias);
+
+                if (aliascmd != null)
+                    lower = aliascmd.Value + lower.Substring(idx + 1);            
             }
 
             /**********************************************************************/

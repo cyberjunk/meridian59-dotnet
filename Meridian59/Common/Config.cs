@@ -23,6 +23,7 @@ using System.ComponentModel;
 using Meridian59.Data.Models;
 using System.Collections.Generic;
 using System.Globalization;
+using Meridian59.Data.Lists;
 
 namespace Meridian59.Common
 {
@@ -84,7 +85,7 @@ namespace Meridian59.Common
         protected bool preloadmusic;
         protected readonly BindingList<ConnectionInfo> connections = new BindingList<ConnectionInfo>();
         protected int selectedConnectionIndex;
-        protected readonly Dictionary<string, string> aliases = new Dictionary<string, string>();
+        protected readonly KeyValuePairStringList aliases = new KeyValuePairStringList();
         #endregion
 
         #region Properties
@@ -246,7 +247,7 @@ namespace Meridian59.Common
         /// <summary>
         /// 
         /// </summary>
-        public Dictionary<string, string> Aliases
+        public KeyValuePairStringList Aliases
         {
             get { return aliases; }
         }
@@ -395,8 +396,7 @@ namespace Meridian59.Common
                     string val = reader[XMLATTRIB_VALUE];
                    
                     // add alias
-                    if (!aliases.ContainsKey(key))
-                        aliases.Add(key, val);                
+                    aliases.Add(new KeyValuePairString(key, val));                
                 }
                 while (reader.ReadToNextSibling(XMLTAG_ALIAS));
             }

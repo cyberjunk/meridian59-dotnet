@@ -112,6 +112,7 @@
     <Compile Include="Common\Outfitter.cs" />
     <Compile Include="Common\Polygon.cs" />
     <Compile Include="Common\Util.cs" />
+    <Compile Include="Data\Lists\KeyValuePairStringList.cs" />
     <Compile Include="Data\Lists\MailList.cs" />
     <Compile Include="Data\Lists\RoomObjectListFiltered.cs" />
     <Compile Include="Data\Models\CharCreationInfo.cs" />
@@ -136,6 +137,7 @@
     <Compile Include="Data\Models\GuildShieldInfo.cs" />
     <Compile Include="Data\Models\ObjectContents.cs" />
     <Compile Include="Data\Models\PlayerOverlay.cs" />
+    <Compile Include="Data\Models\KeyValuePairString.cs" />
     <Compile Include="Data\Models\RoomInfoFlags.cs" />
     <Compile Include="Data\Models\UserCommand\UserCommandClaimShield.cs" />
     <Compile Include="Data\Models\UserCommand\UserCommandGrouping.cs" />
