@@ -40,25 +40,39 @@ namespace Meridian59.Data.Models
         /// </summary>
         /// <param name="Text">Text input to parse</param>
         /// <param name="DataController">Reference to DataController instance</param>
+        /// <param name="Config">Reference to Config instance</param>
         /// <returns></returns>
-        public static ChatCommand Parse(string Text, DataController DataController)
+        public static ChatCommand Parse(string Text, DataController DataController, Config Config)
         {            
-            string command                  = null;
-            string lower                    = null;
-            string text                     = null;
-            string[] splitted               = null;
-            ChatCommand returnValue         = null;
+            string command          = null;
+            string lower            = null;
+            string text             = null;
+            string alias            = null;
+            string[] splitted       = null;
+            ChatCommand returnValue = null;
             
-            // null check
-            if (Text == null)
+            /**********************************************************************/
+
+            if (Text == null || DataController == null || Config == null)
                 return null;
 
-            // trim text
             lower = Text.Trim();
 
-            // empty string check
             if (String.Equals(lower, String.Empty))
                 return null;
+
+            /**********************************************************************/
+
+            int idx = lower.IndexOf(DELIMITER);
+            if (idx > -1 && idx < lower.Length - 1)
+            { 
+                alias = lower.Substring(0, idx);
+
+                if (Config.Aliases.TryGetValue(alias, out alias))               
+                    lower = alias + lower.Substring(idx + 1);            
+            }
+
+            /**********************************************************************/
 
             // split up by delimiter
             splitted = lower.Split(DELIMITER);
@@ -69,7 +83,7 @@ namespace Meridian59.Data.Models
 
             // command is first argument
             command = splitted[0];
-            
+
             // select command
             switch (command)
             {

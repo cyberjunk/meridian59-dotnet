@@ -43,13 +43,16 @@ namespace Meridian59.Common
         public const string PROPNAME_RESOURCESVERSION           = "ResourcesVersion";
         public const string PROPNAME_CONNECTIONS                = "Connections";
         public const string PROPNAME_SELECTEDCONNECTIONINDEX    = "SelectedConnectionIndex";
-
+        public const string PROPNAME_ALIASES                    = "Aliases";
+        
         protected const string XMLTAG_CONFIGURATION             = "configuration";
         protected const string XMLTAG_RESOURCES                 = "resources";
         protected const string XMLTAG_CONNECTIONS               = "connections";
         protected const string XMLTAG_CONNECTION                = "connection";
         protected const string XMLTAG_IGNORELIST                = "ignorelist";
-        protected const string XMLTAG_IGNORE                    = "ignore";       
+        protected const string XMLTAG_IGNORE                    = "ignore";
+        protected const string XMLTAG_ALIASES                   = "aliases";
+        protected const string XMLTAG_ALIAS                     = "alias";
         protected const string XMLATTRIB_VERSION                = "version";
         protected const string XMLATTRIB_PATH                   = "path";
         protected const string XMLATTRIB_PRELOADROOMS           = "preloadrooms";
@@ -65,8 +68,12 @@ namespace Meridian59.Common
         protected const string XMLATTRIB_USERNAME               = "username";
         protected const string XMLATTRIB_PASSWORD               = "password";
         protected const string XMLATTRIB_SELECTEDINDEX          = "selectedindex";
+        protected const string XMLATTRIB_KEY                    = "key"; 
+        protected const string XMLATTRIB_VALUE                  = "value";
         #endregion
-      
+        
+        public static readonly NumberFormatInfo NumberFormatInfo = new NumberFormatInfo();
+        
         #region Fields
         protected uint resourcesversion;
         protected string resourcespath;
@@ -77,7 +84,7 @@ namespace Meridian59.Common
         protected bool preloadmusic;
         protected readonly BindingList<ConnectionInfo> connections = new BindingList<ConnectionInfo>();
         protected int selectedConnectionIndex;
-        public static readonly NumberFormatInfo NumberFormatInfo = new NumberFormatInfo();
+        protected readonly Dictionary<string, string> aliases = new Dictionary<string, string>();
         #endregion
 
         #region Properties
@@ -235,6 +242,14 @@ namespace Meridian59.Common
                     connections[selectedConnectionIndex] : null;
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Dictionary<string, string> Aliases
+        {
+            get { return aliases; }
+        }
         #endregion
 
         #region INotifyPropertyChanged
@@ -364,6 +379,26 @@ namespace Meridian59.Common
                         ignorelist));
                 }
                 while (reader.ReadToNextSibling(XMLTAG_CONNECTION));
+            }
+
+            /******************************************************************************/
+            // PART III: Aliases
+
+            if (!reader.ReadToFollowing(XMLTAG_ALIASES))
+                return;
+
+            if (reader.ReadToDescendant(XMLTAG_ALIAS))
+            {
+                do
+                {
+                    string key = reader[XMLATTRIB_KEY];
+                    string val = reader[XMLATTRIB_VALUE];
+                   
+                    // add alias
+                    if (!aliases.ContainsKey(key))
+                        aliases.Add(key, val);                
+                }
+                while (reader.ReadToNextSibling(XMLTAG_ALIAS));
             }
 
             /******************************************************************************/

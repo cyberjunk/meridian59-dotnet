@@ -155,8 +155,6 @@ namespace Meridian59 { namespace Ogre
 
 		literal ::System::String^ ATTRIB_COUNT = "count";
 		literal ::System::String^ ATTRIB_ENABLED = "enabled";
-		literal ::System::String^ ATTRIB_VALUE = "value";
-		literal ::System::String^ ATTRIB_KEY = "key";
 		literal ::System::String^ ATTRIB_TYPE = "type";
 		literal ::System::String^ ATTRIB_PLAYER = "player";
 		literal ::System::String^ ATTRIB_NUM = "num";

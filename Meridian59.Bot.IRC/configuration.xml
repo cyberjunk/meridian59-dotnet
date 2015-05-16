@@ -52,6 +52,8 @@
     </connection>
   </connections>
   
+  <aliases />
+  
   <!-- 
     CONNECTION:
       character: your shopcharacter to log in

@@ -56,6 +56,8 @@
     </connection>
   </connections>
 
+  <aliases />
+  
   <!-- 
     CONNECTION:
       character: name of your character to log in

@@ -90,6 +90,7 @@
     </connection>
     
   </connections>
+  <aliases />
   <engine>
     <display value="0" />
     <resolution value="1280 x 720 @ 32-bit colour" />

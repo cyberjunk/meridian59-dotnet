@@ -55,6 +55,8 @@
       <ignorelist />
     </connection>
   </connections>
+
+  <aliases />
   
   <!-- 
     CONNECTION:

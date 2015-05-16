@@ -2485,7 +2485,7 @@ namespace Meridian59.Client
             Data.ChatCommandHistoryAdd(Text);
 
             // parse chatcommand
-            ChatCommand chatCommand = ChatCommand.Parse(Text, Data);
+            ChatCommand chatCommand = ChatCommand.Parse(Text, Data, Config);
 
             // handle chatcommand
             if (chatCommand != null)
