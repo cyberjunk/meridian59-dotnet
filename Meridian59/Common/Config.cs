@@ -276,6 +276,9 @@ namespace Meridian59.Common
         {
             NumberFormatInfo.NumberDecimalSeparator = ".";
 
+            // keep aliases sorted by key
+            aliases.SortByKey();
+
             // allow subclasses to init stuff before loading config file
             InitPreConfig();
 
