@@ -27,6 +27,16 @@ namespace Meridian59 { namespace Ogre
 		delete overlayWindows;
 	};
 
+	bool ControllerUI::PlayerOverlays::IsOverlayWindow(::CEGUI::Window* Window)
+	{
+		if (!Window)
+			return false;
+
+		for (size_t i = 0; i < overlayWindows->size(); i++)		
+			if (Window == overlayWindows->at(i))
+				return true;		
+	};
+
 	void ControllerUI::PlayerOverlays::OnPlayerOverlaysListChanged(Object^ sender, ListChangedEventArgs^ e)
 	{
 		switch(e->ListChangedType)

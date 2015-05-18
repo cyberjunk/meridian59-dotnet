@@ -138,7 +138,10 @@ namespace Meridian59 { namespace Ogre
 
 		// tabaliases
 		ListAliases = static_cast<CEGUI::ItemListbox*>(TabAliases->getChild(UI_NAME_OPTIONS_TABALIASES_ALIASES));
-		
+		AliasKey = static_cast<CEGUI::Editbox*>(TabAliases->getChild(UI_NAME_OPTIONS_TABALIASES_ADDKEY));
+		AliasValue = static_cast<CEGUI::Editbox*>(TabAliases->getChild(UI_NAME_OPTIONS_TABALIASES_ADDVALUE));
+		AliasAddBtn = static_cast<CEGUI::PushButton*>(TabAliases->getChild(UI_NAME_OPTIONS_TABALIASES_ADD));
+
 		/******************************************************************************************************/
 		/*                                  PREPARE / SET: ENGINE                                             */
 		/******************************************************************************************************/
@@ -572,6 +575,7 @@ namespace Meridian59 { namespace Ogre
 		InvertMouseY->subscribeEvent(CEGUI::ToggleButton::EventSelectStateChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnInvertMouseYChanged));
 		MouseAimSpeed->subscribeEvent(CEGUI::Slider::EventValueChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnMouseAimSpeedChanged));
 		KeyRotateSpeed->subscribeEvent(CEGUI::Slider::EventValueChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyRotateSpeedChanged));
+		AliasAddBtn->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnAliasAddClicked));
 
 		// subscribe close button
 		Window->subscribeEvent(CEGUI::FrameWindow::EventCloseClicked, CEGUI::Event::Subscriber(UICallbacks::OnWindowClosed));
@@ -642,16 +646,6 @@ namespace Meridian59 { namespace Ogre
 		del->subscribeEvent(
 			CEGUI::PushButton::EventClicked,
 			CEGUI::Event::Subscriber(UICallbacks::Options::OnAliasDeleteClicked));
-
-		// subscribe events
-		/*rank->subscribeEvent(
-		CEGUI::Combobox::EventListSelectionAccepted,
-		CEGUI::Event::Subscriber(UICallbacks::Guild::OnRankSelectionChanged));
-
-		// subscribe checked event
-		supported->subscribeEvent(
-		CEGUI::ToggleButton::EventSelectStateChanged,
-		CEGUI::Event::Subscriber(UICallbacks::Guild::OnSupportedSelectStateChanged));*/
 
 		// insert in ui-list
 		if ((int)ListAliases->getItemCount() > Index)
@@ -1778,6 +1772,31 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::Slider* slider			= (const CEGUI::Slider*)args.window;
 
 		OgreClient::Singleton->Config->KeyRotateSpeed = (int)slider->getCurrentValue();
+
+		return true;
+	};
+
+	bool UICallbacks::Options::OnAliasAddClicked(const CEGUI::EventArgs& e)
+	{
+		const CEGUI::WindowEventArgs& args = (const CEGUI::WindowEventArgs&)e;
+		const CEGUI::PushButton* btn = (const CEGUI::PushButton*)args.window;
+
+		::CEGUI::String key = ControllerUI::Options::AliasKey->getText();
+		::CEGUI::String val = ControllerUI::Options::AliasValue->getText();
+
+		if (key == STRINGEMPTY || val == STRINGEMPTY)
+			return true;
+
+		::System::String^ keyclr = StringConvert::CEGUIToCLR(key);
+		::System::String^ valclr = StringConvert::CEGUIToCLR(val);
+
+		// must not have this aliaskey already
+		if (OgreClient::Singleton->Config->Aliases->GetIndexByKey(keyclr) != -1)
+			return true;
+
+		// add the new alias to config
+		OgreClient::Singleton->Config->Aliases->Add(
+			gcnew KeyValuePairString(keyclr, valclr));
 
 		return true;
 	};

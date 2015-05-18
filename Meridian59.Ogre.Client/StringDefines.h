@@ -578,6 +578,9 @@
 #define UI_NAME_OPTIONS_TABENGINE_PRELOADSOUNDS				"Options.TabEngine.PreloadSounds"
 #define UI_NAME_OPTIONS_TABENGINE_PRELOADMUSIC				"Options.TabEngine.PreloadMusic"
 #define UI_NAME_OPTIONS_TABALIASES_ALIASES					"Options.TabAliases.Aliases"
+#define UI_NAME_OPTIONS_TABALIASES_ADDKEY					"Options.TabAliases.AddKey"
+#define UI_NAME_OPTIONS_TABALIASES_ADDVALUE					"Options.TabAliases.AddValue"
+#define UI_NAME_OPTIONS_TABALIASES_ADD						"Options.TabAliases.Add"
 
 #define UI_BUFFICON_WIDTH					16
 #define UI_BUFFICON_HEIGHT					16

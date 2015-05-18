@@ -137,13 +137,11 @@ namespace Meridian59 { namespace Ogre
 			public: bool get() 
 			{ 
 				
-				return 
-					ControllerUI::TopControl == nullptr || 
+				return
+					ControllerUI::TopControl == nullptr ||
 					ControllerUI::TopControl == ControllerUI::GUIRoot ||
 					ControllerUI::TopControl == ControllerUI::SplashNotifier::Window ||
-					
-					( ControllerUI::TopControl->getName().length() > 0 && 
-					  (int)ControllerUI::TopControl->getName().find(UI_PLAYEROVERLAY_WIDGETPREFIX) > -1); 
+					ControllerUI::PlayerOverlays::IsOverlayWindow(ControllerUI::TopControl);
 			}
 		};
 
@@ -973,6 +971,7 @@ namespace Meridian59 { namespace Ogre
 		public:
 			static void Initialize();
 			static void Destroy();
+			static bool IsOverlayWindow(::CEGUI::Window* Window);
 			static void OnPlayerOverlaysListChanged(Object^ sender, ListChangedEventArgs^ e);
 			static void PlayerOverlayAdd(int Index);
 			static void PlayerOverlayRemove(int Index);
@@ -1149,6 +1148,9 @@ namespace Meridian59 { namespace Ogre
 
 			//
 			static ::CEGUI::ItemListbox* ListAliases = nullptr;
+			static ::CEGUI::Editbox* AliasKey = nullptr;
+			static ::CEGUI::Editbox* AliasValue = nullptr;
+			static ::CEGUI::PushButton* AliasAddBtn = nullptr;
 
 			static void AliasAdd(int Index);
 			static void AliasRemove(int Index);
@@ -1618,6 +1620,7 @@ namespace Meridian59 { namespace Ogre
 			static bool OnMouseAimSpeedChanged(const CEGUI::EventArgs& e);
 			static bool OnKeyRotateSpeedChanged(const CEGUI::EventArgs& e);
 
+			static bool OnAliasAddClicked(const CEGUI::EventArgs& e);
 			static bool OnAliasDeleteClicked(const CEGUI::EventArgs& e);
 		};
 	};
