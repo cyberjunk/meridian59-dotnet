@@ -654,6 +654,9 @@ namespace Meridian59 { namespace Ogre
 		// or add
 		else
 			ListAliases->addItem(widget);
+
+		// fix a bug with last item not visible
+		ListAliases->notifyScreenAreaChanged(true);
 	};
 
 	void ControllerUI::Options::AliasRemove(int Index)

@@ -90,7 +90,11 @@
     </connection>
     
   </connections>
-  <aliases />
+  <aliases>
+    <alias key="chuckle" value="emote chuckles." />
+    <alias key="giggle" value="emote giggles." />
+    <alias key="laugh" value="emote laughs." />
+  </aliases>
   <engine>
     <display value="0" />
     <resolution value="1280 x 720 @ 32-bit colour" />
