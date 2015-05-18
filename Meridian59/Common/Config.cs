@@ -45,7 +45,7 @@ namespace Meridian59.Common
         public const string PROPNAME_CONNECTIONS                = "Connections";
         public const string PROPNAME_SELECTEDCONNECTIONINDEX    = "SelectedConnectionIndex";
         public const string PROPNAME_ALIASES                    = "Aliases";
-        
+
         protected const string XMLTAG_CONFIGURATION             = "configuration";
         protected const string XMLTAG_RESOURCES                 = "resources";
         protected const string XMLTAG_CONNECTIONS               = "connections";
@@ -68,6 +68,7 @@ namespace Meridian59.Common
         protected const string XMLATTRIB_STRINGDICTIONARY       = "stringdictionary";
         protected const string XMLATTRIB_USERNAME               = "username";
         protected const string XMLATTRIB_PASSWORD               = "password";
+        protected const string XMLATTRIB_CHARACTER              = "character";
         protected const string XMLATTRIB_SELECTEDINDEX          = "selectedindex";
         protected const string XMLATTRIB_KEY                    = "key"; 
         protected const string XMLATTRIB_VALUE                  = "value";
@@ -356,6 +357,7 @@ namespace Meridian59.Common
                     string stringdictionary = reader[XMLATTRIB_STRINGDICTIONARY];
                     string username         = reader[XMLATTRIB_USERNAME];
                     string password         = reader[XMLATTRIB_PASSWORD];
+                    string character        = reader[XMLATTRIB_CHARACTER];
 
                     List<string> ignorelist = new List<string>();
                     if (reader.ReadToDescendant(XMLTAG_IGNORELIST))
@@ -387,6 +389,7 @@ namespace Meridian59.Common
                         stringdictionary,
                         username,
                         password,
+                        character,
                         ignorelist));
                 }
                 while (reader.ReadToNextSibling(XMLTAG_CONNECTION));
@@ -466,6 +469,7 @@ namespace Meridian59.Common
                 writer.WriteAttributeString(XMLATTRIB_STRINGDICTIONARY, connections[i].StringDictionary);
                 writer.WriteAttributeString(XMLATTRIB_USERNAME, connections[i].Username);
                 writer.WriteAttributeString(XMLATTRIB_PASSWORD, String.Empty);
+                writer.WriteAttributeString(XMLATTRIB_CHARACTER, connections[i].Character);
 
                 // ignorelist
                 writer.WriteStartElement(XMLTAG_IGNORELIST);

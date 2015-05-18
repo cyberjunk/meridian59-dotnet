@@ -39,7 +39,8 @@
       useipv6="false"
       stringdictionary="rsc0000-103.rsb"
       username="user"
-      password="">
+      password=""
+      character="charactername">
       <ignorelist>
         <ignore name="PathethicTroll0815" />
       </ignorelist>
@@ -51,7 +52,8 @@
       useipv6="false"
       stringdictionary="rsc0000-git.rsb"
       username="user"
-      password="">
+      password=""
+      character="charactername">
       <ignorelist />
     </connection>
   </connections>

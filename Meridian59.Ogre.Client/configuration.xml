@@ -19,7 +19,8 @@
       useipv6="false"
       stringdictionary="rsc0000.rsb"
       username="user"
-      password="">
+      password=""
+      character="">
       <ignorelist />
     </connection>
     
@@ -30,7 +31,8 @@
       useipv6="false"
       stringdictionary="rsc0000.rsb"
       username="user"
-      password="">
+      password=""
+      character="">
       <ignorelist />
     </connection>
     
@@ -41,7 +43,8 @@
       useipv6="false"
       stringdictionary="rsc0000-103.rsb" 
       username="user"
-      password="">
+      password=""
+      character="">
       <ignorelist />
     </connection>
     
@@ -52,7 +55,8 @@
       useipv6="false"
       stringdictionary="rsc0000-104.rsb" 
       username="user"
-      password="">
+      password=""
+      character="">
       <ignorelist />
     </connection>
 
@@ -63,7 +67,8 @@
       useipv6="false"
       stringdictionary="rsc0000-112.rsb"
       username="user"
-      password="">
+      password=""
+      character="">
       <ignorelist />
     </connection>
     
@@ -74,7 +79,8 @@
       useipv6="false"
       stringdictionary="rsc0000-115.rsb"
       username="user"
-      password="">
+      password=""
+      character="">
       <ignorelist />
     </connection>
     
@@ -85,7 +91,8 @@
       useipv6="false"
       stringdictionary="rsc0000-git.rsb" 
       username="user"
-      password="">
+      password=""
+      character="">
       <ignorelist />
     </connection>
     

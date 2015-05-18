@@ -117,8 +117,11 @@ namespace Meridian59 { namespace Ogre
 		// when insertItem was used
 		Avatars->notifyScreenAreaChanged(true);
 
-		// update values
-		//CharacterChange(Index);
+		ConnectionInfo^ coninfo = OgreClient::Singleton->Config->SelectedConnectionInfo;
+
+		// preselect the charactername which we last used
+		if (coninfo && info->Characters[Index]->Name == coninfo->Character)
+			widget->setSelected(true);	
 	};
 
 	void ControllerUI::Welcome::CharacterRemove(int Index)
@@ -157,6 +160,11 @@ namespace Meridian59 { namespace Ogre
 			// login selected avatar
 			else
 			{
+				// save last logged in avatarname in config
+				OgreClient::Singleton->Config->SelectedConnectionInfo->Character =
+					welcomeInfo->Characters[index]->Name;
+
+				// log it in
 				OgreClient::Singleton->SendUseCharacterMessage(index, true);
 				OgreClient::Singleton->SendUserCommandSafetyMessage(true);
 			}
@@ -194,6 +202,11 @@ namespace Meridian59 { namespace Ogre
 			// login selected avatar
 			else
 			{
+				// save last logged in avatarname in config
+				OgreClient::Singleton->Config->SelectedConnectionInfo->Character =
+					welcomeInfo->Characters[index]->Name;
+
+				// log it in
 				OgreClient::Singleton->SendUseCharacterMessage(index, true);
 				OgreClient::Singleton->SendUserCommandSafetyMessage(true);
 			}

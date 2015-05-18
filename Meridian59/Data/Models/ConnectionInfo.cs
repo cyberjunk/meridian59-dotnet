@@ -35,6 +35,7 @@ namespace Meridian59.Data.Models
         public const string PROPNAME_STRINGDICTIONARY   = "StringDictionary";
         public const string PROPNAME_USERNAME           = "Username";
         public const string PROPNAME_PASSWORD           = "Password";
+        public const string PROPNAME_CHARACTER          = "Character";
         public const string PROPNAME_IGNORELIST         = "IgnoreList";
         #endregion
 
@@ -46,6 +47,7 @@ namespace Meridian59.Data.Models
         protected string stringdictionary;
         protected string username;
         protected string password;
+        protected string character;
         protected List<string> ignoreList;
         #endregion
 
@@ -141,6 +143,19 @@ namespace Meridian59.Data.Models
             }
         }
 
+        public string Character
+        {
+            get { return character; }
+            set
+            {
+                if (character != value)
+                {
+                    character = value;
+                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_CHARACTER));
+                }
+            }
+        }
+
         public List<string> IgnoreList
         {
             get { return ignoreList; }
@@ -181,6 +196,7 @@ namespace Meridian59.Data.Models
             string StringDictionary, 
             string Username,
             string Password,
+            string Character,
             IEnumerable<string> IgnoreList)
         {
             ignoreList = new List<string>();
@@ -192,6 +208,7 @@ namespace Meridian59.Data.Models
             stringdictionary = StringDictionary;
             username = Username;
             password = Password;
+            character = Character;
 
             foreach (string s in IgnoreList)
                 ignoreList.Add(s);
@@ -208,6 +225,7 @@ namespace Meridian59.Data.Models
                 StringDictionary = String.Empty;
                 Username = String.Empty;
                 Password = String.Empty;
+                Character = String.Empty;
                 IgnoreList.Clear();
             }
             else
@@ -219,6 +237,7 @@ namespace Meridian59.Data.Models
                 stringdictionary = String.Empty;
                 username = String.Empty;
                 password = String.Empty;
+                character = String.Empty;
                 IgnoreList.Clear();
             }
         }

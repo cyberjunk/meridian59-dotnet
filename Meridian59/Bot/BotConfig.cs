@@ -32,7 +32,6 @@ namespace Meridian59.Bot
         protected const string XMLTAG_BOT                   = "bot";
         protected const string XMLTAG_ADMINS                = "admins";
         protected const string XMLTAG_ITEM                  = "item";
-        protected const string XMLATTRIB_CHARACTER          = "character";
         protected const string XMLATTRIB_MAJORVERSION       = "majorversion";
         protected const string XMLATTRIB_MINORVERSION       = "minorversion";
         protected const string XMLATTRIB_LOGFILE            = "logfile";

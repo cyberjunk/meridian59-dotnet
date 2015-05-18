@@ -37,7 +37,8 @@
       useipv6="false"
       stringdictionary="rsc0000-103.rsb"
       username="user"
-      password="">
+      password=""
+      character="charactername">
       <ignorelist />
     </connection>
     <connection
@@ -47,7 +48,8 @@
       useipv6="false"
       stringdictionary="rsc0000-git.rsb"
       username="user"
-      password="">
+      password=""
+      character="charactername">
       <ignorelist />
     </connection>
   </connections>
