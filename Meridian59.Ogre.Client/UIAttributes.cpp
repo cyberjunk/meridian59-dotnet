@@ -63,6 +63,8 @@ namespace Meridian59 { namespace Ogre
 
 		// update values
 		AttributeChange(Index);
+
+		List->notifyScreenAreaChanged(true);
 	};
 
 	void ControllerUI::Attributes::AttributeRemove(int Index)
