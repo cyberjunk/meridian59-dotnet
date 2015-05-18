@@ -52,7 +52,8 @@ namespace Meridian59.Data.Models
             ChatCommand returnValue = null;
             
             /**********************************************************************/
-
+            // checks
+            
             if (Text == null || DataController == null || Config == null)
                 return null;
 
@@ -62,16 +63,26 @@ namespace Meridian59.Data.Models
                 return null;
 
             /**********************************************************************/
+            // resolve aliases
 
             int idx = lower.IndexOf(DELIMITER);
-            if (idx > -1 && idx < lower.Length - 1)
-            { 
+            if (idx == -1)
+            {
+                // only one word which might be an alias
+                KeyValuePairString aliascmd = Config.Aliases.GetItemByKey(lower);
+
+                if (aliascmd != null)
+                    lower = aliascmd.Value;
+            }
+            else
+            {
+                // first word might be alias, but there is more
                 alias = lower.Substring(0, idx);
 
                 KeyValuePairString aliascmd = Config.Aliases.GetItemByKey(alias);
 
                 if (aliascmd != null)
-                    lower = aliascmd.Value + lower.Substring(idx + 1);            
+                    lower = aliascmd.Value + lower.Substring(idx + 1); 
             }
 
             /**********************************************************************/
