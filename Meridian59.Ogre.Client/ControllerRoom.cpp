@@ -1377,6 +1377,11 @@ namespace Meridian59 { namespace Ogre
 
 			// set initial visibility
 			AvatarObject->SceneNode->setVisible(!ControllerInput::IsCameraFirstPerson);
+
+			// if we've hidden the avatar-scenenode due to 1.person above
+			// make sure a light attached is still visible!
+			if (AvatarObject->Light)
+				AvatarObject->Light->setVisible(true);
         }
     };
 
