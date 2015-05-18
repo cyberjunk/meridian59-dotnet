@@ -124,7 +124,7 @@ namespace Meridian59 { namespace Ogre
 
 		// preselect the charactername which we last used
 		if (coninfo && info->Characters[Index]->Name == coninfo->Character)
-			widget->setSelected(true);	
+			widget->setSelected(true);		
 	};
 
 	void ControllerUI::Welcome::CharacterRemove(int Index)

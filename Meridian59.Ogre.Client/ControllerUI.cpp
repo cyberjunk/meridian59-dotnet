@@ -483,6 +483,9 @@ namespace Meridian59 { namespace Ogre
 			ObjectContents::Window->setVisible(false);
 			Login::Window->setVisible(mode == UIMode::Login);
 			Options::Window->setVisible(false);
+
+			if (mode == UIMode::AvatarSelection)
+				ControllerUI::Welcome::Avatars->activate();
 		}
 	};
 
