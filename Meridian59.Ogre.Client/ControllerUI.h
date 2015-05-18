@@ -1186,6 +1186,8 @@ namespace Meridian59 { namespace Ogre
 			static bool OnSelectClicked(const CEGUI::EventArgs& e);
 			static bool OnItemDoubleClick(const CEGUI::EventArgs& e);
 			static bool OnAvatarSelectionChanged(const CEGUI::EventArgs& e);
+			static bool OnWindowKeyUp(const CEGUI::EventArgs& e);
+			static bool OnWindowCloseClick(const CEGUI::EventArgs& e);
 		};
 
 		/// <summary>

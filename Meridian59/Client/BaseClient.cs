@@ -127,6 +127,20 @@ namespace Meridian59.Client
                 Config.SelectedConnectionInfo.UseIPv6);
         }
 
+        /// <summary>
+        /// Disconnects from the server and resets datalayer.
+        /// </summary>
+        public virtual void Disconnect()
+        {
+            ServerConnection.Disconnect();
+
+            Data.Reset();
+            Data.UIMode = UIMode.Login;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public override void Init()
         {
             // init the legacy resources

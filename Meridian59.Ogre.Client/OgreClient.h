@@ -309,6 +309,11 @@ namespace Meridian59 { namespace Ogre
         /// Called each mainthread loop
         /// </summary>
         virtual void Update() override;
+		
+		/// <summary>
+		/// Overriden Disconnect
+		/// </summary>
+		virtual void Disconnect() override;
 
 		/// <summary>
         /// Overwritten from base class to also set the 

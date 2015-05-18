@@ -599,6 +599,14 @@ namespace Meridian59 { namespace Ogre
 		SingletonClient::Cleanup();      
     };
 
+	void OgreClient::Disconnect()
+	{
+		// call base disconnect
+		SingletonClient::Disconnect();
+
+		DemoSceneLoadBrax();
+	};
+
 	void OgreClient::OnServerConnectionException(System::Exception^ Error)
     {
         //LauncherClient::OnServerConnectionException(Error);
@@ -1023,7 +1031,8 @@ namespace Meridian59 { namespace Ogre
 		RoomInfo^ roomInfo = Data->RoomInformation;
 
 
-		CameraNode->setPosition(1266, 460, 1344);
+		CameraNode->resetToInitialState(); 
+		CameraNode->setPosition(1266, 460, 1344);		
 		CameraNode->rotate(::Ogre::Vector3::UNIT_Y, ::Ogre::Radian(-0.55f));
 		
 		roomInfo->RoomFile = "necarea3.roo";
