@@ -13,6 +13,10 @@ namespace Meridian59 { namespace Ogre
 		Connect = static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_LOGIN_CONNECT));
 		Options = static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_LOGIN_OPTIONS));
 
+		Window->setMousePassThroughEnabled(true);
+		Window->setMouseInputPropagationEnabled(true);
+		Window->setZOrderingEnabled(false);
+
 		OgreClientConfig^ config = OgreClient::Singleton->Config;
 
 		// fill server combobox values
