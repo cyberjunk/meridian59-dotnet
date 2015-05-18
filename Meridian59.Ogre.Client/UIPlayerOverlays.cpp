@@ -34,7 +34,9 @@ namespace Meridian59 { namespace Ogre
 
 		for (size_t i = 0; i < overlayWindows->size(); i++)		
 			if (Window == overlayWindows->at(i))
-				return true;		
+				return true;
+
+		return false;
 	};
 
 	void ControllerUI::PlayerOverlays::OnPlayerOverlaysListChanged(Object^ sender, ListChangedEventArgs^ e)
