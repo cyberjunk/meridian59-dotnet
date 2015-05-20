@@ -328,10 +328,12 @@ namespace Meridian59 { namespace Ogre
 		if (id == OIS::MouseButtonID::MB_Right)
 			tickMouseDownRight = OgreClient::Singleton->GameTick->Current;
 
+		/******************************************************/
+
 		// rightclick: resync the avatars orientation to the camera lookat (on x,z)
-		if (id == OIS::MouseButtonID::MB_Right && !isMouseWentDownOnUI)        
+		if (IsRightMouseDown && !isMouseWentDownOnUI)
 			SetAvatarOrientationFromCamera();
-        		
+
 		// stop automove on manual forward/backward
 		if (isAutoMove && 
 			oisMouse->getMouseState().buttonDown(OIS::MouseButtonID::MB_Left) &&
@@ -584,9 +586,25 @@ namespace Meridian59 { namespace Ogre
 			OgreClient::Singleton->Camera != nullptr &&
 			OgreClient::Singleton->CameraNode != nullptr)
 		{
+			/*::Ogre::Vector3 dir = OgreClient::Singleton->Camera->getRealDirection();
+			Quaternion camOrient = OgreClient::Singleton->Camera->getRealOrientation();
+
+			//::System::Console::WriteLine(
+			//	dir.x.ToString() + " " + dir.y.ToString() + " " + dir.z.ToString());
+		
+			Avatar->RoomObject->Angle = MathUtil::GetRadianForDirection(
+				V2(dir.x, dir.z));
+			
+			OgreClient::Singleton->CameraNode->_setDerivedOrientation(camOrient);
+			
+			// update orientation on server
+			OgreClient::Singleton->SendReqTurnMessage();*/
+			
+			/****************************************************************************/
+
 			Quaternion camOrient = OgreClient::Singleton->Camera->getRealOrientation();
 			Quaternion avatarOrient = Avatar->SceneNode->getOrientation();
-
+			
 			// rotate the avatar to the cam "direction"
 			::Ogre::Vector3 xAxis = avatarOrient.xAxis();
 			Quaternion quat1 = xAxis.getRotationTo(camOrient.xAxis());
