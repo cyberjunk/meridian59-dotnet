@@ -691,20 +691,12 @@ namespace Meridian59 { namespace Ogre
         }
 
 		// 10. load legacy resources
-		if (Config->PreloadObjects)	
-			ResourceManager->PreloadObjects();
-
-		if (Config->PreloadRoomTextures)
-			ResourceManager->PreloadRoomTextures();
-
-		if (Config->PreloadRooms)
-			ResourceManager->PreloadRooms();
-
-		if (Config->PreloadSound)
-			ResourceManager->PreloadSounds();
-
-		if (Config->PreloadMusic)
-			ResourceManager->PreloadMusic();
+		ResourceManager->Preload(
+			Config->PreloadObjects,
+			Config->PreloadRoomTextures,
+			Config->PreloadRooms,
+			Config->PreloadSound,
+			Config->PreloadMusic);
 
         // 10. initialize general group
         resMan->initialiseResourceGroup(RESOURCEGROUPGENERAL);

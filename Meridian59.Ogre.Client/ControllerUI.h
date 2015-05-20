@@ -162,6 +162,7 @@ namespace Meridian59 { namespace Ogre
 			static LoadingBarResourceGroupListener* groupListener = nullptr;
 			static float stepSizeGroup;
 			static float stepSizeContent;
+			static int skipCounter;
 
 		public:
 			static ::CEGUI::Window* Window = nullptr;
@@ -182,8 +183,8 @@ namespace Meridian59 { namespace Ogre
 			static void WorldGeometryStageStarted(const String* description);
 			static void WorldGeometryStageEnded();
 
-			static void OnPreloadingGroupStarted(Object^ sender, ::Meridian59::Files::ResourceManager::StringEventArgs^ e);
-			static void OnPreloadingGroupEnded(Object^ sender, ::Meridian59::Files::ResourceManager::StringEventArgs^ e);
+			static void OnPreloadingGroupStarted(Object^ sender, ::System::EventArgs^ e);
+			static void OnPreloadingGroupEnded(Object^ sender, ::System::EventArgs^ e);
 			static void OnPreloadingFile(Object^ sender, ::Meridian59::Files::ResourceManager::StringEventArgs^ e);
 		};
 

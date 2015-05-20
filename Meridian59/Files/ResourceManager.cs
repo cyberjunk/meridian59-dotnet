@@ -25,6 +25,7 @@ using Meridian59.Files.ROO;
 using Meridian59.Files.RSB;
 using Meridian59.Data.Lists;
 using Meridian59.Data.Models;
+using System.Threading;
 
 namespace Meridian59.Files
 {
@@ -64,6 +65,8 @@ namespace Meridian59.Files
         protected readonly LockingDictionary<string, Tuple<IntPtr, uint>> sounds = new LockingDictionary<string, Tuple<IntPtr, uint>>(StringComparer.OrdinalIgnoreCase);
         protected readonly LockingDictionary<string, Tuple<IntPtr, uint>> music = new LockingDictionary<string, Tuple<IntPtr, uint>>(StringComparer.OrdinalIgnoreCase);
         protected readonly MailList mails = new MailList(200);
+
+        protected readonly LockingQueue<string> queueAsyncFilesLoaded = new LockingQueue<string>();
         #endregion
 
         #region Properties
@@ -150,8 +153,8 @@ namespace Meridian59.Files
         public string MailFolder { get; set; }
         #endregion
 
-        public event EventHandler<StringEventArgs> PreloadingGroupStarted;
-        public event EventHandler<StringEventArgs> PreloadingGroupEnded;
+        public event EventHandler PreloadingStarted;
+        public event EventHandler PreloadingEnded;
         public event EventHandler<StringEventArgs> PreloadingFile;
 
         #region Methods
@@ -520,152 +523,181 @@ namespace Meridian59.Files
         }
 
         /// <summary>
-        /// Preloads all elements in the Objects dictionary.
+        /// Starts preloading resources in several threads.
         /// </summary>
-        public void PreloadObjects()
+        /// <param name="Objects"></param>
+        /// <param name="RoomTextures"></param>
+        /// <param name="Rooms"></param>
+        /// <param name="Sounds"></param>
+        /// <param name="Music"></param>
+        public void Preload(bool Objects, bool RoomTextures, bool Rooms, bool Sounds, bool Music)
         {
-            if (PreloadingGroupStarted != null)
-                PreloadingGroupStarted(this, new StringEventArgs("Objects"));
+            Thread threadObjects        = null;
+            Thread threadRoomTextures   = null;
+            Thread threadRooms          = null;
+            Thread threadSounds         = null;
+            Thread threadMusic          = null;
 
+            if (PreloadingStarted != null)
+                PreloadingStarted(this, new EventArgs());
+
+            if (Objects)
+            {
+                threadObjects = new Thread(LoadThreadObjects);
+                threadObjects.Start();          
+            }
+
+            if (RoomTextures)
+            {
+                threadRoomTextures = new Thread(LoadThreadRoomTextures);
+                threadRoomTextures.Start();           
+            }
+
+            if (Rooms)
+            {
+                threadRooms = new Thread(LoadThreadRooms);
+                threadRooms.Start();
+            }
+
+            if (Sounds)
+            {
+                threadSounds = new Thread(LoadThreadSounds);
+                threadSounds.Start();          
+            }
+
+            if (Music)
+            {
+                threadMusic = new Thread(LoadThreadMusic);
+                threadMusic.Start();
+            }
+
+            string filename;
+
+            // lock until all loaders are finished
+            while ( (threadObjects != null && threadObjects.IsAlive) ||
+                    (threadRoomTextures != null && threadRoomTextures.IsAlive) ||
+                    (threadRooms != null && threadRooms.IsAlive) ||
+                    (threadSounds != null && threadSounds.IsAlive) ||
+                    (threadMusic != null && threadMusic.IsAlive))
+            {
+
+                while (queueAsyncFilesLoaded.TryDequeue(out filename))              
+                    if (PreloadingFile != null)
+                        PreloadingFile(this, new StringEventArgs(filename));               
+            }
+
+            while (queueAsyncFilesLoaded.TryDequeue(out filename))
+                if (PreloadingFile != null)
+                    PreloadingFile(this, new StringEventArgs(filename));
+
+            GC.Collect(2);
+
+            if (PreloadingEnded != null)
+                PreloadingEnded(this, new EventArgs());
+        }
+
+        /// <summary>
+        /// Stars loading all objects in a background thread.
+        /// </summary>
+        protected void LoadThreadObjects()
+        {
             IEnumerator<KeyValuePair<string, BgfFile>> it = Objects.GetEnumerator();
             BgfFile file;
 
             while (it.MoveNext())
             {
-                if (PreloadingFile != null)
-                    PreloadingFile(this, new StringEventArgs(it.Current.Key));
-
                 // load
                 file = new BgfFile(Path.Combine(ObjectsFolder, it.Current.Key));
                 file.DecompressAll();
 
                 // update
                 Objects.TryUpdate(it.Current.Key, file, null);
+
+                queueAsyncFilesLoaded.Enqueue(it.Current.Key);
             }
-
-            GC.Collect(2);
-
-            if (PreloadingGroupEnded != null)
-                PreloadingGroupEnded(this, new StringEventArgs("Objects"));
         }
 
         /// <summary>
-        /// Preloads all elements in the RoomTextures dictionary.
+        /// Stars loading all roomtextures in a background thread.
         /// </summary>
-        public void PreloadRoomTextures()
+        protected void LoadThreadRoomTextures()
         {
-            if (PreloadingGroupStarted != null)
-                PreloadingGroupStarted(this, new StringEventArgs("RoomTextures"));
-
             IEnumerator<KeyValuePair<string, BgfFile>> it = RoomTextures.GetEnumerator();
             BgfFile file;
 
             while (it.MoveNext())
             {
-                if (PreloadingFile != null)
-                    PreloadingFile(this, new StringEventArgs(it.Current.Key));
-
                 // load
                 file = new BgfFile(Path.Combine(RoomTexturesFolder, it.Current.Key));
                 file.DecompressAll();
 
                 // update
                 RoomTextures.TryUpdate(it.Current.Key, file, null);
+                
+                queueAsyncFilesLoaded.Enqueue(it.Current.Key);
             }
-
-            GC.Collect(2);
-
-            if (PreloadingGroupEnded != null)
-                PreloadingGroupEnded(this, new StringEventArgs("RoomTextures"));
         }
 
         /// <summary>
-        /// Preloads all elements in the Rooms dictionary.
+        /// Stars loading all rooms in a background thread.
         /// </summary>
-        public void PreloadRooms()
+        protected void LoadThreadRooms()
         {
-            if (PreloadingGroupStarted != null)
-                PreloadingGroupStarted(this, new StringEventArgs("Rooms"));
-
             IEnumerator<KeyValuePair<string, RooFile>> it = Rooms.GetEnumerator();
             RooFile file;
 
             while (it.MoveNext())
             {
-                if (PreloadingFile != null)
-                    PreloadingFile(this, new StringEventArgs(it.Current.Key));
-
                 // load
                 file = new RooFile(Path.Combine(RoomsFolder, it.Current.Key));
-                
+
                 // update
                 Rooms.TryUpdate(it.Current.Key, file, null);
+
+                queueAsyncFilesLoaded.Enqueue(it.Current.Key);
             }
-
-            GC.Collect(2);
-
-            if (PreloadingGroupEnded != null)
-                PreloadingGroupEnded(this, new StringEventArgs("Rooms"));
         }
 
         /// <summary>
-        /// Preloads all elements in the Wavs dictionary.
+        /// Stars loading all sounds in a background thread.
         /// </summary>
-        public void PreloadSounds()
+        protected void LoadThreadSounds()
         {
-            if (PreloadingGroupStarted != null)
-                PreloadingGroupStarted(this, new StringEventArgs("Sounds"));
-
             IEnumerator<KeyValuePair<string, Tuple<IntPtr, uint>>> it = Wavs.GetEnumerator();
             Tuple<IntPtr, uint> wavData = null;
 
             while (it.MoveNext())
             {
-                if (PreloadingFile != null)
-                    PreloadingFile(this, new StringEventArgs(it.Current.Key));
-
                 // load it
                 wavData = Util.LoadFileToUnmanagedMem(
                     Path.Combine(WavFolder, it.Current.Key));
 
                 // update
                 Wavs.TryUpdate(it.Current.Key, wavData, null);
+
+                queueAsyncFilesLoaded.Enqueue(it.Current.Key);
             }
-
-            GC.Collect(2);
-
-            if (PreloadingGroupEnded != null)
-                PreloadingGroupEnded(this, new StringEventArgs("Sounds"));
         }
 
         /// <summary>
-        /// Preloads all elements in the Music dictionary.
+        /// Stars loading all music in a background thread.
         /// </summary>
-        public void PreloadMusic()
+        protected void LoadThreadMusic()
         {
-            if (PreloadingGroupStarted != null)
-                PreloadingGroupStarted(this, new StringEventArgs("Music"));
-
             IEnumerator<KeyValuePair<string, Tuple<IntPtr, uint>>> it = Music.GetEnumerator();
             Tuple<IntPtr, uint> mp3Data = null;
 
             while (it.MoveNext())
             {
-                if (PreloadingFile != null)
-                    PreloadingFile(this, new StringEventArgs(it.Current.Key));
-
                 // load it
                 mp3Data = Util.LoadFileToUnmanagedMem(
                     Path.Combine(MusicFolder, it.Current.Key));
 
                 // update
                 Music.TryUpdate(it.Current.Key, mp3Data, null);
+
+                queueAsyncFilesLoaded.Enqueue(it.Current.Key);
             }
-
-            GC.Collect(2);
-
-            if (PreloadingGroupEnded != null)
-                PreloadingGroupEnded(this, new StringEventArgs("Music"));
         }
         #endregion
 
