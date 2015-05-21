@@ -1786,12 +1786,15 @@ namespace Meridian59 { namespace Ogre
 
 		::CEGUI::String key = ControllerUI::Options::AliasKey->getText();
 		::CEGUI::String val = ControllerUI::Options::AliasValue->getText();
-
-		if (key == STRINGEMPTY || val == STRINGEMPTY)
-			return true;
-
+	
 		::System::String^ keyclr = StringConvert::CEGUIToCLR(key);
 		::System::String^ valclr = StringConvert::CEGUIToCLR(val);
+
+		keyclr = keyclr->Trim();
+		valclr = valclr->Trim();
+
+		if (keyclr == STRINGEMPTY || valclr == STRINGEMPTY)
+			return true;
 
 		// must not have this aliaskey already
 		if (OgreClient::Singleton->Config->Aliases->GetIndexByKey(keyclr) != -1)
