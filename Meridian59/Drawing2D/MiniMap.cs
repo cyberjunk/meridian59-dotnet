@@ -106,7 +106,7 @@ namespace Meridian59.Drawing2D
         /// <summary>
         /// 
         /// </summary>
-        public float ZoomInv
+        public Real ZoomInv
         {
             get { return 1.0f / zoom; }
         }
