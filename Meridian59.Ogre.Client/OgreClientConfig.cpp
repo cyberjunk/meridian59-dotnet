@@ -2,13 +2,30 @@
 
 namespace Meridian59 { namespace Ogre
 {		
-	OgreClientConfig::OgreClientConfig()
+	OgreClientConfig::OgreClientConfig() : Config()
 	{
+		// be warned:
+		// base constructor will already start reading, use InitPreConfig() instead
 	};
 
 	void OgreClientConfig::InitPreConfig()
 	{
 		Config::InitPreConfig();
+
+		UILayoutAvatar		= new ::CEGUI::URect();
+		UILayoutTarget		= new ::CEGUI::URect();
+		UILayoutMinimap		= new ::CEGUI::URect();
+		UILayoutChat		= new ::CEGUI::URect();
+		UILayoutInventory	= new ::CEGUI::URect();
+		UILayoutSpells		= new ::CEGUI::URect();
+		UILayoutSkills		= new ::CEGUI::URect();
+		UILayoutActions		= new ::CEGUI::URect();
+		UILayoutAttributes	= new ::CEGUI::URect();
+		UILayoutMainButtonsLeft  = new ::CEGUI::URect();
+		UILayoutMainButtonsRight = new ::CEGUI::URect();
+		UILayoutActionButtons	= new ::CEGUI::URect();
+		UILayoutOnlinePlayers	= new ::CEGUI::URect();
+		UILayoutRoomObjects		= new ::CEGUI::URect();
 	};
 
 	void OgreClientConfig::InitPastConfig()
@@ -86,6 +103,194 @@ namespace Meridian59 { namespace Ogre
 		Reader->ReadToFollowing(TAG_DISABLELOOPSOUNDS);
 		DisableLoopSounds = ::System::Convert::ToBoolean(Reader[XMLATTRIB_VALUE]);
 		
+		/******************************************************************************/
+		// ui
+
+		Reader->ReadToFollowing(TAG_UI);		
+		Reader->ReadToFollowing(TAG_LAYOUT);
+
+		// avatar
+		Reader->ReadToFollowing(TAG_AVATAR);
+		UILayoutAvatar->setPosition(::CEGUI::Vector2<::CEGUI::UDim>(
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_XREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_XABS], Config::NumberFormatInfo)),
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_YREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_YABS], Config::NumberFormatInfo))));
+		UILayoutAvatar->setSize(::CEGUI::Size<::CEGUI::UDim>(
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_WREL], Config::NumberFormatInfo), 
+			::System::Convert::ToSingle(Reader[XMLATTRIB_WABS], Config::NumberFormatInfo)),
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_HREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_HABS], Config::NumberFormatInfo))));
+		
+		// target
+		Reader->ReadToFollowing(TAG_TARGET);
+		UILayoutTarget->setPosition(::CEGUI::Vector2<::CEGUI::UDim>(
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_XREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_XABS], Config::NumberFormatInfo)),
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_YREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_YABS], Config::NumberFormatInfo))));
+		UILayoutTarget->setSize(::CEGUI::Size<::CEGUI::UDim>(
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_WREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_WABS], Config::NumberFormatInfo)),
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_HREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_HABS], Config::NumberFormatInfo))));
+
+		// minimap
+		Reader->ReadToFollowing(TAG_MINIMAP);
+		UILayoutMinimap->setPosition(::CEGUI::Vector2<::CEGUI::UDim>(
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_XREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_XABS], Config::NumberFormatInfo)),
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_YREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_YABS], Config::NumberFormatInfo))));
+		UILayoutMinimap->setSize(::CEGUI::Size<::CEGUI::UDim>(
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_WREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_WABS], Config::NumberFormatInfo)),
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_HREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_HABS], Config::NumberFormatInfo))));
+
+		// chat
+		Reader->ReadToFollowing(TAG_CHAT);
+		UILayoutChat->setPosition(::CEGUI::Vector2<::CEGUI::UDim>(
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_XREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_XABS], Config::NumberFormatInfo)),
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_YREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_YABS], Config::NumberFormatInfo))));
+		UILayoutChat->setSize(::CEGUI::Size<::CEGUI::UDim>(
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_WREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_WABS], Config::NumberFormatInfo)),
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_HREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_HABS], Config::NumberFormatInfo))));
+
+		// inventory
+		Reader->ReadToFollowing(TAG_INVENTORY);
+		UILayoutInventory->setPosition(::CEGUI::Vector2<::CEGUI::UDim>(
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_XREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_XABS], Config::NumberFormatInfo)),
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_YREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_YABS], Config::NumberFormatInfo))));
+		UILayoutInventory->setSize(::CEGUI::Size<::CEGUI::UDim>(
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_WREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_WABS], Config::NumberFormatInfo)),
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_HREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_HABS], Config::NumberFormatInfo))));
+
+		// spells
+		Reader->ReadToFollowing(TAG_SPELLS);
+		UILayoutSpells->setPosition(::CEGUI::Vector2<::CEGUI::UDim>(
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_XREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_XABS], Config::NumberFormatInfo)),
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_YREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_YABS], Config::NumberFormatInfo))));
+		UILayoutSpells->setSize(::CEGUI::Size<::CEGUI::UDim>(
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_WREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_WABS], Config::NumberFormatInfo)),
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_HREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_HABS], Config::NumberFormatInfo))));
+
+		// skills
+		Reader->ReadToFollowing(TAG_SKILLS);
+		UILayoutSkills->setPosition(::CEGUI::Vector2<::CEGUI::UDim>(
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_XREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_XABS], Config::NumberFormatInfo)),
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_YREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_YABS], Config::NumberFormatInfo))));
+		UILayoutSkills->setSize(::CEGUI::Size<::CEGUI::UDim>(
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_WREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_WABS], Config::NumberFormatInfo)),
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_HREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_HABS], Config::NumberFormatInfo))));
+
+		// actions
+		Reader->ReadToFollowing(TAG_ACTIONS);
+		UILayoutActions->setPosition(::CEGUI::Vector2<::CEGUI::UDim>(
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_XREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_XABS], Config::NumberFormatInfo)),
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_YREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_YABS], Config::NumberFormatInfo))));
+		UILayoutActions->setSize(::CEGUI::Size<::CEGUI::UDim>(
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_WREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_WABS], Config::NumberFormatInfo)),
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_HREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_HABS], Config::NumberFormatInfo))));
+
+		// attributes
+		Reader->ReadToFollowing(TAG_ATTRIBUTES);
+		UILayoutAttributes->setPosition(::CEGUI::Vector2<::CEGUI::UDim>(
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_XREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_XABS], Config::NumberFormatInfo)),
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_YREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_YABS], Config::NumberFormatInfo))));
+		UILayoutAttributes->setSize(::CEGUI::Size<::CEGUI::UDim>(
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_WREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_WABS], Config::NumberFormatInfo)),
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_HREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_HABS], Config::NumberFormatInfo))));
+
+		// mainbuttonsleft
+		Reader->ReadToFollowing(TAG_MAINBUTTONSLEFT);
+		UILayoutMainButtonsLeft->setPosition(::CEGUI::Vector2<::CEGUI::UDim>(
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_XREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_XABS], Config::NumberFormatInfo)),
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_YREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_YABS], Config::NumberFormatInfo))));
+		UILayoutMainButtonsLeft->setSize(::CEGUI::Size<::CEGUI::UDim>(
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_WREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_WABS], Config::NumberFormatInfo)),
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_HREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_HABS], Config::NumberFormatInfo))));
+
+		// mainbuttonsright
+		Reader->ReadToFollowing(TAG_MAINBUTTONSRIGHT);
+		UILayoutMainButtonsRight->setPosition(::CEGUI::Vector2<::CEGUI::UDim>(
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_XREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_XABS], Config::NumberFormatInfo)),
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_YREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_YABS], Config::NumberFormatInfo))));
+		UILayoutMainButtonsRight->setSize(::CEGUI::Size<::CEGUI::UDim>(
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_WREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_WABS], Config::NumberFormatInfo)),
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_HREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_HABS], Config::NumberFormatInfo))));
+
+		// actionbuttons
+		Reader->ReadToFollowing(TAG_ACTIONBUTTONGRID);
+		UILayoutActionButtons->setPosition(::CEGUI::Vector2<::CEGUI::UDim>(
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_XREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_XABS], Config::NumberFormatInfo)),
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_YREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_YABS], Config::NumberFormatInfo))));
+		UILayoutActionButtons->setSize(::CEGUI::Size<::CEGUI::UDim>(
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_WREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_WABS], Config::NumberFormatInfo)),
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_HREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_HABS], Config::NumberFormatInfo))));
+
+		// onlineplayers
+		Reader->ReadToFollowing(TAG_ONLINEPLAYERS);
+		UILayoutOnlinePlayers->setPosition(::CEGUI::Vector2<::CEGUI::UDim>(
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_XREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_XABS], Config::NumberFormatInfo)),
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_YREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_YABS], Config::NumberFormatInfo))));
+		UILayoutOnlinePlayers->setSize(::CEGUI::Size<::CEGUI::UDim>(
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_WREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_WABS], Config::NumberFormatInfo)),
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_HREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_HABS], Config::NumberFormatInfo))));
+
+		// roomobjects
+		Reader->ReadToFollowing(TAG_ROOMOBJECTS);
+		UILayoutRoomObjects->setPosition(::CEGUI::Vector2<::CEGUI::UDim>(
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_XREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_XABS], Config::NumberFormatInfo)),
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_YREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_YABS], Config::NumberFormatInfo))));
+		UILayoutRoomObjects->setSize(::CEGUI::Size<::CEGUI::UDim>(
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_WREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_WABS], Config::NumberFormatInfo)),
+			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_HREL], Config::NumberFormatInfo),
+			::System::Convert::ToSingle(Reader[XMLATTRIB_HABS], Config::NumberFormatInfo))));
+
 		/******************************************************************************/
 		// input
 
@@ -411,6 +616,183 @@ namespace Meridian59 { namespace Ogre
 		Writer->WriteAttributeString(XMLATTRIB_VALUE, DisableLoopSounds.ToString()->ToLower());
 		Writer->WriteEndElement();
 
+		Writer->WriteEndElement();
+
+		/******************************************************************************/
+		// ui
+
+		Writer->WriteStartElement(TAG_UI);
+		Writer->WriteStartElement(TAG_LAYOUT);
+
+		// avatar
+		Writer->WriteStartElement(TAG_AVATAR);
+		Writer->WriteAttributeString(XMLATTRIB_XREL, UILayoutAvatar->getPosition().d_x.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_XABS, UILayoutAvatar->getPosition().d_x.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_YREL, UILayoutAvatar->getPosition().d_y.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_YABS, UILayoutAvatar->getPosition().d_y.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_WREL, UILayoutAvatar->getSize().d_width.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_WABS, UILayoutAvatar->getSize().d_width.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_HREL, UILayoutAvatar->getSize().d_height.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_HABS, UILayoutAvatar->getSize().d_height.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteEndElement();
+
+		// target
+		Writer->WriteStartElement(TAG_TARGET);
+		Writer->WriteAttributeString(XMLATTRIB_XREL, UILayoutTarget->getPosition().d_x.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_XABS, UILayoutTarget->getPosition().d_x.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_YREL, UILayoutTarget->getPosition().d_y.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_YABS, UILayoutTarget->getPosition().d_y.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_WREL, UILayoutTarget->getSize().d_width.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_WABS, UILayoutTarget->getSize().d_width.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_HREL, UILayoutTarget->getSize().d_height.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_HABS, UILayoutTarget->getSize().d_height.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteEndElement();
+
+		// minimap
+		Writer->WriteStartElement(TAG_MINIMAP);
+		Writer->WriteAttributeString(XMLATTRIB_XREL, UILayoutMinimap->getPosition().d_x.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_XABS, UILayoutMinimap->getPosition().d_x.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_YREL, UILayoutMinimap->getPosition().d_y.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_YABS, UILayoutMinimap->getPosition().d_y.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_WREL, UILayoutMinimap->getSize().d_width.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_WABS, UILayoutMinimap->getSize().d_width.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_HREL, UILayoutMinimap->getSize().d_height.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_HABS, UILayoutMinimap->getSize().d_height.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteEndElement();
+
+		// chat
+		Writer->WriteStartElement(TAG_CHAT);
+		Writer->WriteAttributeString(XMLATTRIB_XREL, UILayoutChat->getPosition().d_x.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_XABS, UILayoutChat->getPosition().d_x.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_YREL, UILayoutChat->getPosition().d_y.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_YABS, UILayoutChat->getPosition().d_y.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_WREL, UILayoutChat->getSize().d_width.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_WABS, UILayoutChat->getSize().d_width.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_HREL, UILayoutChat->getSize().d_height.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_HABS, UILayoutChat->getSize().d_height.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteEndElement();
+
+		// inventory
+		Writer->WriteStartElement(TAG_INVENTORY);
+		Writer->WriteAttributeString(XMLATTRIB_XREL, UILayoutInventory->getPosition().d_x.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_XABS, UILayoutInventory->getPosition().d_x.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_YREL, UILayoutInventory->getPosition().d_y.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_YABS, UILayoutInventory->getPosition().d_y.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_WREL, UILayoutInventory->getSize().d_width.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_WABS, UILayoutInventory->getSize().d_width.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_HREL, UILayoutInventory->getSize().d_height.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_HABS, UILayoutInventory->getSize().d_height.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteEndElement();
+
+		// spells
+		Writer->WriteStartElement(TAG_SPELLS);
+		Writer->WriteAttributeString(XMLATTRIB_XREL, UILayoutSpells->getPosition().d_x.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_XABS, UILayoutSpells->getPosition().d_x.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_YREL, UILayoutSpells->getPosition().d_y.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_YABS, UILayoutSpells->getPosition().d_y.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_WREL, UILayoutSpells->getSize().d_width.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_WABS, UILayoutSpells->getSize().d_width.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_HREL, UILayoutSpells->getSize().d_height.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_HABS, UILayoutSpells->getSize().d_height.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteEndElement();
+
+		// skills
+		Writer->WriteStartElement(TAG_SKILLS);
+		Writer->WriteAttributeString(XMLATTRIB_XREL, UILayoutSkills->getPosition().d_x.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_XABS, UILayoutSkills->getPosition().d_x.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_YREL, UILayoutSkills->getPosition().d_y.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_YABS, UILayoutSkills->getPosition().d_y.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_WREL, UILayoutSkills->getSize().d_width.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_WABS, UILayoutSkills->getSize().d_width.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_HREL, UILayoutSkills->getSize().d_height.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_HABS, UILayoutSkills->getSize().d_height.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteEndElement();
+
+		// actions
+		Writer->WriteStartElement(TAG_ACTIONS);
+		Writer->WriteAttributeString(XMLATTRIB_XREL, UILayoutActions->getPosition().d_x.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_XABS, UILayoutActions->getPosition().d_x.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_YREL, UILayoutActions->getPosition().d_y.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_YABS, UILayoutActions->getPosition().d_y.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_WREL, UILayoutActions->getSize().d_width.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_WABS, UILayoutActions->getSize().d_width.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_HREL, UILayoutActions->getSize().d_height.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_HABS, UILayoutActions->getSize().d_height.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteEndElement();
+
+		// attributes
+		Writer->WriteStartElement(TAG_ATTRIBUTES);
+		Writer->WriteAttributeString(XMLATTRIB_XREL, UILayoutAttributes->getPosition().d_x.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_XABS, UILayoutAttributes->getPosition().d_x.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_YREL, UILayoutAttributes->getPosition().d_y.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_YABS, UILayoutAttributes->getPosition().d_y.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_WREL, UILayoutAttributes->getSize().d_width.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_WABS, UILayoutAttributes->getSize().d_width.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_HREL, UILayoutAttributes->getSize().d_height.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_HABS, UILayoutAttributes->getSize().d_height.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteEndElement();
+
+		// mainbuttonsleft
+		Writer->WriteStartElement(TAG_MAINBUTTONSLEFT);
+		Writer->WriteAttributeString(XMLATTRIB_XREL, UILayoutMainButtonsLeft->getPosition().d_x.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_XABS, UILayoutMainButtonsLeft->getPosition().d_x.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_YREL, UILayoutMainButtonsLeft->getPosition().d_y.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_YABS, UILayoutMainButtonsLeft->getPosition().d_y.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_WREL, UILayoutMainButtonsLeft->getSize().d_width.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_WABS, UILayoutMainButtonsLeft->getSize().d_width.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_HREL, UILayoutMainButtonsLeft->getSize().d_height.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_HABS, UILayoutMainButtonsLeft->getSize().d_height.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteEndElement();
+
+		// mainbuttonsrights
+		Writer->WriteStartElement(TAG_MAINBUTTONSRIGHT);
+		Writer->WriteAttributeString(XMLATTRIB_XREL, UILayoutMainButtonsRight->getPosition().d_x.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_XABS, UILayoutMainButtonsRight->getPosition().d_x.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_YREL, UILayoutMainButtonsRight->getPosition().d_y.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_YABS, UILayoutMainButtonsRight->getPosition().d_y.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_WREL, UILayoutMainButtonsRight->getSize().d_width.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_WABS, UILayoutMainButtonsRight->getSize().d_width.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_HREL, UILayoutMainButtonsRight->getSize().d_height.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_HABS, UILayoutMainButtonsRight->getSize().d_height.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteEndElement();
+
+		// actionbuttons
+		Writer->WriteStartElement(TAG_ACTIONBUTTONGRID);
+		Writer->WriteAttributeString(XMLATTRIB_XREL, UILayoutActionButtons->getPosition().d_x.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_XABS, UILayoutActionButtons->getPosition().d_x.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_YREL, UILayoutActionButtons->getPosition().d_y.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_YABS, UILayoutActionButtons->getPosition().d_y.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_WREL, UILayoutActionButtons->getSize().d_width.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_WABS, UILayoutActionButtons->getSize().d_width.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_HREL, UILayoutActionButtons->getSize().d_height.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_HABS, UILayoutActionButtons->getSize().d_height.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteEndElement();
+
+		// onlineplayers
+		Writer->WriteStartElement(TAG_ONLINEPLAYERS);
+		Writer->WriteAttributeString(XMLATTRIB_XREL, UILayoutOnlinePlayers->getPosition().d_x.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_XABS, UILayoutOnlinePlayers->getPosition().d_x.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_YREL, UILayoutOnlinePlayers->getPosition().d_y.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_YABS, UILayoutOnlinePlayers->getPosition().d_y.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_WREL, UILayoutOnlinePlayers->getSize().d_width.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_WABS, UILayoutOnlinePlayers->getSize().d_width.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_HREL, UILayoutOnlinePlayers->getSize().d_height.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_HABS, UILayoutOnlinePlayers->getSize().d_height.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteEndElement();
+
+		// roomobjects
+		Writer->WriteStartElement(TAG_ROOMOBJECTS);
+		Writer->WriteAttributeString(XMLATTRIB_XREL, UILayoutRoomObjects->getPosition().d_x.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_XABS, UILayoutRoomObjects->getPosition().d_x.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_YREL, UILayoutRoomObjects->getPosition().d_y.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_YABS, UILayoutRoomObjects->getPosition().d_y.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_WREL, UILayoutRoomObjects->getSize().d_width.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_WABS, UILayoutRoomObjects->getSize().d_width.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_HREL, UILayoutRoomObjects->getSize().d_height.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_HABS, UILayoutRoomObjects->getSize().d_height.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteEndElement();
+
+		Writer->WriteEndElement();
 		Writer->WriteEndElement();
 
 		/******************************************************************************/

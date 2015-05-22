@@ -11,6 +11,10 @@ namespace Meridian59 { namespace Ogre
 		Window			= static_cast<CEGUI::Window*>(guiRoot->getChild(UI_NAME_MINIMAP_WINDOW));
 		DrawSurface		= static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_MINIMAP_DRAWSURFACE));
 				
+		// set window layout from config
+		Window->setPosition(OgreClient::Singleton->Config->UILayoutMinimap->getPosition());
+		Window->setSize(OgreClient::Singleton->Config->UILayoutMinimap->getSize());
+
 		// set minimap sizes
 		OgreClient::Singleton->MiniMap->SetDimension(
 			::System::Convert::ToInt32(Window->getPixelSize().d_width), 

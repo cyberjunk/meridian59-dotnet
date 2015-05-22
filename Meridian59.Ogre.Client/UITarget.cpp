@@ -19,6 +19,10 @@ namespace Meridian59 { namespace Ogre
 		Trade		= static_cast<CEGUI::PushButton*>(Layout->getChild(UI_NAME_TARGET_TRADE));
 		Loot		= static_cast<CEGUI::PushButton*>(Layout->getChild(UI_NAME_TARGET_LOOT));
 
+		// set window layout from config
+		Window->setPosition(OgreClient::Singleton->Config->UILayoutTarget->getPosition());
+		Window->setSize(OgreClient::Singleton->Config->UILayoutTarget->getSize());
+
 		// attach listener to Data
 		OgreClient::Singleton->Data->PropertyChanged += 
 			gcnew PropertyChangedEventHandler(OnDataPropertyChanged);

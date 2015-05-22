@@ -463,6 +463,8 @@ namespace Meridian59 { namespace Ogre
 
 	void OgreClient::Cleanup()
     {
+		ControllerUI::SaveLayoutToConfig();
+
 		// cleanup imagebuilder
 		ImageBuilder::Destroy();
 

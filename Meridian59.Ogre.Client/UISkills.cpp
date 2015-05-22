@@ -8,6 +8,10 @@ namespace Meridian59 { namespace Ogre
 		Window	= static_cast<CEGUI::FrameWindow*>(guiRoot->getChild(UI_NAME_SKILLS_WINDOW));
 		List	= static_cast<CEGUI::ItemListbox*>(Window->getChild(UI_NAME_SKILLS_LIST));
 		
+		// set window layout from config
+		Window->setPosition(OgreClient::Singleton->Config->UILayoutSkills->getPosition());
+		Window->setSize(OgreClient::Singleton->Config->UILayoutSkills->getSize());
+
 		// attach listener to avatar skills
 		OgreClient::Singleton->Data->AvatarSkills->ListChanged += 
 			gcnew ListChangedEventHandler(OnSkillsListChanged);

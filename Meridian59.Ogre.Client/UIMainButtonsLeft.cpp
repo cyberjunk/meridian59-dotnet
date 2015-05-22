@@ -15,6 +15,10 @@ namespace Meridian59 { namespace Ogre
 		Map		= static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_MAINBUTTONSLEFT_MAP));
 		Options = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_MAINBUTTONSLEFT_OPTIONS));
 
+		// set window layout from config
+		Window->setPosition(OgreClient::Singleton->Config->UILayoutMainButtonsLeft->getPosition());
+		Window->setSize(OgreClient::Singleton->Config->UILayoutMainButtonsLeft->getSize());
+
 		// subscribe click to head
 		Chat->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::MainButtonsLeft::OnItemClicked));
 		Guild->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::MainButtonsLeft::OnItemClicked));

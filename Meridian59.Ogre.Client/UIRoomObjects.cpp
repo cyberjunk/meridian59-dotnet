@@ -17,6 +17,10 @@ namespace Meridian59 { namespace Ogre
 		ShowPK		= static_cast<CEGUI::ToggleButton*>(Window->getChild(UI_NAME_ROOMOBJECTS_SHOWPK));
 		ShowBuy		= static_cast<CEGUI::ToggleButton*>(Window->getChild(UI_NAME_ROOMOBJECTS_SHOWBUY));
 
+		// set window layout from config
+		Window->setPosition(OgreClient::Singleton->Config->UILayoutRoomObjects->getPosition());
+		Window->setSize(OgreClient::Singleton->Config->UILayoutRoomObjects->getSize());
+
 		// attach listener to roomobjectsfiltered
 		OgreClient::Singleton->Data->RoomObjectsFiltered->ListChanged += 
 			gcnew ListChangedEventHandler(&ControllerUI::RoomObjects::OnRoomObjectsFilteredListChanged);

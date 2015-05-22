@@ -11,6 +11,10 @@ namespace Meridian59 { namespace Ogre
 		Window	= static_cast<CEGUI::Window*>(guiRoot->getChild(UI_NAME_ACTIONBUTTONS_WINDOW));
 		Grid	= static_cast<CEGUI::GridLayoutContainer*>(Window->getChild(UI_NAME_ACTIONBUTTONS_GRID));
 
+		// set window layout from config
+		Window->setPosition(OgreClient::Singleton->Config->UILayoutActionButtons->getPosition());
+		Window->setSize(OgreClient::Singleton->Config->UILayoutActionButtons->getSize());
+
 		// attach listener to actionbutton models
 		OgreClient::Singleton->Data->ActionButtons->ListChanged += 
 			gcnew ListChangedEventHandler(OnActionButtonsListChanged);

@@ -124,6 +124,24 @@
     <soundvolume value="10.0" />
     <disableloopsounds value="false" />
   </engine>
+  <ui>
+    <layout>
+      <avatar xrel="0.0" xabs="5.0" yrel="0.0" yabs="25.0" wrel="0.0" wabs="266.0" hrel="0.0" habs="140.0" />
+      <target xrel="0.0" xabs="275.0" yrel="0.0" yabs="30.0" wrel="0.0" wabs="256.0" hrel="0.0" habs="92.0" />
+      <minimap xrel="1.0" xabs="-257.0" yrel="0.0" yabs="25.0" wrel="0.0" wabs="256.0" hrel="0.0" habs="256.0" />
+      <chat xrel="0.0" xabs="0.0" yrel="0.5" yabs="0.0" wrel="0.35" wabs="0.0" hrel="0.3" habs="0.0" />
+      <inventory xrel="1.0" xabs="-288.0" yrel="1.0" yabs="-310.0" wrel="0.0" wabs="288.0" hrel="0.0" habs="233.0" />
+      <spells xrel="0.5" xabs="-128.0" yrel="0.5" yabs="-128.0" wrel="0.0" wabs="256.0" hrel="0.0" habs="256.0" />
+      <skills xrel="0.5" xabs="-128.0" yrel="0.5" yabs="-128.0" wrel="0.0" wabs="256.0" hrel="0.0" habs="192.0" />
+      <actions xrel="0.5" xabs="-128.0" yrel="0.5" yabs="-128.0" wrel="0.0" wabs="192.0" hrel="0.0" habs="256.0" />
+      <attributes xrel="0.5" xabs="-144.0" yrel="0.5" yabs="-190.0" wrel="0.0" wabs="288.0" hrel="0.0" habs="380.0" />
+      <mainbuttonsleft xrel="0.5" xabs="-372.0" yrel="1.0" yabs="-47.0" wrel="0.0" wabs="182.0" hrel="0.0" habs="46.0" />
+      <mainbuttonsright xrel="0.5" xabs="190.0" yrel="1.0" yabs="-47.0" wrel="0.0" wabs="182.0" hrel="0.0" habs="46.0" />
+      <actionbuttongrid xrel="0.5" xabs="-193.0" yrel="1.0" yabs="-129.0" wrel="0.0" wabs="385.0" hrel="0.0" habs="128.0" />
+      <onlineplayers xrel="0.5" xabs="-128.0" yrel="0.5" yabs="-192.0" wrel="0.0" wabs="256.0" hrel="0.0" habs="384.0" />
+      <roomobjects xrel="0.5" xabs="-128.0" yrel="0.5" yabs="-192.0" wrel="0.0" wabs="208.0" hrel="0.0" habs="384.0" />
+    </layout>
+  </ui>
   <input>
     <mouseaimspeed value="25" />
     <keyrotatespeed value="25" />

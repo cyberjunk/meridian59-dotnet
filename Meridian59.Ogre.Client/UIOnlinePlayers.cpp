@@ -8,6 +8,10 @@ namespace Meridian59 { namespace Ogre
 		Window	= static_cast<CEGUI::FrameWindow*>(guiRoot->getChild(UI_NAME_ONLINEPLAYERS_WINDOW));
 		List	= static_cast<CEGUI::ItemListbox*>(Window->getChild(UI_NAME_ONLINEPLAYERS_LIST));
 
+		// set window layout from config
+		Window->setPosition(OgreClient::Singleton->Config->UILayoutOnlinePlayers->getPosition());
+		Window->setSize(OgreClient::Singleton->Config->UILayoutOnlinePlayers->getSize());
+
 		// attach listener to onlineplayers
 		OgreClient::Singleton->Data->OnlinePlayers->ListChanged += 
 			gcnew ListChangedEventHandler(&ControllerUI::OnlinePlayers::OnOnlinePlayersListChanged);

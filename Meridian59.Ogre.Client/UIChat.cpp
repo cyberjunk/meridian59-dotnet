@@ -10,6 +10,10 @@ namespace Meridian59 { namespace Ogre
 		Input		= static_cast<CEGUI::Editbox*>(Window->getChild(UI_NAME_CHAT_INPUT));
 		Scrollbar	= static_cast<CEGUI::Scrollbar*>(Text->getChildAtIdx(1));
 
+		// set window layout from config
+		Window->setPosition(OgreClient::Singleton->Config->UILayoutChat->getPosition());
+		Window->setSize(OgreClient::Singleton->Config->UILayoutChat->getSize());
+
 		// set autoscroll on text at start
 		Scrollbar->setEndLockEnabled(true);
 

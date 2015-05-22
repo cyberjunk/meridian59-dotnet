@@ -442,6 +442,68 @@ namespace Meridian59 { namespace Ogre
 		}	
 	};
 
+	void ControllerUI::SaveLayoutToConfig()
+	{
+		if (!IsInitialized)
+			return;
+
+		// avatar
+		OgreClient::Singleton->Config->UILayoutAvatar->setPosition(Avatar::Window->getPosition());
+		OgreClient::Singleton->Config->UILayoutAvatar->setSize(Avatar::Window->getSize());
+
+		// target
+		OgreClient::Singleton->Config->UILayoutTarget->setPosition(Target::Window->getPosition());
+		OgreClient::Singleton->Config->UILayoutTarget->setSize(Target::Window->getSize());
+
+		// minimap
+		OgreClient::Singleton->Config->UILayoutMinimap->setPosition(MiniMap::Window->getPosition());
+		OgreClient::Singleton->Config->UILayoutMinimap->setSize(MiniMap::Window->getSize());
+
+		// chat
+		OgreClient::Singleton->Config->UILayoutChat->setPosition(Chat::Window->getPosition());
+		OgreClient::Singleton->Config->UILayoutChat->setSize(Chat::Window->getSize());
+
+		// inventory
+		OgreClient::Singleton->Config->UILayoutInventory->setPosition(Inventory::Window->getPosition());
+		OgreClient::Singleton->Config->UILayoutInventory->setSize(Inventory::Window->getSize());
+
+		// spells
+		OgreClient::Singleton->Config->UILayoutSpells->setPosition(Spells::Window->getPosition());
+		OgreClient::Singleton->Config->UILayoutSpells->setSize(Spells::Window->getSize());
+
+		// skills
+		OgreClient::Singleton->Config->UILayoutSkills->setPosition(Skills::Window->getPosition());
+		OgreClient::Singleton->Config->UILayoutSkills->setSize(Skills::Window->getSize());
+
+		// actions
+		OgreClient::Singleton->Config->UILayoutActions->setPosition(Actions::Window->getPosition());
+		OgreClient::Singleton->Config->UILayoutActions->setSize(Actions::Window->getSize());
+
+		// attributes
+		OgreClient::Singleton->Config->UILayoutAttributes->setPosition(Attributes::Window->getPosition());
+		OgreClient::Singleton->Config->UILayoutAttributes->setSize(Attributes::Window->getSize());
+
+		// mainbuttonsleft
+		OgreClient::Singleton->Config->UILayoutMainButtonsLeft->setPosition(MainButtonsLeft::Window->getPosition());
+		OgreClient::Singleton->Config->UILayoutMainButtonsLeft->setSize(MainButtonsLeft::Window->getSize());
+
+		// mainbuttonsright
+		OgreClient::Singleton->Config->UILayoutMainButtonsRight->setPosition(MainButtonsRight::Window->getPosition());
+		OgreClient::Singleton->Config->UILayoutMainButtonsRight->setSize(MainButtonsRight::Window->getSize());
+
+		// actionbuttons
+		OgreClient::Singleton->Config->UILayoutActionButtons->setPosition(ActionButtons::Window->getPosition());
+		OgreClient::Singleton->Config->UILayoutActionButtons->setSize(ActionButtons::Window->getSize());
+
+		// onlineplayers
+		OgreClient::Singleton->Config->UILayoutOnlinePlayers->setPosition(OnlinePlayers::Window->getPosition());
+		OgreClient::Singleton->Config->UILayoutOnlinePlayers->setSize(OnlinePlayers::Window->getSize());
+
+		// roomobjects
+		OgreClient::Singleton->Config->UILayoutRoomObjects->setPosition(RoomObjects::Window->getPosition());
+		OgreClient::Singleton->Config->UILayoutRoomObjects->setSize(RoomObjects::Window->getSize());
+	};
+
 	void ControllerUI::OnDataPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{		
 		if (::System::String::Equals(e->PropertyName, DataController::PROPNAME_UIMODE))

@@ -72,6 +72,8 @@ namespace Meridian59 { namespace Ogre
 		static void PasteFromClipboard(::CEGUI::Window* EditBox);
 		static void CopyToClipboard(::CEGUI::Window* EditBox, bool Cut);
 		
+		static void SaveLayoutToConfig();
+
 		static void OnDataPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
 
 		static void InjectMousePosition(float x, float y);

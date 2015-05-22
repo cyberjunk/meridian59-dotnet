@@ -15,6 +15,10 @@ namespace Meridian59 { namespace Ogre
 		Actions		= static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_MAINBUTTONSRIGHT_ACTIONS));
 		Attributes	= static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_MAINBUTTONSRIGHT_ATTRIBUTES));
 
+		// set window layout from config
+		Window->setPosition(OgreClient::Singleton->Config->UILayoutMainButtonsRight->getPosition());
+		Window->setSize(OgreClient::Singleton->Config->UILayoutMainButtonsRight->getSize());
+
 		// subscribe click to head
 		Inventory->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::MainButtonsRight::OnItemClicked));
 		Spells->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::MainButtonsRight::OnItemClicked));

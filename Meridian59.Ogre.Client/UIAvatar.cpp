@@ -13,6 +13,10 @@ namespace Meridian59 { namespace Ogre
 		Enchantments	= static_cast<CEGUI::GridLayoutContainer*>(Window->getChild(UI_NAME_AVATAR_ENCHANTMENTS));
 		Conditions		= static_cast<CEGUI::VerticalLayoutContainer*>(Window->getChild(UI_NAME_AVATAR_CONDITIONS));
 
+		// set window layout from config
+		Window->setPosition(OgreClient::Singleton->Config->UILayoutAvatar->getPosition());
+		Window->setSize(OgreClient::Singleton->Config->UILayoutAvatar->getSize());
+
 		// attach listener to Data
 		OgreClient::Singleton->Data->PropertyChanged += 
 			gcnew PropertyChangedEventHandler(OnDataPropertyChanged);

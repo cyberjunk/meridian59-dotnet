@@ -8,6 +8,10 @@ namespace Meridian59 { namespace Ogre
 		Window	= static_cast<CEGUI::FrameWindow*>(guiRoot->getChild(UI_NAME_ACTIONS_WINDOW));
 		List	= static_cast<CEGUI::ItemListbox*>(Window->getChild(UI_NAME_ACTIONS_LIST));
 		
+		// set window layout from config
+		Window->setPosition(OgreClient::Singleton->Config->UILayoutActions->getPosition());
+		Window->setSize(OgreClient::Singleton->Config->UILayoutActions->getSize());
+
 		// create action entries
 		CreateItem(AvatarAction::Attack);
 		CreateItem(AvatarAction::Rest);

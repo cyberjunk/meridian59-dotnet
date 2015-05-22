@@ -12,6 +12,10 @@ namespace Meridian59 { namespace Ogre
 		Pane			= static_cast<CEGUI::ScrollablePane*>(Window->getChild(UI_NAME_INVENTORY_PANE));
 		List			= static_cast<CEGUI::GridLayoutContainer*>(Pane->getChild(UI_NAME_INVENTORY_LIST));
 
+		// set window layout from config
+		Window->setPosition(OgreClient::Singleton->Config->UILayoutInventory->getPosition());
+		Window->setSize(OgreClient::Singleton->Config->UILayoutInventory->getSize());
+
 		// attach listener to inventory
 		OgreClient::Singleton->Data->InventoryObjects->ListChanged += 
 			gcnew ListChangedEventHandler(OnInventoryListChanged);

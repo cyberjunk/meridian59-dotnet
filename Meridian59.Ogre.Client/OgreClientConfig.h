@@ -84,6 +84,22 @@ namespace Meridian59 { namespace Ogre
 		literal ::System::String^ TAG_MUSICVOLUME = "musicvolume";
 		literal ::System::String^ TAG_SOUNDVOLUME = "soundvolume";
 		literal ::System::String^ TAG_DISABLELOOPSOUNDS = "disableloopsounds";
+		literal ::System::String^ TAG_UI = "ui";
+		literal ::System::String^ TAG_LAYOUT = "layout";
+		literal ::System::String^ TAG_AVATAR = "avatar";
+		literal ::System::String^ TAG_TARGET = "target";
+		literal ::System::String^ TAG_MINIMAP = "minimap";
+		literal ::System::String^ TAG_CHAT = "chat";
+		literal ::System::String^ TAG_INVENTORY = "inventory";
+		literal ::System::String^ TAG_SPELLS = "spells";
+		literal ::System::String^ TAG_SKILLS = "skills";
+		literal ::System::String^ TAG_ACTIONS = "actions";
+		literal ::System::String^ TAG_ATTRIBUTES = "attributes";
+		literal ::System::String^ TAG_MAINBUTTONSLEFT = "mainbuttonsleft";
+		literal ::System::String^ TAG_MAINBUTTONSRIGHT = "mainbuttonsright";
+		literal ::System::String^ TAG_ACTIONBUTTONGRID = "actionbuttongrid";
+		literal ::System::String^ TAG_ONLINEPLAYERS = "onlineplayers";
+		literal ::System::String^ TAG_ROOMOBJECTS = "roomobjects";
 		literal ::System::String^ TAG_INPUT = "input";
 		literal ::System::String^ TAG_MOUSEAIMSPEED = "mouseaimspeed";
 		literal ::System::String^ TAG_KEYROTATESPEED = "keyrotatespeed";
@@ -160,6 +176,14 @@ namespace Meridian59 { namespace Ogre
 		literal ::System::String^ ATTRIB_NUM = "num";
 		literal ::System::String^ ATTRIB_RIGHTCLICKACTION = "rightclickaction";
 		literal ::System::String^ ATTRIB_NUMOFSAMENAME = "numofsamename";
+		literal ::System::String^ XMLATTRIB_XREL = "xrel";
+		literal ::System::String^ XMLATTRIB_XABS = "xabs";
+		literal ::System::String^ XMLATTRIB_YREL = "yrel";
+		literal ::System::String^ XMLATTRIB_YABS = "yabs";
+		literal ::System::String^ XMLATTRIB_WREL = "wrel";
+		literal ::System::String^ XMLATTRIB_WABS = "wabs";
+		literal ::System::String^ XMLATTRIB_HREL = "hrel";
+		literal ::System::String^ XMLATTRIB_HABS = "habs";
 
 	protected:
 		ActionButtonType GetButtonType(::System::String^ ButtonType);
@@ -189,6 +213,21 @@ namespace Meridian59 { namespace Ogre
 		int MouseAimSpeed;
 		int KeyRotateSpeed;
 		bool InvertMouseY;
+
+		::CEGUI::URect* UILayoutAvatar;
+		::CEGUI::URect* UILayoutTarget;
+		::CEGUI::URect* UILayoutMinimap;
+		::CEGUI::URect* UILayoutChat;
+		::CEGUI::URect* UILayoutInventory;
+		::CEGUI::URect* UILayoutSpells;
+		::CEGUI::URect* UILayoutSkills;
+		::CEGUI::URect* UILayoutActions;
+		::CEGUI::URect* UILayoutAttributes;
+		::CEGUI::URect* UILayoutMainButtonsLeft;
+		::CEGUI::URect* UILayoutMainButtonsRight;
+		::CEGUI::URect* UILayoutActionButtons;
+		::CEGUI::URect* UILayoutOnlinePlayers;
+		::CEGUI::URect* UILayoutRoomObjects;
 
 		::System::Collections::Generic::List<ActionButtonList^>^ ActionButtonSets =
 			gcnew ::System::Collections::Generic::List<ActionButtonList^>();
