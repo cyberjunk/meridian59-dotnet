@@ -101,9 +101,6 @@ namespace Meridian59 { namespace Ogre
 		// set avatarname
 		name->setText(avatarName);
 
-		widget->setMouseCursor(UI_MOUSECURSOR_TARGET);
-		name->setMouseCursor(UI_MOUSECURSOR_TARGET);
-
 		name->subscribeEvent(
 			CEGUI::Window::EventMouseDoubleClick,
 			CEGUI::Event::Subscriber(UICallbacks::Welcome::OnItemDoubleClick));

@@ -78,10 +78,6 @@ namespace Meridian59 { namespace Ogre
 		CEGUI::Window* name	= widget->getChildAtIdx(UI_SKILLS_CHILDINDEX_NAME);
 		CEGUI::Window* percent = widget->getChildAtIdx(UI_SKILLS_CHILDINDEX_PERCENT);
 				
-		dragger->setMouseCursor(UI_MOUSECURSOR_TARGET);
-		name->setMouseCursor(UI_MOUSECURSOR_TARGET);
-		percent->setMouseCursor(UI_MOUSECURSOR_TARGET);
-		
 		// insert in ui-list
 		if ((int)List->getItemCount() > Index)
 			List->insertItem(widget, List->getItemFromIndex(Index));

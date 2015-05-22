@@ -79,6 +79,7 @@
 #define UI_FILE_SCHEME				"TaharezLook.scheme"
 #define UI_DEFAULTARROW				"TaharezLook/MouseArrow"
 #define UI_MOUSECURSOR_TARGET		"TaharezLook/MouseTarget"
+#define UI_MOUSECURSOR_HAND			"TaharezLook/MouseHand"
 #define UI_DEFAULTTOOLTIP			"TaharezLook/Tooltip"
 #define UI_DEFAULTFONT				UI_FONT_LIBERATIONSANS10
 #define UI_FILE_LAYOUT				"Meridian59.layout"

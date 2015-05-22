@@ -34,9 +34,6 @@ namespace Meridian59 { namespace Ogre
 
 		// set dimension (no. of items per row and no. of cols)
 		Enchantments->setGridDimensions(UI_AVATAR_ENCHANTMENTS_COLS, UI_AVATAR_ENCHANTMENTS_ROWS);
-		
-		// set mousecursor on avatar to target
-		Head->setMouseCursor(UI_MOUSECURSOR_TARGET);
 
 		// image composer for head picture
 		imageComposerHead = gcnew ImageComposerCEGUI<RoomObject^>();
@@ -218,7 +215,7 @@ namespace Meridian59 { namespace Ogre
 			// set tooltip to name and mousecursor to target
 			imgButton->setID(buffObject->ID);
 			imgButton->setTooltipText(StringConvert::CLRToCEGUI(buffObject->Name));
-			imgButton->setMouseCursor(UI_MOUSECURSOR_TARGET);		
+			imgButton->setMouseCursor(UI_MOUSECURSOR_HAND);		
 		}
 	};
 

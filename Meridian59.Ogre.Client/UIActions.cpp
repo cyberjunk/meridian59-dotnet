@@ -55,9 +55,6 @@ namespace Meridian59 { namespace Ogre
 			CEGUI::DragContainer* iconDrag = (CEGUI::DragContainer*)widget->getChildAtIdx(UI_ACTIONS_CHILDINDEX_ICON);
 			CEGUI::Window* icon	= iconDrag->getChildAtIdx(0);			
 			CEGUI::Window* name	= (CEGUI::Window*)widget->getChildAtIdx(UI_ACTIONS_CHILDINDEX_NAME);
-				
-			iconDrag->setMouseCursor(UI_MOUSECURSOR_TARGET);
-			name->setMouseCursor(UI_MOUSECURSOR_TARGET);
 
 			CEGUI::String strIconName;
 			CEGUI::String strName;

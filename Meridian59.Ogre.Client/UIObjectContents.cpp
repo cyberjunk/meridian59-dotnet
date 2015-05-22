@@ -88,9 +88,6 @@ namespace Meridian59 { namespace Ogre
 		// set ID
 		widget->setID(obj->ID);
 
-		// mousecursor
-		widget->setMouseCursor(UI_MOUSECURSOR_TARGET);
-
 		// subscribe click event
 		widget->subscribeEvent(
 			CEGUI::ItemEntry::EventMouseClick, 
@@ -101,10 +98,7 @@ namespace Meridian59 { namespace Ogre
 		{
 			CEGUI::Window* icon		= (CEGUI::Window*)widget->getChildAtIdx(UI_OBJECTCONTENTS_CHILDINDEX_ICON);
 			CEGUI::Window* name		= (CEGUI::Window*)widget->getChildAtIdx(UI_OBJECTCONTENTS_CHILDINDEX_NAME);
-			CEGUI::Editbox* amount	= (CEGUI::Editbox*)widget->getChildAtIdx(UI_OBJECTCONTENTS_CHILDINDEX_AMOUNT);
-
-			icon->setMouseCursor(UI_MOUSECURSOR_TARGET);
-			name->setMouseCursor(UI_MOUSECURSOR_TARGET);			
+			CEGUI::Editbox* amount	= (CEGUI::Editbox*)widget->getChildAtIdx(UI_OBJECTCONTENTS_CHILDINDEX_AMOUNT);			
 		}
 
 		// insert widget in ui-list

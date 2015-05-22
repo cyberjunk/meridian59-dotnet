@@ -26,13 +26,6 @@ namespace Meridian59 { namespace Ogre
 		// attach listener to Data
 		OgreClient::Singleton->Data->PropertyChanged += 
 			gcnew PropertyChangedEventHandler(OnDataPropertyChanged);
-        		
-		Inspect->setMouseCursor(UI_MOUSECURSOR_TARGET);
-		Attack->setMouseCursor(UI_MOUSECURSOR_TARGET);
-		Activate->setMouseCursor(UI_MOUSECURSOR_TARGET);
-		Buy->setMouseCursor(UI_MOUSECURSOR_TARGET);
-		Trade->setMouseCursor(UI_MOUSECURSOR_TARGET);
-		Loot->setMouseCursor(UI_MOUSECURSOR_TARGET);
 
 		// image composer for head picture (hotspot=1 is head)
 		imageComposer = gcnew ImageComposerCEGUI<ObjectBase^>();

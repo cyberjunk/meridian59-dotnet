@@ -164,9 +164,6 @@ namespace Meridian59 { namespace Ogre
 		// set ID
 		widget->setID(obj->ID);
 
-		// set cursor
-		widget->setMouseCursor(UI_MOUSECURSOR_TARGET);
-		
 		// subscribe click event
 		widget->subscribeEvent(
 			CEGUI::ItemEntry::EventMouseClick, 
@@ -183,9 +180,6 @@ namespace Meridian59 { namespace Ogre
 			CEGUI::Window* icon		= (CEGUI::Window*)widget->getChildAtIdx(UI_TRADE_CHILDINDEX_ICON);
 			CEGUI::Window* name		= (CEGUI::Window*)widget->getChildAtIdx(UI_TRADE_CHILDINDEX_NAME);
 			CEGUI::Editbox* amount	= (CEGUI::Editbox*)widget->getChildAtIdx(UI_TRADE_CHILDINDEX_AMOUNT);
-
-			icon->setMouseCursor(UI_MOUSECURSOR_TARGET);
-			name->setMouseCursor(UI_MOUSECURSOR_TARGET);
 
 			// subscribe event to focusleave on textbox
 			amount->subscribeEvent(CEGUI::Editbox::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Trade::OnItemYouAmountDeactivated));
@@ -298,9 +292,6 @@ namespace Meridian59 { namespace Ogre
 		// set id
 		widget->setID(obj->ID);
 
-		// set cursor
-		widget->setMouseCursor(UI_MOUSECURSOR_TARGET);
-
 		// subscribe click event
 		widget->subscribeEvent(
 			CEGUI::ItemEntry::EventMouseClick, 
@@ -313,8 +304,6 @@ namespace Meridian59 { namespace Ogre
 			CEGUI::Window* name		= (CEGUI::Window*)widget->getChildAtIdx(UI_TRADE_CHILDINDEX_NAME);
 			CEGUI::Editbox* amount	= (CEGUI::Editbox*)widget->getChildAtIdx(UI_TRADE_CHILDINDEX_AMOUNT);
 
-			icon->setMouseCursor(UI_MOUSECURSOR_TARGET);
-			name->setMouseCursor(UI_MOUSECURSOR_TARGET);
 			amount->setReadOnly(true);
 
 			// subscribe event to focusleave on textbox

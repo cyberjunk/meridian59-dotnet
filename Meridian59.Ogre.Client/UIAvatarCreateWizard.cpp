@@ -458,7 +458,6 @@ namespace Meridian59 { namespace Ogre
 		widget->setID(obj->ExtraID);
 
 		// mousecursor
-		widget->setMouseCursor(UI_MOUSECURSOR_TARGET);
 		widget->setTooltipText(StringConvert::CLRToCEGUI(obj->SpellDescription));
 
 		// subscribe click event
@@ -479,10 +478,6 @@ namespace Meridian59 { namespace Ogre
 			name->setText(StringConvert::CLRToCEGUI(obj->SpellName));
 			school->setText(StringConvert::CLRToCEGUI(obj->SchoolType.ToString()));
 			points->setText(CEGUI::PropertyHelper<unsigned int>::toString(obj->SpellCost));
-
-			name->setMouseCursor(UI_MOUSECURSOR_TARGET);
-			school->setMouseCursor(UI_MOUSECURSOR_TARGET);
-			points->setMouseCursor(UI_MOUSECURSOR_TARGET);
 		}
 
 		// insert widget in ui-list
@@ -513,7 +508,6 @@ namespace Meridian59 { namespace Ogre
 		widget->setID(obj->ExtraID);
 
 		// mousecursor
-		widget->setMouseCursor(UI_MOUSECURSOR_TARGET);
 		widget->setTooltipText(StringConvert::CLRToCEGUI(obj->SkillDescription));
 
 		// subscribe click event
@@ -532,9 +526,6 @@ namespace Meridian59 { namespace Ogre
 			
 			name->setText(StringConvert::CLRToCEGUI(obj->SkillName));
 			points->setText(CEGUI::PropertyHelper<unsigned int>::toString(obj->SkillCost));
-
-			name->setMouseCursor(UI_MOUSECURSOR_TARGET);
-			points->setMouseCursor(UI_MOUSECURSOR_TARGET);
 		}
 
 		// insert widget in ui-list
@@ -565,7 +556,6 @@ namespace Meridian59 { namespace Ogre
 		widget->setID(obj->ExtraID);
 
 		// mousecursor
-		widget->setMouseCursor(UI_MOUSECURSOR_TARGET);
 		widget->setTooltipText(StringConvert::CLRToCEGUI(obj->SpellDescription));
 
 		// subscribe click event
@@ -586,10 +576,6 @@ namespace Meridian59 { namespace Ogre
 			name->setText(StringConvert::CLRToCEGUI(obj->SpellName));
 			school->setText(StringConvert::CLRToCEGUI(obj->SchoolType.ToString()));
 			points->setText(CEGUI::PropertyHelper<unsigned int>::toString(obj->SpellCost));
-
-			name->setMouseCursor(UI_MOUSECURSOR_TARGET);
-			school->setMouseCursor(UI_MOUSECURSOR_TARGET);
-			points->setMouseCursor(UI_MOUSECURSOR_TARGET);
 		}
 
 		// insert widget in ui-list
@@ -620,7 +606,6 @@ namespace Meridian59 { namespace Ogre
 		widget->setID(obj->ExtraID);
 
 		// mousecursor
-		widget->setMouseCursor(UI_MOUSECURSOR_TARGET);
 		widget->setTooltipText(StringConvert::CLRToCEGUI(obj->SkillDescription));
 
 		// subscribe click event
@@ -639,9 +624,6 @@ namespace Meridian59 { namespace Ogre
 			
 			name->setText(StringConvert::CLRToCEGUI(obj->SkillName));
 			points->setText(CEGUI::PropertyHelper<unsigned int>::toString(obj->SkillCost));
-
-			name->setMouseCursor(UI_MOUSECURSOR_TARGET);
-			points->setMouseCursor(UI_MOUSECURSOR_TARGET);
 		}
 
 		// insert widget in ui-list

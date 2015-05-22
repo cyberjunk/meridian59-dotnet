@@ -61,7 +61,7 @@ namespace Meridian59 { namespace Ogre
 			// some settings
 			dragger->setSize(size);
 			dragger->setMouseInputPropagationEnabled(false);
-			dragger->setMouseCursor(UI_MOUSECURSOR_TARGET);
+			dragger->setMouseCursor(UI_MOUSECURSOR_HAND);
 			
 			widget->setSize(size2);
 			widget->setPosition(CEGUI::UVector2(CEGUI::UDim(0, 2.5f), CEGUI::UDim(0, 2.5f)));

@@ -124,7 +124,7 @@ namespace Meridian59 { namespace Ogre
 			// set tooltip to name and mousecursor to target
 			imgButton->setID(buffObject->ID);
 			imgButton->setTooltipText(StringConvert::CLRToCEGUI(buffObject->Name));
-			imgButton->setMouseCursor(UI_MOUSECURSOR_TARGET);	
+			imgButton->setMouseCursor(UI_MOUSECURSOR_HAND);
 		}
 	};
 
