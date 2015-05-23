@@ -29,7 +29,6 @@
 #include "OgreD3D9RenderSystem.h"
 #include "OgreD3D9RenderWindow.h"
 #include "OgreOctreePlugin.h"
-#include "OgreCgPlugin.h"
 #include "ParticleUniversePlugin.h"
 #pragma managed(pop)
 
@@ -88,7 +87,6 @@ namespace Meridian59 { namespace Ogre
 		::Ogre::Viewport*			viewportInvis;
         ::Ogre::SceneManager*		sceneManager;
 		::Ogre::OctreePlugin*		pluginOctree;
-		::Ogre::CgPlugin*			pluginCG;
 		::Caelum::CaelumPlugin*		pluginCaelum;
 		::ParticleUniverse::ParticleUniversePlugin* pluginParticleUniverse;
 

@@ -32,13 +32,11 @@ namespace Meridian59 { namespace Ogre
 		root					= OGRE_NEW ::Ogre::Root();
 		renderSystem			= OGRE_NEW ::Ogre::D3D9RenderSystem(0);						
 		pluginOctree			= OGRE_NEW ::Ogre::OctreePlugin();
-		pluginCG				= OGRE_NEW ::Ogre::CgPlugin();
 		pluginCaelum			= OGRE_NEW ::Caelum::CaelumPlugin();
 		pluginParticleUniverse	= OGRE_NEW ::ParticleUniverse::ParticleUniversePlugin();
 
 		// install plugins into root
 		root->installPlugin(pluginOctree);
-		root->installPlugin(pluginCG);
 		root->installPlugin(pluginCaelum);
 		root->installPlugin(pluginParticleUniverse);
 
@@ -528,13 +526,11 @@ namespace Meridian59 { namespace Ogre
 
 		// uninstall plugins
 		root->uninstallPlugin(pluginOctree);
-		root->uninstallPlugin(pluginCG);
 		root->uninstallPlugin(pluginCaelum);
 		root->uninstallPlugin(pluginParticleUniverse);
 
 		// delete plugins
 		OGRE_DELETE pluginOctree;
-		OGRE_DELETE pluginCG;
 		//OGRE_DELETE pluginCaelum; // deletes itself at uninstall
 		OGRE_DELETE pluginParticleUniverse;
 
@@ -544,7 +540,6 @@ namespace Meridian59 { namespace Ogre
 		ControllerSound::Destroy();
 
 		pluginOctree			= nullptr;
-		pluginCG				= nullptr;
 		pluginCaelum			= nullptr;
 		pluginParticleUniverse	= nullptr;
 		renderSystem			= nullptr;
