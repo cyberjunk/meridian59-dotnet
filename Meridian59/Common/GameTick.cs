@@ -26,7 +26,7 @@ namespace Meridian59.Common
     public class GameTick
     {
         #region Adjustable tick intervals
-        public uint INTERVALTPSMEASURE   = 500;
+        public uint INTERVALTPSMEASURE   = 250;
         public uint INTERVALINTERACT     = 500;
         public uint INTERVALREQUSERCOMMAND = 500;
         public uint INTERVALREQACTION    = 500;
