@@ -185,6 +185,9 @@ namespace Meridian59.Client
             // process tick
             Update();
 
+            //if (GameTick.Span > 33)
+            //    Logger.Log(MODULENAME, LogType.Warning, "Tick span was " + GameTick.Span.ToString() + " ms.");
+
             // sleep
             Thread.Sleep(SLEEPTIME);
         }
