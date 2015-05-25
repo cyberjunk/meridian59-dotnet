@@ -325,8 +325,9 @@ namespace Meridian59.Protocol
             while (ExceptionQueue.TryDequeue(out error)) ;
 
             // init a new Socket 
-            socket = new Socket(ipv, SocketType.Stream, ProtocolType.Tcp);   
-         
+            socket = new Socket(ipv, SocketType.Stream, ProtocolType.Tcp);
+            socket.NoDelay = true;
+
             // try connect to server
             try { socket.Connect(serverAddress, serverPort); }
             catch (Exception Error) { ExceptionQueue.Enqueue(Error); }
