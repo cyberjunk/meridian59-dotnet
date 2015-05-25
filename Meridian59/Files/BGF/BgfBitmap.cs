@@ -659,7 +659,12 @@ namespace Meridian59.Files.BGF
             return decompressedPixelData;
         }
 
-        protected byte[] DecompressOld(byte[] Data)
+        /// <summary>
+        /// Old Decompress method not using .NET compressor
+        /// </summary>
+        /// <param name="Data"></param>
+        /// <returns></returns>
+        public byte[] DecompressOld(byte[] Data)
         {
             byte[] decompressedPixelData = new byte[UncompressedLength];
 

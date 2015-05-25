@@ -590,8 +590,6 @@ namespace Meridian59.Files
                 if (PreloadingFile != null)
                     PreloadingFile(this, new StringEventArgs(filename));
 
-            GC.Collect(2);
-
             if (PreloadingEnded != null)
                 PreloadingEnded(this, new EventArgs());
         }
