@@ -19,6 +19,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
+using System.IO.Compression;
 using Meridian59.Common;
 using Meridian59.Common.Interfaces;
 using Meridian59.Common.Constants;
@@ -626,6 +627,45 @@ namespace Meridian59.Files.BGF
             // ZLIB
             if (version > BgfFile.VERSION9)
             {
+                // init sourcestream
+                MemoryStream srcStream = new MemoryStream(Data, false);
+
+                // must skip two bytes not part of deflate but used by zlib
+                srcStream.ReadByte();
+                srcStream.ReadByte();
+
+                // init .net decompressor
+                DeflateStream destZ = new DeflateStream(srcStream, CompressionMode.Decompress);
+
+                // decompress
+                destZ.Read(decompressedPixelData, 0, UncompressedLength);
+
+                // cleanup                
+                destZ.Dispose();
+                srcStream.Dispose();
+            }
+            // CRUSH
+            else
+            {
+#if WINCLR && X86
+                // decompress
+                Crush32.Decompress(Data, 0, decompressedPixelData, 0, (int)UncompressedLength, CompressedLength);
+#else
+                throw new Exception(ERRORCRUSHPLATFORM);
+#endif
+            }
+
+            // set decompressed array to pixeldata
+            return decompressedPixelData;
+        }
+
+        protected byte[] DecompressOld(byte[] Data)
+        {
+            byte[] decompressedPixelData = new byte[UncompressedLength];
+
+            // ZLIB
+            if (version > BgfFile.VERSION9)
+            {
                 // init streams
                 MemoryStream destStream = new MemoryStream(decompressedPixelData, true);
                 ZOutputStream destZ = new ZOutputStream(destStream);
@@ -653,7 +693,7 @@ namespace Meridian59.Files.BGF
             // set decompressed array to pixeldata
             return decompressedPixelData;
         }
-
+  
         /// <summary>
         /// Returns the Hotspot matching given Index.
         /// This is an absolute compare: -1 equals 1
