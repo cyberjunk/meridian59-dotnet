@@ -41,7 +41,7 @@ namespace Meridian59.Protocol
     public class MessageEnrichment
     {
         #region Constants
-        protected const int SLEEPTIME = 1;
+        protected const int SLEEPTIME = 5;
         #endregion
 
         #region Fields
