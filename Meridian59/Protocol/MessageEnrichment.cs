@@ -78,6 +78,7 @@ namespace Meridian59.Protocol
 
             // start own workthread
             workThread = new Thread(ThreadProc);
+            workThread.IsBackground = true;
             workThread.Start();
         }
         #endregion

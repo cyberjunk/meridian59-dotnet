@@ -229,6 +229,7 @@ namespace Meridian59.Protocol
             
             // Start workthread
             workThread = new Thread(new ThreadStart(ThreadProc));
+            workThread.IsBackground = true;
             workThread.Start();
         }
 
