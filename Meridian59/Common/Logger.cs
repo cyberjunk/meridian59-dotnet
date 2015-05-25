@@ -57,6 +57,7 @@ namespace Meridian59.Common
 
                 // start workthread
                 workThread = new Thread(new ThreadStart(ThreadProc));
+                workThread.IsBackground = true;
                 workThread.Start();
             }
         }
