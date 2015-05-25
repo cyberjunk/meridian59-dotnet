@@ -74,21 +74,25 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>bin\x86\Debug\</OutDir>
     <IntDir>obj\x86\Debug\</IntDir>
+    <LinkKeyFile>..\Meridian59\Meridian59.snk</LinkKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>bin\x64\Debug\</OutDir>
     <IntDir>obj\x64\Debug\</IntDir>
+    <LinkKeyFile>..\Meridian59\Meridian59.snk</LinkKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>bin\x86\Release\</OutDir>
     <IntDir>obj\x86\Release\</IntDir>
+    <LinkKeyFile>..\Meridian59\Meridian59.snk</LinkKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>bin\x64\Release\</OutDir>
     <IntDir>obj\x64\Release\</IntDir>
+    <LinkKeyFile>..\Meridian59\Meridian59.snk</LinkKeyFile>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
