@@ -695,6 +695,15 @@ namespace Meridian59 { namespace Ogre
 			Config->PreloadSound,
 			Config->PreloadMusic);
 
+		// .NET 4.5
+		// next gc run, defragment the largeobjectheap
+		//::System::Runtime::GCSettings::LargeObjectHeapCompactionMode =
+		//	System::Runtime::GCLargeObjectHeapCompactionMode::CompactOnce;
+
+		// make maximum gc run
+		//::System::GC::Collect(2, ::System::GCCollectionMode::Forced, true);
+		::System::GC::Collect(2, ::System::GCCollectionMode::Forced);
+
         // 10. initialize general group
         resMan->initialiseResourceGroup(RESOURCEGROUPGENERAL);
 			 

@@ -70,6 +70,13 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	Application::EnableVisualStyles();
 	Application::SetCompatibleTextRenderingDefault(false);
 
+	// GC settings for low latency
+	//::System::Runtime::GCSettings::LatencyMode = ::System::Runtime::GCLatencyMode::SustainedLowLatency; // .net 4.5+
+	::System::Runtime::GCSettings::LatencyMode = ::System::Runtime::GCLatencyMode::LowLatency; // .net 4
+
+	// Make sure the mainthread has highest prio within the process (workers!)
+	::System::Threading::Thread::CurrentThread->Priority = ::System::Threading::ThreadPriority::Highest;
+
 	// init client and start (locks thread)
 	OgreClient::Singleton->Start(true);
 
