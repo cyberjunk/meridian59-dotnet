@@ -59,7 +59,7 @@ namespace Meridian59.Common
         /// <summary>
         /// Stopwatch object, usually high resolution on most CLR
         /// </summary>
-        protected Stopwatch watch = new Stopwatch();
+        protected readonly Stopwatch watch = new Stopwatch();
 
         #region Ticks
         /// <summary>
