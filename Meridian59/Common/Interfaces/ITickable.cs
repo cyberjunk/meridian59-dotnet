@@ -26,6 +26,6 @@ namespace Meridian59.Common.Interfaces
         /// </summary>
         /// <param name="Tick">Current tick</param>
         /// <param name="Span">Elapsed time since last tick</param>
-        void Tick(long Tick, long Span);
+        void Tick(double Tick, double Span);
     }
 }

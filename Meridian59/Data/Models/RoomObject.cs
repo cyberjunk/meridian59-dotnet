@@ -932,7 +932,7 @@ namespace Meridian59.Data.Models
         /// </summary>
         /// <param name="TickSpan">Elapsed ms since last call</param>
         /// <param name="RoomInfo">Server sent room information, also has loaded reference to ROO</param>
-        public void UpdatePosition(long TickSpan, RoomInfo RoomInfo)
+        public void UpdatePosition(double TickSpan, RoomInfo RoomInfo)
         {
             if (RoomInfo == null || RoomInfo.ResourceRoom == null)
                 return;
@@ -1203,7 +1203,7 @@ namespace Meridian59.Data.Models
         /// </summary>
         /// <param name="Tick"></param>
         /// <param name="Span"></param>
-        public override void Tick(long Tick, long Span)
+        public override void Tick(double Tick, double Span)
         {
             // don't use base or 
             // appearancechanged will be triggered too early

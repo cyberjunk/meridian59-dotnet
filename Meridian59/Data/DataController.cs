@@ -778,7 +778,7 @@ namespace Meridian59.Data
         /// </summary>
         /// <param name="Tick"></param>
         /// <param name="Span"></param>
-        public void Tick(long Tick, long Span)
+        public void Tick(double Tick, double Span)
         {
             // these iterations are backwards to allow
             // removing entries while iterating

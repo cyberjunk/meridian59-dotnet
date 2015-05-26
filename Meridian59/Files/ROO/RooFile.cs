@@ -1376,7 +1376,7 @@ namespace Meridian59.Files.ROO
         /// </summary>
         /// <param name="Tick"></param>
         /// <param name="Span"></param>
-        public void Tick(long Tick, long Span)
+        public void Tick(double Tick, double Span)
         {
             // update wall animations
             foreach (RooSideDef wallSide in SideDefs)

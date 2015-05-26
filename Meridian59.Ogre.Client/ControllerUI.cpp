@@ -218,7 +218,7 @@ namespace Meridian59 { namespace Ogre
 		IsInitialized = false;
 	};
 
-	void ControllerUI::Tick(long long Tick, long long Span)
+	void ControllerUI::Tick(double Tick, double Span)
 	{
 		if (!IsInitialized)
 			return;
@@ -264,7 +264,7 @@ namespace Meridian59 { namespace Ogre
 			Inventory::Update();
 			Chat::Tick(Tick, Span);
 
-			long long delta = OgreClient::Singleton->GameTick->Current - tickKeyRepeat;
+			double delta = OgreClient::Singleton->GameTick->Current - tickKeyRepeat;
 
 			// keyrepeat
 			if (keyDown != CEGUI::Key::Scan::Unknown &&

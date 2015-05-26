@@ -252,7 +252,7 @@ namespace Meridian59 { namespace Ogre
 			// get id of this buff
 			unsigned int id = dataModels[index]->ID;
 
-			long long span = OgreClient::Singleton->GameTick->Current -
+			double span = OgreClient::Singleton->GameTick->Current -
 				ControllerUI::Inventory::TickMouseClick;
 
 			// new

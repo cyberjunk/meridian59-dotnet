@@ -98,7 +98,6 @@ namespace Meridian59 { namespace Ogre
         bool hasFocus;
 		bool isWinCursorVisible;
 		bool invisViewportUpdateFlip;
-		bool minimapUpdateFlip;
 
 #ifdef _DEBUG
 		DebugForm^ debugForm;

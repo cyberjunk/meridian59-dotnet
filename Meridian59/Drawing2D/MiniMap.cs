@@ -129,7 +129,7 @@ namespace Meridian59.Drawing2D
         /// <summary>
         /// Call regularly from mainthread, will possibly update mapimage and trigger event
         /// </summary>
-        public void Tick(long Tick, long Span)
+        public void Tick(double Tick, double Span)
         {
             Real deltax, deltay;
             Real transx1, transy1, transx2, transy2;

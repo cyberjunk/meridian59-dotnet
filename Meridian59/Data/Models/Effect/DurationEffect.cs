@@ -85,7 +85,7 @@ namespace Meridian59.Data.Models
 
         protected uint duration = 0;
         protected Real progress = 0.0f;
-        protected long startTick = 0;
+        protected double startTick = 0;
         
         /// <summary>
         /// The duration the effect lasts.
@@ -132,7 +132,7 @@ namespace Meridian59.Data.Models
         public unsafe DurationEffect(ref byte* Buffer)
             : base(ref Buffer) { }
 
-        public void Update(long CurrentTick)
+        public void Update(double CurrentTick)
         {
             if (isActive)
             {
@@ -142,7 +142,7 @@ namespace Meridian59.Data.Models
 
                 else
                 {
-                    long span = CurrentTick - startTick;
+                    double span = CurrentTick - startTick;
 
                     // still playing
                     if (span < duration)

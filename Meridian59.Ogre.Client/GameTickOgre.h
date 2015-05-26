@@ -27,32 +27,32 @@ namespace Meridian59 { namespace Ogre
 	public ref class GameTickOgre : public ::Meridian59::Common::GameTick
 	{
 	protected:
-		long long chatUpdate;
+		double chatUpdate;
 		
 	public:
-		unsigned int INTERVALCHATUPDATE;
+		double INTERVALCHATUPDATE;
 		
 		GameTickOgre() : GameTick()
 		{
-			INTERVALCHATUPDATE = 500;
+			INTERVALCHATUPDATE = 500.0;
 		};
 
 		/// <summary>
         /// Tick we last did an update of the chat.
         /// </summary>
-		property long long ChatUpdate 
+		property double ChatUpdate 
 		{ 
-			public: long long get() { return chatUpdate; } 
-			protected: void set(long long value) { chatUpdate = value; }
+			public: double get() { return chatUpdate; } 
+			protected: void set(double value) { chatUpdate = value; }
 		};
 
 		/// <summary>
         /// Milliseconds elapsed since last chat update.
         /// Calculated on-the-fly.
         /// </summary>
-        property long long SpanChatUpdate
+        property double SpanChatUpdate
 		{ 
-			public: long long get() { return Current - ChatUpdate; } 
+			public: double get() { return Current - ChatUpdate; } 
 		};
 	
 		/// <summary>

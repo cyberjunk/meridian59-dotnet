@@ -40,8 +40,8 @@ namespace Meridian59 { namespace Ogre
 	public ref class ControllerUI abstract sealed
 	{
 	protected:
-		literal unsigned int KEYREPEATINTERVALMS = 25;
-		literal unsigned int KEYREPEATINTERVALDELAYMS = 500;
+		literal double KEYREPEATINTERVALMS = 25.0;
+		literal double KEYREPEATINTERVALDELAYMS = 500.0;
 
 		static ::CEGUI::OgreRenderer* renderer;
 		static ::CEGUI::System* system;
@@ -54,7 +54,7 @@ namespace Meridian59 { namespace Ogre
 		static ::CEGUI::Window* movingWindow;
 		static ::CEGUI::Key::Scan keyDown;
 		static ::CEGUI::Key::Scan keyChar;
-		static long long tickKeyRepeat;
+		static double tickKeyRepeat;
 		static bool processingInput;
 		static bool fastKeyRepeat;
 
@@ -65,7 +65,7 @@ namespace Meridian59 { namespace Ogre
 
 		static void Initialize(::Ogre::RenderTarget* Target);
 		static void Destroy();
-		static void Tick(long long Tick, long long Span);
+		static void Tick(double Tick, double Span);
 		static void ToggleVisibility(::CEGUI::Window* Window);
 		static bool IsRecursiveChildOf(::CEGUI::Window* Child, ::CEGUI::Window* Parent);
 		static void ActivateRoot();
@@ -304,7 +304,7 @@ namespace Meridian59 { namespace Ogre
 			
 			static void Initialize();
 			static void Destroy();
-			static void Tick(long long Tick, long long Span);
+			static void Tick(double Tick, double Span);
 			static ::CEGUI::String GetChatString(ChatMessage^ ChatMessage);	
 			static void OnChatMessagesListChanged(Object^ sender, ListChangedEventArgs^ e);	
 		};
@@ -585,7 +585,7 @@ namespace Meridian59 { namespace Ogre
 
 			static void Update();
 			static void SwapImageComposers(unsigned int Index1, unsigned int Index2);
-			static long long TickMouseClick;
+			static double TickMouseClick;
 			static bool DoClick;
 			static int ClickIndex;
 		};

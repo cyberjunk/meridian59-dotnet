@@ -56,8 +56,8 @@ namespace Meridian59 { namespace Ogre
 		static OISMouseListener* mouselistener;
 
 		static LPPOINT mouseDownWindowsPosition;
-		static long long tickMouseDownLeft;
-		static long long tickMouseDownRight;
+		static double tickMouseDownLeft;
+		static double tickMouseDownRight;
 		static bool isCameraFirstPerson;
 		static bool isInitialized;		
 		static bool isMouseInWindow;
@@ -334,6 +334,6 @@ namespace Meridian59 { namespace Ogre
         /// Call this once per mainthread loop		
 		/// to process input and act accordingly.
         /// </summary>
-        static void Tick(long long Tick, long long Span);
+		static void Tick(double Tick, double Span);
 	};
 };};

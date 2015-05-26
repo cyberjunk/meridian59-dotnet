@@ -396,8 +396,8 @@ namespace Meridian59 { namespace Ogre
 
 		// there is a small delay until aiming starts, to not shackle the
 		// camera with any short mouseclick
-		long long dtRightButton = OgreClient::Singleton->GameTick->Current - tickMouseDownRight;
-		long long dtLeftButton = OgreClient::Singleton->GameTick->Current - tickMouseDownLeft;
+		double dtRightButton = OgreClient::Singleton->GameTick->Current - tickMouseDownRight;
+		double dtLeftButton = OgreClient::Singleton->GameTick->Current - tickMouseDownLeft;
 
 		// right mousebutton (or both) pressed and dleay for mouseaim exceeded
 		if (IsRightMouseDown && dtRightButton > MOUSELOOKMINDELAY)
@@ -674,7 +674,7 @@ namespace Meridian59 { namespace Ogre
         return direction;
     };
 
-	void ControllerInput::Tick(long long Tick, long long Span)
+	void ControllerInput::Tick(double Tick, double Span)
     {	
 		if (!IsInitialized)
 			return;

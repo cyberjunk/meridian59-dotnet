@@ -239,12 +239,12 @@ namespace Meridian59.Data.Models
         #endregion
 
         #region Methods
-        public override void Tick(long Tick, long Span)
+        public override void Tick(double Tick, double Span)
         {
             // not first call ?
             if (lastAnimationTick > 0)
             {
-                long span = Tick - lastAnimationTick;
+                double span = Tick - lastAnimationTick;
              
                 // elapsed?
                 if (span >= Period)

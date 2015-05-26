@@ -26,23 +26,23 @@ namespace Meridian59.Common
     public class GameTick
     {
         #region Adjustable tick intervals
-        public uint INTERVALTPSMEASURE   = 250;
-        public uint INTERVALINTERACT     = 500;
-        public uint INTERVALREQUSERCOMMAND = 500;
-        public uint INTERVALREQACTION    = 500;
-        public uint INTERVALSAY          = 0;
-        public uint INTERVALBROADCAST    = 0;
+        public double INTERVALTPSMEASURE     = 250.0;
+        public double INTERVALINTERACT       = 500.0;
+        public double INTERVALREQUSERCOMMAND = 500.0;
+        public double INTERVALREQACTION      = 500.0;
+        public double INTERVALSAY            = 0.0;
+        public double INTERVALBROADCAST      = 0.0;
 
 #if VANILLA
-        public uint INTERVALREQMOVE      = 1000;
-        public uint INTERVALREQTURN      = 1000;
-        public uint INTERVALREQATTACK    = 1000;
-        public uint INTERVALREQCAST      = 1000;
+        public double INTERVALREQMOVE   = 1000.0;
+        public double INTERVALREQTURN   = 1000.0;
+        public double INTERVALREQATTACK = 1000.0;
+        public double INTERVALREQCAST   = 1000.0;
 #else
-        public uint INTERVALREQMOVE     = 250;
-        public uint INTERVALREQTURN     = 250;
-        public uint INTERVALREQATTACK   = 250;
-        public uint INTERVALREQCAST     = 250;
+        public double INTERVALREQMOVE   = 250.0;
+        public double INTERVALREQTURN   = 250.0;
+        public double INTERVALREQATTACK = 250.0;
+        public double INTERVALREQCAST   = 250.0;
 #endif
         #endregion
 
@@ -54,7 +54,7 @@ namespace Meridian59.Common
         /// <summary>
         /// Divide 'ElapsedTicks' of StopWatch by this to get milliseconds.
         /// </summary>
-        protected static readonly long MSTICKDIVISOR = Stopwatch.Frequency / 1000;
+        protected static readonly double MSTICKDIVISOR = (double)Stopwatch.Frequency / 1000.0;
 
         /// <summary>
         /// Stopwatch object, usually high resolution on most CLR
@@ -65,63 +65,63 @@ namespace Meridian59.Common
         /// <summary>
         /// Current tick
         /// </summary>
-        public long Current { get; protected set; }
+        public double Current { get; protected set; }
        
         /// <summary>
         /// Last tick
         /// </summary>
-        public long Last { get; protected set; }
+        public double Last { get; protected set; }
 
         /// <summary>
         /// Tick we last calculated (T)icks(P)er(S)econd
         /// </summary>
-        public long TPSMeasure { get; protected set; }
+        public double TPSMeasure { get; protected set; }
         
         /// <summary>
         /// Tick we last sent BP_REQ_MOVE to the server
         /// </summary>
-        public long ReqMove { get; protected set; }
+        public double ReqMove { get; protected set; }
 
         /// <summary>
         /// Tick we last sent BP_REQ_TURN to the server
         /// </summary>
-        public long ReqTurn { get; protected set; }
+        public double ReqTurn { get; protected set; }
 
         /// <summary>
         /// Tick we last sent BP_REQ_ATTACK to the server
         /// </summary>
-        public long ReqAttack { get; protected set; }
+        public double ReqAttack { get; protected set; }
 
         /// <summary>
         /// Tick we last sent BP_REQ_CAST to the server
         /// </summary>
-        public long ReqCast { get; protected set; }
+        public double ReqCast { get; protected set; }
 
         /// <summary>
         /// Tick we last sent BP_USERCOMMAND
         /// </summary>
-        public long ReqUserCommand { get; protected set; }
+        public double ReqUserCommand { get; protected set; }
 
         /// <summary>
         /// Tick we last sent BP_ACTION (dance, wave, loot, moods)
         /// </summary>
-        public long ReqAction { get; protected set; }
+        public double ReqAction { get; protected set; }
 
         /// <summary>
         /// Tick we last sent a chatmessage in NORMAL mode
         /// </summary>
-        public long Say { get; protected set; }
+        public double Say { get; protected set; }
 
         /// <summary>
         /// Tick we last sent a chatmessage in ALL mode
         /// </summary>
-        public long Broadcast { get; protected set; }
+        public double Broadcast { get; protected set; }
 
         /// <summary>
         /// Ticks we last sent an interaction with an ID, like
         /// BP_REQ_USE, BP_REQ_APPLY, BP_REQ_UNUSE, BP_REQ_LOOK and others.
         /// </summary>
-        public Dictionary<uint, long> Interactions { get; protected set; }
+        public Dictionary<uint, double> Interactions { get; protected set; }
         #endregion
 
         #region Spans
@@ -129,61 +129,61 @@ namespace Meridian59.Common
         /// Milliseconds elapsed since last tick.
         /// Calculated once.
         /// </summary>
-        public long Span { get; protected set; }
+        public double Span { get; protected set; }
 
         /// <summary>
         /// Milliseconds elapsed since last TPS measuring.
         /// Calculated on-the-fly.
         /// </summary>
-        public long SpanTPSMeasure { get { return Current - TPSMeasure; } }
+        public double SpanTPSMeasure { get { return Current - TPSMeasure; } }
 
         /// <summary>
         /// Milliseconds elapsed since last BP_REQ_MOVE.
         /// Calculated on-the-fly.
         /// </summary>
-        public long SpanReqMove { get { return Current - ReqMove; } }
+        public double SpanReqMove { get { return Current - ReqMove; } }
 
         /// <summary>
         /// Milliseconds elapsed since last BP_REQ_TURN.
         /// Calculated on-the-fly.
         /// </summary>
-        public long SpanReqTurn { get { return Current - ReqTurn; } }
+        public double SpanReqTurn { get { return Current - ReqTurn; } }
 
         /// <summary>
         /// Milliseconds elapsed since last BP_REQ_ATTACK.
         /// Calculated on-the-fly.
         /// </summary>
-        public long SpanReqAttack { get { return Current - ReqAttack; } }
+        public double SpanReqAttack { get { return Current - ReqAttack; } }
 
         /// <summary>
         /// Milliseconds elapsed since last BP_REQ_CAST.
         /// Calculated on-the-fly.
         /// </summary>
-        public long SpanReqCast { get { return Current - ReqCast; } }
+        public double SpanReqCast { get { return Current - ReqCast; } }
 
         /// <summary>
         /// Milliseconds elapsed since last BP_USERCOMMAND.
         /// Calculated on-the-fly.
         /// </summary>
-        public long SpanReqUserCommand { get { return Current - ReqUserCommand; } }
+        public double SpanReqUserCommand { get { return Current - ReqUserCommand; } }
 
         /// <summary>
         /// Milliseconds elapsed since last BP_ACTION.
         /// Calculated on-the-fly.
         /// </summary>
-        public long SpanReqAction { get { return Current - ReqAction; } }
+        public double SpanReqAction { get { return Current - ReqAction; } }
       
         /// <summary>
         /// Milliseconds elapsed since last said something.
         /// Calculated on-the-fly.
         /// </summary>
-        public long SpanSay { get { return Current - Say; } }
+        public double SpanSay { get { return Current - Say; } }
 
         /// <summary>
         /// Milliseconds elapsed since last broadcasted something.
         /// Calculated on-the-fly.
         /// </summary>
-        public long SpanBroadcast { get { return Current - Broadcast; } }
+        public double SpanBroadcast { get { return Current - Broadcast; } }
 
         #endregion
 
@@ -203,7 +203,7 @@ namespace Meridian59.Common
         /// </summary>
         public GameTick()
         {
-            Interactions = new Dictionary<uint, long>();
+            Interactions = new Dictionary<uint, double>();
 
             // start watch
             watch.Start();
@@ -218,20 +218,7 @@ namespace Meridian59.Common
             Last = Current;
  
             // get tick for this threadloop in milliseconds
-            Current = watch.ElapsedTicks / MSTICKDIVISOR;
-
-            // block unless the ticks differ at least by 1ms
-            // this limits tickrate to 1000 per second at infinite cpu speed
-            while (Current == Last)
-            {
-                // sleep does not work here - gets disabled in OgreClient somehow
-                // so we lock the core with the cycle
-
-                //Thread.Sleep(1);
-                
-                // get again
-                Current = watch.ElapsedTicks / MSTICKDIVISOR;
-            }
+            Current = (double)watch.ElapsedTicks / MSTICKDIVISOR;
 
             // update general time span once (others on getter)
             Span = Current - Last;           
@@ -242,9 +229,9 @@ namespace Meridian59.Common
         /// This might be later than Current, depending on thread cycle duration.
         /// </summary>
         /// <returns></returns>
-        public long GetUpdatedTick()
+        public double GetUpdatedTick()
         {
-            return watch.ElapsedTicks / MSTICKDIVISOR;
+            return (double)watch.ElapsedTicks / MSTICKDIVISOR;
         }
 
         #region Can
@@ -319,7 +306,7 @@ namespace Meridian59.Common
         public bool CanInteract(uint ID)
         {
             // default value
-            long tick = 0;
+            double tick = 0;
 
             // try to get from tracked ones
             Interactions.TryGetValue(ID, out tick);

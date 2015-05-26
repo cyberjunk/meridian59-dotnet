@@ -55,7 +55,7 @@ namespace Meridian59.Data.Models
         #endregion
 
         #region Fields
-        protected long lastAnimationTick = 0;
+        protected double lastAnimationTick = 0;
         protected ushort currentGroup = 0;
         protected int groupMax = -1;
         #endregion
@@ -186,7 +186,7 @@ namespace Meridian59.Data.Models
         /// </summary>
         /// <param name="Tick"></param>
         /// <param name="Span"></param>
-        public virtual void Tick(long Tick, long Span) { }
+        public virtual void Tick(double Tick, double Span) { }
 
         #endregion
     }

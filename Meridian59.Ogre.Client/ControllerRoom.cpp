@@ -333,7 +333,7 @@ namespace Meridian59 { namespace Ogre
 	
 	void ControllerRoom::LoadRoom()
 	{
-		long long tick1, tick2, span;
+		double tick1, tick2, span;
 
 		/*********************************************************************************************/
 
@@ -542,7 +542,7 @@ namespace Meridian59 { namespace Ogre
 		roomManObj->end();
 	}
 
-	void ControllerRoom::Tick(long long Tick, long long Span)
+	void ControllerRoom::Tick(double Tick, double Span)
 	{		
 		if (!IsInitialized)
 			return;

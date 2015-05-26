@@ -337,7 +337,7 @@ namespace Meridian59 { namespace Ogre
 		/// <summary>
         /// 
         /// </summary>
-        static void Tick(long long Tick, long long Span);
+		static void Tick(double Tick, double Span);
 
 		/// <summary>
         /// Handle a GameMode message

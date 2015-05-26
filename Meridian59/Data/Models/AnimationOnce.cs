@@ -296,7 +296,7 @@ namespace Meridian59.Data.Models
         /// </summary>
         /// <param name="Tick"></param>
         /// <param name="Span"></param>
-        public override void Tick(long Tick, long Span)
+        public override void Tick(double Tick, double Span)
         {
             if (!Finished)
             {               
@@ -304,7 +304,7 @@ namespace Meridian59.Data.Models
                 if (lastAnimationTick > 0)
                 {
                     // convert to ms
-                    long span = Tick - lastAnimationTick;
+                    double span = Tick - lastAnimationTick;
 
                     // elapsed?
                     if (span >= Period)

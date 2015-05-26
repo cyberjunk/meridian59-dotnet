@@ -33,10 +33,10 @@ namespace Meridian59.Bot.Spell
     public class SpellBotClient : BotClient<GameTick, ResourceManager, DataController, SpellBotConfig>
     {
         #region Constants
-        protected const uint STARTUPSLEEP = 5000;
+        protected const double STARTUPSLEEP = 5000.0;
         #endregion
 
-        protected long tickSleepUntil;
+        protected double tickSleepUntil;
         protected BotTask currentTask;
         protected uint imps = 0;
 
@@ -209,10 +209,10 @@ namespace Meridian59.Bot.Spell
                     DoSay((BotTaskSay)currentTask);                
             }
 
-            long slp = (tickSleepUntil - GameTick.Current) / Common.GameTick.MSINSECOND;
+            double slp = (tickSleepUntil - GameTick.Current) / (double)Common.GameTick.MSINSECOND;
             
             // draw sleep & imps
-            DrawDynamic("SLP: " + slp.ToString().PadRight(3) + " IMPS: " + imps.ToString().PadRight(3));
+            DrawDynamic("SLP: " + string.Format("{0:N0}", slp).PadRight(3) + " IMPS: " + imps.ToString().PadRight(3));
         }
 
         /// <summary>
