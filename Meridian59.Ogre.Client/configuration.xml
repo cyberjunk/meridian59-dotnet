@@ -107,7 +107,7 @@
     <resolution value="1280 x 720 @ 32-bit colour" />
     <windowmode enabled="true" />
     <windowframe enabled="true" />
-    <vsync enabled="false" />
+    <vsync enabled="true" />
     <fsaa value="8" />
     <nomipmaps value="false" />
     <texturefiltering value="Anisotropic x16" />
