@@ -116,6 +116,7 @@
       </Version>
       <LargeAddressAware>true</LargeAddressAware>
       <CLRThreadAttribute>STAThreadingAttribute</CLRThreadAttribute>
+      <MinimumRequiredVersion>6.00</MinimumRequiredVersion>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /E /R /Y $(ProjectDir)\..\Engine\dll\x86\* $(TargetDir)</Command>
@@ -162,9 +163,13 @@
       <AdditionalOptions>-Zm328</AdditionalOptions>
       <WholeProgramOptimization>true</WholeProgramOptimization>
       <StringPooling>true</StringPooling>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
+      <EnableParallelCodeGeneration>false</EnableParallelCodeGeneration>
+      <DebugInformationFormat>None</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
       <AdditionalDependencies>irrklang.lib;boost.lib;ogremain.lib;ogreterrain.lib;ogreoctree.lib;ogred3d9.lib;particleuniverse.lib;particleuniverse2.lib;ois.lib;zlib.lib;zziplib.lib;freeimage.lib;freetype.lib;LibTIFF4.lib;LibJPEG.lib;LibOpenJPEG.lib;LibPNG.lib;LibRaw.lib;OpenEXR.lib;pcre.lib;d3d9.lib;d3dx9.lib;dinput8.lib;dxerr.lib;dxguid.lib;ddraw.lib;CEGUIBase.lib;CEGUICommonDialogs.lib;CEGUICoreWindowRendererSet.lib;CEGUIOgreRenderer.lib;CEGUIRapidXMLParser.lib;CEGUISTBImageCodec.lib;caelum.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>..\Engine\lib\x86</AdditionalLibraryDirectories>
@@ -173,6 +178,9 @@
       <LargeAddressAware>true</LargeAddressAware>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
       <CLRThreadAttribute>STAThreadingAttribute</CLRThreadAttribute>
+      <MinimumRequiredVersion>6.00</MinimumRequiredVersion>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /E /R /Y $(ProjectDir)\..\Engine\dll\x86\* $(TargetDir)</Command>
@@ -194,9 +202,10 @@
       <AdditionalOptions>-Zm336</AdditionalOptions>
       <WholeProgramOptimization>true</WholeProgramOptimization>
       <StringPooling>true</StringPooling>
+      <DebugInformationFormat>None</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
       <AdditionalDependencies>irrklang.lib;boost.lib;ogremain.lib;ogreterrain.lib;ogreoctree.lib;ogred3d9.lib;particleuniverse.lib;particleuniverse2.lib;ois.lib;zlib.lib;zziplib.lib;freeimage.lib;freetype.lib;LibTIFF4.lib;LibJPEG.lib;LibOpenJPEG.lib;LibPNG.lib;LibRaw.lib;OpenEXR.lib;pcre.lib;d3d9.lib;d3dx9.lib;dinput8.lib;dxerr.lib;dxguid.lib;ddraw.lib;CEGUIBase.lib;CEGUICommonDialogs.lib;CEGUICoreWindowRendererSet.lib;CEGUIOgreRenderer.lib;CEGUIRapidXMLParser.lib;CEGUISTBImageCodec.lib;caelum.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>..\Engine\lib\x64</AdditionalLibraryDirectories>
