@@ -68,7 +68,7 @@ namespace Meridian59 { namespace Ogre
 		texture = texPtr.get();
 		
 		// lock the texturebuffer
-		void* texBuffer = texture->getBuffer()->lock(::Ogre::HardwareBuffer::LockOptions::HBL_WRITE_ONLY);
+		void* texBuffer = texture->getBuffer()->lock(::Ogre::HardwareBuffer::LockOptions::HBL_DISCARD);
 		
 		// save the pointer for later comparison
 		// we must adjust the gdi bitmap and graphics
@@ -123,8 +123,8 @@ namespace Meridian59 { namespace Ogre
 	void MiniMapCEGUI::PrepareDraw()
 	{
 		// lock the texturebuffer (released in finish)
-		void* texBuffer = texture->getBuffer()->lock(::Ogre::HardwareBuffer::LockOptions::HBL_WRITE_ONLY);
-
+		void* texBuffer = texture->getBuffer()->lock(::Ogre::HardwareBuffer::LockOptions::HBL_DISCARD);
+		
 		// check if buffer was moved
 		if (texBuffer != texbuf)
 		{
