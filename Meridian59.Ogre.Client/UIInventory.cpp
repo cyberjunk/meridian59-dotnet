@@ -205,15 +205,14 @@ namespace Meridian59 { namespace Ogre
 		}
 	};
 
-	void ControllerUI::Inventory::Update()
+	void ControllerUI::Inventory::Tick(double Tick, double Span)
 	{
-		if (DoClick && (OgreClient::Singleton->GameTick->Current - TickMouseClick > UI_MOUSE_CLICKDELAY))
+		if (ClickObject && DoClick && (Tick - TickMouseClick > UI_MOUSE_CLICKDELAY))
 		{
 			// reset singleclick executor
 			DoClick = false;
 
-			OgreClient::Singleton->Data->TargetID = 
-				OgreClient::Singleton->Data->InventoryObjects[ClickIndex]->ID;			
+			OgreClient::Singleton->Data->TargetID = ClickObject->ID;		
 		}
 	};
 
@@ -232,56 +231,47 @@ namespace Meridian59 { namespace Ogre
 	bool UICallbacks::Inventory::OnItemClicked(const CEGUI::EventArgs& e)
 	{
 		const CEGUI::MouseEventArgs& args = static_cast<const CEGUI::MouseEventArgs&>(e);
-		const CEGUI::GridLayoutContainer* dataViews = ControllerUI::Inventory::List;
-		InventoryObjectList^ dataModels = OgreClient::Singleton->Data->InventoryObjects;
+		InventoryObjectList^ dataModels	  = OgreClient::Singleton->Data->InventoryObjects;
+		InventoryObject^ obj              = dataModels->GetItemByID(args.window->getID());
 
-		// get index of clicked buff/widget in grid
-		int index = -1;
-		for (int i = 0; i < (int)dataViews->getChildCount(); i++)
-		{			
-			if (dataViews->getChildAtIdx(i) == args.window)
-			{
-				index = i;
-				break;
-			}
-		}
-
-		// found ?
-		if (index > -1 && dataModels->Count > index)
+		if (obj)
 		{
-			// get id of this buff
-			unsigned int id = dataModels[index]->ID;
-
 			double span = OgreClient::Singleton->GameTick->Current -
 				ControllerUI::Inventory::TickMouseClick;
 
-			// new
+			// single clicks (delayed due to doubleclick)
 			if (span > UI_MOUSE_CLICKDELAY)
 			{
+				// left click targets
 				if (args.button == CEGUI::MouseButton::LeftButton)
 				{
 					// prepare single click execution
 					ControllerUI::Inventory::DoClick = true;
-					ControllerUI::Inventory::ClickIndex = index;
+					ControllerUI::Inventory::ClickObject = obj;
 				}
+
+				// right click requests info window
 				else if (args.button == CEGUI::MouseButton::RightButton)
 				{
-					OgreClient::Singleton->SendReqLookMessage(id);					
+					OgreClient::Singleton->SendReqLookMessage(obj->ID);
 				}
 			}
 
 			// double click
 			else
 			{
+				// left doubleclick uses/applies item
 				if (args.button == CEGUI::MouseButton::LeftButton)
 				{
 					// reset singleclick execution
 					ControllerUI::Inventory::DoClick = false;
 
-					OgreClient::Singleton->UseUnuseApply(dataModels[index]);
+					OgreClient::Singleton->UseUnuseApply(obj);
 				}
+
+				// right doubleclick currently not assigned
 				else if (args.button == CEGUI::MouseButton::RightButton)
-				{				
+				{
 				}
 			}
 

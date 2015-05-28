@@ -261,7 +261,7 @@ namespace Meridian59 { namespace Ogre
 			guiContext->injectTimePulse((float)Span / 1000.0f);
 
 			// update mouseclick executor
-			Inventory::Update();
+			Inventory::Tick(Tick, Span);
 			Chat::Tick(Tick, Span);
 
 			double delta = OgreClient::Singleton->GameTick->Current - tickKeyRepeat;

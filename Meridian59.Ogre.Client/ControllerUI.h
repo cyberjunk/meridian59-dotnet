@@ -583,11 +583,11 @@ namespace Meridian59 { namespace Ogre
 			static void InventoryRemove(int Index);
 			static void InventoryChange(int Index);
 
-			static void Update();
+			static void Tick(double Tick, double Span);
 			static void SwapImageComposers(unsigned int Index1, unsigned int Index2);
 			static double TickMouseClick;
 			static bool DoClick;
-			static int ClickIndex;
+			static InventoryObject^ ClickObject;
 		};
 
 		/// <summary>
