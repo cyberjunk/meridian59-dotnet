@@ -580,7 +580,6 @@ namespace Meridian59 { namespace Ogre
 			static void Tick(double Tick, double Span);
 			static void SwapImageComposers(unsigned int Index1, unsigned int Index2);
 
-			static double TickMouseClick;
 			static bool DoClick;
 			static InventoryObject^ ClickObject;
 

@@ -207,7 +207,7 @@ namespace Meridian59 { namespace Ogre
 
 	void ControllerUI::Inventory::Tick(double Tick, double Span)
 	{
-		if (ClickObject && DoClick && (Tick - TickMouseClick > UI_MOUSE_CLICKDELAY))
+		if (ClickObject && DoClick && OgreClient::Singleton->GameTick->CanInventoryClick())
 		{
 			// reset singleclick executor
 			DoClick = false;
@@ -236,11 +236,8 @@ namespace Meridian59 { namespace Ogre
 
 		if (obj)
 		{
-			double span = OgreClient::Singleton->GameTick->Current -
-				ControllerUI::Inventory::TickMouseClick;
-
 			// single clicks (delayed due to doubleclick)
-			if (span > UI_MOUSE_CLICKDELAY)
+			if (OgreClient::Singleton->GameTick->CanInventoryClick())
 			{
 				// left click targets
 				if (args.button == CEGUI::MouseButton::LeftButton)
@@ -275,8 +272,7 @@ namespace Meridian59 { namespace Ogre
 				}
 			}
 
-			// save tick to execute click later
-			ControllerUI::Inventory::TickMouseClick = OgreClient::Singleton->GameTick->Current;
+			OgreClient::Singleton->GameTick->DidInventoryClick();
 		}
 
 		return false;

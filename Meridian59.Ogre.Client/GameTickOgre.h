@@ -29,17 +29,20 @@ namespace Meridian59 { namespace Ogre
 	protected:
 		double chatUpdate;
 		double keyRepeat;
+		double inventoryClick;
 
 	public:
 		double INTERVALCHATUPDATE;
 		double INTERVALKEYREPEAT;
 		double INTERVALKEYREPEATSTART;
+		double INTERVALINVENTORYCLICK;
 
 		GameTickOgre() : GameTick()
 		{
 			INTERVALCHATUPDATE		= 500.0;
 			INTERVALKEYREPEAT		= 25.0;
 			INTERVALKEYREPEATSTART	= 500.0;
+			INTERVALINVENTORYCLICK	= 250.0;
 		};
 
 		/// <summary>
@@ -61,6 +64,15 @@ namespace Meridian59 { namespace Ogre
 		};
 
 		/// <summary>
+		/// Tick we last clicked an inventory item
+		/// </summary>
+		property double InventoryClick
+		{
+			public: double get() { return inventoryClick; }
+			protected: void set(double value) { inventoryClick = value; }
+		};
+
+		/// <summary>
         /// Milliseconds elapsed since last chat update.
         /// Calculated on-the-fly.
         /// </summary>
@@ -76,6 +88,15 @@ namespace Meridian59 { namespace Ogre
 		property double SpanKeyRepeat
 		{
 			public: double get() { return Current - KeyRepeat; }
+		};
+
+		/// <summary>
+		/// Milliseconds elapsed since we last clicked on inventory item
+		/// Calculated on-the-fly.
+		/// </summary>
+		property double SpanInventoryClick
+		{
+			public: double get() { return Current - InventoryClick; }
 		};
 
 		/// <summary>
@@ -106,6 +127,15 @@ namespace Meridian59 { namespace Ogre
 		}
 
 		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		bool CanInventoryClick()
+		{
+			return SpanInventoryClick >= INTERVALINVENTORYCLICK;
+		}
+
+		/// <summary>
         /// Call this when you did a Chat update
         /// </summary>
         void DidChatUpdate()
@@ -119,6 +149,14 @@ namespace Meridian59 { namespace Ogre
 		void DidKeyRepeat()
 		{
 			KeyRepeat = Current;
+		}
+
+		/// <summary>
+		/// Call this when you did an inventoryclick
+		/// </summary>
+		void DidInventoryClick()
+		{
+			InventoryClick = Current;
 		}
 	};
 };};
