@@ -18,16 +18,14 @@
 
 #pragma managed(push, off)
 #include "OgreRoot.h"
-#include "OgreRenderWindow.h"
-#include "OgreRenderSystem.h"
-#include "OgreCamera.h"
-#include "OgreSceneManager.h"
+#include "OgreD3D9RenderSystem.h"
+#include "OgreD3D9RenderWindow.h"
+#include "OgreOctreeCamera.h"
+#include "OgreOctreeSceneManager.h"
 #include "OgreSceneNode.h"
 #include "OgreViewport.h"
 #include "OgreString.h"
 #include "OgreConfigFile.h"
-#include "OgreD3D9RenderSystem.h"
-#include "OgreD3D9RenderWindow.h"
 #include "OgreOctreePlugin.h"
 #include "ParticleUniversePlugin.h"
 #pragma managed(pop)
@@ -81,7 +79,7 @@ namespace Meridian59 { namespace Ogre
 		::Ogre::D3D9RenderWindow*	renderWindowDummy;
         ::Ogre::D3D9RenderWindow*	renderWindow;
         ::Ogre::D3D9RenderSystem*	renderSystem;
-		::Ogre::Camera*				camera;
+		::Ogre::OctreeCamera*		camera;
         ::Ogre::SceneNode*			cameraNode;
         ::Ogre::Viewport*			viewport;
 		::Ogre::Viewport*			viewportInvis;
@@ -244,10 +242,10 @@ namespace Meridian59 { namespace Ogre
 			protected: void set(Ogre::D3D9RenderSystem* value) { renderSystem = value; }
 		};
 
-		property ::Ogre::Camera* Camera 
+		property ::Ogre::OctreeCamera* Camera 
 		{ 
-			public: ::Ogre::Camera* get() { return camera; } 
-			protected: void set(Ogre::Camera* value) { camera = value; }
+			public: ::Ogre::OctreeCamera* get() { return camera; }
+			protected: void set(Ogre::OctreeCamera* value) { camera = value; }
 		};
 
 		property ::Ogre::SceneNode* CameraNode 

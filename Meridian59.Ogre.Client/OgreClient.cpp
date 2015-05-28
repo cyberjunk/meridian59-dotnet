@@ -122,7 +122,7 @@ namespace Meridian59 { namespace Ogre
 		cameraListener = new CameraListener();
 
 		// create camera
-		camera = sceneManager->createCamera(CAMERANAME);
+		camera = (OctreeCamera*)sceneManager->createCamera(CAMERANAME);
 		camera->setPosition(::Ogre::Vector3(0, 0, 0));
 		camera->setNearClipDistance(1.0f);
 		camera->setListener(cameraListener);
