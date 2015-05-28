@@ -505,15 +505,13 @@ namespace Meridian59 { namespace Ogre
         /// <param name="TextureName">Name of texture to set on new material</param>
         /// <param name="MaterialGroup">ResourceGroup of new material</param>
 		/// <param name="ScrollSpeed">NULL (default) or texture scrolling speed</param>
-		/// <param name="ColorModifier">NULL (= 1 1 1) or a vector which components get multiplied with light components</param>
-		/// <param name="Opaque">Opacity, should be 1.0 by default unless you want transparency on nontransparent parts</param>
+		/// <param name="ColorModifier">NULL (= 1 1 1 1) or a vector which components get multiplied with light components</param>
 		static void CreateMaterial(
 			::Ogre::String MaterialName, 
 			::Ogre::String TextureName, 
 			::Ogre::String MaterialGroup, 
 			::Ogre::Vector2* ScrollSpeed, 
-			::Ogre::Vector3* ColorModifier, 
-			float Opaque)
+			::Ogre::Vector4* ColorModifier)
 		{
 			MaterialManager* matMan = MaterialManager::getSingletonPtr();
 			
@@ -558,10 +556,6 @@ namespace Meridian59 { namespace Ogre
 						// set the light modifier on pointlight pass params
 						paramsDiffuse->setNamedConstant(SHADERCOLORMODIFIER, *ColorModifier);						
 					}
-
-					// set opaque values
-					paramsAmbient->setNamedConstant(SHADEROPAQUE, Opaque);
-					paramsDiffuse->setNamedConstant(SHADEROPAQUE, Opaque);
 
 					// apply a scrolling if set
 					if (ScrollSpeed != nullptr)											
@@ -632,76 +626,6 @@ namespace Meridian59 { namespace Ogre
 			matPtr.setNull();			
 		};
 
-		/*static void CreateMaterial256(
-			::Ogre::String MaterialName, 
-			::std::vector<::Ogre::String> TextureNames, 
-			::Ogre::String MaterialGroup, 
-			::Ogre::Vector2* ScrollSpeed, 
-			::Ogre::Vector3* ColorModifier, 
-			float Opaque)
-		{
-			MaterialManager* matMan = MaterialManager::getSingletonPtr();
-			int count = (int)TextureNames.size();
-			
-			if (count <= 0 || matMan->resourceExists(MaterialName))
-				return;
-
-			// 
-			MaterialPtr matPtr	 = matMan->create(MaterialName, RESOURCEGROUPSHADER);		
-			Technique* technique = matPtr->createTechnique();
-				
-			for(int i = 0; i < count; i++)
-			{
-				Pass* ambientPass = technique->createPass();
-				Pass* diffusePass = technique->createPass();
-
-				if (i == 0)			
-					ambientPass->setSceneBlending(::Ogre::SceneBlendType::SBT_TRANSPARENT_ALPHA);
-				
-				else			
-					ambientPass->setSceneBlending(::Ogre::SceneBlendType::SBT_ADD);
-				
-				diffusePass->setSceneBlending(::Ogre::SceneBlendType::SBT_ADD);
-
-				ambientPass->setVertexProgram("ambient_vs");
-				ambientPass->setFragmentProgram("ambient256_ps");
-				
-				diffusePass->setVertexProgram("diffuse_vs");
-				diffusePass->setFragmentProgram("diffuse256_ps");
-
-				// get fragment shader parameters from ambient pass					
-				const GpuProgramParametersSharedPtr paramsAmbient = 
-					ambientPass->getFragmentProgramParameters();
-					
-				// get fragment shader parameters from diffuse pass				
-				const GpuProgramParametersSharedPtr paramsDiffuse = 
-					diffusePass->getFragmentProgramParameters();
-				
-				// apply a custom color modifier on the shaders
-				// its components get multiplied with the color components
-				if (ColorModifier != nullptr)
-				{					
-					// set the light modifier on ambient pass params
-					paramsAmbient->setNamedConstant(SHADERCOLORMODIFIER, *ColorModifier);
-												
-					// set the light modifier on pointlight pass params
-					paramsDiffuse->setNamedConstant(SHADERCOLORMODIFIER, *ColorModifier);						
-				}
-
-				// set opaque values
-				paramsAmbient->setNamedConstant(SHADEROPAQUE, Opaque);
-				paramsDiffuse->setNamedConstant(SHADEROPAQUE, Opaque);
-
-				TextureUnitState* texStatePal = ambientPass->createTextureUnitState();
-				TextureUnitState* texStateTex = ambientPass->createTextureUnitState();
-
-				texStatePal->setTextureName(PALETTESTEXTURE);
-				texStateTex->setTextureName(TextureNames[i]);
-				//texStatePal->setTextureNameAlias(PALETTESTEXTURE);
-				//texStateTex->setTextureNameAlias(TextureNames[i]);
-			}
-		};*/
-		
 		/// <summary>
         /// Clones the base invisible material to a new material and applies a texture.
 		/// Only if there is no material with that name yet.

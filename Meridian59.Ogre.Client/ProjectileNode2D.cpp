@@ -112,7 +112,7 @@ namespace Meridian59 { namespace Ogre
 			Util::CreateMaterial(
 				matName, texName, 
 				MATERIALGROUP_PROJECTILENODE2D, 
-				nullptr, nullptr, 1.0f);
+				nullptr, &::Ogre::Vector4(1.0f, 1.0f, 1.0f, 1.0f));
 
 			float scaledwidth = (float)bgfBmp->Width / (float)projectile->Resource->ShrinkFactor;
 			float scaledheight = (float)bgfBmp->Height / (float)projectile->Resource->ShrinkFactor;
