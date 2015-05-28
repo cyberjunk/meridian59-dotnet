@@ -85,7 +85,7 @@ namespace Meridian59 { namespace Ogre
         ::Ogre::SceneNode*			cameraNode;
         ::Ogre::Viewport*			viewport;
 		::Ogre::Viewport*			viewportInvis;
-        ::Ogre::SceneManager*		sceneManager;
+        ::Ogre::OctreeSceneManager*	sceneManager;
 		::Ogre::OctreePlugin*		pluginOctree;
 		::Caelum::CaelumPlugin*		pluginCaelum;
 		::ParticleUniverse::ParticleUniversePlugin* pluginParticleUniverse;
@@ -268,10 +268,10 @@ namespace Meridian59 { namespace Ogre
 			protected: void set(Ogre::Viewport* value) { viewportInvis = value; }
 		};
 
-		property ::Ogre::SceneManager* SceneManager 
+		property ::Ogre::OctreeSceneManager* SceneManager 
 		{ 
-			public: ::Ogre::SceneManager* get() { return sceneManager; } 
-			protected: void set(Ogre::SceneManager* value) { sceneManager = value; }
+			public: ::Ogre::OctreeSceneManager* get() { return sceneManager; }
+			protected: void set(Ogre::OctreeSceneManager* value) { sceneManager = value; }
 		};
 
 		property HWND RenderWindowHandle

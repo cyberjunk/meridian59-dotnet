@@ -113,7 +113,7 @@ namespace Meridian59 { namespace Ogre
 		/********************************************************************************************************/
 
 		// init scenemanager
-		sceneManager = root->createSceneManager(SceneType::ST_GENERIC);
+		sceneManager = (OctreeSceneManager*)root->createSceneManager(SceneType::ST_GENERIC);
 		sceneManager->setCameraRelativeRendering(true);
 
 		/********************************************************************************************************/
@@ -475,7 +475,7 @@ namespace Meridian59 { namespace Ogre
 
 		// cleanup cameranode
 		if (sceneManager->hasSceneNode(AVATARCAMNODE))
-			sceneManager->destroySceneNode(cameraNode);
+			sceneManager->destroySceneNode(AVATARCAMNODE);
 
 		// clear all remaining stuff
 		sceneManager->clearScene();

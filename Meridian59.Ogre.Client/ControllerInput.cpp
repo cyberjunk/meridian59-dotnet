@@ -156,7 +156,7 @@ namespace Meridian59 { namespace Ogre
 
         // create ray & query                      
 		Ray ray = OgreClient::Singleton->Camera->getCameraToViewportRay(scrx, scry);                       
-        RaySceneQuery* query = OgreClient::Singleton->SceneManager->createRayQuery(ray);                       
+		RaySceneQuery* query = OgreClient::Singleton->SceneManager->createRayQuery(ray, 0xFFFFFFFF);
         
 		// make it also find billboards and sort by distance
 		query->setQueryTypeMask(0xFFFFFFFF);
