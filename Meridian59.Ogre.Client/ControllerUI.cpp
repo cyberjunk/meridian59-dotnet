@@ -15,7 +15,6 @@ namespace Meridian59 { namespace Ogre
 		movingWindow	= nullptr;
 		keyDown			= CEGUI::Key::Scan::Unknown;
 		keyChar			= CEGUI::Key::Scan::Unknown;
-		tickKeyRepeat	= 0;
 		processingInput = false;
 		fastKeyRepeat	= false;
 	};
@@ -210,7 +209,6 @@ namespace Meridian59 { namespace Ogre
 		movingWindow	= nullptr;
 		keyDown			= CEGUI::Key::Scan::Unknown;
 		keyChar			= CEGUI::Key::Scan::Unknown;
-		tickKeyRepeat	= 0;
 		processingInput = false;
 		fastKeyRepeat	= false;
 
@@ -260,16 +258,14 @@ namespace Meridian59 { namespace Ogre
 			system->injectTimePulse((float)Span / 1000.0f);
 			guiContext->injectTimePulse((float)Span / 1000.0f);
 
-			// update mouseclick executor
+			// tick sub components
 			Inventory::Tick(Tick, Span);
 			Chat::Tick(Tick, Span);
 
-			double delta = OgreClient::Singleton->GameTick->Current - tickKeyRepeat;
-
 			// keyrepeat
 			if (keyDown != CEGUI::Key::Scan::Unknown &&
-				((!fastKeyRepeat && delta >= KEYREPEATINTERVALDELAYMS) ||
-				(fastKeyRepeat && delta >= KEYREPEATINTERVALMS)))
+				((!fastKeyRepeat && OgreClient::Singleton->GameTick->CanKeyRepeatStart()) ||
+				(fastKeyRepeat && OgreClient::Singleton->GameTick->CanKeyRepeat())))
 			{	
 				// mark for shorther keyrepeat once delay elapsed/first run
 				fastKeyRepeat = true;
@@ -281,7 +277,7 @@ namespace Meridian59 { namespace Ogre
 					guiContext->injectChar(keyChar);
 
 				// update repeat tick
-				tickKeyRepeat = OgreClient::Singleton->GameTick->Current;
+				OgreClient::Singleton->GameTick->DidKeyRepeat();
 			}
 		}
 	};
@@ -603,8 +599,10 @@ namespace Meridian59 { namespace Ogre
 	void ControllerUI::InjectKeyDown(::CEGUI::Key::Scan Key)
 	{
 		keyDown = Key;
-		tickKeyRepeat = OgreClient::Singleton->GameTick->Current;
-		
+
+		// save tick for repeating keys in Tick()
+		OgreClient::Singleton->GameTick->DidKeyRepeat();
+
 		if (guiContext != nullptr)
 			guiContext->injectKeyDown(Key);
 	};

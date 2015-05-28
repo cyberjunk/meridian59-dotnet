@@ -28,13 +28,18 @@ namespace Meridian59 { namespace Ogre
 	{
 	protected:
 		double chatUpdate;
-		
+		double keyRepeat;
+
 	public:
 		double INTERVALCHATUPDATE;
-		
+		double INTERVALKEYREPEAT;
+		double INTERVALKEYREPEATSTART;
+
 		GameTickOgre() : GameTick()
 		{
-			INTERVALCHATUPDATE = 500.0;
+			INTERVALCHATUPDATE		= 500.0;
+			INTERVALKEYREPEAT		= 25.0;
+			INTERVALKEYREPEATSTART	= 500.0;
 		};
 
 		/// <summary>
@@ -47,6 +52,15 @@ namespace Meridian59 { namespace Ogre
 		};
 
 		/// <summary>
+		/// Tick we last repeated a key hold down.
+		/// </summary>
+		property double KeyRepeat
+		{
+			public: double get() { return keyRepeat; }
+			protected: void set(double value) { keyRepeat = value; }
+		};
+
+		/// <summary>
         /// Milliseconds elapsed since last chat update.
         /// Calculated on-the-fly.
         /// </summary>
@@ -54,7 +68,16 @@ namespace Meridian59 { namespace Ogre
 		{ 
 			public: double get() { return Current - ChatUpdate; } 
 		};
-	
+
+		/// <summary>
+		/// Milliseconds elapsed since last repeated a key hold down
+		/// Calculated on-the-fly.
+		/// </summary>
+		property double SpanKeyRepeat
+		{
+			public: double get() { return Current - KeyRepeat; }
+		};
+
 		/// <summary>
         /// Call this to know if you can update the chatlog
         /// </summary>
@@ -65,11 +88,37 @@ namespace Meridian59 { namespace Ogre
         }
 
 		/// <summary>
-        /// Call this when you did a TPS measuring
+		/// Call this to know if you can repeat a key hold down
+		/// </summary>
+		/// <returns></returns>
+		bool CanKeyRepeat()
+		{
+			return SpanKeyRepeat >= INTERVALKEYREPEAT;
+		}
+
+		/// <summary>
+		/// Call this to know if you can start repeating a key hold down
+		/// </summary>
+		/// <returns></returns>
+		bool CanKeyRepeatStart()
+		{
+			return SpanKeyRepeat >= INTERVALKEYREPEATSTART;
+		}
+
+		/// <summary>
+        /// Call this when you did a Chat update
         /// </summary>
         void DidChatUpdate()
         {
             ChatUpdate = Current;
         }
+
+		/// <summary>
+		/// Call this when you did a keyrepeat
+		/// </summary>
+		void DidKeyRepeat()
+		{
+			KeyRepeat = Current;
+		}
 	};
 };};

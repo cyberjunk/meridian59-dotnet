@@ -39,10 +39,7 @@ namespace Meridian59 { namespace Ogre
     /// </summary>
 	public ref class ControllerUI abstract sealed
 	{
-	protected:
-		literal double KEYREPEATINTERVALMS = 25.0;
-		literal double KEYREPEATINTERVALDELAYMS = 500.0;
-
+	protected:		
 		static ::CEGUI::OgreRenderer* renderer;
 		static ::CEGUI::System* system;
 		static ::CEGUI::GUIContext* guiContext;
@@ -54,7 +51,6 @@ namespace Meridian59 { namespace Ogre
 		static ::CEGUI::Window* movingWindow;
 		static ::CEGUI::Key::Scan keyDown;
 		static ::CEGUI::Key::Scan keyChar;
-		static double tickKeyRepeat;
 		static bool processingInput;
 		static bool fastKeyRepeat;
 
@@ -569,8 +565,7 @@ namespace Meridian59 { namespace Ogre
 		protected:
 			static array<ImageComposerCEGUI<InventoryObject^>^>^ imageComposers;
 
-		public:
-			
+		public:			
 			static ::CEGUI::FrameWindow* Window = nullptr;
 			static ::CEGUI::ScrollablePane* Pane = nullptr;
 			static ::CEGUI::GridLayoutContainer* List = nullptr;
@@ -582,12 +577,13 @@ namespace Meridian59 { namespace Ogre
 			static void InventoryAdd(int Index);
 			static void InventoryRemove(int Index);
 			static void InventoryChange(int Index);
-
 			static void Tick(double Tick, double Span);
 			static void SwapImageComposers(unsigned int Index1, unsigned int Index2);
+
 			static double TickMouseClick;
 			static bool DoClick;
 			static InventoryObject^ ClickObject;
+
 		};
 
 		/// <summary>
