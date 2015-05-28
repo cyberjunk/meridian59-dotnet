@@ -656,34 +656,6 @@ namespace Meridian59 { namespace Ogre
 		// 7. initialize caelum group
 		InitResourceGroup("Caelum", true, false, System::IO::SearchOption::TopDirectoryOnly, true, true);
 		
-        // 8. init addition resources from resources.cfg
-        // they go into ogre's default "General" group
-        System::String^ file		= Path::Combine(Config->ResourcesPath, RESOURCESCFGFILE);
-        ::Ogre::String ostr_file	= StringConvert::CLRToOgre(file);
-
-		::Ogre::ConfigFile cf = ::Ogre::ConfigFile();
-        cf.load(ostr_file, "\t:=", true);
-
-        ::Ogre::ConfigFile::SectionIterator seci = cf.getSectionIterator();
-        ::Ogre::String secName;
-		::Ogre::String typeName;
-		::Ogre::String archName;
-
-        while (seci.hasMoreElements())
-        {
-			secName = seci.peekNextKey();
-
-			ConfigFile::SettingsMultiMap* settings = seci.getNext();
-			ConfigFile::SettingsMultiMap::iterator i;
-
-			for (i = settings->begin(); i != settings->end(); ++i)
-			{
-				typeName = i->first;
-				archName = i->second;
-				resMan->addResourceLocation(archName, typeName, secName);
-			}
-        }
-
 		// 10. load legacy resources
 		ResourceManager->Preload(
 			Config->PreloadObjects,

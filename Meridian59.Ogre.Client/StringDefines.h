@@ -2,7 +2,6 @@
 #define RENDERSYSTEM	"Direct3D9 Rendering Subsystem"
 #define WINDOWNAME		"Meridian 59"
 
-#define RESOURCESCFGFILE			 "resources.cfg"
 #define RESOURCEGROUPMODELS			 "models"
 #define RESOURCEGROUPGENERAL		 "General"
 #define RESOURCEGROUPPARTICLES		 "particles"
