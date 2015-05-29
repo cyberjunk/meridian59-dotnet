@@ -51,7 +51,7 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::MouseEventArgs& args = static_cast<const CEGUI::MouseEventArgs&>(e);
 
 		// adjust zoomlevel
-		OgreClient::Singleton->MiniMap->Zoom += (args.wheelChange * -0.1f);
+		OgreClient::Singleton->MiniMap->Zoom += (args.wheelChange * -0.2f);
 
 		return true;
 	};
