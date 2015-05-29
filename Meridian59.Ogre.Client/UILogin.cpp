@@ -80,7 +80,8 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::KeyEventArgs& args		= (const CEGUI::KeyEventArgs&)e;
 		const CEGUI::Editbox* editbox		= (const CEGUI::Editbox*)args.window;
 
-		if (args.scancode == ::CEGUI::Key::Scan::Return)
+		if (args.scancode == ::CEGUI::Key::Scan::Return &&
+			!ControllerUI::Login::Connect->isDisabled())
 		{
 			OgreClient::Singleton->Config->SelectedConnectionInfo->Username =
 				StringConvert::CEGUIToCLR(ControllerUI::Login::Username->getText());
@@ -89,6 +90,8 @@ namespace Meridian59 { namespace Ogre
 				StringConvert::CEGUIToCLR(ControllerUI::Login::Password->getText());
 
 			OgreClient::Singleton->Connect();
+
+			ControllerUI::Login::Connect->setEnabled(false);
 		}
 
 		return true;
@@ -97,7 +100,7 @@ namespace Meridian59 { namespace Ogre
 	bool UICallbacks::Login::OnConnectClicked(const CEGUI::EventArgs& e)
 	{
 		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
-		const CEGUI::PushButton* btn		= (const CEGUI::PushButton*)args.window;
+		CEGUI::PushButton* btn				= (CEGUI::PushButton*)args.window;
 
 		OgreClient::Singleton->Config->SelectedConnectionInfo->Username =
 			StringConvert::CEGUIToCLR(ControllerUI::Login::Username->getText());
@@ -106,6 +109,8 @@ namespace Meridian59 { namespace Ogre
 			StringConvert::CEGUIToCLR(ControllerUI::Login::Password->getText());
 
 		OgreClient::Singleton->Connect();
+
+		ControllerUI::Login::Connect->setEnabled(false);
 
 		return true;
 	};

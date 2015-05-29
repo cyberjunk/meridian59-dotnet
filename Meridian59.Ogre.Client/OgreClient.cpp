@@ -599,6 +599,8 @@ namespace Meridian59 { namespace Ogre
 		SingletonClient::Disconnect();
 
 		DemoSceneLoadBrax();
+
+		ControllerUI::Login::Connect->setEnabled(true);
 	};
 
 	void OgreClient::OnServerConnectionException(System::Exception^ Error)
@@ -614,11 +616,7 @@ namespace Meridian59 { namespace Ogre
             ::System::Windows::Forms::MessageBoxOptions::DefaultDesktopOnly, 
 			false);
 
-		Data->Reset();
-		Data->UIMode = UIMode::Login;
-
-		// load demoscene
-		DemoSceneLoadBrax();
+		Disconnect();
     };
 	
 	void OgreClient::InitResources()
@@ -797,14 +795,10 @@ namespace Meridian59 { namespace Ogre
 		// call base handler
         SingletonClient::HandleLoginFailedMessage(Message);
 
-        // try disconnect
-        ServerConnection->Disconnect();
-
         // tell user about wrong credentials
         ::System::Windows::Forms::MessageBox::Show(WRONGCREDENTIALS);
 
-		// reset to login
-		Data->UIMode = UIMode::Login;
+		Disconnect();
 	};
 
 	void OgreClient::HandleNoCharactersMessage(NoCharactersMessage^ Message)
@@ -815,8 +809,7 @@ namespace Meridian59 { namespace Ogre
         // tell user about wrong credentials
         ::System::Windows::Forms::MessageBox::Show(NOCHARACTERS);
 
-		// reset to login
-		Data->UIMode = UIMode::Login;
+		Disconnect();
     };
 
 	void OgreClient::HandleLoginModeMessageMessage(LoginModeMessageMessage^ Message)
@@ -824,8 +817,7 @@ namespace Meridian59 { namespace Ogre
         // tell user about wrong credentials
         ::System::Windows::Forms::MessageBox::Show(Message->Message);
 
-		// reset to login
-		Data->UIMode = UIMode::Login;
+		Disconnect();
     };
 
 	void OgreClient::HandleGetClientMessage(GetClientMessage^ Message)
@@ -833,11 +825,7 @@ namespace Meridian59 { namespace Ogre
 		// tell user about mismatching major/minor version
         ::System::Windows::Forms::MessageBox::Show(APPVERSIONMISMATCH);
 
-        // close connection, we're not going to download the proposed meridian.exe
-        ServerConnection->Disconnect();
-
-		// reset to login
-		Data->UIMode = UIMode::Login;
+		Disconnect();
 	};
 
 	void OgreClient::HandleDownloadMessage(DownloadMessage^ Message)
@@ -847,11 +835,7 @@ namespace Meridian59 { namespace Ogre
 		// tell user about mismatching resources version
         ::System::Windows::Forms::MessageBox::Show("Resources mismatch");
 
-        // close connection, we're not going to download
-        ServerConnection->Disconnect();
-
-		// reset to login
-		Data->UIMode = UIMode::Login;
+		Disconnect();
 	};
 		
 	void OgreClient::HandleCharactersMessage(CharactersMessage^ Message)
