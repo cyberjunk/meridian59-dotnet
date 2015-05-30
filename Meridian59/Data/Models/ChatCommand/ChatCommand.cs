@@ -214,6 +214,10 @@ namespace Meridian59.Data.Models
                 case ChatCommandStand.KEY1:
                     returnValue = new ChatCommandStand();
                     break;
+
+                case ChatCommandQuit.KEY1:
+                    returnValue = new ChatCommandQuit();
+                    break;
 #if !VANILLA
                 case ChatCommandTempSafe.KEY1:
                     returnValue = ParseTempSafe(splitted, lower, DataController);

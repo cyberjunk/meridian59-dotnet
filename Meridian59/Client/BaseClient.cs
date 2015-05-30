@@ -2585,6 +2585,10 @@ namespace Meridian59.Client
                     case ChatCommandType.Stand:
                         SendUserCommandStand();
                         break;
+
+                    case ChatCommandType.Quit:
+                        SendReqQuit();
+                        break;
 #if !VANILLA
                     case ChatCommandType.TempSafe:
                         SendUserCommandTempSafe(((ChatCommandTempSafe)chatCommand).On);

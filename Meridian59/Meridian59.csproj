@@ -127,6 +127,7 @@
     <Compile Include="Data\Models\ChatCommand\ChatCommandDM.cs" />
     <Compile Include="Data\Models\ChatCommand\ChatCommandGo.cs" />
     <Compile Include="Data\Models\ChatCommand\ChatCommandGrouping.cs" />
+    <Compile Include="Data\Models\ChatCommand\ChatCommandQuit.cs" />
     <Compile Include="Data\Models\ChatCommand\ChatCommandTempSafe.cs" />
     <Compile Include="Data\Models\ChatCommand\ChatCommandGoPlayer.cs" />
     <Compile Include="Data\Models\ChatCommand\ChatCommandGetPlayer.cs" />
