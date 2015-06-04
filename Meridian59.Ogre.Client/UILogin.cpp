@@ -91,7 +91,7 @@ namespace Meridian59 { namespace Ogre
 
 			OgreClient::Singleton->Connect();
 
-			ControllerUI::Login::Connect->setEnabled(false);
+			ControllerUI::Login::Window->setEnabled(false);
 		}
 
 		return true;
@@ -110,7 +110,7 @@ namespace Meridian59 { namespace Ogre
 
 		OgreClient::Singleton->Connect();
 
-		ControllerUI::Login::Connect->setEnabled(false);
+		ControllerUI::Login::Window->setEnabled(false);
 
 		return true;
 	};

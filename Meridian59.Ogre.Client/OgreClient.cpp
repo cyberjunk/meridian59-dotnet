@@ -600,7 +600,7 @@ namespace Meridian59 { namespace Ogre
 
 		DemoSceneLoadBrax();
 
-		ControllerUI::Login::Connect->setEnabled(true);
+		ControllerUI::Login::Window->setEnabled(true);
 	};
 
 	void OgreClient::OnServerConnectionException(System::Exception^ Error)
