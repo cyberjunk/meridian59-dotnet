@@ -583,6 +583,9 @@ namespace Meridian59 { namespace Ogre
 		// subscribe keyup (esc for close)
 		Window->subscribeEvent(CEGUI::FrameWindow::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::OnKeyUp));
 
+		// copy&paste for alias values
+		AliasKey->subscribeEvent(CEGUI::Editbox::EventKeyDown, CEGUI::Event::Subscriber(UICallbacks::OnCopyPasteKeyDown));
+		AliasValue->subscribeEvent(CEGUI::Editbox::EventKeyDown, CEGUI::Event::Subscriber(UICallbacks::OnCopyPasteKeyDown));
 
 		/******************************************************************************************************/
 
@@ -646,6 +649,10 @@ namespace Meridian59 { namespace Ogre
 		del->subscribeEvent(
 			CEGUI::PushButton::EventClicked,
 			CEGUI::Event::Subscriber(UICallbacks::Options::OnAliasDeleteClicked));
+
+		// copy&paste for alias values
+		key->subscribeEvent(CEGUI::Editbox::EventKeyDown, CEGUI::Event::Subscriber(UICallbacks::OnCopyPasteKeyDown));
+		value->subscribeEvent(CEGUI::Editbox::EventKeyDown, CEGUI::Event::Subscriber(UICallbacks::OnCopyPasteKeyDown));
 
 		// insert in ui-list
 		if ((int)ListAliases->getItemCount() > Index)
