@@ -221,6 +221,10 @@ namespace Meridian59 { namespace Ogre
 					case AvatarAction::Wave:
 						imgButton->setProperty(UI_PROPNAME_IMAGE, UI_IMAGE_ACTION_WAVE); 
 						break;
+
+					case AvatarAction::GuildInvite:
+						imgButton->setProperty(UI_PROPNAME_IMAGE, UI_IMAGE_ACTION_GUILDINVITE);
+						break;
 				}
 			}
 			else if (dataModel->ButtonType == ActionButtonType::Item)
