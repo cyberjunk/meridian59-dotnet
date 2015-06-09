@@ -268,6 +268,10 @@ namespace Meridian59.Data.Models
             {
                 action = AvatarAction.Activate;
             }
+            else if (String.Equals(lower, AvatarAction.GuildInvite.ToString().ToLower()))
+            {
+                action = AvatarAction.GuildInvite;
+            }
             else
             {
                 action = AvatarAction.Wave;
