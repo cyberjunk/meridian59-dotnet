@@ -370,16 +370,19 @@ namespace Meridian59.Bot
         {
             bool found = false;
 
-            // try to login the character which is defined in config
-            foreach (CharSelectItem character in Message.WelcomeInfo.Characters)
+            if (Config.SelectedConnectionInfo != null)
             {
-                if (character.Name.ToLower() == Config.Character.ToLower())
+                // try to login the character which is defined in config
+                foreach (CharSelectItem character in Message.WelcomeInfo.Characters)
                 {
-                    Log("SYS", "Logging in character " + character.Name);
+                    if (character.Name.ToLower() == Config.SelectedConnectionInfo.Character.ToLower())
+                    {
+                        Log("SYS", "Logging in character " + character.Name);
 
-                    SendUseCharacterMessage(new ObjectID(character.ID), true);
-                    found = true;
-                    break;
+                        SendUseCharacterMessage(new ObjectID(character.ID), true);
+                        found = true;
+                        break;
+                    }
                 }
             }
 
@@ -390,7 +393,9 @@ namespace Meridian59.Bot
                 ServerConnection.Disconnect();
                 IsRunning = false;
 
-                Log("ERROR", "Character " + Config.Character + " was not found on this account.");
+                if (Config.SelectedConnectionInfo != null)
+                    Log("ERROR", "Character " + Config.SelectedConnectionInfo.Character + " was not found on this account.");
+                
                 Thread.Sleep(SLEEPAFTERERROR);
             }
         }

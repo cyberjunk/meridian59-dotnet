@@ -38,7 +38,6 @@ namespace Meridian59.Bot
         #endregion
 
         #region Properties
-        public string Character { get; protected set; }
         public byte MajorVersion { get; protected set; }
         public byte MinorVersion { get; protected set; }
         public string LogFile { get; protected set; }
@@ -100,7 +99,6 @@ namespace Meridian59.Bot
            
             // connection
             Reader.ReadToFollowing(XMLTAG_CONNECTION);
-            Character = Reader[XMLATTRIB_CHARACTER];
             MajorVersion = Convert.ToByte(Reader[XMLATTRIB_MAJORVERSION]);
             MinorVersion = Convert.ToByte(Reader[XMLATTRIB_MINORVERSION]);
             LogFile = Reader[XMLATTRIB_LOGFILE];

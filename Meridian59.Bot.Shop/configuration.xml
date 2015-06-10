@@ -62,13 +62,11 @@
   
   <!-- 
     CONNECTION:
-      character: name of your character to log in
       majorverson: see client menu help/about
       minorversion: see client menu help/about
       logfile: the bot will log also to this file (cleaned at startup, "" to disable)
   -->
   <connection
-    character="charactername"
     majorversion="80"
     minorversion="2"
     logfile="bot.log" />
