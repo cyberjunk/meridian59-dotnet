@@ -487,7 +487,6 @@ namespace Meridian59 { namespace Ogre
 			static void OnNewBuyItemImageAvailable(Object^ sender, ::System::EventArgs^ e);
 			static void BuyItemAdd(int Index);
 			static void BuyItemRemove(int Index);
-			static void BuyItemChange(int Index);
 		};
 
 		/// <summary>
@@ -663,10 +662,8 @@ namespace Meridian59 { namespace Ogre
 			static void OnNewItemPartnerImageAvailable(Object^ sender, ::System::EventArgs^ e);
 			static void ItemYouAdd(int Index);
 			static void ItemYouRemove(int Index);
-			static void ItemYouChange(int Index);
 			static void ItemPartnerAdd(int Index);
-			static void ItemPartnerRemove(int Index);
-			static void ItemPartnerChange(int Index);
+			static void ItemPartnerRemove(int Index);			
 		};
 
 		/// <summary>

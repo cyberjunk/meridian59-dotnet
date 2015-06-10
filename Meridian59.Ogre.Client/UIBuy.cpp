@@ -74,10 +74,6 @@ namespace Meridian59 { namespace Ogre
 			case ::System::ComponentModel::ListChangedType::ItemDeleted:
 				BuyItemRemove(e->NewIndex);
 				break;
-
-			case ::System::ComponentModel::ListChangedType::ItemChanged:
-				BuyItemChange(e->NewIndex);
-				break;
 		}
 	};
 
@@ -109,6 +105,21 @@ namespace Meridian59 { namespace Ogre
 			// subscribe event to focusleave on textbox
 			amount->subscribeEvent(CEGUI::Editbox::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Buy::OnItemAmountDeactivated));
 			amount->subscribeEvent(CEGUI::Editbox::EventTextAccepted, CEGUI::Event::Subscriber(UICallbacks::Buy::OnItemAmountDeactivated));
+
+			// get color
+			::CEGUI::Colour color = ::CEGUI::Colour(
+				NameColors::GetColorFor(obj->Flags));
+
+			// set color and name
+			name->setProperty(UI_PROPNAME_NORMALTEXTCOLOUR, ::CEGUI::PropertyHelper<::CEGUI::Colour>::toString(color));
+			name->setText(StringConvert::CLRToCEGUI(obj->Name));
+
+			// set price
+			price->setText(CEGUI::PropertyHelper<unsigned int>::toString(obj->Price));
+
+			// set default amount
+			amount->setText(CEGUI::PropertyHelper<unsigned int>::toString(obj->Count));
+			amount->setVisible(obj->IsStackable);
 		}
 
 		// insert widget in ui-list
@@ -133,12 +144,12 @@ namespace Meridian59 { namespace Ogre
         imageComposer->CenterHorizontal = true;
         imageComposer->CenterVertical = true;
 		imageComposer->NewImageAvailable += gcnew ::System::EventHandler(OnNewBuyItemImageAvailable);
-		
+
 		// insert composer into list at index
 		imageComposers->Insert(Index, imageComposer);
 
-		// update values
-		BuyItemChange(Index);
+		// set image
+		imageComposer->DataSource = obj;
 	};
 
 	void ControllerUI::Buy::BuyItemRemove(int Index)
@@ -156,45 +167,6 @@ namespace Meridian59 { namespace Ogre
 			
 			// remove from list
 			imageComposers->RemoveAt(Index);
-		}
-	};
-
-	void ControllerUI::Buy::BuyItemChange(int Index)
-	{
-		TradeOfferObject^ obj = OgreClient::Singleton->Data->Buy->Items[Index];
-		
-		// set imagecomposer datasource
-		if (imageComposers->Count > Index)
-			imageComposers[Index]->DataSource = obj;
-		
-		// check
-		if ((int)List->getItemCount() > Index)
-		{
-			CEGUI::ItemEntry* wnd = (CEGUI::ItemEntry*)List->getItemFromIndex(Index);
-
-			// check
-			if (wnd->getChildCount() > 3)
-			{
-				CEGUI::Window* price	= (CEGUI::Window*)wnd->getChildAtIdx(UI_BUY_CHILDINDEX_PRICE);
-				CEGUI::Window* icon		= (CEGUI::Window*)wnd->getChildAtIdx(UI_BUY_CHILDINDEX_ICON);
-				CEGUI::Window* name		= (CEGUI::Window*)wnd->getChildAtIdx(UI_BUY_CHILDINDEX_NAME);
-				CEGUI::Editbox* amount	= (CEGUI::Editbox*)wnd->getChildAtIdx(UI_BUY_CHILDINDEX_AMOUNT);
-
-				// get color
-				::CEGUI::Colour color = ::CEGUI::Colour(
-					NameColors::GetColorFor(obj->Flags));
-		
-				// set color and name
-				name->setProperty(UI_PROPNAME_NORMALTEXTCOLOUR, ::CEGUI::PropertyHelper<::CEGUI::Colour>::toString(color));
-				name->setText(StringConvert::CLRToCEGUI(obj->Name));
-
-				// set price
-				price->setText(CEGUI::PropertyHelper<unsigned int>::toString(obj->Price));
-
-				// set default amount
-				amount->setText(CEGUI::PropertyHelper<unsigned int>::toString(obj->Count));
-				amount->setVisible(obj->IsStackable);
-			}
 		}
 	};
 
