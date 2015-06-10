@@ -20,7 +20,7 @@
     CONNECTIONS:
       selectedindex: the 0-based entryindex to use from below
   -->
-  <connections selectedindex="0">
+  <connections selectedindex="2">
     <!-- 
       CONNECTION:
         name: just a name for this connection
@@ -33,6 +33,32 @@
         ignorelist: these players will be ignored
     -->
     <connection
+      name="101"
+      host="meridian101.meridian59.com"
+      port="5901"
+      useipv6="false"
+      stringdictionary="rsc0000-101.rsb"
+      username="user"
+      password=""
+      character="">
+      <ignorelist>
+        <ignore name="PathethicTroll0815" />
+      </ignorelist>
+    </connection>
+    <connection
+      name="102"
+      host="meridian102.meridian59.com"
+      port="5902"
+      useipv6="false"
+      stringdictionary="rsc0000-101.rsb"
+      username="user"
+      password=""
+      character="">
+      <ignorelist>
+        <ignore name="PathethicTroll0815" />
+      </ignorelist>
+    </connection>
+    <connection
       name="103"
       host="meridian103.openmeridian.org"
       port="5903"
@@ -40,7 +66,46 @@
       stringdictionary="rsc0000-103.rsb"
       username="user"
       password=""
-      character="charactername">
+      character="">
+      <ignorelist>
+        <ignore name="PathethicTroll0815" />
+      </ignorelist>
+    </connection>
+    <connection
+      name="104"
+      host="meridian104.openmeridian.org"
+      port="5904"
+      useipv6="false"
+      stringdictionary="rsc0000-104.rsb"
+      username="user"
+      password=""
+      character="">
+      <ignorelist>
+        <ignore name="PathethicTroll0815" />
+      </ignorelist>
+    </connection>
+    <connection
+      name="112"
+      host="arantis.org"
+      port="5912"
+      useipv6="false"
+      stringdictionary="rsc0000-112.rsb"
+      username="user"
+      password=""
+      character="">
+      <ignorelist>
+        <ignore name="PathethicTroll0815" />
+      </ignorelist>
+    </connection>
+    <connection
+      name="115"
+      host="proxy03.zyres.net"
+      port="5959"
+      useipv6="false"
+      stringdictionary="rsc0000-115.rsb"
+      username="user"
+      password=""
+      character="">
       <ignorelist>
         <ignore name="PathethicTroll0815" />
       </ignorelist>
@@ -53,8 +118,10 @@
       stringdictionary="rsc0000-git.rsb"
       username="user"
       password=""
-      character="charactername">
-      <ignorelist />
+      character="">
+      <ignorelist>
+        <ignore name="PathethicTroll0815" />
+      </ignorelist>
     </connection>
   </connections>
 
