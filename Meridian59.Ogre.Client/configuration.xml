@@ -17,7 +17,7 @@
       host="meridian101.meridian59.com"
       port="5901"
       useipv6="false"
-      stringdictionary="rsc0000.rsb"
+      stringdictionary="rsc0000-101.rsb"
       username="user"
       password=""
       character="">
@@ -29,7 +29,7 @@
       host="meridian102.meridian59.com" 
       port="5902"
       useipv6="false"
-      stringdictionary="rsc0000.rsb"
+      stringdictionary="rsc0000-101.rsb"
       username="user"
       password=""
       character="">
