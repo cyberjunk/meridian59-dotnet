@@ -921,7 +921,7 @@ namespace Meridian59 { namespace Ogre
 		::Ogre::String ostr_matname = StringConvert::CLRToOgre(MaterialName);
 		
 		// possibly create texture
-        Util::CreateTextureA8R8G8B8(Texture, ostr_texname, TEXTUREGROUP_ROOLOADER);
+        Util::CreateTextureA8R8G8B8(Texture, ostr_texname, TEXTUREGROUP_ROOLOADER, MIP_DEFAULT);
         
 		// scrolling texture data
         Vector2* scrollSpeed = nullptr;

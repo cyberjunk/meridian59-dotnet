@@ -342,7 +342,7 @@ namespace Meridian59 { namespace Ogre
 						StringConvert::CLRToOgre(UI_NAMEPREFIX_STATICICON + condition->ResourceName + "/0");
 
 					// possibly create texture
-					Util::CreateTextureA8R8G8B8(condition->Resource->Frames[0], oStrName, UI_RESGROUP_IMAGESETS);
+					Util::CreateTextureA8R8G8B8(condition->Resource->Frames[0], oStrName, UI_RESGROUP_IMAGESETS, MIP_DEFAULT);
 
 					// reget TexPtr (no return from function works, ugh..)
 					TexturePtr texPtr = texMan->getByName(oStrName);

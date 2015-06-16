@@ -143,6 +143,162 @@ namespace Meridian59 { namespace Ogre
 		AliasAddBtn = static_cast<CEGUI::PushButton*>(TabAliases->getChild(UI_NAME_OPTIONS_TABALIASES_ADD));
 
 		/******************************************************************************************************/
+
+		// tababout
+		TabAboutTabControl = static_cast<CEGUI::TabControl*>(TabAbout->getChild(UI_NAME_OPTIONS_TABABOUT_TABCONTROL));
+		TabAboutTabGeneral = static_cast<CEGUI::Window*>(TabAboutTabControl->getChild(UI_NAME_OPTIONS_TABABOUT_TABGENERAL));
+		TabAboutTabHistory = static_cast<CEGUI::Window*>(TabAboutTabControl->getChild(UI_NAME_OPTIONS_TABABOUT_TABHISTORY));
+
+		// tababout - tabhistory
+		TabAboutTabHistoryTabControl = static_cast<CEGUI::TabControl*>(TabAboutTabHistory->getChild(UI_NAME_OPTIONS_TABABOUT_TABHISTORY_TABCONTROL));
+		TabAboutTabHistoryTabEvolution = static_cast<CEGUI::Window*>(TabAboutTabHistoryTabControl->getChild(UI_NAME_OPTIONS_TABABOUT_TABHISTORY_TABEVOLUTION));
+		TabAboutTabHistoryTabResurrection = static_cast<CEGUI::Window*>(TabAboutTabHistoryTabControl->getChild(UI_NAME_OPTIONS_TABABOUT_TABHISTORY_TABRESURRECTION));
+		TabAboutTabHistoryTabDarkAuspices = static_cast<CEGUI::Window*>(TabAboutTabHistoryTabControl->getChild(UI_NAME_OPTIONS_TABABOUT_TABHISTORY_TABDARKAUSPICES));
+		TabAboutTabHistoryTabInsurrection = static_cast<CEGUI::Window*>(TabAboutTabHistoryTabControl->getChild(UI_NAME_OPTIONS_TABABOUT_TABHISTORY_TABINSURRECTION));
+		TabAboutTabHistoryTabRenaissance = static_cast<CEGUI::Window*>(TabAboutTabHistoryTabControl->getChild(UI_NAME_OPTIONS_TABABOUT_TABHISTORY_TABRENAISSANCE));
+		TabAboutTabHistoryTabRevelation = static_cast<CEGUI::Window*>(TabAboutTabHistoryTabControl->getChild(UI_NAME_OPTIONS_TABABOUT_TABHISTORY_TABREVELATION));
+		TabAboutTabHistoryTabValeOfSorrow = static_cast<CEGUI::Window*>(TabAboutTabHistoryTabControl->getChild(UI_NAME_OPTIONS_TABABOUT_TABHISTORY_TABVALEOFSORROW));
+		TabAboutTabHistoryTabTheInternetQuestBegins = static_cast<CEGUI::Window*>(TabAboutTabHistoryTabControl->getChild(UI_NAME_OPTIONS_TABABOUT_TABHISTORY_TABTHEINTERNETQUESTBEGINS));
+
+		TabAboutTabHistoryImageEvolution = static_cast<CEGUI::Window*>(TabAboutTabHistoryTabEvolution->getChild(UI_NAME_OPTIONS_TABABOUT_TABHISTORY_IMAGEEVOLUTION));
+		TabAboutTabHistoryImageResurrection = static_cast<CEGUI::Window*>(TabAboutTabHistoryTabResurrection->getChild(UI_NAME_OPTIONS_TABABOUT_TABHISTORY_IMAGERESURRECTION));
+		TabAboutTabHistoryImageDarkAuspices = static_cast<CEGUI::Window*>(TabAboutTabHistoryTabDarkAuspices->getChild(UI_NAME_OPTIONS_TABABOUT_TABHISTORY_IMAGEDARKAUSPICES));
+		TabAboutTabHistoryImageInsurrection = static_cast<CEGUI::Window*>(TabAboutTabHistoryTabInsurrection->getChild(UI_NAME_OPTIONS_TABABOUT_TABHISTORY_IMAGEINSURRECTION));
+		TabAboutTabHistoryImageRenaissance = static_cast<CEGUI::Window*>(TabAboutTabHistoryTabRenaissance->getChild(UI_NAME_OPTIONS_TABABOUT_TABHISTORY_IMAGERENAISSANCE));
+		TabAboutTabHistoryImageRevelation = static_cast<CEGUI::Window*>(TabAboutTabHistoryTabRevelation->getChild(UI_NAME_OPTIONS_TABABOUT_TABHISTORY_IMAGEREVELATION));
+		TabAboutTabHistoryImageValeOfSorrow = static_cast<CEGUI::Window*>(TabAboutTabHistoryTabValeOfSorrow->getChild(UI_NAME_OPTIONS_TABABOUT_TABHISTORY_IMAGEVALEOFSORROW));
+		TabAboutTabHistoryImageTheInternetQuestBegins = static_cast<CEGUI::Window*>(TabAboutTabHistoryTabTheInternetQuestBegins->getChild(UI_NAME_OPTIONS_TABABOUT_TABHISTORY_IMAGETHEINTERNETQUESTBEGINS));
+
+		/******************************************************************************************************/
+
+		Ogre::TextureManager* texMan	= Ogre::TextureManager::getSingletonPtr();
+		BgfFile^ aboutBgf				= OgreClient::Singleton->ResourceManager->GetObject("about.bgf");
+
+		if (aboutBgf)
+		{
+			// Evolution
+			if (aboutBgf->Frames->Count > 0)
+			{
+				const ::Ogre::String oStrName = "CEGUI/about.bgf/0";
+
+				Util::CreateTextureA8R8G8B8(aboutBgf->Frames[0], oStrName, UI_RESGROUP_IMAGESETS, 0);
+				TexturePtr texPtr = texMan->getByName(oStrName);
+
+				if (!texPtr.isNull())
+				{
+					Util::CreateCEGUITextureFromOgre(ControllerUI::Renderer, texPtr);
+					TabAboutTabHistoryImageEvolution->setProperty(UI_PROPNAME_IMAGE, oStrName);
+				}
+			}
+
+			// Resurrection
+			if (aboutBgf->Frames->Count > 1)
+			{
+				const ::Ogre::String oStrName = "CEGUI/about.bgf/1";
+
+				Util::CreateTextureA8R8G8B8(aboutBgf->Frames[1], oStrName, UI_RESGROUP_IMAGESETS, 0);
+				TexturePtr texPtr = texMan->getByName(oStrName);
+
+				if (!texPtr.isNull())
+				{
+					Util::CreateCEGUITextureFromOgre(ControllerUI::Renderer, texPtr);
+					TabAboutTabHistoryImageResurrection->setProperty(UI_PROPNAME_IMAGE, oStrName);
+				}
+			}
+
+			// DarkAuspices
+			if (aboutBgf->Frames->Count > 2)
+			{
+				const ::Ogre::String oStrName = "CEGUI/about.bgf/2";
+
+				Util::CreateTextureA8R8G8B8(aboutBgf->Frames[2], oStrName, UI_RESGROUP_IMAGESETS, 0);
+				TexturePtr texPtr = texMan->getByName(oStrName);
+
+				if (!texPtr.isNull())
+				{
+					Util::CreateCEGUITextureFromOgre(ControllerUI::Renderer, texPtr);
+					TabAboutTabHistoryImageDarkAuspices->setProperty(UI_PROPNAME_IMAGE, oStrName);
+				}
+			}
+
+			// Insurrection
+			if (aboutBgf->Frames->Count > 3)
+			{
+				const ::Ogre::String oStrName = "CEGUI/about.bgf/3";
+
+				Util::CreateTextureA8R8G8B8(aboutBgf->Frames[3], oStrName, UI_RESGROUP_IMAGESETS, 0);
+				TexturePtr texPtr = texMan->getByName(oStrName);
+
+				if (!texPtr.isNull())
+				{
+					Util::CreateCEGUITextureFromOgre(ControllerUI::Renderer, texPtr);
+					TabAboutTabHistoryImageInsurrection->setProperty(UI_PROPNAME_IMAGE, oStrName);
+				}
+			}
+
+			// Renaissance
+			if (aboutBgf->Frames->Count > 4)
+			{
+				const ::Ogre::String oStrName = "CEGUI/about.bgf/4";
+
+				Util::CreateTextureA8R8G8B8(aboutBgf->Frames[4], oStrName, UI_RESGROUP_IMAGESETS, 0);
+				TexturePtr texPtr = texMan->getByName(oStrName);
+
+				if (!texPtr.isNull())
+				{
+					Util::CreateCEGUITextureFromOgre(ControllerUI::Renderer, texPtr);
+					TabAboutTabHistoryImageRenaissance->setProperty(UI_PROPNAME_IMAGE, oStrName);
+				}
+			}
+
+			// Revelation
+			if (aboutBgf->Frames->Count > 5)
+			{
+				const ::Ogre::String oStrName = "CEGUI/about.bgf/5";
+
+				Util::CreateTextureA8R8G8B8(aboutBgf->Frames[5], oStrName, UI_RESGROUP_IMAGESETS, 0);
+				TexturePtr texPtr = texMan->getByName(oStrName);
+
+				if (!texPtr.isNull())
+				{
+					Util::CreateCEGUITextureFromOgre(ControllerUI::Renderer, texPtr);
+					TabAboutTabHistoryImageRevelation->setProperty(UI_PROPNAME_IMAGE, oStrName);
+				}
+			}
+
+			// ValeOfSorrow
+			if (aboutBgf->Frames->Count > 6)
+			{
+				const ::Ogre::String oStrName = "CEGUI/about.bgf/6";
+
+				Util::CreateTextureA8R8G8B8(aboutBgf->Frames[6], oStrName, UI_RESGROUP_IMAGESETS, 0);
+				TexturePtr texPtr = texMan->getByName(oStrName);
+
+				if (!texPtr.isNull())
+				{
+					Util::CreateCEGUITextureFromOgre(ControllerUI::Renderer, texPtr);
+					TabAboutTabHistoryImageValeOfSorrow->setProperty(UI_PROPNAME_IMAGE, oStrName);
+				}
+			}
+
+			// TheInternetQuestBegins
+			if (aboutBgf->Frames->Count > 7)
+			{
+				const ::Ogre::String oStrName = "CEGUI/about.bgf/7";
+
+				Util::CreateTextureA8R8G8B8(aboutBgf->Frames[7], oStrName, UI_RESGROUP_IMAGESETS, 0);
+				TexturePtr texPtr = texMan->getByName(oStrName);
+
+				if (!texPtr.isNull())
+				{
+					Util::CreateCEGUITextureFromOgre(ControllerUI::Renderer, texPtr);
+					TabAboutTabHistoryImageTheInternetQuestBegins->setProperty(UI_PROPNAME_IMAGE, oStrName);
+				}
+			}
+		}
+
+
+		/******************************************************************************************************/
 		/*                                  PREPARE / SET: ENGINE                                             */
 		/******************************************************************************************************/
 

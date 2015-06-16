@@ -106,7 +106,7 @@ namespace Meridian59 { namespace Ogre
 			::Ogre::String matName = PREFIX_PROJECTILE2D_MATERIAL + keystr;
 
 			// possibly create texture
-			Util::CreateTextureA8R8G8B8(bgfBmp, texName, TEXTUREGROUP_PROJECTILENODE2D);
+			Util::CreateTextureA8R8G8B8(bgfBmp, texName, TEXTUREGROUP_PROJECTILENODE2D, MIP_DEFAULT);
 			
 			// possibly create material
 			Util::CreateMaterial(

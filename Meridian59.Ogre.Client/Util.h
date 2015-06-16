@@ -364,7 +364,8 @@ namespace Meridian59 { namespace Ogre
         static void CreateTextureA8R8G8B8(
 			::Meridian59::Files::BGF::BgfBitmap^ BgfBitmap, 
 			::Ogre::String TextureName, 
-			::Ogre::String TextureGroup)
+			::Ogre::String TextureGroup,
+			int Mipmaps)
 		{
 			if (!BgfBitmap || BgfBitmap->Width == 0 || BgfBitmap->Height == 0)
 				return;
@@ -386,7 +387,7 @@ namespace Meridian59 { namespace Ogre
                     TextureName,
                     TextureGroup,
                     TextureType::TEX_TYPE_2D,
-                    width, height, MIP_DEFAULT,
+                    width, height, Mipmaps,
                     ::Ogre::PixelFormat::PF_A8R8G8B8,
 					TU_DEFAULT, 0, false, 0);
                             

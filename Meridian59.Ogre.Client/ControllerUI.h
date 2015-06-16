@@ -1147,6 +1147,29 @@ namespace Meridian59 { namespace Ogre
 			static ::CEGUI::Editbox* AliasValue = nullptr;
 			static ::CEGUI::PushButton* AliasAddBtn = nullptr;
 
+			//
+			static ::CEGUI::TabControl* TabAboutTabControl = nullptr;
+			static ::CEGUI::Window* TabAboutTabGeneral = nullptr;
+			static ::CEGUI::Window* TabAboutTabHistory = nullptr;
+			
+			static ::CEGUI::TabControl* TabAboutTabHistoryTabControl = nullptr;
+			static ::CEGUI::Window* TabAboutTabHistoryTabEvolution = nullptr;
+			static ::CEGUI::Window* TabAboutTabHistoryTabResurrection = nullptr;
+			static ::CEGUI::Window* TabAboutTabHistoryTabDarkAuspices = nullptr;
+			static ::CEGUI::Window* TabAboutTabHistoryTabInsurrection = nullptr;
+			static ::CEGUI::Window* TabAboutTabHistoryTabRenaissance = nullptr;
+			static ::CEGUI::Window* TabAboutTabHistoryTabRevelation = nullptr;
+			static ::CEGUI::Window* TabAboutTabHistoryTabValeOfSorrow = nullptr;
+			static ::CEGUI::Window* TabAboutTabHistoryTabTheInternetQuestBegins = nullptr;
+			static ::CEGUI::Window* TabAboutTabHistoryImageEvolution = nullptr;
+			static ::CEGUI::Window* TabAboutTabHistoryImageResurrection = nullptr;
+			static ::CEGUI::Window* TabAboutTabHistoryImageDarkAuspices = nullptr;
+			static ::CEGUI::Window* TabAboutTabHistoryImageInsurrection = nullptr;
+			static ::CEGUI::Window* TabAboutTabHistoryImageRenaissance = nullptr;
+			static ::CEGUI::Window* TabAboutTabHistoryImageRevelation = nullptr;
+			static ::CEGUI::Window* TabAboutTabHistoryImageValeOfSorrow = nullptr;
+			static ::CEGUI::Window* TabAboutTabHistoryImageTheInternetQuestBegins = nullptr;
+
 			static void AliasAdd(int Index);
 			static void AliasRemove(int Index);
 
@@ -1154,7 +1177,7 @@ namespace Meridian59 { namespace Ogre
 			static void OnAliasListChanged(Object^ sender, ListChangedEventArgs^ e);
 
 			static void Initialize();
-			static void Destroy();			
+			static void Destroy();
 		};
 #pragma endregion
 	};
