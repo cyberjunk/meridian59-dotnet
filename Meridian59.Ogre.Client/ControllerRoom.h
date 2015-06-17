@@ -95,6 +95,7 @@ namespace Meridian59 { namespace Ogre
 		static void HandlePlayerMessage(PlayerMessage^ Message);
 		static void HandleLightAmbient(LightAmbientMessage^ Message);
 		static void HandleLightPlayer(LightPlayerMessage^ Message);
+		static void HandleLightShading(LightShadingMessage^ Message);
 		static void HandleBackground(BackgroundMessage^ Message);
 		
 		static void AdjustOctree();

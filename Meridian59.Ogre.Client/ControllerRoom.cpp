@@ -1277,17 +1277,47 @@ namespace Meridian59 { namespace Ogre
 
 	void ControllerRoom::AdjustAmbientLight()
 	{
-		// simply use the maximum of avatarlight (nightvision..) and ambientlight.
-		unsigned char ambient = OgreClient::Singleton->Data->RoomInformation->AmbientLight;
-		unsigned char avatar = OgreClient::Singleton->Data->RoomInformation->AvatarLight;
+		unsigned char ambient		= OgreClient::Singleton->Data->RoomInformation->AmbientLight;
+		unsigned char avatar		= OgreClient::Singleton->Data->RoomInformation->AvatarLight;
+		unsigned char directional	= OgreClient::Singleton->Data->LightShading->LightIntensity;
+		
+		// simply use the maximum of avatarlight (nightvision..) and ambientlight for ambientlight
 		unsigned char max = System::Math::Max(ambient, avatar);
 
 		// adjust ambientlight        
-        SceneManager->setAmbientLight(Util::LightIntensityToOgreRGB(max));
+		SceneManager->setAmbientLight(Util::LightIntensityToOgreRGB(max));
 
 		// log
-        Logger::Log(MODULENAME, LogType::Info,
-            "Setting AmbientLight to " + max.ToString());  
+		Logger::Log(MODULENAME, LogType::Info,
+			"Setting AmbientLight to " + max.ToString());
+
+		// directional sun of Caelum
+		if (caelumSystem)
+		{
+			::Caelum::BaseSkyLight* sun  = caelumSystem->getSun();
+			::Caelum::BaseSkyLight* moon = caelumSystem->getMoon();
+			
+			::Ogre::ColourValue color = ::Ogre::ColourValue(
+				(float)directional * 0.1f,
+				(float)directional * 0.1f,
+				(float)directional * 0.1f);
+
+			if (sun)
+			{
+				sun->setDiffuseMultiplier(color);
+				sun->setSpecularMultiplier(color);
+			}
+
+			if (moon)
+			{
+				moon->setDiffuseMultiplier(color);
+				moon->setSpecularMultiplier(color);
+			}
+
+			// log
+			Logger::Log(MODULENAME, LogType::Info,
+				"Setting DirectionalLight to " + directional.ToString());
+		}
 	};
 	
 	void ControllerRoom::ProjectileAdd(Projectile^ Projectile)
@@ -1455,6 +1485,10 @@ namespace Meridian59 { namespace Ogre
                 HandleLightPlayer((LightPlayerMessage^)Message);
                 break;
 
+			case MessageTypeGameMode::LightShading:
+				HandleLightShading((LightShadingMessage^)Message);
+				break;
+
             case MessageTypeGameMode::Background:
                 HandleBackground((BackgroundMessage^)Message);
                 break;
@@ -1479,6 +1513,11 @@ namespace Meridian59 { namespace Ogre
 	};
 
 	void ControllerRoom::HandleLightPlayer(LightPlayerMessage^ Message)
+	{
+		AdjustAmbientLight();
+	};
+
+	void ControllerRoom::HandleLightShading(LightShadingMessage^ Message)
 	{
 		AdjustAmbientLight();
 	};
