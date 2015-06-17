@@ -145,7 +145,7 @@ namespace Meridian59 { namespace Ogre
 		/**************************** 2. TIME/DAY DURATION *******************************************/
 		
 		const int YEAR = 1;
-		const int MONTH = 5;
+		const int MONTH = 4;
 		const int DAY = 1;
 
 		// get caelum clock instance and current m59 time
