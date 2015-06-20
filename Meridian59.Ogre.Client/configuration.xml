@@ -143,7 +143,7 @@
     </layout>
   </ui>
   <input>
-    <mouseaimspeed value="20" />
+    <mouseaimspeed value="15" />
     <keyrotatespeed value="25" />
     <invertmousey value="False" />
     <keybinding rightclickaction="13">
