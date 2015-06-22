@@ -424,6 +424,11 @@ namespace Meridian59.Data
         public CharCreationInfo CharCreationInfo { get; protected set; }
 
         /// <summary>
+        /// Info for the stat change wizard
+        /// </summary>
+        public StatChangeInfo StatChangeInfo { get; protected set; }
+
+        /// <summary>
         /// Whether you're currently resting or not
         /// </summary>
         public bool IsResting
@@ -687,6 +692,7 @@ namespace Meridian59.Data
             WelcomeInfo = new WelcomeInfo();
             CharCreationInfo = new CharCreationInfo();
             ObjectContents = new ObjectContents();
+            StatChangeInfo = new StatChangeInfo();
 
             // some values
             ChatMessagesMaximum = 100;
@@ -762,6 +768,7 @@ namespace Meridian59.Data
             CharCreationInfo.Clear(true);
             ObjectContents.Clear(true);
             GuildShieldInfo.Clear(true);
+            StatChangeInfo.Clear(true);
 
             // reset values/references
             AvatarObject = null;
@@ -1369,7 +1376,11 @@ namespace Meridian59.Data
                 case MessageTypeGameMode.UserCommand:               // 155
                     HandleUserCommand((UserCommandMessage)Message);
                     break;
-
+#if !VANILLA
+                case MessageTypeGameMode.ReqStatChange:             // 156
+                    HandleReqStatChange((ReqStatChangeMessage)Message);
+                    break;
+#endif
                 case MessageTypeGameMode.PlayWave:                  // 170
                     HandlePlayWave((PlayWaveMessage)Message);
                     break;
@@ -2023,6 +2034,14 @@ namespace Meridian59.Data
                     break;
             }
         }
+
+#if !VANILLA
+        protected void HandleReqStatChange(ReqStatChangeMessage Message)
+        {
+            // update own instance with new values
+            StatChangeInfo.UpdateFromModel(Message.StatChangeInfo, true);
+        }
+#endif
 
         protected void HandleAddBgOverlay(AddBgOverlayMessage Message)
         {

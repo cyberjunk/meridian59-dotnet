@@ -122,6 +122,7 @@
     <Compile Include="Data\Lists\KeyValuePairStringList.cs" />
     <Compile Include="Data\Lists\MailList.cs" />
     <Compile Include="Data\Lists\RoomObjectListFiltered.cs" />
+    <Compile Include="Data\Models\StatChangeInfo.cs" />
     <Compile Include="Data\Models\CharCreationInfo.cs" />
     <Compile Include="Data\Models\ChatCommand\ChatCommandCast.cs" />
     <Compile Include="Data\Models\ChatCommand\ChatCommandDM.cs" />
@@ -341,6 +342,8 @@
     <Compile Include="Native\Linux.cs" />
     <Compile Include="Native\Windows.cs" />
     <Compile Include="Native\Wrapper.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\ChangedStatsMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\ReqStatChangeMessage.cs" />
     <Compile Include="Protocol\GameMessages\GameMode\CancelOfferMessage.cs" />
     <Compile Include="Protocol\GameMessages\GameMode\CounterOfferedMessage.cs" />
     <Compile Include="Protocol\GameMessages\GameMode\ChangePasswordMessage.cs" />

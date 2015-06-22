@@ -2038,6 +2038,24 @@ namespace Meridian59.Client
             }
         }
 
+#if !VANILLA
+        /// <summary>
+        /// Sends modified stat values from datalayer to the server, requesting a stat change.
+        /// </summary>
+        public virtual void SendChangedStatsMessage()
+        {
+            // get (copy) of currently selected data from datalayer
+            StatChangeInfo info = new StatChangeInfo();
+            info.UpdateFromModel(Data.StatChangeInfo, false);
+
+            // create message instance
+            ChangedStatsMessage message = new ChangedStatsMessage(info);
+
+            // send/enqueue it (async)
+            ServerConnection.SendQueue.Enqueue(message);
+        }
+#endif
+
         /// <summary>
         /// Accepts a pending trade/offer.
         /// This also clears the Trade in the DataController afterwards.

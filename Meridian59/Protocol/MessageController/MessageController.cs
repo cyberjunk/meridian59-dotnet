@@ -678,7 +678,15 @@ namespace Meridian59.Protocol
                         TypedMessage = new UserCommandMessage(stringResources, e.Direction, e.MessageBuffer);
                         HandleUserCommand((UserCommandMessage)TypedMessage);
                         break;
+#if !VANILLA
+                    case MessageTypeGameMode.ReqStatChange:                                   // PI: 156
+                        TypedMessage = new ReqStatChangeMessage(e.MessageBuffer);                
+                        break;
 
+                    case MessageTypeGameMode.ChangedStats:                                    // PI: 157
+                        TypedMessage = new ChangedStatsMessage(e.MessageBuffer);
+                        break;
+#endif
                     case MessageTypeGameMode.PasswordOK:
                         TypedMessage = new PasswordOKMessage(e.MessageBuffer);                // PI: 160
                         break;
