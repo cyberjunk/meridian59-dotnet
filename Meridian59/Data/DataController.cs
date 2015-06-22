@@ -2040,6 +2040,7 @@ namespace Meridian59.Data
         {
             // update own instance with new values
             StatChangeInfo.UpdateFromModel(Message.StatChangeInfo, true);
+            StatChangeInfo.IsVisible = true;
         }
 #endif
 
