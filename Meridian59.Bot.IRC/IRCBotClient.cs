@@ -394,7 +394,7 @@ namespace Meridian59.Bot.IRC
             {
                 // build the welcome-string
                 string welcomestr =
-                    "Meridian 59 IRC BOT (" + ver + ") - Player " + Config.Character + " on host " + 
+                    "Meridian 59 IRC BOT (" + ver + ") - Player " + Config.SelectedConnectionInfo.Character + " on host " + 
                     Config.SelectedConnectionInfo.Host + ":" + Config.SelectedConnectionInfo.Port;
 
                 // try to log the chatmessage to IRC
