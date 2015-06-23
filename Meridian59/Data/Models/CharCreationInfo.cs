@@ -1385,8 +1385,8 @@ namespace Meridian59.Data.Models
             int MouthIndex = 0)
         {
             gender = Gender;
-            skinColor = skinColors[SkinColorIndex];
-            hairColor = hairColors[HairColorIndex];
+            skinColor = (skinColors.Length > SkinColorIndex) ? skinColors[SkinColorIndex] : (byte)0;
+            hairColor = (hairColors.Length > HairColorIndex) ? hairColors[HairColorIndex] : (byte)0;
 
             ResourceIDBGF skullID;
             ResourceIDBGF[] hairIDs;
@@ -1466,27 +1466,27 @@ namespace Meridian59.Data.Models
             subOvSkull.Name = skullID.Name;
             subOvSkull.ResourceID = skullID.Value;
             subOvSkull.Resource = skullID.Resource;
-            subOvSkull.ColorTranslation = skinColors[SkinColorIndex];
+            subOvSkull.ColorTranslation = (skinColors.Length > SkinColorIndex) ? skinColors[SkinColorIndex] : (byte)0;
 
-            subOvHair.Name = hairIDs[HairIndex].Name;
-            subOvHair.ResourceID = hairIDs[HairIndex].Value;
-            subOvHair.Resource = hairIDs[HairIndex].Resource;
-            subOvHair.ColorTranslation = hairColors[HairColorIndex];
+            subOvHair.Name = (hairIDs.Length > HairIndex) ? hairIDs[HairIndex].Name : String.Empty;
+            subOvHair.ResourceID = (hairIDs.Length > HairIndex) ? hairIDs[HairIndex].Value : 0;
+            subOvHair.Resource = (hairIDs.Length > HairIndex) ? hairIDs[HairIndex].Resource : null;
+            subOvHair.ColorTranslation = (hairColors.Length > HairColorIndex) ? hairColors[HairColorIndex] : (byte)0;
 
-            subOvEyes.Name = eyeIDs[EyesIndex].Name;
-            subOvEyes.ResourceID = eyeIDs[EyesIndex].Value;
-            subOvEyes.Resource = eyeIDs[EyesIndex].Resource;
-            subOvEyes.ColorTranslation = skinColors[SkinColorIndex];
+            subOvEyes.Name = (eyeIDs.Length > EyesIndex) ? eyeIDs[EyesIndex].Name : String.Empty;
+            subOvEyes.ResourceID = (eyeIDs.Length > EyesIndex) ? eyeIDs[EyesIndex].Value : 0;
+            subOvEyes.Resource = (eyeIDs.Length > EyesIndex) ? eyeIDs[EyesIndex].Resource : null;
+            subOvEyes.ColorTranslation = (skinColors.Length > SkinColorIndex) ? skinColors[SkinColorIndex] : (byte)0;
 
-            subOvNose.Name = noseIDs[NoseIndex].Name;
-            subOvNose.ResourceID = noseIDs[NoseIndex].Value;
-            subOvNose.Resource = noseIDs[NoseIndex].Resource;
-            subOvNose.ColorTranslation = skinColors[SkinColorIndex];
+            subOvNose.Name = (noseIDs.Length > NoseIndex) ? noseIDs[NoseIndex].Name : String.Empty;
+            subOvNose.ResourceID = (noseIDs.Length > NoseIndex) ? noseIDs[NoseIndex].Value : 0;
+            subOvNose.Resource = (noseIDs.Length > NoseIndex) ? noseIDs[NoseIndex].Resource : null;
+            subOvNose.ColorTranslation = (skinColors.Length > SkinColorIndex) ? skinColors[SkinColorIndex] : (byte)0;
 
-            subOvMouth.Name = mouthIDs[MouthIndex].Name;
-            subOvMouth.ResourceID = mouthIDs[MouthIndex].Value;
-            subOvMouth.Resource = mouthIDs[MouthIndex].Resource;
-            subOvMouth.ColorTranslation = skinColors[SkinColorIndex];
+            subOvMouth.Name = (mouthIDs.Length > MouthIndex) ? mouthIDs[MouthIndex].Name : String.Empty;
+            subOvMouth.ResourceID = (mouthIDs.Length > MouthIndex) ? mouthIDs[MouthIndex].Value : 0;
+            subOvMouth.Resource = (mouthIDs.Length > MouthIndex) ? mouthIDs[MouthIndex].Resource : null;
+            subOvMouth.ColorTranslation = (skinColors.Length > SkinColorIndex) ? skinColors[SkinColorIndex] : (byte)0;
 
             RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_GENDER));                
         }
