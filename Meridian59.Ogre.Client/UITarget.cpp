@@ -111,7 +111,7 @@ namespace Meridian59 { namespace Ogre
 				
 				// set button availability
 				Attack->setEnabled(targetObject->Flags->IsAttackable);
-				Activate->setEnabled(targetObject->Flags->IsActivatable);
+				Activate->setEnabled(targetObject->Flags->IsActivatable || targetObject->Flags->IsContainer);
 				Buy->setEnabled(targetObject->Flags->IsBuyable);
 				Trade->setEnabled(targetObject->Flags->IsOfferable);
 				Loot->setEnabled(targetObject->Flags->IsGettable);
@@ -165,7 +165,7 @@ namespace Meridian59 { namespace Ogre
 				
 			// set button availability
 			Attack->setEnabled(targetObject->Flags->IsAttackable);
-			Activate->setEnabled(targetObject->Flags->IsActivatable);
+			Activate->setEnabled(targetObject->Flags->IsActivatable || targetObject->Flags->IsContainer);
 			Buy->setEnabled(targetObject->Flags->IsBuyable);
 			Trade->setEnabled(targetObject->Flags->IsOfferable);
 			Loot->setEnabled(targetObject->Flags->IsGettable);
@@ -204,8 +204,8 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::MouseEventArgs& args = static_cast<const CEGUI::MouseEventArgs&>(e);
 
 		// request activate of current target
-		OgreClient::Singleton->SendReqActivate();
-		
+		OgreClient::Singleton->ExecAction(AvatarAction::Activate);
+
 		return true;
 	};
 

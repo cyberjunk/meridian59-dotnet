@@ -2125,6 +2125,17 @@ namespace Meridian59.Client
         }
 
         /// <summary>
+        /// Requests the contents of your current target ID
+        /// </summary>
+        public virtual void SendSendObjectContents()
+        {
+            if (!ObjectID.IsValid(Data.TargetID))
+                return;
+            
+            SendSendObjectContents(Data.TargetID);
+        }
+
+        /// <summary>
         /// Request the list of online players
         /// </summary>
         public virtual void SendSendPlayers()
@@ -2695,7 +2706,16 @@ namespace Meridian59.Client
                     break;
 
                 case AvatarAction.Activate:
-                    SendReqActivate();
+                    // for objects set with cointaier flag
+                    if (Data.TargetObject != null)
+                    {
+                        if (Data.TargetObject.Flags.IsContainer)                           
+                            SendSendObjectContents();
+                        
+                        else 
+                            SendReqActivate();
+                    }
+                   
                     break;
 
                 case AvatarAction.Trade:
