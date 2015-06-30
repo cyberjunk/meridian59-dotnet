@@ -2136,6 +2136,20 @@ namespace Meridian59.Client
         }
 
         /// <summary>
+        /// Requests to put 'Item' into 'Target'
+        /// </summary>
+        /// <param name="Item"></param>
+        /// <param name="Target"></param>
+        public virtual void SendReqPut(ObjectID Item, ObjectID Target)
+        {
+            // create message instance
+            ReqPutMessage message = new ReqPutMessage(Item, Target);
+
+            // send/enqueue it (async)
+            ServerConnection.SendQueue.Enqueue(message);
+        }
+
+        /// <summary>
         /// Request the list of online players
         /// </summary>
         public virtual void SendSendPlayers()
