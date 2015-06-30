@@ -2113,6 +2113,18 @@ namespace Meridian59.Client
         }
 
         /// <summary>
+        /// Requests the contents of an object
+        /// </summary>
+        public virtual void SendSendObjectContents(uint ID)
+        {
+            // create message instance
+            SendObjectContentsMessage message = new SendObjectContentsMessage(ID);
+
+            // send/enqueue it (async)
+            ServerConnection.SendQueue.Enqueue(message);
+        }
+
+        /// <summary>
         /// Request the list of online players
         /// </summary>
         public virtual void SendSendPlayers()
