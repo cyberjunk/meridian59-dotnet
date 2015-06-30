@@ -13,8 +13,9 @@ namespace Meridian59 { namespace Ogre
 		Text		= static_cast<CEGUI::MultiLineEditbox*>(Window->getChild(UI_NAME_NEWSGROUPCOMPOSE_TEXT));
 		Send		= static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_NEWSGROUPCOMPOSE_SEND));
 		
-		// set maximum length for title (server chokes on too big ones)
+		// set maximum length for title and body (check with server values...)
 		HeadLine->setMaxTextLength(UI_NEWSCOMPOSE_MAXTITLELENGTH);
+		Text->setMaxTextLength(UI_NEWSCOMPOSE_MAXBODYLENGTH);
 
 		// attach listener to newsgroup data
 		OgreClient::Singleton->Data->NewsGroup->PropertyChanged += 
