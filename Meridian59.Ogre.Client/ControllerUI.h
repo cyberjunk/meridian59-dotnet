@@ -53,7 +53,7 @@ namespace Meridian59 { namespace Ogre
 		static ::CEGUI::Key::Scan keyChar;
 		static bool processingInput;
 		static bool fastKeyRepeat;
-
+		static ::CEGUI::Window* draggedWindow;
 		static ControllerUI(void);
 
 	public:		
@@ -126,6 +126,12 @@ namespace Meridian59 { namespace Ogre
 			protected: void set(bool value) { processingInput = value; } 
 		};
 
+		static property ::CEGUI::Window* DraggedWindow
+		{
+			public: ::CEGUI::Window* get() { return draggedWindow; }
+			public: void set(::CEGUI::Window* value) { draggedWindow = value; }
+		};
+
 		/// <summary>
 		/// Returns true if TopControl is either null or should be ignored.
 		/// If true then make sure to handle the mouse input in the engine.
@@ -139,6 +145,8 @@ namespace Meridian59 { namespace Ogre
 					ControllerUI::TopControl == nullptr ||
 					ControllerUI::TopControl == ControllerUI::GUIRoot ||
 					ControllerUI::TopControl == ControllerUI::SplashNotifier::Window ||
+					ControllerUI::TopControl == ControllerUI::DraggedWindow ||
+					(ControllerUI::TopControl->getParent() && ControllerUI::TopControl->getParent() == ControllerUI::DraggedWindow) ||
 					ControllerUI::PlayerOverlays::IsOverlayWindow(ControllerUI::TopControl);
 			}
 		};
@@ -1383,6 +1391,7 @@ namespace Meridian59 { namespace Ogre
 		class Inventory
 		{
 		public:
+			static bool OnDragStarted(const CEGUI::EventArgs& e);
 			static bool OnItemClicked(const CEGUI::EventArgs& e);
 			static bool OnDragEnded(const CEGUI::EventArgs& e);
 		};

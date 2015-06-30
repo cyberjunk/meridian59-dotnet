@@ -72,7 +72,8 @@ namespace Meridian59 { namespace Ogre
 			// subscribe events
 			dragger->subscribeEvent(CEGUI::DragContainer::EventDragEnded, CEGUI::Event::Subscriber(UICallbacks::Inventory::OnDragEnded));
 			dragger->subscribeEvent(CEGUI::DragContainer::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Inventory::OnItemClicked));
-		
+			dragger->subscribeEvent(CEGUI::DragContainer::EventDragStarted, CEGUI::Event::Subscriber(UICallbacks::Inventory::OnDragStarted));
+
 			// add
 			List->addChild(dragger);
 		}
@@ -278,6 +279,15 @@ namespace Meridian59 { namespace Ogre
 		return false;
 	};
 
+	bool UICallbacks::Inventory::OnDragStarted(const CEGUI::EventArgs& e)
+	{
+		const CEGUI::WindowEventArgs& args = static_cast<const CEGUI::WindowEventArgs&>(e);
+
+		ControllerUI::DraggedWindow = args.window;
+
+		return true;
+	};
+
 	bool UICallbacks::Inventory::OnDragEnded(const CEGUI::EventArgs& e)
 	{
 		const CEGUI::WindowEventArgs& args = static_cast<const CEGUI::WindowEventArgs&>(e);
@@ -286,6 +296,9 @@ namespace Meridian59 { namespace Ogre
 		CEGUI::DragContainer* dataView = nullptr;
 		InventoryObject^ dataItem = nullptr;
 		
+		// reset dragwindow
+		ControllerUI::DraggedWindow = nullptr;
+
 		// get index and dragcontainer
 		int childcount = (int)dataViews->getChildCount();
 		for (int i = 0; i < childcount; i++)
@@ -310,17 +323,33 @@ namespace Meridian59 { namespace Ogre
 
 			if (wnd)
 			{
-				// dropped on rootwindow? drop item
+				// dropped on rootwindow?
 				if (wnd == ControllerUI::GUIRoot)
 				{
-					// drop directly
-					if (!dataItem->IsStackable)
-						OgreClient::Singleton->SendReqDropMessage(gcnew ObjectID(dataItem->ID, 0));
+					// see if dropped on a container roomobject such as chest
+					RoomObject^ mouseOverObj = OgreClient::Singleton->Data->RoomObjects->GetHighlightedItem();
 
-					// show amount input
+					if (mouseOverObj && mouseOverObj->Flags->IsContainer)
+					{
+						// put into object
+						OgreClient::Singleton->SendReqPut(
+							gcnew ObjectID(dataItem->ID, dataItem->Count),
+							gcnew ObjectID(mouseOverObj->ID, 0));
+					}
+					
+					// drop it
 					else
-						ControllerUI::Amount::ShowValues(dataItem->ID, dataItem->Count);
+					{
+						// drop directly
+						if (!dataItem->IsStackable)
+							OgreClient::Singleton->SendReqDropMessage(gcnew ObjectID(dataItem->ID, 0));
+
+						// show amount input
+						else
+							ControllerUI::Amount::ShowValues(dataItem->ID, dataItem->Count);
+					}
 				}
+
 #if !VANILLA
 				// other inventory slot?
 				else if (wnd->getParent() == ControllerUI::Inventory::List)

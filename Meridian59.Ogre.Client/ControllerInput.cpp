@@ -188,7 +188,7 @@ namespace Meridian59 { namespace Ogre
 					// try parse an id out of name string
 					unsigned int objectid;
 					System::UInt32::TryParse(s->Substring(s->LastIndexOf('/') + 1), objectid);
-                          
+                       
 					if (objectid > 0)	
 					{
 						RoomObject^ obj = OgreClient::Singleton->Data->RoomObjects->GetItemByID(objectid);
@@ -352,6 +352,11 @@ namespace Meridian59 { namespace Ogre
 		int dx = arg.state.X.rel;
 		int dy = arg.state.Y.rel;
 		int dz = arg.state.Z.rel;
+		
+		if (dx == 0 && dy == 0 && dz == 0)
+			return true;
+
+		bool isAiming = false;
 
 		// update flag whether mouse is in window or not
 		IsMouseInWindow = (
@@ -386,102 +391,109 @@ namespace Meridian59 { namespace Ogre
 		// the cameranode
 		SceneNode* cameraNode = OgreClient::Singleton->CameraNode;
 
-		// exit conditions for aiming
+		// exit conditions for 'actual playing' e.g. with avatar set
 		if (OgreClient::Singleton->Data->IsWaiting || 
 			Avatar == nullptr ||                
             Avatar->SceneNode == nullptr ||
-			cameraNode == nullptr ||
-			isMouseWentDownOnUI)
+			cameraNode == nullptr)
 			return true;
 
-		// there is a small delay until aiming starts, to not shackle the
-		// camera with any short mouseclick
-		double dtRightButton = OgreClient::Singleton->GameTick->Current - tickMouseDownRight;
-		double dtLeftButton = OgreClient::Singleton->GameTick->Current - tickMouseDownLeft;
+		if (!isMouseWentDownOnUI)
+		{
+			// there is a small delay until aiming starts, to not shackle the
+			// camera with any short mouseclick
+			double dtRightButton = OgreClient::Singleton->GameTick->Current - tickMouseDownRight;
+			double dtLeftButton = OgreClient::Singleton->GameTick->Current - tickMouseDownLeft;
 
-		// right mousebutton (or both) pressed and dleay for mouseaim exceeded
-		if (IsRightMouseDown && dtRightButton > MOUSELOOKMINDELAY)
-		{				
-			if (dx != 0)					    
-			{
-				// stop immediately if we switched directions
-				if (::System::Math::Sign(dx) != ::System::Math::Sign(avatarYawDelta))
-					avatarYawDelta = 0.0f;
+			// right mousebutton (or both) pressed and dleay for mouseaim exceeded
+			if (IsRightMouseDown && dtRightButton > MOUSELOOKMINDELAY)
+			{				
+				if (dx != 0)					    
+				{
+					// stop immediately if we switched directions
+					if (::System::Math::Sign(dx) != ::System::Math::Sign(avatarYawDelta))
+						avatarYawDelta = 0.0f;
 
-				// set a new delta and stepsize
-				// this will be processed tick based
-				avatarYawDelta += MOUSELOOKSPEED * (float)OgreClient::Singleton->Config->MouseAimSpeed * (float)dx;
-				avatarYawStep = MOUSELOOKSTEPFACT * avatarYawDelta * ::System::Math::Max((float)OgreClient::Singleton->GameTick->Span, 1.0f);
+					// set a new delta and stepsize
+					// this will be processed tick based
+					avatarYawDelta += MOUSELOOKSPEED * (float)OgreClient::Singleton->Config->MouseAimSpeed * (float)dx;
+					avatarYawStep = MOUSELOOKSTEPFACT * avatarYawDelta * ::System::Math::Max((float)OgreClient::Singleton->GameTick->Span, 1.0f);
+
+					isAiming = true;
+				}
+
+				if (dy != 0)
+				{
+					// invert mouse y if enabled in config
+					if (OgreClient::Singleton->Config->InvertMouseY)
+						dy = -dy;
+
+					// stop immediately if we switched directions
+					if (::System::Math::Sign(dy) != ::System::Math::Sign(cameraPitchDelta))
+						cameraPitchDelta = 0.0f;
+
+					// set a new delta and stepsize
+					// this will be processed tick based
+					cameraPitchDelta += MOUSELOOKSPEED * (float)OgreClient::Singleton->Config->MouseAimSpeed * (float)dy;
+					cameraPitchStep = MOUSELOOKSTEPFACT * cameraPitchDelta * ::System::Math::Max((float)OgreClient::Singleton->GameTick->Span, 1.0f);
+
+					isAiming = true;
+				}
 			}
 
-			if (dy != 0)
-			{
-				// invert mouse y if enabled in config
-				if (OgreClient::Singleton->Config->InvertMouseY)
-					dy = -dy;
+			// left mousebutton pressed and delay for mouseaim exceeded
+			else if (IsLeftMouseDown && dtLeftButton > MOUSELOOKMINDELAY)
+			{                    
+				if (dx != 0)
+				{
+					// stop immediately if we switched directions
+					if (::System::Math::Sign(dx) != ::System::Math::Sign(cameraYawDelta))
+						cameraYawDelta = 0.0f;
 
-				// stop immediately if we switched directions
-				if (::System::Math::Sign(dy) != ::System::Math::Sign(cameraPitchDelta))
-					cameraPitchDelta = 0.0f;
+					// set a new delta and stepsize
+					// this will be processed tick based
+					cameraYawDelta += MOUSELOOKSPEED * (float)OgreClient::Singleton->Config->MouseAimSpeed * (float)dx;
+					cameraYawStep = MOUSELOOKSTEPFACT * cameraYawDelta * ::System::Math::Max((float)OgreClient::Singleton->GameTick->Span, 1.0f);
 
-				// set a new delta and stepsize
-				// this will be processed tick based
-				cameraPitchDelta += MOUSELOOKSPEED * (float)OgreClient::Singleton->Config->MouseAimSpeed * (float)dy;
-				cameraPitchStep = MOUSELOOKSTEPFACT * cameraPitchDelta * ::System::Math::Max((float)OgreClient::Singleton->GameTick->Span, 1.0f);
-			}
-		}
-
-		// left mousebutton pressed and delay for mouseaim exceeded
-		else if (IsLeftMouseDown && dtLeftButton > MOUSELOOKMINDELAY)
-		{                    
-			if (dx != 0)
-			{
-				// stop immediately if we switched directions
-				if (::System::Math::Sign(dx) != ::System::Math::Sign(cameraYawDelta))
-					cameraYawDelta = 0.0f;
-
-				// set a new delta and stepsize
-				// this will be processed tick based
-				cameraYawDelta += MOUSELOOKSPEED * (float)OgreClient::Singleton->Config->MouseAimSpeed * (float)dx;
-				cameraYawStep = MOUSELOOKSTEPFACT * cameraYawDelta * ::System::Math::Max((float)OgreClient::Singleton->GameTick->Span, 1.0f);
-			}
+					isAiming = true;
+				}
 	
-			if (dy != 0)
-			{	
-				// invert mouse y if enabled in config
-				if (OgreClient::Singleton->Config->InvertMouseY)
-					dy = -dy;
+				if (dy != 0)
+				{	
+					// invert mouse y if enabled in config
+					if (OgreClient::Singleton->Config->InvertMouseY)
+						dy = -dy;
 
-				// stop immediately if we switched directions
-				if (::System::Math::Sign(dy) != ::System::Math::Sign(cameraPitchDelta))
-					cameraPitchDelta = 0.0f;
+					// stop immediately if we switched directions
+					if (::System::Math::Sign(dy) != ::System::Math::Sign(cameraPitchDelta))
+						cameraPitchDelta = 0.0f;
 
+					// set a new delta and stepsize
+					// this will be processed tick based
+					cameraPitchDelta += MOUSELOOKSPEED * (float)OgreClient::Singleton->Config->MouseAimSpeed * (float)dy;
+					cameraPitchStep = MOUSELOOKSTEPFACT * cameraPitchDelta * ::System::Math::Max((float)OgreClient::Singleton->GameTick->Span, 1.0f);
+
+					isAiming = true;
+				}
+			}
+
+			// mousewheel / zoom
+			if (dz != 0 && ControllerUI::IgnoreTopControlForMouseInput)
+			{			
 				// set a new delta and stepsize
 				// this will be processed tick based
-				cameraPitchDelta += MOUSELOOKSPEED * (float)OgreClient::Singleton->Config->MouseAimSpeed * (float)dy;
-				cameraPitchStep = MOUSELOOKSTEPFACT * cameraPitchDelta * ::System::Math::Max((float)OgreClient::Singleton->GameTick->Span, 1.0f);
+				cameraZDelta += ZOOMSPEED * (float)dz;
+				cameraZStep = MOUSELOOKSTEPFACT * cameraZDelta * ::System::Math::Max((float)OgreClient::Singleton->GameTick->Span, 1.0f);
 			}
-		}
 
-		// mousewheel / zoom
-		if (dz != 0 && ControllerUI::IgnoreTopControlForMouseInput)
-		{			
-			// set a new delta and stepsize
-			// this will be processed tick based
-			cameraZDelta += ZOOMSPEED * (float)dz;
-			cameraZStep = MOUSELOOKSTEPFACT * cameraZDelta * ::System::Math::Max((float)OgreClient::Singleton->GameTick->Span, 1.0f);
+			// restore/fixed windows cursor position on mouse look										
+			if (IsAnyMouseDown)							
+				SetCursorPos(mouseDownWindowsPosition->x, mouseDownWindowsPosition->y);	
 		}
-
-		// restore/fixed windows cursor position on mouse look										
-		if (IsAnyMouseDown)							
-			SetCursorPos(mouseDownWindowsPosition->x, mouseDownWindowsPosition->y);	
-			
-		// perform mouseover on object
-		// if mouse is not on ui element and no button is down
-		if (ControllerUI::IgnoreTopControlForMouseInput && !IsLeftMouseDown && !IsRightMouseDown)		
-			PerformMouseOver(arg.state.X.abs, arg.state.Y.abs, false);												 
 		
-		   
+		if (!isAiming && ControllerUI::IgnoreTopControlForMouseInput)
+			PerformMouseOver(arg.state.X.abs, arg.state.Y.abs, false);												 
+
         return true;
     };
 
