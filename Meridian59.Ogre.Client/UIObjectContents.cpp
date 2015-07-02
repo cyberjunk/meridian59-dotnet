@@ -98,7 +98,15 @@ namespace Meridian59 { namespace Ogre
 		{
 			CEGUI::Window* icon		= (CEGUI::Window*)widget->getChildAtIdx(UI_OBJECTCONTENTS_CHILDINDEX_ICON);
 			CEGUI::Window* name		= (CEGUI::Window*)widget->getChildAtIdx(UI_OBJECTCONTENTS_CHILDINDEX_NAME);
-			CEGUI::Editbox* amount	= (CEGUI::Editbox*)widget->getChildAtIdx(UI_OBJECTCONTENTS_CHILDINDEX_AMOUNT);			
+			CEGUI::Editbox* amount	= (CEGUI::Editbox*)widget->getChildAtIdx(UI_OBJECTCONTENTS_CHILDINDEX_AMOUNT);
+
+			// NOTE: Currently server does not support specifying an amount in BP_REQ_GET
+			// So we can't use our amount here and deactivate it for now
+			amount->setEnabled(false);
+
+			// subscribe event to focusleave on textbox
+			amount->subscribeEvent(CEGUI::Editbox::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::ObjectContents::OnItemAmountDeactivated));
+			amount->subscribeEvent(CEGUI::Editbox::EventTextAccepted, CEGUI::Event::Subscriber(UICallbacks::ObjectContents::OnItemAmountDeactivated));
 		}
 
 		// insert widget in ui-list
@@ -198,6 +206,37 @@ namespace Meridian59 { namespace Ogre
 			// set new image on ui widget
 			icon->setProperty(UI_PROPNAME_IMAGE, *imageComposer->Image->TextureName);
 		}
+	};
+
+	bool UICallbacks::ObjectContents::OnItemAmountDeactivated(const CEGUI::EventArgs& e)
+	{
+		const CEGUI::WindowEventArgs& args = (CEGUI::MouseEventArgs&)e;
+		CEGUI::Editbox* box = (CEGUI::Editbox*)args.window;
+		CEGUI::ItemEntry* itemEntry = (CEGUI::ItemEntry*)box->getParent();
+		CEGUI::ItemListbox* list = ControllerUI::ObjectContents::List;
+
+		// get user value from box
+		CEGUI::String boxText = box->getText();
+
+		// revert empty input to 1
+		if (boxText == STRINGEMPTY)
+		{
+			boxText = "1";
+			box->setText(boxText);
+		}
+
+		// data models
+		ObjectBaseList<ObjectBase^>^ dataItems =
+			OgreClient::Singleton->Data->ObjectContents->Items;
+
+		// get index of clicked buff/widget in listbox
+		int index = (int)list->getItemIndex(itemEntry);
+
+		// found ?
+		if (dataItems->Count > index)
+			dataItems[index]->Count = ::CEGUI::PropertyHelper<unsigned int>::fromString(boxText);
+
+		return true;
 	};
 
 	bool UICallbacks::ObjectContents::OnItemClicked(const CEGUI::EventArgs& e)

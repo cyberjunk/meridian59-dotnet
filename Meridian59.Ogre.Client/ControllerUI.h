@@ -1584,6 +1584,7 @@ namespace Meridian59 { namespace Ogre
 		class ObjectContents
 		{
 		public:
+			static bool OnItemAmountDeactivated(const CEGUI::EventArgs& e);
 			static bool OnItemClicked(const CEGUI::EventArgs& e);
 			static bool OnGetClicked(const CEGUI::EventArgs& e);
 			static bool OnWindowClosed(const CEGUI::EventArgs& e);
