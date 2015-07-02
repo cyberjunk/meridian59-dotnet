@@ -151,7 +151,9 @@ namespace Meridian59 { namespace Ogre
 			dragger->setID(obj->ID);
 
 			if (obj->Count > 0)
-				imgButton->setText(CEGUI::PropertyHelper<unsigned int>::toString(obj->Count));				
+				imgButton->setText(CEGUI::PropertyHelper<unsigned int>::toString(obj->Count));
+
+			List->notifyScreenAreaChanged(true);
 		}
 	};
 
@@ -185,6 +187,8 @@ namespace Meridian59 { namespace Ogre
 
 				SwapImageComposers(i, i + 1);
 			}
+
+			List->notifyScreenAreaChanged(true);
 		}
 	};
 
