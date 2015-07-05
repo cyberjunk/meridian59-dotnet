@@ -35,8 +35,3 @@ You can "rotate" the object by using the angle slider or change the color palett
 6) Export / XML format
 ------------------
 Exports the frames of the BGF to separated BMP files and creates an additional metadata XML file.
-
-7) Contact
------------------
-Send comments & questions to:
-clint@meridian59-project.com
