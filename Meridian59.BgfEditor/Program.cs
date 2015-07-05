@@ -118,6 +118,10 @@ namespace Meridian59.BgfEditor
         /// <param name="Filename">Full path and filename of BGF or XML</param>
         public static void Load(string Filename)
         {
+            // stop animation playback
+            Program.IsPlaying = false;
+            MainForm.btnPlay.Image = Properties.Resources.Play;
+            
             if (File.Exists(Filename))
             {
                 string extension = Path.GetExtension(Filename);
@@ -133,6 +137,11 @@ namespace Meridian59.BgfEditor
                         CurrentFile.LoadXml(Filename);
                         break;
                 }
+
+                // set input controls in 'settings' window to values from file
+                SettingsForm.ShrinkFactor = CurrentFile.ShrinkFactor;
+                SettingsForm.Version = CurrentFile.Version;
+                SettingsForm.BgfName = CurrentFile.Name;
             }
         }
 
@@ -142,9 +151,10 @@ namespace Meridian59.BgfEditor
         /// <param name="Filename"></param>
         public static void Save(string Filename)
         {
+            // set values in file from input controls in 'settings' window
             CurrentFile.ShrinkFactor = SettingsForm.ShrinkFactor;
             CurrentFile.Version = SettingsForm.Version;
-            CurrentFile.Name = SettingsForm.Name;
+            CurrentFile.Name = SettingsForm.BgfName;
 
             string extension = Path.GetExtension(Filename);
 
@@ -166,6 +176,27 @@ namespace Meridian59.BgfEditor
         }
 
         /// <summary>
+        /// Creates a new blank bgf instance to work with
+        /// </summary>
+        public static void New()
+        {
+            // stop animation playback
+            Program.IsPlaying = false;
+            MainForm.btnPlay.Image = Properties.Resources.Play;
+                      
+            CurrentFile.Clear(true);
+
+            // set input controls in 'settings' window to values from blank file
+            SettingsForm.ShrinkFactor = CurrentFile.ShrinkFactor;
+            SettingsForm.Version = CurrentFile.Version;
+            SettingsForm.BgfName = CurrentFile.Name;
+
+            // unset current imageboxes
+            ShowFrame(true, null, MainForm.picFrameImage);
+            ShowFrame(true, null, MainForm.picAnimation);
+        }
+
+        /// <summary>
         /// Show a Bitmap in a picturebox
         /// </summary>
         /// <param name="Scale"></param>
@@ -173,51 +204,57 @@ namespace Meridian59.BgfEditor
         /// <param name="PictureBox"></param>
         public static void ShowFrame(bool Scale, Bitmap Bitmap, PictureBox PictureBox)
         {
-            if (Scale)
-            {
-                // scaling calculcations
-                int MainOverlayX = 0;
-                int MainOverlayY = 0;
-                float nPercentW = ((float)PictureBox.Width / (float)Bitmap.Width);
-                float nPercentH = ((float)PictureBox.Height / (float)Bitmap.Height);
+            if (Bitmap == null)
+                PictureBox.Image = null;
 
-                float MainOverlayScale;
-                if (nPercentH < nPercentW)
+            else
+            {
+                if (Scale)
                 {
-                    MainOverlayScale = nPercentH;
-                    MainOverlayX = System.Convert.ToInt16((PictureBox.Width -
-                                  (Bitmap.Width * MainOverlayScale)) / 2);
+                    // scaling calculcations
+                    int MainOverlayX = 0;
+                    int MainOverlayY = 0;
+                    float nPercentW = ((float)PictureBox.Width / (float)Bitmap.Width);
+                    float nPercentH = ((float)PictureBox.Height / (float)Bitmap.Height);
+
+                    float MainOverlayScale;
+                    if (nPercentH < nPercentW)
+                    {
+                        MainOverlayScale = nPercentH;
+                        MainOverlayX = System.Convert.ToInt16((PictureBox.Width -
+                                      (Bitmap.Width * MainOverlayScale)) / 2);
+                    }
+                    else
+                    {
+                        MainOverlayScale = nPercentW;
+                        MainOverlayY = System.Convert.ToInt16((PictureBox.Height -
+                                      (Bitmap.Height * MainOverlayScale)) / 2);
+                    }
+
+                    int destWidth = (int)(Bitmap.Width * MainOverlayScale);
+                    int destHeight = (int)(Bitmap.Height * MainOverlayScale);
+
+                    Bitmap bmp = new Bitmap(PictureBox.Width, PictureBox.Height);
+
+                    // get graphics for bitmap to draw on
+                    Graphics grPhoto = Graphics.FromImage(bmp);
+                    grPhoto.Clear(Color.Transparent);
+                    grPhoto.InterpolationMode = InterpolationMode.HighQualityBicubic;
+
+                    // draw mainbmp into target bitmap
+                    grPhoto.DrawImage(Bitmap,
+                        new System.Drawing.Rectangle(MainOverlayX, MainOverlayY, destWidth, destHeight),
+                        new System.Drawing.Rectangle(0, 0, Bitmap.Width, Bitmap.Height),
+                        GraphicsUnit.Pixel);
+
+                    grPhoto.Dispose();
+
+                    PictureBox.Image = (Image)bmp;
                 }
                 else
                 {
-                    MainOverlayScale = nPercentW;
-                    MainOverlayY = System.Convert.ToInt16((PictureBox.Height -
-                                  (Bitmap.Height * MainOverlayScale)) / 2);
+                    PictureBox.Image = Bitmap;
                 }
-
-                int destWidth = (int)(Bitmap.Width * MainOverlayScale);
-                int destHeight = (int)(Bitmap.Height * MainOverlayScale);
-
-                Bitmap bmp = new Bitmap(PictureBox.Width, PictureBox.Height);
-
-                // get graphics for bitmap to draw on
-                Graphics grPhoto = Graphics.FromImage(bmp);
-                grPhoto.Clear(Color.Transparent);
-                grPhoto.InterpolationMode = InterpolationMode.HighQualityBicubic;
-
-                // draw mainbmp into target bitmap
-                grPhoto.DrawImage(Bitmap,
-                    new System.Drawing.Rectangle(MainOverlayX, MainOverlayY, destWidth, destHeight),
-                    new System.Drawing.Rectangle(0, 0, Bitmap.Width, Bitmap.Height),
-                    GraphicsUnit.Pixel);
-
-                grPhoto.Dispose();
-
-                PictureBox.Image = (Image)bmp;
-            }
-            else
-            {
-                PictureBox.Image = Bitmap;
             }
         }
 

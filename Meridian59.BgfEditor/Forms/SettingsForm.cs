@@ -35,7 +35,7 @@ namespace Meridian59.BgfEditor
             }
         }
 
-        public string Name
+        public string BgfName
         {
             get { return txtName.Text; }
             set

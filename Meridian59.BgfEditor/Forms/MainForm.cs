@@ -445,7 +445,7 @@ namespace Meridian59.BgfEditor
 
         protected void OnMenuNewClick(object sender, EventArgs e)
         {
-            Program.CurrentFile.Clear(true);
+            Program.New();            
         }
 
         protected void OnMenuOpenClick(object sender, EventArgs e)

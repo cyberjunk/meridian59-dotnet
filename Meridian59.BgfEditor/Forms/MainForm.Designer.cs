@@ -1110,7 +1110,7 @@
             // cbPalette
             // 
             this.cbPalette.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbPalette.FormattingEnabled = true;
+            this.cbPalette.FormattingEnabled = true;            
             this.cbPalette.Location = new System.Drawing.Point(22, 244);
             this.cbPalette.Name = "cbPalette";
             this.cbPalette.Size = new System.Drawing.Size(164, 21);
@@ -1255,12 +1255,9 @@
         private System.Windows.Forms.NumericUpDown numInterval;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.GroupBox groupBox6;
-        private System.Windows.Forms.Button btnPlay;
-        private System.Windows.Forms.PictureBox picAnimation;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ToolStripMenuItem menuSetShrink;
         private System.Windows.Forms.GroupBox groupFrameImage;
-        private System.Windows.Forms.PictureBox picFrameImage;
         private System.Windows.Forms.ToolStripMenuItem menuConvertAllToV10;
         private System.Windows.Forms.ToolStripMenuItem menuConvertAllToV9;
         private System.Windows.Forms.TrackBar trackAngle;
@@ -1278,6 +1275,9 @@
         private System.Windows.Forms.ComboBox cbType;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox cbFinal;
+        public System.Windows.Forms.PictureBox picFrameImage;
+        public System.Windows.Forms.PictureBox picAnimation;
+        public System.Windows.Forms.Button btnPlay;
     }
 }
 
