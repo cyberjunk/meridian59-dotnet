@@ -260,6 +260,10 @@ namespace Meridian59.Data.Models
             // also there might be more than one iteration necessary as varibles may be nested into variable-strings
             fullString = String.Copy(resourceName);
 
+            // stringliterals (%q) will not be replaced immediately because
+            // they might contain %variables which would, but can't be resolved from message parameters
+            List<Tuple<string, int>> stringliterals = new List<Tuple<string, int>>();
+
             int index = HasVariable(fullString);
             while (index > -1)
             {
@@ -284,9 +288,9 @@ namespace Meridian59.Data.Models
                         Variables.Add(var2);
                         string s = (string)var2.Data;
 
-                        // remove the %q and insert the string
+                        // remove the %q, save string for insert later
                         fullString = fullString.Remove(index, 2);
-                        fullString = fullString.Insert(index, s);
+                        stringliterals.Add(new Tuple<string, int>(s, index));
                         break;
 
                     case STRINGRESOURCEFLAG:
@@ -316,6 +320,10 @@ namespace Meridian59.Data.Models
                 index = HasVariable(fullString);
             }
 
+            // now finally add the stringliterals
+            foreach(Tuple<string, int> stringliteral in stringliterals)           
+                fullString = fullString.Insert(stringliteral.Item2, stringliteral.Item1);
+            
             // extract and remove the inline styles (~B ...)
             Styles = ChatStyle.GetStyles(fullString, chatMessageType);
             fullString = ChatStyle.RemoveInlineStyles(fullString);
