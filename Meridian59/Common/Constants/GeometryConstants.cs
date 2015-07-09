@@ -65,7 +65,8 @@ namespace Meridian59.Common.Constants
         public const int LOG_FINENESS = 10;
       
         /// <summary>
-        /// Maximum height a player can step across a wall
+        /// Maximum height a player can step across a wall.
+        /// From legacy move.c MAX_STEP_HEIGHT.
         /// </summary>
         public const int MAXSTEPHEIGHT = 24 << 4;
 
