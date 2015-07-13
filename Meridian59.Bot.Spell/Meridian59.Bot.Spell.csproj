@@ -57,6 +57,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Tasks\BotTaskEat.cs" />
+    <Compile Include="Tasks\BotTaskBuyItem.cs" />
+    <Compile Include="Tasks\BotTaskMove.cs" />
+    <Compile Include="Tasks\BotTaskRecover.cs" />
     <Compile Include="Tasks\BotTaskSleep.cs" />
     <Compile Include="Tasks\BotTaskStand.cs" />
     <Compile Include="SpellBotClient.cs" />
@@ -68,11 +72,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tasks\BotTask.cs" />
     <Compile Include="Tasks\BotTaskSay.cs" />
+    <Compile Include="Tasks\BotTaskEquip.cs" />
+    <Compile Include="Tasks\BotTaskDiscard.cs" />
     <Compile Include="Tasks\Template.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="configuration.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="icon.ico" />
   </ItemGroup>

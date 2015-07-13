@@ -20,7 +20,7 @@
     CONNECTIONS:
       selectedindex: the 0-based entryindex to use from below
   -->
-  <connections selectedindex="2"> 
+  <connections selectedindex="0"> 
     <!-- 
       CONNECTION:
         name: just a name for this connection
@@ -33,79 +33,13 @@
         ignorelist: these players will be ignored
     -->
     <connection
-      name="101"
-      host="meridian101.meridian59.com"
-      port="5901"
-      useipv6="false"
-      stringdictionary="rsc0000-101.rsb"
-      username="user"
-      password=""
-      character="">
-      <ignorelist>
-        <ignore name="PathethicTroll0815" />
-      </ignorelist>
-    </connection>
-    <connection
-      name="102"
-      host="meridian102.meridian59.com"
-      port="5902"
-      useipv6="false"
-      stringdictionary="rsc0000-101.rsb"
-      username="user"
-      password=""
-      character="">
-      <ignorelist>
-        <ignore name="PathethicTroll0815" />
-      </ignorelist>
-    </connection>
-    <connection
       name="103"
       host="meridian103.openmeridian.org"
       port="5903"
       useipv6="false"
       stringdictionary="rsc0000-103.rsb"
-      username="user"
-      password=""
-      character="">
-      <ignorelist>
-        <ignore name="PathethicTroll0815" />
-      </ignorelist>
-    </connection>
-    <connection
-      name="104"
-      host="meridian104.openmeridian.org"
-      port="5904"
-      useipv6="false"
-      stringdictionary="rsc0000-104.rsb"
-      username="user"
-      password=""
-      character="">
-      <ignorelist>
-        <ignore name="PathethicTroll0815" />
-      </ignorelist>
-    </connection>
-    <connection
-      name="112"
-      host="arantis.org"
-      port="5912"
-      useipv6="false"
-      stringdictionary="rsc0000-112.rsb"
-      username="user"
-      password=""
-      character="">
-      <ignorelist>
-        <ignore name="PathethicTroll0815" />
-      </ignorelist>
-    </connection>
-    <connection
-      name="115"
-      host="proxy03.zyres.net"
-      port="5959"
-      useipv6="false"
-      stringdictionary="rsc0000-115.rsb"
-      username="user"
-      password=""
-      character="">
+      username="ACC_NAME"
+      password="ACC_PW">
       <ignorelist>
         <ignore name="PathethicTroll0815" />
       </ignorelist>
@@ -117,11 +51,8 @@
       useipv6="false"
       stringdictionary="rsc0000-git.rsb"
       username="user"
-      password=""
-      character="">
-      <ignorelist>
-        <ignore name="PathethicTroll0815" />
-      </ignorelist>
+      password="">
+      <ignorelist />
     </connection>
   </connections>
 
@@ -129,11 +60,13 @@
   
   <!-- 
     CONNECTION:
+      character: name of your character to log in
       majorverson: see client menu help/about
       minorversion: see client menu help/about
       logfile: the bot will log also to this file (cleaned at startup, "" to disable)
   -->
   <connection
+    character="CHAR_NAME"
     majorversion="80"
     minorversion="1"
     logfile="bot.log" />
@@ -153,7 +86,7 @@
       Set value of template to a valid template-name from below.
       The bot will execute this template.
   -->
-  <bot template="example">
+  <bot template="majorhealWithCircletAtFrisco">
 
     <!--
       TEMPLATES:    
@@ -169,29 +102,162 @@
         When the bottom is reached it starts from top again.
       
       TYPE:
-        1) rest     Start resting
-        2) stand    Stop resting
-        3) sleep    Sleep duration (secs) before go to next task
-        4) cast     Cast a spell with (name).
-                    optional (default ""): 
-                      on an object (target) in (room) or (inventory)
-                      when reached 99% (onmax) either (skip) the task or (quit) the bot.                   
-        5) use      Use/Unuse an item from inventory
-        6) say      Says the given text
-    
+        1) rest       Start resting                                                           <task type="rest"/>
+        2) stand      Stop resting                                                            <task type="stand"/>
+        3) sleep      Sleep duration (secs) before go to next task                            <task type="sleep" duration="1" />
+        4) cast       Cast a spell with (name).                                               <task type="cast" name="holy weapon" target="scimitar" in="inventory" cap="80" onmax="quit"/>
+                      optional (default ""): 
+                        on an object (target) in (room) or (inventory). target may be "self".
+                        when reached (cap)% or 99% (onmax) either (skip) task or (quit) bot.
+        5) multicast  Repeat a cast (amount )times and waits (duration) sec between casts     <task type="multicast" name="create weapon" target="" in="" amount="10" duration="20"/>      
+        6) use        Use/Unuse an item from inventory (toggles wearing items, see equip)     <task type="use" name="wheel of cheese"/>
+        7) say        Says the given text                                                     <task type="say" text="Purples 250 each Paddock .. are you serious?!"
+        8) equip      Equip an specific item by name (always from inventory)                  <task type="equip" name="circlet"/>
+        9) discard    Discard(unequip) an specific item by name                               <task type="discard" name="circlet"/>
+        10)loop       Open a loop to repeat a complex set of tasks                            <task type="loop" amount="10"/>
+           endloop    Closes the latest opened loop. Every loop has to be closed but            <task type=... Tasks that get looped 10 times.../>
+                      they can be stacked into each other. Between loop and endloop any         <task type=... Do this task do that task 10 .../>
+                      abaritary amount of other tasks can appear.                             <task type="endloop"/>
+        11)buy        Buy an specific item (name) from an npc (target) who is                 <task type="buy" name="mug of stout" target="Paddock" amount="2" invmax="5"/>  
+                      in range and sight. (invmax) sets the maximum to have in
+                      inventory which prevents buying failamounts when mana or virgor
+                      ran empty
+        12)recover    Rest until a stat reached its maximum (hp, mana, vigor)                 <task type="recover" stat="vig"/>
+        12)eat        Will eat named food or if name (feeding) eat as much food as possible   <task type="eat" name="feeding"/>
+                      from inventory until vigor is fully/nearly restored or stomach is full  <task type="eat" name="wheel of cheese"/>
       -->
-      <template name="example">
-        <task type="say" text="test" />
-        <task type="stand" />
-        <task type="cast" name="blink" target="" in="" onmax="skip" />
-        <task type="sleep" duration="15" />
-        <task type="cast" name="bless" target="Sha'Krune" in="room" onmax="" />
-        <task type="sleep" duration="15" />
-        <task type="cast" name="blink" target="" in="" onmax="quit" />
-        <task type="sleep" duration="15" />
-        <task type="rest" />
+
+      
+      <template name="majorhealWithCircletAtFrisco">
+          <task type="recover" stat="mana"/>
+          <task type="sleep" duration="1" />
+          <task type="recover" stat="vig"/>
+          <task type="stand"/>
+          <task type="buy" name="herb" target="frisconar" amount="35" invmax="40"/>
+          <task type="sleep" duration="1" />
+          
+          <task type="loop" amount="7"/>
+            <task type="equip" name="circlet"/>
+            <task type="sleep" duration="10" />
+            <task type="discard" name="circlet"/>
+            <task type="sleep" duration="1" />
+            <task type="cast" name="major heal" target="self" in="room" cap="99" onmax="quit"/>
+            <task type="sleep" duration="3" />
+          <task type="endloop"/>
+        
+      </template>
+
+      <template name="DeflectAtKocaVault">
+        <task type="recover" stat="mana"/>
+        <task type="recover" stat="vig"/>
+        <task type="eat" name="feeding"/>
+        <task type="buy" name="kriipa claw" target="Itzal cha'Nosak" amount="5"/>
+        <task type="buy" name="vial of solagh" target="Itzal cha'Nosak" amount="5"/>
+        <task type="multicast" name="deflect" target="self" in="room" cap="99" onmax="quit" amount="5" duration="10"/>
+      </template>
+
+      <!-- Empty -->
+      <template name="yourScript">
+        <!-- your commands -->
+      </template>  
+      
+      
+      
+      
+      <!-- Repeats blink and wait -->
+      <template name="exampleBlink">
+        <!-- Cast "blink" and wait 30sec for concentration to finish -->
+        <task type="cast" name="blink" target="" in=""/>
+        <task type="sleep" duration="30" />
+      </template>   
+      
+      
+      
+      
+      <!-- Repeats blink and wait until vigor is rested to max -->
+      <template name="exampleBlinkRest">
+        <!-- Cast "blink" and wait 30sec for concentration to finish -->
+        <task type="multicast" name="blink" target="" in="" amount="2" duration="5" onmax="quit"/>
+        <task type="recover" stat="mana"/>
+      </template>      
+      
+      
+      
+      
+      <!-- Repeats easy spell leveling, resting and eating -->
+      <template name="exampleLevelSpell">
+        <!-- Rest for 60seconds to recover vigor and mana -->
+        <task type="rest"/>
         <task type="sleep" duration="60" />
-        <task type="use" name="apple" />      
+        <!-- Eat one loaf of bread from your inventory to get virgor above resting threshold -->
+        <task type="use" name="loaf of bread"/>
+        <!-- Stand up to be able to cast -->
+        <task type="stand"/>
+        <!-- Cast "bless" on "JohnDoe" who stand in "room" for 15 times and wait 3 seconds between each cast(concentration). -->
+        <task type="multicast" name="bless" target="self" in="room" amount="1" duration="3"/>
+      </template>
+      
+      
+      
+      
+      <!-- Repeats buying 2 stout from Paddock to a maximum amount of 5 in inventory -->
+      <template name="examplebuy">
+        <task type="buy" name="mug of stout" target="Paddock" amount="2" invmax="5"/>
+        <task type="sleep" duration="100" />
+      </template>
+      
+      
+        
+
+      <!-- Repeats looped instructions -->
+      <template name="exampleloops">
+        <!-- Repeats loosing HP with a circlet and healing yourself  -->
+        <task type ="loop" amount="3"/>
+          <task type="stand"/>
+          <task type="sleep" duration="5" />
+          <task type="equip" name="circlet"/>
+          <task type="sleep" duration="10" />
+          <task type="discard" name="circlet"/>
+          <task type="sleep" duration="1" />
+          <task type="cast" name="major heal" target="self" in="room"/>
+          <task type="sleep" duration="15" />
+        <task type="endloop"/>
+
+        <!-- Repeats casting blink. Can be done with multicast in one line  -->
+        <task type="loop" amount="2"/>
+          <task type="cast" name="blink" target="self" in="room"/>
+          <task type="sleep" duration="25" />
+        <task type="endloop"/>
+      
+        <task type="multicast" name="blink" target="JohnDoe" in="room" amount="25" duration="25"/>
+      </template>
+      
+      
+      
+      
+      <!-- This template gets continously repeated until bot shuts downs -->
+      <template name="exampleLoopInLoop">
+        <!-- Stat to loop content 3 times [start loop 1] -->
+        <task type ="loop" amount="3"/>
+          <task type="stand"/>
+          <!-- Stat another loop inside loop 1 and loop its content 5 times. [start loop 2] -->  
+          <task type="loop" amount="5"/>
+              <!-- 5x eqip and unequip the circlet in your inventory -->
+              <task type="sleep" duration="5" />
+              <task type="equip" name="circlet"/>
+              <task type="sleep" duration="10" />
+              <task type="discard" name="circlet"/>
+          <!-- End loop 2. Until here all commands get repeated 5 times. In total 3times from outter and 5 times from inner loop = 15 repeats -->  
+          <task type="endloop"/>
+          <!-- This tasks get looped only 3 times -->
+          <task type="sleep" duration="1" />
+          <task type="cast" name="major heal" target="self" in="room"/>
+          <task type="sleep" duration="15" />
+        <!-- End loop 1. Tasks on loop1 got repeated 3 times. Tasks on loop2 level got repeated 3x5=15 times-->
+        <task type="endloop"/>        
+        <!-- Following tasks are not part of the loop and get executed once -->
+        <task type="rest"/>
+        <task type="sleep" duration="30" />
       </template>
       
     </templates>

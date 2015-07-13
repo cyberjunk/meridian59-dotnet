@@ -36,9 +36,17 @@ namespace Meridian59.Bot.Spell
         public const string XMLATTRIB_DURATION  = "duration";
         public const string XMLATTRIB_IN        = "in";
         public const string XMLATTRIB_ONMAX     = "onmax";
+        public const string XMLATTRIB_AMOUNT    = "amount";
+        public const string XMLATTRIB_INVMAX    = "invmax";
         public const string XMLATTRIB_TEMPLATE  = "template";
+        public const string XMLATTRIB_STAT      = "stat";
+        public const string XMLATTRIB_CAP       = "cap";
         public const string XMLVALUE_CAST       = "cast";
+        public const string XMLVALUE_EAT        = "eat";
         public const string XMLVALUE_USE        = "use";
+        public const string XMLVALUE_EQUIP      = "equip";
+        public const string XMLVALUE_DISCARD    = "discard";
+        public const string XMLVALUE_BUY        = "buy";
         public const string XMLVALUE_REST       = "rest";
         public const string XMLVALUE_STAND      = "stand";
         public const string XMLVALUE_SLEEP      = "sleep";
@@ -47,6 +55,18 @@ namespace Meridian59.Bot.Spell
         public const string XMLVALUE_INVENTORY  = "inventory";
         public const string XMLVALUE_QUIT       = "quit";
         public const string XMLVALUE_SKIP       = "skip";
+        public const string XMLVALUE_MULTICAST  = "multicast";
+        public const string XMLVALUE_STARTLOOP  = "loop";
+        public const string XMLVALUE_ENDLOOP    = "endloop";
+        public const string XMLVALUE_RECOVER    = "recover";
+
+        public const string XMLVALUE_MOVE       = "move";
+        public const string XMLATTRIB_DOOR      = "door";
+
+        //public const string XMLVALUE_SELNPC     = "selectnpc";
+        //public const string XMLVALUE_SENDBUY    = "sendbuy";
+        //public const string XMLVALUE_BUYITEM    = "buyitem";
+
         #endregion
 
         /// <summary>
@@ -148,57 +168,212 @@ namespace Meridian59.Bot.Spell
             Template template = new Template();
             template.Name = Reader[XMLATTRIB_NAME];
 
+            int loopOpenCnt = 0;
+            LinkedList<uint> loopAmountStack = new LinkedList<uint>();
+            LinkedList<LinkedList<BotTask>> dynTaskListStack = new LinkedList<LinkedList<BotTask>>();
+
             string type;
             string name;
             string target;
             string text;
             string where;
             string onmax;
+            string stat;
+            uint cap;
+            uint amount;
             uint duration;
-            
+            uint maxamount;
+
+            string door;
+
+            // Parse the BotSkript to Template
             if (Reader.ReadToDescendant(XMLTAG_TASK))
             {
                 do
                 {
                     type = Reader[XMLATTRIB_TYPE].ToLower();
 
+                    #region switch
                     switch (type)
                     {
+                        case XMLVALUE_STARTLOOP:
+                            ++loopOpenCnt;
+                            loopAmountStack.AddLast(Convert.ToUInt32(Reader[XMLATTRIB_AMOUNT]));
+                            dynTaskListStack.AddLast(new LinkedList<BotTask>());
+                            break;
+
+                        case XMLVALUE_ENDLOOP:
+                            if (loopOpenCnt > 0)
+                            {
+                                for (int i = 0; i < loopAmountStack.Last.Value ; ++i)
+                                    template.Tasks.AddRange(dynTaskListStack.Last.Value);
+                                --loopOpenCnt;
+                                loopAmountStack.RemoveLast();
+                                dynTaskListStack.RemoveLast();
+                            }
+                            break;
+
                         case XMLVALUE_CAST:
                             name = Reader[XMLATTRIB_NAME];
                             target = Reader[XMLATTRIB_TARGET];
                             where = Reader[XMLATTRIB_IN];
                             onmax = Reader[XMLATTRIB_ONMAX];
+                            cap = Convert.ToUInt32(Reader[XMLATTRIB_CAP]);
 
-                            template.Tasks.Add(new BotTaskCast(name, target, where, onmax));
+                            if (loopOpenCnt > 0)
+                                dynTaskListStack.Last.Value.AddLast(new BotTaskCast(name, target, where, onmax, cap));
+                            else
+                                template.Tasks.Add(new BotTaskCast(name, target, where, onmax, cap));
+                            break;
+
+                        case XMLVALUE_BUY:
+                            name = Reader[XMLATTRIB_NAME];
+                            target = Reader[XMLATTRIB_TARGET];
+                            amount = Convert.ToUInt32(Reader[XMLATTRIB_AMOUNT]);
+                            maxamount = Convert.ToUInt32(Reader[XMLATTRIB_INVMAX]);
+
+                            if (loopOpenCnt > 0)
+                            {
+                                dynTaskListStack.Last.Value.AddLast(new BotTaskSelectNPC(target));
+                                dynTaskListStack.Last.Value.AddLast(new BotTaskSleep(GameTick.MSINSECOND));
+                                dynTaskListStack.Last.Value.AddLast(new BotTaskSendBuy());
+                                dynTaskListStack.Last.Value.AddLast(new BotTaskSleep(GameTick.MSINSECOND));
+                                dynTaskListStack.Last.Value.AddLast(new BotTaskBuyItem(name, amount, maxamount));
+                                dynTaskListStack.Last.Value.AddLast(new BotTaskSleep(GameTick.MSINSECOND));
+                            }
+                            else
+                            {
+                                template.Tasks.Add(new BotTaskSelectNPC(target));
+                                template.Tasks.Add(new BotTaskSleep(GameTick.MSINSECOND));
+                                template.Tasks.Add(new BotTaskSendBuy());
+                                template.Tasks.Add(new BotTaskSleep(GameTick.MSINSECOND));
+                                template.Tasks.Add(new BotTaskBuyItem(name, amount, maxamount));
+                                template.Tasks.Add(new BotTaskSleep(GameTick.MSINSECOND));
+                            }
+                            break;
+
+                        case XMLVALUE_MULTICAST:
+                            name = Reader[XMLATTRIB_NAME];
+                            target = Reader[XMLATTRIB_TARGET];
+                            where = Reader[XMLATTRIB_IN];
+                            onmax = Reader[XMLATTRIB_ONMAX];
+                            cap = Convert.ToUInt32(Reader[XMLATTRIB_CAP]);
+                            amount = Convert.ToUInt32(Reader[XMLATTRIB_AMOUNT]);
+                            duration = GameTick.MSINSECOND * Convert.ToUInt32(Reader[XMLATTRIB_DURATION]);
+
+                            if (loopOpenCnt > 0)
+                                for (int i = 0; i < amount; ++i)
+                                {
+                                    dynTaskListStack.Last.Value.AddLast(new BotTaskCast(name, target, where, onmax, cap));
+                                    dynTaskListStack.Last.Value.AddLast(new BotTaskSleep(duration));
+                                }
+                            else
+                                for (int i = 0; i < amount; ++i)
+                                {
+                                    template.Tasks.Add(new BotTaskCast(name, target, where, onmax, cap));
+                                    template.Tasks.Add(new BotTaskSleep(duration));
+                                }
+                            break;
+
+                        case XMLVALUE_EAT:
+                            name = Reader[XMLATTRIB_NAME];
+                            if (loopOpenCnt > 0)
+                                dynTaskListStack.Last.Value.AddLast(new BotTaskEat(name));
+                            else
+                                template.Tasks.Add(new BotTaskEat(name));
                             break;
 
                         case XMLVALUE_USE:
                             name = Reader[XMLATTRIB_NAME];
-                            template.Tasks.Add(new BotTaskUse(name));
+                            if (loopOpenCnt > 0)
+                                dynTaskListStack.Last.Value.AddLast(new BotTaskUse(name));
+                            else
+                                template.Tasks.Add(new BotTaskUse(name));
+                            break;
+
+                        case XMLVALUE_EQUIP:
+                            name = Reader[XMLATTRIB_NAME];
+                            if (loopOpenCnt > 0)
+                                dynTaskListStack.Last.Value.AddLast(new BotTaskEquip(name));
+                            else
+                                template.Tasks.Add(new BotTaskEquip(name));
+                            break;
+
+                        case XMLVALUE_DISCARD:
+                            name = Reader[XMLATTRIB_NAME];
+                            if (loopOpenCnt > 0)
+                                dynTaskListStack.Last.Value.AddLast(new BotTaskDiscard(name));
+                            else
+                                template.Tasks.Add(new BotTaskDiscard(name));
                             break;
 
                         case XMLVALUE_REST:
-                            template.Tasks.Add(new BotTaskRest());
+                            if (loopOpenCnt > 0)
+                                dynTaskListStack.Last.Value.AddLast(new BotTaskRest());
+                            else
+                                template.Tasks.Add(new BotTaskRest());
+                            break;
+
+                        case XMLVALUE_RECOVER:
+                            stat = Reader[XMLATTRIB_STAT];
+                            if (loopOpenCnt > 0)
+                                dynTaskListStack.Last.Value.AddLast(new BotTaskRecover(stat));
+                            else
+                                template.Tasks.Add(new BotTaskRecover(stat));
                             break;
 
                         case XMLVALUE_STAND:
-                            template.Tasks.Add(new BotTaskStand());
+                            if (loopOpenCnt > 0)
+                                dynTaskListStack.Last.Value.AddLast(new BotTaskStand());
+                            else
+                                template.Tasks.Add(new BotTaskStand());
                             break;
 
                         case XMLVALUE_SLEEP:
                             duration = GameTick.MSINSECOND * Convert.ToUInt32(Reader[XMLATTRIB_DURATION]);
-                            template.Tasks.Add(new BotTaskSleep(duration));
+                            if (loopOpenCnt > 0)
+                                dynTaskListStack.Last.Value.AddLast(new BotTaskSleep(duration));
+                            else
+                                template.Tasks.Add(new BotTaskSleep(duration));
                             break;
 
                         case XMLVALUE_SAY:
                             text = Reader[XMLATTRIB_TEXT];
-                            template.Tasks.Add(new BotTaskSay(text));
+                            if (loopOpenCnt > 0)
+                                dynTaskListStack.Last.Value.AddLast(new BotTaskSay(text));
+                            else
+                                template.Tasks.Add(new BotTaskSay(text));
                             break;
+
+                        //case XMLVALUE_MOVE :
+                        //    door = Reader[XMLATTRIB_DOOR];
+                        //    template.Tasks.Add(new BotTaskMove(door));
+                        //    template.Tasks.Add(new BotTaskSleep(GameTick.MSINSECOND * 20));
+                        //    break;
+
+                        //case XMLVALUE_SELNPC:
+                        //    name = Reader[XMLATTRIB_NAME];
+                        //    template.Tasks.Add(new BotTaskSelectNPC(name));
+                        //    break;
+
+                        //case XMLVALUE_SENDBUY:
+                        //    template.Tasks.Add(new BotTaskSendBuy());
+                        //    break;
+
+                        //case XMLVALUE_BUYITEM:
+                        //    name = Reader[XMLATTRIB_NAME];
+                        //    amount = Convert.ToUInt32(Reader[XMLATTRIB_AMOUNT]);
+                        //    template.Tasks.Add(new BotTaskBuyItem(name, amount));
+                        //    break;
                     }
+                    #endregion
                 }
                 while (Reader.ReadToNextSibling(XMLTAG_TASK));
+
             }
+
+            if (loopOpenCnt != 0)
+                throw new Exception("Template contains illegal loop structure!");
 
             return template;
         }
