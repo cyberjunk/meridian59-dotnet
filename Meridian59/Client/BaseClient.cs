@@ -2371,7 +2371,8 @@ namespace Meridian59.Client
         {
             // no movements when resting or paralyzed
             if (!Data.IsResting &&
-                !Data.Effects.Paralyze.IsActive)
+                !Data.Effects.Paralyze.IsActive &&
+                CurrentRoom != null)
             {
                 // slow down movements to walkspeed if not enough vigor
                 if (Data.VigorPoints < StatNumsValues.LOWVIGOR && Speed > (byte)MovementSpeed.Walk)
