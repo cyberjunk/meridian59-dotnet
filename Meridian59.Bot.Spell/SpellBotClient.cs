@@ -182,62 +182,64 @@ namespace Meridian59.Bot.Spell
         /// </summary>
         protected bool ProcessIsStatRecovered(string stat)
         {
-            int current = 0, max = 0;
+            StatNumeric statData = null;
+            bool recoverActive = false;
 
             switch(stat)
             {
                 case "HP":
                     {
-                        current = Data.AvatarCondition.GetItemByNum(1).ValueCurrent;
-                        max = Data.AvatarCondition.GetItemByNum(1).ValueMaximum;
-                        recoveringHp = (current >= max) ? false : true;
-                        Log("Log", "Recovery status HP: " + (int)((float)current / (float)max * 100.0) + "%");
+                        statData = Data.AvatarCondition.GetItemByNum(StatNums.HITPOINTS);
+                        if (statData == null) return false; // false for now to prevent resting being stopped by server save, if creates deadlock then change to true. 
+                        recoverActive = recoveringHp = (statData.ValueCurrent < statData.ValueMaximum);
+                        Log("Log", "Recovery status HP: " + (int)((float)statData.ValueCurrent / (float)statData.ValueMaximum * 100.0) + "%");
                         break;
                     }
                 case "MP":
                     {
-                        current = Data.AvatarCondition.GetItemByNum(2).ValueCurrent;
-                        max = Data.AvatarCondition.GetItemByNum(2).ValueMaximum;
-                        recoveringMp = (current >= max) ? false : true;
-                        Log("Log", "Recovery status MP: " + (int)((float)current / (float)max * 100.0) + "%");
+                        statData = Data.AvatarCondition.GetItemByNum(StatNums.MANA);
+                        if (statData == null) return false;
+                        recoverActive = recoveringMp = (statData.ValueCurrent < statData.ValueMaximum);
+                        Log("Log", "Recovery status MP: " + (int)((float)statData.ValueCurrent / (float)statData.ValueMaximum * 100.0) + "%");
                         break;
                     }
                 case "VIG":
                     {
-                        current = Data.AvatarCondition.GetItemByNum(3).ValueCurrent;
-                        
+                        statData = Data.AvatarCondition.GetItemByNum(StatNums.VIGOR);
+                        if (statData == null) return false;
+
+                        int current = statData.ValueCurrent;
+
+                        //if (Data.AvatarSkills. != null && Data.AvatarSkills.GetItemsByPrefix("second"))
+
                         SkillList tl = Data.AvatarSkills;
                         StatList[] sl = tl.ToArray();
 
-                        max = 80; // default
-
+                        int max = StatNumsValues.MAXRESTEDVIGOR; // default
                         uint secondWindLevel = 0;
                         for (uint i = 0; i < sl.Length; ++i)
                             if (sl[i].ResourceName.Equals("second wind"))
                             {
                                 secondWindLevel = sl[i].SkillPoints;
                                 //Log("Log", "Detected Secondwind at Level: " + secondWindLevel);
-                                max = 80 + (int)((secondWindLevel+1) / 5);
+                                max = StatNumsValues.MAXRESTEDVIGOR + (int)((secondWindLevel + 1) / 5);
                             }
-                        
-                        recoveringVig = (current >= max) ? false : true;
-                        Log("Log", "Recovery status VIG: " + (int)((float)current/(float)max*100.0) + "%");
+
+                        recoverActive = recoveringVig = (current < max);
+                        Log("Log", "Recovery status VIG: " + (int)((float)current/(float)max * 100.0) + "%");
                         break;
                     }
                 default: Log("ERROR", "Unknown stat: " + stat); DoStand(new BotTaskStand()); return true;
             }
 
-            if (current >= max)
+            if (!recoverActive)
             {
                 Log("Log", "... Recovery of "+ stat +" finished!");
-                if (!recoveringHp && !recoveringMp && !recoveringVig)
-                {
-                    DoStand(new BotTaskStand());
-                    tickSleepUntil = GameTick.Current + (Common.GameTick.MSINSECOND * 10);
-                }
+                DoStand(new BotTaskStand());
+                tickSleepUntil = GameTick.Current + (Common.GameTick.MSINSECOND * 10);
             }
 
-            return (current >= max);
+            return (!recoverActive);
         }
 
         /// <summary>
@@ -254,11 +256,13 @@ namespace Meridian59.Bot.Spell
                 Data.AvatarSpells.Count > 0 &&
                 GameTick.Current > tickSleepUntil)
             {
-                //// Emergency log
-                //if (Data.HitPoints < (Data.AvatarCondition.GetItemByNum(1).ValueMaximum / 3))
-                //{
-                //    DoCast(new BotTaskCast("phase", "", "", "", 100));
-                //}
+                //#if !VANILLA
+                    //// Emergency log
+                    //if (Data.HitPoints < (Data.AvatarCondition.GetItemByNum(1).ValueMaximum / 3))
+                    //{
+                    //    DoCast(new BotTaskCast("phase", "", "", "", 100));
+                    //}
+                //#endif
 
                 bool waitForRecover = false;
                 if (recoveringHp)
@@ -373,15 +377,15 @@ namespace Meridian59.Bot.Spell
                 case "hitpoint":
                 case "lp":
                 case "lebenspunkte":
-                case "hitpoints": if (Data.HitPoints >= Data.AvatarCondition.GetItemByNum(1).ValueMaximum) return; recoveringHp = true; break;
+                case "hitpoints": if (Data.HitPoints >= Data.AvatarCondition.GetItemByNum(StatNums.HITPOINTS).ValueMaximum) return; recoveringHp = true; break;
                 case "mp":
                 case "mps":
                 case "manapoints":
-                case "mana": if (Data.ManaPoints >= Data.AvatarCondition.GetItemByNum(2).ValueMaximum) return; recoveringMp = true; break;
+                case "mana": if (Data.ManaPoints >= Data.AvatarCondition.GetItemByNum(StatNums.MANA).ValueMaximum) return; recoveringMp = true; break;
                 case "vig":
                 case "vigor":
                 case "ausdauer":
-                case "stamina": if (Data.VigorPoints > 100) return; recoveringVig = true; break;
+                case "stamina": if (Data.VigorPoints > StatNumsValues.MAXRESTEDVIGORSECWIND) return; recoveringVig = true; break;
             }
             
             // request to rest
@@ -424,6 +428,12 @@ namespace Meridian59.Bot.Spell
         {
             SpellObject spellObject = null;
             StatList spellStat = null;
+
+            if (Data.AvatarObject == null || Data.SpellObjects == null )
+            {
+                Log("WARN", "Can't execute task 'cast'. " + Task.Where + ". Saver is maybe saving or you have no spells.");
+                return;
+            }
 
             // test for selfcast
             if (Task.Target.ToLower().Equals("self"))
@@ -557,7 +567,7 @@ namespace Meridian59.Bot.Spell
                 }
 
                 // If message was to full to eat try to eat a small food item
-                if (Data.ChatMessages.LastAddedItem.FullString.ToLower().Equals("you are too full to eat."))
+                if (Data.ChatMessages.LastAddedItem.FullString.ToLower().Equals(ChatSubStrings.FULL))
                 {
                     InventoryObject tinyEat = null;
                     foreach (string key in foodList.Keys)
@@ -635,7 +645,7 @@ namespace Meridian59.Bot.Spell
 
                 // if food is known internally test if useage would be waste
                 if(foodList.ContainsKey(foodObject.Name))
-                    if((200 - Data.VigorPoints) < foodList[foodObject.Name] )
+                    if((StatNumsValues.MAXVIGOR - Data.VigorPoints) < foodList[foodObject.Name] )
                     {
                         Log("Log", "Skipped eat "+Task.Name+" because it would be waste!");
                         return;
@@ -688,7 +698,7 @@ namespace Meridian59.Bot.Spell
                 Data.InventoryObjects.GetItemsByName(Task.Name, false);
 
             // item not found
-            if (foundItems == null)
+            if (foundItems.Count == 0)
             {
                 // log
                 Log("WARN", "Cant execute task 'discard'. Item " + Task.Name + " not found in inventory.");
@@ -719,30 +729,19 @@ namespace Meridian59.Bot.Spell
         protected void DoEquip(BotTaskEquip Task)
         {
             // try to get the item from the inventory
-                ObjectBaseList<InventoryObject> foundItems = 
-                    Data.InventoryObjects.GetItemsByName(Task.Name, false);
+            InventoryObject foundItem = Data.InventoryObjects.GetItemByName(Task.Name, false);
 
             // item not found
-            if (foundItems == null)
+            if (foundItem == null)
             {
-                // log
                 Log("WARN", "Cant execute task 'equip'. Item " + Task.Name + " not found in inventory.");
-
                 return;
             }
 
-            // send requse
-            foreach (InventoryObject inventoryObject in foundItems)
-                if (inventoryObject.IsInUse)
-                {
-                    Log("BOT", "Item " + inventoryObject.Name + " is already equiped!");
-                    return;
-                }
-
-            SendReqUseMessage(foundItems[0].ID);
+            SendReqUseMessage(foundItem.ID);
 
             // log
-            Log("BOT", "Executed task 'equip' " + foundItems[0].Name);
+            Log("BOT", "Executed task 'equip' " + foundItem.Name);
         }
 
         /// <summary>
@@ -789,22 +788,7 @@ namespace Meridian59.Bot.Spell
 
         protected void DoBuyItem(BotTaskBuyItem Task)
         {
-            ObjectBaseList<TradeOfferObject> buyItems = Data.Buy.Items;
-
-            if (buyItems.Count < 1)
-            {
-                Log("ERROR", "Failed to buy item: Item unknown"); 
-                return;
-            }
-
-            TradeOfferObject targetItem = null;
-
-            foreach (TradeOfferObject itemOffer in buyItems)
-            {
-                //Log("BOT", "For sale: " + itemOffer.Name);
-                if (itemOffer.Name == Task.Name)
-                    targetItem = itemOffer;
-            }
+            TradeOfferObject targetItem = Data.Buy.Items.GetItemByName(Task.Name);
 
             // Find the item in offer
             if (targetItem == null)
@@ -847,6 +831,11 @@ namespace Meridian59.Bot.Spell
 
             if (finalAmount > 0)
             {
+                if (Data.Buy.TradePartner != null)
+                {
+                    Log("WARN", "Lost trade partner, skipping buy! Server is maybe saving!");
+                    return;
+                }
                 // Buy the maximum or desired amount
                 targetItem.Count = finalAmount;
 

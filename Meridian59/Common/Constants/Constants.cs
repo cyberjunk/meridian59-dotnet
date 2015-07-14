@@ -73,6 +73,8 @@ namespace Meridian59.Common.Constants
     public static class StatNumsValues
     {
         public const int LOWVIGOR = 10;
+        public const int MAXRESTEDVIGOR = 80;
+        public const int MAXRESTEDVIGORSECWIND = 100;
         public const int MAXVIGOR = 200;
     }
 
