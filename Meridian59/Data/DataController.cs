@@ -654,6 +654,47 @@ namespace Meridian59.Data
         }
 
         /// <summary>
+        /// Returns the delta between your maximum hitpoints and your current hitpoints or 0 if not known.
+        /// So this tells you how much you can heal.
+        /// </summary>
+        public int Injury
+        {
+            get
+            {
+                StatNumeric stat = AvatarCondition.GetItemByNum(StatNums.HITPOINTS);
+
+                if (stat != null)
+
+                    // note: the real maximum value of hitpoints you can heal/got is saved in ValueMaximum
+                    // the RenderMaximum refers to 100 by default
+                    return Math.Max(0, stat.ValueMaximum - stat.ValueCurrent);
+
+                else
+                    return 0;
+            }
+        }
+
+        /// <summary>
+        /// Returns the delta between your maximum manapoints and your current manapoints or 0 if not known.
+        /// </summary>
+        public int ManaMissing
+        {
+            get
+            {
+                StatNumeric stat = AvatarCondition.GetItemByNum(StatNums.MANA);
+
+                if (stat != null)
+
+                    // note: the real maximum value of manapoints you can get is saved in ValueMaximum
+                    // the RenderMaximum refers to 100 by default
+                    return Math.Max(0, stat.ValueMaximum - stat.ValueCurrent);
+
+                else
+                    return 0;
+            }
+        }
+
+        /// <summary>
         /// The active actionbuttons / shortcuts.
         /// </summary>
         public ActionButtonList ActionButtons { get; protected set; }
