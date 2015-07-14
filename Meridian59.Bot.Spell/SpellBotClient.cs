@@ -801,7 +801,7 @@ namespace Meridian59.Bot.Spell
 
             // Cap to maxamount
             InventoryObject existingStock = Data.InventoryObjects.GetItemByName(targetItem.Name, false);
-            if (existingStock.Name.Equals(targetItem.Name))
+            if (existingStock != null && existingStock.Name.Equals(targetItem.Name))
             {
                 if (existingStock.Count > Task.MaxAmount)
                 {
