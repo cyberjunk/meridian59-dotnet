@@ -614,6 +614,46 @@ namespace Meridian59.Data
         }
 
         /// <summary>
+        /// Returns the delta between maximum vigor (usually 200) and your current vigor or 0 if not known.
+        /// </summary>
+        public int Hunger
+        {
+            get
+            {
+                StatNumeric stat = AvatarCondition.GetItemByNum(StatNums.VIGOR);
+
+                if (stat != null)
+
+                    // note: the absolute maximum value for vigor is saved in ValueRenderMax
+                    // usually 200
+                    return Math.Max(0, stat.ValueRenderMax - stat.ValueCurrent);
+
+                else
+                    return 0;
+            }
+        }
+
+        /// <summary>
+        /// Returns the delta between maximum vigor you can get by resting and your current vigor or 0 if not known.
+        /// </summary>
+        public int Fatigue
+        {
+            get
+            {
+                StatNumeric stat = AvatarCondition.GetItemByNum(StatNums.VIGOR);
+
+                if (stat != null)
+
+                    // note: the maximum value for vigor you get by only resting is saved in ValueMaximum
+                    // usually 80-100 based on second wind
+                    return Math.Max(0, stat.ValueMaximum - stat.ValueCurrent);
+
+                else
+                    return 0;
+            }
+        }
+
+        /// <summary>
         /// The active actionbuttons / shortcuts.
         /// </summary>
         public ActionButtonList ActionButtons { get; protected set; }
