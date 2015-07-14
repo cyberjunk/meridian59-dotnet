@@ -15,6 +15,7 @@
 */
 
 using Meridian59.Common.Enums;
+using System.Collections.Generic;
 
 namespace Meridian59.Common.Constants
 {
@@ -121,17 +122,63 @@ namespace Meridian59.Common.Constants
             /// </summary>
             public static class Food
             {
-                public const string CHOCOLATEMINT   = "chocolate mint";
-                public const string INKYCAPMUSHROOM = "Inky-cap mushroom";
-                public const string WHEELOFCHEESE   = "wheel of cheese";
+                public const string CHOCOLATEMINT       = "chocolate mint";
+                public const string INKYCAPMUSHROOM     = "Inky-cap mushroom";
+                public const string WHEELOFCHEESE       = "wheel of cheese";
+                public const string LOAFOFBREAD         = "loaf of bread";
+                public const string MUGOFSTOUT          = "mug of stout";
+                public const string WATERSKIN           = "water skin";
+                public const string GOBLETOFWINE        = "goblet of wine";
+                public const string GOBLETOFALE         = "goblet of Ale";
+                public const string BUNCHOFGRAPES       = "bunch of grapes";
+                public const string EDIBLEMUSHROOM      = "edible mushroom";
+                public const string MEATPIE             = "meat pie";
+                public const string COPPERPEKONCHMUGS   = "copper pekonch mugs";
+                public const string BOWLOFSOUP          = "bowl of soup";
+                public const string BOWLOFSTEW          = "bowl of stew";
+                public const string FORTUNECOOKIE       = "fortune cookie";
+                public const string SLICEOFPORK         = "slice of pork";
+                public const string TURKEYLEG           = "turkey leg";
+                public const string DRUMSTICK           = "drumstick";
+                public const string SPIDEREYE           = "spider eye";
+                public const string APPLE               = "apple";
 
                 public static bool Is(string Value)
                 {
                     return (Value != null) && (
                         string.Equals(Value, CHOCOLATEMINT) ||
                         string.Equals(Value, INKYCAPMUSHROOM) ||
-                        string.Equals(Value, WHEELOFCHEESE));
+                        string.Equals(Value, WHEELOFCHEESE) ||
+                        string.Equals(Value, LOAFOFBREAD) ||
+                        string.Equals(Value, MUGOFSTOUT) ||
+                        string.Equals(Value, WATERSKIN) ||
+                        string.Equals(Value, GOBLETOFWINE) ||
+                        string.Equals(Value, GOBLETOFALE) ||
+                        string.Equals(Value, BUNCHOFGRAPES) ||
+                        string.Equals(Value, EDIBLEMUSHROOM) ||
+                        string.Equals(Value, MEATPIE) ||
+                        string.Equals(Value, COPPERPEKONCHMUGS) ||
+                        string.Equals(Value, BOWLOFSOUP) ||
+                        string.Equals(Value, BOWLOFSTEW) ||
+                        string.Equals(Value, FORTUNECOOKIE) ||
+                        string.Equals(Value, SLICEOFPORK) ||
+                        string.Equals(Value, TURKEYLEG) ||
+                        string.Equals(Value, DRUMSTICK) ||
+                        string.Equals(Value, SPIDEREYE) ||
+                        string.Equals(Value, APPLE));
                 }
+
+                /// <summary>
+                /// Lookup nutrition / gain in vigor from here. Do not edit at runtime.
+                /// </summary>
+                public static readonly Dictionary<string, byte> NUTRITIONS = new Dictionary<string, byte>() {
+                    {CHOCOLATEMINT,5},      {INKYCAPMUSHROOM,50},   {WHEELOFCHEESE,30},
+                    {LOAFOFBREAD,20},       {MUGOFSTOUT,6},         {WATERSKIN,3},       
+                    {GOBLETOFWINE,6},       {GOBLETOFALE,3},        {BUNCHOFGRAPES,7},  
+                    {EDIBLEMUSHROOM,5},     {MEATPIE,30},           {COPPERPEKONCHMUGS,3},
+                    {BOWLOFSOUP,9},         {BOWLOFSTEW,15},        {FORTUNECOOKIE,1}, 
+                    {SLICEOFPORK,9},        {TURKEYLEG,15},         {DRUMSTICK,9},
+                    {SPIDEREYE,9},          {APPLE,10},             };               
             }
 
             /// <summary>
@@ -191,11 +238,13 @@ namespace Meridian59.Common.Constants
             public static class Others
             {
                 public const string GNARLEDSTAFF = "gnarled staff";
+                public const string SHILLING = "shilling";
 
                 public static bool Is(string Value)
                 {
                     return (Value != null) && (
-                        string.Equals(Value, GNARLEDSTAFF));
+                        string.Equals(Value, GNARLEDSTAFF) ||
+                        string.Equals(Value, SHILLING));
                 }
             }
         }
