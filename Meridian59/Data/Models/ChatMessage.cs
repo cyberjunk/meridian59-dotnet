@@ -30,12 +30,14 @@ namespace Meridian59.Data.Models
     public class ChatMessage : IByteSerializableFast, INotifyPropertyChanged, IClearable
     {
         #region Constants
-        public const char VARIABLEFLAG       = '%';
-        public const char INTEGERFLAG        = 'i';
-        public const char INTEGERFLAG2       = 'd'; // might be decimal one day
-        public const char STRINGRESOURCEFLAG = 's';
-        public const char EMBEDDEDSTRINGFLAG = 'q';
-        
+        public const char VARIABLEFLAG                  = '%';
+        public const char INTEGERFLAG                   = 'i';
+        public const char INTEGERFLAG2                  = 'd';
+        public const char STRINGRESOURCELITERALFLAG     = 's';
+        public const char EMBEDDEDSTRINGLITERALFLAG     = 'q';
+#if !VANILLA        
+        public const char STRINGRESOURCERECURSIVEFLAG   = 'r';
+#endif        
         public const string PROPNAME_CHATMESSAGETYPE = "ChatMessageType";
         public const string PROPNAME_RESOURCEID = "ResourceID";
         public const string PROPNAME_RESOURCENAME = "ResourceName";
@@ -159,78 +161,108 @@ namespace Meridian59.Data.Models
         }
         public virtual int ReadFrom(byte[] Buffer, int StartIndex = 0)
         {
+            InlineVariable var;
+            string strval;
+            int intval;
+            uint uintval;
+            int index;
+            List<Tuple<string, int>> stringliterals = new List<Tuple<string, int>>();
+
             int cursor = StartIndex;
 
             resourceID = BitConverter.ToUInt32(Buffer, cursor);
             cursor += TypeSizes.INT;
 
-            string resourceName;
-            stringResources.TryGetValue(resourceID, out resourceName);
-            this.resourceName = resourceName;
+            // resolve root resource id
+            if (!stringResources.TryGetValue(resourceID, out resourceName))
+                resourceName = String.Empty;
 
-            // start filling up variables (example: %s) with values
-            // their values are attached to the packet/buffer and make it a variable length
-            // also there might be more than one iteration necessary as varibles may be nested into variable-strings
+            // build string
             fullString = String.Copy(resourceName);
-
-            int index = HasVariable(fullString);
+            index = HasVariable(fullString);
             while (index > -1)
-            {                              
+            {
                 // which type of inline var
                 switch (fullString[index + 1])
                 {
+                    // %i or %d are 4 byte integers. Their value should be inserted as a string.
                     case INTEGERFLAG:
                     case INTEGERFLAG2:
-                        InlineVariable var1 = new InlineVariable(InlineVariableType.Integer, Buffer, cursor);
-                        cursor += var1.ByteLength;
+                        var = new InlineVariable(InlineVariableType.Integer, Buffer, cursor);
+                        intval = (int)var.Data;
+                        cursor += var.ByteLength;
 
-                        Variables.Add(var1);
-                        int j = (int)var1.Data;
+                        Variables.Add(var);
 
-                        // remove the %i and insert the integer
+                        // remove the %i, %d and insert the integer directly
                         fullString = fullString.Remove(index, 2);
-                        fullString = fullString.Insert(index, j.ToString());
+                        fullString = fullString.Insert(index, intval.ToString());
                         break;
 
-                    case EMBEDDEDSTRINGFLAG:
-                        InlineVariable var2 = new InlineVariable(InlineVariableType.String, Buffer, cursor);
-                        cursor += var2.ByteLength;
+                    // %q is a server-sent string which is directly attached to the message and not looked up from rsb
+                    // if it contains any %vars itself, these MUST NOT be resolved further (won't be available in params)
+                    case EMBEDDEDSTRINGLITERALFLAG:
+                        var = new InlineVariable(InlineVariableType.String, Buffer, cursor);
+                        strval = (string)var.Data;
+                        cursor += var.ByteLength;
 
-                        Variables.Add(var2);                             
-                        string s = (string)var2.Data;
+                        Variables.Add(var);
 
-                        // remove the %q and insert the string
+                        // remove the %q, save string and position for insert later
+                        // this position won't invalidate, because the string grows to the right of this index only
                         fullString = fullString.Remove(index, 2);
-                        fullString = fullString.Insert(index, s);                      
+                        stringliterals.Add(new Tuple<string, int>(strval, index));
                         break;
 
-                    case STRINGRESOURCEFLAG:
-                        InlineVariable var3 = new InlineVariable(InlineVariableType.Resource, Buffer, cursor);
-                        cursor += var3.ByteLength;
+                    // %s is a server-sent string resource id. It must be resolved from .rsb
+                    // if it contains any %vars itself, these MUST NOT be resolved further (won't be available in params)
+                    case STRINGRESOURCELITERALFLAG:
+                        var = new InlineVariable(InlineVariableType.Resource, Buffer, cursor);
+                        uintval = (uint)var.Data;
+                        cursor += var.ByteLength;
 
-                        Variables.Add(var3);
-                        uint resourceid = (uint)var3.Data;
+                        Variables.Add(var);
 
-                        // try to get it from strings
-                        string resourcestr;
-                        stringResources.TryGetValue(resourceid, out resourcestr);
-                                                               
-                        // still null? use dummy
-                        if (resourcestr == null)
-                            resourcestr = String.Empty;
+                        if (!stringResources.TryGetValue(uintval, out strval))
+                            strval = String.Empty;
 
-                        // remove the %s and insert the resourcestr
+                        // remove the %s, save string and position for insert later
+                        // this position won't invalidate, because the string grows to the right of this index only                      
                         fullString = fullString.Remove(index, 2);
-                        fullString = fullString.Insert(index, resourcestr);
+                        stringliterals.Add(new Tuple<string, int>(strval, index));
                         break;
 
+#if !VANILLA
+                    // %r is a server-sent string resource id. It must be resolved from .rsb
+                    // if it contains any %vars itself, these MUST be resolved before any next var.
+                    case STRINGRESOURCERECURSIVEFLAG:
+                        var = new InlineVariable(InlineVariableType.Resource, Buffer, cursor);
+                        uintval = (uint)var.Data;
+                        cursor += var.ByteLength;
+
+                        Variables.Add(var);
+
+                        if (!stringResources.TryGetValue(uintval, out strval))
+                            strval = String.Empty;
+
+                        // remove the %r, immediately insert the content (so we process it next)
+                        fullString = fullString.Remove(index, 2);
+                        fullString = fullString.Insert(index, strval);
+                        break;
+#endif
                     default:
                         break;
                 }
-                               
+
                 // check if there is more inline vars (may start loop again)
                 index = HasVariable(fullString);
             }
+
+            // Now finally add the %q and %s stringliterals:
+            // MUST iterate backwards (right to left in string)
+            // so these inserts don't invalidate the other indices
+            for (int i = stringliterals.Count - 1; i >= 0; i--)
+                fullString = fullString.Insert(stringliterals[i].Item2, stringliterals[i].Item1);
 
             // extract and remove the inline styles (~B ...)
             Styles = ChatStyle.GetStyles(fullString, chatMessageType);
@@ -248,70 +280,89 @@ namespace Meridian59.Data.Models
         }
         public unsafe virtual void ReadFrom(ref byte* Buffer)
         {
+            InlineVariable var;
+            string strval;
+            int intval;
+            uint uintval;
+            int index;
+            List<Tuple<string, int>> stringliterals = new List<Tuple<string, int>>();
+            
             resourceID = *((uint*)Buffer);
             Buffer += TypeSizes.INT;
 
-            string resourceName;
-            stringResources.TryGetValue(resourceID, out resourceName);
-            this.resourceName = resourceName;
+            // resolve root resource id
+            if (!stringResources.TryGetValue(resourceID, out resourceName))
+                resourceName = String.Empty;
 
-            // start filling up variables (example: %s) with values
-            // their values are attached to the packet/buffer and make it a variable length
-            // also there might be more than one iteration necessary as varibles may be nested into variable-strings
+            // build string
             fullString = String.Copy(resourceName);
-
-            // stringliterals (%q) will not be replaced immediately because
-            // they might contain %variables which would, but can't be resolved from message parameters
-            List<Tuple<string, int>> stringliterals = new List<Tuple<string, int>>();
-
-            int index = HasVariable(fullString);
+            index = HasVariable(fullString);
             while (index > -1)
             {
                 // which type of inline var
                 switch (fullString[index + 1])
                 {
+                    // %i or %d are 4 byte integers. Their value should be inserted as a string.
                     case INTEGERFLAG:
                     case INTEGERFLAG2:
-                        InlineVariable var1 = new InlineVariable(InlineVariableType.Integer, ref Buffer);
-                        
-                        Variables.Add(var1);
-                        int j = (int)var1.Data;
+                        var     = new InlineVariable(InlineVariableType.Integer, ref Buffer);
+                        intval  = (int)var.Data;
 
-                        // remove the %i and insert the integer
+                        Variables.Add(var);
+                        
+                        // remove the %i, %d and insert the integer directly
                         fullString = fullString.Remove(index, 2);
-                        fullString = fullString.Insert(index, j.ToString());
+                        fullString = fullString.Insert(index, intval.ToString());
                         break;
 
-                    case EMBEDDEDSTRINGFLAG:
-                        InlineVariable var2 = new InlineVariable(InlineVariableType.String, ref Buffer);
-                        
-                        Variables.Add(var2);
-                        string s = (string)var2.Data;
+                    // %q is a server-sent string which is directly attached to the message and not looked up from rsb
+                    // if it contains any %vars itself, these MUST NOT be resolved further (won't be available in params)
+                    case EMBEDDEDSTRINGLITERALFLAG:
+                        var     = new InlineVariable(InlineVariableType.String, ref Buffer);
+                        strval  = (string)var.Data;
 
-                        // remove the %q, save string for insert later
+                        Variables.Add(var);
+                        
+                        // remove the %q, save string and position for insert later
+                        // this position won't invalidate, because the string grows to the right of this index only
                         fullString = fullString.Remove(index, 2);
-                        stringliterals.Add(new Tuple<string, int>(s, index));
+                        stringliterals.Add(new Tuple<string, int>(strval, index));
                         break;
 
-                    case STRINGRESOURCEFLAG:
-                        InlineVariable var3 = new InlineVariable(InlineVariableType.Resource, ref Buffer);
+                    // %s is a server-sent string resource id. It must be resolved from .rsb
+                    // if it contains any %vars itself, these MUST NOT be resolved further (won't be available in params)
+                    case STRINGRESOURCELITERALFLAG:
+                        var     = new InlineVariable(InlineVariableType.Resource, ref Buffer);
+                        uintval = (uint)var.Data;
+
+                        Variables.Add(var);
                         
-                        Variables.Add(var3);
-                        uint resourceid = (uint)var3.Data;
+                        if (!stringResources.TryGetValue(uintval, out strval))
+                            strval = String.Empty;
 
-                        // try to get it from strings
-                        string resourcestr;
-                        stringResources.TryGetValue(resourceid, out resourcestr);
-
-                        // still null? use dummy
-                        if (resourcestr == null)
-                            resourcestr = String.Empty;
-
-                        // remove the %s and insert the resourcestr
+                        // remove the %s, save string and position for insert later
+                        // this position won't invalidate, because the string grows to the right of this index only                      
                         fullString = fullString.Remove(index, 2);
-                        fullString = fullString.Insert(index, resourcestr);
+                        stringliterals.Add(new Tuple<string, int>(strval, index));
                         break;
 
+#if !VANILLA
+                    // %r is a server-sent string resource id. It must be resolved from .rsb
+                    // if it contains any %vars itself, these MUST be resolved before any next var.
+                    case STRINGRESOURCERECURSIVEFLAG:
+                        var     = new InlineVariable(InlineVariableType.Resource, ref Buffer);
+                        uintval = (uint)var.Data;
+
+                        Variables.Add(var);
+                        
+                        if (!stringResources.TryGetValue(uintval, out strval))
+                            strval = String.Empty;
+
+                        // remove the %r, immediately insert the content (so we process it next)
+                        fullString = fullString.Remove(index, 2);
+                        fullString = fullString.Insert(index, strval);                       
+                        break;
+#endif
                     default:
                         break;
                 }
@@ -320,9 +371,11 @@ namespace Meridian59.Data.Models
                 index = HasVariable(fullString);
             }
 
-            // now finally add the stringliterals
-            foreach(Tuple<string, int> stringliteral in stringliterals)           
-                fullString = fullString.Insert(stringliteral.Item2, stringliteral.Item1);
+            // Now finally add the %q and %s stringliterals:
+            // MUST iterate backwards (right to left in string)
+            // so these inserts don't invalidate the other indices
+            for(int i = stringliterals.Count - 1; i >= 0; i--)           
+                fullString = fullString.Insert(stringliterals[i].Item2, stringliterals[i].Item1);
             
             // extract and remove the inline styles (~B ...)
             Styles = ChatStyle.GetStyles(fullString, chatMessageType);
@@ -416,8 +469,11 @@ namespace Meridian59.Data.Models
                     (
                     String[i + 1] == INTEGERFLAG ||
                     String[i + 1] == INTEGERFLAG2 || 
-                    String[i + 1] == EMBEDDEDSTRINGFLAG || 
-                    String[i + 1] == STRINGRESOURCEFLAG
+                    String[i + 1] == EMBEDDEDSTRINGLITERALFLAG || 
+                    String[i + 1] == STRINGRESOURCELITERALFLAG
+#if !VANILLA
+                    || String[i + 1] == STRINGRESOURCERECURSIVEFLAG
+#endif
                     ))
 
                     return i;
