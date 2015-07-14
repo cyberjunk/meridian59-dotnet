@@ -93,7 +93,7 @@ namespace Meridian59.Bot
             Data.InventoryObjects.ListChanged += OnInventoryObjectsListChanged;
             Data.AvatarCondition.ListChanged += OnAvatarConditionListChanged;
             Data.RoomInformation.PropertyChanged += OnRoomInformationPropertyChanged;
-            Data.PropertyChanged += OnDataControllerPropertyChanged;
+            Data.PropertyChanged += OnDataControllerPropertyChanged;          
         }
 
         /// <summary>
@@ -598,7 +598,7 @@ namespace Meridian59.Bot
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void OnAvatarConditionListChanged(object sender, ListChangedEventArgs e)
+        protected virtual void OnAvatarConditionListChanged(object sender, ListChangedEventArgs e)
         {
             DrawCondition();
         }
@@ -608,7 +608,7 @@ namespace Meridian59.Bot
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void OnInventoryObjectsListChanged(object sender, ListChangedEventArgs e)
+        protected virtual void OnInventoryObjectsListChanged(object sender, ListChangedEventArgs e)
         {
             DrawCash();
         }
@@ -618,9 +618,8 @@ namespace Meridian59.Bot
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void OnOnlinePlayersListChanged(object sender, ListChangedEventArgs e)
-        {
-            
+        protected virtual void OnOnlinePlayersListChanged(object sender, ListChangedEventArgs e)
+        {            
         }
 
         /// <summary>
