@@ -14,6 +14,7 @@ namespace Meridian59 { namespace Ogre
 		Skills		= static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_MAINBUTTONSRIGHT_SKILLS));
 		Actions		= static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_MAINBUTTONSRIGHT_ACTIONS));
 		Attributes	= static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_MAINBUTTONSRIGHT_ATTRIBUTES));
+		Quests		= static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_MAINBUTTONSRIGHT_QUESTS));
 
 		// set window layout from config
 		Window->setPosition(OgreClient::Singleton->Config->UILayoutMainButtonsRight->getPosition());
@@ -25,6 +26,7 @@ namespace Meridian59 { namespace Ogre
 		Skills->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::MainButtonsRight::OnItemClicked));
 		Actions->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::MainButtonsRight::OnItemClicked));
 		Attributes->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::MainButtonsRight::OnItemClicked));
+		Quests->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::MainButtonsRight::OnItemClicked));
 
 		// subscribe mouse events
 		Window->subscribeEvent(CEGUI::Window::EventMouseButtonDown, CEGUI::Event::Subscriber(UICallbacks::MainButtonsRight::OnMouseDown));
@@ -67,6 +69,12 @@ namespace Meridian59 { namespace Ogre
 		else if (args.window == ControllerUI::MainButtonsRight::Attributes)
 		{
 			ControllerUI::ToggleVisibility(ControllerUI::Attributes::Window);
+		}
+
+		// quests clicked
+		else if (args.window == ControllerUI::MainButtonsRight::Quests)
+		{
+			ControllerUI::ToggleVisibility(ControllerUI::Quests::Window);
 		}
 
 		return true;

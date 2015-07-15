@@ -638,6 +638,7 @@ namespace Meridian59 { namespace Ogre
 			static ::CEGUI::Window* Skills = nullptr;
 			static ::CEGUI::Window* Actions = nullptr;
 			static ::CEGUI::Window* Attributes = nullptr;
+			static ::CEGUI::Window* Quests = nullptr;
 
 			static void Initialize();
 			static void Destroy();

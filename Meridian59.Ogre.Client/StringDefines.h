@@ -327,6 +327,7 @@
 #define UI_NAME_MAINBUTTONSRIGHT_SKILLS				"MainButtonsRight.Skills"
 #define UI_NAME_MAINBUTTONSRIGHT_ACTIONS			"MainButtonsRight.Actions"
 #define UI_NAME_MAINBUTTONSRIGHT_ATTRIBUTES			"MainButtonsRight.Attributes"
+#define UI_NAME_MAINBUTTONSRIGHT_QUESTS				"MainButtonsRight.Quests"
 #define UI_NAME_AMOUNT_WINDOW						"Amount"
 #define UI_NAME_AMOUNT_VALUE						"Amount.Value"
 #define UI_NAME_AMOUNT_OK							"Amount.OK"
