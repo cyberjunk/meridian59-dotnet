@@ -320,6 +320,7 @@
     <ClCompile Include="UIOptions.cpp" />
     <ClCompile Include="UIPlayerDetails.cpp" />
     <ClCompile Include="UIPlayerOverlays.cpp" />
+    <ClCompile Include="UIQuests.cpp" />
     <ClCompile Include="UIRoomEnchantments.cpp" />
     <ClCompile Include="UIRoomObjects.cpp" />
     <ClCompile Include="UISkills.cpp" />

@@ -120,6 +120,7 @@ namespace Meridian59 { namespace Ogre
 		Attributes::Initialize();
 		Skills::Initialize();
 		Spells::Initialize();
+		Quests::Initialize();
 		Actions::Initialize();
 		Inventory::Initialize();
 		MainButtonsLeft::Initialize();
@@ -139,7 +140,7 @@ namespace Meridian59 { namespace Ogre
 		ObjectContents::Initialize();
 		Login::Initialize();
 		Options::Initialize();
-
+		
 		// attach listener to Data
 		OgreClient::Singleton->Data->PropertyChanged += 
 			gcnew PropertyChangedEventHandler(OnDataPropertyChanged);
@@ -175,6 +176,7 @@ namespace Meridian59 { namespace Ogre
 		Attributes::Destroy();
 		Skills::Destroy();
 		Spells::Destroy();
+		Quests::Destroy();
 		Actions::Destroy();
 		Inventory::Destroy();
 		MainButtonsLeft::Destroy();
@@ -524,6 +526,7 @@ namespace Meridian59 { namespace Ogre
 			Actions::Window->setVisible(false);
 			Spells::Window->setVisible(false);
 			Skills::Window->setVisible(false);
+			Quests::Window->setVisible(false);
 			Inventory::Window->setVisible(false);
 			MainButtonsLeft::Window->setVisible(mode == UIMode::Playing);
 			MainButtonsRight::Window->setVisible(mode == UIMode::Playing);

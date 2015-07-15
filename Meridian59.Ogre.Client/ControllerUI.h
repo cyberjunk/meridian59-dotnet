@@ -549,6 +549,23 @@ namespace Meridian59 { namespace Ogre
 		};
 
 		/// <summary>
+		/// Quests window
+		/// </summary>
+		ref class Quests abstract sealed
+		{
+		public:
+			static ::CEGUI::FrameWindow* Window = nullptr;
+			static ::CEGUI::ItemListbox* List = nullptr;
+
+			static void Initialize();
+			static void Destroy();
+			static void OnQuestsListChanged(Object^ sender, ListChangedEventArgs^ e);
+			static void QuestAdd(int Index);
+			static void QuestRemove(int Index);
+			static void QuestChange(int Index);
+		};
+
+		/// <summary>
 		/// Actions window
 		/// </summary>
 		ref class Actions abstract sealed
@@ -1374,6 +1391,15 @@ namespace Meridian59 { namespace Ogre
 			static bool OnKeyUp(const CEGUI::EventArgs& e);
 			static bool OnItemClicked(const CEGUI::EventArgs& e);
 			static bool OnItemDoubleClicked(const CEGUI::EventArgs& e);
+		};
+
+		/// <summary>
+		/// Quests event handlers
+		/// </summary>
+		class Quests
+		{
+		public:
+			static bool OnItemClicked(const CEGUI::EventArgs& e);
 		};
 
 		/// <summary>

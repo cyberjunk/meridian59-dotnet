@@ -191,6 +191,7 @@
 #define UI_WINDOWTYPE_AVATARCONDITIONITEM		"TaharezLook/AvatarConditionItem"
 #define UI_WINDOWTYPE_AVATARATTRIBUTEITEM		"TaharezLook/AvatarAttributeItem"
 #define UI_WINDOWTYPE_AVATARSKILLITEM			"TaharezLook/AvatarSkillItem"
+#define UI_WINDOWTYPE_AVATARQUESTITEM			"TaharezLook/AvatarQuestItem"
 #define UI_WINDOWTYPE_ACTIONITEM				"TaharezLook/ActionItem"
 #define UI_WINDOWTYPE_INVENTORYICON				"TaharezLook/DragImage"
 #define UI_WINDOWTYPE_TRADELISTBOXITEM			"TaharezLook/TradeListboxItem"
@@ -307,6 +308,8 @@
 #define UI_NAME_SKILLS_LIST							"Skills.List"
 #define UI_NAME_SPELLS_WINDOW						"Spells"
 #define UI_NAME_SPELLS_LIST							"Spells.List"
+#define UI_NAME_QUESTS_WINDOW						"Quests"
+#define UI_NAME_QUESTS_LIST							"Quests.List"
 #define UI_NAME_ACTIONS_WINDOW						"Actions"
 #define UI_NAME_ACTIONS_LIST						"Actions.List"
 #define UI_NAME_INVENTORY_WINDOW					"Inventory"
@@ -636,6 +639,8 @@
 #define UI_SKILLS_CHILDINDEX_ICON				0
 #define UI_SKILLS_CHILDINDEX_NAME				1
 #define UI_SKILLS_CHILDINDEX_PERCENT			2
+#define UI_QUESTS_CHILDINDEX_QUESTID			0
+#define UI_QUESTS_CHILDINDEX_NAME				1
 #define UI_ACTIONS_CHILDINDEX_ICON				0
 #define UI_ACTIONS_CHILDINDEX_NAME				1
 #define UI_TRADE_CHILDINDEX_ICON				0
