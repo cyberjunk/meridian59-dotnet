@@ -38,7 +38,7 @@
       port="5901"
       useipv6="false"
       stringdictionary="rsc0000-101.rsb"
-      username="user"
+      username=""
       password=""
       character="">
       <ignorelist>
@@ -64,7 +64,7 @@
       port="5903"
       useipv6="false"
       stringdictionary="rsc0000-103.rsb"
-      username="user"
+      username=""
       password=""
       character="">
       <ignorelist>
@@ -175,7 +175,9 @@
         4) cast     Cast a spell with (name).
                     optional (default ""): 
                       on an object (target) in (room) or (inventory)
-                      when reached 99% (onmax) either (skip) the task or (quit) the bot.                   
+                      or on (target) "self"
+                      when reached (cap)% or 99% (onmax) either
+                      (skip) the task or (quit) the bot.                   
         5) use      Use/Unuse an item from inventory
         6) say      Says the given text
     
@@ -183,11 +185,11 @@
       <template name="example">
         <task type="say" text="test" />
         <task type="stand" />
-        <task type="cast" name="blink" target="" in="" onmax="skip" />
+        <task type="cast" name="blink" target="" in="" cap="100" onmax="skip" />
         <task type="sleep" duration="15" />
-        <task type="cast" name="bless" target="Sha'Krune" in="room" onmax="" />
+        <task type="cast" name="bless" target="self" in="room" cap="80" onmax="" />
         <task type="sleep" duration="15" />
-        <task type="cast" name="blink" target="" in="" onmax="quit" />
+        <task type="cast" name="bless" target="self" in="" onmax="quit" />
         <task type="sleep" duration="15" />
         <task type="rest" />
         <task type="sleep" duration="60" />

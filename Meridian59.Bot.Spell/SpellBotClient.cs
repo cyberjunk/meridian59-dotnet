@@ -260,6 +260,21 @@ namespace Meridian59.Bot.Spell
         {
             SpellObject spellObject = null;
             StatList spellStat = null;
+            string sureTarget = Task.Target;
+            string sureWhere = Task.Where;
+
+            // handle selftargeting
+            if (sureTarget.ToLower().Equals(SpellBotConfig.XMLVALUE_SELF))
+            {
+                if(Data.AvatarObject == null)
+                {
+                    Log("WARN", "Cant execute task 'cast' " + Task.Name + ". Technical interruption changed the target.");
+                    return;
+                }
+
+                sureTarget = Data.AvatarObject.Name.ToLower();
+                sureWhere = SpellBotConfig.XMLVALUE_ROOM;
+            }
 
             // try to get the spell from the spells
             spellObject = Data.SpellObjects.GetItemByName(Task.Name, false);
@@ -277,10 +292,13 @@ namespace Meridian59.Bot.Spell
                 return;
             }
 
-            // handle maxed out spell
-            if (spellStat.SkillPoints == 99)
+            // See 0 as 99 to keep old templates without cap attr running as supposed
+            uint cap = (Task.Cap == 0) ? StatNumsValues.SPELLMAX : Task.Cap;
+
+            // handle maxed out spell. Using cap greater 99 will loop endless as as no "onmax" set
+            if (spellStat.SkillPoints >= cap)
             {
-                if (Task.OnMax == SpellBotConfig.XMLVALUE_QUIT)
+                if (Task.OnMax.ToLower() == SpellBotConfig.XMLVALUE_QUIT)
                 {
                     // log
                     Log("BOT", "Quitting.. spell " + spellObject.Name + " reached 99%.");
@@ -289,7 +307,7 @@ namespace Meridian59.Bot.Spell
                     IsRunning = false;
                     return;
                 }
-                else if (Task.OnMax == SpellBotConfig.XMLVALUE_SKIP)
+                else if (Task.OnMax.ToLower() == SpellBotConfig.XMLVALUE_SKIP)
                 {
                     // log
                     Log("BOT", "Skipped task 'cast' " + spellObject.Name + " (99%)");
@@ -312,17 +330,17 @@ namespace Meridian59.Bot.Spell
             else if (spellObject.TargetsCount > 0)
             {
                 // marked to cast on roomobject
-                if (Task.Where == SpellBotConfig.XMLVALUE_ROOM)
+                if (sureWhere == SpellBotConfig.XMLVALUE_ROOM)
                 {
                     // try to get the target
                     RoomObject roomObject =
-                        Data.RoomObjects.GetItemByName(Task.Target, false);
+                        Data.RoomObjects.GetItemByName(sureTarget, false);
 
                     // target not found
                     if (roomObject == null)
                     {
                         // log
-                        Log("WARN", "Can't execute task 'cast'. RoomObject " + Task.Target + " not found.");
+                        Log("WARN", "Can't execute task 'cast'. RoomObject " + sureTarget + " not found.");
 
                         return;
                     }
@@ -338,17 +356,17 @@ namespace Meridian59.Bot.Spell
                 }
 
                 // cast on inventory item
-                else if (Task.Where == SpellBotConfig.XMLVALUE_INVENTORY)
+                else if (sureWhere == SpellBotConfig.XMLVALUE_INVENTORY)
                 {
                     // try to get the target
                     InventoryObject inventoryObject =
-                        Data.InventoryObjects.GetItemByName(Task.Target, false);
+                        Data.InventoryObjects.GetItemByName(sureTarget, false);
 
                     // target not found
                     if (inventoryObject == null)
                     {
                         // log
-                        Log("WARN", "Can't execute task 'cast'. Item " + Task.Target + " not found.");
+                        Log("WARN", "Can't execute task 'cast'. Item " + sureTarget + " not found.");
 
                         return;
                     }
@@ -365,7 +383,7 @@ namespace Meridian59.Bot.Spell
                 else
                 {
                     // log
-                    Log("WARN", "Can't execute task 'cast'. " + Task.Where + " is unknown 'where'.");
+                    Log("WARN", "Can't execute task 'cast'. " + sureWhere + " is unknown 'where'.");
                 }
             }
         }

@@ -36,6 +36,7 @@ namespace Meridian59.Bot.Spell
         public const string XMLATTRIB_DURATION  = "duration";
         public const string XMLATTRIB_IN        = "in";
         public const string XMLATTRIB_ONMAX     = "onmax";
+        public const string XMLATTRIB_CAP       = "cap";
         public const string XMLATTRIB_TEMPLATE  = "template";
         public const string XMLVALUE_CAST       = "cast";
         public const string XMLVALUE_USE        = "use";
@@ -47,6 +48,7 @@ namespace Meridian59.Bot.Spell
         public const string XMLVALUE_INVENTORY  = "inventory";
         public const string XMLVALUE_QUIT       = "quit";
         public const string XMLVALUE_SKIP       = "skip";
+        public const string XMLVALUE_SELF       = "self";
         #endregion
 
         /// <summary>
@@ -154,6 +156,7 @@ namespace Meridian59.Bot.Spell
             string text;
             string where;
             string onmax;
+            uint cap;
             uint duration;
             
             if (Reader.ReadToDescendant(XMLTAG_TASK))
@@ -169,8 +172,9 @@ namespace Meridian59.Bot.Spell
                             target = Reader[XMLATTRIB_TARGET];
                             where = Reader[XMLATTRIB_IN];
                             onmax = Reader[XMLATTRIB_ONMAX];
+                            cap = Convert.ToUInt32(Reader[XMLATTRIB_CAP]);
 
-                            template.Tasks.Add(new BotTaskCast(name, target, where, onmax));
+                            template.Tasks.Add(new BotTaskCast(name, target, where, onmax, cap));
                             break;
 
                         case XMLVALUE_USE:
