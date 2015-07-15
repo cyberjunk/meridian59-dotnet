@@ -2391,6 +2391,18 @@ namespace Meridian59.Client
                 // step based on direction and tick delta
                 V2 step = Direction * (Real)Speed * (Real)GameTick.Span * GeometryConstants.MOVEBASECOEFF;
 
+                // slow down movements sectors with depth modifiers
+                if (avatar.SubSector != null && avatar.SubSector.Sector != null)
+                {
+                    switch(avatar.SubSector.Sector.Flags.SectorDepth)
+                    {
+                        case RooSectorFlags.DepthType.Depth0: break;
+                        case RooSectorFlags.DepthType.Depth1: step.Scale(0.75f); break;
+                        case RooSectorFlags.DepthType.Depth2: step.Scale(0.5f);  break;
+                        case RooSectorFlags.DepthType.Depth3: step.Scale(0.25f); break;
+                    }
+                }
+
                 // apply step on start ("end candidate")
                 V2 end = start2D + step;
                 
