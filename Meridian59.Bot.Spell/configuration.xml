@@ -38,7 +38,7 @@
       port="5901"
       useipv6="false"
       stringdictionary="rsc0000-101.rsb"
-      username=""
+      username="user"
       password=""
       character="">
       <ignorelist>
@@ -64,7 +64,7 @@
       port="5903"
       useipv6="false"
       stringdictionary="rsc0000-103.rsb"
-      username=""
+      username="user"
       password=""
       character="">
       <ignorelist>
