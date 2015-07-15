@@ -150,6 +150,11 @@ namespace Meridian59.Data
         public SkillList AvatarSpells { get; protected set; }
 
         /// <summary>
+        /// The quests list
+        /// </summary>
+        public SkillList AvatarQuests { get; protected set; }
+
+        /// <summary>
         /// Currently active room enchantments
         /// </summary>
         public ObjectBaseList<ObjectBase> RoomBuffs { get; protected set; }
@@ -732,6 +737,7 @@ namespace Meridian59.Data
             AvatarAttributes = new StatNumericList(10);
             AvatarSkills = new SkillList(100);
             AvatarSpells = new SkillList(100);
+            AvatarQuests = new SkillList(100);
             RoomBuffs = new ObjectBaseList<ObjectBase>(30);
             AvatarBuffs = new ObjectBaseList<ObjectBase>(30);
             SpellObjects = new SpellObjectList(100);
@@ -754,6 +760,7 @@ namespace Meridian59.Data
             OnlinePlayers.SortByName();
             AvatarSkills.SortByResourceName();
             AvatarSpells.SortByResourceName();
+            AvatarQuests.SortByResourceName();
             SpellObjects.SortByName();
             
             // create single data objects
@@ -825,6 +832,7 @@ namespace Meridian59.Data
             AvatarSkills.Clear();
             AvatarSpells.Clear();
             AvatarBuffs.Clear();
+            AvatarQuests.Clear();
             RoomBuffs.Clear();
             SpellObjects.Clear();
             BackgroundOverlays.Clear();
@@ -1956,6 +1964,13 @@ namespace Meridian59.Data
                     foreach (Stat stat in Message.Stats)
                         AvatarSpells.Add((StatList)stat);                   
                     break;
+#if !VANILLA
+                case StatGroup.Quests:
+                    AvatarQuests.Clear();
+                    foreach (Stat stat in Message.Stats)
+                        AvatarQuests.Add((StatList)stat);                   
+                    break;
+#endif
             }
         }
 
@@ -2006,6 +2021,16 @@ namespace Meridian59.Data
                         oldSkillEntry.UpdateFromModel(newSkillEntry, true);
                     }
                     break;
+#if !VANILLA
+                case StatGroup.Quests:
+                    newSkillEntry = (StatList)Message.Stat;
+                    oldSkillEntry = AvatarQuests.GetItemByNum(newSkillEntry.Num);
+                    if (oldSkillEntry != null)
+                    {
+                        oldSkillEntry.UpdateFromModel(newSkillEntry, true);
+                    }
+                    break;
+#endif
             }
         }
 

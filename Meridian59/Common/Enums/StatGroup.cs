@@ -21,9 +21,13 @@ namespace Meridian59.Common.Enums
     /// </summary>
     public enum StatGroup : byte
     {
-        Condition = 0x01,
-        Attributes = 0x02,
-        Spells = 0x03,
-        Skills = 0x04
+        Condition   = 0x01,
+        Attributes  = 0x02,
+        Spells      = 0x03,
+        Skills      = 0x04
+
+#if !VANILLA
+        ,Quests     = 0x05
+#endif
     }
 }

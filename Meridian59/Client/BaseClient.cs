@@ -2326,6 +2326,9 @@ namespace Meridian59.Client
             SendSendStatsMessage(StatGroup.Attributes);
             SendSendStatsMessage(StatGroup.Skills);
             SendSendStatsMessage(StatGroup.Spells);
+#if !VANILLA
+            SendSendStatsMessage(StatGroup.Quests);
+#endif
 
             // request inventory
             SendReqInventoryMessage();
