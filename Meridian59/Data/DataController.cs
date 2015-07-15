@@ -760,7 +760,6 @@ namespace Meridian59.Data
             OnlinePlayers.SortByName();
             AvatarSkills.SortByResourceName();
             AvatarSpells.SortByResourceName();
-            AvatarQuests.SortByResourceName();
             SpellObjects.SortByName();
             
             // create single data objects
