@@ -161,14 +161,15 @@ namespace Meridian59.Data.Models
         }
         public virtual int ReadFrom(byte[] Buffer, int StartIndex = 0)
         {
+            int cursor = StartIndex;
+
             InlineVariable var;
             string strval;
             int intval;
             uint uintval;
             int index;
-            List<Tuple<string, int>> stringliterals = new List<Tuple<string, int>>();
-
-            int cursor = StartIndex;
+            List<int> q_indices = new List<int>();
+            List<string> q_strings = new List<string>();
 
             resourceID = BitConverter.ToUInt32(Buffer, cursor);
             cursor += TypeSizes.INT;
@@ -177,92 +178,126 @@ namespace Meridian59.Data.Models
             if (!stringResources.TryGetValue(resourceID, out resourceName))
                 resourceName = String.Empty;
 
-            // build string
+            // will store fully constructed string
             fullString = String.Copy(resourceName);
+
+            // build string
             index = HasVariable(fullString);
             while (index > -1)
             {
-                // which type of inline var
-                switch (fullString[index + 1])
+                while (index > -1)
                 {
-                    // %i or %d are 4 byte integers. Their value should be inserted as a string.
-                    case INTEGERFLAG:
-                    case INTEGERFLAG2:
-                        var = new InlineVariable(InlineVariableType.Integer, Buffer, cursor);
-                        intval = (int)var.Data;
-                        cursor += var.ByteLength;
+                    // which type of inline var
+                    switch (fullString[index + 1])
+                    {
+                        // %i or %d are 4 byte integers. Their value should be inserted as a string.
+                        case INTEGERFLAG:
+                        case INTEGERFLAG2:
+                            var = new InlineVariable(InlineVariableType.Integer, Buffer, cursor);
+                            intval = (int)var.Data;
+                            cursor += var.ByteLength;
 
-                        Variables.Add(var);
+                            Variables.Add(var);
+                            string intstr = intval.ToString();
 
-                        // remove the %i, %d and insert the integer directly
-                        fullString = fullString.Remove(index, 2);
-                        fullString = fullString.Insert(index, intval.ToString());
-                        break;
+                            // remove the %i, %d and insert the integer directly
+                            fullString = fullString.Remove(index, 2);
+                            fullString = fullString.Insert(index, intstr);
 
-                    // %q is a server-sent string which is directly attached to the message and not looked up from rsb
-                    // if it contains any %vars itself, these MUST NOT be resolved further (won't be available in params)
-                    case EMBEDDEDSTRINGLITERALFLAG:
-                        var = new InlineVariable(InlineVariableType.String, Buffer, cursor);
-                        strval = (string)var.Data;
-                        cursor += var.ByteLength;
+                            // adjust stringliteral indices right to this index
+                            for (int i = 0; i < q_indices.Count; i++)
+                                if (q_indices[i] > index)
+                                    q_indices[i] = q_indices[i] + intstr.Length - 2;
+                            break;
 
-                        Variables.Add(var);
+                        // %q is a server-sent string which is directly attached to the message and not looked up from rsb
+                        // if it contains any %vars itself, these MUST NOT be resolved further (won't be available in params)
+                        case EMBEDDEDSTRINGLITERALFLAG:
+                            var = new InlineVariable(InlineVariableType.String, Buffer, cursor);
+                            strval = (string)var.Data;
+                            cursor += var.ByteLength;
 
-                        // remove the %q, save string and position for insert later
-                        // this position won't invalidate, because the string grows to the right of this index only
-                        fullString = fullString.Remove(index, 2);
-                        stringliterals.Add(new Tuple<string, int>(strval, index));
-                        break;
+                            Variables.Add(var);
 
-                    // %s is a server-sent string resource id. It must be resolved from .rsb
-                    // if it contains any %vars itself, these MUST NOT be resolved further (won't be available in params)
-                    case STRINGRESOURCELITERALFLAG:
-                        var = new InlineVariable(InlineVariableType.Resource, Buffer, cursor);
-                        uintval = (uint)var.Data;
-                        cursor += var.ByteLength;
+                            // remove the %q, save string and position for insert later
+                            fullString = fullString.Remove(index, 2);
+                            q_strings.Add(strval);
+                            q_indices.Add(index);
 
-                        Variables.Add(var);
+                            // adjust stringliteral indices right to this index
+                            for (int i = 0; i < q_indices.Count; i++)
+                                if (q_indices[i] > index)
+                                    q_indices[i] = q_indices[i] - 2;
+                            break;
 
-                        if (!stringResources.TryGetValue(uintval, out strval))
-                            strval = String.Empty;
+                        // %s is a server-sent string resource id. It must be resolved from .rsb
+                        // If it contains any %vars itself, these sub-vars must be resolved AFTER any next-vars.
+                        case STRINGRESOURCELITERALFLAG:
+                            var = new InlineVariable(InlineVariableType.Resource, Buffer, cursor);
+                            uintval = (uint)var.Data;
+                            cursor += var.ByteLength;
 
-                        // remove the %s, save string and position for insert later
-                        // this position won't invalidate, because the string grows to the right of this index only                      
-                        fullString = fullString.Remove(index, 2);
-                        stringliterals.Add(new Tuple<string, int>(strval, index));
-                        break;
+                            Variables.Add(var);
+
+                            if (!stringResources.TryGetValue(uintval, out strval))
+                                strval = String.Empty;
+
+                            // remove the %s, and insert the string,
+                            // but skip its content in this inner while()                     
+                            fullString = fullString.Remove(index, 2);
+                            fullString = fullString.Insert(index, strval);
+
+                            // adjust stringliteral indices right to this index
+                            for (int i = 0; i < q_indices.Count; i++)
+                                if (q_indices[i] > index)
+                                    q_indices[i] = q_indices[i] + strval.Length - 2;
+
+                            // skip
+                            index += strval.Length;
+
+                            break;
 
 #if !VANILLA
-                    // %r is a server-sent string resource id. It must be resolved from .rsb
-                    // if it contains any %vars itself, these MUST be resolved before any next var.
-                    case STRINGRESOURCERECURSIVEFLAG:
-                        var = new InlineVariable(InlineVariableType.Resource, Buffer, cursor);
-                        uintval = (uint)var.Data;
-                        cursor += var.ByteLength;
+                        // %r is a server-sent string resource id. It must be resolved from .rsb
+                        // If it contains any %vars itself, these sub-vars must be resolved BEFORE any next-vars.
+                        case STRINGRESOURCERECURSIVEFLAG:
+                            var = new InlineVariable(InlineVariableType.Resource, Buffer, cursor);
+                            uintval = (uint)var.Data;
+                            cursor += var.ByteLength;
 
-                        Variables.Add(var);
+                            Variables.Add(var);
 
-                        if (!stringResources.TryGetValue(uintval, out strval))
-                            strval = String.Empty;
+                            if (!stringResources.TryGetValue(uintval, out strval))
+                                strval = String.Empty;
 
-                        // remove the %r, immediately insert the content (so we process it next)
-                        fullString = fullString.Remove(index, 2);
-                        fullString = fullString.Insert(index, strval);
-                        break;
+                            // remove the %r, insert the content (so we process it next)
+                            fullString = fullString.Remove(index, 2);
+                            fullString = fullString.Insert(index, strval);
+
+                            // adjust stringliteral indices right to this index
+                            for (int i = 0; i < q_indices.Count; i++)
+                                if (q_indices[i] > index)
+                                    q_indices[i] = q_indices[i] + strval.Length - 2;
+                            break;
 #endif
-                    default:
-                        break;
+                        default:
+                            break;
+                    }
+
+                    // see if there is more inline vars to the right of current index
+                    // this makes sure we don't yet process nested and already inserted %s
+                    index = HasVariable(fullString, index);
                 }
 
-                // check if there is more inline vars (may start loop again)
+                // start from the beginning again, this will process nested %s
                 index = HasVariable(fullString);
             }
 
-            // Now finally add the %q and %s stringliterals:
+            // Now finally add the %q stringliterals:
             // MUST iterate backwards (right to left in string)
             // so these inserts don't invalidate the other indices
-            for (int i = stringliterals.Count - 1; i >= 0; i--)
-                fullString = fullString.Insert(stringliterals[i].Item2, stringliterals[i].Item1);
+            for (int i = q_indices.Count - 1; i >= 0; i--)
+                fullString = fullString.Insert(q_indices[i], q_strings[i]);
 
             // extract and remove the inline styles (~B ...)
             Styles = ChatStyle.GetStyles(fullString, chatMessageType);
@@ -285,8 +320,9 @@ namespace Meridian59.Data.Models
             int intval;
             uint uintval;
             int index;
-            List<Tuple<string, int>> stringliterals = new List<Tuple<string, int>>();
-            
+            List<int> q_indices = new List<int>();
+            List<string> q_strings = new List<string>();
+
             resourceID = *((uint*)Buffer);
             Buffer += TypeSizes.INT;
 
@@ -294,89 +330,123 @@ namespace Meridian59.Data.Models
             if (!stringResources.TryGetValue(resourceID, out resourceName))
                 resourceName = String.Empty;
 
-            // build string
+            // will store fully constructed string
             fullString = String.Copy(resourceName);
+
+            // build string
             index = HasVariable(fullString);
             while (index > -1)
             {
-                // which type of inline var
-                switch (fullString[index + 1])
+                while (index > -1)
                 {
-                    // %i or %d are 4 byte integers. Their value should be inserted as a string.
-                    case INTEGERFLAG:
-                    case INTEGERFLAG2:
-                        var     = new InlineVariable(InlineVariableType.Integer, ref Buffer);
-                        intval  = (int)var.Data;
+                    // which type of inline var
+                    switch (fullString[index + 1])
+                    {
+                        // %i or %d are 4 byte integers. Their value should be inserted as a string.
+                        case INTEGERFLAG:
+                        case INTEGERFLAG2:
+                            var     = new InlineVariable(InlineVariableType.Integer, ref Buffer);
+                            intval  = (int)var.Data;
 
-                        Variables.Add(var);
+                            Variables.Add(var);                       
+                            string intstr = intval.ToString();
+
+                            // remove the %i, %d and insert the integer directly
+                            fullString = fullString.Remove(index, 2);
+                            fullString = fullString.Insert(index, intstr);
+
+                            // adjust stringliteral indices right to this index
+                            for (int i = 0; i < q_indices.Count; i++)
+                                if (q_indices[i] > index)
+                                    q_indices[i] = q_indices[i] + intstr.Length - 2;
+                            break;
+
+                        // %q is a server-sent string which is directly attached to the message and not looked up from rsb
+                        // if it contains any %vars itself, these MUST NOT be resolved further (won't be available in params)
+                        case EMBEDDEDSTRINGLITERALFLAG:
+                            var     = new InlineVariable(InlineVariableType.String, ref Buffer);
+                            strval  = (string)var.Data;
+
+                            Variables.Add(var);
                         
-                        // remove the %i, %d and insert the integer directly
-                        fullString = fullString.Remove(index, 2);
-                        fullString = fullString.Insert(index, intval.ToString());
-                        break;
+                            // remove the %q, save string and position for insert later
+                            fullString = fullString.Remove(index, 2);
+                            q_strings.Add(strval);
+                            q_indices.Add(index);
+                            
+                            // adjust stringliteral indices right to this index
+                            for (int i = 0; i < q_indices.Count; i++)
+                                if (q_indices[i] > index)
+                                    q_indices[i] = q_indices[i] - 2;
+                            break;
 
-                    // %q is a server-sent string which is directly attached to the message and not looked up from rsb
-                    // if it contains any %vars itself, these MUST NOT be resolved further (won't be available in params)
-                    case EMBEDDEDSTRINGLITERALFLAG:
-                        var     = new InlineVariable(InlineVariableType.String, ref Buffer);
-                        strval  = (string)var.Data;
+                        // %s is a server-sent string resource id. It must be resolved from .rsb
+                        // If it contains any %vars itself, these sub-vars must be resolved AFTER any next-vars.
+                        case STRINGRESOURCELITERALFLAG:
+                            var     = new InlineVariable(InlineVariableType.Resource, ref Buffer);
+                            uintval = (uint)var.Data;
 
-                        Variables.Add(var);
+                            Variables.Add(var);
                         
-                        // remove the %q, save string and position for insert later
-                        // this position won't invalidate, because the string grows to the right of this index only
-                        fullString = fullString.Remove(index, 2);
-                        stringliterals.Add(new Tuple<string, int>(strval, index));
-                        break;
+                            if (!stringResources.TryGetValue(uintval, out strval))
+                                strval = String.Empty;
 
-                    // %s is a server-sent string resource id. It must be resolved from .rsb
-                    // if it contains any %vars itself, these MUST NOT be resolved further (won't be available in params)
-                    case STRINGRESOURCELITERALFLAG:
-                        var     = new InlineVariable(InlineVariableType.Resource, ref Buffer);
-                        uintval = (uint)var.Data;
+                            // remove the %s, and insert the string,
+                            // but skip its content in this inner while()                     
+                            fullString = fullString.Remove(index, 2);
+                            fullString = fullString.Insert(index, strval);
 
-                        Variables.Add(var);
-                        
-                        if (!stringResources.TryGetValue(uintval, out strval))
-                            strval = String.Empty;
+                            // adjust stringliteral indices right to this index
+                            for (int i = 0; i < q_indices.Count; i++)
+                                if (q_indices[i] > index)
+                                    q_indices[i] = q_indices[i] + strval.Length - 2;
 
-                        // remove the %s, save string and position for insert later
-                        // this position won't invalidate, because the string grows to the right of this index only                      
-                        fullString = fullString.Remove(index, 2);
-                        stringliterals.Add(new Tuple<string, int>(strval, index));
-                        break;
+                            // skip
+                            index += strval.Length;
+
+                            break;
 
 #if !VANILLA
-                    // %r is a server-sent string resource id. It must be resolved from .rsb
-                    // if it contains any %vars itself, these MUST be resolved before any next var.
-                    case STRINGRESOURCERECURSIVEFLAG:
-                        var     = new InlineVariable(InlineVariableType.Resource, ref Buffer);
-                        uintval = (uint)var.Data;
+                        // %r is a server-sent string resource id. It must be resolved from .rsb
+                        // If it contains any %vars itself, these sub-vars must be resolved BEFORE any next-vars.
+                        case STRINGRESOURCERECURSIVEFLAG:
+                            var     = new InlineVariable(InlineVariableType.Resource, ref Buffer);
+                            uintval = (uint)var.Data;
 
-                        Variables.Add(var);
+                            Variables.Add(var);
                         
-                        if (!stringResources.TryGetValue(uintval, out strval))
-                            strval = String.Empty;
+                            if (!stringResources.TryGetValue(uintval, out strval))
+                                strval = String.Empty;
 
-                        // remove the %r, immediately insert the content (so we process it next)
-                        fullString = fullString.Remove(index, 2);
-                        fullString = fullString.Insert(index, strval);                       
-                        break;
+                            // remove the %r, insert the content (so we process it next)
+                            fullString = fullString.Remove(index, 2);
+                            fullString = fullString.Insert(index, strval);
+
+                            // adjust stringliteral indices right to this index
+                            for (int i = 0; i < q_indices.Count; i++)
+                                if (q_indices[i] > index)
+                                    q_indices[i] = q_indices[i] + strval.Length - 2;
+                            break;
 #endif
-                    default:
-                        break;
+                        default:
+                            break;
+                    }
+
+                    // see if there is more inline vars to the right of current index
+                    // this makes sure we don't yet process nested and already inserted %s
+                    index = HasVariable(fullString, index);
                 }
 
-                // check if there is more inline vars (may start loop again)
+                // start from the beginning again, this will process nested %s
                 index = HasVariable(fullString);
             }
 
-            // Now finally add the %q and %s stringliterals:
+            // Now finally add the %q stringliterals:
             // MUST iterate backwards (right to left in string)
             // so these inserts don't invalidate the other indices
-            for(int i = stringliterals.Count - 1; i >= 0; i--)           
-                fullString = fullString.Insert(stringliterals[i].Item2, stringliterals[i].Item1);
-            
+            for (int i = q_indices.Count - 1; i >= 0; i--)
+                fullString = fullString.Insert(q_indices[i], q_strings[i]);
+
             // extract and remove the inline styles (~B ...)
             Styles = ChatStyle.GetStyles(fullString, chatMessageType);
             fullString = ChatStyle.RemoveInlineStyles(fullString);
@@ -460,10 +530,14 @@ namespace Meridian59.Data.Models
         /// Checks whether a string still contains an inline variable
         /// </summary>
         /// <param name="String">string to check</param>
+        /// <param name="StartIndex"></param>
         /// <returns>index of the next inline variable (-1 if none found)</returns>
-        protected int HasVariable(string String)
+        protected int HasVariable(string String, int StartIndex = 0)
         {
-            for (int i = 0; i < String.Length - 1; i++)
+            // turn neg. indices to 0
+            StartIndex = Math.Max(0, StartIndex);
+
+            for (int i = StartIndex; i < String.Length - 1; i++)
             {
                 if (String[i] == VARIABLEFLAG &&
                     (
