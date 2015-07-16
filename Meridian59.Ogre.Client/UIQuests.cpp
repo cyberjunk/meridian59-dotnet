@@ -65,8 +65,11 @@ namespace Meridian59 {
 			widget->subscribeEvent(
 				CEGUI::ItemEntry::EventMouseClick,
 				CEGUI::Event::Subscriber(UICallbacks::Quests::OnItemClicked));
+			
+			CEGUI::DragContainer* dragger =
+				(CEGUI::DragContainer*)widget->getChildAtIdx(UI_QUESTS_CHILDINDEX_ICON);
 
-			CEGUI::Window* percent = widget->getChildAtIdx(UI_QUESTS_CHILDINDEX_QUESTID);
+			CEGUI::Window* icon = dragger->getChildAtIdx(0);
 			CEGUI::Window* name = widget->getChildAtIdx(UI_QUESTS_CHILDINDEX_NAME);
 			
 			// insert in ui-list
@@ -101,23 +104,48 @@ namespace Meridian59 {
 			{
 				CEGUI::ItemEntry* wnd = (CEGUI::ItemEntry*)List->getItemFromIndex(Index);
 
-				CEGUI::Window* percent = wnd->getChildAtIdx(UI_QUESTS_CHILDINDEX_QUESTID);
+				CEGUI::DragContainer* dragger =
+					(CEGUI::DragContainer*)wnd->getChildAtIdx(UI_QUESTS_CHILDINDEX_ICON);
+
+				CEGUI::Window* icon = dragger->getChildAtIdx(0);
 				CEGUI::Window* name = wnd->getChildAtIdx(UI_QUESTS_CHILDINDEX_NAME);
 				
 				// set name
 				name->setText(StringConvert::CLRToCEGUI(obj->ResourceName));
-				percent->setText(CEGUI::PropertyHelper<unsigned int>::toString(obj->SkillPoints) + ':');
 				
 				// handle headers
 				if (obj->SkillPoints == 0)
 				{
-					percent->setVisible(false);
 					name->setFont(UI_FONT_LIBERATIONSANS10B);
 				}
 				else
 				{
-					percent->setVisible(true);
 					name->setFont(UI_FONT_LIBERATIONSANS10);
+				}
+
+				// set image if available
+				if (obj->Resource != nullptr && obj->Resource->Frames->Count > 0)
+				{
+					Ogre::TextureManager* texMan = Ogre::TextureManager::getSingletonPtr();
+
+					// build name
+					::Ogre::String oStrName =
+						StringConvert::CLRToOgre(UI_NAMEPREFIX_STATICICON + obj->ResourceIconName + "/0");
+
+					// possibly create texture
+					Util::CreateTextureA8R8G8B8(obj->Resource->Frames[0], oStrName, UI_RESGROUP_IMAGESETS, MIP_DEFAULT);
+
+					// reget TexPtr (no return from function works, ugh..)
+					TexturePtr texPtr = texMan->getByName(oStrName);
+
+					if (!texPtr.isNull())
+					{
+						// possibly create cegui wrap around it
+						Util::CreateCEGUITextureFromOgre(ControllerUI::Renderer, texPtr);
+
+						// set image
+						icon->setProperty(UI_PROPNAME_IMAGE, oStrName);
+					}
 				}
 			}
 		};
