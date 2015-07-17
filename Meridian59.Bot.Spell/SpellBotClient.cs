@@ -291,12 +291,9 @@ namespace Meridian59.Bot.Spell
 
                 return;
             }
-
-            // See 0 as 99 to keep old templates without cap attr running as supposed
-            uint cap = (Task.Cap == 0) ? StatNumsValues.SPELLMAX : Task.Cap;
-
-            // handle maxed out spell. Using cap greater 99 will loop endless as as no "onmax" set
-            if (spellStat.SkillPoints >= cap)
+           
+            // handle spells above cap
+            if (spellStat.SkillPoints >= Task.Cap)
             {
                 if (Task.OnMax.ToLower() == SpellBotConfig.XMLVALUE_QUIT)
                 {

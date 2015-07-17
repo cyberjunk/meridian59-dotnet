@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Xml;
 using Meridian59.Common;
+using Meridian59.Common.Constants;
 
 namespace Meridian59.Bot.Spell
 {
@@ -172,7 +173,9 @@ namespace Meridian59.Bot.Spell
                             target = Reader[XMLATTRIB_TARGET];
                             where = Reader[XMLATTRIB_IN];
                             onmax = Reader[XMLATTRIB_ONMAX];
-                            cap = Convert.ToUInt32(Reader[XMLATTRIB_CAP]);
+
+                            cap = (Reader[XMLATTRIB_CAP] == null) ? StatNumsValues.SKILLMAX : 
+                                Math.Min(StatNumsValues.SKILLMAX, Convert.ToUInt32(Reader[XMLATTRIB_CAP]));
 
                             template.Tasks.Add(new BotTaskCast(name, target, where, onmax, cap));
                             break;

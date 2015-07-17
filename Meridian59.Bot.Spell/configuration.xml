@@ -183,14 +183,28 @@
     
       -->
       <template name="example">
-        <task type="say" text="test" />
+
+        <!-- Say hello and make sure we're not resting. -->
+        <task type="say" text="Hello world!" />
         <task type="stand" />
-        <task type="cast" name="blink" target="" in="" cap="100" onmax="skip" />
+        
+        <!-- If 'blink' is less than 99%, cast it. Otherwise skip this task. -->
+        <task type="cast" name="blink" target="" in="" onmax="skip" cap="99" />        
         <task type="sleep" duration="15" />
-        <task type="cast" name="bless" target="self" in="room" cap="80" onmax="" />
+
+        <!-- If 'bless' is less than 80%, cast it on yourself. Otherwise skip this task. -->
+        <task type="cast" name="bless" target="self" in="" onmax="skip" cap="80" />
         <task type="sleep" duration="15" />
-        <task type="cast" name="bless" target="self" in="" onmax="quit" />
+
+        <!-- If 'super strength' is less than 99%, cast it on 'PlayerA'. Otherwise quit the bot. -->
+        <task type="cast" name="super strength" target="PlayerA" in="room" onmax="quit" />
         <task type="sleep" duration="15" />
+
+        <!-- Cast 'enchant weapon' on the first 'scimitar' in your inventory. No matter what skill %. -->
+        <task type="cast" name="enchant weapon" target="scimitar" in="inventory" onmax="" />
+        <task type="sleep" duration="15" />
+        
+        <!-- Rest and eat an apple before start again. -->
         <task type="rest" />
         <task type="sleep" duration="60" />
         <task type="use" name="apple" />      
