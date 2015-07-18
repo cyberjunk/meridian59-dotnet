@@ -60,6 +60,7 @@ namespace Meridian59 { namespace Ogre
 			dragger->setMouseInputPropagationEnabled(true);
 			dragger->setMouseCursor(UI_DEFAULTARROW);
 			dragger->setWantsMultiClickEvents(false);
+			dragger->setDraggingEnabled(false);
 
 			widget->setSize(size);
 			widget->setFont(UI_FONT_LIBERATIONSANS10B);
@@ -149,6 +150,7 @@ namespace Meridian59 { namespace Ogre
 			dragger->setTooltipText(StringConvert::CLRToCEGUI(obj->Name));
 			dragger->setMouseCursor(UI_MOUSECURSOR_TARGET);	
 			dragger->setID(obj->ID);
+			dragger->setDraggingEnabled(true);
 
 			if (obj->Count > 0)
 				imgButton->setText(CEGUI::PropertyHelper<unsigned int>::toString(obj->Count));
@@ -173,7 +175,8 @@ namespace Meridian59 { namespace Ogre
 			imgButton->setText(STRINGEMPTY);
 			dragger->setTooltipText(STRINGEMPTY);
 			dragger->setMouseCursor(UI_DEFAULTARROW);
-			
+			dragger->setDraggingEnabled(false);
+
 			// reset datasource
 			imageComposers[Index]->DataSource = nullptr;
 
@@ -204,6 +207,7 @@ namespace Meridian59 { namespace Ogre
 			CEGUI::Window* imgButton = dragger->getChildAtIdx(0);
 
 			imgButton->setTooltipText(StringConvert::CLRToCEGUI(obj->Name));
+			dragger->setDraggingEnabled(true);
 
 			if (obj->Count > 0)
 				imgButton->setText(CEGUI::PropertyHelper<unsigned int>::toString(obj->Count));
