@@ -385,6 +385,8 @@ namespace Meridian59 { namespace Ogre
 						// tell server
 						OgreClient::Singleton->SendReqInventoryMoveMessage(
 							dataView->getID(), destDrag->getID());
+
+						ControllerUI::Inventory::List->notifyScreenAreaChanged(true);
 					}
 				}
 #endif
