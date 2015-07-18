@@ -1271,10 +1271,10 @@ namespace Meridian59.Client
         }
 
         /// <summary>
-        /// Requests to swap inventory items.
+        /// Requests to move inventoryitem 'FromID' right in front of 'ToID'.
         /// </summary>
-        /// <param name="FromID">Item ID to swap</param>
-        /// <param name="ToID">Item ID to swap with</param>
+        /// <param name="FromID">Item ID to move</param>
+        /// <param name="ToID">Item ID where to move</param>
         public virtual void SendReqInventoryMoveMessage(uint FromID, uint ToID)
         {
             // create message instance

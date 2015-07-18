@@ -67,9 +67,6 @@ namespace Meridian59 { namespace Ogre
 			widget->setProperty(UI_PROPNAME_FRAMEENABLED, "True");
 			widget->setProperty(UI_PROPNAME_BACKGROUNDENABLED, "True");
 
-#ifdef _DEBUG
-			widget->setText(CEGUI::PropertyHelper<int>::toString(i));
-#endif
 			// subscribe events
 			dragger->subscribeEvent(CEGUI::DragContainer::EventDragEnded, CEGUI::Event::Subscriber(UICallbacks::Inventory::OnDragEnded));
 			dragger->subscribeEvent(CEGUI::DragContainer::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Inventory::OnItemClicked));
@@ -140,6 +137,19 @@ namespace Meridian59 { namespace Ogre
 		if ((int)List->getChildCount() > Index &&
 			imageComposers->Length > Index)
 		{		
+			// if not added at the end, rearrange by moving all forward once
+			if (Index < OgreClient::Singleton->Data->InventoryObjects->Count - 1)
+				for (int i = OgreClient::Singleton->Data->InventoryObjects->Count - 1; i >= Index; i--)
+				{
+					// swap views
+					List->swapChildren(
+						List->getChildAtIdx(i),
+						List->getChildAtIdx(i + 1));
+
+					SwapImageComposers(i, i + 1);
+				}
+
+
 			CEGUI::DragContainer* dragger = (CEGUI::DragContainer*)List->getChildAtIdx(Index);
 			CEGUI::Window* imgButton = dragger->getChildAtIdx(0);
 			
@@ -377,14 +387,10 @@ namespace Meridian59 { namespace Ogre
 							(int)toIndex < 0 || (int)toIndex >= dataModels->Count)
 							return true;
 
-						// swap views
-						ControllerUI::Inventory::List->swapChildren(dataView, destDrag);
-						
-						// swap composers
-						ControllerUI::Inventory::SwapImageComposers(fromIndex, toIndex);
-
-						// swap datamodels
-						dataModels->Swap(fromIndex, toIndex);
+						// remove and reinsert at position
+						InventoryObject^ obj = dataModels[fromIndex];
+						dataModels->RemoveAt(fromIndex);
+						dataModels->Insert(toIndex, obj);
 
 						// tell server
 						OgreClient::Singleton->SendReqInventoryMoveMessage(
