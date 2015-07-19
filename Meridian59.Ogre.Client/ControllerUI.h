@@ -1679,6 +1679,8 @@ namespace Meridian59 { namespace Ogre
 
 			static bool OnAliasAddClicked(const CEGUI::EventArgs& e);
 			static bool OnAliasDeleteClicked(const CEGUI::EventArgs& e);
+			static bool OnAliasKeyAccepted(const CEGUI::EventArgs& e);
+			static bool OnAliasValueAccepted(const CEGUI::EventArgs& e);
 		};
 	};
 #pragma endregion

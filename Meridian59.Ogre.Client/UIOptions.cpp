@@ -808,7 +808,11 @@ namespace Meridian59 { namespace Ogre
 
 		// copy&paste for alias values
 		key->subscribeEvent(CEGUI::Editbox::EventKeyDown, CEGUI::Event::Subscriber(UICallbacks::OnCopyPasteKeyDown));
+		key->subscribeEvent(CEGUI::Editbox::EventTextAccepted, CEGUI::Event::Subscriber(UICallbacks::Options::OnAliasKeyAccepted));
+		key->subscribeEvent(CEGUI::Editbox::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnAliasKeyAccepted));
 		value->subscribeEvent(CEGUI::Editbox::EventKeyDown, CEGUI::Event::Subscriber(UICallbacks::OnCopyPasteKeyDown));
+		value->subscribeEvent(CEGUI::Editbox::EventTextAccepted, CEGUI::Event::Subscriber(UICallbacks::Options::OnAliasValueAccepted));
+		value->subscribeEvent(CEGUI::Editbox::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnAliasValueAccepted));
 
 		// insert in ui-list
 		if ((int)ListAliases->getItemCount() > Index)
@@ -1980,6 +1984,34 @@ namespace Meridian59 { namespace Ogre
 		size_t idx = list->getItemIndex((CEGUI::ItemEntry*)btn->getParent());
 
 		OgreClient::Singleton->Config->Aliases->RemoveAt(idx);
+
+		return true;
+	};
+
+	bool UICallbacks::Options::OnAliasKeyAccepted(const CEGUI::EventArgs& e)
+	{
+		const CEGUI::WindowEventArgs& args = (const CEGUI::WindowEventArgs&)e;
+		const CEGUI::Editbox* box = (const CEGUI::Editbox*)args.window;
+
+		CEGUI::ItemListbox* list = ControllerUI::Options::ListAliases;
+		size_t idx = list->getItemIndex((CEGUI::ItemEntry*)box->getParent());
+
+		if (OgreClient::Singleton->Config->Aliases->Count > (int)idx)
+			OgreClient::Singleton->Config->Aliases[idx]->Key = StringConvert::CEGUIToCLR(box->getText());
+
+		return true;
+	};
+
+	bool UICallbacks::Options::OnAliasValueAccepted(const CEGUI::EventArgs& e)
+	{
+		const CEGUI::WindowEventArgs& args = (const CEGUI::WindowEventArgs&)e;
+		const CEGUI::Editbox* box = (const CEGUI::Editbox*)args.window;
+
+		CEGUI::ItemListbox* list = ControllerUI::Options::ListAliases;
+		size_t idx = list->getItemIndex((CEGUI::ItemEntry*)box->getParent());
+
+		if (OgreClient::Singleton->Config->Aliases->Count > (int)idx)
+			OgreClient::Singleton->Config->Aliases[idx]->Value = StringConvert::CEGUIToCLR(box->getText());
 
 		return true;
 	};
