@@ -189,6 +189,10 @@ namespace Meridian59.Protocol
                     HandleSpellsMessage((SpellsMessage)Message);
                     break;
 
+                case MessageTypeGameMode.SpellAdd:                              // 142
+                    HandleSpellAddMessage((SpellAddMessage)Message);
+                    break;
+
                 case MessageTypeGameMode.AddEnchantment:                        // 147
                     HandleAddEnchantmentMessage((AddEnchantmentMessage)Message);
                     break;
@@ -331,6 +335,15 @@ namespace Meridian59.Protocol
                 obj.ResolveResources(resourceManager, false);
                 obj.DecompressResources();
             }
+        }
+
+        protected virtual void HandleSpellAddMessage(SpellAddMessage Message)
+        {
+            if (Message.NewSpellObject != null)
+            {
+                Message.NewSpellObject.ResolveResources(resourceManager, false);
+                Message.NewSpellObject.DecompressResources();
+            }            
         }
 
         protected virtual void HandleAddEnchantmentMessage(AddEnchantmentMessage Message)
