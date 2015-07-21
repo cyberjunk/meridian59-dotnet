@@ -10,8 +10,8 @@ namespace Meridian59 { namespace Ogre
 		
         // create billboardset
         billboardSet = SceneManager->createBillboardSet(ostr_name);
-        billboardSet->setBillboardType(BillboardType::BBT_POINT);
-		
+        billboardSet->setBillboardType(BillboardType::BBT_ORIENTED_SELF);
+
 		// note: IsHanging overlaps with some playertypes
 		// workaround: must not have set IsPlayer also
 		billboardSet->setBillboardOrigin(
@@ -31,6 +31,7 @@ namespace Meridian59 { namespace Ogre
         // create billboard to draw image on
         billboard = billboardSet->createBillboard(::Ogre::Vector3::ZERO);
         billboard->setColour(ColourValue::ZERO);
+		billboard->mDirection = ::Ogre::Vector3::UNIT_Y;
 
         // attach to scenenode        
         SceneNode->attachObject(billboardSet);
