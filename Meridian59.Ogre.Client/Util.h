@@ -31,7 +31,7 @@
 #include "CEGUI/RendererModules/Ogre/Renderer.h"
 #pragma managed(pop)
 
-#include "StringDefines.h"
+#include "Constants.h"
 
 namespace Meridian59 { namespace Ogre 
 {

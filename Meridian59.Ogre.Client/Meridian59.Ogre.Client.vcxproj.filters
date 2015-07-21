@@ -87,9 +87,6 @@
     <ClInclude Include="StringConvert.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="StringDefines.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
     <ClInclude Include="Util.h">
       <Filter>Headers</Filter>
     </ClInclude>
@@ -112,6 +109,9 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="OgreClientConfig.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Constants.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

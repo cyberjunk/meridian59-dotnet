@@ -21,7 +21,7 @@
 #include "CEGUI/String.h"
 #pragma managed(pop)
 
-#include "StringDefines.h"
+#include "Constants.h"
 #include <msclr/marshal.h>
 
 namespace Meridian59 { namespace Ogre 

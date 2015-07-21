@@ -32,7 +32,7 @@
 
 #include "Util.h"
 #include "StringConvert.h"
-#include "StringDefines.h"
+#include "Constants.h"
 #include "RemoteNode.h"
 #include "RemoteNode2D.h"
 #include "RemoteNode3D.h"

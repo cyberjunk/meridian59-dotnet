@@ -31,7 +31,7 @@
 #pragma managed(pop)
 
 #include "resource.h"
-#include "StringDefines.h"
+#include "Constants.h"
 #include "StringConvert.h"
 #include "ControllerSound.h"
 #include "ControllerInput.h"

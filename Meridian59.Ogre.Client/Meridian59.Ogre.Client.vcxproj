@@ -257,7 +257,7 @@
     <ClInclude Include="ResourceManagerOgre.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="StringConvert.h" />
-    <ClInclude Include="StringDefines.h" />
+    <ClInclude Include="Constants.h" />
     <ClInclude Include="Util.h" />
     <ClInclude Include="XmlReaderExtensions.h" />
   </ItemGroup>
