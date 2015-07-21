@@ -1366,6 +1366,81 @@ namespace Meridian59.Data.Models
         }
 
         /// <summary>
+        /// Sets attributes such as Might, Stamina, ... to a
+        /// predefined set suitable for mages.
+        /// </summary>
+        public void SetAttributesToMage()
+        {
+            // set to 0 first
+            Might = Intellect = Stamina = Agility = Mysticism = Aim = ATTRIBUTE_MINVALUE;
+#if !VANILLA
+            Might       = 40;
+            Intellect   = 50;
+            Stamina     = 45;
+            Agility     = 15;
+            Mysticism   = 45;
+            Aim         = 5;
+#else           
+            Might       = 35;
+            Intellect   = 40;
+            Stamina     = 50;
+            Agility     = 15;
+            Mysticism   = 45;
+            Aim         = 15;
+#endif
+        }
+
+        /// <summary>
+        /// Sets attributes such as Might, Stamina, ... to a
+        /// predefined set suitable for warriors.
+        /// </summary>
+        public void SetAttributesToWarrior()
+        {
+            // set to 0 first
+            Might = Intellect = Stamina = Agility = Mysticism = Aim = ATTRIBUTE_MINVALUE;
+#if !VANILLA
+            Might       = 40;
+            Intellect   = 10;
+            Stamina     = 50;
+            Agility     = 40;
+            Mysticism   = 10;
+            Aim         = 50;
+#else           
+            Might       = 50;
+            Intellect   = 10;
+            Stamina     = 50;
+            Agility     = 30;
+            Mysticism   = 10;
+            Aim         = 50;
+#endif
+        }
+
+        /// <summary>
+        /// Sets attributes such as Might, Stamina, ... to a
+        /// predefined set suitable for hybrids.
+        /// </summary>
+        public void SetAttributesToHybrid()
+        {
+            // set to 0 first
+            Might = Intellect = Stamina = Agility = Mysticism = Aim = ATTRIBUTE_MINVALUE;
+#if !VANILLA
+            Might       = 40;
+            Intellect   = 25;
+            Stamina     = 50;
+            Agility     = 15;
+            Mysticism   = 35;
+            Aim         = 35;
+#else           
+            Might       = 40;
+            Intellect   = 25;
+            Stamina     = 35;
+            Agility     = 25;
+            Mysticism   = 35;
+            Aim         = 40;
+#endif
+        }
+
+        /// <summary>
         /// Adjusts the ExampleModel instance
         /// </summary>
         /// <param name="Gender"></param>
