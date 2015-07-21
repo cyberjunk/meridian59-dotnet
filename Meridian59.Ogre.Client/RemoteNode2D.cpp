@@ -11,6 +11,7 @@ namespace Meridian59 { namespace Ogre
         // create billboardset
         billboardSet = SceneManager->createBillboardSet(ostr_name);
         billboardSet->setBillboardType(BillboardType::BBT_ORIENTED_SELF);
+		billboardSet->setUseAccurateFacing(true);
 
 		// note: IsHanging overlaps with some playertypes
 		// workaround: must not have set IsPlayer also
