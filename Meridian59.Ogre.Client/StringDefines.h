@@ -436,6 +436,8 @@
 #define UI_NAME_AVATARCREATEWIZARD_MOUTH			"AvatarCreateWizard.Mouth"
 #define UI_NAME_AVATARCREATEWIZARD_DESCRIPTIONDESC	"AvatarCreateWizard.DescriptionDescription"
 #define UI_NAME_AVATARCREATEWIZARD_DESCRIPTION		"AvatarCreateWizard.Description"
+#define UI_NAME_AVATARCREATEWIZARD_PROFILES			"AvatarCreateWizard.Profiles"
+#define UI_NAME_AVATARCREATEWIZARD_PROFILESDESC		"AvatarCreateWizard.ProfilesDescription"
 #define UI_NAME_AVATARCREATEWIZARD_MIGHT			"AvatarCreateWizard.Might"
 #define UI_NAME_AVATARCREATEWIZARD_MIGHTDESC		"AvatarCreateWizard.MightDescription"
 #define UI_NAME_AVATARCREATEWIZARD_INTELLECT		"AvatarCreateWizard.Intellect"
@@ -604,6 +606,11 @@
 #define UI_NAME_OPTIONS_TABABOUT_TABHISTORY_IMAGEREVELATION		"Options.TabAbout.TabHistory.ImageRevelation"
 #define UI_NAME_OPTIONS_TABABOUT_TABHISTORY_IMAGEVALEOFSORROW	"Options.TabAbout.TabHistory.ImageValeOfSorrow"
 #define UI_NAME_OPTIONS_TABABOUT_TABHISTORY_IMAGETHEINTERNETQUESTBEGINS	"Options.TabAbout.TabHistory.ImageTheInternetQuestBegins"
+
+#define UI_AVATARCREATEWIZARD_PROFILE_CUSTOM	"Custom"
+#define UI_AVATARCREATEWIZARD_PROFILE_WARRIOR	"Warrior"
+#define UI_AVATARCREATEWIZARD_PROFILE_MAGE		"Mage"
+#define UI_AVATARCREATEWIZARD_PROFILE_HYBRID	"Hybrid"
 
 #define UI_BUFFICON_WIDTH					16
 #define UI_BUFFICON_HEIGHT					16

@@ -37,6 +37,8 @@ namespace Meridian59 { namespace Ogre
 		Description		= static_cast<CEGUI::MultiLineEditbox*>(TabBasic->getChild(UI_NAME_AVATARCREATEWIZARD_DESCRIPTION));
 		
 		// Controls in TabAttributes
+		ProfilesDesc	= static_cast<CEGUI::Window*>(TabAttributes->getChild(UI_NAME_AVATARCREATEWIZARD_PROFILESDESC));
+		Profiles		= static_cast<CEGUI::Combobox*>(TabAttributes->getChild(UI_NAME_AVATARCREATEWIZARD_PROFILES));
 		MightDesc		= static_cast<CEGUI::Window*>(TabAttributes->getChild(UI_NAME_AVATARCREATEWIZARD_MIGHTDESC));
 		Might			= static_cast<CEGUI::ProgressBar*>(TabAttributes->getChild(UI_NAME_AVATARCREATEWIZARD_MIGHT));
 		IntellectDesc	= static_cast<CEGUI::Window*>(TabAttributes->getChild(UI_NAME_AVATARCREATEWIZARD_INTELLECTDESC));
@@ -89,6 +91,14 @@ namespace Meridian59 { namespace Ogre
 		imageComposerHead->NewImageAvailable += gcnew ::System::EventHandler(OnNewHeadImageAvailable);
 		imageComposerHead->DataSource = info->ExampleModel;
 
+		// Profiles for attributes
+		Profiles->addItem(new::CEGUI::ListboxTextItem(UI_AVATARCREATEWIZARD_PROFILE_CUSTOM));
+		Profiles->addItem(new::CEGUI::ListboxTextItem(UI_AVATARCREATEWIZARD_PROFILE_WARRIOR));
+		Profiles->addItem(new::CEGUI::ListboxTextItem(UI_AVATARCREATEWIZARD_PROFILE_MAGE));
+		Profiles->addItem(new::CEGUI::ListboxTextItem(UI_AVATARCREATEWIZARD_PROFILE_HYBRID));
+		Profiles->setText(UI_AVATARCREATEWIZARD_PROFILE_CUSTOM);
+		Profiles->selectListItemWithEditboxText();
+
 		// initial attributes		
 		Might->setProgress((float)info->Might / (float)CharCreationInfo::ATTRIBUTE_MAXVALUE);
 		Might->setText(CEGUI::PropertyHelper<unsigned int>::toString(info->Might) + "/" + CEGUI::PropertyHelper<unsigned int>::toString(CharCreationInfo::ATTRIBUTE_MAXVALUE));
@@ -140,6 +150,9 @@ namespace Meridian59 { namespace Ogre
 		Eyes->subscribeEvent(CEGUI::Slider::EventValueChanged, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnFaceSettingChanged));
 		Nose->subscribeEvent(CEGUI::Slider::EventValueChanged, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnFaceSettingChanged));
 		Mouth->subscribeEvent(CEGUI::Slider::EventValueChanged, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnFaceSettingChanged));
+
+		// subscribe profilesbox
+		Profiles->subscribeEvent(CEGUI::Combobox::EventListSelectionAccepted, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnProfileChanged));
 
 		// subscribe attributes
 		Might->subscribeEvent(CEGUI::ProgressBar::EventMouseMove, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeMouseMoveClick));
@@ -740,6 +753,30 @@ namespace Meridian59 { namespace Ogre
 		
 		return true;
 	};
+	
+	bool UICallbacks::AvatarCreateWizard::OnProfileChanged(const CEGUI::EventArgs& e)
+	{
+		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
+		const CEGUI::Combobox* combobox		= (const CEGUI::Combobox*)args.window;
+
+		::System::String^ newval = StringConvert::CEGUIToCLR(combobox->getText());
+		
+		if (!newval || newval == STRINGEMPTY)
+			return true;
+
+		CharCreationInfo^ data = OgreClient::Singleton->Data->CharCreationInfo;
+
+		if (newval == UI_AVATARCREATEWIZARD_PROFILE_WARRIOR)
+			data->SetAttributesToWarrior();
+		
+		else if (newval == UI_AVATARCREATEWIZARD_PROFILE_MAGE)
+			data->SetAttributesToMage();
+
+		else if (newval == UI_AVATARCREATEWIZARD_PROFILE_HYBRID)
+			data->SetAttributesToHybrid();
+
+		return true;
+	};
 
 	bool UICallbacks::AvatarCreateWizard::OnAttributeMouseMoveClick(const CEGUI::EventArgs& e)
 	{
@@ -771,6 +808,9 @@ namespace Meridian59 { namespace Ogre
 
 			else if (args.window == ControllerUI::AvatarCreateWizard::Aim)			
 				OgreClient::Singleton->Data->CharCreationInfo->Aim = val;
+
+			ControllerUI::AvatarCreateWizard::Profiles->setText(UI_AVATARCREATEWIZARD_PROFILE_CUSTOM);
+			ControllerUI::AvatarCreateWizard::Profiles->selectListItemWithEditboxText();
 		}
 
 		return true;

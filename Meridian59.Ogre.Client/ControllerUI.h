@@ -914,6 +914,8 @@ namespace Meridian59 { namespace Ogre
 			static ::CEGUI::Window* DescriptionDesc = nullptr;
 			static ::CEGUI::MultiLineEditbox* Description = nullptr;
 			
+			static ::CEGUI::Window* ProfilesDesc = nullptr;
+			static ::CEGUI::Combobox* Profiles = nullptr;
 			static ::CEGUI::Window* MightDesc = nullptr;
 			static ::CEGUI::ProgressBar* Might = nullptr;
 			static ::CEGUI::Window* IntellectDesc = nullptr;
@@ -1576,6 +1578,7 @@ namespace Meridian59 { namespace Ogre
 			static bool OnFaceSettingChanged(const CEGUI::EventArgs& e);
 			static bool OnGenderChanged(const CEGUI::EventArgs& e);
 
+			static bool OnProfileChanged(const CEGUI::EventArgs& e);
 			static bool OnAttributeMouseMoveClick(const CEGUI::EventArgs& e);
 			
 			static bool OnSpellDoubleClicked(const CEGUI::EventArgs& e);
