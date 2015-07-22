@@ -856,66 +856,58 @@ namespace Meridian59.Files.ROO
         /// <param name="End">A 2D location</param>
         /// <param name="PlayerHeight">Height of the player for ceiling collisions</param>
         /// <returns></returns>
-        public bool IsBlocking(V3 Start, V2 End, Real PlayerHeight)
-        {
-            V2 Start2D = new V2(Start.X, Start.Z);
+        public bool IsBlockingMove(V3 Start, V2 End, Real PlayerHeight)
+        {          
+            // get distance to finite line segment
+            Real dist = End.MinSquaredDistanceToLineSegment(P1, P2);
 
-            // calculate the sides of the points (returns -1, 0 or 1)
-            int startside = Start2D.GetSide(P1, P2);
-            int endside = End.GetSide(P1, P2);
+            // far enough away
+            if (dist >= GeometryConstants.WALLMINDISTANCE2)
+                return false;
 
-            // if points are not on same side
-            // the infinite lines cross
-            if (startside != endside)
-            {
-                // verify also the finite line segments cross
-                V2 intersect;
+            /*************************************************************************/
 
-                LineLineIntersectionType intersecttype = 
-                    MathUtil.IntersectLineLine(Start2D, End, P1, P2, out intersect);
+            // we're 'too' close, must check for passable-flag, stepheight, head-collision
+            V2 start2D      = new V2(Start.X, Start.Z);
+            int startside   = start2D.GetSide(P1, P2);
+            Real endheight;
 
-                if (intersecttype == LineLineIntersectionType.OneIntersection ||
-                    intersecttype == LineLineIntersectionType.OneBoundaryPoint ||
-                    intersecttype == LineLineIntersectionType.FullyCoincide ||
-                    intersecttype == LineLineIntersectionType.PartiallyCoincide)
-                {
-                    // verify the side we've crossed is flaggged as "nonpassable"
-                    // if so, we actually have a collision
-                    if ((startside < 0 && LeftSide != null && !LeftSide.Flags.IsPassable) ||
-                        (startside > 0 && RightSide != null && !RightSide.Flags.IsPassable))
-                    {
-                        return true;
-                    }
+            /*************************************************************************/
+            
+            // check if the 'start' side is marked as non-passable
+            if ((startside < 0 && LeftSide != null && !LeftSide.Flags.IsPassable) ||
+                (startside > 0 && RightSide != null && !RightSide.Flags.IsPassable))
+                return true;         
 
-                    // still check the stepheight from oldheight to new floor if passable
-                    // for too high steps                    
-                    Real endheight = 0.0f;
-                    Real diff;
+            /*************************************************************************/
 
-                    if (endside <= 0 && LeftSector != null)
-                        endheight = LeftSector.CalculateFloorHeight((int)End.X, (int)End.Y, true);
+            // check the floor heights
+            endheight = 0.0f;
 
-                    else if (endside > 0 && RightSector != null)
-                        endheight = RightSector.CalculateFloorHeight((int)End.X, (int)End.Y, true);
+            if (startside >= 0 && LeftSector != null)
+                endheight = LeftSector.CalculateFloorHeight(End.X, End.Y, true);
 
-                    diff = endheight - Start.Y;
+            else if (startside < 0 && RightSector != null)
+                endheight = RightSector.CalculateFloorHeight(End.X, End.Y, true);
 
-                    // diff is bigger than max. step height, we have a collision
-                    if (diff > GeometryConstants.MAXSTEPHEIGHT)                   
-                        return true;
+            if (endheight - Start.Y > GeometryConstants.MAXSTEPHEIGHT)
+                return true;
+            
+            /*************************************************************************/
 
-                    // check the ceiling heights
-                    if (endside <= 0 && LeftSector != null)
-                        endheight = LeftSector.CalculateCeilingHeight((int)End.X, (int)End.Y);
+            // check the ceiling heights
+            endheight = 0.0f;
+            
+            if (startside >= 0 && LeftSector != null)
+                endheight = LeftSector.CalculateCeilingHeight(End.X, End.Y);
 
-                    else if (endside > 0 && RightSector != null)
-                        endheight = RightSector.CalculateCeilingHeight((int)End.X, (int)End.Y);
+            else if (startside < 0 && RightSector != null)
+                endheight = RightSector.CalculateCeilingHeight(End.X, End.Y);
 
-                    // diff is bigger than max. step height, we have a collision
-                    if (endheight < Start.Y + PlayerHeight)
-                        return true;
-                }
-            }
+            if (endheight < Start.Y + PlayerHeight)
+                return true;
+
+            /*************************************************************************/
 
             return false;
         }

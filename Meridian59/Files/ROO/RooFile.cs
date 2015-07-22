@@ -1468,67 +1468,111 @@ namespace Meridian59.Files.ROO
         /// returns a possibly adjusted movement vector to use instead.
         /// This might be a slide along a wall or a zero-vector for a full block.
         /// </summary>
-        /// <param name="Start">Startpoint of movement (in ROO coords)</param>
-        /// <param name="End">Endpoint of movement (in ROO coords)</param>
+        /// <param name="Start">Startpoint of movement. In FINENESS units (1:1024), Y is height.</param>
+        /// <param name="End">Endpoint of movement. In FINENESS units (1:1024).</param>
         /// <param name="PlayerHeight">Height of the player for ceiling collisions</param>
         /// <returns>Same or adjusted delta vector between Start and end (in ROO coords)</returns>
         public V2 VerifyMove(V3 Start, V2 End, Real PlayerHeight)
         {                       
             V2 Start2D = new V2(Start.X, Start.Z);
+            V2 newend = End;           
+            V2 rot;
+            RooWall wall;
 
-            // the move, if everything OK with this move
-            // this is the untouched return
-            V2 diff = End - Start2D;
+            const int MAXATTEMPTS = 8;
+            const Real ANGLESTEP = GeometryConstants.QUARTERPERIOD / 8;
 
-            // an extension to the delta for min. wall distance
-            V2 ext = diff.Clone();
-            ext.ScaleToLength(GeometryConstants.WALLMINDISTANCE);
+            /**************************************************************/
+
+            // first collision check
+            wall = VerifyMoveByTree(BSPTree[0], Start, End, PlayerHeight);
             
-            // this holds a possible collision wall
-            RooWall intersectWall = VerifyMoveTree(BSPTree[0], Start, End + ext, PlayerHeight);
+            // no collision with untouched move
+            if (wall == null)
+                return End - Start2D;
 
-            // if there was an intersection, try to slide along wall
-            if (intersectWall != null)
+            /**************************************************************/
+
+            // try to slide along collision wall
+            newend  = wall.SlideAlong(Start2D, End);
+            wall    = VerifyMoveByTree(BSPTree[0], Start, newend, PlayerHeight);
+            
+            // no collision with 'slide along' move
+            if (wall == null)
+                return newend - Start2D;
+           
+            /**************************************************************/
+
+            // try find another collision wall
+            wall = VerifyMoveByTree(BSPTree[0], Start, End, PlayerHeight, wall);
+
+            if (wall != null)
             {
-                V2 newend = intersectWall.SlideAlong(Start2D, End);
-                diff = newend - Start2D;
+                // try to slide along other collision wall
+                newend  = wall.SlideAlong(Start2D, End);
+                wall    = VerifyMoveByTree(BSPTree[0], Start, newend, PlayerHeight);
 
-                // an extension to the delta for min. wall distance
-                ext = diff.Clone();
-                ext.ScaleToLength(GeometryConstants.WALLMINDISTANCE);
-
-                // recheck slide for intersect with other walls
-                // this is necessary in case you get into a corner
-                // to not slide through other wall there
-                if (VerifyMoveTree(BSPTree[0], Start, newend + ext, PlayerHeight) != null)
-                {
-                    diff.X = 0;
-                    diff.Y = 0;
-                }
+                // slide along other collision wall was ok
+                if (wall == null)
+                    return newend - Start2D;          
             }
 
-            return diff;
+            /**************************************************************/
+
+            // sliding on collision walls does not work, try rotate a bit
+            for(int i = 0; i < MAXATTEMPTS; i++)
+            {
+                rot = End - Start2D;
+                rot.Rotate(-ANGLESTEP * (Real)i);
+                newend = Start2D + rot;
+
+                wall = VerifyMoveByTree(BSPTree[0], Start, newend, PlayerHeight);
+                
+                // no collision
+                if (wall == null)
+                    return newend - Start2D;
+
+                rot = End - Start2D;
+                rot.Rotate(ANGLESTEP * (Real)i);
+                newend = Start2D + rot;
+
+                wall = VerifyMoveByTree(BSPTree[0], Start, newend, PlayerHeight);
+
+                // no collision
+                if (wall == null)
+                    return newend - Start2D;
+            }
+
+            return new V2(0.0f, 0.0f);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Start"></param>
+        /// <param name="End"></param>
+        /// <param name="PlayerHeight"></param>
+        /// <returns></returns>
+        protected RooWall VerifyMoveByList(V3 Start, V2 End, Real PlayerHeight)
+        {
+            foreach (RooWall wall in Walls)
+                if (wall.IsBlockingMove(Start, End, PlayerHeight))
+                    return wall;
+
+            return null;
         }
 
         /// <summary>
         /// Collisions with wall segments for user movements using the BSP tree.
         /// Therefore with logarithmic rather than linear costs.
         /// </summary>
-        /// <remarks>
-        /// The algorithm goes like this (starts at root)
-        /// (1) Get the sides of both endpoints (start, end) using the splitter (node)
-        /// (2) If both endpoints are on the same side, there is no collision with any wall in the splitter
-        ///     and only one of the two subtrees must be visited then.
-        /// (3) If there is an intersection with the infinite splitter, check the finite wall segments
-        ///     in the splitter for intersection. If none found, split up the vector (start, end) at the intersection
-        ///     and recusively start again for both subtrees using the just created two chunks of start vector.
-        /// </remarks>
         /// <param name="Node"></param>
         /// <param name="Start"></param>
         /// <param name="End"></param>
         /// <param name="PlayerHeight"></param>
+        /// <param name="IgnoreWall"></param>
         /// <returns></returns>
-        protected RooWall VerifyMoveTree(RooBSPItem Node, V3 Start, V2 End, Real PlayerHeight)
+        protected RooWall VerifyMoveByTree(RooBSPItem Node, V3 Start, V2 End, Real PlayerHeight, RooWall IgnoreWall = null)
         {
             if (Node == null || Node.Type != RooBSPItem.NodeType.Node)
                 return null;
@@ -1536,85 +1580,37 @@ namespace Meridian59.Files.ROO
             /*************************************************************/
 
             RooPartitionLine line = (RooPartitionLine)Node;
-            
-            int side1 = Math.Sign(line.A * Start.X + line.B * Start.Z + line.C);
-            int side2 = Math.Sign(line.A * End.X + line.B * End.Y + line.C);
+            RooWall wall = line.Wall;
+            V2 start2D = new V2(Start.X, Start.Z);
 
             /*************************************************************/
+            
+            // check node boundingbox
+            if (!line.BoundingBox.IsInside(End, GeometryConstants.WALLMINDISTANCE) && 
+                !line.BoundingBox.IsInside(start2D, GeometryConstants.WALLMINDISTANCE))
+                return null;
+       
+            /*************************************************************/
 
-            // both endpoints on the same side of splitter -> no intersection
-            // climb down only one of the two subtrees of the node
-            if (side1 == side2 && side1 != 0)
+            // test walls of splitter
+            while (wall != null)
             {
-                // left
-                if (side1 < 0)
-                    return VerifyMoveTree(line.LeftChild, Start, End, PlayerHeight);
+                if (wall != IgnoreWall && wall.IsBlockingMove(Start, End, PlayerHeight))
+                    return wall;
 
-                // right
-                else
-                    return VerifyMoveTree(line.RightChild, Start, End, PlayerHeight);
+                // loop over next wall in same plane
+                wall = wall.NextWallInPlane;
             }
 
             /*************************************************************/
 
-            // endpoints are on different sides or both on infinite line
+            RooWall wl = VerifyMoveByTree(line.LeftChild, Start, End, PlayerHeight, IgnoreWall);
+
+            if (wl != null)
+                return wl;
+
             else
-            {
-                RooWall wall = line.Wall;
-                V2 intersect;
-                V2 start2D = new V2(Start.X, Start.Z);
-
-                if (wall == null)
-                    return null;
-
-                /*************************************************************/
-
-                // intersect with infinite splitter
-                LineInfiniteLineIntersectionType typ =
-                    MathUtil.IntersectLineInfiniteLine(start2D, End, wall.P1, wall.P2, out intersect);
-
-                /*************************************************************/
-
-                // see if intersection with infinite splitter is on a wall segment in plane
-                while (wall != null)
-                {
-                    if (wall.IsBlocking(Start, End, PlayerHeight))
-                        return wall;
-
-                    // loop over next wall in same plane
-                    wall = wall.NextWallInPlane;
-                }
-
-                /*************************************************************/
-                
-                // no finite wallsegment in splitter plane intersects:
-                // if vector is fully in splitter, we're done
-                if (side1 == 0 && side2 == 0)
-                    return null;
-
-                // otherwise split up the vector in left and right half
-                // and possible check both
-                else if (side1 < 0 && side2 > 0)
-                {
-                    RooWall wl = VerifyMoveTree(line.LeftChild, Start, intersect, PlayerHeight);
-
-                    if (wl != null)
-                        return wl;
-
-                    else
-                        return VerifyMoveTree(line.RightChild, new V3(intersect.X, Start.Y, intersect.Y), End, PlayerHeight);
-                }
-                else
-                {
-                    RooWall wl = VerifyMoveTree(line.RightChild, Start, intersect, PlayerHeight);
-
-                    if (wl != null)
-                        return wl;
-
-                    else
-                        return VerifyMoveTree(line.LeftChild, new V3(intersect.X, Start.Y, intersect.Y), End, PlayerHeight);
-                }
-            }        
+                return VerifyMoveByTree(line.RightChild, Start, End, PlayerHeight, IgnoreWall);
         }
 
         /// <summary>
