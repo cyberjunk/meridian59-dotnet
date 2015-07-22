@@ -329,5 +329,17 @@ namespace Meridian59.Files.ROO
                 LeftChild = RooFile.BSPTree[Left - 1];
             }
         }
+
+        /// <summary>
+        /// Returns the distance of point P from this infinite splitter line.
+        /// Uses the line equation coefficients from properties (A,B,C).
+        /// Sign of value gives the side.
+        /// </summary>
+        /// <param name="P"></param>
+        /// <returns></returns>
+        public Real GetDistance(V2 P)
+        {
+            return A * P.X + B * P.Y + C;
+        }
     }
 }

@@ -1663,32 +1663,43 @@ namespace Meridian59.Files.ROO
 
             /*************************************************************/
 
-            // check node boundingbox
-            //if (!line.BoundingBox.IsInside(end2D) &&
-            //    !line.BoundingBox.IsInside(start2D))
-            //    return true;
+            Real startDist  = line.GetDistance(start2D);
+            Real endDist    = line.GetDistance(end2D);
 
             /*************************************************************/
 
-            // test walls of splitter
-            while (wall != null)
-            {
-                if (wall.IsBlockingSight(Start, End))
-                    return false;
+            // both endpoints on negative side
+            if (startDist < 0.0f && endDist < 0.0f)
+                return VerifySightByTree(line.LeftChild, Start, End);
 
-                // loop over next wall in same plane
-                wall = wall.NextWallInPlane;
-            }
-
-            /*************************************************************/
-
-            bool wl = VerifySightByTree(line.LeftChild, Start, End);
-
-            if (wl == false)
-                return wl;
-
-            else
+            // both endpoints on positive side
+            else if (startDist > 0.0f && endDist > 0.0f)
                 return VerifySightByTree(line.RightChild, Start, End);
+
+            // crosses infinite splitter or one or both points on splitter
+            else
+            {
+                // test walls of splitter
+                while (wall != null)
+                {
+                    if (wall.IsBlockingSight(Start, End))
+                        return false;
+
+                    // loop over next wall in same plane
+                    wall = wall.NextWallInPlane;
+                }
+
+                // must climb down both subtrees, go left first
+                bool wl = VerifySightByTree(line.LeftChild, Start, End);
+
+                // return collision if already found
+                if (wl == false)
+                    return wl;
+
+                // try other subtree otherwise
+                else
+                    return VerifySightByTree(line.RightChild, Start, End);
+            }           
         }
 
         /// <summary>
