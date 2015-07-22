@@ -1664,9 +1664,9 @@ namespace Meridian59.Files.ROO
             /*************************************************************/
 
             // check node boundingbox
-            if (!line.BoundingBox.IsInside(end2D) &&
-                !line.BoundingBox.IsInside(start2D))
-                return true;
+            //if (!line.BoundingBox.IsInside(end2D) &&
+            //    !line.BoundingBox.IsInside(start2D))
+            //    return true;
 
             /*************************************************************/
 
