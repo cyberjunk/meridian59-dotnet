@@ -873,7 +873,7 @@ namespace Meridian59 { namespace Ogre
 			V2 direction = GetMoveVector();
 
 			// get the height of the avatar in ROO format
-			float playerheight = 0.9f * 16.0f * Avatar->SceneNode->_getWorldAABB().getSize().y;
+			float playerheight = 0.88f * 16.0f * Avatar->SceneNode->_getWorldAABB().getSize().y;
 				
 			// try to do the move (might get blocked)				
 			OgreClient::Singleton->TryMove(direction, (unsigned char)speed, playerheight);
