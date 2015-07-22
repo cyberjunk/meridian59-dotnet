@@ -18,6 +18,7 @@ using Meridian59.Common;
 using Meridian59.Common.Constants;
 using Meridian59.Common.Enums;
 using Meridian59.Common.Interfaces;
+using Meridian59.Files.BGF;
 using System;
 
 // Switch FP precision based on architecture
@@ -872,6 +873,7 @@ namespace Meridian59.Files.ROO
             int startside   = start2D.GetSide(P1, P2);
             int endside     = End.GetSide(P1, P2);
             Real endheight;
+            ushort bgfbmp;
 
             /*************************************************************************/
             // allow moving away from wall
@@ -896,27 +898,37 @@ namespace Meridian59.Files.ROO
 
             endheight = 0.0f;
 
-            if (startside >= 0 && LeftSector != null)
-                endheight = LeftSector.CalculateFloorHeight(End.X, End.Y, true);
+            if (startside >= 0)
+            {
+                endheight = (LeftSector != null) ? LeftSector.CalculateFloorHeight(End.X, End.Y, true) : 0.0f;
+                bgfbmp = (RightSide != null) ? RightSide.LowerTexture : (ushort)0;
+            }
+            else
+            {
+                endheight = (RightSector != null) ? RightSector.CalculateFloorHeight(End.X, End.Y, true) : 0.0f;
+                bgfbmp = (LeftSide != null) ? LeftSide.LowerTexture : (ushort)0;
+            }
 
-            else if (startside < 0 && RightSector != null)
-                endheight = RightSector.CalculateFloorHeight(End.X, End.Y, true);
-
-            if (endheight - Start.Y > GeometryConstants.MAXSTEPHEIGHT)
+            if (bgfbmp > 0 && (endheight - Start.Y > GeometryConstants.MAXSTEPHEIGHT))
                 return true;
             
             /*************************************************************************/
             // check head collision with ceiling
 
             endheight = 0.0f;
-            
-            if (startside >= 0 && LeftSector != null)
-                endheight = LeftSector.CalculateCeilingHeight(End.X, End.Y);
 
-            else if (startside < 0 && RightSector != null)
-                endheight = RightSector.CalculateCeilingHeight(End.X, End.Y);
+            if (startside >= 0)
+            {
+                endheight = (LeftSector != null) ? LeftSector.CalculateCeilingHeight(End.X, End.Y) : 0.0f;
+                bgfbmp = (RightSide != null) ? RightSide.UpperTexture : (ushort)0;
+            }
+            else
+            {
+                endheight = (RightSector != null) ? RightSector.CalculateCeilingHeight(End.X, End.Y) : 0.0f;
+                bgfbmp = (LeftSide != null) ? LeftSide.UpperTexture : (ushort)0;
+            }
 
-            if (endheight < Start.Y + PlayerHeight)
+            if (bgfbmp > 0 && (endheight < Start.Y + PlayerHeight))
                 return true;
 
             /*************************************************************************/
