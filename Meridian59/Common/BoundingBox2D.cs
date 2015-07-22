@@ -103,6 +103,19 @@ namespace Meridian59.Common
         }
 
         /// <summary>
+        /// Checks whether a point is inside the boundingbox
+        /// </summary>
+        /// <param name="P">Point to check</param>
+        /// <param name="Extent"></param>
+        /// <returns></returns>
+        public bool IsInside(V2 P, Real Extent = 0.0f)
+        {
+            return
+                P.X + Extent >= Min.X && P.X - Extent <= Max.X &&
+                P.Y + Extent >= Min.Y && P.Y - Extent <= Max.Y;
+        }
+
+        /// <summary>
         /// Overridden equals
         /// </summary>
         /// <param name="obj"></param>
