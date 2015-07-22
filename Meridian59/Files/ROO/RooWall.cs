@@ -858,30 +858,42 @@ namespace Meridian59.Files.ROO
         /// <returns></returns>
         public bool IsBlockingMove(V3 Start, V2 End, Real PlayerHeight)
         {          
-            // get distance to finite line segment
-            Real dist = End.MinSquaredDistanceToLineSegment(P1, P2);
+            // get distance of end to finite line segment
+            Real distEnd = End.MinSquaredDistanceToLineSegment(P1, P2);
 
-            // far enough away
-            if (dist >= GeometryConstants.WALLMINDISTANCE2)
+            // end is far enough away, no block
+            if (distEnd >= GeometryConstants.WALLMINDISTANCE2)
                 return false;
 
             /*************************************************************************/
-
-            // we're 'too' close, must check for passable-flag, stepheight, head-collision
+            // end is too 'too' close to wall
+            
             V2 start2D      = new V2(Start.X, Start.Z);
             int startside   = start2D.GetSide(P1, P2);
+            int endside     = End.GetSide(P1, P2);
             Real endheight;
 
             /*************************************************************************/
-            
-            // check if the 'start' side is marked as non-passable
+            // allow moving away from wall
+
+            if (startside == endside)
+            { 
+                Real distStart = start2D.MinSquaredDistanceToLineSegment(P1, P2);
+
+                if (distEnd > distStart)
+                    return false;
+            }
+
+            /*************************************************************************/
+            // prevent moving through non-passable side
+
             if ((startside < 0 && LeftSide != null && !LeftSide.Flags.IsPassable) ||
                 (startside > 0 && RightSide != null && !RightSide.Flags.IsPassable))
                 return true;         
 
             /*************************************************************************/
+            // check step-height
 
-            // check the floor heights
             endheight = 0.0f;
 
             if (startside >= 0 && LeftSector != null)
@@ -894,8 +906,8 @@ namespace Meridian59.Files.ROO
                 return true;
             
             /*************************************************************************/
+            // check head collision with ceiling
 
-            // check the ceiling heights
             endheight = 0.0f;
             
             if (startside >= 0 && LeftSector != null)
