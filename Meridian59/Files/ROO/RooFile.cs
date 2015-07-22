@@ -1614,12 +1614,25 @@ namespace Meridian59.Files.ROO
         }
 
         /// <summary>
-        /// Verifies if any wall blocks a ray from Start to End
+        /// Verifies Line of Sight from Start to End.
+        /// Checking against Walls only (no sectors/ceilings).
         /// </summary>
         /// <param name="Start"></param>
         /// <param name="End"></param>
         /// <returns>True if OK, false if collision.</returns>
         public bool VerifySight(V3 Start, V3 End)
+        {
+            return VerifySightByTree(BSPTree[0], Start, End);
+            //return VerifySightByList(Start, End);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Start"></param>
+        /// <param name="End"></param>
+        /// <returns>True if OK, false if collision.</returns>
+        protected bool VerifySightByList(V3 Start, V3 End)
         {
             // look for blocking wall
             foreach (RooWall wall in Walls)            
@@ -1627,6 +1640,55 @@ namespace Meridian59.Files.ROO
                     return false;
                 
             return true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Node"></param>
+        /// <param name="Start"></param>
+        /// <param name="End"></param>
+        /// <returns>True if OK, false if collision.</returns>
+        protected bool VerifySightByTree(RooBSPItem Node, V3 Start, V3 End)
+        {
+            if (Node == null || Node.Type != RooBSPItem.NodeType.Node)
+                return true;
+
+            /*************************************************************/
+
+            RooPartitionLine line = (RooPartitionLine)Node;
+            RooWall wall = line.Wall;
+            V2 start2D = new V2(Start.X, Start.Z);
+            V2 end2D = new V2(End.X, End.Z);
+
+            /*************************************************************/
+
+            // check node boundingbox
+            if (!line.BoundingBox.IsInside(end2D) &&
+                !line.BoundingBox.IsInside(start2D))
+                return true;
+
+            /*************************************************************/
+
+            // test walls of splitter
+            while (wall != null)
+            {
+                if (wall.IsBlockingSight(Start, End))
+                    return false;
+
+                // loop over next wall in same plane
+                wall = wall.NextWallInPlane;
+            }
+
+            /*************************************************************/
+
+            bool wl = VerifySightByTree(line.LeftChild, Start, End);
+
+            if (wl == false)
+                return wl;
+
+            else
+                return VerifySightByTree(line.RightChild, Start, End);
         }
 
         /// <summary>
