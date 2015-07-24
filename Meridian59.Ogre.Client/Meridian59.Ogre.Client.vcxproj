@@ -215,6 +215,8 @@
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
       <CLRThreadAttribute>STAThreadingAttribute</CLRThreadAttribute>
       <MinimumRequiredVersion>6.00</MinimumRequiredVersion>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /E /R /Y $(ProjectDir)\..\Engine\dll\x64\* $(TargetDir)</Command>
