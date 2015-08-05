@@ -49,6 +49,11 @@ namespace Meridian59.Common
 			new LockingDictionary<uint, string>();
 
 		/// <summary>
+		/// Count property
+		/// </summary>
+		public uint Count { get { return (uint)dictionary.Count; } }
+
+		/// <summary>
 		/// Constructor
 		/// </summary>
  		public StringDictionary() : base()
@@ -115,6 +120,16 @@ namespace Meridian59.Common
 		public static uint CombineKeys(uint ResourceID, LanguageCode Language)
 		{
 			return ((uint)Language * BRACKETSIZE) + ResourceID;
+		}
+
+		public static LanguageCode GetLanguageFromCombined(uint CombinedKey)
+		{
+			return (LanguageCode)(CombinedKey / BRACKETSIZE);
+		}
+
+		public static uint GetResourceIDFromCombined(uint CombinedKey)
+		{
+			return (CombinedKey % BRACKETSIZE);
 		}
 	}
 }

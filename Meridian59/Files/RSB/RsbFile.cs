@@ -26,6 +26,7 @@ using Meridian59.Common.Interfaces;
 using Meridian59.Common.Constants;
 using Meridian59.Common;
 using Meridian59.Files.ROO;
+using Meridian59.Common.Enums;
 
 namespace Meridian59.Files.RSB
 {
@@ -67,8 +68,15 @@ namespace Meridian59.Files.RSB
             {
                 int len = TypeSizes.INT + TypeSizes.INT + TypeSizes.INT;
 			
-                foreach (KeyValuePair<uint, string> entry in StringResources)
-                    len += TypeSizes.INT + entry.Value.Length + TypeSizes.BYTE;
+				// old, no multilang
+				if (version <= VERSION4)
+					foreach (KeyValuePair<uint, string> entry in StringResources)
+						len += TypeSizes.INT + entry.Value.Length + TypeSizes.BYTE;
+				
+				// multilanguage (additional int)
+				else
+					foreach (KeyValuePair<uint, string> entry in StringResources)
+						len += TypeSizes.INT + TypeSizes.INT + entry.Value.Length + TypeSizes.BYTE;
 
                 return len;
             }
@@ -81,7 +89,7 @@ namespace Meridian59.Files.RSB
             Array.Copy(BitConverter.GetBytes(SIGNATURE), 0, Buffer, cursor, TypeSizes.INT);
             cursor += TypeSizes.INT;
 
-            Array.Copy(BitConverter.GetBytes(VERSION4), 0, Buffer, cursor, TypeSizes.INT);
+            Array.Copy(BitConverter.GetBytes(version), 0, Buffer, cursor, TypeSizes.INT);
             cursor += TypeSizes.INT;
 
             Array.Copy(BitConverter.GetBytes(StringResources.Count), 0, Buffer, cursor, TypeSizes.INT);
@@ -89,12 +97,25 @@ namespace Meridian59.Files.RSB
 
             foreach (KeyValuePair<uint, string> entry in StringResources)
             {
-                Array.Copy(BitConverter.GetBytes(entry.Key), 0, Buffer, cursor, TypeSizes.INT);
-                cursor += TypeSizes.INT;
+				uint key = StringDictionary.GetResourceIDFromCombined(entry.Key);
+				
+				Array.Copy(BitConverter.GetBytes(key), 0, Buffer, cursor, TypeSizes.INT);
+				cursor += TypeSizes.INT;
 
-                Array.Copy(Encoding.Default.GetBytes(entry.Value), 0, Buffer, cursor, entry.Value.Length);
-                cursor += entry.Value.Length;
+				// version5 and above have additional language code
+				if (version >= VERSION5)
+				{
+					uint langcode = (uint)StringDictionary.GetLanguageFromCombined(entry.Key);
 
+					Array.Copy(BitConverter.GetBytes(langcode), 0, Buffer, cursor, TypeSizes.INT);
+					cursor += TypeSizes.INT;
+				}
+
+				// write string
+				Array.Copy(Encoding.Default.GetBytes(entry.Value), 0, Buffer, cursor, entry.Value.Length);
+				cursor += entry.Value.Length;
+
+				// c-str termination
                 Buffer[cursor] = 0x00;
                 cursor++;
             }
@@ -138,13 +159,15 @@ namespace Meridian59.Files.RSB
                 StringResources.Clear();
                 for (int i = 0; i < entries; i++)
                 {
-                    uint ID = BitConverter.ToUInt32(Buffer, cursor);
+                    uint id = BitConverter.ToUInt32(Buffer, cursor);
                     cursor += TypeSizes.INT;
 
 					// version 5 and above has additional language code
+					LanguageCode langcode = LanguageCode.English;
 					if (version >= VERSION5)
 					{
-
+						langcode = (LanguageCode)BitConverter.ToUInt32(Buffer, cursor);
+						cursor += TypeSizes.INT;
 					}
 
                     // look for terminating 0x00 (NULL)
@@ -152,10 +175,12 @@ namespace Meridian59.Files.RSB
                     while ((Buffer.Length > cursor + strlen) && Buffer[cursor + strlen] != 0x00)
                         strlen++;
 
-                    string Value = Encoding.Default.GetString(Buffer, cursor, strlen);
+					// get string
+                    string val = Encoding.Default.GetString(Buffer, cursor, strlen);
                     cursor += strlen + TypeSizes.BYTE;
 
-                    StringResources.TryAdd(ID, Value);
+					// add to dictionary
+					StringResources.TryAdd(id, val, langcode);
                 }               
             }
             else
@@ -275,7 +300,7 @@ namespace Meridian59.Files.RSB
         #region Fields
 		protected uint version;
         protected string filename;
-        protected LockingDictionary<uint, string> stringResources = new LockingDictionary<uint, string>();
+		protected StringDictionary stringResources = new StringDictionary();
         #endregion
 
         #region Properties
@@ -314,7 +339,7 @@ namespace Meridian59.Files.RSB
         /// <summary>
         /// A key/value pair dictionary with resource/string IDs.
         /// </summary>
-        public LockingDictionary<uint, string> StringResources 
+        public StringDictionary StringResources 
         {
             get { return stringResources; }
             protected set
@@ -341,7 +366,7 @@ namespace Meridian59.Files.RSB
         /// Constructor by values
         /// </summary>
         /// <param name="StringResources"></param>
-        public RsbFile(LockingDictionary<uint, string> StringResources)
+		public RsbFile(StringDictionary StringResources)
         {
             filename = DEFAULTFILENAME;
             stringResources = StringResources;
