@@ -36,6 +36,7 @@ namespace Meridian59.Files.RSB
     {
         #region Constants
         public const uint SIGNATURE = 0x01435352;
+		public const uint VERSION5  = 0x00000005;
         public const uint VERSION4  = 0x00000004;
         public const uint VERSION3  = 0x00000003;
 
@@ -43,6 +44,8 @@ namespace Meridian59.Files.RSB
             { 0x2F, 0xC6, 0x46, 0xDA, 0x20, 0x0E, 0x9F, 0xF9, 0x00 };
 
         public const string DEFAULTFILENAME             = "rsc0000.rsb";
+		public const uint DEFAULTVERSION				= VERSION5;
+		public const string PROPNAME_VERSION			= "Version";
         public const string PROPNAME_FILENAME           = "Filename";
         public const string PROPNAME_STRINGRESOURCES    = "StringResources";
         #endregion
@@ -63,7 +66,7 @@ namespace Meridian59.Files.RSB
             get 
             {
                 int len = TypeSizes.INT + TypeSizes.INT + TypeSizes.INT;
-
+			
                 foreach (KeyValuePair<uint, string> entry in StringResources)
                     len += TypeSizes.INT + entry.Value.Length + TypeSizes.BYTE;
 
@@ -102,13 +105,13 @@ namespace Meridian59.Files.RSB
         public int ReadFrom(byte[] Buffer, int StartIndex = 0)
         {
             int cursor = StartIndex;
-            
+
             uint sig= BitConverter.ToUInt32(Buffer, cursor);
             cursor += TypeSizes.INT;
 
             if (sig == SIGNATURE)
             {
-                uint ver = BitConverter.ToUInt32(Buffer, cursor);
+                version = BitConverter.ToUInt32(Buffer, cursor);
                 cursor += TypeSizes.INT;
 
                 uint entries = BitConverter.ToUInt32(Buffer, cursor);
@@ -116,7 +119,7 @@ namespace Meridian59.Files.RSB
 
                 // decrypt old versions first (v4 first unencryted)
                 // note: this might need different passwords for other versions
-                if (ver <= VERSION3)
+				if (version <= VERSION3)
                 {
 #if WINCLR && X86
                     uint streamlength = BitConverter.ToUInt32(Buffer, cursor);
@@ -125,7 +128,7 @@ namespace Meridian59.Files.RSB
                     uint expectedresponse = BitConverter.ToUInt32(Buffer, cursor);
                     cursor += TypeSizes.INT;
 
-                    Crush32.Decrypt(Buffer, cursor, (int)streamlength, ver, expectedresponse, PASSWORDV3);
+					Crush32.Decrypt(Buffer, cursor, (int)streamlength, version, expectedresponse, PASSWORDV3);
 #else
                     throw new Exception(RooFile.ERRORCRUSHPLATFORM);
 #endif
@@ -137,6 +140,12 @@ namespace Meridian59.Files.RSB
                 {
                     uint ID = BitConverter.ToUInt32(Buffer, cursor);
                     cursor += TypeSizes.INT;
+
+					// version 5 and above has additional language code
+					if (version >= VERSION5)
+					{
+
+					}
 
                     // look for terminating 0x00 (NULL)
                     ushort strlen = 0;
@@ -264,11 +273,28 @@ namespace Meridian59.Files.RSB
         #endregion
 
         #region Fields
+		protected uint version;
         protected string filename;
         protected LockingDictionary<uint, string> stringResources = new LockingDictionary<uint, string>();
         #endregion
 
         #region Properties
+		/// <summary>
+		/// Fileformat version
+		/// </summary>
+		public uint Version
+		{
+			get { return version; }
+			set
+			{
+				if (version != value)
+				{
+					version = value;
+					RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_VERSION));
+				}
+			}
+		}
+
         /// <summary>
         /// Filename without path or extension
         /// </summary>
@@ -345,11 +371,13 @@ namespace Meridian59.Files.RSB
             if (RaiseChangedEvent)
             {
                 Filename = DEFAULTFILENAME;
+				Version = DEFAULTVERSION;
                 stringResources.Clear();
             }
             else
             {
                 filename = DEFAULTFILENAME;
+				version = DEFAULTVERSION;
                 stringResources.Clear();
             }
         }

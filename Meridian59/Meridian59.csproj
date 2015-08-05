@@ -102,6 +102,7 @@
     <Compile Include="Common\Crush32.cs" />
     <Compile Include="Common\Enums\KnownHotspot.cs" />
     <Compile Include="Common\Enums\HealthStatus.cs" />
+    <Compile Include="Common\Enums\LanguageCode.cs" />
     <Compile Include="Common\Enums\RoomAnimationAction.cs" />
     <Compile Include="Common\Enums\PlayerOverlayHotspot.cs" />
     <Compile Include="Common\Enums\LogType.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Common\Flags.cs" />
     <Compile Include="Common\GameTick.cs" />
     <Compile Include="Common\Interfaces\ITickable.cs" />
+    <Compile Include="Common\StringDictionary.cs" />
     <Compile Include="Common\LockingDictionary.cs" />
     <Compile Include="Common\LockingQueue.cs" />
     <Compile Include="Common\Logger.cs" />
