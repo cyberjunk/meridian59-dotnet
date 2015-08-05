@@ -58,16 +58,16 @@ namespace Meridian59.Protocol.GameMessages
         #endregion
 
         public ChatMessage Message { get; set; }
-        public LockingDictionary<uint, string> LookupList { get; private set; }
-        
-        public SysMessageMessage(ChatMessage Message, LockingDictionary<uint, string> LookupList)
+		public StringDictionary LookupList { get; private set; }
+
+		public SysMessageMessage(ChatMessage Message, StringDictionary LookupList)
             : base(MessageTypeGameMode.SysMessage)
         {
             this.LookupList = LookupList;
             this.Message = Message;           
         }
 
-        public SysMessageMessage(LockingDictionary<uint, string> LookupList, byte[] Buffer, int StartIndex = 0)
+		public SysMessageMessage(StringDictionary LookupList, byte[] Buffer, int StartIndex = 0)
             : base()
         {
             this.LookupList = LookupList;

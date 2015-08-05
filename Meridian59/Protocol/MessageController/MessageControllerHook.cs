@@ -43,7 +43,7 @@ namespace Meridian59.Protocol
         /// </summary>
         /// <param name="StringResources">Resources</param>
         /// <param name="AdvanceHashTable"></param>
-        public MessageControllerHook(LockingDictionary<uint, string> StringResources, bool AdvanceHashTable)
+		public MessageControllerHook(StringDictionary StringResources, bool AdvanceHashTable)
             : base(StringResources) 
         {
             this.advanceHashTable = AdvanceHashTable;

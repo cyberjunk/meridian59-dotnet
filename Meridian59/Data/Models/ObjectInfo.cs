@@ -119,7 +119,7 @@ namespace Meridian59.Data.Models
         protected ChatMessage inscription;
         protected bool isVisible;
 
-        protected LockingDictionary<uint, string> stringResources;
+		protected StringDictionary stringResources;
         #endregion
 
         #region Properties
@@ -218,7 +218,7 @@ namespace Meridian59.Data.Models
             inscription = Inscription;
         }
 
-        public ObjectInfo(LockingDictionary<uint, string> StringResources, byte[] Buffer, int StartIndex = 0) 
+		public ObjectInfo(StringDictionary StringResources, byte[] Buffer, int StartIndex = 0) 
         {
             stringResources = StringResources;
 

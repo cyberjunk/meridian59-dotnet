@@ -131,7 +131,7 @@ namespace Meridian59.Data.Models
         protected string website;
         protected bool isVisible;
 
-        protected LockingDictionary<uint, string> stringResources;
+		protected StringDictionary stringResources;
         #endregion
 
         #region Properties
@@ -247,7 +247,7 @@ namespace Meridian59.Data.Models
             website = Website;
         }
 
-        public PlayerInfo(LockingDictionary<uint, string> StringResources, byte[] Buffer, int StartIndex = 0) 
+		public PlayerInfo(StringDictionary StringResources, byte[] Buffer, int StartIndex = 0) 
         {
             stringResources = StringResources;
 

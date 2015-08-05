@@ -182,7 +182,7 @@ namespace Meridian59.Data.Models
         protected ChatMessage message;
         protected string title;
 
-        protected LockingDictionary<uint, string> stringResources;
+		protected StringDictionary stringResources;
         #endregion
 
         #region Properties
@@ -299,7 +299,7 @@ namespace Meridian59.Data.Models
             title = Title;
         }
 
-        public Mail(LockingDictionary<uint, string> StringResources, byte[] Buffer, int StartIndex = 0) 
+		public Mail(StringDictionary StringResources, byte[] Buffer, int StartIndex = 0) 
         {
             stringResources = StringResources;
 

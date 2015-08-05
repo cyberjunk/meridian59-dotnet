@@ -71,7 +71,7 @@ namespace Meridian59.Protocol
         /// <summary>
         /// Stores reference to StringResources used to get local-iterate strings from (ID proposed in PingReply packet)
         /// </summary>
-        protected LockingDictionary<uint, string> stringResources;
+		protected StringDictionary stringResources;
         #endregion
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace Meridian59.Protocol
         /// Constructor
         /// </summary>
         /// <param name="StringResources">A threadsafe dictionary used to resolve Meridian Strings from.</param>
-        public PIEncoder(LockingDictionary<uint, string> StringResources)
+		public PIEncoder(StringDictionary StringResources)
         {
             this.stringResources = StringResources;
             

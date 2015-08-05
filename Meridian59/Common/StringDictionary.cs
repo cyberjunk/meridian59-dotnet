@@ -93,6 +93,18 @@ namespace Meridian59.Common
 		}
 
 		/// <summary>
+		/// Tries to remove an element from the dictionary
+		/// </summary>
+		/// <param name="ResourceID"></param>
+		/// <param name="Value"></param>
+		/// <param name="Language"></param>
+		/// <returns></returns>
+		public bool TryRemove(uint ResourceID, out string Value, LanguageCode Language = LanguageCode.English)
+		{
+			return dictionary.TryRemove(CombineKeys(ResourceID, Language), out Value);
+		}
+
+		/// <summary>
 		/// Implements foreach
 		/// </summary>
 		/// <returns></returns>

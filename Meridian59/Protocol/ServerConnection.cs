@@ -98,7 +98,7 @@ namespace Meridian59.Protocol
         /// <summary>
         /// 
         /// </summary>
-        protected LockingDictionary<uint, string> stringResources;
+		protected StringDictionary stringResources;
 
         /// <summary>
         /// Timer for regularly sending pings in Game ProtocolMode
@@ -167,7 +167,7 @@ namespace Meridian59.Protocol
         /// Constructor.
         /// </summary>
         /// <param name="StringResources">The StringResources to use.</param>
-        public ServerConnection(LockingDictionary<uint, string> StringResources)
+		public ServerConnection(StringDictionary StringResources)
         {           
             // init the queues (receive, send, logs, exceptions)
             ReceiveQueue = new LockingQueue<GameMessage>();

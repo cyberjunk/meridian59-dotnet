@@ -67,14 +67,14 @@ namespace Meridian59.Data.Models
 
         public PlayerInfo PlayerInfo { get; set; }
 
-        protected LockingDictionary<uint, string> stringResources;
+		protected StringDictionary stringResources;
 
         public UserCommandLookPlayer(PlayerInfo PlayerInfo)
         {
             this.PlayerInfo = PlayerInfo;       
         }
 
-        public UserCommandLookPlayer(LockingDictionary<uint, string> LookupList, byte[] Buffer, int StartIndex = 0)
+		public UserCommandLookPlayer(StringDictionary LookupList, byte[] Buffer, int StartIndex = 0)
         {
             stringResources = LookupList;
             ReadFrom(Buffer, StartIndex);

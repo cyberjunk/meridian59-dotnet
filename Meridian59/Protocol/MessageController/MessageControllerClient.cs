@@ -37,7 +37,7 @@ namespace Meridian59.Protocol
         /// Constructor
         /// </summary>
         /// <param name="StringResources"></param>
-        public MessageControllerClient(LockingDictionary<uint, string> StringResources)
+        public MessageControllerClient(StringDictionary StringResources)
             : base(StringResources) { }
 
         /// <summary>

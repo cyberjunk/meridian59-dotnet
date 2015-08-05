@@ -66,8 +66,8 @@ namespace Meridian59.Data.Models
         /// <param name="Length">This is required to parse unknown UserCommandGeneric.</param>
         /// <returns>Subclass instance of UserCommand or UserCommandGeneric for unknown ones</returns>
         public static UserCommand ExtractCommand(
-            bool IsOutgoing, 
-            LockingDictionary<uint, string> StringResources, 
+            bool IsOutgoing,
+			StringDictionary StringResources, 
             byte[] Buffer, 
             int StartIndex,
             int Length)

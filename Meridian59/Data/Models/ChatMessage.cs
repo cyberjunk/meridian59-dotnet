@@ -60,7 +60,7 @@ namespace Meridian59.Data.Models
         protected string resourceName;
         protected string fullString;
 
-        protected LockingDictionary<uint, string> stringResources;      
+		protected StringDictionary stringResources;      
         #endregion
 
         #region Properties
@@ -483,8 +483,8 @@ namespace Meridian59.Data.Models
         }
 
         public ChatMessage(
-            ChatMessageType MessageType, 
-            LockingDictionary<uint, string> StringResources, 
+            ChatMessageType MessageType,
+			StringDictionary StringResources, 
             uint ResourceID, 
             List<InlineVariable> Variables,
             List<ChatStyle> Styles)
@@ -498,8 +498,8 @@ namespace Meridian59.Data.Models
         }
 
         public ChatMessage(
-            ChatMessageType MessageType, 
-            LockingDictionary<uint, string> StringResources, 
+            ChatMessageType MessageType,
+			StringDictionary StringResources, 
             byte[] Buffer, 
             int StartIndex = 0)
         {
@@ -512,8 +512,8 @@ namespace Meridian59.Data.Models
         }
 
         public unsafe ChatMessage(
-            ChatMessageType MessageType, 
-            LockingDictionary<uint, string> StringResources,
+            ChatMessageType MessageType,
+			StringDictionary StringResources,
             ref byte* Buffer) 
         {
             this.chatMessageType = MessageType;

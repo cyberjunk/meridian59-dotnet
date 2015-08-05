@@ -16,6 +16,7 @@
 
 using System.Text;
 using Meridian59.Common;
+using Meridian59.Common.Enums;
 
 namespace Meridian59.Protocol
 {  
@@ -65,14 +66,14 @@ namespace Meridian59.Protocol
         /// <summary>
         /// Stores reference to StringResources used to get local-iterate strings from (ID proposed in PingReply packet)
         /// </summary>
-        protected LockingDictionary<uint, string> stringResources;
+		protected StringDictionary stringResources;
         #endregion
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="StringResources">A threadsafe dictionary used to resolve Meridian Strings from.</param>
-        public PIDecoder(LockingDictionary<uint, string> StringResources)
+		public PIDecoder(StringDictionary StringResources)
         {
             this.stringResources = StringResources;
             
@@ -137,8 +138,8 @@ namespace Meridian59.Protocol
             {
                 string iterateString;
 
-                // try to get the string from dictionary
-                if (stringResources.TryGetValue(ResourceID, out iterateString))
+                // try to get the string from dictionary (ALWAYS english!)
+                if (stringResources.TryGetValue(ResourceID, out iterateString, LanguageCode.English))
                 {
                     stringBytes = Encoding.Default.GetBytes(iterateString);
                 }

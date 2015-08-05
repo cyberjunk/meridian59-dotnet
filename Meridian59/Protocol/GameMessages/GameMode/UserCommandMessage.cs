@@ -61,18 +61,18 @@ namespace Meridian59.Protocol.GameMessages
         #region Fields & Properties
         public UserCommand Command { get; set; }
 
-        private LockingDictionary<uint, string> StringResources;
+		private StringDictionary StringResources;
         #endregion
 
         #region Constructors
-        public UserCommandMessage(UserCommand Command, LockingDictionary<uint, string> StringResources)
+		public UserCommandMessage(UserCommand Command, StringDictionary StringResources)
             : base(MessageTypeGameMode.UserCommand)
         {         
             this.Command = Command;
             this.StringResources = StringResources;            
         }
 
-        public UserCommandMessage(LockingDictionary<uint, string> StringResources, MessageDirection Direction, byte[] Buffer, int StartIndex = 0) 
+		public UserCommandMessage(StringDictionary StringResources, MessageDirection Direction, byte[] Buffer, int StartIndex = 0) 
             : base () 
         {
             this.TransferDirection = Direction;

@@ -57,7 +57,7 @@ namespace Meridian59.Files
         #endregion
 
         #region Fields
-        protected readonly LockingDictionary<uint, string> stringResources = new LockingDictionary<uint, string>();
+		protected readonly StringDictionary stringResources = new StringDictionary();
         protected readonly LockingDictionary<string, RsbFile> stringDictionaries = new LockingDictionary<string, RsbFile>(StringComparer.OrdinalIgnoreCase);
         protected readonly LockingDictionary<string, BgfFile> objects = new LockingDictionary<string, BgfFile>(StringComparer.OrdinalIgnoreCase);
         protected readonly LockingDictionary<string, BgfFile> roomTextures = new LockingDictionary<string, BgfFile>(StringComparer.OrdinalIgnoreCase);
@@ -73,7 +73,7 @@ namespace Meridian59.Files
         /// <summary>
         /// Provides the currently active string resources
         /// </summary>
-        public LockingDictionary<uint, string> StringResources { get { return stringResources; } }
+		public StringDictionary StringResources { get { return stringResources; } }
 
         /// <summary>
         /// All string dictionaries (.rsb) files found

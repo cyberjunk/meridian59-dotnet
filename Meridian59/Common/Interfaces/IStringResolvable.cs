@@ -14,6 +14,8 @@
  If not, see http://www.gnu.org/licenses/.
 */
 
+using Meridian59.Common.Enums;
+
 namespace Meridian59.Common.Interfaces
 {
     /// <summary>
@@ -21,6 +23,6 @@ namespace Meridian59.Common.Interfaces
     /// </summary>
     public interface IStringResolvable
     {           
-        void ResolveStrings(LockingDictionary<uint, string> StringResources, bool RaiseChangedEvent);
+        void ResolveStrings(StringDictionary StringResources, bool RaiseChangedEvent, LanguageCode Language = LanguageCode.English);
     }
 }

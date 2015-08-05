@@ -57,17 +57,17 @@ namespace Meridian59.Protocol.GameMessages
         #endregion
 
         public ObjectInfo ObjectInfo { get; set; }
-      
-        public LockingDictionary<uint, string> LookupList { get; private set; }
-        
-        public LookMessage(ObjectInfo ObjectInfo, LockingDictionary<uint, string> LookupList)
+
+		public StringDictionary LookupList { get; private set; }
+
+		public LookMessage(ObjectInfo ObjectInfo, StringDictionary LookupList)
             : base(MessageTypeGameMode.Look)
         {
             this.ObjectInfo = ObjectInfo;
             this.LookupList = LookupList;         
         }
 
-        public LookMessage(LockingDictionary<uint, string> LookupList, byte[] Buffer, int StartIndex = 0) 
+		public LookMessage(StringDictionary LookupList, byte[] Buffer, int StartIndex = 0) 
             : base () 
         {
             this.LookupList = LookupList;

@@ -807,12 +807,12 @@ namespace Meridian59.Data.Models
         #endregion
 
         #region IStringResolvable
-        public override void ResolveStrings(LockingDictionary<uint, string> StringResources, bool RaiseChangedEvent)
+		public override void ResolveStrings(StringDictionary StringResources, bool RaiseChangedEvent, LanguageCode Language = LanguageCode.English)
         {
-            base.ResolveStrings(StringResources, RaiseChangedEvent);
+            base.ResolveStrings(StringResources, RaiseChangedEvent, Language);
 
             foreach (SubOverlay obj in motionSubOverlays)
-                obj.ResolveStrings(StringResources, RaiseChangedEvent);
+                obj.ResolveStrings(StringResources, RaiseChangedEvent, Language);
         }
         #endregion
 

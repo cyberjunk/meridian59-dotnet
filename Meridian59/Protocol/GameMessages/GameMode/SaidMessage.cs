@@ -71,23 +71,23 @@ namespace Meridian59.Protocol.GameMessages
         #endregion
 
         public ObjectChatMessage Message { get; set; }
-        public LockingDictionary<uint, string> StringResources { get; private set; }
-        
-        public SaidMessage(ObjectChatMessage Message, LockingDictionary<uint, string> LookupList)
+		public StringDictionary StringResources { get; private set; }
+
+		public SaidMessage(ObjectChatMessage Message, StringDictionary LookupList)
             : base(MessageTypeGameMode.Said)
         {
             this.StringResources = LookupList;
             this.Message = Message;         
         }
 
-        public SaidMessage(LockingDictionary<uint, string> StringResources, byte[] Buffer, int StartIndex = 0) 
+		public SaidMessage(StringDictionary StringResources, byte[] Buffer, int StartIndex = 0) 
             : base() 
         {
             this.StringResources = StringResources;
             ReadFrom(Buffer, StartIndex);
         }
 
-        public unsafe SaidMessage(LockingDictionary<uint, string> StringResources, ref byte* Buffer)
+		public unsafe SaidMessage(StringDictionary StringResources, ref byte* Buffer)
             : base()
         {
             this.StringResources = StringResources;

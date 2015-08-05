@@ -21,6 +21,7 @@ using Meridian59.Common.Constants;
 using Meridian59.Files.ROO;
 using Meridian59.Files;
 using Meridian59.Common;
+using Meridian59.Common.Enums;
 
 namespace Meridian59.Data.Models
 {
@@ -756,7 +757,7 @@ namespace Meridian59.Data.Models
         #endregion
 
         #region IStringResolvable
-        public void ResolveStrings(LockingDictionary<uint, string> StringResources, bool RaiseChangedEvent)
+		public void ResolveStrings(StringDictionary StringResources, bool RaiseChangedEvent, LanguageCode Language = LanguageCode.English)
         {
             string avatar_name;
             string avatar_overlay;
@@ -765,13 +766,24 @@ namespace Meridian59.Data.Models
             string background_file;
             string wading_file;
 
-            StringResources.TryGetValue(avatarOverlayRID, out avatar_overlay);
-            StringResources.TryGetValue(avatarNameRID, out avatar_name);
-            StringResources.TryGetValue(roomFileRID, out room_file);
-            StringResources.TryGetValue(roomNameRID, out room_name);
-            StringResources.TryGetValue(backgroundFileRID, out background_file);
-            StringResources.TryGetValue(wadingSoundFileRID, out wading_file);
-            
+			if (!StringResources.TryGetValue(avatarOverlayRID, out avatar_overlay, Language) && Language != LanguageCode.English)
+				StringResources.TryGetValue(avatarOverlayRID, out avatar_overlay, LanguageCode.English);
+
+			if (!StringResources.TryGetValue(avatarNameRID, out avatar_name, Language) && Language != LanguageCode.English)
+				StringResources.TryGetValue(avatarNameRID, out avatar_name, LanguageCode.English);
+
+			if (!StringResources.TryGetValue(roomFileRID, out room_file, Language) && Language != LanguageCode.English)
+				StringResources.TryGetValue(roomFileRID, out room_file, LanguageCode.English);
+
+			if (!StringResources.TryGetValue(roomNameRID, out room_name, Language) && Language != LanguageCode.English)
+				StringResources.TryGetValue(roomNameRID, out room_name, LanguageCode.English);
+
+			if (!StringResources.TryGetValue(backgroundFileRID, out background_file, Language) && Language != LanguageCode.English)
+				StringResources.TryGetValue(backgroundFileRID, out background_file, LanguageCode.English);
+
+			if (!StringResources.TryGetValue(wadingSoundFileRID, out wading_file, Language) && Language != LanguageCode.English)
+				StringResources.TryGetValue(wadingSoundFileRID, out wading_file, LanguageCode.English);
+
             if (RaiseChangedEvent)
             {
                 if (avatar_name != null) AvatarName = avatar_name;

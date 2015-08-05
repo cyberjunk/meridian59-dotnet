@@ -22,6 +22,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using Meridian59.Data.Models;
 using System.ComponentModel;
+using Meridian59.Common;
 
 namespace Meridian59.DebugUI.ListViewers
 {
@@ -34,7 +35,7 @@ namespace Meridian59.DebugUI.ListViewers
         /// The DataSource to display
         /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), DefaultValue(null), Browsable(true)]
-        public ConcurrentDictionary<uint, string> DataSource
+        public StringDictionary DataSource
         {
             //get { return dataSource; }
             set {

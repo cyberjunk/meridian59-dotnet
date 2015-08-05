@@ -61,7 +61,7 @@ namespace Meridian59.Protocol.GameMessages
         
         public Mail Mail { get; set; }
 
-        protected LockingDictionary<uint, string> stringResources;
+		protected StringDictionary stringResources;
 
         public MailMessage(Mail Mail) 
             : base(MessageTypeGameMode.Mail)
@@ -69,7 +69,7 @@ namespace Meridian59.Protocol.GameMessages
             this.Mail = Mail;                      
         }
 
-        public MailMessage(LockingDictionary<uint, string> StringResources, byte[] Buffer, int StartIndex = 0)            
+		public MailMessage(StringDictionary StringResources, byte[] Buffer, int StartIndex = 0)            
         {
             stringResources = StringResources;
             ReadFrom(Buffer, StartIndex);

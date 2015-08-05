@@ -77,7 +77,7 @@ namespace Meridian59.Protocol
         /// <summary>
         /// Reference to a populated dictionary with game strings.
         /// </summary>
-        protected LockingDictionary<uint, string> stringResources;
+        protected StringDictionary stringResources;
         #endregion
 
         #region Properties
@@ -125,7 +125,7 @@ namespace Meridian59.Protocol
         /// Constructor
         /// </summary>
         /// <param name="StringResources">A dictionary to resolve Meridian59 strings from.</param>
-        public MessageController(LockingDictionary<uint, string> StringResources)
+		public MessageController(StringDictionary StringResources)
         {
             // save string dictionary
             this.stringResources = StringResources;
