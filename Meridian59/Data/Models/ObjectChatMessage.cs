@@ -24,9 +24,10 @@ using Meridian59.Common;
 namespace Meridian59.Data.Models
 {
     /// <summary>
-    /// Derived from ChatMessage, adds a sender ID and ResourceID
+    /// Derived from ServerString.
+	/// Additionally has blakserv ID and resource ID of sender of the message.
     /// </summary>
-    public class ObjectChatMessage : ChatMessage
+    public class ObjectChatMessage : ServerString
     {
         #region IByteSerializable
         public override int ByteLength

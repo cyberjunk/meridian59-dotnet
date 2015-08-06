@@ -254,7 +254,7 @@ namespace Meridian59.Data
         /// <summary>
         /// List of received chat messages
         /// </summary>
-        public BaseList<ChatMessage> ChatMessages { get; protected set; }
+        public BaseList<ServerString> ChatMessages { get; protected set; }
 
         /// <summary>
         /// Maximum entries in chat before remove
@@ -743,7 +743,7 @@ namespace Meridian59.Data
             SpellObjects = new SpellObjectList(100);
             BackgroundOverlays = new BackgroundOverlayList(5);
             PlayerOverlays = new ObjectBaseList<PlayerOverlay>(10);
-            ChatMessages = new BaseList<ChatMessage>(101);
+            ChatMessages = new BaseList<ServerString>(101);
             GameMessageLog = new BaseList<GameMessage>(100);
             VisitedTargets = new List<RoomObject>(50);
             ClickedTargets = new List<uint>(50);

@@ -54,7 +54,7 @@ namespace Meridian59.Bot.IRC
         /// </summary>
         /// <param name="ChatMessage"></param>
         /// <returns></returns>
-        public static string CreateIRCMessageFromChatMessage(ChatMessage ChatMessage)
+        public static string CreateIRCMessageFromChatMessage(ServerString ChatMessage)
         {
             // prefix
             string s = String.Empty;

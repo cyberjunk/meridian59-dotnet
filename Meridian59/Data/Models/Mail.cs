@@ -114,7 +114,7 @@ namespace Meridian59.Data.Models
             }
 
             // get message
-            message = new ChatMessage(ChatMessageType.ObjectChatMessage, stringResources, Buffer, cursor);
+            message = new ServerString(ChatMessageType.ObjectChatMessage, stringResources, Buffer, cursor);
             cursor += message.ByteLength;
 
             // Now ugly:
@@ -179,7 +179,7 @@ namespace Meridian59.Data.Models
         protected string sender;
         protected uint timestamp;
         protected List<string> recipients;
-        protected ChatMessage message;
+        protected ServerString message;
         protected string title;
 
 		protected StringDictionary stringResources;
@@ -250,7 +250,7 @@ namespace Meridian59.Data.Models
             }
         }
 
-        public ChatMessage Message
+        public ServerString Message
         {
             get
             {
@@ -289,7 +289,7 @@ namespace Meridian59.Data.Models
             Clear(false);
         }
 
-        public Mail(uint Num, string Sender, uint TimeStamp, List<string> Recipients, ChatMessage Message, string Title)
+        public Mail(uint Num, string Sender, uint TimeStamp, List<string> Recipients, ServerString Message, string Title)
         {
             num = Num;
             sender = Sender;
@@ -316,7 +316,7 @@ namespace Meridian59.Data.Models
                 Sender = String.Empty;
                 Timestamp = 0;
                 Recipients = new List<string>(10);
-                Message = new ChatMessage();
+                Message = new ServerString();
                 Title = String.Empty;
             }
             else
@@ -325,7 +325,7 @@ namespace Meridian59.Data.Models
                 sender = String.Empty;
                 timestamp = 0;
                 recipients = new List<string>(10);
-                message = new ChatMessage();
+                message = new ServerString();
                 title = String.Empty;
             }
         }
@@ -362,7 +362,7 @@ namespace Meridian59.Data.Models
             Reader.ReadToFollowing(TAG_TEXT);
             
             // construct chatmessage instance dummy
-            Message = new ChatMessage();
+            Message = new ServerString();
             Message.FullString = Reader.ReadString();
         }
 

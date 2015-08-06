@@ -122,7 +122,7 @@ namespace Meridian59 { namespace Ogre
 		// description
 		else if (::System::String::Equals(e->PropertyName, PlayerInfo::PROPNAME_MESSAGE))
 		{
-			ChatMessage^ text = OgreClient::Singleton->Data->LookPlayer->Message;
+			ServerString^ text = OgreClient::Singleton->Data->LookPlayer->Message;
 
 			if (text != nullptr)
 				Description->setText(StringConvert::CLRToCEGUI(text->FullString));

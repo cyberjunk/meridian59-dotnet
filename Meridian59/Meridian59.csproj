@@ -246,7 +246,7 @@
     <Compile Include="Data\Models\ChatCommand\ChatCommandGuild.cs" />
     <Compile Include="Data\Models\ChatCommand\ChatCommandTell.cs" />
     <Compile Include="Data\Models\ChatCommand\ChatStyle.cs" />
-    <Compile Include="Data\Models\ChatMessage.cs" />
+    <Compile Include="Data\Models\ServerString.cs" />
     <Compile Include="Data\Models\ConnectionInfo.cs" />
     <Compile Include="Data\Models\DiplomacyInfo.cs" />
     <Compile Include="Data\Models\DownloadFileInfo.cs" />

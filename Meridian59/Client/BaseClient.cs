@@ -1603,7 +1603,7 @@ namespace Meridian59.Client
                 // create a delay like a cast
                 if (GameTick.CanReqCast())
                 {
-                    Data.ChatMessages.Add(ChatMessage.GetChatMessageForString(
+                    Data.ChatMessages.Add(ServerString.GetServerStringForString(
                         "This spell requires a target."));
 
                     GameTick.DidReqCast();

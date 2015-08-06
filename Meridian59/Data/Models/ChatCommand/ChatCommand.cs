@@ -278,7 +278,7 @@ namespace Meridian59.Data.Models
                     // empty text
                     else
                     {
-                        Data.ChatMessages.Add(ChatMessage.GetChatMessageForString(
+                        Data.ChatMessages.Add(ServerString.GetServerStringForString(
                             "Can't send empty message."));
                     }
                 }
@@ -286,7 +286,7 @@ namespace Meridian59.Data.Models
                 // no player with that name
                 else
                 {
-                    Data.ChatMessages.Add(ChatMessage.GetChatMessageForString(
+                    Data.ChatMessages.Add(ServerString.GetServerStringForString(
                         "No player with name: " + quote.Item3));
                 }
             }
@@ -321,7 +321,7 @@ namespace Meridian59.Data.Models
                     else
                     {
                         // empty text
-                        Data.ChatMessages.Add(ChatMessage.GetChatMessageForString(
+                        Data.ChatMessages.Add(ServerString.GetServerStringForString(
                             "Can't send empty message."));
                     }
                 }
@@ -329,14 +329,14 @@ namespace Meridian59.Data.Models
                 // still more than one player with max. prefix
                 else if (list.Count > 1)
                 {
-                    Data.ChatMessages.Add(ChatMessage.GetChatMessageForString(
+                    Data.ChatMessages.Add(ServerString.GetServerStringForString(
                         "More than one player with prefix: " + prefix));
                 }
 
                 // no player with that prefix
                 else
                 {
-                    Data.ChatMessages.Add(ChatMessage.GetChatMessageForString(
+                    Data.ChatMessages.Add(ServerString.GetServerStringForString(
                         "No player with prefix: " + prefix));
                 }              
             }
@@ -381,7 +381,7 @@ namespace Meridian59.Data.Models
                 // no player with that name
                 else
                 {
-                    Data.ChatMessages.Add(ChatMessage.GetChatMessageForString(
+                    Data.ChatMessages.Add(ServerString.GetServerStringForString(
                         "No player with name: " + quote.Item3));
                 }
             }
@@ -409,14 +409,14 @@ namespace Meridian59.Data.Models
                 // still more than one player with max. prefix
                 else if (list.Count > 1)
                 {
-                    Data.ChatMessages.Add(ChatMessage.GetChatMessageForString(
+                    Data.ChatMessages.Add(ServerString.GetServerStringForString(
                         "More than one player with prefix: " + prefix));
                 }
 
                 // no player with that prefix
                 else
                 {
-                    Data.ChatMessages.Add(ChatMessage.GetChatMessageForString(
+                    Data.ChatMessages.Add(ServerString.GetServerStringForString(
                         "No player with prefix: " + prefix));
                 }
             }
@@ -461,7 +461,7 @@ namespace Meridian59.Data.Models
                 // no player with that name
                 else
                 {
-                    Data.ChatMessages.Add(ChatMessage.GetChatMessageForString(
+                    Data.ChatMessages.Add(ServerString.GetServerStringForString(
                         "No player with name: " + quote.Item3));
                 }
             }
@@ -489,14 +489,14 @@ namespace Meridian59.Data.Models
                 // still more than one player with max. prefix
                 else if (list.Count > 1)
                 {
-                    Data.ChatMessages.Add(ChatMessage.GetChatMessageForString(
+                    Data.ChatMessages.Add(ServerString.GetServerStringForString(
                         "More than one player with prefix: " + prefix));
                 }
 
                 // no player with that prefix
                 else
                 {
-                    Data.ChatMessages.Add(ChatMessage.GetChatMessageForString(
+                    Data.ChatMessages.Add(ServerString.GetServerStringForString(
                         "No player with prefix: " + prefix));
                 }
             }
@@ -541,7 +541,7 @@ namespace Meridian59.Data.Models
                 // no player with that name
                 else
                 {
-                    Data.ChatMessages.Add(ChatMessage.GetChatMessageForString(
+                    Data.ChatMessages.Add(ServerString.GetServerStringForString(
                         "No spell with name: " + quote.Item3));
                 }
             }
@@ -569,14 +569,14 @@ namespace Meridian59.Data.Models
                 // still more than one player with max. prefix
                 else if (list.Count > 1)
                 {
-                    Data.ChatMessages.Add(ChatMessage.GetChatMessageForString(
+                    Data.ChatMessages.Add(ServerString.GetServerStringForString(
                         "More than one spell with prefix: " + prefix));
                 }
 
                 // no spell with that prefix
                 else
                 {
-                    Data.ChatMessages.Add(ChatMessage.GetChatMessageForString(
+                    Data.ChatMessages.Add(ServerString.GetServerStringForString(
                         "No spell with prefix: " + prefix));
                 }
             }

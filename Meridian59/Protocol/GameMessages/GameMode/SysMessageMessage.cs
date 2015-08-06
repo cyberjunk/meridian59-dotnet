@@ -50,17 +50,17 @@ namespace Meridian59.Protocol.GameMessages
 
             cursor += base.ReadFrom(Buffer, cursor);
 
-            Message = new ChatMessage(ChatMessageType.SystemMessage, LookupList, Buffer, cursor);
+            Message = new ServerString(ChatMessageType.SystemMessage, LookupList, Buffer, cursor);
             cursor += Message.ByteLength;
 
             return cursor - StartIndex;
         }
         #endregion
 
-        public ChatMessage Message { get; set; }
+        public ServerString Message { get; set; }
 		public StringDictionary LookupList { get; private set; }
 
-		public SysMessageMessage(ChatMessage Message, StringDictionary LookupList)
+		public SysMessageMessage(ServerString Message, StringDictionary LookupList)
             : base(MessageTypeGameMode.SysMessage)
         {
             this.LookupList = LookupList;

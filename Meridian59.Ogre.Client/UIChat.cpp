@@ -35,7 +35,7 @@ namespace Meridian59 { namespace Ogre
 		Window->subscribeEvent(CEGUI::FrameWindow::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::OnKeyUp));
 
 		// create queue for chatmessage to write at next chatupdate tick
-		Queue = gcnew ::System::Collections::Generic::Queue<::Meridian59::Data::Models::ChatMessage^>();
+		Queue = gcnew ::System::Collections::Generic::Queue<::Meridian59::Data::Models::ServerString^>();
 	};
 
 	void ControllerUI::Chat::Destroy()
@@ -62,7 +62,7 @@ namespace Meridian59 { namespace Ogre
 				if (Queue->Count > 0)
 				{
 					// get first
-					ChatMessage^ msg = Queue->Dequeue();			
+					ServerString^ msg = Queue->Dequeue();
 					CEGUI::String str = GetChatString(msg);
 
 					// append next ones
@@ -95,7 +95,7 @@ namespace Meridian59 { namespace Ogre
 		}
 	};
 
-	::CEGUI::String ControllerUI::Chat::GetChatString(ChatMessage^ ChatMessage)
+	::CEGUI::String ControllerUI::Chat::GetChatString(ServerString^ ChatMessage)
 	{
 		// text with CEGUI markup and escapes
 		::System::String^ text = ::System::String::Empty;

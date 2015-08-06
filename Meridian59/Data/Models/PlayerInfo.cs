@@ -68,7 +68,7 @@ namespace Meridian59.Data.Models
             isEditable = Convert.ToBoolean(Buffer[cursor]);
             cursor++;
 
-            message = new ChatMessage(ChatMessageType.ObjectChatMessage, stringResources, Buffer, cursor);
+            message = new ServerString(ChatMessageType.ObjectChatMessage, stringResources, Buffer, cursor);
             cursor += Message.ByteLength;
 
             ushort strlen = BitConverter.ToUInt16(Buffer, cursor);
@@ -126,7 +126,7 @@ namespace Meridian59.Data.Models
         #region Fields
         protected ObjectBase objectBase;
         protected bool isEditable;
-        protected ChatMessage message;
+        protected ServerString message;
         protected string titles;
         protected string website;
         protected bool isVisible;
@@ -167,7 +167,7 @@ namespace Meridian59.Data.Models
             }
         }
 
-        public ChatMessage Message
+        public ServerString Message
         {
             get
             {
@@ -238,7 +238,7 @@ namespace Meridian59.Data.Models
             Clear(false);
         }
 
-        public PlayerInfo(ObjectBase ObjectBase, bool IsEditable, ChatMessage Message, string Titles, string Website)
+        public PlayerInfo(ObjectBase ObjectBase, bool IsEditable, ServerString Message, string Titles, string Website)
         {
             objectBase = ObjectBase;
             isEditable = IsEditable;
@@ -262,7 +262,7 @@ namespace Meridian59.Data.Models
             {
                 ObjectBase = new ObjectBase();
                 IsEditable = false;
-                Message = new ChatMessage();
+                Message = new ServerString();
                 Titles = String.Empty;
                 Website = String.Empty;
                 IsVisible = false;
@@ -271,7 +271,7 @@ namespace Meridian59.Data.Models
             {
                 objectBase = new ObjectBase();
                 isEditable = false;
-                message = new ChatMessage();
+                message = new ServerString();
                 titles = String.Empty;
                 website = String.Empty;
                 isVisible = false;

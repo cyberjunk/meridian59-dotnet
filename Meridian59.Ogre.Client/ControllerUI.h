@@ -303,13 +303,13 @@ namespace Meridian59 { namespace Ogre
 			static ::CEGUI::Window* Text = nullptr;
 			static ::CEGUI::Editbox* Input = nullptr;
 			static ::CEGUI::Scrollbar* Scrollbar = nullptr;
-			static ::System::Collections::Generic::Queue<::Meridian59::Data::Models::ChatMessage^>^ Queue = nullptr;
+			static ::System::Collections::Generic::Queue<::Meridian59::Data::Models::ServerString^>^ Queue = nullptr;
 			static unsigned int DeleteCounter = 0;
 			
 			static void Initialize();
 			static void Destroy();
 			static void Tick(double Tick, double Span);
-			static ::CEGUI::String GetChatString(ChatMessage^ ChatMessage);	
+			static ::CEGUI::String GetChatString(ServerString^ ChatMessage);	
 			static void OnChatMessagesListChanged(Object^ sender, ListChangedEventArgs^ e);	
 		};
 

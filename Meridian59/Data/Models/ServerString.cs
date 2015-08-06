@@ -27,7 +27,7 @@ namespace Meridian59.Data.Models
     /// <summary>
     /// M59 chat message model
     /// </summary>
-    public class ChatMessage : IByteSerializableFast, INotifyPropertyChanged, IClearable
+    public class ServerString : IByteSerializableFast, INotifyPropertyChanged, IClearable
     {
         #region Constants
         public const char VARIABLEFLAG                  = '%';
@@ -391,7 +391,7 @@ namespace Meridian59.Data.Models
       
         #region Constructors
 
-        public ChatMessage()
+        public ServerString()
         {
             this.chatMessageType = ChatMessageType.SystemMessage;
             Variables = new List<InlineVariable>();
@@ -400,7 +400,7 @@ namespace Meridian59.Data.Models
             Clear(false);
         }
 
-        public ChatMessage(ChatMessageType MessageType)
+        public ServerString(ChatMessageType MessageType)
         {
             this.chatMessageType = MessageType;
             Variables = new List<InlineVariable>();
@@ -409,7 +409,7 @@ namespace Meridian59.Data.Models
             Clear(false);
         }
 
-        public ChatMessage(
+        public ServerString(
             ChatMessageType MessageType,
 			StringDictionary StringResources, 
             uint ResourceID, 
@@ -424,7 +424,7 @@ namespace Meridian59.Data.Models
             this.resourceID = ResourceID;       
         }
 
-        public ChatMessage(
+        public ServerString(
             ChatMessageType MessageType,
 			StringDictionary StringResources, 
             byte[] Buffer, 
@@ -438,7 +438,7 @@ namespace Meridian59.Data.Models
             ReadFrom(Buffer, StartIndex);
         }
 
-        public unsafe ChatMessage(
+        public unsafe ServerString(
             ChatMessageType MessageType,
 			StringDictionary StringResources,
             ref byte* Buffer) 
@@ -633,7 +633,7 @@ namespace Meridian59.Data.Models
         }
 
         /// <summary>
-        /// Creates a local ChatMessage instance for given text and
+        /// Creates a local 'ServerString' instance for given text and
         /// style settings.
         /// </summary>
         /// <param name="Text"></param>
@@ -642,7 +642,7 @@ namespace Meridian59.Data.Models
         /// <param name="IsUnderline"></param>
         /// <param name="Color"></param>
         /// <returns></returns>
-        public static ChatMessage GetChatMessageForString(
+        public static ServerString GetServerStringForString(
             string Text, 
             bool IsBold = false, 
             bool IsCursive = false, 
@@ -652,7 +652,7 @@ namespace Meridian59.Data.Models
             ChatStyle style = new ChatStyle(
                 0, Text.Length, IsBold, IsCursive, IsUnderline, Color);
             
-            ChatMessage message = new ChatMessage();
+            ServerString message = new ServerString();
             message.FullString = Text;
             message.Styles.Add(style);
                 

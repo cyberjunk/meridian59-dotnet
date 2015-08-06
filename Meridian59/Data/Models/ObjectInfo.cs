@@ -70,13 +70,13 @@ namespace Meridian59.Data.Models
             lookType = new LookTypeFlags(Buffer[cursor]);
             cursor++;
 
-            message = new ChatMessage(ChatMessageType.ObjectChatMessage, stringResources, Buffer, cursor);
+            message = new ServerString(ChatMessageType.ObjectChatMessage, stringResources, Buffer, cursor);
             cursor += Message.ByteLength;
 
             // if there is an inscription, additionally read it
             if (LookType.IsEditable || LookType.IsInscribed)
             {
-                inscription = new ChatMessage(ChatMessageType.ObjectChatMessage, stringResources, Buffer, cursor);
+                inscription = new ServerString(ChatMessageType.ObjectChatMessage, stringResources, Buffer, cursor);
                 cursor += Inscription.ByteLength;
             }
 
@@ -115,8 +115,8 @@ namespace Meridian59.Data.Models
         #region Fields
         protected ObjectBase objectBase;
         protected LookTypeFlags lookType;
-        protected ChatMessage message;
-        protected ChatMessage inscription;
+        protected ServerString message;
+        protected ServerString inscription;
         protected bool isVisible;
 
 		protected StringDictionary stringResources;
@@ -155,7 +155,7 @@ namespace Meridian59.Data.Models
             }
         }
 
-        public ChatMessage Message
+        public ServerString Message
         {
             get
             {
@@ -171,7 +171,7 @@ namespace Meridian59.Data.Models
             }
         }
 
-        public ChatMessage Inscription
+        public ServerString Inscription
         {
             get
             {
@@ -210,7 +210,7 @@ namespace Meridian59.Data.Models
             Clear(false);
         }
 
-        public ObjectInfo(ObjectBase ObjectBase, LookTypeFlags LookType, ChatMessage Message, ChatMessage Inscription)
+        public ObjectInfo(ObjectBase ObjectBase, LookTypeFlags LookType, ServerString Message, ServerString Inscription)
         {
             objectBase = ObjectBase;
             lookType = LookType;
@@ -233,7 +233,7 @@ namespace Meridian59.Data.Models
             {
                 ObjectBase = new ObjectBase();
                 LookType = new LookTypeFlags();
-                Message = new ChatMessage();
+                Message = new ServerString();
                 Inscription = null;
                 IsVisible = false;
             }
@@ -241,7 +241,7 @@ namespace Meridian59.Data.Models
             {
                 objectBase = new ObjectBase();
                 lookType = new LookTypeFlags();
-                message = new ChatMessage();
+                message = new ServerString();
                 inscription = null;
                 isVisible = false;
             }

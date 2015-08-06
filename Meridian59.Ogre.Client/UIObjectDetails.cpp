@@ -91,7 +91,7 @@ namespace Meridian59 { namespace Ogre
 		// description
 		else if (::System::String::Equals(e->PropertyName, ObjectInfo::PROPNAME_MESSAGE))
 		{
-			ChatMessage^ text = OgreClient::Singleton->Data->LookObject->Message;
+			ServerString^ text = OgreClient::Singleton->Data->LookObject->Message;
 
 			if (text != nullptr)
 				Description->setText(StringConvert::CLRToCEGUI(text->FullString));
@@ -100,7 +100,7 @@ namespace Meridian59 { namespace Ogre
 		// inscription
 		else if (::System::String::Equals(e->PropertyName, ObjectInfo::PROPNAME_INSCRIPTION))
 		{
-			ChatMessage^ text = OgreClient::Singleton->Data->LookObject->Inscription;
+			ServerString^ text = OgreClient::Singleton->Data->LookObject->Inscription;
 
 			if (text != nullptr)
 				Inscription->setText(StringConvert::CLRToCEGUI(text->FullString));

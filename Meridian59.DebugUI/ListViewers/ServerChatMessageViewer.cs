@@ -29,9 +29,9 @@ namespace Meridian59.DebugUI.ListViewers
         /// The DataSource to display
         /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), DefaultValue(null), Browsable(true)]
-        public BaseList<ChatMessage> DataSource
+        public BaseList<ServerString> DataSource
         {
-            get { return (BaseList<ChatMessage>)dgChatMessages.DataSource; }
+            get { return (BaseList<ServerString>)dgChatMessages.DataSource; }
             set {
 
                 value.ListChanged += new ListChangedEventHandler(value_ListChanged);
@@ -65,7 +65,7 @@ namespace Meridian59.DebugUI.ListViewers
 
         private void CreateGrid()
         {
-            dgChatMessages.DataSource = new BaseList<ChatMessage>(5);
+            dgChatMessages.DataSource = new BaseList<ServerString>(5);
 
             // Set basic properties of the DataGridView
             dgChatMessages.Dock = DockStyle.Fill;
