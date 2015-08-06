@@ -943,47 +943,47 @@ namespace Meridian59.Data.Models
         #endregion
 
         #region IStringResolvable
-		public virtual void ResolveStrings(StringDictionary StringResources, bool RaiseChangedEvent, LanguageCode Language = LanguageCode.English)
+		public virtual void ResolveStrings(StringDictionary StringResources, bool RaiseChangedEvent)
         {
             // male 
 
             foreach (ResourceIDBGF obj in maleHairIDs)
-				obj.ResolveStrings(StringResources, RaiseChangedEvent, Language);
+				obj.ResolveStrings(StringResources, RaiseChangedEvent);
 
-			maleSkullID.ResolveStrings(StringResources, RaiseChangedEvent, Language);
+			maleSkullID.ResolveStrings(StringResources, RaiseChangedEvent);
 
             foreach (ResourceIDBGF obj in maleEyeIDs)
-				obj.ResolveStrings(StringResources, RaiseChangedEvent, Language);
+				obj.ResolveStrings(StringResources, RaiseChangedEvent);
 
             foreach (ResourceIDBGF obj in maleNoseIDs)
-				obj.ResolveStrings(StringResources, RaiseChangedEvent, Language);
+				obj.ResolveStrings(StringResources, RaiseChangedEvent);
 
             foreach (ResourceIDBGF obj in maleMouthIDs)
-				obj.ResolveStrings(StringResources, RaiseChangedEvent, Language);
+				obj.ResolveStrings(StringResources, RaiseChangedEvent);
 
             // female 
 
             foreach (ResourceIDBGF obj in femaleHairIDs)
-				obj.ResolveStrings(StringResources, RaiseChangedEvent, Language);
+				obj.ResolveStrings(StringResources, RaiseChangedEvent);
 
-			femaleSkullID.ResolveStrings(StringResources, RaiseChangedEvent, Language);
+			femaleSkullID.ResolveStrings(StringResources, RaiseChangedEvent);
 
             foreach (ResourceIDBGF obj in femaleEyeIDs)
-				obj.ResolveStrings(StringResources, RaiseChangedEvent, Language);
+				obj.ResolveStrings(StringResources, RaiseChangedEvent);
 
             foreach (ResourceIDBGF obj in femaleNoseIDs)
-				obj.ResolveStrings(StringResources, RaiseChangedEvent, Language);
+				obj.ResolveStrings(StringResources, RaiseChangedEvent);
 
             foreach (ResourceIDBGF obj in femaleMouthIDs)
-				obj.ResolveStrings(StringResources, RaiseChangedEvent, Language);
+				obj.ResolveStrings(StringResources, RaiseChangedEvent);
 
             // spells/skills
             
             foreach (AvatarCreatorSpellObject obj in spells)
-				obj.ResolveStrings(StringResources, RaiseChangedEvent, Language);
+				obj.ResolveStrings(StringResources, RaiseChangedEvent);
             
             foreach (AvatarCreatorSkillObject obj in skills)
-				obj.ResolveStrings(StringResources, RaiseChangedEvent, Language);
+				obj.ResolveStrings(StringResources, RaiseChangedEvent);
         }
         #endregion
 

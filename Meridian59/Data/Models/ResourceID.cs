@@ -160,12 +160,11 @@ namespace Meridian59.Data.Models
         #endregion
 
         #region IStringResolvable
-		public virtual void ResolveStrings(StringDictionary StringResources, bool RaiseChangedEvent, LanguageCode Language = LanguageCode.English)
+		public virtual void ResolveStrings(StringDictionary StringResources, bool RaiseChangedEvent)
         {
             string res_name;
 
-			if (!StringResources.TryGetValue(value, out res_name, Language) && Language != LanguageCode.English)
-				StringResources.TryGetValue(value, out res_name, LanguageCode.English);
+			StringResources.TryGetValue(value, out res_name);
             
             if (RaiseChangedEvent)
             {

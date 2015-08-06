@@ -113,7 +113,8 @@ namespace Meridian59.Client
 
             // load the strings for this connectionentry
 		    ResourceManager.SelectStringDictionary(
-                Config.SelectedConnectionInfo.StringDictionary);
+                Config.SelectedConnectionInfo.StringDictionary,
+				LanguageCode.English); // todo: from config
 
 		    // fill ignore list in datacontroller with ignored
             // playernames for this connectionentry.
@@ -505,7 +506,7 @@ namespace Meridian59.Client
              */
             
             string modulefile;
-            if (ResourceManager.StringResources.TryGetValue(Message.ResourceID, out modulefile))
+            if (ResourceManager.StringResources.TryGetValue(Message.ResourceID, out modulefile, LanguageCode.English))
             {
                 if (String.Equals(modulefile, CHARDLL))
                 {

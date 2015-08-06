@@ -447,16 +447,13 @@ namespace Meridian59.Data.Models
         #endregion
         
         #region IStringResolvable
-		public void ResolveStrings(StringDictionary StringResources, bool RaiseChangedEvent, LanguageCode Language = LanguageCode.English)
+		public void ResolveStrings(StringDictionary StringResources, bool RaiseChangedEvent)
         {           
             string bg_res;
             string bg_name;
 
-			if (!StringResources.TryGetValue(nameRID, out bg_res, Language) && Language != LanguageCode.English)
-				StringResources.TryGetValue(nameRID, out bg_res, LanguageCode.English);
-
-			if (!StringResources.TryGetValue(overlayFileRID, out bg_name, Language) && Language != LanguageCode.English)
-				StringResources.TryGetValue(overlayFileRID, out bg_name, LanguageCode.English);
+			StringResources.TryGetValue(nameRID, out bg_res);
+			StringResources.TryGetValue(overlayFileRID, out bg_name);
 
             if (RaiseChangedEvent)
             {

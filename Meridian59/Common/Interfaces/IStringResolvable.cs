@@ -23,6 +23,6 @@ namespace Meridian59.Common.Interfaces
     /// </summary>
     public interface IStringResolvable
     {           
-        void ResolveStrings(StringDictionary StringResources, bool RaiseChangedEvent, LanguageCode Language = LanguageCode.English);
+        void ResolveStrings(StringDictionary StringResources, bool RaiseChangedEvent);
     }
 }

@@ -365,12 +365,11 @@ namespace Meridian59.Data.Models
         #endregion
 
         #region IStringResolvable
-		public void ResolveStrings(StringDictionary StringResources, bool RaiseChangedEvent, LanguageCode Language = LanguageCode.English)
+		public void ResolveStrings(StringDictionary StringResources, bool RaiseChangedEvent)
         {
             string res_name;
 
-			if (!StringResources.TryGetValue(resourceID, out res_name, Language) && Language != LanguageCode.English)
-				StringResources.TryGetValue(resourceID, out res_name, LanguageCode.English);
+			StringResources.TryGetValue(resourceID, out res_name);
 
             if (RaiseChangedEvent)
             {

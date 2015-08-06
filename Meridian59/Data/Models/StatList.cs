@@ -262,14 +262,13 @@ namespace Meridian59.Data.Models
         #endregion
 
         #region IStringResolvable
-		public override void ResolveStrings(StringDictionary StringResources, bool RaiseChangedEvent, LanguageCode Language = LanguageCode.English)
+		public override void ResolveStrings(StringDictionary StringResources, bool RaiseChangedEvent)
         {
-            base.ResolveStrings(StringResources, RaiseChangedEvent, Language);
+            base.ResolveStrings(StringResources, RaiseChangedEvent);
 
             string res_icon;
 
-			if (!StringResources.TryGetValue(resourceIconID, out res_icon, Language) && Language != LanguageCode.English)
-				StringResources.TryGetValue(resourceIconID, out res_icon, LanguageCode.English);
+			StringResources.TryGetValue(resourceIconID, out res_icon);
 
             if (RaiseChangedEvent)
             {           

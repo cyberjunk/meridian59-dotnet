@@ -36,6 +36,11 @@ namespace Meridian59.Common
     public class StringDictionary : IEnumerable<KeyValuePair<uint, string>>
 	{
 		/// <summary>
+		/// Language used if the defined lanuage has no result
+		/// </summary>
+		public const LanguageCode FALLBACKLANGUAGE = LanguageCode.English;
+
+		/// <summary>
 		/// The size of an ID space bracket for multilanguage support
 		/// </summary>
 		public const uint BRACKETSIZE = UInt32.MaxValue / (uint)LanguageCode._COUNT;
@@ -54,10 +59,18 @@ namespace Meridian59.Common
 		public uint Count { get { return (uint)dictionary.Count; } }
 
 		/// <summary>
+		/// This is the default language the dictionary is using,
+		/// if not specified explicitly in function signatures.
+		/// Note: This is NOT the only contained language!
+		/// </summary>
+		public LanguageCode Language { get; set; }
+
+		/// <summary>
 		/// Constructor
 		/// </summary>
- 		public StringDictionary() : base()
+ 		public StringDictionary(LanguageCode Language = FALLBACKLANGUAGE) : base()
         {
+			this.Language = Language;
         }
 
 		/// <summary>
@@ -69,15 +82,30 @@ namespace Meridian59.Common
 		}
 
 		/// <summary>
-		/// Tries to get an element from the dictionary
+		/// Tries to get a string for given ID and Language only.
 		/// </summary>
 		/// <param name="ResourceID"></param>
 		/// <param name="Value"></param>
 		/// <param name="Language"></param>
 		/// <returns></returns>
-		public bool TryGetValue(uint ResourceID, out string Value, LanguageCode Language = LanguageCode.English)
+		public bool TryGetValue(uint ResourceID, out string Value, LanguageCode Language)
 		{
 			return dictionary.TryGetValue(CombineKeys(ResourceID, Language), out Value);
+		}
+
+		/// <summary>
+		/// Tries to get a string for given ID for language set in 'Language' property.
+		/// If no entry for this language, will return FALLBACK language
+		/// </summary>
+		/// <param name="ResourceID"></param>
+		/// <param name="Value"></param>
+		/// <returns>False if not found in language AND fallback language</returns>
+		public bool TryGetValue(uint ResourceID, out string Value)
+		{
+			if (!TryGetValue(ResourceID, out Value, Language) && Language != FALLBACKLANGUAGE)
+				return TryGetValue(ResourceID, out Value, FALLBACKLANGUAGE);
+
+			return true;
 		}
 
 		/// <summary>
@@ -87,9 +115,20 @@ namespace Meridian59.Common
 		/// <param name="Value"></param>
 		/// <param name="Language"></param>
 		/// <returns></returns>
-		public bool TryAdd(uint ResourceID, string Value, LanguageCode Language = LanguageCode.English)
+		public bool TryAdd(uint ResourceID, string Value, LanguageCode Language)
 		{
 			return dictionary.TryAdd(CombineKeys(ResourceID, Language), Value);
+		}
+
+		/// <summary>
+		/// Adds all entries from Values to this instance.
+		/// </summary>
+		/// <param name="Values"></param>
+		public void AddRange(IEnumerable<KeyValuePair<uint, string>> Values)
+		{
+			// copies with combined keys
+			foreach (KeyValuePair<uint, string> pair in Values)
+				dictionary.TryAdd(pair.Key, pair.Value);
 		}
 
 		/// <summary>
@@ -99,7 +138,7 @@ namespace Meridian59.Common
 		/// <param name="Value"></param>
 		/// <param name="Language"></param>
 		/// <returns></returns>
-		public bool TryRemove(uint ResourceID, out string Value, LanguageCode Language = LanguageCode.English)
+		public bool TryRemove(uint ResourceID, out string Value, LanguageCode Language)
 		{
 			return dictionary.TryRemove(CombineKeys(ResourceID, Language), out Value);
 		}

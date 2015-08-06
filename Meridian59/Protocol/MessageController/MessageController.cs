@@ -1020,18 +1020,18 @@ namespace Meridian59.Protocol
         protected void HandlePlayers(PlayersMessage Message)
         {
             foreach (OnlinePlayer obj in Message.OnlinePlayers)
-                stringResources.TryAdd(obj.NameRID, obj.Name);
+                stringResources.TryAdd(obj.NameRID, obj.Name, LanguageCode.English);
         }
 
         protected void HandlePlayerAdd(PlayerAddMessage Message)
         {
-            stringResources.TryAdd(Message.NewOnlinePlayer.NameRID, Message.NewOnlinePlayer.Name);
+            stringResources.TryAdd(Message.NewOnlinePlayer.NameRID, Message.NewOnlinePlayer.Name, LanguageCode.English);
         }
 
         protected void HandlePlayerRemove(PlayerRemoveMessage Message)
         {
             string temp;
-            stringResources.TryRemove(Message.ObjectID, out temp);
+            stringResources.TryRemove(Message.ObjectID, out temp, LanguageCode.English);
         }
 
         protected void HandleStatGroup(StatGroupMessage Message)

@@ -279,16 +279,13 @@ namespace Meridian59.Data.Models
         #endregion
 
         #region IStringResolvable
-		public void ResolveStrings(StringDictionary StringResources, bool RaiseChangedEvent, LanguageCode Language = LanguageCode.English)
+		public void ResolveStrings(StringDictionary StringResources, bool RaiseChangedEvent)
         {
             string skill_name;
             string skill_description;
 
-			if (!StringResources.TryGetValue(skillNameID, out skill_name, Language) && Language != LanguageCode.English)
-				StringResources.TryGetValue(skillNameID, out skill_name, LanguageCode.English);
-
-			if (!StringResources.TryGetValue(skillDescriptionID, out skill_description, Language) && Language != LanguageCode.English)
-				StringResources.TryGetValue(skillDescriptionID, out skill_description, LanguageCode.English);
+			StringResources.TryGetValue(skillNameID, out skill_name);
+			StringResources.TryGetValue(skillDescriptionID, out skill_description);
 
             if (RaiseChangedEvent)
             {

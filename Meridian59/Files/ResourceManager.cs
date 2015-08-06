@@ -26,6 +26,7 @@ using Meridian59.Files.RSB;
 using Meridian59.Data.Lists;
 using Meridian59.Data.Models;
 using System.Threading;
+using Meridian59.Common.Enums;
 
 namespace Meridian59.Files
 {
@@ -506,20 +507,21 @@ namespace Meridian59.Files
         /// which was previously initialized during Init()
         /// </summary>
         /// <param name="RsbFile">Plain filename, like rsc0000.rsb</param>
-        public void SelectStringDictionary(string RsbFile)
+		/// <param name="Language"></param>
+        public void SelectStringDictionary(string RsbFile, LanguageCode Language)
         {
             // clear old entries
             StringResources.Clear();
+
+			// set preferred language
+			StringResources.Language = Language;
 
             // try get the dictionary for argument
             RsbFile file = GetStringDictionary(RsbFile);
             
             // add to dictionary in use
-            if (file != null)
-            {                
-                foreach (KeyValuePair<uint, string> pair in file.StringResources)
-                    StringResources.TryAdd(pair.Key, pair.Value);
-            }
+            if (file != null)            
+				StringResources.AddRange(file.StringResources);           
         }
 
         /// <summary>

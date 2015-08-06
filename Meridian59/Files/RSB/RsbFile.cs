@@ -256,8 +256,9 @@ namespace Meridian59.Files.RSB
             {
                 reader.ReadToFollowing("string");
                 uint id = Convert.ToUInt32(reader["id"]);
-                string resource = reader.ReadString();           
-                StringResources.TryAdd(id, resource);
+				LanguageCode lang = LanguageCode.English; //todo
+                string resource = reader.ReadString();
+				StringResources.TryAdd(id, resource, lang);
             }
         }
 
