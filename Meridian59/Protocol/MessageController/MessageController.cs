@@ -1146,11 +1146,11 @@ namespace Meridian59.Protocol
         {
             string temp;
 
-            // remove old
-            stringResources.TryRemove(Message.ResourceID, out temp);
+            // remove old (always english)
+            stringResources.TryRemove(Message.ResourceID, out temp, LanguageCode.English);
 
-            // add new
-            stringResources.TryAdd(Message.ResourceID, Message.NewValue);
+            // add new (always english)
+            stringResources.TryAdd(Message.ResourceID, Message.NewValue, LanguageCode.English);
         }
 
         protected void HandleRoomContents(RoomContentsMessage Message)
