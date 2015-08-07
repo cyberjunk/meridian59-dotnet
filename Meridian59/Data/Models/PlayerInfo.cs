@@ -54,14 +54,20 @@ namespace Meridian59.Data.Models
         public int ByteLength { 
             get {
                 return objectBase.ByteLength + TypeSizes.BYTE + message.ByteLength
-                    + TypeSizes.SHORT + titles.Length + TypeSizes.SHORT + website.Length;
+#if !VANILLA
+					+ titles.ByteLength
+#else
+                    + TypeSizes.SHORT + titles.Length
+#endif
+					+ TypeSizes.SHORT + website.Length;
             } 
         }
 
         public int ReadFrom(byte[] Buffer, int StartIndex = 0)
         {
             int cursor = StartIndex;
-           
+			ushort strlen;
+
             objectBase = new ObjectBase(true, Buffer, cursor);
             cursor += objectBase.ByteLength;
 
@@ -71,12 +77,16 @@ namespace Meridian59.Data.Models
             message = new ServerString(ChatMessageType.ObjectChatMessage, stringResources, Buffer, cursor);
             cursor += Message.ByteLength;
 
-            ushort strlen = BitConverter.ToUInt16(Buffer, cursor);
+#if !VANILLA
+			titles = new ServerString(ChatMessageType.ObjectChatMessage, stringResources, Buffer, cursor);
+			cursor += titles.ByteLength;
+#else
+            strlen = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
             Titles = Encoding.Default.GetString(Buffer, cursor, strlen);
             cursor += strlen;
-
+#endif
             strlen = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
@@ -97,12 +107,15 @@ namespace Meridian59.Data.Models
 
             cursor += message.WriteTo(Buffer, cursor);
 
+#if !VANILLA
+			cursor += titles.WriteTo(Buffer, cursor);
+#else
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(Titles.Length)), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
             Array.Copy(Encoding.Default.GetBytes(Titles), 0, Buffer, cursor, Titles.Length);
             cursor += Titles.Length;
-
+#endif
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(Website.Length)), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
@@ -127,8 +140,12 @@ namespace Meridian59.Data.Models
         protected ObjectBase objectBase;
         protected bool isEditable;
         protected ServerString message;
+#if !VANILLA
+		protected ServerString titles;
+#else
         protected string titles;
-        protected string website;
+#endif
+		protected string website;
         protected bool isVisible;
 
 		protected StringDictionary stringResources;
@@ -182,7 +199,23 @@ namespace Meridian59.Data.Models
                 }
             }
         }
-
+#if !VANILLA
+		public ServerString Titles
+		{
+			get
+			{
+				return titles;
+			}
+			set
+			{
+				if (titles != value)
+				{
+					titles = value;
+					RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_TITLES));
+				}
+			}
+		}
+#else
         public string Titles
         {
             get
@@ -198,7 +231,7 @@ namespace Meridian59.Data.Models
                 }
             }
         }
-
+#endif
         public string Website
         {
             get
@@ -237,7 +270,16 @@ namespace Meridian59.Data.Models
         {
             Clear(false);
         }
-
+#if !VANILLA
+		public PlayerInfo(ObjectBase ObjectBase, bool IsEditable, ServerString Message, ServerString Titles, string Website)
+		{
+			objectBase = ObjectBase;
+			isEditable = IsEditable;
+			message = Message;
+			titles = Titles;
+			website = Website;
+		}
+#else
         public PlayerInfo(ObjectBase ObjectBase, bool IsEditable, ServerString Message, string Titles, string Website)
         {
             objectBase = ObjectBase;
@@ -246,7 +288,7 @@ namespace Meridian59.Data.Models
             titles = Titles;
             website = Website;
         }
-
+#endif
 		public PlayerInfo(StringDictionary StringResources, byte[] Buffer, int StartIndex = 0) 
         {
             stringResources = StringResources;
@@ -263,7 +305,11 @@ namespace Meridian59.Data.Models
                 ObjectBase = new ObjectBase();
                 IsEditable = false;
                 Message = new ServerString();
+#if !VANILLA
+				Titles = new ServerString();
+#else
                 Titles = String.Empty;
+#endif
                 Website = String.Empty;
                 IsVisible = false;
             }
@@ -272,7 +318,11 @@ namespace Meridian59.Data.Models
                 objectBase = new ObjectBase();
                 isEditable = false;
                 message = new ServerString();
+#if !VANILLA
+				titles = new ServerString();
+#else
                 titles = String.Empty;
+#endif
                 website = String.Empty;
                 isVisible = false;
             }

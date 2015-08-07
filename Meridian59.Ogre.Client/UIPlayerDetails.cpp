@@ -93,8 +93,11 @@ namespace Meridian59 { namespace Ogre
 		// titles
 		else if (::System::String::Equals(e->PropertyName, PlayerInfo::PROPNAME_TITLES))
 		{
+#ifndef VANILLA
+			::System::String^ text = OgreClient::Singleton->Data->LookPlayer->Titles->FullString;
+#else
 			::System::String^ text = OgreClient::Singleton->Data->LookPlayer->Titles;
-
+#endif
 			if (text != nullptr)
 				Titles->setText(StringConvert::CLRToCEGUI(text));
 			
