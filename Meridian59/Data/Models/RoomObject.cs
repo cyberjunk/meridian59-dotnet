@@ -1632,10 +1632,9 @@ namespace Meridian59.Data.Models
         /// <returns></returns>
         public static Real GetDistanceSquared(RoomObject ObjectA, RoomObject ObjectB)
         {
-            int deltax = ObjectA.CoordinateX - ObjectB.CoordinateX;
-            int deltay = ObjectA.CoordinateY - ObjectB.CoordinateY;
+			V3 AB = ObjectB.Position3D - ObjectA.Position3D;
 
-            return deltax * deltax + deltay * deltay;
+            return AB.LengthSquared;
         }
 
         /// <summary>
