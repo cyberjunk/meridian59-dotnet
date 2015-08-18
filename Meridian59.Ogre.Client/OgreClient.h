@@ -221,7 +221,7 @@ namespace Meridian59 { namespace Ogre
 
 		property unsigned char AppVersionMinor
 		{ 
-			public: virtual unsigned char get() override { return 2; } 			
+			public: virtual unsigned char get() override { return 3; } 			
 		};
 		
 		property ::Ogre::Root* Root 
