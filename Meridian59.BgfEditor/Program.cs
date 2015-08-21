@@ -90,6 +90,12 @@ namespace Meridian59.BgfEditor
             // set running
             IsRunning = true;
             
+            string[] args = Environment.GetCommandLineArgs();
+
+            // load file passed by arguments
+            if (args.Length > 1)
+                Load(args[1]);
+                
             // start mainthread loop
             while (IsRunning)
             {
