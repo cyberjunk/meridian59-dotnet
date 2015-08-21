@@ -394,7 +394,7 @@ namespace Meridian59.Files.BGF
         public BgfFile(string Filename)
         {
             // get extension of filename
-            string extension = Path.GetExtension(Filename);
+            string extension = Path.GetExtension(Filename).ToLower();
 
             // if it's .bgf load it
             if (extension == FileExtensions.BGF)

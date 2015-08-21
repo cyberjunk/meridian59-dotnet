@@ -130,7 +130,7 @@ namespace Meridian59.BgfEditor
             
             if (File.Exists(Filename))
             {
-                string extension = Path.GetExtension(Filename);
+                string extension = Path.GetExtension(Filename).ToLower();
 
                 switch (extension)
                 {
