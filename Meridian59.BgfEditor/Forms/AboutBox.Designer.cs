@@ -60,7 +60,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(31, 13);
             this.label2.TabIndex = 1;
-            this.label2.Text = "1.0.9";
+            this.label2.Text = "1.1.0";
             // 
             // groupBox1
             // 
@@ -152,6 +152,7 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox3);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "AboutBox";
             this.Text = "About";
             this.groupBox1.ResumeLayout(false);

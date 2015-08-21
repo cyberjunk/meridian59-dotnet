@@ -31,6 +31,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.menuFile = new System.Windows.Forms.ToolStripMenuItem();
             this.menuNew = new System.Windows.Forms.ToolStripMenuItem();
@@ -101,6 +102,7 @@
             this.cbFinal = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.cbGroup = new System.Windows.Forms.ComboBox();
+            this.cbPalette = new Meridian59.BgfEditor.Controls.ComboBoxPalette();
             this.label1 = new System.Windows.Forms.Label();
             this.trackAngle = new System.Windows.Forms.TrackBar();
             this.label6 = new System.Windows.Forms.Label();
@@ -116,7 +118,6 @@
             this.fdAddFrame = new System.Windows.Forms.OpenFileDialog();
             this.fdOpenFile = new System.Windows.Forms.OpenFileDialog();
             this.fdSaveFile = new System.Windows.Forms.SaveFileDialog();
-            this.cbPalette = new Meridian59.BgfEditor.Controls.ComboBoxPalette();
             this.menuStrip.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tabFrames.SuspendLayout();
@@ -234,7 +235,7 @@
             this.menuConvertAllToV9,
             this.menuComparePalettes});
             this.menuTasks.Name = "menuTasks";
-            this.menuTasks.Size = new System.Drawing.Size(48, 20);
+            this.menuTasks.Size = new System.Drawing.Size(47, 20);
             this.menuTasks.Text = "Tools";
             // 
             // menuExportAllBGFToXML
@@ -969,6 +970,272 @@
             this.cbGroup.TabIndex = 19;
             this.cbGroup.SelectedIndexChanged += new System.EventHandler(this.OnGroupSelectedIndexChanged);
             // 
+            // cbPalette
+            // 
+            this.cbPalette.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbPalette.FormattingEnabled = true;
+            this.cbPalette.Items.AddRange(new object[] {
+            "(000) - IDENTITY",
+            "(001) - DBLUETOSKIN1",
+            "(002) - DBLUETOSKIN2",
+            "(003) - DBLUETOSKIN3",
+            "(004) - DBLUETOSKIN4",
+            "(005) - DBLUETOSICKGREEN",
+            "(006) - DBLUETOSICKYELLOW",
+            "(007) - DBLUETOGRAY",
+            "(008) - DBLUETOLBLUE",
+            "(009) - DBLUETOASHEN",
+            "(010) - GRAYTOORANGE",
+            "(011) - GRAYTODGREEN",
+            "(012) - GRAYTOBGREEN",
+            "(013) - GRAYTOSKY",
+            "(014) - GRAYTODBLUE",
+            "(015) - GRAYTOPURPLE",
+            "(016) - GRAYTOGOLD",
+            "(017) - GRAYTOBBLUE",
+            "(018) - GRAYTORED",
+            "(019) - GRAYTOLORANGE",
+            "(020) - GRAYTOLGREEN",
+            "(021) - GRAYTOLBGREEN",
+            "(022) - GRAYTOLSKY",
+            "(023) - GRAYTOLBLUE",
+            "(024) - GRAYTOLPURPLE",
+            "(025) - GRAYTOLGOLD",
+            "(026) - GRAYTOSKIN1",
+            "(027) - GRAYTOSKIN2",
+            "(028) - GRAYTOSKIN3",
+            "(029) - GRAYTOSKIN4",
+            "(030) - GRAYTOSKIN5",
+            "(031) - UNSET",
+            "(032) - GRAYTOLBBLUE",
+            "(033) - GRAYTOLRED",
+            "(034) - GRAYTOKORANGE",
+            "(035) - GRAYTOKGREEN",
+            "(036) - GRAYTOKBGREEN",
+            "(037) - GRAYTOKSKY",
+            "(038) - GRAYTOKBLUE",
+            "(039) - GRAYTOKPURPLE",
+            "(040) - GRAYTOKGOLD",
+            "(041) - GRAYTOKBBLUE",
+            "(042) - GRAYTOKRED",
+            "(043) - GRAYTOKGRAY",
+            "(044) - GRAYTOBLACK",
+            "(045) - GRAYTOOLDHAIR1",
+            "(046) - GRAYTOOLDHAIR2",
+            "(047) - GRAYTOOLDHAIR3",
+            "(048) - GRAYTOPLATBLOND",
+            "(049) - FILTERWHITE90",
+            "(050) - FILTERWHITE80",
+            "(051) - FILTERWHITE70",
+            "(052) - UNSET",
+            "(053) - UNSET",
+            "(054) - FILTERBRIGHT1",
+            "(055) - FILTERBRIGHT2",
+            "(056) - FILTERBRIGHT3",
+            "(057) - BLEND25YELLOW",
+            "(058) - PURPLETOLBLUE",
+            "(059) - PURPLETOBRED",
+            "(060) - PURPLETOGREEN",
+            "(061) - PURPLETOYELLOW",
+            "(062) - UNSET",
+            "(063) - UNSET",
+            "(064) - UNSET",
+            "(065) - BLEND10RED",
+            "(066) - BLEND20RED",
+            "(067) - BLEND30RED",
+            "(068) - BLEND40RED",
+            "(069) - BLEND50RED",
+            "(070) - BLEND60RED",
+            "(071) - BLEND70RED",
+            "(072) - BLEND80RED",
+            "(073) - BLEND90RED",
+            "(074) - BLEND100RED",
+            "(075) - UNSET",
+            "(076) - UNSET",
+            "(077) - FILTERRED",
+            "(078) - FILTERBLUE",
+            "(079) - FILTERGREEN",
+            "(080) - UNSET",
+            "(081) - BLEND25RED",
+            "(082) - BLEND25BLUE",
+            "(083) - BLEND25GREEN",
+            "(084) - UNSET",
+            "(085) - BLEND50BLUE",
+            "(086) - BLEND50GREEN",
+            "(087) - BLEND75RED",
+            "(088) - BLEND75BLUE",
+            "(089) - BLEND75GREEN",
+            "(090) - REDTOBLACK",
+            "(091) - BLUETOBLACK",
+            "(092) - PURPLETOBLACK",
+            "(093) - UNSET",
+            "(094) - UNSET",
+            "(095) - UNSET",
+            "(096) - RAMPUP1",
+            "(097) - RAMPUP2",
+            "(098) - UNSET",
+            "(099) - UNSET",
+            "(100) - UNSET",
+            "(101) - UNSET",
+            "(102) - UNSET",
+            "(103) - UNSET",
+            "(104) - UNSET",
+            "(105) - UNSET",
+            "(106) - UNSET",
+            "(107) - UNSET",
+            "(108) - UNSET",
+            "(109) - UNSET",
+            "(110) - RAMPDOWN2",
+            "(111) - RAMPDOWN1",
+            "(112) - BLEND10WHITE",
+            "(113) - BLEND20WHITE",
+            "(114) - BLEND30WHITE",
+            "(115) - BLEND40WHITE",
+            "(116) - BLEND50WHITE",
+            "(117) - BLEND60WHITE",
+            "(118) - BLEND70WHITE",
+            "(119) - BLEND80WHITE",
+            "(120) - BLEND90WHITE",
+            "(121) - BLEND100WHITE",
+            "(122) - REDTODGREEN1",
+            "(123) - REDTODGREEN2",
+            "(124) - REDTODGREEN3",
+            "(125) - REDTOBLACK1",
+            "(126) - REDTOBLACK2",
+            "(127) - REDTOBLACK3",
+            "(128) - REDTODKBLACK1",
+            "(129) - REDTODKBLACK2",
+            "(130) - REDTODKBLACK3",
+            "(131) - REDBLK_BLWHT",
+            "(132) - BLBLK_REDWHT",
+            "(133) - UNSET",
+            "(134) - UNSET",
+            "(135) - GUILDCOLOR0",
+            "(136) - GUILDCOLOR1",
+            "(137) - GUILDCOLOR2",
+            "(138) - GUILDCOLOR3",
+            "(139) - GUILDCOLOR4",
+            "(140) - GUILDCOLOR5",
+            "(141) - GUILDCOLOR6",
+            "(142) - GUILDCOLOR7",
+            "(143) - GUILDCOLOR8",
+            "(144) - GUILDCOLOR9",
+            "(145) - GUILDCOLOR10",
+            "(146) - GUILDCOLOR11",
+            "(147) - GUILDCOLOR12",
+            "(148) - GUILDCOLOR13",
+            "(149) - GUILDCOLOR14",
+            "(150) - GUILDCOLOR15",
+            "(151) - GUILDCOLOR16",
+            "(152) - GUILDCOLOR17",
+            "(153) - GUILDCOLOR18",
+            "(154) - GUILDCOLOR19",
+            "(155) - GUILDCOLOR20",
+            "(156) - GUILDCOLOR21",
+            "(157) - GUILDCOLOR22",
+            "(158) - GUILDCOLOR23",
+            "(159) - GUILDCOLOR24",
+            "(160) - GUILDCOLOR25",
+            "(161) - GUILDCOLOR26",
+            "(162) - GUILDCOLOR27",
+            "(163) - GUILDCOLOR28",
+            "(164) - GUILDCOLOR29",
+            "(165) - GUILDCOLOR30",
+            "(166) - GUILDCOLOR31",
+            "(167) - GUILDCOLOR32",
+            "(168) - GUILDCOLOR33",
+            "(169) - GUILDCOLOR34",
+            "(170) - GUILDCOLOR35",
+            "(171) - GUILDCOLOR36",
+            "(172) - GUILDCOLOR37",
+            "(173) - GUILDCOLOR38",
+            "(174) - GUILDCOLOR39",
+            "(175) - GUILDCOLOR40",
+            "(176) - GUILDCOLOR41",
+            "(177) - GUILDCOLOR42",
+            "(178) - GUILDCOLOR43",
+            "(179) - GUILDCOLOR44",
+            "(180) - GUILDCOLOR45",
+            "(181) - GUILDCOLOR46",
+            "(182) - GUILDCOLOR47",
+            "(183) - GUILDCOLOR48",
+            "(184) - GUILDCOLOR49",
+            "(185) - GUILDCOLOR50",
+            "(186) - GUILDCOLOR51",
+            "(187) - GUILDCOLOR52",
+            "(188) - GUILDCOLOR53",
+            "(189) - GUILDCOLOR54",
+            "(190) - GUILDCOLOR55",
+            "(191) - GUILDCOLOR56",
+            "(192) - GUILDCOLOR57",
+            "(193) - GUILDCOLOR58",
+            "(194) - GUILDCOLOR59",
+            "(195) - GUILDCOLOR60",
+            "(196) - GUILDCOLOR61",
+            "(197) - GUILDCOLOR62",
+            "(198) - GUILDCOLOR63",
+            "(199) - GUILDCOLOR64",
+            "(200) - GUILDCOLOR65",
+            "(201) - GUILDCOLOR66",
+            "(202) - GUILDCOLOR67",
+            "(203) - GUILDCOLOR68",
+            "(204) - GUILDCOLOR69",
+            "(205) - GUILDCOLOR70",
+            "(206) - GUILDCOLOR71",
+            "(207) - GUILDCOLOR72",
+            "(208) - GUILDCOLOR73",
+            "(209) - GUILDCOLOR74",
+            "(210) - GUILDCOLOR75",
+            "(211) - GUILDCOLOR76",
+            "(212) - GUILDCOLOR77",
+            "(213) - GUILDCOLOR78",
+            "(214) - GUILDCOLOR79",
+            "(215) - GUILDCOLOR80",
+            "(216) - GUILDCOLOR81",
+            "(217) - GUILDCOLOR82",
+            "(218) - GUILDCOLOR83",
+            "(219) - GUILDCOLOR84",
+            "(220) - GUILDCOLOR85",
+            "(221) - GUILDCOLOR86",
+            "(222) - GUILDCOLOR87",
+            "(223) - GUILDCOLOR88",
+            "(224) - GUILDCOLOR89",
+            "(225) - GUILDCOLOR90",
+            "(226) - GUILDCOLOR91",
+            "(227) - GUILDCOLOR92",
+            "(228) - GUILDCOLOR93",
+            "(229) - GUILDCOLOR94",
+            "(230) - GUILDCOLOR95",
+            "(231) - GUILDCOLOR96",
+            "(232) - GUILDCOLOR97",
+            "(233) - GUILDCOLOR98",
+            "(234) - GUILDCOLOR99",
+            "(235) - GUILDCOLOR100",
+            "(236) - GUILDCOLOR101",
+            "(237) - GUILDCOLOR102",
+            "(238) - GUILDCOLOR103",
+            "(239) - GUILDCOLOR104",
+            "(240) - GUILDCOLOR105",
+            "(241) - GUILDCOLOR106",
+            "(242) - GUILDCOLOR107",
+            "(243) - GUILDCOLOR108",
+            "(244) - GUILDCOLOR109",
+            "(245) - GUILDCOLOR110",
+            "(246) - GUILDCOLOR111",
+            "(247) - GUILDCOLOR112",
+            "(248) - GUILDCOLOR113",
+            "(249) - GUILDCOLOR114",
+            "(250) - GUILDCOLOR115",
+            "(251) - GUILDCOLOR116",
+            "(252) - GUILDCOLOR117",
+            "(253) - GUILDCOLOR118",
+            "(254) - GUILDCOLOR119",
+            "(255) - GUILDCOLOR120"});
+            this.cbPalette.Location = new System.Drawing.Point(22, 244);
+            this.cbPalette.Name = "cbPalette";
+            this.cbPalette.Size = new System.Drawing.Size(164, 21);
+            this.cbPalette.TabIndex = 18;
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -1107,15 +1374,6 @@
             this.fdSaveFile.Filter = "BGF-File|*.bgf|XML-File|*.xml";
             this.fdSaveFile.FileOk += new System.ComponentModel.CancelEventHandler(this.OnFileDialogSaveFileOk);
             // 
-            // cbPalette
-            // 
-            this.cbPalette.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbPalette.FormattingEnabled = true;            
-            this.cbPalette.Location = new System.Drawing.Point(22, 244);
-            this.cbPalette.Name = "cbPalette";
-            this.cbPalette.Size = new System.Drawing.Size(164, 21);
-            this.cbPalette.TabIndex = 18;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1123,6 +1381,7 @@
             this.ClientSize = new System.Drawing.Size(984, 457);
             this.Controls.Add(this.tabMain);
             this.Controls.Add(this.menuStrip);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip;
             this.Name = "MainForm";
             this.Text = "Meridian 59 BGF Editor";
