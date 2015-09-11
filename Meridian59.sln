@@ -1,15 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31206.0
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meridian59", "Meridian59\Meridian59.csproj", "{E8223F3F-3F18-4F4C-9A8F-D9102B067BE3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meridian59.BgfEditor", "Meridian59.BgfEditor\Meridian59.BgfEditor.csproj", "{CD526045-BF2A-4D19-9823-2FCD9DFC9158}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meridian59.DebugUI", "Meridian59.DebugUI\Meridian59.DebugUI.csproj", "{C8938199-AB12-4A43-AAB0-C8F7043E46E9}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meridian59.ExampleClient", "Meridian59.ExampleClient\Meridian59.ExampleClient.csproj", "{EA1643C9-481D-4D23-B21B-2CC7DE34291D}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Meridian59.Ogre.Client", "Meridian59.Ogre.Client\Meridian59.Ogre.Client.vcxproj", "{96EEE7B3-2425-4686-8DC3-44405E00641D}"
 EndProject
@@ -65,16 +63,6 @@ Global
 		{C8938199-AB12-4A43-AAB0-C8F7043E46E9}.Release|x64.Build.0 = Release|x64
 		{C8938199-AB12-4A43-AAB0-C8F7043E46E9}.Release|x86.ActiveCfg = Release|x86
 		{C8938199-AB12-4A43-AAB0-C8F7043E46E9}.Release|x86.Build.0 = Release|x86
-		{EA1643C9-481D-4D23-B21B-2CC7DE34291D}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{EA1643C9-481D-4D23-B21B-2CC7DE34291D}.Debug|x64.ActiveCfg = Debug|x64
-		{EA1643C9-481D-4D23-B21B-2CC7DE34291D}.Debug|x64.Build.0 = Debug|x64
-		{EA1643C9-481D-4D23-B21B-2CC7DE34291D}.Debug|x86.ActiveCfg = Debug|x86
-		{EA1643C9-481D-4D23-B21B-2CC7DE34291D}.Debug|x86.Build.0 = Debug|x86
-		{EA1643C9-481D-4D23-B21B-2CC7DE34291D}.Release|Any CPU.ActiveCfg = Release|x86
-		{EA1643C9-481D-4D23-B21B-2CC7DE34291D}.Release|x64.ActiveCfg = Release|x64
-		{EA1643C9-481D-4D23-B21B-2CC7DE34291D}.Release|x64.Build.0 = Release|x64
-		{EA1643C9-481D-4D23-B21B-2CC7DE34291D}.Release|x86.ActiveCfg = Release|x86
-		{EA1643C9-481D-4D23-B21B-2CC7DE34291D}.Release|x86.Build.0 = Release|x86
 		{96EEE7B3-2425-4686-8DC3-44405E00641D}.Debug|Any CPU.ActiveCfg = Debug|Win32
 		{96EEE7B3-2425-4686-8DC3-44405E00641D}.Debug|x64.ActiveCfg = Debug|x64
 		{96EEE7B3-2425-4686-8DC3-44405E00641D}.Debug|x64.Build.0 = Debug|x64
