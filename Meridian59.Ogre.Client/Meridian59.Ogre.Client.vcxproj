@@ -338,7 +338,7 @@
     <Image Include="glow.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Meridian59.DebugUI\Meridian59.AdminUI.csproj">
+    <ProjectReference Include="..\Meridian59.AdminUI\Meridian59.AdminUI.csproj">
       <Project>{c8938199-ab12-4a43-aab0-c8f7043e46e9}</Project>
     </ProjectReference>
     <ProjectReference Include="..\Meridian59\Meridian59.csproj">
