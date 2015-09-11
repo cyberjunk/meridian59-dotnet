@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meridian59", "Meridian59\Me
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meridian59.BgfEditor", "Meridian59.BgfEditor\Meridian59.BgfEditor.csproj", "{CD526045-BF2A-4D19-9823-2FCD9DFC9158}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meridian59.DebugUI", "Meridian59.DebugUI\Meridian59.DebugUI.csproj", "{C8938199-AB12-4A43-AAB0-C8F7043E46E9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meridian59.AdminUI", "Meridian59.DebugUI\Meridian59.AdminUI.csproj", "{C8938199-AB12-4A43-AAB0-C8F7043E46E9}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Meridian59.Ogre.Client", "Meridian59.Ogre.Client\Meridian59.Ogre.Client.vcxproj", "{96EEE7B3-2425-4686-8DC3-44405E00641D}"
 EndProject
