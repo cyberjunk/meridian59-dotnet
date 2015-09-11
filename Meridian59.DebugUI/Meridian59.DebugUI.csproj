@@ -130,9 +130,6 @@
     </Compile>
     <Compile Include="CustomDataGridColumns\InOutColumn.cs" />
     <Compile Include="CustomDataGridColumns\ByteColumn.cs" />
-    <Compile Include="LoginControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Viewers\RoomInfoView.cs">
       <SubType>UserControl</SubType>
     </Compile>
