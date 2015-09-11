@@ -1,4 +1,4 @@
-﻿namespace Meridian59.DebugUI.Viewers
+﻿namespace Meridian59.AdminUI.Viewers
 {
     partial class BackgroundOverlayView
     {
@@ -32,9 +32,9 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBackgroundOverlays = new System.Windows.Forms.GroupBox();
-            this.gridObjects = new Meridian59.DebugUI.BaseGridView();
+            this.gridObjects = new Meridian59.AdminUI.BaseGridView();
             this.groupAnimation = new System.Windows.Forms.GroupBox();
-            this.avAnimation = new Meridian59.DebugUI.AnimationView();
+            this.avAnimation = new Meridian59.AdminUI.AnimationView();
             this.colID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colOverlayRID = new System.Windows.Forms.DataGridViewTextBoxColumn();

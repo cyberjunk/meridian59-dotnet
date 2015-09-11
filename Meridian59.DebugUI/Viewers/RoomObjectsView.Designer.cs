@@ -1,4 +1,4 @@
-﻿namespace Meridian59.DebugUI
+﻿namespace Meridian59.AdminUI
 {
     partial class RoomObjectsView
     {
@@ -57,25 +57,25 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle40 = new System.Windows.Forms.DataGridViewCellStyle();
             this.splitMain1 = new System.Windows.Forms.SplitContainer();
             this.groupRoomObjects = new System.Windows.Forms.GroupBox();
-            this.gridRoomObjects = new Meridian59.DebugUI.BaseGridView();
+            this.gridRoomObjects = new Meridian59.AdminUI.BaseGridView();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitMain2 = new System.Windows.Forms.SplitContainer();
             this.splitSubOverlays = new System.Windows.Forms.SplitContainer();
             this.groupSubOverlays = new System.Windows.Forms.GroupBox();
-            this.gridSubOverlays = new Meridian59.DebugUI.SubOverlayGrid();
+            this.gridSubOverlays = new Meridian59.AdminUI.SubOverlayGrid();
             this.groupMotionSubOverlays = new System.Windows.Forms.GroupBox();
-            this.gridMotionSubOverlays = new Meridian59.DebugUI.SubOverlayGrid();
+            this.gridMotionSubOverlays = new Meridian59.AdminUI.SubOverlayGrid();
             this.splitAnimationMain = new System.Windows.Forms.SplitContainer();
             this.splitAnimation1 = new System.Windows.Forms.SplitContainer();
             this.groupAnimation = new System.Windows.Forms.GroupBox();
-            this.avAnimation = new Meridian59.DebugUI.AnimationView();
+            this.avAnimation = new Meridian59.AdminUI.AnimationView();
             this.groupMotionAnimation = new System.Windows.Forms.GroupBox();
-            this.avMotionAnimation = new Meridian59.DebugUI.AnimationView();
+            this.avMotionAnimation = new Meridian59.AdminUI.AnimationView();
             this.splitAnimation2 = new System.Windows.Forms.SplitContainer();
             this.groupSubOverlayAnimation = new System.Windows.Forms.GroupBox();
-            this.avSubOverlayAnimation = new Meridian59.DebugUI.AnimationView();
+            this.avSubOverlayAnimation = new Meridian59.AdminUI.AnimationView();
             this.groupMotionSubOverlayAnimation = new System.Windows.Forms.GroupBox();
-            this.avMotionSubOverlayAnimation = new Meridian59.DebugUI.AnimationView();
+            this.avMotionSubOverlayAnimation = new Meridian59.AdminUI.AnimationView();
             this.groupImage = new System.Windows.Forms.GroupBox();
             this.picImage = new System.Windows.Forms.PictureBox();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();

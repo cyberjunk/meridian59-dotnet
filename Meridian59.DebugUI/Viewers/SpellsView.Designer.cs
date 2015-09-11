@@ -1,4 +1,4 @@
-﻿namespace Meridian59.DebugUI.Viewers
+﻿namespace Meridian59.AdminUI.Viewers
 {
     partial class SpellsView
     {
@@ -40,15 +40,15 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             this.splitMain = new System.Windows.Forms.SplitContainer();
             this.groupSpells = new System.Windows.Forms.GroupBox();
-            this.gridSpells = new Meridian59.DebugUI.BaseGridView();
+            this.gridSpells = new Meridian59.AdminUI.BaseGridView();
             this.splitMain2 = new System.Windows.Forms.SplitContainer();
             this.groupSubOverlays = new System.Windows.Forms.GroupBox();
-            this.gridSubOverlays = new Meridian59.DebugUI.SubOverlayGrid();
+            this.gridSubOverlays = new Meridian59.AdminUI.SubOverlayGrid();
             this.splitAnimations = new System.Windows.Forms.SplitContainer();
             this.groupAnimation = new System.Windows.Forms.GroupBox();
-            this.avAnimation = new Meridian59.DebugUI.AnimationView();
+            this.avAnimation = new Meridian59.AdminUI.AnimationView();
             this.groupSubOverlayAnimation = new System.Windows.Forms.GroupBox();
-            this.avSubOverlayAnimation = new Meridian59.DebugUI.AnimationView();
+            this.avSubOverlayAnimation = new Meridian59.AdminUI.AnimationView();
             this.colID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colOverlayRID = new System.Windows.Forms.DataGridViewTextBoxColumn();

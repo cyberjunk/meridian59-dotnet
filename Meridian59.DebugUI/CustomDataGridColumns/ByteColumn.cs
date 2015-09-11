@@ -19,7 +19,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.ComponentModel;
 
-namespace Meridian59.DebugUI.CustomDataGridColumns
+namespace Meridian59.AdminUI.CustomDataGridColumns
 {
     
     public class ByteCell : DataGridViewTextBoxCell

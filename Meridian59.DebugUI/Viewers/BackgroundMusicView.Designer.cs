@@ -1,4 +1,4 @@
-﻿namespace Meridian59.DebugUI.Viewers
+﻿namespace Meridian59.AdminUI.Viewers
 {
     partial class BackgroundMusicView
     {

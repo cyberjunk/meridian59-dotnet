@@ -18,14 +18,14 @@ using System;
 using System.Windows.Forms;
 using System.Drawing;
 using System.ComponentModel;
-using Meridian59.DebugUI.Generic;
-using Meridian59.DebugUI.Events;
-using Meridian59.DebugUI.CustomDataGridColumns;
+using Meridian59.AdminUI.Generic;
+using Meridian59.AdminUI.Events;
+using Meridian59.AdminUI.CustomDataGridColumns;
 using Meridian59.Protocol.Events;
 using Meridian59.Protocol.GameMessages;
 using Meridian59.Data.Lists;
 
-namespace Meridian59.DebugUI.ListViewers
+namespace Meridian59.AdminUI.ListViewers
 {
     
     public class GamePacketViewer : Panel

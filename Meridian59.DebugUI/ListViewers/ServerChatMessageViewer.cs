@@ -19,7 +19,7 @@ using System.ComponentModel;
 using Meridian59.Data.Lists;
 using Meridian59.Data.Models;
 
-namespace Meridian59.DebugUI.ListViewers
+namespace Meridian59.AdminUI.ListViewers
 {
     public class ServerChatMessageViewer : Panel
     {

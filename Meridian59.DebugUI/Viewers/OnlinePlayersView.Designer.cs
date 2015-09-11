@@ -1,4 +1,4 @@
-﻿namespace Meridian59.DebugUI
+﻿namespace Meridian59.AdminUI
 {
     partial class OnlinePlayersView
     {
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.gridOnlinePlayers = new Meridian59.DebugUI.BaseGridView();
+            this.gridOnlinePlayers = new Meridian59.AdminUI.BaseGridView();
             this.colID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNameRID = new System.Windows.Forms.DataGridViewTextBoxColumn();

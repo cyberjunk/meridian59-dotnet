@@ -19,7 +19,7 @@ using System.Windows.Forms;
 using System.ComponentModel;
 using Meridian59.Protocol.Enums;
 
-namespace Meridian59.DebugUI.CustomDataGridColumns
+namespace Meridian59.AdminUI.CustomDataGridColumns
 {
     public class InOutCell : DataGridViewTextBoxCell
     {

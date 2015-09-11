@@ -1,5 +1,5 @@
 ﻿using Meridian59.Data.Lists;
-namespace Meridian59.DebugUI
+namespace Meridian59.AdminUI
 {
     partial class DebugForm
     {
@@ -31,30 +31,30 @@ namespace Meridian59.DebugUI
         {
             this.tabMain = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.gamePacketViewer = new Meridian59.DebugUI.ListViewers.GamePacketViewer();
+            this.gamePacketViewer = new Meridian59.AdminUI.ListViewers.GamePacketViewer();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.splitContainer8 = new System.Windows.Forms.SplitContainer();
             this.splitContainer10 = new System.Windows.Forms.SplitContainer();
             this.groupOnlinePlayers = new System.Windows.Forms.GroupBox();
-            this.onlinePlayersView = new Meridian59.DebugUI.OnlinePlayersView();
+            this.onlinePlayersView = new Meridian59.AdminUI.OnlinePlayersView();
             this.splitContainer9 = new System.Windows.Forms.SplitContainer();
-            this.roomInfoView = new Meridian59.DebugUI.Viewers.RoomInfoView();
+            this.roomInfoView = new Meridian59.AdminUI.Viewers.RoomInfoView();
             this.splitContainer11 = new System.Windows.Forms.SplitContainer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.lightShadingView = new Meridian59.DebugUI.Viewers.LightShadingView();
+            this.lightShadingView = new Meridian59.AdminUI.Viewers.LightShadingView();
             this.splitContainer12 = new System.Windows.Forms.SplitContainer();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.backgroundMusicView = new Meridian59.DebugUI.Viewers.BackgroundMusicView();
-            this.backgroundOverlayView = new Meridian59.DebugUI.Viewers.BackgroundOverlayView();
+            this.backgroundMusicView = new Meridian59.AdminUI.Viewers.BackgroundMusicView();
+            this.backgroundOverlayView = new Meridian59.AdminUI.Viewers.BackgroundOverlayView();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.roomObjectsView1 = new Meridian59.DebugUI.RoomObjectsView();
+            this.roomObjectsView1 = new Meridian59.AdminUI.RoomObjectsView();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.stringListViewer = new Meridian59.DebugUI.ListViewers.StringListViewer();
+            this.stringListViewer = new Meridian59.AdminUI.ListViewers.StringListViewer();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
             this.btnRequestInventory = new System.Windows.Forms.Button();
             this.splitContainer5 = new System.Windows.Forms.SplitContainer();
-            this.inventoryObjectView = new Meridian59.DebugUI.InventoryObjectView();
+            this.inventoryObjectView = new Meridian59.AdminUI.InventoryObjectView();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.splitAvatarInfo = new System.Windows.Forms.SplitContainer();
@@ -64,39 +64,39 @@ namespace Meridian59.DebugUI
             this.btnRequestSkills = new System.Windows.Forms.Button();
             this.tblAvarInfo = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.statsConditionView = new Meridian59.DebugUI.Viewers.StatsNumericView();
+            this.statsConditionView = new Meridian59.AdminUI.Viewers.StatsNumericView();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.statsAttributesView = new Meridian59.DebugUI.Viewers.StatsNumericView();
+            this.statsAttributesView = new Meridian59.AdminUI.Viewers.StatsNumericView();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.statsSpellsView = new Meridian59.DebugUI.Viewers.StatsListView();
+            this.statsSpellsView = new Meridian59.AdminUI.Viewers.StatsListView();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.statsSkillsView = new Meridian59.DebugUI.Viewers.StatsListView();
+            this.statsSkillsView = new Meridian59.AdminUI.Viewers.StatsListView();
             this.tabPage8 = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.btnRequestRoomBuffs = new System.Windows.Forms.Button();
             this.btnRequestPlayerBuffs = new System.Windows.Forms.Button();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.roomBuffsView = new Meridian59.DebugUI.ObjectBaseView();
-            this.avatarBuffsView = new Meridian59.DebugUI.ObjectBaseView();
+            this.roomBuffsView = new Meridian59.AdminUI.ObjectBaseView();
+            this.avatarBuffsView = new Meridian59.AdminUI.ObjectBaseView();
             this.tabPage9 = new System.Windows.Forms.TabPage();
-            this.chatMessageViewer = new Meridian59.DebugUI.ListViewers.ServerChatMessageViewer();
+            this.chatMessageViewer = new Meridian59.AdminUI.ListViewers.ServerChatMessageViewer();
             this.tabPage10 = new System.Windows.Forms.TabPage();
             this.tabPage11 = new System.Windows.Forms.TabPage();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.btnRequestSpellObjects = new System.Windows.Forms.Button();
-            this.spellsView = new Meridian59.DebugUI.Viewers.SpellsView();
+            this.spellsView = new Meridian59.AdminUI.Viewers.SpellsView();
             this.tabPage12 = new System.Windows.Forms.TabPage();
             this.splitContainer6 = new System.Windows.Forms.SplitContainer();
-            this.guildMemberListViewer = new Meridian59.DebugUI.ListViewers.GuildMemberListViewer();
+            this.guildMemberListViewer = new Meridian59.AdminUI.ListViewers.GuildMemberListViewer();
             this.splitContainer7 = new System.Windows.Forms.SplitContainer();
             this.guildShieldsViewer = new System.Windows.Forms.ListBox();
             this.btnDisbandGuild = new System.Windows.Forms.Button();
             this.btnRequestGuildShields = new System.Windows.Forms.Button();
             this.btnLeaveGuild = new System.Windows.Forms.Button();
-            this.guildListViewer = new Meridian59.DebugUI.ListViewers.GuildListViewer();
+            this.guildListViewer = new Meridian59.AdminUI.ListViewers.GuildListViewer();
             this.btnRequestSpells2 = new System.Windows.Forms.Button();
             this.btnRequestSpells3 = new System.Windows.Forms.Button();
-            this.objectBaseView1 = new Meridian59.DebugUI.ObjectBaseView();
+            this.objectBaseView1 = new Meridian59.AdminUI.ObjectBaseView();
             this.tabMain.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -209,7 +209,7 @@ namespace Meridian59.DebugUI
             this.gamePacketViewer.Size = new System.Drawing.Size(1220, 552);
             this.gamePacketViewer.TabIndex = 0;
             this.gamePacketViewer.PacketSend += new Meridian59.Protocol.Events.GameMessageEventHandler(this.gamePacketViewer_PacketSend);
-            this.gamePacketViewer.PacketLogChanged += new Meridian59.DebugUI.Events.PacketLogChangeEventHandler(this.gamePacketViewer_PacketLogChanged);
+            this.gamePacketViewer.PacketLogChanged += new Meridian59.AdminUI.Events.PacketLogChangeEventHandler(this.gamePacketViewer_PacketLogChanged);
             // 
             // tabPage2
             // 

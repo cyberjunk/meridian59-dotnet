@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using Meridian59.Data.Lists;
 using Meridian59.Data.Models;
 
-namespace Meridian59.DebugUI.Viewers
+namespace Meridian59.AdminUI.Viewers
 {
     public partial class SpellsView : UserControl
     {

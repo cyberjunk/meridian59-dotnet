@@ -17,14 +17,14 @@
 using System;
 using System.Windows.Forms;
 using Meridian59.Data.Lists;
-using Meridian59.DebugUI.Generic;
+using Meridian59.AdminUI.Generic;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using Meridian59.Data.Models;
 using System.ComponentModel;
 using Meridian59.Common;
 
-namespace Meridian59.DebugUI.ListViewers
+namespace Meridian59.AdminUI.ListViewers
 {
     public class StringListViewer : GroupBox
     {

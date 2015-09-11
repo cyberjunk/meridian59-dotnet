@@ -17,7 +17,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Meridian59.DebugUI.Generic
+namespace Meridian59.AdminUI.Generic
 {
     public class ThreadSafeLog : GroupBox
     {

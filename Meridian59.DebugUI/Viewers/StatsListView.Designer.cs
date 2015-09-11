@@ -1,4 +1,4 @@
-﻿namespace Meridian59.DebugUI.Viewers
+﻿namespace Meridian59.AdminUI.Viewers
 {
     partial class StatsListView
     {
@@ -30,7 +30,7 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.gridStats = new Meridian59.DebugUI.BaseGridView();
+            this.gridStats = new Meridian59.AdminUI.BaseGridView();
             this.colNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colResourceID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colID = new System.Windows.Forms.DataGridViewTextBoxColumn();

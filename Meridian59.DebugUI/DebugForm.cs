@@ -17,14 +17,14 @@
 using System;
 using System.Windows.Forms;
 using Meridian59.Data;
-using Meridian59.DebugUI.Events;
+using Meridian59.AdminUI.Events;
 using Meridian59.Protocol.Events;
 using Meridian59.Protocol.GameMessages;
 using Meridian59.Common.Enums;
 using Meridian59.Data.Models;
 using Meridian59.Files;
 
-namespace Meridian59.DebugUI
+namespace Meridian59.AdminUI
 {
     public partial class DebugForm : Form
     {

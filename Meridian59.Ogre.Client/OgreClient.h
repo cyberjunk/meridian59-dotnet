@@ -59,8 +59,8 @@ namespace Meridian59 { namespace Ogre
 	using namespace Meridian59::Drawing2D;
 	using namespace Meridian59::Ogre;
 #ifdef _DEBUG
-	using namespace Meridian59::DebugUI;
-	using namespace Meridian59::DebugUI::Events;
+	using namespace Meridian59::AdminUI;
+	using namespace Meridian59::AdminUI::Events;
 #endif
 
 	/// <summary>

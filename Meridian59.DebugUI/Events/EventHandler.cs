@@ -14,7 +14,7 @@
  If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Meridian59.DebugUI.Events
+namespace Meridian59.AdminUI.Events
 {
     public delegate void TargetChangeEventHandler(object sender, ObjectIDEventArgs e);
     public delegate void TeleportToEventHandler(object sender, TeleportToEventArgs e);

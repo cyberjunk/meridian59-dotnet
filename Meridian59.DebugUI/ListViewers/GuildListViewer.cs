@@ -22,7 +22,7 @@ using Meridian59.Protocol.Events;
 using Meridian59.Protocol.GameMessages;
 using System.ComponentModel;
 
-namespace Meridian59.DebugUI.ListViewers
+namespace Meridian59.AdminUI.ListViewers
 {
     public class GuildListViewer : Panel
     {

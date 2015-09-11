@@ -19,7 +19,7 @@ using Meridian59.Data.Lists;
 using Meridian59.Common;
 using System.ComponentModel;
 
-namespace Meridian59.DebugUI.ListViewers
+namespace Meridian59.AdminUI.ListViewers
 {
     public class LogMessageViewer : Panel
     {

@@ -7,7 +7,7 @@ using Meridian59.Files;
 using Meridian59.Data.Lists;
 using Meridian59.Data.Models;
 
-namespace Meridian59.DebugUI
+namespace Meridian59.AdminUI
 {
     public partial class InventoryObjectView : UserControl
     {

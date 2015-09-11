@@ -3,7 +3,7 @@ using System.Windows.Forms;
 using Meridian59.Data.Models;
 using Meridian59.Common.Enums;
 
-namespace Meridian59.DebugUI
+namespace Meridian59.AdminUI
 {
     public partial class AnimationView : UserControl
     {

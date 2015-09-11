@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.ComponentModel;
 
-namespace Meridian59.DebugUI
+namespace Meridian59.AdminUI
 {
     public class BaseGridView : DataGridView
     {

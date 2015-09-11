@@ -1,4 +1,4 @@
-﻿namespace Meridian59.DebugUI
+﻿namespace Meridian59.AdminUI
 {
     partial class AnimationView
     {

@@ -16,7 +16,7 @@
 
 using System;
 
-namespace Meridian59.DebugUI.Events
+namespace Meridian59.AdminUI.Events
 {
     public class ObjectIDEventArgs : EventArgs
     {

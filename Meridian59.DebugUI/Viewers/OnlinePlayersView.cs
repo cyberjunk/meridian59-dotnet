@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using Meridian59.Data.Lists;
 
-namespace Meridian59.DebugUI
+namespace Meridian59.AdminUI
 {
     public partial class OnlinePlayersView : UserControl
     {

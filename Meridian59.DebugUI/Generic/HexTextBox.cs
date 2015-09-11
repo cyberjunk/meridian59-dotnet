@@ -18,7 +18,7 @@ using System;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace Meridian59.DebugUI.Generic
+namespace Meridian59.AdminUI.Generic
 {
     public enum Endian { Big, Little }
 

@@ -8,8 +8,8 @@
     <ProjectGuid>{C8938199-AB12-4A43-AAB0-C8F7043E46E9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Meridian59.DebugUI</RootNamespace>
-    <AssemblyName>Meridian59.DebugUI</AssemblyName>
+    <RootNamespace>Meridian59.AdminUI</RootNamespace>
+    <AssemblyName>Meridian59.AdminUI</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>

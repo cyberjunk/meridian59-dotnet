@@ -1,4 +1,4 @@
-﻿namespace Meridian59.DebugUI
+﻿namespace Meridian59.AdminUI
 {
     partial class ObjectBaseView
     {
@@ -37,17 +37,17 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupObjects = new System.Windows.Forms.GroupBox();
-            this.gridObjects = new Meridian59.DebugUI.BaseGridView();
+            this.gridObjects = new Meridian59.AdminUI.BaseGridView();
             this.splitMain = new System.Windows.Forms.SplitContainer();
             this.splitMain2 = new System.Windows.Forms.SplitContainer();
             this.groupSubOverlays = new System.Windows.Forms.GroupBox();
-            this.gridSubOverlays = new Meridian59.DebugUI.SubOverlayGrid();
+            this.gridSubOverlays = new Meridian59.AdminUI.SubOverlayGrid();
             this.splitAnimationsPic = new System.Windows.Forms.SplitContainer();
             this.splitAnimations = new System.Windows.Forms.SplitContainer();
             this.groupAnimation = new System.Windows.Forms.GroupBox();
-            this.avAnimation = new Meridian59.DebugUI.AnimationView();
+            this.avAnimation = new Meridian59.AdminUI.AnimationView();
             this.groupBoxSubOverlayAnimation = new System.Windows.Forms.GroupBox();
-            this.avSubOverlayAnimation = new Meridian59.DebugUI.AnimationView();
+            this.avSubOverlayAnimation = new Meridian59.AdminUI.AnimationView();
             this.groupImage = new System.Windows.Forms.GroupBox();
             this.picImage = new System.Windows.Forms.PictureBox();
             this.colID = new System.Windows.Forms.DataGridViewTextBoxColumn();
