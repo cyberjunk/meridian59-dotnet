@@ -119,9 +119,6 @@
     <Compile Include="ListViewers\GuildListViewer.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ListViewers\LogMessageViewer.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="ListViewers\ServerChatMessageViewer.cs">
       <SubType>Component</SubType>
     </Compile>
