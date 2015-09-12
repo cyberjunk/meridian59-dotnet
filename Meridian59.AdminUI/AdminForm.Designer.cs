@@ -30,9 +30,17 @@ namespace Meridian59.AdminUI
         private void InitializeComponent()
         {
             this.tabMain = new System.Windows.Forms.TabControl();
+            this.tabConsole = new System.Windows.Forms.TabPage();
             this.tabNetwork = new System.Windows.Forms.TabPage();
             this.tabPlayers = new System.Windows.Forms.TabPage();
             this.splitContainer8 = new System.Windows.Forms.SplitContainer();
+            this.splitContainer10 = new System.Windows.Forms.SplitContainer();
+            this.groupOnlinePlayers = new System.Windows.Forms.GroupBox();
+            this.splitContainer9 = new System.Windows.Forms.SplitContainer();
+            this.splitContainer11 = new System.Windows.Forms.SplitContainer();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.splitContainer12 = new System.Windows.Forms.SplitContainer();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tabRoomObjects = new System.Windows.Forms.TabPage();
             this.tabStrings = new System.Windows.Forms.TabPage();
             this.tabInventory = new System.Windows.Forms.TabPage();
@@ -56,10 +64,10 @@ namespace Meridian59.AdminUI
             this.btnRequestRoomBuffs = new System.Windows.Forms.Button();
             this.btnRequestPlayerBuffs = new System.Windows.Forms.Button();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.tabChat = new System.Windows.Forms.TabPage();
             this.tabSpells = new System.Windows.Forms.TabPage();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.btnRequestSpellObjects = new System.Windows.Forms.Button();
+            this.tabChat = new System.Windows.Forms.TabPage();
             this.tabGuild = new System.Windows.Forms.TabPage();
             this.splitContainer6 = new System.Windows.Forms.SplitContainer();
             this.splitContainer7 = new System.Windows.Forms.SplitContainer();
@@ -69,18 +77,10 @@ namespace Meridian59.AdminUI
             this.btnLeaveGuild = new System.Windows.Forms.Button();
             this.btnRequestSpells2 = new System.Windows.Forms.Button();
             this.btnRequestSpells3 = new System.Windows.Forms.Button();
-            this.tabConsole = new System.Windows.Forms.TabPage();
             this.gamePacketViewer = new Meridian59.AdminUI.ListViewers.GamePacketViewer();
-            this.splitContainer10 = new System.Windows.Forms.SplitContainer();
-            this.groupOnlinePlayers = new System.Windows.Forms.GroupBox();
             this.onlinePlayersView = new Meridian59.AdminUI.OnlinePlayersView();
-            this.splitContainer9 = new System.Windows.Forms.SplitContainer();
             this.roomInfoView = new Meridian59.AdminUI.Viewers.RoomInfoView();
-            this.splitContainer11 = new System.Windows.Forms.SplitContainer();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lightShadingView = new Meridian59.AdminUI.Viewers.LightShadingView();
-            this.splitContainer12 = new System.Windows.Forms.SplitContainer();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.backgroundMusicView = new Meridian59.AdminUI.Viewers.BackgroundMusicView();
             this.backgroundOverlayView = new Meridian59.AdminUI.Viewers.BackgroundOverlayView();
             this.roomObjectsView1 = new Meridian59.AdminUI.RoomObjectsView();
@@ -92,11 +92,11 @@ namespace Meridian59.AdminUI
             this.statsSkillsView = new Meridian59.AdminUI.Viewers.StatsListView();
             this.roomBuffsView = new Meridian59.AdminUI.ObjectBaseView();
             this.avatarBuffsView = new Meridian59.AdminUI.ObjectBaseView();
-            this.chatMessageViewer = new Meridian59.AdminUI.ListViewers.ServerChatMessageViewer();
             this.spellsView = new Meridian59.AdminUI.Viewers.SpellsView();
             this.guildMemberListViewer = new Meridian59.AdminUI.ListViewers.GuildMemberListViewer();
             this.guildListViewer = new Meridian59.AdminUI.ListViewers.GuildListViewer();
             this.objectBaseView1 = new Meridian59.AdminUI.ObjectBaseView();
+            this.chatViewer = new Meridian59.AdminUI.Viewers.ServerStringView();
             this.tabMain.SuspendLayout();
             this.tabNetwork.SuspendLayout();
             this.tabPlayers.SuspendLayout();
@@ -104,6 +104,24 @@ namespace Meridian59.AdminUI
             this.splitContainer8.Panel1.SuspendLayout();
             this.splitContainer8.Panel2.SuspendLayout();
             this.splitContainer8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer10)).BeginInit();
+            this.splitContainer10.Panel1.SuspendLayout();
+            this.splitContainer10.Panel2.SuspendLayout();
+            this.splitContainer10.SuspendLayout();
+            this.groupOnlinePlayers.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer9)).BeginInit();
+            this.splitContainer9.Panel1.SuspendLayout();
+            this.splitContainer9.Panel2.SuspendLayout();
+            this.splitContainer9.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer11)).BeginInit();
+            this.splitContainer11.Panel1.SuspendLayout();
+            this.splitContainer11.Panel2.SuspendLayout();
+            this.splitContainer11.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer12)).BeginInit();
+            this.splitContainer12.Panel1.SuspendLayout();
+            this.splitContainer12.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.tabRoomObjects.SuspendLayout();
             this.tabStrings.SuspendLayout();
             this.tabInventory.SuspendLayout();
@@ -134,12 +152,12 @@ namespace Meridian59.AdminUI
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
-            this.tabChat.SuspendLayout();
             this.tabSpells.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
             this.splitContainer3.Panel1.SuspendLayout();
             this.splitContainer3.Panel2.SuspendLayout();
             this.splitContainer3.SuspendLayout();
+            this.tabChat.SuspendLayout();
             this.tabGuild.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer6)).BeginInit();
             this.splitContainer6.Panel1.SuspendLayout();
@@ -149,24 +167,6 @@ namespace Meridian59.AdminUI
             this.splitContainer7.Panel1.SuspendLayout();
             this.splitContainer7.Panel2.SuspendLayout();
             this.splitContainer7.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer10)).BeginInit();
-            this.splitContainer10.Panel1.SuspendLayout();
-            this.splitContainer10.Panel2.SuspendLayout();
-            this.splitContainer10.SuspendLayout();
-            this.groupOnlinePlayers.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer9)).BeginInit();
-            this.splitContainer9.Panel1.SuspendLayout();
-            this.splitContainer9.Panel2.SuspendLayout();
-            this.splitContainer9.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer11)).BeginInit();
-            this.splitContainer11.Panel1.SuspendLayout();
-            this.splitContainer11.Panel2.SuspendLayout();
-            this.splitContainer11.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer12)).BeginInit();
-            this.splitContainer12.Panel1.SuspendLayout();
-            this.splitContainer12.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabMain
@@ -188,6 +188,15 @@ namespace Meridian59.AdminUI
             this.tabMain.SelectedIndex = 0;
             this.tabMain.Size = new System.Drawing.Size(1234, 584);
             this.tabMain.TabIndex = 0;
+            // 
+            // tabConsole
+            // 
+            this.tabConsole.Location = new System.Drawing.Point(4, 22);
+            this.tabConsole.Name = "tabConsole";
+            this.tabConsole.Size = new System.Drawing.Size(1226, 558);
+            this.tabConsole.TabIndex = 12;
+            this.tabConsole.Text = "Console";
+            this.tabConsole.UseVisualStyleBackColor = true;
             // 
             // tabNetwork
             // 
@@ -228,6 +237,105 @@ namespace Meridian59.AdminUI
             this.splitContainer8.Size = new System.Drawing.Size(1220, 552);
             this.splitContainer8.SplitterDistance = 432;
             this.splitContainer8.TabIndex = 1;
+            // 
+            // splitContainer10
+            // 
+            this.splitContainer10.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer10.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer10.Name = "splitContainer10";
+            // 
+            // splitContainer10.Panel1
+            // 
+            this.splitContainer10.Panel1.Controls.Add(this.groupOnlinePlayers);
+            // 
+            // splitContainer10.Panel2
+            // 
+            this.splitContainer10.Panel2.Controls.Add(this.splitContainer9);
+            this.splitContainer10.Size = new System.Drawing.Size(1220, 432);
+            this.splitContainer10.SplitterDistance = 560;
+            this.splitContainer10.TabIndex = 0;
+            // 
+            // groupOnlinePlayers
+            // 
+            this.groupOnlinePlayers.Controls.Add(this.onlinePlayersView);
+            this.groupOnlinePlayers.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupOnlinePlayers.Location = new System.Drawing.Point(0, 0);
+            this.groupOnlinePlayers.Name = "groupOnlinePlayers";
+            this.groupOnlinePlayers.Size = new System.Drawing.Size(560, 432);
+            this.groupOnlinePlayers.TabIndex = 1;
+            this.groupOnlinePlayers.TabStop = false;
+            this.groupOnlinePlayers.Text = "Online Players";
+            // 
+            // splitContainer9
+            // 
+            this.splitContainer9.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer9.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer9.Name = "splitContainer9";
+            // 
+            // splitContainer9.Panel1
+            // 
+            this.splitContainer9.Panel1.Controls.Add(this.roomInfoView);
+            // 
+            // splitContainer9.Panel2
+            // 
+            this.splitContainer9.Panel2.Controls.Add(this.splitContainer11);
+            this.splitContainer9.Size = new System.Drawing.Size(656, 432);
+            this.splitContainer9.SplitterDistance = 401;
+            this.splitContainer9.TabIndex = 1;
+            // 
+            // splitContainer11
+            // 
+            this.splitContainer11.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer11.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer11.Name = "splitContainer11";
+            this.splitContainer11.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer11.Panel1
+            // 
+            this.splitContainer11.Panel1.Controls.Add(this.groupBox1);
+            // 
+            // splitContainer11.Panel2
+            // 
+            this.splitContainer11.Panel2.Controls.Add(this.splitContainer12);
+            this.splitContainer11.Size = new System.Drawing.Size(251, 432);
+            this.splitContainer11.SplitterDistance = 90;
+            this.splitContainer11.TabIndex = 0;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.lightShadingView);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox1.Location = new System.Drawing.Point(0, 0);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(251, 90);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "LightShading";
+            // 
+            // splitContainer12
+            // 
+            this.splitContainer12.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer12.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer12.Name = "splitContainer12";
+            this.splitContainer12.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer12.Panel1
+            // 
+            this.splitContainer12.Panel1.Controls.Add(this.groupBox2);
+            this.splitContainer12.Size = new System.Drawing.Size(251, 338);
+            this.splitContainer12.SplitterDistance = 78;
+            this.splitContainer12.TabIndex = 0;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.backgroundMusicView);
+            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox2.Location = new System.Drawing.Point(0, 0);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(251, 78);
+            this.groupBox2.TabIndex = 0;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "BackgroundMusic";
             // 
             // tabRoomObjects
             // 
@@ -523,17 +631,6 @@ namespace Meridian59.AdminUI
             this.splitContainer2.SplitterDistance = 257;
             this.splitContainer2.TabIndex = 3;
             // 
-            // tabChat
-            // 
-            this.tabChat.Controls.Add(this.chatMessageViewer);
-            this.tabChat.Location = new System.Drawing.Point(4, 22);
-            this.tabChat.Name = "tabChat";
-            this.tabChat.Padding = new System.Windows.Forms.Padding(3);
-            this.tabChat.Size = new System.Drawing.Size(1226, 558);
-            this.tabChat.TabIndex = 8;
-            this.tabChat.Text = "Chat";
-            this.tabChat.UseVisualStyleBackColor = true;
-            // 
             // tabSpells
             // 
             this.tabSpells.Controls.Add(this.splitContainer3);
@@ -572,6 +669,17 @@ namespace Meridian59.AdminUI
             this.btnRequestSpellObjects.Text = "Request SpellObjects";
             this.btnRequestSpellObjects.UseVisualStyleBackColor = true;
             this.btnRequestSpellObjects.Click += new System.EventHandler(this.btnRequestSpellObjects_Click);
+            // 
+            // tabChat
+            // 
+            this.tabChat.Controls.Add(this.chatViewer);
+            this.tabChat.Location = new System.Drawing.Point(4, 22);
+            this.tabChat.Name = "tabChat";
+            this.tabChat.Padding = new System.Windows.Forms.Padding(3);
+            this.tabChat.Size = new System.Drawing.Size(1226, 558);
+            this.tabChat.TabIndex = 8;
+            this.tabChat.Text = "Chat";
+            this.tabChat.UseVisualStyleBackColor = true;
             // 
             // tabGuild
             // 
@@ -679,15 +787,6 @@ namespace Meridian59.AdminUI
             this.btnRequestSpells3.Text = "Request SpellObjects";
             this.btnRequestSpells3.UseVisualStyleBackColor = true;
             // 
-            // tabConsole
-            // 
-            this.tabConsole.Location = new System.Drawing.Point(4, 22);
-            this.tabConsole.Name = "tabConsole";
-            this.tabConsole.Size = new System.Drawing.Size(1226, 558);
-            this.tabConsole.TabIndex = 12;
-            this.tabConsole.Text = "Console";
-            this.tabConsole.UseVisualStyleBackColor = true;
-            // 
             // gamePacketViewer
             // 
             this.gamePacketViewer.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -698,34 +797,6 @@ namespace Meridian59.AdminUI
             this.gamePacketViewer.PacketSend += new Meridian59.Protocol.Events.GameMessageEventHandler(this.gamePacketViewer_PacketSend);
             this.gamePacketViewer.PacketLogChanged += new Meridian59.AdminUI.Events.PacketLogChangeEventHandler(this.gamePacketViewer_PacketLogChanged);
             // 
-            // splitContainer10
-            // 
-            this.splitContainer10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer10.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer10.Name = "splitContainer10";
-            // 
-            // splitContainer10.Panel1
-            // 
-            this.splitContainer10.Panel1.Controls.Add(this.groupOnlinePlayers);
-            // 
-            // splitContainer10.Panel2
-            // 
-            this.splitContainer10.Panel2.Controls.Add(this.splitContainer9);
-            this.splitContainer10.Size = new System.Drawing.Size(1220, 432);
-            this.splitContainer10.SplitterDistance = 560;
-            this.splitContainer10.TabIndex = 0;
-            // 
-            // groupOnlinePlayers
-            // 
-            this.groupOnlinePlayers.Controls.Add(this.onlinePlayersView);
-            this.groupOnlinePlayers.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupOnlinePlayers.Location = new System.Drawing.Point(0, 0);
-            this.groupOnlinePlayers.Name = "groupOnlinePlayers";
-            this.groupOnlinePlayers.Size = new System.Drawing.Size(560, 432);
-            this.groupOnlinePlayers.TabIndex = 1;
-            this.groupOnlinePlayers.TabStop = false;
-            this.groupOnlinePlayers.Text = "Online Players";
-            // 
             // onlinePlayersView
             // 
             this.onlinePlayersView.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -733,23 +804,6 @@ namespace Meridian59.AdminUI
             this.onlinePlayersView.Name = "onlinePlayersView";
             this.onlinePlayersView.Size = new System.Drawing.Size(554, 413);
             this.onlinePlayersView.TabIndex = 0;
-            // 
-            // splitContainer9
-            // 
-            this.splitContainer9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer9.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer9.Name = "splitContainer9";
-            // 
-            // splitContainer9.Panel1
-            // 
-            this.splitContainer9.Panel1.Controls.Add(this.roomInfoView);
-            // 
-            // splitContainer9.Panel2
-            // 
-            this.splitContainer9.Panel2.Controls.Add(this.splitContainer11);
-            this.splitContainer9.Size = new System.Drawing.Size(656, 432);
-            this.splitContainer9.SplitterDistance = 401;
-            this.splitContainer9.TabIndex = 1;
             // 
             // roomInfoView
             // 
@@ -759,35 +813,6 @@ namespace Meridian59.AdminUI
             this.roomInfoView.Size = new System.Drawing.Size(401, 432);
             this.roomInfoView.TabIndex = 0;
             // 
-            // splitContainer11
-            // 
-            this.splitContainer11.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer11.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer11.Name = "splitContainer11";
-            this.splitContainer11.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer11.Panel1
-            // 
-            this.splitContainer11.Panel1.Controls.Add(this.groupBox1);
-            // 
-            // splitContainer11.Panel2
-            // 
-            this.splitContainer11.Panel2.Controls.Add(this.splitContainer12);
-            this.splitContainer11.Size = new System.Drawing.Size(251, 432);
-            this.splitContainer11.SplitterDistance = 90;
-            this.splitContainer11.TabIndex = 0;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.lightShadingView);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Location = new System.Drawing.Point(0, 0);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(251, 90);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "LightShading";
-            // 
             // lightShadingView
             // 
             this.lightShadingView.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -795,31 +820,6 @@ namespace Meridian59.AdminUI
             this.lightShadingView.Name = "lightShadingView";
             this.lightShadingView.Size = new System.Drawing.Size(245, 71);
             this.lightShadingView.TabIndex = 0;
-            // 
-            // splitContainer12
-            // 
-            this.splitContainer12.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer12.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer12.Name = "splitContainer12";
-            this.splitContainer12.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer12.Panel1
-            // 
-            this.splitContainer12.Panel1.Controls.Add(this.groupBox2);
-            this.splitContainer12.Size = new System.Drawing.Size(251, 338);
-            this.splitContainer12.SplitterDistance = 78;
-            this.splitContainer12.TabIndex = 0;
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.backgroundMusicView);
-            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Location = new System.Drawing.Point(0, 0);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(251, 78);
-            this.groupBox2.TabIndex = 0;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "BackgroundMusic";
             // 
             // backgroundMusicView
             // 
@@ -913,14 +913,6 @@ namespace Meridian59.AdminUI
             this.avatarBuffsView.TabIndex = 0;
             this.avatarBuffsView.Title = "AvatarBuffs";
             // 
-            // chatMessageViewer
-            // 
-            this.chatMessageViewer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chatMessageViewer.Location = new System.Drawing.Point(3, 3);
-            this.chatMessageViewer.Name = "chatMessageViewer";
-            this.chatMessageViewer.Size = new System.Drawing.Size(1220, 552);
-            this.chatMessageViewer.TabIndex = 0;
-            // 
             // spellsView
             // 
             this.spellsView.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -954,6 +946,14 @@ namespace Meridian59.AdminUI
             this.objectBaseView1.TabIndex = 0;
             this.objectBaseView1.Title = "Objects";
             // 
+            // chatViewer
+            // 
+            this.chatViewer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chatViewer.Location = new System.Drawing.Point(3, 3);
+            this.chatViewer.Name = "chatViewer";
+            this.chatViewer.Size = new System.Drawing.Size(1220, 552);
+            this.chatViewer.TabIndex = 0;
+            // 
             // AdminForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -969,6 +969,24 @@ namespace Meridian59.AdminUI
             this.splitContainer8.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer8)).EndInit();
             this.splitContainer8.ResumeLayout(false);
+            this.splitContainer10.Panel1.ResumeLayout(false);
+            this.splitContainer10.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer10)).EndInit();
+            this.splitContainer10.ResumeLayout(false);
+            this.groupOnlinePlayers.ResumeLayout(false);
+            this.splitContainer9.Panel1.ResumeLayout(false);
+            this.splitContainer9.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer9)).EndInit();
+            this.splitContainer9.ResumeLayout(false);
+            this.splitContainer11.Panel1.ResumeLayout(false);
+            this.splitContainer11.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer11)).EndInit();
+            this.splitContainer11.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.splitContainer12.Panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer12)).EndInit();
+            this.splitContainer12.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
             this.tabRoomObjects.ResumeLayout(false);
             this.tabStrings.ResumeLayout(false);
             this.tabInventory.ResumeLayout(false);
@@ -999,12 +1017,12 @@ namespace Meridian59.AdminUI
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
-            this.tabChat.ResumeLayout(false);
             this.tabSpells.ResumeLayout(false);
             this.splitContainer3.Panel1.ResumeLayout(false);
             this.splitContainer3.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
             this.splitContainer3.ResumeLayout(false);
+            this.tabChat.ResumeLayout(false);
             this.tabGuild.ResumeLayout(false);
             this.splitContainer6.Panel1.ResumeLayout(false);
             this.splitContainer6.Panel2.ResumeLayout(false);
@@ -1014,24 +1032,6 @@ namespace Meridian59.AdminUI
             this.splitContainer7.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer7)).EndInit();
             this.splitContainer7.ResumeLayout(false);
-            this.splitContainer10.Panel1.ResumeLayout(false);
-            this.splitContainer10.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer10)).EndInit();
-            this.splitContainer10.ResumeLayout(false);
-            this.groupOnlinePlayers.ResumeLayout(false);
-            this.splitContainer9.Panel1.ResumeLayout(false);
-            this.splitContainer9.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer9)).EndInit();
-            this.splitContainer9.ResumeLayout(false);
-            this.splitContainer11.Panel1.ResumeLayout(false);
-            this.splitContainer11.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer11)).EndInit();
-            this.splitContainer11.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.splitContainer12.Panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer12)).EndInit();
-            this.splitContainer12.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1059,7 +1059,6 @@ namespace Meridian59.AdminUI
         private System.Windows.Forms.Button btnRequestPlayerBuffs;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.TabPage tabChat;
-        private ListViewers.ServerChatMessageViewer chatMessageViewer;
         private System.Windows.Forms.TabPage tabSpells;
         private System.Windows.Forms.SplitContainer splitContainer3;
         private System.Windows.Forms.Button btnRequestSpellObjects;
@@ -1106,5 +1105,6 @@ namespace Meridian59.AdminUI
         private Viewers.StatsListView statsSkillsView;
         private InventoryObjectView inventoryObjectView;
         private System.Windows.Forms.TabPage tabConsole;
+        private Viewers.ServerStringView chatViewer;
     }
 }

@@ -51,7 +51,7 @@ namespace Meridian59.AdminUI
                 guildMemberListViewer.DataSource = dataController.GuildInfo;
                 guildShieldsViewer.DataSource = dataController.GuildShieldInfo.Shields;
                 guildListViewer.DataSource = dataController.DiplomacyInfo;
-                chatMessageViewer.DataSource = dataController.ChatMessages;
+                chatViewer.DataSource = dataController.ChatMessages;
                 
                 roomObjectsView1.DataSource = dataController.RoomObjects;
                 inventoryObjectView.DataSource = dataController.InventoryObjects;

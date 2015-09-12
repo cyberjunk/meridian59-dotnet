@@ -49,6 +49,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -68,6 +69,12 @@
     </Compile>
     <Compile Include="Viewers\BackgroundOverlayView.Designer.cs">
       <DependentUpon>BackgroundOverlayView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\ServerStringView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Viewers\ServerStringView.Designer.cs">
+      <DependentUpon>ServerStringView.cs</DependentUpon>
     </Compile>
     <Compile Include="Viewers\InventoryObjectView.cs">
       <SubType>UserControl</SubType>
@@ -117,9 +124,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ListViewers\GuildListViewer.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ListViewers\ServerChatMessageViewer.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ListViewers\GamePacketViewer.cs">
@@ -185,6 +189,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Viewers\BackgroundOverlayView.resx">
       <DependentUpon>BackgroundOverlayView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Viewers\ServerStringView.resx">
+      <DependentUpon>ServerStringView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Viewers\InventoryObjectView.resx">
       <DependentUpon>InventoryObjectView.cs</DependentUpon>
