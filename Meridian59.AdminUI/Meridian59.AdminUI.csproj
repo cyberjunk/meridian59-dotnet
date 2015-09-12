@@ -122,9 +122,6 @@
     <Compile Include="Generic\HexTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Generic\ThreadSafeLog.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="ListViewers\GuildMemberListViewer.cs">
       <SubType>Component</SubType>
     </Compile>
