@@ -51,7 +51,9 @@ namespace Meridian59.Data
         public const string PROPNAME_SELFTARGET = "SelfTarget";
         public const string PROPNAME_TARGETID = "TargetID";
         public const string PROPNAME_ISRESTING = "IsResting";
+#if VANILLA
         public const string PROPNAME_ISSAFETY = "IsSafety";
+#endif
         public const string PROPNAME_ISWAITING = "IsWaiting";
         public const string PROPNAME_MERIDIANTIME = "MeridianTime";
         public const string PROPNAME_TPS = "TPS";
@@ -77,7 +79,11 @@ namespace Meridian59.Data
         protected uint targetID = UInt32.MaxValue;
         protected bool selfTarget;
         protected bool isResting;
+#if VANILLA
         protected bool isSafety;
+#else
+        protected PreferencesFlags clientPreferences;
+#endif
         protected bool isWaiting;
         protected DateTime meridianTime;
         protected uint tps;
@@ -205,6 +211,11 @@ namespace Meridian59.Data
         public AdminInfo AdminInfo { get; protected set; }
 
         /// <summary>
+        /// Current client gameplay preferences (e.g. safety, tempsafe).
+        /// </summary>
+        public PreferencesFlags ClientPreferences { get; protected set; }
+
+       /// <summary>
         /// The last inspected nonplayer-object.
         /// This instance stays the same. Its properties change!
         /// </summary>
@@ -454,6 +465,7 @@ namespace Meridian59.Data
             }
         }
 
+#if VANILLA
         /// <summary>
         /// Whether safety is enabled or not
         /// </summary>
@@ -469,7 +481,7 @@ namespace Meridian59.Data
                 }
             }
         }
-
+#endif
         /// <summary>
         /// Whether server is saving right now or not
         /// </summary>
@@ -777,6 +789,7 @@ namespace Meridian59.Data
             GuildAskData = new GuildAskData();
             DiplomacyInfo = new DiplomacyInfo();
             AdminInfo = new AdminInfo();
+            ClientPreferences = new PreferencesFlags();
             LookObject = new ObjectInfo();
             LookPlayer = new PlayerInfo();
             NewsGroup = new NewsGroup();
@@ -2122,7 +2135,11 @@ namespace Meridian59.Data
                     GuildInfo.UpdateFromModel(((UserCommandGuildInfo)Message.Command).GuildInfo, true);
                     GuildInfo.IsVisible = true;
                     break;
-
+#if !VANILLA
+                case UserCommandType.ReceivePreferences:
+                    ClientPreferences.UpdateFromModel(((UserCommandReceivePreferences)Message.Command).ClientPreferences, true);
+                    break;
+#endif
                 case UserCommandType.GuildShield:
                     // this can either be GuildShieldInfo or GuildshieldInfoReq
                     if (Message.Command is UserCommandGuildShieldInfo)

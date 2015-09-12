@@ -58,7 +58,7 @@ namespace Meridian59.Data.Models
         private const uint OF_BUYABLE           = 0x00000400;    // Set if object can be bought from
         private const uint OF_ACTIVATABLE       = 0x00000800;    // Set if object can be activated
         private const uint OF_APPLYABLE         = 0x00001000;    // Set if object can be applied to another object
-        private const uint OF_SAFETY            = 0x00002000;    // Set if player has safety on (self only)
+
         private const uint OF_BOUNCING          = 0x00010000;    // If both flags on then object is bouncing
         private const uint OF_FLICKERING        = 0x00020000;    // For players or objects if holding a flickering light.
         private const uint OF_FLASHING          = 0x00040000;    // For players or objects if flashing with light.
@@ -593,21 +593,6 @@ namespace Meridian59.Data.Models
             {
                 if (value) flags |= OF_APPLYABLE;
                 else flags &= ~OF_APPLYABLE;
-
-                RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
-            }
-        }
-
-        /// <summary>
-        /// True if the object has safety on.
-        /// </summary>
-        public bool IsSafety
-        {
-            get { return (flags & OF_SAFETY) == OF_SAFETY; }
-            set
-            {
-                if (value) flags |= OF_SAFETY;
-                else flags &= ~OF_SAFETY;
 
                 RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
             }

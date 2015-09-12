@@ -244,6 +244,7 @@ namespace Meridian59 { namespace Ogre
 			static void Initialize();
 			static void Destroy();
 			static void OnDataPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
+			static void OnClientPreferencesChanged(Object^ sender, PropertyChangedEventArgs^ e);
 			static void OnRoomInformationPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
 			static void OnOnlinePlayersListChanged(Object^ sender, ListChangedEventArgs^ e);
 		};

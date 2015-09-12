@@ -23,15 +23,19 @@ namespace Meridian59 { namespace Ogre
 		MTimeValue			= static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_STATUSBAR_MTIMEVAL));
 		RoomDescription		= static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_STATUSBAR_ROOMDESC));
 		RoomValue			= static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_STATUSBAR_ROOMVAL));
-		
+
 		// attach listener to Data
 		OgreClient::Singleton->Data->PropertyChanged += 
 			gcnew PropertyChangedEventHandler(&ControllerUI::StatusBar::OnDataPropertyChanged);
-           
+
+		// attach listener to Preference Flags
+		OgreClient::Singleton->Data->ClientPreferences->PropertyChanged +=
+			gcnew PropertyChangedEventHandler(&ControllerUI::StatusBar::OnClientPreferencesChanged);
+
 		// attach listener to roominformation
 		OgreClient::Singleton->Data->RoomInformation->PropertyChanged += 
 			gcnew PropertyChangedEventHandler(&ControllerUI::StatusBar::OnRoomInformationPropertyChanged);
-           
+
 		// attach listener to onlineplayers
 		OgreClient::Singleton->Data->OnlinePlayers->ListChanged += 
 			gcnew ListChangedEventHandler(&ControllerUI::StatusBar::OnOnlinePlayersListChanged);
@@ -54,11 +58,15 @@ namespace Meridian59 { namespace Ogre
 		// detach listener from Data
 		OgreClient::Singleton->Data->PropertyChanged -= 
 			gcnew PropertyChangedEventHandler(&ControllerUI::StatusBar::OnDataPropertyChanged);
-           
-		// detach listener from roominformation
+
+		// attach listener to Preference Flags
+		OgreClient::Singleton->Data->ClientPreferences->PropertyChanged -=
+			gcnew PropertyChangedEventHandler(&ControllerUI::StatusBar::OnClientPreferencesChanged);
+
+      // detach listener from roominformation
 		OgreClient::Singleton->Data->RoomInformation->PropertyChanged -= 
 			gcnew PropertyChangedEventHandler(&ControllerUI::StatusBar::OnRoomInformationPropertyChanged);
-           
+
 		// detach listener from onlineplayers
 		OgreClient::Singleton->Data->OnlinePlayers->ListChanged -= 
 			gcnew ListChangedEventHandler(&ControllerUI::StatusBar::OnOnlinePlayersListChanged); 		
@@ -118,9 +126,11 @@ namespace Meridian59 { namespace Ogre
 		}
 
 		// update safety
+#if VANILLA
 		else if (::System::String::Equals(e->PropertyName, DataController::PROPNAME_ISSAFETY))
 		{
 			const bool isSafety = OgreClient::Singleton->Data->IsSafety;
+
 			const CEGUI::String color = (isSafety ? UI_COLOR_PALEGREEN : UI_COLOR_DARKRED);
 			const CEGUI::String val = (isSafety ? "On" : "Off");
 
@@ -128,8 +138,24 @@ namespace Meridian59 { namespace Ogre
 			SafetyValue->setProperty(UI_PROPNAME_HOVERTEXTCOLOUR, color);
 			SafetyValue->setText(val);
 		}
+#endif
 	};
-	
+
+#if !VANILLA
+	void ControllerUI::StatusBar::OnClientPreferencesChanged(Object^ sender, PropertyChangedEventArgs^ e)
+	{
+		if (::System::String::Equals(e->PropertyName, PreferencesFlags::PROPNAME_FLAGS))
+		{
+			const bool isSafety = OgreClient::Singleton->Data->ClientPreferences->IsSafety;
+			const CEGUI::String color = (isSafety ? UI_COLOR_DARKRED : UI_COLOR_PALEGREEN);
+			const CEGUI::String val = (isSafety ? "Off" : "On");
+			SafetyValue->setProperty(UI_PROPNAME_NORMALTEXTCOLOUR, color);
+			SafetyValue->setProperty(UI_PROPNAME_HOVERTEXTCOLOUR, color);
+			SafetyValue->setText(val);
+		}
+	};
+#endif
+
 	void ControllerUI::StatusBar::OnRoomInformationPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{
 		if (::System::String::Equals(e->PropertyName, RoomInfo::PROPNAME_ROOMNAME))
@@ -171,8 +197,14 @@ namespace Meridian59 { namespace Ogre
 
 	bool UICallbacks::StatusBar::OnSafetyClicked(const CEGUI::EventArgs& e)
 	{
+#if VANILLA
 		OgreClient::Singleton->SendUserCommandSafetyMessage(
 			!OgreClient::Singleton->Data->IsSafety);
+#else
+		OgreClient::Singleton->Data->ClientPreferences->IsSafety
+			= !OgreClient::Singleton->Data->ClientPreferences->IsSafety;
+		OgreClient::Singleton->SendUserCommandSendPreferences();
+#endif
 
 		return true;
 	};

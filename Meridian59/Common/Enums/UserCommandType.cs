@@ -28,10 +28,15 @@ namespace Meridian59.Common.Enums
         
         Rest                = 5,
         Stand               = 6,
+#if VANILLA
         Safety              = 7,
+#else
+        ReqPreferences      = 7,
+
+#endif
         Suicide             = 8,
 #if !VANILLA
-        TempSafe            = 9,
+        SendPreferences     = 9,
 #endif
         ReqGuildInfo        = 10,
         GuildInfo           = 11,
@@ -58,7 +63,7 @@ namespace Meridian59.Common.Enums
         GuildShields        = 32,
         ClaimShield         = 33,
 #if !VANILLA
-        Grouping            = 34,
+        ReceivePreferences  = 34,
 #endif
         Deposit             = 35,
         WithDraw            = 36,
