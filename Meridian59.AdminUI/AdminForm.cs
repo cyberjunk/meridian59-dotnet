@@ -52,12 +52,12 @@ namespace Meridian59.AdminUI
                     if (data != null)
                     {
                         // old              
-                        gamePacketViewer.DataSource = data.GameMessageLog;
                         guildMemberListViewer.DataSource = data.GuildInfo;
                         guildShieldsViewer.DataSource = data.GuildShieldInfo.Shields;
                         guildListViewer.DataSource = data.DiplomacyInfo;
 
                         // refactored controls
+                        gameMessageViewer.DataSource = data.GameMessageLog;
                         statsConditionView.DataSource = data.AvatarCondition;
                         statsAttributesView.DataSource = data.AvatarAttributes;
                         statsSkillsView.DataSource = data.AvatarSkills;

@@ -32,7 +32,6 @@ namespace Meridian59.AdminUI
             this.tabMain = new System.Windows.Forms.TabControl();
             this.tabConsole = new System.Windows.Forms.TabPage();
             this.tabNetwork = new System.Windows.Forms.TabPage();
-            this.gamePacketViewer = new Meridian59.AdminUI.ListViewers.GamePacketViewer();
             this.tabPlayers = new System.Windows.Forms.TabPage();
             this.splitContainer8 = new System.Windows.Forms.SplitContainer();
             this.splitContainer10 = new System.Windows.Forms.SplitContainer();
@@ -97,6 +96,7 @@ namespace Meridian59.AdminUI
             this.btnRequestSpells2 = new System.Windows.Forms.Button();
             this.btnRequestSpells3 = new System.Windows.Forms.Button();
             this.objectBaseView1 = new Meridian59.AdminUI.ObjectBaseView();
+            this.gameMessageViewer = new Meridian59.AdminUI.Viewers.GameMessageView();
             this.tabMain.SuspendLayout();
             this.tabNetwork.SuspendLayout();
             this.tabPlayers.SuspendLayout();
@@ -200,7 +200,7 @@ namespace Meridian59.AdminUI
             // 
             // tabNetwork
             // 
-            this.tabNetwork.Controls.Add(this.gamePacketViewer);
+            this.tabNetwork.Controls.Add(this.gameMessageViewer);
             this.tabNetwork.Location = new System.Drawing.Point(4, 22);
             this.tabNetwork.Name = "tabNetwork";
             this.tabNetwork.Padding = new System.Windows.Forms.Padding(3);
@@ -208,16 +208,6 @@ namespace Meridian59.AdminUI
             this.tabNetwork.TabIndex = 0;
             this.tabNetwork.Text = "Network";
             this.tabNetwork.UseVisualStyleBackColor = true;
-            // 
-            // gamePacketViewer
-            // 
-            this.gamePacketViewer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gamePacketViewer.Location = new System.Drawing.Point(3, 3);
-            this.gamePacketViewer.Name = "gamePacketViewer";
-            this.gamePacketViewer.Size = new System.Drawing.Size(1220, 552);
-            this.gamePacketViewer.TabIndex = 0;
-            this.gamePacketViewer.PacketSend += new Meridian59.Protocol.Events.GameMessageEventHandler(this.OnGamePacketViewerPacketSend);
-            this.gamePacketViewer.PacketLogChanged += new Meridian59.AdminUI.Events.PacketLogChangeEventHandler(this.gamePacketViewer_PacketLogChanged);
             // 
             // tabPlayers
             // 
@@ -954,6 +944,16 @@ namespace Meridian59.AdminUI
             this.objectBaseView1.TabIndex = 0;
             this.objectBaseView1.Title = "Objects";
             // 
+            // gameMessageViewer
+            // 
+            this.gameMessageViewer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gameMessageViewer.Location = new System.Drawing.Point(3, 3);
+            this.gameMessageViewer.Name = "gameMessageViewer";
+            this.gameMessageViewer.Size = new System.Drawing.Size(1220, 552);
+            this.gameMessageViewer.TabIndex = 0;
+            this.gameMessageViewer.PacketSend += new Meridian59.Protocol.Events.GameMessageEventHandler(this.OnGamePacketViewerPacketSend);
+            this.gameMessageViewer.PacketLogChanged += new Meridian59.AdminUI.Events.PacketLogChangeEventHandler(this.gamePacketViewer_PacketLogChanged);
+            // 
             // AdminForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1047,7 +1047,6 @@ namespace Meridian59.AdminUI
         private System.Windows.Forms.TabPage tabInventory;
         private System.Windows.Forms.TabPage tabStats;
         private System.Windows.Forms.TableLayoutPanel tblAvarInfo;
-        private ListViewers.GamePacketViewer gamePacketViewer;
         private System.Windows.Forms.SplitContainer splitAvatarInfo;
         private System.Windows.Forms.Button btnRequestSkills;
         private System.Windows.Forms.Button btnRequestSpells;
@@ -1106,5 +1105,6 @@ namespace Meridian59.AdminUI
         private InventoryObjectView inventoryObjectView;
         private System.Windows.Forms.TabPage tabConsole;
         private Viewers.ServerStringView chatViewer;
+        private Viewers.GameMessageView gameMessageViewer;
     }
 }

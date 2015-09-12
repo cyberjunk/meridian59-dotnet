@@ -131,9 +131,6 @@
     <Compile Include="ListViewers\GuildListViewer.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ListViewers\GamePacketViewer.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="CustomDataGridColumns\InOutColumn.cs" />
     <Compile Include="CustomDataGridColumns\ByteColumn.cs" />
     <Compile Include="Viewers\RoomInfoView.cs">
