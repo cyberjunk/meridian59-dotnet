@@ -156,6 +156,12 @@
     <Compile Include="Viewers\StatsNumericView.Designer.cs">
       <DependentUpon>StatsNumericView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Viewers\StringsViewer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Viewers\StringsViewer.Designer.cs">
+      <DependentUpon>StringsViewer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Viewers\SubOverlayGrid.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -167,9 +173,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="ListViewers\StringListViewer.cs">
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Viewers\RoomObjectsView.cs">
       <SubType>UserControl</SubType>
@@ -223,6 +226,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Viewers\StatsNumericView.resx">
       <DependentUpon>StatsNumericView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Viewers\StringsViewer.resx">
+      <DependentUpon>StringsViewer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Viewers\SubOverlayGrid.resx">
       <DependentUpon>SubOverlayGrid.cs</DependentUpon>

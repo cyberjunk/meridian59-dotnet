@@ -32,6 +32,7 @@ namespace Meridian59.AdminUI
             this.tabMain = new System.Windows.Forms.TabControl();
             this.tabConsole = new System.Windows.Forms.TabPage();
             this.tabNetwork = new System.Windows.Forms.TabPage();
+            this.gameMessageViewer = new Meridian59.AdminUI.Viewers.GameMessageView();
             this.tabPlayers = new System.Windows.Forms.TabPage();
             this.splitContainer8 = new System.Windows.Forms.SplitContainer();
             this.splitContainer10 = new System.Windows.Forms.SplitContainer();
@@ -49,7 +50,6 @@ namespace Meridian59.AdminUI
             this.tabRoomObjects = new System.Windows.Forms.TabPage();
             this.roomObjectsViewer = new Meridian59.AdminUI.RoomObjectsView();
             this.tabStrings = new System.Windows.Forms.TabPage();
-            this.stringListViewer = new Meridian59.AdminUI.ListViewers.StringListViewer();
             this.tabInventory = new System.Windows.Forms.TabPage();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
             this.btnRequestInventory = new System.Windows.Forms.Button();
@@ -96,7 +96,7 @@ namespace Meridian59.AdminUI
             this.btnRequestSpells2 = new System.Windows.Forms.Button();
             this.btnRequestSpells3 = new System.Windows.Forms.Button();
             this.objectBaseView1 = new Meridian59.AdminUI.ObjectBaseView();
-            this.gameMessageViewer = new Meridian59.AdminUI.Viewers.GameMessageView();
+            this.stringsViewer = new Meridian59.AdminUI.Viewers.StringsViewer();
             this.tabMain.SuspendLayout();
             this.tabNetwork.SuspendLayout();
             this.tabPlayers.SuspendLayout();
@@ -208,6 +208,16 @@ namespace Meridian59.AdminUI
             this.tabNetwork.TabIndex = 0;
             this.tabNetwork.Text = "Network";
             this.tabNetwork.UseVisualStyleBackColor = true;
+            // 
+            // gameMessageViewer
+            // 
+            this.gameMessageViewer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gameMessageViewer.Location = new System.Drawing.Point(3, 3);
+            this.gameMessageViewer.Name = "gameMessageViewer";
+            this.gameMessageViewer.Size = new System.Drawing.Size(1220, 552);
+            this.gameMessageViewer.TabIndex = 0;
+            this.gameMessageViewer.PacketSend += new Meridian59.Protocol.Events.GameMessageEventHandler(this.OnGamePacketViewerPacketSend);
+            this.gameMessageViewer.PacketLogChanged += new Meridian59.AdminUI.Events.PacketLogChangeEventHandler(this.gamePacketViewer_PacketLogChanged);
             // 
             // tabPlayers
             // 
@@ -397,7 +407,7 @@ namespace Meridian59.AdminUI
             // 
             // tabStrings
             // 
-            this.tabStrings.Controls.Add(this.stringListViewer);
+            this.tabStrings.Controls.Add(this.stringsViewer);
             this.tabStrings.Location = new System.Drawing.Point(4, 22);
             this.tabStrings.Name = "tabStrings";
             this.tabStrings.Padding = new System.Windows.Forms.Padding(3);
@@ -405,16 +415,6 @@ namespace Meridian59.AdminUI
             this.tabStrings.TabIndex = 3;
             this.tabStrings.Text = "Strings";
             this.tabStrings.UseVisualStyleBackColor = true;
-            // 
-            // stringListViewer
-            // 
-            this.stringListViewer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.stringListViewer.Location = new System.Drawing.Point(3, 3);
-            this.stringListViewer.Name = "stringListViewer";
-            this.stringListViewer.Size = new System.Drawing.Size(1220, 552);
-            this.stringListViewer.TabIndex = 0;
-            this.stringListViewer.TabStop = false;
-            this.stringListViewer.Text = "stringListViewer";
             // 
             // tabInventory
             // 
@@ -944,15 +944,13 @@ namespace Meridian59.AdminUI
             this.objectBaseView1.TabIndex = 0;
             this.objectBaseView1.Title = "Objects";
             // 
-            // gameMessageViewer
+            // stringsViewer
             // 
-            this.gameMessageViewer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gameMessageViewer.Location = new System.Drawing.Point(3, 3);
-            this.gameMessageViewer.Name = "gameMessageViewer";
-            this.gameMessageViewer.Size = new System.Drawing.Size(1220, 552);
-            this.gameMessageViewer.TabIndex = 0;
-            this.gameMessageViewer.PacketSend += new Meridian59.Protocol.Events.GameMessageEventHandler(this.OnGamePacketViewerPacketSend);
-            this.gameMessageViewer.PacketLogChanged += new Meridian59.AdminUI.Events.PacketLogChangeEventHandler(this.gamePacketViewer_PacketLogChanged);
+            this.stringsViewer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.stringsViewer.Location = new System.Drawing.Point(3, 3);
+            this.stringsViewer.Name = "stringsViewer";
+            this.stringsViewer.Size = new System.Drawing.Size(1220, 552);
+            this.stringsViewer.TabIndex = 0;
             // 
             // AdminForm
             // 
@@ -1043,7 +1041,6 @@ namespace Meridian59.AdminUI
         private System.Windows.Forms.TabPage tabPlayers;
         private System.Windows.Forms.TabPage tabRoomObjects;
         private System.Windows.Forms.TabPage tabStrings;
-        private ListViewers.StringListViewer stringListViewer;
         private System.Windows.Forms.TabPage tabInventory;
         private System.Windows.Forms.TabPage tabStats;
         private System.Windows.Forms.TableLayoutPanel tblAvarInfo;
@@ -1106,5 +1103,6 @@ namespace Meridian59.AdminUI
         private System.Windows.Forms.TabPage tabConsole;
         private Viewers.ServerStringView chatViewer;
         private Viewers.GameMessageView gameMessageViewer;
+        private Viewers.StringsViewer stringsViewer;
     }
 }
