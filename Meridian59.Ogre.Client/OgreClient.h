@@ -58,10 +58,8 @@ namespace Meridian59 { namespace Ogre
 	using namespace Meridian59::Data::Models;
 	using namespace Meridian59::Drawing2D;
 	using namespace Meridian59::Ogre;
-#ifdef _DEBUG
 	using namespace Meridian59::AdminUI;
 	using namespace Meridian59::AdminUI::Events;
-#endif
 
 	/// <summary>
     /// Meridian 59 client implementation based on Ogre3D and other open-source frameworks.
@@ -92,14 +90,12 @@ namespace Meridian59 { namespace Ogre
 		CameraListener*			cameraListener;
 		MyWindowEventListener*	windowListener;
         MiniMapCEGUI^			miniMap;
+		AdminForm^				adminForm;
 
         bool hasFocus;
 		bool isWinCursorVisible;
 		bool invisViewportUpdateFlip;
-
-#ifdef _DEBUG
-		AdminForm^ adminForm;
-#endif
+	
 		/// <summary>
         /// 
         /// </summary>
@@ -205,11 +201,20 @@ namespace Meridian59 { namespace Ogre
         /// </summary>
 		virtual void Suicide() override;
 		
-#ifdef _DEBUG
+		/// <summary>
+		/// Eventhandler when AdminForm changed logging settings for network connection
+		/// </summary>
 		void OnAdminFormPacketLogChanged(Object^ sender, PacketLogChangeEventArgs^ e);
+
+		/// <summary>
+		/// Eventhandler when AdminForm tried to send a game message
+		/// </summary>
 		void OnAdminFormPacketSend(Object^ sender, GameMessageEventArgs^ e);
+
+		/// <summary>
+		/// Shows the admin form
+		/// </summary>
 		void ShowAdminForm();
-#endif
 
 	public:
 		bool RecreateWindow = false;

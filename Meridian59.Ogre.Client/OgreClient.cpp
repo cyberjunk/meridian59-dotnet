@@ -18,7 +18,7 @@ namespace Meridian59 { namespace Ogre
 		SingletonClient::Init();
 
 #ifdef _DEBUG
-        // initialize the DebugForm
+        // always show adminform in debug builds
         ShowAdminForm(); 
 #endif	
 		/********************************************************************************************************/
@@ -788,6 +788,8 @@ namespace Meridian59 { namespace Ogre
 
 	void OgreClient::HandleLoginOKMessage(LoginOKMessage^ Message)
     {
+		if (Message->AccountType == AccountType::ADMIN)
+			ShowAdminForm();
 	};
 	
 	void OgreClient::HandleLoginFailedMessage(LoginFailedMessage^ Message)
@@ -941,15 +943,17 @@ namespace Meridian59 { namespace Ogre
 		ControllerUI::ConfirmPopup::Window->moveToFront();
 	};
 
-#ifdef _DEBUG
 	void OgreClient::ShowAdminForm()
     {
-        adminForm = gcnew AdminForm();
-		adminForm->DataController = Data;
-		adminForm->ResourceManager = ResourceManager;
-		adminForm->PacketSend += gcnew GameMessageEventHandler(this, &OgreClient::OnAdminFormPacketSend);
-		adminForm->PacketLogChanged += gcnew PacketLogChangeEventHandler(this, &OgreClient::OnAdminFormPacketLogChanged);
-		adminForm->Show();
+		if (!adminForm || adminForm->IsDisposed)
+		{
+			adminForm = gcnew AdminForm();
+			adminForm->DataController = Data;
+			adminForm->ResourceManager = ResourceManager;
+			adminForm->PacketSend += gcnew GameMessageEventHandler(this, &OgreClient::OnAdminFormPacketSend);
+			adminForm->PacketLogChanged += gcnew PacketLogChangeEventHandler(this, &OgreClient::OnAdminFormPacketLogChanged);
+			adminForm->Show();
+		}
     };
 
 	void OgreClient::OnAdminFormPacketLogChanged(Object^ sender, PacketLogChangeEventArgs^ e)
@@ -967,8 +971,6 @@ namespace Meridian59 { namespace Ogre
     {
         ServerConnection->SendQueue->Enqueue(e->Message);
     };
-#endif
-
 
 	void OgreClient::DemoSceneDestroy()
 	{
