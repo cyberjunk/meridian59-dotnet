@@ -51,10 +51,6 @@ namespace Meridian59.AdminUI
 
                     if (data != null)
                     {
-                        // old                                     
-                        //guildShieldsViewer.DataSource = data.GuildShieldInfo.Shields;
-                        
-                        // refactored controls
                         diplomacyInfoViewer.DataSource = data.DiplomacyInfo;
                         guildInfoViewer.DataSource = data.GuildInfo;
                         gameMessageViewer.DataSource = data.GameMessageLog;
@@ -118,82 +114,16 @@ namespace Meridian59.AdminUI
                 stringsViewer.DataSource = resourceManager.StringResources;
         }
 
-        protected void OnGamePacketViewerPacketSend(object sender, GameMessageEventArgs e)
+        protected void OnGameMessageViewerPacketSend(object sender, GameMessageEventArgs e)
         {
             if (PacketSend != null) 
                 PacketSend(this, e);
         }
 
-        protected void gamePacketViewer_PacketLogChanged(object sender, PacketLogChangeEventArgs e)
+        protected void OnGameMessageViewerPacketLogChanged(object sender, PacketLogChangeEventArgs e)
         {
             if (PacketLogChanged != null) 
                 PacketLogChanged(this, e);
-        }
-
-        protected void btnRequestSkills_Click(object sender, EventArgs e)
-        {
-            if (PacketSend != null)
-                PacketSend(this, new GameMessageEventArgs(new SendStatsMessage(StatGroup.Skills)));          
-        }
-
-        protected void btnRequestSpells_Click(object sender, EventArgs e)
-        {
-            if (PacketSend != null)
-                PacketSend(this, new GameMessageEventArgs(new SendStatsMessage(StatGroup.Spells)));  
-        }
-
-        protected void btnRequestCondition_Click(object sender, EventArgs e)
-        {
-            if (PacketSend != null)
-                PacketSend(this, new GameMessageEventArgs(new SendStatsMessage(StatGroup.Condition)));
-        }
-
-        protected void btnRequestAttributes_Click(object sender, EventArgs e)
-        {
-            if (PacketSend != null)
-                PacketSend(this, new GameMessageEventArgs(new SendStatsMessage(StatGroup.Attributes)));
-        }
-
-        protected void btnRequestPlayerBuffs_Click(object sender, EventArgs e)
-        {
-            if (PacketSend != null)
-                PacketSend(this, new GameMessageEventArgs(new SendEnchantmentsMessage(BuffType.AvatarBuff)));
-        }
-
-        protected void btnRequestRoomBuffs_Click(object sender, EventArgs e)
-        {
-            if (PacketSend != null)
-                PacketSend(this, new GameMessageEventArgs(new SendEnchantmentsMessage(BuffType.RoomBuff)));
-        }
-
-        protected void btnRequestSpellObjects_Click(object sender, EventArgs e)
-        {
-            if (PacketSend != null)
-                PacketSend(this, new GameMessageEventArgs(new SendSpellsMessage()));
-        }
-
-        protected void btnRequestInventory_Click(object sender, EventArgs e)
-        {
-            if (PacketSend != null)
-                PacketSend(this, new GameMessageEventArgs(new ReqInventoryMessage()));
-        }
-
-        protected void btnRequestGuildShields_Click(object sender, EventArgs e)
-        {
-            if (PacketSend != null)
-                PacketSend(this, new GameMessageEventArgs(new UserCommandMessage(new UserCommandGuildShieldListReq(), null)));
-        }
-
-        protected void btnLeaveGuild_Click(object sender, EventArgs e)
-        {
-            if (PacketSend != null)
-                PacketSend(this, new GameMessageEventArgs(new UserCommandMessage(new UserCommandGuildRenounce(), null)));
-        }
-
-        protected void btnDisbandGuild_Click(object sender, EventArgs e)
-        {
-            if (PacketSend != null)
-                PacketSend(this, new GameMessageEventArgs(new UserCommandMessage(new UserCommandGuildDisband(), null)));
         }
     }
 }

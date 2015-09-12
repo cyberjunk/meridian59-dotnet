@@ -45,15 +45,10 @@ namespace Meridian59.AdminUI
             this.tabStrings = new System.Windows.Forms.TabPage();
             this.tabInventory = new System.Windows.Forms.TabPage();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
-            this.btnRequestInventory = new System.Windows.Forms.Button();
             this.splitContainer5 = new System.Windows.Forms.SplitContainer();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.tabStats = new System.Windows.Forms.TabPage();
             this.splitAvatarInfo = new System.Windows.Forms.SplitContainer();
-            this.btnRequestAttributes = new System.Windows.Forms.Button();
-            this.btnRequestCondition = new System.Windows.Forms.Button();
-            this.btnRequestSpells = new System.Windows.Forms.Button();
-            this.btnRequestSkills = new System.Windows.Forms.Button();
             this.tblAvarInfo = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
@@ -61,14 +56,13 @@ namespace Meridian59.AdminUI
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.tabBuffs = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.btnRequestRoomBuffs = new System.Windows.Forms.Button();
-            this.btnRequestPlayerBuffs = new System.Windows.Forms.Button();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.tabSpells = new System.Windows.Forms.TabPage();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
-            this.btnRequestSpellObjects = new System.Windows.Forms.Button();
             this.tabChat = new System.Windows.Forms.TabPage();
             this.tabGuild = new System.Windows.Forms.TabPage();
+            this.splitContainer6 = new System.Windows.Forms.SplitContainer();
+            this.splitContainer7 = new System.Windows.Forms.SplitContainer();
             this.btnRequestSpells2 = new System.Windows.Forms.Button();
             this.btnRequestSpells3 = new System.Windows.Forms.Button();
             this.gameMessageViewer = new Meridian59.AdminUI.Viewers.GameMessageView();
@@ -88,9 +82,7 @@ namespace Meridian59.AdminUI
             this.avatarBuffsView = new Meridian59.AdminUI.ObjectBaseView();
             this.spellsView = new Meridian59.AdminUI.Viewers.SpellsView();
             this.chatViewer = new Meridian59.AdminUI.Viewers.ServerStringView();
-            this.splitContainer6 = new System.Windows.Forms.SplitContainer();
             this.guildInfoViewer = new Meridian59.AdminUI.Viewers.GuildInfoView();
-            this.splitContainer7 = new System.Windows.Forms.SplitContainer();
             this.diplomacyInfoViewer = new Meridian59.AdminUI.Viewers.DiplomacyInfoView();
             this.objectBaseView1 = new Meridian59.AdminUI.ObjectBaseView();
             this.tabMain.SuspendLayout();
@@ -122,7 +114,6 @@ namespace Meridian59.AdminUI
             this.tabStrings.SuspendLayout();
             this.tabInventory.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).BeginInit();
-            this.splitContainer4.Panel1.SuspendLayout();
             this.splitContainer4.Panel2.SuspendLayout();
             this.splitContainer4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).BeginInit();
@@ -131,7 +122,6 @@ namespace Meridian59.AdminUI
             this.splitContainer5.SuspendLayout();
             this.tabStats.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitAvatarInfo)).BeginInit();
-            this.splitAvatarInfo.Panel1.SuspendLayout();
             this.splitAvatarInfo.Panel2.SuspendLayout();
             this.splitAvatarInfo.SuspendLayout();
             this.tblAvarInfo.SuspendLayout();
@@ -141,7 +131,6 @@ namespace Meridian59.AdminUI
             this.groupBox7.SuspendLayout();
             this.tabBuffs.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
@@ -150,7 +139,6 @@ namespace Meridian59.AdminUI
             this.splitContainer2.SuspendLayout();
             this.tabSpells.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
-            this.splitContainer3.Panel1.SuspendLayout();
             this.splitContainer3.Panel2.SuspendLayout();
             this.splitContainer3.SuspendLayout();
             this.tabChat.SuspendLayout();
@@ -372,26 +360,12 @@ namespace Meridian59.AdminUI
             this.splitContainer4.Name = "splitContainer4";
             this.splitContainer4.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
-            // splitContainer4.Panel1
-            // 
-            this.splitContainer4.Panel1.Controls.Add(this.btnRequestInventory);
-            // 
             // splitContainer4.Panel2
             // 
             this.splitContainer4.Panel2.Controls.Add(this.splitContainer5);
             this.splitContainer4.Size = new System.Drawing.Size(1220, 552);
             this.splitContainer4.SplitterDistance = 31;
             this.splitContainer4.TabIndex = 1;
-            // 
-            // btnRequestInventory
-            // 
-            this.btnRequestInventory.Location = new System.Drawing.Point(115, 3);
-            this.btnRequestInventory.Name = "btnRequestInventory";
-            this.btnRequestInventory.Size = new System.Drawing.Size(138, 23);
-            this.btnRequestInventory.TabIndex = 0;
-            this.btnRequestInventory.Text = "Request Inventory";
-            this.btnRequestInventory.UseVisualStyleBackColor = true;
-            this.btnRequestInventory.Click += new System.EventHandler(this.btnRequestInventory_Click);
             // 
             // splitContainer5
             // 
@@ -440,59 +414,12 @@ namespace Meridian59.AdminUI
             this.splitAvatarInfo.Name = "splitAvatarInfo";
             this.splitAvatarInfo.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
-            // splitAvatarInfo.Panel1
-            // 
-            this.splitAvatarInfo.Panel1.Controls.Add(this.btnRequestAttributes);
-            this.splitAvatarInfo.Panel1.Controls.Add(this.btnRequestCondition);
-            this.splitAvatarInfo.Panel1.Controls.Add(this.btnRequestSpells);
-            this.splitAvatarInfo.Panel1.Controls.Add(this.btnRequestSkills);
-            // 
             // splitAvatarInfo.Panel2
             // 
             this.splitAvatarInfo.Panel2.Controls.Add(this.tblAvarInfo);
             this.splitAvatarInfo.Size = new System.Drawing.Size(1220, 552);
             this.splitAvatarInfo.SplitterDistance = 30;
             this.splitAvatarInfo.TabIndex = 5;
-            // 
-            // btnRequestAttributes
-            // 
-            this.btnRequestAttributes.Location = new System.Drawing.Point(420, 4);
-            this.btnRequestAttributes.Name = "btnRequestAttributes";
-            this.btnRequestAttributes.Size = new System.Drawing.Size(107, 23);
-            this.btnRequestAttributes.TabIndex = 3;
-            this.btnRequestAttributes.Text = "Request Attributes";
-            this.btnRequestAttributes.UseVisualStyleBackColor = true;
-            this.btnRequestAttributes.Click += new System.EventHandler(this.btnRequestAttributes_Click);
-            // 
-            // btnRequestCondition
-            // 
-            this.btnRequestCondition.Location = new System.Drawing.Point(307, 4);
-            this.btnRequestCondition.Name = "btnRequestCondition";
-            this.btnRequestCondition.Size = new System.Drawing.Size(107, 23);
-            this.btnRequestCondition.TabIndex = 2;
-            this.btnRequestCondition.Text = "Request Condition";
-            this.btnRequestCondition.UseVisualStyleBackColor = true;
-            this.btnRequestCondition.Click += new System.EventHandler(this.btnRequestCondition_Click);
-            // 
-            // btnRequestSpells
-            // 
-            this.btnRequestSpells.Location = new System.Drawing.Point(194, 5);
-            this.btnRequestSpells.Name = "btnRequestSpells";
-            this.btnRequestSpells.Size = new System.Drawing.Size(107, 23);
-            this.btnRequestSpells.TabIndex = 1;
-            this.btnRequestSpells.Text = "Request Spells";
-            this.btnRequestSpells.UseVisualStyleBackColor = true;
-            this.btnRequestSpells.Click += new System.EventHandler(this.btnRequestSpells_Click);
-            // 
-            // btnRequestSkills
-            // 
-            this.btnRequestSkills.Location = new System.Drawing.Point(81, 4);
-            this.btnRequestSkills.Name = "btnRequestSkills";
-            this.btnRequestSkills.Size = new System.Drawing.Size(107, 23);
-            this.btnRequestSkills.TabIndex = 0;
-            this.btnRequestSkills.Text = "Request Skills";
-            this.btnRequestSkills.UseVisualStyleBackColor = true;
-            this.btnRequestSkills.Click += new System.EventHandler(this.btnRequestSkills_Click);
             // 
             // tblAvarInfo
             // 
@@ -576,37 +503,12 @@ namespace Meridian59.AdminUI
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.btnRequestRoomBuffs);
-            this.splitContainer1.Panel1.Controls.Add(this.btnRequestPlayerBuffs);
-            // 
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
             this.splitContainer1.Size = new System.Drawing.Size(1220, 552);
             this.splitContainer1.SplitterDistance = 31;
             this.splitContainer1.TabIndex = 0;
-            // 
-            // btnRequestRoomBuffs
-            // 
-            this.btnRequestRoomBuffs.Location = new System.Drawing.Point(383, 3);
-            this.btnRequestRoomBuffs.Name = "btnRequestRoomBuffs";
-            this.btnRequestRoomBuffs.Size = new System.Drawing.Size(116, 23);
-            this.btnRequestRoomBuffs.TabIndex = 1;
-            this.btnRequestRoomBuffs.Text = "Request Roombuffs";
-            this.btnRequestRoomBuffs.UseVisualStyleBackColor = true;
-            this.btnRequestRoomBuffs.Click += new System.EventHandler(this.btnRequestRoomBuffs_Click);
-            // 
-            // btnRequestPlayerBuffs
-            // 
-            this.btnRequestPlayerBuffs.Location = new System.Drawing.Point(256, 3);
-            this.btnRequestPlayerBuffs.Name = "btnRequestPlayerBuffs";
-            this.btnRequestPlayerBuffs.Size = new System.Drawing.Size(121, 23);
-            this.btnRequestPlayerBuffs.TabIndex = 0;
-            this.btnRequestPlayerBuffs.Text = "Request Avatarbuffs";
-            this.btnRequestPlayerBuffs.UseVisualStyleBackColor = true;
-            this.btnRequestPlayerBuffs.Click += new System.EventHandler(this.btnRequestPlayerBuffs_Click);
             // 
             // splitContainer2
             // 
@@ -644,26 +546,12 @@ namespace Meridian59.AdminUI
             this.splitContainer3.Name = "splitContainer3";
             this.splitContainer3.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
-            // splitContainer3.Panel1
-            // 
-            this.splitContainer3.Panel1.Controls.Add(this.btnRequestSpellObjects);
-            // 
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.spellsView);
             this.splitContainer3.Size = new System.Drawing.Size(1220, 552);
             this.splitContainer3.SplitterDistance = 37;
             this.splitContainer3.TabIndex = 1;
-            // 
-            // btnRequestSpellObjects
-            // 
-            this.btnRequestSpellObjects.Location = new System.Drawing.Point(522, 7);
-            this.btnRequestSpellObjects.Name = "btnRequestSpellObjects";
-            this.btnRequestSpellObjects.Size = new System.Drawing.Size(146, 23);
-            this.btnRequestSpellObjects.TabIndex = 0;
-            this.btnRequestSpellObjects.Text = "Request SpellObjects";
-            this.btnRequestSpellObjects.UseVisualStyleBackColor = true;
-            this.btnRequestSpellObjects.Click += new System.EventHandler(this.btnRequestSpellObjects_Click);
             // 
             // tabChat
             // 
@@ -686,6 +574,36 @@ namespace Meridian59.AdminUI
             this.tabGuild.TabIndex = 11;
             this.tabGuild.Text = "Guild";
             this.tabGuild.UseVisualStyleBackColor = true;
+            // 
+            // splitContainer6
+            // 
+            this.splitContainer6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer6.Location = new System.Drawing.Point(3, 3);
+            this.splitContainer6.Name = "splitContainer6";
+            // 
+            // splitContainer6.Panel1
+            // 
+            this.splitContainer6.Panel1.Controls.Add(this.guildInfoViewer);
+            // 
+            // splitContainer6.Panel2
+            // 
+            this.splitContainer6.Panel2.Controls.Add(this.splitContainer7);
+            this.splitContainer6.Size = new System.Drawing.Size(1220, 552);
+            this.splitContainer6.SplitterDistance = 499;
+            this.splitContainer6.TabIndex = 0;
+            // 
+            // splitContainer7
+            // 
+            this.splitContainer7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer7.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer7.Name = "splitContainer7";
+            // 
+            // splitContainer7.Panel1
+            // 
+            this.splitContainer7.Panel1.Controls.Add(this.diplomacyInfoViewer);
+            this.splitContainer7.Size = new System.Drawing.Size(717, 552);
+            this.splitContainer7.SplitterDistance = 376;
+            this.splitContainer7.TabIndex = 1;
             // 
             // btnRequestSpells2
             // 
@@ -712,8 +630,8 @@ namespace Meridian59.AdminUI
             this.gameMessageViewer.Name = "gameMessageViewer";
             this.gameMessageViewer.Size = new System.Drawing.Size(1220, 552);
             this.gameMessageViewer.TabIndex = 0;
-            this.gameMessageViewer.PacketSend += new Meridian59.Protocol.Events.GameMessageEventHandler(this.OnGamePacketViewerPacketSend);
-            this.gameMessageViewer.PacketLogChanged += new Meridian59.AdminUI.Events.PacketLogChangeEventHandler(this.gamePacketViewer_PacketLogChanged);
+            this.gameMessageViewer.PacketSend += new Meridian59.Protocol.Events.GameMessageEventHandler(this.OnGameMessageViewerPacketSend);
+            this.gameMessageViewer.PacketLogChanged += new Meridian59.AdminUI.Events.PacketLogChangeEventHandler(this.OnGameMessageViewerPacketLogChanged);
             // 
             // onlinePlayersView
             // 
@@ -845,23 +763,6 @@ namespace Meridian59.AdminUI
             this.chatViewer.Size = new System.Drawing.Size(1220, 552);
             this.chatViewer.TabIndex = 0;
             // 
-            // splitContainer6
-            // 
-            this.splitContainer6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer6.Location = new System.Drawing.Point(3, 3);
-            this.splitContainer6.Name = "splitContainer6";
-            // 
-            // splitContainer6.Panel1
-            // 
-            this.splitContainer6.Panel1.Controls.Add(this.guildInfoViewer);
-            // 
-            // splitContainer6.Panel2
-            // 
-            this.splitContainer6.Panel2.Controls.Add(this.splitContainer7);
-            this.splitContainer6.Size = new System.Drawing.Size(1220, 552);
-            this.splitContainer6.SplitterDistance = 499;
-            this.splitContainer6.TabIndex = 0;
-            // 
             // guildInfoViewer
             // 
             this.guildInfoViewer.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -869,19 +770,6 @@ namespace Meridian59.AdminUI
             this.guildInfoViewer.Name = "guildInfoViewer";
             this.guildInfoViewer.Size = new System.Drawing.Size(499, 552);
             this.guildInfoViewer.TabIndex = 0;
-            // 
-            // splitContainer7
-            // 
-            this.splitContainer7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer7.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer7.Name = "splitContainer7";
-            // 
-            // splitContainer7.Panel1
-            // 
-            this.splitContainer7.Panel1.Controls.Add(this.diplomacyInfoViewer);
-            this.splitContainer7.Size = new System.Drawing.Size(717, 552);
-            this.splitContainer7.SplitterDistance = 376;
-            this.splitContainer7.TabIndex = 1;
             // 
             // diplomacyInfoViewer
             // 
@@ -936,7 +824,6 @@ namespace Meridian59.AdminUI
             this.tabRoomObjects.ResumeLayout(false);
             this.tabStrings.ResumeLayout(false);
             this.tabInventory.ResumeLayout(false);
-            this.splitContainer4.Panel1.ResumeLayout(false);
             this.splitContainer4.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).EndInit();
             this.splitContainer4.ResumeLayout(false);
@@ -945,7 +832,6 @@ namespace Meridian59.AdminUI
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).EndInit();
             this.splitContainer5.ResumeLayout(false);
             this.tabStats.ResumeLayout(false);
-            this.splitAvatarInfo.Panel1.ResumeLayout(false);
             this.splitAvatarInfo.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitAvatarInfo)).EndInit();
             this.splitAvatarInfo.ResumeLayout(false);
@@ -955,7 +841,6 @@ namespace Meridian59.AdminUI
             this.groupBox6.ResumeLayout(false);
             this.groupBox7.ResumeLayout(false);
             this.tabBuffs.ResumeLayout(false);
-            this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
@@ -964,7 +849,6 @@ namespace Meridian59.AdminUI
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
             this.tabSpells.ResumeLayout(false);
-            this.splitContainer3.Panel1.ResumeLayout(false);
             this.splitContainer3.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
             this.splitContainer3.ResumeLayout(false);
@@ -992,24 +876,16 @@ namespace Meridian59.AdminUI
         private System.Windows.Forms.TabPage tabStats;
         private System.Windows.Forms.TableLayoutPanel tblAvarInfo;
         private System.Windows.Forms.SplitContainer splitAvatarInfo;
-        private System.Windows.Forms.Button btnRequestSkills;
-        private System.Windows.Forms.Button btnRequestSpells;
-        private System.Windows.Forms.Button btnRequestCondition;
-        private System.Windows.Forms.Button btnRequestAttributes;
         private System.Windows.Forms.TabPage tabBuffs;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.Button btnRequestRoomBuffs;
-        private System.Windows.Forms.Button btnRequestPlayerBuffs;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.TabPage tabChat;
         private System.Windows.Forms.TabPage tabSpells;
         private System.Windows.Forms.SplitContainer splitContainer3;
-        private System.Windows.Forms.Button btnRequestSpellObjects;
         private System.Windows.Forms.Button btnRequestSpells2;
         private System.Windows.Forms.Button btnRequestSpells3;
         private System.Windows.Forms.SplitContainer splitContainer4;
         private System.Windows.Forms.SplitContainer splitContainer5;
-        private System.Windows.Forms.Button btnRequestInventory;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.TabPage tabGuild;
         private System.Windows.Forms.SplitContainer splitContainer6;
