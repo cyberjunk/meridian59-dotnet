@@ -79,6 +79,12 @@
     <Compile Include="Viewers\GameMessageView.Designer.cs">
       <DependentUpon>GameMessageView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Viewers\GuildInfoView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Viewers\GuildInfoView.Designer.cs">
+      <DependentUpon>GuildInfoView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Viewers\ServerStringView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -122,9 +128,6 @@
       <DependentUpon>AdminForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Generic\HexTextBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ListViewers\GuildMemberListViewer.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ListViewers\GuildListViewer.cs">
@@ -196,6 +199,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Viewers\GameMessageView.resx">
       <DependentUpon>GameMessageView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Viewers\GuildInfoView.resx">
+      <DependentUpon>GuildInfoView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Viewers\ServerStringView.resx">
       <DependentUpon>ServerStringView.cs</DependentUpon>
