@@ -192,7 +192,7 @@ namespace Meridian59.AdminUI.ListViewers
             
             try
             {
-                byte[] packetbody = txtSendPacket.Value;
+                byte[] packetbody = txtSendPacket.GetBinaryValue();
                 byte[] packetdata = new byte[GameMessage.HEADERLENGTH + packetbody.Length];
                 Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(packetbody.Length)), 0, packetdata, 0, 2);
                 Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(packetbody.Length)), 0, packetdata, 4, 2);

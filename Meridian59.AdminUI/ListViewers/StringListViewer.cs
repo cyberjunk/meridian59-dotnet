@@ -142,19 +142,21 @@ namespace Meridian59.AdminUI.ListViewers
         {        
             try
             {
+                byte[] hex = txtIDFilterHex.GetBinaryValue();
+
                 uint id = 0;
-                switch (txtIDFilterHex.Value.Length)
+                switch (hex.Length)
                 {
                     case 1:
-                        id = txtIDFilterHex.Value[0];
+                        id = hex[0];
                         break;
 
                     case 2: case 3:
-                        id = BitConverter.ToUInt16(txtIDFilterHex.Value, 0);
+                        id = BitConverter.ToUInt16(hex, 0);
                         break;
 
                     case 4:
-                        id = BitConverter.ToUInt32(txtIDFilterHex.Value, 0);
+                        id = BitConverter.ToUInt32(hex, 0);
                         break;
 
                 }
@@ -195,8 +197,6 @@ namespace Meridian59.AdminUI.ListViewers
             lblIDFilterDecDesc.Text = strIDFilterDecDesc;
             lblIDFilterHexDesc.Text = strIDFilterHexDesc;
             lblStringFilterDesc.Text = strStringFilterDesc;
-
-            txtIDFilterHex.MaxBytesLength = 4;
 
             CreateHeaderTable();
             splitContainer.Panel1.Controls.Add(tblPanel);

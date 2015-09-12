@@ -20,42 +20,100 @@ using System.Windows.Forms;
 
 namespace Meridian59.AdminUI.Generic
 {
-    public enum Endian { Big, Little }
-
+    /// <summary>
+    /// Extends base TextBox. Allows only hex values.
+    /// </summary>
     public class HexTextBox : TextBox
     {
-        private bool suppressNextKey = false;
-        private static Keys[] ValidCharKeys = new Keys[] { Keys.A, Keys.B, Keys.C, Keys.D, Keys.E, Keys.F };
-        private static Keys[] ValidNumericKeys = new Keys[] { Keys.D0, Keys.D1, Keys.D2, Keys.D3, Keys.D4, Keys.D5, Keys.D6, Keys.D7, Keys.D8, Keys.D9 };
+        protected bool isCtrl;
 
-        private Endian _endianType = Endian.Little;
-        public Endian EndianType { get { return _endianType; } set { _endianType = value; } }
+        protected static readonly char[] allowedChars = new char[] {
+            'A', 'B', 'C', 'D', 'E', 'F',
+            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '\b'
+        };
 
-        private uint _maxBytesLength = 20000;
-        public uint MaxBytesLength { get { return _maxBytesLength; } set { _maxBytesLength = value; } }
+        protected static readonly Keys[] allowedKeys = new Keys[] {
+            Keys.A, Keys.B, Keys.C, Keys.D, Keys.E, Keys.F,
+            Keys.D0, Keys.D1, Keys.D2, Keys.D3, Keys.D4, Keys.D5, Keys.D6, Keys.D7, Keys.D8, Keys.D9, 
+            Keys.NumPad0, Keys.NumPad1, Keys.NumPad2, Keys.NumPad3, Keys.NumPad4, 
+            Keys.NumPad5, Keys.NumPad6, Keys.NumPad7, Keys.NumPad8, Keys.NumPad9,
+            Keys.Left, Keys.Right, Keys.Back, Keys.Delete, Keys.End };
 
-        private byte[] _value;
-        public byte[] Value
+        protected static bool IsValidKey(Keys Key)
         {
-            get { return _value; }
-            set { 
-                _value = value;
-                if (value != null)
-                    this.Text = BitConverter.ToString(value).Replace("-",String.Empty);
-            }
+            foreach (Keys k in allowedKeys)
+                if (Key == k)
+                    return true;
+
+            return false;
+        }
+
+        protected static bool IsValidChar(char Key)
+        {
+            foreach (char k in allowedChars)
+                if (Key == k)
+                    return true;
+
+            return false;
         }
 
         public HexTextBox()
+            : base()
         {
-            this.Multiline = false;
-            this.KeyDown += new KeyEventHandler(HexTextBox_KeyDown);
-            this.KeyPress += new KeyPressEventHandler(HexTextBox_KeyPress);
-            this.TextChanged += new EventHandler(HexTextBox_TextChanged);
         }
-      
+
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            isCtrl = e.Control;
+
+            if (!IsValidKey(e.KeyCode) && !e.Control)
+            {
+                e.Handled = true;
+                return;
+            }
+
+            base.OnKeyDown(e);
+        }
+
+        protected override void OnKeyUp(KeyEventArgs e)
+        {
+            if (e.Control)
+                isCtrl = false;
+
+            if (!IsValidKey(e.KeyCode) && !e.Control)
+            {
+                e.Handled = true;
+                return;
+            }
+
+            base.OnKeyUp(e);
+        }
+
+        protected override void OnKeyPress(KeyPressEventArgs e)
+        {
+            // turn hex lowercase to uppercase
+            switch (e.KeyChar)
+            {
+                case 'a': e.KeyChar = 'A'; break;
+                case 'b': e.KeyChar = 'B'; break;
+                case 'c': e.KeyChar = 'C'; break;
+                case 'd': e.KeyChar = 'D'; break;
+                case 'e': e.KeyChar = 'E'; break;
+                case 'f': e.KeyChar = 'F'; break;
+            }
+
+            if (!IsValidChar(e.KeyChar) && !isCtrl)
+            {
+                e.Handled = true;
+                return;
+            }
+
+            base.OnKeyPress(e);
+        }
+
         protected override void WndProc(ref Message m)
-        {           
-            switch(m.Msg)
+        {
+            switch (m.Msg)
             {
                 // intercept CTRL+V (WM_PASTE)
                 case 0x302:
@@ -63,103 +121,37 @@ namespace Meridian59.AdminUI.Generic
                     pasteString = pasteString.Replace("-", String.Empty);
                     pasteString = pasteString.Replace(" ", String.Empty);
                     pasteString = pasteString.Replace("\t", String.Empty);
-                    
-                    bool isStringValid = true;
+                    pasteString = pasteString.Replace("\n", String.Empty);
+                    pasteString = pasteString.Replace("a", "A");
+                    pasteString = pasteString.Replace("b", "B");
+                    pasteString = pasteString.Replace("c", "C");
+                    pasteString = pasteString.Replace("d", "D");
+                    pasteString = pasteString.Replace("e", "E");
+                    pasteString = pasteString.Replace("f", "F");
+
                     for (int j = 0; j < pasteString.Length; j++)
-                    {
-                        bool isCharValid = false;
-                        for (int i = 0; i < ValidCharKeys.Length; i++)
-                            if (ValidCharKeys[i] == (Keys)(byte)char.ToUpper(pasteString[j]))
-                            {
-                                isCharValid = true;
-                                break;
-                            }
+                        if (!IsValidChar(pasteString[j]))
+                            return;
 
-                        if(!isCharValid)
-                            for (int i = 0; i < ValidNumericKeys.Length; i++)
-                                if (ValidNumericKeys[i] == (Keys)(byte)char.ToUpper(pasteString[j]))
-                                {
-                                    isCharValid = true;
-                                    break;
-                                }
+                    int cursor = SelectionStart;
+                    this.Text = this.Text.Remove(SelectionStart, SelectionLength).Insert(cursor, pasteString);
+                    SelectionStart = cursor + pasteString.Length;
 
-                        if (!isCharValid)
-                        {
-                            isStringValid = false;
-                            break;
-                        }
-                    }
+                    break;
 
-                    if (isStringValid)
-                    {
-                        this.Text = this.Text.Substring(0, this.SelectionStart) + pasteString + this.Text.Substring(this.SelectionStart);
-                        _value = StringToByteArray(this.Text);
-                    }
-                    break;   
-    
                 default:
                     base.WndProc(ref m);
                     break;
-            }          
-        }
-        
-        private void HexTextBox_TextChanged(object sender, EventArgs e)
-        {
-            _value = StringToByteArray(this.Text);
-        }
-
-        private void HexTextBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            // suppress keys by default
-            suppressNextKey = true;
-
-            // allow only if defined max not reached
-            if (this.Text.Length < _maxBytesLength * 2)
-            {
-                // allow charskeys (also with shift pressed)
-                for (int i = 0; i < ValidCharKeys.Length; i++)
-                    if (e.KeyCode == ValidCharKeys[i])
-                    {
-                        suppressNextKey = false;
-                        break;
-                    }
-
-                // if key not yet allowed, allow numerickeys (without shift pressed)
-                if ((suppressNextKey) && (!e.Shift))
-                    for (int i = 0; i < ValidNumericKeys.Length; i++)
-                        if (e.KeyCode == ValidNumericKeys[i])
-                        {
-                            suppressNextKey = false;
-                            break;
-                        }
             }
-
-            // if it wasn't a hexkey but a ctrl+c, ctrl+v, backspace allow also
-            if ((suppressNextKey) && (e.Control && e.KeyCode == Keys.C) || (e.Control && e.KeyCode == Keys.V) || (e.KeyCode == Keys.Back))
-                suppressNextKey = false;
         }
 
-        private void HexTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        public byte[] GetBinaryValue()
         {
-            // suppress key depending on flag saved by keydown
-            e.Handled = suppressNextKey;
-        }
-        
-        private byte[] StringToByteArray(string hex)
-        {
+            string hex = String.Copy(Text);
+
             if (hex.Length % 2 != 0)
-            {
-                switch (EndianType)
-                {
-                    case Endian.Little:
-                        hex = hex.Insert(hex.Length - 1, "0");
-                        break;
-                    case Endian.Big:
-                        hex = hex.Insert(0, "0");
-                        break;
-                }                
-            }
-                
+                hex = hex.Insert(hex.Length - 1, "0");
+
             return Enumerable.Range(0, hex.Length)
                              .Where(x => x % 2 == 0)
                              .Select(x => Convert.ToByte(hex.Substring(x, 2), 16))

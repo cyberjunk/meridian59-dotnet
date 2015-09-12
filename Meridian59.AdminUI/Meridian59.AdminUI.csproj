@@ -71,6 +71,12 @@
     <Compile Include="Viewers\BackgroundOverlayView.Designer.cs">
       <DependentUpon>BackgroundOverlayView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Viewers\GameMessageView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Viewers\GameMessageView.Designer.cs">
+      <DependentUpon>GameMessageView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Viewers\ServerStringView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -188,6 +194,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Viewers\BackgroundOverlayView.resx">
       <DependentUpon>BackgroundOverlayView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Viewers\GameMessageView.resx">
+      <DependentUpon>GameMessageView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Viewers\ServerStringView.resx">
       <DependentUpon>ServerStringView.cs</DependentUpon>
