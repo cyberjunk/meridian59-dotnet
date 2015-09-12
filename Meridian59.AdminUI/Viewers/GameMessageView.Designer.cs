@@ -36,14 +36,14 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             this.gridMessages = new Meridian59.AdminUI.Generic.BaseGridView();
-            this.colTrafficDirection = new Meridian59.AdminUI.CustomDataGridColumns.InOutColumn();
+            this.colTrafficDirection = new Meridian59.AdminUI.DataGridColumns.InOutColumn();
             this.colDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colLEN1 = new Meridian59.AdminUI.CustomDataGridColumns.HexColumn();
-            this.colCRC = new Meridian59.AdminUI.CustomDataGridColumns.HexColumn();
-            this.colLEN2 = new Meridian59.AdminUI.CustomDataGridColumns.HexColumn();
-            this.colSS = new Meridian59.AdminUI.CustomDataGridColumns.HexColumn();
-            this.colPI = new Meridian59.AdminUI.CustomDataGridColumns.HexColumn();
-            this.colData = new Meridian59.AdminUI.CustomDataGridColumns.HexColumn();
+            this.colLEN1 = new Meridian59.AdminUI.DataGridColumns.HexColumn();
+            this.colCRC = new Meridian59.AdminUI.DataGridColumns.HexColumn();
+            this.colLEN2 = new Meridian59.AdminUI.DataGridColumns.HexColumn();
+            this.colSS = new Meridian59.AdminUI.DataGridColumns.HexColumn();
+            this.colPI = new Meridian59.AdminUI.DataGridColumns.HexColumn();
+            this.colData = new Meridian59.AdminUI.DataGridColumns.HexColumn();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.btnClear = new System.Windows.Forms.Button();
             this.lblMessageBody = new System.Windows.Forms.Label();
@@ -389,14 +389,14 @@
         private System.Windows.Forms.Label lblMessageBody;
         private System.Windows.Forms.Button btnSend;
         private Generic.HexTextBox txtMessageBody;
-        private CustomDataGridColumns.InOutColumn colTrafficDirection;
+        private DataGridColumns.InOutColumn colTrafficDirection;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDescription;
-        private CustomDataGridColumns.HexColumn colLEN1;
-        private CustomDataGridColumns.HexColumn colCRC;
-        private CustomDataGridColumns.HexColumn colLEN2;
-        private CustomDataGridColumns.HexColumn colSS;
-        private CustomDataGridColumns.HexColumn colPI;
-        private CustomDataGridColumns.HexColumn colData;
+        private DataGridColumns.HexColumn colLEN1;
+        private DataGridColumns.HexColumn colCRC;
+        private DataGridColumns.HexColumn colLEN2;
+        private DataGridColumns.HexColumn colSS;
+        private DataGridColumns.HexColumn colPI;
+        private DataGridColumns.HexColumn colData;
         private System.Windows.Forms.Button btnClear;
     }
 }

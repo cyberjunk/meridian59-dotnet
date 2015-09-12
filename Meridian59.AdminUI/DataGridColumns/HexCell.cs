@@ -19,7 +19,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace Meridian59.AdminUI.CustomDataGridColumns
+namespace Meridian59.AdminUI.DataGridColumns
 {
     /// <summary>
     /// This cell will show a hexadecimal representation of

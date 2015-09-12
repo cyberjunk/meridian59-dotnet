@@ -17,7 +17,7 @@
 using System.Windows.Forms;
 using System.ComponentModel;
 using System.Drawing;
-using Meridian59.AdminUI.CustomDataGridColumns;
+using Meridian59.AdminUI.DataGridColumns;
 using Meridian59.Data.Lists;
 using Meridian59.Data.Models;
 using Meridian59.Protocol.Events;

@@ -19,36 +19,38 @@ using System.Windows.Forms;
 using System.ComponentModel;
 using Meridian59.Protocol.Enums;
 
-namespace Meridian59.AdminUI.CustomDataGridColumns
+namespace Meridian59.AdminUI.DataGridColumns
 {
     /// <summary>
-    /// InOutColumn uses InOutCells to display a value
-    /// for 'RECEIVE' and 'SEND'.
+    /// This cell will show the string 'SEND' or 'RECV'
+    /// depending on the value.
     /// </summary>
-    public class InOutColumn : DataGridViewColumn
+    public class InOutCell : DataGridViewTextBoxCell
     {
         /// <summary>
         /// Constructor
         /// </summary>
-        public InOutColumn() : base(new InOutCell())
+        public InOutCell()
         {
         }
 
-        public override object Clone()
+        protected override object GetFormattedValue(object value,
+           int rowIndex, ref DataGridViewCellStyle cellStyle,
+           TypeConverter valueTypeConverter,
+           TypeConverter formattedValueTypeConverter,
+           DataGridViewDataErrorContexts context)
         {
-            return (InOutColumn)base.Clone();
-        }
-
-        public override DataGridViewCell CellTemplate
-        {
-            get { return base.CellTemplate; }
-            set
+            if (value != null && value is MessageDirection)
             {
-                if ((value == null) || !(value is InOutCell))
-                {
-                    throw new ArgumentException("Invalid cell type, InOutColumns can only contain InOutCells");
-                }
+                if ((MessageDirection)value == MessageDirection.ClientToServer) 
+                    return "SEND";
+
+                else
+                    return "RECV";
             }
+
+            else 
+                return String.Empty;
         }
     }
 }

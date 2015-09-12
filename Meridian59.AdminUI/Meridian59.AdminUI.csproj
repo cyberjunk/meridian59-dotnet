@@ -55,8 +55,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomDataGridColumns\HexCell.cs" />
-    <Compile Include="CustomDataGridColumns\InOutCell.cs" />
+    <Compile Include="DataGridColumns\HexCell.cs" />
+    <Compile Include="DataGridColumns\InOutCell.cs" />
     <Compile Include="Events\PacketLogChange.cs" />
     <Compile Include="Generic\BaseGridView.cs">
       <SubType>Component</SubType>
@@ -130,8 +130,8 @@
     <Compile Include="ListViewers\GuildListViewer.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="CustomDataGridColumns\InOutColumn.cs" />
-    <Compile Include="CustomDataGridColumns\HexColumn.cs" />
+    <Compile Include="DataGridColumns\InOutColumn.cs" />
+    <Compile Include="DataGridColumns\HexColumn.cs" />
     <Compile Include="Viewers\RoomInfoView.cs">
       <SubType>UserControl</SubType>
     </Compile>
