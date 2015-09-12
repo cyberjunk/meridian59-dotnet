@@ -90,9 +90,9 @@ namespace Meridian59.AdminUI
             this.chatViewer = new Meridian59.AdminUI.Viewers.ServerStringView();
             this.splitContainer6 = new System.Windows.Forms.SplitContainer();
             this.guildInfoViewer = new Meridian59.AdminUI.Viewers.GuildInfoView();
-            this.objectBaseView1 = new Meridian59.AdminUI.ObjectBaseView();
-            this.diplomacyInfoViewer = new Meridian59.AdminUI.Viewers.DiplomacyInfoView();
             this.splitContainer7 = new System.Windows.Forms.SplitContainer();
+            this.diplomacyInfoViewer = new Meridian59.AdminUI.Viewers.DiplomacyInfoView();
+            this.objectBaseView1 = new Meridian59.AdminUI.ObjectBaseView();
             this.tabMain.SuspendLayout();
             this.tabNetwork.SuspendLayout();
             this.tabPlayers.SuspendLayout();
@@ -870,23 +870,6 @@ namespace Meridian59.AdminUI
             this.guildInfoViewer.Size = new System.Drawing.Size(499, 552);
             this.guildInfoViewer.TabIndex = 0;
             // 
-            // objectBaseView1
-            // 
-            this.objectBaseView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.objectBaseView1.Location = new System.Drawing.Point(0, 0);
-            this.objectBaseView1.Name = "objectBaseView1";
-            this.objectBaseView1.Size = new System.Drawing.Size(821, 502);
-            this.objectBaseView1.TabIndex = 0;
-            this.objectBaseView1.Title = "Objects";
-            // 
-            // diplomacyInfoViewer
-            // 
-            this.diplomacyInfoViewer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.diplomacyInfoViewer.Location = new System.Drawing.Point(0, 0);
-            this.diplomacyInfoViewer.Name = "diplomacyInfoViewer";
-            this.diplomacyInfoViewer.Size = new System.Drawing.Size(434, 552);
-            this.diplomacyInfoViewer.TabIndex = 0;
-            // 
             // splitContainer7
             // 
             this.splitContainer7.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -897,8 +880,25 @@ namespace Meridian59.AdminUI
             // 
             this.splitContainer7.Panel1.Controls.Add(this.diplomacyInfoViewer);
             this.splitContainer7.Size = new System.Drawing.Size(717, 552);
-            this.splitContainer7.SplitterDistance = 434;
+            this.splitContainer7.SplitterDistance = 376;
             this.splitContainer7.TabIndex = 1;
+            // 
+            // diplomacyInfoViewer
+            // 
+            this.diplomacyInfoViewer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.diplomacyInfoViewer.Location = new System.Drawing.Point(0, 0);
+            this.diplomacyInfoViewer.Name = "diplomacyInfoViewer";
+            this.diplomacyInfoViewer.Size = new System.Drawing.Size(376, 552);
+            this.diplomacyInfoViewer.TabIndex = 0;
+            // 
+            // objectBaseView1
+            // 
+            this.objectBaseView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.objectBaseView1.Location = new System.Drawing.Point(0, 0);
+            this.objectBaseView1.Name = "objectBaseView1";
+            this.objectBaseView1.Size = new System.Drawing.Size(821, 502);
+            this.objectBaseView1.TabIndex = 0;
+            this.objectBaseView1.Title = "Objects";
             // 
             // AdminForm
             // 

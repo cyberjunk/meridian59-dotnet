@@ -29,21 +29,25 @@
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.gbDiplomacy = new System.Windows.Forms.GroupBox();
+            this.lblYourAllies = new System.Windows.Forms.Label();
+            this.lblDeclaredWarOnYou = new System.Windows.Forms.Label();
+            this.lbYouDeclaredAlly = new System.Windows.Forms.ListBox();
+            this.lblYourEnemies = new System.Windows.Forms.Label();
+            this.lbYouDeclaredEnemy = new System.Windows.Forms.ListBox();
+            this.lblDeclaredYouAlly = new System.Windows.Forms.Label();
+            this.lbDeclaredYouAlly = new System.Windows.Forms.ListBox();
+            this.lbDeclaredYouEnemy = new System.Windows.Forms.ListBox();
+            this.gbGuilds = new System.Windows.Forms.GroupBox();
             this.gridGuilds = new Meridian59.AdminUI.Generic.BaseGridView();
             this.colID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.lbYouDeclaredAlly = new System.Windows.Forms.ListBox();
-            this.lbYouDeclaredEnemy = new System.Windows.Forms.ListBox();
-            this.lbDeclaredYouAlly = new System.Windows.Forms.ListBox();
-            this.lbDeclaredYouEnemy = new System.Windows.Forms.ListBox();
-            this.lblYouDeclaredAlly = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.gbDiplomacy.SuspendLayout();
+            this.gbGuilds.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridGuilds)).BeginInit();
             this.SuspendLayout();
             // 
@@ -58,21 +62,111 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.label3);
-            this.splitContainer1.Panel1.Controls.Add(this.label2);
-            this.splitContainer1.Panel1.Controls.Add(this.label1);
-            this.splitContainer1.Panel1.Controls.Add(this.lblYouDeclaredAlly);
-            this.splitContainer1.Panel1.Controls.Add(this.lbDeclaredYouEnemy);
-            this.splitContainer1.Panel1.Controls.Add(this.lbDeclaredYouAlly);
-            this.splitContainer1.Panel1.Controls.Add(this.lbYouDeclaredEnemy);
-            this.splitContainer1.Panel1.Controls.Add(this.lbYouDeclaredAlly);
+            this.splitContainer1.Panel1.Controls.Add(this.gbDiplomacy);
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.gridGuilds);
+            this.splitContainer1.Panel2.Controls.Add(this.gbGuilds);
             this.splitContainer1.Size = new System.Drawing.Size(374, 552);
             this.splitContainer1.SplitterDistance = 175;
             this.splitContainer1.TabIndex = 0;
+            // 
+            // gbDiplomacy
+            // 
+            this.gbDiplomacy.Controls.Add(this.lblYourAllies);
+            this.gbDiplomacy.Controls.Add(this.lblDeclaredWarOnYou);
+            this.gbDiplomacy.Controls.Add(this.lbYouDeclaredAlly);
+            this.gbDiplomacy.Controls.Add(this.lblYourEnemies);
+            this.gbDiplomacy.Controls.Add(this.lbYouDeclaredEnemy);
+            this.gbDiplomacy.Controls.Add(this.lblDeclaredYouAlly);
+            this.gbDiplomacy.Controls.Add(this.lbDeclaredYouAlly);
+            this.gbDiplomacy.Controls.Add(this.lbDeclaredYouEnemy);
+            this.gbDiplomacy.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbDiplomacy.Location = new System.Drawing.Point(0, 0);
+            this.gbDiplomacy.Name = "gbDiplomacy";
+            this.gbDiplomacy.Size = new System.Drawing.Size(374, 175);
+            this.gbDiplomacy.TabIndex = 8;
+            this.gbDiplomacy.TabStop = false;
+            this.gbDiplomacy.Text = "Diplomacy";
+            // 
+            // lblYourAllies
+            // 
+            this.lblYourAllies.AutoSize = true;
+            this.lblYourAllies.Location = new System.Drawing.Point(10, 24);
+            this.lblYourAllies.Name = "lblYourAllies";
+            this.lblYourAllies.Size = new System.Drawing.Size(55, 13);
+            this.lblYourAllies.TabIndex = 4;
+            this.lblYourAllies.Text = "Your allies";
+            // 
+            // lblDeclaredWarOnYou
+            // 
+            this.lblDeclaredWarOnYou.AutoSize = true;
+            this.lblDeclaredWarOnYou.Location = new System.Drawing.Point(274, 24);
+            this.lblDeclaredWarOnYou.Name = "lblDeclaredWarOnYou";
+            this.lblDeclaredWarOnYou.Size = new System.Drawing.Size(71, 13);
+            this.lblDeclaredWarOnYou.TabIndex = 7;
+            this.lblDeclaredWarOnYou.Text = "Hostile to you";
+            // 
+            // lbYouDeclaredAlly
+            // 
+            this.lbYouDeclaredAlly.FormattingEnabled = true;
+            this.lbYouDeclaredAlly.Location = new System.Drawing.Point(13, 40);
+            this.lbYouDeclaredAlly.Name = "lbYouDeclaredAlly";
+            this.lbYouDeclaredAlly.Size = new System.Drawing.Size(82, 121);
+            this.lbYouDeclaredAlly.TabIndex = 0;
+            // 
+            // lblYourEnemies
+            // 
+            this.lblYourEnemies.AutoSize = true;
+            this.lblYourEnemies.Location = new System.Drawing.Point(98, 24);
+            this.lblYourEnemies.Name = "lblYourEnemies";
+            this.lblYourEnemies.Size = new System.Drawing.Size(71, 13);
+            this.lblYourEnemies.TabIndex = 6;
+            this.lblYourEnemies.Text = "Your enemies";
+            // 
+            // lbYouDeclaredEnemy
+            // 
+            this.lbYouDeclaredEnemy.FormattingEnabled = true;
+            this.lbYouDeclaredEnemy.Location = new System.Drawing.Point(101, 40);
+            this.lbYouDeclaredEnemy.Name = "lbYouDeclaredEnemy";
+            this.lbYouDeclaredEnemy.Size = new System.Drawing.Size(82, 121);
+            this.lbYouDeclaredEnemy.TabIndex = 1;
+            // 
+            // lblDeclaredYouAlly
+            // 
+            this.lblDeclaredYouAlly.AutoSize = true;
+            this.lblDeclaredYouAlly.Location = new System.Drawing.Point(186, 24);
+            this.lblDeclaredYouAlly.Name = "lblDeclaredYouAlly";
+            this.lblDeclaredYouAlly.Size = new System.Drawing.Size(74, 13);
+            this.lblDeclaredYouAlly.TabIndex = 5;
+            this.lblDeclaredYouAlly.Text = "Allied with you";
+            // 
+            // lbDeclaredYouAlly
+            // 
+            this.lbDeclaredYouAlly.FormattingEnabled = true;
+            this.lbDeclaredYouAlly.Location = new System.Drawing.Point(189, 40);
+            this.lbDeclaredYouAlly.Name = "lbDeclaredYouAlly";
+            this.lbDeclaredYouAlly.Size = new System.Drawing.Size(82, 121);
+            this.lbDeclaredYouAlly.TabIndex = 2;
+            // 
+            // lbDeclaredYouEnemy
+            // 
+            this.lbDeclaredYouEnemy.FormattingEnabled = true;
+            this.lbDeclaredYouEnemy.Location = new System.Drawing.Point(277, 40);
+            this.lbDeclaredYouEnemy.Name = "lbDeclaredYouEnemy";
+            this.lbDeclaredYouEnemy.Size = new System.Drawing.Size(82, 121);
+            this.lbDeclaredYouEnemy.TabIndex = 3;
+            // 
+            // gbGuilds
+            // 
+            this.gbGuilds.Controls.Add(this.gridGuilds);
+            this.gbGuilds.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbGuilds.Location = new System.Drawing.Point(0, 0);
+            this.gbGuilds.Name = "gbGuilds";
+            this.gbGuilds.Size = new System.Drawing.Size(374, 373);
+            this.gbGuilds.TabIndex = 2;
+            this.gbGuilds.TabStop = false;
+            this.gbGuilds.Text = "Guilds";
             // 
             // gridGuilds
             // 
@@ -80,9 +174,9 @@
             this.gridGuilds.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colID,
             this.colName});
-            this.gridGuilds.Location = new System.Drawing.Point(0, 0);
+            this.gridGuilds.Location = new System.Drawing.Point(3, 16);
             this.gridGuilds.Name = "gridGuilds";
-            this.gridGuilds.Size = new System.Drawing.Size(374, 373);
+            this.gridGuilds.Size = new System.Drawing.Size(368, 354);
             this.gridGuilds.TabIndex = 0;
             // 
             // colID
@@ -101,74 +195,6 @@
             this.colName.Name = "colName";
             this.colName.ReadOnly = true;
             // 
-            // lbYouDeclaredAlly
-            // 
-            this.lbYouDeclaredAlly.FormattingEnabled = true;
-            this.lbYouDeclaredAlly.Location = new System.Drawing.Point(20, 26);
-            this.lbYouDeclaredAlly.Name = "lbYouDeclaredAlly";
-            this.lbYouDeclaredAlly.Size = new System.Drawing.Size(120, 56);
-            this.lbYouDeclaredAlly.TabIndex = 0;
-            // 
-            // lbYouDeclaredEnemy
-            // 
-            this.lbYouDeclaredEnemy.FormattingEnabled = true;
-            this.lbYouDeclaredEnemy.Location = new System.Drawing.Point(218, 26);
-            this.lbYouDeclaredEnemy.Name = "lbYouDeclaredEnemy";
-            this.lbYouDeclaredEnemy.Size = new System.Drawing.Size(120, 56);
-            this.lbYouDeclaredEnemy.TabIndex = 1;
-            // 
-            // lbDeclaredYouAlly
-            // 
-            this.lbDeclaredYouAlly.FormattingEnabled = true;
-            this.lbDeclaredYouAlly.Location = new System.Drawing.Point(20, 106);
-            this.lbDeclaredYouAlly.Name = "lbDeclaredYouAlly";
-            this.lbDeclaredYouAlly.Size = new System.Drawing.Size(120, 56);
-            this.lbDeclaredYouAlly.TabIndex = 2;
-            // 
-            // lbDeclaredYouEnemy
-            // 
-            this.lbDeclaredYouEnemy.FormattingEnabled = true;
-            this.lbDeclaredYouEnemy.Location = new System.Drawing.Point(218, 106);
-            this.lbDeclaredYouEnemy.Name = "lbDeclaredYouEnemy";
-            this.lbDeclaredYouEnemy.Size = new System.Drawing.Size(120, 56);
-            this.lbDeclaredYouEnemy.TabIndex = 3;
-            // 
-            // lblYouDeclaredAlly
-            // 
-            this.lblYouDeclaredAlly.AutoSize = true;
-            this.lblYouDeclaredAlly.Location = new System.Drawing.Point(17, 10);
-            this.lblYouDeclaredAlly.Name = "lblYouDeclaredAlly";
-            this.lblYouDeclaredAlly.Size = new System.Drawing.Size(55, 13);
-            this.lblYouDeclaredAlly.TabIndex = 4;
-            this.lblYouDeclaredAlly.Text = "Your allies";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(17, 90);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(74, 13);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "Allied with you";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(215, 10);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(71, 13);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "Your enemies";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(215, 90);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(71, 13);
-            this.label3.TabIndex = 7;
-            this.label3.Text = "Hostile to you";
-            // 
             // DiplomacyInfoView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -177,10 +203,12 @@
             this.Name = "DiplomacyInfoView";
             this.Size = new System.Drawing.Size(374, 552);
             this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.gbDiplomacy.ResumeLayout(false);
+            this.gbDiplomacy.PerformLayout();
+            this.gbGuilds.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridGuilds)).EndInit();
             this.ResumeLayout(false);
 
@@ -196,9 +224,11 @@
         private System.Windows.Forms.ListBox lbDeclaredYouAlly;
         private System.Windows.Forms.ListBox lbYouDeclaredEnemy;
         private System.Windows.Forms.ListBox lbYouDeclaredAlly;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label lblYouDeclaredAlly;
+        private System.Windows.Forms.Label lblDeclaredWarOnYou;
+        private System.Windows.Forms.Label lblYourEnemies;
+        private System.Windows.Forms.Label lblDeclaredYouAlly;
+        private System.Windows.Forms.Label lblYourAllies;
+        private System.Windows.Forms.GroupBox gbDiplomacy;
+        private System.Windows.Forms.GroupBox gbGuilds;
     }
 }
