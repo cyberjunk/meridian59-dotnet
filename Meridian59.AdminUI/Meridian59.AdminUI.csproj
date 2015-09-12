@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Events\PacketLogChange.cs" />
     <Compile Include="Generic\BaseGridView.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -112,8 +113,6 @@
     <Compile Include="AdminForm.Designer.cs">
       <DependentUpon>AdminForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Events\EventArgs.cs" />
-    <Compile Include="Events\EventHandler.cs" />
     <Compile Include="Generic\HexTextBox.cs">
       <SubType>Component</SubType>
     </Compile>

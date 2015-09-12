@@ -1,6 +1,6 @@
 ﻿/*
  Copyright (c) 2012 Clint Banzhaf
- This file is part of "Meridian59.DebugUI".
+ This file is part of "Meridian59.AdminUI".
 
  "Meridian59.DebugUI" is free software: 
  You can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, 
@@ -14,9 +14,26 @@
  If not, see http://www.gnu.org/licenses/.
 */
 
+using System;
+
 namespace Meridian59.AdminUI.Events
 {
-    public delegate void TargetChangeEventHandler(object sender, ObjectIDEventArgs e);
-    public delegate void TeleportToEventHandler(object sender, TeleportToEventArgs e);
     public delegate void PacketLogChangeEventHandler(object sender, PacketLogChangeEventArgs e);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class PacketLogChangeEventArgs : EventArgs
+    {
+        public bool LogOutgoing;
+        public bool LogIncoming;
+        public bool LogPings;
+
+        public PacketLogChangeEventArgs(bool LogOutgoing, bool LogIncoming, bool LogPings)
+        {
+            this.LogIncoming = LogIncoming;
+            this.LogOutgoing = LogOutgoing;
+            this.LogPings = LogPings;
+        }
+    }
 }

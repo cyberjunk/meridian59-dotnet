@@ -26,136 +26,161 @@ using Meridian59.Files;
 
 namespace Meridian59.AdminUI
 {
+    /// <summary>
+    /// The Admin UI window
+    /// </summary>
     public partial class AdminForm : Form
     {
+        protected DataController data;
+        protected ResourceManager resourceManager;
+
         public event GameMessageEventHandler PacketSend;
         public event PacketLogChangeEventHandler PacketLogChanged;
 
-        private DataController dataController;
+        /// <summary>
+        /// A DataController instance providing all models for the views.
+        /// </summary>
         public DataController DataController
         {
-            get { return dataController; }
+            get { return data; }
             set
             {
-                dataController = value;
-                //onlinePlayerViewer.DataSource = dataController.OnlinePlayers;
-                //roomInfoViewer.DataSource = dataController.RoomInformation;
-                statsConditionView.DataSource = dataController.AvatarCondition;
-                statsAttributesView.DataSource = dataController.AvatarAttributes;
-                statsSkillsView.DataSource = dataController.AvatarSkills;
-                statsSpellsView.DataSource = dataController.AvatarSpells;
-                gamePacketViewer.DataSource = dataController.GameMessageLog;
-                //avatarBuffsViewer.DataSource = dataController.AvatarBuffs;
-                //roomBuffsViewer.DataSource = dataController.RoomBuffs;
-                //spellObjectsViewer.DataSource = dataController.SpellObjects;
-                guildMemberListViewer.DataSource = dataController.GuildInfo;
-                guildShieldsViewer.DataSource = dataController.GuildShieldInfo.Shields;
-                guildListViewer.DataSource = dataController.DiplomacyInfo;
-                chatViewer.DataSource = dataController.ChatMessages;
-                
-                roomObjectsView1.DataSource = dataController.RoomObjects;
-                inventoryObjectView.DataSource = dataController.InventoryObjects;
-                spellsView.DataSource = dataController.SpellObjects;
-                avatarBuffsView.DataSource = dataController.AvatarBuffs;
-                roomBuffsView.DataSource = dataController.RoomBuffs;
-                onlinePlayersView.DataSource = dataController.OnlinePlayers;
-                backgroundOverlayView.DataSource = dataController.BackgroundOverlays;
-                roomInfoView.DataSource = dataController.RoomInformation;
-                lightShadingView.DataSource = dataController.LightShading;
-                backgroundMusicView.DataSource = dataController.BackgroundMusic;
+                if (data != value)
+                { 
+                    data = value;
+
+                    if (data != null)
+                    {
+                        // old              
+                        gamePacketViewer.DataSource = data.GameMessageLog;
+                        guildMemberListViewer.DataSource = data.GuildInfo;
+                        guildShieldsViewer.DataSource = data.GuildShieldInfo.Shields;
+                        guildListViewer.DataSource = data.DiplomacyInfo;
+
+                        // refactored controls
+                        statsConditionView.DataSource = data.AvatarCondition;
+                        statsAttributesView.DataSource = data.AvatarAttributes;
+                        statsSkillsView.DataSource = data.AvatarSkills;
+                        statsSpellsView.DataSource = data.AvatarSpells;
+                        roomObjectsViewer.DataSource = data.RoomObjects;
+                        inventoryObjectView.DataSource = data.InventoryObjects;
+                        spellsView.DataSource = data.SpellObjects;
+                        avatarBuffsView.DataSource = data.AvatarBuffs;
+                        roomBuffsView.DataSource = data.RoomBuffs;
+                        onlinePlayersView.DataSource = data.OnlinePlayers;
+                        backgroundOverlayView.DataSource = data.BackgroundOverlays;
+                        roomInfoView.DataSource = data.RoomInformation;
+                        lightShadingView.DataSource = data.LightShading;
+                        backgroundMusicView.DataSource = data.BackgroundMusic;
+                        chatViewer.DataSource = data.ChatMessages;
+                    }
+                }
             }
         }
 
-        private ResourceManager resourceManager;
+        /// <summary>
+        /// The 'ResourceManager' instance providing access
+        /// to resource files such as BGF.
+        /// </summary>
         public ResourceManager ResourceManager
         {
             get { return resourceManager; }
             set
             {
-                resourceManager = value;
-                stringListViewer.DataSource = resourceManager.StringResources;              
+                if (resourceManager != value)
+                { 
+                    resourceManager = value;
+
+                    if (resourceManager != null)
+                        stringListViewer.DataSource = resourceManager.StringResources;
+                }
             }
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public AdminForm()
         {
             InitializeComponent();
 
-            guildMemberListViewer.PacketSend += new GameMessageEventHandler(gamePacketViewer_PacketSend);
-            guildListViewer.PacketSend += new GameMessageEventHandler(gamePacketViewer_PacketSend);
+            guildMemberListViewer.PacketSend += new GameMessageEventHandler(OnGamePacketViewerPacketSend);
+            guildListViewer.PacketSend += new GameMessageEventHandler(OnGamePacketViewerPacketSend);
         }
 
-        private void gamePacketViewer_PacketSend(object sender, GameMessageEventArgs e)
+        protected void OnGamePacketViewerPacketSend(object sender, GameMessageEventArgs e)
         {
-            if (PacketSend != null) PacketSend(this, e);
+            if (PacketSend != null) 
+                PacketSend(this, e);
         }
 
-        private void gamePacketViewer_PacketLogChanged(object sender, PacketLogChangeEventArgs e)
+        protected void gamePacketViewer_PacketLogChanged(object sender, PacketLogChangeEventArgs e)
         {
-            if (PacketLogChanged != null) PacketLogChanged(this, e);
+            if (PacketLogChanged != null) 
+                PacketLogChanged(this, e);
         }
 
-        private void btnRequestSkills_Click(object sender, EventArgs e)
+        protected void btnRequestSkills_Click(object sender, EventArgs e)
         {
             if (PacketSend != null)
                 PacketSend(this, new GameMessageEventArgs(new SendStatsMessage(StatGroup.Skills)));          
         }
 
-        private void btnRequestSpells_Click(object sender, EventArgs e)
+        protected void btnRequestSpells_Click(object sender, EventArgs e)
         {
             if (PacketSend != null)
                 PacketSend(this, new GameMessageEventArgs(new SendStatsMessage(StatGroup.Spells)));  
         }
 
-        private void btnRequestCondition_Click(object sender, EventArgs e)
+        protected void btnRequestCondition_Click(object sender, EventArgs e)
         {
             if (PacketSend != null)
                 PacketSend(this, new GameMessageEventArgs(new SendStatsMessage(StatGroup.Condition)));
         }
 
-        private void btnRequestAttributes_Click(object sender, EventArgs e)
+        protected void btnRequestAttributes_Click(object sender, EventArgs e)
         {
             if (PacketSend != null)
                 PacketSend(this, new GameMessageEventArgs(new SendStatsMessage(StatGroup.Attributes)));
         }
 
-        private void btnRequestPlayerBuffs_Click(object sender, EventArgs e)
+        protected void btnRequestPlayerBuffs_Click(object sender, EventArgs e)
         {
             if (PacketSend != null)
                 PacketSend(this, new GameMessageEventArgs(new SendEnchantmentsMessage(BuffType.AvatarBuff)));
         }
 
-        private void btnRequestRoomBuffs_Click(object sender, EventArgs e)
+        protected void btnRequestRoomBuffs_Click(object sender, EventArgs e)
         {
             if (PacketSend != null)
                 PacketSend(this, new GameMessageEventArgs(new SendEnchantmentsMessage(BuffType.RoomBuff)));
         }
 
-        private void btnRequestSpellObjects_Click(object sender, EventArgs e)
+        protected void btnRequestSpellObjects_Click(object sender, EventArgs e)
         {
             if (PacketSend != null)
                 PacketSend(this, new GameMessageEventArgs(new SendSpellsMessage()));
         }
 
-        private void btnRequestInventory_Click(object sender, EventArgs e)
+        protected void btnRequestInventory_Click(object sender, EventArgs e)
         {
             if (PacketSend != null)
                 PacketSend(this, new GameMessageEventArgs(new ReqInventoryMessage()));
         }
 
-        private void btnRequestGuildShields_Click(object sender, EventArgs e)
+        protected void btnRequestGuildShields_Click(object sender, EventArgs e)
         {
             if (PacketSend != null)
                 PacketSend(this, new GameMessageEventArgs(new UserCommandMessage(new UserCommandGuildShieldListReq(), null)));
         }
 
-        private void btnLeaveGuild_Click(object sender, EventArgs e)
+        protected void btnLeaveGuild_Click(object sender, EventArgs e)
         {
             if (PacketSend != null)
                 PacketSend(this, new GameMessageEventArgs(new UserCommandMessage(new UserCommandGuildRenounce(), null)));
         }
 
-        private void btnDisbandGuild_Click(object sender, EventArgs e)
+        protected void btnDisbandGuild_Click(object sender, EventArgs e)
         {
             if (PacketSend != null)
                 PacketSend(this, new GameMessageEventArgs(new UserCommandMessage(new UserCommandGuildDisband(), null)));
