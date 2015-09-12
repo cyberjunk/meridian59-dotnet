@@ -98,7 +98,7 @@ namespace Meridian59 { namespace Ogre
 		bool invisViewportUpdateFlip;
 
 #ifdef _DEBUG
-		DebugForm^ debugForm;
+		AdminForm^ adminForm;
 #endif
 		/// <summary>
         /// 
@@ -206,9 +206,9 @@ namespace Meridian59 { namespace Ogre
 		virtual void Suicide() override;
 		
 #ifdef _DEBUG
-		void debugForm_PacketLogChanged(Object^ sender, PacketLogChangeEventArgs^ e);
-		void debugForm_PacketSend(Object^ sender, GameMessageEventArgs^ e);
-		void ShowDebugForm();
+		void OnAdminFormPacketLogChanged(Object^ sender, PacketLogChangeEventArgs^ e);
+		void OnAdminFormPacketSend(Object^ sender, GameMessageEventArgs^ e);
+		void ShowAdminForm();
 #endif
 
 	public:

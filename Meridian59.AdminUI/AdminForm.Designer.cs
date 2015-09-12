@@ -1,7 +1,7 @@
 ﻿using Meridian59.Data.Lists;
 namespace Meridian59.AdminUI
 {
-    partial class DebugForm
+    partial class AdminForm
     {
         /// <summary>
         /// Required designer variable.

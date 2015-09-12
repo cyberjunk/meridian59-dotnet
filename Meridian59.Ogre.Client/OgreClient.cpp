@@ -19,7 +19,7 @@ namespace Meridian59 { namespace Ogre
 
 #ifdef _DEBUG
         // initialize the DebugForm
-        ShowDebugForm(); 
+        ShowAdminForm(); 
 #endif	
 		/********************************************************************************************************/
 
@@ -942,17 +942,17 @@ namespace Meridian59 { namespace Ogre
 	};
 
 #ifdef _DEBUG
-	void OgreClient::ShowDebugForm()
+	void OgreClient::ShowAdminForm()
     {
-        debugForm = gcnew DebugForm();
-        debugForm->DataController = Data;
-        debugForm->ResourceManager = ResourceManager;
-        debugForm->PacketSend += gcnew GameMessageEventHandler(this, &OgreClient::debugForm_PacketSend);
-        debugForm->PacketLogChanged += gcnew PacketLogChangeEventHandler(this, &OgreClient::debugForm_PacketLogChanged);
-        debugForm->Show();
+        adminForm = gcnew AdminForm();
+		adminForm->DataController = Data;
+		adminForm->ResourceManager = ResourceManager;
+		adminForm->PacketSend += gcnew GameMessageEventHandler(this, &OgreClient::OnAdminFormPacketSend);
+		adminForm->PacketLogChanged += gcnew PacketLogChangeEventHandler(this, &OgreClient::OnAdminFormPacketLogChanged);
+		adminForm->Show();
     };
 
-	void OgreClient::debugForm_PacketLogChanged(Object^ sender, PacketLogChangeEventArgs^ e)
+	void OgreClient::OnAdminFormPacketLogChanged(Object^ sender, PacketLogChangeEventArgs^ e)
     {
         // update the setings in the Data
         Data->LogIncomingMessages = e->LogIncoming;
@@ -963,7 +963,7 @@ namespace Meridian59 { namespace Ogre
         ServerConnection->IsOutgoingPacketLogEnabled = e->LogOutgoing;
     };
 
-	void OgreClient::debugForm_PacketSend(Object^ sender, GameMessageEventArgs^ e)
+	void OgreClient::OnAdminFormPacketSend(Object^ sender, GameMessageEventArgs^ e)
     {
         ServerConnection->SendQueue->Enqueue(e->Message);
     };

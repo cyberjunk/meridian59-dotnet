@@ -26,7 +26,7 @@ using Meridian59.Files;
 
 namespace Meridian59.AdminUI
 {
-    public partial class DebugForm : Form
+    public partial class AdminForm : Form
     {
         public event GameMessageEventHandler PacketSend;
         public event PacketLogChangeEventHandler PacketLogChanged;
@@ -77,7 +77,7 @@ namespace Meridian59.AdminUI
             }
         }
 
-        public DebugForm()
+        public AdminForm()
         {
             InitializeComponent();
 
