@@ -157,6 +157,7 @@ namespace Meridian59.Files
         public event EventHandler PreloadingStarted;
         public event EventHandler PreloadingEnded;
         public event EventHandler<StringEventArgs> PreloadingFile;
+        public event EventHandler StringDictionarySelected;
 
         #region Methods
         /// <summary>
@@ -521,7 +522,11 @@ namespace Meridian59.Files
             
             // add to dictionary in use
             if (file != null)            
-				StringResources.AddRange(file.StringResources);           
+				StringResources.AddRange(file.StringResources);
+
+            // raise event
+            if (StringDictionarySelected != null)
+                StringDictionarySelected(this, new EventArgs());
         }
 
         /// <summary>
