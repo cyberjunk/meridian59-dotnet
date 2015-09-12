@@ -89,13 +89,17 @@ namespace Meridian59.AdminUI
         protected void OnGridSubOverlaysSelectionChanged(object sender, EventArgs e)
         {
             SubOverlay selectedItem = gridSubOverlays.SelectedItem;
-            avSubOverlayAnimation.DataSource = selectedItem.Animation;
+            
+            avSubOverlayAnimation.DataSource = 
+                (selectedItem != null) ? selectedItem.Animation : null;
         }
 
         protected void OnGridMotionSubOverlaysSelectionChanged(object sender, EventArgs e)
         {
             SubOverlay selectedItem = gridMotionSubOverlays.SelectedItem;
-            avMotionSubOverlayAnimation.DataSource = selectedItem.Animation;
+
+            avMotionSubOverlayAnimation.DataSource = 
+                (selectedItem != null) ? selectedItem.Animation : null;
         }
 
         protected void OnImageComposerNewImageAvailable(object sender, EventArgs e)

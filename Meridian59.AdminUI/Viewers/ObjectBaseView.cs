@@ -92,8 +92,8 @@ namespace Meridian59.AdminUI
         {
             SubOverlay selectedItem = gridSubOverlays.SelectedItem;
 
-            if (selectedItem != null)
-                avSubOverlayAnimation.DataSource = selectedItem.Animation;
+            avSubOverlayAnimation.DataSource = 
+                (selectedItem != null) ? selectedItem.Animation : null;
         }
 
         protected void OnImageComposerNewImageAvailable(object sender, EventArgs e)
