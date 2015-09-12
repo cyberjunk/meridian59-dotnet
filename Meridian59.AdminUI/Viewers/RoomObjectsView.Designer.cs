@@ -57,7 +57,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle40 = new System.Windows.Forms.DataGridViewCellStyle();
             this.splitMain1 = new System.Windows.Forms.SplitContainer();
             this.groupRoomObjects = new System.Windows.Forms.GroupBox();
-            this.gridRoomObjects = new Meridian59.AdminUI.BaseGridView();
+            this.gridRoomObjects = new Meridian59.AdminUI.Generic.BaseGridView();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitMain2 = new System.Windows.Forms.SplitContainer();
             this.splitSubOverlays = new System.Windows.Forms.SplitContainer();
@@ -290,7 +290,7 @@
             this.gridSubOverlays.Name = "gridSubOverlays";
             this.gridSubOverlays.Size = new System.Drawing.Size(420, 203);
             this.gridSubOverlays.TabIndex = 0;
-            this.gridSubOverlays.SelectionChanged += new System.EventHandler(this.gridSubOverlays_SelectionChanged);
+            this.gridSubOverlays.SelectionChanged += new System.EventHandler(this.OnGridSubOverlaysSelectionChanged);
             // 
             // groupMotionSubOverlays
             // 
@@ -310,7 +310,7 @@
             this.gridMotionSubOverlays.Name = "gridMotionSubOverlays";
             this.gridMotionSubOverlays.Size = new System.Drawing.Size(420, 203);
             this.gridMotionSubOverlays.TabIndex = 0;
-            this.gridMotionSubOverlays.SelectionChanged += new System.EventHandler(this.gridMotionSubOverlays_SelectionChanged);
+            this.gridMotionSubOverlays.SelectionChanged += new System.EventHandler(this.OnGridMotionSubOverlaysSelectionChanged);
             // 
             // splitAnimationMain
             // 
@@ -919,7 +919,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn17;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn18;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn19;
-        private BaseGridView gridRoomObjects;
+        private Meridian59.AdminUI.Generic.BaseGridView gridRoomObjects;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.GroupBox groupImage;
         private System.Windows.Forms.PictureBox picImage;

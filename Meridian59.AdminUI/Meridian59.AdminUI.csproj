@@ -54,7 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseGridView.cs">
+    <Compile Include="Generic\BaseGridView.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Viewers\BackgroundMusicView.cs">

@@ -32,7 +32,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBackgroundOverlays = new System.Windows.Forms.GroupBox();
-            this.gridObjects = new Meridian59.AdminUI.BaseGridView();
+            this.gridObjects = new Meridian59.AdminUI.Generic.BaseGridView();
             this.groupAnimation = new System.Windows.Forms.GroupBox();
             this.avAnimation = new Meridian59.AdminUI.AnimationView();
             this.colID = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -102,7 +102,7 @@
             this.gridObjects.Name = "gridObjects";
             this.gridObjects.Size = new System.Drawing.Size(644, 83);
             this.gridObjects.TabIndex = 0;
-            this.gridObjects.SelectionChanged += new System.EventHandler(this.gridObjects_SelectionChanged);
+            this.gridObjects.SelectionChanged += new System.EventHandler(this.OnGridObjectsSelectionChanged);
             // 
             // groupAnimation
             // 
@@ -244,7 +244,7 @@
 
         #endregion
 
-        private BaseGridView gridObjects;
+        private Meridian59.AdminUI.Generic.BaseGridView gridObjects;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.GroupBox groupBackgroundOverlays;
         private System.Windows.Forms.GroupBox groupAnimation;

@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.gridStats = new Meridian59.AdminUI.BaseGridView();
+            this.gridStats = new Meridian59.AdminUI.Generic.BaseGridView();
             this.colNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colResourceID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTag = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -145,7 +145,7 @@
 
         #endregion
 
-        private BaseGridView gridStats;
+        private Meridian59.AdminUI.Generic.BaseGridView gridStats;
         private System.Windows.Forms.DataGridViewTextBoxColumn colNum;
         private System.Windows.Forms.DataGridViewTextBoxColumn colResourceID;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTag;

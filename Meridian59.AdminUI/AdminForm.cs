@@ -1,6 +1,6 @@
 ﻿/*
  Copyright (c) 2012 Clint Banzhaf
- This file is part of "Meridian59.DebugUI".
+ This file is part of "Meridian59.AdminUI".
 
  "Meridian59.DebugUI" is free software: 
  You can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, 

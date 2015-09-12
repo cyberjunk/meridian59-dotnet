@@ -37,7 +37,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupObjects = new System.Windows.Forms.GroupBox();
-            this.gridObjects = new Meridian59.AdminUI.BaseGridView();
+            this.gridObjects = new Meridian59.AdminUI.Generic.BaseGridView();
             this.splitMain = new System.Windows.Forms.SplitContainer();
             this.splitMain2 = new System.Windows.Forms.SplitContainer();
             this.groupSubOverlays = new System.Windows.Forms.GroupBox();
@@ -126,7 +126,7 @@
             this.gridObjects.Name = "gridObjects";
             this.gridObjects.Size = new System.Drawing.Size(712, 199);
             this.gridObjects.TabIndex = 0;
-            this.gridObjects.SelectionChanged += new System.EventHandler(this.gridObjects_SelectionChanged);
+            this.gridObjects.SelectionChanged += new System.EventHandler(this.OnGridObjectsSelectionChanged);
             // 
             // splitMain
             // 
@@ -181,7 +181,7 @@
             this.gridSubOverlays.Name = "gridSubOverlays";
             this.gridSubOverlays.Size = new System.Drawing.Size(312, 159);
             this.gridSubOverlays.TabIndex = 0;
-            this.gridSubOverlays.SelectionChanged += new System.EventHandler(this.gridSubOverlays_SelectionChanged);
+            this.gridSubOverlays.SelectionChanged += new System.EventHandler(this.OnGridSubOverlaysSelectionChanged);
             // 
             // splitAnimationsPic
             // 
@@ -480,7 +480,7 @@
         private System.Windows.Forms.GroupBox groupAnimation;
         private System.Windows.Forms.GroupBox groupBoxSubOverlayAnimation;
         private AnimationView avSubOverlayAnimation;
-        private BaseGridView gridObjects;
+        private Meridian59.AdminUI.Generic.BaseGridView gridObjects;
         private System.Windows.Forms.SplitContainer splitAnimations;
         private System.Windows.Forms.GroupBox groupImage;
         private System.Windows.Forms.PictureBox picImage;

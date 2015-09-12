@@ -32,7 +32,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.gridSubOverlays = new Meridian59.AdminUI.BaseGridView();
+            this.gridSubOverlays = new Meridian59.AdminUI.Generic.BaseGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -62,7 +62,7 @@
             this.gridSubOverlays.Name = "gridSubOverlays";
             this.gridSubOverlays.Size = new System.Drawing.Size(371, 165);
             this.gridSubOverlays.TabIndex = 0;
-            this.gridSubOverlays.SelectionChanged += new System.EventHandler(this.gridSubOverlays_SelectionChanged);
+            this.gridSubOverlays.SelectionChanged += new System.EventHandler(this.OnGridSubOverlaysSelectionChanged);
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -186,7 +186,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
-        private BaseGridView gridSubOverlays;
+        private Meridian59.AdminUI.Generic.BaseGridView gridSubOverlays;
         private System.Windows.Forms.DataGridViewTextBoxColumn colRID;
         private System.Windows.Forms.DataGridViewTextBoxColumn colHotspot;
         private System.Windows.Forms.DataGridViewTextBoxColumn colColorTranslation;

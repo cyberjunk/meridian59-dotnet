@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.gridOnlinePlayers = new Meridian59.AdminUI.BaseGridView();
+            this.gridOnlinePlayers = new Meridian59.AdminUI.Generic.BaseGridView();
             this.colID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNameRID = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -109,7 +109,7 @@
 
         #endregion
 
-        private BaseGridView gridOnlinePlayers;
+        private Meridian59.AdminUI.Generic.BaseGridView gridOnlinePlayers;
         private System.Windows.Forms.DataGridViewTextBoxColumn colID;
         private System.Windows.Forms.DataGridViewTextBoxColumn colCount;
         private System.Windows.Forms.DataGridViewTextBoxColumn colNameRID;

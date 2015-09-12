@@ -1,18 +1,38 @@
-﻿using System;
+﻿/*
+ Copyright (c) 2012 Clint Banzhaf
+ This file is part of "Meridian59.AdminUI".
+
+ "Meridian59.DebugUI" is free software: 
+ You can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, 
+ either version 3 of the License, or (at your option) any later version.
+
+ "Meridian59.DebugUI" is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ See the GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License along with "Meridian59.DebugUI".
+ If not, see http://www.gnu.org/licenses/.
+*/
+
+using System;
 using System.ComponentModel;
 using System.Windows.Forms;
 using System.Threading;
 using Meridian59.Data.Lists;
 using Meridian59.Data.Models;
-using Meridian59.Files;
 using Meridian59.Drawing2D;
 
 namespace Meridian59.AdminUI
 {
+    /// <summary>
+    /// View for Data.Lists.RoomObjectList
+    /// </summary>
     public partial class RoomObjectsView : UserControl
     {
+        protected readonly ImageComposerGDI<RoomObject> imageComposer = new ImageComposerGDI<RoomObject>();
+
         /// <summary>
-        /// The DataSource to display
+        /// The model to be shown in the View
         /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), DefaultValue(null), Browsable(true)]
         public RoomObjectList DataSource
@@ -30,39 +50,34 @@ namespace Meridian59.AdminUI
             }
         }
 
-        ImageComposerGDI<RoomObject> imageComposer;
-
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public RoomObjectsView()
         {
             InitializeComponent();
-            imageComposer = new ImageComposerGDI<RoomObject>();
 
-            // attach handler when gamebitmap changes (animation)
-            imageComposer.NewImageAvailable += gameBitmap_NewBitmap;                   
+            // attach handler when new image is available
+            imageComposer.NewImageAvailable += OnImageComposerNewImageAvailable;                   
         }
 
-        private void gridRoomObjects_SelectionChanged(object sender, EventArgs e)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void gridRoomObjects_SelectionChanged(object sender, EventArgs e)
         {
-            if (gridRoomObjects.SelectedRows.Count > 0 && gridRoomObjects.SelectedRows[0].DataBoundItem != null)
+            if (gridRoomObjects.SelectedRows.Count > 0 && 
+                gridRoomObjects.SelectedRows[0].DataBoundItem != null)
             {
                 RoomObject roomObject = (RoomObject)gridRoomObjects.SelectedRows[0].DataBoundItem;
-
-                if (roomObject.Resource != null)
-                {
-                    // recreate gamebitmap
-                    imageComposer.Width = (uint)picImage.Width;
-                    imageComposer.Height = (uint)picImage.Height;
-
-                    imageComposer.DataSource = roomObject;
-                }
-
+               
+                // update imagecomposer
+                imageComposer.DataSource = roomObject;
+                
                 roomObject.SubOverlays.SyncContext = SynchronizationContext.Current;
                 roomObject.MotionSubOverlays.SyncContext = SynchronizationContext.Current;
-
-                avAnimation.DataSource = null;
-                avMotionAnimation.DataSource = null;
-                avSubOverlayAnimation.DataSource = null;
-                avMotionSubOverlayAnimation.DataSource = null;
 
                 gridSubOverlays.DataSource = roomObject.SubOverlays;
                 gridMotionSubOverlays.DataSource = roomObject.MotionSubOverlays;
@@ -71,23 +86,19 @@ namespace Meridian59.AdminUI
             }          
         }
 
-        private void gridSubOverlays_SelectionChanged(object sender, EventArgs e)
+        protected void OnGridSubOverlaysSelectionChanged(object sender, EventArgs e)
         {
             SubOverlay selectedItem = gridSubOverlays.SelectedItem;
-            
-            if (selectedItem != null)
-                avSubOverlayAnimation.DataSource = selectedItem.Animation;
+            avSubOverlayAnimation.DataSource = selectedItem.Animation;
         }
 
-        private void gridMotionSubOverlays_SelectionChanged(object sender, EventArgs e)
+        protected void OnGridMotionSubOverlaysSelectionChanged(object sender, EventArgs e)
         {
             SubOverlay selectedItem = gridMotionSubOverlays.SelectedItem;
-
-            if (selectedItem != null)
-                avMotionSubOverlayAnimation.DataSource = selectedItem.Animation;
+            avMotionSubOverlayAnimation.DataSource = selectedItem.Animation;
         }
 
-        private void gameBitmap_NewBitmap(object sender, EventArgs e)
+        protected void OnImageComposerNewImageAvailable(object sender, EventArgs e)
         {
             picImage.Image = imageComposer.Image;
         }
