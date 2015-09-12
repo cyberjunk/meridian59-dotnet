@@ -52,10 +52,10 @@ namespace Meridian59.AdminUI
                     if (data != null)
                     {
                         // old                                     
-                        guildShieldsViewer.DataSource = data.GuildShieldInfo.Shields;
-                        guildListViewer.DataSource = data.DiplomacyInfo;
-
+                        //guildShieldsViewer.DataSource = data.GuildShieldInfo.Shields;
+                        
                         // refactored controls
+                        diplomacyInfoViewer.DataSource = data.DiplomacyInfo;
                         guildInfoViewer.DataSource = data.GuildInfo;
                         gameMessageViewer.DataSource = data.GameMessageLog;
                         statsConditionView.DataSource = data.AvatarCondition;
@@ -110,8 +110,6 @@ namespace Meridian59.AdminUI
         public AdminForm()
         {
             InitializeComponent();
-
-            guildListViewer.PacketSend += new GameMessageEventHandler(OnGamePacketViewerPacketSend);
         }
 
         protected void OnStringDictionarySelected(object sender, EventArgs e)

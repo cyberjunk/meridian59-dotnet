@@ -69,12 +69,6 @@ namespace Meridian59.AdminUI
             this.btnRequestSpellObjects = new System.Windows.Forms.Button();
             this.tabChat = new System.Windows.Forms.TabPage();
             this.tabGuild = new System.Windows.Forms.TabPage();
-            this.splitContainer6 = new System.Windows.Forms.SplitContainer();
-            this.splitContainer7 = new System.Windows.Forms.SplitContainer();
-            this.guildShieldsViewer = new System.Windows.Forms.ListBox();
-            this.btnDisbandGuild = new System.Windows.Forms.Button();
-            this.btnRequestGuildShields = new System.Windows.Forms.Button();
-            this.btnLeaveGuild = new System.Windows.Forms.Button();
             this.btnRequestSpells2 = new System.Windows.Forms.Button();
             this.btnRequestSpells3 = new System.Windows.Forms.Button();
             this.gameMessageViewer = new Meridian59.AdminUI.Viewers.GameMessageView();
@@ -94,9 +88,11 @@ namespace Meridian59.AdminUI
             this.avatarBuffsView = new Meridian59.AdminUI.ObjectBaseView();
             this.spellsView = new Meridian59.AdminUI.Viewers.SpellsView();
             this.chatViewer = new Meridian59.AdminUI.Viewers.ServerStringView();
-            this.guildListViewer = new Meridian59.AdminUI.ListViewers.GuildListViewer();
-            this.objectBaseView1 = new Meridian59.AdminUI.ObjectBaseView();
+            this.splitContainer6 = new System.Windows.Forms.SplitContainer();
             this.guildInfoViewer = new Meridian59.AdminUI.Viewers.GuildInfoView();
+            this.objectBaseView1 = new Meridian59.AdminUI.ObjectBaseView();
+            this.diplomacyInfoViewer = new Meridian59.AdminUI.Viewers.DiplomacyInfoView();
+            this.splitContainer7 = new System.Windows.Forms.SplitContainer();
             this.tabMain.SuspendLayout();
             this.tabNetwork.SuspendLayout();
             this.tabPlayers.SuspendLayout();
@@ -165,7 +161,6 @@ namespace Meridian59.AdminUI
             this.splitContainer6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer7)).BeginInit();
             this.splitContainer7.Panel1.SuspendLayout();
-            this.splitContainer7.Panel2.SuspendLayout();
             this.splitContainer7.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -692,83 +687,6 @@ namespace Meridian59.AdminUI
             this.tabGuild.Text = "Guild";
             this.tabGuild.UseVisualStyleBackColor = true;
             // 
-            // splitContainer6
-            // 
-            this.splitContainer6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer6.Location = new System.Drawing.Point(3, 3);
-            this.splitContainer6.Name = "splitContainer6";
-            // 
-            // splitContainer6.Panel1
-            // 
-            this.splitContainer6.Panel1.Controls.Add(this.guildInfoViewer);
-            // 
-            // splitContainer6.Panel2
-            // 
-            this.splitContainer6.Panel2.Controls.Add(this.splitContainer7);
-            this.splitContainer6.Size = new System.Drawing.Size(1220, 552);
-            this.splitContainer6.SplitterDistance = 499;
-            this.splitContainer6.TabIndex = 0;
-            // 
-            // splitContainer7
-            // 
-            this.splitContainer7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer7.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer7.Name = "splitContainer7";
-            this.splitContainer7.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer7.Panel1
-            // 
-            this.splitContainer7.Panel1.Controls.Add(this.guildShieldsViewer);
-            this.splitContainer7.Panel1.Controls.Add(this.btnDisbandGuild);
-            this.splitContainer7.Panel1.Controls.Add(this.btnRequestGuildShields);
-            this.splitContainer7.Panel1.Controls.Add(this.btnLeaveGuild);
-            // 
-            // splitContainer7.Panel2
-            // 
-            this.splitContainer7.Panel2.Controls.Add(this.guildListViewer);
-            this.splitContainer7.Size = new System.Drawing.Size(717, 552);
-            this.splitContainer7.SplitterDistance = 153;
-            this.splitContainer7.TabIndex = 4;
-            // 
-            // guildShieldsViewer
-            // 
-            this.guildShieldsViewer.DisplayMember = "Name";
-            this.guildShieldsViewer.FormattingEnabled = true;
-            this.guildShieldsViewer.Location = new System.Drawing.Point(16, 41);
-            this.guildShieldsViewer.Name = "guildShieldsViewer";
-            this.guildShieldsViewer.Size = new System.Drawing.Size(120, 95);
-            this.guildShieldsViewer.TabIndex = 0;
-            // 
-            // btnDisbandGuild
-            // 
-            this.btnDisbandGuild.Location = new System.Drawing.Point(154, 113);
-            this.btnDisbandGuild.Name = "btnDisbandGuild";
-            this.btnDisbandGuild.Size = new System.Drawing.Size(121, 23);
-            this.btnDisbandGuild.TabIndex = 3;
-            this.btnDisbandGuild.Text = "Disband guild";
-            this.btnDisbandGuild.UseVisualStyleBackColor = true;
-            this.btnDisbandGuild.Click += new System.EventHandler(this.btnDisbandGuild_Click);
-            // 
-            // btnRequestGuildShields
-            // 
-            this.btnRequestGuildShields.Location = new System.Drawing.Point(16, 3);
-            this.btnRequestGuildShields.Name = "btnRequestGuildShields";
-            this.btnRequestGuildShields.Size = new System.Drawing.Size(120, 23);
-            this.btnRequestGuildShields.TabIndex = 1;
-            this.btnRequestGuildShields.Text = "Request Shields";
-            this.btnRequestGuildShields.UseVisualStyleBackColor = true;
-            this.btnRequestGuildShields.Click += new System.EventHandler(this.btnRequestGuildShields_Click);
-            // 
-            // btnLeaveGuild
-            // 
-            this.btnLeaveGuild.Location = new System.Drawing.Point(154, 75);
-            this.btnLeaveGuild.Name = "btnLeaveGuild";
-            this.btnLeaveGuild.Size = new System.Drawing.Size(121, 23);
-            this.btnLeaveGuild.TabIndex = 2;
-            this.btnLeaveGuild.Text = "Leave guild";
-            this.btnLeaveGuild.UseVisualStyleBackColor = true;
-            this.btnLeaveGuild.Click += new System.EventHandler(this.btnLeaveGuild_Click);
-            // 
             // btnRequestSpells2
             // 
             this.btnRequestSpells2.Location = new System.Drawing.Point(272, 3);
@@ -927,13 +845,30 @@ namespace Meridian59.AdminUI
             this.chatViewer.Size = new System.Drawing.Size(1220, 552);
             this.chatViewer.TabIndex = 0;
             // 
-            // guildListViewer
+            // splitContainer6
             // 
-            this.guildListViewer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.guildListViewer.Location = new System.Drawing.Point(0, 0);
-            this.guildListViewer.Name = "guildListViewer";
-            this.guildListViewer.Size = new System.Drawing.Size(717, 395);
-            this.guildListViewer.TabIndex = 0;
+            this.splitContainer6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer6.Location = new System.Drawing.Point(3, 3);
+            this.splitContainer6.Name = "splitContainer6";
+            // 
+            // splitContainer6.Panel1
+            // 
+            this.splitContainer6.Panel1.Controls.Add(this.guildInfoViewer);
+            // 
+            // splitContainer6.Panel2
+            // 
+            this.splitContainer6.Panel2.Controls.Add(this.splitContainer7);
+            this.splitContainer6.Size = new System.Drawing.Size(1220, 552);
+            this.splitContainer6.SplitterDistance = 499;
+            this.splitContainer6.TabIndex = 0;
+            // 
+            // guildInfoViewer
+            // 
+            this.guildInfoViewer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.guildInfoViewer.Location = new System.Drawing.Point(0, 0);
+            this.guildInfoViewer.Name = "guildInfoViewer";
+            this.guildInfoViewer.Size = new System.Drawing.Size(499, 552);
+            this.guildInfoViewer.TabIndex = 0;
             // 
             // objectBaseView1
             // 
@@ -944,13 +879,26 @@ namespace Meridian59.AdminUI
             this.objectBaseView1.TabIndex = 0;
             this.objectBaseView1.Title = "Objects";
             // 
-            // guildInfoViewer
+            // diplomacyInfoViewer
             // 
-            this.guildInfoViewer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.guildInfoViewer.Location = new System.Drawing.Point(0, 0);
-            this.guildInfoViewer.Name = "guildInfoViewer";
-            this.guildInfoViewer.Size = new System.Drawing.Size(499, 552);
-            this.guildInfoViewer.TabIndex = 0;
+            this.diplomacyInfoViewer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.diplomacyInfoViewer.Location = new System.Drawing.Point(0, 0);
+            this.diplomacyInfoViewer.Name = "diplomacyInfoViewer";
+            this.diplomacyInfoViewer.Size = new System.Drawing.Size(434, 552);
+            this.diplomacyInfoViewer.TabIndex = 0;
+            // 
+            // splitContainer7
+            // 
+            this.splitContainer7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer7.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer7.Name = "splitContainer7";
+            // 
+            // splitContainer7.Panel1
+            // 
+            this.splitContainer7.Panel1.Controls.Add(this.diplomacyInfoViewer);
+            this.splitContainer7.Size = new System.Drawing.Size(717, 552);
+            this.splitContainer7.SplitterDistance = 434;
+            this.splitContainer7.TabIndex = 1;
             // 
             // AdminForm
             // 
@@ -1027,7 +975,6 @@ namespace Meridian59.AdminUI
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer6)).EndInit();
             this.splitContainer6.ResumeLayout(false);
             this.splitContainer7.Panel1.ResumeLayout(false);
-            this.splitContainer7.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer7)).EndInit();
             this.splitContainer7.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -1066,12 +1013,6 @@ namespace Meridian59.AdminUI
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.TabPage tabGuild;
         private System.Windows.Forms.SplitContainer splitContainer6;
-        private System.Windows.Forms.ListBox guildShieldsViewer;
-        private System.Windows.Forms.Button btnRequestGuildShields;
-        private System.Windows.Forms.Button btnLeaveGuild;
-        private System.Windows.Forms.Button btnDisbandGuild;
-        private System.Windows.Forms.SplitContainer splitContainer7;
-        private ListViewers.GuildListViewer guildListViewer;
         private ObjectBaseView objectBaseView1;
         private RoomObjectsView roomObjectsViewer;
         private Viewers.SpellsView spellsView;
@@ -1104,5 +1045,7 @@ namespace Meridian59.AdminUI
         private Viewers.GameMessageView gameMessageViewer;
         private Viewers.StringsViewer stringsViewer;
         private Viewers.GuildInfoView guildInfoViewer;
+        private System.Windows.Forms.SplitContainer splitContainer7;
+        private Viewers.DiplomacyInfoView diplomacyInfoViewer;
     }
 }

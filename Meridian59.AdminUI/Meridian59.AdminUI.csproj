@@ -73,6 +73,12 @@
     <Compile Include="Viewers\BackgroundOverlayView.Designer.cs">
       <DependentUpon>BackgroundOverlayView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Viewers\DiplomacyInfoView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Viewers\DiplomacyInfoView.Designer.cs">
+      <DependentUpon>DiplomacyInfoView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Viewers\GameMessageView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -128,9 +134,6 @@
       <DependentUpon>AdminForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Generic\HexTextBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ListViewers\GuildListViewer.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="DataGridColumns\InOutColumn.cs" />
@@ -197,6 +200,9 @@
     <EmbeddedResource Include="Viewers\BackgroundOverlayView.resx">
       <DependentUpon>BackgroundOverlayView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Viewers\DiplomacyInfoView.resx">
+      <DependentUpon>DiplomacyInfoView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Viewers\GameMessageView.resx">
       <DependentUpon>GameMessageView.cs</DependentUpon>
     </EmbeddedResource>
@@ -253,6 +259,9 @@
       <Project>{e8223f3f-3f18-4f4c-9a8f-d9102b067be3}</Project>
       <Name>Meridian59</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ListViewers\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
