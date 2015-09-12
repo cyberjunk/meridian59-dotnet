@@ -1,6 +1,6 @@
 ﻿/*
  Copyright (c) 2012 Clint Banzhaf
- This file is part of "Meridian59.DebugUI".
+ This file is part of "Meridian59.AdminUI".
 
  "Meridian59.DebugUI" is free software: 
  You can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, 
@@ -15,20 +15,31 @@
 */
 
 using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
-using System.ComponentModel;
 
 namespace Meridian59.AdminUI.CustomDataGridColumns
 {
-    
-    public class ByteCell : DataGridViewTextBoxCell
+    /// <summary>
+    /// This cell will show a hexadecimal representation of
+    /// the provided value.
+    /// </summary>
+    public class HexCell : DataGridViewTextBoxCell
     {
-        public ByteCell()
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public HexCell()
         {
-            
         }
-        private byte[] StringToByteArray(string hex)
+
+        /// <summary>
+        /// Converts hex-string to byte[]
+        /// </summary>
+        /// <param name="hex"></param>
+        /// <returns></returns>
+        private static byte[] StringToByteArray(string hex)
         {
             hex = hex.Replace("-", "");
             hex = hex.Replace("\t", "");
@@ -39,6 +50,18 @@ namespace Meridian59.AdminUI.CustomDataGridColumns
                              .Select(x => Convert.ToByte(hex.Substring(x, 2), 16))
                              .ToArray();
         }
+
+        /// <summary>
+        /// This function must return a string representation
+        /// of the value. In this case a hexidecimal string.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="rowIndex"></param>
+        /// <param name="cellStyle"></param>
+        /// <param name="valueTypeConverter"></param>
+        /// <param name="formattedValueTypeConverter"></param>
+        /// <param name="context"></param>
+        /// <returns></returns>
         protected override object GetFormattedValue(object value,
            int rowIndex, ref DataGridViewCellStyle cellStyle,
            TypeConverter valueTypeConverter,
@@ -49,22 +72,42 @@ namespace Meridian59.AdminUI.CustomDataGridColumns
 
             if (value != null)
             {
-                if (value.GetType() == typeof(byte[]))
+                if (value is byte[])
                     returnVal = BitConverter.ToString((byte[])value);
-                else if (value.GetType() == typeof(byte))
+
+                else if (value is byte)
                     returnVal = BitConverter.ToString(new byte[] { (byte)value });
-                else if (value.GetType() == typeof(int))
-                    returnVal = BitConverter.ToString(BitConverter.GetBytes(((int)value)),0);
-                else if (value.GetType() == typeof(uint))
+
+                else if (value is int)
+                    returnVal = BitConverter.ToString(BitConverter.GetBytes(((int)value)), 0);
+
+                else if (value is uint)
                     returnVal = BitConverter.ToString(BitConverter.GetBytes(((uint)value)), 0);
-                else if (value.GetType() == typeof(short))
+
+                else if (value is short)
                     returnVal = BitConverter.ToString(BitConverter.GetBytes(((short)value)), 0);
-                else if (value.GetType() == typeof(ushort))
+
+                else if (value is ushort)
                     returnVal = BitConverter.ToString(BitConverter.GetBytes(((ushort)value)), 0);
+
+                else if (value is long)
+                    returnVal = BitConverter.ToString(BitConverter.GetBytes(((long)value)), 0);
+
+                else if (value is ulong)
+                    returnVal = BitConverter.ToString(BitConverter.GetBytes(((ulong)value)), 0);
             }
+
             return returnVal;
         }
 
+        /// <summary>
+        /// This function must provide a value from hexidecimal string in cell.
+        /// </summary>
+        /// <param name="formattedValue"></param>
+        /// <param name="cellStyle"></param>
+        /// <param name="formattedValueTypeConverter"></param>
+        /// <param name="valueTypeConverter"></param>
+        /// <returns></returns>
         public override object ParseFormattedValue(object formattedValue, DataGridViewCellStyle cellStyle, TypeConverter formattedValueTypeConverter, TypeConverter valueTypeConverter)
         {
             byte[] val = new byte[0];
@@ -75,33 +118,6 @@ namespace Meridian59.AdminUI.CustomDataGridColumns
             finally { }
 
             return val;
-        }
-    }
-
-    public class ByteColumn : DataGridViewColumn
-    {
-        public ByteColumn() : base(new ByteCell())
-        {
-            
-        }
-        
-
-        public override object Clone()
-        {
-            ByteColumn col = base.Clone() as ByteColumn;
-            return col;
-        }
-
-        public override DataGridViewCell CellTemplate
-        {
-            get { return base.CellTemplate; }
-            set
-            {
-                if ((value == null) || !(value is ByteCell))
-                {
-                    throw new ArgumentException("Invalid cell type, ByteColumns can only contain ByteCells");
-                }
-            }
         }
     }
 }

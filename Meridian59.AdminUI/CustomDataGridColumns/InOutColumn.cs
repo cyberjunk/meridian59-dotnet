@@ -21,39 +21,22 @@ using Meridian59.Protocol.Enums;
 
 namespace Meridian59.AdminUI.CustomDataGridColumns
 {
-    public class InOutCell : DataGridViewTextBoxCell
-    {
-        public InOutCell()
-        {
-            
-        }
-        
-        protected override object GetFormattedValue(object value,
-           int rowIndex, ref DataGridViewCellStyle cellStyle,
-           TypeConverter valueTypeConverter,
-           TypeConverter formattedValueTypeConverter,
-           DataGridViewDataErrorContexts context)
-        {
-            if ((value != null) && (value != DBNull.Value))
-            {
-                if ((MessageDirection)value == MessageDirection.ClientToServer) return "SEND";
-                else return "RECV";
-            }
-            else return String.Empty;
-          
-        }
-    }
-
+    /// <summary>
+    /// InOutColumn uses InOutCells to display a value
+    /// for 'RECEIVE' and 'SEND'.
+    /// </summary>
     public class InOutColumn : DataGridViewColumn
     {
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public InOutColumn() : base(new InOutCell())
         {
         }
 
         public override object Clone()
         {
-            InOutColumn col = base.Clone() as InOutColumn;
-            return col;
+            return (InOutColumn)base.Clone();
         }
 
         public override DataGridViewCell CellTemplate
@@ -63,7 +46,7 @@ namespace Meridian59.AdminUI.CustomDataGridColumns
             {
                 if ((value == null) || !(value is InOutCell))
                 {
-                    throw new ArgumentException("Invalid cell type, StatusColumns can only contain StatusCells");
+                    throw new ArgumentException("Invalid cell type, InOutColumns can only contain InOutCells");
                 }
             }
         }

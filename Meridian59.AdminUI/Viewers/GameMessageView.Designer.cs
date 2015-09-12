@@ -38,12 +38,12 @@
             this.gridMessages = new Meridian59.AdminUI.Generic.BaseGridView();
             this.colTrafficDirection = new Meridian59.AdminUI.CustomDataGridColumns.InOutColumn();
             this.colDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colLEN1 = new Meridian59.AdminUI.CustomDataGridColumns.ByteColumn();
-            this.colCRC = new Meridian59.AdminUI.CustomDataGridColumns.ByteColumn();
-            this.colLEN2 = new Meridian59.AdminUI.CustomDataGridColumns.ByteColumn();
-            this.colSS = new Meridian59.AdminUI.CustomDataGridColumns.ByteColumn();
-            this.colPI = new Meridian59.AdminUI.CustomDataGridColumns.ByteColumn();
-            this.colData = new Meridian59.AdminUI.CustomDataGridColumns.ByteColumn();
+            this.colLEN1 = new Meridian59.AdminUI.CustomDataGridColumns.HexColumn();
+            this.colCRC = new Meridian59.AdminUI.CustomDataGridColumns.HexColumn();
+            this.colLEN2 = new Meridian59.AdminUI.CustomDataGridColumns.HexColumn();
+            this.colSS = new Meridian59.AdminUI.CustomDataGridColumns.HexColumn();
+            this.colPI = new Meridian59.AdminUI.CustomDataGridColumns.HexColumn();
+            this.colData = new Meridian59.AdminUI.CustomDataGridColumns.HexColumn();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.btnClear = new System.Windows.Forms.Button();
             this.lblMessageBody = new System.Windows.Forms.Label();
@@ -391,12 +391,12 @@
         private Generic.HexTextBox txtMessageBody;
         private CustomDataGridColumns.InOutColumn colTrafficDirection;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDescription;
-        private CustomDataGridColumns.ByteColumn colLEN1;
-        private CustomDataGridColumns.ByteColumn colCRC;
-        private CustomDataGridColumns.ByteColumn colLEN2;
-        private CustomDataGridColumns.ByteColumn colSS;
-        private CustomDataGridColumns.ByteColumn colPI;
-        private CustomDataGridColumns.ByteColumn colData;
+        private CustomDataGridColumns.HexColumn colLEN1;
+        private CustomDataGridColumns.HexColumn colCRC;
+        private CustomDataGridColumns.HexColumn colLEN2;
+        private CustomDataGridColumns.HexColumn colSS;
+        private CustomDataGridColumns.HexColumn colPI;
+        private CustomDataGridColumns.HexColumn colData;
         private System.Windows.Forms.Button btnClear;
     }
 }

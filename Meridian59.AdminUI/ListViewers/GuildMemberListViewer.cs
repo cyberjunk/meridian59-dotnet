@@ -105,8 +105,8 @@ namespace Meridian59.AdminUI.ListViewers
         private DataGridViewColumn colID = new DataGridViewTextBoxColumn();
         private DataGridViewColumn colCount = new DataGridViewTextBoxColumn();
         private DataGridViewColumn colName = new DataGridViewTextBoxColumn();
-        private DataGridViewColumn colRank = new ByteColumn();
-        private DataGridViewColumn colGender = new ByteColumn();
+        private DataGridViewColumn colRank = new HexColumn();
+        private DataGridViewColumn colGender = new HexColumn();
         
         // Strings used by dgRoomObjects
         private const string strID = "ID";
