@@ -64,6 +64,7 @@ namespace Meridian59.AdminUI.Viewers
 
                 spellObject.SubOverlays.SyncContext = SynchronizationContext.Current;
 
+                pictureBox.DataSource = spellObject;
                 gridSubOverlays.DataSource = spellObject.SubOverlays;               
                 avAnimation.DataSource = spellObject.Animation;              
             }

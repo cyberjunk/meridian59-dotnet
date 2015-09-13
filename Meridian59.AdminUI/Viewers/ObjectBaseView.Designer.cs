@@ -38,18 +38,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupObjects = new System.Windows.Forms.GroupBox();
             this.gridObjects = new Meridian59.AdminUI.Generic.BaseGridView();
-            this.splitMain = new System.Windows.Forms.SplitContainer();
-            this.splitMain2 = new System.Windows.Forms.SplitContainer();
-            this.groupSubOverlays = new System.Windows.Forms.GroupBox();
-            this.gridSubOverlays = new Meridian59.AdminUI.SubOverlayGrid();
-            this.splitAnimationsPic = new System.Windows.Forms.SplitContainer();
-            this.splitAnimations = new System.Windows.Forms.SplitContainer();
-            this.groupAnimation = new System.Windows.Forms.GroupBox();
-            this.avAnimation = new Meridian59.AdminUI.AnimationView();
-            this.groupBoxSubOverlayAnimation = new System.Windows.Forms.GroupBox();
-            this.avSubOverlayAnimation = new Meridian59.AdminUI.AnimationView();
-            this.groupImage = new System.Windows.Forms.GroupBox();
-            this.picImage = new System.Windows.Forms.PictureBox();
             this.colID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colOverlayRID = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -64,6 +52,18 @@
             this.colAppearanceHash = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colOverlayFile = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.splitMain = new System.Windows.Forms.SplitContainer();
+            this.splitMain2 = new System.Windows.Forms.SplitContainer();
+            this.groupSubOverlays = new System.Windows.Forms.GroupBox();
+            this.gridSubOverlays = new Meridian59.AdminUI.SubOverlayGrid();
+            this.splitAnimationsPic = new System.Windows.Forms.SplitContainer();
+            this.splitAnimations = new System.Windows.Forms.SplitContainer();
+            this.groupAnimation = new System.Windows.Forms.GroupBox();
+            this.avAnimation = new Meridian59.AdminUI.AnimationView();
+            this.groupBoxSubOverlayAnimation = new System.Windows.Forms.GroupBox();
+            this.avSubOverlayAnimation = new Meridian59.AdminUI.AnimationView();
+            this.groupImage = new System.Windows.Forms.GroupBox();
+            this.pictureBox = new Meridian59.AdminUI.Generic.PictureBoxObjectBase();
             this.groupObjects.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridObjects)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitMain)).BeginInit();
@@ -86,7 +86,6 @@
             this.groupAnimation.SuspendLayout();
             this.groupBoxSubOverlayAnimation.SuspendLayout();
             this.groupImage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picImage)).BeginInit();
             this.SuspendLayout();
             // 
             // groupObjects
@@ -95,7 +94,7 @@
             this.groupObjects.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupObjects.Location = new System.Drawing.Point(0, 0);
             this.groupObjects.Name = "groupObjects";
-            this.groupObjects.Size = new System.Drawing.Size(718, 218);
+            this.groupObjects.Size = new System.Drawing.Size(797, 218);
             this.groupObjects.TabIndex = 0;
             this.groupObjects.TabStop = false;
             this.groupObjects.Text = "Objects";
@@ -120,157 +119,9 @@
             this.colOverlayFile});
             this.gridObjects.Location = new System.Drawing.Point(3, 16);
             this.gridObjects.Name = "gridObjects";
-            this.gridObjects.Size = new System.Drawing.Size(712, 199);
+            this.gridObjects.Size = new System.Drawing.Size(791, 199);
             this.gridObjects.TabIndex = 0;
             this.gridObjects.SelectionChanged += new System.EventHandler(this.OnGridObjectsSelectionChanged);
-            // 
-            // splitMain
-            // 
-            this.splitMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitMain.Location = new System.Drawing.Point(0, 0);
-            this.splitMain.Name = "splitMain";
-            this.splitMain.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitMain.Panel1
-            // 
-            this.splitMain.Panel1.Controls.Add(this.groupObjects);
-            // 
-            // splitMain.Panel2
-            // 
-            this.splitMain.Panel2.Controls.Add(this.splitMain2);
-            this.splitMain.Size = new System.Drawing.Size(718, 400);
-            this.splitMain.SplitterDistance = 218;
-            this.splitMain.TabIndex = 1;
-            // 
-            // splitMain2
-            // 
-            this.splitMain2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitMain2.Location = new System.Drawing.Point(0, 0);
-            this.splitMain2.Name = "splitMain2";
-            // 
-            // splitMain2.Panel1
-            // 
-            this.splitMain2.Panel1.Controls.Add(this.groupSubOverlays);
-            // 
-            // splitMain2.Panel2
-            // 
-            this.splitMain2.Panel2.Controls.Add(this.splitAnimationsPic);
-            this.splitMain2.Size = new System.Drawing.Size(718, 178);
-            this.splitMain2.SplitterDistance = 318;
-            this.splitMain2.TabIndex = 0;
-            // 
-            // groupSubOverlays
-            // 
-            this.groupSubOverlays.Controls.Add(this.gridSubOverlays);
-            this.groupSubOverlays.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupSubOverlays.Location = new System.Drawing.Point(0, 0);
-            this.groupSubOverlays.Name = "groupSubOverlays";
-            this.groupSubOverlays.Size = new System.Drawing.Size(318, 178);
-            this.groupSubOverlays.TabIndex = 0;
-            this.groupSubOverlays.TabStop = false;
-            this.groupSubOverlays.Text = "SubOverlays";
-            // 
-            // gridSubOverlays
-            // 
-            this.gridSubOverlays.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridSubOverlays.Location = new System.Drawing.Point(3, 16);
-            this.gridSubOverlays.Name = "gridSubOverlays";
-            this.gridSubOverlays.Size = new System.Drawing.Size(312, 159);
-            this.gridSubOverlays.TabIndex = 0;
-            this.gridSubOverlays.SelectionChanged += new System.EventHandler(this.OnGridSubOverlaysSelectionChanged);
-            // 
-            // splitAnimationsPic
-            // 
-            this.splitAnimationsPic.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitAnimationsPic.Location = new System.Drawing.Point(0, 0);
-            this.splitAnimationsPic.Name = "splitAnimationsPic";
-            // 
-            // splitAnimationsPic.Panel1
-            // 
-            this.splitAnimationsPic.Panel1.Controls.Add(this.splitAnimations);
-            // 
-            // splitAnimationsPic.Panel2
-            // 
-            this.splitAnimationsPic.Panel2.Controls.Add(this.groupImage);
-            this.splitAnimationsPic.Size = new System.Drawing.Size(396, 178);
-            this.splitAnimationsPic.SplitterDistance = 197;
-            this.splitAnimationsPic.TabIndex = 0;
-            // 
-            // splitAnimations
-            // 
-            this.splitAnimations.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitAnimations.Location = new System.Drawing.Point(0, 0);
-            this.splitAnimations.Name = "splitAnimations";
-            this.splitAnimations.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitAnimations.Panel1
-            // 
-            this.splitAnimations.Panel1.Controls.Add(this.groupAnimation);
-            // 
-            // splitAnimations.Panel2
-            // 
-            this.splitAnimations.Panel2.Controls.Add(this.groupBoxSubOverlayAnimation);
-            this.splitAnimations.Size = new System.Drawing.Size(197, 178);
-            this.splitAnimations.SplitterDistance = 89;
-            this.splitAnimations.TabIndex = 1;
-            // 
-            // groupAnimation
-            // 
-            this.groupAnimation.Controls.Add(this.avAnimation);
-            this.groupAnimation.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupAnimation.Location = new System.Drawing.Point(0, 0);
-            this.groupAnimation.Name = "groupAnimation";
-            this.groupAnimation.Size = new System.Drawing.Size(197, 89);
-            this.groupAnimation.TabIndex = 0;
-            this.groupAnimation.TabStop = false;
-            this.groupAnimation.Text = "Animaton";
-            // 
-            // avAnimation
-            // 
-            this.avAnimation.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.avAnimation.Location = new System.Drawing.Point(3, 16);
-            this.avAnimation.Name = "avAnimation";
-            this.avAnimation.Size = new System.Drawing.Size(191, 70);
-            this.avAnimation.TabIndex = 0;
-            // 
-            // groupBoxSubOverlayAnimation
-            // 
-            this.groupBoxSubOverlayAnimation.Controls.Add(this.avSubOverlayAnimation);
-            this.groupBoxSubOverlayAnimation.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBoxSubOverlayAnimation.Location = new System.Drawing.Point(0, 0);
-            this.groupBoxSubOverlayAnimation.Name = "groupBoxSubOverlayAnimation";
-            this.groupBoxSubOverlayAnimation.Size = new System.Drawing.Size(197, 85);
-            this.groupBoxSubOverlayAnimation.TabIndex = 1;
-            this.groupBoxSubOverlayAnimation.TabStop = false;
-            this.groupBoxSubOverlayAnimation.Text = "SubOverlayAnimaton";
-            // 
-            // avSubOverlayAnimation
-            // 
-            this.avSubOverlayAnimation.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.avSubOverlayAnimation.Location = new System.Drawing.Point(3, 16);
-            this.avSubOverlayAnimation.Name = "avSubOverlayAnimation";
-            this.avSubOverlayAnimation.Size = new System.Drawing.Size(191, 66);
-            this.avSubOverlayAnimation.TabIndex = 0;
-            // 
-            // groupImage
-            // 
-            this.groupImage.Controls.Add(this.picImage);
-            this.groupImage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupImage.Location = new System.Drawing.Point(0, 0);
-            this.groupImage.Name = "groupImage";
-            this.groupImage.Size = new System.Drawing.Size(195, 178);
-            this.groupImage.TabIndex = 0;
-            this.groupImage.TabStop = false;
-            this.groupImage.Text = "Image";
-            // 
-            // picImage
-            // 
-            this.picImage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.picImage.Location = new System.Drawing.Point(3, 16);
-            this.picImage.Name = "picImage";
-            this.picImage.Size = new System.Drawing.Size(189, 159);
-            this.picImage.TabIndex = 0;
-            this.picImage.TabStop = false;
             // 
             // colID
             // 
@@ -412,13 +263,160 @@
             this.colOverlayFile.Name = "colOverlayFile";
             this.colOverlayFile.ReadOnly = true;
             // 
+            // splitMain
+            // 
+            this.splitMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitMain.Location = new System.Drawing.Point(0, 0);
+            this.splitMain.Name = "splitMain";
+            this.splitMain.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitMain.Panel1
+            // 
+            this.splitMain.Panel1.Controls.Add(this.groupObjects);
+            // 
+            // splitMain.Panel2
+            // 
+            this.splitMain.Panel2.Controls.Add(this.splitMain2);
+            this.splitMain.Size = new System.Drawing.Size(797, 400);
+            this.splitMain.SplitterDistance = 218;
+            this.splitMain.TabIndex = 1;
+            // 
+            // splitMain2
+            // 
+            this.splitMain2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitMain2.Location = new System.Drawing.Point(0, 0);
+            this.splitMain2.Name = "splitMain2";
+            // 
+            // splitMain2.Panel1
+            // 
+            this.splitMain2.Panel1.Controls.Add(this.groupSubOverlays);
+            // 
+            // splitMain2.Panel2
+            // 
+            this.splitMain2.Panel2.Controls.Add(this.splitAnimationsPic);
+            this.splitMain2.Size = new System.Drawing.Size(797, 178);
+            this.splitMain2.SplitterDistance = 352;
+            this.splitMain2.TabIndex = 0;
+            // 
+            // groupSubOverlays
+            // 
+            this.groupSubOverlays.Controls.Add(this.gridSubOverlays);
+            this.groupSubOverlays.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupSubOverlays.Location = new System.Drawing.Point(0, 0);
+            this.groupSubOverlays.Name = "groupSubOverlays";
+            this.groupSubOverlays.Size = new System.Drawing.Size(352, 178);
+            this.groupSubOverlays.TabIndex = 0;
+            this.groupSubOverlays.TabStop = false;
+            this.groupSubOverlays.Text = "SubOverlays";
+            // 
+            // gridSubOverlays
+            // 
+            this.gridSubOverlays.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridSubOverlays.Location = new System.Drawing.Point(3, 16);
+            this.gridSubOverlays.Name = "gridSubOverlays";
+            this.gridSubOverlays.Size = new System.Drawing.Size(346, 159);
+            this.gridSubOverlays.TabIndex = 0;
+            this.gridSubOverlays.SelectionChanged += new System.EventHandler(this.OnGridSubOverlaysSelectionChanged);
+            // 
+            // splitAnimationsPic
+            // 
+            this.splitAnimationsPic.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitAnimationsPic.Location = new System.Drawing.Point(0, 0);
+            this.splitAnimationsPic.Name = "splitAnimationsPic";
+            // 
+            // splitAnimationsPic.Panel1
+            // 
+            this.splitAnimationsPic.Panel1.Controls.Add(this.splitAnimations);
+            // 
+            // splitAnimationsPic.Panel2
+            // 
+            this.splitAnimationsPic.Panel2.Controls.Add(this.groupImage);
+            this.splitAnimationsPic.Size = new System.Drawing.Size(441, 178);
+            this.splitAnimationsPic.SplitterDistance = 159;
+            this.splitAnimationsPic.TabIndex = 0;
+            // 
+            // splitAnimations
+            // 
+            this.splitAnimations.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitAnimations.Location = new System.Drawing.Point(0, 0);
+            this.splitAnimations.Name = "splitAnimations";
+            this.splitAnimations.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitAnimations.Panel1
+            // 
+            this.splitAnimations.Panel1.Controls.Add(this.groupAnimation);
+            // 
+            // splitAnimations.Panel2
+            // 
+            this.splitAnimations.Panel2.Controls.Add(this.groupBoxSubOverlayAnimation);
+            this.splitAnimations.Size = new System.Drawing.Size(159, 178);
+            this.splitAnimations.SplitterDistance = 89;
+            this.splitAnimations.TabIndex = 1;
+            // 
+            // groupAnimation
+            // 
+            this.groupAnimation.Controls.Add(this.avAnimation);
+            this.groupAnimation.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupAnimation.Location = new System.Drawing.Point(0, 0);
+            this.groupAnimation.Name = "groupAnimation";
+            this.groupAnimation.Size = new System.Drawing.Size(159, 89);
+            this.groupAnimation.TabIndex = 0;
+            this.groupAnimation.TabStop = false;
+            this.groupAnimation.Text = "Animaton";
+            // 
+            // avAnimation
+            // 
+            this.avAnimation.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.avAnimation.Location = new System.Drawing.Point(3, 16);
+            this.avAnimation.Name = "avAnimation";
+            this.avAnimation.Size = new System.Drawing.Size(153, 70);
+            this.avAnimation.TabIndex = 0;
+            // 
+            // groupBoxSubOverlayAnimation
+            // 
+            this.groupBoxSubOverlayAnimation.Controls.Add(this.avSubOverlayAnimation);
+            this.groupBoxSubOverlayAnimation.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBoxSubOverlayAnimation.Location = new System.Drawing.Point(0, 0);
+            this.groupBoxSubOverlayAnimation.Name = "groupBoxSubOverlayAnimation";
+            this.groupBoxSubOverlayAnimation.Size = new System.Drawing.Size(159, 85);
+            this.groupBoxSubOverlayAnimation.TabIndex = 1;
+            this.groupBoxSubOverlayAnimation.TabStop = false;
+            this.groupBoxSubOverlayAnimation.Text = "SubOverlayAnimaton";
+            // 
+            // avSubOverlayAnimation
+            // 
+            this.avSubOverlayAnimation.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.avSubOverlayAnimation.Location = new System.Drawing.Point(3, 16);
+            this.avSubOverlayAnimation.Name = "avSubOverlayAnimation";
+            this.avSubOverlayAnimation.Size = new System.Drawing.Size(153, 66);
+            this.avSubOverlayAnimation.TabIndex = 0;
+            // 
+            // groupImage
+            // 
+            this.groupImage.Controls.Add(this.pictureBox);
+            this.groupImage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupImage.Location = new System.Drawing.Point(0, 0);
+            this.groupImage.Name = "groupImage";
+            this.groupImage.Size = new System.Drawing.Size(278, 178);
+            this.groupImage.TabIndex = 0;
+            this.groupImage.TabStop = false;
+            this.groupImage.Text = "Image";
+            // 
+            // pictureBox
+            // 
+            this.pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox.Location = new System.Drawing.Point(3, 16);
+            this.pictureBox.Name = "pictureBox";
+            this.pictureBox.Size = new System.Drawing.Size(272, 159);
+            this.pictureBox.TabIndex = 0;
+            // 
             // ObjectBaseView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.splitMain);
             this.Name = "ObjectBaseView";
-            this.Size = new System.Drawing.Size(718, 400);
+            this.Size = new System.Drawing.Size(797, 400);
             this.groupObjects.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridObjects)).EndInit();
             this.splitMain.Panel1.ResumeLayout(false);
@@ -441,7 +439,6 @@
             this.groupAnimation.ResumeLayout(false);
             this.groupBoxSubOverlayAnimation.ResumeLayout(false);
             this.groupImage.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.picImage)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -461,7 +458,6 @@
         private Meridian59.AdminUI.Generic.BaseGridView gridObjects;
         private System.Windows.Forms.SplitContainer splitAnimations;
         private System.Windows.Forms.GroupBox groupImage;
-        private System.Windows.Forms.PictureBox picImage;
         private System.Windows.Forms.DataGridViewTextBoxColumn colID;
         private System.Windows.Forms.DataGridViewTextBoxColumn colCount;
         private System.Windows.Forms.DataGridViewTextBoxColumn colOverlayRID;
@@ -476,5 +472,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colAppearanceHash;
         private System.Windows.Forms.DataGridViewTextBoxColumn colName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colOverlayFile;
+        private Generic.PictureBoxObjectBase pictureBox;
     }
 }

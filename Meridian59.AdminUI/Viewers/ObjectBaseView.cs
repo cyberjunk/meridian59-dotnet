@@ -29,8 +29,6 @@ namespace Meridian59.AdminUI
     /// </summary>
     public partial class ObjectBaseView : UserControl
     {
-        protected readonly ImageComposerGDI<ObjectBase> imageComposer = new ImageComposerGDI<ObjectBase>();
-
         /// <summary>
         /// The model to be shown in the View
         /// </summary>
@@ -68,10 +66,6 @@ namespace Meridian59.AdminUI
         public ObjectBaseView()
         {
             InitializeComponent();
-
-            // 
-            imageComposer.Width = (uint)picImage.Width;
-            imageComposer.Height = (uint)picImage.Height;
         }
 
         protected void OnGridObjectsSelectionChanged(object sender, EventArgs e)
@@ -82,7 +76,7 @@ namespace Meridian59.AdminUI
                 ObjectBase objectBase = (ObjectBase)gridObjects.SelectedRows[0].DataBoundItem;                
                 objectBase.SubOverlays.SyncContext = SynchronizationContext.Current;
 
-                imageComposer.DataSource = objectBase;
+                pictureBox.DataSource = objectBase;
                 gridSubOverlays.DataSource = objectBase.SubOverlays;
                 avAnimation.DataSource = objectBase.Animation;
             }  
@@ -94,11 +88,6 @@ namespace Meridian59.AdminUI
 
             avSubOverlayAnimation.DataSource = 
                 (selectedItem != null) ? selectedItem.Animation : null;
-        }
-
-        protected void OnImageComposerNewImageAvailable(object sender, EventArgs e)
-        {
-            picImage.Image = imageComposer.Image;
         }
     }
 }
