@@ -28,75 +28,49 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle41 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle42 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle43 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle44 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle45 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle46 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle47 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle48 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle49 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle50 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle51 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle52 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle53 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle54 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle30 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle31 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle32 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle33 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle34 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle35 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle36 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle37 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle38 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle39 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle40 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
             this.splitMain1 = new System.Windows.Forms.SplitContainer();
             this.groupRoomObjects = new System.Windows.Forms.GroupBox();
-            this.gridRoomObjects = new Meridian59.AdminUI.Generic.BaseGridView();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitMain2 = new System.Windows.Forms.SplitContainer();
             this.splitSubOverlays = new System.Windows.Forms.SplitContainer();
             this.groupSubOverlays = new System.Windows.Forms.GroupBox();
-            this.gridSubOverlays = new Meridian59.AdminUI.SubOverlayGrid();
             this.groupMotionSubOverlays = new System.Windows.Forms.GroupBox();
-            this.gridMotionSubOverlays = new Meridian59.AdminUI.SubOverlayGrid();
             this.splitAnimationMain = new System.Windows.Forms.SplitContainer();
             this.splitAnimation1 = new System.Windows.Forms.SplitContainer();
             this.groupAnimation = new System.Windows.Forms.GroupBox();
-            this.avAnimation = new Meridian59.AdminUI.AnimationView();
             this.groupMotionAnimation = new System.Windows.Forms.GroupBox();
-            this.avMotionAnimation = new Meridian59.AdminUI.AnimationView();
             this.splitAnimation2 = new System.Windows.Forms.SplitContainer();
             this.groupSubOverlayAnimation = new System.Windows.Forms.GroupBox();
-            this.avSubOverlayAnimation = new Meridian59.AdminUI.AnimationView();
             this.groupMotionSubOverlayAnimation = new System.Windows.Forms.GroupBox();
-            this.avMotionSubOverlayAnimation = new Meridian59.AdminUI.AnimationView();
             this.groupImage = new System.Windows.Forms.GroupBox();
-            this.picImage = new System.Windows.Forms.PictureBox();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gridRoomObjects = new Meridian59.AdminUI.Generic.BaseGridView();
             this.colID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colOverlayRID = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -118,12 +92,37 @@
             this.colViewerAppearanceHash = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colOverlayFile = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gridSubOverlays = new Meridian59.AdminUI.SubOverlayGrid();
+            this.gridMotionSubOverlays = new Meridian59.AdminUI.SubOverlayGrid();
+            this.avAnimation = new Meridian59.AdminUI.AnimationView();
+            this.avMotionAnimation = new Meridian59.AdminUI.AnimationView();
+            this.avSubOverlayAnimation = new Meridian59.AdminUI.AnimationView();
+            this.avMotionSubOverlayAnimation = new Meridian59.AdminUI.AnimationView();
+            this.pictureBox = new Meridian59.AdminUI.Generic.PictureBoxRoomObject();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.splitMain1)).BeginInit();
             this.splitMain1.Panel1.SuspendLayout();
             this.splitMain1.Panel2.SuspendLayout();
             this.splitMain1.SuspendLayout();
             this.groupRoomObjects.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridRoomObjects)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -155,7 +154,7 @@
             this.groupSubOverlayAnimation.SuspendLayout();
             this.groupMotionSubOverlayAnimation.SuspendLayout();
             this.groupImage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picImage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridRoomObjects)).BeginInit();
             this.SuspendLayout();
             // 
             // splitMain1
@@ -187,6 +186,188 @@
             this.groupRoomObjects.TabStop = false;
             this.groupRoomObjects.Text = "RoomObjects";
             // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.splitMain2);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.groupImage);
+            this.splitContainer1.Size = new System.Drawing.Size(1202, 314);
+            this.splitContainer1.SplitterDistance = 687;
+            this.splitContainer1.TabIndex = 2;
+            // 
+            // splitMain2
+            // 
+            this.splitMain2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitMain2.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.splitMain2.IsSplitterFixed = true;
+            this.splitMain2.Location = new System.Drawing.Point(0, 0);
+            this.splitMain2.Name = "splitMain2";
+            this.splitMain2.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitMain2.Panel1
+            // 
+            this.splitMain2.Panel1.Controls.Add(this.splitSubOverlays);
+            // 
+            // splitMain2.Panel2
+            // 
+            this.splitMain2.Panel2.Controls.Add(this.splitAnimationMain);
+            this.splitMain2.Size = new System.Drawing.Size(687, 314);
+            this.splitMain2.SplitterDistance = 222;
+            this.splitMain2.TabIndex = 0;
+            // 
+            // splitSubOverlays
+            // 
+            this.splitSubOverlays.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitSubOverlays.Location = new System.Drawing.Point(0, 0);
+            this.splitSubOverlays.Name = "splitSubOverlays";
+            // 
+            // splitSubOverlays.Panel1
+            // 
+            this.splitSubOverlays.Panel1.Controls.Add(this.groupSubOverlays);
+            // 
+            // splitSubOverlays.Panel2
+            // 
+            this.splitSubOverlays.Panel2.Controls.Add(this.groupMotionSubOverlays);
+            this.splitSubOverlays.Size = new System.Drawing.Size(687, 222);
+            this.splitSubOverlays.SplitterDistance = 340;
+            this.splitSubOverlays.TabIndex = 0;
+            // 
+            // groupSubOverlays
+            // 
+            this.groupSubOverlays.Controls.Add(this.gridSubOverlays);
+            this.groupSubOverlays.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupSubOverlays.Location = new System.Drawing.Point(0, 0);
+            this.groupSubOverlays.Name = "groupSubOverlays";
+            this.groupSubOverlays.Size = new System.Drawing.Size(340, 222);
+            this.groupSubOverlays.TabIndex = 0;
+            this.groupSubOverlays.TabStop = false;
+            this.groupSubOverlays.Text = "SubOverlays";
+            // 
+            // groupMotionSubOverlays
+            // 
+            this.groupMotionSubOverlays.Controls.Add(this.gridMotionSubOverlays);
+            this.groupMotionSubOverlays.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupMotionSubOverlays.Location = new System.Drawing.Point(0, 0);
+            this.groupMotionSubOverlays.Name = "groupMotionSubOverlays";
+            this.groupMotionSubOverlays.Size = new System.Drawing.Size(343, 222);
+            this.groupMotionSubOverlays.TabIndex = 0;
+            this.groupMotionSubOverlays.TabStop = false;
+            this.groupMotionSubOverlays.Text = "MotionSubOverlays";
+            // 
+            // splitAnimationMain
+            // 
+            this.splitAnimationMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitAnimationMain.Location = new System.Drawing.Point(0, 0);
+            this.splitAnimationMain.Name = "splitAnimationMain";
+            // 
+            // splitAnimationMain.Panel1
+            // 
+            this.splitAnimationMain.Panel1.Controls.Add(this.splitAnimation1);
+            // 
+            // splitAnimationMain.Panel2
+            // 
+            this.splitAnimationMain.Panel2.Controls.Add(this.splitAnimation2);
+            this.splitAnimationMain.Size = new System.Drawing.Size(687, 88);
+            this.splitAnimationMain.SplitterDistance = 341;
+            this.splitAnimationMain.TabIndex = 0;
+            // 
+            // splitAnimation1
+            // 
+            this.splitAnimation1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitAnimation1.Location = new System.Drawing.Point(0, 0);
+            this.splitAnimation1.Name = "splitAnimation1";
+            // 
+            // splitAnimation1.Panel1
+            // 
+            this.splitAnimation1.Panel1.Controls.Add(this.groupAnimation);
+            // 
+            // splitAnimation1.Panel2
+            // 
+            this.splitAnimation1.Panel2.Controls.Add(this.groupMotionAnimation);
+            this.splitAnimation1.Size = new System.Drawing.Size(341, 88);
+            this.splitAnimation1.SplitterDistance = 148;
+            this.splitAnimation1.TabIndex = 0;
+            // 
+            // groupAnimation
+            // 
+            this.groupAnimation.Controls.Add(this.avAnimation);
+            this.groupAnimation.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupAnimation.Location = new System.Drawing.Point(0, 0);
+            this.groupAnimation.Name = "groupAnimation";
+            this.groupAnimation.Size = new System.Drawing.Size(148, 88);
+            this.groupAnimation.TabIndex = 0;
+            this.groupAnimation.TabStop = false;
+            this.groupAnimation.Text = "Animation";
+            // 
+            // groupMotionAnimation
+            // 
+            this.groupMotionAnimation.Controls.Add(this.avMotionAnimation);
+            this.groupMotionAnimation.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupMotionAnimation.Location = new System.Drawing.Point(0, 0);
+            this.groupMotionAnimation.Name = "groupMotionAnimation";
+            this.groupMotionAnimation.Size = new System.Drawing.Size(189, 88);
+            this.groupMotionAnimation.TabIndex = 1;
+            this.groupMotionAnimation.TabStop = false;
+            this.groupMotionAnimation.Text = "MotionAnimation";
+            // 
+            // splitAnimation2
+            // 
+            this.splitAnimation2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitAnimation2.Location = new System.Drawing.Point(0, 0);
+            this.splitAnimation2.Name = "splitAnimation2";
+            // 
+            // splitAnimation2.Panel1
+            // 
+            this.splitAnimation2.Panel1.Controls.Add(this.groupSubOverlayAnimation);
+            // 
+            // splitAnimation2.Panel2
+            // 
+            this.splitAnimation2.Panel2.Controls.Add(this.groupMotionSubOverlayAnimation);
+            this.splitAnimation2.Size = new System.Drawing.Size(342, 88);
+            this.splitAnimation2.SplitterDistance = 160;
+            this.splitAnimation2.TabIndex = 0;
+            // 
+            // groupSubOverlayAnimation
+            // 
+            this.groupSubOverlayAnimation.Controls.Add(this.avSubOverlayAnimation);
+            this.groupSubOverlayAnimation.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupSubOverlayAnimation.Location = new System.Drawing.Point(0, 0);
+            this.groupSubOverlayAnimation.Name = "groupSubOverlayAnimation";
+            this.groupSubOverlayAnimation.Size = new System.Drawing.Size(160, 88);
+            this.groupSubOverlayAnimation.TabIndex = 2;
+            this.groupSubOverlayAnimation.TabStop = false;
+            this.groupSubOverlayAnimation.Text = "SubOverlayAnimation";
+            // 
+            // groupMotionSubOverlayAnimation
+            // 
+            this.groupMotionSubOverlayAnimation.Controls.Add(this.avMotionSubOverlayAnimation);
+            this.groupMotionSubOverlayAnimation.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupMotionSubOverlayAnimation.Location = new System.Drawing.Point(0, 0);
+            this.groupMotionSubOverlayAnimation.Name = "groupMotionSubOverlayAnimation";
+            this.groupMotionSubOverlayAnimation.Size = new System.Drawing.Size(178, 88);
+            this.groupMotionSubOverlayAnimation.TabIndex = 3;
+            this.groupMotionSubOverlayAnimation.TabStop = false;
+            this.groupMotionSubOverlayAnimation.Text = "MotionSubOverlayAnimation";
+            // 
+            // groupImage
+            // 
+            this.groupImage.Controls.Add(this.pictureBox);
+            this.groupImage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupImage.Location = new System.Drawing.Point(0, 0);
+            this.groupImage.Name = "groupImage";
+            this.groupImage.Size = new System.Drawing.Size(511, 314);
+            this.groupImage.TabIndex = 0;
+            this.groupImage.TabStop = false;
+            this.groupImage.Text = "Image";
+            // 
             // gridRoomObjects
             // 
             this.gridRoomObjects.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -217,406 +398,6 @@
             this.gridRoomObjects.Size = new System.Drawing.Size(1196, 263);
             this.gridRoomObjects.TabIndex = 0;
             this.gridRoomObjects.SelectionChanged += new System.EventHandler(this.gridRoomObjects_SelectionChanged);
-            // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Name = "splitContainer1";
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.splitMain2);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.groupImage);
-            this.splitContainer1.Size = new System.Drawing.Size(1202, 314);
-            this.splitContainer1.SplitterDistance = 856;
-            this.splitContainer1.TabIndex = 2;
-            // 
-            // splitMain2
-            // 
-            this.splitMain2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitMain2.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-            this.splitMain2.IsSplitterFixed = true;
-            this.splitMain2.Location = new System.Drawing.Point(0, 0);
-            this.splitMain2.Name = "splitMain2";
-            this.splitMain2.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitMain2.Panel1
-            // 
-            this.splitMain2.Panel1.Controls.Add(this.splitSubOverlays);
-            // 
-            // splitMain2.Panel2
-            // 
-            this.splitMain2.Panel2.Controls.Add(this.splitAnimationMain);
-            this.splitMain2.Size = new System.Drawing.Size(856, 314);
-            this.splitMain2.SplitterDistance = 222;
-            this.splitMain2.TabIndex = 0;
-            // 
-            // splitSubOverlays
-            // 
-            this.splitSubOverlays.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitSubOverlays.Location = new System.Drawing.Point(0, 0);
-            this.splitSubOverlays.Name = "splitSubOverlays";
-            // 
-            // splitSubOverlays.Panel1
-            // 
-            this.splitSubOverlays.Panel1.Controls.Add(this.groupSubOverlays);
-            // 
-            // splitSubOverlays.Panel2
-            // 
-            this.splitSubOverlays.Panel2.Controls.Add(this.groupMotionSubOverlays);
-            this.splitSubOverlays.Size = new System.Drawing.Size(856, 222);
-            this.splitSubOverlays.SplitterDistance = 426;
-            this.splitSubOverlays.TabIndex = 0;
-            // 
-            // groupSubOverlays
-            // 
-            this.groupSubOverlays.Controls.Add(this.gridSubOverlays);
-            this.groupSubOverlays.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupSubOverlays.Location = new System.Drawing.Point(0, 0);
-            this.groupSubOverlays.Name = "groupSubOverlays";
-            this.groupSubOverlays.Size = new System.Drawing.Size(426, 222);
-            this.groupSubOverlays.TabIndex = 0;
-            this.groupSubOverlays.TabStop = false;
-            this.groupSubOverlays.Text = "SubOverlays";
-            // 
-            // gridSubOverlays
-            // 
-            this.gridSubOverlays.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridSubOverlays.Location = new System.Drawing.Point(3, 16);
-            this.gridSubOverlays.Name = "gridSubOverlays";
-            this.gridSubOverlays.Size = new System.Drawing.Size(420, 203);
-            this.gridSubOverlays.TabIndex = 0;
-            this.gridSubOverlays.SelectionChanged += new System.EventHandler(this.OnGridSubOverlaysSelectionChanged);
-            // 
-            // groupMotionSubOverlays
-            // 
-            this.groupMotionSubOverlays.Controls.Add(this.gridMotionSubOverlays);
-            this.groupMotionSubOverlays.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupMotionSubOverlays.Location = new System.Drawing.Point(0, 0);
-            this.groupMotionSubOverlays.Name = "groupMotionSubOverlays";
-            this.groupMotionSubOverlays.Size = new System.Drawing.Size(426, 222);
-            this.groupMotionSubOverlays.TabIndex = 0;
-            this.groupMotionSubOverlays.TabStop = false;
-            this.groupMotionSubOverlays.Text = "MotionSubOverlays";
-            // 
-            // gridMotionSubOverlays
-            // 
-            this.gridMotionSubOverlays.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridMotionSubOverlays.Location = new System.Drawing.Point(3, 16);
-            this.gridMotionSubOverlays.Name = "gridMotionSubOverlays";
-            this.gridMotionSubOverlays.Size = new System.Drawing.Size(420, 203);
-            this.gridMotionSubOverlays.TabIndex = 0;
-            this.gridMotionSubOverlays.SelectionChanged += new System.EventHandler(this.OnGridMotionSubOverlaysSelectionChanged);
-            // 
-            // splitAnimationMain
-            // 
-            this.splitAnimationMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitAnimationMain.Location = new System.Drawing.Point(0, 0);
-            this.splitAnimationMain.Name = "splitAnimationMain";
-            // 
-            // splitAnimationMain.Panel1
-            // 
-            this.splitAnimationMain.Panel1.Controls.Add(this.splitAnimation1);
-            // 
-            // splitAnimationMain.Panel2
-            // 
-            this.splitAnimationMain.Panel2.Controls.Add(this.splitAnimation2);
-            this.splitAnimationMain.Size = new System.Drawing.Size(856, 88);
-            this.splitAnimationMain.SplitterDistance = 426;
-            this.splitAnimationMain.TabIndex = 0;
-            // 
-            // splitAnimation1
-            // 
-            this.splitAnimation1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitAnimation1.Location = new System.Drawing.Point(0, 0);
-            this.splitAnimation1.Name = "splitAnimation1";
-            // 
-            // splitAnimation1.Panel1
-            // 
-            this.splitAnimation1.Panel1.Controls.Add(this.groupAnimation);
-            // 
-            // splitAnimation1.Panel2
-            // 
-            this.splitAnimation1.Panel2.Controls.Add(this.groupMotionAnimation);
-            this.splitAnimation1.Size = new System.Drawing.Size(426, 88);
-            this.splitAnimation1.SplitterDistance = 186;
-            this.splitAnimation1.TabIndex = 0;
-            // 
-            // groupAnimation
-            // 
-            this.groupAnimation.Controls.Add(this.avAnimation);
-            this.groupAnimation.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupAnimation.Location = new System.Drawing.Point(0, 0);
-            this.groupAnimation.Name = "groupAnimation";
-            this.groupAnimation.Size = new System.Drawing.Size(186, 88);
-            this.groupAnimation.TabIndex = 0;
-            this.groupAnimation.TabStop = false;
-            this.groupAnimation.Text = "Animation";
-            // 
-            // avAnimation
-            // 
-            this.avAnimation.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.avAnimation.Location = new System.Drawing.Point(3, 16);
-            this.avAnimation.Name = "avAnimation";
-            this.avAnimation.Size = new System.Drawing.Size(180, 69);
-            this.avAnimation.TabIndex = 0;
-            // 
-            // groupMotionAnimation
-            // 
-            this.groupMotionAnimation.Controls.Add(this.avMotionAnimation);
-            this.groupMotionAnimation.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupMotionAnimation.Location = new System.Drawing.Point(0, 0);
-            this.groupMotionAnimation.Name = "groupMotionAnimation";
-            this.groupMotionAnimation.Size = new System.Drawing.Size(236, 88);
-            this.groupMotionAnimation.TabIndex = 1;
-            this.groupMotionAnimation.TabStop = false;
-            this.groupMotionAnimation.Text = "MotionAnimation";
-            // 
-            // avMotionAnimation
-            // 
-            this.avMotionAnimation.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.avMotionAnimation.Location = new System.Drawing.Point(3, 16);
-            this.avMotionAnimation.Name = "avMotionAnimation";
-            this.avMotionAnimation.Size = new System.Drawing.Size(230, 69);
-            this.avMotionAnimation.TabIndex = 1;
-            // 
-            // splitAnimation2
-            // 
-            this.splitAnimation2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitAnimation2.Location = new System.Drawing.Point(0, 0);
-            this.splitAnimation2.Name = "splitAnimation2";
-            // 
-            // splitAnimation2.Panel1
-            // 
-            this.splitAnimation2.Panel1.Controls.Add(this.groupSubOverlayAnimation);
-            // 
-            // splitAnimation2.Panel2
-            // 
-            this.splitAnimation2.Panel2.Controls.Add(this.groupMotionSubOverlayAnimation);
-            this.splitAnimation2.Size = new System.Drawing.Size(426, 88);
-            this.splitAnimation2.SplitterDistance = 201;
-            this.splitAnimation2.TabIndex = 0;
-            // 
-            // groupSubOverlayAnimation
-            // 
-            this.groupSubOverlayAnimation.Controls.Add(this.avSubOverlayAnimation);
-            this.groupSubOverlayAnimation.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupSubOverlayAnimation.Location = new System.Drawing.Point(0, 0);
-            this.groupSubOverlayAnimation.Name = "groupSubOverlayAnimation";
-            this.groupSubOverlayAnimation.Size = new System.Drawing.Size(201, 88);
-            this.groupSubOverlayAnimation.TabIndex = 2;
-            this.groupSubOverlayAnimation.TabStop = false;
-            this.groupSubOverlayAnimation.Text = "SubOverlayAnimation";
-            // 
-            // avSubOverlayAnimation
-            // 
-            this.avSubOverlayAnimation.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.avSubOverlayAnimation.Location = new System.Drawing.Point(3, 16);
-            this.avSubOverlayAnimation.Name = "avSubOverlayAnimation";
-            this.avSubOverlayAnimation.Size = new System.Drawing.Size(195, 69);
-            this.avSubOverlayAnimation.TabIndex = 2;
-            // 
-            // groupMotionSubOverlayAnimation
-            // 
-            this.groupMotionSubOverlayAnimation.Controls.Add(this.avMotionSubOverlayAnimation);
-            this.groupMotionSubOverlayAnimation.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupMotionSubOverlayAnimation.Location = new System.Drawing.Point(0, 0);
-            this.groupMotionSubOverlayAnimation.Name = "groupMotionSubOverlayAnimation";
-            this.groupMotionSubOverlayAnimation.Size = new System.Drawing.Size(221, 88);
-            this.groupMotionSubOverlayAnimation.TabIndex = 3;
-            this.groupMotionSubOverlayAnimation.TabStop = false;
-            this.groupMotionSubOverlayAnimation.Text = "MotionSubOverlayAnimation";
-            // 
-            // avMotionSubOverlayAnimation
-            // 
-            this.avMotionSubOverlayAnimation.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.avMotionSubOverlayAnimation.Location = new System.Drawing.Point(3, 16);
-            this.avMotionSubOverlayAnimation.Name = "avMotionSubOverlayAnimation";
-            this.avMotionSubOverlayAnimation.Size = new System.Drawing.Size(215, 69);
-            this.avMotionSubOverlayAnimation.TabIndex = 3;
-            // 
-            // groupImage
-            // 
-            this.groupImage.Controls.Add(this.picImage);
-            this.groupImage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupImage.Location = new System.Drawing.Point(0, 0);
-            this.groupImage.Name = "groupImage";
-            this.groupImage.Size = new System.Drawing.Size(342, 314);
-            this.groupImage.TabIndex = 0;
-            this.groupImage.TabStop = false;
-            this.groupImage.Text = "Image";
-            // 
-            // picImage
-            // 
-            this.picImage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.picImage.Location = new System.Drawing.Point(3, 16);
-            this.picImage.Name = "picImage";
-            this.picImage.Size = new System.Drawing.Size(336, 295);
-            this.picImage.TabIndex = 0;
-            this.picImage.TabStop = false;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn1.HeaderText = "ID";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.Width = 60;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn2.HeaderText = "COUNT";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.Width = 60;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn3.HeaderText = "OVRID";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.Width = 60;
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            this.dataGridViewTextBoxColumn4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn4.HeaderText = "NRID";
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            this.dataGridViewTextBoxColumn4.Width = 60;
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            this.dataGridViewTextBoxColumn5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn5.HeaderText = "FLAGS";
-            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            this.dataGridViewTextBoxColumn5.Width = 50;
-            // 
-            // dataGridViewTextBoxColumn6
-            // 
-            this.dataGridViewTextBoxColumn6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle41.BackColor = System.Drawing.Color.PaleGoldenrod;
-            this.dataGridViewTextBoxColumn6.DefaultCellStyle = dataGridViewCellStyle41;
-            this.dataGridViewTextBoxColumn6.HeaderText = "LF";
-            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
-            this.dataGridViewTextBoxColumn6.Width = 35;
-            // 
-            // dataGridViewTextBoxColumn7
-            // 
-            this.dataGridViewTextBoxColumn7.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle42.BackColor = System.Drawing.Color.PaleGoldenrod;
-            this.dataGridViewTextBoxColumn7.DefaultCellStyle = dataGridViewCellStyle42;
-            this.dataGridViewTextBoxColumn7.HeaderText = "LI";
-            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
-            this.dataGridViewTextBoxColumn7.Width = 35;
-            // 
-            // dataGridViewTextBoxColumn8
-            // 
-            this.dataGridViewTextBoxColumn8.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle43.BackColor = System.Drawing.Color.PaleGoldenrod;
-            this.dataGridViewTextBoxColumn8.DefaultCellStyle = dataGridViewCellStyle43;
-            this.dataGridViewTextBoxColumn8.HeaderText = "LC";
-            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
-            this.dataGridViewTextBoxColumn8.Width = 50;
-            // 
-            // dataGridViewTextBoxColumn9
-            // 
-            this.dataGridViewTextBoxColumn9.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle44.BackColor = System.Drawing.Color.Thistle;
-            this.dataGridViewTextBoxColumn9.DefaultCellStyle = dataGridViewCellStyle44;
-            this.dataGridViewTextBoxColumn9.HeaderText = "CT";
-            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
-            this.dataGridViewTextBoxColumn9.Width = 35;
-            // 
-            // dataGridViewTextBoxColumn10
-            // 
-            this.dataGridViewTextBoxColumn10.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle45.BackColor = System.Drawing.Color.Thistle;
-            this.dataGridViewTextBoxColumn10.DefaultCellStyle = dataGridViewCellStyle45;
-            this.dataGridViewTextBoxColumn10.HeaderText = "E";
-            this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
-            this.dataGridViewTextBoxColumn10.Width = 35;
-            // 
-            // dataGridViewTextBoxColumn11
-            // 
-            this.dataGridViewTextBoxColumn11.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle46.BackColor = System.Drawing.Color.Thistle;
-            this.dataGridViewTextBoxColumn11.DefaultCellStyle = dataGridViewCellStyle46;
-            this.dataGridViewTextBoxColumn11.HeaderText = "ANIM";
-            this.dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
-            this.dataGridViewTextBoxColumn11.Width = 60;
-            // 
-            // dataGridViewTextBoxColumn12
-            // 
-            this.dataGridViewTextBoxColumn12.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle47.BackColor = System.Drawing.Color.Silver;
-            this.dataGridViewTextBoxColumn12.DefaultCellStyle = dataGridViewCellStyle47;
-            this.dataGridViewTextBoxColumn12.HeaderText = "X";
-            this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
-            this.dataGridViewTextBoxColumn12.Width = 40;
-            // 
-            // dataGridViewTextBoxColumn13
-            // 
-            this.dataGridViewTextBoxColumn13.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle48.BackColor = System.Drawing.Color.Silver;
-            this.dataGridViewTextBoxColumn13.DefaultCellStyle = dataGridViewCellStyle48;
-            this.dataGridViewTextBoxColumn13.HeaderText = "Y";
-            this.dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
-            this.dataGridViewTextBoxColumn13.Width = 40;
-            // 
-            // dataGridViewTextBoxColumn14
-            // 
-            this.dataGridViewTextBoxColumn14.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle49.BackColor = System.Drawing.Color.Silver;
-            this.dataGridViewTextBoxColumn14.DefaultCellStyle = dataGridViewCellStyle49;
-            this.dataGridViewTextBoxColumn14.HeaderText = "ANGLE";
-            this.dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
-            this.dataGridViewTextBoxColumn14.Width = 50;
-            // 
-            // dataGridViewTextBoxColumn15
-            // 
-            this.dataGridViewTextBoxColumn15.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle50.BackColor = System.Drawing.Color.LightSalmon;
-            this.dataGridViewTextBoxColumn15.DefaultCellStyle = dataGridViewCellStyle50;
-            this.dataGridViewTextBoxColumn15.HeaderText = "MCT";
-            this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
-            this.dataGridViewTextBoxColumn15.Width = 35;
-            // 
-            // dataGridViewTextBoxColumn16
-            // 
-            this.dataGridViewTextBoxColumn16.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle51.BackColor = System.Drawing.Color.LightSalmon;
-            this.dataGridViewTextBoxColumn16.DefaultCellStyle = dataGridViewCellStyle51;
-            this.dataGridViewTextBoxColumn16.HeaderText = "ME";
-            this.dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
-            this.dataGridViewTextBoxColumn16.Width = 35;
-            // 
-            // dataGridViewTextBoxColumn17
-            // 
-            this.dataGridViewTextBoxColumn17.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle52.BackColor = System.Drawing.Color.LightSalmon;
-            this.dataGridViewTextBoxColumn17.DefaultCellStyle = dataGridViewCellStyle52;
-            this.dataGridViewTextBoxColumn17.HeaderText = "MANIM";
-            this.dataGridViewTextBoxColumn17.Name = "dataGridViewTextBoxColumn17";
-            this.dataGridViewTextBoxColumn17.Width = 60;
-            // 
-            // dataGridViewTextBoxColumn18
-            // 
-            this.dataGridViewTextBoxColumn18.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle53.BackColor = System.Drawing.Color.Wheat;
-            this.dataGridViewTextBoxColumn18.DefaultCellStyle = dataGridViewCellStyle53;
-            this.dataGridViewTextBoxColumn18.HeaderText = "NAME";
-            this.dataGridViewTextBoxColumn18.Name = "dataGridViewTextBoxColumn18";
-            // 
-            // dataGridViewTextBoxColumn19
-            // 
-            this.dataGridViewTextBoxColumn19.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle54.BackColor = System.Drawing.Color.Wheat;
-            this.dataGridViewTextBoxColumn19.DefaultCellStyle = dataGridViewCellStyle54;
-            this.dataGridViewTextBoxColumn19.HeaderText = "OVNAME";
-            this.dataGridViewTextBoxColumn19.Name = "dataGridViewTextBoxColumn19";
             // 
             // colID
             // 
@@ -667,8 +448,8 @@
             // 
             this.colLightFlags.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colLightFlags.DataPropertyName = "LightFlags";
-            dataGridViewCellStyle28.BackColor = System.Drawing.Color.PaleGoldenrod;
-            this.colLightFlags.DefaultCellStyle = dataGridViewCellStyle28;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.PaleGoldenrod;
+            this.colLightFlags.DefaultCellStyle = dataGridViewCellStyle1;
             this.colLightFlags.HeaderText = "LF";
             this.colLightFlags.Name = "colLightFlags";
             this.colLightFlags.ReadOnly = true;
@@ -678,8 +459,8 @@
             // 
             this.colLightIntensity.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colLightIntensity.DataPropertyName = "LightIntensity";
-            dataGridViewCellStyle29.BackColor = System.Drawing.Color.PaleGoldenrod;
-            this.colLightIntensity.DefaultCellStyle = dataGridViewCellStyle29;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.PaleGoldenrod;
+            this.colLightIntensity.DefaultCellStyle = dataGridViewCellStyle2;
             this.colLightIntensity.HeaderText = "LI";
             this.colLightIntensity.Name = "colLightIntensity";
             this.colLightIntensity.ReadOnly = true;
@@ -689,8 +470,8 @@
             // 
             this.LightColor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.LightColor.DataPropertyName = "LightColor";
-            dataGridViewCellStyle30.BackColor = System.Drawing.Color.PaleGoldenrod;
-            this.LightColor.DefaultCellStyle = dataGridViewCellStyle30;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.PaleGoldenrod;
+            this.LightColor.DefaultCellStyle = dataGridViewCellStyle3;
             this.LightColor.HeaderText = "LC";
             this.LightColor.Name = "LightColor";
             this.LightColor.ReadOnly = true;
@@ -700,8 +481,8 @@
             // 
             this.colColorTranslation.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colColorTranslation.DataPropertyName = "ColorTranslation";
-            dataGridViewCellStyle31.BackColor = System.Drawing.Color.Thistle;
-            this.colColorTranslation.DefaultCellStyle = dataGridViewCellStyle31;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.Thistle;
+            this.colColorTranslation.DefaultCellStyle = dataGridViewCellStyle4;
             this.colColorTranslation.HeaderText = "CT";
             this.colColorTranslation.Name = "colColorTranslation";
             this.colColorTranslation.ReadOnly = true;
@@ -711,8 +492,8 @@
             // 
             this.colEffect.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colEffect.DataPropertyName = "Effect";
-            dataGridViewCellStyle32.BackColor = System.Drawing.Color.Thistle;
-            this.colEffect.DefaultCellStyle = dataGridViewCellStyle32;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.Thistle;
+            this.colEffect.DefaultCellStyle = dataGridViewCellStyle5;
             this.colEffect.HeaderText = "E";
             this.colEffect.Name = "colEffect";
             this.colEffect.ReadOnly = true;
@@ -722,8 +503,8 @@
             // 
             this.colAnimation.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colAnimation.DataPropertyName = "Animation";
-            dataGridViewCellStyle33.BackColor = System.Drawing.Color.Thistle;
-            this.colAnimation.DefaultCellStyle = dataGridViewCellStyle33;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.Thistle;
+            this.colAnimation.DefaultCellStyle = dataGridViewCellStyle6;
             this.colAnimation.HeaderText = "ANIM";
             this.colAnimation.Name = "colAnimation";
             this.colAnimation.ReadOnly = true;
@@ -733,8 +514,8 @@
             // 
             this.colPosition3D.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colPosition3D.DataPropertyName = "Position3D";
-            dataGridViewCellStyle34.BackColor = System.Drawing.Color.Silver;
-            this.colPosition3D.DefaultCellStyle = dataGridViewCellStyle34;
+            dataGridViewCellStyle7.BackColor = System.Drawing.Color.Silver;
+            this.colPosition3D.DefaultCellStyle = dataGridViewCellStyle7;
             this.colPosition3D.HeaderText = "POS";
             this.colPosition3D.Name = "colPosition3D";
             this.colPosition3D.ReadOnly = true;
@@ -743,8 +524,8 @@
             // 
             this.colAngle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colAngle.DataPropertyName = "Angle";
-            dataGridViewCellStyle35.BackColor = System.Drawing.Color.Silver;
-            this.colAngle.DefaultCellStyle = dataGridViewCellStyle35;
+            dataGridViewCellStyle8.BackColor = System.Drawing.Color.Silver;
+            this.colAngle.DefaultCellStyle = dataGridViewCellStyle8;
             this.colAngle.HeaderText = "ANGLE";
             this.colAngle.Name = "colAngle";
             this.colAngle.ReadOnly = true;
@@ -754,8 +535,8 @@
             // 
             this.colMotionColorTranslation.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colMotionColorTranslation.DataPropertyName = "MotionColorTranslation";
-            dataGridViewCellStyle36.BackColor = System.Drawing.Color.LightSalmon;
-            this.colMotionColorTranslation.DefaultCellStyle = dataGridViewCellStyle36;
+            dataGridViewCellStyle9.BackColor = System.Drawing.Color.LightSalmon;
+            this.colMotionColorTranslation.DefaultCellStyle = dataGridViewCellStyle9;
             this.colMotionColorTranslation.HeaderText = "MCT";
             this.colMotionColorTranslation.Name = "colMotionColorTranslation";
             this.colMotionColorTranslation.ReadOnly = true;
@@ -765,8 +546,8 @@
             // 
             this.colMotionEffect.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colMotionEffect.DataPropertyName = "MotionEffect";
-            dataGridViewCellStyle37.BackColor = System.Drawing.Color.LightSalmon;
-            this.colMotionEffect.DefaultCellStyle = dataGridViewCellStyle37;
+            dataGridViewCellStyle10.BackColor = System.Drawing.Color.LightSalmon;
+            this.colMotionEffect.DefaultCellStyle = dataGridViewCellStyle10;
             this.colMotionEffect.HeaderText = "ME";
             this.colMotionEffect.Name = "colMotionEffect";
             this.colMotionEffect.ReadOnly = true;
@@ -776,8 +557,8 @@
             // 
             this.colMotionAnimation.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colMotionAnimation.DataPropertyName = "MotionAnimation";
-            dataGridViewCellStyle38.BackColor = System.Drawing.Color.LightSalmon;
-            this.colMotionAnimation.DefaultCellStyle = dataGridViewCellStyle38;
+            dataGridViewCellStyle11.BackColor = System.Drawing.Color.LightSalmon;
+            this.colMotionAnimation.DefaultCellStyle = dataGridViewCellStyle11;
             this.colMotionAnimation.HeaderText = "MANIM";
             this.colMotionAnimation.Name = "colMotionAnimation";
             this.colMotionAnimation.ReadOnly = true;
@@ -814,8 +595,8 @@
             // 
             this.colName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colName.DataPropertyName = "Name";
-            dataGridViewCellStyle39.BackColor = System.Drawing.Color.Wheat;
-            this.colName.DefaultCellStyle = dataGridViewCellStyle39;
+            dataGridViewCellStyle12.BackColor = System.Drawing.Color.Wheat;
+            this.colName.DefaultCellStyle = dataGridViewCellStyle12;
             this.colName.HeaderText = "NAME";
             this.colName.Name = "colName";
             this.colName.ReadOnly = true;
@@ -824,11 +605,228 @@
             // 
             this.colOverlayFile.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colOverlayFile.DataPropertyName = "OverlayFile";
-            dataGridViewCellStyle40.BackColor = System.Drawing.Color.Wheat;
-            this.colOverlayFile.DefaultCellStyle = dataGridViewCellStyle40;
+            dataGridViewCellStyle13.BackColor = System.Drawing.Color.Wheat;
+            this.colOverlayFile.DefaultCellStyle = dataGridViewCellStyle13;
             this.colOverlayFile.HeaderText = "OVFILE";
             this.colOverlayFile.Name = "colOverlayFile";
             this.colOverlayFile.ReadOnly = true;
+            // 
+            // gridSubOverlays
+            // 
+            this.gridSubOverlays.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridSubOverlays.Location = new System.Drawing.Point(3, 16);
+            this.gridSubOverlays.Name = "gridSubOverlays";
+            this.gridSubOverlays.Size = new System.Drawing.Size(334, 203);
+            this.gridSubOverlays.TabIndex = 0;
+            this.gridSubOverlays.SelectionChanged += new System.EventHandler(this.OnGridSubOverlaysSelectionChanged);
+            // 
+            // gridMotionSubOverlays
+            // 
+            this.gridMotionSubOverlays.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridMotionSubOverlays.Location = new System.Drawing.Point(3, 16);
+            this.gridMotionSubOverlays.Name = "gridMotionSubOverlays";
+            this.gridMotionSubOverlays.Size = new System.Drawing.Size(337, 203);
+            this.gridMotionSubOverlays.TabIndex = 0;
+            this.gridMotionSubOverlays.SelectionChanged += new System.EventHandler(this.OnGridMotionSubOverlaysSelectionChanged);
+            // 
+            // avAnimation
+            // 
+            this.avAnimation.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.avAnimation.Location = new System.Drawing.Point(3, 16);
+            this.avAnimation.Name = "avAnimation";
+            this.avAnimation.Size = new System.Drawing.Size(142, 69);
+            this.avAnimation.TabIndex = 0;
+            // 
+            // avMotionAnimation
+            // 
+            this.avMotionAnimation.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.avMotionAnimation.Location = new System.Drawing.Point(3, 16);
+            this.avMotionAnimation.Name = "avMotionAnimation";
+            this.avMotionAnimation.Size = new System.Drawing.Size(183, 69);
+            this.avMotionAnimation.TabIndex = 1;
+            // 
+            // avSubOverlayAnimation
+            // 
+            this.avSubOverlayAnimation.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.avSubOverlayAnimation.Location = new System.Drawing.Point(3, 16);
+            this.avSubOverlayAnimation.Name = "avSubOverlayAnimation";
+            this.avSubOverlayAnimation.Size = new System.Drawing.Size(154, 69);
+            this.avSubOverlayAnimation.TabIndex = 2;
+            // 
+            // avMotionSubOverlayAnimation
+            // 
+            this.avMotionSubOverlayAnimation.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.avMotionSubOverlayAnimation.Location = new System.Drawing.Point(3, 16);
+            this.avMotionSubOverlayAnimation.Name = "avMotionSubOverlayAnimation";
+            this.avMotionSubOverlayAnimation.Size = new System.Drawing.Size(172, 69);
+            this.avMotionSubOverlayAnimation.TabIndex = 3;
+            // 
+            // pictureBox
+            // 
+            this.pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox.Location = new System.Drawing.Point(3, 16);
+            this.pictureBox.Name = "pictureBox";
+            this.pictureBox.Size = new System.Drawing.Size(505, 295);
+            this.pictureBox.TabIndex = 0;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.dataGridViewTextBoxColumn1.HeaderText = "ID";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.Width = 60;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.dataGridViewTextBoxColumn2.HeaderText = "COUNT";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.Width = 60;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.dataGridViewTextBoxColumn3.HeaderText = "OVRID";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.Width = 60;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.dataGridViewTextBoxColumn4.HeaderText = "NRID";
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            this.dataGridViewTextBoxColumn4.Width = 60;
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.dataGridViewTextBoxColumn5.HeaderText = "FLAGS";
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            this.dataGridViewTextBoxColumn5.Width = 50;
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            this.dataGridViewTextBoxColumn6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle14.BackColor = System.Drawing.Color.PaleGoldenrod;
+            this.dataGridViewTextBoxColumn6.DefaultCellStyle = dataGridViewCellStyle14;
+            this.dataGridViewTextBoxColumn6.HeaderText = "LF";
+            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            this.dataGridViewTextBoxColumn6.Width = 35;
+            // 
+            // dataGridViewTextBoxColumn7
+            // 
+            this.dataGridViewTextBoxColumn7.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle15.BackColor = System.Drawing.Color.PaleGoldenrod;
+            this.dataGridViewTextBoxColumn7.DefaultCellStyle = dataGridViewCellStyle15;
+            this.dataGridViewTextBoxColumn7.HeaderText = "LI";
+            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
+            this.dataGridViewTextBoxColumn7.Width = 35;
+            // 
+            // dataGridViewTextBoxColumn8
+            // 
+            this.dataGridViewTextBoxColumn8.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle16.BackColor = System.Drawing.Color.PaleGoldenrod;
+            this.dataGridViewTextBoxColumn8.DefaultCellStyle = dataGridViewCellStyle16;
+            this.dataGridViewTextBoxColumn8.HeaderText = "LC";
+            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
+            this.dataGridViewTextBoxColumn8.Width = 50;
+            // 
+            // dataGridViewTextBoxColumn9
+            // 
+            this.dataGridViewTextBoxColumn9.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle17.BackColor = System.Drawing.Color.Thistle;
+            this.dataGridViewTextBoxColumn9.DefaultCellStyle = dataGridViewCellStyle17;
+            this.dataGridViewTextBoxColumn9.HeaderText = "CT";
+            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
+            this.dataGridViewTextBoxColumn9.Width = 35;
+            // 
+            // dataGridViewTextBoxColumn10
+            // 
+            this.dataGridViewTextBoxColumn10.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle18.BackColor = System.Drawing.Color.Thistle;
+            this.dataGridViewTextBoxColumn10.DefaultCellStyle = dataGridViewCellStyle18;
+            this.dataGridViewTextBoxColumn10.HeaderText = "E";
+            this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
+            this.dataGridViewTextBoxColumn10.Width = 35;
+            // 
+            // dataGridViewTextBoxColumn11
+            // 
+            this.dataGridViewTextBoxColumn11.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle19.BackColor = System.Drawing.Color.Thistle;
+            this.dataGridViewTextBoxColumn11.DefaultCellStyle = dataGridViewCellStyle19;
+            this.dataGridViewTextBoxColumn11.HeaderText = "ANIM";
+            this.dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
+            this.dataGridViewTextBoxColumn11.Width = 60;
+            // 
+            // dataGridViewTextBoxColumn12
+            // 
+            this.dataGridViewTextBoxColumn12.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle20.BackColor = System.Drawing.Color.Silver;
+            this.dataGridViewTextBoxColumn12.DefaultCellStyle = dataGridViewCellStyle20;
+            this.dataGridViewTextBoxColumn12.HeaderText = "X";
+            this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
+            this.dataGridViewTextBoxColumn12.Width = 40;
+            // 
+            // dataGridViewTextBoxColumn13
+            // 
+            this.dataGridViewTextBoxColumn13.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle21.BackColor = System.Drawing.Color.Silver;
+            this.dataGridViewTextBoxColumn13.DefaultCellStyle = dataGridViewCellStyle21;
+            this.dataGridViewTextBoxColumn13.HeaderText = "Y";
+            this.dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
+            this.dataGridViewTextBoxColumn13.Width = 40;
+            // 
+            // dataGridViewTextBoxColumn14
+            // 
+            this.dataGridViewTextBoxColumn14.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle22.BackColor = System.Drawing.Color.Silver;
+            this.dataGridViewTextBoxColumn14.DefaultCellStyle = dataGridViewCellStyle22;
+            this.dataGridViewTextBoxColumn14.HeaderText = "ANGLE";
+            this.dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
+            this.dataGridViewTextBoxColumn14.Width = 50;
+            // 
+            // dataGridViewTextBoxColumn15
+            // 
+            this.dataGridViewTextBoxColumn15.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle23.BackColor = System.Drawing.Color.LightSalmon;
+            this.dataGridViewTextBoxColumn15.DefaultCellStyle = dataGridViewCellStyle23;
+            this.dataGridViewTextBoxColumn15.HeaderText = "MCT";
+            this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
+            this.dataGridViewTextBoxColumn15.Width = 35;
+            // 
+            // dataGridViewTextBoxColumn16
+            // 
+            this.dataGridViewTextBoxColumn16.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle24.BackColor = System.Drawing.Color.LightSalmon;
+            this.dataGridViewTextBoxColumn16.DefaultCellStyle = dataGridViewCellStyle24;
+            this.dataGridViewTextBoxColumn16.HeaderText = "ME";
+            this.dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
+            this.dataGridViewTextBoxColumn16.Width = 35;
+            // 
+            // dataGridViewTextBoxColumn17
+            // 
+            this.dataGridViewTextBoxColumn17.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle25.BackColor = System.Drawing.Color.LightSalmon;
+            this.dataGridViewTextBoxColumn17.DefaultCellStyle = dataGridViewCellStyle25;
+            this.dataGridViewTextBoxColumn17.HeaderText = "MANIM";
+            this.dataGridViewTextBoxColumn17.Name = "dataGridViewTextBoxColumn17";
+            this.dataGridViewTextBoxColumn17.Width = 60;
+            // 
+            // dataGridViewTextBoxColumn18
+            // 
+            this.dataGridViewTextBoxColumn18.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle26.BackColor = System.Drawing.Color.Wheat;
+            this.dataGridViewTextBoxColumn18.DefaultCellStyle = dataGridViewCellStyle26;
+            this.dataGridViewTextBoxColumn18.HeaderText = "NAME";
+            this.dataGridViewTextBoxColumn18.Name = "dataGridViewTextBoxColumn18";
+            // 
+            // dataGridViewTextBoxColumn19
+            // 
+            this.dataGridViewTextBoxColumn19.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle27.BackColor = System.Drawing.Color.Wheat;
+            this.dataGridViewTextBoxColumn19.DefaultCellStyle = dataGridViewCellStyle27;
+            this.dataGridViewTextBoxColumn19.HeaderText = "OVNAME";
+            this.dataGridViewTextBoxColumn19.Name = "dataGridViewTextBoxColumn19";
             // 
             // RoomObjectsView
             // 
@@ -842,7 +840,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitMain1)).EndInit();
             this.splitMain1.ResumeLayout(false);
             this.groupRoomObjects.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.gridRoomObjects)).EndInit();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -874,7 +871,7 @@
             this.groupSubOverlayAnimation.ResumeLayout(false);
             this.groupMotionSubOverlayAnimation.ResumeLayout(false);
             this.groupImage.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.picImage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridRoomObjects)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -922,7 +919,6 @@
         private Meridian59.AdminUI.Generic.BaseGridView gridRoomObjects;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.GroupBox groupImage;
-        private System.Windows.Forms.PictureBox picImage;
         private System.Windows.Forms.DataGridViewTextBoxColumn colID;
         private System.Windows.Forms.DataGridViewTextBoxColumn colCount;
         private System.Windows.Forms.DataGridViewTextBoxColumn colOverlayRID;
@@ -944,5 +940,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colViewerAppearanceHash;
         private System.Windows.Forms.DataGridViewTextBoxColumn colName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colOverlayFile;
+        private Generic.PictureBoxRoomObject pictureBox;
     }
 }

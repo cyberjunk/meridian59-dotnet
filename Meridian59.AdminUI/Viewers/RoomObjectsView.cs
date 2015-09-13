@@ -29,8 +29,6 @@ namespace Meridian59.AdminUI
     /// </summary>
     public partial class RoomObjectsView : UserControl
     {
-        protected readonly ImageComposerGDI<RoomObject> imageComposer = new ImageComposerGDI<RoomObject>();
-
         /// <summary>
         /// The model to be shown in the View
         /// </summary>
@@ -55,10 +53,7 @@ namespace Meridian59.AdminUI
         /// </summary>
         public RoomObjectsView()
         {
-            InitializeComponent();
-
-            // attach handler when new image is available
-            imageComposer.NewImageAvailable += OnImageComposerNewImageAvailable;                   
+            InitializeComponent();                  
         }
 
         /// <summary>
@@ -74,7 +69,7 @@ namespace Meridian59.AdminUI
                 RoomObject roomObject = (RoomObject)gridRoomObjects.SelectedRows[0].DataBoundItem;
                
                 // update imagecomposer
-                imageComposer.DataSource = roomObject;
+                pictureBox.DataSource = roomObject;
                 
                 roomObject.SubOverlays.SyncContext = SynchronizationContext.Current;
                 roomObject.MotionSubOverlays.SyncContext = SynchronizationContext.Current;
@@ -100,11 +95,6 @@ namespace Meridian59.AdminUI
 
             avMotionSubOverlayAnimation.DataSource = 
                 (selectedItem != null) ? selectedItem.Animation : null;
-        }
-
-        protected void OnImageComposerNewImageAvailable(object sender, EventArgs e)
-        {
-            picImage.Image = imageComposer.Image;
         }
     }
 }

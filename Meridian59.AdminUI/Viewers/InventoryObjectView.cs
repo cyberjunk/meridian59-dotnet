@@ -30,11 +30,6 @@ namespace Meridian59.AdminUI
     public partial class InventoryObjectView : UserControl
     {
         /// <summary>
-        /// This will produce the images to show
-        /// </summary>
-        protected readonly ImageComposerGDI<ObjectBase> imageComposer = new ImageComposerGDI<ObjectBase>();
-
-        /// <summary>
         /// The model to be shown in the View
         /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), DefaultValue(null), Browsable(true)]
@@ -71,13 +66,6 @@ namespace Meridian59.AdminUI
         public InventoryObjectView()
         {
             InitializeComponent();
-
-            // set imagecomposer size
-            imageComposer.Width = (uint)picImage.Width;
-            imageComposer.Height = (uint)picImage.Height;
-
-            // attach handler when gamebitmap changes (animation)
-            imageComposer.NewImageAvailable += OnImageComposerNewImageAvailable;
         }
 
         /// <summary>
@@ -90,10 +78,12 @@ namespace Meridian59.AdminUI
             if (gridObjects.SelectedRows.Count > 0 && 
                 gridObjects.SelectedRows[0].DataBoundItem != null)
             {
-                ObjectBase objectBase = (ObjectBase)gridObjects.SelectedRows[0].DataBoundItem;
+                InventoryObject objectBase = (InventoryObject)gridObjects.SelectedRows[0].DataBoundItem;
                 objectBase.SubOverlays.SyncContext = SynchronizationContext.Current;
+
+                // update imagecomposer
+                pictureBox.DataSource = objectBase;
                 
-                imageComposer.DataSource = objectBase;
                 gridSubOverlays.DataSource = objectBase.SubOverlays;
                 avAnimation.DataSource = objectBase.Animation;
             }  
@@ -110,16 +100,6 @@ namespace Meridian59.AdminUI
 
             avSubOverlayAnimation.DataSource = 
                 (selectedItem != null) ? selectedItem.Animation : null;
-        }
-
-        /// <summary>
-        /// Triggered when the image was recreated and should be shown.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void OnImageComposerNewImageAvailable(object sender, EventArgs e)
-        {
-            picImage.Image = imageComposer.Image;
         }
     }
 }
