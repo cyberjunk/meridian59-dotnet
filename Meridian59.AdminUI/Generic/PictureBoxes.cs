@@ -32,6 +32,7 @@ namespace Meridian59.AdminUI.Generic
     public class PictureBoxGame<T> : Control where T: ObjectBase
     {
         protected readonly ImageComposerGDI<T> imageComposer = new ImageComposerGDI<T>();
+        protected float zoom = 1.0f;
 
         /// <summary>
         /// The object to be shown
@@ -71,8 +72,8 @@ namespace Meridian59.AdminUI.Generic
                 return;
 
             // get object size in world size
-            float scaledwidth = (imageComposer.RenderInfo.UVEnd.X * imageComposer.RenderInfo.Dimension.X) / imageComposer.RenderInfo.Scaling;
-            float scaledheight = (imageComposer.RenderInfo.UVEnd.Y * imageComposer.RenderInfo.Dimension.Y) / imageComposer.RenderInfo.Scaling;
+            float scaledwidth = ((imageComposer.RenderInfo.UVEnd.X * imageComposer.RenderInfo.Dimension.X) / imageComposer.RenderInfo.Scaling) * zoom;
+            float scaledheight = ((imageComposer.RenderInfo.UVEnd.Y * imageComposer.RenderInfo.Dimension.Y) / imageComposer.RenderInfo.Scaling) * zoom;
 
             // important:
             // center x (extends x, -x -> right, left)
@@ -90,9 +91,17 @@ namespace Meridian59.AdminUI.Generic
                 GraphicsUnit.Pixel);
         }
 
-        protected override void OnSizeChanged(EventArgs e)
+        protected override void OnMouseWheel(MouseEventArgs e)
         {
-            base.OnSizeChanged(e);
+            base.OnMouseWheel(e);
+
+            zoom += e.Delta * 0.001f;
+
+            // bound
+            zoom = System.Math.Max(0.1f, zoom);
+            zoom = System.Math.Min(10.0f, zoom);
+
+            Refresh();
         }
     }
 
