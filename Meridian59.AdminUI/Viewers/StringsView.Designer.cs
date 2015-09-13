@@ -1,6 +1,6 @@
 ﻿namespace Meridian59.AdminUI.Viewers
 {
-    partial class StringsViewer
+    partial class StringsView
     {
         /// <summary> 
         /// Erforderliche Designervariable.

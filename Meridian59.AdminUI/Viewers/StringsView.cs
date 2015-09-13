@@ -27,7 +27,7 @@ namespace Meridian59.AdminUI.Viewers
     /// <summary>
     /// 
     /// </summary>
-    public partial class StringsViewer : UserControl
+    public partial class StringsView : UserControl
     {
         protected readonly StringList unfilteredData = new StringList(50000);
         protected readonly StringList filteredData = new StringList(50000);
@@ -59,7 +59,7 @@ namespace Meridian59.AdminUI.Viewers
         /// <summary>
         /// Constructor
         /// </summary>
-        public StringsViewer()
+        public StringsView()
         {
             InitializeComponent();
 

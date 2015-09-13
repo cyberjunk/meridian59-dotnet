@@ -165,11 +165,11 @@
     <Compile Include="Viewers\StatsNumericView.Designer.cs">
       <DependentUpon>StatsNumericView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Viewers\StringsViewer.cs">
+    <Compile Include="Viewers\StringsView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Viewers\StringsViewer.Designer.cs">
-      <DependentUpon>StringsViewer.cs</DependentUpon>
+    <Compile Include="Viewers\StringsView.Designer.cs">
+      <DependentUpon>StringsView.cs</DependentUpon>
     </Compile>
     <Compile Include="Viewers\SubOverlayGrid.cs">
       <SubType>UserControl</SubType>
@@ -242,8 +242,8 @@
     <EmbeddedResource Include="Viewers\StatsNumericView.resx">
       <DependentUpon>StatsNumericView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Viewers\StringsViewer.resx">
-      <DependentUpon>StringsViewer.cs</DependentUpon>
+    <EmbeddedResource Include="Viewers\StringsView.resx">
+      <DependentUpon>StringsView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Viewers\SubOverlayGrid.resx">
       <DependentUpon>SubOverlayGrid.cs</DependentUpon>

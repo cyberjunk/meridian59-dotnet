@@ -51,7 +51,7 @@ namespace Meridian59.AdminUI
             this.tabRoomObjects = new System.Windows.Forms.TabPage();
             this.roomObjectsViewer = new Meridian59.AdminUI.RoomObjectsView();
             this.tabStrings = new System.Windows.Forms.TabPage();
-            this.stringsViewer = new Meridian59.AdminUI.Viewers.StringsViewer();
+            this.stringsViewer = new Meridian59.AdminUI.Viewers.StringsView();
             this.tabInventory = new System.Windows.Forms.TabPage();
             this.inventoryObjectView = new Meridian59.AdminUI.InventoryObjectView();
             this.tabStats = new System.Windows.Forms.TabPage();
@@ -790,7 +790,7 @@ namespace Meridian59.AdminUI
         private System.Windows.Forms.TabPage tabConsole;
         private Viewers.ServerStringView chatViewer;
         private Viewers.GameMessageView gameMessageViewer;
-        private Viewers.StringsViewer stringsViewer;
+        private Viewers.StringsView stringsViewer;
         private Viewers.GuildInfoView guildInfoViewer;
         private System.Windows.Forms.SplitContainer splitContainer7;
         private Viewers.DiplomacyInfoView diplomacyInfoViewer;
