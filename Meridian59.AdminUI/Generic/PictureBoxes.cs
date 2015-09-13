@@ -21,6 +21,7 @@ using Meridian59.Data.Models;
 using Meridian59.Drawing2D;
 using System.Drawing.Drawing2D;
 using System.Drawing;
+using Meridian59.Common;
 
 namespace Meridian59.AdminUI.Generic
 {
@@ -69,49 +70,28 @@ namespace Meridian59.AdminUI.Generic
             if (imageComposer.Image == null)
                 return;
 
+            // get object size in world size
+            float scaledwidth = (imageComposer.RenderInfo.UVEnd.X * imageComposer.RenderInfo.Dimension.X) / imageComposer.RenderInfo.Scaling;
+            float scaledheight = (imageComposer.RenderInfo.UVEnd.Y * imageComposer.RenderInfo.Dimension.Y) / imageComposer.RenderInfo.Scaling;
 
+            // important:
+            // center x (extends x, -x -> right, left)
+            // fix y to bottom (extends y -> up)
+            float posx = ((float)Width * 0.5f) - (scaledwidth * 0.5f);
+            float posy = (float)Height - scaledheight;
 
-            // scaling calculcations
-            float MainOverlayX = 0;
-            float MainOverlayY = 0;
-            float nPercentW = ((float)Width / (float)imageComposer.Image.Width);
-            float nPercentH = ((float)Height / (float)imageComposer.Image.Height);
-
-            float MainOverlayScale;
-            if (nPercentH < nPercentW)
-            {
-                MainOverlayScale = nPercentH;
-                MainOverlayX = (Width - (imageComposer.Image.Width * MainOverlayScale)) * 0.5f;
-            }
-            else
-            {
-                MainOverlayScale = nPercentW;
-                MainOverlayY = (Height - (imageComposer.Image.Height * MainOverlayScale)) * 0.5f;
-            }
-
-            int destWidth = (int)(imageComposer.Image.Width * MainOverlayScale);
-            int destHeight = (int)(imageComposer.Image.Height * MainOverlayScale);
-
-            
-            
-            e.Graphics.Clear(Color.Transparent);
+            e.Graphics.Clear(BackColor);
             e.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
 
             // draw mainbmp into target bitmap
             e.Graphics.DrawImage(imageComposer.Image,
-                new System.Drawing.Rectangle((int)MainOverlayX, (int)MainOverlayY, destWidth, destHeight),
+                new System.Drawing.Rectangle((int)posx, (int)posy, (int)scaledwidth, (int)scaledheight),
                 new System.Drawing.Rectangle(0, 0, imageComposer.Image.Width, imageComposer.Image.Height),
                 GraphicsUnit.Pixel);
-
-
-            //e.Graphics.DrawImage(imageComposer.Image)
         }
 
         protected override void OnSizeChanged(EventArgs e)
         {
-            //imageComposer.Width = (uint)Width;
-            //imageComposer.Height = (uint)Height;
-
             base.OnSizeChanged(e);
         }
     }
