@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meridian59.UnitTest", "Meri
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meridian59.RooViewer", "Meridian59.RooViewer\Meridian59.RooViewer.csproj", "{EDD8A1EF-0E47-4567-BF78-7A7DF8E5BEA0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meridian59.RsbEditor", "Meridian59.RsbEditor\Meridian59.RsbEditor.csproj", "{8A720E91-6344-4407-B9C4-2204AEE47595}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -123,6 +125,18 @@ Global
 		{EDD8A1EF-0E47-4567-BF78-7A7DF8E5BEA0}.Release|x64.Build.0 = Release|x64
 		{EDD8A1EF-0E47-4567-BF78-7A7DF8E5BEA0}.Release|x86.ActiveCfg = Release|x86
 		{EDD8A1EF-0E47-4567-BF78-7A7DF8E5BEA0}.Release|x86.Build.0 = Release|x86
+		{8A720E91-6344-4407-B9C4-2204AEE47595}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A720E91-6344-4407-B9C4-2204AEE47595}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A720E91-6344-4407-B9C4-2204AEE47595}.Debug|x64.ActiveCfg = Debug|x64
+		{8A720E91-6344-4407-B9C4-2204AEE47595}.Debug|x64.Build.0 = Debug|x64
+		{8A720E91-6344-4407-B9C4-2204AEE47595}.Debug|x86.ActiveCfg = Debug|x86
+		{8A720E91-6344-4407-B9C4-2204AEE47595}.Debug|x86.Build.0 = Debug|x86
+		{8A720E91-6344-4407-B9C4-2204AEE47595}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A720E91-6344-4407-B9C4-2204AEE47595}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A720E91-6344-4407-B9C4-2204AEE47595}.Release|x64.ActiveCfg = Release|x64
+		{8A720E91-6344-4407-B9C4-2204AEE47595}.Release|x64.Build.0 = Release|x64
+		{8A720E91-6344-4407-B9C4-2204AEE47595}.Release|x86.ActiveCfg = Release|x86
+		{8A720E91-6344-4407-B9C4-2204AEE47595}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
