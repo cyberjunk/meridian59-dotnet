@@ -209,12 +209,12 @@ namespace Meridian59.Data
         /// Admin info (for admin console) and more.
         /// </summary>
         public AdminInfo AdminInfo { get; protected set; }
-
+#if !VANILLA
         /// <summary>
         /// Current client gameplay preferences (e.g. safety, tempsafe).
         /// </summary>
         public PreferencesFlags ClientPreferences { get; protected set; }
-
+#endif
        /// <summary>
         /// The last inspected nonplayer-object.
         /// This instance stays the same. Its properties change!
@@ -789,7 +789,9 @@ namespace Meridian59.Data
             GuildAskData = new GuildAskData();
             DiplomacyInfo = new DiplomacyInfo();
             AdminInfo = new AdminInfo();
+#if !VANILLA
             ClientPreferences = new PreferencesFlags();
+#endif
             LookObject = new ObjectInfo();
             LookPlayer = new PlayerInfo();
             NewsGroup = new NewsGroup();
@@ -864,7 +866,9 @@ namespace Meridian59.Data
             GuildAskData.Clear(true);
             DiplomacyInfo.Clear(true);
             AdminInfo.Clear(true);
+#if !VANILLA
             ClientPreferences.Clear(true);
+#endif
             LookObject.Clear(true);
             LookPlayer.Clear(true);
             RoomInformation.Clear(true);

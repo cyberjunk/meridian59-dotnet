@@ -27,11 +27,11 @@ namespace Meridian59 { namespace Ogre
 		// attach listener to Data
 		OgreClient::Singleton->Data->PropertyChanged += 
 			gcnew PropertyChangedEventHandler(&ControllerUI::StatusBar::OnDataPropertyChanged);
-
+#if !VANILLA
 		// attach listener to Preference Flags
 		OgreClient::Singleton->Data->ClientPreferences->PropertyChanged +=
 			gcnew PropertyChangedEventHandler(&ControllerUI::StatusBar::OnClientPreferencesChanged);
-
+#endif
 		// attach listener to roominformation
 		OgreClient::Singleton->Data->RoomInformation->PropertyChanged += 
 			gcnew PropertyChangedEventHandler(&ControllerUI::StatusBar::OnRoomInformationPropertyChanged);
@@ -58,11 +58,11 @@ namespace Meridian59 { namespace Ogre
 		// detach listener from Data
 		OgreClient::Singleton->Data->PropertyChanged -= 
 			gcnew PropertyChangedEventHandler(&ControllerUI::StatusBar::OnDataPropertyChanged);
-
-		// attach listener to Preference Flags
+#if !VANILLA
+		// detach listener to Preference Flags
 		OgreClient::Singleton->Data->ClientPreferences->PropertyChanged -=
 			gcnew PropertyChangedEventHandler(&ControllerUI::StatusBar::OnClientPreferencesChanged);
-
+#endif
       // detach listener from roominformation
 		OgreClient::Singleton->Data->RoomInformation->PropertyChanged -= 
 			gcnew PropertyChangedEventHandler(&ControllerUI::StatusBar::OnRoomInformationPropertyChanged);
