@@ -30,9 +30,13 @@ namespace Meridian59.AdminUI.Viewers
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.splitContainer3 = new System.Windows.Forms.SplitContainer();
+            this.gbSendCommand = new System.Windows.Forms.GroupBox();
             this.txtCommand = new System.Windows.Forms.TextBox();
+            this.gbActions = new System.Windows.Forms.GroupBox();
+            this.btnClearLog = new System.Windows.Forms.Button();
+            this.gbOutput = new System.Windows.Forms.GroupBox();
             this.txtConsole = new System.Windows.Forms.RichTextBox();
             this.gbObjects = new System.Windows.Forms.GroupBox();
             this.tabObjects = new System.Windows.Forms.TabControl();
@@ -40,11 +44,17 @@ namespace Meridian59.AdminUI.Viewers
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
+            this.splitContainer3.Panel1.SuspendLayout();
+            this.splitContainer3.Panel2.SuspendLayout();
+            this.splitContainer3.SuspendLayout();
+            this.gbSendCommand.SuspendLayout();
+            this.gbActions.SuspendLayout();
+            this.gbOutput.SuspendLayout();
             this.gbObjects.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,7 +66,7 @@ namespace Meridian59.AdminUI.Viewers
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.groupBox1);
+            this.splitContainer1.Panel1.Controls.Add(this.splitContainer2);
             // 
             // splitContainer1.Panel2
             // 
@@ -65,56 +75,110 @@ namespace Meridian59.AdminUI.Viewers
             this.splitContainer1.SplitterDistance = 363;
             this.splitContainer1.TabIndex = 0;
             // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.splitContainer2);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Location = new System.Drawing.Point(0, 0);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(363, 337);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Console";
-            // 
             // splitContainer2
             // 
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitContainer2.IsSplitterFixed = true;
-            this.splitContainer2.Location = new System.Drawing.Point(3, 16);
+            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
             this.splitContainer2.Name = "splitContainer2";
             this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
             // splitContainer2.Panel1
             // 
-            this.splitContainer2.Panel1.Controls.Add(this.txtCommand);
+            this.splitContainer2.Panel1.Controls.Add(this.splitContainer3);
             // 
             // splitContainer2.Panel2
             // 
-            this.splitContainer2.Panel2.Controls.Add(this.txtConsole);
-            this.splitContainer2.Size = new System.Drawing.Size(357, 318);
-            this.splitContainer2.SplitterDistance = 25;
+            this.splitContainer2.Panel2.Controls.Add(this.gbOutput);
+            this.splitContainer2.Size = new System.Drawing.Size(363, 337);
+            this.splitContainer2.SplitterDistance = 40;
             this.splitContainer2.TabIndex = 0;
+            // 
+            // splitContainer3
+            // 
+            this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer3.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.splitContainer3.IsSplitterFixed = true;
+            this.splitContainer3.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer3.Name = "splitContainer3";
+            // 
+            // splitContainer3.Panel1
+            // 
+            this.splitContainer3.Panel1.Controls.Add(this.gbSendCommand);
+            // 
+            // splitContainer3.Panel2
+            // 
+            this.splitContainer3.Panel2.Controls.Add(this.gbActions);
+            this.splitContainer3.Size = new System.Drawing.Size(363, 40);
+            this.splitContainer3.SplitterDistance = 281;
+            this.splitContainer3.TabIndex = 5;
+            // 
+            // gbSendCommand
+            // 
+            this.gbSendCommand.Controls.Add(this.txtCommand);
+            this.gbSendCommand.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbSendCommand.Location = new System.Drawing.Point(0, 0);
+            this.gbSendCommand.Name = "gbSendCommand";
+            this.gbSendCommand.Size = new System.Drawing.Size(281, 40);
+            this.gbSendCommand.TabIndex = 0;
+            this.gbSendCommand.TabStop = false;
+            this.gbSendCommand.Text = "Send";
             // 
             // txtCommand
             // 
+            this.txtCommand.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.txtCommand.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.txtCommand.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtCommand.Location = new System.Drawing.Point(0, 0);
+            this.txtCommand.Location = new System.Drawing.Point(3, 16);
             this.txtCommand.Name = "txtCommand";
-            this.txtCommand.Size = new System.Drawing.Size(357, 20);
+            this.txtCommand.Size = new System.Drawing.Size(275, 20);
             this.txtCommand.TabIndex = 0;
             this.txtCommand.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnCommandKeyDown);
             this.txtCommand.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnCommandKeyPress);
             this.txtCommand.KeyUp += new System.Windows.Forms.KeyEventHandler(this.OnCommandKeyUp);
             // 
+            // gbActions
+            // 
+            this.gbActions.Controls.Add(this.btnClearLog);
+            this.gbActions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbActions.Location = new System.Drawing.Point(0, 0);
+            this.gbActions.Name = "gbActions";
+            this.gbActions.Size = new System.Drawing.Size(78, 40);
+            this.gbActions.TabIndex = 0;
+            this.gbActions.TabStop = false;
+            this.gbActions.Text = "Actions";
+            // 
+            // btnClearLog
+            // 
+            this.btnClearLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnClearLog.Location = new System.Drawing.Point(3, 16);
+            this.btnClearLog.Name = "btnClearLog";
+            this.btnClearLog.Size = new System.Drawing.Size(72, 21);
+            this.btnClearLog.TabIndex = 0;
+            this.btnClearLog.Text = "Clear log";
+            this.btnClearLog.UseVisualStyleBackColor = true;
+            this.btnClearLog.Click += new System.EventHandler(this.OnClearLogClick);
+            // 
+            // gbOutput
+            // 
+            this.gbOutput.Controls.Add(this.txtConsole);
+            this.gbOutput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbOutput.Location = new System.Drawing.Point(0, 0);
+            this.gbOutput.Name = "gbOutput";
+            this.gbOutput.Size = new System.Drawing.Size(363, 293);
+            this.gbOutput.TabIndex = 1;
+            this.gbOutput.TabStop = false;
+            this.gbOutput.Text = "Output";
+            // 
             // txtConsole
             // 
             this.txtConsole.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtConsole.Font = new System.Drawing.Font("Courier New", 8.25F);
-            this.txtConsole.Location = new System.Drawing.Point(0, 0);
+            this.txtConsole.Location = new System.Drawing.Point(3, 16);
             this.txtConsole.Name = "txtConsole";
             this.txtConsole.ReadOnly = true;
-            this.txtConsole.Size = new System.Drawing.Size(357, 289);
+            this.txtConsole.Size = new System.Drawing.Size(357, 274);
             this.txtConsole.TabIndex = 0;
             this.txtConsole.Text = "";
             // 
@@ -149,12 +213,18 @@ namespace Meridian59.AdminUI.Viewers
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
-            this.splitContainer2.Panel1.PerformLayout();
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
+            this.splitContainer3.Panel1.ResumeLayout(false);
+            this.splitContainer3.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
+            this.splitContainer3.ResumeLayout(false);
+            this.gbSendCommand.ResumeLayout(false);
+            this.gbSendCommand.PerformLayout();
+            this.gbActions.ResumeLayout(false);
+            this.gbOutput.ResumeLayout(false);
             this.gbObjects.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -163,11 +233,15 @@ namespace Meridian59.AdminUI.Viewers
         #endregion
 
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.TextBox txtCommand;
-        private System.Windows.Forms.RichTextBox txtConsole;
         private System.Windows.Forms.GroupBox gbObjects;
         private System.Windows.Forms.TabControl tabObjects;
+        private System.Windows.Forms.SplitContainer splitContainer3;
+        private System.Windows.Forms.GroupBox gbSendCommand;
+        private System.Windows.Forms.GroupBox gbActions;
+        private System.Windows.Forms.Button btnClearLog;
+        private System.Windows.Forms.GroupBox gbOutput;
+        private System.Windows.Forms.RichTextBox txtConsole;
     }
 }

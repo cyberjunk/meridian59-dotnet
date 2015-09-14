@@ -69,6 +69,9 @@ namespace Meridian59.AdminUI.Viewers
         public AdminInfoView()
         {
             InitializeComponent();
+
+            // add default commands
+            txtCommand.AutoCompleteCustomSource.AddRange(AdminInfo.DEFAULTCOMMANDS);
         }
 
         protected void OnCommandKeyDown(object sender, KeyEventArgs e)
@@ -84,15 +87,18 @@ namespace Meridian59.AdminUI.Viewers
         {
             if (e.KeyCode == Keys.Return || e.KeyCode == Keys.Enter)
             {
+                string s = txtCommand.Text.TrimEnd().TrimStart();
 
-                ReqAdminMessage msg = new ReqAdminMessage(
-                    txtCommand.Text.TrimEnd().TrimStart());
+                ReqAdminMessage msg = new ReqAdminMessage(s);
 
                 if (MessageSend != null)
                     MessageSend(this, new GameMessageEventArgs(msg));
 
+                // track it in autocompletion
+                txtCommand.AutoCompleteCustomSource.Add(s);
+
+                // prepare for next command
                 txtCommand.Clear();
-                //e.Handled = true;
             }
         }
 
@@ -155,6 +161,9 @@ namespace Meridian59.AdminUI.Viewers
                     tabObjects.TabPages.Remove(tabPage);        
         }
 
-
+        protected void OnClearLogClick(object sender, EventArgs e)
+        {
+            dataSource.ServerResponses.Clear();
+        }
     }
 }
