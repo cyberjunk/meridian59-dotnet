@@ -291,14 +291,14 @@ namespace Meridian59.Client
             // Handle all exceptions from networkclient
             while (ServerConnection.ExceptionQueue.TryDequeue(out error))          
                 OnServerConnectionException(error);
-                             
-            // Handle all pending incoming messages done from enrichment
-            while (MessageEnrichment.OutputQueue.TryDequeue(out message))          
-                HandleGameMessage(message);
-            
+
             // Handle the outgoing MessageLog (debug for sent packets)
             while (ServerConnection.OutgoingPacketLog.TryDequeue(out message))
-                Data.LogOutgoingPacket(message);         
+                Data.LogOutgoingPacket(message); 
+               
+            // Handle all pending incoming messages done from enrichment
+            while (MessageEnrichment.OutputQueue.TryDequeue(out message))          
+                HandleGameMessage(message);       
         }
 
         #endregion
