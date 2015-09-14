@@ -226,8 +226,24 @@ namespace Meridian59.Data.Models
                 case ChatCommandGrouping.KEY1:
                     returnValue = ParseGrouping(splitted, lower, DataController);
                     break;
+
+                case ChatCommandAutoLoot.KEY1:
+                    returnValue = ParseAutoLoot(splitted, lower, DataController);
+                    break;
+
+                case ChatCommandAutoCombine.KEY1:
+                    returnValue = ParseAutoCombine(splitted, lower, DataController);
+                    break;
+
+                case ChatCommandReagentBag.KEY1:
+                    returnValue = ParseReagentBag(splitted, lower, DataController);
+                    break;
+
+                case ChatCommandSpellPower.KEY1:
+                    returnValue = ParseSpellPower(splitted, lower, DataController);
+                    break;
 #endif
-            }               
+            }
             
             return returnValue;
         }
@@ -649,6 +665,138 @@ namespace Meridian59.Data.Models
             }
 
             return command;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Words"></param>
+        /// <param name="Text"></param>
+        /// <param name="Data"></param>
+        /// <returns></returns>
+        protected static ChatCommandAutoLoot ParseAutoLoot(string[] Words, string Text, DataController Data)
+        {
+           ChatCommandAutoLoot command = null;
+
+           if (Words == null || Words.Length < 2)
+              return command;
+
+           string text = String.Join(DELIMITER.ToString(), Words, 1, Words.Length - 1);
+
+           if (text != null)
+              text = text.Trim();
+
+           switch (text)
+           {
+              case ON:
+                 command = new ChatCommandAutoLoot(true);
+                 break;
+
+              case OFF:
+                 command = new ChatCommandAutoLoot(false);
+                 break;
+           }
+
+           return command;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Words"></param>
+        /// <param name="Text"></param>
+        /// <param name="Data"></param>
+        /// <returns></returns>
+        protected static ChatCommandAutoCombine ParseAutoCombine(string[] Words, string Text, DataController Data)
+        {
+           ChatCommandAutoCombine command = null;
+
+           if (Words == null || Words.Length < 2)
+              return command;
+
+           string text = String.Join(DELIMITER.ToString(), Words, 1, Words.Length - 1);
+
+           if (text != null)
+              text = text.Trim();
+
+           switch (text)
+           {
+              case ON:
+                 command = new ChatCommandAutoCombine(true);
+                 break;
+
+              case OFF:
+                 command = new ChatCommandAutoCombine(false);
+                 break;
+           }
+
+           return command;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Words"></param>
+        /// <param name="Text"></param>
+        /// <param name="Data"></param>
+        /// <returns></returns>
+        protected static ChatCommandReagentBag ParseReagentBag(string[] Words, string Text, DataController Data)
+        {
+           ChatCommandReagentBag command = null;
+
+           if (Words == null || Words.Length < 2)
+              return command;
+
+           string text = String.Join(DELIMITER.ToString(), Words, 1, Words.Length - 1);
+
+           if (text != null)
+              text = text.Trim();
+
+           switch (text)
+           {
+              case ON:
+                 command = new ChatCommandReagentBag(true);
+                 break;
+
+              case OFF:
+                 command = new ChatCommandReagentBag(false);
+                 break;
+           }
+
+           return command;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Words"></param>
+        /// <param name="Text"></param>
+        /// <param name="Data"></param>
+        /// <returns></returns>
+        protected static ChatCommandSpellPower ParseSpellPower(string[] Words, string Text, DataController Data)
+        {
+           ChatCommandSpellPower command = null;
+
+           if (Words == null || Words.Length < 2)
+              return command;
+
+           string text = String.Join(DELIMITER.ToString(), Words, 1, Words.Length - 1);
+
+           if (text != null)
+              text = text.Trim();
+
+           switch (text)
+           {
+              case ON:
+                 command = new ChatCommandSpellPower(true);
+                 break;
+
+              case OFF:
+                 command = new ChatCommandSpellPower(false);
+                 break;
+           }
+
+           return command;
         }
 #endif
     }

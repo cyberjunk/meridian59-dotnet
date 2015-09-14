@@ -129,6 +129,10 @@
     <Compile Include="Data\Models\AdminInfoObject.cs" />
     <Compile Include="Data\Models\AdminInfo.cs" />
     <Compile Include="Data\Models\ResourceID.cs" />
+    <Compile Include="Data\Models\ChatCommand\ChatCommandAutoLoot.cs" />
+    <Compile Include="Data\Models\ChatCommand\ChatCommandAutoCombine.cs" />
+    <Compile Include="Data\Models\ChatCommand\ChatCommandReagentBag.cs" />
+    <Compile Include="Data\Models\ChatCommand\ChatCommandSpellPower.cs" />
     <Compile Include="Data\Models\PreferencesFlags.cs" />
     <Compile Include="Data\Models\StatChangeInfo.cs" />
     <Compile Include="Data\Models\CharCreationInfo.cs" />

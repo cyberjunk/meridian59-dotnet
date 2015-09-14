@@ -2675,6 +2675,26 @@ namespace Meridian59.Client
                         Data.ClientPreferences.Grouping = ((ChatCommandGrouping)chatCommand).On;
                         SendUserCommandSendPreferences();
                         break;
+
+                    case ChatCommandType.AutoLoot:
+                        Data.ClientPreferences.AutoLoot = ((ChatCommandAutoLoot)chatCommand).On;
+                        SendUserCommandSendPreferences();
+                        break;
+
+                    case ChatCommandType.AutoCombine:
+                        Data.ClientPreferences.AutoCombine = ((ChatCommandAutoCombine)chatCommand).On;
+                        SendUserCommandSendPreferences();
+                        break;
+
+                    case ChatCommandType.ReagentBag:
+                        Data.ClientPreferences.ReagentBag = ((ChatCommandReagentBag)chatCommand).On;
+                        SendUserCommandSendPreferences();
+                        break;
+
+                    case ChatCommandType.SpellPower:
+                        Data.ClientPreferences.SpellPower = ((ChatCommandSpellPower)chatCommand).On;
+                        SendUserCommandSendPreferences();
+                        break;
 #endif
                 }
             }    
