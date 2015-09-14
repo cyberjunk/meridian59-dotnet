@@ -85,11 +85,25 @@ namespace Meridian59.Files.RSB
 
             Array.Copy(BitConverter.GetBytes(SIGNATURE), 0, Buffer, cursor, TypeSizes.INT);
             cursor += TypeSizes.INT;
-
-            Array.Copy(BitConverter.GetBytes(version), 0, Buffer, cursor, TypeSizes.INT);
+            
+            // note: we can't write v3 here, would have to encrypt
+            // so trying to write opened v3 files will result in v4 files
+            Array.Copy(BitConverter.GetBytes(Math.Max(version, VERSION4)), 0, Buffer, cursor, TypeSizes.INT);
             cursor += TypeSizes.INT;
 
-            Array.Copy(BitConverter.GetBytes(StringResources.Count), 0, Buffer, cursor, TypeSizes.INT);
+            int count = StringResources.Count;
+
+            // old versions cant store other languages
+            // they won't write them to the file below
+            if (version < VERSION5)
+            {
+                count = 0;
+                foreach (RsbResourceID obj in StringResources)
+                    if (obj.Language == LanguageCode.English)
+                        count++;
+            }
+
+            Array.Copy(BitConverter.GetBytes(count), 0, Buffer, cursor, TypeSizes.INT);
             cursor += TypeSizes.INT;
 
             foreach (RsbResourceID entry in StringResources)            
@@ -124,7 +138,7 @@ namespace Meridian59.Files.RSB
                     uint expectedresponse = BitConverter.ToUInt32(Buffer, cursor);
                     cursor += TypeSizes.INT;
 
-					Crush32.Decrypt(Buffer, cursor, (int)streamlength, version, expectedresponse, PASSWORDV3);
+					Crush32.Decrypt(Buffer, cursor, (int)streamlength, version, expectedresponse, PASSWORDV3);                   
 #else
                     throw new Exception(RooFile.ERRORCRUSHPLATFORM);
 #endif
@@ -132,6 +146,7 @@ namespace Meridian59.Files.RSB
 
                 // now load strings                  
                 StringResources.Clear();
+                StringResources.Capacity = (int)entries + 100;
                 for (int i = 0; i < entries; i++)
                 {
                     RsbResourceID entry = new RsbResourceID(version, Buffer, cursor);
@@ -273,6 +288,10 @@ namespace Meridian59.Files.RSB
 				if (version != value)
 				{
 					version = value;
+
+                    foreach (RsbResourceID obj in StringResources)
+                        obj.RsbVersion = version;
+
 					RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_VERSION));
 				}
 			}

@@ -37,23 +37,11 @@ namespace Meridian59.Files.RSB
                 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected uint rsbVersion;
         protected uint id;
         protected string text;
         protected LanguageCode language;
 
-        public uint RsbVersion
-        {
-            get { return rsbVersion; }
-            set
-            {
-                if (rsbVersion != value)
-                {
-                    rsbVersion = value;
-                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_RSBVERSION));
-                }
-            }
-        }
+        public uint RsbVersion { get; set; }
 
         public uint ID
         {
@@ -98,13 +86,17 @@ namespace Meridian59.Files.RSB
         {
             get
             {
-                int len = TypeSizes.INT + text.Length + TypeSizes.BYTE;
+                if (RsbVersion >= RsbFile.VERSION5 || language == LanguageCode.English)
+                {
+                    int len = TypeSizes.INT + text.Length + TypeSizes.BYTE;
 
-                // language code
-                if (rsbVersion >= RsbFile.VERSION5)
-                    len += TypeSizes.INT;
+                    // language code
+                    if (RsbVersion >= RsbFile.VERSION5)
+                        len += TypeSizes.INT;
 
-                return len;
+                    return len;
+                }
+                else return 0;
             }
         }
 
@@ -112,16 +104,27 @@ namespace Meridian59.Files.RSB
         {
             int cursor = StartIndex;
 
-            Array.Copy(BitConverter.GetBytes(id), 0, Buffer, cursor, TypeSizes.INT);
-            cursor += TypeSizes.INT;
+            // only write to file if either multilang version or english 
+            if (RsbVersion >= RsbFile.VERSION5 || language == LanguageCode.English)
+            {
+                Array.Copy(BitConverter.GetBytes(id), 0, Buffer, cursor, TypeSizes.INT);
+                cursor += TypeSizes.INT;
 
-            // write string
-            Array.Copy(Encoding.Default.GetBytes(text), 0, Buffer, cursor, text.Length);
-            cursor += text.Length;
+                // version 5 and above has additional language code
+                if (RsbVersion >= RsbFile.VERSION5)
+                {
+                    Array.Copy(BitConverter.GetBytes((uint)language), 0, Buffer, cursor, TypeSizes.INT);
+                    cursor += TypeSizes.INT;
+                }
 
-            // c-str termination
-            Buffer[cursor] = 0x00;
-            cursor++;
+                // write string
+                Array.Copy(Encoding.Default.GetBytes(text), 0, Buffer, cursor, text.Length);
+                cursor += text.Length;
+
+                // c-str termination
+                Buffer[cursor] = 0x00;
+                cursor++;
+            }
 
             return cursor - StartIndex;
         }
@@ -134,7 +137,7 @@ namespace Meridian59.Files.RSB
             cursor += TypeSizes.INT;
 
             // version 5 and above has additional language code
-            if (rsbVersion >= RsbFile.VERSION5)
+            if (RsbVersion >= RsbFile.VERSION5)
             {
                 language = (LanguageCode)BitConverter.ToUInt32(Buffer, cursor);
                 cursor += TypeSizes.INT;
@@ -172,13 +175,13 @@ namespace Meridian59.Files.RSB
         {
             id = ID;
             text = Text;
-            rsbVersion = RsbVersion;
+            this.RsbVersion = RsbVersion;
             language = Language;
         }
 
         public RsbResourceID(uint RsbVersion, byte[] Buffer, int StartIndex = 0)
         {
-            rsbVersion = RsbVersion;
+            this.RsbVersion = RsbVersion;
             ReadFrom(Buffer, StartIndex);
         }
 
@@ -195,7 +198,7 @@ namespace Meridian59.Files.RSB
             {
                 id = 0;
                 text = String.Empty;
-                rsbVersion = RsbFile.VERSION5;
+                RsbVersion = RsbFile.VERSION5;
                 language = LanguageCode.English;
             }
         }
