@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,10 +55,10 @@
             this.txtFilterText = new System.Windows.Forms.TextBox();
             this.gbStrings = new System.Windows.Forms.GroupBox();
             this.gridStrings = new System.Windows.Forms.DataGridView();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.colID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colLanguage = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colText = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -392,6 +393,10 @@
             this.gridStrings.Size = new System.Drawing.Size(780, 409);
             this.gridStrings.TabIndex = 0;
             // 
+            // saveFileDialog
+            // 
+            this.saveFileDialog.Filter = "M59 RSB Files|*.rsb";
+            // 
             // colID
             // 
             this.colID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
@@ -414,13 +419,11 @@
             // 
             this.colText.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colText.DataPropertyName = "Text";
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.colText.DefaultCellStyle = dataGridViewCellStyle1;
             this.colText.HeaderText = "TEXT";
             this.colText.MaxInputLength = 100000;
             this.colText.Name = "colText";
-            // 
-            // saveFileDialog
-            // 
-            this.saveFileDialog.Filter = "M59 RSB Files|*.rsb";
             // 
             // MainForm
             // 
