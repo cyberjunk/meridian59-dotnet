@@ -489,7 +489,11 @@ namespace Meridian59.Client
         protected virtual void HandleCharInfoOKMessage(CharInfoOkMessage Message)
         {
             SendUseCharacterMessage(new ObjectID(Message.CharacterID), true);
-		    SendUserCommandSafetyMessage(true);
+#if VANILLA
+            SendUserCommandSafetyMessage(true);
+#else
+            SendUserCommandReqPreferences();
+#endif
         }
 
         /// <summary>
@@ -847,7 +851,7 @@ namespace Meridian59.Client
             // send/enqueue it (async)
             ServerConnection.SendQueue.Enqueue(message);
         }
-
+#if VANILLA
         /// <summary>
         /// Tells server to set safety on or off
         /// </summary>
@@ -866,7 +870,20 @@ namespace Meridian59.Client
             // save updated state in datacontroller
             Data.IsSafety = On;
         }
-
+#else
+        /// <summary>
+        /// Sends client preferences to server
+        /// </summary>
+        public virtual void SendUserCommandSendPreferences()
+        {
+            // create message instance
+           UserCommandSendPreferences userCommand = new UserCommandSendPreferences(Data.ClientPreferences);
+           UserCommandMessage message = new UserCommandMessage(userCommand, null);
+            
+            // send/enqueue it (async)
+            ServerConnection.SendQueue.Enqueue(message);
+        }
+#endif
         /// <summary>
         /// Requests to deposit something to the closest NPC? (no ID!)
         /// </summary>
@@ -1246,29 +1263,16 @@ namespace Meridian59.Client
         }
 #if !VANILLA
         /// <summary>
-        /// Disables or enables the temporary angel after being murdered.
+        /// Request client preferences stored for character on server.
         /// </summary>
-        public virtual void SendUserCommandTempSafe(bool On)
+        public virtual void SendUserCommandReqPreferences()
         {
-            // create message instance
-            UserCommand command = new UserCommandTempSafe(Convert.ToByte(On));
-            UserCommandMessage message = new UserCommandMessage(command, null);
+           // create message instance
+           UserCommand command = new UserCommandReqPreferences();
+           UserCommandMessage message = new UserCommandMessage(command, null);
 
-            // send/enqueue it (async)
-            ServerConnection.SendQueue.Enqueue(message);
-        }
-
-        /// <summary>
-        /// Disables or enables the grouping feature
-        /// </summary>
-        public virtual void SendUserCommandGrouping(bool On)
-        {
-            // create message instance
-            UserCommand command = new UserCommandGrouping(Convert.ToByte(On));
-            UserCommandMessage message = new UserCommandMessage(command, null);
-
-            // send/enqueue it (async)
-            ServerConnection.SendQueue.Enqueue(message);
+           // send/enqueue it (async)
+           ServerConnection.SendQueue.Enqueue(message);
         }
 
         /// <summary>
@@ -2663,11 +2667,33 @@ namespace Meridian59.Client
                         break;
 #if !VANILLA
                     case ChatCommandType.TempSafe:
-                        SendUserCommandTempSafe(((ChatCommandTempSafe)chatCommand).On);
+                        Data.ClientPreferences.TempSafe = ((ChatCommandTempSafe)chatCommand).On;
+                        SendUserCommandSendPreferences();
                         break;
 
                     case ChatCommandType.Grouping:
-                        SendUserCommandGrouping(((ChatCommandGrouping)chatCommand).On);
+                        Data.ClientPreferences.Grouping = ((ChatCommandGrouping)chatCommand).On;
+                        SendUserCommandSendPreferences();
+                        break;
+
+                    case ChatCommandType.AutoLoot:
+                        Data.ClientPreferences.AutoLoot = ((ChatCommandAutoLoot)chatCommand).On;
+                        SendUserCommandSendPreferences();
+                        break;
+
+                    case ChatCommandType.AutoCombine:
+                        Data.ClientPreferences.AutoCombine = ((ChatCommandAutoCombine)chatCommand).On;
+                        SendUserCommandSendPreferences();
+                        break;
+
+                    case ChatCommandType.ReagentBag:
+                        Data.ClientPreferences.ReagentBag = ((ChatCommandReagentBag)chatCommand).On;
+                        SendUserCommandSendPreferences();
+                        break;
+
+                    case ChatCommandType.SpellPower:
+                        Data.ClientPreferences.SpellPower = ((ChatCommandSpellPower)chatCommand).On;
+                        SendUserCommandSendPreferences();
                         break;
 #endif
                 }

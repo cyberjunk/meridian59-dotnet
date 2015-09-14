@@ -57,7 +57,9 @@ namespace Meridian59.AdminUI.Viewers
                 new Request("Request skills", new SendSkillsMessage()),
                 new Request("Request stats attributes", new SendStatsMessage(StatGroup.Attributes)),
                 new Request("Request stats condition", new SendStatsMessage(StatGroup.Condition)),
+#if !VANILLA
                 new Request("Request stats quests", new SendStatsMessage(StatGroup.Quests)),
+#endif
                 new Request("Request stats skills", new SendStatsMessage(StatGroup.Skills)),
                 new Request("Request stats spells", new SendStatsMessage(StatGroup.Spells)),
                 new Request("Request room enhancements", new SendEnchantmentsMessage(BuffType.RoomBuff))

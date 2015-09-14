@@ -166,7 +166,11 @@ namespace Meridian59 { namespace Ogre
 
 			// log it in
 			OgreClient::Singleton->SendUseCharacterMessage(index, true);
+#if VANILLA
 			OgreClient::Singleton->SendUserCommandSafetyMessage(true);
+#else
+			OgreClient::Singleton->SendUserCommandReqPreferences();
+#endif
 		}
 		
 		return true;
@@ -207,7 +211,11 @@ namespace Meridian59 { namespace Ogre
 
 				// log it in
 				OgreClient::Singleton->SendUseCharacterMessage(index, true);
+#if VANILLA
 				OgreClient::Singleton->SendUserCommandSafetyMessage(true);
+#else
+				OgreClient::Singleton->SendUserCommandReqPreferences();
+#endif
 			}
 		}
 
@@ -292,7 +300,11 @@ namespace Meridian59 { namespace Ogre
 
 				// log it in
 				OgreClient::Singleton->SendUseCharacterMessage(index, true);
+#if VANILLA
 				OgreClient::Singleton->SendUserCommandSafetyMessage(true);
+#else
+				OgreClient::Singleton->SendUserCommandReqPreferences();
+#endif
 			}
 		}
 

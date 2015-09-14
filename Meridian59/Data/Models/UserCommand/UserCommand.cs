@@ -92,17 +92,21 @@ namespace Meridian59.Data.Models
                 case UserCommandType.Stand:                                                             // 6
                     returnValue = new UserCommandStand(Buffer, StartIndex);
                     break;
-
+#if VANILLA
                 case UserCommandType.Safety:                                                            // 7
                     returnValue = new UserCommandSafety(Buffer, StartIndex);
                     break;
-
+#else
+                case UserCommandType.ReqPreferences:                                                    // 7
+                    returnValue = new UserCommandReqPreferences(Buffer, StartIndex);
+                    break;
+#endif
                 case UserCommandType.Suicide:                                                           // 8
                     returnValue = new UserCommandSuicide(Buffer, StartIndex);
                     break;
 #if !VANILLA
-                case UserCommandType.TempSafe:                                                          // 9
-                    returnValue = new UserCommandTempSafe(Buffer, StartIndex);
+                case UserCommandType.SendPreferences:                                                   // 9
+                    returnValue = new UserCommandSendPreferences(Buffer, StartIndex);
                     break;
 #endif
                 case UserCommandType.GuildInfo:                                                         // 11
@@ -183,8 +187,8 @@ namespace Meridian59.Data.Models
                     returnValue = new UserCommandClaimShield(Buffer, StartIndex);
                     break;
 #if !VANILLA
-                case UserCommandType.Grouping:                                                          // 34
-                    returnValue = new UserCommandGrouping(Buffer, StartIndex);
+                case UserCommandType.ReceivePreferences:                                                // 34
+                    returnValue = new UserCommandReceivePreferences(Buffer, StartIndex);
                     break;
 #endif
                 case UserCommandType.Deposit:                                                           // 35

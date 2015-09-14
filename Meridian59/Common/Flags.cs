@@ -30,7 +30,7 @@ namespace Meridian59.Common
         /// <summary>
         /// 
         /// </summary>
-        public string PROPNAME_FLAGS = "Flags";
+        public const string PROPNAME_FLAGS = "Flags";
 
         /// <summary>
         /// 
