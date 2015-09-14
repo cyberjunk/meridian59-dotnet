@@ -41,10 +41,6 @@ namespace Meridian59.Data.Models
         private const uint CF_SPELLPOWER = 0x00000040; // Player gets spellpower readout from cast spells
         #endregion
 
-        #region Constants
-        public new const string PROPNAME_FLAGS = "Flags";
-        #endregion
-
         #region Properties
         /// <summary>
         /// Whether safety is enabled or not
@@ -57,6 +53,8 @@ namespace Meridian59.Data.Models
            {
               if (value) Value |= CF_SAFETY_OFF;
               else Value &= ~CF_SAFETY_OFF;
+
+              RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
            }
         }
 
@@ -70,6 +68,8 @@ namespace Meridian59.Data.Models
            {
               if (value) Value |= CF_TEMPSAFE;
               else Value &= ~CF_TEMPSAFE;
+
+              RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
            }
         }
 
@@ -83,6 +83,8 @@ namespace Meridian59.Data.Models
            {
               if (value) Value |= CF_GROUPING;
               else Value &= ~CF_GROUPING;
+
+              RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
            }
         }
 
@@ -96,6 +98,8 @@ namespace Meridian59.Data.Models
            {
               if (value) Value |= CF_REAGENTBAG;
               else Value &= ~CF_REAGENTBAG;
+
+              RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
            }
         }
 
@@ -109,6 +113,8 @@ namespace Meridian59.Data.Models
            {
               if (value) Value |= CF_AUTOLOOT;
               else Value &= ~CF_AUTOLOOT;
+
+              RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
            }
         }
 
@@ -122,6 +128,8 @@ namespace Meridian59.Data.Models
            {
               if (value) Value |= CF_AUTOCOMBINE;
               else Value &= ~CF_AUTOCOMBINE;
+
+              RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
            }
         }
 
@@ -135,6 +143,8 @@ namespace Meridian59.Data.Models
            {
               if (value) Value |= CF_SPELLPOWER;
               else Value &= ~CF_SPELLPOWER;
+
+              RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
            }
         }
         #endregion
