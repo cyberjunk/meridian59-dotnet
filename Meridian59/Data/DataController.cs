@@ -864,6 +864,7 @@ namespace Meridian59.Data
             GuildAskData.Clear(true);
             DiplomacyInfo.Clear(true);
             AdminInfo.Clear(true);
+            ClientPreferences.Clear(true);
             LookObject.Clear(true);
             LookPlayer.Clear(true);
             RoomInformation.Clear(true);
