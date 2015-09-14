@@ -84,21 +84,43 @@ namespace Meridian59.Data.Models
         }
         #endregion
 
+        protected AdminInfoObject GetTrackedObjectByID(uint ID)
+        {
+            foreach (AdminInfoObject obj in TrackedObjects)
+                if (obj.ID == ID)
+                    return obj;
+
+            return null;
+        }
+
         public void ProcessServerResponse(string Text)
         {
             // track it (for console)
             serverResponses.Add(Text);
 
-            /*** regex processing ***/
+            // parse using regex
+            TryAdminInfoObject(Text);
 
-            // 1) Test for object info
+            // .. continue me ..
+        }
+
+        protected bool TryAdminInfoObject(string Text)
+        {
             AdminInfoObject adminInfoObj = AdminInfoObject.TryParse(Text);
 
             if (adminInfoObj != null)
             {
-                trackedObjects.Add(adminInfoObj);
-                return;
+                AdminInfoObject existingObj = GetTrackedObjectByID(adminInfoObj.ID);
+
+                if (existingObj != null)
+                    existingObj.UpdateFromModel(adminInfoObj, true);
+                else
+                    trackedObjects.Add(adminInfoObj);
+
+                return true;
             }
+
+            return false;
         }
     }
 }

@@ -27,7 +27,7 @@ namespace Meridian59.Data.Models
     /// <summary>
     /// 
     /// </summary>
-    public class AdminInfoObject : INotifyPropertyChanged, IClearable
+    public class AdminInfoObject : INotifyPropertyChanged, IClearable, IUpdatable<AdminInfoObject>
     {
         #region Constants
         public const string PROPNAME_ID = "ID";
@@ -161,6 +161,26 @@ namespace Meridian59.Data.Models
         protected void RaisePropertyChanged(PropertyChangedEventArgs e)
         {
             if (PropertyChanged != null) PropertyChanged(this, e);
+        }
+
+        public void UpdateFromModel(AdminInfoObject Model, bool RaiseChangedEvent)
+        {
+            if (RaiseChangedEvent)
+            {
+                ID = Model.ID;
+                ClassName = Model.ClassName;
+
+                properties.Clear();
+                properties.AddRange(Model.Properties);
+            }
+            else
+            {
+                id = Model.ID;
+                className = Model.ClassName;
+
+                properties.Clear();
+                properties.AddRange(Model.Properties);
+            }
         }
     }
 }
