@@ -110,6 +110,7 @@
     <Compile Include="Common\Events\InventoryObjectEvent.cs" />
     <Compile Include="Common\Events\ActionTypeEvent.cs" />
     <Compile Include="Common\Events\AvatarActionEvent.cs" />
+    <Compile Include="Common\Events\StringEvent.cs" />
     <Compile Include="Common\Flags.cs" />
     <Compile Include="Common\GameTick.cs" />
     <Compile Include="Common\Interfaces\ITickable.cs" />

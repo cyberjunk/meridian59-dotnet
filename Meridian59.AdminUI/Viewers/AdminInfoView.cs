@@ -20,6 +20,7 @@ using System.Windows.Forms;
 using Meridian59.Protocol.Events;
 using Meridian59.Protocol.GameMessages;
 using Meridian59.Data.Models;
+using Meridian59.Common.Events;
 
 namespace Meridian59.AdminUI.Viewers
 {
@@ -134,6 +135,7 @@ namespace Meridian59.AdminUI.Viewers
                     view.Dock = DockStyle.Fill;
                     view.DataSource = dataSource.TrackedObjects[e.NewIndex];
                     view.Close += OnAdminInfoObjectViewClose;
+                    view.CommandSend += OnAdminInfoObjectCommandSend;
 
                     // create tabpage and add view
                     TabPage tabPage = new TabPage();
@@ -152,6 +154,14 @@ namespace Meridian59.AdminUI.Viewers
                     tabObjects.TabPages.Clear();
                     break;
             }
+        }
+
+        protected void OnAdminInfoObjectCommandSend(object sender, StringEventArgs e)
+        {
+            ReqAdminMessage msg = new ReqAdminMessage(e.Value);
+
+            if (MessageSend != null)
+                MessageSend(this, new GameMessageEventArgs(msg));
         }
 
         protected void OnAdminInfoObjectViewClose(object sender, EventArgs e)

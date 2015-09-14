@@ -56,6 +56,8 @@
             this.gridProperties.Name = "gridProperties";
             this.gridProperties.Size = new System.Drawing.Size(313, 337);
             this.gridProperties.TabIndex = 0;
+            this.gridProperties.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.OnGridPropertiesCellEndEdit);
+            this.gridProperties.ReadOnly = false;
             // 
             // colPropertyName
             // 
@@ -79,7 +81,7 @@
             this.colPropertyValue.DataPropertyName = "PropertyValue";
             this.colPropertyValue.HeaderText = "PropertyValue";
             this.colPropertyValue.Name = "colPropertyValue";
-            this.colPropertyValue.ReadOnly = true;
+            this.colPropertyValue.ReadOnly = false;
             // 
             // splitContainer1
             // 
@@ -153,12 +155,12 @@
         #endregion
 
         private Generic.BaseGridView gridProperties;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colPropertyName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colPropertyType;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colPropertyValue;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.GroupBox gbProperties;
         private System.Windows.Forms.GroupBox gbActions;
         private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPropertyName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPropertyType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPropertyValue;
     }
 }

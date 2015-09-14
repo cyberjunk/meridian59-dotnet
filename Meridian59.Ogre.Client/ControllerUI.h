@@ -28,6 +28,7 @@ namespace Meridian59 { namespace Ogre
 {
 	using namespace System::ComponentModel;
 	using namespace Meridian59::Common::Enums;
+	using namespace Meridian59::Common::Events;
 	using namespace Meridian59::Data::Models;
 	using namespace Meridian59::Data;
 
@@ -191,7 +192,7 @@ namespace Meridian59 { namespace Ogre
 
 			static void OnPreloadingGroupStarted(Object^ sender, ::System::EventArgs^ e);
 			static void OnPreloadingGroupEnded(Object^ sender, ::System::EventArgs^ e);
-			static void OnPreloadingFile(Object^ sender, ::Meridian59::Files::ResourceManager::StringEventArgs^ e);
+			static void OnPreloadingFile(Object^ sender, StringEventArgs^ e);
 		};
 
 		/// <summary>

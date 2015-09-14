@@ -27,6 +27,7 @@ using Meridian59.Data.Lists;
 using Meridian59.Data.Models;
 using System.Threading;
 using Meridian59.Common.Enums;
+using Meridian59.Common.Events;
 
 namespace Meridian59.Files
 {
@@ -35,15 +36,6 @@ namespace Meridian59.Files
     /// </summary>
     public class ResourceManager
     {
-        public class StringEventArgs : EventArgs
-        {
-            public string Value;
-            public StringEventArgs(string Value)
-            {
-                this.Value = Value;
-            }
-        }
-
         #region Constants
         protected const string NOTFOUND = "Error: StringResources file or Bgf/Roo/Wav/Music folder not found.";
         protected const string DEFAULTSTRINGFILE = "rsc0000.rsb";

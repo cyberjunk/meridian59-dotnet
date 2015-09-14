@@ -19,7 +19,7 @@ namespace Meridian59 { namespace Ogre
 			gcnew ::System::EventHandler(OnPreloadingGroupEnded);
 
 		OgreClient::Singleton->ResourceManager->PreloadingFile +=
-			gcnew ::System::EventHandler<::Meridian59::Files::ResourceManager::StringEventArgs^>(OnPreloadingFile);
+			gcnew ::System::EventHandler<StringEventArgs^>(OnPreloadingFile);
 
 	};
 
@@ -33,7 +33,7 @@ namespace Meridian59 { namespace Ogre
 			gcnew ::System::EventHandler(OnPreloadingGroupEnded);
 
 		OgreClient::Singleton->ResourceManager->PreloadingFile -=
-			gcnew ::System::EventHandler<::Meridian59::Files::ResourceManager::StringEventArgs^>(OnPreloadingFile);
+			gcnew ::System::EventHandler<StringEventArgs^>(OnPreloadingFile);
 	};
 
 	void ControllerUI::LoadingBar::Start(unsigned short numGroupsInit) 
@@ -163,7 +163,7 @@ namespace Meridian59 { namespace Ogre
 	{
 	};
 
-	void ControllerUI::LoadingBar::OnPreloadingFile(Object^ sender, ::Meridian59::Files::ResourceManager::StringEventArgs^ e)
+	void ControllerUI::LoadingBar::OnPreloadingFile(Object^ sender, StringEventArgs^ e)
 	{
 		if (!OgreClient::Singleton->RenderWindow->isClosed())
 		{

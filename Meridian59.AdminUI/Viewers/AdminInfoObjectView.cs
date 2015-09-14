@@ -15,14 +15,10 @@
 */
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using Meridian59.Data.Models;
+using Meridian59.Common.Events;
 
 namespace Meridian59.AdminUI.Viewers
 {
@@ -37,6 +33,11 @@ namespace Meridian59.AdminUI.Viewers
         /// Raised when Close button is clicked
         /// </summary>
         public event EventHandler Close;
+
+        /// <summary>
+        /// Raised when a query should be send to the server
+        /// </summary>
+        public event EventHandler<StringEventArgs> CommandSend;
 
         /// <summary>
         /// The model to be shown in the View
@@ -68,6 +69,21 @@ namespace Meridian59.AdminUI.Viewers
         {
             if (Close != null)
                 Close(this, new EventArgs());
+        }
+
+        protected void OnGridPropertiesCellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridViewRow row = gridProperties.Rows[e.RowIndex];
+            AdminInfoProperty prop = (AdminInfoProperty)row.DataBoundItem;
+            
+            string s = String.Format("set object {0} {1} {2} {3}", 
+                dataSource.ID, 
+                prop.PropertyName, 
+                prop.PropertyType, 
+                prop.PropertyValue);
+
+            if (CommandSend != null)
+                CommandSend(this, new StringEventArgs(s));
         }
     }
 }
