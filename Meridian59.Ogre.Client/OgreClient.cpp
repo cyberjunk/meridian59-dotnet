@@ -17,10 +17,6 @@ namespace Meridian59 { namespace Ogre
 		// call base init
 		SingletonClient::Init();
 
-#ifdef _DEBUG
-        // always show adminform in debug builds
-        ShowAdminForm(); 
-#endif	
 		/********************************************************************************************************/
 
 		// init sound-engine (irrklang)
@@ -788,8 +784,6 @@ namespace Meridian59 { namespace Ogre
 
 	void OgreClient::HandleLoginOKMessage(LoginOKMessage^ Message)
     {
-		if (Message->AccountType == AccountType::ADMIN)
-			ShowAdminForm();
 	};
 	
 	void OgreClient::HandleLoginFailedMessage(LoginFailedMessage^ Message)

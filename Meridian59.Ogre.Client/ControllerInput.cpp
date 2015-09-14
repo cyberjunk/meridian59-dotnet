@@ -701,7 +701,7 @@ namespace Meridian59 { namespace Ogre
 		oisKeyboard->capture();
 		oisMouse->capture();
 				
-		/********************* EXIT CASES *********************/
+		/********************* EXIT CASES 1 *******************/
 		/*        Don't go on if any of these match           */
 		/******************************************************/
 		
@@ -709,11 +709,27 @@ namespace Meridian59 { namespace Ogre
 			!OgreClient::Singleton->RenderWindow ||
 			!OgreClient::Singleton->RenderWindow->isVisible() ||
 			!OgreClient::Singleton->RenderWindow->isActive() ||
-			!OgreClient::Singleton->HasFocus ||
-			Avatar == nullptr ||
-			Avatar->SceneNode == nullptr)
+			!OgreClient::Singleton->HasFocus)
 			return;
-		
+
+		/********************* ADMIN UI ***********************/
+		/*           hardcoded key-combo for admin ui         */
+		/******************************************************/
+
+		if (!ControllerUI::ProcessingInput &&
+			oisKeyboard->isKeyDown(::OIS::KeyCode::KC_4) &&
+			(oisKeyboard->isKeyDown(::OIS::KeyCode::KC_LSHIFT) ||
+			 oisKeyboard->isKeyDown(::OIS::KeyCode::KC_RSHIFT)))
+		{
+			OgreClient::Singleton->ShowAdminForm();
+		}
+
+		/********************* EXIT CASES 2 *******************/
+		/*        Don't go on if any of these match           */
+		/******************************************************/
+		if (Avatar == nullptr || Avatar->SceneNode == nullptr)
+			return;
+
 		/*************** SELF TARGET MODIFIER *****************/
 		/*         Process keydown of some specific keys      */
 		/******************************************************/
@@ -885,7 +901,7 @@ namespace Meridian59 { namespace Ogre
 
 		if (ControllerUI::ProcessingInput)
 			return;
-		
+
 		/******************** ROTATION KEYS *******************/
 		/*             rotate left/right by keyboard          */
 		/******************************************************/	

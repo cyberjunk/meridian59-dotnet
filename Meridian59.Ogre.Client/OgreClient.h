@@ -211,11 +211,6 @@ namespace Meridian59 { namespace Ogre
 		/// </summary>
 		void OnAdminFormPacketSend(Object^ sender, GameMessageEventArgs^ e);
 
-		/// <summary>
-		/// Shows the admin form
-		/// </summary>
-		void ShowAdminForm();
-
 	public:
 		bool RecreateWindow = false;
 
@@ -314,6 +309,11 @@ namespace Meridian59 { namespace Ogre
 		/// Overriden Disconnect
 		/// </summary>
 		virtual void Disconnect() override;
+
+		/// <summary>
+		/// Shows the admin form
+		/// </summary>
+		void ShowAdminForm();
 
 		/// <summary>
         /// Overwritten from base class to also set the 
