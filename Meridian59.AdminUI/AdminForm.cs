@@ -51,6 +51,7 @@ namespace Meridian59.AdminUI
 
                     if (data != null)
                     {
+                        adminInfoView.DataSource = data.AdminInfo;
                         diplomacyInfoViewer.DataSource = data.DiplomacyInfo;
                         guildInfoViewer.DataSource = data.GuildInfo;
                         gameMessageViewer.DataSource = data.GameMessageLog;
@@ -114,7 +115,7 @@ namespace Meridian59.AdminUI
                 stringsViewer.DataSource = resourceManager.StringResources;
         }
 
-        protected void OnGameMessageViewerPacketSend(object sender, GameMessageEventArgs e)
+        protected void OnSubControlPacketSend(object sender, GameMessageEventArgs e)
         {
             if (PacketSend != null) 
                 PacketSend(this, e);

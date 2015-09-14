@@ -15,24 +15,34 @@
 */
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
+using System.Data;
+using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 using Meridian59.Data.Models;
 
 namespace Meridian59.AdminUI.Viewers
 {
     /// <summary>
-    /// View for Data.Models.DiplomacyInfo
+    /// View for Data.Models.AdminInfoObject
     /// </summary>
-    public partial class DiplomacyInfoView : UserControl
+    public partial class AdminInfoObjectView : UserControl
     {
-        protected DiplomacyInfo dataSource;
+        protected AdminInfoObject dataSource;
+
+        /// <summary>
+        /// Raised when Close button is clicked
+        /// </summary>
+        public event EventHandler Close;
 
         /// <summary>
         /// The model to be shown in the View
         /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), DefaultValue(null), Browsable(true)]
-        public DiplomacyInfo DataSource
+        public AdminInfoObject DataSource
         {
             get { return dataSource; }
             set
@@ -41,12 +51,7 @@ namespace Meridian59.AdminUI.Viewers
                 {
                     dataSource = value;
 
-                    gridGuilds.DataSource = dataSource.Guilds;
-
-                    lbYouDeclaredAlly.DataSource = dataSource.YouDeclaredAllyList;
-                    lbYouDeclaredEnemy.DataSource = dataSource.YouDeclaredEnemyList;
-                    lbDeclaredYouAlly.DataSource = dataSource.DeclaredYouAllyList;
-                    lbDeclaredYouEnemy.DataSource = dataSource.DeclaredYouEnemyList;
+                    gridProperties.DataSource = dataSource.Properties;
                 }
             }
         }
@@ -54,9 +59,15 @@ namespace Meridian59.AdminUI.Viewers
         /// <summary>
         /// Constructor
         /// </summary>
-        public DiplomacyInfoView()
+        public AdminInfoObjectView()
         {
             InitializeComponent();
+        }
+
+        protected void OnCloseClick(object sender, EventArgs e)
+        {
+            if (Close != null)
+                Close(this, new EventArgs());
         }
     }
 }

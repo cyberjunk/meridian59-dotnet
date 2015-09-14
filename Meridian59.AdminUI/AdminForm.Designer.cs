@@ -32,6 +32,7 @@ namespace Meridian59.AdminUI
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminForm));
             this.tabMain = new System.Windows.Forms.TabControl();
             this.tabConsole = new System.Windows.Forms.TabPage();
+            this.adminInfoView = new Meridian59.AdminUI.Viewers.AdminInfoView();
             this.tabNetwork = new System.Windows.Forms.TabPage();
             this.gameMessageViewer = new Meridian59.AdminUI.Viewers.GameMessageView();
             this.tabPlayers = new System.Windows.Forms.TabPage();
@@ -81,6 +82,7 @@ namespace Meridian59.AdminUI
             this.btnRequestSpells3 = new System.Windows.Forms.Button();
             this.objectBaseView1 = new Meridian59.AdminUI.ObjectBaseView();
             this.tabMain.SuspendLayout();
+            this.tabConsole.SuspendLayout();
             this.tabNetwork.SuspendLayout();
             this.tabPlayers.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer8)).BeginInit();
@@ -153,12 +155,22 @@ namespace Meridian59.AdminUI
             // 
             // tabConsole
             // 
+            this.tabConsole.Controls.Add(this.adminInfoView);
             this.tabConsole.Location = new System.Drawing.Point(4, 22);
             this.tabConsole.Name = "tabConsole";
             this.tabConsole.Size = new System.Drawing.Size(1226, 558);
             this.tabConsole.TabIndex = 12;
             this.tabConsole.Text = "Console";
             this.tabConsole.UseVisualStyleBackColor = true;
+            // 
+            // adminInfoView
+            // 
+            this.adminInfoView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.adminInfoView.Location = new System.Drawing.Point(0, 0);
+            this.adminInfoView.Name = "adminInfoView";
+            this.adminInfoView.Size = new System.Drawing.Size(1226, 558);
+            this.adminInfoView.TabIndex = 0;
+            this.adminInfoView.MessageSend += new Meridian59.Protocol.Events.GameMessageEventHandler(this.OnSubControlPacketSend);
             // 
             // tabNetwork
             // 
@@ -178,7 +190,7 @@ namespace Meridian59.AdminUI
             this.gameMessageViewer.Name = "gameMessageViewer";
             this.gameMessageViewer.Size = new System.Drawing.Size(1220, 552);
             this.gameMessageViewer.TabIndex = 0;
-            this.gameMessageViewer.PacketSend += new Meridian59.Protocol.Events.GameMessageEventHandler(this.OnGameMessageViewerPacketSend);
+            this.gameMessageViewer.PacketSend += new Meridian59.Protocol.Events.GameMessageEventHandler(this.OnSubControlPacketSend);
             this.gameMessageViewer.PacketLogChanged += new Meridian59.AdminUI.Events.PacketLogChangeEventHandler(this.OnGameMessageViewerPacketLogChanged);
             // 
             // tabPlayers
@@ -690,6 +702,7 @@ namespace Meridian59.AdminUI
             this.Name = "AdminForm";
             this.Text = "Admin UI";
             this.tabMain.ResumeLayout(false);
+            this.tabConsole.ResumeLayout(false);
             this.tabNetwork.ResumeLayout(false);
             this.tabPlayers.ResumeLayout(false);
             this.splitContainer8.Panel1.ResumeLayout(false);
@@ -794,5 +807,6 @@ namespace Meridian59.AdminUI
         private Viewers.GuildInfoView guildInfoViewer;
         private System.Windows.Forms.SplitContainer splitContainer7;
         private Viewers.DiplomacyInfoView diplomacyInfoViewer;
+        private Viewers.AdminInfoView adminInfoView;
     }
 }

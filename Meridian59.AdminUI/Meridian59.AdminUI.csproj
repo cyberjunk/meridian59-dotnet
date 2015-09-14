@@ -64,6 +64,18 @@
     <Compile Include="Generic\PictureBoxes.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Viewers\AdminInfoObjectView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Viewers\AdminInfoObjectView.Designer.cs">
+      <DependentUpon>AdminInfoObjectView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Viewers\AdminInfoView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Viewers\AdminInfoView.Designer.cs">
+      <DependentUpon>AdminInfoView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Viewers\BackgroundMusicView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -196,6 +208,12 @@
   <ItemGroup>
     <EmbeddedResource Include="AdminForm.resx">
       <DependentUpon>AdminForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Viewers\AdminInfoObjectView.resx">
+      <DependentUpon>AdminInfoObjectView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Viewers\AdminInfoView.resx">
+      <DependentUpon>AdminInfoView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Viewers\BackgroundMusicView.resx">
       <DependentUpon>BackgroundMusicView.cs</DependentUpon>
