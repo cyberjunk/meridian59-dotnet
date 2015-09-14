@@ -124,6 +124,9 @@
     <Compile Include="Data\Lists\KeyValuePairStringList.cs" />
     <Compile Include="Data\Lists\MailList.cs" />
     <Compile Include="Data\Lists\RoomObjectListFiltered.cs" />
+    <Compile Include="Data\Models\AdminInfoProperty.cs" />
+    <Compile Include="Data\Models\AdminInfoObject.cs" />
+    <Compile Include="Data\Models\AdminInfo.cs" />
     <Compile Include="Data\Models\StatChangeInfo.cs" />
     <Compile Include="Data\Models\CharCreationInfo.cs" />
     <Compile Include="Data\Models\ChatCommand\ChatCommandCast.cs" />

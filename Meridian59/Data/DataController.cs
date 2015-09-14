@@ -200,6 +200,11 @@ namespace Meridian59.Data
         public DiplomacyInfo DiplomacyInfo { get; protected set; }
 
         /// <summary>
+        /// Admin info (for admin console) and more.
+        /// </summary>
+        public AdminInfo AdminInfo { get; protected set; }
+
+        /// <summary>
         /// The last inspected nonplayer-object.
         /// This instance stays the same. Its properties change!
         /// </summary>
@@ -771,6 +776,7 @@ namespace Meridian59.Data
             GuildShieldInfo = new GuildShieldInfo();
             GuildAskData = new GuildAskData();
             DiplomacyInfo = new DiplomacyInfo();
+            AdminInfo = new AdminInfo();
             LookObject = new ObjectInfo();
             LookPlayer = new PlayerInfo();
             NewsGroup = new NewsGroup();
@@ -844,6 +850,7 @@ namespace Meridian59.Data
             GuildInfo.Clear(true);
             GuildAskData.Clear(true);
             DiplomacyInfo.Clear(true);
+            AdminInfo.Clear(true);
             LookObject.Clear(true);
             LookPlayer.Clear(true);
             RoomInformation.Clear(true);
@@ -1469,6 +1476,10 @@ namespace Meridian59.Data
                     HandleReqStatChange((ReqStatChangeMessage)Message);
                     break;
 #endif
+                case MessageTypeGameMode.Admin:                     // 162
+                    HandleAdmin((AdminMessage)Message);
+                    break;
+
                 case MessageTypeGameMode.PlayWave:                  // 170
                     HandlePlayWave((PlayWaveMessage)Message);
                     break;
@@ -2160,6 +2171,11 @@ namespace Meridian59.Data
 
             if (bgOverlay != null)
                 bgOverlay.UpdateFromModel(Message.BackgroundOverlay, true); 
+        }
+
+        protected void HandleAdmin(AdminMessage Message)
+        {
+            AdminInfo.ProcessServerResponse(Message.Message);
         }
 
         protected void HandlePlayWave(PlayWaveMessage Message)
