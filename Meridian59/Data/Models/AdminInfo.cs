@@ -42,7 +42,7 @@ namespace Meridian59.Data.Models
 
         #region Fields
         protected readonly BindingList<string> serverResponses = new BindingList<string>();
-        protected readonly BaseList<AdminInfoObject> trackedObjects = new BaseList<AdminInfoObject>();
+        protected readonly BaseList<AdminInfoObject> trackedObjects = new BaseList<AdminInfoObject>();       
         #endregion
 
         #region Properties
@@ -122,5 +122,35 @@ namespace Meridian59.Data.Models
 
             return false;
         }
+
+        /// <summary>
+        /// Default commands for blakserv.
+        /// Please keep alphabetically ordered.
+        /// </summary>
+        /// <remarks>
+        /// {0} are variables for possible use of String.Format() function.
+        /// Like %i in sprintf()
+        /// </remarks>
+        public static readonly string[] DEFAULTCOMMANDS = new string[]
+        {
+            "add",
+            "garbage",
+            "help",
+            "recreate",
+            "reload game {0}",
+            "reload motd",
+            "reload packages",
+            "reload system",
+            "save",
+            "save configuration",
+            "save game",
+            "send",
+            "send object 0 recreateall",
+            "show",
+            "show accounts",
+            "show object {0}",
+            "show users",
+            "who"
+        };
     }
 }
