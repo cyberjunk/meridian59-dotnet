@@ -27,6 +27,8 @@ using Meridian59.Common.Constants;
 using Meridian59.Common;
 using Meridian59.Files.ROO;
 using Meridian59.Common.Enums;
+using Meridian59.Data.Lists;
+using Meridian59.Data.Models;
 
 namespace Meridian59.Files.RSB
 {
@@ -66,17 +68,12 @@ namespace Meridian59.Files.RSB
         {
             get 
             {
+                // header
                 int len = TypeSizes.INT + TypeSizes.INT + TypeSizes.INT;
-			
-				// old, no multilang
-				if (version <= VERSION4)
-					foreach (KeyValuePair<uint, string> entry in StringResources)
-						len += TypeSizes.INT + entry.Value.Length + TypeSizes.BYTE;
-				
-				// multilanguage (additional int)
-				else
-					foreach (KeyValuePair<uint, string> entry in StringResources)
-						len += TypeSizes.INT + TypeSizes.INT + entry.Value.Length + TypeSizes.BYTE;
+
+                // strings
+                foreach (RsbResourceID entry in stringResources)
+                    len += entry.ByteLength;
 
                 return len;
             }
@@ -95,31 +92,9 @@ namespace Meridian59.Files.RSB
             Array.Copy(BitConverter.GetBytes(StringResources.Count), 0, Buffer, cursor, TypeSizes.INT);
             cursor += TypeSizes.INT;
 
-            foreach (KeyValuePair<uint, string> entry in StringResources)
-            {
-				uint key = StringDictionary.GetResourceIDFromCombined(entry.Key);
-				
-				Array.Copy(BitConverter.GetBytes(key), 0, Buffer, cursor, TypeSizes.INT);
-				cursor += TypeSizes.INT;
+            foreach (RsbResourceID entry in StringResources)            
+                cursor += entry.WriteTo(Buffer, cursor);
 
-				// version5 and above have additional language code
-				if (version >= VERSION5)
-				{
-					uint langcode = (uint)StringDictionary.GetLanguageFromCombined(entry.Key);
-
-					Array.Copy(BitConverter.GetBytes(langcode), 0, Buffer, cursor, TypeSizes.INT);
-					cursor += TypeSizes.INT;
-				}
-
-				// write string
-				Array.Copy(Encoding.Default.GetBytes(entry.Value), 0, Buffer, cursor, entry.Value.Length);
-				cursor += entry.Value.Length;
-
-				// c-str termination
-                Buffer[cursor] = 0x00;
-                cursor++;
-            }
-           
             return cursor - StartIndex;
         }
 
@@ -159,28 +134,10 @@ namespace Meridian59.Files.RSB
                 StringResources.Clear();
                 for (int i = 0; i < entries; i++)
                 {
-                    uint id = BitConverter.ToUInt32(Buffer, cursor);
-                    cursor += TypeSizes.INT;
+                    RsbResourceID entry = new RsbResourceID(version, Buffer, cursor);
+                    cursor += entry.ByteLength;
 
-					// version 5 and above has additional language code
-					LanguageCode langcode = LanguageCode.English;
-					if (version >= VERSION5)
-					{
-						langcode = (LanguageCode)BitConverter.ToUInt32(Buffer, cursor);
-						cursor += TypeSizes.INT;
-					}
-
-                    // look for terminating 0x00 (NULL)
-                    ushort strlen = 0;
-                    while ((Buffer.Length > cursor + strlen) && Buffer[cursor + strlen] != 0x00)
-                        strlen++;
-
-					// get string
-                    string val = Encoding.Default.GetString(Buffer, cursor, strlen);
-                    cursor += strlen + TypeSizes.BYTE;
-
-					// add to dictionary
-					StringResources.TryAdd(id, val, langcode);
+					StringResources.Add(entry);
                 }               
             }
             else
@@ -258,7 +215,7 @@ namespace Meridian59.Files.RSB
                 uint id = Convert.ToUInt32(reader["id"]);
 				LanguageCode lang = LanguageCode.English; //todo
                 string resource = reader.ReadString();
-				StringResources.TryAdd(id, resource, lang);
+				stringResources.Add(new RsbResourceID(id, resource, version, lang));
             }
         }
 
@@ -281,11 +238,11 @@ namespace Meridian59.Files.RSB
             // strings
             writer.WriteStartElement("strings");
             writer.WriteAttributeString("count", StringResources.Count.ToString());
-            foreach(KeyValuePair<uint, string> entry in StringResources)
+            foreach(RsbResourceID entry in StringResources)
             {
                 writer.WriteStartElement("string");
-                writer.WriteAttributeString("id", entry.Key.ToString());
-                writer.WriteString(entry.Value);               
+                writer.WriteAttributeString("id", entry.ID.ToString());
+                writer.WriteString(entry.Text);               
                 writer.WriteEndElement();
             }
             writer.WriteEndElement();
@@ -301,7 +258,7 @@ namespace Meridian59.Files.RSB
         #region Fields
 		protected uint version;
         protected string filename;
-		protected StringDictionary stringResources = new StringDictionary();
+        protected readonly StringList stringResources = new StringList();
         #endregion
 
         #region Properties
@@ -340,17 +297,9 @@ namespace Meridian59.Files.RSB
         /// <summary>
         /// A key/value pair dictionary with resource/string IDs.
         /// </summary>
-        public StringDictionary StringResources 
+        public StringList StringResources 
         {
-            get { return stringResources; }
-            protected set
-            {
-                if (stringResources != value)
-                {
-                    stringResources = value;
-                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_STRINGRESOURCES));
-                }
-            } 
+            get { return stringResources; }            
         }
         #endregion
 
@@ -367,10 +316,11 @@ namespace Meridian59.Files.RSB
         /// Constructor by values
         /// </summary>
         /// <param name="StringResources"></param>
-		public RsbFile(StringDictionary StringResources)
+		public RsbFile(IEnumerable<RsbResourceID> StringResources)
         {
             filename = DEFAULTFILENAME;
-            stringResources = StringResources;
+
+            stringResources.AddRange(StringResources);
         }
 
         /// <summary>

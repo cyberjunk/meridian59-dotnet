@@ -86,17 +86,7 @@ namespace Meridian59.AdminUI
             {
                 if (resourceManager != value)
                 {
-                    // detach old listener
-                    if (resourceManager != null)
-                        resourceManager.StringDictionarySelected -= OnStringDictionarySelected;
-
                     resourceManager = value;
-
-                    if (resourceManager != null)
-                    {
-                        resourceManager.StringDictionarySelected += OnStringDictionarySelected;
-                        stringsViewer.DataSource = resourceManager.StringResources;
-                    }                      
                 }
             }
         }
@@ -107,12 +97,6 @@ namespace Meridian59.AdminUI
         public AdminForm()
         {
             InitializeComponent();
-        }
-
-        protected void OnStringDictionarySelected(object sender, EventArgs e)
-        {
-            if (resourceManager != null)
-                stringsViewer.DataSource = resourceManager.StringResources;
         }
 
         protected void OnSubControlPacketSend(object sender, GameMessageEventArgs e)

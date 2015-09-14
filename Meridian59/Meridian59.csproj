@@ -128,6 +128,7 @@
     <Compile Include="Data\Models\AdminInfoProperty.cs" />
     <Compile Include="Data\Models\AdminInfoObject.cs" />
     <Compile Include="Data\Models\AdminInfo.cs" />
+    <Compile Include="Data\Models\ResourceID.cs" />
     <Compile Include="Data\Models\StatChangeInfo.cs" />
     <Compile Include="Data\Models\CharCreationInfo.cs" />
     <Compile Include="Data\Models\ChatCommand\ChatCommandCast.cs" />
@@ -294,7 +295,6 @@
     <Compile Include="Data\Models\ObjectUpdate.cs" />
     <Compile Include="Data\Models\OnlinePlayer.cs" />
     <Compile Include="Data\Models\Projectile.cs" />
-    <Compile Include="Data\Models\ResourceID.cs" />
     <Compile Include="Data\Models\RoomInfo.cs" />
     <Compile Include="Data\Models\RoomObject.cs" />
     <Compile Include="Data\Models\StatList.cs" />
@@ -345,6 +345,7 @@
     <Compile Include="Files\ROO\RooThingExtended.cs" />
     <Compile Include="Files\ROO\SectorMovedEvent.cs" />
     <Compile Include="Files\ROO\WallTextureChangedEvent.cs" />
+    <Compile Include="Files\RSB\RsbResourceID.cs" />
     <Compile Include="Native\Linux.cs" />
     <Compile Include="Native\Windows.cs" />
     <Compile Include="Native\Wrapper.cs" />

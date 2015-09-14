@@ -512,9 +512,11 @@ namespace Meridian59.Files
             // try get the dictionary for argument
             RsbFile file = GetStringDictionary(RsbFile);
             
-            // add to dictionary in use
-            if (file != null)            
-				StringResources.AddRange(file.StringResources);
+            // load strings of the rsbfile to use
+            // into the multithreaded dictionary
+            if (file != null)
+                foreach (RsbResourceID res in file.StringResources)
+                    StringResources.TryAdd(res.ID, res.Text, res.Language);
 
             // raise event
             if (StringDictionarySelected != null)

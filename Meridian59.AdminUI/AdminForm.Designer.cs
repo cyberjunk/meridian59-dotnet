@@ -51,8 +51,6 @@ namespace Meridian59.AdminUI
             this.backgroundOverlayView = new Meridian59.AdminUI.Viewers.BackgroundOverlayView();
             this.tabRoomObjects = new System.Windows.Forms.TabPage();
             this.roomObjectsViewer = new Meridian59.AdminUI.RoomObjectsView();
-            this.tabStrings = new System.Windows.Forms.TabPage();
-            this.stringsViewer = new Meridian59.AdminUI.Viewers.StringsView();
             this.tabInventory = new System.Windows.Forms.TabPage();
             this.inventoryObjectView = new Meridian59.AdminUI.InventoryObjectView();
             this.tabStats = new System.Windows.Forms.TabPage();
@@ -108,7 +106,6 @@ namespace Meridian59.AdminUI
             this.splitContainer12.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tabRoomObjects.SuspendLayout();
-            this.tabStrings.SuspendLayout();
             this.tabInventory.SuspendLayout();
             this.tabStats.SuspendLayout();
             this.tblAvarInfo.SuspendLayout();
@@ -139,7 +136,6 @@ namespace Meridian59.AdminUI
             this.tabMain.Controls.Add(this.tabNetwork);
             this.tabMain.Controls.Add(this.tabPlayers);
             this.tabMain.Controls.Add(this.tabRoomObjects);
-            this.tabMain.Controls.Add(this.tabStrings);
             this.tabMain.Controls.Add(this.tabInventory);
             this.tabMain.Controls.Add(this.tabStats);
             this.tabMain.Controls.Add(this.tabBuffs);
@@ -378,25 +374,6 @@ namespace Meridian59.AdminUI
             this.roomObjectsViewer.Name = "roomObjectsViewer";
             this.roomObjectsViewer.Size = new System.Drawing.Size(1220, 552);
             this.roomObjectsViewer.TabIndex = 1;
-            // 
-            // tabStrings
-            // 
-            this.tabStrings.Controls.Add(this.stringsViewer);
-            this.tabStrings.Location = new System.Drawing.Point(4, 22);
-            this.tabStrings.Name = "tabStrings";
-            this.tabStrings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabStrings.Size = new System.Drawing.Size(1226, 558);
-            this.tabStrings.TabIndex = 3;
-            this.tabStrings.Text = "Strings";
-            this.tabStrings.UseVisualStyleBackColor = true;
-            // 
-            // stringsViewer
-            // 
-            this.stringsViewer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.stringsViewer.Location = new System.Drawing.Point(3, 3);
-            this.stringsViewer.Name = "stringsViewer";
-            this.stringsViewer.Size = new System.Drawing.Size(1220, 552);
-            this.stringsViewer.TabIndex = 0;
             // 
             // tabInventory
             // 
@@ -728,7 +705,6 @@ namespace Meridian59.AdminUI
             this.splitContainer12.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.tabRoomObjects.ResumeLayout(false);
-            this.tabStrings.ResumeLayout(false);
             this.tabInventory.ResumeLayout(false);
             this.tabStats.ResumeLayout(false);
             this.tblAvarInfo.ResumeLayout(false);
@@ -761,7 +737,6 @@ namespace Meridian59.AdminUI
         private System.Windows.Forms.TabPage tabNetwork;
         private System.Windows.Forms.TabPage tabPlayers;
         private System.Windows.Forms.TabPage tabRoomObjects;
-        private System.Windows.Forms.TabPage tabStrings;
         private System.Windows.Forms.TabPage tabInventory;
         private System.Windows.Forms.TabPage tabStats;
         private System.Windows.Forms.TableLayoutPanel tblAvarInfo;
@@ -803,7 +778,6 @@ namespace Meridian59.AdminUI
         private System.Windows.Forms.TabPage tabConsole;
         private Viewers.ServerStringView chatViewer;
         private Viewers.GameMessageView gameMessageViewer;
-        private Viewers.StringsView stringsViewer;
         private Viewers.GuildInfoView guildInfoViewer;
         private System.Windows.Forms.SplitContainer splitContainer7;
         private Viewers.DiplomacyInfoView diplomacyInfoViewer;

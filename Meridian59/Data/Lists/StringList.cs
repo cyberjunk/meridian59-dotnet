@@ -18,14 +18,16 @@ using System;
 using System.ComponentModel;
 using System.Collections.Generic;
 using Meridian59.Data.Models;
+using Meridian59.Files.RSB;
+using Meridian59.Common.Enums;
 
 namespace Meridian59.Data.Lists
 {
     /// <summary>
-    /// List for ResourceID
+    /// List for RsbResourceID
     /// </summary>
     [Serializable]
-    public class StringList : BaseList<ResourceID>
+    public class StringList : BaseList<RsbResourceID>
     {      
         public StringList(int Capacity = 5) : base (Capacity)
         {
@@ -34,69 +36,70 @@ namespace Meridian59.Data.Lists
             AllowRemove = true;           
         }
 
-        public uint GetMaximumValue()
+        public uint GetMaximumID()
         {
             uint max = 0;
-            foreach (ResourceID entry in this)
-                if (entry.Value > max)
-                    max = entry.Value;
+            foreach (RsbResourceID entry in this)
+                if (entry.ID > max)
+                    max = entry.ID;
 
             return max;     
         }
         
-        public uint GetMinimumValue()
+        public uint GetMinimumID()
         {
             uint min = 0;
-            foreach (ResourceID entry in this)
-                if (entry.Value < min)
-                    min = entry.Value;
+            foreach (RsbResourceID entry in this)
+                if (entry.ID < min)
+                    min = entry.ID;
 
             return min;
         }
         
-        public int GetIndexByValue(uint Value)
+        public int GetIndexByKey(uint ID, LanguageCode Language)
         {
             for (int i = 0; i < Count; i++)
-                if (this[i].Value == Value)
+                if (this[i].ID == ID && this[i].Language == Language)
                     return i;
+
             return -1;
         }
         
-        public int GetIndexByName(string Name)
+        public int GetIndexByText(string Text)
         {
             for (int i = 0; i < Count; i++)
-                if (String.Equals(this[i].Name, Name))
+                if (String.Equals(this[i].Text, Text))
                     return i;
             return -1;
         }
 
-        public ResourceID GetItemByValue(uint Value)
+        public RsbResourceID GetItemByKey(uint ID, LanguageCode Language)
         {
-            foreach (ResourceID entry in this)
-                if (entry.Value == Value)
+            foreach (RsbResourceID entry in this)
+                if (entry.ID == ID && entry.Language == Language)
                     return entry;
 
             return null;
         }
 
-        public ResourceID GetItemByName(string Name)
+        public RsbResourceID GetItemByText(string Text)
         {
-            foreach (ResourceID entry in this)
-                if (String.Equals(entry.Name, Name))
+            foreach (RsbResourceID entry in this)
+                if (entry.Text == Text)
                     return entry;
 
             return null;
         }
 
-        public IEnumerable<ResourceID> GetItemsByValues(uint[] Values)
+        public IEnumerable<RsbResourceID> GetItemsByIDs(uint[] IDs)
         {
-            List<ResourceID> list = new List<ResourceID>(Capacity);
+            List<RsbResourceID> list = new List<RsbResourceID>(Capacity);
 
-            foreach (ResourceID entry in this)
+            foreach (RsbResourceID entry in this)
             {
-                foreach (uint ID in Values)
+                foreach (uint ID in IDs)
                 {
-                    if (entry.Value == ID)
+                    if (entry.ID == ID)
                     {
                         list.Add(entry);
                         break;
@@ -106,44 +109,39 @@ namespace Meridian59.Data.Lists
 
             return list;
         }
-        
-        public IEnumerable<ResourceID> GetItemsBySubstring(string Substring)
-        {
-            List<ResourceID> list = new List<ResourceID>(Capacity);
 
-            foreach (ResourceID entry in this)
-                if ((Substring == String.Empty) || (entry.Name.IndexOf(Substring) > -1))
+        public IEnumerable<RsbResourceID> GetItemsBySubstring(string Substring)
+        {
+            List<RsbResourceID> list = new List<RsbResourceID>(Capacity);
+
+            foreach (RsbResourceID entry in this)
+                if (Substring == String.Empty || entry.Text.IndexOf(Substring) > -1)
                     list.Add(entry);
 
             return list;
         }
 
-        public string GetNameByValue(uint Value)
-        {
-            foreach (ResourceID entry in this)
-                if (entry.Value == Value)
-                    return entry.Name;
-
-            return String.Empty;
-        }
-        
         public override void ApplySort(PropertyDescriptor Property, ListSortDirection Direction)
         {
             base.ApplySort(Property, Direction);
 
             switch (Property.Name)
             {
-                case ResourceID.PROPNAME_VALUE:
-                    this.Sort(CompareByValue);
+                case RsbResourceID.PROPNAME_ID:
+                    this.Sort(CompareByID);
                     break;
 
-                case ResourceID.PROPNAME_NAME:
-                    this.Sort(CompareByName);
+                case RsbResourceID.PROPNAME_LANGUAGE:
+                    this.Sort(CompareByLanguage);
+                    break;
+
+                case RsbResourceID.PROPNAME_TEXT:
+                    this.Sort(CompareByText);
                     break;
             }        
         }
 
-        public override void Insert(int Index, ResourceID Item)
+        public override void Insert(int Index, RsbResourceID Item)
         {
             if (!isSorted)
                 base.Insert(Index, Item);
@@ -151,12 +149,16 @@ namespace Meridian59.Data.Lists
             {
                 switch (sortProperty.Name)
                 {
-                    case ResourceID.PROPNAME_VALUE:
-                        Index = FindSortedIndexByValue(Item);
+                    case RsbResourceID.PROPNAME_ID:
+                        Index = FindSortedIndexByID(Item);
                         break;
 
-                    case ResourceID.PROPNAME_NAME:
-                        Index = FindSortedIndexByName(Item);
+                    case RsbResourceID.PROPNAME_LANGUAGE:
+                        Index = FindSortedIndexByLanguage(Item);
+                        break;
+
+                    case RsbResourceID.PROPNAME_TEXT:
+                        Index = FindSortedIndexByText(Item);
                         break;
                 }
 
@@ -164,48 +166,70 @@ namespace Meridian59.Data.Lists
             }
         }
 
-        public void SortByValue()
+        public void SortByID()
         {
-            sortProperty = PDC[ResourceID.PROPNAME_VALUE];
+            sortProperty = PDC[RsbResourceID.PROPNAME_ID];
             sortDirection = ListSortDirection.Ascending;
 
             ApplySort(sortProperty, sortDirection);
         }
 
-        public void SortByName()
+        public void SortByLanguage()
         {
-            sortProperty = PDC[ResourceID.PROPNAME_NAME];
+            sortProperty = PDC[RsbResourceID.PROPNAME_LANGUAGE];
             sortDirection = ListSortDirection.Ascending;
 
             ApplySort(sortProperty, sortDirection);
         }
 
-        protected int FindSortedIndexByValue(ResourceID Candidate)
+        public void SortByText()
+        {
+            sortProperty = PDC[RsbResourceID.PROPNAME_TEXT];
+            sortDirection = ListSortDirection.Ascending;
+
+            ApplySort(sortProperty, sortDirection);
+        }
+
+        protected int FindSortedIndexByID(RsbResourceID Candidate)
         {
             for (int i = 0; i < this.Count; i++)
-                if (CompareByValue(this[i], Candidate) > 0)
+                if (CompareByID(this[i], Candidate) > 0)
                     return i;
 
             return Count;
         }
 
-        protected int FindSortedIndexByName(ResourceID Candidate)
+        protected int FindSortedIndexByLanguage(RsbResourceID Candidate)
         {
             for (int i = 0; i < this.Count; i++)
-                if (CompareByName(this[i], Candidate) > 0)
+                if (CompareByLanguage(this[i], Candidate) > 0)
                     return i;
 
             return Count;
         }
 
-        protected int CompareByValue(ResourceID A, ResourceID B)
+        protected int FindSortedIndexByText(RsbResourceID Candidate)
         {
-            return sortDirectionValue * A.Value.CompareTo(B.Value);
+            for (int i = 0; i < this.Count; i++)
+                if (CompareByText(this[i], Candidate) > 0)
+                    return i;
+
+            return Count;
         }
 
-        protected int CompareByName(ResourceID A, ResourceID B)
+        protected int CompareByID(RsbResourceID A, RsbResourceID B)
         {
-            return sortDirectionValue * A.Name.CompareTo(B.Name);
+            return sortDirectionValue * A.ID.CompareTo(B.ID);
+        }
+
+        protected int CompareByLanguage(RsbResourceID A, RsbResourceID B)
+        {
+            return sortDirectionValue * A.Language.CompareTo(B.Language);
+        }
+
+        protected int CompareByText(RsbResourceID A, RsbResourceID B)
+        {
+            return sortDirectionValue * A.Text.CompareTo(B.Text);
         }
     }
 }
