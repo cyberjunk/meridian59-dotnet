@@ -17,7 +17,6 @@
 using System;
 using System.ComponentModel;
 using System.Collections.Generic;
-using System.Collections.Concurrent;
 using Meridian59.Data.Models;
 using Meridian59.Data.Lists;
 using Meridian59.Protocol.GameMessages;
@@ -47,7 +46,6 @@ namespace Meridian59.Data
         #region Constants
         public const string PROPNAME_AVATAROBJECT = "AvatarObject";
         public const string PROPNAME_TARGETOBJECT = "TargetObject";
-        public const string PROPNAME_LOOKOBJECT = "LookObject";
         public const string PROPNAME_SELFTARGET = "SelfTarget";
         public const string PROPNAME_TARGETID = "TargetID";
         public const string PROPNAME_ISRESTING = "IsResting";
@@ -74,8 +72,7 @@ namespace Meridian59.Data
 
         #region Fields
         protected RoomObject avatarObject;
-        protected ObjectBase targetObject;
-        protected ObjectInfo lookObject;
+        protected ObjectBase targetObject;       
         protected uint targetID = UInt32.MaxValue;
         protected bool selfTarget;
         protected bool isResting;
@@ -85,202 +82,269 @@ namespace Meridian59.Data
         protected PreferencesFlags clientPreferences;
 #endif
         protected bool isWaiting;
-        protected DateTime meridianTime;
         protected uint tps;
         protected uint rtt;
+        protected DateTime meridianTime;
         protected V3 viewerPosition;
         protected AccountType accountType;
         protected UIMode uiMode;
+
+        protected readonly RoomObjectList roomObjects;
+        protected readonly RoomObjectListFiltered roomObjectsFiltered;
+        protected readonly ProjectileList projectiles;
+        protected readonly OnlinePlayerList onlinePlayers;
+        protected readonly InventoryObjectList inventoryObjects;
+        protected readonly StatNumericList avatarCondition;
+        protected readonly StatNumericList avatarAttributes;
+        protected readonly SkillList avatarSkills;
+        protected readonly SkillList avatarSpells;
+        protected readonly SkillList avatarQuests;
+        protected readonly ObjectBaseList<ObjectBase> roomBuffs;
+        protected readonly ObjectBaseList<ObjectBase> avatarBuffs;
+        protected readonly SpellObjectList spellObjects;
+        protected readonly BackgroundOverlayList backgroundOverlays;
+        protected readonly ObjectBaseList<PlayerOverlay> playerOverlays;
+        protected readonly BaseList<ServerString> chatMessages;
+        protected readonly BaseList<GameMessage> gameMessageLog;
+        protected readonly List<RoomObject> visitedTargets;
+        protected readonly List<uint> clickedTargets;
+        protected readonly ActionButtonList actionButtons;
+        protected readonly List<string> ignoreList;
+        protected readonly List<string> chatCommandHistory;
+
+        protected readonly RoomInfo roomInformation;
+        protected readonly LightShading lightShading;
+        protected readonly PlayMusic backgroundMusic;
+        protected readonly GuildInfo guildInfo;
+        protected readonly GuildShieldInfo guildShieldInfo;
+        protected readonly GuildAskData guildAskData;
+        protected readonly DiplomacyInfo diplomacyInfo;
+        protected readonly AdminInfo adminInfo;
+        protected readonly TradeInfo tradeInfo;
+        protected readonly BuyInfo buyInfo;
+        protected readonly WelcomeInfo welcomeInfo;
+        protected readonly CharCreationInfo charCreationInfo;
+        protected readonly StatChangeInfo statChangeInfo;
+        protected readonly NewsGroup newsGroup;
+        protected readonly ObjectContents objectContents;
+        protected readonly Effects effects;
+        protected readonly PlayerInfo lookPlayer;
+        protected readonly ObjectInfo lookObject;        
         #endregion
 
         #region Properties
+        #region Collections
         /// <summary>
         /// List of objects in your room
         /// </summary>
-        public RoomObjectList RoomObjects { get; protected set; }
+        public RoomObjectList RoomObjects { get { return roomObjects; } }
 
         /// <summary>
         /// Contains all objects from RoomObjects matching
         /// the currently set filter.
         /// </summary>
-        public RoomObjectListFiltered RoomObjectsFiltered { get; protected set; }
+        public RoomObjectListFiltered RoomObjectsFiltered { get { return roomObjectsFiltered; } }
 
         /// <summary>
         /// List of current projectiles in room
         /// </summary>
-        public ProjectileList Projectiles { get; protected set; }
+        public ProjectileList Projectiles { get { return projectiles; } }
 
         /// <summary>
         /// List of online players
         /// </summary>
-        public OnlinePlayerList OnlinePlayers { get; protected set; }
-
-        /// <summary>
-        /// Information about the current room
-        /// </summary>
-        public RoomInfo RoomInformation { get; protected set; }
-
-        /// <summary>
-        /// Information about current directional light
-        /// </summary>
-        public LightShading LightShading { get; protected set; }
-
-        /// <summary>
-        /// The current background music
-        /// </summary>
-        public PlayMusic BackgroundMusic { get; protected set; }
+        public OnlinePlayerList OnlinePlayers { get { return onlinePlayers; } }
 
         /// <summary>
         /// Your inventory objects
         /// </summary>
-        public InventoryObjectList InventoryObjects { get; protected set; }
+        public InventoryObjectList InventoryObjects { get { return inventoryObjects; } }
 
         /// <summary>
         /// Your condition values (HP, MP, Vigor)
         /// </summary>
-        public StatNumericList AvatarCondition { get; protected set; }
+        public StatNumericList AvatarCondition { get { return avatarCondition; } }
 
         /// <summary>
         /// Your attributes (STR, STAM, ...)
         /// </summary>
-        public StatNumericList AvatarAttributes { get; protected set; }
+        public StatNumericList AvatarAttributes { get { return avatarAttributes; } }
 
         /// <summary>
         /// Your skills (slash, block, ...)
         /// </summary>
-        public SkillList AvatarSkills { get; protected set; }
+        public SkillList AvatarSkills { get { return avatarSkills; } }
 
         /// <summary>
         /// Your spells
         /// </summary>
-        public SkillList AvatarSpells { get; protected set; }
+        public SkillList AvatarSpells { get { return avatarSpells; } }
 
         /// <summary>
         /// The quests list
         /// </summary>
-        public SkillList AvatarQuests { get; protected set; }
+        public SkillList AvatarQuests { get { return avatarQuests; } }
 
         /// <summary>
         /// Currently active room enchantments
         /// </summary>
-        public ObjectBaseList<ObjectBase> RoomBuffs { get; protected set; }
+        public ObjectBaseList<ObjectBase> RoomBuffs { get { return roomBuffs; } }
 
         /// <summary>
         /// Currently active enchantments on your avatar
         /// </summary>
-        public ObjectBaseList<ObjectBase> AvatarBuffs { get; protected set; }
+        public ObjectBaseList<ObjectBase> AvatarBuffs { get { return avatarBuffs; } }
 
         /// <summary>
         /// Your known spells
         /// </summary>
-        public SpellObjectList SpellObjects { get; protected set; }
+        public SpellObjectList SpellObjects { get { return spellObjects; } }
 
         /// <summary>
         /// List of background overlays (like sun)
         /// </summary>
-        public BackgroundOverlayList BackgroundOverlays { get; protected set; }
+        public BackgroundOverlayList BackgroundOverlays { get { return backgroundOverlays; } }
 
         /// <summary>
         /// First person weapon/shield/... overlay data
         /// </summary>
-        public ObjectBaseList<PlayerOverlay> PlayerOverlays { get; protected set; }
-
-        /// <summary>
-        /// Information about the guild you belong to
-        /// </summary>
-        public GuildInfo GuildInfo { get; protected set; }
-
-        /// <summary>
-        /// Data for your or the currently selected guildshield
-        /// </summary>
-        public GuildShieldInfo GuildShieldInfo { get; protected set; }
-
-        /// <summary>
-        /// Info transmitted for the GuildCreate window (e.g. cost)
-        /// </summary>
-        public GuildAskData GuildAskData { get; protected set; }
-
-        /// <summary>
-        /// Diplomacy info between your guild and others
-        /// </summary>
-        public DiplomacyInfo DiplomacyInfo { get; protected set; }
-
-        /// <summary>
-        /// Admin info (for admin console) and more.
-        /// </summary>
-        public AdminInfo AdminInfo { get; protected set; }
-#if !VANILLA
-        /// <summary>
-        /// Current client gameplay preferences (e.g. safety, tempsafe).
-        /// </summary>
-        public PreferencesFlags ClientPreferences { get; protected set; }
-#endif
-       /// <summary>
-        /// The last inspected nonplayer-object.
-        /// This instance stays the same. Its properties change!
-        /// </summary>
-        public ObjectInfo LookObject
-        {
-            get { return lookObject; }
-            set
-            {
-                if (lookObject != value)
-                {
-                    lookObject = value;
-                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_LOOKOBJECT));
-                }
-            }
-        }
-
-        /// <summary>
-        /// The last inspected player
-        /// </summary>
-        public PlayerInfo LookPlayer { get; protected set; }
-
-        /// <summary>
-        /// The last inspected newsgroup and its articles
-        /// </summary>
-        public NewsGroup NewsGroup { get; protected set; }
-
-        /// <summary>
-        /// The data of the last ObjectsContentMessage
-        /// </summary>
-        public ObjectContents ObjectContents { get; protected set; }
+        public ObjectBaseList<PlayerOverlay> PlayerOverlays { get { return playerOverlays; } }
 
         /// <summary>
         /// A list of visited targets for NextTarget function
         /// </summary>
-        public List<RoomObject> VisitedTargets { get; protected set; }
+        public List<RoomObject> VisitedTargets { get { return visitedTargets; } }
 
         /// <summary>
         /// A list of recently clicked targets for click iteration.
         /// </summary>       
-        public List<uint> ClickedTargets { get; protected set; }
+        public List<uint> ClickedTargets { get { return clickedTargets; } }
 
         /// <summary>
-        /// Currently active effects
+        /// Messages from these players won't be added to the chatmessages list.
         /// </summary>
-        public Effects Effects { get; protected set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public List<string> IgnoreList { get; protected set; }
+        public List<string> IgnoreList { get { return ignoreList; } }
 
         /// <summary>
         /// List of received chat messages
         /// </summary>
-        public BaseList<ServerString> ChatMessages { get; protected set; }
-
-        /// <summary>
-        /// Maximum entries in chat before remove
-        /// </summary>
-        public int ChatMessagesMaximum { get; set; }
+        public BaseList<ServerString> ChatMessages { get { return chatMessages; } }
 
         /// <summary>
         /// Saves last executed chatcommands
         /// </summary>
-        public List<string> ChatCommandHistory { get; protected set; }
+        public List<string> ChatCommandHistory { get { return chatCommandHistory; } }
+
+        /// <summary>
+        /// Log of message flow between client and server
+        /// </summary>
+        public BaseList<GameMessage> GameMessageLog { get { return gameMessageLog; } }
+
+        /// <summary>
+        /// The active actionbuttons / shortcuts.
+        /// </summary>
+        public ActionButtonList ActionButtons { get { return actionButtons; } }
+        #endregion
+
+        #region Single Sub Data Objects
+        /// <summary>
+        /// Information about the current room
+        /// </summary>
+        public RoomInfo RoomInformation { get { return roomInformation; } }
+
+        /// <summary>
+        /// Information about current directional light
+        /// </summary>
+        public LightShading LightShading { get { return lightShading; } }
+
+        /// <summary>
+        /// The current background music
+        /// </summary>
+        public PlayMusic BackgroundMusic { get { return backgroundMusic; } }
+
+        /// <summary>
+        /// Information about the guild you belong to
+        /// </summary>
+        public GuildInfo GuildInfo { get { return guildInfo; } }
+
+        /// <summary>
+        /// Data for your or the currently selected guildshield
+        /// </summary>
+        public GuildShieldInfo GuildShieldInfo { get { return guildShieldInfo; } }
+
+        /// <summary>
+        /// Info transmitted for the GuildCreate window (e.g. cost)
+        /// </summary>
+        public GuildAskData GuildAskData { get { return guildAskData; } }
+
+        /// <summary>
+        /// Diplomacy info between your guild and others
+        /// </summary>
+        public DiplomacyInfo DiplomacyInfo { get { return diplomacyInfo; } }
+
+        /// <summary>
+        /// Admin info (for admin console) and more.
+        /// </summary>
+        public AdminInfo AdminInfo { get { return adminInfo; } }
+
+        /// <summary>
+        /// Info about a possible active trade
+        /// </summary>
+        public TradeInfo Trade { get { return tradeInfo; } }
+
+        /// <summary>
+        /// Info about a possibly active Buy (from NPC) window
+        /// </summary>
+        public BuyInfo Buy { get { return buyInfo; } }
+
+        /// <summary>
+        /// Stores the welcome info transferred at login, containing selectable
+        /// avatars and message of the day.
+        /// </summary>
+        public WelcomeInfo WelcomeInfo { get { return welcomeInfo; } }
+
+        /// <summary>
+        /// Info for the avatar creation wizard.
+        /// </summary>
+        public CharCreationInfo CharCreationInfo { get { return charCreationInfo; } }
+
+        /// <summary>
+        /// Info for the stat change wizard
+        /// </summary>
+        public StatChangeInfo StatChangeInfo { get { return statChangeInfo; } }
+        
+        /// <summary>
+        /// The last inspected newsgroup and its articles
+        /// </summary>
+        public NewsGroup NewsGroup { get { return newsGroup; } }
+
+        /// <summary>
+        /// The data of the last ObjectsContentMessage
+        /// </summary>
+        public ObjectContents ObjectContents { get { return objectContents; } }
+
+        /// <summary>
+        /// Currently active effects
+        /// </summary>
+        public Effects Effects { get { return effects; } }
+
+        /// <summary>
+        /// The last inspected player
+        /// </summary>
+        public PlayerInfo LookPlayer { get { return lookPlayer; } }
+
+        /// <summary>
+        /// The last inspected nonplayer-object.
+        /// This instance stays the same. Its properties change!
+        /// </summary>
+        public ObjectInfo LookObject { get { return lookObject; } }
+        #endregion
+
+        #region Own Values
+        /// <summary>
+        /// Maximum entries in chat before remove
+        /// </summary>
+        public int ChatMessagesMaximum { get; set; }
 
         /// <summary>
         /// Used in GetNext and GetPrevious.
@@ -291,11 +355,6 @@ namespace Meridian59.Data
         /// Maximum entries in executed chatcommand history
         /// </summary>
         public int ChatCommandHistoryMaximum { get; set; }
-
-        /// <summary>
-        /// Log of message flow between client and server
-        /// </summary>
-        public BaseList<GameMessage> GameMessageLog { get; protected set; }
 
         /// <summary>
         /// Whether to log outgoing messages
@@ -316,22 +375,6 @@ namespace Meridian59.Data
         /// The ID of your avatar
         /// </summary>
         public uint AvatarID { get; set; }
-
-        /// <summary>
-        /// The RoomObject of your avatar
-        /// </summary>
-        public RoomObject AvatarObject 
-        {
-            get { return avatarObject; }
-            set
-            {
-                if (avatarObject != value)
-                {
-                    avatarObject = value;
-                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_AVATAROBJECT));
-                }
-            }
-        }
 
         /// <summary>
         /// Whether cast/uses are go on yourself.
@@ -419,36 +462,28 @@ namespace Meridian59.Data
         }
 
         /// <summary>
+        /// The RoomObject of your avatar.
+        /// Be careful: This is NULL at first and
+        /// for a short moment whenever you change a room. 
+        /// </summary>
+        public RoomObject AvatarObject
+        {
+            get { return avatarObject; }
+            set
+            {
+                if (avatarObject != value)
+                {
+                    avatarObject = value;
+                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_AVATAROBJECT));
+                }
+            }
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         public bool IsNextAttackApplyCastOnHighlightedObject { get; set; }
         
-        /// <summary>
-        /// Info about a possible active trade
-        /// </summary>
-        public TradeInfo Trade { get; protected set; }
-
-        /// <summary>
-        /// Info about a possibly active Buy (from NPC) window
-        /// </summary>
-        public BuyInfo Buy { get; protected set; }
-
-        /// <summary>
-        /// Stores the welcome info transferred at login, containing selectable
-        /// avatars and message of the day.
-        /// </summary>
-        public WelcomeInfo WelcomeInfo { get; protected set; }
-
-        /// <summary>
-        /// Info for the avatar creation wizard.
-        /// </summary>
-        public CharCreationInfo CharCreationInfo { get; protected set; }
-
-        /// <summary>
-        /// Info for the stat change wizard
-        /// </summary>
-        public StatChangeInfo StatChangeInfo { get; protected set; }
-
         /// <summary>
         /// Whether you're currently resting or not
         /// </summary>
@@ -464,8 +499,12 @@ namespace Meridian59.Data
                 }
             }
         }
-
-#if VANILLA
+#if !VANILLA
+        /// <summary>
+        /// Current client gameplay preferences (e.g. safety, tempsafe).
+        /// </summary>
+        public PreferencesFlags ClientPreferences { get; protected set; }
+#else
         /// <summary>
         /// Whether safety is enabled or not
         /// </summary>
@@ -501,7 +540,7 @@ namespace Meridian59.Data
         /// <summary>
         /// The current time in Meridian 59.
         /// With date set to 1/1/1.
-        /// Does not get auto-updated.
+        /// Updated when Tick() is called.
         /// </summary>
         public DateTime MeridianTime
         {
@@ -569,12 +608,28 @@ namespace Meridian59.Data
         }
 
         /// <summary>
+        /// The current UI state
+        /// </summary>
+        public UIMode UIMode
+        {
+            get { return uiMode; }
+            set
+            {
+                if (uiMode != value)
+                {
+                    uiMode = value;
+                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_UIMODE));
+                }
+            }
+        }
+        
+        /// <summary>
         /// The accounttype received with LoginOK
         /// </summary>
         public AccountType AccountType
         {
             get { return accountType; }
-            set
+            protected set
             {
                 if (accountType != value)
                 {
@@ -583,7 +638,9 @@ namespace Meridian59.Data
                 }
             }
         }
+        #endregion
 
+        #region Easy access to HP/MP/...
         /// <summary>
         /// Returns your current hitpoints or 0 if not known.
         /// </summary>
@@ -715,27 +772,7 @@ namespace Meridian59.Data
                     return 0;
             }
         }
-
-        /// <summary>
-        /// The active actionbuttons / shortcuts.
-        /// </summary>
-        public ActionButtonList ActionButtons { get; protected set; }
-
-        /// <summary>
-        /// The current UI state
-        /// </summary>
-        public UIMode UIMode
-        {
-            get { return uiMode; }
-            set
-            {
-                if (uiMode != value)
-                {
-                    uiMode = value;
-                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_UIMODE));
-                }
-            }
-        }
+        #endregion
         #endregion
 
         #region Constructors
@@ -745,28 +782,28 @@ namespace Meridian59.Data
         public DataController()
         {          
             // create lists
-            RoomObjects = new RoomObjectList(300);
-            RoomObjectsFiltered = new RoomObjectListFiltered(RoomObjects);
-            Projectiles = new ProjectileList(50);
-            OnlinePlayers = new OnlinePlayerList(200);
-            InventoryObjects = new InventoryObjectList(100);
-            AvatarCondition = new StatNumericList(5);
-            AvatarAttributes = new StatNumericList(10);
-            AvatarSkills = new SkillList(100);
-            AvatarSpells = new SkillList(100);
-            AvatarQuests = new SkillList(100);
-            RoomBuffs = new ObjectBaseList<ObjectBase>(30);
-            AvatarBuffs = new ObjectBaseList<ObjectBase>(30);
-            SpellObjects = new SpellObjectList(100);
-            BackgroundOverlays = new BackgroundOverlayList(5);
-            PlayerOverlays = new ObjectBaseList<PlayerOverlay>(10);
-            ChatMessages = new BaseList<ServerString>(101);
-            GameMessageLog = new BaseList<GameMessage>(100);
-            VisitedTargets = new List<RoomObject>(50);
-            ClickedTargets = new List<uint>(50);
-            ActionButtons = new ActionButtonList();
-            IgnoreList = new List<string>(20);
-            ChatCommandHistory = new List<string>(20);
+            roomObjects = new RoomObjectList(300);
+            roomObjectsFiltered = new RoomObjectListFiltered(roomObjects);
+            projectiles = new ProjectileList(50);
+            onlinePlayers = new OnlinePlayerList(200);
+            inventoryObjects = new InventoryObjectList(100);
+            avatarCondition = new StatNumericList(5);
+            avatarAttributes = new StatNumericList(10);
+            avatarSkills = new SkillList(100);
+            avatarSpells = new SkillList(100);
+            avatarQuests = new SkillList(100);
+            roomBuffs = new ObjectBaseList<ObjectBase>(30);
+            avatarBuffs = new ObjectBaseList<ObjectBase>(30);
+            spellObjects = new SpellObjectList(100);
+            backgroundOverlays = new BackgroundOverlayList(5);
+            playerOverlays = new ObjectBaseList<PlayerOverlay>(10);            
+            chatMessages = new BaseList<ServerString>(101);
+            gameMessageLog = new BaseList<GameMessage>(100);
+            visitedTargets = new List<RoomObject>(50);
+            clickedTargets = new List<uint>(50);
+            actionButtons = new ActionButtonList();
+            ignoreList = new List<string>(20);
+            chatCommandHistory = new List<string>(20);
 
             // attach some listeners
             RoomObjects.ListChanged += OnRoomObjectsListChanged;
@@ -780,28 +817,28 @@ namespace Meridian59.Data
             SpellObjects.SortByName();
             
             // create single data objects
-            Effects = new Effects();
-            RoomInformation = new RoomInfo();
-            LightShading = new LightShading(0, new SpherePosition(0, 0));
-            BackgroundMusic = new PlayMusic();
-            GuildInfo = new GuildInfo();
-            GuildShieldInfo = new GuildShieldInfo();
-            GuildAskData = new GuildAskData();
-            DiplomacyInfo = new DiplomacyInfo();
-            AdminInfo = new AdminInfo();
+            roomInformation = new RoomInfo();
+            lightShading = new LightShading(0, new SpherePosition(0, 0));
+            backgroundMusic = new PlayMusic();
+            guildInfo = new GuildInfo();
+            guildShieldInfo = new GuildShieldInfo();
+            guildAskData = new GuildAskData();
+            diplomacyInfo = new DiplomacyInfo();
+            adminInfo = new AdminInfo();
+            tradeInfo = new TradeInfo();
+            buyInfo = new BuyInfo();
+            welcomeInfo = new WelcomeInfo();
+            charCreationInfo = new CharCreationInfo();
+            statChangeInfo = new StatChangeInfo();
+            newsGroup = new NewsGroup();
+            objectContents = new ObjectContents();
+            effects = new Effects();
+            lookPlayer = new PlayerInfo();
+            lookObject = new ObjectInfo();
+            
 #if !VANILLA
             ClientPreferences = new PreferencesFlags();
 #endif
-            LookObject = new ObjectInfo();
-            LookPlayer = new PlayerInfo();
-            NewsGroup = new NewsGroup();
-            Trade = new TradeInfo();
-            Buy = new BuyInfo();
-            WelcomeInfo = new WelcomeInfo();
-            CharCreationInfo = new CharCreationInfo();
-            ObjectContents = new ObjectContents();
-            StatChangeInfo = new StatChangeInfo();
-
             // some values
             ChatMessagesMaximum = 100;
             ChatCommandHistoryMaximum = 20;
