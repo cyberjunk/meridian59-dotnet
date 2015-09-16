@@ -234,8 +234,8 @@ namespace Meridian59.Files.BGF
         protected uint version;
         protected string name;
         protected uint shrinkFactor = 1;
-        protected BaseList<BgfBitmap> frames = new BaseList<BgfBitmap>(20);
-        protected BaseList<BgfFrameSet> frameSets = new BaseList<BgfFrameSet>(20);
+        protected readonly BaseList<BgfBitmap> frames = new BaseList<BgfBitmap>(20);
+        protected readonly BaseList<BgfFrameSet> frameSets = new BaseList<BgfFrameSet>(20);
         #endregion
 
         #region Properties
@@ -348,34 +348,12 @@ namespace Meridian59.Files.BGF
         /// <summary>
         /// The list with included images (BgfBitmap)
         /// </summary>
-        public BaseList<BgfBitmap> Frames 
-        {
-            get { return frames; }
-            protected set
-            {
-                if (frames != value)
-                {
-                    frames = value;
-                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FRAMES));
-                }
-            } 
-        }
+        public BaseList<BgfBitmap> Frames { get { return frames; } }
         
         /// <summary>
         /// The list with included framesets/groups
         /// </summary>
-        public BaseList<BgfFrameSet> FrameSets 
-        {
-            get { return frameSets; }
-            protected set
-            {
-                if (frameSets != value)
-                {
-                    frameSets = value;
-                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FRAMESETS));
-                }
-            }
-        }
+        public BaseList<BgfFrameSet> FrameSets { get { return frameSets; } }
         #endregion
 
         #region Constructors
