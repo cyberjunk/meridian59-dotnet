@@ -66,7 +66,9 @@ namespace Meridian59.Files
         {
             int cursor = StartIndex;
             int lastPNGStartOffset = 0;
-            
+
+            images.Clear();
+
             // start splitting up PNG files from container
             while (cursor < Buffer.Length)
             {
@@ -133,23 +135,22 @@ namespace Meridian59.Files
         public string Filename { get; set; }
         #endregion
 
-        public List<byte[]> Images { get; set; }
+        protected readonly List<byte[]> images = new List<byte[]>();
+
+        public List<byte[]> Images { get { return images; } }
         
         #region Constructors
         public BsfFile()
         {
-            Images = new List<byte[]>();
         }
 
         public BsfFile(string Filename)
         {
-            Images = new List<byte[]>();
             Load(Filename);
         }
 
         public BsfFile(byte[] Buffer, int StartIndex = 0)
         {
-            Images = new List<byte[]>();
             ReadFrom(Buffer, StartIndex);
         }
         #endregion
