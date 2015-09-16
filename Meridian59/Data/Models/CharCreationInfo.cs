@@ -384,10 +384,10 @@ namespace Meridian59.Data.Models
         protected ResourceIDBGF[] femaleEyeIDs;
         protected ResourceIDBGF[] femaleNoseIDs;
         protected ResourceIDBGF[] femaleMouthIDs;
-        protected BaseList<AvatarCreatorSpellObject> spells;
-        protected BaseList<AvatarCreatorSkillObject> skills;
-        protected BaseList<AvatarCreatorSpellObject> selectedSpells;
-        protected BaseList<AvatarCreatorSkillObject> selectedSkills;
+        protected readonly BaseList<AvatarCreatorSpellObject> spells = new BaseList<AvatarCreatorSpellObject>(30);
+        protected readonly BaseList<AvatarCreatorSkillObject> skills = new BaseList<AvatarCreatorSkillObject>(30);
+        protected readonly BaseList<AvatarCreatorSpellObject> selectedSpells = new BaseList<AvatarCreatorSpellObject>(5);
+        protected readonly BaseList<AvatarCreatorSkillObject> selectedSkills = new BaseList<AvatarCreatorSkillObject>(5);
         protected ObjectBase exampleModel;
         protected uint might = ATTRIBUTE_DEFAULT;
         protected uint intellect = ATTRIBUTE_DEFAULT;
@@ -563,54 +563,22 @@ namespace Meridian59.Data.Models
 
         public BaseList<AvatarCreatorSpellObject> Spells
         {
-            get { return spells; }
-            set
-            {
-                if (spells != value)
-                {
-                    spells = value;
-                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_SPELLS));
-                }
-            }
+            get { return spells; }           
         }
 
         public BaseList<AvatarCreatorSkillObject> Skills
         {
-            get { return skills; }
-            set
-            {
-                if (skills != value)
-                {
-                    skills = value;
-                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_SKILLS));
-                }
-            }
+            get { return skills; }            
         }
 
         public BaseList<AvatarCreatorSpellObject> SelectedSpells
         {
-            get { return selectedSpells; }
-            set
-            {
-                if (selectedSpells != value)
-                {
-                    selectedSpells = value;
-                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_SELECTEDSPELLS));
-                }
-            }
+            get { return selectedSpells; }            
         }
 
         public BaseList<AvatarCreatorSkillObject> SelectedSkills
         {
-            get { return selectedSkills; }
-            set
-            {
-                if (selectedSkills != value)
-                {
-                    selectedSkills = value;
-                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_SELECTEDSKILLS));
-                }
-            }
+            get { return selectedSkills; }           
         }
 
         public ObjectBase ExampleModel
@@ -855,12 +823,6 @@ namespace Meridian59.Data.Models
         public CharCreationInfo()
         {
             ExampleModel = new ObjectBase();
-            
-            // init list instances
-            spells = new BaseList<AvatarCreatorSpellObject>(30);
-            skills = new BaseList<AvatarCreatorSkillObject>(30);
-            selectedSpells = new BaseList<AvatarCreatorSpellObject>(5);
-            selectedSkills = new BaseList<AvatarCreatorSkillObject>(5);
 
             Clear(false);
         }
@@ -897,7 +859,9 @@ namespace Meridian59.Data.Models
             ResourceIDBGF[] FemaleMouthIDs,
             IEnumerable<AvatarCreatorSpellObject> Spells,
             IEnumerable<AvatarCreatorSkillObject> Skills)
-        {           
+        {
+            ExampleModel = new ObjectBase(); 
+
             hairColors = HairColors;
             skinColors = SkinColors;
             maleHairIDs = MaleHairIDs;
@@ -910,17 +874,9 @@ namespace Meridian59.Data.Models
             femaleEyeIDs = FemaleEyeIDs;
             femaleNoseIDs = FemaleNoseIDs;
             femaleMouthIDs = FemaleMouthIDs;
-            
-            // init list instances
-            spells = new BaseList<AvatarCreatorSpellObject>(30);
-            skills = new BaseList<AvatarCreatorSkillObject>(30);
-            selectedSpells = new BaseList<AvatarCreatorSpellObject>(5);
-            selectedSkills = new BaseList<AvatarCreatorSkillObject>(5);
 
             spells.AddRange(Spells);
-            skills.AddRange(Skills);
-
-            ExampleModel = new ObjectBase();         
+            skills.AddRange(Skills);       
         }
 
         /// <summary>
@@ -931,12 +887,6 @@ namespace Meridian59.Data.Models
         public CharCreationInfo(byte[] Buffer, int StartIndex = 0)
         {
             ExampleModel = new ObjectBase();
-
-            // init list instances
-            spells = new BaseList<AvatarCreatorSpellObject>(30);
-            skills = new BaseList<AvatarCreatorSkillObject>(30);
-            selectedSpells = new BaseList<AvatarCreatorSpellObject>(5);
-            selectedSkills = new BaseList<AvatarCreatorSkillObject>(5);
 
             ReadFrom(Buffer, StartIndex); 
         }

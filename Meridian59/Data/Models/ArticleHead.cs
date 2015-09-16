@@ -174,7 +174,7 @@ namespace Meridian59.Data.Models
         protected string title;
         #endregion
 
-        #region Properties      
+        #region Properties
         /// <summary>
         /// 
         /// </summary>

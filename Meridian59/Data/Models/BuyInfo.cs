@@ -46,11 +46,14 @@ namespace Meridian59.Data.Models
 
         #region Fields
         protected ObjectBase tradePartner;
-        protected ObjectBaseList<TradeOfferObject> items;
+        protected readonly ObjectBaseList<TradeOfferObject> items = new ObjectBaseList<TradeOfferObject>();
         protected bool isVisible;
         #endregion
 
         #region Properties
+        /// <summary>
+        /// 
+        /// </summary>
         public ObjectBase TradePartner
         {
             get
@@ -67,22 +70,14 @@ namespace Meridian59.Data.Models
             }
         }
 
-        public ObjectBaseList<TradeOfferObject> Items
-        {
-            get
-            {
-                return items;
-            }
-            protected set
-            {
-                if (items != value)
-                {
-                    items = value;
-                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_ITEMS));
-                }
-            }
-        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public ObjectBaseList<TradeOfferObject> Items { get { return items; } }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public bool IsVisible
         {
             get
@@ -103,8 +98,6 @@ namespace Meridian59.Data.Models
         #region Constructors
         public BuyInfo()
         {
-            items = new ObjectBaseList<TradeOfferObject>(20);
-
             Clear(false);
         }
         #endregion
