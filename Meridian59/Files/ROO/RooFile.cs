@@ -515,7 +515,8 @@ namespace Meridian59.Files.ROO
             len = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            BSPTree = new List<RooBSPItem>(len);
+            BSPTree.Clear();
+            BSPTree.Capacity = len + 10;
             for (int i = 0; i < len; i++)
             {
                 RooBSPItem bspItem = RooBSPItem.ExtractBSPItem(RooVersion, Buffer, cursor);
@@ -529,7 +530,8 @@ namespace Meridian59.Files.ROO
             len = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            Walls = new List<RooWall>(len);           
+            Walls.Clear();
+            Walls.Capacity = len + 10;           
             for (int i = 0; i < len; i++)
             {
                 RooWall lineDef = new RooWall(RooVersion, Buffer, cursor);               
@@ -544,7 +546,8 @@ namespace Meridian59.Files.ROO
             len = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            WallsEditor = new List<RooWallEditor>(len);
+            WallsEditor.Clear();
+            WallsEditor.Capacity = len + 10;
             for (int i = 0; i < len; i++)
             {
                 RooWallEditor wallEditor = new RooWallEditor(Buffer, cursor);
@@ -559,7 +562,8 @@ namespace Meridian59.Files.ROO
             len = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            SideDefs = new List<RooSideDef>(len);
+            SideDefs.Clear();
+            SideDefs.Capacity = len + 10;
             for (int i = 0; i < len; i++)
             {
                 RooSideDef sideDef = new RooSideDef(Buffer, cursor);
@@ -576,7 +580,8 @@ namespace Meridian59.Files.ROO
             cursor += TypeSizes.SHORT;
 
             bool hasSpeed = (RooVersion >= VERSIONSPEED);
-            Sectors = new List<RooSector>(len);
+            Sectors.Clear();
+            Sectors.Capacity = len + 10;
             for (int i = 0; i < len; i++)
             {
                 RooSector sectorDef = new RooSector(RooVersion, Buffer, cursor, hasSpeed);
@@ -593,7 +598,8 @@ namespace Meridian59.Files.ROO
             len = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            Things = new List<RooThing>(len);
+            Things.Clear();
+            Things.Capacity = len + 10;
             if (len > 2)
             {
                 for (int i = 0; i < len; i++)
@@ -728,7 +734,8 @@ namespace Meridian59.Files.ROO
             len = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            BSPTree = new List<RooBSPItem>(len);
+            BSPTree.Clear();
+            BSPTree.Capacity = len + 10;
             for (int i = 0; i < len; i++)
             {
                 RooBSPItem bspItem = RooBSPItem.ExtractBSPItem(RooVersion, ref Buffer);
@@ -740,7 +747,8 @@ namespace Meridian59.Files.ROO
             len = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            Walls = new List<RooWall>(len);
+            Walls.Clear();
+            Walls.Capacity = len + 10;
             for (int i = 0; i < len; i++)
             {
                 RooWall lineDef = new RooWall(RooVersion, ref Buffer);
@@ -753,7 +761,8 @@ namespace Meridian59.Files.ROO
             len = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            WallsEditor = new List<RooWallEditor>(len);
+            WallsEditor.Clear();
+            WallsEditor.Capacity = len + 10;
             for (int i = 0; i < len; i++)
             {
                 RooWallEditor wallEditor = new RooWallEditor(ref Buffer);
@@ -766,7 +775,8 @@ namespace Meridian59.Files.ROO
             len = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            SideDefs = new List<RooSideDef>(len);
+            SideDefs.Clear();
+            SideDefs.Capacity = len + 10;
             for (int i = 0; i < len; i++)
             {
                 RooSideDef sideDef = new RooSideDef(ref Buffer);
@@ -781,7 +791,8 @@ namespace Meridian59.Files.ROO
             Buffer += TypeSizes.SHORT;
 
             bool hasSpeed = (RooVersion >= VERSIONSPEED);
-            Sectors = new List<RooSector>(len);
+            Sectors.Clear();
+            Sectors.Capacity = len + 10;
             for (int i = 0; i < len; i++)
             {
                 RooSector sectorDef = new RooSector(RooVersion, ref Buffer, hasSpeed);
@@ -796,7 +807,8 @@ namespace Meridian59.Files.ROO
             len = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            Things = new List<RooThing>(len);
+            Things.Clear();
+            Things.Capacity = len + 10;
             if (len > 2)
             {
                 for (int i = 0; i < len; i++)
@@ -870,6 +882,15 @@ namespace Meridian59.Files.ROO
         }
         
         public string Filename { get; set; }        
+        #endregion
+
+        #region Fields
+        protected readonly List<RooBSPItem> bspTree = new List<RooBSPItem>();
+        protected readonly List<RooWall> walls = new List<RooWall>();
+        protected readonly List<RooWallEditor> wallsEditor = new List<RooWallEditor>();
+        protected readonly List<RooSideDef> sideDefs = new List<RooSideDef>();
+        protected readonly List<RooSector> sectors = new List<RooSector>();
+        protected readonly List<RooThing> things = new List<RooThing>();
         #endregion
 
         #region Properties
@@ -951,34 +972,34 @@ namespace Meridian59.Files.ROO
         /// <summary>
         /// The populated BSP tree for this room.
         /// </summary>
-        public List<RooBSPItem> BSPTree { get; set; }
+        public List<RooBSPItem> BSPTree { get { return bspTree; } }
        
         /// <summary>
         /// Existing walls/linedefs in this room, as used by the client.
         /// </summary>
-        public List<RooWall> Walls { get; set; }
+        public List<RooWall> Walls { get { return walls; } }
 
         /// <summary>
         /// Existing walls/linedefs in this room, as used by WINDEU.
         /// </summary>
-        public List<RooWallEditor> WallsEditor { get; set; }
+        public List<RooWallEditor> WallsEditor { get { return wallsEditor; } }
         
         /// <summary>
         /// Wall-sides in the room.
         /// Each Wall has 2 sides (with up to 3 parts).
         /// </summary>
-        public List<RooSideDef> SideDefs { get; set; }
+        public List<RooSideDef> SideDefs { get { return sideDefs; } }
         
         /// <summary>
         /// Sectors in a room are composed by referenced SubSectors (convex-polygons).
         /// SubSectors are part of the BSP-tree.
         /// </summary>
-        public List<RooSector> Sectors { get; set; }
+        public List<RooSector> Sectors { get { return sectors; } }
 
         /// <summary>
         /// Things data.
         /// </summary>
-        public List<RooThing> Things { get; set; }
+        public List<RooThing> Things { get { return things; } }
         
         /// <summary>
         /// RoomID (Note: This is mostly unset or uncorrect).
@@ -1050,12 +1071,6 @@ namespace Meridian59.Files.ROO
         /// </summary>
         public RooFile()
         {
-            BSPTree = new List<RooBSPItem>();
-            Walls = new List<RooWall>();
-            WallsEditor = new List<RooWallEditor>();
-            SideDefs = new List<RooSideDef>();
-            Sectors = new List<RooSector>();
-            Things = new List<RooThing>();
         }
 
         /// <summary>
