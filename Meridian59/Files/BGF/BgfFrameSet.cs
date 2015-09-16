@@ -75,7 +75,8 @@ namespace Meridian59.Files.BGF
             int len = BitConverter.ToInt32(Buffer, cursor);
             cursor += TypeSizes.INT;
 
-            FrameIndices = new List<int>(len);
+            FrameIndices.Clear();
+            FrameIndices.Capacity = len;
             for (int i = 0; i < len; i++)
             {
                 FrameIndices.Add(BitConverter.ToInt32(Buffer, cursor));
@@ -103,7 +104,7 @@ namespace Meridian59.Files.BGF
 
         #region Fields
         protected uint num;
-        protected List<int> frameIndices = new List<int>();
+        protected readonly List<int> frameIndices = new List<int>();
         #endregion
 
         #region Properties
@@ -126,19 +127,7 @@ namespace Meridian59.Files.BGF
         /// <summary>
         /// List with frames that form this Group
         /// </summary>
-        public List<int> FrameIndices 
-        {
-            get { return frameIndices; }
-            protected set
-            {
-                if (frameIndices != value)
-                {
-                    frameIndices = value;
-                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FRAMEINDICES));
-                }
-            }
-        }
-      
+        public List<int> FrameIndices  { get { return frameIndices; } }      
         #endregion
 
         #region Constructors
@@ -155,10 +144,10 @@ namespace Meridian59.Files.BGF
         /// </summary>
         /// <param name="Num"></param>
         /// <param name="FrameIndices"></param>
-        public BgfFrameSet(uint Num, List<int> FrameIndices)
+        public BgfFrameSet(uint Num, IEnumerable<int> FrameIndices)
         {
             num = Num;
-            frameIndices = FrameIndices;
+            frameIndices.AddRange(FrameIndices);
         }
 
         /// <summary>

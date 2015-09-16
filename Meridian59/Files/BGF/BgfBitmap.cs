@@ -225,7 +225,7 @@ namespace Meridian59.Files.BGF
         protected uint pow2width;
         protected uint pow2height;
         protected uint multiple4width;
-        protected BaseList<BgfBitmapHotspot> hotspots = new BaseList<BgfBitmapHotspot>();
+        protected readonly BaseList<BgfBitmapHotspot> hotspots = new BaseList<BgfBitmapHotspot>();
         protected byte[] pixeldata;
         #endregion
 
@@ -359,18 +359,7 @@ namespace Meridian59.Files.BGF
         /// <summary>
         /// List of hotspots this frame has
         /// </summary>
-        public BaseList<BgfBitmapHotspot> HotSpots 
-        {
-            get { return hotspots; }
-            protected set
-            {
-                if (hotspots != value)
-                {
-                    hotspots = value;
-                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_HOTSPOTS));
-                }
-            }
-        }
+        public BaseList<BgfBitmapHotspot> HotSpots { get { return hotspots; } }
 
         /// <summary>
         /// Compressed size (if compression enabled)
