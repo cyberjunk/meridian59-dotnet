@@ -30,10 +30,6 @@ namespace Meridian59.Data.Models
     public class GuildAskData : IByteSerializableFast, INotifyPropertyChanged, IClearable, IUpdatable<GuildAskData>
     {
         #region Constants
-        /* 
-         * These constants are used in databinding and avoid nasty and slow reflection calls
-         * Make sure to keep them in sync with the actual property names.
-         */
         public const string PROPNAME_COSTNORMAL = "CostNormal";
         public const string PROPNAME_COSTSECRET = "CostSecret";
         public const string PROPNAME_ISVISIBLE  = "IsVisible";

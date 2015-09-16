@@ -642,7 +642,7 @@ namespace Meridian59.Data.Models
             byte ColorTranslation, 
             byte Effect, 
             Animation Animation, 
-            BaseList<SubOverlay> SubOverlays,            
+            IEnumerable<SubOverlay> SubOverlays,            
             V3 Position3D,
             ushort Angle, 
             AnimationType MotionFirstAnimationType, 

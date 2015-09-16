@@ -46,7 +46,7 @@ namespace Meridian59.Data.Models
 
         #region Fields
         protected ObjectID objectID;
-        protected ObjectBaseList<ObjectBase> items;
+        protected readonly ObjectBaseList<ObjectBase> items = new ObjectBaseList<ObjectBase>(20);
         protected bool isVisible;
         #endregion
 
@@ -73,14 +73,6 @@ namespace Meridian59.Data.Models
             {
                 return items;
             }
-            protected set
-            {
-                if (items != value)
-                {
-                    items = value;
-                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_ITEMS));
-                }
-            }
         }
 
         public bool IsVisible
@@ -103,8 +95,6 @@ namespace Meridian59.Data.Models
         #region Constructors
         public ObjectContents()
         {
-            items = new ObjectBaseList<ObjectBase>(20);
-
             Clear(false);
         }
         #endregion

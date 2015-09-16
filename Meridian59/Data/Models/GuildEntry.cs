@@ -28,9 +28,7 @@ namespace Meridian59.Data.Models
     [Serializable]
     public class GuildEntry : ObjectID, IClearable
     {
-        #region Constants
         public const string PROPNAME_NAME = "Name";
-        #endregion
 
         #region IByteSerializable
         public override int ByteLength { 
@@ -97,11 +95,11 @@ namespace Meridian59.Data.Models
         }
         #endregion
 
-        #region Fields
         protected string name;
-        #endregion
 
-        #region Properties
+        /// <summary>
+        /// 
+        /// </summary>
         public string Name
         {
             get { return name; }
@@ -114,28 +112,43 @@ namespace Meridian59.Data.Models
                 }
             }
         }
-        #endregion
 
-        #region Constructors
-        public GuildEntry() : base()
-        {
-        }
+        /// <summary>
+        /// Empty constructor
+        /// </summary>
+        public GuildEntry() : base() { }
 
-        public GuildEntry(string Name, uint ID, uint Count=0)
+        /// <summary>
+        /// Constructor by values
+        /// </summary>
+        /// <param name="Name"></param>
+        /// <param name="ID"></param>
+        /// <param name="Count"></param>
+        public GuildEntry(string Name, uint ID, uint Count = 0)
             : base(ID, Count)
         {
-            this.name = Name;
+            name = Name;
         }
 
+        /// <summary>
+        /// Constructor by managed parser
+        /// </summary>
+        /// <param name="Buffer"></param>
+        /// <param name="StartIndex"></param>
         public GuildEntry(byte[] Buffer, int StartIndex = 0)
             : base(Buffer, StartIndex) { }
 
+        /// <summary>
+        /// Constructor by pointer parser
+        /// </summary>
+        /// <param name="Buffer"></param>
         public unsafe GuildEntry(ref byte* Buffer)
             : base(ref Buffer) { }
 
-        #endregion
-
-        #region IClearable
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="RaiseChangedEvent"></param>
         public override void Clear(bool RaiseChangedEvent)
         {
             base.Clear(RaiseChangedEvent);
@@ -149,6 +162,5 @@ namespace Meridian59.Data.Models
                 name = String.Empty;
             }
         }
-        #endregion
     }
 }

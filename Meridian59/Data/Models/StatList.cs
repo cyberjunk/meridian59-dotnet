@@ -31,15 +31,9 @@ namespace Meridian59.Data.Models
     public class StatList : Stat, IUpdatable<StatList>
     {
         #region Constants
-        /* 
-         * These constants are used in databinding and avoid nasty and slow reflection calls
-         * Make sure to keep them in sync with the actual property names.
-         */
-
         public const string PROPNAME_OBJECTID = "ObjectID";
         public const string PROPNAME_SKILLPOINTS = "SkillPoints";
         public const string PROPNAME_RESOURCEICONID = "ResourceIconID";
-
         public const string PROPNAME_RESOURCEICONNAME = "ResourceIconName";
         #endregion
 

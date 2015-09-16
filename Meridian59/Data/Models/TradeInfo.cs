@@ -43,8 +43,8 @@ namespace Meridian59.Data.Models
         protected bool isItemsYouSet;
         protected bool isItemsPartnerSet;
         protected ObjectBase tradePartner;
-        protected ObjectBaseList<ObjectBase> itemsYou;
-        protected ObjectBaseList<ObjectBase> itemsPartner;
+        protected readonly ObjectBaseList<ObjectBase> itemsYou = new ObjectBaseList<ObjectBase>(20);
+        protected readonly ObjectBaseList<ObjectBase> itemsPartner = new ObjectBaseList<ObjectBase>(20);
 
         /// <summary>
         /// This is true once the trade is switched visible,
@@ -150,14 +150,6 @@ namespace Meridian59.Data.Models
         public ObjectBaseList<ObjectBase> ItemsPartner 
         {
             get { return itemsPartner; }
-            protected set
-            {
-                if (itemsPartner != value)
-                {
-                    itemsPartner = value;
-                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_ITEMSPARTNER));
-                }
-            }
         }
 
         /// <summary>
@@ -166,14 +158,6 @@ namespace Meridian59.Data.Models
         public ObjectBaseList<ObjectBase> ItemsYou 
         {
             get { return itemsYou; }
-            protected set
-            {
-                if (itemsYou != value)
-                {
-                    itemsYou = value;
-                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_ITEMSYOU));
-                }
-            }
         }
        
         /// <summary>
@@ -181,9 +165,6 @@ namespace Meridian59.Data.Models
         /// </summary>
         public TradeInfo()
         {
-            itemsYou = new ObjectBaseList<ObjectBase>(20);
-            itemsPartner = new ObjectBaseList<ObjectBase>(20);
-
             Clear(false);
         }
 

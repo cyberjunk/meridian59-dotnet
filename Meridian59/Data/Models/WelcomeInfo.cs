@@ -17,10 +17,9 @@
 using System;
 using System.Text;
 using System.ComponentModel;
-using System.Collections.Concurrent;
+using System.Collections.Generic;
 using Meridian59.Common.Interfaces;
 using Meridian59.Common.Constants;
-using Meridian59.Common.Enums;
 using Meridian59.Data.Lists;
 
 namespace Meridian59.Data.Models
@@ -140,9 +139,9 @@ namespace Meridian59.Data.Models
         #endregion
 
         #region Fields
-        protected BaseList<CharSelectItem> characters;
+        protected readonly BaseList<CharSelectItem> characters = new BaseList<CharSelectItem>();
         protected string motd;
-        protected BaseList<CharSelectAd> ads;
+        protected readonly BaseList<CharSelectAd> ads = new BaseList<CharSelectAd>();
         #endregion
 
         #region Properties
@@ -151,14 +150,6 @@ namespace Meridian59.Data.Models
             get
             {
                 return characters;
-            }
-            set
-            {
-                if (characters != value)
-                {
-                    characters = value;
-                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_CHARACTERS));
-                }
             }
         }
 
@@ -184,38 +175,24 @@ namespace Meridian59.Data.Models
             {
                 return ads;
             }
-            set
-            {
-                if (ads != value)
-                {
-                    ads = value;
-                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_ADS));
-                }
-            }
         }
         #endregion
 
         #region Constructors
         public WelcomeInfo()
         {
-            characters = new BaseList<CharSelectItem>(10);
-            ads = new BaseList<CharSelectAd>(5);
-
             Clear(false);
         }
 
-        public WelcomeInfo(BaseList<CharSelectItem> Characters, BaseList<CharSelectAd> Ads, string MOTD)
+        public WelcomeInfo(IEnumerable<CharSelectItem> Characters, IEnumerable<CharSelectAd> Ads, string MOTD)
         {
-            characters = Characters;
-            ads = Ads;
+            characters.AddRange(Characters);
+            ads.AddRange(Ads);
             motd = MOTD;
         }
 
         public WelcomeInfo(byte[] Buffer, int StartIndex = 0) 
         {
-            characters = new BaseList<CharSelectItem>(10);
-            ads = new BaseList<CharSelectAd>(5);
-
             ReadFrom(Buffer, StartIndex);
         }    
         #endregion

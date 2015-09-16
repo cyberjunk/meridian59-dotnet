@@ -16,9 +16,9 @@
 
 using System;
 using System.ComponentModel;
+using System.Collections.Generic;
 using Meridian59.Common.Enums;
 using Meridian59.Common.Constants;
-using Meridian59.Data.Lists;
 
 namespace Meridian59.Data.Models
 {
@@ -28,15 +28,11 @@ namespace Meridian59.Data.Models
     [Serializable]
     public class SpellObject : ObjectBase
     {
-        #region Constants
-        /* 
-         * These constants are used in databinding and avoid nasty and slow reflection calls
-         * Make sure to keep them in sync with the actual property names.
-         */
-
         public const string PROPNAME_TARGETSCOUNT = "TargetsCount";
-        public const string PROPNAME_SCHOOLTYPE = "SchoolType";
-        #endregion
+        public const string PROPNAME_SCHOOLTYPE   = "SchoolType";
+
+        protected byte targetsCount;
+        protected SchoolType schoolType;
 
         #region IByteSerializable
         public override int ByteLength { 
@@ -98,13 +94,6 @@ namespace Meridian59.Data.Models
         }
         #endregion
 
-        #region Fields
-        protected byte targetsCount;
-        protected SchoolType schoolType;
-        #endregion
-
-        #region Properties
-
         /// <summary>
         /// How many concurrent targets this spell can have
         /// </summary>
@@ -136,13 +125,30 @@ namespace Meridian59.Data.Models
                 }
             }
         }
-        #endregion
 
-        #region Constructors
-        public SpellObject() : base()
-        {
-        }
+        /// <summary>
+        /// Empty constructor
+        /// </summary>
+        public SpellObject() : base() { }
 
+        /// <summary>
+        /// Constructor by values
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="Count"></param>
+        /// <param name="OverlayFileRID"></param>
+        /// <param name="NameRID"></param>
+        /// <param name="Flags"></param>
+        /// <param name="LightFlags"></param>
+        /// <param name="LightIntensity"></param>
+        /// <param name="LightColor"></param>
+        /// <param name="FirstAnimationType"></param>
+        /// <param name="ColorTranslation"></param>
+        /// <param name="Effect"></param>
+        /// <param name="Animation"></param>
+        /// <param name="SubOverlays"></param>
+        /// <param name="TargetsCount"></param>
+        /// <param name="SchoolType"></param>
         public SpellObject(
             uint ID, 
             uint Count,            
@@ -156,7 +162,7 @@ namespace Meridian59.Data.Models
             byte ColorTranslation, 
             byte Effect, 
             Animation Animation, 
-            BaseList<SubOverlay> SubOverlays,                      
+            IEnumerable<SubOverlay> SubOverlays,                      
             byte TargetsCount,
             SchoolType SchoolType)           
             : base(
@@ -170,15 +176,25 @@ namespace Meridian59.Data.Models
             this.schoolType = SchoolType;        
         }
 
+        /// <summary>
+        /// Constructor by managed parser
+        /// </summary>
+        /// <param name="Buffer"></param>
+        /// <param name="StartIndex"></param>
         public SpellObject(byte[] Buffer, int StartIndex = 0)
             : base(true, Buffer, StartIndex) { }
 
+        /// <summary>
+        /// Constructor by pointer parser
+        /// </summary>
+        /// <param name="Buffer"></param>
         public unsafe SpellObject(ref byte* Buffer)
             : base(true, ref Buffer) { }
 
-        #endregion
-
-        #region IClearable
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="RaiseChangedEvent"></param>
         public override void Clear(bool RaiseChangedEvent)
         {
             base.Clear(RaiseChangedEvent);
@@ -194,6 +210,5 @@ namespace Meridian59.Data.Models
                 schoolType = 0;  
             }
         }
-        #endregion
     }
 }

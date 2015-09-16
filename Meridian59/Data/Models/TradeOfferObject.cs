@@ -16,9 +16,9 @@
 
 using System;
 using System.ComponentModel;
+using System.Collections.Generic;
 using Meridian59.Common.Enums;
 using Meridian59.Common.Constants;
-using Meridian59.Data.Lists;
 
 namespace Meridian59.Data.Models
 {
@@ -27,17 +27,11 @@ namespace Meridian59.Data.Models
     /// </summary>
     [Serializable]
     public class TradeOfferObject : ObjectBase
-    {
-        #region Constants
-        /* 
-         * These constants are used in databinding and avoid nasty and slow reflection calls
-         * Make sure to keep them in sync with the actual property names.
-         */
+    {        
+        public const string PROPNAME_PRICE = "Price";
 
-        public const string PROPNAME_PRICE = "Price";       
-        #endregion
+        protected uint price;
 
-        #region IByteSerializable
         public override int ByteLength
         { 
             get { 
@@ -84,13 +78,7 @@ namespace Meridian59.Data.Models
             *((uint*)Buffer) = price;
             Buffer += TypeSizes.INT;
         }
-        #endregion
 
-        #region Fields
-        protected uint price;
-        #endregion
-
-        #region Properties
         /// <summary>
         /// Per unit price of the object.
         /// </summary>
@@ -106,12 +94,30 @@ namespace Meridian59.Data.Models
                 }
             }
         }  
-        #endregion
 
-        #region Constructors
+        /// <summary>
+        /// Empty constructor
+        /// </summary>
         public TradeOfferObject() 
             : base() { }
 
+        /// <summary>
+        /// Constructor by values
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="Count"></param>
+        /// <param name="OverlayFileRID"></param>
+        /// <param name="NameRID"></param>
+        /// <param name="Flags"></param>
+        /// <param name="LightFlags"></param>
+        /// <param name="LightIntensity"></param>
+        /// <param name="LightColor"></param>
+        /// <param name="FirstAnimationType"></param>
+        /// <param name="ColorTranslation"></param>
+        /// <param name="Effect"></param>
+        /// <param name="Animation"></param>
+        /// <param name="SubOverlays"></param>
+        /// <param name="Price"></param>
         public TradeOfferObject(
             uint ID,
             uint Count, 
@@ -125,7 +131,7 @@ namespace Meridian59.Data.Models
             byte ColorTranslation, 
             byte Effect,
             Animation Animation, 
-            BaseList<SubOverlay> SubOverlays,            
+            IEnumerable<SubOverlay> SubOverlays,            
             uint Price)        
             : base(
                 ID, Count, OverlayFileRID, NameRID, Flags, 
@@ -136,15 +142,25 @@ namespace Meridian59.Data.Models
             this.price = Price;
         }
 
+        /// <summary>
+        /// Constructor by managed parser
+        /// </summary>
+        /// <param name="Buffer"></param>
+        /// <param name="StartIndex"></param>
         public TradeOfferObject(byte[] Buffer, int StartIndex = 0)
             : base(true, Buffer, StartIndex) { }
 
+        /// <summary>
+        /// Constructor by pointer parser
+        /// </summary>
+        /// <param name="Buffer"></param>
         public unsafe TradeOfferObject(ref byte* Buffer)
             : base(true, ref Buffer) { }
 
-        #endregion
-
-        #region IClearable
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="RaiseChangedEvent"></param>
         public override void Clear(bool RaiseChangedEvent)
         {
             base.Clear(RaiseChangedEvent);
@@ -158,6 +174,5 @@ namespace Meridian59.Data.Models
                 price = 0;
             }
         }
-        #endregion
     }
 }

@@ -30,11 +30,6 @@ namespace Meridian59.Data.Models
     public class StatNumeric : Stat, IUpdatable<StatNumeric>
     {
         #region Constants
-        /* 
-         * These constants are used in databinding and avoid nasty and slow reflection calls
-         * Make sure to keep them in sync with the actual property names.
-         */
-
         public const string PROPNAME_TAG = "Tag";
         public const string PROPNAME_VALUECURRENT = "ValueCurrent";
         public const string PROPNAME_VALUERENDERMIN = "ValueRenderMin";

@@ -231,7 +231,7 @@ namespace Meridian59.Data.Models
         protected Animation animation;
         protected string name;
         protected BgfFile resource;
-        protected Murmur3 hash = new Murmur3();          
+        protected readonly Murmur3 hash = new Murmur3();          
         #endregion
 
         #region Properties

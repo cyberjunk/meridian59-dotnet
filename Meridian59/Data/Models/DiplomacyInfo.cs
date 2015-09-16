@@ -16,6 +16,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Collections.Generic;
 using Meridian59.Common.Interfaces;
 using Meridian59.Common.Constants;
 using Meridian59.Data.Lists;
@@ -121,7 +122,8 @@ namespace Meridian59.Data.Models
             ushort len = BitConverter.ToUInt16(Buffer, cursor);                 // GuildsLEN  (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            guilds = new BaseList<GuildEntry>(len);
+            guilds.Clear();
+            guilds.Capacity = len;
             for (ushort i = 0; i < len; i++)
             {
                 GuildEntry obj = new GuildEntry(Buffer, cursor);                // GuildEntry (n bytes)
@@ -132,7 +134,8 @@ namespace Meridian59.Data.Models
             len = BitConverter.ToUInt16(Buffer, cursor);                        // YouDeclAllyLEN  (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            youDeclaredAllyList = new ObjectIDList<ObjectID>(len);
+            youDeclaredAllyList.Clear();
+            youDeclaredAllyList.Capacity = len;
             for (ushort i = 0; i < len; i++)
             {
                 ObjectID obj = new ObjectID(Buffer, cursor);                    // ObjectID (4/8 bytes)
@@ -143,7 +146,8 @@ namespace Meridian59.Data.Models
             len = BitConverter.ToUInt16(Buffer, cursor);                        // YouDeclEnemyLEN  (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            youDeclaredEnemyList = new ObjectIDList<ObjectID>(len);
+            youDeclaredEnemyList.Clear();
+            youDeclaredEnemyList.Capacity = len;
             for (ushort i = 0; i < len; i++)
             {
                 ObjectID obj = new ObjectID(Buffer, cursor);                    // ObjectID (4/8 bytes)
@@ -154,7 +158,8 @@ namespace Meridian59.Data.Models
             len = BitConverter.ToUInt16(Buffer, cursor);                        // DeclYouAllyLEN  (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            declaredYouAllyList = new ObjectIDList<ObjectID>(len);
+            declaredYouAllyList.Clear();
+            declaredYouAllyList.Capacity = len;
             for (ushort i = 0; i < len; i++)
             {
                 ObjectID obj = new ObjectID(Buffer, cursor);                    // ObjectID (4/8 bytes)
@@ -165,7 +170,8 @@ namespace Meridian59.Data.Models
             len = BitConverter.ToUInt16(Buffer, cursor);                        // DeclYouEnemyLEN  (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            declaredYouEnemyList = new ObjectIDList<ObjectID>(len);
+            declaredYouEnemyList.Clear();
+            declaredYouEnemyList.Capacity = len;
             for (ushort i = 0; i < len; i++)
             {
                 ObjectID obj = new ObjectID(Buffer, cursor);                    // ObjectID (4/8 bytes)
@@ -212,14 +218,16 @@ namespace Meridian59.Data.Models
             ushort len = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            guilds = new BaseList<GuildEntry>(len);
+            guilds.Clear();
+            guilds.Capacity = len;
             for (ushort i = 0; i < len; i++)
                 guilds.Add(new GuildEntry(ref Buffer));
 
             len = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            youDeclaredAllyList = new ObjectIDList<ObjectID>(len);
+            youDeclaredAllyList.Clear();
+            youDeclaredAllyList.Capacity = len;
             for (ushort i = 0; i < len; i++)         
                 youDeclaredAllyList.Add(new ObjectID(ref Buffer));
 
@@ -227,7 +235,8 @@ namespace Meridian59.Data.Models
             len = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            youDeclaredEnemyList = new ObjectIDList<ObjectID>(len);
+            youDeclaredEnemyList.Clear();
+            youDeclaredEnemyList.Capacity = len;
             for (ushort i = 0; i < len; i++)            
                 youDeclaredEnemyList.Add(new ObjectID(ref Buffer));
             
@@ -235,7 +244,8 @@ namespace Meridian59.Data.Models
             len = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            declaredYouAllyList = new ObjectIDList<ObjectID>(len);
+            declaredYouAllyList.Clear();
+            declaredYouAllyList.Capacity = len;
             for (ushort i = 0; i < len; i++)            
                 declaredYouAllyList.Add(new ObjectID(ref Buffer));             
             
@@ -243,7 +253,8 @@ namespace Meridian59.Data.Models
             len = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            declaredYouEnemyList = new ObjectIDList<ObjectID>(len);
+            declaredYouEnemyList.Clear();
+            declaredYouEnemyList.Capacity = len;
             for (ushort i = 0; i < len; i++)           
                 declaredYouEnemyList.Add(new ObjectID(ref Buffer)); 
         }
@@ -259,73 +270,33 @@ namespace Meridian59.Data.Models
         #endregion
 
         #region Fields
-        protected BaseList<GuildEntry> guilds;
-        protected ObjectIDList<ObjectID> youDeclaredAllyList;
-        protected ObjectIDList<ObjectID> youDeclaredEnemyList;
-        protected ObjectIDList<ObjectID> declaredYouAllyList;
-        protected ObjectIDList<ObjectID> declaredYouEnemyList;
+        protected readonly BaseList<GuildEntry> guilds = new BaseList<GuildEntry>();
+        protected readonly ObjectIDList<ObjectID> youDeclaredAllyList = new ObjectIDList<ObjectID>();
+        protected readonly ObjectIDList<ObjectID> youDeclaredEnemyList = new ObjectIDList<ObjectID>();
+        protected readonly ObjectIDList<ObjectID> declaredYouAllyList = new ObjectIDList<ObjectID>();
+        protected readonly ObjectIDList<ObjectID> declaredYouEnemyList = new ObjectIDList<ObjectID>();
         #endregion
 
         #region Properties
         public BaseList<GuildEntry> Guilds
         {
             get { return guilds; }
-            set
-            {
-                if (guilds != value)
-                {
-                    guilds = value;
-                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_GUILDS));
-                }
-            }
         }
         public ObjectIDList<ObjectID> YouDeclaredAllyList
         {
             get { return youDeclaredAllyList; }
-            set
-            {
-                if (youDeclaredAllyList != value)
-                {
-                    youDeclaredAllyList = value;
-                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_YOUDECLAREDALLYLIST));
-                }
-            }
         }
         public ObjectIDList<ObjectID> YouDeclaredEnemyList
         {
             get { return youDeclaredEnemyList; }
-            set
-            {
-                if (youDeclaredEnemyList != value)
-                {
-                    youDeclaredEnemyList = value;
-                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_YOUDECLAREDENEMYLIST));
-                }
-            }
         }
         public ObjectIDList<ObjectID> DeclaredYouAllyList
         {
             get { return declaredYouAllyList; }
-            set
-            {
-                if (declaredYouAllyList != value)
-                {
-                    declaredYouAllyList = value;
-                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_DECLAREDYOUALLYLIST));
-                }
-            }
         }
         public ObjectIDList<ObjectID> DeclaredYouEnemyList
         {
             get { return declaredYouEnemyList; }
-            set
-            {
-                if (declaredYouEnemyList != value)
-                {
-                    declaredYouEnemyList = value;
-                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_DECLAREDYOUENEMYLIST));
-                }
-            }
         }
         #endregion
 
@@ -335,15 +306,15 @@ namespace Meridian59.Data.Models
             Clear(false);
         }
 
-        public DiplomacyInfo(BaseList<GuildEntry> Guilds,
-            ObjectIDList<ObjectID> YouDeclaredAllyList, ObjectIDList<ObjectID> YouDeclaredEnemyList,
-            ObjectIDList<ObjectID> DeclaredYouAllyList, ObjectIDList<ObjectID> DeclaredYouEnemyList)
+        public DiplomacyInfo(IEnumerable<GuildEntry> Guilds,
+            IEnumerable<ObjectID> YouDeclaredAllyList, IEnumerable<ObjectID> YouDeclaredEnemyList,
+            IEnumerable<ObjectID> DeclaredYouAllyList, IEnumerable<ObjectID> DeclaredYouEnemyList)
         {
-            this.guilds = Guilds;
-            this.youDeclaredAllyList = YouDeclaredAllyList;
-            this.youDeclaredEnemyList = YouDeclaredEnemyList;
-            this.declaredYouAllyList = DeclaredYouAllyList;
-            this.declaredYouEnemyList = DeclaredYouEnemyList;
+            guilds.AddRange(Guilds);
+            youDeclaredAllyList.AddRange(YouDeclaredAllyList);
+            youDeclaredEnemyList.AddRange(YouDeclaredEnemyList);
+            declaredYouAllyList.AddRange(DeclaredYouAllyList);
+            declaredYouEnemyList.AddRange(DeclaredYouEnemyList);
         }
         
         public DiplomacyInfo(byte[] RawData, int startIndex = 0)
@@ -362,19 +333,19 @@ namespace Meridian59.Data.Models
         {
             if (RaiseChangedEvent)
             {
-                Guilds = new BaseList<GuildEntry>(5);
-                YouDeclaredAllyList = new ObjectIDList<ObjectID>(5);
-                YouDeclaredEnemyList = new ObjectIDList<ObjectID>(5);
-                DeclaredYouAllyList = new ObjectIDList<ObjectID>(5);
-                DeclaredYouEnemyList = new ObjectIDList<ObjectID>(5);
+                Guilds.Clear();
+                YouDeclaredAllyList.Clear();
+                YouDeclaredEnemyList.Clear();
+                DeclaredYouAllyList.Clear();
+                DeclaredYouEnemyList.Clear();
             }
             else
             {
-                guilds = new BaseList<GuildEntry>(5);
-                youDeclaredAllyList = new ObjectIDList<ObjectID>(5);
-                youDeclaredEnemyList = new ObjectIDList<ObjectID>(5);
-                declaredYouAllyList = new ObjectIDList<ObjectID>(5);
-                declaredYouEnemyList = new ObjectIDList<ObjectID>(5);
+                guilds.Clear();
+                youDeclaredAllyList.Clear();
+                youDeclaredEnemyList.Clear();
+                declaredYouAllyList.Clear();
+                declaredYouEnemyList.Clear();
             }
         }
         #endregion

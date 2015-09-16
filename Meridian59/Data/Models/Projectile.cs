@@ -245,7 +245,7 @@ namespace Meridian59.Data.Models
         protected uint appearanceHash;
         protected RoomObject sourceObject;
         protected RoomObject targetObject;
-        protected Murmur3 hash = new Murmur3();
+        protected readonly Murmur3 hash = new Murmur3();
         protected object userdata;
         #endregion
 

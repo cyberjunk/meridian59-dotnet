@@ -17,6 +17,7 @@
 using System;
 using System.Text;
 using System.ComponentModel;
+using System.Collections.Generic;
 using Meridian59.Common.Interfaces;
 using Meridian59.Common.Constants;
 using Meridian59.Data.Lists;
@@ -281,7 +282,8 @@ namespace Meridian59.Data.Models
             len = BitConverter.ToUInt16(Buffer, cursor);                        // ListLEN
             cursor += TypeSizes.SHORT;
 
-            guildMembers = new GuildMemberList(len);
+            guildMembers.Clear();
+            guildMembers.Capacity = len;
             for (ushort i = 0; i < len; i++)
             {
                 GuildMemberEntry obj = new GuildMemberEntry(Buffer, cursor);    // GuildMemberEntry (n bytes)
@@ -381,7 +383,8 @@ namespace Meridian59.Data.Models
             len = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            guildMembers = new GuildMemberList(len);
+            guildMembers.Clear();
+            guildMembers.Capacity = len;
             for (ushort i = 0; i < len; i++)
                 guildMembers.Add(new GuildMemberEntry(ref Buffer));                                   
         }
@@ -566,12 +569,11 @@ namespace Meridian59.Data.Models
         protected string rank5Male;
         protected string rank5Female;
         protected ObjectID supportedMember;
-        protected GuildMemberList guildMembers;
+        protected readonly GuildMemberList guildMembers = new GuildMemberList(50);
         protected bool isVisible;
         #endregion
 
-        #region Properties
-        
+        #region Properties       
         /// <summary>
         /// Name of the guild
         /// </summary>
@@ -834,14 +836,6 @@ namespace Meridian59.Data.Models
         public GuildMemberList GuildMembers
         {
             get { return guildMembers; }
-            set
-            {
-                if (guildMembers != value)
-                {
-                    guildMembers = value;
-                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_GUILDMEMBERS));
-                }
-            }
         }
 
         /// <summary>
@@ -864,45 +858,75 @@ namespace Meridian59.Data.Models
         #endregion
 
         #region Constructors
+        /// <summary>
+        /// Empty constructor
+        /// </summary>
         public GuildInfo()
         {
-            guildMembers = new GuildMemberList(50);
             Clear(false);
         }
 
+        /// <summary>
+        /// Constructor by values
+        /// </summary>
+        /// <param name="GuildName"></param>
+        /// <param name="PasswordSetFlag"></param>
+        /// <param name="ChestPassword"></param>
+        /// <param name="Flags"></param>
+        /// <param name="GuildID"></param>
+        /// <param name="Rank1Male"></param>
+        /// <param name="Rank1Female"></param>
+        /// <param name="Rank2Male"></param>
+        /// <param name="Rank2Female"></param>
+        /// <param name="Rank3Male"></param>
+        /// <param name="Rank3Female"></param>
+        /// <param name="Rank4Male"></param>
+        /// <param name="Rank4Female"></param>
+        /// <param name="Rank5Male"></param>
+        /// <param name="Rank5Female"></param>
+        /// <param name="SupportedMember"></param>
+        /// <param name="GuildMembers"></param>
         public GuildInfo(string GuildName, byte PasswordSetFlag, string ChestPassword, GuildFlags Flags, ObjectID GuildID,
             string Rank1Male, string Rank1Female, string Rank2Male, string Rank2Female, string Rank3Male, string Rank3Female, 
             string Rank4Male, string Rank4Female, string Rank5Male, string Rank5Female,
-            ObjectID SupportedMember, GuildMemberList GuildMembers)
+            ObjectID SupportedMember, IEnumerable<GuildMemberEntry> GuildMembers)
         {
-            this.guildName = GuildName;
-            this.passwordSetFlag = PasswordSetFlag;          
-            this.chestPassword = ChestPassword;
-            this.flags = Flags;
-            this.guildID = GuildID;
-            this.rank1Male = Rank1Male;
-            this.rank1Female = Rank1Female;
-            this.rank2Male = Rank2Male;
-            this.rank2Female = Rank2Female;
-            this.rank3Male = Rank3Male;
-            this.rank3Female = Rank3Female;
-            this.rank4Male = Rank4Male;
-            this.rank4Female = Rank4Female;
-            this.rank5Male = Rank5Male;
-            this.rank5Female = Rank5Female;
-            this.supportedMember = SupportedMember;
-            this.guildMembers = GuildMembers;            
+            guildName = GuildName;
+            passwordSetFlag = PasswordSetFlag;          
+            chestPassword = ChestPassword;
+            flags = Flags;
+            guildID = GuildID;
+            rank1Male = Rank1Male;
+            rank1Female = Rank1Female;
+            rank2Male = Rank2Male;
+            rank2Female = Rank2Female;
+            rank3Male = Rank3Male;
+            rank3Female = Rank3Female;
+            rank4Male = Rank4Male;
+            rank4Female = Rank4Female;
+            rank5Male = Rank5Male;
+            rank5Female = Rank5Female;
+            supportedMember = SupportedMember;
+
+            guildMembers.AddRange(GuildMembers);            
         }
         
+        /// <summary>
+        /// Constructor by managed parser
+        /// </summary>
+        /// <param name="RawData"></param>
+        /// <param name="startIndex"></param>
         public GuildInfo(byte[] RawData, int startIndex = 0)
         {
-            guildMembers = new GuildMemberList(50);
             ReadFrom(RawData, startIndex);
         }
 
+        /// <summary>
+        /// Constructor by pointer parser
+        /// </summary>
+        /// <param name="Buffer"></param>
         public unsafe GuildInfo(ref byte* Buffer)
         {
-            guildMembers = new GuildMemberList(50);
             ReadFrom(ref Buffer);
         }
         #endregion     
