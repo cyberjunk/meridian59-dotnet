@@ -35,6 +35,10 @@ namespace Meridian59.Bot
         protected const string XMLATTRIB_MAJORVERSION       = "majorversion";
         protected const string XMLATTRIB_MINORVERSION       = "minorversion";
         protected const string XMLATTRIB_LOGFILE            = "logfile";
+
+        public const byte   DEFAULTVAL_CONNECTION_MAJORVERSION  = 90;
+        public const byte   DEFAULTVAL_CONNECTION_MINORVERSION  = 90;
+        public const string DEFAULTVAL_CONNECTION_LOGFILE       = "bot.log";
         #endregion
 
         #region Properties
@@ -92,27 +96,58 @@ namespace Meridian59.Bot
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="Reader"></param>
-        public override void ReadXml(XmlReader Reader)
+        /// <param name="Document"></param>
+        public override void ReadXml(XmlDocument Document)
         {
-            base.ReadXml(Reader);
-           
+            base.ReadXml(Document);
+
+            XmlNode node;
+            byte val_byte;
+
             // connection
-            Reader.ReadToFollowing(XMLTAG_CONNECTION);
-            MajorVersion = Convert.ToByte(Reader[XMLATTRIB_MAJORVERSION]);
-            MinorVersion = Convert.ToByte(Reader[XMLATTRIB_MINORVERSION]);
-            LogFile = Reader[XMLATTRIB_LOGFILE];
+
+            node = Document.DocumentElement.SelectSingleNode(
+                '/' + XMLTAG_CONFIGURATION + '/' + XMLTAG_CONNECTION);
+
+            if (node != null)
+            {
+                
+                MajorVersion = (node.Attributes[XMLATTRIB_MAJORVERSION] != null && Byte.TryParse(node.Attributes[XMLATTRIB_MAJORVERSION].Value, out val_byte)) ?
+                    val_byte : DEFAULTVAL_CONNECTION_MAJORVERSION;
+
+                MinorVersion = (node.Attributes[XMLATTRIB_MINORVERSION] != null && Byte.TryParse(node.Attributes[XMLATTRIB_MINORVERSION].Value, out val_byte)) ?
+                    val_byte : DEFAULTVAL_CONNECTION_MINORVERSION;
+
+                LogFile = (node.Attributes[XMLATTRIB_LOGFILE] != null) ?
+                    node.Attributes[XMLATTRIB_LOGFILE].Value : DEFAULTVAL_CONNECTION_LOGFILE;
+            }
+            else
+            {
+                MajorVersion = DEFAULTVAL_CONNECTION_MAJORVERSION;
+                MinorVersion = DEFAULTVAL_CONNECTION_MINORVERSION;
+                LogFile = DEFAULTVAL_CONNECTION_LOGFILE;
+            }
 
             // admins list
+
             Admins.Clear();
-            Reader.ReadToFollowing(XMLTAG_ADMINS);
-            if (Reader.ReadToDescendant(XMLTAG_ITEM))
+
+            node = Document.DocumentElement.SelectSingleNode(
+                '/' + XMLTAG_CONFIGURATION + '/' + XMLTAG_ADMINS);
+
+            if (node != null)
             {
-                do
+                foreach (XmlNode child in node.ChildNodes)
                 {
-                    Admins.Add(Reader[XMLATTRIB_NAME]);
+                    if (child.Name != XMLTAG_ITEM)
+                        continue;
+
+                    string name = (child.Attributes[XMLATTRIB_NAME] != null) ?
+                        child.Attributes[XMLATTRIB_NAME].Value : null;
+
+                    if (name != null)
+                        Admins.Add(name);
                 }
-                while (Reader.ReadToNextSibling(XMLTAG_ITEM));
             }
         }
     }

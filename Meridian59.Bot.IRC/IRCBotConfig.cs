@@ -36,6 +36,16 @@ namespace Meridian59.Bot.IRC
         protected const string XMLATTRIB_MAXBURST       = "maxburst";
         protected const string XMLATTRIB_REFILL         = "refill";
         protected const string XMLATTRIB_BANNER         = "banner";
+
+        public const string DEFAULTVAL_IRCBOT_IRCSERVER     = "irc.esper.net";
+        public const ushort DEFAULTVAL_IRCBOT_IRCPORT       = 7000;
+        public const string DEFAULTVAL_IRCBOT_CHANNEL       = "#Meridian59";
+        public const string DEFAULTVAL_IRCBOT_NICKNAME      = "M59-IRC-Bot";
+        public const string DEFAULTVAL_IRCBOT_IRCPASSWORD   = "";
+        public const string DEFAULTVAL_IRCBOT_CHATPREFIX    = "";
+        public const uint   DEFAULTVAL_IRCBOT_MAXBURST      = 10;
+        public const uint   DEFAULTVAL_IRCBOT_REFILL        = 1000;
+        public const string DEFAULTVAL_IRCBOT_BANNER        = "";
         #endregion
 
         #region Properties
@@ -78,34 +88,83 @@ namespace Meridian59.Bot.IRC
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="Reader"></param>
-        public override void ReadXml(XmlReader Reader)
+        /// <param name="Document"></param>
+        public override void ReadXml(XmlDocument Document)
         {
             // read baseclass part
-            base.ReadXml(Reader);
+            base.ReadXml(Document);
+
+            ushort val_ushort;
+            uint val_uint;
+            XmlNode node;
+
+            AdminCommands.Clear();
 
             // bot
-            Reader.ReadToFollowing(XMLTAG_BOT);
-            IRCServer = Reader[XMLATTRIB_IRCSERVER];
-            IRCPort = Convert.ToUInt16(Reader[XMLATTRIB_IRCPORT]);
-            Channel = Reader[XMLATTRIB_CHANNEL];
-            NickName = Reader[XMLATTRIB_NICKNAME];
-            IRCPassword = Reader[XMLATTRIB_IRCPASSWORD];
-            ChatPrefix = Reader[XMLATTRIB_CHATPREFIX];
-            MaxBurst = Convert.ToUInt32(Reader[XMLATTRIB_MAXBURST]);
-            Refill = Convert.ToUInt32(Reader[XMLATTRIB_REFILL]);
-            Banner = Reader[XMLATTRIB_BANNER];
+
+            node = Document.DocumentElement.SelectSingleNode(
+                '/' + XMLTAG_CONFIGURATION + '/' + XMLTAG_BOT);
+
+            if (node != null)
+            {
+                IRCServer = (node.Attributes[XMLATTRIB_IRCSERVER] != null) ?
+                    node.Attributes[XMLATTRIB_IRCSERVER].Value : DEFAULTVAL_IRCBOT_IRCSERVER;
+
+                IRCPort = (node.Attributes[XMLATTRIB_IRCPORT] != null && UInt16.TryParse(node.Attributes[XMLATTRIB_IRCPORT].Value, out val_ushort)) ?
+                    val_ushort : DEFAULTVAL_IRCBOT_IRCPORT;
+
+                Channel = (node.Attributes[XMLATTRIB_CHANNEL] != null) ?
+                    node.Attributes[XMLATTRIB_CHANNEL].Value : DEFAULTVAL_IRCBOT_CHANNEL;
+
+                NickName = (node.Attributes[XMLATTRIB_NICKNAME] != null) ?
+                    node.Attributes[XMLATTRIB_NICKNAME].Value : DEFAULTVAL_IRCBOT_NICKNAME;
+
+                IRCPassword = (node.Attributes[XMLATTRIB_IRCPASSWORD] != null) ?
+                    node.Attributes[XMLATTRIB_IRCPASSWORD].Value : DEFAULTVAL_IRCBOT_IRCPASSWORD;
+
+                ChatPrefix = (node.Attributes[XMLATTRIB_CHATPREFIX] != null) ?
+                    node.Attributes[XMLATTRIB_CHATPREFIX].Value : DEFAULTVAL_IRCBOT_CHATPREFIX;
+
+                MaxBurst = (node.Attributes[XMLATTRIB_MAXBURST] != null && UInt32.TryParse(node.Attributes[XMLATTRIB_MAXBURST].Value, out val_uint)) ?
+                    val_uint : DEFAULTVAL_IRCBOT_MAXBURST;
+
+                Refill = (node.Attributes[XMLATTRIB_REFILL] != null && UInt32.TryParse(node.Attributes[XMLATTRIB_REFILL].Value, out val_uint)) ?
+                    val_uint : DEFAULTVAL_IRCBOT_REFILL;
+
+                Banner = (node.Attributes[XMLATTRIB_BANNER] != null) ?
+                    node.Attributes[XMLATTRIB_BANNER].Value : DEFAULTVAL_IRCBOT_BANNER;
+            }      
+            else
+            {
+                IRCServer = DEFAULTVAL_IRCBOT_IRCSERVER;
+                IRCPort = DEFAULTVAL_IRCBOT_IRCPORT;
+                Channel = DEFAULTVAL_IRCBOT_CHANNEL;
+                NickName = DEFAULTVAL_IRCBOT_NICKNAME;
+                IRCPassword = DEFAULTVAL_IRCBOT_IRCPASSWORD;
+                ChatPrefix = DEFAULTVAL_IRCBOT_CHATPREFIX;
+                MaxBurst = DEFAULTVAL_IRCBOT_MAXBURST;
+                Refill = DEFAULTVAL_IRCBOT_REFILL;
+                Banner = DEFAULTVAL_IRCBOT_BANNER;
+            }
 
             // admincommands list
-            AdminCommands.Clear();
-            Reader.ReadToFollowing(XMLTAG_ADMINCOMMANDS);
-            if (Reader.ReadToDescendant(XMLTAG_ITEM))
+
+            node = Document.DocumentElement.SelectSingleNode(
+                '/' + XMLTAG_CONFIGURATION + '/' + XMLTAG_BOT + '/' + XMLTAG_ADMINCOMMANDS);
+
+            if (node != null)
             {
-                do
+                foreach (XmlNode child in node.ChildNodes)
                 {
-                    AdminCommands.Add(Reader[XMLATTRIB_NAME]);
+                    if (child.Name != XMLTAG_ITEM)
+                        continue;
+
+                    string name = (child.Attributes[XMLATTRIB_NAME] != null) ?
+                        child.Attributes[XMLATTRIB_NAME].Value : null;
+
+                    if (name != null)
+                        AdminCommands.Add(name);
                 }
-                while (Reader.ReadToNextSibling(XMLTAG_ITEM));
             }
         }
 

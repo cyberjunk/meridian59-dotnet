@@ -35,27 +35,29 @@ namespace Meridian59 { namespace Ogre
 	public ref class OgreClientConfig : public Config
 	{
 	public:
-		literal int    DEFAULT_DISPLAY = 0;
-		literal ::System::String^ DEFAULT_RESOLUTION = "1024 x 768";
-		literal bool   DEFAULT_WINDOWMODE = false;
-		literal bool   DEFAULT_VSYNC = false;
-		literal ::System::String^ DEFAULT_FSAA = "2";
-		literal bool   DEFAULT_NOMIPMAPS = false;
-		literal bool   DEFAULT_WINDOWFRAMEENABLED = true;
-		literal ::System::String^ DEFAULT_TEXTUREFILTERING = "Bilinear";
-		literal ::System::String^ DEFAULT_IMAGEBUILDER = "GDI";
-		literal ::System::String^ DEFAULT_BITMAPSCALING = "Default";
-		literal ::System::String^ DEFAULT_TEXTUREQUALITY = "Default";
-		literal bool   DEFAULT_DISABLE3DMODELS = false;
-		literal bool   DEFAULT_DISABLEROOMTEXTURES = false;
-		literal bool   DEFAULT_DISABLENEWSKY = false;
-		literal bool   DEFAULT_DISABLEWEATHEREFFECTS = false;
-		literal int    DEFAULT_WEATHERPARTICLES = 1;
-		literal int    DEFAULT_MUSICVOLUME = 10;
-		literal bool   DEFAULT_DISABLELOOPSOUNDS = false;
-		literal int    DEFAULT_MOUSEAIMSPEED = 25;
-		literal int    DEFAULT_KEYROTATESPEED = 25;
-		literal bool   DEFAULT_INVERTMOUSEY = false;
+		literal int					DEFAULTVAL_ENGINE_DISPLAY			= 0;
+		literal ::System::String^	DEFAULTVAL_ENGINE_RESOLUTION		= "1024 x 768";
+		literal bool				DEFAULTVAL_ENGINE_WINDOWMODE		= false;
+		literal bool				DEFAULTVAL_ENGINE_WINDOWFRAME		= true;
+		literal bool				DEFAULTVAL_ENGINE_VSYNC				= false;
+		literal ::System::String^	DEFAULTVAL_ENGINE_FSAA				= "2";
+		literal bool				DEFAULTVAL_ENGINE_NOMIPMAPS			= false;
+		literal ::System::String^	DEFAULTVAL_ENGINE_TEXFILTERING		= "Bilinear";
+		literal ::System::String^	DEFAULTVAL_ENGINE_IMAGEBUILDER		= "GDI";
+		literal ::System::String^	DEFAULTVAL_ENGINE_BITMAPSCALING		= "Default";
+		literal ::System::String^	DEFAULTVAL_ENGINE_TEXQUALITY		= "Default";
+		literal int					DEFAULTVAL_ENGINE_DECORATIONINTENSITY = 0;
+		literal bool				DEFAULTVAL_ENGINE_DISABLENEWROOMTEX = false;
+		literal bool				DEFAULTVAL_ENGINE_DISABLE3DMODELS	= false;
+		literal bool				DEFAULTVAL_ENGINE_DISABLENEWSKY		= false;
+		literal bool				DEFAULTVAL_ENGINE_DISABLEWEATHEREFFECTS = false;
+		literal int					DEFAULTVAL_ENGINE_WEATHERPARTICLES	= 1;
+		literal int					DEFAULTVAL_ENGINE_MUSICVOLUME		= 10;
+		literal int					DEFAULTVAL_ENGINE_SOUNDVOLUME		= 10;
+		literal bool				DEFAULTVAL_ENGINE_DISABLELOOPSOUNDS = false;
+		literal int					DEFAULTVAL_INPUT_MOUSEAIMSPEED		= 25;
+		literal int					DEFAULTVAL_INPUT_KEYROTATESPEED		= 25;
+		literal bool				DEFAULTVAL_INPUT_INVERTMOUSEY		= false;
 
 		literal ::System::String^ BUTTONTYPE_SPELL = "spell";
 		literal ::System::String^ BUTTONTYPE_ACTION = "action";
@@ -188,6 +190,8 @@ namespace Meridian59 { namespace Ogre
 	protected:
 		ActionButtonType GetButtonType(::System::String^ ButtonType);
 
+		void ReadUILayout(::CEGUI::URect* Layout, XmlNode^ Node);
+
 	public:
 		int Display;
 		::System::String^ Resolution;
@@ -236,7 +240,7 @@ namespace Meridian59 { namespace Ogre
 
 		virtual void InitPreConfig() override;
 		virtual void InitPastConfig() override;
-		virtual void ReadXml(::System::Xml::XmlReader^ Reader) override;
+		virtual void ReadXml(::System::Xml::XmlDocument^ Document) override;
 		virtual void WriteXml(::System::Xml::XmlWriter^ Writer) override;
 
 		ActionButtonList^ GetActionButtonSetByName(::System::String^ Name);

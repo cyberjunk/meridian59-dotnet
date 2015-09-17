@@ -1,5 +1,23 @@
 #include "stdafx.h"
 
+#define PARSE_BOOL_ATTRIB(node, attribname, outval) \
+	(node && node->Attributes[attribname] && ::System::Boolean::TryParse(node->Attributes[attribname]->Value, outval))
+
+#define PARSE_UINT32_ATTRIB(node, attribname, outval) \
+	(node && node->Attributes[attribname] && ::System::UInt32::TryParse(node->Attributes[attribname]->Value, outval))
+
+#define PARSE_INT32_ATTRIB(node, attribname, outval) \
+	(node && node->Attributes[attribname] && ::System::Int32::TryParse(node->Attributes[attribname]->Value, outval))
+
+#define PARSE_UINT16_ATTRIB(node, attribname, outval) \
+	(node && node->Attributes[attribname] && ::System::UInt16::TryParse(node->Attributes[attribname]->Value, outval))
+
+#define PARSE_INT16_ATTRIB(node, attribname, outval) \
+	(node && node->Attributes[attribname] && ::System::Int16::TryParse(node->Attributes[attribname]->Value, outval))
+
+#define PARSE_FLOAT_ATTRIB(node, attribname, outval) \
+	(node && node->Attributes[attribname] && ::System::Single::TryParse(node->Attributes[attribname]->Value, ::System::Globalization::NumberStyles::Float, Config::NumberFormatInfo, outval))
+
 namespace Meridian59 { namespace Ogre
 {		
 	OgreClientConfig::OgreClientConfig() : Config()
@@ -12,20 +30,63 @@ namespace Meridian59 { namespace Ogre
 	{
 		Config::InitPreConfig();
 
-		UILayoutAvatar		= new ::CEGUI::URect();
-		UILayoutTarget		= new ::CEGUI::URect();
-		UILayoutMinimap		= new ::CEGUI::URect();
-		UILayoutChat		= new ::CEGUI::URect();
-		UILayoutInventory	= new ::CEGUI::URect();
-		UILayoutSpells		= new ::CEGUI::URect();
-		UILayoutSkills		= new ::CEGUI::URect();
-		UILayoutActions		= new ::CEGUI::URect();
-		UILayoutAttributes	= new ::CEGUI::URect();
-		UILayoutMainButtonsLeft  = new ::CEGUI::URect();
-		UILayoutMainButtonsRight = new ::CEGUI::URect();
-		UILayoutActionButtons	= new ::CEGUI::URect();
-		UILayoutOnlinePlayers	= new ::CEGUI::URect();
-		UILayoutRoomObjects		= new ::CEGUI::URect();
+		// default ui layout
+
+		UILayoutAvatar = new ::CEGUI::URect(
+			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.0f, 5.0f),   ::CEGUI::UDim(0.0f, 25.0f)), 
+			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 266.0f), ::CEGUI::UDim(0.0f, 140.0f)));
+
+		UILayoutTarget = new ::CEGUI::URect(
+			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.0f, 275.0f), ::CEGUI::UDim(0.0f, 30.0f)),
+			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 256.0f), ::CEGUI::UDim(0.0f, 92.0f)));
+
+		UILayoutMinimap = new ::CEGUI::URect(
+			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(1.0f, -257.0f), ::CEGUI::UDim(0.0f, 25.0f)),
+			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 256.0f),  ::CEGUI::UDim(0.0f, 256.0f)));
+
+		UILayoutChat = new ::CEGUI::URect(
+			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.0f, 0.0f),  ::CEGUI::UDim(0.5f, 0.0f)),
+			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.35f, 0.0f), ::CEGUI::UDim(0.3f, 0.0f)));
+
+		UILayoutInventory = new ::CEGUI::URect(
+			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(1.0f, -288.0f), ::CEGUI::UDim(1.0f, -310.0f)),
+			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 288.0f),  ::CEGUI::UDim(0.0f, 233.0f)));
+
+		UILayoutSpells = new ::CEGUI::URect(
+			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.5f, -128.0f), ::CEGUI::UDim(0.5f, -128.0f)),
+			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 256.0f),  ::CEGUI::UDim(0.0f, 256.0f)));
+
+		UILayoutSkills = new ::CEGUI::URect(
+			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.5f, -128.0f), ::CEGUI::UDim(0.5f, -128.0f)),
+			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 256.0f),  ::CEGUI::UDim(0.0f, 192.0f)));
+
+		UILayoutActions = new ::CEGUI::URect(
+			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.5f, -128.0f), ::CEGUI::UDim(0.5f, -128.0f)),
+			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 192.0f),  ::CEGUI::UDim(0.0f, 256.0f)));
+
+		UILayoutAttributes = new ::CEGUI::URect(
+			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.5f, -144.0f), ::CEGUI::UDim(0.5f, -190.0f)),
+			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 288.0f),  ::CEGUI::UDim(0.0f, 380.0f)));
+
+		UILayoutMainButtonsLeft = new ::CEGUI::URect(
+			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.5f, -372.0f), ::CEGUI::UDim(1.0f, -47.0f)),
+			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 182.0f),  ::CEGUI::UDim(0.0f, 46.0f)));
+
+		UILayoutMainButtonsRight = new ::CEGUI::URect(
+			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.5f, 190.0f), ::CEGUI::UDim(1.0f, -47.0f)),
+			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 182.0f), ::CEGUI::UDim(0.0f, 46.0f)));
+
+		UILayoutActionButtons = new ::CEGUI::URect(
+			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.5f, -193.0f), ::CEGUI::UDim(1.0f, -129.0f)),
+			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 385.0f),  ::CEGUI::UDim(0.0f, 128.0f)));
+
+		UILayoutOnlinePlayers = new ::CEGUI::URect(
+			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.5f, -128.0f), ::CEGUI::UDim(0.5f, -192.0f)),
+			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 256.0f),  ::CEGUI::UDim(0.0f, 384.0f)));
+
+		UILayoutRoomObjects = new ::CEGUI::URect(
+			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.5f, -128.0f), ::CEGUI::UDim(0.5f, -192.0f)),
+			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 208.0f), ::CEGUI::UDim(0.0f, 384.0f)));
 	};
 
 	void OgreClientConfig::InitPastConfig()
@@ -33,498 +94,477 @@ namespace Meridian59 { namespace Ogre
 		Config::InitPastConfig();
 	};
 
-	void OgreClientConfig::ReadXml(::System::Xml::XmlReader^ Reader)
+	void OgreClientConfig::ReadUILayout(::CEGUI::URect* Layout, XmlNode^ Node)
 	{
-		Config::ReadXml(Reader);
+		if (!Layout || !Node)
+			return;
 
-		int count;
+		// must have all defined or we keep default
+		if (!Node->Attributes[XMLATTRIB_XREL] ||
+			!Node->Attributes[XMLATTRIB_XABS] ||
+			!Node->Attributes[XMLATTRIB_YREL] ||
+			!Node->Attributes[XMLATTRIB_YABS] ||
+			!Node->Attributes[XMLATTRIB_WREL] || 
+			!Node->Attributes[XMLATTRIB_WABS] ||
+			!Node->Attributes[XMLATTRIB_HREL] ||
+			!Node->Attributes[XMLATTRIB_HABS])
+			return;
+		
+		float xrel, xabs, yrel, yabs;
+		float wrel, wabs, hrel, habs;
+
+		// must all be parsable or we keep default
+		if (!::System::Single::TryParse(Node->Attributes[XMLATTRIB_XREL]->Value, ::System::Globalization::NumberStyles::Float, Config::NumberFormatInfo, xrel) ||
+			!::System::Single::TryParse(Node->Attributes[XMLATTRIB_XABS]->Value, ::System::Globalization::NumberStyles::Float, Config::NumberFormatInfo, xabs) ||
+			!::System::Single::TryParse(Node->Attributes[XMLATTRIB_YREL]->Value, ::System::Globalization::NumberStyles::Float, Config::NumberFormatInfo, yrel) ||
+			!::System::Single::TryParse(Node->Attributes[XMLATTRIB_YABS]->Value, ::System::Globalization::NumberStyles::Float, Config::NumberFormatInfo, yabs) ||
+			!::System::Single::TryParse(Node->Attributes[XMLATTRIB_WREL]->Value, ::System::Globalization::NumberStyles::Float, Config::NumberFormatInfo, wrel) ||
+			!::System::Single::TryParse(Node->Attributes[XMLATTRIB_WABS]->Value, ::System::Globalization::NumberStyles::Float, Config::NumberFormatInfo, wabs) ||
+			!::System::Single::TryParse(Node->Attributes[XMLATTRIB_HREL]->Value, ::System::Globalization::NumberStyles::Float, Config::NumberFormatInfo, hrel) ||
+			!::System::Single::TryParse(Node->Attributes[XMLATTRIB_HABS]->Value, ::System::Globalization::NumberStyles::Float, Config::NumberFormatInfo, habs))
+			return;
+
+		// set position
+		Layout->setPosition(::CEGUI::Vector2<::CEGUI::UDim>(
+			::CEGUI::UDim(xrel, xabs),
+			::CEGUI::UDim(yrel, yabs)));
+		
+		// set size
+		Layout->setSize(::CEGUI::Size<::CEGUI::UDim>(
+			::CEGUI::UDim(wrel, wabs),
+			::CEGUI::UDim(hrel, habs)));
+	};
+
+	void OgreClientConfig::ReadXml(::System::Xml::XmlDocument^ Document)
+	{
+		Config::ReadXml(Document);
+
+		XmlNode^ node;
+		int	     val_int;
+		bool     val_bool;
+		float    val_float;
+		unsigned int val_uint;
 
 		/******************************************************************************/
-		// engine
-
-		Reader->ReadToFollowing(TAG_ENGINE);
-		Reader->ReadToFollowing(TAG_DISPLAY);
-		Display = ::System::Convert::ToInt32(Reader[XMLATTRIB_VALUE]);
-
-		Reader->ReadToFollowing(TAG_RESOLUTION);
-		Resolution = Reader[XMLATTRIB_VALUE];
-
-		Reader->ReadToFollowing(TAG_WINDOWMODE);
-		WindowMode = ::System::Convert::ToBoolean(Reader[ATTRIB_ENABLED]);
-
-		Reader->ReadToFollowing(TAG_WINDOWFRAME);
-		WindowFrame = ::System::Convert::ToBoolean(Reader[ATTRIB_ENABLED]);
-
-		Reader->ReadToFollowing(TAG_VSYNC);
-		VSync = ::System::Convert::ToBoolean(Reader[ATTRIB_ENABLED]);
-
-		Reader->ReadToFollowing(TAG_FSAA);
-		FSAA = Reader[XMLATTRIB_VALUE];
-
-		Reader->ReadToFollowing(TAG_NOMIPMAPS);
-		NoMipmaps = ::System::Convert::ToBoolean(Reader[XMLATTRIB_VALUE]);
-
-		Reader->ReadToFollowing(TAG_TEXTUREFILTERING);
-		TextureFiltering = Reader[XMLATTRIB_VALUE];
-
-		Reader->ReadToFollowing(TAG_IMAGEBUILDER);
-		ImageBuilder = Reader[XMLATTRIB_VALUE];
-
-		Reader->ReadToFollowing(TAG_BITMAPSCALING);
-		BitmapScaling = Reader[XMLATTRIB_VALUE];
-
-		Reader->ReadToFollowing(TAG_TEXTUREQUALITY);
-		TextureQuality = Reader[XMLATTRIB_VALUE];
-
-		Reader->ReadToFollowing(TAG_DECORATIONINTENSITY);
-		DecorationIntensity = ::System::Convert::ToInt32(Reader[XMLATTRIB_VALUE]);
-
-		Reader->ReadToFollowing(TAG_DISABLENEWROOMTEXTURES);
-		DisableNewRoomTextures = ::System::Convert::ToBoolean(Reader[XMLATTRIB_VALUE]);
-
-		Reader->ReadToFollowing(TAG_DISABLE3DMODELS);
-		Disable3DModels = ::System::Convert::ToBoolean(Reader[XMLATTRIB_VALUE]);
-
-		Reader->ReadToFollowing(TAG_DISABLENEWSKY);
-		DisableNewSky = ::System::Convert::ToBoolean(Reader[XMLATTRIB_VALUE]);
-
-		Reader->ReadToFollowing(TAG_DISABLEWEATHEREFFECTS);
-		DisableWeatherEffects = ::System::Convert::ToBoolean(Reader[XMLATTRIB_VALUE]);
-
-		Reader->ReadToFollowing(TAG_WEATHERPARTICLES);
-		WeatherParticles = ::System::Convert::ToInt32(Reader[XMLATTRIB_VALUE]);
-
-		Reader->ReadToFollowing(TAG_MUSICVOLUME);
-		MusicVolume = ::System::Convert::ToSingle(Reader[XMLATTRIB_VALUE], Config::NumberFormatInfo);
-		
-		Reader->ReadToFollowing(TAG_SOUNDVOLUME);
-		SoundVolume = ::System::Convert::ToSingle(Reader[XMLATTRIB_VALUE], Config::NumberFormatInfo);
-
-		Reader->ReadToFollowing(TAG_DISABLELOOPSOUNDS);
-		DisableLoopSounds = ::System::Convert::ToBoolean(Reader[XMLATTRIB_VALUE]);
-		
+		/*  1) Engine
 		/******************************************************************************/
-		// ui
+		
+		// Display
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_ENGINE + "/" + TAG_DISPLAY);
+		Display = (PARSE_INT32_ATTRIB(node, XMLATTRIB_VALUE, val_int)) ? val_int : DEFAULTVAL_ENGINE_DISPLAY;
 
-		Reader->ReadToFollowing(TAG_UI);		
-		Reader->ReadToFollowing(TAG_LAYOUT);
+		// Resolution
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_ENGINE + "/" + TAG_RESOLUTION);
+		Resolution = (node && node->Attributes[XMLATTRIB_VALUE]) ? node->Attributes[XMLATTRIB_VALUE]->Value : DEFAULTVAL_ENGINE_RESOLUTION;
+
+		// WindowMode
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_ENGINE + "/" + TAG_WINDOWMODE);		
+		WindowMode = (PARSE_BOOL_ATTRIB(node, ATTRIB_ENABLED, val_bool)) ? val_bool : DEFAULTVAL_ENGINE_WINDOWMODE;
+
+		// WindowFrame
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_ENGINE + "/" + TAG_WINDOWFRAME);
+		WindowFrame = (PARSE_BOOL_ATTRIB(node, ATTRIB_ENABLED, val_bool)) ? val_bool : DEFAULTVAL_ENGINE_WINDOWFRAME;
+
+		// VSync
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_ENGINE + "/" + TAG_VSYNC);
+		VSync = (PARSE_BOOL_ATTRIB(node, ATTRIB_ENABLED, val_bool)) ? val_bool : DEFAULTVAL_ENGINE_VSYNC;
+
+		// FSAA
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_ENGINE + "/" + TAG_FSAA);
+		FSAA = (node && node->Attributes[XMLATTRIB_VALUE]) ? node->Attributes[XMLATTRIB_VALUE]->Value : DEFAULTVAL_ENGINE_FSAA;
+
+		// NoMipmaps
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_ENGINE + "/" + TAG_NOMIPMAPS);
+		NoMipmaps = (PARSE_BOOL_ATTRIB(node, XMLATTRIB_VALUE, val_bool)) ? val_bool : DEFAULTVAL_ENGINE_NOMIPMAPS;
+
+		// TextureFiltering
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_ENGINE + "/" + TAG_TEXTUREFILTERING);
+		TextureFiltering = (node && node->Attributes[XMLATTRIB_VALUE]) ? node->Attributes[XMLATTRIB_VALUE]->Value : DEFAULTVAL_ENGINE_TEXFILTERING;
+
+		// ImageBuilder
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_ENGINE + "/" + TAG_IMAGEBUILDER);
+		ImageBuilder = (node && node->Attributes[XMLATTRIB_VALUE]) ? node->Attributes[XMLATTRIB_VALUE]->Value : DEFAULTVAL_ENGINE_IMAGEBUILDER;
+
+		// BitmapScaling
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_ENGINE + "/" + TAG_BITMAPSCALING);
+		BitmapScaling = (node && node->Attributes[XMLATTRIB_VALUE]) ? node->Attributes[XMLATTRIB_VALUE]->Value : DEFAULTVAL_ENGINE_BITMAPSCALING;
+
+		// TextureQuality
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_ENGINE + "/" + TAG_TEXTUREQUALITY);
+		TextureQuality = (node && node->Attributes[XMLATTRIB_VALUE]) ? node->Attributes[XMLATTRIB_VALUE]->Value : DEFAULTVAL_ENGINE_TEXQUALITY;
+
+		// DecorationIntensity
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_ENGINE + "/" + TAG_DECORATIONINTENSITY);
+		DecorationIntensity = (PARSE_INT32_ATTRIB(node, XMLATTRIB_VALUE, val_int)) ? val_int : DEFAULTVAL_ENGINE_DECORATIONINTENSITY;
+
+		// DisableNewRoomTextures
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_ENGINE + "/" + TAG_DISABLENEWROOMTEXTURES);
+		DisableNewRoomTextures = (PARSE_BOOL_ATTRIB(node, XMLATTRIB_VALUE, val_bool)) ? val_bool : DEFAULTVAL_ENGINE_DISABLENEWROOMTEX;
+
+		// Disable3DModels
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_ENGINE + "/" + TAG_DISABLE3DMODELS);
+		Disable3DModels = (PARSE_BOOL_ATTRIB(node, XMLATTRIB_VALUE, val_bool)) ? val_bool : DEFAULTVAL_ENGINE_DISABLE3DMODELS;
+
+		// DisableNewSky
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_ENGINE + "/" + TAG_DISABLENEWSKY);
+		DisableNewSky = (PARSE_BOOL_ATTRIB(node, XMLATTRIB_VALUE, val_bool)) ? val_bool : DEFAULTVAL_ENGINE_DISABLENEWSKY;
+
+		// DisableWeatherEffects
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_ENGINE + "/" + TAG_DISABLEWEATHEREFFECTS);
+		DisableWeatherEffects = (PARSE_BOOL_ATTRIB(node, XMLATTRIB_VALUE, val_bool)) ? val_bool : DEFAULTVAL_ENGINE_DISABLEWEATHEREFFECTS;
+
+		// WeatherParticles
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_ENGINE + "/" + TAG_WEATHERPARTICLES);
+		WeatherParticles = (PARSE_INT32_ATTRIB(node, XMLATTRIB_VALUE, val_int)) ? val_int : DEFAULTVAL_ENGINE_WEATHERPARTICLES;
+
+		// MusicVolume
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_ENGINE + "/" + TAG_MUSICVOLUME);
+		MusicVolume = (PARSE_FLOAT_ATTRIB(node, XMLATTRIB_VALUE, val_float)) ? val_float : DEFAULTVAL_ENGINE_MUSICVOLUME;
+
+		// SoundVolume
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_ENGINE + "/" + TAG_SOUNDVOLUME);
+		SoundVolume = (PARSE_FLOAT_ATTRIB(node, XMLATTRIB_VALUE, val_float)) ? val_float : DEFAULTVAL_ENGINE_SOUNDVOLUME;
+
+		// DisableLoopSounds
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_ENGINE + "/" + TAG_DISABLELOOPSOUNDS);
+		DisableLoopSounds = (PARSE_BOOL_ATTRIB(node, XMLATTRIB_VALUE, val_bool)) ? val_bool : DEFAULTVAL_ENGINE_DISABLELOOPSOUNDS;
+
+		/******************************************************************************/
+		/*  2) UI
+		/******************************************************************************/
 
 		// avatar
-		Reader->ReadToFollowing(TAG_AVATAR);
-		UILayoutAvatar->setPosition(::CEGUI::Vector2<::CEGUI::UDim>(
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_XREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_XABS], Config::NumberFormatInfo)),
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_YREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_YABS], Config::NumberFormatInfo))));
-		UILayoutAvatar->setSize(::CEGUI::Size<::CEGUI::UDim>(
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_WREL], Config::NumberFormatInfo), 
-			::System::Convert::ToSingle(Reader[XMLATTRIB_WABS], Config::NumberFormatInfo)),
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_HREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_HABS], Config::NumberFormatInfo))));
-		
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_AVATAR);
+		ReadUILayout(UILayoutAvatar, node);
+
 		// target
-		Reader->ReadToFollowing(TAG_TARGET);
-		UILayoutTarget->setPosition(::CEGUI::Vector2<::CEGUI::UDim>(
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_XREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_XABS], Config::NumberFormatInfo)),
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_YREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_YABS], Config::NumberFormatInfo))));
-		UILayoutTarget->setSize(::CEGUI::Size<::CEGUI::UDim>(
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_WREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_WABS], Config::NumberFormatInfo)),
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_HREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_HABS], Config::NumberFormatInfo))));
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_TARGET);
+		ReadUILayout(UILayoutTarget, node);
 
 		// minimap
-		Reader->ReadToFollowing(TAG_MINIMAP);
-		UILayoutMinimap->setPosition(::CEGUI::Vector2<::CEGUI::UDim>(
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_XREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_XABS], Config::NumberFormatInfo)),
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_YREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_YABS], Config::NumberFormatInfo))));
-		UILayoutMinimap->setSize(::CEGUI::Size<::CEGUI::UDim>(
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_WREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_WABS], Config::NumberFormatInfo)),
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_HREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_HABS], Config::NumberFormatInfo))));
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_MINIMAP);
+		ReadUILayout(UILayoutMinimap, node);
 
 		// chat
-		Reader->ReadToFollowing(TAG_CHAT);
-		UILayoutChat->setPosition(::CEGUI::Vector2<::CEGUI::UDim>(
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_XREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_XABS], Config::NumberFormatInfo)),
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_YREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_YABS], Config::NumberFormatInfo))));
-		UILayoutChat->setSize(::CEGUI::Size<::CEGUI::UDim>(
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_WREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_WABS], Config::NumberFormatInfo)),
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_HREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_HABS], Config::NumberFormatInfo))));
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_CHAT);
+		ReadUILayout(UILayoutChat, node);
 
 		// inventory
-		Reader->ReadToFollowing(TAG_INVENTORY);
-		UILayoutInventory->setPosition(::CEGUI::Vector2<::CEGUI::UDim>(
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_XREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_XABS], Config::NumberFormatInfo)),
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_YREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_YABS], Config::NumberFormatInfo))));
-		UILayoutInventory->setSize(::CEGUI::Size<::CEGUI::UDim>(
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_WREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_WABS], Config::NumberFormatInfo)),
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_HREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_HABS], Config::NumberFormatInfo))));
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_INVENTORY);
+		ReadUILayout(UILayoutInventory, node);
 
 		// spells
-		Reader->ReadToFollowing(TAG_SPELLS);
-		UILayoutSpells->setPosition(::CEGUI::Vector2<::CEGUI::UDim>(
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_XREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_XABS], Config::NumberFormatInfo)),
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_YREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_YABS], Config::NumberFormatInfo))));
-		UILayoutSpells->setSize(::CEGUI::Size<::CEGUI::UDim>(
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_WREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_WABS], Config::NumberFormatInfo)),
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_HREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_HABS], Config::NumberFormatInfo))));
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_SPELLS);
+		ReadUILayout(UILayoutSpells, node);
 
 		// skills
-		Reader->ReadToFollowing(TAG_SKILLS);
-		UILayoutSkills->setPosition(::CEGUI::Vector2<::CEGUI::UDim>(
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_XREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_XABS], Config::NumberFormatInfo)),
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_YREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_YABS], Config::NumberFormatInfo))));
-		UILayoutSkills->setSize(::CEGUI::Size<::CEGUI::UDim>(
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_WREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_WABS], Config::NumberFormatInfo)),
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_HREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_HABS], Config::NumberFormatInfo))));
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_SKILLS);
+		ReadUILayout(UILayoutSkills, node);
 
 		// actions
-		Reader->ReadToFollowing(TAG_ACTIONS);
-		UILayoutActions->setPosition(::CEGUI::Vector2<::CEGUI::UDim>(
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_XREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_XABS], Config::NumberFormatInfo)),
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_YREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_YABS], Config::NumberFormatInfo))));
-		UILayoutActions->setSize(::CEGUI::Size<::CEGUI::UDim>(
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_WREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_WABS], Config::NumberFormatInfo)),
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_HREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_HABS], Config::NumberFormatInfo))));
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_ACTIONS);
+		ReadUILayout(UILayoutActions, node);
 
 		// attributes
-		Reader->ReadToFollowing(TAG_ATTRIBUTES);
-		UILayoutAttributes->setPosition(::CEGUI::Vector2<::CEGUI::UDim>(
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_XREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_XABS], Config::NumberFormatInfo)),
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_YREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_YABS], Config::NumberFormatInfo))));
-		UILayoutAttributes->setSize(::CEGUI::Size<::CEGUI::UDim>(
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_WREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_WABS], Config::NumberFormatInfo)),
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_HREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_HABS], Config::NumberFormatInfo))));
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_ATTRIBUTES);
+		ReadUILayout(UILayoutAttributes, node);
 
 		// mainbuttonsleft
-		Reader->ReadToFollowing(TAG_MAINBUTTONSLEFT);
-		UILayoutMainButtonsLeft->setPosition(::CEGUI::Vector2<::CEGUI::UDim>(
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_XREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_XABS], Config::NumberFormatInfo)),
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_YREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_YABS], Config::NumberFormatInfo))));
-		UILayoutMainButtonsLeft->setSize(::CEGUI::Size<::CEGUI::UDim>(
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_WREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_WABS], Config::NumberFormatInfo)),
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_HREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_HABS], Config::NumberFormatInfo))));
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_MAINBUTTONSLEFT);
+		ReadUILayout(UILayoutMainButtonsLeft, node);
 
 		// mainbuttonsright
-		Reader->ReadToFollowing(TAG_MAINBUTTONSRIGHT);
-		UILayoutMainButtonsRight->setPosition(::CEGUI::Vector2<::CEGUI::UDim>(
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_XREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_XABS], Config::NumberFormatInfo)),
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_YREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_YABS], Config::NumberFormatInfo))));
-		UILayoutMainButtonsRight->setSize(::CEGUI::Size<::CEGUI::UDim>(
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_WREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_WABS], Config::NumberFormatInfo)),
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_HREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_HABS], Config::NumberFormatInfo))));
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_MAINBUTTONSRIGHT);
+		ReadUILayout(UILayoutMainButtonsRight, node);
 
 		// actionbuttons
-		Reader->ReadToFollowing(TAG_ACTIONBUTTONGRID);
-		UILayoutActionButtons->setPosition(::CEGUI::Vector2<::CEGUI::UDim>(
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_XREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_XABS], Config::NumberFormatInfo)),
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_YREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_YABS], Config::NumberFormatInfo))));
-		UILayoutActionButtons->setSize(::CEGUI::Size<::CEGUI::UDim>(
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_WREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_WABS], Config::NumberFormatInfo)),
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_HREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_HABS], Config::NumberFormatInfo))));
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_ACTIONBUTTONGRID);
+		ReadUILayout(UILayoutActionButtons, node);
 
 		// onlineplayers
-		Reader->ReadToFollowing(TAG_ONLINEPLAYERS);
-		UILayoutOnlinePlayers->setPosition(::CEGUI::Vector2<::CEGUI::UDim>(
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_XREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_XABS], Config::NumberFormatInfo)),
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_YREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_YABS], Config::NumberFormatInfo))));
-		UILayoutOnlinePlayers->setSize(::CEGUI::Size<::CEGUI::UDim>(
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_WREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_WABS], Config::NumberFormatInfo)),
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_HREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_HABS], Config::NumberFormatInfo))));
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_ONLINEPLAYERS);
+		ReadUILayout(UILayoutOnlinePlayers, node);
 
 		// roomobjects
-		Reader->ReadToFollowing(TAG_ROOMOBJECTS);
-		UILayoutRoomObjects->setPosition(::CEGUI::Vector2<::CEGUI::UDim>(
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_XREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_XABS], Config::NumberFormatInfo)),
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_YREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_YABS], Config::NumberFormatInfo))));
-		UILayoutRoomObjects->setSize(::CEGUI::Size<::CEGUI::UDim>(
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_WREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_WABS], Config::NumberFormatInfo)),
-			::CEGUI::UDim(::System::Convert::ToSingle(Reader[XMLATTRIB_HREL], Config::NumberFormatInfo),
-			::System::Convert::ToSingle(Reader[XMLATTRIB_HABS], Config::NumberFormatInfo))));
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_ROOMOBJECTS);
+		ReadUILayout(UILayoutRoomObjects, node);
 
 		/******************************************************************************/
-		// input
-
-		Reader->ReadToFollowing(TAG_INPUT);
-		Reader->ReadToFollowing(TAG_MOUSEAIMSPEED);
-		MouseAimSpeed = ::System::Convert::ToInt32(Reader[XMLATTRIB_VALUE]);
-
-		Reader->ReadToFollowing(TAG_KEYROTATESPEED);
-		KeyRotateSpeed = ::System::Convert::ToInt32(Reader[XMLATTRIB_VALUE]);
-
-		Reader->ReadToFollowing(TAG_INVERTMOUSEY);
-		InvertMouseY = ::System::Convert::ToBoolean(Reader[XMLATTRIB_VALUE]);
-
-		Reader->ReadToFollowing(TAG_KEYBINDING);
-
-		KeyBinding = gcnew OISKeyBinding();
-		KeyBinding->RightClickAction = ::System::Convert::ToInt32(Reader[ATTRIB_RIGHTCLICKACTION]);
-
-		// movement
-		Reader->ReadToFollowing(TAG_MOVEFORWARD);
-		KeyBinding->MoveForward = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_MOVEBACKWARD);
-		KeyBinding->MoveBackward = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_MOVELEFT);
-		KeyBinding->MoveLeft = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_MOVERIGHT);
-		KeyBinding->MoveRight = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ROTATELEFT);
-		KeyBinding->RotateLeft = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ROTATERIGHT);
-		KeyBinding->RotateRight = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		// modifiers
-		Reader->ReadToFollowing(TAG_WALK);
-		KeyBinding->Walk = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_AUTOMOVE);
-		KeyBinding->AutoMove = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		// targetting
-		Reader->ReadToFollowing(TAG_NEXTTARGET);
-		KeyBinding->NextTarget = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_SELFTARGET);
-		KeyBinding->SelfTarget = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		// others
-		Reader->ReadToFollowing(TAG_OPEN);
-		KeyBinding->ReqGo = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_CLOSE);
-		KeyBinding->Close = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		// actions
-		Reader->ReadToFollowing(TAG_ACTION01);
-		KeyBinding->ActionButton01 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION02);
-		KeyBinding->ActionButton02 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION03);
-		KeyBinding->ActionButton03 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION04);
-		KeyBinding->ActionButton04 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION05);
-		KeyBinding->ActionButton05 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION06);
-		KeyBinding->ActionButton06 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION07);
-		KeyBinding->ActionButton07 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION08);
-		KeyBinding->ActionButton08 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION09);
-		KeyBinding->ActionButton09 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION10);
-		KeyBinding->ActionButton10 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION11);
-		KeyBinding->ActionButton11 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION12);
-		KeyBinding->ActionButton12 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION13);
-		KeyBinding->ActionButton13 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION14);
-		KeyBinding->ActionButton14 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION15);
-		KeyBinding->ActionButton15 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION16);
-		KeyBinding->ActionButton16 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION17);
-		KeyBinding->ActionButton17 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION18);
-		KeyBinding->ActionButton18 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION19);
-		KeyBinding->ActionButton19 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION20);
-		KeyBinding->ActionButton20 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION21);
-		KeyBinding->ActionButton21 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION22);
-		KeyBinding->ActionButton22 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION23);
-		KeyBinding->ActionButton23 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION24);
-		KeyBinding->ActionButton24 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION25);
-		KeyBinding->ActionButton25 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION26);
-		KeyBinding->ActionButton26 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION27);
-		KeyBinding->ActionButton27 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION28);
-		KeyBinding->ActionButton28 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION29);
-		KeyBinding->ActionButton29 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION30);
-		KeyBinding->ActionButton30 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION31);
-		KeyBinding->ActionButton31 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION32);
-		KeyBinding->ActionButton32 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION33);
-		KeyBinding->ActionButton33 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION34);
-		KeyBinding->ActionButton34 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION35);
-		KeyBinding->ActionButton35 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION36);
-		KeyBinding->ActionButton36 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION37);
-		KeyBinding->ActionButton37 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION38);
-		KeyBinding->ActionButton38 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION39);
-		KeyBinding->ActionButton39 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION40);
-		KeyBinding->ActionButton40 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION41);
-		KeyBinding->ActionButton41 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION42);
-		KeyBinding->ActionButton42 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION43);
-		KeyBinding->ActionButton43 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION44);
-		KeyBinding->ActionButton44 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION45);
-		KeyBinding->ActionButton45 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION46);
-		KeyBinding->ActionButton46 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION47);
-		KeyBinding->ActionButton47 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
-
-		Reader->ReadToFollowing(TAG_ACTION48);
-		KeyBinding->ActionButton48 = (::OIS::KeyCode)::System::Convert::ToUInt32(Reader[XMLATTRIB_KEY]);
+		/*  3) Input
+		/******************************************************************************/
+
+		// MouseAimSpeed
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_MOUSEAIMSPEED);
+		MouseAimSpeed = (PARSE_INT32_ATTRIB(node, XMLATTRIB_VALUE, val_int)) ? val_int : DEFAULTVAL_INPUT_MOUSEAIMSPEED;
+
+		// KeyRotateSpeed
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYROTATESPEED);
+		KeyRotateSpeed = (PARSE_INT32_ATTRIB(node, XMLATTRIB_VALUE, val_int)) ? val_int : DEFAULTVAL_INPUT_KEYROTATESPEED;
+
+		// InvertMouseY
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_INVERTMOUSEY);
+		InvertMouseY = (PARSE_BOOL_ATTRIB(node, XMLATTRIB_VALUE, val_bool)) ? val_bool : DEFAULTVAL_INPUT_INVERTMOUSEY;
+
+		//
+
+		KeyBinding = OISKeyBinding::GetDefault();
+
+		// RightClickAction
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING);
+		if (PARSE_UINT32_ATTRIB(node, ATTRIB_RIGHTCLICKACTION, val_uint))
+			KeyBinding->RightClickAction = val_int;
+
+		// MoveForward
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_MOVEFORWARD);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->MoveForward = (::OIS::KeyCode)val_uint;
+
+		// MoveBackward
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_MOVEBACKWARD);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->MoveBackward = (::OIS::KeyCode)val_uint;
+
+		// MoveLeft
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_MOVELEFT);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->MoveLeft = (::OIS::KeyCode)val_uint;
+
+		// MoveRight
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_MOVERIGHT);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->MoveRight = (::OIS::KeyCode)val_uint;
+		
+		// RotateLeft
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ROTATELEFT);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->RotateLeft = (::OIS::KeyCode)val_uint;
+
+		// RotateRight
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ROTATERIGHT);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->RotateRight = (::OIS::KeyCode)val_uint;
+
+		// Walk
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_WALK);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->Walk = (::OIS::KeyCode)val_uint;
+
+		// AutoMove
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_AUTOMOVE);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->AutoMove = (::OIS::KeyCode)val_uint;
+
+		// NextTarget
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_NEXTTARGET);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->NextTarget = (::OIS::KeyCode)val_uint;
+
+		// SelfTarget
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_SELFTARGET);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->SelfTarget = (::OIS::KeyCode)val_uint;
+
+		// ReqGo
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_OPEN);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ReqGo = (::OIS::KeyCode)val_uint;
+
+		// Close
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_CLOSE);	
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->Close = (::OIS::KeyCode)val_uint;
+
+		// ActionButtons
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION01);		
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton01 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION02);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton02 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION03);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton03 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION04);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton04 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION05);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton05 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION06);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton06 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION07);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton07 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION08);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton08 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION09);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton09 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION10);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton10 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION11);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton11 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION12);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton12 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION13);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton13 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION14);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton14 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION15);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton15 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION16);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton16 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION17);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton17 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION18);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton18 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION19);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton19 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION20);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton20 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION21);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton21 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION22);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton22 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION23);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton23 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION24);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton24 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION25);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton25 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION26);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton26 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION27);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton27 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION28);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton28 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION29);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton29 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION30);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton30 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION31);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton31 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION32);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton32 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION33);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton33 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION34);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton34 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION35);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton35 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION36);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton36 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION37);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton37 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION38);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton38 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION39);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton39 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION40);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton40 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION41);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton41 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION42);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton42 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION43);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton43 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION44);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton44 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION45);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton45 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION46);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton46 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION47);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton47 = (::OIS::KeyCode)val_uint;
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION48);
+		if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+			KeyBinding->ActionButton48 = (::OIS::KeyCode)val_uint;
 
 		/******************************************************************************/
-		// input
 
-		// actionbuttonsets
-		Reader->ReadToFollowing(TAG_ACTIONBUTTONSETS);
-		count = ::System::Convert::ToInt32(Reader[ATTRIB_COUNT]);
-		for (int i = 0; i < count; i++)
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_ACTIONBUTTONSETS);
+
+		if (node)
 		{
-			ActionButtonList^ buttonSet = gcnew ActionButtonList();
-
-			// actionbuttons
-			Reader->ReadToFollowing(TAG_ACTIONBUTTONS);
-			buttonSet->PlayerName = Reader[ATTRIB_PLAYER];
-			int num = ::System::Convert::ToInt32(Reader[ATTRIB_COUNT]);
-			for (int j = 0; j < num; j++)
+			for each(::System::Xml::XmlNode^ child in node->ChildNodes)
 			{
-				// button
-				Reader->ReadToFollowing(TAG_ACTIONBUTTON);
+				if (child->Name != TAG_ACTIONBUTTONS || !child->Attributes[ATTRIB_PLAYER])
+					continue;
 
-				buttonSet->Add(gcnew ActionButtonConfig(
-					::System::Convert::ToInt32(Reader[ATTRIB_NUM]),
-					GetButtonType(Reader[ATTRIB_TYPE]),
-					Reader[XMLATTRIB_NAME],
-					nullptr,
-					nullptr,
-					::System::Convert::ToUInt32(Reader[ATTRIB_NUMOFSAMENAME])));
+				ActionButtonList^ buttonSet = gcnew ActionButtonList();
+				buttonSet->PlayerName = child->Attributes[ATTRIB_PLAYER]->Value;
+
+				for each (::System::Xml::XmlNode^ subchild in child->ChildNodes)
+				{
+					if (subchild->Name != TAG_ACTIONBUTTON)
+						continue;
+
+					int num;
+					::System::String^ type;
+					::System::String^ name;
+					unsigned int numofsamename;
+
+					if (!PARSE_INT32_ATTRIB(subchild, ATTRIB_NUM, num) ||
+						!subchild->Attributes[ATTRIB_TYPE] ||
+						!subchild->Attributes[XMLATTRIB_NAME] ||
+						!PARSE_UINT32_ATTRIB(subchild, ATTRIB_NUMOFSAMENAME, numofsamename))
+						continue;
+
+					type = subchild->Attributes[ATTRIB_TYPE]->Value;
+					name = subchild->Attributes[XMLATTRIB_NAME]->Value;
+
+					buttonSet->Add(gcnew ActionButtonConfig(
+						num, 
+						GetButtonType(type),
+						name,
+						nullptr,
+						nullptr,
+						numofsamename));
+				}
+
+				ActionButtonSets->Add(buttonSet);
 			}
-
-			// add buttonset to known ones
-			ActionButtonSets->Add(buttonSet);
-		}
+		}		
 	};
 
 	void OgreClientConfig::WriteXml(::System::Xml::XmlWriter^ Writer)

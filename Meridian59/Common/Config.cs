@@ -30,7 +30,7 @@ namespace Meridian59.Common
     /// <summary>
     /// Base class for all configuration files
     /// </summary>
-    public class Config : IXmlSerializable, INotifyPropertyChanged
+    public class Config : INotifyPropertyChanged
     {
         #region Constants
         public const string CONFIGFILE = "configuration.xml";
@@ -45,6 +45,25 @@ namespace Meridian59.Common
         public const string PROPNAME_CONNECTIONS                = "Connections";
         public const string PROPNAME_SELECTEDCONNECTIONINDEX    = "SelectedConnectionIndex";
         public const string PROPNAME_ALIASES                    = "Aliases";
+
+        public const string DEFAULTVAL_RESOURCES_PATH           = "../resources/";
+        public const uint   DEFAULTVAL_RESOURCES_VERSION        = 10016;
+        public const bool   DEFAULTVAL_RESOURCES_PRELOADROOMS   = false;
+        public const bool   DEFAULTVAL_RESOURCES_PRELOADOBJECTS = false;
+        public const bool   DEFAULTVAL_RESOURCES_PRELOADROOMTEX = false;
+        public const bool   DEFAULTVAL_RESOURCES_PRELOADSOUND   = false;
+        public const bool   DEFAULTVAL_RESOURCES_PRELOADMUSIC   = false;
+        public const int    DEFAULTVAL_CONNECTIONS_SELECTEDINDEX= 0;
+        public const string DEFAULTVAL_CONNECTIONS_NAME         = "";
+        public const string DEFAULTVAL_CONNECTIONS_HOST         = "";
+        public const ushort DEFAULTVAL_CONNECTIONS_PORT         = 5959;
+        public const bool   DEFAULTVAL_CONNECTIONS_USEIPV6      = false;
+        public const string DEFAULTVAL_CONNECTIONS_STRINGDICT   = "rsc0000.rsb";
+        public const string DEFAULTVAL_CONNECTIONS_USERNAME     = "";
+        public const string DEFAULTVAL_CONNECTIONS_PASSWORD     = "";
+        public const string DEFAULTVAL_CONNECTIONS_CHARACTER    = "";
+        public const string DEFAULTVAL_ALIASES_KEY              = "";
+        public const string DEFAULTVAL_ALIASES_VALUE            = "";
 
         protected const string XMLTAG_CONFIGURATION             = "configuration";
         protected const string XMLTAG_RESOURCES                 = "resources";
@@ -316,68 +335,115 @@ namespace Meridian59.Common
             if (!File.Exists(CONFIGFILE))
                 return;
                 
-            // create xml reader
+            // create xml reader and document
             XmlReader reader = XmlReader.Create(CONFIGFILE);
-            
-            // read rootnode
-            if (!reader.ReadToFollowing(XMLTAG_CONFIGURATION))
-                return;
+            XmlDocument doc = new XmlDocument();
+            XmlNode node, node2;
+
+            uint   val_uint;
+            bool   val_bool;
+            int    val_int;
+            ushort val_ushort;
+
+            // try parse file
+            doc.Load(reader);
+            reader.Close();
+
+            // clear some old
+            connections.Clear();
+            aliases.Clear();
 
             /******************************************************************************/           
             // PART I: RESOURCES
+            /******************************************************************************/
 
-            if (!reader.ReadToFollowing(XMLTAG_RESOURCES))
-                return;
+            node = doc.DocumentElement.SelectSingleNode(
+                '/' + XMLTAG_CONFIGURATION + '/' + XMLTAG_RESOURCES);
 
-            ResourcesPath       = reader[XMLATTRIB_PATH];
-            ResourcesVersion    = Convert.ToUInt32(reader[XMLATTRIB_VERSION]);
-            PreloadRooms        = Convert.ToBoolean(reader[XMLATTRIB_PRELOADROOMS]);
-            PreloadObjects      = Convert.ToBoolean(reader[XMLATTRIB_PRELOADOBJECTS]);
-            PreloadRoomTextures = Convert.ToBoolean(reader[XMLATTRIB_PRELOADROOMTEXTURES]);
-            PreloadSound        = Convert.ToBoolean(reader[XMLATTRIB_PRELOADSOUND]);
-            PreloadMusic        = Convert.ToBoolean(reader[XMLATTRIB_PRELOADMUSIC]);
-            
+            if (node != null)
+            {
+                ResourcesPath = (node.Attributes[XMLATTRIB_PATH] != null) ? 
+                    node.Attributes[XMLATTRIB_PATH].Value : DEFAULTVAL_RESOURCES_PATH;
+
+                ResourcesVersion = (node.Attributes[XMLATTRIB_VERSION] != null && UInt32.TryParse(node.Attributes[XMLATTRIB_VERSION].Value, out val_uint)) ? 
+                    val_uint : DEFAULTVAL_RESOURCES_VERSION;
+
+                PreloadRooms = (node.Attributes[XMLATTRIB_PRELOADROOMS] != null && Boolean.TryParse(node.Attributes[XMLATTRIB_PRELOADROOMS].Value, out val_bool)) ? 
+                    val_bool : DEFAULTVAL_RESOURCES_PRELOADROOMS;
+
+                PreloadObjects = (node.Attributes[XMLATTRIB_PRELOADOBJECTS] != null && Boolean.TryParse(node.Attributes[XMLATTRIB_PRELOADOBJECTS].Value, out val_bool)) ? 
+                    val_bool : DEFAULTVAL_RESOURCES_PRELOADOBJECTS;
+
+                PreloadRoomTextures = (node.Attributes[XMLATTRIB_PRELOADROOMTEXTURES] != null && Boolean.TryParse(node.Attributes[XMLATTRIB_PRELOADROOMTEXTURES].Value, out val_bool)) ? 
+                    val_bool : DEFAULTVAL_RESOURCES_PRELOADROOMTEX;
+
+                PreloadSound = (node.Attributes[XMLATTRIB_PRELOADSOUND] != null && Boolean.TryParse(node.Attributes[XMLATTRIB_PRELOADSOUND].Value, out val_bool)) ? 
+                    val_bool : DEFAULTVAL_RESOURCES_PRELOADSOUND;
+
+                PreloadMusic = (node.Attributes[XMLATTRIB_PRELOADMUSIC] != null && Boolean.TryParse(node.Attributes[XMLATTRIB_PRELOADMUSIC].Value, out val_bool)) ? 
+                    val_bool : DEFAULTVAL_RESOURCES_PRELOADMUSIC;
+            }
+            else
+            {
+                ResourcesPath = DEFAULTVAL_RESOURCES_PATH;
+                ResourcesVersion = DEFAULTVAL_RESOURCES_VERSION;
+                PreloadRooms = DEFAULTVAL_RESOURCES_PRELOADROOMS;
+                PreloadObjects = DEFAULTVAL_RESOURCES_PRELOADOBJECTS;
+                PreloadRoomTextures = DEFAULTVAL_RESOURCES_PRELOADROOMTEX;
+                PreloadSound = DEFAULTVAL_RESOURCES_PRELOADSOUND;
+                PreloadMusic = DEFAULTVAL_RESOURCES_PRELOADMUSIC;
+            }
+
             /******************************************************************************/
             // PART II: Connections
+            /******************************************************************************/
+            
+            node = doc.DocumentElement.SelectSingleNode(
+                '/' + XMLTAG_CONFIGURATION + '/' + XMLTAG_CONNECTIONS);
 
-            if (!reader.ReadToFollowing(XMLTAG_CONNECTIONS))
-                return;
-
-            SelectedConnectionIndex = Convert.ToInt32(reader[XMLATTRIB_SELECTEDINDEX]);
-
-            connections.Clear();
-            if (reader.ReadToDescendant(XMLTAG_CONNECTION))
+            if (node != null)
             {
-                do
+                SelectedConnectionIndex = (node.Attributes[XMLATTRIB_SELECTEDINDEX] != null && Int32.TryParse(node.Attributes[XMLATTRIB_SELECTEDINDEX].Value, out val_int)) ?
+                    val_int : DEFAULTVAL_CONNECTIONS_SELECTEDINDEX;
+
+                foreach (XmlNode child in node.ChildNodes)
                 {
-                    string name             = reader[XMLATTRIB_NAME];
-                    string host             = reader[XMLATTRIB_HOST];
-                    ushort port             = Convert.ToUInt16(reader[XMLATTRIB_PORT]);
-                    bool useipv6            = Convert.ToBoolean(reader[XMLATTRIB_USEIPV6]);
-                    string stringdictionary = reader[XMLATTRIB_STRINGDICTIONARY];
-                    string username         = reader[XMLATTRIB_USERNAME];
-                    string password         = reader[XMLATTRIB_PASSWORD];
-                    string character        = reader[XMLATTRIB_CHARACTER];
+                    if (child.Name != XMLTAG_CONNECTION)
+                        continue;
 
+                    string name = (child.Attributes[XMLATTRIB_NAME] != null) ? 
+                        child.Attributes[XMLATTRIB_NAME].Value : DEFAULTVAL_CONNECTIONS_NAME;
+                    
+                    string host = (child.Attributes[XMLATTRIB_HOST] != null) ? 
+                        child.Attributes[XMLATTRIB_HOST].Value : DEFAULTVAL_CONNECTIONS_HOST;
+
+                    ushort port = (child.Attributes[XMLATTRIB_PORT] != null && UInt16.TryParse(child.Attributes[XMLATTRIB_PORT].Value, out val_ushort)) ?
+                        val_ushort : DEFAULTVAL_CONNECTIONS_PORT;
+
+                    bool useipv6 = (child.Attributes[XMLATTRIB_USEIPV6] != null && Boolean.TryParse(child.Attributes[XMLATTRIB_USEIPV6].Value, out val_bool)) ?
+                        val_bool : DEFAULTVAL_CONNECTIONS_USEIPV6;
+
+                    string stringdictionary = (child.Attributes[XMLATTRIB_STRINGDICTIONARY] != null) ? 
+                        child.Attributes[XMLATTRIB_STRINGDICTIONARY].Value : DEFAULTVAL_CONNECTIONS_STRINGDICT;
+
+                    string username = (child.Attributes[XMLATTRIB_USERNAME] != null) ?
+                        child.Attributes[XMLATTRIB_USERNAME].Value : DEFAULTVAL_CONNECTIONS_USERNAME;
+
+                    string password = (child.Attributes[XMLATTRIB_PASSWORD] != null) ?
+                        child.Attributes[XMLATTRIB_PASSWORD].Value : DEFAULTVAL_CONNECTIONS_PASSWORD;
+                    
+                    string character = (child.Attributes[XMLATTRIB_CHARACTER] != null) ?
+                        child.Attributes[XMLATTRIB_CHARACTER].Value : DEFAULTVAL_CONNECTIONS_CHARACTER;
+                    
                     List<string> ignorelist = new List<string>();
-                    if (reader.ReadToDescendant(XMLTAG_IGNORELIST))
+                    node2 = child.SelectSingleNode(XMLTAG_IGNORELIST);
+                   
+                    foreach (XmlNode subchild in node2.ChildNodes)
                     {
-                        if (reader.ReadToDescendant(XMLTAG_IGNORE))
-                        {
-                            do
-                            {
-                                ignorelist.Add(reader[XMLATTRIB_NAME]);
-                            }
-                            while (reader.ReadToNextSibling(XMLTAG_IGNORE));
+                        if (subchild.Name != XMLTAG_IGNORE)
+                            continue;
 
-                            reader.ReadEndElement();
-                        }
-                        else
-                        {
-                            reader.ReadStartElement(XMLTAG_IGNORELIST);
-                        }
-
-                        reader.ReadEndElement();
+                        ignorelist.Add(reader[XMLATTRIB_NAME]);
                     }
 
                     // add connection
@@ -392,35 +458,40 @@ namespace Meridian59.Common
                         character,
                         ignorelist));
                 }
-                while (reader.ReadToNextSibling(XMLTAG_CONNECTION));
+            }
+            else
+            {
+                SelectedConnectionIndex = DEFAULTVAL_CONNECTIONS_SELECTEDINDEX;
             }
 
             /******************************************************************************/
             // PART III: Aliases
+            /******************************************************************************/
+            
+            node = doc.DocumentElement.SelectSingleNode(
+                '/' + XMLTAG_CONFIGURATION + '/' + XMLTAG_ALIASES);
 
-            if (!reader.ReadToFollowing(XMLTAG_ALIASES))
-                return;
-
-            if (reader.ReadToDescendant(XMLTAG_ALIAS))
+            if (node != null)
             {
-                do
+                foreach (XmlNode child in node.ChildNodes)
                 {
-                    string key = reader[XMLATTRIB_KEY];
-                    string val = reader[XMLATTRIB_VALUE];
-                   
-                    // add alias
-                    aliases.Add(new KeyValuePairString(key, val));                
+                    if (child.Name != XMLTAG_ALIAS)
+                        continue;
+
+                    string key = (child.Attributes[XMLATTRIB_KEY] != null) ?
+                        child.Attributes[XMLATTRIB_KEY].Value : DEFAULTVAL_ALIASES_KEY;
+
+                    string val = (child.Attributes[XMLATTRIB_VALUE] != null) ?
+                        child.Attributes[XMLATTRIB_VALUE].Value : DEFAULTVAL_ALIASES_VALUE;
+
+                    aliases.Add(new KeyValuePairString(key, val));
                 }
-                while (reader.ReadToNextSibling(XMLTAG_ALIAS));
             }
 
             /******************************************************************************/
 
             // let deriving classes load their stuff
-            ReadXml(reader);
-
-            // end
-            reader.Close();
+            ReadXml(doc);
         }
 
         /// <summary>
@@ -514,21 +585,12 @@ namespace Meridian59.Common
             // close writer
             writer.Close();
         }
-        
-        /// <summary>
-        /// Returns null, overwrite if necessary.
-        /// </summary>
-        /// <returns></returns>
-        public virtual XmlSchema GetSchema()
-        {
-            return null;
-        }
 
         /// <summary>
         /// Does nothing by default, overwrite if necessary.
         /// </summary>
-        /// <param name="Reader"></param>
-        public virtual void ReadXml(XmlReader Reader) { }
+        /// <param name="Document"></param>
+        public virtual void ReadXml(XmlDocument Document) { }
 
         /// <summary>
         /// Does nothing by default, overwrite if necessary.

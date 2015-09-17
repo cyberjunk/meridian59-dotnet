@@ -36,6 +36,16 @@ namespace Meridian59.Bot.Shop
         protected const string XMLATTRIB_TELLONENTER        = "tellonenter";
         protected const string XMLATTRIB_CHATPREFIXSTRING   = "chatprefixstring";
         protected const string XMLATTRIB_SHOPNAME           = "shopname";
+
+        public const uint   DEFAULTVAL_SHOPBOT_INTERVALBROADCAST    = 3600;
+        public const uint   DEFAULTVAL_SHOPBOT_INTERVALSAY          = 1800;
+        public const bool   DEFAULTVAL_SHOPBOT_TELLONENTER          = true;
+        public const string DEFAULTVAL_SHOPBOT_CHATPREFIXSTRING     = "~B~r";
+        public const string DEFAULTVAL_SHOPBOT_SHOPNAME             = "~B~rS~n~khop~B~rB~n~kot";
+        public const string DEFAULTVAL_OFFERLIST_NAME               = "";
+        public const uint   DEFAULTVAL_OFFERLIST_UNITPRICE          = 99999999;
+        public const uint   DEFAULTVAL_OFFERLIST_AMOUNT             = 0;
+
         #endregion
 
         #region Properties
@@ -104,55 +114,101 @@ namespace Meridian59.Bot.Shop
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="Reader"></param>
-        public override void ReadXml(XmlReader Reader)
+        /// <param name="Document"></param>
+        public override void ReadXml(XmlDocument Document)
         {
             // read baseclass part
-            base.ReadXml(Reader);
-
-            // shopbot
-            Reader.ReadToFollowing(XMLTAG_BOT);
-            IntervalBroadcast = GameTick.MSINSECOND * Convert.ToUInt32(Reader[XMLATTRIB_INTERVALBROADCAST]);
-            IntervalSay = GameTick.MSINSECOND * Convert.ToUInt32(Reader[XMLATTRIB_INTERVALSAY]);
-            TellOnEnter = Convert.ToBoolean(Reader[XMLATTRIB_TELLONENTER]);
-            ChatPrefixString = Reader[XMLATTRIB_CHATPREFIXSTRING];
-            Shopname = Reader[XMLATTRIB_SHOPNAME];
-
-            // vars for lists
+            base.ReadXml(Document);
+            
+            uint val_uint;
+            bool val_bool;
+            XmlNode node;
             string name;
             uint unitprice;
             uint amount;
 
-            // offerlist
             OfferList.Clear();
-            Reader.ReadToFollowing(XMLTAG_OFFERLIST);
-            if (Reader.ReadToDescendant(XMLTAG_ITEM))
+            BuyList.Clear();
+
+            // basics
+
+            node = Document.DocumentElement.SelectSingleNode(
+                '/' + XMLTAG_CONFIGURATION + '/' + XMLTAG_BOT);
+
+            if (node != null)
             {
-                do
+                IntervalBroadcast = (node.Attributes[XMLATTRIB_INTERVALBROADCAST] != null && UInt32.TryParse(node.Attributes[XMLATTRIB_INTERVALBROADCAST].Value, out val_uint)) ?
+                    val_uint * GameTick.MSINSECOND : DEFAULTVAL_SHOPBOT_INTERVALBROADCAST * GameTick.MSINSECOND;
+
+                IntervalSay = (node.Attributes[XMLATTRIB_INTERVALSAY] != null && UInt32.TryParse(node.Attributes[XMLATTRIB_INTERVALSAY].Value, out val_uint)) ?
+                    val_uint * GameTick.MSINSECOND : DEFAULTVAL_SHOPBOT_INTERVALSAY * GameTick.MSINSECOND;
+
+                TellOnEnter = (node.Attributes[XMLATTRIB_TELLONENTER] != null && Boolean.TryParse(node.Attributes[XMLATTRIB_TELLONENTER].Value, out val_bool)) ? 
+                    val_bool : DEFAULTVAL_SHOPBOT_TELLONENTER;
+
+                ChatPrefixString = (node.Attributes[XMLATTRIB_CHATPREFIXSTRING] != null) ?
+                    node.Attributes[XMLATTRIB_CHATPREFIXSTRING].Value : DEFAULTVAL_SHOPBOT_CHATPREFIXSTRING;
+
+                Shopname = (node.Attributes[XMLATTRIB_SHOPNAME] != null) ?
+                    node.Attributes[XMLATTRIB_SHOPNAME].Value : DEFAULTVAL_SHOPBOT_SHOPNAME;
+            }
+            else
+            {
+                IntervalBroadcast = DEFAULTVAL_SHOPBOT_INTERVALBROADCAST * GameTick.MSINSECOND;
+                IntervalSay = DEFAULTVAL_SHOPBOT_INTERVALSAY * GameTick.MSINSECOND;
+                TellOnEnter = DEFAULTVAL_SHOPBOT_TELLONENTER;
+                ChatPrefixString = DEFAULTVAL_SHOPBOT_CHATPREFIXSTRING;
+                Shopname = DEFAULTVAL_SHOPBOT_SHOPNAME;
+            }
+            
+            // offerlist
+
+            node = Document.DocumentElement.SelectSingleNode(
+                '/' + XMLTAG_CONFIGURATION + '/' + XMLTAG_BOT + '/' + XMLTAG_OFFERLIST);
+
+            if (node != null)
+            {
+                foreach (XmlNode child in node.ChildNodes)
                 {
-                    name = Reader[XMLATTRIB_NAME];
-                    unitprice = Convert.ToUInt32(Reader[XMLATTRIB_UNITPRICE]);
-                    amount = Convert.ToUInt32(Reader[XMLATTRIB_COUNT]);
+                    if (child.Name != XMLTAG_ITEM)
+                        continue;
+
+                    name = (child.Attributes[XMLATTRIB_NAME] != null) ?
+                        child.Attributes[XMLATTRIB_NAME].Value : DEFAULTVAL_OFFERLIST_NAME;
+
+                    unitprice = (child.Attributes[XMLATTRIB_UNITPRICE] != null && UInt32.TryParse(child.Attributes[XMLATTRIB_UNITPRICE].Value, out val_uint)) ?
+                        val_uint : DEFAULTVAL_OFFERLIST_UNITPRICE;
+
+                    amount = (child.Attributes[XMLATTRIB_COUNT] != null && UInt32.TryParse(child.Attributes[XMLATTRIB_COUNT].Value, out val_uint)) ?
+                        val_uint : DEFAULTVAL_OFFERLIST_AMOUNT;
 
                     OfferList.Add(new ShopItem(name, unitprice, amount));
                 }
-                while (Reader.ReadToNextSibling(XMLTAG_ITEM));
             }
-            
+
             // buylist
-            BuyList.Clear();
-            Reader.ReadToFollowing(XMLTAG_BUYLIST);
-            if (Reader.ReadToDescendant(XMLTAG_ITEM))
+
+            node = Document.DocumentElement.SelectSingleNode(
+                '/' + XMLTAG_CONFIGURATION + '/' + XMLTAG_BOT + '/' + XMLTAG_BUYLIST);
+
+            if (node != null)
             {
-                do
+                foreach (XmlNode child in node.ChildNodes)
                 {
-                    name = Reader[XMLATTRIB_NAME];
-                    unitprice = Convert.ToUInt32(Reader[XMLATTRIB_UNITPRICE]);
-                    amount = Convert.ToUInt32(Reader[XMLATTRIB_COUNT]);
+                    if (child.Name != XMLTAG_ITEM)
+                        continue;
+
+                    name = (child.Attributes[XMLATTRIB_NAME] != null) ?
+                        child.Attributes[XMLATTRIB_NAME].Value : DEFAULTVAL_OFFERLIST_NAME;
+
+                    unitprice = (child.Attributes[XMLATTRIB_UNITPRICE] != null && UInt32.TryParse(child.Attributes[XMLATTRIB_UNITPRICE].Value, out val_uint)) ?
+                        val_uint : DEFAULTVAL_OFFERLIST_UNITPRICE;
+
+                    amount = (child.Attributes[XMLATTRIB_COUNT] != null && UInt32.TryParse(child.Attributes[XMLATTRIB_COUNT].Value, out val_uint)) ?
+                        val_uint : DEFAULTVAL_OFFERLIST_AMOUNT;
 
                     BuyList.Add(new ShopItem(name, unitprice, amount));
                 }
-                while (Reader.ReadToNextSibling(XMLTAG_ITEM));
             }
         }
 

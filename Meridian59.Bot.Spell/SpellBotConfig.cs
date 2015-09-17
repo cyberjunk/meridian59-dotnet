@@ -50,6 +50,15 @@ namespace Meridian59.Bot.Spell
         public const string XMLVALUE_QUIT       = "quit";
         public const string XMLVALUE_SKIP       = "skip";
         public const string XMLVALUE_SELF       = "self";
+
+        public const string DEFAULTVAL_SPELLBOT_TEMPLATE = "";
+        public const string DEFAULTVAL_SPELLBOT_TEMPLATENAME = "";
+        public const string DEFAULTVAL_SPELLBOT_CAST_NAME = "";
+        public const string DEFAULTVAL_SPELLBOT_CAST_TARGET = "";
+        public const string DEFAULTVAL_SPELLBOT_CAST_WHERE = "";
+        public const string DEFAULTVAL_SPELLBOT_CAST_ONMAX = "";
+        public const uint DEFAULTVAL_SPELLBOT_SLEEP_DURATION = 1;
+
         #endregion
 
         /// <summary>
@@ -114,29 +123,50 @@ namespace Meridian59.Bot.Spell
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="Reader"></param>
-        public override void ReadXml(XmlReader Reader)
+        /// <param name="Document"></param>
+        public override void ReadXml(XmlDocument Document)
         {
             // read baseclass part
-            base.ReadXml(Reader);
+            base.ReadXml(Document);
+
+            XmlNode node;
 
             // vars for reading
             string activetemplate;
 
+
             // bot
-            Reader.ReadToFollowing(XMLTAG_BOT);
-            activetemplate = Reader[XMLATTRIB_TEMPLATE];
+
+            node = Document.DocumentElement.SelectSingleNode(
+                '/' + XMLTAG_CONFIGURATION + '/' + XMLTAG_BOT);
+
+            if (node != null)
+            {
+                activetemplate = (node.Attributes[XMLATTRIB_TEMPLATE] != null) ?
+                    node.Attributes[XMLATTRIB_TEMPLATE].Value : DEFAULTVAL_SPELLBOT_TEMPLATE;
+            }
+            else
+            {
+                activetemplate = DEFAULTVAL_SPELLBOT_TEMPLATE;
+            }
+
 
             // templates
-            Reader.ReadToFollowing(XMLTAG_TEMPLATES);
-            if (Reader.ReadToDescendant(XMLTAG_TEMPLATE))
+            node = Document.DocumentElement.SelectSingleNode(
+                '/' + XMLTAG_CONFIGURATION + '/' + XMLTAG_BOT + '/' + XMLTAG_TEMPLATES);
+
+            if (node != null)
             {
-                do
+                foreach (XmlNode child in node.ChildNodes)
                 {
-                    Templates.Add(ReadTemplate(Reader));
-                }               
-                while (Reader.ReadToNextSibling(XMLTAG_TEMPLATE));
+                    if (child.Name != XMLTAG_TEMPLATE)
+                        continue;
+
+                    Templates.Add(ReadTemplate(child));
+                }
             }
+
+            //
 
             // find active one from templates
             ActiveTemplate = GetTemplateByName(activetemplate);                     
@@ -146,11 +176,13 @@ namespace Meridian59.Bot.Spell
         /// 
         /// </summary>
         /// <param name="Reader"></param>
-        protected Template ReadTemplate(XmlReader Reader)
+        protected Template ReadTemplate(XmlNode Reader)
         {
             Template template = new Template();
-            template.Name = Reader[XMLATTRIB_NAME];
 
+            template.Name = (Reader.Attributes[XMLATTRIB_NAME] != null) ?
+                Reader.Attributes[XMLATTRIB_NAME].Value : DEFAULTVAL_SPELLBOT_TEMPLATENAME;
+          
             string type;
             string name;
             string target;
@@ -159,52 +191,62 @@ namespace Meridian59.Bot.Spell
             string onmax;
             uint cap;
             uint duration;
-            
-            if (Reader.ReadToDescendant(XMLTAG_TASK))
+
+            foreach (XmlNode child in Reader.ChildNodes)
             {
-                do
+                if (child.Name != XMLTAG_TASK)
+                    continue;
+
+                type = (child.Attributes[XMLATTRIB_TYPE] != null) ?
+                    child.Attributes[XMLATTRIB_TYPE].Value : null;
+
+                switch (type)
                 {
-                    type = Reader[XMLATTRIB_TYPE].ToLower();
+                    case XMLVALUE_CAST:
+                        name = (child.Attributes[XMLATTRIB_NAME] != null) ?
+                            child.Attributes[XMLATTRIB_NAME].Value : DEFAULTVAL_SPELLBOT_CAST_NAME;
+                        target = (child.Attributes[XMLATTRIB_TARGET] != null) ?
+                            child.Attributes[XMLATTRIB_TARGET].Value : DEFAULTVAL_SPELLBOT_CAST_TARGET;
+                        where = (child.Attributes[XMLATTRIB_IN] != null) ?
+                            child.Attributes[XMLATTRIB_IN].Value : DEFAULTVAL_SPELLBOT_CAST_WHERE;
+                        onmax = (child.Attributes[XMLATTRIB_ONMAX] != null) ?
+                            child.Attributes[XMLATTRIB_ONMAX].Value : DEFAULTVAL_SPELLBOT_CAST_ONMAX;
+                        cap = (child.Attributes[XMLATTRIB_CAP] != null && UInt32.TryParse(child.Attributes[XMLATTRIB_CAP].Value, out cap)) ?
+                            Math.Min(StatNumsValues.SKILLMAX, cap) : StatNumsValues.SKILLMAX;
 
-                    switch (type)
-                    {
-                        case XMLVALUE_CAST:
-                            name = Reader[XMLATTRIB_NAME];
-                            target = Reader[XMLATTRIB_TARGET];
-                            where = Reader[XMLATTRIB_IN];
-                            onmax = Reader[XMLATTRIB_ONMAX];
+                        template.Tasks.Add(new BotTaskCast(name, target, where, onmax, cap));
+                        break;
 
-                            cap = (Reader[XMLATTRIB_CAP] == null) ? StatNumsValues.SKILLMAX : 
-                                Math.Min(StatNumsValues.SKILLMAX, Convert.ToUInt32(Reader[XMLATTRIB_CAP]));
+                    case XMLVALUE_USE:
+                        name = (child.Attributes[XMLATTRIB_NAME] != null) ?
+                            child.Attributes[XMLATTRIB_NAME].Value : DEFAULTVAL_SPELLBOT_CAST_NAME;
+                        template.Tasks.Add(new BotTaskUse(name));
+                        break;
 
-                            template.Tasks.Add(new BotTaskCast(name, target, where, onmax, cap));
-                            break;
+                    case XMLVALUE_REST:
+                        template.Tasks.Add(new BotTaskRest());
+                        break;
 
-                        case XMLVALUE_USE:
-                            name = Reader[XMLATTRIB_NAME];
-                            template.Tasks.Add(new BotTaskUse(name));
-                            break;
+                    case XMLVALUE_STAND:
+                        template.Tasks.Add(new BotTaskStand());
+                        break;
 
-                        case XMLVALUE_REST:
-                            template.Tasks.Add(new BotTaskRest());
-                            break;
+                    case XMLVALUE_SLEEP:
+                        duration = (child.Attributes[XMLATTRIB_DURATION] != null && UInt32.TryParse(child.Attributes[XMLATTRIB_DURATION].Value, out duration)) ?
+                            duration * GameTick.MSINSECOND : DEFAULTVAL_SPELLBOT_SLEEP_DURATION * GameTick.MSINSECOND;
 
-                        case XMLVALUE_STAND:
-                            template.Tasks.Add(new BotTaskStand());
-                            break;
+                        template.Tasks.Add(new BotTaskSleep(duration));
+                        break;
 
-                        case XMLVALUE_SLEEP:
-                            duration = GameTick.MSINSECOND * Convert.ToUInt32(Reader[XMLATTRIB_DURATION]);
-                            template.Tasks.Add(new BotTaskSleep(duration));
-                            break;
+                    case XMLVALUE_SAY:
+                        text = (child.Attributes[XMLATTRIB_TEXT] != null) ?
+                            child.Attributes[XMLATTRIB_TEXT].Value : null;
 
-                        case XMLVALUE_SAY:
-                            text = Reader[XMLATTRIB_TEXT];
+                        if (text != null)
                             template.Tasks.Add(new BotTaskSay(text));
-                            break;
-                    }
+                        break;
+
                 }
-                while (Reader.ReadToNextSibling(XMLTAG_TASK));
             }
 
             return template;
