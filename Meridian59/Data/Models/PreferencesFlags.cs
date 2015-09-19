@@ -14,8 +14,6 @@
  If not, see http://www.gnu.org/licenses/.
 */
 
-#if !VANILLA
-
 using System;
 using System.ComponentModel;
 using Meridian59.Common;
@@ -30,6 +28,8 @@ namespace Meridian59.Data.Models
     [Serializable]
     public class PreferencesFlags : Flags, IUpdatable<PreferencesFlags>
     {
+        public const string PROPNAME_ENABLED = "Enabled";
+
         #region Bitmasks
         /// Flags for client preference options, e.g. safety.
         private const uint CF_SAFETY_OFF = 0x00000001; // Player has safety off
@@ -41,12 +41,31 @@ namespace Meridian59.Data.Models
         private const uint CF_SPELLPOWER = 0x00000040; // Player gets spellpower readout from cast spells
         #endregion
 
+        protected bool enabled;
+
         #region Properties
+        /// <summary>
+        /// Stores whether the flags have been received/enabled or not.
+        /// </summary>
+        ///
+        public bool Enabled
+        {
+            get { return enabled; }
+            set
+            {
+                if (enabled != value)
+                {
+                    enabled = value;
+                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_ENABLED));
+                }
+            }
+        }
+
         /// <summary>
         /// Whether safety is enabled or not
         /// </summary>
         ///
-        public bool IsSafety
+        public bool IsSafetyOff
         {
            get { return (flags & CF_SAFETY_OFF) == CF_SAFETY_OFF; }
            set
@@ -197,6 +216,19 @@ namespace Meridian59.Data.Models
             }
         }
         #endregion
+
+        public override void Clear(bool RaiseChangedEvent)
+        {
+            base.Clear(RaiseChangedEvent);
+
+            if (RaiseChangedEvent)
+            {
+                Enabled = false;    
+            }
+            else
+            {
+                enabled = false;
+            }
+        }
     }
 }
-#endif

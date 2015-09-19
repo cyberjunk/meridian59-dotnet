@@ -244,9 +244,7 @@ namespace Meridian59 { namespace Ogre
 			static void Initialize();
 			static void Destroy();
 			static void OnDataPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
-#if !VANILLA
 			static void OnClientPreferencesChanged(Object^ sender, PropertyChangedEventArgs^ e);
-#endif
 			static void OnRoomInformationPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
 			static void OnOnlinePlayersListChanged(Object^ sender, ListChangedEventArgs^ e);
 		};
@@ -1060,14 +1058,14 @@ namespace Meridian59 { namespace Ogre
 			
 			static ::CEGUI::PushButton* Engine = nullptr;
 			static ::CEGUI::PushButton* Input = nullptr;
-			static ::CEGUI::PushButton* UI = nullptr;
+			static ::CEGUI::PushButton* GamePlay = nullptr;
 			static ::CEGUI::PushButton* Aliases = nullptr;
 			static ::CEGUI::PushButton* About = nullptr;
 
 			static ::CEGUI::TabControl* TabControl = nullptr;
 			static ::CEGUI::Window* TabEngine = nullptr;
 			static ::CEGUI::Window* TabInput = nullptr;
-			static ::CEGUI::Window* TabUI = nullptr;
+			static ::CEGUI::Window* TabGamePlay = nullptr;
 			static ::CEGUI::Window* TabAliases = nullptr;
 			static ::CEGUI::Window* TabAbout = nullptr;
 
@@ -1105,6 +1103,16 @@ namespace Meridian59 { namespace Ogre
 			static ::CEGUI::ToggleButton* PreloadObjects = nullptr;
 			static ::CEGUI::ToggleButton* PreloadSounds = nullptr;
 			static ::CEGUI::ToggleButton* PreloadMusic = nullptr;
+
+			//
+
+			static ::CEGUI::ToggleButton* Safety = nullptr;
+			static ::CEGUI::ToggleButton* Grouping = nullptr;
+			static ::CEGUI::ToggleButton* SpellPower = nullptr;
+			static ::CEGUI::ToggleButton* ReagentBag = nullptr;
+			static ::CEGUI::ToggleButton* TempSafe = nullptr;
+			static ::CEGUI::ToggleButton* AutoLoot = nullptr;
+			static ::CEGUI::ToggleButton* AutoCombine = nullptr;
 
 			//
 
@@ -1206,6 +1214,7 @@ namespace Meridian59 { namespace Ogre
 			static void AliasRemove(int Index);
 
 			static void OnConfigPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
+			static void OnClientPreferencesPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
 			static void OnAliasListChanged(Object^ sender, ListChangedEventArgs^ e);
 
 			static void Initialize();
@@ -1688,6 +1697,8 @@ namespace Meridian59 { namespace Ogre
 			static bool OnAliasDeleteClicked(const CEGUI::EventArgs& e);
 			static bool OnAliasKeyAccepted(const CEGUI::EventArgs& e);
 			static bool OnAliasValueAccepted(const CEGUI::EventArgs& e);
+
+			static bool OnPreferencesCheckboxChanged(const CEGUI::EventArgs& e);
 		};
 	};
 #pragma endregion

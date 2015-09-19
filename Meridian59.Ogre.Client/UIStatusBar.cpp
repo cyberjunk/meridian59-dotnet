@@ -27,11 +27,11 @@ namespace Meridian59 { namespace Ogre
 		// attach listener to Data
 		OgreClient::Singleton->Data->PropertyChanged += 
 			gcnew PropertyChangedEventHandler(&ControllerUI::StatusBar::OnDataPropertyChanged);
-#if !VANILLA
+
 		// attach listener to Preference Flags
 		OgreClient::Singleton->Data->ClientPreferences->PropertyChanged +=
 			gcnew PropertyChangedEventHandler(&ControllerUI::StatusBar::OnClientPreferencesChanged);
-#endif
+
 		// attach listener to roominformation
 		OgreClient::Singleton->Data->RoomInformation->PropertyChanged += 
 			gcnew PropertyChangedEventHandler(&ControllerUI::StatusBar::OnRoomInformationPropertyChanged);
@@ -58,11 +58,11 @@ namespace Meridian59 { namespace Ogre
 		// detach listener from Data
 		OgreClient::Singleton->Data->PropertyChanged -= 
 			gcnew PropertyChangedEventHandler(&ControllerUI::StatusBar::OnDataPropertyChanged);
-#if !VANILLA
-		// detach listener to Preference Flags
+
+		// detach listener from Preference Flags
 		OgreClient::Singleton->Data->ClientPreferences->PropertyChanged -=
 			gcnew PropertyChangedEventHandler(&ControllerUI::StatusBar::OnClientPreferencesChanged);
-#endif
+
       // detach listener from roominformation
 		OgreClient::Singleton->Data->RoomInformation->PropertyChanged -= 
 			gcnew PropertyChangedEventHandler(&ControllerUI::StatusBar::OnRoomInformationPropertyChanged);
@@ -124,37 +124,20 @@ namespace Meridian59 { namespace Ogre
 			MTimeValue->setText(
 				StringConvert::CLRToCEGUI(OgreClient::Singleton->Data->MeridianTime.ToShortTimeString()));
 		}
-
-		// update safety
-#if VANILLA
-		else if (::System::String::Equals(e->PropertyName, DataController::PROPNAME_ISSAFETY))
-		{
-			const bool isSafety = OgreClient::Singleton->Data->IsSafety;
-
-			const CEGUI::String color = (isSafety ? UI_COLOR_PALEGREEN : UI_COLOR_DARKRED);
-			const CEGUI::String val = (isSafety ? "On" : "Off");
-
-			SafetyValue->setProperty(UI_PROPNAME_NORMALTEXTCOLOUR, color);
-			SafetyValue->setProperty(UI_PROPNAME_HOVERTEXTCOLOUR, color);
-			SafetyValue->setText(val);
-		}
-#endif
 	};
 
-#if !VANILLA
 	void ControllerUI::StatusBar::OnClientPreferencesChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{
 		if (::System::String::Equals(e->PropertyName, PreferencesFlags::PROPNAME_FLAGS))
 		{
-			const bool isSafety = OgreClient::Singleton->Data->ClientPreferences->IsSafety;
-			const CEGUI::String color = (isSafety ? UI_COLOR_DARKRED : UI_COLOR_PALEGREEN);
-			const CEGUI::String val = (isSafety ? "Off" : "On");
+			const bool isSafetyOff = OgreClient::Singleton->Data->ClientPreferences->IsSafetyOff;
+			const CEGUI::String color = (isSafetyOff ? UI_COLOR_DARKRED : UI_COLOR_PALEGREEN);
+			const CEGUI::String val = (isSafetyOff ? "Off" : "On");
 			SafetyValue->setProperty(UI_PROPNAME_NORMALTEXTCOLOUR, color);
 			SafetyValue->setProperty(UI_PROPNAME_HOVERTEXTCOLOUR, color);
 			SafetyValue->setText(val);
 		}
 	};
-#endif
 
 	void ControllerUI::StatusBar::OnRoomInformationPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{
@@ -197,12 +180,13 @@ namespace Meridian59 { namespace Ogre
 
 	bool UICallbacks::StatusBar::OnSafetyClicked(const CEGUI::EventArgs& e)
 	{
+		OgreClient::Singleton->Data->ClientPreferences->IsSafetyOff
+			= !OgreClient::Singleton->Data->ClientPreferences->IsSafetyOff;
+
 #if VANILLA
 		OgreClient::Singleton->SendUserCommandSafetyMessage(
-			!OgreClient::Singleton->Data->IsSafety);
+			!OgreClient::Singleton->Data->ClientPreferences->IsSafetyOff);
 #else
-		OgreClient::Singleton->Data->ClientPreferences->IsSafety
-			= !OgreClient::Singleton->Data->ClientPreferences->IsSafety;
 		OgreClient::Singleton->SendUserCommandSendPreferences();
 #endif
 

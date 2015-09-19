@@ -49,9 +49,6 @@ namespace Meridian59.Data
         public const string PROPNAME_SELFTARGET = "SelfTarget";
         public const string PROPNAME_TARGETID = "TargetID";
         public const string PROPNAME_ISRESTING = "IsResting";
-#if VANILLA
-        public const string PROPNAME_ISSAFETY = "IsSafety";
-#endif
         public const string PROPNAME_ISWAITING = "IsWaiting";
         public const string PROPNAME_MERIDIANTIME = "MeridianTime";
         public const string PROPNAME_TPS = "TPS";
@@ -76,11 +73,7 @@ namespace Meridian59.Data
         protected uint targetID = UInt32.MaxValue;
         protected bool selfTarget;
         protected bool isResting;
-#if VANILLA
-        protected bool isSafety;
-#else
-        protected PreferencesFlags clientPreferences;
-#endif
+
         protected bool isWaiting;
         protected uint tps;
         protected uint rtt;
@@ -129,7 +122,8 @@ namespace Meridian59.Data
         protected readonly ObjectContents objectContents;
         protected readonly Effects effects;
         protected readonly PlayerInfo lookPlayer;
-        protected readonly ObjectInfo lookObject;        
+        protected readonly ObjectInfo lookObject;
+        protected readonly PreferencesFlags clientPreferences;
         #endregion
 
         #region Properties
@@ -338,6 +332,12 @@ namespace Meridian59.Data
         /// This instance stays the same. Its properties change!
         /// </summary>
         public ObjectInfo LookObject { get { return lookObject; } }
+
+        /// <summary>
+        /// Current client gameplay preferences (e.g. safety, tempsafe).
+        /// </summary>
+        public PreferencesFlags ClientPreferences { get { return clientPreferences; } }
+
         #endregion
 
         #region Own Values
@@ -499,28 +499,7 @@ namespace Meridian59.Data
                 }
             }
         }
-#if !VANILLA
-        /// <summary>
-        /// Current client gameplay preferences (e.g. safety, tempsafe).
-        /// </summary>
-        public PreferencesFlags ClientPreferences { get; protected set; }
-#else
-        /// <summary>
-        /// Whether safety is enabled or not
-        /// </summary>
-        public bool IsSafety
-        {
-            get { return isSafety; }
-            set
-            {
-                if (isSafety != value)
-                {
-                    isSafety = value;
-                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_ISSAFETY));
-                }
-            }
-        }
-#endif
+
         /// <summary>
         /// Whether server is saving right now or not
         /// </summary>
@@ -835,10 +814,8 @@ namespace Meridian59.Data
             effects = new Effects();
             lookPlayer = new PlayerInfo();
             lookObject = new ObjectInfo();
-            
-#if !VANILLA
-            ClientPreferences = new PreferencesFlags();
-#endif
+            clientPreferences = new PreferencesFlags();
+
             // some values
             ChatMessagesMaximum = 100;
             ChatCommandHistoryMaximum = 20;
@@ -903,9 +880,8 @@ namespace Meridian59.Data
             GuildAskData.Clear(true);
             DiplomacyInfo.Clear(true);
             AdminInfo.Clear(true);
-#if !VANILLA
             ClientPreferences.Clear(true);
-#endif
+
             LookObject.Clear(true);
             LookPlayer.Clear(true);
             RoomInformation.Clear(true);
@@ -2180,6 +2156,7 @@ namespace Meridian59.Data
 #if !VANILLA
                 case UserCommandType.ReceivePreferences:
                     ClientPreferences.UpdateFromModel(((UserCommandReceivePreferences)Message.Command).ClientPreferences, true);
+                    ClientPreferences.Enabled = true;
                     break;
 #endif
                 case UserCommandType.GuildShield:

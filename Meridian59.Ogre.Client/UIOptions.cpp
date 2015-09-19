@@ -14,7 +14,7 @@ namespace Meridian59 { namespace Ogre
 		// category buttons
 		Engine		= static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_OPTIONS_ENGINE));
 		Input		= static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_OPTIONS_INPUT));
-		UI			= static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_OPTIONS_UI));
+		GamePlay	= static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_OPTIONS_GAMEPLAY));
 		Aliases		= static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_OPTIONS_ALIASES));
 		About		= static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_OPTIONS_ABOUT));
 
@@ -22,7 +22,7 @@ namespace Meridian59 { namespace Ogre
 		TabControl	= static_cast<CEGUI::TabControl*>(Window->getChild(UI_NAME_OPTIONS_TABCONTROL));		
 		TabEngine	= static_cast<CEGUI::Window*>(TabControl->getChild(UI_NAME_OPTIONS_TABENGINE));
 		TabInput	= static_cast<CEGUI::Window*>(TabControl->getChild(UI_NAME_OPTIONS_TABINPUT));
-		TabUI		= static_cast<CEGUI::Window*>(TabControl->getChild(UI_NAME_OPTIONS_TABUI));
+		TabGamePlay = static_cast<CEGUI::Window*>(TabControl->getChild(UI_NAME_OPTIONS_TABGAMEPLAY));
 		TabAliases	= static_cast<CEGUI::Window*>(TabControl->getChild(UI_NAME_OPTIONS_TABALIASES));
 		TabAbout	= static_cast<CEGUI::Window*>(TabControl->getChild(UI_NAME_OPTIONS_TABABOUT));
 
@@ -133,6 +133,17 @@ namespace Meridian59 { namespace Ogre
 		PreloadObjects	= static_cast<CEGUI::ToggleButton*>(TabEngine->getChild(UI_NAME_OPTIONS_TABENGINE_PRELOADOBJECTS));
 		PreloadSounds	= static_cast<CEGUI::ToggleButton*>(TabEngine->getChild(UI_NAME_OPTIONS_TABENGINE_PRELOADSOUNDS));
 		PreloadMusic	= static_cast<CEGUI::ToggleButton*>(TabEngine->getChild(UI_NAME_OPTIONS_TABENGINE_PRELOADMUSIC));
+		
+		/******************************************************************************************************/
+
+		// tabgameplay
+		Safety		= static_cast<CEGUI::ToggleButton*>(TabGamePlay->getChild(UI_NAME_OPTIONS_TABGAMEPLAY_SAFETY));
+		Grouping	= static_cast<CEGUI::ToggleButton*>(TabGamePlay->getChild(UI_NAME_OPTIONS_TABGAMEPLAY_GROUPING));
+		SpellPower	= static_cast<CEGUI::ToggleButton*>(TabGamePlay->getChild(UI_NAME_OPTIONS_TABGAMEPLAY_SPELLPOWER));
+		ReagentBag	= static_cast<CEGUI::ToggleButton*>(TabGamePlay->getChild(UI_NAME_OPTIONS_TABGAMEPLAY_REAGENTBAG));
+		TempSafe	= static_cast<CEGUI::ToggleButton*>(TabGamePlay->getChild(UI_NAME_OPTIONS_TABGAMEPLAY_TEMPSAFE));
+		AutoLoot	= static_cast<CEGUI::ToggleButton*>(TabGamePlay->getChild(UI_NAME_OPTIONS_TABGAMEPLAY_AUTOLOOT));
+		AutoCombine = static_cast<CEGUI::ToggleButton*>(TabGamePlay->getChild(UI_NAME_OPTIONS_TABGAMEPLAY_AUTOCOMBINE));
 
 		/******************************************************************************************************/
 
@@ -399,6 +410,19 @@ namespace Meridian59 { namespace Ogre
 		PreloadMusic->setSelected(OgreClient::Singleton->Config->PreloadMusic);
 
 		/******************************************************************************************************/
+		/*                                  PREPARE / SET: GAMEPLAY                                           */
+		/******************************************************************************************************/
+		
+		// these are disabled until switched enabled by event
+		Safety->setEnabled(false);
+		Grouping->setEnabled(false);
+		SpellPower->setEnabled(false);
+		ReagentBag->setEnabled(false);
+		TempSafe->setEnabled(false);
+		AutoLoot->setEnabled(false);
+		AutoCombine->setEnabled(false);
+
+		/******************************************************************************************************/
 		/*                                  PREPARE / SET: ALIASES                                            */
 		/******************************************************************************************************/
 
@@ -506,7 +530,7 @@ namespace Meridian59 { namespace Ogre
 		// subscribe category buttons
 		Engine->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnCategoryButtonClicked));
 		Input->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnCategoryButtonClicked));
-		UI->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnCategoryButtonClicked));
+		GamePlay->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnCategoryButtonClicked));
 		Aliases->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnCategoryButtonClicked));
 		About->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnCategoryButtonClicked));
 
@@ -537,6 +561,17 @@ namespace Meridian59 { namespace Ogre
 		PreloadObjects->subscribeEvent(CEGUI::ToggleButton::EventSelectStateChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnPreloadChanged));
 		PreloadSounds->subscribeEvent(CEGUI::ToggleButton::EventSelectStateChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnPreloadChanged));
 		PreloadMusic->subscribeEvent(CEGUI::ToggleButton::EventSelectStateChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnPreloadChanged));
+
+		/******************************************************************************************************/
+
+		// gameplay checkbox events
+		Safety->subscribeEvent(CEGUI::ToggleButton::EventSelectStateChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnPreferencesCheckboxChanged));
+		Grouping->subscribeEvent(CEGUI::ToggleButton::EventSelectStateChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnPreferencesCheckboxChanged));
+		SpellPower->subscribeEvent(CEGUI::ToggleButton::EventSelectStateChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnPreferencesCheckboxChanged));
+		ReagentBag->subscribeEvent(CEGUI::ToggleButton::EventSelectStateChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnPreferencesCheckboxChanged));
+		TempSafe->subscribeEvent(CEGUI::ToggleButton::EventSelectStateChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnPreferencesCheckboxChanged));
+		AutoLoot->subscribeEvent(CEGUI::ToggleButton::EventSelectStateChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnPreferencesCheckboxChanged));
+		AutoCombine->subscribeEvent(CEGUI::ToggleButton::EventSelectStateChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnPreferencesCheckboxChanged));
 
 		/******************************************************************************************************/
 
@@ -752,6 +787,10 @@ namespace Meridian59 { namespace Ogre
 		// attach listener to aliases
 		OgreClient::Singleton->Config->Aliases->ListChanged +=
 			gcnew ListChangedEventHandler(OnAliasListChanged);
+
+		// attach listener to clientpreferences
+		OgreClient::Singleton->Data->ClientPreferences->PropertyChanged +=
+			gcnew PropertyChangedEventHandler(OnClientPreferencesPropertyChanged);
 	};
 
 	void ControllerUI::Options::Destroy()
@@ -763,10 +802,41 @@ namespace Meridian59 { namespace Ogre
 		// detach listener from aliases
 		OgreClient::Singleton->Config->Aliases->ListChanged -=
 			gcnew ListChangedEventHandler(OnAliasListChanged);
+
+		// detach listener from clientpreferences
+		OgreClient::Singleton->Data->ClientPreferences->PropertyChanged -=
+			gcnew PropertyChangedEventHandler(OnClientPreferencesPropertyChanged);
 	};
 
 	void ControllerUI::Options::OnConfigPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{
+	};
+
+	void ControllerUI::Options::OnClientPreferencesPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
+	{
+		if (::System::String::Equals(e->PropertyName, PreferencesFlags::PROPNAME_ENABLED))
+		{
+			Safety->setEnabled(OgreClient::Singleton->Data->ClientPreferences->Enabled);
+#if !VANILLA
+			Grouping->setEnabled(OgreClient::Singleton->Data->ClientPreferences->Enabled);
+			SpellPower->setEnabled(OgreClient::Singleton->Data->ClientPreferences->Enabled);
+			ReagentBag->setEnabled(OgreClient::Singleton->Data->ClientPreferences->Enabled);
+			TempSafe->setEnabled(OgreClient::Singleton->Data->ClientPreferences->Enabled);
+			AutoLoot->setEnabled(OgreClient::Singleton->Data->ClientPreferences->Enabled);
+			AutoCombine->setEnabled(OgreClient::Singleton->Data->ClientPreferences->Enabled);
+#endif
+		}
+		else
+		{
+			// update checkboxes to datalayer values
+			Safety->setSelected(!OgreClient::Singleton->Data->ClientPreferences->IsSafetyOff);
+			Grouping->setSelected(OgreClient::Singleton->Data->ClientPreferences->Grouping);
+			SpellPower->setSelected(OgreClient::Singleton->Data->ClientPreferences->SpellPower);
+			ReagentBag->setSelected(OgreClient::Singleton->Data->ClientPreferences->ReagentBag);
+			TempSafe->setSelected(OgreClient::Singleton->Data->ClientPreferences->TempSafe);
+			AutoLoot->setSelected(OgreClient::Singleton->Data->ClientPreferences->AutoLoot);
+			AutoCombine->setSelected(OgreClient::Singleton->Data->ClientPreferences->AutoCombine);
+		}
 	};
 
 	void ControllerUI::Options::OnAliasListChanged(Object^ sender, ListChangedEventArgs^ e)
@@ -843,7 +913,7 @@ namespace Meridian59 { namespace Ogre
 		else if (btn == ControllerUI::Options::Input)
 			ControllerUI::Options::TabControl->setSelectedTabAtIndex(1);
 		
-		else if (btn == ControllerUI::Options::UI)
+		else if (btn == ControllerUI::Options::GamePlay)
 			ControllerUI::Options::TabControl->setSelectedTabAtIndex(2);
 
 		else if (btn == ControllerUI::Options::Aliases)
@@ -2012,6 +2082,43 @@ namespace Meridian59 { namespace Ogre
 
 		if (OgreClient::Singleton->Config->Aliases->Count > (int)idx)
 			OgreClient::Singleton->Config->Aliases[idx]->Value = StringConvert::CEGUIToCLR(box->getText());
+
+		return true;
+	};
+
+	bool UICallbacks::Options::OnPreferencesCheckboxChanged(const CEGUI::EventArgs& e)
+	{
+		const CEGUI::WindowEventArgs& args = (const CEGUI::WindowEventArgs&)e;
+		const CEGUI::ToggleButton* btn = (const CEGUI::ToggleButton*)args.window;
+
+#if !VANILLA
+		if (btn == ControllerUI::Options::Safety)
+			OgreClient::Singleton->Data->ClientPreferences->IsSafetyOff = !btn->isSelected();
+
+		else if (btn == ControllerUI::Options::Grouping)
+			OgreClient::Singleton->Data->ClientPreferences->Grouping = btn->isSelected();
+
+		else if (btn == ControllerUI::Options::SpellPower)
+			OgreClient::Singleton->Data->ClientPreferences->SpellPower = btn->isSelected();
+
+		else if (btn == ControllerUI::Options::ReagentBag)
+			OgreClient::Singleton->Data->ClientPreferences->ReagentBag = btn->isSelected();
+
+		else if (btn == ControllerUI::Options::TempSafe)
+			OgreClient::Singleton->Data->ClientPreferences->TempSafe = btn->isSelected();
+
+		else if (btn == ControllerUI::Options::AutoLoot)
+			OgreClient::Singleton->Data->ClientPreferences->AutoLoot = btn->isSelected();
+
+		else if (btn == ControllerUI::Options::AutoCombine)
+			OgreClient::Singleton->Data->ClientPreferences->AutoCombine = btn->isSelected();
+
+		// send updated values to server
+		OgreClient::Singleton->SendUserCommandSendPreferences();
+#else
+		if (btn == ControllerUI::Options::Safety)		
+			OgreClient::Singleton->SendUserCommandSafetyMessage(btn->isSelected());		
+#endif
 
 		return true;
 	};

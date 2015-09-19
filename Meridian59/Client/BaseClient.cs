@@ -488,7 +488,7 @@ namespace Meridian59.Client
         /// <param name="Message"></param>
         protected virtual void HandleCharInfoOKMessage(CharInfoOkMessage Message)
         {
-            SendUseCharacterMessage(new ObjectID(Message.CharacterID), true);
+            SendUseCharacterMessage(new ObjectID(Message.CharacterID), true);            
 #if VANILLA
             SendUserCommandSafetyMessage(true);
 #else
@@ -868,7 +868,7 @@ namespace Meridian59.Client
             ServerConnection.SendQueue.Enqueue(message);
 
             // save updated state in datacontroller
-            Data.IsSafety = On;
+            Data.ClientPreferences.IsSafetyOff = !On;
         }
 #else
         /// <summary>
@@ -877,7 +877,9 @@ namespace Meridian59.Client
         public virtual void SendUserCommandSendPreferences()
         {
             // create message instance
-           UserCommandSendPreferences userCommand = new UserCommandSendPreferences(Data.ClientPreferences);
+           UserCommandSendPreferences userCommand = new UserCommandSendPreferences(
+               new PreferencesFlags(Data.ClientPreferences.Value));
+
            UserCommandMessage message = new UserCommandMessage(userCommand, null);
             
             // send/enqueue it (async)
