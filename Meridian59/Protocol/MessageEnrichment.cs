@@ -220,7 +220,11 @@ namespace Meridian59.Protocol
                 case MessageTypeGameMode.PlayMidi:                              // 172
                     HandlePlayMidiMessage((PlayMidiMessage)Message);
                     break;
-
+#if !VANILLA
+                case MessageTypeGameMode.StopWave:                              // 173
+                    HandleStopWave((StopWaveMessage)Message);
+                    break;
+#endif
                 case MessageTypeGameMode.LookNewsGroup:                         // 180
                     HandleLookNewsGroupMessage((LookNewsGroupMessage)Message);
                     break;
@@ -405,7 +409,12 @@ namespace Meridian59.Protocol
         {
             Message.PlayInfo.ResolveResources(resourceManager, false);
         }
-
+#if !VANILLA
+        protected virtual void HandleStopWave(StopWaveMessage Message)
+        {
+            Message.PlayInfo.ResolveResources(resourceManager, false);
+        }
+#endif
         protected virtual void HandleLookNewsGroupMessage(LookNewsGroupMessage Message)
         {
             Message.NewsGroup.NewsGlobeObject.ResolveResources(resourceManager, false);

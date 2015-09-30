@@ -125,7 +125,7 @@ namespace Meridian59 { namespace Ogre
     };
 
 	void ControllerSound::UpdateListener(RemoteNode^ AvatarNode)
-    {
+	{
 		if (!IsInitialized || !soundEngine || !AvatarNode || !AvatarNode->SceneNode)
 			return;
 		
@@ -145,7 +145,7 @@ namespace Meridian59 { namespace Ogre
 		irrlook.Z = -dir.Y;
 		
 		soundEngine->setListenerPosition(irrpos, irrlook);
-    };
+	};
 
 	void ControllerSound::AdjustMusicVolume()
 	{
@@ -179,7 +179,7 @@ namespace Meridian59 { namespace Ogre
 	};
 
 	void ControllerSound::HandleGameModeMessage(GameModeMessage^ Message)
-    {
+	{
 		if (!IsInitialized || !soundEngine)
 			return;
 	
@@ -192,7 +192,11 @@ namespace Meridian59 { namespace Ogre
 			case MessageTypeGameMode::PlayWave:
 				HandlePlayWaveMessage((PlayWaveMessage^)Message);
 				break;
-
+#if !VANILLA
+			case MessageTypeGameMode::StopWave:
+				HandleStopWaveMessage((StopWaveMessage^)Message);
+				break;
+#endif
 			case MessageTypeGameMode::PlayMusic:
 				HandlePlayMusicMessage((PlayMusicMessage^)Message);
 				break;
@@ -200,11 +204,92 @@ namespace Meridian59 { namespace Ogre
 			case MessageTypeGameMode::PlayMidi:
 				HandlePlayMidiMessage((PlayMidiMessage^)Message);
 				break;
-		}		
-    };
+		}
+	};
+#if !VANILLA
+	void ControllerSound::HandleStopWaveMessage(StopWaveMessage^ Message)
+	{
+		if (!IsInitialized || !soundEngine || !Message->PlayInfo->Resource || !Message->PlayInfo->ResourceName)
+			return;
 
+		// get resource name of wav file
+		System::String^ sourcename = Message->PlayInfo->ResourceName->ToLower();
+
+		// native string
+		::Ogre::String o_str = StringConvert::CLRToOgre(sourcename);
+		const char* c_str = o_str.c_str();
+
+		// check if sound is known to irrklang
+		ISoundSource* soundsrc = soundEngine->getSoundSource(c_str, false);
+
+		// Return if not found
+		if (!soundsrc)
+			return;
+
+		// Source given by object id
+		if (Message->PlayInfo->ID > 0)
+		{
+			// try get source object
+			RoomObject^ source = OgreClient::Singleton->Data->RoomObjects->GetItemByID(Message->PlayInfo->ID);
+
+			if (source && source->UserData)
+			{
+				// get attached remotenode
+				RemoteNode^ node = (RemoteNode^)source->UserData;
+
+				if (node && node->Sounds)
+				{
+					for (std::list<ISound*>::iterator it = node->Sounds->begin(); it != node->Sounds->end();++it)
+					{
+						if ((*it)->getSoundSource() == soundsrc)
+						{
+							(*it)->stop();
+							(*it)->drop();
+							it = node->Sounds->erase(it);
+							return;
+						}
+					}
+				}
+			}
+		}
+
+		// Check our avatar's sound list
+		if (OgreClient::Singleton->Data->AvatarObject &&
+			OgreClient::Singleton->Data->AvatarObject->UserData)
+		{
+			RemoteNode^ node = (RemoteNode^)OgreClient::Singleton->Data->AvatarObject->UserData;
+
+			if (node && node->Sounds)
+			{
+				for (std::list<ISound*>::iterator it = node->Sounds->begin(); it != node->Sounds->end(); ++it)
+				{
+					if ((*it)->getSoundSource() == soundsrc)
+					{
+						(*it)->stop();
+						(*it)->drop();
+						it = node->Sounds->erase(it);
+						return;
+					}
+				}
+			}
+		}
+
+		// Check sounds list
+		for (std::list<ISound*>::iterator it = sounds->begin(); it != sounds->end();++it)
+		{
+			if ((*it)->getSoundSource() == soundsrc)
+			{
+				(*it)->stop();
+				(*it)->drop();
+				it = sounds->erase(it);
+				return;
+			}
+		}
+		return;
+	};
+#endif
 	void ControllerSound::HandlePlayerMessage(PlayerMessage^ Message)
-    {
+	{
 		if (!IsInitialized || !soundEngine || !sounds)
 			return;
 		
@@ -218,16 +303,16 @@ namespace Meridian59 { namespace Ogre
 		}
 		
 		// clear references
-		sounds->clear();		
-    };
+		sounds->clear();
+	};
 	
 	void ControllerSound::HandlePlayMusicMessage(PlayMusicMessage^ Message)
-    {
-		StartMusic(Message->PlayInfo);		
+	{
+		StartMusic(Message->PlayInfo);
 	};
 
 	void ControllerSound::HandlePlayMidiMessage(PlayMidiMessage^ Message)
-    {
+	{
 		StartMusic(Message->PlayInfo);
 	};
 
