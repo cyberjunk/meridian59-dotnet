@@ -147,6 +147,9 @@ namespace Meridian59.Protocol.Enums
         PlayWave            = 170,
         PlayMusic           = 171,
         PlayMidi            = 172,
+#if !VANILLA
+        StopWave            = 173,
+#endif
 
         LookNewsGroup       = 180,
         Articles            = 181,

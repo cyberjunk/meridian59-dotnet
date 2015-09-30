@@ -713,7 +713,12 @@ namespace Meridian59.Protocol
                         TypedMessage = new PlayMidiMessage(e.MessageBuffer);
                         HandlePlayMidi((PlayMidiMessage)TypedMessage);
                         break;
-
+#if !VANILLA
+                    case MessageTypeGameMode.StopWave:                                       // PI: 173
+                        TypedMessage = new StopWaveMessage(e.MessageBuffer);
+                        HandleStopWave((StopWaveMessage)TypedMessage);
+                        break;
+#endif
                     case MessageTypeGameMode.LookNewsGroup:                                   // PI: 180
                         TypedMessage = new LookNewsGroupMessage(e.MessageBuffer);
                         HandleLookNewsGroup((LookNewsGroupMessage)TypedMessage);
@@ -1189,7 +1194,12 @@ namespace Meridian59.Protocol
         {
             Message.PlayInfo.ResolveStrings(stringResources, false);
         }
-
+#if !VANILLA
+        protected void HandleStopWave(StopWaveMessage Message)
+        {
+            Message.PlayInfo.ResolveStrings(stringResources, false);
+        }
+#endif
         protected void HandleLookNewsGroup(LookNewsGroupMessage Message)
         {
             Message.NewsGroup.ResolveStrings(stringResources, false);

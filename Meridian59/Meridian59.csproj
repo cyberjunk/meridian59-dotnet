@@ -128,6 +128,7 @@
     <Compile Include="Data\Models\AdminInfoProperty.cs" />
     <Compile Include="Data\Models\AdminInfoObject.cs" />
     <Compile Include="Data\Models\AdminInfo.cs" />
+    <Compile Include="Data\Models\StopSound.cs" />
     <Compile Include="Data\Models\ResourceID.cs" />
     <Compile Include="Data\Models\ChatCommand\ChatCommandAutoLoot.cs" />
     <Compile Include="Data\Models\ChatCommand\ChatCommandAutoCombine.cs" />
@@ -356,6 +357,7 @@
     <Compile Include="Native\Windows.cs" />
     <Compile Include="Native\Wrapper.cs" />
     <Compile Include="Protocol\GameMessages\GameMode\ChangedStatsMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\StopWaveMessage.cs" />
     <Compile Include="Protocol\GameMessages\GameMode\ReqStatChangeMessage.cs" />
     <Compile Include="Protocol\GameMessages\GameMode\CancelOfferMessage.cs" />
     <Compile Include="Protocol\GameMessages\GameMode\CounterOfferedMessage.cs" />

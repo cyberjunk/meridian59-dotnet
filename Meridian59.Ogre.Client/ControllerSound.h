@@ -60,6 +60,9 @@ namespace Meridian59 { namespace Ogre
 
 		static void HandlePlayerMessage(PlayerMessage^ Message);
 		static void HandlePlayWaveMessage(PlayWaveMessage^ Message);
+#if !VANILLA
+		static void HandleStopWaveMessage(StopWaveMessage^ Message);
+#endif
 		static void HandlePlayMusicMessage(PlayMusicMessage^ Message);
 		static void HandlePlayMidiMessage(PlayMidiMessage^ Message);
 
