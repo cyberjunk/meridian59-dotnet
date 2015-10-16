@@ -484,7 +484,17 @@ namespace Meridian59.Bot.IRC
         /// <param name="sender"></param>
         /// <param name="e"></param>
         protected void OnLocalUserMessageReceived(object sender, IrcMessageEventArgs e)
-        {            
+        {
+            // try get channeluser by name
+            IrcChannelUser usr = GetChannelUser(e.Source.Name);
+
+            if (usr == null)
+                return;
+
+            // only allow operators
+            if (!usr.Modes.Contains('o'))
+                return;
+
             // only allow ADMINS from config
             if (Config.Admins.Contains(e.Source.Name))
             {
