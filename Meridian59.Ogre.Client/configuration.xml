@@ -62,7 +62,7 @@
 
     <connection
       name="112"
-      host="arantis.org"
+      host="meridian112.arantis.eu"
       port="5912"
       useipv6="false"
       stringdictionary="rsc0000-112.rsb"
