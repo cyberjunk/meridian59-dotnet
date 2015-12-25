@@ -357,6 +357,7 @@
     <Compile Include="Native\Windows.cs" />
     <Compile Include="Native\Wrapper.cs" />
     <Compile Include="Protocol\GameMessages\GameMode\ChangedStatsMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\DeleteNewsMessage.cs" />
     <Compile Include="Protocol\GameMessages\GameMode\StopWaveMessage.cs" />
     <Compile Include="Protocol\GameMessages\GameMode\ReqStatChangeMessage.cs" />
     <Compile Include="Protocol\GameMessages\GameMode\CancelOfferMessage.cs" />

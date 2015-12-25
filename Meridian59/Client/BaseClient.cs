@@ -2274,7 +2274,21 @@ namespace Meridian59.Client
             // send/enqueue it (async)
             ServerConnection.SendQueue.Enqueue(message);
         }
+#if !VANILLA
+        /// <summary>
+        /// Requests to delete the newsgroup article with Num in a globe from the server.
+        /// </summary>
+        /// <param name="NewsGroupID"></param>
+        /// <param name="Num"></param>
+        public virtual void SendDeleteNews(ushort NewsGroupID, uint Num)
+        {
+            // create message instance
+            DeleteNewsMessage message = new DeleteNewsMessage(NewsGroupID, Num);
 
+            // send/enqueue it (async)
+            ServerConnection.SendQueue.Enqueue(message);
+        }
+#endif
         /// <summary>
         /// Requests to download all mails from the server.
         /// </summary>

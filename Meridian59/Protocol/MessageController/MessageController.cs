@@ -443,7 +443,11 @@ namespace Meridian59.Protocol
                     case MessageTypeGameMode.DeleteMail:                                      // PI: 83
                         TypedMessage = new DeleteMailMessage(e.MessageBuffer);
                         break;
-
+#if !VANILLA
+                    case MessageTypeGameMode.DeleteNews:                                      // PI: 84
+                        TypedMessage = new DeleteNewsMessage(e.MessageBuffer);
+                        break;
+#endif
                     case MessageTypeGameMode.ReqArticles:                                     // PI: 85
                         TypedMessage = new ReqArticlesMessage(e.MessageBuffer);
                         break;

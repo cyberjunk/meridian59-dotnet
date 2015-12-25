@@ -70,7 +70,9 @@ namespace Meridian59.Protocol.Enums
         ReqGetMail          = 81,
         SendMail            = 82,
         DeleteMail          = 83,
-        
+#if !VANILLA
+        DeleteNews          = 84,
+#endif
         ReqArticles         = 85,
         ReqArticle          = 86,
         PostArticle         = 87,
