@@ -12,6 +12,7 @@ namespace Meridian59 { namespace Ogre
 		Respond		= static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_NEWSGROUP_RESPOND));
 		MailAuthor	= static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_NEWSGROUP_MAILAUTHOR));
 		Refresh		= static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_NEWSGROUP_REFRESH));
+		Delete		= static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_NEWSGROUP_DELETE));
 		Text		= static_cast<CEGUI::MultiLineEditbox*>(Window->getChild(UI_NAME_NEWSGROUP_TEXT));
 
 		List->setShowVertScrollbar(true);
@@ -35,6 +36,7 @@ namespace Meridian59 { namespace Ogre
 		Respond->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::NewsGroup::OnRespondClicked));
 		MailAuthor->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::NewsGroup::OnMailAuthorClicked));
 		Refresh->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::NewsGroup::OnRefreshClicked));
+		Delete->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::NewsGroup::OnDeleteClicked));
 
 		// subscribe selection change
 		List->subscribeEvent(CEGUI::MultiColumnList::EventSelectionChanged, CEGUI::Event::Subscriber(UICallbacks::NewsGroup::OnSelectionChanged));
@@ -228,6 +230,35 @@ namespace Meridian59 { namespace Ogre
 		// re-request articles
 		OgreClient::Singleton->SendReqArticles();
 
+		return true;
+	}
+
+	bool UICallbacks::NewsGroup::OnDeleteClicked(const CEGUI::EventArgs& e)
+	{
+#if !VANILLA
+		const CEGUI::WindowEventArgs& args = (const CEGUI::WindowEventArgs&)e;
+		CEGUI::MultiColumnList* list = ControllerUI::NewsGroup::List;
+		CEGUI::ListboxItem* itm = list->getFirstSelectedItem();
+		Models::NewsGroup^ news = OgreClient::Singleton->Data->NewsGroup;
+
+		if (itm != nullptr && news != nullptr)
+		{
+			unsigned int index = list->getItemRowIndex(itm);
+
+			if (news->Articles->Count > index)
+			{
+				// num of the article and id of currently viewed newsgroup
+				unsigned int num = news->Articles[index]->Number;
+				unsigned short id = news->NewsGlobeID;
+
+				// try to delete
+				OgreClient::Singleton->SendDeleteNews(id, num);
+
+				// re-request articles
+				OgreClient::Singleton->SendReqArticles();
+			}			
+		}	
+#endif
 		return true;
 	}
 

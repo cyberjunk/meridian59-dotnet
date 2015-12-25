@@ -347,6 +347,7 @@
 #define UI_NAME_NEWSGROUP_RESPOND					"NewsGroup.Respond"
 #define UI_NAME_NEWSGROUP_MAILAUTHOR				"NewsGroup.MailAuthor"
 #define UI_NAME_NEWSGROUP_REFRESH					"NewsGroup.Refresh"
+#define UI_NAME_NEWSGROUP_DELETE					"NewsGroup.Delete"
 #define UI_NAME_NEWSGROUP_TEXT						"NewsGroup.Text"
 #define UI_NAME_NEWSGROUPCOMPOSE_WINDOW				"NewsGroupCompose"
 #define UI_NAME_NEWSGROUPCOMPOSE_GROUPDESC			"NewsGroupCompose.GroupDesc"
