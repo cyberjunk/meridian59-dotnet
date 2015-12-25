@@ -1031,7 +1031,7 @@ namespace Meridian59.Client
             if (Data.TargetObject != null)
             {
                 // create message instance
-                UserCommand command = new UserCommandGuildVote(new ObjectID(Data.TargetObject.ID));
+                UserCommand command = new UserCommandGuildInvite(new ObjectID(Data.TargetObject.ID));
                 UserCommandMessage message = new UserCommandMessage(command, null);
 
                 // send/enqueue it (async)
