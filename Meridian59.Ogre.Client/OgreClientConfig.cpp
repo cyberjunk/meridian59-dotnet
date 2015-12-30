@@ -311,7 +311,7 @@ namespace Meridian59 { namespace Ogre
 
 		// RightClickAction
 		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING);
-		if (PARSE_UINT32_ATTRIB(node, ATTRIB_RIGHTCLICKACTION, val_uint))
+		if (PARSE_INT32_ATTRIB(node, ATTRIB_RIGHTCLICKACTION, val_int))
 			KeyBinding->RightClickAction = val_int;
 
 		// MoveForward
