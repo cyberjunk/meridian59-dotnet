@@ -36,23 +36,23 @@ namespace Meridian59 { namespace Ogre
 	{
 	public:
 		literal int					DEFAULTVAL_ENGINE_DISPLAY			= 0;
-		literal ::System::String^	DEFAULTVAL_ENGINE_RESOLUTION		= "1024 x 768";
-		literal bool				DEFAULTVAL_ENGINE_WINDOWMODE		= false;
+		literal ::System::String^	DEFAULTVAL_ENGINE_RESOLUTION		= "1280 x 720 @ 32-bit colour";
+		literal bool				DEFAULTVAL_ENGINE_WINDOWMODE		= true;
 		literal bool				DEFAULTVAL_ENGINE_WINDOWFRAME		= true;
-		literal bool				DEFAULTVAL_ENGINE_VSYNC				= false;
-		literal ::System::String^	DEFAULTVAL_ENGINE_FSAA				= "2";
+		literal bool				DEFAULTVAL_ENGINE_VSYNC				= true;
+		literal ::System::String^	DEFAULTVAL_ENGINE_FSAA				= "8";
 		literal bool				DEFAULTVAL_ENGINE_NOMIPMAPS			= false;
-		literal ::System::String^	DEFAULTVAL_ENGINE_TEXFILTERING		= "Bilinear";
+		literal ::System::String^	DEFAULTVAL_ENGINE_TEXFILTERING		= "Anisotropic x16";
 		literal ::System::String^	DEFAULTVAL_ENGINE_IMAGEBUILDER		= "GDI";
 		literal ::System::String^	DEFAULTVAL_ENGINE_BITMAPSCALING		= "Default";
 		literal ::System::String^	DEFAULTVAL_ENGINE_TEXQUALITY		= "Default";
-		literal int					DEFAULTVAL_ENGINE_DECORATIONINTENSITY = 0;
+		literal int					DEFAULTVAL_ENGINE_DECORATIONINTENSITY = 20;
 		literal bool				DEFAULTVAL_ENGINE_DISABLENEWROOMTEX = false;
 		literal bool				DEFAULTVAL_ENGINE_DISABLE3DMODELS	= false;
 		literal bool				DEFAULTVAL_ENGINE_DISABLENEWSKY		= false;
 		literal bool				DEFAULTVAL_ENGINE_DISABLEWEATHEREFFECTS = false;
-		literal int					DEFAULTVAL_ENGINE_WEATHERPARTICLES	= 1;
-		literal int					DEFAULTVAL_ENGINE_MUSICVOLUME		= 10;
+		literal int					DEFAULTVAL_ENGINE_WEATHERPARTICLES	= 5000;
+		literal int					DEFAULTVAL_ENGINE_MUSICVOLUME		= 4;
 		literal int					DEFAULTVAL_ENGINE_SOUNDVOLUME		= 10;
 		literal bool				DEFAULTVAL_ENGINE_DISABLELOOPSOUNDS = false;
 		literal int					DEFAULTVAL_INPUT_MOUSEAIMSPEED		= 25;

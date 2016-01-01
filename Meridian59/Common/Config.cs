@@ -24,6 +24,7 @@ using Meridian59.Data.Models;
 using System.Collections.Generic;
 using System.Globalization;
 using Meridian59.Data.Lists;
+using Meridian59.Common.Enums;
 
 namespace Meridian59.Common
 {
@@ -47,6 +48,7 @@ namespace Meridian59.Common
         public const string PROPNAME_ALIASES                    = "Aliases";
 
         public const string DEFAULTVAL_RESOURCES_PATH           = "../resources/";
+        public const string DEFAULTVAL_RESOURCES_PATH_DEV       = "../../../../resources/";
         public const uint   DEFAULTVAL_RESOURCES_VERSION        = 10016;
         public const bool   DEFAULTVAL_RESOURCES_PRELOADROOMS   = false;
         public const bool   DEFAULTVAL_RESOURCES_PRELOADOBJECTS = false;
@@ -332,23 +334,31 @@ namespace Meridian59.Common
         /// </summary>
         public virtual void Load()
         {
-            if (!File.Exists(CONFIGFILE))
-                return;
-                
-            // create xml reader and document
-            XmlReader reader = XmlReader.Create(CONFIGFILE);
             XmlDocument doc = new XmlDocument();
             XmlNode node, node2;
 
-            uint   val_uint;
-            bool   val_bool;
-            int    val_int;
+            uint val_uint;
+            bool val_bool;
+            int val_int;
             ushort val_ushort;
 
-            // try parse file
-            doc.Load(reader);
-            reader.Close();
+            // check for configuration.xml existance
+            if (File.Exists(CONFIGFILE))
+            {
+                // create xml reader
+                XmlReader reader = XmlReader.Create(CONFIGFILE);
 
+                // try parse file
+                doc.Load(reader);
+                reader.Close();
+            }
+            else
+            {
+                // create empty rootnode
+                doc.InsertBefore(doc.CreateElement(XMLTAG_CONFIGURATION), null);
+                Logger.Log("Config", LogType.Info, "File configuration.xml not found. Using defaults.");
+            }
+            
             // clear some old
             connections.Clear();
             aliases.Clear();
@@ -362,9 +372,13 @@ namespace Meridian59.Common
 
             if (node != null)
             {
+#if !DEBUG
                 ResourcesPath = (node.Attributes[XMLATTRIB_PATH] != null) ? 
                     node.Attributes[XMLATTRIB_PATH].Value : DEFAULTVAL_RESOURCES_PATH;
-
+#else
+                ResourcesPath = (node.Attributes[XMLATTRIB_PATH] != null) ?
+                    node.Attributes[XMLATTRIB_PATH].Value : DEFAULTVAL_RESOURCES_PATH_DEV;
+#endif
                 ResourcesVersion = (node.Attributes[XMLATTRIB_VERSION] != null && UInt32.TryParse(node.Attributes[XMLATTRIB_VERSION].Value, out val_uint)) ? 
                     val_uint : DEFAULTVAL_RESOURCES_VERSION;
 
@@ -385,7 +399,11 @@ namespace Meridian59.Common
             }
             else
             {
+#if !DEBUG
                 ResourcesPath = DEFAULTVAL_RESOURCES_PATH;
+#else
+                ResourcesPath = DEFAULTVAL_RESOURCES_PATH_DEV;
+#endif
                 ResourcesVersion = DEFAULTVAL_RESOURCES_VERSION;
                 PreloadRooms = DEFAULTVAL_RESOURCES_PRELOADROOMS;
                 PreloadObjects = DEFAULTVAL_RESOURCES_PRELOADOBJECTS;
@@ -443,7 +461,10 @@ namespace Meridian59.Common
                         if (subchild.Name != XMLTAG_IGNORE)
                             continue;
 
-                        ignorelist.Add(reader[XMLATTRIB_NAME]);
+                        if (subchild.Attributes[XMLATTRIB_NAME] == null)
+                            continue;
+
+                        ignorelist.Add(subchild.Attributes[XMLATTRIB_NAME].Value);
                     }
 
                     // add connection

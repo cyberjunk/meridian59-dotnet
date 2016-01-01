@@ -311,6 +311,6 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="configuration.xml" />
+    <Xml Include="configuration.template.xml" />
   </ItemGroup>
 </Project>

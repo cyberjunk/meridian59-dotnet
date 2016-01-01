@@ -350,13 +350,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="configuration.xml">
+    <Content Include="configuration.template.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="configuration.xml" />
+    <Xml Include="configuration.template.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
