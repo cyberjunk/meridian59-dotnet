@@ -401,20 +401,20 @@ namespace Meridian59.Common
             node = doc.DocumentElement.SelectSingleNode(
                 '/' + XMLTAG_CONFIGURATION + '/' + XMLTAG_CONNECTIONS);
 
-            if (node != null)
+            if (node != null && node.ChildNodes.Count > 0)
             {
                 SelectedConnectionIndex = (node.Attributes[XMLATTRIB_SELECTEDINDEX] != null && Int32.TryParse(node.Attributes[XMLATTRIB_SELECTEDINDEX].Value, out val_int)) ?
                     val_int : DEFAULTVAL_CONNECTIONS_SELECTEDINDEX;
-
+           
                 foreach (XmlNode child in node.ChildNodes)
                 {
                     if (child.Name != XMLTAG_CONNECTION)
                         continue;
 
-                    string name = (child.Attributes[XMLATTRIB_NAME] != null) ? 
+                    string name = (child.Attributes[XMLATTRIB_NAME] != null) ?
                         child.Attributes[XMLATTRIB_NAME].Value : DEFAULTVAL_CONNECTIONS_NAME;
-                    
-                    string host = (child.Attributes[XMLATTRIB_HOST] != null) ? 
+
+                    string host = (child.Attributes[XMLATTRIB_HOST] != null) ?
                         child.Attributes[XMLATTRIB_HOST].Value : DEFAULTVAL_CONNECTIONS_HOST;
 
                     ushort port = (child.Attributes[XMLATTRIB_PORT] != null && UInt16.TryParse(child.Attributes[XMLATTRIB_PORT].Value, out val_ushort)) ?
@@ -423,7 +423,7 @@ namespace Meridian59.Common
                     bool useipv6 = (child.Attributes[XMLATTRIB_USEIPV6] != null && Boolean.TryParse(child.Attributes[XMLATTRIB_USEIPV6].Value, out val_bool)) ?
                         val_bool : DEFAULTVAL_CONNECTIONS_USEIPV6;
 
-                    string stringdictionary = (child.Attributes[XMLATTRIB_STRINGDICTIONARY] != null) ? 
+                    string stringdictionary = (child.Attributes[XMLATTRIB_STRINGDICTIONARY] != null) ?
                         child.Attributes[XMLATTRIB_STRINGDICTIONARY].Value : DEFAULTVAL_CONNECTIONS_STRINGDICT;
 
                     string username = (child.Attributes[XMLATTRIB_USERNAME] != null) ?
@@ -431,13 +431,13 @@ namespace Meridian59.Common
 
                     string password = (child.Attributes[XMLATTRIB_PASSWORD] != null) ?
                         child.Attributes[XMLATTRIB_PASSWORD].Value : DEFAULTVAL_CONNECTIONS_PASSWORD;
-                    
+
                     string character = (child.Attributes[XMLATTRIB_CHARACTER] != null) ?
                         child.Attributes[XMLATTRIB_CHARACTER].Value : DEFAULTVAL_CONNECTIONS_CHARACTER;
-                    
+
                     List<string> ignorelist = new List<string>();
                     node2 = child.SelectSingleNode(XMLTAG_IGNORELIST);
-                   
+
                     foreach (XmlNode subchild in node2.ChildNodes)
                     {
                         if (subchild.Name != XMLTAG_IGNORE)
@@ -457,11 +457,19 @@ namespace Meridian59.Common
                         password,
                         character,
                         ignorelist));
-                }
+                }               
             }
             else
             {
                 SelectedConnectionIndex = DEFAULTVAL_CONNECTIONS_SELECTEDINDEX;
+
+#if !VANILLA
+                connections.Add(ConnectionInfo.CON103);
+                connections.Add(ConnectionInfo.CON112);
+#else
+                connections.Add(ConnectionInfo.CON101);
+                connections.Add(ConnectionInfo.CON102);
+#endif
             }
 
             /******************************************************************************/

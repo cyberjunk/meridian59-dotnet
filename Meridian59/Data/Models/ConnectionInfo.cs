@@ -39,6 +39,16 @@ namespace Meridian59.Data.Models
         public const string PROPNAME_IGNORELIST         = "IgnoreList";
         #endregion
 
+        #region Hardcoded ConnectionInfos
+#if VANILLA
+        public static readonly ConnectionInfo CON101 = new ConnectionInfo("101", "meridian101.meridian59.com",  5901, false, "rsc0000-101.rsb", "", "", "", null);
+        public static readonly ConnectionInfo CON102 = new ConnectionInfo("102", "meridian102.meridian59.com",  5902, false, "rsc0000-101.rsb", "", "", "", null);
+#else
+        public static readonly ConnectionInfo CON103 = new ConnectionInfo("103", "meridian103.openmeridian.org",5903, false, "rsc0000-103.rsb", "", "", "", null);
+        public static readonly ConnectionInfo CON112 = new ConnectionInfo("112", "meridian112.arantis.eu",      5912, false, "rsc0000-112.rsb", "", "", "", null);
+#endif
+        #endregion
+
         #region Fields
         protected string name;
         protected string host;
@@ -210,8 +220,9 @@ namespace Meridian59.Data.Models
             password = Password;
             character = Character;
 
-            foreach (string s in IgnoreList)
-                ignoreList.Add(s);
+            if (IgnoreList != null)
+                foreach (string s in IgnoreList)
+                    ignoreList.Add(s);
         }
 
         public void Clear(bool RaiseChangedEvent)
