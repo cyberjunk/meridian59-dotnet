@@ -372,13 +372,17 @@ namespace Meridian59.Common
 
             if (node != null)
             {
-#if !DEBUG
+                // path when shipped to user (../resources)
                 ResourcesPath = (node.Attributes[XMLATTRIB_PATH] != null) ? 
                     node.Attributes[XMLATTRIB_PATH].Value : DEFAULTVAL_RESOURCES_PATH;
-#else
-                ResourcesPath = (node.Attributes[XMLATTRIB_PATH] != null) ?
-                    node.Attributes[XMLATTRIB_PATH].Value : DEFAULTVAL_RESOURCES_PATH_DEV;
-#endif
+
+                if (!Directory.Exists(ResourcesPath))
+                {
+                    // path when running from build-dir (../../../../resources)
+                    ResourcesPath = (node.Attributes[XMLATTRIB_PATH] != null) ?
+                        node.Attributes[XMLATTRIB_PATH].Value : DEFAULTVAL_RESOURCES_PATH_DEV;
+                }
+
                 ResourcesVersion = (node.Attributes[XMLATTRIB_VERSION] != null && UInt32.TryParse(node.Attributes[XMLATTRIB_VERSION].Value, out val_uint)) ? 
                     val_uint : DEFAULTVAL_RESOURCES_VERSION;
 
@@ -399,11 +403,7 @@ namespace Meridian59.Common
             }
             else
             {
-#if !DEBUG
-                ResourcesPath = DEFAULTVAL_RESOURCES_PATH;
-#else
-                ResourcesPath = DEFAULTVAL_RESOURCES_PATH_DEV;
-#endif
+                ResourcesPath = (Directory.Exists(DEFAULTVAL_RESOURCES_PATH)) ? DEFAULTVAL_RESOURCES_PATH : DEFAULTVAL_RESOURCES_PATH_DEV;
                 ResourcesVersion = DEFAULTVAL_RESOURCES_VERSION;
                 PreloadRooms = DEFAULTVAL_RESOURCES_PRELOADROOMS;
                 PreloadObjects = DEFAULTVAL_RESOURCES_PRELOADOBJECTS;
