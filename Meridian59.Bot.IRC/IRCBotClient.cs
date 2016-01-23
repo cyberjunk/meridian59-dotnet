@@ -24,6 +24,7 @@ using Meridian59.Data;
 using Meridian59.Data.Models;
 using Meridian59.Files;
 using IrcDotNet;
+using System.Text.RegularExpressions;
 
 namespace Meridian59.Bot.IRC
 {
@@ -441,6 +442,23 @@ namespace Meridian59.Bot.IRC
 
             if (words.Length > 0)
             {
+                if ((Regex.Match(words[0], @"^(dm|get|go|echo)", RegexOptions.IgnoreCase)).Success)
+                {
+                    
+                    IrcClient.LocalUser.SendMessage(
+                        IrcChannel,
+                        e.Source.Name + " you can't use this feature. This incident has been logged");
+                    foreach (string admin in Config.Admins)
+                    {
+                        // try get channeluser by name
+                        usr = GetChannelUser(admin);
+
+                        // online? send!
+                        if (usr != null)
+                            IrcClient.LocalUser.SendMessage(admin, String.Format("IRC User {0} has attempted to use a DM command", e.Source.Name));
+                    }
+                    return;
+                }
                 switch(words[0])
                 {
                     case ChatCommandBroadcast.KEY1:
