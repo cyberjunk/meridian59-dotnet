@@ -1209,57 +1209,35 @@ namespace Meridian59.Files.ROO
         /// <param name="y"></param>
         /// <returns>SubSector (leaf) or null</returns>
         public RooSubSector GetSubSectorAt(Real x, Real y)
-        {
-            if (BSPTree.Count > 0)
-                return (RooSubSector)GetSubSectorAt(BSPTree[0], x, y);
-            
-            else return null;
-        }
-
-        /// <summary>
-        /// Recursively walks the BSP tree start at given node,
-        /// to find the subsector (leaf) containing the point.
-        /// </summary>
-        /// <param name="node"></param>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <returns></returns>
-        protected RooBSPItem GetSubSectorAt(RooBSPItem node, Real x, Real y)
-        {
-            if (node == null)
+        {           
+            if (BSPTree.Count <= 0)
                 return null;
 
-            int side;
-
-            if (node.Type == RooBSPItem.NodeType.Leaf)
-                return node;
-            else
+            RooBSPItem node = BSPTree[0];
+            while(node != null)
             {
-                RooPartitionLine line = (RooPartitionLine)node;
-                side = Math.Sign(line.A * x + line.B * y + line.C);
+                // traverse down the tree
+                if (node.Type == RooBSPItem.NodeType.Node)
+                {
+                    RooPartitionLine line = (RooPartitionLine)node;
+                    int side = Math.Sign(line.A * x + line.B * y + line.C);
+                    node = (side >= 0) ? line.RightChild : line.LeftChild;
+                }
 
-                if (side == 0)
-                {
-                    if (line.RightChild != null)
-                    {
-                        return GetSubSectorAt(line.RightChild, x, y);
-                    }
-                    else
-                    {
-                        return GetSubSectorAt(line.LeftChild, x, y);
-                    }                   
-                }
-                else if (side > 0)
-                {
-                    return GetSubSectorAt(line.RightChild, x, y);
-                }
+                // found leaf point belongs to
+                else if (node.Type == RooBSPItem.NodeType.Leaf)
+                    return (RooSubSector)node;
+
+                // unknown node-type, abort
                 else
-                {
-                    return GetSubSectorAt(line.LeftChild, x, y);
-                }
+                    return null;
+
             }
+
+            // should not get here
+            return null;
         }
-      
+
         /// <summary>
         /// Returns the sidedef matching the given server id
         /// </summary>
