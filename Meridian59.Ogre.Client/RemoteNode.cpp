@@ -19,7 +19,7 @@ namespace Meridian59 { namespace Ogre
 		SceneNode->setFixedYawAxis(true);
 
 		// show boundingbox in debug builds
-#if _DEBUG
+#if DEBUGBOUNDINGBOX
         SceneNode->showBoundingBox(true);
 #endif
 		// attach listener

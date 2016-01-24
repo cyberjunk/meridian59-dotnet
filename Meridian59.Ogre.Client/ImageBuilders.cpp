@@ -416,7 +416,7 @@ namespace Meridian59 { namespace Ogre
 		graphics->InterpolationMode = InterpolationMode;
 		graphics->SmoothingMode = SmoothingMode::HighQuality;
 
-#ifdef _DEBUG
+#ifdef DEBUGBGFOBJECTS
 		graphics->Clear(Color::Black);
 #endif
 	}

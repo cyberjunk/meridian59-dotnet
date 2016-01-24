@@ -101,7 +101,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;DEBUG;BOOST_THREAD_VERSION=4;BOOST_ALL_NO_LIB;OGRE_NONCLIENT_BUILD;FREEIMAGE_LIB;CEGUI_STATIC;PCRE_STATIC;DLLNAME="$(ProjectName)";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;DEBUG;BOOST_THREAD_VERSION=4;BOOST_ALL_NO_LIB;OGRE_NONCLIENT_BUILD;FREEIMAGE_LIB;CEGUI_STATIC;PCRE_STATIC;DLLNAME="$(ProjectName)";DEBUGOCTREE;DEBUGBOUNDINGBOX;DEBUGBGFOBJECTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <AdditionalIncludeDirectories>..\Engine\Include\DX9;..\Engine\include\OGRE;..\Engine\include\;..\Engine\include\OIS;..\Engine\include\irrKlang;..\Engine\include\CEGUI;..\Engine\include\caelum;..\Engine\include\particleuniverse;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -126,7 +126,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;DEBUG;BOOST_THREAD_VERSION=4;BOOST_ALL_NO_LIB;OGRE_NONCLIENT_BUILD;FREEIMAGE_LIB;CEGUI_STATIC;PCRE_STATIC;DLLNAME="$(ProjectName)";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;DEBUG;BOOST_THREAD_VERSION=4;BOOST_ALL_NO_LIB;OGRE_NONCLIENT_BUILD;FREEIMAGE_LIB;CEGUI_STATIC;PCRE_STATIC;DLLNAME="$(ProjectName)";DEBUGOCTREE;DEBUGBOUNDINGBOX;DEBUGBGFOBJECTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <AdditionalIncludeDirectories>..\Engine\Include\DX9;..\Engine\include\OGRE;..\Engine\include\;..\Engine\include\OIS;..\Engine\include\irrKlang;..\Engine\include\CEGUI;..\Engine\include\caelum;..\Engine\include\particleuniverse;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>

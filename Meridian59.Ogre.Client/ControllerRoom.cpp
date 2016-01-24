@@ -1254,7 +1254,7 @@ namespace Meridian59 { namespace Ogre
 		const AxisAlignedBox octreeBox = AxisAlignedBox(min, newMax);		
 		SceneManager->setOption("Size", &octreeBox);
 		
-#ifdef _DEBUG
+#ifdef DEBUGOCTREE
 		const bool showOctree = true;
 		SceneManager->setOption("ShowOctree", &showOctree);
 #endif
