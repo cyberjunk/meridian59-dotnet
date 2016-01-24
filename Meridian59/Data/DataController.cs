@@ -2,8 +2,8 @@
  Copyright (c) 2012-2013 Clint Banzhaf
  This file is part of "Meridian59 .NET".
 
- "Meridian59 .NET" is free software: 
- You can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, 
+ "Meridian59 .NET" is free software:
+ You can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation,
  either version 3 of the License, or (at your option) any later version.
 
  "Meridian59 .NET" is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
@@ -30,7 +30,7 @@ using Meridian59.Files.ROO;
 // Switch FP precision based on architecture
 #if X64
 using Real = System.Double;
-#else 
+#else
 using Real = System.Single;
 #endif
 
@@ -69,7 +69,7 @@ namespace Meridian59.Data
 
         #region Fields
         protected RoomObject avatarObject;
-        protected ObjectBase targetObject;       
+        protected ObjectBase targetObject;
         protected uint targetID = UInt32.MaxValue;
         protected bool selfTarget;
         protected bool isResting;
@@ -211,7 +211,7 @@ namespace Meridian59.Data
 
         /// <summary>
         /// A list of recently clicked targets for click iteration.
-        /// </summary>       
+        /// </summary>
         public List<uint> ClickedTargets { get { return clickedTargets; } }
 
         /// <summary>
@@ -306,7 +306,7 @@ namespace Meridian59.Data
         /// Info for the stat change wizard
         /// </summary>
         public StatChangeInfo StatChangeInfo { get { return statChangeInfo; } }
-        
+
         /// <summary>
         /// The last inspected newsgroup and its articles
         /// </summary>
@@ -395,7 +395,7 @@ namespace Meridian59.Data
         /// <summary>
         /// The ID of your currently selected object
         /// </summary>
-        public uint TargetID 
+        public uint TargetID
         {
             get { return targetID; }
             set
@@ -403,7 +403,7 @@ namespace Meridian59.Data
                 if (targetID != value)
                 {
                     targetID = value;
-                    
+
                     // find/mark target in roomobjects
                     bool found = false;
                     foreach (RoomObject obj in RoomObjects)
@@ -432,7 +432,7 @@ namespace Meridian59.Data
                         }
 
                         if (!found)
-                            TargetObject = null;                     
+                            TargetObject = null;
                     }
 
                     RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_TARGETID));
@@ -464,7 +464,7 @@ namespace Meridian59.Data
         /// <summary>
         /// The RoomObject of your avatar.
         /// Be careful: This is NULL at first and
-        /// for a short moment whenever you change a room. 
+        /// for a short moment whenever you change a room.
         /// </summary>
         public RoomObject AvatarObject
         {
@@ -480,10 +480,10 @@ namespace Meridian59.Data
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public bool IsNextAttackApplyCastOnHighlightedObject { get; set; }
-        
+
         /// <summary>
         /// Whether you're currently resting or not
         /// </summary>
@@ -601,7 +601,7 @@ namespace Meridian59.Data
                 }
             }
         }
-        
+
         /// <summary>
         /// The accounttype received with LoginOK
         /// </summary>
@@ -623,7 +623,7 @@ namespace Meridian59.Data
         /// <summary>
         /// Returns your current hitpoints or 0 if not known.
         /// </summary>
-        public int HitPoints 
+        public int HitPoints
         {
             get
             {
@@ -759,7 +759,7 @@ namespace Meridian59.Data
         /// Constructor
         /// </summary>
         public DataController()
-        {          
+        {
             // create lists
             roomObjects = new RoomObjectList(300);
             roomObjectsFiltered = new RoomObjectListFiltered(roomObjects);
@@ -775,7 +775,7 @@ namespace Meridian59.Data
             avatarBuffs = new ObjectBaseList<ObjectBase>(30);
             spellObjects = new SpellObjectList(100);
             backgroundOverlays = new BackgroundOverlayList(5);
-            playerOverlays = new ObjectBaseList<PlayerOverlay>(10);            
+            playerOverlays = new ObjectBaseList<PlayerOverlay>(10);
             chatMessages = new BaseList<ServerString>(101);
             gameMessageLog = new BaseList<GameMessage>(100);
             visitedTargets = new List<RoomObject>(50);
@@ -794,7 +794,7 @@ namespace Meridian59.Data
             AvatarSkills.SortByResourceName();
             AvatarSpells.SortByResourceName();
             SpellObjects.SortByName();
-            
+
             // create single data objects
             roomInformation = new RoomInfo();
             lightShading = new LightShading(0, new SpherePosition(0, 0));
@@ -841,11 +841,11 @@ namespace Meridian59.Data
             ChatMessages.Clear();
             GameMessageLog.Clear();
             ChatCommandHistory.Clear();
-            
+
             // clear values
             ChatCommandHistoryIndex = -1;
             ViewerPosition = V3.ZERO;
-            
+
             // reset others
             Invalidate();
         }
@@ -873,14 +873,14 @@ namespace Meridian59.Data
             PlayerOverlays.Clear();
             VisitedTargets.Clear();
             ClickedTargets.Clear();
-            
+
             // clear single data models
             Effects.Clear(true);
             GuildInfo.Clear(true);
             GuildAskData.Clear(true);
             DiplomacyInfo.Clear(true);
             AdminInfo.Clear(true);
-            ClientPreferences.Clear(true);
+            ClientPreferences.Clear(false); // Do not propagate clear to server.
 
             LookObject.Clear(true);
             LookPlayer.Clear(true);
@@ -943,7 +943,7 @@ namespace Meridian59.Data
 
                 // update this tick
                 ov.Tick(Tick, Span);
-            
+
                 // remove overlays which have a finished ONCE animation and finalgroup = 0
                 // this finalgroup value is basically invalid
                 // at least for playeroverlays it indicates the overlay should be removed/not drawn anymore
@@ -960,16 +960,16 @@ namespace Meridian59.Data
                     }
                 }
             }
-            
+
             // update effects
             Effects.Tick(Tick, Span);
-            
+
             // update lookobject
-            if (LookObject != null && LookObject.ObjectBase != null)           
+            if (LookObject != null && LookObject.ObjectBase != null)
                 LookObject.ObjectBase.Tick(Tick, Span);
-            
+
             // update lookplayer
-            if (LookPlayer != null && LookPlayer.ObjectBase != null)           
+            if (LookPlayer != null && LookPlayer.ObjectBase != null)
                 LookPlayer.ObjectBase.Tick(Tick, Span);
 
             // update charcreation model
@@ -1023,7 +1023,7 @@ namespace Meridian59.Data
                 Real mindist2 = Real.MaxValue;
                 RoomObject minObj = null;
                 foreach (RoomObject obj in bettercandidates)
-                {                    
+                {
                     if (obj.Flags.IsMinimapEnemy)
                     {
                         // mark found
@@ -1031,7 +1031,7 @@ namespace Meridian59.Data
 
                         // get distsquared
                         dist2 = AvatarObject.GetDistanceSquared(obj);
-                        
+
                         // closer than last candidate?
                         if (dist2 < mindist2)
                         {
@@ -1060,7 +1060,7 @@ namespace Meridian59.Data
 
                             // get distsquared
                             dist2 = AvatarObject.GetDistanceSquared(obj);
-                            
+
                             // closer than last candidate?
                             if (dist2 < mindist2)
                             {
@@ -1116,7 +1116,7 @@ namespace Meridian59.Data
 
                     if (!found)
                     {
-                        uint id = RoomObjectIDs[0];                        
+                        uint id = RoomObjectIDs[0];
                         TargetID = id;
 
                         ClickedTargets.Clear();
@@ -1134,7 +1134,7 @@ namespace Meridian59.Data
         {
             if (RoomInformation.ResourceRoom == null || AvatarObject == null)
                 return null;
-           
+
             // get visible objects within distances
             List<RoomObject> candidates = avatarObject.GetObjectsWithinDistance(RoomObjects, RoomInformation.ResourceRoom,
                 32.0f, 512.0f, false);
@@ -1199,7 +1199,7 @@ namespace Meridian59.Data
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public string ChatCommandHistoryGetPrevious()
@@ -1426,7 +1426,7 @@ namespace Meridian59.Data
                 case MessageTypeGameMode.Player:                    // 130
                     HandlePlayer((PlayerMessage)Message);
                     break;
-                
+
                 case MessageTypeGameMode.Stat:                      // 131
                     HandleStat((StatMessage)Message);
                     break;
@@ -1594,7 +1594,7 @@ namespace Meridian59.Data
                 case MessageTypeGameMode.CounterOffered:            // 215
                     HandleCounterOffered((CounterOfferedMessage)Message);
                     break;
-                
+
                 case MessageTypeGameMode.BuyList:                   // 216
                     HandleBuyList((BuyListMessage)Message);
                     break;
@@ -1647,7 +1647,7 @@ namespace Meridian59.Data
 
         protected void HandlePlayerRemove(PlayerRemoveMessage Message)
         {
-            OnlinePlayers.RemoveByID(Message.ObjectID);           
+            OnlinePlayers.RemoveByID(Message.ObjectID);
         }
 
         protected void HandleCharacters(CharactersMessage Message)
@@ -1664,7 +1664,7 @@ namespace Meridian59.Data
         }
 
         protected void HandleRoomContents(RoomContentsMessage Message)
-        {              
+        {
             RoomObjects.Clear();
 
             foreach (RoomObject Model in Message.RoomObjects)
@@ -1672,7 +1672,7 @@ namespace Meridian59.Data
                 // set initial height from mapdata
                 if (RoomInformation.ResourceRoom != null)
                     Model.UpdateHeightPosition(RoomInformation);
-              
+
                 // check if this is our avatar
                 if (Model.ID == AvatarID)
                 {
@@ -1681,9 +1681,9 @@ namespace Meridian59.Data
                 }
 
                 // reassign target if same id
-                if (Model.ID == TargetID)              
+                if (Model.ID == TargetID)
                     TargetObject = Model;
-                
+
                 // add to list
                 RoomObjects.Add(Model);
             }
@@ -1714,8 +1714,8 @@ namespace Meridian59.Data
 
         protected void HandleRemove(RemoveMessage Message)
         {
-            RoomObjects.RemoveByID(Message.ObjectID);   
-            
+            RoomObjects.RemoveByID(Message.ObjectID);
+
             // reset target if our target left
             if (TargetID == Message.ObjectID)
                 TargetID = UInt32.MaxValue;
@@ -1730,7 +1730,7 @@ namespace Meridian59.Data
             RoomObject roomObject = RoomObjects.GetItemByID(Message.UpdatedObject.ID);
             if (roomObject != null)
             {
-                roomObject.UpdateFromModel(Message.UpdatedObject, true);               
+                roomObject.UpdateFromModel(Message.UpdatedObject, true);
             }
             else
             {
@@ -1749,9 +1749,9 @@ namespace Meridian59.Data
             {
                 // create destination from values
                 V2 destination = new V2(Message.NewCoordinateX, Message.NewCoordinateY);
-                               
+
                 // initiate movement
-                roomObject.StartMoveTo(destination, (byte)Message.MovementSpeed);                            
+                roomObject.StartMoveTo(destination, (byte)Message.MovementSpeed);
             }
         }
 
@@ -1759,7 +1759,7 @@ namespace Meridian59.Data
         {
             RoomObject roomObject = RoomObjects.GetItemByID(Message.ObjectID);
             if (roomObject != null)
-                roomObject.AngleUnits = Message.Angle;               
+                roomObject.AngleUnits = Message.Angle;
         }
 
         protected void HandlePlayer(PlayerMessage Message)
@@ -1770,7 +1770,7 @@ namespace Meridian59.Data
 
             // update
             RoomInformation.UpdateFromModel(Message.RoomInfo, true);
-         
+
             // attach new sectormove listener
             if (RoomInformation.ResourceRoom != null)
                 RoomInformation.ResourceRoom.SectorMoved += OnRoomSectorMoved;
@@ -1834,18 +1834,18 @@ namespace Meridian59.Data
                         // WTF? can this happen?
                     }
                 }
-                
+
                 // new id
                 else
                 {
                     PlayerOverlays.Add(Message.HandItemObject);
-                }               
+                }
             }
         }
 
         protected void HandleLightAmbient(LightAmbientMessage Message)
         {
-            RoomInformation.AmbientLight = Message.RoomBrightness;           
+            RoomInformation.AmbientLight = Message.RoomBrightness;
         }
 
         protected void HandleLightPlayer(LightPlayerMessage Message)
@@ -1877,7 +1877,7 @@ namespace Meridian59.Data
                         button.SetToItem(obj);
                     }
                 }
-            }                                  
+            }
         }
 
         protected void HandleInventoryAdd(InventoryAddMessage Message)
@@ -1907,7 +1907,7 @@ namespace Meridian59.Data
         }
 
         protected void HandleUseList(UseListMessage Message)
-        {            
+        {
             // mark inventory objects as in use
             foreach (ObjectID objectID in Message.EquippedObjects)
             {
@@ -1927,7 +1927,7 @@ namespace Meridian59.Data
             InventoryObject inventoryObject = InventoryObjects.GetItemByID(Message.ID.ID);
 
             if (inventoryObject != null)
-                inventoryObject.IsInUse = false;  
+                inventoryObject.IsInUse = false;
         }
 
         protected void HandleUse(UseMessage Message)
@@ -1935,7 +1935,7 @@ namespace Meridian59.Data
             InventoryObject inventoryObject = InventoryObjects.GetItemByID(Message.NewEquippedItem.ID);
 
             if (inventoryObject != null)
-                inventoryObject.IsInUse = true;          
+                inventoryObject.IsInUse = true;
         }
 
         protected void HandleSpells(SpellsMessage Message)
@@ -1959,7 +1959,7 @@ namespace Meridian59.Data
         }
 
         protected void HandleSpellAdd(SpellAddMessage Message)
-        {           
+        {
             SpellObjects.Add(Message.NewSpellObject);
 
             // look up buttons which are assigned to this spell
@@ -1991,25 +1991,25 @@ namespace Meridian59.Data
                 case StatGroup.Attributes:
                     AvatarAttributes.Clear();
                     foreach (Stat stat in Message.Stats)
-                        AvatarAttributes.Add((StatNumeric)stat);                 
+                        AvatarAttributes.Add((StatNumeric)stat);
                     break;
 
                 case StatGroup.Skills:
                     AvatarSkills.Clear();
                     foreach (Stat stat in Message.Stats)
-                        AvatarSkills.Add((StatList)stat);                     
+                        AvatarSkills.Add((StatList)stat);
                     break;
 
                 case StatGroup.Spells:
                     AvatarSpells.Clear();
                     foreach (Stat stat in Message.Stats)
-                        AvatarSpells.Add((StatList)stat);                   
+                        AvatarSpells.Add((StatList)stat);
                     break;
 #if !VANILLA
                 case StatGroup.Quests:
                     AvatarQuests.Clear();
                     foreach (Stat stat in Message.Stats)
-                        AvatarQuests.Add((StatList)stat);                   
+                        AvatarQuests.Add((StatList)stat);
                     break;
 #endif
             }
@@ -2031,7 +2031,7 @@ namespace Meridian59.Data
 
                     if (oldValueBarData != null)
                     {
-                        oldValueBarData.UpdateFromModel(newValueBarData, true);                         
+                        oldValueBarData.UpdateFromModel(newValueBarData, true);
                     }
                     break;
 
@@ -2041,7 +2041,7 @@ namespace Meridian59.Data
 
                     if (oldValueBarData != null)
                     {
-                        oldValueBarData.UpdateFromModel(newValueBarData, true);                         
+                        oldValueBarData.UpdateFromModel(newValueBarData, true);
                     }
                     break;
 
@@ -2076,7 +2076,7 @@ namespace Meridian59.Data
         }
 
         protected void HandleAddEnchantment(AddEnchantmentMessage Message)
-        {         
+        {
             switch (Message.BuffType)
             {
                 case BuffType.AvatarBuff:
@@ -2108,7 +2108,7 @@ namespace Meridian59.Data
             if (ChatMessages.Count > ChatMessagesMaximum)
                 ChatMessages.Remove(ChatMessages[0]);
 
-            ChatMessages.Add(Message.Message);           
+            ChatMessages.Add(Message.Message);
         }
 
         protected void HandleCharInfoNotOKMessage(CharInfoNotOkMessage Message)
@@ -2164,7 +2164,7 @@ namespace Meridian59.Data
                     if (Message.Command is UserCommandGuildShieldInfo)
                     {
                         GuildShieldInfo.UpdateFromModel(((UserCommandGuildShieldInfo)Message.Command).ShieldInfo, true);
-                    }                  
+                    }
                     break;
 
                 case UserCommandType.GuildAsk:
@@ -2177,7 +2177,7 @@ namespace Meridian59.Data
                     if (Message.Command is UserCommandGuildShieldList)
                     {
                         UserCommandGuildShieldList commandShieldList = (UserCommandGuildShieldList)Message.Command;
-                        GuildShieldInfo.Shields = commandShieldList.ShieldResources;                   
+                        GuildShieldInfo.Shields = commandShieldList.ShieldResources;
                     }
                     break;
 
@@ -2206,7 +2206,7 @@ namespace Meridian59.Data
             BackgroundOverlay bgOverlay = BackgroundOverlays.GetItemByID(Message.BackgroundOverlay.ID);
 
             if (bgOverlay != null)
-                bgOverlay.UpdateFromModel(Message.BackgroundOverlay, true); 
+                bgOverlay.UpdateFromModel(Message.BackgroundOverlay, true);
         }
 
         protected void HandleAdmin(AdminMessage Message)
@@ -2224,7 +2224,7 @@ namespace Meridian59.Data
 
                 if (roomObj == null)
                     return;
-                
+
                 // see if this sound was a known ouch sound
                 HealthStatus ouch = ResourceStrings.Sounds.IsOuch(Message.PlayInfo.ResourceName);
 
@@ -2245,7 +2245,7 @@ namespace Meridian59.Data
         protected void HandleShoot(ShootMessage Message)
         {
             Projectile projectile = Message.Projectile;
-            
+
             // resolve the source and targetobject references of the projectile
             projectile.ResolveSourceTarget(RoomObjects, false);
 
@@ -2327,7 +2327,7 @@ namespace Meridian59.Data
         }
 
         protected void HandleOffered(OfferedMessage Message)
-        {           
+        {
             Trade.ItemsYou.Clear();
             Trade.ItemsYou.AddRange(Message.OfferedItems);
 
@@ -2345,7 +2345,7 @@ namespace Meridian59.Data
             Trade.TradePartner = Message.TradePartner;
 
             Trade.ItemsPartner.AddRange(Message.OfferedItems);
-            
+
             Trade.IsVisible = false;
             Trade.IsItemsYouSet = false;
             Trade.IsItemsPartnerSet = true;
@@ -2371,6 +2371,6 @@ namespace Meridian59.Data
             // set visible
             Buy.IsVisible = true;
         }
-        #endregion  
+        #endregion
     }
 }
