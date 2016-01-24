@@ -565,13 +565,14 @@ namespace Meridian59 { namespace Ogre
 		/******************************************************************************************************/
 
 		// gameplay checkbox events
-		Safety->subscribeEvent(CEGUI::ToggleButton::EventSelectStateChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnPreferencesCheckboxChanged));
-		Grouping->subscribeEvent(CEGUI::ToggleButton::EventSelectStateChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnPreferencesCheckboxChanged));
-		SpellPower->subscribeEvent(CEGUI::ToggleButton::EventSelectStateChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnPreferencesCheckboxChanged));
-		ReagentBag->subscribeEvent(CEGUI::ToggleButton::EventSelectStateChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnPreferencesCheckboxChanged));
-		TempSafe->subscribeEvent(CEGUI::ToggleButton::EventSelectStateChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnPreferencesCheckboxChanged));
-		AutoLoot->subscribeEvent(CEGUI::ToggleButton::EventSelectStateChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnPreferencesCheckboxChanged));
-		AutoCombine->subscribeEvent(CEGUI::ToggleButton::EventSelectStateChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnPreferencesCheckboxChanged));
+		// use click event here instead of select-change, to avoid conflicts with code-raised clearing which should not trigger same behaviour
+		Safety->subscribeEvent(CEGUI::ToggleButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnPreferencesCheckboxClicked));
+		Grouping->subscribeEvent(CEGUI::ToggleButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnPreferencesCheckboxClicked));
+		SpellPower->subscribeEvent(CEGUI::ToggleButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnPreferencesCheckboxClicked));
+		ReagentBag->subscribeEvent(CEGUI::ToggleButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnPreferencesCheckboxClicked));
+		TempSafe->subscribeEvent(CEGUI::ToggleButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnPreferencesCheckboxClicked));
+		AutoLoot->subscribeEvent(CEGUI::ToggleButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnPreferencesCheckboxClicked));
+		AutoCombine->subscribeEvent(CEGUI::ToggleButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnPreferencesCheckboxClicked));
 
 		/******************************************************************************************************/
 
@@ -818,6 +819,7 @@ namespace Meridian59 { namespace Ogre
 		{
 			Safety->setEnabled(OgreClient::Singleton->Data->ClientPreferences->Enabled);
 #if !VANILLA
+			// these only get enabled for openmeridian
 			Grouping->setEnabled(OgreClient::Singleton->Data->ClientPreferences->Enabled);
 			SpellPower->setEnabled(OgreClient::Singleton->Data->ClientPreferences->Enabled);
 			ReagentBag->setEnabled(OgreClient::Singleton->Data->ClientPreferences->Enabled);
@@ -2086,10 +2088,14 @@ namespace Meridian59 { namespace Ogre
 		return true;
 	};
 
-	bool UICallbacks::Options::OnPreferencesCheckboxChanged(const CEGUI::EventArgs& e)
+	bool UICallbacks::Options::OnPreferencesCheckboxClicked(const CEGUI::EventArgs& e)
 	{
 		const CEGUI::WindowEventArgs& args = (const CEGUI::WindowEventArgs&)e;
 		const CEGUI::ToggleButton* btn = (const CEGUI::ToggleButton*)args.window;
+
+		// don't do anything if not ingame with a toon/preferences enabled
+		if (!OgreClient::Singleton->Data->ClientPreferences->Enabled)
+			return true;
 
 #if !VANILLA
 		if (btn == ControllerUI::Options::Safety)
@@ -2112,7 +2118,7 @@ namespace Meridian59 { namespace Ogre
 
 		else if (btn == ControllerUI::Options::AutoCombine)
 			OgreClient::Singleton->Data->ClientPreferences->AutoCombine = btn->isSelected();
-
+		
 		// send updated values to server
 		OgreClient::Singleton->SendUserCommandSendPreferences();
 #else

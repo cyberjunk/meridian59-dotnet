@@ -1700,7 +1700,7 @@ namespace Meridian59 { namespace Ogre
 			static bool OnAliasKeyAccepted(const CEGUI::EventArgs& e);
 			static bool OnAliasValueAccepted(const CEGUI::EventArgs& e);
 
-			static bool OnPreferencesCheckboxChanged(const CEGUI::EventArgs& e);
+			static bool OnPreferencesCheckboxClicked(const CEGUI::EventArgs& e);
 		};
 	};
 #pragma endregion

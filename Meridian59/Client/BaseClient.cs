@@ -2349,6 +2349,7 @@ namespace Meridian59.Client
             SendSendStatsMessage(StatGroup.Spells);
 #if !VANILLA
             SendSendStatsMessage(StatGroup.Quests);
+            SendUserCommandReqPreferences();
 #endif
 
             // request inventory
@@ -2359,7 +2360,7 @@ namespace Meridian59.Client
             SendSendSkillsMessage();
 
             // request buff states
-            SendSendEnchantmentsMessage(BuffType.AvatarBuff);            
+            SendSendEnchantmentsMessage(BuffType.AvatarBuff);
         }
 
         /// <summary>

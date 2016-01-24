@@ -168,8 +168,6 @@ namespace Meridian59 { namespace Ogre
 			OgreClient::Singleton->SendUseCharacterMessage(index, true);
 #if VANILLA
 			OgreClient::Singleton->SendUserCommandSafetyMessage(true);
-#else
-			OgreClient::Singleton->SendUserCommandReqPreferences();
 #endif
 		}
 		
@@ -213,8 +211,6 @@ namespace Meridian59 { namespace Ogre
 				OgreClient::Singleton->SendUseCharacterMessage(index, true);
 #if VANILLA
 				OgreClient::Singleton->SendUserCommandSafetyMessage(true);
-#else
-				OgreClient::Singleton->SendUserCommandReqPreferences();
 #endif
 			}
 		}
@@ -302,8 +298,6 @@ namespace Meridian59 { namespace Ogre
 				OgreClient::Singleton->SendUseCharacterMessage(index, true);
 #if VANILLA
 				OgreClient::Singleton->SendUserCommandSafetyMessage(true);
-#else
-				OgreClient::Singleton->SendUserCommandReqPreferences();
 #endif
 			}
 		}
