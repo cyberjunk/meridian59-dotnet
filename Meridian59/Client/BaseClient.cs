@@ -1592,8 +1592,12 @@ namespace Meridian59.Client
                     // send or not to send
                     if (send)
                     {
+                        ObjectID[] plainIDs = new ObjectID[targetIDs.Length];
+                        for (int i = 0; i < targetIDs.Length; i++)
+                            plainIDs[i] = new ObjectID(targetIDs[i].ID);
+
                         // create message instance
-                        ReqCastMessage message = new ReqCastMessage(Spell.ID, targetIDs);
+                        ReqCastMessage message = new ReqCastMessage(Spell.ID, plainIDs);
 
                         // send/enqueue it (async)
                         ServerConnection.SendQueue.Enqueue(message);
