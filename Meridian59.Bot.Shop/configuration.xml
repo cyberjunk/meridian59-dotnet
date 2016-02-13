@@ -85,6 +85,32 @@
       </ignorelist>
     </connection>
     <connection
+      name="105"
+      host="meridian105.meridiannext.com"
+      port="5905"
+      useipv6="false"
+      stringdictionary="rsc0000-105.rsb"
+      username="user"
+      password=""
+      character="">
+      <ignorelist>
+        <ignore name="PathethicTroll0815" />
+      </ignorelist>
+    </connection>
+    <connection
+      name="106"
+      host="meridian106.meridiannext.com"
+      port="5906"
+      useipv6="false"
+      stringdictionary="rsc0000-106.rsb"
+      username="user"
+      password=""
+      character="">
+      <ignorelist>
+        <ignore name="PathethicTroll0815" />
+      </ignorelist>
+    </connection>
+    <connection
       name="112"
       host="meridian112.arantis.eu"
       port="5912"
