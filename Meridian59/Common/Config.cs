@@ -486,6 +486,9 @@ namespace Meridian59.Common
 
 #if !VANILLA
                 connections.Add(ConnectionInfo.CON103);
+                connections.Add(ConnectionInfo.CON104);
+                connections.Add(ConnectionInfo.CON105);
+                connections.Add(ConnectionInfo.CON106);
                 connections.Add(ConnectionInfo.CON112);
 #else
                 connections.Add(ConnectionInfo.CON101);
