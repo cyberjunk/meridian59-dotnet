@@ -21,6 +21,47 @@ using System;
 namespace Meridian59.Bot.IRC
 {
     /// <summary>
+    /// Extensions for the String class that allow replacing the first instance
+    /// of a substring in a string, starting from pos 0 or given pos.
+    /// </summary>
+    public static class StringExtensionMethods
+    {
+        /// <summary>
+        /// Replaces the first instance of a search string in the string with another string.
+        /// </summary>
+        /// <param name="search"></param>
+        /// <param name="replace"></param>
+        /// <returns></returns>
+        public static string ReplaceFirst(this string text, string search, string replace)
+        {
+            int pos = text.IndexOf(search);
+            if (pos < 0)
+            {
+                return text;
+            }
+            return text.Substring(0, pos) + replace + text.Substring(pos + search.Length);
+        }
+
+        /// <summary>
+        /// Replaces the first instance of a search string in the string with another string.
+        /// Starts searching at startPos.
+        /// </summary>
+        /// <param name="search"></param>
+        /// <param name="replace"></param>
+        /// <param name="startPos"></param>
+        /// <returns></returns>
+        public static string ReplaceFirst(this string text, string search, string replace, int startPos)
+        {
+            int pos = text.IndexOf(search, startPos);
+            if (pos < 0)
+            {
+                return text;
+            }
+            return text.Substring(0, pos) + replace + text.Substring(pos + search.Length);
+        }
+    }
+
+    /// <summary>
     /// Deals with IRC chatstyle
     /// </summary>
     public static class IRCChatStyle
@@ -47,7 +88,70 @@ namespace Meridian59.Bot.IRC
         public const string IRCCOLOR_LIGHTPINK  = "13";
         public const string IRCCOLOR_GREY       = "14";
         public const string IRCCOLOR_LIGHTGREY  = "15";
+
+        // IRC to chat constants
+        public const string SERVER_UNDERLINE = "~U";
+        public const string SERVER_BOLD = "~B";
+        public const string SERVER_ITALIC = "~I";
+        public const string SERVER_CANCEL = "~n";
+        public const string SERVER_WHITE = "~w";
+        public const string SERVER_BLACK = "~k";
+        public const string SERVER_BLUE = "~b";
+        public const string SERVER_GREEN = "~g";
+        public const string SERVER_RED = "~r";
+        public const string SERVER_PURPLE = "~v";
+        public const string SERVER_ORANGE = "~o";
+        public const string SERVER_YELLOW = "~y";
+        public const string SERVER_LIGHTGREEN = "~l";
+        public const string SERVER_TEAL = "~t";
+        public const string SERVER_AQUA = "~a";
+        public const string SERVER_LIGHTPINK = "~p";
+        public const string SERVER_LIGHTGREY = "~s";
         #endregion
+
+        /// <summary>
+        /// Converts IRC colors into server-displayable colors, for sending
+        /// a server chat message from one server to another through IRC.
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static string CreateChatMessageFromIRCMessage(string s)
+        {
+            int index;
+            // Handle styles
+            while ((index = s.IndexOf(IRCCOLOR_BOLD, 0)) > -1)
+            {
+                s = s.ReplaceFirst(IRCCOLOR_BOLD, SERVER_BOLD);
+                s = s.ReplaceFirst(IRCCOLOR_TERM, SERVER_BOLD, index);
+            }
+            while ((index = s.IndexOf(IRCCOLOR_UNDERLINE, 0)) > -1)
+            {
+                s = s.ReplaceFirst(IRCCOLOR_UNDERLINE, SERVER_UNDERLINE);
+                s = s.ReplaceFirst(IRCCOLOR_TERM, SERVER_UNDERLINE, index);
+            }
+            while ((index = s.IndexOf(IRCCOLOR_ITALIC, 0)) > -1)
+            {
+                s = s.ReplaceFirst(IRCCOLOR_ITALIC, SERVER_ITALIC);
+                s = s.ReplaceFirst(IRCCOLOR_TERM, SERVER_ITALIC, index);
+            }
+
+            s = s.Replace(IRCCOLOR_START + IRCCOLOR_WHITE + "," + IRCCOLOR_GREY, SERVER_WHITE);
+            s = s.Replace(IRCCOLOR_START + IRCCOLOR_BLACK + "," + IRCCOLOR_GREY, SERVER_BLACK);
+            s = s.Replace(IRCCOLOR_START + IRCCOLOR_BLUE + "," + IRCCOLOR_GREY, SERVER_BLUE);
+            s = s.Replace(IRCCOLOR_START + IRCCOLOR_GREEN + "," + IRCCOLOR_GREY, SERVER_GREEN);
+            s = s.Replace(IRCCOLOR_START + IRCCOLOR_PURPLE + "," + IRCCOLOR_GREY, SERVER_PURPLE);
+            s = s.Replace(IRCCOLOR_START + IRCCOLOR_RED + "," + IRCCOLOR_GREY, SERVER_RED);
+            s = s.Replace(IRCCOLOR_START + IRCCOLOR_LIGHTGREEN + "," + IRCCOLOR_GREY, SERVER_LIGHTGREEN);
+            s = s.Replace(IRCCOLOR_START + IRCCOLOR_YELLOW + "," + IRCCOLOR_GREY, SERVER_YELLOW);
+            s = s.Replace(IRCCOLOR_START + IRCCOLOR_LIGHTPINK + "," + IRCCOLOR_GREY, SERVER_LIGHTPINK);
+            s = s.Replace(IRCCOLOR_START + IRCCOLOR_ORANGE + "," + IRCCOLOR_GREY, SERVER_ORANGE);
+            s = s.Replace(IRCCOLOR_START + IRCCOLOR_LIGHTCYAN + "," + IRCCOLOR_GREY, SERVER_AQUA);
+            s = s.Replace(IRCCOLOR_START + IRCCOLOR_TEAL + "," + IRCCOLOR_GREY, SERVER_TEAL);
+            s = s.Replace(IRCCOLOR_START + IRCCOLOR_LIGHTGREY + "," + IRCCOLOR_GREY, SERVER_LIGHTGREY);
+            s = s.Replace(IRCCOLOR_TERM, String.Empty);
+
+            return s;
+        }
 
         /// <summary>
         /// Creates a colored IRC message string from a ChatMessage instance

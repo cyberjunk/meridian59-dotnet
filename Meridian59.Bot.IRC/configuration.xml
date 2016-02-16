@@ -111,5 +111,15 @@
       <item name="who" />
     </admincommands>  
   
+    <!--
+    RELAYBOTS:
+      The bot can relay messages said by other IRC bots to the server this bot is on.
+      The bots that will have their messages relayed need to be placed here. The
+      banner is what gets displayed at the front of the relayed message (as opposed
+      to the IRC header which is simpler).
+    -->
+    <relaybots>
+      <item name="placeholder" banner="~g[~k~B103~g]~k:"/>
+    </relaybots>
   </bot>
 </configuration>

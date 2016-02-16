@@ -410,8 +410,8 @@ namespace Meridian59.Bot.IRC
         /// <param name="e"></param>
         protected void OnMessageReceived(object sender, IrcMessageEventArgs e)
         {
-            // ignore messages without @prefix start or which are only @prefix + @ + space length
-            if (e.Text == null || e.Text.IndexOf("@" + Config.ChatPrefix) != 0 || e.Text.Length <= Config.ChatPrefix.Length + 1 + 1)
+            // Ignore message whose length is just @prefix + @ + space length.
+            if (e.Text == null || e.Text.Length <= Config.ChatPrefix.Length + 1 + 1)
                 return;
 
             // try get channeluser by name
@@ -420,23 +420,50 @@ namespace Meridian59.Bot.IRC
             if (usr == null)
                 return;
 
-            // only allow operators
-            if (!usr.Modes.Contains('o'))
-            {
-                // respond user he can't use this feature
-                IrcClient.LocalUser.SendMessage(
-                    IrcChannel,
-                    e.Source.Name + " you can't use this feature. Only operators allowed.");
+            string s = String.Empty;
+            string banner = String.Empty;
+            bool relayMsg = false;
 
-                return;
+            // Relay messages from allowed chatbots
+            foreach (var relayBot in Config.RelayBots)
+            {
+                if (relayBot.Item1.Contains(e.Source.Name))
+                {
+                    // Sanity check for our own name
+                    if (e.Source.Name.Equals(Config.NickName))
+                        return;
+
+                    // Banner is the second string in the tuple.
+                    banner = relayBot.Item2;
+
+                    // Convert the IRC colors back to server styles/colors.
+                    s = IRCChatStyle.CreateChatMessageFromIRCMessage(e.Text);
+                    relayMsg = true;
+                    break;
+                }
             }
-           
-            // now remove the @103 start
-            string s = e.Text.Substring(Config.ChatPrefix.Length + 1 + 1);
-            
+
+            if (!relayMsg)
+            {
+                // Ignore messages without @prefix start.
+                if (!relayMsg && e.Text.IndexOf("@" + Config.ChatPrefix) != 0)
+                    return;
+                // only allow operators
+                if (!usr.Modes.Contains('o'))
+                {
+                    // respond user he can't use this feature
+                    IrcClient.LocalUser.SendMessage(
+                        IrcChannel,
+                        e.Source.Name + " you can't use this feature. Only operators allowed.");
+
+                    return;
+                }
+                // now remove the @103 start
+                s = e.Text.Substring(Config.ChatPrefix.Length + 1 + 1);
+            }
+
             // used delimiter
             const char delimiter = ' ';
-            
             // split up into words
             string[] words = s.Split(delimiter);
 
@@ -459,35 +486,69 @@ namespace Meridian59.Bot.IRC
                     }
                     return;
                 }
-                switch(words[0])
+                else if (words.Length > 3 && relayMsg)
                 {
-                    case ChatCommandBroadcast.KEY1:
-                    case ChatCommandBroadcast.KEY2:
-
-                        // keep first word
-                        s = String.Join(delimiter.ToString(), words, 0, 1);
-
-                        // insert banner + name
-                        s += delimiter + Config.Banner;
-                        s += e.Source.Name + ": ~n";
-
-                        // add rest
-                        s += String.Join(delimiter.ToString(), words, 1, words.Length - 1);
-                        break;
-
-                    case ChatCommandTell.KEY1:
-                    case ChatCommandTell.KEY2:
-
-                        // keep first two word
-                        s = String.Join(delimiter.ToString(), words, 0, 2);
-
-                        // insert banner + name
-                        s += delimiter + Config.Banner;
-                        s += e.Source.Name + ": ~n";
-
-                        // add rest
+                    // First word is the server's header (e.g. 103:) so don't use it.
+                    if (words[1].Contains("[###]"))
+                    {
+                        // Adjust the color codes to display [###] correctly, drop the
+                        // existing [###] and add a fixed one here. Doesn't seem to be
+                        // possible to fix the one in the message itself.
+                        s = "dm gqemote " + banner + " ~U[###]~n ~U";
                         s += String.Join(delimiter.ToString(), words, 2, words.Length - 2);
-                        break;
+                    }
+                    else if (words[2].Contains("broadcasts,")
+                            || (words[2].Contains("teilt") && words[3].Contains("allen")))
+                    {
+                        // Add server header, echo message.
+                        s = "dm gqemote " + banner + " ~n~w";
+                        s += String.Join(delimiter.ToString(), words, 1, words.Length - 1);
+                    }
+                    else if (words[1].Contains("You") && words[2].Contains("broadcast,"))
+                    {
+                        // Echo messages that the other bot broadcasts to its server.
+                        s = "dm gqemote " + banner + " ~n~wHelp broadcasts,";
+                        s += String.Join(delimiter.ToString(), words, 3, words.Length - 3);
+                    }
+                    else if (words.Length > 5 && words[1].Contains("Du") && words[3].Contains("allen"))
+                    {
+                        // German bot broadcasting to its server, echo the German translation.
+                        s = "dm gqemote " + banner + " ~n~wHelp teilt allen mit,";
+                        s += String.Join(delimiter.ToString(), words, 5, words.Length - 5);
+                    }
+                }
+                else
+                {
+                    switch (words[0])
+                    {
+                        case ChatCommandBroadcast.KEY1:
+                        case ChatCommandBroadcast.KEY2:
+
+                            // keep first word
+                            s = String.Join(delimiter.ToString(), words, 0, 1);
+
+                            // insert banner + name
+                            s += delimiter + Config.Banner;
+                            s += e.Source.Name + ": ~n";
+
+                            // add rest
+                            s += String.Join(delimiter.ToString(), words, 1, words.Length - 1);
+                            break;
+
+                        case ChatCommandTell.KEY1:
+                        case ChatCommandTell.KEY2:
+
+                            // keep first two word
+                            s = String.Join(delimiter.ToString(), words, 0, 2);
+
+                            // insert banner + name
+                            s += delimiter + Config.Banner;
+                            s += e.Source.Name + ": ~n";
+
+                            // add rest
+                            s += String.Join(delimiter.ToString(), words, 2, words.Length - 2);
+                            break;
+                    }
                 }
             }
 
