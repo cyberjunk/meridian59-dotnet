@@ -497,8 +497,7 @@ namespace Meridian59.Bot.IRC
                         s = "dm gqemote " + banner + " ~U[###]~n ~U";
                         s += String.Join(delimiter.ToString(), words, 2, words.Length - 2);
                     }
-                    else if (words[2].Contains("broadcasts,")
-                            || (words[2].Contains("teilt") && words[3].Contains("allen")))
+                    else if ((Regex.Match(s, @"(broadcasts,|teilt allen)")).Success)
                     {
                         // Add server header, echo message.
                         s = "dm gqemote " + banner + " ~n~w";
