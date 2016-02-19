@@ -15,6 +15,7 @@
 */
 
 using System;
+using System.IO;
 using System.ComponentModel;
 using Meridian59.Common.Interfaces;
 using Meridian59.Common.Constants;
@@ -195,12 +196,12 @@ namespace Meridian59.Data.Models
 
             if (RaiseChangedEvent)
             {
-                if (res_name != null) ResourceName = res_name.Replace(FileExtensions.MID, FileExtensions.MP3);               
+                if (res_name != null) ResourceName = Path.ChangeExtension(res_name, ".ogg");
                 else ResourceName = String.Empty;
             }
             else
             {
-                if (res_name != null) resourceName = res_name.Replace(FileExtensions.MID, FileExtensions.MP3);
+                if (res_name != null) resourceName = Path.ChangeExtension(res_name, ".ogg");
                 else resourceName = String.Empty;
             }
         }

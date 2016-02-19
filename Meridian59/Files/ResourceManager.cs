@@ -451,7 +451,7 @@ namespace Meridian59.Files
             if (Directory.Exists(WavFolder))
             {
                 // get available files
-                files = Directory.GetFiles(WavFolder, '*' + FileExtensions.WAV);
+                files = Directory.GetFiles(WavFolder, '*' + FileExtensions.OGG);
                 
                 foreach (string s in files)                                
                     Wavs.TryAdd(Path.GetFileName(s), null);                                  
@@ -461,7 +461,7 @@ namespace Meridian59.Files
             if (Directory.Exists(MusicFolder))
             {
                 // get available files
-                files = Directory.GetFiles(MusicFolder, '*' + FileExtensions.MP3);
+                files = Directory.GetFiles(MusicFolder, '*' + FileExtensions.OGG);
                 
                 foreach (string s in files)                
                     Music.TryAdd(Path.GetFileName(s), null);                                  
