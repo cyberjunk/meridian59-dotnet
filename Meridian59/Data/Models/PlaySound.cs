@@ -374,12 +374,12 @@ namespace Meridian59.Data.Models
 
             if (RaiseChangedEvent)
             {
-                if (res_name != null) ResourceName = Path.ChangeExtension(res_name, ".ogg");
+                if (res_name != null) ResourceName = Path.ChangeExtension(res_name, FileExtensions.OGG);
                 else ResourceName = String.Empty;
             }
             else
             {
-                if (res_name != null) resourceName = Path.ChangeExtension(res_name, ".ogg");
+                if (res_name != null) resourceName = Path.ChangeExtension(res_name, FileExtensions.OGG);
                 else resourceName = String.Empty;
             }
         }
