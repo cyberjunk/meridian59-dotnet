@@ -436,14 +436,11 @@ namespace Meridian59.Bot.IRC
                     // Banner is the second string in the tuple.
                     banner = relayBot.Banner;
 
-                    // Any messages that match the regex are not relayed.
-                    if (!(Regex.Match(e.Text, relayBot.Regex).Success))
-                    {
-                        // Convert the IRC colors back to server styles/colors.
-                        s = IRCChatStyle.CreateChatMessageFromIRCMessage(e.Text);
-                        relayMsg = true;
-                        break;
-                    }
+                    // Convert the IRC colors back to server styles/colors.
+                    s = IRCChatStyle.CreateChatMessageFromIRCMessage(e.Text);
+                    relayMsg = true;
+                    break;
+
                 }
             }
 
@@ -495,7 +492,7 @@ namespace Meridian59.Bot.IRC
                     // First word is the server's header (e.g. 103:) so don't use it.
                     if (words[1].Contains("[###]"))
                     {
-                        if ((Regex.Match(s, @"(Please welcome|Au revoir to|just logged on for the first time)")).Success)
+                        if (Regex.Match(e.Text, relayBot.Regex).Success))
                             return;
 
                         // Adjust the color codes to display [###] correctly, drop the
