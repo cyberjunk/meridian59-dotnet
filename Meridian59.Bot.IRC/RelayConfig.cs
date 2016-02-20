@@ -9,13 +9,13 @@ namespace Meridian59.Bot.IRC
     {
         public string Name { get; set; }
         public string Banner { get; set; }
-        public string Regex { get; set; }
+        public string IgnoreRegex { get; set; }
 
         public RelayConfig(string name, string banner, string regex)
         {
             Name = name;
             Banner = banner;
-            Regex = regex;
+            IgnoreRegex = regex;
         }
     }
 }

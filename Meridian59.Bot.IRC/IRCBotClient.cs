@@ -438,6 +438,8 @@ namespace Meridian59.Bot.IRC
 
                     // Convert the IRC colors back to server styles/colors.
                     s = IRCChatStyle.CreateChatMessageFromIRCMessage(e.Text);
+                    if ((Regex.Match(s, relayBot.IgnoreRegex)).Success)
+                        return;
                     relayMsg = true;
                     break;
 
@@ -492,8 +494,6 @@ namespace Meridian59.Bot.IRC
                     // First word is the server's header (e.g. 103:) so don't use it.
                     if (words[1].Contains("[###]"))
                     {
-                        if (Regex.Match(e.Text, relayBot.Regex).Success))
-                            return;
 
                         // Adjust the color codes to display [###] correctly, drop the
                         // existing [###] and add a fixed one here. Doesn't seem to be

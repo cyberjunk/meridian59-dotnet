@@ -37,7 +37,7 @@ namespace Meridian59.Bot.IRC
         protected const string XMLATTRIB_MAXBURST       = "maxburst";
         protected const string XMLATTRIB_REFILL         = "refill";
         protected const string XMLATTRIB_BANNER         = "banner";
-        protected const string XMLATTRIB_REGEX          = "regex";
+        protected const string XMLATTRIB_IGNOREREGEX    = "ignoreregex";
 
         public const string DEFAULTVAL_IRCBOT_IRCSERVER     = "irc.esper.net";
         public const ushort DEFAULTVAL_IRCBOT_IRCPORT       = 7000;
@@ -188,8 +188,8 @@ namespace Meridian59.Bot.IRC
                         child.Attributes[XMLATTRIB_NAME].Value : null;
                     string banner = (child.Attributes[XMLATTRIB_BANNER] != null) ?
                         child.Attributes[XMLATTRIB_BANNER].Value : null;
-                    string regex = (child.Attributes[XMLATTRIB_REGEX].Value != null) ?
-                        child.Attributes[XMLATTRIB_REGEX].Value : null;
+                    string regex = (child.Attributes[XMLATTRIB_IGNOREREGEX].Value != null) ?
+                        child.Attributes[XMLATTRIB_IGNOREREGEX].Value : null;
                     if (name != null && banner != null && regex != null)
                         RelayBots.Add(new RelayConfig(name,banner,regex));
                 }
