@@ -37,6 +37,7 @@ namespace Meridian59.Bot.IRC
         protected const string XMLATTRIB_MAXBURST       = "maxburst";
         protected const string XMLATTRIB_REFILL         = "refill";
         protected const string XMLATTRIB_BANNER         = "banner";
+        protected const string XMLATTRIB_REGEX          = "regex";
 
         public const string DEFAULTVAL_IRCBOT_IRCSERVER     = "irc.esper.net";
         public const ushort DEFAULTVAL_IRCBOT_IRCPORT       = 7000;
@@ -57,7 +58,7 @@ namespace Meridian59.Bot.IRC
         public string IRCPassword { get; protected set; }
         public string ChatPrefix { get; protected set; }
         public List<string> AdminCommands { get; protected set; }
-        public List<Tuple<string, string>> RelayBots { get; protected set; }
+        public List<RelayConfig> RelayBots { get; protected set; }
         public uint MaxBurst { get; protected set; }
         public uint Refill { get; protected set; }
         public string Banner { get; protected set; }
@@ -77,7 +78,7 @@ namespace Meridian59.Bot.IRC
             base.InitPreConfig();
 
             AdminCommands = new List<string>();
-            RelayBots = new List<Tuple<string, string>>();
+            RelayBots = new List<RelayConfig>();
         }
 
         /// <summary>
@@ -187,8 +188,10 @@ namespace Meridian59.Bot.IRC
                         child.Attributes[XMLATTRIB_NAME].Value : null;
                     string banner = (child.Attributes[XMLATTRIB_BANNER] != null) ?
                         child.Attributes[XMLATTRIB_BANNER].Value : null;
-                    if (name != null && banner != null)
-                        RelayBots.Add(new Tuple<string, string>(name, banner));
+                    string regex = (child.Attributes[XMLATTRIB_REGEX].Value != null) ?
+                        child.Attributes[XMLATTRIB_REGEX].Value : null;
+                    if (name != null && banner != null && regex != null)
+                        RelayBots.Add(new RelayConfig(name,banner,regex));
                 }
             }
         }

@@ -427,19 +427,23 @@ namespace Meridian59.Bot.IRC
             // Relay messages from allowed chatbots
             foreach (var relayBot in Config.RelayBots)
             {
-                if (relayBot.Item1.Contains(e.Source.Name))
+                if (relayBot.Name.Contains(e.Source.Name))
                 {
                     // Sanity check for our own name
                     if (e.Source.Name.Equals(Config.NickName))
                         return;
 
                     // Banner is the second string in the tuple.
-                    banner = relayBot.Item2;
+                    banner = relayBot.Banner;
 
-                    // Convert the IRC colors back to server styles/colors.
-                    s = IRCChatStyle.CreateChatMessageFromIRCMessage(e.Text);
-                    relayMsg = true;
-                    break;
+                    // Any messages that match the regex are not relayed.
+                    if (!(Regex.Match(e.Text, relayBot.Regex).Success))
+                    {
+                        // Convert the IRC colors back to server styles/colors.
+                        s = IRCChatStyle.CreateChatMessageFromIRCMessage(e.Text);
+                        relayMsg = true;
+                        break;
+                    }
                 }
             }
 
@@ -615,4 +619,5 @@ namespace Meridian59.Bot.IRC
 
         #endregion       
     }
+
 }
