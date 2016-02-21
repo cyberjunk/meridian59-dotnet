@@ -119,7 +119,7 @@
       to the IRC header which is simpler).
     -->
     <relaybots>
-      <item name="placeholder" banner="~g[~k~B103~g]~k:" ignoreregex="(Please welcome|Au revoir to|just logged on for the first time)"/>
+      <item name="placeholder" banner="~g[~k~B103~g]~k:" ignoresystemregex="(Please welcome|Au revoir to|just logged on for the first time)" ignoreallregex=""/>
     </relaybots>
   </bot>
 </configuration>
