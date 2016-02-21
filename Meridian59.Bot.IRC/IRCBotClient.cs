@@ -422,6 +422,7 @@ namespace Meridian59.Bot.IRC
 
             string s = String.Empty;
             string banner = String.Empty;
+            string ignoreSystemRegex = String.Empty;
             bool relayMsg = false;
 
             // Relay messages from allowed chatbots
@@ -433,15 +434,17 @@ namespace Meridian59.Bot.IRC
                     if (e.Source.Name.Equals(Config.NickName))
                         return;
 
-                    // Banner is the second string in the tuple.
-                    banner = relayBot.Banner;
-
                     // Convert the IRC colors back to server styles/colors.
                     s = IRCChatStyle.CreateChatMessageFromIRCMessage(e.Text);
 
                     // Ignore any messages containing...
-                    if ((Regex.Match(s, relayBot.IgnoreAllRegex)).Success)
+                    if (!String.IsNullOrEmpty(relayBot.IgnoreAllRegex) && (Regex.Match(s, relayBot.IgnoreAllRegex)).Success)
                         return;
+
+                    // Banner is the second string in the tuple.
+                    banner = relayBot.Banner;
+                    ignoreSystemRegex = relayBot.IgnoreSystemRegex;
+
                     relayMsg = true;
                     break;
 
@@ -496,8 +499,8 @@ namespace Meridian59.Bot.IRC
                     // First word is the server's header (e.g. 103:) so don't use it.
                     if (words[1].Contains("[###]"))
                     {
-                        // Ignore ystem messages containing....
-                        if ((Regex.Match(s, relayBot.IgnoreSystemRegex)).Success)
+                        // Ignore system messages containing....
+                        if (!String.IsNullOrEmpty(ignoreSystemRegex) && (Regex.Match(s, ignoreSystemRegex)).Success)
                             return;
 
                         // Adjust the color codes to display [###] correctly, drop the
