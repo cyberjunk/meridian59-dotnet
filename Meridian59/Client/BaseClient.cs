@@ -111,10 +111,16 @@ namespace Meridian59.Client
             if (Config.SelectedConnectionInfo == null)
                 return;
 
+            // Set server-specific subfolder.
+            ResourceManager.ServerSubFolder = Config.SelectedConnectionInfo.Name;
+
             // load the strings for this connectionentry
 		    ResourceManager.SelectStringDictionary(
                 Config.SelectedConnectionInfo.StringDictionary,
 				LanguageCode.English); // todo: from config
+
+            // Load server-specific rooms if present
+            ResourceManager.AddServerRooms();
 
 		    // fill ignore list in datacontroller with ignored
             // playernames for this connectionentry.

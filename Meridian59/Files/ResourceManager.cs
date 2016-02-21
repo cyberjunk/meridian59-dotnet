@@ -111,6 +111,11 @@ namespace Meridian59.Files
         public bool Initialized { get; protected set; }
 
         /// <summary>
+        /// Subfolder containing server-specific files.
+        /// </summary>
+        public string ServerSubFolder { get; set; }
+
+        /// <summary>
         /// Folder containing all .rsb files for different servers.
         /// </summary>
         public string StringsFolder { get; set; }
@@ -223,7 +228,11 @@ namespace Meridian59.Files
                 if (rooFile == null)
                 {                  
                     // load it
-                    rooFile = new RooFile(RoomsFolder + "/" + File);
+                    if (!String.IsNullOrEmpty(ServerSubFolder)
+                        && System.IO.File.Exists(RoomsFolder + "/" + ServerSubFolder + "/" + File))
+                        rooFile = new RooFile(RoomsFolder + "/" + ServerSubFolder + "/" + File);
+                    else
+                        rooFile = new RooFile(RoomsFolder + "/" + File);
 
                     // resolve resource references (may load texture bgfs)
                     rooFile.ResolveResources(this);
@@ -524,6 +533,38 @@ namespace Meridian59.Files
         }
 
         /// <summary>
+        /// Adds server-specific rooms to the Rooms dictionary.
+        /// </summary>
+        public void AddServerRooms()
+        {
+            string[] files;
+
+            // Reset rooms
+            Rooms.Clear();
+
+            // RoomsSubFolder is set and not equal to the server number (subfolder) we
+            // now have. Need to remove the previous server-specific rooms and add the
+            // default ones in place of them.
+            if (!String.IsNullOrEmpty(ServerSubFolder)
+                && Directory.Exists(Path.Combine(RoomsFolder, ServerSubFolder)))
+            {
+                files = Directory.GetFiles(Path.Combine(RoomsFolder, ServerSubFolder), '*' + FileExtensions.ROO);
+                foreach (string s in files)
+                    Rooms.TryAdd(Path.GetFileName(s), null);
+            }
+
+            // Add defaults. Won't overwrite the ones we just added.
+            if (Directory.Exists(RoomsFolder))
+            {
+                // get available files
+                files = Directory.GetFiles(RoomsFolder, '*' + FileExtensions.ROO);
+
+                foreach (string s in files)
+                    Rooms.TryAdd(Path.GetFileName(s), null);
+            }
+        }
+
+        /// <summary>
         /// Starts preloading resources in several threads.
         /// </summary>
         /// <param name="Objects"></param>
@@ -648,7 +689,11 @@ namespace Meridian59.Files
             while (it.MoveNext())
             {
                 // load
-                file = new RooFile(Path.Combine(RoomsFolder, it.Current.Key));
+                if (!String.IsNullOrEmpty(ServerSubFolder)
+                    && System.IO.File.Exists(Path.Combine(RoomsFolder, ServerSubFolder, it.Current.Key)))
+                    file = new RooFile(Path.Combine(RoomsFolder, ServerSubFolder, it.Current.Key));
+                else
+                    file = new RooFile(Path.Combine(RoomsFolder, it.Current.Key));
 
                 // update
                 Rooms.TryUpdate(it.Current.Key, file, null);
