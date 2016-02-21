@@ -654,7 +654,6 @@ namespace Meridian59 { namespace Ogre
 		ResourceManager->Preload(
 			Config->PreloadObjects,
 			Config->PreloadRoomTextures,
-			Config->PreloadRooms,
 			Config->PreloadSound,
 			Config->PreloadMusic);
 

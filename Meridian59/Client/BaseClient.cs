@@ -116,6 +116,9 @@ namespace Meridian59.Client
                 Config.SelectedConnectionInfo.StringDictionary,
 				LanguageCode.English); // todo: from config
 
+            // Load server-specific rooms if needed
+            ResourceManager.AddServerRooms(Config.SelectedConnectionInfo.Name, Config.PreloadRooms);
+
 		    // fill ignore list in datacontroller with ignored
             // playernames for this connectionentry.
 		    Data.IgnoreList.Clear();

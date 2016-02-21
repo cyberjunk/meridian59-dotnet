@@ -121,6 +121,11 @@ namespace Meridian59.Files
         public string RoomsFolder { get; set; }
 
         /// <summary>
+        /// Folder containing server-specific .roo files.
+        /// </summary>
+        public string RoomsSubFolder { get; set; }
+
+        /// <summary>
         /// Folder containing all object BGFs
         /// </summary>
         public string ObjectsFolder { get; set; }
@@ -221,9 +226,13 @@ namespace Meridian59.Files
             {
                 // haven't loaded it yet?
                 if (rooFile == null)
-                {                  
+                {
                     // load it
-                    rooFile = new RooFile(RoomsFolder + "/" + File);
+                    if (!String.IsNullOrEmpty(RoomsSubFolder)
+                        && System.IO.File.Exists(RoomsFolder + "/" + RoomsSubFolder + "/" + File))
+                        rooFile = new RooFile(RoomsFolder + "/" + RoomsSubFolder + "/" + File);
+                    else
+                        rooFile = new RooFile(RoomsFolder + "/" + File);
 
                     // resolve resource references (may load texture bgfs)
                     rooFile.ResolveResources(this);
@@ -524,18 +533,96 @@ namespace Meridian59.Files
         }
 
         /// <summary>
+        /// Adds server-specific rooms to the Rooms dictionary, and
+        /// loads all rooms if room preloading is enabled. If we already
+        /// have server-specific rooms loaded, unload them and reload
+        /// the correct room (if one exists).
+        /// </summary>
+        /// <param name="serverNum"></param>
+        /// <param name="preloadRooms"></param>
+        public void AddServerRooms(string serverNum, bool preloadRooms)
+        {
+            string[] files;
+            string subFolder;
+            RooFile r;
+
+            // RoomsSubFolder is set and not equal to the server number (subfolder) we
+            // now have. Need to remove the previous server-specific rooms and add the
+            // default ones in place of them.
+            if (!String.IsNullOrEmpty(RoomsSubFolder) && !RoomsSubFolder.Equals(serverNum))
+            {
+                subFolder = Path.Combine(RoomsFolder, RoomsSubFolder);
+                if (Directory.Exists(subFolder))
+                {
+                    files = Directory.GetFiles(subFolder, '*' + FileExtensions.ROO);
+                    foreach (string s in files)
+                    {
+                        // Remove the old server-specific files.
+                        Rooms.TryRemove(Path.GetFileName(s), out r);
+                        // Try to add from default folder. Check for existence as the
+                        // previous room may not have a default.
+                        if (System.IO.File.Exists(Path.Combine(RoomsFolder, Path.GetFileName(s))))
+                            Rooms.TryAdd(Path.GetFileName(s), null);
+                    }
+                }
+            }
+
+            subFolder = Path.Combine(RoomsFolder, serverNum);
+            // Now check for a new subfolder, and add any .roo files.
+            if (Directory.Exists(subFolder))
+            {
+                files = Directory.GetFiles(subFolder, '*' + FileExtensions.ROO);
+
+                foreach (string s in files)
+                {
+                    // Try to remove the room if already added to the dictionary,
+                    // then add the server-specific one.
+                    Rooms.TryRemove(Path.GetFileName(s), out r);
+                    Rooms.TryAdd(Path.GetFileName(s), null);
+                }
+            }
+
+            // Save the subfolder identifying string for future room loading/resetting.
+            RoomsSubFolder = serverNum;
+
+            // Preload if user has chosen to do so.
+            if (preloadRooms)
+                LoadRooms();
+        }
+
+        /// <summary>
+        /// Loads rooms before connecting if user has chosen to preload.
+        /// </summary>
+        protected void LoadRooms()
+        {
+            IEnumerator<KeyValuePair<string, RooFile>> it = Rooms.GetEnumerator();
+            RooFile file;
+
+            while (it.MoveNext())
+            {
+                // load
+                if (!String.IsNullOrEmpty(RoomsSubFolder)
+                    && System.IO.File.Exists(Path.Combine(RoomsFolder, RoomsSubFolder, it.Current.Key)))
+                    file = new RooFile(Path.Combine(RoomsFolder, RoomsSubFolder, it.Current.Key));
+                else
+                    file = new RooFile(Path.Combine(RoomsFolder, it.Current.Key));
+
+                // update
+                Rooms.TryUpdate(it.Current.Key, file, null);
+            }
+        }
+
+        /// <summary>
         /// Starts preloading resources in several threads.
         /// </summary>
         /// <param name="Objects"></param>
         /// <param name="RoomTextures"></param>
-        /// <param name="Rooms"></param>
         /// <param name="Sounds"></param>
         /// <param name="Music"></param>
-        public void Preload(bool Objects, bool RoomTextures, bool Rooms, bool Sounds, bool Music)
+        public void Preload(bool Objects, bool RoomTextures, bool Sounds, bool Music)
         {
             Thread threadObjects        = null;
             Thread threadRoomTextures   = null;
-            Thread threadRooms          = null;
             Thread threadSounds         = null;
             Thread threadMusic          = null;
 
@@ -552,12 +639,6 @@ namespace Meridian59.Files
             {
                 threadRoomTextures = new Thread(LoadThreadRoomTextures);
                 threadRoomTextures.Start();           
-            }
-
-            if (Rooms)
-            {
-                threadRooms = new Thread(LoadThreadRooms);
-                threadRooms.Start();
             }
 
             if (Sounds)
@@ -577,7 +658,6 @@ namespace Meridian59.Files
             // lock until all loaders are finished
             while ( (threadObjects != null && threadObjects.IsAlive) ||
                     (threadRoomTextures != null && threadRoomTextures.IsAlive) ||
-                    (threadRooms != null && threadRooms.IsAlive) ||
                     (threadSounds != null && threadSounds.IsAlive) ||
                     (threadMusic != null && threadMusic.IsAlive))
             {
@@ -633,26 +713,6 @@ namespace Meridian59.Files
                 // update
                 RoomTextures.TryUpdate(it.Current.Key, file, null);
                 
-                queueAsyncFilesLoaded.Enqueue(it.Current.Key);
-            }
-        }
-
-        /// <summary>
-        /// Stars loading all rooms in a background thread.
-        /// </summary>
-        protected void LoadThreadRooms()
-        {
-            IEnumerator<KeyValuePair<string, RooFile>> it = Rooms.GetEnumerator();
-            RooFile file;
-
-            while (it.MoveNext())
-            {
-                // load
-                file = new RooFile(Path.Combine(RoomsFolder, it.Current.Key));
-
-                // update
-                Rooms.TryUpdate(it.Current.Key, file, null);
-
                 queueAsyncFilesLoaded.Enqueue(it.Current.Key);
             }
         }
