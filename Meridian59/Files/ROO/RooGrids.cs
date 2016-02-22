@@ -44,6 +44,9 @@ namespace Meridian59.Files.ROO
         {
             get 
             {
+                if (RooVersion >= RooFile.VERSIONNOGRIDS)
+                    return 0;
+
                 // rows + cols
                 int len = TypeSizes.INT + TypeSizes.INT;
 
@@ -71,6 +74,9 @@ namespace Meridian59.Files.ROO
 
         public virtual int WriteTo(byte[] Buffer, int StartIndex = 0)
         {
+            if (RooVersion >= RooFile.VERSIONNOGRIDS)
+                return 0;
+
             int cursor = StartIndex;
 
             Array.Copy(BitConverter.GetBytes(Rows), 0, Buffer, cursor, TypeSizes.INT);
@@ -136,6 +142,9 @@ namespace Meridian59.Files.ROO
 
         public virtual unsafe void WriteTo(ref byte* Buffer)
         {
+            if (RooVersion >= RooFile.VERSIONNOGRIDS)
+                return;
+
             *((int*)Buffer) = Rows;
             Buffer += TypeSizes.INT;
 
@@ -197,6 +206,9 @@ namespace Meridian59.Files.ROO
 
         public virtual int ReadFrom(byte[] Buffer, int StartIndex = 0)
         {
+            if (RooVersion >= RooFile.VERSIONNOGRIDS)
+                return 0;
+
             int cursor = StartIndex;
 
             Rows = BitConverter.ToInt32(Buffer, cursor);
@@ -269,6 +281,9 @@ namespace Meridian59.Files.ROO
 
         public virtual unsafe void ReadFrom(ref byte* Buffer)
         {
+            if (RooVersion >= RooFile.VERSIONNOGRIDS)
+                return;
+
             Rows = *((int*)Buffer);
             Buffer += TypeSizes.INT;
 

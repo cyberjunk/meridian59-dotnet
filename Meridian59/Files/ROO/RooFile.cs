@@ -71,6 +71,7 @@ namespace Meridian59.Files.ROO
         public const uint VERSIONMONSTERGRID    = 12;           // first one with monster grid
         public const uint VERSIONHIGHRESGRID    = 13;           // first one with highres grid
         public const uint VERSIONFLOATCOORDS    = 14;           // first one with floating points
+        public const uint VERSIONNOGRIDS        = 15;           // first one that does not include grids
         public const uint MINVERSION            = 9;            // absolute minimum we can handle
         public const uint ENCRYPTIONFLAG        = 0xFFFFFFFF;
         public const byte ENCRYPTIONINFOLENGTH  = 12;
