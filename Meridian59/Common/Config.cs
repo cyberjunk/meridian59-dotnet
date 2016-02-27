@@ -478,7 +478,25 @@ namespace Meridian59.Common
                         password,
                         character,
                         ignorelist));
-                }               
+                }
+                // Double check we have all available servers in connections list.
+#if !VANILLA
+                if (!HasConnection(ConnectionInfo.CON103.Host, ConnectionInfo.CON103.Port))
+                    connections.Add(ConnectionInfo.CON103);
+                if (!HasConnection(ConnectionInfo.CON104.Host, ConnectionInfo.CON104.Port))
+                    connections.Add(ConnectionInfo.CON104);
+                if (!HasConnection(ConnectionInfo.CON105.Host, ConnectionInfo.CON105.Port))
+                    connections.Add(ConnectionInfo.CON105);
+                if (!HasConnection(ConnectionInfo.CON106.Host, ConnectionInfo.CON106.Port))
+                    connections.Add(ConnectionInfo.CON106);
+                if (!HasConnection(ConnectionInfo.CON112.Host, ConnectionInfo.CON112.Port))
+                    connections.Add(ConnectionInfo.CON112);
+#else
+                if (!HasConnection(ConnectionInfo.CON101.Host, ConnectionInfo.CON101.Port))
+                    connections.Add(ConnectionInfo.CON101);
+                if (!HasConnection(ConnectionInfo.CON102.Host, ConnectionInfo.CON102.Port))
+                    connections.Add(ConnectionInfo.CON102);
+#endif
             }
             else
             {
@@ -616,6 +634,20 @@ namespace Meridian59.Common
 
             // close writer
             writer.Close();
+        }
+
+        /// <summary>
+        /// Checks if the given host and port can be found in the connections BindingList.
+        /// </summary>
+        /// <param name="Host"></param>
+        /// <param name="Port"></param>
+        public virtual bool HasConnection(string Host, ushort Port)
+        {
+            foreach (ConnectionInfo connection in connections)
+                if (connection.Host.Equals(Host) && connection.Port == Port)
+                    return true;
+
+            return false;
         }
 
         /// <summary>
