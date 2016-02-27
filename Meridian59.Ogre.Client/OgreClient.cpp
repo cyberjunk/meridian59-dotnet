@@ -1056,7 +1056,7 @@ namespace Meridian59 { namespace Ogre
 		Data->RoomObjects->Add(worm);
 
 		PlayMusic^ music = gcnew PlayMusic();
-		music->ResourceName = "nec02.mp3";
+		music->ResourceName = "nec02.ogg";
 		music->ResolveResources(OgreClient::Singleton->ResourceManager, false);
 		ControllerSound::StartMusic(music);
 	};

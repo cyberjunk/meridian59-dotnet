@@ -30,6 +30,7 @@ namespace Meridian59.Common.Constants
         public const string PNG = ".png";
         public const string MP3 = ".mp3";
         public const string MID = ".mid";
+        public const string OGG = ".ogg";
         public const string RSB = ".rsb";
         public const string SCENE = ".scene";        
     }

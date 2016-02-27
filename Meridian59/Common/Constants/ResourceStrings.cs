@@ -15,6 +15,7 @@
 */
 
 using Meridian59.Common.Enums;
+using System.IO;
 using System.Collections.Generic;
 
 namespace Meridian59.Common.Constants
@@ -365,18 +366,18 @@ namespace Meridian59.Common.Constants
         /// </summary>
         public static class Sounds
         {
-            public const string OUCHMALE1 = "ouchm1.wav";
-            public const string OUCHMALE2 = "ouchm2.wav";
-            public const string OUCHMALE3 = "ouchm3.wav";
-            public const string OUCHMALE4 = "ouchm4.wav";
-            public const string OUCHFEMALE1 = "ouchf1.wav";
-            public const string OUCHFEMALE2 = "ouchf2.wav";
-            public const string OUCHFEMALE3 = "ouchf3.wav";
-            public const string OUCHFEMALE4 = "ouchf4.wav";
+            public const string OUCHMALE1 = "ouchm1.ogg";
+            public const string OUCHMALE2 = "ouchm2.ogg";
+            public const string OUCHMALE3 = "ouchm3.ogg";
+            public const string OUCHMALE4 = "ouchm4.ogg";
+            public const string OUCHFEMALE1 = "ouchf1.ogg";
+            public const string OUCHFEMALE2 = "ouchf2.ogg";
+            public const string OUCHFEMALE3 = "ouchf3.ogg";
+            public const string OUCHFEMALE4 = "ouchf4.ogg";
 
             public static HealthStatus IsOuch(string Value)
             {
-                switch (Value)
+                switch (Path.ChangeExtension(Value, FileExtensions.OGG))
                 {
                     case OUCHMALE1:
                     case OUCHFEMALE1:
@@ -401,15 +402,16 @@ namespace Meridian59.Common.Constants
 
             public static bool Is(string Value)
             {
-                return (Value != null) && (
-                    string.Equals(Value, OUCHMALE1) ||
-                    string.Equals(Value, OUCHMALE2) ||
-                    string.Equals(Value, OUCHMALE3) ||
-                    string.Equals(Value, OUCHMALE4) ||
-                    string.Equals(Value, OUCHFEMALE1) ||
-                    string.Equals(Value, OUCHFEMALE2) ||
-                    string.Equals(Value, OUCHFEMALE3) ||
-                    string.Equals(Value, OUCHFEMALE4));
+                string value = Path.ChangeExtension(Value, FileExtensions.OGG);
+                return (value != null) && (
+                    string.Equals(value, OUCHMALE1) ||
+                    string.Equals(value, OUCHMALE2) ||
+                    string.Equals(value, OUCHMALE3) ||
+                    string.Equals(value, OUCHMALE4) ||
+                    string.Equals(value, OUCHFEMALE1) ||
+                    string.Equals(value, OUCHFEMALE2) ||
+                    string.Equals(value, OUCHFEMALE3) ||
+                    string.Equals(value, OUCHFEMALE4));
             }
         }
 
