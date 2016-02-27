@@ -229,5 +229,39 @@ namespace Meridian59.Common
 
             return new Tuple<int, int, string>(quote1, len, quote);
         }
+
+        /// <summary>
+        /// Replaces the first instance of a search string in the string with another string.
+        /// </summary>
+        /// <param name="Text"></param>
+        /// <param name="Search"></param>
+        /// <param name="Replace"></param>
+        /// <returns></returns>
+        public static string ReplaceFirst(this string Text, string Search, string Replace)
+        {
+            int position = Text.IndexOf(Search);
+            if (position < 0)
+                return Text;
+
+            return Text.Substring(0, position) + Replace + Text.Substring(position + Search.Length);
+        }
+
+        /// <summary>
+        /// Replaces the first instance of a search string in the string with another string.
+        /// Starts searching at startPos.
+        /// </summary>
+        /// <param name="Text"></param>
+        /// <param name="Search"></param>
+        /// <param name="Replace"></param>
+        /// <param name="StartPos"></param>
+        /// <returns></returns>
+        public static string ReplaceFirst(this string Text, string Search, string Replace, int StartPos)
+        {
+            int position = Text.IndexOf(Search, StartPos);
+            if (position < 0)
+                return Text;
+
+            return Text.Substring(0, position) + Replace + Text.Substring(position + Search.Length);
+        }
     }
 }

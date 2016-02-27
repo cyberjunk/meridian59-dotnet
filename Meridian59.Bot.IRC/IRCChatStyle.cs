@@ -14,53 +14,13 @@
  If not, see http://www.gnu.org/licenses/.
 */
 
+using Meridian59.Common;
 using Meridian59.Common.Enums;
 using Meridian59.Data.Models;
 using System;
 
 namespace Meridian59.Bot.IRC
 {
-    /// <summary>
-    /// Extensions for the String class that allow replacing the first instance
-    /// of a substring in a string, starting from pos 0 or given pos.
-    /// </summary>
-    public static class StringExtensionMethods
-    {
-        /// <summary>
-        /// Replaces the first instance of a search string in the string with another string.
-        /// </summary>
-        /// <param name="search"></param>
-        /// <param name="replace"></param>
-        /// <returns></returns>
-        public static string ReplaceFirst(this string text, string search, string replace)
-        {
-            int pos = text.IndexOf(search);
-            if (pos < 0)
-            {
-                return text;
-            }
-            return text.Substring(0, pos) + replace + text.Substring(pos + search.Length);
-        }
-
-        /// <summary>
-        /// Replaces the first instance of a search string in the string with another string.
-        /// Starts searching at startPos.
-        /// </summary>
-        /// <param name="search"></param>
-        /// <param name="replace"></param>
-        /// <param name="startPos"></param>
-        /// <returns></returns>
-        public static string ReplaceFirst(this string text, string search, string replace, int startPos)
-        {
-            int pos = text.IndexOf(search, startPos);
-            if (pos < 0)
-            {
-                return text;
-            }
-            return text.Substring(0, pos) + replace + text.Substring(pos + search.Length);
-        }
-    }
-
     /// <summary>
     /// Deals with IRC chatstyle
     /// </summary>
@@ -115,42 +75,44 @@ namespace Meridian59.Bot.IRC
         /// </summary>
         /// <param name="s"></param>
         /// <returns></returns>
-        public static string CreateChatMessageFromIRCMessage(string s)
+        public static string CreateChatMessageFromIRCMessage(string Text)
         {
             int index;
             // Handle styles
-            while ((index = s.IndexOf(IRCCOLOR_BOLD, 0)) > -1)
+            while ((index = Text.IndexOf(IRCCOLOR_BOLD, 0)) > -1)
             {
-                s = s.ReplaceFirst(IRCCOLOR_BOLD, SERVER_BOLD);
-                s = s.ReplaceFirst(IRCCOLOR_TERM, SERVER_BOLD, index);
+
+                Text = Text.ReplaceFirst(IRCCOLOR_BOLD, SERVER_BOLD);
+                Text = Text.ReplaceFirst(IRCCOLOR_BOLD, SERVER_BOLD);
+                Text = Text.ReplaceFirst(IRCCOLOR_TERM, SERVER_BOLD, index);
             }
-            while ((index = s.IndexOf(IRCCOLOR_UNDERLINE, 0)) > -1)
+            while ((index = Text.IndexOf(IRCCOLOR_UNDERLINE, 0)) > -1)
             {
-                s = s.ReplaceFirst(IRCCOLOR_UNDERLINE, SERVER_UNDERLINE);
-                s = s.ReplaceFirst(IRCCOLOR_TERM, SERVER_UNDERLINE, index);
+                Text = Text.ReplaceFirst(IRCCOLOR_UNDERLINE, SERVER_UNDERLINE);
+                Text = Text.ReplaceFirst(IRCCOLOR_TERM, SERVER_UNDERLINE, index);
             }
-            while ((index = s.IndexOf(IRCCOLOR_ITALIC, 0)) > -1)
+            while ((index = Text.IndexOf(IRCCOLOR_ITALIC, 0)) > -1)
             {
-                s = s.ReplaceFirst(IRCCOLOR_ITALIC, SERVER_ITALIC);
-                s = s.ReplaceFirst(IRCCOLOR_TERM, SERVER_ITALIC, index);
+                Text = Text.ReplaceFirst(IRCCOLOR_ITALIC, SERVER_ITALIC);
+                Text = Text.ReplaceFirst(IRCCOLOR_TERM, SERVER_ITALIC, index);
             }
 
-            s = s.Replace(IRCCOLOR_START + IRCCOLOR_WHITE + "," + IRCCOLOR_GREY, SERVER_WHITE);
-            s = s.Replace(IRCCOLOR_START + IRCCOLOR_BLACK + "," + IRCCOLOR_GREY, SERVER_BLACK);
-            s = s.Replace(IRCCOLOR_START + IRCCOLOR_BLUE + "," + IRCCOLOR_GREY, SERVER_BLUE);
-            s = s.Replace(IRCCOLOR_START + IRCCOLOR_GREEN + "," + IRCCOLOR_GREY, SERVER_GREEN);
-            s = s.Replace(IRCCOLOR_START + IRCCOLOR_PURPLE + "," + IRCCOLOR_GREY, SERVER_PURPLE);
-            s = s.Replace(IRCCOLOR_START + IRCCOLOR_RED + "," + IRCCOLOR_GREY, SERVER_RED);
-            s = s.Replace(IRCCOLOR_START + IRCCOLOR_LIGHTGREEN + "," + IRCCOLOR_GREY, SERVER_LIGHTGREEN);
-            s = s.Replace(IRCCOLOR_START + IRCCOLOR_YELLOW + "," + IRCCOLOR_GREY, SERVER_YELLOW);
-            s = s.Replace(IRCCOLOR_START + IRCCOLOR_LIGHTPINK + "," + IRCCOLOR_GREY, SERVER_LIGHTPINK);
-            s = s.Replace(IRCCOLOR_START + IRCCOLOR_ORANGE + "," + IRCCOLOR_GREY, SERVER_ORANGE);
-            s = s.Replace(IRCCOLOR_START + IRCCOLOR_LIGHTCYAN + "," + IRCCOLOR_GREY, SERVER_AQUA);
-            s = s.Replace(IRCCOLOR_START + IRCCOLOR_TEAL + "," + IRCCOLOR_GREY, SERVER_TEAL);
-            s = s.Replace(IRCCOLOR_START + IRCCOLOR_LIGHTGREY + "," + IRCCOLOR_GREY, SERVER_LIGHTGREY);
-            s = s.Replace(IRCCOLOR_TERM, String.Empty);
+            Text = Text.Replace(IRCCOLOR_START + IRCCOLOR_WHITE + "," + IRCCOLOR_GREY, SERVER_WHITE);
+            Text = Text.Replace(IRCCOLOR_START + IRCCOLOR_BLACK + "," + IRCCOLOR_GREY, SERVER_BLACK);
+            Text = Text.Replace(IRCCOLOR_START + IRCCOLOR_BLUE + "," + IRCCOLOR_GREY, SERVER_BLUE);
+            Text = Text.Replace(IRCCOLOR_START + IRCCOLOR_GREEN + "," + IRCCOLOR_GREY, SERVER_GREEN);
+            Text = Text.Replace(IRCCOLOR_START + IRCCOLOR_PURPLE + "," + IRCCOLOR_GREY, SERVER_PURPLE);
+            Text = Text.Replace(IRCCOLOR_START + IRCCOLOR_RED + "," + IRCCOLOR_GREY, SERVER_RED);
+            Text = Text.Replace(IRCCOLOR_START + IRCCOLOR_LIGHTGREEN + "," + IRCCOLOR_GREY, SERVER_LIGHTGREEN);
+            Text = Text.Replace(IRCCOLOR_START + IRCCOLOR_YELLOW + "," + IRCCOLOR_GREY, SERVER_YELLOW);
+            Text = Text.Replace(IRCCOLOR_START + IRCCOLOR_LIGHTPINK + "," + IRCCOLOR_GREY, SERVER_LIGHTPINK);
+            Text = Text.Replace(IRCCOLOR_START + IRCCOLOR_ORANGE + "," + IRCCOLOR_GREY, SERVER_ORANGE);
+            Text = Text.Replace(IRCCOLOR_START + IRCCOLOR_LIGHTCYAN + "," + IRCCOLOR_GREY, SERVER_AQUA);
+            Text = Text.Replace(IRCCOLOR_START + IRCCOLOR_TEAL + "," + IRCCOLOR_GREY, SERVER_TEAL);
+            Text = Text.Replace(IRCCOLOR_START + IRCCOLOR_LIGHTGREY + "," + IRCCOLOR_GREY, SERVER_LIGHTGREY);
+            Text = Text.Replace(IRCCOLOR_TERM, String.Empty);
 
-            return s;
+            return Text;
         }
 
         /// <summary>
