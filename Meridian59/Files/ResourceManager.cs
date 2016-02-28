@@ -37,7 +37,7 @@ namespace Meridian59.Files
     public class ResourceManager
     {
         #region Constants
-        protected const string NOTFOUND = "Error: StringResources file or Bgf/Roo/Wav/Music folder not found.";
+        protected const string NOTFOUND = "Error: StringResources file or Bgf/Roo/Sound/Music folder not found.";
         protected const string DEFAULTSTRINGFILE = "rsc0000.rsb";
 
         public const string SUBPATHSTRINGS = "strings";
@@ -89,9 +89,9 @@ namespace Meridian59.Files
         public LockingDictionary<string, RooFile> Rooms { get { return rooms; } }
 
         /// <summary>
-        /// WAV soundfiles
+        /// OGG soundfiles
         /// </summary>
-        public LockingDictionary<string, Tuple<IntPtr, uint>> Wavs { get { return sounds; } }
+        public LockingDictionary<string, Tuple<IntPtr, uint>> Sounds { get { return sounds; } }
 
         /// <summary>
         /// Music
@@ -136,9 +136,9 @@ namespace Meridian59.Files
         public string RoomTexturesFolder { get; set; }
 
         /// <summary>
-        /// Folder containing all WAV soundfiles
+        /// Folder containing all non-music soundfiles
         /// </summary>
-        public string WavFolder { get; set; }
+        public string SoundFolder { get; set; }
 
         /// <summary>
         /// Folder containing music
@@ -293,38 +293,38 @@ namespace Meridian59.Files
         }
 
         /// <summary>
-        /// Tries to retrieve a WAV file from the Wavs dictionary.
+        /// Tries to retrieve an OGG file from the Sounds dictionary.
         /// Will load the file from disk, if not yet loaded.
         /// </summary>
         /// <param name="File"></param>
         /// <returns></returns>
-        public Tuple<IntPtr, uint> GetWavFile(string File)
+        public Tuple<IntPtr, uint> GetSoundFile(string File)
         {
-            Tuple<IntPtr, uint> wavData = null;
+            Tuple<IntPtr, uint> soundData = null;
 
             // if the file is known
-            if (Wavs.TryGetValue(File, out wavData))
+            if (Sounds.TryGetValue(File, out soundData))
             {
                 // haven't loaded it yet?
-                if (wavData == null)
+                if (soundData == null)
                 {
                     // load it
                     if (!String.IsNullOrEmpty(ServerSubFolder)
-                        && System.IO.File.Exists(WavFolder + "/" + ServerSubFolder + "/" + File))
-                        wavData = Util.LoadFileToUnmanagedMem(WavFolder + "/" + ServerSubFolder + "/" + File);
+                        && System.IO.File.Exists(SoundFolder + "/" + ServerSubFolder + "/" + File))
+                        soundData = Util.LoadFileToUnmanagedMem(SoundFolder + "/" + ServerSubFolder + "/" + File);
                     else
-                        wavData = Util.LoadFileToUnmanagedMem(WavFolder + "/" + File);
+                        soundData = Util.LoadFileToUnmanagedMem(SoundFolder + "/" + File);
                     
                     // update the registry
-                    Wavs.TryUpdate(File, wavData, null);
+                    Sounds.TryUpdate(File, soundData, null);
                 }
             }
 
-            return wavData;
+            return soundData;
         }
 
         /// <summary>
-        /// Tries to retrieve a MP3 file from the Music dictionary.
+        /// Tries to retrieve an OGG file from the Music dictionary.
         /// Will load the file from disk, if not yet loaded.
         /// </summary>
         /// <param name="File"></param>
@@ -403,7 +403,7 @@ namespace Meridian59.Files
             this.RoomsFolder = PathRooms;
             this.ObjectsFolder = PathObjects;
             this.RoomTexturesFolder = PathRoomTextures;
-            this.WavFolder = PathSounds;
+            this.SoundFolder = PathSounds;
             this.MusicFolder = PathMusic;
             this.MailFolder = PathMails;
 
@@ -417,7 +417,7 @@ namespace Meridian59.Files
                 Objects.Clear();
                 RoomTextures.Clear();
                 Rooms.Clear();
-                Wavs.Clear();
+                Sounds.Clear();
                 Music.Clear();
 
                 // detach mail listener so we don't delete them
@@ -472,14 +472,14 @@ namespace Meridian59.Files
                     Rooms.TryAdd(Path.GetFileName(s), null);              
             }
 
-            // register wav sounds          
-            if (Directory.Exists(WavFolder))
+            // register sounds          
+            if (Directory.Exists(SoundFolder))
             {
                 // get available files
-                files = Directory.GetFiles(WavFolder, '*' + FileExtensions.OGG);
+                files = Directory.GetFiles(SoundFolder, '*' + FileExtensions.OGG);
                 
                 foreach (string s in files)                                
-                    Wavs.TryAdd(Path.GetFileName(s), null);                                  
+                    Sounds.TryAdd(Path.GetFileName(s), null);                                  
             }
 
             // register music         
@@ -644,32 +644,32 @@ namespace Meridian59.Files
         }
 
         /// <summary>
-        /// Adds server-specific sound files to the Wavs dictionary.
+        /// Adds server-specific sound files to the Sounds dictionary.
         /// </summary>
         public void AddServerSounds()
         {
             string[] files;
 
             // Reset rooms
-            Wavs.Clear();
+            Sounds.Clear();
 
             // Add server-specific room files.
             if (!String.IsNullOrEmpty(ServerSubFolder)
-                && Directory.Exists(Path.Combine(WavFolder, ServerSubFolder)))
+                && Directory.Exists(Path.Combine(SoundFolder, ServerSubFolder)))
             {
-                files = Directory.GetFiles(Path.Combine(WavFolder, ServerSubFolder), '*' + FileExtensions.WAV);
+                files = Directory.GetFiles(Path.Combine(SoundFolder, ServerSubFolder), '*' + FileExtensions.OGG);
                 foreach (string s in files)
-                    Wavs.TryAdd(Path.GetFileName(s), null);
+                    Sounds.TryAdd(Path.GetFileName(s), null);
             }
 
             // Add defaults. Won't overwrite the ones we just added.
-            if (Directory.Exists(WavFolder))
+            if (Directory.Exists(SoundFolder))
             {
                 // get available files
-                files = Directory.GetFiles(WavFolder, '*' + FileExtensions.WAV);
+                files = Directory.GetFiles(SoundFolder, '*' + FileExtensions.OGG);
 
                 foreach (string s in files)
-                    Wavs.TryAdd(Path.GetFileName(s), null);
+                    Sounds.TryAdd(Path.GetFileName(s), null);
             }
         }
 
@@ -687,7 +687,7 @@ namespace Meridian59.Files
             if (!String.IsNullOrEmpty(ServerSubFolder)
                 && Directory.Exists(Path.Combine(MusicFolder, ServerSubFolder)))
             {
-                files = Directory.GetFiles(Path.Combine(MusicFolder, ServerSubFolder), '*' + FileExtensions.MP3);
+                files = Directory.GetFiles(Path.Combine(MusicFolder, ServerSubFolder), '*' + FileExtensions.OGG);
                 foreach (string s in files)
                     Music.TryAdd(Path.GetFileName(s), null);
             }
@@ -696,7 +696,7 @@ namespace Meridian59.Files
             if (Directory.Exists(MusicFolder))
             {
                 // get available files
-                files = Directory.GetFiles(MusicFolder, '*' + FileExtensions.MP3);
+                files = Directory.GetFiles(MusicFolder, '*' + FileExtensions.OGG);
 
                 foreach (string s in files)
                     Music.TryAdd(Path.GetFileName(s), null);
@@ -854,22 +854,22 @@ namespace Meridian59.Files
         /// </summary>
         protected void LoadThreadSounds()
         {
-            IEnumerator<KeyValuePair<string, Tuple<IntPtr, uint>>> it = Wavs.GetEnumerator();
-            Tuple<IntPtr, uint> wavData = null;
+            IEnumerator<KeyValuePair<string, Tuple<IntPtr, uint>>> it = Sounds.GetEnumerator();
+            Tuple<IntPtr, uint> soundData = null;
 
             while (it.MoveNext())
             {
                 // load it
                 if (!String.IsNullOrEmpty(ServerSubFolder)
-                    && System.IO.File.Exists(Path.Combine(WavFolder, ServerSubFolder, it.Current.Key)))
-                    wavData = Util.LoadFileToUnmanagedMem(
-                        Path.Combine(WavFolder, ServerSubFolder, it.Current.Key));
+                    && System.IO.File.Exists(Path.Combine(SoundFolder, ServerSubFolder, it.Current.Key)))
+                    soundData = Util.LoadFileToUnmanagedMem(
+                        Path.Combine(SoundFolder, ServerSubFolder, it.Current.Key));
                 else
-                    wavData = Util.LoadFileToUnmanagedMem(
-                        Path.Combine(WavFolder, it.Current.Key));
+                    soundData = Util.LoadFileToUnmanagedMem(
+                        Path.Combine(SoundFolder, it.Current.Key));
 
                 // update
-                Wavs.TryUpdate(it.Current.Key, wavData, null);
+                Sounds.TryUpdate(it.Current.Key, soundData, null);
 
                 queueAsyncFilesLoaded.Enqueue(it.Current.Key);
             }
@@ -881,21 +881,21 @@ namespace Meridian59.Files
         protected void LoadThreadMusic()
         {
             IEnumerator<KeyValuePair<string, Tuple<IntPtr, uint>>> it = Music.GetEnumerator();
-            Tuple<IntPtr, uint> mp3Data = null;
+            Tuple<IntPtr, uint> musicData = null;
 
             while (it.MoveNext())
             {
                 // load it
                 if (!String.IsNullOrEmpty(ServerSubFolder)
                     && System.IO.File.Exists(Path.Combine(MusicFolder, ServerSubFolder, it.Current.Key)))
-                    mp3Data = Util.LoadFileToUnmanagedMem(
+                    musicData = Util.LoadFileToUnmanagedMem(
                         Path.Combine(MusicFolder, ServerSubFolder, it.Current.Key));
                 else
-                    mp3Data = Util.LoadFileToUnmanagedMem(
+                    musicData = Util.LoadFileToUnmanagedMem(
                         Path.Combine(MusicFolder, it.Current.Key));
 
                 // update
-                Music.TryUpdate(it.Current.Key, mp3Data, null);
+                Music.TryUpdate(it.Current.Key, musicData, null);
 
                 queueAsyncFilesLoaded.Enqueue(it.Current.Key);
             }
