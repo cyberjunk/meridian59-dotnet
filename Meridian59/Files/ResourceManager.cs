@@ -521,6 +521,21 @@ namespace Meridian59.Files
         }
 
         /// <summary>
+        /// Adds legacy resources to dictionaries based on the given server folder.
+        /// </summary>
+        /// <param name="ServerSubFolder"></param>
+        public void SelectServerResources(string ServerSubFolder)
+        {
+            this.ServerSubFolder = ServerSubFolder;
+            // Load server-specific resources if present
+            AddServerObjects();
+            AddServerRoomTextures();
+            AddServerRooms();
+            AddServerSounds();
+            AddServerMusic();
+        }
+
+        /// <summary>
         /// Clears and reloads the strings from another dictionary file within the strings folder,
         /// which was previously initialized during Init()
         /// </summary>
@@ -551,7 +566,7 @@ namespace Meridian59.Files
         /// <summary>
         /// Adds server-specific object BGF files to the Objects dictionary.
         /// </summary>
-        public void AddServerObjects()
+        protected void AddServerObjects()
         {
             string[] files;
 
@@ -585,7 +600,7 @@ namespace Meridian59.Files
         /// <summary>
         /// Adds server-specific room textures files to the RoomTextures dictionary.
         /// </summary>
-        public void AddServerRoomTextures()
+        protected void AddServerRoomTextures()
         {
             string[] files;
 
@@ -616,7 +631,7 @@ namespace Meridian59.Files
         /// <summary>
         /// Adds server-specific rooms to the Rooms dictionary.
         /// </summary>
-        public void AddServerRooms()
+        protected void AddServerRooms()
         {
             string[] files;
 
@@ -646,7 +661,7 @@ namespace Meridian59.Files
         /// <summary>
         /// Adds server-specific sound files to the Sounds dictionary.
         /// </summary>
-        public void AddServerSounds()
+        protected void AddServerSounds()
         {
             string[] files;
 
@@ -676,7 +691,7 @@ namespace Meridian59.Files
         /// <summary>
         /// Adds server-specific music files to the Music dictionary.
         /// </summary>
-        public void AddServerMusic()
+        protected void AddServerMusic()
         {
             string[] files;
 
