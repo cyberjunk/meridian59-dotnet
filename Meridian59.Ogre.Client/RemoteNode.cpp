@@ -86,11 +86,10 @@ namespace Meridian59 { namespace Ogre
 		if (System::String::Equals(e->PropertyName, Data::Models::RoomObject::PROPNAME_ANGLE))
 			RefreshOrientation();
 		
-        // This is the trigger for light change in model, because it's the last value
-        // of the lightset: Flags, Intensity, Color
-		else if (System::String::Equals(e->PropertyName, Data::Models::RoomObject::PROPNAME_LIGHTCOLOR))
+      // Update light if changed
+		else if (System::String::Equals(e->PropertyName, Data::Models::RoomObject::PROPNAME_LIGHTINGINFO))
 		{
-            if (RoomObject->LightFlags > 0)
+            if (RoomObject->LightingInfo->Flags->IsLightOn)
             {
                 DestroyLight();
                 CreateLight();

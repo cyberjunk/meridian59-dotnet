@@ -139,9 +139,7 @@ namespace Meridian59.Data.Models
         /// <param name="OverlayFileRID"></param>
         /// <param name="NameRID"></param>
         /// <param name="Flags"></param>
-        /// <param name="LightFlags"></param>
-        /// <param name="LightIntensity"></param>
-        /// <param name="LightColor"></param>
+        /// <param name="LightingInfo"></param>
         /// <param name="FirstAnimationType"></param>
         /// <param name="ColorTranslation"></param>
         /// <param name="Effect"></param>
@@ -150,30 +148,26 @@ namespace Meridian59.Data.Models
         /// <param name="TargetsCount"></param>
         /// <param name="SchoolType"></param>
         public SpellObject(
-            uint ID, 
-            uint Count,            
+            uint ID,
+            uint Count,
             uint OverlayFileRID,
-            uint NameRID, 
+            uint NameRID,
             uint Flags,
-            ushort LightFlags, 
-            byte LightIntensity, 
-            ushort LightColor, 
-            AnimationType FirstAnimationType, 
-            byte ColorTranslation, 
-            byte Effect, 
-            Animation Animation, 
-            IEnumerable<SubOverlay> SubOverlays,                      
+            LightingInfo LightingInfo,
+            AnimationType FirstAnimationType,
+            byte ColorTranslation,
+            byte Effect,
+            Animation Animation,
+            IEnumerable<SubOverlay> SubOverlays,
             byte TargetsCount,
-            SchoolType SchoolType)           
+            SchoolType SchoolType)
             : base(
-                ID, Count, 
-                OverlayFileRID, NameRID, Flags, 
-                LightFlags, LightIntensity, LightColor, 
-                FirstAnimationType, ColorTranslation, Effect, 
-                Animation, SubOverlays)
+                ID, Count, OverlayFileRID, NameRID, Flags,
+                LightingInfo, FirstAnimationType,
+                ColorTranslation, Effect, Animation, SubOverlays)
         {
             this.targetsCount = TargetsCount;
-            this.schoolType = SchoolType;        
+            this.schoolType = SchoolType;
         }
 
         /// <summary>

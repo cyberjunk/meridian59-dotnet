@@ -135,6 +135,8 @@
     <Compile Include="Data\Models\ClientPatchInfo.cs" />
     <Compile Include="Data\Models\GroupMember.cs" />
     <Compile Include="Data\Models\GuildHall.cs" />
+    <Compile Include="Data\Models\LightFlags.cs" />
+    <Compile Include="Data\Models\LightingInfo.cs" />
     <Compile Include="Data\Models\LootInfo.cs" />
     <Compile Include="Data\Models\Group.cs" />
     <Compile Include="Data\Models\StopSound.cs" />

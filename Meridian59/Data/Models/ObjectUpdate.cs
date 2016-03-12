@@ -43,9 +43,7 @@ namespace Meridian59.Data.Models
         public const string PROPNAME_OVERLAYFILERID = "OverlayFileRID";
         public const string PROPNAME_NAMERID = "NameRID";
         public const string PROPNAME_FLAGS = "Flags";
-        public const string PROPNAME_LIGHTFLAGS = "LightFlags";
-        public const string PROPNAME_LIGHTINTENSITY = "LightIntensity";
-        public const string PROPNAME_LIGHTCOLOR = "LightColor";
+        public const string PROPNAME_LIGHTINGINFO = "LightingInfo";
         public const string PROPNAME_FIRSTANIMATIONTYPE = "FirstAnimationType";
         public const string PROPNAME_COLORTRANSLATION = "ColorTranslation";
         public const string PROPNAME_EFFECT = "Effect";
@@ -65,10 +63,9 @@ namespace Meridian59.Data.Models
         public override int ByteLength
         { 
             get {
-                int len = base.ByteLength + TypeSizes.INT + TypeSizes.INT + flags.ByteLength + TypeSizes.SHORT;
+                int len = base.ByteLength + TypeSizes.INT + TypeSizes.INT + flags.ByteLength;
 
-                if (lightFlags > 0)
-                    len += TypeSizes.BYTE + TypeSizes.SHORT;
+                len += lightingInfo.ByteLength;
 
                 if (firstAnimationType > 0)
                     len += TypeSizes.BYTE + TypeSizes.BYTE;
@@ -107,17 +104,8 @@ namespace Meridian59.Data.Models
             flags.ReadFrom(Buffer, cursor);                                    // Flags (n bytes)
             cursor += flags.ByteLength;
 
-            lightFlags = BitConverter.ToUInt16(Buffer, cursor);                 // LightFlags (2 bytes)
-            cursor += TypeSizes.SHORT;
-
-            if (lightFlags > 0)
-            {
-                lightIntensity = Buffer[cursor];                                // LightIntensity (1 byte)
-                cursor++;
-
-                lightColor = BitConverter.ToUInt16(Buffer, cursor);             // LightColor (2 bytes)
-                cursor += TypeSizes.SHORT;
-            }
+            lightingInfo.ReadFrom(Buffer, cursor); // Lighting info (n bytes)
+            cursor += lightingInfo.ByteLength;
 
             if ((AnimationType)Buffer[cursor] == AnimationType.TRANSLATION)   // check if there is a translation or effect for object                         
             {
@@ -213,18 +201,8 @@ namespace Meridian59.Data.Models
             cursor += TypeSizes.INT;
 
             cursor += flags.WriteTo(Buffer, cursor);                                            // Flags (n bytes)
-            
-            Array.Copy(BitConverter.GetBytes(lightFlags), 0, Buffer, cursor, TypeSizes.SHORT);  // LightFlags (2 bytes)
-            cursor += TypeSizes.SHORT;
 
-            if (lightFlags > 0)
-            {
-                Buffer[cursor] = lightIntensity;                                                    // LightIntensity (1 byte)
-                cursor++;
-
-                Array.Copy(BitConverter.GetBytes(lightColor), 0, Buffer, cursor, TypeSizes.SHORT);  // LightColor (2 bytes)
-                cursor += TypeSizes.SHORT;
-            }
+            cursor += lightingInfo.WriteTo(Buffer, cursor);                                     // Lighting info (n bytes)
 
             if (firstAnimationType == AnimationType.TRANSLATION)
             {
@@ -290,18 +268,8 @@ namespace Meridian59.Data.Models
             Buffer += TypeSizes.INT;
 
             flags.ReadFrom(ref Buffer);
-            
-            lightFlags = *((ushort*)Buffer);
-            Buffer += TypeSizes.SHORT;
 
-            if (lightFlags > 0)
-            {
-                lightIntensity = Buffer[0];
-                Buffer++;
-
-                lightColor = *((ushort*)Buffer);
-                Buffer += TypeSizes.SHORT;
-            }
+            lightingInfo.ReadFrom(ref Buffer);
 
             if ((AnimationType)Buffer[0] == AnimationType.TRANSLATION)
             {
@@ -387,18 +355,8 @@ namespace Meridian59.Data.Models
             Buffer += TypeSizes.INT;
 
             flags.WriteTo(ref Buffer);
-                     
-            *((ushort*)Buffer) = lightFlags;
-            Buffer += TypeSizes.SHORT;
 
-            if (lightFlags > 0)
-            {
-                Buffer[0] = lightIntensity;
-                Buffer++;
-
-                *((ushort*)Buffer) = lightColor;
-                Buffer += TypeSizes.SHORT;
-            }
+            lightingInfo.WriteTo(ref Buffer);
             
             if (firstAnimationType == AnimationType.TRANSLATION)
             {
@@ -457,9 +415,7 @@ namespace Meridian59.Data.Models
         protected uint overlayFileRID;
         protected uint nameRID;
         protected readonly ObjectFlags flags = new ObjectFlags();
-        protected ushort lightFlags;
-        protected byte lightIntensity;
-        protected ushort lightColor;
+        protected readonly LightingInfo lightingInfo = new LightingInfo();
         protected AnimationType firstAnimationType;
         protected byte colorTranslation;
         protected byte effect;
@@ -503,43 +459,11 @@ namespace Meridian59.Data.Models
         }
         public ObjectFlags Flags
         {
-            get { return flags; }            
+            get { return flags; }
         }
-        public ushort LightFlags
+        public LightingInfo LightingInfo
         {
-            get { return lightFlags; }
-            set
-            {
-                if (lightFlags != value)
-                {
-                    lightFlags = value;
-                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_LIGHTFLAGS));
-                }
-            }
-        }
-        public byte LightIntensity
-        {
-            get { return lightIntensity; }
-            set
-            {
-                if (lightIntensity != value)
-                {
-                    lightIntensity = value;
-                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_LIGHTINTENSITY));
-                }
-            }
-        }
-        public ushort LightColor
-        {
-            get { return lightColor; }
-            set
-            {
-                if (lightColor != value)
-                {
-                    lightColor = value;
-                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_LIGHTCOLOR));
-                }
-            }
+            get { return lightingInfo; }
         }
         public AnimationType FirstAnimationType
         {
@@ -702,9 +626,7 @@ namespace Meridian59.Data.Models
             uint OverlayFileRID = 0, 
             uint NameRID = 0, 
             uint Flags = 0,
-            ushort LightFlags = 0, 
-            byte LightIntensity = 0, 
-            ushort LightColor = 0, 
+            LightingInfo LightingInfo = null,
             AnimationType FirstAnimationType = 0, 
             byte ColorTranslation = 0, 
             byte Effect = 0, 
@@ -720,9 +642,7 @@ namespace Meridian59.Data.Models
             this.overlayFileRID = OverlayFileRID;
             this.nameRID = NameRID;
             this.flags.Value = Flags;
-            this.lightFlags = LightFlags;
-            this.lightIntensity = LightIntensity;
-            this.lightColor = LightColor;
+            this.lightingInfo = LightingInfo;
             this.firstAnimationType = FirstAnimationType;
             this.colorTranslation = ColorTranslation;
 
@@ -776,10 +696,7 @@ namespace Meridian59.Data.Models
             if (RaiseChangedEvent)
             {
                 OverlayFileRID = 0;
-                NameRID = 0;               
-                LightFlags = 0;
-                LightIntensity = 0;
-                LightColor = 0;
+                NameRID = 0;
                 FirstAnimationType = 0;
                 ColorTranslation = 0;
                 Effect = 0;
@@ -797,9 +714,6 @@ namespace Meridian59.Data.Models
             {
                 overlayFileRID = 0;
                 nameRID = 0;
-                lightFlags = 0;
-                lightIntensity = 0;
-                lightColor = 0;
                 firstAnimationType = 0;
                 colorTranslation = 0;
                 effect = 0;
@@ -815,6 +729,7 @@ namespace Meridian59.Data.Models
             }
 
             flags.Clear(RaiseChangedEvent);
+            lightingInfo.Clear(RaiseChangedEvent);
             subOverlays.Clear();
             motionSubOverlays.Clear();
         }

@@ -46,9 +46,7 @@ namespace Meridian59.Data.Models
                
         public const string PROPNAME_OVERLAYFILERID = "OverlayFileRID";
         public const string PROPNAME_FLAGS = "Flags";
-        public const string PROPNAME_LIGHTFLAGS = "LightFlags";
-        public const string PROPNAME_LIGHTINTENSITY = "LightIntensity";
-        public const string PROPNAME_LIGHTCOLOR = "LightColor";
+        public const string PROPNAME_LIGHTINGINFO = "LightingInfo";
         public const string PROPNAME_FIRSTANIMATIONTYPE = "FirstAnimationType";
         public const string PROPNAME_COLORTRANSLATION = "ColorTranslation";
         public const string PROPNAME_EFFECT = "Effect";
@@ -94,10 +92,9 @@ namespace Meridian59.Data.Models
 
                 len += TypeSizes.BYTE;
 
-                len += TypeSizes.SHORT + TypeSizes.SHORT;
+                len += TypeSizes.SHORT;
 
-                if (lightFlags > 0)
-                    len += TypeSizes.BYTE + TypeSizes.SHORT;
+                len += lightingInfo.ByteLength;
 
                 return len; 
             } 
@@ -143,17 +140,8 @@ namespace Meridian59.Data.Models
             flags = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            lightFlags = BitConverter.ToUInt16(Buffer, cursor);
-            cursor += TypeSizes.SHORT;
-
-            if (lightFlags > 0)
-            {
-                lightIntensity = Buffer[cursor];
-                cursor++;
-
-                lightColor = BitConverter.ToUInt16(Buffer, cursor);
-                cursor += TypeSizes.SHORT;
-            }
+            lightingInfo.ReadFrom(Buffer, cursor);
+            cursor += lightingInfo.ByteLength;
 
             return cursor - StartIndex; 
         }
@@ -193,17 +181,7 @@ namespace Meridian59.Data.Models
             Array.Copy(BitConverter.GetBytes(flags), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(BitConverter.GetBytes(lightFlags), 0, Buffer, cursor, TypeSizes.SHORT);
-            cursor += TypeSizes.SHORT;
-
-            if (lightFlags > 0)
-            {
-                Buffer[cursor] = lightIntensity;
-                cursor++;
-
-                Array.Copy(BitConverter.GetBytes(lightColor), 0, Buffer, cursor, TypeSizes.SHORT);
-                cursor += TypeSizes.SHORT;
-            }
+            cursor += lightingInfo.WriteTo(Buffer, cursor);
 
             return cursor - StartIndex;
         }
@@ -230,9 +208,7 @@ namespace Meridian59.Data.Models
         protected ObjectID target;
         protected byte speed;
         protected ushort flags;
-        protected ushort lightFlags;
-        protected byte lightIntensity;
-        protected ushort lightColor;
+        protected LightingInfo lightingInfo;
 
         protected V3 position3D;
         protected bool isMoving;
@@ -355,39 +331,15 @@ namespace Meridian59.Data.Models
                 }
             }
         }
-        public ushort LightFlags
+        public LightingInfo LightingInfo
         {
-            get { return lightFlags; }
+            get { return lightingInfo; }
             set
             {
-                if (lightFlags != value)
+                if (lightingInfo != value)
                 {
-                    lightFlags = value;
-                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_LIGHTFLAGS));
-                }
-            }
-        }
-        public byte LightIntensity
-        {
-            get { return lightIntensity; }
-            set
-            {
-                if (lightIntensity != value)
-                {
-                    lightIntensity = value;
-                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_LIGHTINTENSITY));
-                }
-            }
-        }
-        public ushort LightColor
-        {
-            get { return lightColor; }
-            set
-            {
-                if (lightColor != value)
-                {
-                    lightColor = value;
-                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_LIGHTCOLOR));
+                    lightingInfo = value;
+                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_LIGHTINGINFO));
                 }
             }
         }
@@ -512,23 +464,21 @@ namespace Meridian59.Data.Models
 
         public Projectile(
             uint ResourceID,
-            AnimationType FirstObjectAnimationType, 
-            byte ColorTranslation, 
-            byte Effect, 
-            Animation Animation, 
-            ObjectID Source, 
-            ObjectID Targe,
+            AnimationType FirstObjectAnimationType,
+            byte ColorTranslation,
+            byte Effect,
+            Animation Animation,
+            ObjectID Source,
+            ObjectID Target,
             byte Speed,
             ushort Flags,
-            ushort LightFlags, 
-            byte LightIntensity, 
-            ushort LightColor)
+            LightingInfo LightingInfo)
         {
             ID = nextID;
             nextID++;
 
             this.overlayFileRID = ResourceID;
-            
+
             this.firstAnimationType = FirstObjectAnimationType;
             this.colorTranslation = ColorTranslation;
             this.effect = Effect;
@@ -539,10 +489,7 @@ namespace Meridian59.Data.Models
             this.target = Target;
 
             this.flags = Flags;
-           
-            this.lightFlags = LightFlags;
-            this.lightIntensity = LightIntensity;
-            this.lightColor = LightColor;                    
+            this.lightingInfo = LightingInfo;
         }
 
         public Projectile(byte[] Buffer, int StartIndex=0)
@@ -550,7 +497,7 @@ namespace Meridian59.Data.Models
             ID = nextID;
             nextID++;
 
-            ReadFrom(Buffer, StartIndex);                    
+            ReadFrom(Buffer, StartIndex);
         }
 
         #endregion
@@ -569,9 +516,7 @@ namespace Meridian59.Data.Models
                 Target = new ObjectID(0);
                 Speed = 0;
                 Flags = 0;
-                LightFlags = 0;
-                LightIntensity = 0;
-                LightColor = 0;
+                LightingInfo = new LightingInfo();
 
                 OverlayFile = String.Empty;
             }
@@ -586,9 +531,7 @@ namespace Meridian59.Data.Models
                 target = new ObjectID(0);
                 speed = 0;
                 flags = 0;
-                lightFlags = 0;
-                lightIntensity = 0;
-                lightColor = 0;
+                lightingInfo = new LightingInfo();
 
                 overlayFile = String.Empty;
             }
@@ -596,19 +539,19 @@ namespace Meridian59.Data.Models
         #endregion
 
         #region IStringResolvable
-		public void ResolveStrings(StringDictionary StringResources, bool RaiseChangedEvent)
+        public void ResolveStrings(StringDictionary StringResources, bool RaiseChangedEvent)
         {
             string res_mainoverlayname;
 
-			StringResources.TryGetValue(overlayFileRID, out res_mainoverlayname);
+            StringResources.TryGetValue(overlayFileRID, out res_mainoverlayname);
 
             if (RaiseChangedEvent)
-            {           
+            {
                 if (res_mainoverlayname != null) OverlayFile = res_mainoverlayname;
                 else OverlayFile = String.Empty;
             }
             else
-            {            
+            {
                 if (res_mainoverlayname != null) overlayFile = res_mainoverlayname;
                 else overlayFile = String.Empty;
             }
@@ -652,7 +595,7 @@ namespace Meridian59.Data.Models
                 }
             }
         }
-        
+
         public bool IsMoving
         {
             get { return isMoving; }
@@ -725,9 +668,8 @@ namespace Meridian59.Data.Models
                 // trigger changed event
                 RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_POSITION3D));
             }
-            else               
-                IsMoving = false;              
-            
+            else
+                IsMoving = false;
         }
         #endregion
 
