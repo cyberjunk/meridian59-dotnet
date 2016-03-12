@@ -14,6 +14,8 @@
  If not, see http://www.gnu.org/licenses/.
 */
 
+using Meridian59.Data.Models;
+
 namespace Meridian59.Common.Interfaces
 {
     /// <summary>
@@ -21,8 +23,6 @@ namespace Meridian59.Common.Interfaces
     /// </summary>
     public interface ILightOwner
     {
-        ushort LightFlags { get; set; }
-        byte LightIntensity { get; set; }
-        ushort LightColor { get; set; }
+        LightingInfo LightingInfo { get; set; }
     }
 }

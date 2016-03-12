@@ -1083,9 +1083,7 @@ namespace Meridian59 { namespace Ogre
 		tree1->Animation = gcnew AnimationNone(1);
 		tree1->OverlayFile = "nectree3.bgf";
 		tree1->Flags->Value = 131136;
-		tree1->LightFlags = 1;
-		tree1->LightIntensity = 50;
-		tree1->LightColor = 320;
+		tree1->LightingInfo = gcnew LightingInfo(1, 50, 320);
 		tree1->Position3D = V3(1696.0f, 360.0f, 1120.0f);
 		tree1->ResolveResources(OgreClient::Singleton->ResourceManager, false);
 		Data->RoomObjects->Add(tree1);
@@ -1096,9 +1094,7 @@ namespace Meridian59 { namespace Ogre
 		tree2->Animation = gcnew AnimationNone(1);
 		tree2->OverlayFile = "nectree2.bgf";
 		tree2->Flags->Value = 131136;
-		tree2->LightFlags = 1;
-		tree2->LightIntensity = 50;
-		tree2->LightColor = 15360;
+		tree2->LightingInfo = gcnew LightingInfo(1, 50, 15360);
 		tree2->Position3D = V3(1280.0f, 357.25f, 896.0f);
 		tree2->ResolveResources(OgreClient::Singleton->ResourceManager, false);
 		Data->RoomObjects->Add(tree2);
@@ -1109,9 +1105,7 @@ namespace Meridian59 { namespace Ogre
 		brazier->Animation = gcnew AnimationCycle(120, 2, 7);
 		brazier->OverlayFile = "brazier.bgf";
 		brazier->Flags->Value = 131136;
-		brazier->LightFlags = 1;
-		brazier->LightIntensity = 40;
-		brazier->LightColor = 32518;
+		brazier->LightingInfo = gcnew LightingInfo(1, 40, 32518);
 		brazier->Position3D = V3(1430.0f, 360.0f, 1120.0f);
 		brazier->ResolveResources(OgreClient::Singleton->ResourceManager, false);
 		Data->RoomObjects->Add(brazier);
@@ -1123,9 +1117,7 @@ namespace Meridian59 { namespace Ogre
 		lich->OverlayFile = "licha.bgf";
 		lich->Flags->Value = 1544;
 		lich->Angle = 1.49f;
-		lich->LightFlags = 0;
-		lich->LightIntensity = 0;
-		lich->LightColor = 0;
+		lich->LightingInfo = gcnew LightingInfo();
 		lich->Position3D = V3(1400.0f, 360.0f, 1080.0f);
 		lich->ResolveResources(OgreClient::Singleton->ResourceManager, false);
 		Data->RoomObjects->Add(lich);
@@ -1137,9 +1129,7 @@ namespace Meridian59 { namespace Ogre
 		worm->OverlayFile = "darkbeas.bgf";
 		worm->Flags->Value = 0;
 		worm->Angle = 2.8f;
-		worm->LightFlags = 0;
-		worm->LightIntensity = 0;
-		worm->LightColor = 0;
+		worm->LightingInfo = gcnew LightingInfo();
 		worm->Position3D = V3(1500.0f, 360.0f, 1130.0f);
 		worm->ResolveResources(OgreClient::Singleton->ResourceManager, false);
 		Data->RoomObjects->Add(worm);
