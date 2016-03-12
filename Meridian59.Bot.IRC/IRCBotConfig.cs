@@ -27,7 +27,8 @@ namespace Meridian59.Bot.IRC
     {
         #region Constants
         protected const string XMLTAG_ADMINCOMMANDS     = "admincommands";
-        protected const string XMLATTRIB_IRCSERVER      = "ircserver";        
+        protected const string XMLTAG_RELAYBOTS         = "relaybots";
+        protected const string XMLATTRIB_IRCSERVER      = "ircserver";
         protected const string XMLATTRIB_IRCPORT        = "ircport";
         protected const string XMLATTRIB_CHANNEL        = "channel";
         protected const string XMLATTRIB_NICKNAME       = "nickname";
@@ -36,6 +37,8 @@ namespace Meridian59.Bot.IRC
         protected const string XMLATTRIB_MAXBURST       = "maxburst";
         protected const string XMLATTRIB_REFILL         = "refill";
         protected const string XMLATTRIB_BANNER         = "banner";
+        protected const string XMLATTRIB_IGNORESYSREGEX = "ignoresystemregex";
+        protected const string XMLATTRIB_IGNOREALLREGEX = "ignoreallregex";
 
         public const string DEFAULTVAL_IRCBOT_IRCSERVER     = "irc.esper.net";
         public const ushort DEFAULTVAL_IRCBOT_IRCPORT       = 7000;
@@ -56,6 +59,7 @@ namespace Meridian59.Bot.IRC
         public string IRCPassword { get; protected set; }
         public string ChatPrefix { get; protected set; }
         public List<string> AdminCommands { get; protected set; }
+        public List<RelayConfig> RelayBots { get; protected set; }
         public uint MaxBurst { get; protected set; }
         public uint Refill { get; protected set; }
         public string Banner { get; protected set; }
@@ -75,6 +79,7 @@ namespace Meridian59.Bot.IRC
             base.InitPreConfig();
 
             AdminCommands = new List<string>();
+            RelayBots = new List<RelayConfig>();
         }
 
         /// <summary>
@@ -99,6 +104,7 @@ namespace Meridian59.Bot.IRC
             XmlNode node;
 
             AdminCommands.Clear();
+            RelayBots.Clear();
 
             // bot
 
@@ -164,6 +170,31 @@ namespace Meridian59.Bot.IRC
 
                     if (name != null)
                         AdminCommands.Add(name);
+                }
+            }
+
+            // Relay bots (bots we pass on messages from)
+
+            node = Document.DocumentElement.SelectSingleNode(
+                '/' + XMLTAG_CONFIGURATION + '/' + XMLTAG_BOT + '/' + XMLTAG_RELAYBOTS);
+
+            if (node != null)
+            {
+                foreach (XmlNode child in node.ChildNodes)
+                {
+                    if (child.Name != XMLTAG_ITEM)
+                        continue;
+
+                    string name = (child.Attributes[XMLATTRIB_NAME] != null) ?
+                        child.Attributes[XMLATTRIB_NAME].Value : null;
+                    string banner = (child.Attributes[XMLATTRIB_BANNER] != null) ?
+                        child.Attributes[XMLATTRIB_BANNER].Value : null;
+                    string systemregex = (child.Attributes[XMLATTRIB_IGNORESYSREGEX].Value != null) ?
+                        child.Attributes[XMLATTRIB_IGNORESYSREGEX].Value : null;
+                    string allregex = (child.Attributes[XMLATTRIB_IGNOREALLREGEX].Value != null)  ?
+                        child.Attributes[XMLATTRIB_IGNOREALLREGEX].Value : null;
+                    if (name != null && banner != null && systemregex != null && allregex != null)
+                        RelayBots.Add(new RelayConfig(name, banner, systemregex, allregex));
                 }
             }
         }

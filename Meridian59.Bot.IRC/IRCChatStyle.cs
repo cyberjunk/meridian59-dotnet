@@ -14,6 +14,7 @@
  If not, see http://www.gnu.org/licenses/.
 */
 
+using Meridian59.Common;
 using Meridian59.Common.Enums;
 using Meridian59.Data.Models;
 using System;
@@ -47,7 +48,72 @@ namespace Meridian59.Bot.IRC
         public const string IRCCOLOR_LIGHTPINK  = "13";
         public const string IRCCOLOR_GREY       = "14";
         public const string IRCCOLOR_LIGHTGREY  = "15";
+
+        // IRC to chat constants
+        public const string SERVER_UNDERLINE = "~U";
+        public const string SERVER_BOLD = "~B";
+        public const string SERVER_ITALIC = "~I";
+        public const string SERVER_CANCEL = "~n";
+        public const string SERVER_WHITE = "~w";
+        public const string SERVER_BLACK = "~k";
+        public const string SERVER_BLUE = "~b";
+        public const string SERVER_GREEN = "~g";
+        public const string SERVER_RED = "~r";
+        public const string SERVER_PURPLE = "~v";
+        public const string SERVER_ORANGE = "~o";
+        public const string SERVER_YELLOW = "~y";
+        public const string SERVER_LIGHTGREEN = "~l";
+        public const string SERVER_TEAL = "~t";
+        public const string SERVER_AQUA = "~a";
+        public const string SERVER_LIGHTPINK = "~p";
+        public const string SERVER_LIGHTGREY = "~s";
         #endregion
+
+        /// <summary>
+        /// Converts IRC colors into server-displayable colors, for sending
+        /// a server chat message from one server to another through IRC.
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static string CreateChatMessageFromIRCMessage(string Text)
+        {
+            int index;
+            // Handle styles
+            while ((index = Text.IndexOf(IRCCOLOR_BOLD, 0)) > -1)
+            {
+
+                Text = Text.ReplaceFirst(IRCCOLOR_BOLD, SERVER_BOLD);
+                Text = Text.ReplaceFirst(IRCCOLOR_BOLD, SERVER_BOLD);
+                Text = Text.ReplaceFirst(IRCCOLOR_TERM, SERVER_BOLD, index);
+            }
+            while ((index = Text.IndexOf(IRCCOLOR_UNDERLINE, 0)) > -1)
+            {
+                Text = Text.ReplaceFirst(IRCCOLOR_UNDERLINE, SERVER_UNDERLINE);
+                Text = Text.ReplaceFirst(IRCCOLOR_TERM, SERVER_UNDERLINE, index);
+            }
+            while ((index = Text.IndexOf(IRCCOLOR_ITALIC, 0)) > -1)
+            {
+                Text = Text.ReplaceFirst(IRCCOLOR_ITALIC, SERVER_ITALIC);
+                Text = Text.ReplaceFirst(IRCCOLOR_TERM, SERVER_ITALIC, index);
+            }
+
+            Text = Text.Replace(IRCCOLOR_START + IRCCOLOR_WHITE + "," + IRCCOLOR_GREY, SERVER_WHITE);
+            Text = Text.Replace(IRCCOLOR_START + IRCCOLOR_BLACK + "," + IRCCOLOR_GREY, SERVER_BLACK);
+            Text = Text.Replace(IRCCOLOR_START + IRCCOLOR_BLUE + "," + IRCCOLOR_GREY, SERVER_BLUE);
+            Text = Text.Replace(IRCCOLOR_START + IRCCOLOR_GREEN + "," + IRCCOLOR_GREY, SERVER_GREEN);
+            Text = Text.Replace(IRCCOLOR_START + IRCCOLOR_PURPLE + "," + IRCCOLOR_GREY, SERVER_PURPLE);
+            Text = Text.Replace(IRCCOLOR_START + IRCCOLOR_RED + "," + IRCCOLOR_GREY, SERVER_RED);
+            Text = Text.Replace(IRCCOLOR_START + IRCCOLOR_LIGHTGREEN + "," + IRCCOLOR_GREY, SERVER_LIGHTGREEN);
+            Text = Text.Replace(IRCCOLOR_START + IRCCOLOR_YELLOW + "," + IRCCOLOR_GREY, SERVER_YELLOW);
+            Text = Text.Replace(IRCCOLOR_START + IRCCOLOR_LIGHTPINK + "," + IRCCOLOR_GREY, SERVER_LIGHTPINK);
+            Text = Text.Replace(IRCCOLOR_START + IRCCOLOR_ORANGE + "," + IRCCOLOR_GREY, SERVER_ORANGE);
+            Text = Text.Replace(IRCCOLOR_START + IRCCOLOR_LIGHTCYAN + "," + IRCCOLOR_GREY, SERVER_AQUA);
+            Text = Text.Replace(IRCCOLOR_START + IRCCOLOR_TEAL + "," + IRCCOLOR_GREY, SERVER_TEAL);
+            Text = Text.Replace(IRCCOLOR_START + IRCCOLOR_LIGHTGREY + "," + IRCCOLOR_GREY, SERVER_LIGHTGREY);
+            Text = Text.Replace(IRCCOLOR_TERM, String.Empty);
+
+            return Text;
+        }
 
         /// <summary>
         /// Creates a colored IRC message string from a ChatMessage instance
