@@ -250,6 +250,10 @@ namespace Meridian59.Protocol
                         TypedMessage = new GetClientMessage(e.MessageBuffer);
                         break;
 
+                    case MessageTypeLoginMode.ClientPatch:            // PI: 12
+                        TypedMessage = new ClientPatchMessage(e.MessageBuffer);
+                        break;
+
                     case MessageTypeLoginMode.GetLogin:               // PI: 21
                         TypedMessage = new GetLoginMessage(e.MessageBuffer);
                         break;

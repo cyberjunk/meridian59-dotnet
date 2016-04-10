@@ -81,7 +81,12 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml" />
@@ -128,6 +133,7 @@
     <Compile Include="Data\Models\AdminInfoProperty.cs" />
     <Compile Include="Data\Models\AdminInfoObject.cs" />
     <Compile Include="Data\Models\AdminInfo.cs" />
+    <Compile Include="Data\Models\ClientPatchInfo.cs" />
     <Compile Include="Data\Models\StopSound.cs" />
     <Compile Include="Data\Models\ResourceID.cs" />
     <Compile Include="Data\Models\ChatCommand\ChatCommandAutoLoot.cs" />
@@ -374,6 +380,7 @@
     <Compile Include="Protocol\GameMessages\GameMode\PlayMidiMessage.cs" />
     <Compile Include="Protocol\GameMessages\GameMode\ReqActivateMessage.cs" />
     <Compile Include="Protocol\GameMessages\LoginMode\AdminMessageLoginMode.cs" />
+    <Compile Include="Protocol\GameMessages\LoginMode\ClientPatchMessage.cs" />
     <Compile Include="Protocol\GameMessages\LoginMode\NoCharactersMessage.cs" />
     <Compile Include="Protocol\GameMessages\LoginMode\LoginModeMessageMessage.cs" />
     <Compile Include="Protocol\GameMessages\LoginMode\ReqAdminMessageLoginMode.cs" />
