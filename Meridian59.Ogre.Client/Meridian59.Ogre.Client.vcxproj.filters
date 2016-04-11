@@ -301,6 +301,9 @@
     <ClCompile Include="UIQuests.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="UIDownloadBar.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="app.ico">

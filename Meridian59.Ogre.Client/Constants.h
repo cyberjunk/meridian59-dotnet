@@ -227,6 +227,8 @@
 #define UI_NAME_LOADINGBAR_WINDOW					"LoadingBar"
 #define UI_NAME_LOADINGBAR_GROUP					"LoadingBar.Group"
 #define UI_NAME_LOADINGBAR_CONTENT					"LoadingBar.Content"
+#define UI_NAME_DOWNLOADBAR_WINDOW					"DownloadBar"
+#define UI_NAME_DOWNLOADBAR_CONTENT					"DownloadBar.Content"
 #define UI_NAME_WELCOME_WINDOW						"Welcome"
 #define UI_NAME_WELCOME_AVATARS						"Welcome.Avatars"
 #define UI_NAME_WELCOME_SELECT						"Welcome.Select"

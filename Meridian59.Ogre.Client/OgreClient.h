@@ -172,7 +172,7 @@ namespace Meridian59 { namespace Ogre
 		virtual void HandleGetClientMessage(GetClientMessage^ Message) override;
 
       /// <summary>
-      /// Handler for a mismatch application versions message (update).
+      /// Handler for a mismatch application versions message (client patch).
       /// </summary>
       /// <param name="Message"></param>
       virtual void HandleClientPatchMessage(ClientPatchMessage^ Message) override;
@@ -227,7 +227,7 @@ namespace Meridian59 { namespace Ogre
 
 		property unsigned char AppVersionMinor
 		{ 
-			public: virtual unsigned char get() override { return 4; } 			
+			public: virtual unsigned char get() override { return 5; } 			
 		};
 		
 		property ::Ogre::Root* Root 

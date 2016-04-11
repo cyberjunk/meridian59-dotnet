@@ -826,10 +826,13 @@ namespace Meridian59 { namespace Ogre
 
    void OgreClient::HandleClientPatchMessage(ClientPatchMessage^ Message)
    {
-      // tell user about mismatching major/minor version
-      ::System::Windows::Forms::MessageBox::Show(APPVERSIONMISMATCH);
-
+      // Disconnect from server.
       Disconnect();
+      // Set UI mode to download, start download bar.
+      Data->UIMode = UIMode::Download;
+      ControllerUI::DownloadBar::Start();
+      // Download the client patch cache and updater, launch it and disconnect.
+      DownloadHandler->DownloadClientPatch(Message->ClientPatchInfo);
    };
 
 	void OgreClient::HandleDownloadMessage(DownloadMessage^ Message)

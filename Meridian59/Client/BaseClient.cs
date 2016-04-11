@@ -80,6 +80,7 @@ namespace Meridian59.Client
         #region Major components
         public ServerConnection ServerConnection { get; protected set; }
         public MessageEnrichment MessageEnrichment { get; protected set; }
+        public DownloadHandler DownloadHandler { get; protected set; }
         #endregion
 
         #region Constructors
@@ -94,6 +95,9 @@ namespace Meridian59.Client
 
             // Initialize resource loader (message enrichment thread)
             MessageEnrichment = new MessageEnrichment(ResourceManager, ServerConnection);
+
+            // Initialize a download handler in case an update is needed.
+            DownloadHandler = new DownloadHandler();
 
             // hook up lists/model observers
             Data.ActionButtons.ListChanged += OnActionButtonListChanged;
@@ -274,6 +278,12 @@ namespace Meridian59.Client
             {
                 ServerConnection.Disconnect();
                 ServerConnection = null;
+            }
+
+            if (DownloadHandler != null)
+            {
+                DownloadHandler.Dispose();
+                DownloadHandler = null;
             }
 
             // last because of logging
