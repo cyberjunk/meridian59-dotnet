@@ -824,6 +824,14 @@ namespace Meridian59 { namespace Ogre
 		Disconnect();
 	};
 
+   void OgreClient::HandleClientPatchMessage(ClientPatchMessage^ Message)
+   {
+      // tell user about mismatching major/minor version
+      ::System::Windows::Forms::MessageBox::Show(APPVERSIONMISMATCH);
+
+      Disconnect();
+   };
+
 	void OgreClient::HandleDownloadMessage(DownloadMessage^ Message)
 	{
 		SingletonClient::HandleDownloadMessage(Message);

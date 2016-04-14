@@ -316,6 +316,10 @@ namespace Meridian59.Client
                     HandleGetClientMessage((GetClientMessage)Message);
                     break;
 
+                case MessageTypeLoginMode.ClientPatch:                      // 12
+                    HandleClientPatchMessage((ClientPatchMessage)Message);
+                    break;
+
                 case MessageTypeLoginMode.GetLogin:                         // 21
                     HandleGetLoginMessage((GetLoginMessage)Message);
                     break;
@@ -421,6 +425,14 @@ namespace Meridian59.Client
         /// </summary>
         /// <param name="Message"></param>
         protected abstract void HandleGetClientMessage(GetClientMessage Message);
+
+        /// <summary>
+        /// Your client major/minor versions don't match server.
+        /// Server responds with download info for patchinfo.txt.
+        /// Implement this with a proper response.
+        /// </summary>
+        /// <param name="Message"></param>
+        protected abstract void HandleClientPatchMessage(ClientPatchMessage Message);
 
         /// <summary>
         /// Implement this with a proper Login response

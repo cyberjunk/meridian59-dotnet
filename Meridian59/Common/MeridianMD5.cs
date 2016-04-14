@@ -50,6 +50,19 @@ namespace Meridian59.Common
         }
 
         /// <summary>
+        /// Generates an MD5 from bytes input
+        /// </summary>
+        /// <param name="Input">A string to generate an MD5 from</param>
+        /// <returns>MD5 bytes with no modification</returns>
+        public static byte[] ComputeGenericMD5(byte[] Input)
+        {
+            // get MD5
+            byte[] bytes = md5.ComputeHash(Input);
+
+            return bytes;
+        }
+
+        /// <summary>
         /// Generates a MD5 in M59 style from string input
         /// </summary>
         /// <param name="Input">A string to generate a M59 MD5 from</param>
