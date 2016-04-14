@@ -98,11 +98,12 @@ namespace Meridian59.Client
 
             // Initialize a download handler in case an update is needed.
             DownloadHandler = new DownloadHandler();
+            DownloadHandler.ExitRequestEvent += new EventHandler(OnExitRequestHandler);
 
             // hook up lists/model observers
             Data.ActionButtons.ListChanged += OnActionButtonListChanged;
         }
-        
+
         #endregion
 
         #region Methods
@@ -141,6 +142,14 @@ namespace Meridian59.Client
 
             Data.Reset();
             Data.UIMode = UIMode.Login;
+        }
+
+        /// <summary>
+        /// Sets IsRunning to false and results in the client being closed.
+        /// </summary>
+        private void OnExitRequestHandler(object sender, EventArgs e)
+        {
+            IsRunning = false;
         }
 
         /// <summary>

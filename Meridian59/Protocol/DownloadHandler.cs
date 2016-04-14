@@ -54,6 +54,7 @@ namespace Meridian59.Protocol
         public event EventHandler<StringEventArgs> DownloadText;
         public event EventHandler<IntegerEventArgs> DownloadProgress;
         public event EventHandler<StringEventArgs> DownloadFinished;
+        public event EventHandler ExitRequestEvent;
         #endregion
 
         #region Constructor/Destructor
@@ -211,6 +212,9 @@ namespace Meridian59.Protocol
 
             if (DownloadFinished != null)
                 DownloadFinished(this, new StringEventArgs(SUCCESSMESSAGE));
+
+            if (ExitRequestEvent != null)
+                ExitRequestEvent(this, new EventArgs());
         }
 
         private bool CompareCacheToLocalFile(string CurrentPath, PatchFile PatchFile)
