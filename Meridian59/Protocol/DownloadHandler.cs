@@ -47,6 +47,7 @@ namespace Meridian59.Protocol
         protected const string SUCCESSMESSAGE = "Success!";
         protected const string DOWNLOADFAIL = "Failed to download file.";
         protected const string CACHELOADFAIL = "Unable to load patch file. Please contact an administrator.";
+        protected const long NUMFILEBYTES = 1024;
         #endregion
 
         #region Event Handlers
@@ -235,9 +236,9 @@ namespace Meridian59.Protocol
             }
 
             // Number of bytes to read.
-            long numBytesToRead = 1024;
+            long numBytesToRead = NUMFILEBYTES;
             // Make sure we dont read past the end of a file smaller than 1024 bytes.
-            if (stream.Length < 1024)
+            if (stream.Length < NUMFILEBYTES)
                 numBytesToRead = stream.Length;
 
             byte[] fileBytes = new byte[numBytesToRead];
