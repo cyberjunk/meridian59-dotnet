@@ -824,17 +824,6 @@ namespace Meridian59 { namespace Ogre
 		Disconnect();
 	};
 
-   void OgreClient::HandleClientPatchMessage(ClientPatchMessage^ Message)
-   {
-      // Disconnect from server.
-      Disconnect();
-      // Set UI mode to download, start download bar.
-      Data->UIMode = UIMode::Download;
-      ControllerUI::DownloadBar::Start();
-      // Download the client patch cache and updater, launch it and disconnect.
-      DownloadHandler->DownloadClientPatch(Message->ClientPatchInfo);
-   };
-
 	void OgreClient::HandleDownloadMessage(DownloadMessage^ Message)
 	{
 		SingletonClient::HandleDownloadMessage(Message);

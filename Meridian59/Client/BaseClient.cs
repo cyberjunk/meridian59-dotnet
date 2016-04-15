@@ -448,10 +448,16 @@ namespace Meridian59.Client
         /// <summary>
         /// Your client major/minor versions don't match server.
         /// Server responds with download info for patchinfo.txt.
-        /// Implement this with a proper response.
         /// </summary>
         /// <param name="Message"></param>
-        protected abstract void HandleClientPatchMessage(ClientPatchMessage Message);
+        protected virtual void HandleClientPatchMessage(ClientPatchMessage Message)
+        {
+            // Disconnect from server.
+            Disconnect();
+            // Set UI mode to download.
+            Data.UIMode = UIMode.Download;
+            DownloadHandler.DownloadClientPatch(Message.ClientPatchInfo);
+        }
 
         /// <summary>
         /// Implement this with a proper Login response

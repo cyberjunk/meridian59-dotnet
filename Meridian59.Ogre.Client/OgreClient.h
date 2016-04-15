@@ -171,12 +171,6 @@ namespace Meridian59 { namespace Ogre
         /// <param name="Message"></param>
 		virtual void HandleGetClientMessage(GetClientMessage^ Message) override;
 
-      /// <summary>
-      /// Handler for a mismatch application versions message (client patch).
-      /// </summary>
-      /// <param name="Message"></param>
-      virtual void HandleClientPatchMessage(ClientPatchMessage^ Message) override;
-
 		/// <summary>
         /// Handler for a mismatch resource versions message (update).
         /// </summary>
