@@ -195,7 +195,7 @@ namespace Meridian59.Protocol
         private void UpdaterLaunch(ClientPatchInfo ClientPatchInfo)
         {
             // Location of client executable.
-            string clientExec = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            string clientExec = System.Reflection.Assembly.GetEntryAssembly().Location;
             string clientPath = System.IO.Path.GetDirectoryName(clientExec);
 
             Process process = new Process();
