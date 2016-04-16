@@ -807,6 +807,20 @@ namespace Meridian59 { namespace Ogre
 		// detach listener from clientpreferences
 		OgreClient::Singleton->Data->ClientPreferences->PropertyChanged -=
 			gcnew PropertyChangedEventHandler(OnClientPreferencesPropertyChanged);
+
+		// detach CEGUI event listeners
+		size_t numAliases = ListAliases->getItemCount();
+		for (size_t i = 0; i < numAliases; i++)
+		{
+			CEGUI::Window* widget	= ListAliases->getItemFromIndex(i);
+			CEGUI::PushButton* del	= (CEGUI::PushButton*)widget->getChildAtIdx(UI_OPTIONS_CHILDINDEX_ALIAS_DELETE);
+			CEGUI::Editbox* key		= (CEGUI::Editbox*)widget->getChildAtIdx(UI_OPTIONS_CHILDINDEX_ALIAS_KEY);
+			CEGUI::Editbox* value	= (CEGUI::Editbox*)widget->getChildAtIdx(UI_OPTIONS_CHILDINDEX_ALIAS_VALUE);
+
+			del->removeAllEvents();
+			key->removeAllEvents();
+			value->removeAllEvents();
+		}
 	};
 
 	void ControllerUI::Options::OnConfigPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
@@ -2066,7 +2080,9 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::Editbox* box = (const CEGUI::Editbox*)args.window;
 
 		CEGUI::ItemListbox* list = ControllerUI::Options::ListAliases;
-		size_t idx = list->getItemIndex((CEGUI::ItemEntry*)box->getParent());
+		CEGUI::ItemEntry* entry = (CEGUI::ItemEntry*)box->getParent();
+
+		size_t idx = list->getItemIndex(entry);
 
 		if (OgreClient::Singleton->Config->Aliases->Count > (int)idx)
 			OgreClient::Singleton->Config->Aliases[idx]->Key = StringConvert::CEGUIToCLR(box->getText());
