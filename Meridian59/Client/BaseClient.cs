@@ -80,6 +80,7 @@ namespace Meridian59.Client
         #region Major components
         public ServerConnection ServerConnection { get; protected set; }
         public MessageEnrichment MessageEnrichment { get; protected set; }
+        public DownloadHandler DownloadHandler { get; protected set; }
         #endregion
 
         #region Constructors
@@ -95,10 +96,14 @@ namespace Meridian59.Client
             // Initialize resource loader (message enrichment thread)
             MessageEnrichment = new MessageEnrichment(ResourceManager, ServerConnection);
 
+            // Initialize a download handler in case an update is needed.
+            DownloadHandler = new DownloadHandler();
+            DownloadHandler.ExitRequestEvent += new EventHandler(OnExitRequestHandler);
+
             // hook up lists/model observers
             Data.ActionButtons.ListChanged += OnActionButtonListChanged;
         }
-        
+
         #endregion
 
         #region Methods
@@ -137,6 +142,14 @@ namespace Meridian59.Client
 
             Data.Reset();
             Data.UIMode = UIMode.Login;
+        }
+
+        /// <summary>
+        /// Sets IsRunning to false and results in the client being closed.
+        /// </summary>
+        private void OnExitRequestHandler(object sender, EventArgs e)
+        {
+            IsRunning = false;
         }
 
         /// <summary>
@@ -274,6 +287,12 @@ namespace Meridian59.Client
             {
                 ServerConnection.Disconnect();
                 ServerConnection = null;
+            }
+
+            if (DownloadHandler != null)
+            {
+                DownloadHandler.Dispose();
+                DownloadHandler = null;
             }
 
             // last because of logging
@@ -429,10 +448,16 @@ namespace Meridian59.Client
         /// <summary>
         /// Your client major/minor versions don't match server.
         /// Server responds with download info for patchinfo.txt.
-        /// Implement this with a proper response.
         /// </summary>
         /// <param name="Message"></param>
-        protected abstract void HandleClientPatchMessage(ClientPatchMessage Message);
+        protected virtual void HandleClientPatchMessage(ClientPatchMessage Message)
+        {
+            // Disconnect from server.
+            Disconnect();
+            // Set UI mode to download.
+            Data.UIMode = UIMode.Download;
+            DownloadHandler.DownloadClientPatch(Message.ClientPatchInfo);
+        }
 
         /// <summary>
         /// Implement this with a proper Login response

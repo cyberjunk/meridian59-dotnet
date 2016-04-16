@@ -194,7 +194,26 @@ namespace Meridian59 { namespace Ogre
 			static void OnPreloadingGroupEnded(Object^ sender, ::System::EventArgs^ e);
 			static void OnPreloadingFile(Object^ sender, StringEventArgs^ e);
 		};
+         public:
+            /// <summary>
+            /// DownloadBar window
+            /// </summary>
+            ref class DownloadBar abstract sealed
+            {
+            public:
+               static ::CEGUI::Window* Window = nullptr;
+               static ::CEGUI::ProgressBar* Content = nullptr;
 
+               static void Initialize();
+               static void Destroy();
+               static void Start();
+               static void Finish();
+
+               static void OnDownloadStarted(Object^ sender, ::System::EventArgs^ e);
+               static void OnDownloadFinished(Object^ sender, StringEventArgs^ e);
+               static void OnDownloadFile(Object^ sender, StringEventArgs^ e);
+               static void OnDownloadProgress(Object^ sender, IntegerEventArgs^ e);
+            };
 		/// <summary>
 		/// Welcome window
 		/// </summary>

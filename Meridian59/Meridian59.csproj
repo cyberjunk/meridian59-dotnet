@@ -115,6 +115,7 @@
     <Compile Include="Common\Events\InventoryObjectEvent.cs" />
     <Compile Include="Common\Events\ActionTypeEvent.cs" />
     <Compile Include="Common\Events\AvatarActionEvent.cs" />
+    <Compile Include="Common\Events\IntegerEvent.cs" />
     <Compile Include="Common\Events\StringEvent.cs" />
     <Compile Include="Common\Flags.cs" />
     <Compile Include="Common\GameTick.cs" />
@@ -555,6 +556,7 @@
     <Compile Include="Protocol\MessageController\MessageControllerClient.cs" />
     <Compile Include="Protocol\MessageController\MessageControllerHook.cs" />
     <Compile Include="Protocol\MessageController\MessageParser.cs" />
+    <Compile Include="Protocol\DownloadHandler.cs" />
     <Compile Include="Protocol\SubMessage\SubMessage.cs" />
     <Compile Include="Protocol\SubMessage\SubMessageGeneric.cs" />
     <Compile Include="Protocol\SubMessage\SubMessageNewCharInfo.cs" />
