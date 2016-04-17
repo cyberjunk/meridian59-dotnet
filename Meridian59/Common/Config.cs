@@ -34,7 +34,8 @@ namespace Meridian59.Common
     public class Config : INotifyPropertyChanged
     {
         #region Constants
-        public const string CONFIGFILE = "configuration.xml";
+        public const string CONFIGFILE                          = "../configuration.xml";
+        public const string CONFIGFILE_ALT                      = "configuration.xml";
 
         public const string PROPNAME_RESOURCESPATH              = "ResourcesPath";
         public const string PROPNAME_PRELOADROOMS               = "PreloadRooms";
@@ -342,7 +343,7 @@ namespace Meridian59.Common
             int val_int;
             ushort val_ushort;
 
-            // check for configuration.xml existance
+            // check for ../configuration.xml existance
             if (File.Exists(CONFIGFILE))
             {
                 // create xml reader
@@ -352,6 +353,19 @@ namespace Meridian59.Common
                 doc.Load(reader);
                 reader.Close();
             }
+
+            // try find configuration.xml at alternative location
+            else if (File.Exists(CONFIGFILE_ALT))
+            {
+                // create xml reader
+                XmlReader reader = XmlReader.Create(CONFIGFILE_ALT);
+
+                // try parse file
+                doc.Load(reader);
+                reader.Close();
+            }
+
+            // no configuration found, use defaults
             else
             {
                 // create empty rootnode
