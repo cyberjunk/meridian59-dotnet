@@ -7,8 +7,8 @@
     <ProjectGuid>{D7C86C96-D59F-4969-A978-97E94FA7FA80}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>club</RootNamespace>
-    <AssemblyName>club</AssemblyName>
+    <RootNamespace>Meridian59.Ogre.Patcher</RootNamespace>
+    <AssemblyName>Meridian59.Ogre.Patcher</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

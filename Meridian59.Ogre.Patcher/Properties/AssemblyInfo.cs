@@ -2,11 +2,11 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("club")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Meridian59.Ogre.Patcher")]
+[assembly: AssemblyDescription("Patcher for Ogre Client")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("club")]
+[assembly: AssemblyProduct("Meridian59.Ogre.Patcher")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
