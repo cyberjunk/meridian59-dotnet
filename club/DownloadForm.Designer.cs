@@ -1,4 +1,4 @@
-﻿namespace club
+﻿namespace Meridian59.Ogre.Patcher
 {
     partial class DownloadForm
     {

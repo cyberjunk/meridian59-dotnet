@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
 
-namespace club
+namespace Meridian59.Ogre.Patcher
 {
     public partial class DownloadForm : Form
     {

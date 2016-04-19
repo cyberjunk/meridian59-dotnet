@@ -34,7 +34,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>club.Patcher</StartupObject>
+    <StartupObject>Meridian59.Ogre.Patcher.Patcher</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

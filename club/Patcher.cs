@@ -10,7 +10,7 @@ using System.Runtime.Serialization.Json;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace club
+namespace Meridian59.Ogre.Patcher
 {
     public static class Patcher
     {

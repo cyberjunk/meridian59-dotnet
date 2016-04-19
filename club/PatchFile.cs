@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace club
+namespace Meridian59.Ogre.Patcher
 {
     /// <summary>
     /// An instance of this class represents an entry from the patchinfo.txt JSON array.
