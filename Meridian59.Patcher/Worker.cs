@@ -104,7 +104,7 @@ namespace Meridian59.Patcher
                     if (IsDiskFileEqual(file))
                     {
                         file.LengthDone = file.Length;
-                        RaiseFileFinishedOK(file);
+                        queueFinished.Enqueue(file);
                     }
 
                     // CASE 2: File must be downloaded
@@ -163,24 +163,6 @@ namespace Meridian59.Patcher
         }
 
         /// <summary>
-        /// Raises FileFinishedOK event in other thread.
-        /// </summary>
-        /// <param name="File"></param>
-        protected void RaiseFileFinishedOK(PatchFile File)
-        {
-            queueFinished.Enqueue(File);
-        }
-
-        /// <summary>
-        /// Raises FileFinishedError in other thread.
-        /// </summary>
-        /// <param name="File"></param>
-        protected void RaiseFileFinishedError(PatchFile File)
-        {
-            queueErrors.Enqueue(File);
-        }
-
-        /// <summary>
         /// Raised by the WebClient object when download progresses.
         /// </summary>
         /// <param name="sender"></param>
@@ -208,10 +190,10 @@ namespace Meridian59.Patcher
                 PatchFile f = (PatchFile)e.UserState;
 
                 if (e.Error != null)
-                    RaiseFileFinishedError(f);
-
+                    queueErrors.Enqueue(f);
+  
                 else
-                    RaiseFileFinishedOK(f);
+                    queueFinished.Enqueue(f);
             }            
         }
 
