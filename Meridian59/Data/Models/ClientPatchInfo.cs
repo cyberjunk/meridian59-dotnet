@@ -429,14 +429,9 @@ namespace Meridian59.Data.Models
         }
         #endregion
 
-        public Uri GetCacheURL()
+        public Uri GetUpdaterURL()
         {
-            return new Uri("http://" + machine + patchCachePath + patchFile);
-        }
-
-        public Uri GetUpdaterURL(string filename)
-        {
-            return new Uri("http://" + machine + patchPath + "/" + filename);
+            return new Uri("http://" + machine + patchPath + "/" + updaterFile);
         }
     }
 }

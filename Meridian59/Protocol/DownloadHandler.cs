@@ -31,7 +31,6 @@ using System.Net;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using Newtonsoft.Json;
 using System.Diagnostics;
 
 namespace Meridian59.Protocol
@@ -42,12 +41,9 @@ namespace Meridian59.Protocol
     public class DownloadHandler : IDisposable
     {
         #region Constants
-        protected const string DEFAULTUPDATEFILE = "club.exe";
         protected const string DEFAULTUPDATEFILEPATH = "..\\";
         protected const string SUCCESSMESSAGE = "Success!";
         protected const string DOWNLOADFAIL = "Failed to download file.";
-        protected const string CACHELOADFAIL = "Unable to load patch file. Please contact an administrator.";
-        protected const long NUMFILEBYTES = 1024;
         #endregion
 
         #region Event Handlers
@@ -80,19 +76,6 @@ namespace Meridian59.Protocol
         }
 
         // The event that will trigger when the WebClient is completed
-        private void CacheFileCompleted(object sender, AsyncCompletedEventArgs e)
-        {
-            if (e.Cancelled == true)
-            {
-                // Let client know download failed/was cancelled.
-                if (DownloadText != null)
-                    DownloadText(this, new StringEventArgs(DOWNLOADFAIL));
-                return;
-            }
-            CacheFileProcess((ClientPatchInfo)e.UserState);
-        }
-
-        // The event that will trigger when the WebClient is completed
         private void UpdaterFileCompleted(object sender, AsyncCompletedEventArgs e)
         {
             if (e.Cancelled == true)
@@ -117,17 +100,18 @@ namespace Meridian59.Protocol
                 DownloadProgress(this, new IntegerEventArgs(0));
 
             WebClient webClient = new WebClient();
-            webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(CacheFileCompleted);
+            webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(UpdaterFileCompleted);
             webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(ProgressChanged);
 
             // Update UI with download info.
             if (DownloadText != null)
-                DownloadText(this, new StringEventArgs("Downloading " + ClientPatchInfo.PatchFile));
-            // Download cache file first.
+                DownloadText(this, new StringEventArgs("Downloading " + ClientPatchInfo.UpdaterFile));
+
+            // Download Updater.
             try
             {
-                // Start downloading the file
-                webClient.DownloadFileAsync(ClientPatchInfo.GetCacheURL(), ClientPatchInfo.PatchFile, ClientPatchInfo);
+                webClient.DownloadFileAsync(ClientPatchInfo.GetUpdaterURL(),
+                    "..\\" + ClientPatchInfo.UpdaterFile, ClientPatchInfo);
             }
             catch (Exception ex)
             {
@@ -137,74 +121,24 @@ namespace Meridian59.Protocol
             }
         }
 
-        private void CacheFileProcess(ClientPatchInfo ClientPatchInfo)
-        {
-            // Get the executable path.
-            string currentPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            // Combine with cache filename from ClientPatchInfo.
-            string patchFilePath = System.IO.Path.Combine(currentPath, ClientPatchInfo.PatchFile);
-
-            // Read the JSON array.
-            List<PatchFile> pL = JsonConvert.DeserializeObject<List<PatchFile>>(File.ReadAllText(patchFilePath));
-            // Try to get club.exe.
-            PatchFile p = pL.FirstOrDefault(x => x.Filename == DEFAULTUPDATEFILE);
-
-            if (p == null)
-            {
-                // Tell UI that we failed to load JSON/find club... split into two errors?
-                if (DownloadText != null)
-                    DownloadText(this, new StringEventArgs(CACHELOADFAIL));
-                return;
-            }
-
-            if (!CompareCacheToLocalFile(System.IO.Path.Combine(currentPath, DEFAULTUPDATEFILEPATH), p))
-            {
-                // Download Updater.
-                WebClient webClient = new WebClient();
-                webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(ProgressChanged);
-                webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(UpdaterFileCompleted);
-
-                // Set download progress back to 0%.
-                if (DownloadProgress != null)
-                    DownloadProgress(this, new IntegerEventArgs(0));
-
-                // Update UI with new file to download.
-                if (DownloadText != null)
-                    DownloadText(this, new StringEventArgs("Downloading " + p.Filename));
-
-                try
-                {
-                    // Start downloading the file
-                    webClient.DownloadFileAsync(ClientPatchInfo.GetUpdaterURL(p.Filename),
-                        "..\\" + p.Filename, ClientPatchInfo);
-                }
-                catch (Exception ex)
-                {
-                    // Update UI with failed download message.
-                    if (DownloadText != null)
-                        DownloadText(this, new StringEventArgs("Error: " + ex.Message));
-                }
-            }
-            else
-            {
-                // Have a valid version of the updater, launch it.
-                UpdaterLaunch(ClientPatchInfo);
-            }
-        }
-
         private void UpdaterLaunch(ClientPatchInfo ClientPatchInfo)
         {
             // Location of client executable.
             string clientExec = System.Reflection.Assembly.GetEntryAssembly().Location;
             string clientPath = System.IO.Path.GetDirectoryName(clientExec);
 
+            // Create the arguments to run the updater with.
+            string args = String.Format(" \"{0}\" UPDATE \"{1}\" \"{2}\" \"{3}\" \"{4}\" \"{5}\"",
+                clientExec, ClientPatchInfo.Machine, ClientPatchInfo.PatchPath,
+                ClientPatchInfo.PatchCachePath, ClientPatchInfo.PatchFile,
+                DEFAULTUPDATEFILEPATH);
+            // Save the arguments to a file also, for launching updater separately.
+            System.IO.File.WriteAllText(DEFAULTUPDATEFILEPATH + "dlinfo.txt", args);
+
             Process process = new Process();
             ProcessStartInfo pi = new ProcessStartInfo();
-            pi.FileName = System.IO.Path.Combine(clientPath, DEFAULTUPDATEFILEPATH, DEFAULTUPDATEFILE);
-            pi.Arguments = "\"" + clientExec + "\"" + " UPDATE \""
-                + ClientPatchInfo.Machine + "\" \"" + ClientPatchInfo.PatchPath
-                + "\" \"" + System.IO.Path.Combine(clientPath, ClientPatchInfo.PatchFile)
-                + "\" \"" + "..\\\"";
+            pi.FileName = System.IO.Path.Combine(clientPath, DEFAULTUPDATEFILEPATH, ClientPatchInfo.UpdaterFile);
+            pi.Arguments = args;
             pi.UseShellExecute = true;
             pi.WorkingDirectory = System.IO.Path.Combine(clientPath, DEFAULTUPDATEFILEPATH);
             process.StartInfo = pi;
@@ -216,48 +150,6 @@ namespace Meridian59.Protocol
 
             if (ExitRequestEvent != null)
                 ExitRequestEvent(this, new EventArgs());
-        }
-
-        private bool CompareCacheToLocalFile(string CurrentPath, PatchFile PatchFile)
-        {
-            string combinePath = System.IO.Path.Combine(CurrentPath, PatchFile.Filename);
-            // Check if we already have club.exe locally, if it's the same, don't download it again.
-            if (!System.IO.File.Exists(combinePath))
-                return false;
-
-            // Open file.
-            FileStream stream = File.OpenRead(combinePath);
-
-            // Check file length.
-            if (stream.Length != PatchFile.Length)
-            {
-                stream.Close();
-                return false;
-            }
-
-            // Number of bytes to read.
-            long numBytesToRead = NUMFILEBYTES;
-            // Make sure we dont read past the end of a file smaller than 1024 bytes.
-            if (stream.Length < NUMFILEBYTES)
-                numBytesToRead = stream.Length;
-
-            byte[] fileBytes = new byte[numBytesToRead];
-            byte[] fileNameBytes = Encoding.ASCII.GetBytes(PatchFile.Filename);
-            byte[] hashableBytes = new byte[numBytesToRead + PatchFile.Filename.Length];
-
-            // Read bytes.
-            stream.Read(fileBytes, 0, (int)numBytesToRead);
-            stream.Close();
-
-            // Copy to buffer.
-            Buffer.BlockCopy(fileBytes, 0, hashableBytes, 0, fileBytes.Length);
-            Buffer.BlockCopy(fileNameBytes, 0, hashableBytes, fileBytes.Length, fileNameBytes.Length);
-
-            // Hash bytes
-            string localHash = BitConverter.ToString(MeridianMD5.ComputeGenericMD5(hashableBytes)).Replace("-", "");
-
-            // Compare hashes
-            return (localHash == PatchFile.MyHash);
         }
 
         #endregion
@@ -273,20 +165,5 @@ namespace Meridian59.Protocol
         {
             Dispose(true);
         }
-    }
-
-    public class PatchFileList
-    {
-        public List<PatchFile> PatchFile;
-    }
-
-    public class PatchFile
-    {
-        public string Basepath;
-        public string Filename;
-        public string MyHash;
-        public long Length;
-        public bool Download;
-        public int Version;
     }
 }
