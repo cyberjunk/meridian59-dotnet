@@ -138,7 +138,7 @@ namespace Meridian59.Ogre.Patcher
         protected bool IsDiskFileEqual(PatchFile file)
         {
             // build expected path on disk
-            string filePath = Path.Combine(baseFilePath, file.Basepath, file.Filename);
+            string filePath = baseFilePath + file.Basepath + file.Filename;
 
             // not equal if not existant
             if (!File.Exists(filePath))
