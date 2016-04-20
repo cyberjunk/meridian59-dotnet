@@ -33,7 +33,8 @@ namespace Meridian59.Protocol.Enums
         GetAll          = 9,
         ReqMenu         = 10,
         AdminNote       = 11,
-        ClientPatch     = 12, // Only valid for MeridianNext
+        ClientPatchOld  = 12, // Only valid for MeridianNext
+        ClientPatch     = 13, // Only valid for MeridianNext
 
         GetLogin        = 21,
         GetChoice       = 22,
