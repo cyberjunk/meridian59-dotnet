@@ -29,11 +29,12 @@ namespace Meridian59.Data.Models
     public class ClientPatchInfo : IByteSerializableFast, INotifyPropertyChanged, IClearable
     {
         #region Constants
-        public const string PROPNAME_MACHINE    = "Machine"; // ww1.meridiannext.com
-        public const string PROPNAME_PATCHPATH  = "PatchPath"; // /105/clientpatch
+        public const string PROPNAME_MACHINE     = "Machine";            // ww1.meridiannext.com
+        public const string PROPNAME_PATCHPATH   = "PatchPath";          // /105/clientpatch
         public const string PROPNAME_PATCHCACHEPATH  = "PatchCachePath"; // /105/
-        public const string PROPNAME_PATCHFILE   = "PatchFile"; // patchinfo.txt
-        public const string PROPNAME_REASON     = "Reason"; // "Update is required"
+        public const string PROPNAME_UPDATERFILE = "UpdaterFile";        // Meridian59.Ogre.Patcher.exe
+        public const string PROPNAME_PATCHFILE   = "PatchFile";          // patchinfo.txt
+        public const string PROPNAME_REASON      = "Reason";             // "Update is required"
         #endregion
 
         #region INotifyPropertyChanged
@@ -53,6 +54,7 @@ namespace Meridian59.Data.Models
                     TypeSizes.SHORT + patchPath.Length +
                     TypeSizes.SHORT + patchCachePath.Length +
                     TypeSizes.SHORT + patchFile.Length +
+                    TypeSizes.SHORT + updaterFile.Length + 
                     TypeSizes.SHORT + reason.Length;
 
                 return len;
@@ -85,6 +87,12 @@ namespace Meridian59.Data.Models
             cursor += TypeSizes.SHORT;
 
             patchFile = Encoding.Default.GetString(Buffer, cursor, len);
+            cursor += len;
+
+            len = BitConverter.ToUInt16(Buffer, cursor);
+            cursor += TypeSizes.SHORT;
+
+            updaterFile = Encoding.Default.GetString(Buffer, cursor, len);
             cursor += len;
 
             len = BitConverter.ToUInt16(Buffer, cursor);
@@ -123,6 +131,12 @@ namespace Meridian59.Data.Models
 
             Array.Copy(Encoding.Default.GetBytes(patchFile), 0, Buffer, cursor, patchFile.Length);
             cursor += patchFile.Length;
+            
+            Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(updaterFile.Length)), 0, Buffer, cursor, TypeSizes.SHORT);
+            cursor += TypeSizes.SHORT;
+
+            Array.Copy(Encoding.Default.GetBytes(updaterFile), 0, Buffer, cursor, updaterFile.Length);
+            cursor += updaterFile.Length;
 
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(reason.Length)), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
@@ -157,6 +171,12 @@ namespace Meridian59.Data.Models
             Buffer += TypeSizes.SHORT;
 
             patchFile = new string((sbyte*)Buffer, 0, len);
+            Buffer += len;
+
+            len = *((ushort*)Buffer);
+            Buffer += TypeSizes.SHORT;
+
+            updaterFile = new string((sbyte*)Buffer, 0, len);
             Buffer += len;
 
             len = *((ushort*)Buffer);
@@ -216,6 +236,17 @@ namespace Meridian59.Data.Models
                 Buffer += len;
             }
 
+            fixed (char* pString = updaterFile)
+            {
+                len = (ushort)updaterFile.Length;
+
+                *((ushort*)Buffer) = len;
+                Buffer += TypeSizes.SHORT;
+
+                Encoding.Default.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
+                Buffer += len;
+            }
+
             fixed (char* pString = reason)
             {
                 len = (ushort)reason.Length;
@@ -244,6 +275,7 @@ namespace Meridian59.Data.Models
         protected string patchPath;
         protected string patchCachePath;
         protected string patchFile;
+        protected string updaterFile;
         protected string reason;
         #endregion
 
@@ -312,6 +344,22 @@ namespace Meridian59.Data.Models
             }
         }
 
+        public string UpdaterFile
+        {
+            get
+            {
+                return updaterFile;
+            }
+            set
+            {
+                if (updaterFile != value)
+                {
+                    updaterFile = value;
+                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_UPDATERFILE));
+                }
+            }
+        }
+
         public string Reason
         {
             get
@@ -336,12 +384,13 @@ namespace Meridian59.Data.Models
         }
 
         public ClientPatchInfo(string Machine, string PatchPath, string PatchCachePath,
-                               string PatchFile, string Reason)
+                               string PatchFile, string UpdaterFile, string Reason)
         {
             this.machine = Machine;
             this.patchPath = PatchPath;
             this.patchCachePath = PatchCachePath;
             this.patchFile = PatchFile;
+            this.updaterFile = UpdaterFile;
             this.reason = Reason;
         }
 
@@ -365,6 +414,7 @@ namespace Meridian59.Data.Models
                 PatchPath = String.Empty;
                 PatchCachePath = String.Empty;
                 PatchFile = String.Empty;
+                UpdaterFile = String.Empty;
                 Reason = String.Empty;
             }
             else
@@ -373,6 +423,7 @@ namespace Meridian59.Data.Models
                 patchPath = String.Empty;
                 patchCachePath = String.Empty;
                 patchFile = String.Empty;
+                updaterFile = String.Empty;
                 reason = String.Empty;
             }
         }
