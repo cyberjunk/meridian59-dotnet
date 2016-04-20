@@ -14,18 +14,25 @@ namespace Meridian59.Ogre.Patcher
 {
     public static class Patcher
     {
+        private const string BASEURL       = "http://ww1.meridiannext.com/netclient/clientpatch/";
+        private const string JSONURL       = "http://ww1.meridiannext.com/netclient/patchinfo.txt";
+        private const int NUMWORKERS       = 8;
         private const int MAXRETRIES       = 3;
         private const string JSONPATCHFILE = "patchinfo.txt";
+        private const string CLIENTEXE     = "Meridian59.Ogre.Client.exe";
+        private const string PATCHEREXE    = "Meridian59.Ogre.Patcher.exe";
+        private const string FOLDERX64     = "x64";
+        private const string FOLDERX86     = "x86";
+        private const string CLIENTX64     = FOLDERX64 + "/" + CLIENTEXE;
+        private const string CLIENTX86     = FOLDERX86 + "/" + CLIENTEXE;
 
-        private const string BASEURL    = "http://ww1.meridiannext.com/netclient/clientpatch/";
-        private const string JSONURL105 = "http://ww1.meridiannext.com/netclient/patchinfo.txt";
-
-        private static ConcurrentQueue<PatchFile> queue = new ConcurrentQueue<PatchFile>();
-        private static List<PatchFile> files            = new List<PatchFile>();
-        private static readonly Worker[] workers        = new Worker[8];       
+        private static readonly string[] EXCLUSIONS     = new string[] { "club.exe", PATCHEREXE };
+        private static readonly ConcurrentQueue<PatchFile> queue = new ConcurrentQueue<PatchFile>();
+        private static readonly List<PatchFile> files   = new List<PatchFile>();
+        private static readonly Worker[] workers        = new Worker[NUMWORKERS];       
         private static readonly Stopwatch watch         = new Stopwatch();
         private static readonly WebClient webClient     = new WebClient();
-        private static readonly double MSTICKDIVISOR    = (double)Stopwatch.Frequency / 1000.0;
+        private static readonly double MSTICKDIVISOR    = (double)Stopwatch.Frequency / 1000.0;      
         private static int filesDone                    = 0;
         private static bool abort                       = false;
         private static bool isRunning                   = true;
@@ -49,7 +56,7 @@ namespace Meridian59.Ogre.Patcher
 
             // start download of patchinfo.txt
             webClient.DownloadFileCompleted += OnWebClientDownloadFileCompleted;
-            webClient.DownloadFileAsync(new Uri(JSONURL105), JSONPATCHFILE);
+            webClient.DownloadFileAsync(new Uri(JSONURL), JSONPATCHFILE);
            
             ///////////////////////////////////////////////////////////////////////
 
@@ -80,8 +87,8 @@ namespace Meridian59.Ogre.Patcher
             {
                 string clientExec = Assembly.GetEntryAssembly().Location;
                 string clientPath = Path.GetDirectoryName(clientExec);
-                string fileName   = Environment.Is64BitOperatingSystem ? "x64/Meridian59.Ogre.Client.exe" : "x86/Meridian59.Ogre.Client.exe";
-                string workDir    = Environment.Is64BitOperatingSystem ? "x64" : "x86";
+                string fileName   = Environment.Is64BitOperatingSystem ? CLIENTX64 : CLIENTX86;
+                string workDir    = Environment.Is64BitOperatingSystem ? FOLDERX64 : FOLDERX86;
 
                 ProcessStartInfo pi = new ProcessStartInfo();
                 pi.FileName         = Path.Combine(clientPath, fileName);
@@ -123,11 +130,22 @@ namespace Meridian59.Ogre.Patcher
             {
                 PatchFile f = list[i];
 
+                // remove files marked to be not downloaded
                 if (!f.Download)
                     list.RemoveAt(i);
 
-                else if (f.Filename.Equals("club.exe"))
-                    list.RemoveAt(i);
+                // look for hardcoded exclusions
+                else 
+                {
+                    foreach (string s in EXCLUSIONS)
+                    {
+                        if (f.Filename.Equals(s))
+                        {
+                            list.RemoveAt(i);
+                            break;
+                        }
+                    }
+                }
             }
 
             // add them to the real list instance
