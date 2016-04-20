@@ -493,38 +493,40 @@ namespace Meridian59.Common
                         character,
                         ignorelist));
                 }
+
                 // Double check we have all available servers in connections list.
-#if !VANILLA
+#if VANILLA
+                if (!HasConnection(ConnectionInfo.CON101.Host, ConnectionInfo.CON101.Port))
+                    connections.Add(ConnectionInfo.CON101);
+                if (!HasConnection(ConnectionInfo.CON102.Host, ConnectionInfo.CON102.Port))
+                    connections.Add(ConnectionInfo.CON102);
+#elif OPENMERIDIAN
                 if (!HasConnection(ConnectionInfo.CON103.Host, ConnectionInfo.CON103.Port))
                     connections.Add(ConnectionInfo.CON103);
                 if (!HasConnection(ConnectionInfo.CON104.Host, ConnectionInfo.CON104.Port))
                     connections.Add(ConnectionInfo.CON104);
+#else
                 if (!HasConnection(ConnectionInfo.CON105.Host, ConnectionInfo.CON105.Port))
                     connections.Add(ConnectionInfo.CON105);
                 if (!HasConnection(ConnectionInfo.CON106.Host, ConnectionInfo.CON106.Port))
                     connections.Add(ConnectionInfo.CON106);
                 if (!HasConnection(ConnectionInfo.CON112.Host, ConnectionInfo.CON112.Port))
                     connections.Add(ConnectionInfo.CON112);
-#else
-                if (!HasConnection(ConnectionInfo.CON101.Host, ConnectionInfo.CON101.Port))
-                    connections.Add(ConnectionInfo.CON101);
-                if (!HasConnection(ConnectionInfo.CON102.Host, ConnectionInfo.CON102.Port))
-                    connections.Add(ConnectionInfo.CON102);
 #endif
             }
             else
             {
                 SelectedConnectionIndex = DEFAULTVAL_CONNECTIONS_SELECTEDINDEX;
-
-#if !VANILLA
+#if VANILLA
+                connections.Add(ConnectionInfo.CON101);
+                connections.Add(ConnectionInfo.CON102);
+#elif OPENMERIDIAN
                 connections.Add(ConnectionInfo.CON103);
                 connections.Add(ConnectionInfo.CON104);
+#else
                 connections.Add(ConnectionInfo.CON105);
                 connections.Add(ConnectionInfo.CON106);
                 connections.Add(ConnectionInfo.CON112);
-#else
-                connections.Add(ConnectionInfo.CON101);
-                connections.Add(ConnectionInfo.CON102);
 #endif
             }
 
