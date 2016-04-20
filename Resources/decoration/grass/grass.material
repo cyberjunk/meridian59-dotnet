@@ -1,0 +1,41 @@
+import * from "general.material"
+
+material decoration/grass/1 : base_material
+{
+	set_texture_alias diffuseMap grass1.png
+}
+
+material decoration/grass/2 : base_material
+{
+	set_texture_alias diffuseMap grass2.png
+}
+
+material decoration/grass/3 : base_material
+{
+	set_texture_alias diffuseMap grass3.png
+}
+
+material decoration/grass/4 : base_material
+{
+	set_texture_alias diffuseMap grass4.png
+}
+
+material decoration/grass/5 : base_material
+{
+	set_texture_alias diffuseMap grass5.png
+}
+
+material decoration/grass/6 : base_material
+{
+	set_texture_alias diffuseMap grass6.png
+}
+
+material decoration/grass/7 : base_material
+{
+	set_texture_alias diffuseMap grass7.png
+}
+
+material decoration/grass/8 : base_material
+{
+	set_texture_alias diffuseMap grass8.png
+}

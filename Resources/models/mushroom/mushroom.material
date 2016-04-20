@@ -1,0 +1,184 @@
+import * from "general.material"
+
+material mushroom/mushroom/0/default : base_material
+{
+	set_texture_alias diffuseMap mushroom_mushroom.png
+}
+
+material mushroom/mushroom/135/default : base_material
+{
+	set_texture_alias diffuseMap mushroom_mushroom_color_135.png
+}
+
+material mushroom/mushroom/171/default : base_material
+{
+	set_texture_alias diffuseMap mushroom_mushroom_color_171.png
+}
+
+material mushroom/mushroom/193/default : base_material
+{
+	set_texture_alias diffuseMap mushroom_mushroom_color_193.png
+}
+
+material mushroom/mushroom/207/default : base_material
+{
+	set_texture_alias diffuseMap mushroom_mushroom_color_207.png
+}
+
+material mushroom/mushroom/219/default : base_material
+{
+	set_texture_alias diffuseMap mushroom_mushroom_color_219.png
+}
+
+material mushroom/mushroom/237/default : base_material
+{
+	set_texture_alias diffuseMap mushroom_mushroom_color_237.png
+}
+
+// ---------- BLACK ---------- //
+
+material mushroom/mushroom/0/black : base_material_black
+{
+	set_texture_alias diffuseMap mushroom_mushroom.png
+}
+
+material mushroom/mushroom/135/black : base_material_black
+{
+	set_texture_alias diffuseMap mushroom_mushroom_color_135.png
+}
+
+material mushroom/mushroom/171/black : base_material_black
+{
+	set_texture_alias diffuseMap mushroom_mushroom_color_171.png
+}
+
+material mushroom/mushroom/193/black : base_material_black
+{
+	set_texture_alias diffuseMap mushroom_mushroom_color_193.png
+}
+
+material mushroom/mushroom/207/black : base_material_black
+{
+	set_texture_alias diffuseMap mushroom_mushroom_color_207.png
+}
+
+material mushroom/mushroom/219/black : base_material_black
+{
+	set_texture_alias diffuseMap mushroom_mushroom_color_219.png
+}
+
+material mushroom/mushroom/237/black : base_material_black
+{
+	set_texture_alias diffuseMap mushroom_mushroom_color_237.png
+}
+
+// ---------- TARGET ---------- //
+
+material mushroom/mushroom/0/target : base_material_target
+{
+	set_texture_alias diffuseMap mushroom_mushroom.png
+}
+
+material mushroom/mushroom/135/target : base_material_target
+{
+	set_texture_alias diffuseMap mushroom_mushroom_color_135.png
+}
+
+material mushroom/mushroom/171/target : base_material_target
+{
+	set_texture_alias diffuseMap mushroom_mushroom_color_171.png
+}
+
+material mushroom/mushroom/193/target : base_material_target
+{
+	set_texture_alias diffuseMap mushroom_mushroom_color_193.png
+}
+
+material mushroom/mushroom/207/target : base_material_target
+{
+	set_texture_alias diffuseMap mushroom_mushroom_color_207.png
+}
+
+material mushroom/mushroom/219/target : base_material_target
+{
+	set_texture_alias diffuseMap mushroom_mushroom_color_219.png
+}
+
+material mushroom/mushroom/237/target : base_material_target
+{
+	set_texture_alias diffuseMap mushroom_mushroom_color_237.png
+}
+
+// ---------- MOUSEOVER ---------- //
+
+material mushroom/mushroom/0/mouseover : base_material_mouseover
+{
+	set_texture_alias diffuseMap mushroom_mushroom.png
+}
+
+material mushroom/mushroom/135/mouseover : base_material_mouseover
+{
+	set_texture_alias diffuseMap mushroom_mushroom_color_135.png
+}
+
+material mushroom/mushroom/171/mouseover : base_material_mouseover
+{
+	set_texture_alias diffuseMap mushroom_mushroom_color_171.png
+}
+
+material mushroom/mushroom/193/mouseover : base_material_mouseover
+{
+	set_texture_alias diffuseMap mushroom_mushroom_color_193.png
+}
+
+material mushroom/mushroom/207/mouseover : base_material_mouseover
+{
+	set_texture_alias diffuseMap mushroom_mushroom_color_207.png
+}
+
+material mushroom/mushroom/219/mouseover : base_material_mouseover
+{
+	set_texture_alias diffuseMap mushroom_mushroom_color_219.png
+}
+
+material mushroom/mushroom/237/mouseover : base_material_mouseover
+{
+	set_texture_alias diffuseMap mushroom_mushroom_color_237.png
+}
+
+// ---------- INVISIBLE ---------- //
+
+material mushroom/mushroom/0/invisible : base_material_invisible
+{
+	set_texture_alias diffuseMap mushroom_mushroom.png
+}
+
+material mushroom/mushroom/135/invisible : base_material_invisible
+{
+	set_texture_alias diffuseMap mushroom_mushroom_color_135.png
+}
+
+material mushroom/mushroom/171/invisible : base_material_invisible
+{
+	set_texture_alias diffuseMap mushroom_mushroom_color_171.png
+}
+
+material mushroom/mushroom/193/invisible : base_material_invisible
+{
+	set_texture_alias diffuseMap mushroom_mushroom_color_193.png
+}
+
+material mushroom/mushroom/207/invisible : base_material_invisible
+{
+	set_texture_alias diffuseMap mushroom_mushroom_color_207.png
+}
+
+material mushroom/mushroom/219/invisible : base_material_invisible
+{
+	set_texture_alias diffuseMap mushroom_mushroom_color_219.png
+}
+
+material mushroom/mushroom/237/invisible : base_material_invisible
+{
+	set_texture_alias diffuseMap mushroom_mushroom_color_237.png
+}

@@ -1,0 +1,84 @@
+import * from "general.material"
+
+material chalice/chalice/0/default : base_material
+{
+	set_texture_alias diffuseMap chalice_chalice.png
+}
+
+material chalice/bottom/0/default : base_material
+{
+	set_texture_alias diffuseMap chalice_chalice.png
+}
+
+material chalice/rubies/0/default : base_material
+{
+	set_texture_alias diffuseMap chalice_ruby.png
+}
+
+// ---------- BLACK ---------- //
+
+material chalice/chalice/0/black : base_material_black
+{
+	set_texture_alias diffuseMap chalice_chalice.png
+}
+
+material chalice/bottom/0/black : base_material_black
+{
+	set_texture_alias diffuseMap chalice_chalice.png
+}
+
+material chalice/rubies/0/black : base_material_black
+{
+	set_texture_alias diffuseMap chalice_ruby.png
+}
+
+// ---------- TARGET ---------- //
+
+material chalice/chalice/0/target : base_material_target
+{
+	set_texture_alias diffuseMap chalice_chalice.png
+}
+
+material chalice/bottom/0/target : base_material_target
+{
+	set_texture_alias diffuseMap chalice_chalice.png
+}
+
+material chalice/rubies/0/target : base_material_target
+{
+	set_texture_alias diffuseMap chalice_ruby.png
+}
+
+// ---------- MOUSEOVER ---------- //
+
+material chalice/chalice/0/mouseover : base_material_mouseover
+{
+	set_texture_alias diffuseMap chalice_chalice.png
+}
+
+material chalice/bottom/0/mouseover : base_material_mouseover
+{
+	set_texture_alias diffuseMap chalice_chalice.png
+}
+
+material chalice/rubies/0/mouseover : base_material_mouseover
+{
+	set_texture_alias diffuseMap chalice_ruby.png
+}
+
+// ---------- INVISIBLE ---------- //
+
+material chalice/chalice/0/invisible : base_material_invisible
+{
+	set_texture_alias diffuseMap chalice_chalice.png
+}
+
+material chalice/bottom/0/invisible : base_material_invisible
+{
+	set_texture_alias diffuseMap chalice_chalice.png
+}
+
+material chalice/rubies/0/invisible : base_material_invisible
+{
+	set_texture_alias diffuseMap chalice_ruby.png
+}

@@ -1,0 +1,7590 @@
+material h7/R0M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/L1M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R2M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R3M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R4M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R5M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/L6M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd09777-0.png
+			}
+		}
+	}
+}
+material h7/R6M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd09777-0.png
+			}
+		}
+	}
+}
+material h7/R7M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R8M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R9M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R10M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R12M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R13M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R14M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R15M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R16M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R17M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R18M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R19M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R20M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R21M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R22M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R23M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R24M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R25M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R26M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R27M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R28M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R29M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R30M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R31M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R32M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R33M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R34M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/L35M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd09777-0.png
+			}
+		}
+	}
+}
+material h7/R35M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd09777-0.png
+			}
+		}
+	}
+}
+material h7/R36M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R37M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R38M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R39M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R40M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R41M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R42M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R43M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R44M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R45M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R46M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R47M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R48M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R49M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R50M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R51M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R52M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R53M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R54M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R55M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R56M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R57M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R58M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/L59M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd01502-0.png
+			}
+		}
+	}
+}
+material h7/R59M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd01502-0.png
+			}
+		}
+	}
+}
+material h7/R60M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R61M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R62M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R63M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R64M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R65M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R66M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R67M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R68M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R69M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R70M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R71M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R72M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/L73M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd01502-0.png
+			}
+		}
+	}
+}
+material h7/R73M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd01502-0.png
+			}
+		}
+	}
+}
+material h7/R74M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R75M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R76M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R77M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R78M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R79M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R80M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R81M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R82M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R83M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R84M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R85M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R86M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R87M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R88M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R89M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R90M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R91M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R92M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R93M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R94M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R95M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R96M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R97M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R98M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R99M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R100M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R101M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R102M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R103M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R104M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R105M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R106M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R107M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R108M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R109M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R110M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R111M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R112M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R113M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R114M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R115M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R116M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R117M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R118M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R119M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R120M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R121M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R122M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R123M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R124M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R125M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R126M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R127M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R128M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R129M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R130M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/L131M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd09777-0.png
+			}
+		}
+	}
+}
+material h7/R131M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd09777-0.png
+			}
+		}
+	}
+}
+material h7/R132M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R133M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd01605-0.png
+			}
+		}
+	}
+}
+material h7/R134M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd01605-0.png
+			}
+		}
+	}
+}
+material h7/R135M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R136M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R137M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R138M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R139M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R140M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/L142M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02701-0.png
+			}
+		}
+	}
+}
+material h7/R142M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd01606-0.png
+			}
+		}
+	}
+}
+material h7/R142U-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd01606-0.png
+			}
+		}
+	}
+}
+material h7/R143M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R144M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd01606-0.png
+			}
+		}
+	}
+}
+material h7/R144U-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd01606-0.png
+			}
+		}
+	}
+}
+material h7/L145L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/L145M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/L145U-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/L146M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10001-0.png
+			}
+		}
+	}
+}
+material h7/R146M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10001-0.png
+			}
+		}
+	}
+}
+material h7/R147M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R148M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd01606-0.png
+			}
+		}
+	}
+}
+material h7/R149M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R150L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/R150M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R150U-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/R151L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/R151M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R151U-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/R152M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd01605-0.png
+			}
+		}
+	}
+}
+material h7/R153M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd01605-0.png
+			}
+		}
+	}
+}
+material h7/R154M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd01605-0.png
+			}
+		}
+	}
+}
+material h7/R155M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd01605-0.png
+			}
+		}
+	}
+}
+material h7/R156M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd01605-0.png
+			}
+		}
+	}
+}
+material h7/R157M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd01605-0.png
+			}
+		}
+	}
+}
+material h7/R158M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd01605-0.png
+			}
+		}
+	}
+}
+material h7/R159M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd01605-0.png
+			}
+		}
+	}
+}
+material h7/R160M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd01605-0.png
+			}
+		}
+	}
+}
+material h7/R161M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R162M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R163M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R164M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R165M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R166M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R167M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R168M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R169M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R170M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R171M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R172M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R173M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/L174M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd09777-0.png
+			}
+		}
+	}
+}
+material h7/R174M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd09777-0.png
+			}
+		}
+	}
+}
+material h7/R175M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R176M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R177M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R178M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R179M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R180M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/L181M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd09777-0.png
+			}
+		}
+	}
+}
+material h7/R181M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd09777-0.png
+			}
+		}
+	}
+}
+material h7/R182M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R183M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R184M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R185M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R186M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R187M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R188M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R189M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R190M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R191M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R192M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R193L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/R193M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R194M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R195L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/R195M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/L196L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/R196L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/R197L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/R197M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R199M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R200M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R201M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R202M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R204M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R205M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R206M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R207M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R208M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R209M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R210M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R211M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R212M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R213M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R214M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R215M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R216M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R217M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R218M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R219M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R220M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R221M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R222M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R223M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R224M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R225M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R226M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R227M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R228M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R229M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R230M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R231M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R232M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R233M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R234M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R235M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/L236M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd09777-0.png
+			}
+		}
+	}
+}
+material h7/R236M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd09777-0.png
+			}
+		}
+	}
+}
+material h7/R237M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R238M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R239M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R240M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R241M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R242M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R243M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R244M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R245M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R246M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R247M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R248M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R249M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R250M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R251M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R252M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R253M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R254M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R255M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R256M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R257M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R258M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R259M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R260M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R261M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R262M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R263M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R264M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R265M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R266M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R267M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R268M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R269M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R270M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R271M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R272M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R273M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R274M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R275M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R276M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R277M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R278M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R279M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R280M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R282M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R283M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/L284M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd09777-0.png
+			}
+		}
+	}
+}
+material h7/R284M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd09777-0.png
+			}
+		}
+	}
+}
+material h7/R285M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R286M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R287M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R288M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R289M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R290M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R291M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R292M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R293M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R294M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R295M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R296M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R297M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R298M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R299M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R300M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R301M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R302M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R303M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R304M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R305M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R306M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R307M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/L308M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd09777-0.png
+			}
+		}
+	}
+}
+material h7/R308L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/R308M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd09777-0.png
+			}
+		}
+	}
+}
+material h7/R309M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R310M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R311M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R312M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R313M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R314M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R315M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd09542-0.png
+			}
+		}
+	}
+}
+material h7/R316M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R317M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R318M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/L319M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd09777-0.png
+			}
+		}
+	}
+}
+material h7/R319L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/R319M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd09777-0.png
+			}
+		}
+	}
+}
+material h7/R320M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R321M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R323M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R324M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R325M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R326M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R327M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R328M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R329M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R330M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R331M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/L332L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/R332L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/L333L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/R333L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/L334L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10201-0.png
+			}
+		}
+	}
+}
+material h7/R334L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10201-0.png
+			}
+		}
+	}
+}
+material h7/L335L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/R335L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/L336L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/R336L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/L337L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/R337L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/L338L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/R338L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/L339L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/R339L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/L340L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/R340L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/L341L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/R341L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/L342L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/R342L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/L343L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/R343L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/R344M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R345M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R346M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R347M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R348M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/L349L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/R349L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/R350M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/L351L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/R351L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/L352L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/R352L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/R353M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R354M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R355M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R356M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R357M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R358M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R359M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R360M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R361M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R362M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R363M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R364M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R366M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/L367L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10201-0.png
+			}
+		}
+	}
+}
+material h7/R367L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10201-0.png
+			}
+		}
+	}
+}
+material h7/L368L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/R368L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/L369L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/R369L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/R370M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R371M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R372M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R373M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R374M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R375M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R376M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R377M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R378M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R379M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/L380L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/R380L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/L381L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/R381L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/L382L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/R382L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/L384L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/R384L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/L386L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/R386L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/L387L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/R387L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/R389M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/L390L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/R390L-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/R391M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R392M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R393M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R394M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R395M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R396M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R397M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R398M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R399M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R400M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R401M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R402M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R403M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R404M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R405M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R406M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R407M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R408M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R409M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R410M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R411M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R412M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R413M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R414M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R415M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R416M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R417M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/L418M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd09777-0.png
+			}
+		}
+	}
+}
+material h7/R418M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd09777-0.png
+			}
+		}
+	}
+}
+material h7/R419M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R420M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R421M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R422M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R423M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R424M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R425M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R426M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R427M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R428M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R429M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R430M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R431M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R432M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R433M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R434M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R435M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R436M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/L437M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd09777-0.png
+			}
+		}
+	}
+}
+material h7/R437M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd09777-0.png
+			}
+		}
+	}
+}
+material h7/R438M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R439M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R440M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R441M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R442M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R443M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R444M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/R445M-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd10000-0.png
+			}
+		}
+	}
+}
+material h7/F0-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/F1-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/F2-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/F3-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/F4-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02123-0.png
+			}
+		}
+	}
+}
+material h7/C4-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd01604-0.png
+			}
+		}
+	}
+}
+material h7/F5-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/F6-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/F7-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/F8-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/F9-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/F10-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/F11-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/F12-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/F13-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}
+material h7/F14-0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend alpha_blend
+			alpha_rejection greater_equal 255
+			texture_unit
+			{
+				texture grd02301-0.png
+			}
+		}
+	}
+}

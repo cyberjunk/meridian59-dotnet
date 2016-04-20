@@ -1,0 +1,82 @@
+system Weather/Snow
+{
+    fast_forward                                1 1
+    category                                    Nature
+    technique
+    {
+        visual_particle_quota                   5000
+        material                                PU/Weather/Snow
+        renderer                                Billboard
+        {
+            billboard_origin                    top_center
+        }
+        emitter                                 Box 
+        {
+            emission_rate                       500
+            angle                               dyn_random
+            {
+                min                             5
+                max                             40
+            }
+            time_to_live                        9000000
+            velocity                            dyn_random
+            {
+                min                             40.0
+                max                             60.0
+            }
+            all_particle_dimensions             dyn_random
+            {
+                min                             3.0
+                max                             4.0
+            }
+            position                            0 9 0
+            direction                           0 -1 0
+            box_width                           3072
+            box_height                          1
+            box_depth                           3072
+        }
+        affector                                LinearForce WindLeft
+        {
+            enabled                             false
+            force_vector                        -0.6 0 0
+        }
+        affector                                LinearForce WindRight
+        {
+            enabled                             false
+            force_vector                        0.6 0 0
+        }
+		
+		// this observer is manipulated in code
+		// and will delete the particle
+		observer                                OnPosition 
+        {			
+            position_y                          less_than 0.0
+        }
+		
+        observer                                OnRandom 
+        {
+            observe_interval                    1
+            handler                             DoEnableComponent 
+            {
+                enable_component                affector_component WindLeft true
+            }
+            handler                             DoEnableComponent 
+            {
+                enable_component                affector_component WindRight false
+            }
+        }
+        observer                                OnRandom 
+        {
+            observe_interval                    1
+            handler                             DoEnableComponent 
+            {
+                enable_component                affector_component WindRight true
+            }
+            handler                             DoEnableComponent 
+            {
+                enable_component                affector_component WindLeft false
+            }
+            random_threshold                    0.6
+        }
+    }
+}

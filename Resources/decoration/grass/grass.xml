@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+	This XML file stores grass mappings for room textures.
+	It is used to improve the room with randomly placed grass on grass floors.
+-->
+<grass>
+  <!--
+      These are the grass-set definitions.
+	  You can bundle different grass-materials together here to appear together.
+	  This is used for creating different grass-types (dark/bright/spooky/...)
+	  The name value must equal the material name from grass.material
+  -->
+  <sets>
+	<!-- Default set -->
+    <set id="0">
+      <material name="decoration/grass/3" />
+      <material name="decoration/grass/4" />
+      <material name="decoration/grass/5" />
+      <material name="decoration/grass/6" />
+      <material name="decoration/grass/7" />
+      <material name="decoration/grass/8" />
+    </set>
+  </sets>
+  <!--
+      These are the mappings between a texture and a grass-set.
+      The texture id is XXXXX number from grdXXXXX.bgf filename.
+	  The set id is from sets above.
+  -->
+  <mappings>
+    <texture id="2301" set="0" />
+    <texture id="2303" set="0" />
+    <texture id="2306" set="0" />
+    <texture id="11000" set="0" />
+  </mappings>
+</grass>

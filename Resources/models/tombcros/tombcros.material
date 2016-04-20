@@ -1,0 +1,34 @@
+import * from "general.material"
+
+material tombcros/tombcros/0/default : base_material
+{
+	set_texture_alias diffuseMap tombcros_tombcros.png
+}
+
+// ---------- BLACK ---------- //
+
+material tombcros/tombcros/0/black : base_material_black
+{
+	set_texture_alias diffuseMap tombcros_tombcros.png
+}
+
+// ---------- TARGET ---------- //
+
+material tombcros/tombcros/0/target : base_material_target
+{
+	set_texture_alias diffuseMap tombcros_tombcros.png
+}
+
+// ---------- MOUSEOVER ---------- //
+
+material tombcros/tombcros/0/mouseover : base_material_mouseover
+{
+	set_texture_alias diffuseMap tombcros_tombcros.png
+}
+
+// ---------- TARGET ---------- //
+
+material tombcros/tombcros/0/invisible: base_material_invisible
+{
+	set_texture_alias diffuseMap tombcros_tombcros.png
+}

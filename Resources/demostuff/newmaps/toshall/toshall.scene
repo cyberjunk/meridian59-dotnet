@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<scene formatVersion="1.0.0" generator="ROO2MESH Exporter 0.1">
+  <environment>
+    <sky enabled="false" />
+    <fog enabled="false" />
+    <ambientlight enabled="true" />
+    <avatarlight enabled="true" />
+    <lights count="0" />  
+  </environment>
+  <terrain enabled="false" />
+  <roomnode enabled="true">    
+    <position x="64" y="0" z="64" />
+    <orientation qw="1" qx="0" qy="0" qz="0" />
+    <scale x="1" y="1" z="1" />
+    <entity meshfile="toshall.mesh" />     
+  </roomnode>
+  <nodes count="0">   
+  </nodes>
+  <waters count="0" />
+  <linedefs count="30">
+    <linedef x1="4096" y1="14336" x2="5120" y2="14336" />
+    <linedef x1="5120" y1="14336" x2="6144" y2="14336" />
+    <linedef x1="3072" y1="14336" x2="4096" y2="14336" />
+    <linedef x1="2048" y1="14336" x2="3072" y2="14336" />
+    <linedef x1="6144" y1="14336" x2="7168" y2="14336" />
+    <linedef x1="5632" y1="16384" x2="5120" y2="16384" />
+    <linedef x1="6144" y1="16384" x2="5632" y2="16384" />
+    <linedef x1="3072" y1="16384" x2="2048" y2="16384" />
+    <linedef x1="5120" y1="16384" x2="4096" y2="16384" />
+    <linedef x1="4096" y1="16384" x2="3072" y2="16384" />
+    <linedef x1="7168" y1="16384" x2="6144" y2="16384" />
+    <linedef x1="5632" y1="16384" x2="5632" y2="15872" />
+    <linedef x1="7168" y1="14336" x2="7168" y2="16384" />
+    <linedef x1="6144" y1="16384" x2="6144" y2="14336" />
+    <linedef x1="2048" y1="16384" x2="2048" y2="14336" />
+    <linedef x1="3072" y1="14336" x2="3072" y2="16384" />
+    <linedef x1="4096" y1="13312" x2="4096" y2="14336" />
+    <linedef x1="4096" y1="12288" x2="4096" y2="13312" />
+    <linedef x1="2048" y1="13312" x2="4096" y2="13312" />
+    <linedef x1="2048" y1="14336" x2="2048" y2="13312" />
+    <linedef x1="3072" y1="12288" x2="4096" y2="12288" />
+    <linedef x1="2048" y1="12288" x2="3072" y2="12288" />
+    <linedef x1="2048" y1="13312" x2="2048" y2="12288" />
+    <linedef x1="5120" y1="13312" x2="7168" y2="13312" />
+    <linedef x1="5120" y1="14336" x2="5120" y2="13312" />
+    <linedef x1="7168" y1="13312" x2="7168" y2="14336" />
+    <linedef x1="5120" y1="12288" x2="7168" y2="12288" />
+    <linedef x1="4096" y1="12288" x2="5120" y2="12288" />
+    <linedef x1="5120" y1="13312" x2="5120" y2="12288" />
+    <linedef x1="7168" y1="12288" x2="7168" y2="13312" />
+  </linedefs>
+</scene>

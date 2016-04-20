@@ -1,0 +1,93 @@
+import * from "general.material"
+
+material grd02011 : base_material
+{
+set_texture_alias diffuseMap grd02011.dds
+set_texture_alias nrmalMap grd02011_nrm.dds
+set $specularCol "1 1 1"
+set $ambientCol "0 0 0 0"  
+set $shininess "128"
+}
+
+material grd01601 : base_material
+{
+set_texture_alias diffuseMap grd01601.dds
+set_texture_alias nrmalMap grd01601_nrm.dds
+set $specularCol "1 1 1"
+set $ambientCol "0 0 0 0"  
+set $shininess "128"
+}
+
+material grd01601-1 : base_material
+{
+set_texture_alias diffuseMap grd01601-1.dds
+set_texture_alias nrmalMap grd01601-1_nrm.dds
+set $specularCol "1 1 1"
+set $ambientCol "0 0 0 0"  
+set $shininess "128"
+}
+
+material grd04601 : base_material
+{
+set_texture_alias diffuseMap grd04601.dds
+set_texture_alias nrmalMap grd04601_nrm.dds
+set $specularCol "1 1 1"
+set $ambientCol "0 0 0 0"  
+set $shininess "128"
+}
+
+material grd_pillar0 : base_material
+{
+set_texture_alias diffuseMap grd_pillar0.dds
+set_texture_alias nrmalMap grd_pillar0_nrm.dds
+set $specularCol "1 1 1"
+set $ambientCol "0 0 0 0"  
+set $shininess "128"
+
+}
+
+material grd_banner_1 : base_material
+{
+set_texture_alias diffuseMap grd_banner_1.dds
+set_texture_alias specMap grd_banner_1_spec.dds
+set $specularCol "1 1 1"
+set $ambientCol "0 0 0 0"  
+set $shininess "128"
+
+}
+
+material grd04809 : base_material
+{
+set_texture_alias diffuseMap grd04809.dds
+set_texture_alias nrmalMap grd04809_nrm.dds
+set $specularCol "1 1 1"
+set $ambientCol "0 0 0 0"  
+set $shininess "128"
+}
+
+material grd02011-1 : base_material
+{
+set_texture_alias diffuseMap grd02011-1.dds
+set_texture_alias nrmalMap grd02011-1_nrm.dds
+set $specularCol "1 1 1"
+set $ambientCol "0 0 0 0"  
+set $shininess "128"
+}
+
+material grd_picframe : base_material
+{
+set_texture_alias diffuseMap grd_picframe.dds
+set_texture_alias specMap grd_picframe_spec.dds
+set $specularCol "1 1 1"
+set $ambientCol "0 0 0 0"  
+set $shininess "128"
+}
+
+material grd04809-1 : base_material
+{
+set_texture_alias diffuseMap grd04809-1.dds
+set_texture_alias nrmalMap grd04809-1_nrm.dds
+set $specularCol "1 1 1"
+set $ambientCol "0 0 0 0"  
+set $shininess "128"
+}

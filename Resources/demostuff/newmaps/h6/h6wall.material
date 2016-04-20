@@ -1,0 +1,33 @@
+import * from "general.material"
+
+material h6_wall_01 : base_material
+{
+set_texture_alias diffuseMap h6_wall_01.dds
+set_texture_alias specMap h6_wall_01_spec.dds
+set_texture_alias nrmalMap h6_wall_01_nrm.dds
+set_texture_alias aoMap h6_wall_01_ao.dds
+}
+
+material h6_wall_02 : base_material
+{
+set_texture_alias diffuseMap h6_wall_02.dds
+set_texture_alias specMap h6_wall_02_spec.dds
+set_texture_alias nrmalMap h6_wall_02_nrm.dds
+set_texture_alias aoMap h6_wall_02_ao.dds
+}
+
+material h6_wall_03 : base_material
+{
+set_texture_alias diffuseMap h6_wall_03.dds
+set_texture_alias specMap h6_wall_03_spec.dds
+set_texture_alias nrmalMap h6_wall_03_nrm.dds
+set_texture_alias aoMap h6_wall_03_ao.dds
+}
+
+material h6_door_0 : base_material
+{
+set_texture_alias diffuseMap h6_door_0.dds
+set_texture_alias specMap h6_door_0_spec.dds
+set_texture_alias nrmalMap h6_door_0_nrm.dds
+set_texture_alias aoMap h6_door_0_ao.dds
+}

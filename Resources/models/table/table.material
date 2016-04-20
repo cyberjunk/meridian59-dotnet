@@ -1,0 +1,34 @@
+import * from "general.material"
+
+material table/table/0/default : base_material
+{
+	set_texture_alias diffuseMap table_table.dds
+}
+
+// ---------- BLACK ---------- //
+
+material table/table/0/black : base_material_black
+{
+	set_texture_alias diffuseMap table_table.dds
+}
+
+// ---------- TARGET ---------- //
+
+material table/table/0/target : base_material_target
+{
+	set_texture_alias diffuseMap table_table.dds
+}
+
+// ---------- MOUSEOVER ---------- //
+
+material table/table/0/mouseover : base_material_mouseover
+{
+	set_texture_alias diffuseMap table_table.dds
+}
+
+// ---------- INVISIBLE ---------- //
+
+material table/table/0/invisible : base_material_invisible
+{
+	set_texture_alias diffuseMap table_table.dds
+}

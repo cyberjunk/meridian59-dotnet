@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+	This XML file stores water mappings for room textures.
+-->
+<water>
+	<texture name="grd01802-0.png" /> <!-- water -->	
+	<texture name="grd03203-0.png" /> <!-- lava -->
+	<texture name="grd07201-0.png" /> <!-- water -->
+	<texture name="grd07202-0.png" /> <!-- water -->
+	<texture name="grd07203-0.png" /> <!-- water -->
+	<texture name="grd07204-0.png" /> <!-- water -->
+	<texture name="grd08894-0.png" /> <!-- water -->
+	<texture name="grd08895-0.png" /> <!-- water -->
+	<texture name="grd08911-0.png" /> <!-- water -->
+	<texture name="grd08912-0.png" /> <!-- water -->
+	<texture name="grd08913-0.png" /> <!-- water -->
+	<texture name="grd08914-0.png" /> <!-- water -->
+
+	<texture name="grd09083-0.png" /> <!-- ocean kocatan -->
+	<texture name="grd09084-0.png" /> <!-- ocean kocatan -->
+
+</water>

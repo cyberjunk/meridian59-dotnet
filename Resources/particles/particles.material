@@ -1,0 +1,55 @@
+material mp_fire_02
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            depth_write off
+            scene_blend add
+
+            texture_unit
+            {
+                texture mp_fire_02_2x2.dds
+            }
+        }
+    }
+}
+
+material PUMediaPack/Flare_04
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_flare_04.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+material PUMediaPack/Streak_03
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_streak_03.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}

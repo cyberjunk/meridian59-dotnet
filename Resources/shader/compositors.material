@@ -1,0 +1,212 @@
+fragment_program Compositor/BlackAndWhite_ps hlsl
+{
+	source compositors.hlsl
+	entry_point BlackAndWhite_ps
+	target ps_2_0
+}
+
+fragment_program Compositor/Blend_ps hlsl
+{
+	source compositors.hlsl
+	entry_point Blend_ps
+	target ps_2_0
+	
+	default_params
+    {
+		param_named blendcolor float4 1.0 1.0 1.0 0.0
+    }
+}
+
+fragment_program Compositor/Black_ps hlsl
+{
+	source compositors.hlsl
+	entry_point Blend_ps
+	target ps_2_0
+	
+	default_params
+    {
+		param_named blendcolor float4 1.0 1.0 1.0 0.0
+    }
+}
+
+fragment_program Compositor/Pain_ps hlsl
+{
+	source compositors.hlsl
+	entry_point Blend_ps
+	target ps_2_0
+	
+	default_params
+    {
+		param_named blendcolor float4 1.0 1.0 1.0 0.0
+    }
+}
+
+fragment_program Compositor/Whiteout_ps hlsl
+{
+	source compositors.hlsl
+	entry_point Blend_ps
+	target ps_2_0
+	
+	default_params
+    {
+		param_named blendcolor float4 1.0 1.0 1.0 0.0
+    }
+}
+
+fragment_program Compositor/Blur_ps hlsl
+{
+	source compositors.hlsl
+	entry_point Blur_ps
+	target ps_2_0
+}
+
+fragment_program Compositor/Invert_ps hlsl
+{
+	source compositors.hlsl
+	entry_point Invert_ps
+	target ps_2_0
+}
+
+material Compositor/BlackAndWhite
+{
+	technique
+	{
+		pass
+		{
+			depth_check off
+
+			fragment_program_ref Compositor/BlackAndWhite_ps
+			{
+			}
+
+			texture_unit
+			{
+			}
+		}
+	}
+}
+
+material Compositor/Blend
+{
+	technique
+	{
+		pass
+		{
+			depth_check off
+
+			fragment_program_ref Compositor/Blend_ps
+			{
+				param_named blendcolor float4 1.0 1.0 1.0 0.0
+			}
+
+			texture_unit
+			{
+			}
+		}
+	}
+}
+
+material Compositor/Black
+{
+	technique
+	{
+		pass
+		{
+			depth_check off
+
+			fragment_program_ref Compositor/Blend_ps
+			{
+				param_named blendcolor float4 1.0 1.0 1.0 0.0
+			}
+
+			texture_unit
+			{
+			}
+		}
+	}
+}
+
+material Compositor/Pain
+{
+	technique
+	{
+		pass
+		{
+			depth_check off
+
+			fragment_program_ref Compositor/Blend_ps
+			{
+				param_named blendcolor float4 1.0 1.0 1.0 0.0
+			}
+
+			texture_unit
+			{
+			}
+		}
+	}
+}
+
+material Compositor/Whiteout
+{
+	technique
+	{
+		pass
+		{
+			depth_check off
+
+			fragment_program_ref Compositor/Blend_ps
+			{
+				param_named blendcolor float4 1.0 1.0 1.0 0.0
+			}
+
+			texture_unit
+			{
+			}
+		}
+	}
+}
+
+material Compositor/Blur
+{
+	technique
+	{
+		pass
+		{
+			cull_hardware none
+			cull_software none
+			depth_check off
+
+			fragment_program_ref Compositor/Blur_ps
+			{
+	            param_named sampleDist float 1.0
+	            param_named sampleStrength float 2.2
+			}
+			
+			texture_unit
+			{
+                tex_coord_set 0
+				tex_address_mode clamp
+				filtering trilinear
+			}
+		}
+	}
+}
+
+material Compositor/Invert
+{
+	technique
+	{
+		pass
+		{
+			depth_check off
+
+			fragment_program_ref Compositor/Invert_ps
+			{
+			}
+
+			texture_unit
+			{
+			}
+		}
+	}
+}

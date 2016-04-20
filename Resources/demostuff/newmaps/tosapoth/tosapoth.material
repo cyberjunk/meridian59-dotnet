@@ -1,0 +1,104 @@
+material grd09581-0
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture grd09581-0.dds
+                filtering trilinear
+            }
+        }
+    }
+}
+
+material grd09582-0
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture grd09582-0.dds
+                filtering trilinear
+            }
+        }
+    }
+}
+
+material grd09583-0
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture grd09583-0.dds
+                filtering trilinear
+            }
+        }
+    }
+}
+
+material grd09587-0
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture grd09587-0.dds
+                filtering trilinear
+            }
+        }
+    }
+}
+
+material grd09585-0
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture grd09585-0.dds
+                filtering trilinear
+            }
+        }
+    }
+}
+
+material grd09586-0
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture grd09586-0.dds
+                filtering trilinear
+            }
+        }
+    }
+}
+
+material grd09588-0
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture grd09588-0.dds
+                filtering trilinear
+            }
+        }
+    }
+}

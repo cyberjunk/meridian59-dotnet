@@ -1,0 +1,35 @@
+material t7_b
+{
+    technique
+    {
+        pass
+        {
+            scene_blend alpha_blend
+            alpha_rejection greater_equal 128
+            cull_hardware none
+            cull_software none        
+            texture_unit
+            {
+                texture t7_b.dds
+            }
+        }
+    }
+}
+
+material t7_l
+{
+    technique
+    {
+        pass
+        {
+            scene_blend alpha_blend
+            alpha_rejection greater_equal 128
+            cull_hardware none
+            cull_software none        
+            texture_unit
+            {
+                texture t7_l.dds
+            }
+        }
+    }
+}

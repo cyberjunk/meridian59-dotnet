@@ -1,0 +1,59 @@
+import * from "general.material"
+
+material apple/body/0/default : base_material
+{
+	set_texture_alias diffuseMap apple_body.png
+}
+
+material apple/stem/0/default : base_material
+{
+	set_texture_alias diffuseMap apple_stem.png
+}
+
+// ---------- BLACK ---------- //
+
+material apple/body/0/black : base_material_black
+{
+	set_texture_alias diffuseMap apple_body.png
+}
+
+material apple/stem/0/black : base_material_black
+{
+	set_texture_alias diffuseMap apple_stem.png
+}
+
+// ---------- TARGET ---------- //
+
+material apple/body/0/target : base_material_target
+{
+	set_texture_alias diffuseMap apple_body.png
+}
+
+material apple/stem/0/target : base_material_target
+{
+	set_texture_alias diffuseMap apple_stem.png
+}
+
+// ---------- MOUSEOVER ---------- //
+
+material apple/body/0/mouseover : base_material_mouseover
+{
+	set_texture_alias diffuseMap apple_body.png
+}
+
+material apple/stem/0/mouseover : base_material_mouseover
+{
+	set_texture_alias diffuseMap apple_stem.png
+}
+
+// ---------- INVISIBLE ---------- //
+
+material apple/body/0/invisible : base_material_invisible
+{
+	set_texture_alias diffuseMap apple_body.png
+}
+
+material apple/stem/0/invisible : base_material_invisible
+{
+	set_texture_alias diffuseMap apple_stem.png
+}

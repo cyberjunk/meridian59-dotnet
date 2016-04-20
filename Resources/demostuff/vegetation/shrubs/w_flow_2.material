@@ -1,0 +1,17 @@
+material w_flow_2
+{
+    technique
+    {
+        pass
+        {
+            scene_blend alpha_blend
+            alpha_rejection greater_equal 128
+            cull_hardware none
+            cull_software none        
+            texture_unit
+            {
+                texture w_flow_2.dds
+            }
+        }
+    }
+}

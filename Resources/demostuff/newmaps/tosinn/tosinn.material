@@ -1,0 +1,123 @@
+import * from "general.material"
+
+material grd09727-0 : base_material
+{
+    set_texture_alias diffuseMap grd09727-0.dds
+    set_texture_alias specMap grd09727-0_spec.dds
+    set_texture_alias nrmalMap grd09727-0_nrm.dds
+    //set_texture_alias aoMap grd09727-0_ao.dds
+    
+    // diffuse colour multiplier (for example, green-ish)
+    // set $diffuseCol "0.1 1 0.1"
+    // specular colour multiplier (for example, red-ish)
+    // set $specularCol "1 0.1 0.1"
+    // specular power (shininess) (the higher, the sharper the highlights)
+    set $shininess "256"
+    // once again, you can leave any of these configurables out if you don't need them
+    set $ambientCol "0.3 0.3 0.3 0.3"    
+}
+
+material grd07301-0 : base_material
+{
+    set_texture_alias diffuseMap grd07301-0.dds
+    set_texture_alias specMap grd07301-0_spec.dds
+    set_texture_alias nrmalMap grd07301-0_nrm.dds
+    set_texture_alias aoMap grd07301-0_ao.dds
+    set $ambientCol "0.3 0.3 0.3 0.3"     
+}
+
+material grd09552-0 : base_material
+{
+    set_texture_alias diffuseMap grd09552-0.dds
+    set_texture_alias specMap grd09552-0_spec.dds
+    set_texture_alias nrmalMap grd09552-0_nrm.dds
+    set_texture_alias aoMap grd09552-0_ao.dds
+    set $ambientCol "0.3 0.3 0.3 0.3"   
+}
+
+material grd09769-0 : base_material
+{
+    set_texture_alias diffuseMap grd09769-0.dds
+    set_texture_alias specMap grd09769-0_spec.dds
+    set_texture_alias nrmalMap grd09769-0_nrm.dds
+    set_texture_alias aoMap grd09769-0_ao.dds
+    set $ambientCol "0.5 0.5 0.5 0.5"
+}
+
+material grd09556-0 : base_material
+{
+    set_texture_alias diffuseMap grd09556-0.dds
+    set_texture_alias specMap grd09556-0_spec.dds
+    set_texture_alias nrmalMap grd09556-0_nrm.dds
+    set_texture_alias aoMap grd09556-0_ao.dds
+    set $ambientCol "0.5 0.5 0.5 0.5"
+}
+
+material cus09771-0 : base_material
+{
+    set_texture_alias diffuseMap cus09771-0.dds
+    set_texture_alias specMap cus09771-0_spec.dds
+    set_texture_alias nrmalMap cus09771-0_nrm.dds
+    set_texture_alias aoMap cus09771-0_ao.dds
+    set $ambientCol "0.5 0.5 0.5 0.5"
+}
+
+material cus-2-09771-0 : base_material
+{
+    set_texture_alias diffuseMap cus-2-09771-0.dds
+    set_texture_alias specMap cus-2-09771-0_spec.dds
+    set_texture_alias nrmalMap cus-2-09771-0_nrm.dds
+    set_texture_alias aoMap cus-2-09771-0_ao.dds
+    set $ambientCol "0.5 0.5 0.5 0.5"
+}
+
+material grd08860-0 : base_material
+{
+    set_texture_alias diffuseMap grd08860-0.dds
+    set_texture_alias specMap grd08860-0_spec.dds
+    set_texture_alias nrmalMap grd08860-0_nrm.dds
+    set_texture_alias aoMap grd08860-0_ao.dds
+    set $ambientCol "0.5 0.5 0.5 0.5"
+}
+
+material tos_in_pic : base_material
+{
+    set_texture_alias diffuseMap tos_in_pic.dds
+    set_texture_alias specMap tos_in_pic_spec.dds
+    set_texture_alias nrmalMap tos_in_pic_nrm.dds
+    set_texture_alias aoMap tos_in_pic_ao.dds
+    set $ambientCol "0.5 0.5 0.5 0.5"
+}
+
+material cus_tosinn_floor: base_material
+{
+    set_texture_alias diffuseMap cus_tosinn_floor.dds
+    set_texture_alias specMap cus_tosinn_floor_spec.dds
+    set_texture_alias nrmalMap cus_tosinn_floor_nrm.dds
+    set_texture_alias aoMap cus_tosinn_floor_ao.dds
+    set $ambientCol "0.5 0.5 0.5 0.5"
+}
+
+material grd07302-0 : base_material
+{
+    set_texture_alias diffuseMap grd07302-0.dds
+    set_texture_alias specMap grd07302-0_spec.dds
+    set_texture_alias nrmalMap grd07302-0_nrm.dds
+    set_texture_alias aoMap grd07302-0_ao.dds
+    set $ambientCol "0.5 0.5 0.5 0.5"
+}
+
+material cus09556-0 : base_material
+{
+    set_texture_alias diffuseMap cus09556-0.dds
+    set_texture_alias specMap cus09556-0_spec.dds
+    set_texture_alias nrmalMap cus09556-0_nrm.dds
+    set_texture_alias aoMap cus09556-0_ao.dds
+    set $ambientCol "0.5 0.5 0.5 0.5"
+}
+
+
+
+
+
+

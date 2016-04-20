@@ -1,0 +1,59 @@
+import * from "general.material"
+
+material brazier/socle/0/default : base_material
+{
+	set_texture_alias diffuseMap brazier_socle.png
+}
+
+material brazier/pan/0/default : base_material
+{
+	set_texture_alias diffuseMap brazier_pan.png
+}
+
+// ---------- BLACK ---------- //
+
+material brazier/socle/0/black : base_material_black
+{	
+	set_texture_alias diffuseMap brazier_socle.png
+}
+
+material brazier/pan/0/black : base_material_black
+{
+	set_texture_alias diffuseMap brazier_pan.png
+}
+
+// ---------- TARGET ---------- //
+
+material brazier/socle/0/target : base_material_target
+{	
+	set_texture_alias diffuseMap brazier_socle.png
+}
+
+material brazier/pan/0/target : base_material_target
+{
+	set_texture_alias diffuseMap brazier_pan.png
+}
+
+// ---------- MOUSEOVER ---------- //
+
+material brazier/socle/0/mouseover : base_material_mouseover
+{	
+	set_texture_alias diffuseMap brazier_socle.png
+}
+
+material brazier/pan/0/mouseover : base_material_mouseover
+{
+	set_texture_alias diffuseMap brazier_pan.png
+}
+
+// ---------- INVISIBLE ---------- //
+
+material brazier/socle/0/invisible : base_material_invisible
+{	
+	set_texture_alias diffuseMap brazier_socle.png
+}
+
+material brazier/pan/0/invisible : base_material_invisible
+{
+	set_texture_alias diffuseMap brazier_pan.png
+}

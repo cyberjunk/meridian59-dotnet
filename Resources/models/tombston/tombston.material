@@ -1,0 +1,34 @@
+import * from "general.material"
+
+material tombston/tombston/0/default : base_material
+{
+	set_texture_alias diffuseMap tombston_tombston.png
+}
+
+// ---------- BLACK ---------- //
+
+material tombston/tombston/0/black : base_material_black
+{
+	set_texture_alias diffuseMap tombston_tombston.png
+}
+
+// ---------- TARGET ---------- //
+
+material tombston/tombston/0/target : base_material_target
+{
+	set_texture_alias diffuseMap tombston_tombston.png
+}
+
+// ---------- MOUSEOVER ---------- //
+
+material tombston/tombston/0/mouseover : base_material_mouseover
+{
+	set_texture_alias diffuseMap tombston_tombston.png
+}
+
+// ---------- INVISIBLE ---------- //
+
+material tombston/tombston/0/invisible : base_material_invisible
+{
+	set_texture_alias diffuseMap tombston_tombston.png
+}

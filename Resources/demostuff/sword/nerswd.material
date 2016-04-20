@@ -1,0 +1,129 @@
+material 02-Default
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588235 0.588235 0.588235 1
+			diffuse 0.588235 0.588235 0.588235 1
+			specular 1.881 1.881 1.881 1 18
+
+			texture_unit
+			{
+				texture Textura_calavera.jpg
+			}
+		}
+
+	}
+
+}
+
+
+
+material 04-Default
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588235 0.588235 0.588235 1
+			diffuse 0.588235 0.588235 0.588235 1
+			specular 0.738 0.738 0.738 1 36
+
+			texture_unit
+			{
+				texture Textura_calavera.jpg
+			}
+		}
+
+	}
+
+}
+
+
+
+material 03-Default
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588235 0.588235 0.588235 1
+			diffuse 0.588235 0.588235 0.588235 1
+			specular 0.531 0.531 0.531 1 39
+
+			texture_unit
+			{
+				texture Textura_mango_completo.jpg
+			}
+		}
+
+	}
+
+}
+
+
+
+material 05-Default
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.588235 0.588235 0.588235 1
+			diffuse 0.588235 0.588235 0.588235 1
+			specular 0.72 0.72 0.72 1 30
+
+			texture_unit
+			{
+				texture Textura_calavera.jpg
+			}
+		}
+
+	}
+
+}
+
+
+
+material Stones_Travertn
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.447059 0.447059 0.447059 1
+			diffuse 0.447059 0.447059 0.447059 1
+			specular 0.477 0.477 0.477 1 26
+
+			texture_unit
+			{
+				texture Travertn.tga
+			}
+		}
+
+	}
+
+}
+
+
+
+material Metal_ChromeFast
+{
+	technique
+	{
+		pass
+		{
+			ambient 0 0 0 1
+			diffuse 0.439216 0.439216 0.439216 1
+			specular 1.35 1.35 1.35 1 20
+
+			texture_unit
+			{
+				texture completa.jpg
+			}
+		}
+
+	}
+
+}

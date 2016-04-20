@@ -1,0 +1,15 @@
+material cus_bumper
+{
+    technique
+    {
+        pass
+        {
+            scene_blend alpha_blend
+            depth_write off
+            texture_unit
+            {
+                texture cus_bumper.dds
+            }
+        }
+    }
+}

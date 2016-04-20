@@ -1,0 +1,331 @@
+////////////////////////////////
+// VERTEX & FRAGMENT PROGRAMS //
+////////////////////////////////
+
+vertex_program ambient_vs hlsl
+{
+    source general.hlsl
+    target vs_2_0
+    entry_point ambient_vs
+ 
+    default_params
+    {
+        param_named_auto wvpMat worldviewproj_matrix
+		param_named_auto texMat texture_matrix 0
+    }
+}
+
+vertex_program diffuse_vs hlsl
+{
+    source general.hlsl
+    target vs_2_0
+    entry_point diffuse_vs
+ 
+    default_params
+    {
+        param_named_auto wvpMat worldviewproj_matrix   
+		param_named_auto texMat texture_matrix 0
+        param_named_auto wMat   world_matrix		
+    }
+}
+
+vertex_program invisible_vs hlsl
+{
+	source general.hlsl
+	target vs_2_0
+	entry_point invisible_vs
+	
+	default_params
+    {  
+		param_named_auto wvpMat worldviewproj_matrix
+		param_named_auto texMat texture_matrix 0
+		param_named_auto timeVal time 0.05
+    }
+}
+
+vertex_program water_vs hlsl
+{
+	source general.hlsl
+	target vs_2_0
+	entry_point water_vs
+
+	default_params
+	{
+		param_named_auto wvpMat worldviewproj_matrix
+		param_named_auto eyePos camera_position_object_space
+		param_named_auto time_0_X time_0_x 100.0
+	}
+}
+
+fragment_program ambient_ps hlsl
+{
+    source general.hlsl
+    target ps_2_0
+    entry_point ambient_ps
+ 
+    default_params
+    {
+        param_named_auto ambient ambient_light_colour
+		param_named_auto lightDir light_direction 0
+		param_named_auto lightCol light_diffuse_colour 0
+		param_named colormodifier float4 1 1 1 1
+    }
+}
+
+fragment_program diffuse_ps hlsl
+{
+    source general.hlsl
+    target ps_2_0
+    entry_point diffuse_ps
+ 
+    default_params
+    {
+        param_named_auto lightCol0 light_diffuse_colour 0
+		param_named_auto lightPos0 light_position 0
+        param_named_auto lightAtt0 light_attenuation 0
+		param_named_auto lightCol1 light_diffuse_colour 1
+		param_named_auto lightPos1 light_position 1
+        param_named_auto lightAtt1 light_attenuation 1	
+		param_named_auto lightCol2 light_diffuse_colour 2
+		param_named_auto lightPos2 light_position 2
+        param_named_auto lightAtt2 light_attenuation 2
+		param_named_auto lightCol3 light_diffuse_colour 3
+		param_named_auto lightPos3 light_position 3
+        param_named_auto lightAtt3 light_attenuation 3
+		param_named colormodifier float4 1 1 1 1			
+    }
+}
+
+fragment_program invisible_ps hlsl
+{
+	source general.hlsl
+	target ps_2_0
+	entry_point invisible_ps
+	
+	default_params
+    {
+	}
+}
+
+
+fragment_program water_ps hlsl
+{
+	source general.hlsl
+	target ps_2_0
+	entry_point water_ps
+
+	default_params
+	{
+		param_named_auto ambient ambient_light_colour
+	}
+}
+
+////////////////////////////////
+// MATERIALS //
+////////////////////////////////
+
+
+material transparent
+{
+	technique
+    {
+        pass
+        {
+			ambient 0 0 0 0
+			diffuse 0 0 0 0
+			specular 0 0 0 0
+			scene_blend alpha_blend
+			depth_write off
+		}
+	}
+}
+
+material base_material
+{
+    technique
+    {
+		// 1. pass: ambient + directional light
+        pass
+        {
+			alpha_rejection greater_equal 64
+			alpha_to_coverage on
+            illumination_stage ambient
+
+            vertex_program_ref ambient_vs
+            {
+            }
+ 
+            fragment_program_ref ambient_ps
+            {
+				param_named colormodifier float4 1 1 1 1
+            }
+ 
+			// set this in code with texture
+			// see: ApplyTextureAliases()
+            texture_unit diffuseMap
+            {   
+            }
+        }
+ 
+		// 2. pass: per point light
+        pass
+        {
+			alpha_rejection greater_equal 64
+			alpha_to_coverage on
+			iteration 1 per_n_lights 4 point
+			max_lights 48
+			scene_blend add
+            
+            vertex_program_ref diffuse_vs
+            {
+            }
+ 
+            fragment_program_ref diffuse_ps
+            {
+				param_named colormodifier float4 1 1 1 1
+            }
+
+            // set this in code with texture
+			// see: ApplyTextureAliases()
+			texture_unit diffuseMap
+            {                
+            }
+        }
+		
+    }
+}
+
+material base_material_black : base_material
+{	
+	technique
+    {
+        pass
+        {
+			fragment_program_ref ambient_ps
+			{
+				param_named colormodifier float4 0 0 0 1
+			}
+		}
+		
+		pass
+		{
+			fragment_program_ref diffuse_ps
+			{
+				param_named colormodifier float4 0 0 0 1
+			}
+		}
+	}
+}
+
+material base_material_target : base_material
+{	
+	technique
+    {
+        pass
+        {
+			fragment_program_ref ambient_ps
+			{
+				param_named colormodifier float4 4 1.2 1.2 1
+			}
+		}
+		
+		pass
+		{
+			fragment_program_ref diffuse_ps
+			{
+				param_named colormodifier float4 4 1.2 1.2 1
+			}
+		}
+	}
+}
+
+material base_material_mouseover : base_material
+{	
+	technique
+    {
+        pass
+        {
+			fragment_program_ref ambient_ps
+			{
+				param_named colormodifier float4 1.2 4.0 1.2 1
+			}
+		}
+		
+		pass
+		{
+			fragment_program_ref diffuse_ps
+			{
+				param_named colormodifier float4 1.2 4.0 1.2 1
+			}
+		}
+	}
+}
+
+material base_material_invisible
+{	
+	technique
+    {
+        pass
+        {
+			scene_blend alpha_blend
+			depth_write off
+			
+			vertex_program_ref invisible_vs
+			{
+			}
+			
+			fragment_program_ref invisible_ps
+			{
+			}
+			
+			texture_unit diffuseMap
+            {                
+            }
+			
+			texture_unit
+			{
+				texture noise.dds
+				filtering linear linear none
+			}
+			
+			texture_unit
+			{
+				texture refraction
+				tex_address_mode clamp
+			}
+		}		
+	}
+}
+
+material base_material_water
+{
+	technique
+	{
+		pass
+		{
+			illumination_stage ambient
+		
+			vertex_program_ref water_vs
+			{
+			}
+
+			fragment_program_ref water_ps
+			{
+			}
+
+			texture_unit
+			{
+				texture noise.dds
+				tex_coord_set 0
+			}
+			
+			// set this in code with texture
+			// see: ApplyTextureAliases()
+            texture_unit diffuseMap
+            {   
+				tex_address_mode clamp
+				tex_coord_set 1
+            }
+		}
+	}
+}

@@ -1,0 +1,59 @@
+import * from "general.material"
+
+material news/globe/0/default : base_material
+{
+	set_texture_alias diffuseMap news_globe.png
+}
+
+material news/pillar/0/default : base_material
+{
+	set_texture_alias diffuseMap news_pillar.png
+}
+
+// ---------- BLACK ---------- //
+
+material news/globe/0/black : base_material_black
+{
+	set_texture_alias diffuseMap news_globe.png
+}
+
+material news/pillar/0/black : base_material_black
+{
+	set_texture_alias diffuseMap news_pillar.png
+}
+
+// ---------- TARGET ---------- //
+
+material news/globe/0/target : base_material_target
+{
+	set_texture_alias diffuseMap news_globe.png
+}
+
+material news/pillar/0/target : base_material_target
+{
+	set_texture_alias diffuseMap news_pillar.png
+}
+
+// ---------- MOUSEOVER ---------- //
+
+material news/globe/0/mouseover : base_material_mouseover
+{
+	set_texture_alias diffuseMap news_globe.png
+}
+
+material news/pillar/0/mouseover : base_material_mouseover
+{
+	set_texture_alias diffuseMap news_pillar.png
+}
+
+// ---------- INVISIBLE ---------- //
+
+material news/globe/0/invisible : base_material_invisible
+{
+	set_texture_alias diffuseMap news_globe.png
+}
+
+material news/pillar/0/invisible : base_material_invisible
+{
+	set_texture_alias diffuseMap news_pillar.png
+}

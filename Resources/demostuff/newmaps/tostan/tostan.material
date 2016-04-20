@@ -1,0 +1,27 @@
+import * from  "pssm.material"
+
+material grd09572-0 : PSSM/base_receiver
+{
+	set $diffuse grd09572-0.dds
+}
+
+material grd09728-0 : PSSM/base_receiver
+{
+ set $diffuse grd09728-0.dds
+}
+
+material grd09729-0 : PSSM/base_receiver
+{
+  set $diffuse grd09729-0.dds
+}
+
+material grd09730-0 : PSSM/base_receiver
+{
+  set $diffuse grd09730-0.dds
+}
+
+material grd09571-0 : PSSM/base_receiver
+{
+  set $diffuse grd09571-0.dds
+}
+

@@ -1,0 +1,34 @@
+import * from "general.material"
+
+material barstool/barstool/0/default : base_material
+{
+	set_texture_alias diffuseMap barstool.dds
+}
+
+// ---------- BLACK ---------- //
+
+material barstool/barstool/0/black : base_material_black
+{
+	set_texture_alias diffuseMap barstool.dds
+}
+
+// ---------- TARGET ---------- //
+
+material barstool/barstool/0/target : base_material_target
+{
+	set_texture_alias diffuseMap barstool.dds
+}
+
+// ---------- TARGET ---------- //
+
+material barstool/barstool/0/mouseover : base_material_mouseover
+{
+	set_texture_alias diffuseMap barstool.dds
+}
+
+// ---------- INVISIBLE ---------- //
+
+material barstool/barstool/0/invisible : base_material_invisible
+{
+	set_texture_alias diffuseMap barstool.dds
+}

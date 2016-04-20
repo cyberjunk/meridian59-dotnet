@@ -1,0 +1,9 @@
+Map basiert noch auf alten Werten und muss komplett neu gemacht werden.
+
+Map needs a complete rework, cause i messed up the values.
+
+Mesh	
+Width (X):	3456,000000
+Depth (Z):	4480,000000
+Offset X:	-640,000000
+Offset Z:	-1376,000000

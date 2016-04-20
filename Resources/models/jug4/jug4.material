@@ -1,0 +1,34 @@
+import * from "general.material"
+
+material jug4/jug4/0/default : base_material
+{
+	set_texture_alias diffuseMap jug4_jug4.dds
+}
+
+// ---------- BLACK ---------- //
+
+material jug4/jug4/0/black : base_material_black
+{
+	set_texture_alias diffuseMap jug4_jug4.dds
+}
+
+// ---------- TARGET ---------- //
+
+material jug4/jug4/0/target : base_material_target
+{
+	set_texture_alias diffuseMap jug4_jug4.dds
+}
+
+// ---------- MOUSEOVER ---------- //
+
+material jug4/jug4/0/mouseover : base_material_mouseover
+{
+	set_texture_alias diffuseMap jug4_jug4.dds
+}
+
+// ---------- INVISIBLE ---------- //
+
+material jug4/jug4/0/invisible : base_material_invisible
+{
+	set_texture_alias diffuseMap jug4_jug4.dds
+}

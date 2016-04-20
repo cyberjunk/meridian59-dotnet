@@ -1,0 +1,59 @@
+import * from "general.material"
+
+material razshrub/bark/0/default : base_material
+{
+	set_texture_alias diffuseMap razshrub_bark.dds
+}
+
+material razshrub/leaf/0/default : base_material
+{
+	set_texture_alias diffuseMap razshrub_leaf.dds
+}
+
+// ---------- BLACK ---------- //
+
+material razshrub/bark/0/black : base_material_black
+{
+	set_texture_alias diffuseMap razshrub_bark.dds
+}
+
+material razshrub/leaf/0/black : base_material_black
+{
+	set_texture_alias diffuseMap razshrub_leaf.dds
+}
+
+// ---------- TARGET ---------- //
+
+material razshrub/bark/0/target : base_material_target
+{
+	set_texture_alias diffuseMap razshrub_bark.dds
+}
+
+material razshrub/leaf/0/target : base_material_target
+{
+	set_texture_alias diffuseMap razshrub_leaf.dds
+}
+
+// ---------- MOUSEOVER ---------- //
+
+material razshrub/bark/0/mouseover : base_material_mouseover
+{
+	set_texture_alias diffuseMap razshrub_bark.dds
+}
+
+material razshrub/leaf/0/mouseover : base_material_mouseover
+{
+	set_texture_alias diffuseMap razshrub_leaf.dds
+}
+
+// ---------- INVISIBLE ---------- //
+
+material razshrub/bark/0/invisible : base_material_invisible
+{
+	set_texture_alias diffuseMap razshrub_bark.dds
+}
+
+material razshrub/leaf/0/invisible : base_material_invisible
+{
+	set_texture_alias diffuseMap razshrub_leaf.dds
+}

@@ -1,0 +1,106 @@
+
+vertex_program HLSL/RiverVS hlsl
+{
+	source River.vert
+	entry_point main
+	target vs_2_0
+
+	default_params
+	{
+		param_named_auto worldViewProj worldviewproj_matrix
+		param_named_auto eyePosition camera_position_object_space
+		param_named_auto time_0_X time_0_x 300.0
+	}
+}
+
+fragment_program HLSL/RiverFS hlsl
+{
+	source River.frag
+	entry_point main
+	target ps_3_0
+
+}
+
+material River
+{
+
+	technique HLSL
+	{
+		pass
+		{
+			vertex_program_ref HLSL/RiverVS
+			{
+
+			}
+
+			fragment_program_ref HLSL/RiverFS
+			{
+
+			}
+			
+			scene_blend alpha_blend
+			scene_blend colour_blend
+			
+            depth_write off
+
+			texture_unit
+			{
+				texture w1-2-grey.tga
+				//texture waves2.dds
+				tex_address_mode wrap wrap wrap
+				filtering linear linear none
+				max_anisotropy 1 
+				tex_border_colour 0.0 0.0 0.0 0.0
+				tex_coord_set 0
+			}
+
+			texture_unit
+			{
+				texture FlowMap_water_1
+				//texture hpcvwater.png
+				max_anisotropy 0
+				tex_border_colour 0.0 0.0 0.0 0.0
+				tex_coord_set 1
+			
+			}
+			texture_unit
+			{
+				texture hpcvrock2.png
+				tex_address_mode wrap wrap clamp
+				filtering linear linear none
+				max_anisotropy 1
+				tex_border_colour 0.0 0.0 0.0 0.0
+				tex_coord_set 2
+			}
+			
+			texture_unit
+			{
+			
+			// will be filled in at runtime
+				cubic_texture Cube_water_1 combinedUVW
+				//cubic_texture early_morning.jpg combinedUVW
+				tex_address_mode clamp
+				env_map cubic_reflection
+				tex_coord_set 3
+				
+			}
+			texture_unit
+			{
+			
+			// will be filled in at runtime
+				//cubic_texture dyncubemap combinedUVW
+				cubic_texture cm2.jpg combinedUVW
+				tex_address_mode clamp
+				env_map cubic_reflection
+				tex_coord_set 4
+				
+			}
+
+		}
+		
+	}
+
+}
+
+
+

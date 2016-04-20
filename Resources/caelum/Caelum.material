@@ -1,0 +1,437 @@
+//
+//This file is part of Caelum.
+//See http://www.ogre3d.org/wiki/index.php/Caelum 
+//
+//Copyright (c) 2006-2007 Caelum team. See Contributors.txt for details.
+//
+//Caelum is free software: you can redistribute it and/or modify
+//it under the terms of the GNU Lesser General Public License as published
+//by the Free Software Foundation, either version 3 of the License, or
+//(at your option) any later version.
+//
+//Caelum is distributed in the hope that it will be useful,
+//but WITHOUT ANY WARRANTY; without even the implied warranty of
+//MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//GNU Lesser General Public License for more details.
+//
+//You should have received a copy of the GNU Lesser General Public License
+//along with Caelum. If not, see <http://www.gnu.org/licenses/>.
+//
+
+/////////////////////////////////////////////////////////////////
+//                    LAYERED CLOUDS                           //
+/////////////////////////////////////////////////////////////////
+
+vertex_program CaelumLayeredCloudsVP hlsl
+{
+	source CaelumLayeredClouds.hlsl
+	entry_point LayeredClouds_vp
+	target vs_2_0
+	
+	default_params
+	{
+		param_named_auto worldViewProj worldviewproj_matrix
+		param_named_auto worldMatrix world_matrix 
+		param_named sunDirection float3 -1 -1 0
+	}
+}
+
+fragment_program CaelumLayeredCloudsFP hlsl
+{
+	source CaelumLayeredClouds.hlsl
+    entry_point LayeredClouds_fp
+    target ps_3_0
+
+    default_params
+    {
+        // Caelum sky properties
+        param_named sunLightColour float4 1 1 1 1
+        param_named sunSphereColour float4 1 1 1 1
+        param_named sunDirection float4 1 1 1 1
+        
+        // Fog colour; used as the base cloud colour.
+        param_named fogColour float4 0 0 0 0
+        
+        
+        // The inverse of the cloud forms scale
+        param_named cloudMassInvScale float 1.2
+        // The inverse of the cloud details scale
+        param_named cloudDetailInvScale float 4.8
+        
+        // Cloud mass offset
+        param_named cloudMassOffset float2 0 0
+        // Cloud details offset
+        param_named cloudDetailOffset float2 0.5 0.5
+        
+        // Blending factor between Cloud1 and Cloud2
+        param_named cloudMassBlend float 0.9
+        // Cloud detail weight.
+        param_named cloudDetailBlend float 0.5
+        
+        
+        // Cloud coverage, between 0 and 1
+        param_named cloudCoverageThreshold float 0.9
+
+        // Cloud sharpness. Lower values result in softer clouds.
+        param_named cloudSharpness float 4
+        
+        // Cloud thickness. Bigger values results in darker clouds.
+        param_named cloudThickness float 3
+        
+        param_named_auto camera_position camera_position    
+        param_named layerHeight float 0
+        
+        param_named cloudUVFactor float -1
+        param_named heightRedFactor float -1
+
+        param_named nearFadeDist float -1
+        param_named farFadeDist float -1
+        
+        param_named fadeDistMeasurementVector float3 0 1 1
+    }
+}
+
+material CaelumLayeredClouds
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_check on                                     
+			depth_write off
+			scene_blend alpha_blend
+			fog_override true
+			cull_hardware none
+
+			vertex_program_ref CaelumLayeredCloudsVP
+			{
+			}
+			
+			fragment_program_ref CaelumLayeredCloudsFP
+			{
+			}
+
+			texture_unit Cloud1
+			{
+				texture noise1.dds
+                filtering trilinear
+                tex_coord_set 0
+			}
+			
+			texture_unit Cloud2
+			{
+				texture noise2.dds
+                filtering trilinear
+                tex_coord_set 1
+			}
+			
+			texture_unit Detail
+			{
+				texture noise4.dds
+                tex_coord_set 2
+			}
+		}
+	}
+}
+
+/////////////////////////////////////////////////////////////////
+//                    POINT STARFIELD                          //
+/////////////////////////////////////////////////////////////////
+
+vertex_program Caelum/StarPointVP hlsl
+{
+	source CaelumPointStarfield.hlsl
+	entry_point StarPointVP
+	target vs_2_0
+
+	default_params
+	{
+	    param_named_auto worldviewproj_matrix worldviewproj_matrix
+        param_named_auto render_target_flipping render_target_flipping
+	    
+	    // Default parameters only here to quiet ogre.
+	    param_named mag_scale float -1
+        param_named mag0_size float -1
+        param_named min_size float -1
+        param_named max_size float -1 
+        param_named aspect_ratio float -1
+	}
+}
+
+fragment_program Caelum/StarPointFP hlsl
+{
+	source CaelumPointStarfield.hlsl
+	entry_point StarPointFP
+	target ps_2_0
+
+	default_params
+	{
+	}
+}
+
+material Caelum/StarPoint
+{
+	receive_shadows off
+	
+	technique
+	{
+		pass
+		{
+			depth_check off
+			depth_write off
+
+            vertex_program_ref Caelum/StarPointVP
+            {
+            }
+            			
+            fragment_program_ref Caelum/StarPointFP
+            {
+            }
+            
+            scene_blend alpha_blend
+            
+            // Works with default culling:
+            cull_hardware clockwise
+            
+            // Override Direct3D shader fog.
+            fog_override true none
+        }
+	}
+}
+
+/////////////////////////////////////////////////////////////////
+//                          SUN                                //
+/////////////////////////////////////////////////////////////////
+
+material CaelumSphereSun
+{
+    technique Defaulto
+    {
+        pass Main
+        {
+            depth_check off
+            depth_write off
+            fog_override true none
+            ambient 0 0 0
+            diffuse 0 0 0
+        }
+    }
+}
+
+material CaelumSpriteSun
+{
+    receive_shadows off
+    technique Default
+    {
+        pass Main
+        {
+            lighting off
+            depth_check off
+            depth_write off
+            fog_override true none
+            ambient 0 0 0
+            diffuse 0 0 0
+            scene_blend src_colour one_minus_src_colour
+            alpha_rejection greater_equal 128
+            emissive vertexcolour
+            texture_unit Texture0
+            {
+                texture sun_disc.png 2d 0
+            }
+        }
+    }
+}
+
+/////////////////////////////////////////////////////////////////
+//                          MOON                               //
+/////////////////////////////////////////////////////////////////
+
+fragment_program Caelum/PhaseMoonFP hlsl
+{
+	source CaelumPhaseMoon.hlsl
+	entry_point PhaseMoonFP
+	target ps_2_0
+
+	default_params
+	{
+		param_named phase float 0.3
+	}
+}
+
+material Caelum/FullMoon
+{
+    receive_shadows off
+    technique Default
+    {
+        pass Main
+        {
+            lighting off
+            depth_check off
+            depth_write off
+            fog_override true none
+            ambient 0 0 0
+            diffuse 0 0 0
+            scene_blend alpha_blend 
+            emissive vertexcolour
+
+            texture_unit Texture0
+            {
+                texture moon_disc.dds 2d
+            }
+        }
+    }
+}
+
+material Caelum/PhaseMoon
+{
+    receive_shadows off
+    technique Default
+    {
+        pass Main
+        {
+            lighting off
+            depth_check off
+            depth_write off
+            fog_override true none
+            ambient 0 0 0
+            diffuse 0 0 0
+            scene_blend alpha_blend
+
+            texture_unit MoonDisc
+            {
+                texture moon_disc.dds
+            }
+            
+            fragment_program_ref Caelum/PhaseMoonFP
+            {
+            }
+        }
+    }
+}
+
+material Caelum/MoonBackground
+{
+    receive_shadows off
+    technique Default
+    {
+        pass Main
+        {
+            // Used fixed function lighting to return black.
+            lighting off
+            
+            depth_check off
+            depth_write off
+            fog_override true none
+            scene_blend alpha_blend
+
+            texture_unit MoonDisc
+            {
+                texture moon_disc.dds
+                colour_op_ex source1 src_manual src_diffuse 0 0 0 0
+            }
+        }
+    }
+}
+
+/////////////////////////////////////////////////////////////////
+//                        SKY DOME                             //
+/////////////////////////////////////////////////////////////////
+
+fragment_program CaelumSkyDomeFP hlsl
+{
+	source CaelumSkyDome.hlsl
+	entry_point SkyDomeFP
+	compile_arguments -DHAZE
+	target ps_2_0
+
+	default_params
+	{
+		// Caelum sky properties
+		param_named offset float 0
+	}
+}
+
+fragment_program CaelumSkyDomeFP_NoHaze hlsl
+{
+	source CaelumSkyDome.hlsl
+	entry_point SkyDomeFP
+	target ps_2_0
+
+	default_params
+	{
+		// Caelum sky properties
+		param_named offset float 0
+	}
+}
+
+vertex_program CaelumSkyDomeVP hlsl
+{
+	source CaelumSkyDome.hlsl
+	entry_point SkyDomeVP
+	target vs_2_0
+	
+	default_params
+	{
+		param_named_auto worldViewProj worldviewproj_matrix
+		param_named sunDirection float3 1 0 0
+	}
+}
+
+material CaelumSkyDomeMaterial
+{
+	receive_shadows off
+	
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_check off
+			depth_write off
+			scene_blend alpha_blend
+			fog_override true none
+			
+			vertex_program_ref CaelumSkyDomeVP
+			{
+			}
+			
+			fragment_program_ref CaelumSkyDomeFP
+			{
+			}
+
+			texture_unit
+			{
+				texture EarthClearSky2.png 0
+				tex_address_mode clamp
+				tex_coord_set 0
+			}
+
+			texture_unit
+			{
+				texture AtmosphereDepth.png 1d
+				tex_address_mode clamp
+				tex_coord_set 1
+			}
+		}
+	}
+
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_check off
+			depth_write off
+			scene_blend alpha_blend
+			fog_override true
+			
+			texture_unit
+			{
+				texture EarthClearSky2.png 0
+				tex_address_mode clamp
+				tex_coord_set 0
+			}
+		}
+	}
+}

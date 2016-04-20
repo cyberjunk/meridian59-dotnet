@@ -1,0 +1,18 @@
+material PU/Weather/Snow
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend alpha_blend
+            depth_write off
+
+            texture_unit
+            {
+                texture weather_snow.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}

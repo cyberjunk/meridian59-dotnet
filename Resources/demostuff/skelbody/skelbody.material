@@ -1,0 +1,31 @@
+material bone0
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.898039 0.858824 0.764706 1
+			diffuse 0.898039 0.858824 0.764706 1
+			specular 0.690196 0.643137 0.643137 1 42
+		}
+
+	}
+
+}
+
+
+
+material bone
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.898039 0.858824 0.764706 1
+			diffuse 0.898039 0.858824 0.764706 1
+			specular 0.690196 0.643137 0.643137 1 42
+		}
+
+	}
+
+}
