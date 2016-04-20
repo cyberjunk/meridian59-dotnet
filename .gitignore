@@ -1,11 +1,21 @@
+# Exclusions for local Visual Studio project files
 *.sdf
 *.suo
 *.pdb
 *.opensdf
+
+# ircdotnet lib
+/ircdotnet/bin
+/ircdotnet/lib/Samples/*.pdb
+/ircdotnet/src/IrcDotNet/obj
+
+# Exclusions of 'obj' and 'bin' folders
 /Meridian59/obj
 /Meridian59/bin
 /Meridian59.Android.ChatClient/bin
 /Meridian59.Android.ChatClient/obj
+/Meridian59.AdminUI/obj
+/Meridian59.AdminUI/bin
 /Meridian59.BgfEditor/obj
 /Meridian59.BgfEditor/bin
 /Meridian59.Bot.IRC/bin
@@ -14,12 +24,6 @@
 /Meridian59.Bot.Shop/bin
 /Meridian59.Bot.Spell/obj
 /Meridian59.Bot.Spell/bin
-/Meridian59.DebugUI/obj
-/Meridian59.DebugUI/bin
-/Meridian59.ExampleClient/obj
-/Meridian59.ExampleClient/bin
-/Meridian59.Launcher/obj
-/Meridian59.Launcher/bin
 /Meridian59.Ogre.Client/obj
 /Meridian59.Ogre.Client/bin
 /Meridian59.Ogre.Client/Meridian59.Ogre.Client.vcxproj.user
@@ -28,22 +32,13 @@
 /Meridian59.RooViewer/bin
 /Meridian59.UnitTest/obj
 /Meridian59.UnitTest/bin
-/ircdotnet/bin
-/ircdotnet/lib/Samples/*.pdb
-/ircdotnet/src/IrcDotNet/obj
-/Meridian59-private.sln
-/Meridian59.Memory
-/Meridian59.Brain
-/Meridian59.Editor
-/Meridian59.Graph
-/Meridian59.Hack
-/Meridian59.Hacking
-/Meridian59.Hook
-/Meridian59.HookInterface
-/testapp
 /Meridian59.RsbEditor/bin
 /Meridian59.RsbEditor/obj
-/Meridian59.AdminUI/obj
-/Meridian59.AdminUI/bin
-/Meridian59.Ogre.Patcher/bin
-/Meridian59.Ogre.Patcher/obj
+/Meridian59.Patcher/bin
+/Meridian59.Patcher/obj
+
+# Excludings in Resources
+/Resources/bgfobjects/*.bgf
+/Resources/bgftextures/*.bgf
+
+# Others
