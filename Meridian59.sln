@@ -23,7 +23,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meridian59.RooViewer", "Mer
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meridian59.RsbEditor", "Meridian59.RsbEditor\Meridian59.RsbEditor.csproj", "{8A720E91-6344-4407-B9C4-2204AEE47595}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meridian59.Patcher", "Meridian59.Ogre.Patcher\Meridian59.Patcher.csproj", "{D7C86C96-D59F-4969-A978-97E94FA7FA80}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meridian59.Patcher", "Meridian59.Patcher\Meridian59.Patcher.csproj", "{D7C86C96-D59F-4969-A978-97E94FA7FA80}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
