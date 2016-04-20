@@ -15,6 +15,9 @@ namespace Meridian59.Patcher
     public class Worker
     {      
         protected readonly ConcurrentQueue<PatchFile> queue;
+        protected readonly ConcurrentQueue<PatchFile> queueFinished;
+        protected readonly ConcurrentQueue<PatchFile> queueErrors;
+
         protected readonly Thread thread;
         protected readonly string baseFilePath;
         protected readonly string baseUrl;
@@ -25,27 +28,27 @@ namespace Meridian59.Patcher
         protected volatile bool isDownloading;
         protected volatile bool IsRunning;
 
-        public event EventHandler<PatchFile.EventArgs> FileFinishedOK;
-        public event EventHandler<PatchFile.EventArgs> FileFinishedError;
-
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="BaseFilePath"></param>
         /// <param name="BaseUrl"></param>
         /// <param name="InputQueue"></param>
-        /// <param name="EventContext"></param>
+        /// <param name="FinishedQueue"></param>
+        /// <param name="ErrorQueue"></param>
         public Worker(
             string BaseFilePath, 
             string BaseUrl,
             ConcurrentQueue<PatchFile> InputQueue,
-            SynchronizationContext EventContext)
+            ConcurrentQueue<PatchFile> FinishedQueue,
+            ConcurrentQueue<PatchFile> ErrorQueue)
         {
             // keep references
             baseFilePath = BaseFilePath;
             baseUrl = BaseUrl;
             queue = InputQueue;
-            eventContext = EventContext;
+            queueFinished = FinishedQueue;
+            queueErrors = ErrorQueue;
 
             // get MD5 creator for this worker
             md5 = MD5.Create();
@@ -165,12 +168,7 @@ namespace Meridian59.Patcher
         /// <param name="File"></param>
         protected void RaiseFileFinishedOK(PatchFile File)
         {
-            eventContext.Post(new SendOrPostCallback((o) =>
-            {
-                if (FileFinishedOK != null)
-                    FileFinishedOK(this, new PatchFile.EventArgs(File));
-
-            }), null);
+            queueFinished.Enqueue(File);
         }
 
         /// <summary>
@@ -179,12 +177,7 @@ namespace Meridian59.Patcher
         /// <param name="File"></param>
         protected void RaiseFileFinishedError(PatchFile File)
         {
-            eventContext.Post(new SendOrPostCallback((o) =>
-            {
-                if (FileFinishedError != null)
-                    FileFinishedError(this, new PatchFile.EventArgs(File));
-
-            }), null);
+            queueErrors.Enqueue(File);
         }
 
         /// <summary>

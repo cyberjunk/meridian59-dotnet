@@ -28,6 +28,9 @@ namespace Meridian59.Patcher
         private static readonly double MSTICKDIVISOR = (double)Stopwatch.Frequency / 1000.0;      
         
         private static readonly ConcurrentQueue<PatchFile> queue = new ConcurrentQueue<PatchFile>();
+        private static readonly ConcurrentQueue<PatchFile> queueFinished = new ConcurrentQueue<PatchFile>();
+        private static readonly ConcurrentQueue<PatchFile> queueErrors = new ConcurrentQueue<PatchFile>();
+
         private static readonly List<PatchFile> files   = new List<PatchFile>();
         private static readonly Worker[] workers        = new Worker[NUMWORKERS];       
         private static readonly Stopwatch watch         = new Stopwatch();
@@ -71,7 +74,10 @@ namespace Meridian59.Patcher
             {
                 long   tick   = watch.ElapsedTicks;
                 double mstick = (double)tick / MSTICKDIVISOR;
-                
+
+                // handle PatchFile instances returned by workers
+                ProcessQueues();
+
                 // tick ui
                 progressForm.Tick(mstick);
 
@@ -105,6 +111,48 @@ namespace Meridian59.Patcher
                 Process process = new Process();
                 process.StartInfo = pi;
                 process.Start();
+            }
+        }
+
+        /// <summary>
+        /// Handles all returned PatchFile instances in the queues.
+        /// </summary>
+        private static void ProcessQueues()
+        {
+            PatchFile file;
+
+            // handle error files
+            while (!abort && queueErrors.TryDequeue(out file))
+            {
+                // raise errorcounter for this file
+                file.ErrorCount++;
+
+                // try again by enqueueing again
+                if (file.ErrorCount < MAXRETRIES)
+                {
+                    file.LengthDone = 0;
+                    queue.Enqueue(file);
+                }
+                else
+                {
+                    MessageBox.Show("Download of file " + file.Filename + " failed.",
+                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    // make sure to quit loop
+                    abort = true;
+                    isRunning = false;
+                }
+            }
+
+            // handle finished files
+            while (queueFinished.TryDequeue(out file))
+            {
+                // raise counter for finished files
+                filesDone++;
+
+                // check for finish
+                if (filesDone >= files.Count)
+                    isRunning = false;
             }
         }
 
@@ -229,44 +277,11 @@ namespace Meridian59.Patcher
                         Path.GetDirectoryName(assemblyLocation),
                         baseUrl,
                         queue,
-                        SynchronizationContext.Current);
+                        queueFinished,
+                        queueErrors);
 
-                    workers[i].FileFinishedOK += OnWorkerFileFinishedOK;
-                    workers[i].FileFinishedError += OnWorkerFileFinishedError;
                     workers[i].Start();
                 }
-            }
-        }
-
-        private static void OnWorkerFileFinishedOK(object sender, PatchFile.EventArgs e)
-        {
-            // raise counter for finished files
-            filesDone++;
-
-            // check for finish
-            if (filesDone >= files.Count)
-                isRunning = false;
-        }
-
-        private static void OnWorkerFileFinishedError(object sender, PatchFile.EventArgs e)
-        {
-            // raise errorcounter for this file
-            e.File.ErrorCount++;
-
-            // try again by enqueueing again
-            if (e.File.ErrorCount < MAXRETRIES)
-            {
-                e.File.LengthDone = 0;
-                queue.Enqueue(e.File);
-            }
-            else
-            {
-                MessageBox.Show("Download of file " + e.File.Filename + " failed.", 
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            
-                // make sure to quit loop
-                abort = true;
-                isRunning = false;
             }
         }
     }
