@@ -1,8 +1,12 @@
-# Exclusions for local Visual Studio project files
+# File-Type exclusions for Visual Studio
 *.sdf
 *.suo
 *.pdb
 *.opensdf
+*.ipch
+
+# Other generic exclusions
+*.log
 
 # ircdotnet lib
 /ircdotnet/bin
