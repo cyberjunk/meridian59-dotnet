@@ -35,12 +35,14 @@ namespace Meridian59.Patcher
         private static readonly Worker[] workers        = new Worker[NUMWORKERS];       
         private static readonly Stopwatch watch         = new Stopwatch();
         private static readonly WebClient webClient     = new WebClient();
-        
-        private static int filesDone    = 0;
-        private static bool abort       = false;
-        private static bool isRunning   = true;
-        private static string baseUrl   = "";
-        private static string jsonUrl   = "";
+
+        private static DownloadForm form = null;
+        private static int filesDone     = 0;
+        private static bool abort        = false;
+        private static bool isRunning    = true;
+        private static bool isHeadless   = false;
+        private static string baseUrl    = "";
+        private static string jsonUrl    = "";
         
         /// <summary>
         /// Main entry point
@@ -48,20 +50,29 @@ namespace Meridian59.Patcher
         [STAThread]
         static void Main(string[] args)
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-
-            // read urls first
-            if (!ReadUrlDataFile())
-                return;
-
             // start ticker
             watch.Start();
 
-            // create ui
-            DownloadForm progressForm = new DownloadForm(files);
-            progressForm.FormClosed += OnFormClosed;
-            progressForm.Show();
+            // parse commandline arguments
+            ReadCommandLineArguments(args);
+
+            ///////////////////////////////////////////////////////////////////////
+
+            // create UI if not-headless
+            if (!isHeadless)
+            {
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+
+                // create ui
+                form = new DownloadForm(files);
+                form.FormClosed += OnFormClosed;
+                form.Show();
+            }
+
+            // read urls
+            if (!ReadUrlDataFile())
+                return;
 
             // start download of patchinfo.txt
             webClient.DownloadDataCompleted += OnWebClientDownloadDataCompleted;
@@ -78,12 +89,17 @@ namespace Meridian59.Patcher
                 // handle PatchFile instances returned by workers
                 ProcessQueues();
 
-                // tick ui
-                progressForm.Tick(mstick);
+                // update UI
+                if (!isHeadless)
+                {
+                    // tick ui
+                    if (form != null)
+                        form.Tick(mstick);
 
-                // process messages
-                Application.DoEvents();
-                
+                    // process messages
+                    Application.DoEvents();
+                }
+
                 // sleep a bit (-> ~60 FPS)
                 Thread.Sleep(16);
             }
@@ -135,8 +151,11 @@ namespace Meridian59.Patcher
                 }
                 else
                 {
-                    MessageBox.Show("Download of file " + file.Filename + " failed.",
-                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    if (!isHeadless)
+                    {
+                        MessageBox.Show("Download of file " + file.Filename + " failed.",
+                            "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
 
                     // make sure to quit loop
                     abort = true;
@@ -155,6 +174,33 @@ namespace Meridian59.Patcher
                     isRunning = false;
             }
         }
+        
+        /// <summary>
+        /// Reads the command line arguments
+        /// </summary>
+        /// <param name="args"></param>
+        private static void ReadCommandLineArguments(string[] args)
+        {
+            foreach (string s in args)
+            {
+                // null or empty
+                if (s == null || s.Length == 0)
+                    return;
+
+                // no valid argument tag char
+                if (s[0] != '-' && s[0] != '/')
+                    return;
+
+                // get argument without tag char
+                string arg = s.Substring(1);
+
+                // evaluate argument
+                switch(arg)
+                {
+                    case "headless": isHeadless = true; break;
+                }
+            }
+        }
 
         /// <summary>
         /// Reads the file providing URLs for root path of files and the
@@ -166,8 +212,11 @@ namespace Meridian59.Patcher
             // show error in case the URLDATAFILE is missing
             if (!File.Exists(URLDATAFILE))
             {
-                MessageBox.Show("Required file " + URLDATAFILE + " is missing. Please reinstall the client.",
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (!isHeadless)
+                {
+                    MessageBox.Show("Required file " + URLDATAFILE + " is missing. Please reinstall the client.",
+                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
 
                 return false;
             }
@@ -178,8 +227,11 @@ namespace Meridian59.Patcher
             // show error in case content is invalid
             if (urls == null || urls.Length < 2)
             {
-                MessageBox.Show("File " + URLDATAFILE + " is corrupted. Please reinstall the client.",
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (!isHeadless)
+                {
+                    MessageBox.Show("File " + URLDATAFILE + " is corrupted. Please reinstall the client.",
+                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
 
                 return false;
             }
@@ -241,6 +293,11 @@ namespace Meridian59.Patcher
             files.AddRange(list);
         }
 
+        /// <summary>
+        /// Raised when the UI is closed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private static void OnFormClosed(object sender, FormClosedEventArgs e)
         {
             // make sure to quit loop
@@ -248,13 +305,21 @@ namespace Meridian59.Patcher
             isRunning = false;
         }
 
+        /// <summary>
+        /// Raised when the JSON patch data is received.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private static void OnWebClientDownloadDataCompleted(object sender, DownloadDataCompletedEventArgs e)
         {
             // error downloading patchinfo.txt
             if (e.Error != null)
             {
-                MessageBox.Show("Download of JSON patch data failed. Please try again or reinstall client.",
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (!isHeadless)
+                {
+                    MessageBox.Show("Download of JSON patch data failed. Please try again or reinstall client.",
+                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
 
                 abort = true;
                 isRunning = false;
@@ -268,13 +333,14 @@ namespace Meridian59.Patcher
                 foreach (PatchFile entry in files)
                     queue.Enqueue(entry);
 
-                // create worker-instances
+                // create worker-instances and start them
                 for (int i = 0; i < workers.Length; i++)
                 {
                     string assemblyLocation = Assembly.GetExecutingAssembly().Location;
+                    string assemblyPath = Path.GetDirectoryName(assemblyLocation);
 
                     workers[i] = new Worker(
-                        Path.GetDirectoryName(assemblyLocation),
+                        assemblyPath,
                         baseUrl,
                         queue,
                         queueFinished,
