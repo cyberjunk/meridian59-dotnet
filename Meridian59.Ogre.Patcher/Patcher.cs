@@ -14,11 +14,10 @@ namespace Meridian59.Ogre.Patcher
 {
     public static class Patcher
     {
-        private const string BASEURL       = "http://ww1.meridiannext.com/netclient/clientpatch/";
-        private const string JSONURL       = "http://ww1.meridiannext.com/netclient/patchinfo.txt";
+
         private const int NUMWORKERS       = 8;
         private const int MAXRETRIES       = 3;
-        private const string JSONPATCHFILE = "patchinfo.txt";
+        private const string URLDATAFILE   = "patchurl.txt";
         private const string CLIENTEXE     = "Meridian59.Ogre.Client.exe";
         private const string PATCHEREXE    = "Meridian59.Ogre.Patcher.exe";
         private const string FOLDERX64     = "x64";
@@ -26,25 +25,33 @@ namespace Meridian59.Ogre.Patcher
         private const string CLIENTX64     = FOLDERX64 + "/" + CLIENTEXE;
         private const string CLIENTX86     = FOLDERX86 + "/" + CLIENTEXE;
 
-        private static readonly string[] EXCLUSIONS     = new string[] { "club.exe", PATCHEREXE };
+        private static readonly string[] EXCLUSIONS  = new string[] { "club.exe", PATCHEREXE };
+        private static readonly double MSTICKDIVISOR = (double)Stopwatch.Frequency / 1000.0;      
+        
         private static readonly ConcurrentQueue<PatchFile> queue = new ConcurrentQueue<PatchFile>();
         private static readonly List<PatchFile> files   = new List<PatchFile>();
         private static readonly Worker[] workers        = new Worker[NUMWORKERS];       
         private static readonly Stopwatch watch         = new Stopwatch();
         private static readonly WebClient webClient     = new WebClient();
-        private static readonly double MSTICKDIVISOR    = (double)Stopwatch.Frequency / 1000.0;      
-        private static int filesDone                    = 0;
-        private static bool abort                       = false;
-        private static bool isRunning                   = true;
-
+        
+        private static int filesDone    = 0;
+        private static bool abort       = false;
+        private static bool isRunning   = true;
+        private static string baseUrl   = "";
+        private static string jsonUrl   = "";
+        
         /// <summary>
         /// Main entry point
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            // read urls first
+            if (!ReadUrlDataFile())
+                return;
 
             // start ticker
             watch.Start();
@@ -55,8 +62,8 @@ namespace Meridian59.Ogre.Patcher
             progressForm.Show();
 
             // start download of patchinfo.txt
-            webClient.DownloadFileCompleted += OnWebClientDownloadFileCompleted;
-            webClient.DownloadFileAsync(new Uri(JSONURL), JSONPATCHFILE);
+            webClient.DownloadDataCompleted += OnWebClientDownloadDataCompleted;
+            webClient.DownloadDataAsync(new Uri(jsonUrl));
            
             ///////////////////////////////////////////////////////////////////////
 
@@ -103,16 +110,51 @@ namespace Meridian59.Ogre.Patcher
         }
 
         /// <summary>
+        /// Reads the file providing URLs for root path of files and the
+        /// JSON data file.
+        /// </summary>
+        /// <returns></returns>
+        private static bool ReadUrlDataFile()
+        {
+            // show error in case the URLDATAFILE is missing
+            if (!File.Exists(URLDATAFILE))
+            {
+                MessageBox.Show("Required file " + URLDATAFILE + " is missing. Please reinstall the client.",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return false;
+            }
+
+            // parse url lines
+            string[] urls = File.ReadAllLines(URLDATAFILE);
+
+            // show error in case content is invalid
+            if (urls == null || urls.Length < 2)
+            {
+                MessageBox.Show("File " + URLDATAFILE + " is corrupted. Please reinstall the client.",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return false;
+            }
+
+            // use URLs
+            baseUrl = urls[0];
+            jsonUrl = urls[1];
+
+            return true;
+        }
+
+        /// <summary>
         /// Parses the entries from patchinfo.txt
         /// </summary>
         /// <returns></returns>
-        private static void ReadPatchInfoTxt()
+        private static void ReadJsonData(byte[] JsonData)
         {
             // clear current instances if any
             files.Clear();
 
             // filestream on file
-            FileStream fs = new FileStream(JSONPATCHFILE, FileMode.Open, FileAccess.Read);
+            MemoryStream fs = new MemoryStream(JsonData);
 
             // json reader
             DataContractJsonSerializer reader = 
@@ -159,12 +201,12 @@ namespace Meridian59.Ogre.Patcher
             isRunning = false;
         }
 
-        private static void OnWebClientDownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
+        private static void OnWebClientDownloadDataCompleted(object sender, DownloadDataCompletedEventArgs e)
         {
             // error downloading patchinfo.txt
             if (e.Error != null)
             {
-                MessageBox.Show("Download of patchinfo.txt failed.",
+                MessageBox.Show("Download of JSON patch data failed. Please try again or reinstall client.",
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 abort = true;
@@ -172,8 +214,8 @@ namespace Meridian59.Ogre.Patcher
             }
             else
             {
-                // parse patchinfo.txt
-                ReadPatchInfoTxt();
+                // parse json patch data
+                ReadJsonData(e.Result);
 
                 // enqueue entries
                 foreach (PatchFile entry in files)
@@ -186,7 +228,7 @@ namespace Meridian59.Ogre.Patcher
 
                     workers[i] = new Worker(
                         Path.GetDirectoryName(assemblyLocation),
-                        BASEURL,
+                        baseUrl,
                         queue,
                         SynchronizationContext.Current);
 
