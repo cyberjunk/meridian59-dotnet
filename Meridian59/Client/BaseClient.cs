@@ -454,9 +454,13 @@ namespace Meridian59.Client
         {
             // Disconnect from server.
             Disconnect();
+
+            // testing!!
+            Message.ClientPatchInfo.UpdaterFile = "Meridian59.Ogre.Patcher.exe";
+
             // Set UI mode to download.
             Data.UIMode = UIMode.Download;
-            DownloadHandler.DownloadClientPatch(Message.ClientPatchInfo);
+            DownloadHandler.DownloadClientPatcher(Message.ClientPatchInfo);
         }
 
         /// <summary>

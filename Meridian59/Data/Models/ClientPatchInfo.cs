@@ -429,14 +429,34 @@ namespace Meridian59.Data.Models
         }
         #endregion
 
-        public Uri GetCacheURL()
+        /// <summary>
+        /// Returns the base path which must be used as a prefix
+        /// on the JSON entries to build the full http path.
+        /// </summary>
+        /// <returns></returns>
+        public string GetUpdateBasePath()
         {
-            return new Uri("http://" + machine + patchCachePath + patchFile);
+            return "http://" + machine + patchPath;
         }
 
-        public Uri GetUpdaterURL(string filename)
+        /// <summary>
+        /// Returns the URL of the updater binary.
+        /// Built from machine, patchPath and updaterFile values.
+        /// </summary>
+        /// <returns></returns>
+        public string GetUpdaterURL()
         {
-            return new Uri("http://" + machine + patchPath + "/" + filename);
+            return "http://" + machine + patchPath + "/" + updaterFile;
+        }
+
+        /// <summary>
+        /// Returns the URL of the JSON datafile
+        /// providing entries for all game files.
+        /// </summary>
+        /// <returns></returns>
+        public string GetJsonDataURL()
+        {
+            return "http://" + machine + patchCachePath + "/" + patchFile;
         }
     }
 }
