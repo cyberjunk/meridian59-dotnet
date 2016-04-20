@@ -2,11 +2,11 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Meridian59.Ogre.Patcher")]
-[assembly: AssemblyDescription("Patcher for Ogre Client")]
+[assembly: AssemblyTitle("Meridian59.Patcher")]
+[assembly: AssemblyDescription("Patcher for Meridian 59")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Meridian59.Ogre.Patcher")]
+[assembly: AssemblyProduct("Meridian59.Patcher")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

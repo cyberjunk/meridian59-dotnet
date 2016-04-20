@@ -7,7 +7,7 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Threading;
 
-namespace Meridian59.Ogre.Patcher
+namespace Meridian59.Patcher
 {
     /// <summary>
     /// An instance of this runs in a dedicated thread and procsses items.

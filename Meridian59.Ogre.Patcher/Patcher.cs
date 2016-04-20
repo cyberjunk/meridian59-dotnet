@@ -10,11 +10,10 @@ using System.Runtime.Serialization.Json;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace Meridian59.Ogre.Patcher
+namespace Meridian59.Patcher
 {
     public static class Patcher
     {
-
         private const int NUMWORKERS       = 8;
         private const int MAXRETRIES       = 3;
         private const string URLDATAFILE   = "patchurl.txt";

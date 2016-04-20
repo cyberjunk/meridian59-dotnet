@@ -7,8 +7,8 @@
     <ProjectGuid>{D7C86C96-D59F-4969-A978-97E94FA7FA80}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Meridian59.Ogre.Patcher</RootNamespace>
-    <AssemblyName>Meridian59.Ogre.Patcher</AssemblyName>
+    <RootNamespace>Meridian59.Patcher</RootNamespace>
+    <AssemblyName>Meridian59.Patcher</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -34,7 +34,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>Meridian59.Ogre.Patcher.Patcher</StartupObject>
+    <StartupObject>Meridian59.Patcher.Patcher</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

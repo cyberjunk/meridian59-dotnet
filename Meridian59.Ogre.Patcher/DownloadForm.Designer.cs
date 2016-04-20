@@ -1,4 +1,4 @@
-﻿namespace Meridian59.Ogre.Patcher
+﻿namespace Meridian59.Patcher
 {
     partial class DownloadForm
     {
