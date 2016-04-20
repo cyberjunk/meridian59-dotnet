@@ -8,8 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Meridian59</RootNamespace>
-    <AssemblyName Condition="'$(Configuration)'=='Debug'">Meridian59_d</AssemblyName>
-    <AssemblyName Condition="'$(Configuration)'=='Release'">Meridian59</AssemblyName>
+    <AssemblyName>Meridian59</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>
@@ -26,7 +25,7 @@
     <OutputPath>bin\x64\Debug\</OutputPath>
     <DefineConstants>TRACE;DEBUG;WINCLR;DRAWING;CONCURRENT;X64</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>bin\x64\Debug\Meridian59_d.XML</DocumentationFile>
+    <DocumentationFile>bin\x64\Debug\Meridian59.XML</DocumentationFile>
     <NoWarn>1591</NoWarn>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
@@ -45,7 +44,7 @@
     <OutputPath>bin\x86\Debug\</OutputPath>
     <DefineConstants>TRACE;DEBUG;WINCLR;DRAWING;CONCURRENT;X86</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>bin\x86\Debug\Meridian59_d.XML</DocumentationFile>
+    <DocumentationFile>bin\x86\Debug\Meridian59.XML</DocumentationFile>
     <NoWarn>1591</NoWarn>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
@@ -66,7 +65,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <DocumentationFile>bin\Debug\Meridian59_d.XML</DocumentationFile>
+    <DocumentationFile>bin\Debug\Meridian59.XML</DocumentationFile>
     <NoWarn>1591</NoWarn>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
