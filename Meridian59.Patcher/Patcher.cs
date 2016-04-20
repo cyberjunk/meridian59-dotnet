@@ -18,7 +18,7 @@ namespace Meridian59.Patcher
         private const int MAXRETRIES       = 3;
         private const string URLDATAFILE   = "patchurl.txt";
         private const string CLIENTEXE     = "Meridian59.Ogre.Client.exe";
-        private const string PATCHEREXE    = "Meridian59.Ogre.Patcher.exe";
+        private const string PATCHEREXE    = "Meridian59.Patcher.exe";
         private const string FOLDERX64     = "x64";
         private const string FOLDERX86     = "x86";
         private const string CLIENTX64     = FOLDERX64 + "/" + CLIENTEXE;
