@@ -175,37 +175,37 @@ float4 diffuse_ps(
 	uniform float4 colormodifier,
 	uniform sampler2D diffusetex : TEXUNIT0) : COLOR0
 {  
+	float lightDist, lightScale;
+	float3 light;
+	
 	// base pixel from texture
 	float4 diffuseTex = tex2D(diffusetex, vsout.uv);
 	
 	// 1. light
-	float lightDist0  = length(lightPos0.xyz - vsout.wp.xyz) / lightAtt0.r;
-	float lightScale0 = 1.0 - (lightDist0 * lightDist0);
-	float3 light0     = max(float3(0, 0, 0), lightCol0 * lightScale0);
+	lightDist  = length(lightPos0.xyz - vsout.wp.xyz) / lightAtt0.r;
+	lightScale = 1.0 - (lightDist * lightDist);
+	light      = max(float3(0, 0, 0), lightCol0 * lightScale);
 
 	// 2. light
-	float lightDist1  = length(lightPos1.xyz - vsout.wp.xyz) / lightAtt1.r;
-	float lightScale1 = 1.0 - (lightDist1 * lightDist1);
-	float3 light1     = max(float3(0, 0, 0), lightCol1 * lightScale1);
+	lightDist  = length(lightPos1.xyz - vsout.wp.xyz) / lightAtt1.r;
+	lightScale = 1.0 - (lightDist * lightDist);
+	light      += max(float3(0, 0, 0), lightCol1 * lightScale);
 
 	// 3. light
-	float lightDist2  = length(lightPos2.xyz - vsout.wp.xyz) / lightAtt2.r;
-	float lightScale2 = 1.0 - (lightDist2 * lightDist2);
-	float3 light2     = max(float3(0, 0, 0), lightCol2 * lightScale2);
+	lightDist  = length(lightPos2.xyz - vsout.wp.xyz) / lightAtt2.r;
+	lightScale = 1.0 - (lightDist * lightDist);
+	light      += max(float3(0, 0, 0), lightCol2 * lightScale);
 
 	// 4. light
-	float lightDist3  = length(lightPos3.xyz - vsout.wp.xyz) / lightAtt3.r;
-	float lightScale3 = 1.0 - (lightDist3 * lightDist3);
-	float3 light3     = max(float3(0, 0, 0), lightCol3 * lightScale3);
+	lightDist  = length(lightPos3.xyz - vsout.wp.xyz) / lightAtt3.r;
+	lightScale = 1.0 - (lightDist * lightDist);
+	light      += max(float3(0, 0, 0), lightCol3 * lightScale);
 
-	// combined
-	float3 light = light0 + light1 + light2 + light3;
-	
-	return float4(
-		diffuseTex.r * colormodifier[0] * light[0],
-		diffuseTex.g * colormodifier[1] * light[1],
-		diffuseTex.b * colormodifier[2] * light[2],
-		diffuseTex.a * colormodifier[3]);
+	return colormodifier * float4(
+		diffuseTex.r * light[0],
+		diffuseTex.g * light[1],
+		diffuseTex.b * light[2],
+		diffuseTex.a);
 }
 
 float4 invisible_ps(
