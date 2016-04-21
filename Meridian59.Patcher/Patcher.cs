@@ -12,29 +12,39 @@ using System.Windows.Forms;
 
 namespace Meridian59.Patcher
 {
+    /// <summary>
+    /// Main class/controller of the Meridian59 Patcher.
+    /// Contains the Main() method.
+    /// </summary>
     public static class Patcher
     {
-        private const int NUMWORKERS       = 8;
-        private const int MAXRETRIES       = 3;
-        private const string URLDATAFILE   = "patchurl.txt";
-        private const string CLIENTEXE     = "Meridian59.Ogre.Client.exe";
-        private const string PATCHEREXE    = "Meridian59.Patcher.exe";
-        private const string FOLDERX64     = "x64";
-        private const string FOLDERX86     = "x86";
-        private const string CLIENTX64     = FOLDERX64 + "/" + CLIENTEXE;
-        private const string CLIENTX86     = FOLDERX86 + "/" + CLIENTEXE;
+        private const int NUMWORKERS        = 8;
+        private const int MAXRETRIES        = 3;
+        private const string URLDATAFILE    = "patchurl.txt";
+        private const string CLIENTEXENAME  = "Meridian59.Ogre.Client.exe";
+        private const string CLIENTPROCESS  = "Meridian59.Ogre.Client";
+        private const string PATCHEREXENAME = "Meridian59.Patcher.exe";
+        private const string FOLDERX64      = "x64";
+        private const string FOLDERX86      = "x86";
 
-        private static readonly string[] EXCLUSIONS  = new string[] { "club.exe", PATCHEREXE };
-        private static readonly double MSTICKDIVISOR = (double)Stopwatch.Frequency / 1000.0;      
-        
-        private static readonly ConcurrentQueue<PatchFile> queue = new ConcurrentQueue<PatchFile>();
-        private static readonly ConcurrentQueue<PatchFile> queueFinished = new ConcurrentQueue<PatchFile>();
-        private static readonly ConcurrentQueue<PatchFile> queueErrors = new ConcurrentQueue<PatchFile>();
+        private static readonly string[] EXCLUSIONS   = new string[] { "club.exe", PATCHEREXENAME };
+        private static readonly double MSTICKDIVISOR  = (double)Stopwatch.Frequency / 1000.0;
+        private static readonly string PATCHEREXE     = Assembly.GetEntryAssembly().Location;
+        private static readonly string PATCHERPATH    = Path.GetDirectoryName(PATCHEREXE);
+        private static readonly string CLIENTPATHX86  = Path.Combine(PATCHERPATH, FOLDERX86);
+        private static readonly string CLIENTPATHX64  = Path.Combine(PATCHERPATH, FOLDERX64);
+        private static readonly string CLIENTEXE86    = Path.Combine(CLIENTPATHX86, CLIENTEXENAME);
+        private static readonly string CLIENTEXE64    = Path.Combine(CLIENTPATHX64, CLIENTEXENAME);
+        private static readonly string CLIENTEXEAUTO  = Environment.Is64BitOperatingSystem ? CLIENTEXE64 : CLIENTEXE86;
+        private static readonly string CLIENTPATHAUTO = Environment.Is64BitOperatingSystem ? CLIENTPATHX64 : CLIENTPATHX86;
 
-        private static readonly List<PatchFile> files   = new List<PatchFile>();
-        private static readonly Worker[] workers        = new Worker[NUMWORKERS];       
-        private static readonly Stopwatch watch         = new Stopwatch();
-        private static readonly WebClient webClient     = new WebClient();
+        private static readonly PatchFileQueue queue       = new PatchFileQueue();
+        private static readonly PatchFileQueue queueDone   = new PatchFileQueue();
+        private static readonly PatchFileQueue queueErrors = new PatchFileQueue();
+        private static readonly List<PatchFile> files      = new List<PatchFile>();
+        private static readonly Worker[] workers           = new Worker[NUMWORKERS];       
+        private static readonly Stopwatch watch            = new Stopwatch();
+        private static readonly WebClient webClient        = new WebClient();
 
         private static DownloadForm form = null;
         private static int filesDone     = 0;
@@ -55,8 +65,6 @@ namespace Meridian59.Patcher
 
             // parse commandline arguments
             ReadCommandLineArguments(args);
-
-            ///////////////////////////////////////////////////////////////////////
 
             // create UI if not-headless
             if (!isHeadless)
@@ -114,16 +122,11 @@ namespace Meridian59.Patcher
             // start client in case patching went well
             if (!abort)
             {
-                string clientExec = Assembly.GetEntryAssembly().Location;
-                string clientPath = Path.GetDirectoryName(clientExec);
-                string fileName   = Environment.Is64BitOperatingSystem ? CLIENTX64 : CLIENTX86;
-                string workDir    = Environment.Is64BitOperatingSystem ? FOLDERX64 : FOLDERX86;
-
                 ProcessStartInfo pi = new ProcessStartInfo();
-                pi.FileName         = Path.Combine(clientPath, fileName);
+                pi.FileName         = CLIENTEXEAUTO;
                 pi.Arguments        = "";
                 pi.UseShellExecute  = true;
-                pi.WorkingDirectory = Path.Combine(clientPath, workDir);
+                pi.WorkingDirectory = CLIENTPATHAUTO;
 
                 Process process = new Process();
                 process.StartInfo = pi;
@@ -165,7 +168,7 @@ namespace Meridian59.Patcher
             }
 
             // handle finished files
-            while (queueFinished.TryDequeue(out file))
+            while (queueDone.TryDequeue(out file))
             {
                 // raise counter for finished files
                 filesDone++;
@@ -336,15 +339,12 @@ namespace Meridian59.Patcher
 
                 // create worker-instances and start them
                 for (int i = 0; i < workers.Length; i++)
-                {
-                    string assemblyLocation = Assembly.GetExecutingAssembly().Location;
-                    string assemblyPath = Path.GetDirectoryName(assemblyLocation);
-
+                {                   
                     workers[i] = new Worker(
-                        assemblyPath,
+                        PATCHERPATH,
                         baseUrl,
                         queue,
-                        queueFinished,
+                        queueDone,
                         queueErrors);
 
                     workers[i].Start();

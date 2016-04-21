@@ -58,6 +58,7 @@
     </Compile>
     <Compile Include="PatchFile.cs" />
     <Compile Include="Patcher.cs" />
+    <Compile Include="PatchFileQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Worker.cs" />
     <EmbeddedResource Include="DownloadForm.resx">
