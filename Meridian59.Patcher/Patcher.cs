@@ -107,8 +107,9 @@ namespace Meridian59.Patcher
             ///////////////////////////////////////////////////////////////////////
 
             // also stop worker-instances
-            for (int i = 0; i < workers.Length; i++)
-                workers[i].Stop();
+            foreach(Worker w in workers)
+                if (w != null)
+                    w.Stop();
      
             // start client in case patching went well
             if (!abort)
