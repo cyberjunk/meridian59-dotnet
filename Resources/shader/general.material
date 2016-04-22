@@ -92,6 +92,12 @@ fragment_program diffuse_ps hlsl
 		param_named_auto lightCol3 light_diffuse_colour 3
 		param_named_auto lightPos3 light_position 3
         param_named_auto lightAtt3 light_attenuation 3
+		param_named_auto lightCol4 light_diffuse_colour 4
+		param_named_auto lightPos4 light_position 4
+        param_named_auto lightAtt4 light_attenuation 4
+		param_named_auto lightCol5 light_diffuse_colour 5
+		param_named_auto lightPos5 light_position 5
+        param_named_auto lightAtt5 light_attenuation 5
 		param_named colormodifier float4 1 1 1 1			
     }
 }
@@ -172,7 +178,7 @@ material base_material
         {
 			alpha_rejection greater_equal 64
 			alpha_to_coverage on
-			iteration 1 per_n_lights 4 point
+			iteration 1 per_n_lights 6 point
 			max_lights 48
 			scene_blend add
             

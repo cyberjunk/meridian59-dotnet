@@ -172,6 +172,12 @@ float4 diffuse_ps(
 	uniform float3 lightCol3,
 	uniform float4 lightPos3,
 	uniform float4 lightAtt3,
+	uniform float3 lightCol4,
+	uniform float4 lightPos4,
+	uniform float4 lightAtt4,
+	uniform float3 lightCol5,
+	uniform float4 lightPos5,
+	uniform float4 lightAtt5,
 	uniform float4 colormodifier,
 	uniform sampler2D diffusetex : TEXUNIT0) : COLOR0
 {  
@@ -200,6 +206,16 @@ float4 diffuse_ps(
 	lightDist  = length(lightPos3.xyz - vsout.wp.xyz) / lightAtt3.r;
 	lightScale = 1.0 - (lightDist * lightDist);
 	light      += max(float3(0, 0, 0), lightCol3 * lightScale);
+
+	// 5. light
+	lightDist  = length(lightPos4.xyz - vsout.wp.xyz) / lightAtt4.r;
+	lightScale = 1.0 - (lightDist * lightDist);
+	light      += max(float3(0, 0, 0), lightCol4 * lightScale);
+
+	// 6. light
+	lightDist  = length(lightPos5.xyz - vsout.wp.xyz) / lightAtt5.r;
+	lightScale = 1.0 - (lightDist * lightDist);
+	light      += max(float3(0, 0, 0), lightCol5 * lightScale);
 
 	return colormodifier * float4(
 		diffuseTex.r * light[0],
