@@ -206,16 +206,12 @@ namespace Meridian59 { namespace Ogre
             Light->setDiffuseColour(baseColor);
             Light->setSpecularColour(baseColor);
 
-            // attenuation scaling
-            float range = 0.0f;
-            float constant = 1.0f;
-            float linear = 0.01f; // / ratio;
-            float quadratic = 0.0001f;// / (ratio * ratio);
+            // light scaling by intensity
+			float range = (LightOwner->LightIntensity > 0) ? 
+				120.0f + 460.0f * ratio : 0.0f;
 
-            if (LightOwner->LightIntensity > 0)
-                range = 120.0f + 460.0f * ratio;
-
-            Light->setAttenuation(range, constant, linear, quadratic);
+			// only distance value is used in pixelshader
+            Light->setAttenuation(range, 0.0f, 0.0f, 0.0f);
         };
 
         /// <summary>
