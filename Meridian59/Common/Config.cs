@@ -500,12 +500,11 @@ namespace Meridian59.Common
                     connections.Add(ConnectionInfo.CON101);
                 if (!HasConnection(ConnectionInfo.CON102.Host, ConnectionInfo.CON102.Port))
                     connections.Add(ConnectionInfo.CON102);
-#elif OPENMERIDIAN
+#else
                 if (!HasConnection(ConnectionInfo.CON103.Host, ConnectionInfo.CON103.Port))
                     connections.Add(ConnectionInfo.CON103);
                 if (!HasConnection(ConnectionInfo.CON104.Host, ConnectionInfo.CON104.Port))
                     connections.Add(ConnectionInfo.CON104);
-#else
                 if (!HasConnection(ConnectionInfo.CON105.Host, ConnectionInfo.CON105.Port))
                     connections.Add(ConnectionInfo.CON105);
                 if (!HasConnection(ConnectionInfo.CON106.Host, ConnectionInfo.CON106.Port))
