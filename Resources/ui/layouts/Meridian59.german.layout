@@ -16,7 +16,7 @@
 				
 			<!-- Title -->
 			<Window type="TaharezLook/Label" name="LoadingBar.Title" >
-				<Property name="Text" value="Loading" />
+				<Property name="Text" value="Lade..." />
 				<Property name="Area" value="{{0,0},{0,0},{1,0},{0,32}}" />
 				<Property name="Font" value="EBGaramondSC-26" />
 				<Property name="NormalTextColour" value="FFFF0000" />			
@@ -45,7 +45,7 @@
 				
 			<!-- Title -->
 			<Window type="TaharezLook/Label" name="DownloadBar.Title" >
-				<Property name="Text" value="Updating" />
+				<Property name="Text" value="Hole Update..." />
 				<Property name="Area" value="{{0,0},{0,0},{1,0},{0,32}}" />
 				<Property name="Font" value="EBGaramondSC-26" />
 				<Property name="NormalTextColour" value="FFFF0000" />			
@@ -60,7 +60,7 @@
 		
 		<!-- Welcome -->
 		<Window type="TaharezLook/FrameWindow" name="Welcome" >
-			<Property name="Text" value="Welcome" />
+			<Property name="Text" value="Willkommen" />
 			<Property name="TitlebarEnabled" value="True" />
 			<Property name="TitlebarFont" value="DejaVuSerif-10-Bold" />
 			<Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
@@ -76,7 +76,7 @@
 			
 			<!-- Button -->
 			<Window type="TaharezLook/Button" name="Welcome.Select" >
-				<Property name="Text" value="Select" />
+				<Property name="Text" value="Auswählen" />
 				<Property name="Area" value="{{1,-95},{0,5},{1,-5},{0,30}}" />
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
@@ -106,7 +106,7 @@
 				<Property name="HorzFormatting" value="LeftAligned" />
 				<Property name="Font" value="DejaVuSerif-10-Bold" />
 				<Property name="NormalTextColour" value="FFffeeee" />
-				<Property name="TooltipText" value="Frames per second - Higher is better (more fluid Gameplay)" />
+				<Property name="TooltipText" value="Frames pro Sekunde - Je höher umso besser (flüssigeres Gameplay)" />
 			</Window>
 			<Window type="TaharezLook/Label" name="StatusBar.FPSValue" >
 				<Property name="Text" value="0" />
@@ -121,7 +121,7 @@
 				<Property name="HorzFormatting" value="LeftAligned" />
 				<Property name="Font" value="DejaVuSerif-10-Bold" />
 				<Property name="NormalTextColour" value="FFffeeee" />
-				<Property name="TooltipText" value="Your Connection to the Server. Lower is better." />
+				<Property name="TooltipText" value="Die Verbindungsgeschwindigkeit zum Server. Je niedrieger umso besser." />
 			</Window>
 			<Window type="TaharezLook/Label" name="StatusBar.RTTValue" >
 				<Property name="Text" value="0" />
@@ -131,11 +131,12 @@
 			
 			<!-- OnlinePlayers -->
 			<Window type="TaharezLook/Label" name="StatusBar.PlayersDescription" >
-				<Property name="Text" value="PLAYERS:" />
+				<Property name="Text" value="Spieler:" />
 				<Property name="Area" value="{{0,150},{0,1},{0,230},{0,17}}" />
 				<Property name="HorzFormatting" value="LeftAligned" />
 				<Property name="Font" value="DejaVuSerif-10-Bold" />
-				<Property name="NormalTextColour" value="FFffeeee" />				
+				<Property name="NormalTextColour" value="FFffeeee" />
+				<Property name="TooltipText" value="Die Anzahl der zurzeit eingeloggten Spieler" />
 			</Window>
 			<Window type="TaharezLook/Button" name="StatusBar.PlayersValue" >
 				<Property name="Text" value="0" />
@@ -145,63 +146,65 @@
 			
 			<!-- Mood -->
 			<Window type="TaharezLook/Label" name="StatusBar.MoodDescription" >
-				<Property name="Text" value="MOOD:" />
+				<Property name="Text" value="Deine Stimmung:" />
 				<Property name="Area" value="{{0,290},{0,1},{0,345},{0,18}}" />
 				<Property name="HorzFormatting" value="LeftAligned" />
 				<Property name="Font" value="DejaVuSerif-10-Bold" />
-				<Property name="NormalTextColour" value="FFffeeee" />				
+				<Property name="NormalTextColour" value="FFffeeee" />
+				<Property name="TooltipText" value="Hier kann die Stimmung deines Avatars eingestellt werden.\r\n\Mögliche Einstellungen: erfreut, neutral, traurig, verärgert." />
 			</Window>
 			<Window type="TaharezLook/ImageButton" name="StatusBar.MoodHappy" >
 				<Property name="Area" value="{{0,347},{0,1},{0,365},{0,18}}" />
 				<Property name="NormalImage" value="TaharezLook/MoodHappy" />
 				<Property name="HoverImage" value="TaharezLook/MoodHappyHover" />
-				<Property name="TooltipText" value="Click me to change your mood to happy." />
+				<Property name="TooltipText" value="Hier klicken um die Stimmung auf erfreut zu stellen." />
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 			<Window type="TaharezLook/ImageButton" name="StatusBar.MoodNeutral" >
 				<Property name="Area" value="{{0,366},{0,1},{0,384},{0,18}}" />
 				<Property name="NormalImage" value="TaharezLook/MoodNeutral" />
 				<Property name="HoverImage" value="TaharezLook/MoodNeutralHover" />
-				<Property name="TooltipText" value="Click me to change your mood to neutral." />
+				<Property name="TooltipText" value="Hier klicken um die Stimmung auf neutral zu stellen." />
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 			<Window type="TaharezLook/ImageButton" name="StatusBar.MoodSad" >
 				<Property name="Area" value="{{0,385},{0,1},{0,403},{0,18}}" />
 				<Property name="NormalImage" value="TaharezLook/MoodSad" />
 				<Property name="HoverImage" value="TaharezLook/MoodSadHover" />
-				<Property name="TooltipText" value="Click me to change your mood to sad." />
+				<Property name="TooltipText" value="Hier klicken um die Stimmung auf traurig zu stellen." />
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 			<Window type="TaharezLook/ImageButton" name="StatusBar.MoodAngry" >
 				<Property name="Area" value="{{0,404},{0,1},{0,422},{0,18}}" />
 				<Property name="NormalImage" value="TaharezLook/MoodAngry" />
 				<Property name="HoverImage" value="TaharezLook/MoodAngryHover" />
-				<Property name="TooltipText" value="Click me to change your mood to angry." />
+				<Property name="TooltipText" value="Hier klicken um die Stimmung auf verärgert zu stellen." />
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 			
 			<!-- Safety -->
 			<Window type="TaharezLook/Label" name="StatusBar.SafetyDescription" >
-				<Property name="Text" value="SAFETY:" />
+				<Property name="Text" value="SICHERHEIT:" />
 				<Property name="Area" value="{{0,430},{0,1},{0,500},{0,17}}" />
 				<Property name="HorzFormatting" value="LeftAligned" />
 				<Property name="Font" value="DejaVuSerif-10-Bold" />
 				<Property name="NormalTextColour" value="FFffeeee" />
+				<Property name="TooltipText" value="Wenn Deine Sicherheit eingeschaltet ist, kannst Du keine\r\nunschuldigen Spieler angreifen." />
 			</Window>
 			<Window type="TaharezLook/Button" name="StatusBar.SafetyValue" >
-				<Property name="Text" value="On" />
+				<Property name="Text" value="Ein" />
 				<Property name="Area" value="{{0,500},{0,1},{0,550},{0,17}}" />
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 			
 			<!-- MeridianTime -->
 			<Window type="TaharezLook/Label" name="StatusBar.MTimeDescription" >
-				<Property name="Text" value="MTIME:" />
+				<Property name="Text" value="M-ZEIT:" />
 				<Property name="Area" value="{{0,555},{0,1},{0,625},{0,17}}" />
 				<Property name="HorzFormatting" value="LeftAligned" />
 				<Property name="Font" value="DejaVuSerif-10-Bold" />
 				<Property name="NormalTextColour" value="FFffeeee" />
-				<Property name="TooltipText" value="Current Meridian59 Time" />		
+				<Property name="TooltipText" value="Die aktuelle Meridian59 Zeit" />
 			</Window>
 			<Window type="TaharezLook/Label" name="StatusBar.MTimeValue" >
 				<Property name="Text" value="00:00" />
@@ -211,11 +214,12 @@
 			
 			<!-- RoomName -->
 			<Window type="TaharezLook/Label" name="StatusBar.RoomDescription" >
-				<Property name="Text" value="ROOM:" />
+				<Property name="Text" value="RAUM:" />
 				<Property name="Area" value="{{0,675},{0,1},{0,730},{0,17}}" />
 				<Property name="HorzFormatting" value="LeftAligned" />
 				<Property name="Font" value="DejaVuSerif-10-Bold" />
 				<Property name="NormalTextColour" value="FFffeeee" />
+				<Property name="TooltipText" value="Hier steht die Gegend, die Stadt oder der Raum,\r\nindem Du Dich gerade aufhälst." />
 			</Window>
 			<Window type="TaharezLook/Label" name="StatusBar.RoomValue" >
 				<Property name="Text" value="-" />
@@ -226,7 +230,7 @@
 		
 		<!-- OnlinePlayers -->
 		<Window type="TaharezLook/FrameWindow" name="OnlinePlayers" >
-			<Property name="Text" value="Players" />
+			<Property name="Text" value="Spieler online" />
 			<Property name="TitlebarEnabled" value="True" />
 			<Property name="TitlebarFont" value="DejaVuSerif-10-Bold" />
 			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
@@ -247,7 +251,7 @@
 		
 		<!-- RoomObjects -->
 		<Window type="TaharezLook/FrameWindow" name="RoomObjects" >
-			<Property name="Text" value="RoomObjects" />
+			<Property name="Text" value="Objekte im Raum" />
 			<Property name="TitlebarEnabled" value="True" />
 			<Property name="TitlebarFont" value="DejaVuSerif-10-Bold" />
 			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
@@ -259,65 +263,65 @@
 
 			<!-- ShowAll -->
 			<Window type="TaharezLook/Checkbox" name="RoomObjects.ShowAll" >
-				<Property name="Text" value="All" />
+				<Property name="Text" value="Alles" />
 				<Property name="Area" value="{{0.05,0},{0,5},{0.35,0},{0,25}}" />
-				<Property name="TooltipText" value="Show any object in the room." />
+				<Property name="TooltipText" value="Zeige alle Objekte im Raum." />
 			</Window>
 			
 			<!-- ShowGuild -->
 			<Window type="TaharezLook/Checkbox" name="RoomObjects.ShowGuild" >
-				<Property name="Text" value="Guild" />
+				<Property name="Text" value="Gilde" />
 				<Property name="Area" value="{{0.35,0},{0,5},{0.65,0},{0,25}}" />
-				<Property name="TooltipText" value="Show objects from your guild." />
+				<Property name="TooltipText" value="Zeige Objekte meiner Gilde im Raum." />
 			</Window>
 			
 			<!-- ShowEnemy -->
 			<Window type="TaharezLook/Checkbox" name="RoomObjects.ShowEnemy" >
-				<Property name="Text" value="Enemy" />
+				<Property name="Text" value="Böse gesinnt" />
 				<Property name="Area" value="{{0.65,0},{0,5},{0.95,0},{0,25}}" />
-				<Property name="TooltipText" value="Show enemy objects." />
+				<Property name="TooltipText" value="Zeige alle Objekte im Raum, die mir böse gesinnt sind." />
 			</Window>
 			
 			<!-- ShowFriend -->
 			<Window type="TaharezLook/Checkbox" name="RoomObjects.ShowFriend" >
-				<Property name="Text" value="Friend" />
+				<Property name="Text" value="Freundlich gesinnt" />
 				<Property name="Area" value="{{0.05,0},{0,25},{0.35,0},{0,45}}" />
-				<Property name="TooltipText" value="Show friendly objects." />
+				<Property name="TooltipText" value="Zeige alle Objekte im Raum, die mir freundlich gesinnt sind." />
 			</Window>
 			
 			<!-- ShowAttack -->
 			<Window type="TaharezLook/Checkbox" name="RoomObjects.ShowAttack" >
-				<Property name="Text" value="Attack" />
+				<Property name="Text" value="Attackierbare Objekte" />
 				<Property name="Area" value="{{0.35,0},{0,25},{0.65,0},{0,45}}" />
-				<Property name="TooltipText" value="Show attackable objects." />
+				<Property name="TooltipText" value="Zeige alle Objekte im Raum, die ich angreifen kann." />
 			</Window>
 			
 			<!-- ShowGet -->
 			<Window type="TaharezLook/Checkbox" name="RoomObjects.ShowGet" >
-				<Property name="Text" value="Get" />
+				<Property name="Text" value="Sammelbare Objekte" />
 				<Property name="Area" value="{{0.65,0},{0,25},{0.95,0},{0,45}}" />
-				<Property name="TooltipText" value="Show gettable objects." />
+				<Property name="TooltipText" value="Zeige alle Objekte im Raum, die aufsammeln kann." />
 			</Window>
 			
 			<!-- ShowMinion -->
 			<Window type="TaharezLook/Checkbox" name="RoomObjects.ShowMinion" >
-				<Property name="Text" value="Minion" />
+				<Property name="Text" value="Diener" />
 				<Property name="Area" value="{{0.05,0},{0,45},{0.35,0},{0,65}}" />
-				<Property name="TooltipText" value="Show minion objects." />
+				<Property name="TooltipText" value="Zeige alle Diener im Raum." />
 			</Window>
 			
 			<!-- ShowPK -->
 			<Window type="TaharezLook/Checkbox" name="RoomObjects.ShowPK" >
-				<Property name="Text" value="PK" />
+				<Property name="Text" value="Mörder" />
 				<Property name="Area" value="{{0.35,0},{0,45},{0.65,0},{0,65}}" />
-				<Property name="TooltipText" value="Show murderers and outlaws." />
+				<Property name="TooltipText" value="Zeige alle Mörder im Raum." />
 			</Window>
 			
 			<!-- ShowBuy -->
 			<Window type="TaharezLook/Checkbox" name="RoomObjects.ShowBuy" >
-				<Property name="Text" value="Buy" />
+				<Property name="Text" value="Shops" />
 				<Property name="Area" value="{{0.65,0},{0,45},{0.95,0},{0,65}}" />
-				<Property name="TooltipText" value="Show objects you can buy from." />
+				<Property name="TooltipText" value="Zeige alle Objekte im Raum, von denen ich etwas kaufen kann." />
 			</Window>
 			
 			<!-- List -->
@@ -396,7 +400,7 @@
 		
 		<!-- ObjectDetails -->
 		<Window type="TaharezLook/FrameWindow" name="ObjectDetails" >
-			<Property name="Text" value="Object details" />
+			<Property name="Text" value="Objekt Details" />
 			<Property name="TitlebarEnabled" value="True" />
 			<Property name="TitlebarFont" value="DejaVuSerif-10-Bold" />
 			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
@@ -437,7 +441,7 @@
 		
 		<!-- PlayerDetails -->
 		<Window type="TaharezLook/FrameWindow" name="PlayerDetails" >
-			<Property name="Text" value="Player details" />
+			<Property name="Text" value="Spieler Details" />
 			<Property name="TitlebarEnabled" value="True" />
 			<Property name="TitlebarFont" value="DejaVuSerif-10-Bold" />
 			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
@@ -529,7 +533,7 @@
 					<Property name="HoverImage" value="TaharezLook/ActionInspect" />
 					<Property name="PushedImage" value="TaharezLook/ActionInspect" />
 					<Property name="DisabledImage" value="TaharezLook/ActionInspectDisabled" />
-					<Property name="TooltipText" value="Inspect" />
+					<Property name="TooltipText" value="Inspizieren" />
 					<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 				</Window>
 				
@@ -540,7 +544,7 @@
 					<Property name="HoverImage" value="TaharezLook/ActionAttack" />
 					<Property name="PushedImage" value="TaharezLook/ActionAttack" />
 					<Property name="DisabledImage" value="TaharezLook/ActionAttackDisabled" />
-					<Property name="TooltipText" value="Attack" />
+					<Property name="TooltipText" value="Angreifen" />
 					<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 				</Window>
 				
@@ -551,7 +555,7 @@
 					<Property name="HoverImage" value="TaharezLook/ActionActivate" />
 					<Property name="PushedImage" value="TaharezLook/ActionActivate" />
 					<Property name="DisabledImage" value="TaharezLook/ActionActivateDisabled" />
-					<Property name="TooltipText" value="Activate" />
+					<Property name="TooltipText" value="Aktivieren" />
 					<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 				</Window>
 				
@@ -562,7 +566,7 @@
 					<Property name="HoverImage" value="TaharezLook/ActionBuy" />
 					<Property name="PushedImage" value="TaharezLook/ActionBuy" />
 					<Property name="DisabledImage" value="TaharezLook/ActionBuyDisabled" />
-					<Property name="TooltipText" value="Buy" />
+					<Property name="TooltipText" value="Kaufen" />
 					<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 				</Window>
 				
@@ -573,7 +577,7 @@
 					<Property name="HoverImage" value="TaharezLook/ActionTrade" />
 					<Property name="PushedImage" value="TaharezLook/ActionTrade" />
 					<Property name="DisabledImage" value="TaharezLook/ActionTradeDisabled" />
-					<Property name="TooltipText" value="Trade" />
+					<Property name="TooltipText" value="Handeln" />
 					<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 				</Window>
 				
@@ -584,7 +588,7 @@
 					<Property name="HoverImage" value="TaharezLook/ActionLoot" />
 					<Property name="PushedImage" value="TaharezLook/ActionLoot" />
 					<Property name="DisabledImage" value="TaharezLook/ActionLootDisabled" />
-					<Property name="TooltipText" value="Loot" />
+					<Property name="TooltipText" value="Aufheben" />
 					<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 				</Window>
 			</Window>
@@ -635,7 +639,7 @@
 		
 		<!-- Buy -->
 		<Window type="TaharezLook/FrameWindow" name="Buy" >
-			<Property name="Text" value="Buy something" />
+			<Property name="Text" value="Kaufen..." />
 			<Property name="TitlebarEnabled" value="True" />
 			<Property name="TitlebarFont" value="DejaVuSerif-10-Bold" />
 			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
@@ -652,7 +656,7 @@
 			
 			<!-- Sum -->
 			<Window type="TaharezLook/Label" name="Buy.SumDescription" >
-				<Property name="Text" value="Sum:" />
+				<Property name="Text" value="Summe:" />
 				<Property name="Area" value="{{0,5},{1,-25},{0,50},{1,-5}}" />
 				<Property name="HorzFormatting" value="LeftAligned" />				
 			</Window>
@@ -664,14 +668,14 @@
 		
 			<!-- OK button -->
 			<Window type="TaharezLook/Button" name="Buy.OK" >
-				<Property name="Text" value="Buy" />
+				<Property name="Text" value="Kaufen" />
 				<Property name="Area" value="{{1,-60},{1,-25},{1,-5},{1,-5}}" />				
 			</Window>
 		</Window>
 		
 		<!-- Attributes -->
 		<Window type="TaharezLook/FrameWindow" name="Attributes" >
-			<Property name="Text" value="Attributes" />
+			<Property name="Text" value="Attribute" />
 			<Property name="TitlebarEnabled" value="True" />
 			<Property name="TitlebarFont" value="DejaVuSerif-10-Bold" />
 			<Property name="Size" value="{{0,288},{0,380}}" />
@@ -692,7 +696,7 @@
 		
 		<!-- Skills -->
 		<Window type="TaharezLook/FrameWindow" name="Skills" >
-			<Property name="Text" value="Skills" />
+			<Property name="Text" value="Fähigkeiten" />
 			<Property name="TitlebarEnabled" value="True" />
 			<Property name="TitlebarFont" value="DejaVuSerif-10-Bold" />
 			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
@@ -713,7 +717,7 @@
 		
 		<!-- Spells -->
 		<Window type="TaharezLook/FrameWindow" name="Spells" >
-			<Property name="Text" value="Spells" />
+			<Property name="Text" value="Zaubersprüche" />
 			<Property name="TitlebarEnabled" value="True" />
 			<Property name="TitlebarFont" value="DejaVuSerif-10-Bold" />
 			<Property name="Size" value="{{0,256},{0,256}}" />
@@ -755,7 +759,7 @@
 		
 		<!-- Actions -->
 		<Window type="TaharezLook/FrameWindow" name="Actions" >
-			<Property name="Text" value="Actions" />
+			<Property name="Text" value="Aktionen" />
 			<Property name="TitlebarEnabled" value="True" />
 			<Property name="TitlebarFont" value="DejaVuSerif-10-Bold" />
 			<Property name="MaxSize" value="{{1,0},{1,0}}" />
@@ -775,7 +779,7 @@
 		
 		<!-- Inventory -->
 		<Window type="TaharezLook/FrameWindow" name="Inventory" >
-			<Property name="Text" value="Inventory" />
+			<Property name="Text" value="Inventar" />
 			<Property name="TitlebarEnabled" value="True" />
 			<Property name="TitlebarFont" value="DejaVuSerif-10-Bold" />
 			<Property name="MaxSize" value="{{0,288},{1,0}}" />
@@ -823,7 +827,7 @@
 				<Property name="FrameEnabled" value="False" />
 				<Property name="BackgroundEnabled" value="False" />
 				<Property name="Image" value="TaharezLook/MainButtonGuild" />
-				<Property name="TooltipText" value="Guild" />
+				<Property name="TooltipText" value="Gilde" />
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 			
@@ -833,7 +837,7 @@
 				<Property name="FrameEnabled" value="False" />
 				<Property name="BackgroundEnabled" value="False" />
 				<Property name="Image" value="TaharezLook/MainButtonMail" />
-				<Property name="TooltipText" value="Mail" />
+				<Property name="TooltipText" value="Nachrichten" />
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 			
@@ -843,7 +847,7 @@
 				<Property name="FrameEnabled" value="False" />
 				<Property name="BackgroundEnabled" value="False" />
 				<Property name="Image" value="TaharezLook/MainButtonMap" />
-				<Property name="TooltipText" value="Map" />
+				<Property name="TooltipText" value="Karte" />
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 			
@@ -853,7 +857,7 @@
 				<Property name="FrameEnabled" value="False" />
 				<Property name="BackgroundEnabled" value="False" />
 				<Property name="Image" value="TaharezLook/MainButtonOptions" />
-				<Property name="TooltipText" value="Options" />
+				<Property name="TooltipText" value="Optionen" />
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 		</Window>
@@ -874,7 +878,7 @@
 				<Property name="FrameEnabled" value="False" />
 				<Property name="BackgroundEnabled" value="False" />
 				<Property name="Image" value="TaharezLook/MainButtonInventory" />
-				<Property name="TooltipText" value="Inventory" />
+				<Property name="TooltipText" value="Inventar" />
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 			
@@ -884,7 +888,7 @@
 				<Property name="FrameEnabled" value="False" />
 				<Property name="BackgroundEnabled" value="False" />
 				<Property name="Image" value="TaharezLook/MainButtonSpells" />
-				<Property name="TooltipText" value="Spells" />
+				<Property name="TooltipText" value="Zaubersprüche" />
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 			
@@ -894,7 +898,7 @@
 				<Property name="FrameEnabled" value="False" />
 				<Property name="BackgroundEnabled" value="False" />
 				<Property name="Image" value="TaharezLook/MainButtonSkills" />
-				<Property name="TooltipText" value="Skills" />
+				<Property name="TooltipText" value="Fähigkeiten" />
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 			
@@ -904,7 +908,7 @@
 				<Property name="FrameEnabled" value="False" />
 				<Property name="BackgroundEnabled" value="False" />
 				<Property name="Image" value="TaharezLook/MainButtonActions" />
-				<Property name="TooltipText" value="Actions" />
+				<Property name="TooltipText" value="Aktionen" />
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 			
@@ -914,7 +918,7 @@
 				<Property name="FrameEnabled" value="False" />
 				<Property name="BackgroundEnabled" value="False" />
 				<Property name="Image" value="TaharezLook/MainButtonAttributes" />
-				<Property name="TooltipText" value="Attributes" />
+				<Property name="TooltipText" value="Attribute" />
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 			
@@ -931,7 +935,7 @@
 		
 		<!-- Amount -->
 		<Window type="TaharezLook/FrameWindow" name="Amount" >
-			<Property name="Text" value="Amount" />
+			<Property name="Text" value="Menge" />
 			<Property name="TitlebarEnabled" value="True" />
 			<Property name="TitlebarFont" value="DejaVuSerif-10-Bold" />
 			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
@@ -960,7 +964,7 @@
 		
 		<!-- Trade -->
 		<Window type="TaharezLook/FrameWindow" name="Trade" >
-			<Property name="Text" value="Trade" />
+			<Property name="Text" value="Handeln..." />
 			<Property name="TitlebarEnabled" value="True" />
 			<Property name="TitlebarFont" value="DejaVuSerif-10-Bold" />
 			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
@@ -972,7 +976,7 @@
 
 			<!-- NameYou -->
 			<Window type="TaharezLook/Label" name="Trade.NameYou" >
-				<Property name="Text" value="You" />
+				<Property name="Text" value="Ich" />
 				<Property name="Area" value="{{0,5},{0,5},{0.5,-5},{0,25}}" />
 				<Property name="HorzFormatting" value="LeftAligned" />				
 			</Window>
@@ -984,7 +988,7 @@
 			
 			<!-- NamePartner -->
 			<Window type="TaharezLook/Label" name="Trade.NamePartner" >
-				<Property name="Text" value="Partner" />
+				<Property name="Text" value="Handelspartner" />
 				<Property name="Area" value="{{0.5,5},{0,5},{1,-5},{0,25}}" />
 				<Property name="HorzFormatting" value="LeftAligned" />				
 			</Window>
@@ -996,14 +1000,14 @@
 			
 			<!-- Offer button -->
 			<Window type="TaharezLook/Button" name="Trade.Offer" >
-				<Property name="Text" value="Offer" />
+				<Property name="Text" value="Angebot" />
 				<Property name="Area" value="{{0.5,-80},{1,-25},{0.5,-5},{1,-5}}" />
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>		
 
 			<!-- Accept button -->
 			<Window type="TaharezLook/Button" name="Trade.Accept" >
-				<Property name="Text" value="Accept" />
+				<Property name="Text" value="Akzeptieren" />
 				<Property name="Area" value="{{1,-80},{1,-25},{1,-5},{1,-5}}" />
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
@@ -1030,7 +1034,7 @@
 		
 		<!-- NewsGroup -->
 		<Window type="TaharezLook/FrameWindow" name="NewsGroup" >
-			<Property name="Text" value="NewsGroup" />
+			<Property name="Text" value="News Guppe" />
 			<Property name="TitlebarEnabled" value="True" />
 			<Property name="TitlebarFont" value="DejaVuSerif-10-Bold" />
 			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
@@ -1054,35 +1058,35 @@
 			
 			<!-- Create -->
 			<Window type="TaharezLook/Button" name="NewsGroup.Create" >
-				<Property name="Text" value="Create" />
+				<Property name="Text" value="Erstellen" />
 				<Property name="Area" value="{{0,5},{0.5,-5},{0,100},{0.5,15}}" />
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 			
 			<!-- Respond -->
 			<Window type="TaharezLook/Button" name="NewsGroup.Respond" >
-				<Property name="Text" value="Respond" />
+				<Property name="Text" value="Antworten" />
 				<Property name="Area" value="{{0,105},{0.5,-5},{0,200},{0.5,15}}" />
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 			
 			<!-- MailAuthor -->
 			<Window type="TaharezLook/Button" name="NewsGroup.MailAuthor" >
-				<Property name="Text" value="Mail author" />
+				<Property name="Text" value="Mail an Verfasser" />
 				<Property name="Area" value="{{0,205},{0.5,-5},{0,300},{0.5,15}}" />
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 			
 			<!-- Refresh -->
 			<Window type="TaharezLook/Button" name="NewsGroup.Refresh" >
-				<Property name="Text" value="Refresh" />
+				<Property name="Text" value="Aktualisieren" />
 				<Property name="Area" value="{{0,305},{0.5,-5},{0,400},{0.5,15}}" />
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 			
 			<!-- Delete -->
 			<Window type="TaharezLook/Button" name="NewsGroup.Delete" >
-				<Property name="Text" value="Delete" />
+				<Property name="Text" value="Löschen" />
 				<Property name="Area" value="{{0,405},{0.5,-5},{0,500},{0.5,15}}" />
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
@@ -1097,7 +1101,7 @@
 		
 		<!-- NewsGroupCompose -->
 		<Window type="TaharezLook/FrameWindow" name="NewsGroupCompose" >
-			<Property name="Text" value="Create message" />
+			<Property name="Text" value="Nachricht erstellen" />
 			<Property name="TitlebarEnabled" value="True" />
 			<Property name="TitlebarFont" value="DejaVuSerif-10-Bold" />
 			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
@@ -1109,7 +1113,7 @@
 
 			<!-- GroupDesc -->
 			<Window type="TaharezLook/Label" name="NewsGroupCompose.GroupDesc" >
-				<Property name="Text" value="Group:" />
+				<Property name="Text" value="Gruppe:" />
 				<Property name="Area" value="{{0,5},{0,5},{0,65},{0,30}}" />
 				<Property name="HorzFormatting" value="LeftAligned" />				
 			</Window>
@@ -1122,7 +1126,7 @@
 			
 			<!-- HeadLineDesc -->
 			<Window type="TaharezLook/Label" name="NewsGroupCompose.HeadLineDesc" >
-				<Property name="Text" value="Title:" />
+				<Property name="Text" value="Titel:" />
 				<Property name="Area" value="{{0,5},{0,40},{0,65},{0,70}}" />
 				<Property name="HorzFormatting" value="LeftAligned" />				
 			</Window>
@@ -1142,7 +1146,7 @@
 			
 			<!-- Send -->
 			<Window type="TaharezLook/Button" name="NewsGroupCompose.Send" >
-				<Property name="Text" value="Send" />
+				<Property name="Text" value="Senden" />
 				<Property name="Area" value="{{1,-80},{1,-30},{1,-5},{1,-5}}" />
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
@@ -1150,7 +1154,7 @@
 		
 		<!-- Mail -->
 		<Window type="TaharezLook/FrameWindow" name="Mail" >
-			<Property name="Text" value="Mail" />
+			<Property name="Text" value="Nachrichten" />
 			<Property name="TitlebarEnabled" value="True" />
 			<Property name="TitlebarFont" value="DejaVuSerif-10-Bold" />
 			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
@@ -1167,28 +1171,28 @@
 			
 			<!-- Create -->
 			<Window type="TaharezLook/Button" name="Mail.Create" >
-				<Property name="Text" value="Create" />
+				<Property name="Text" value="Neue Nachricht" />
 				<Property name="Area" value="{{0,5},{0.5,-5},{0,100},{0.5,15}}" />
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 			
 			<!-- Respond -->
 			<Window type="TaharezLook/Button" name="Mail.Respond" >
-				<Property name="Text" value="Respond" />
+				<Property name="Text" value="Antworten" />
 				<Property name="Area" value="{{0,105},{0.5,-5},{0,200},{0.5,15}}" />
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 			
 			<!-- RespondAll -->
 			<Window type="TaharezLook/Button" name="Mail.RespondAll" >
-				<Property name="Text" value="Respond all" />
+				<Property name="Text" value="Allen antworten" />
 				<Property name="Area" value="{{0,205},{0.5,-5},{0,300},{0.5,15}}" />
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 			
 			<!-- Refresh -->
 			<Window type="TaharezLook/Button" name="Mail.Refresh" >
-				<Property name="Text" value="Refresh" />
+				<Property name="Text" value="Aktualisieren" />
 				<Property name="Area" value="{{0,305},{0.5,-5},{0,400},{0.5,15}}" />
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
@@ -1203,7 +1207,7 @@
 		
 		<!-- MailCompose -->
 		<Window type="TaharezLook/FrameWindow" name="MailCompose" >
-			<Property name="Text" value="Create mail" />
+			<Property name="Text" value="Neue Nachricht" />
 			<Property name="TitlebarEnabled" value="True" />
 			<Property name="TitlebarFont" value="DejaVuSerif-10-Bold" />
 			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
@@ -1215,7 +1219,7 @@
 
 			<!-- RecipientsDesc -->
 			<Window type="TaharezLook/Label" name="MailCompose.RecipientsDesc" >
-				<Property name="Text" value="To:" />
+				<Property name="Text" value="An:" />
 				<Property name="Area" value="{{0,5},{0,5},{0,65},{0,30}}" />
 				<Property name="HorzFormatting" value="LeftAligned" />				
 			</Window>
@@ -1228,7 +1232,7 @@
 			
 			<!-- HeadLineDesc -->
 			<Window type="TaharezLook/Label" name="MailCompose.HeadLineDesc" >
-				<Property name="Text" value="Title:" />
+				<Property name="Text" value="Titel:" />
 				<Property name="Area" value="{{0,5},{0,40},{0,65},{0,70}}" />
 				<Property name="HorzFormatting" value="LeftAligned" />				
 			</Window>
@@ -1257,7 +1261,7 @@
 			
 			<!-- Send -->
 			<Window type="TaharezLook/Button" name="MailCompose.Send" >
-				<Property name="Text" value="Send" />
+				<Property name="Text" value="Senden" />
 				<Property name="Area" value="{{1,-80},{1,-30},{1,-5},{1,-5}}" />
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
@@ -1265,7 +1269,7 @@
 		
 		<!-- Guild -->
 		<Window type="TaharezLook/FrameWindow" name="Guild" >
-			<Property name="Text" value="Guild" />
+			<Property name="Text" value="Gilde" />
 			<Property name="TitlebarEnabled" value="True" />
 			<Property name="TitlebarFont" value="DejaVuSerif-10-Bold" />
 			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
@@ -1281,7 +1285,7 @@
 
 				<!-- TabMembers -->
 				<Window type="DefaultWindow" name="Guild.TabMembers" >
-					<Property name="Text" value="Members" />
+					<Property name="Text" value="Mitglieder" />
 					<Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
 					
 					<!-- ListMembers -->
@@ -1292,7 +1296,7 @@
 				
 				<!-- TabDiplomacy -->
 				<Window type="DefaultWindow" name="Guild.TabDiplomacy" >
-					<Property name="Text" value="Diplomacy" />
+					<Property name="Text" value="Diplomatie" />
 					<Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
 
 					<!-- ListGuilds -->
@@ -1303,12 +1307,12 @@
 							
 				<!-- TabGuildmaster -->
 				<Window type="DefaultWindow" name="Guild.TabGuildmaster" >
-					<Property name="Text" value="Guildmaster" />
+					<Property name="Text" value="Gildenmeister" />
 					<Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
 
 					<!-- Password -->
 					<Window type="TaharezLook/Label" name="Guild.PasswordDescription" >
-						<Property name="Text" value="Password:" />
+						<Property name="Text" value="Passwort:" />
 						<Property name="Area" value="{{0,5},{0,5},{0,85},{0,30}}" />
 						<Property name="HorzFormatting" value="LeftAligned" />				
 					</Window>
@@ -1317,16 +1321,16 @@
 						<Property name="Area" value="{{0,90},{0,5},{0,200},{0,30}}" />			
 					</Window>
 					<Window type="TaharezLook/Button" name="Guild.SetPassword" >
-						<Property name="Text" value="Set" />
+						<Property name="Text" value="Passwort setzen" />
 						<Property name="Area" value="{{0,205},{0,5},{0,270},{0,30}}" />
 						<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
-						<Property name="TooltipText" value="Changes your password." />
+						<Property name="TooltipText" value="Ändert das Gildenpasswort." />
 					</Window>
 				</Window>
 				
 				<!-- TabShield -->
 				<Window type="DefaultWindow" name="Guild.TabShield" >
-					<Property name="Text" value="Shield" />
+					<Property name="Text" value="Gildenschild" />
 					<Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
 					
 					<!-- Image -->
@@ -1334,12 +1338,12 @@
 						<Property name="Area" value="{{0,10},{0,45},{0,202},{0,301}}" />
 						<Property name="FrameEnabled" value="False" />
 						<Property name="BackgroundEnabled" value="True" />
-						<Property name="TooltipText" value="The image of the selected design" />
+						<Property name="TooltipText" value="Das aktuelle Design des Gildenschilds" />
 					</Window>
 					
 					<!-- Color1 -->
 					<Window type="TaharezLook/Label" name="Guild.ShieldColor1Description" >
-						<Property name="Text" value="Color1:" />
+						<Property name="Text" value="1. Farbe:" />
 						<Property name="Area" value="{{0,212},{0,55},{0,287},{0,80}}" />
 						<Property name="HorzFormatting" value="LeftAligned" />				
 					</Window>
@@ -1349,7 +1353,7 @@
 
 					<!-- Color2 -->
 					<Window type="TaharezLook/Label" name="Guild.ShieldColor2Description" >
-						<Property name="Text" value="Color2:" />
+						<Property name="Text" value="2. Farbe:" />
 						<Property name="Area" value="{{0,212},{0,85},{0,287},{0,110}}" />
 						<Property name="HorzFormatting" value="LeftAligned" />				
 					</Window>
@@ -1369,7 +1373,7 @@
 
 					<!-- ClaimedBy -->
 					<Window type="TaharezLook/Label" name="Guild.ShieldClaimedByDescription" >
-						<Property name="Text" value="Claimed by:" />
+						<Property name="Text" value="Design Wird bereits beansprucht von:" />
 						<Property name="Area" value="{{0,212},{0,145},{0,287},{0,170}}" />
 						<Property name="HorzFormatting" value="LeftAligned" />				
 					</Window>
@@ -1381,26 +1385,26 @@
 
 					<!-- Claim button -->
 					<Window type="TaharezLook/Button" name="Guild.ShieldClaim" >
-						<Property name="Text" value="Claim" />
+						<Property name="Text" value="Design beanspruchen" />
 						<Property name="Area" value="{{0,270},{0,175},{0,370},{0,200}}" />
 						<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
-						<Property name="TooltipText" value="Claim this design!" />
+						<Property name="TooltipText" value="Beansprucht das Design des Gildenschild für Deine Gilde!" />
 					</Window>					
 				</Window>
 			</Window>
 		
 			<!-- Renounce/Abandon button -->
 			<Window type="TaharezLook/Button" name="Guild.Renounce" >
-				<Property name="Text" value="Renounce" />
+				<Property name="Text" value="Verlassen/Auflösen" />
 				<Property name="Area" value="{{1,-155},{1,-30},{1,-5},{1,-5}}" />
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
-				<Property name="TooltipText" value="Leave or disband your guild!" />
+				<Property name="TooltipText" value="Verlässt die Gilde oder löst Deine Gilde auf!" />
 			</Window>			
 		</Window>
 		
 		<!-- GuildCreate -->
 		<Window type="TaharezLook/FrameWindow" name="GuildCreate" >
-			<Property name="Text" value="Create a guild" />
+			<Property name="Text" value="Gilde gründen" />
 			<Property name="TitlebarEnabled" value="True" />
 			<Property name="TitlebarFont" value="DejaVuSerif-10-Bold" />
 			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
@@ -1414,108 +1418,108 @@
 			<Window type="TaharezLook/Label" name="GuildCreate.GuildNameDesc" >
 				<Property name="Text" value="Name:" />
 				<Property name="Area" value="{{0.1,0},{0,10},{0.1,65},{0,35}}" />
-				<Property name="HorzFormatting" value="LeftAligned" />				
+				<Property name="HorzFormatting" value="LeftAligned" />
 			</Window>
 			
 			<!-- GuildName -->
 			<Window type="TaharezLook/Editbox" name="GuildCreate.GuildName" >
 				<Property name="Area" value="{{0.1,70},{0,10},{0.9,0},{0,35}}" />
-				<Property name="MaxTextLength" value="1073741823" />			
+				<Property name="MaxTextLength" value="1073741823" />
 			</Window>
 			
 			<!-- MaleRanksDesc -->
 			<Window type="TaharezLook/Label" name="GuildCreate.MaleRanksDesc" >
-				<Property name="Text" value="Male ranks:" />
+				<Property name="Text" value="Männliche Ränge:" />
 				<Property name="Area" value="{{0.1,0},{0,40},{0.4,0},{0,65}}" />
-				<Property name="HorzFormatting" value="LeftAligned" />				
+				<Property name="HorzFormatting" value="LeftAligned" />
 			</Window>
 			
 			<!-- FemaleRanksDesc -->
 			<Window type="TaharezLook/Label" name="GuildCreate.FemaleRanksDesc" >
-				<Property name="Text" value="Female ranks:" />
+				<Property name="Text" value="Weibliche Ränge:" />
 				<Property name="Area" value="{{0.6,0},{0,40},{0.9,0},{0,65}}" />
-				<Property name="HorzFormatting" value="LeftAligned" />				
+				<Property name="HorzFormatting" value="LeftAligned" />
 			</Window>
 			
 			<!-- MaleRank5 -->
 			<Window type="TaharezLook/Editbox" name="GuildCreate.MaleRank5" >
-				<Property name="Text" value="Guildmaster" />
+				<Property name="Text" value="Gildenmeister" />
 				<Property name="MaxTextLength" value="1073741823" />
 				<Property name="Area" value="{{0.1,0},{0,70},{0.4,0},{0,95}}" />
 			</Window>
 
 			<!-- MaleRank4 -->
 			<Window type="TaharezLook/Editbox" name="GuildCreate.MaleRank4" >
-				<Property name="Text" value="Hero" />
+				<Property name="Text" value="Held" />
 				<Property name="MaxTextLength" value="1073741823" />
 				<Property name="Area" value="{{0.1,0},{0,100},{0.4,0},{0,125}}" />
 			</Window>
 			
 			<!-- MaleRank3 -->
 			<Window type="TaharezLook/Editbox" name="GuildCreate.MaleRank3" >
-				<Property name="Text" value="Lord" />
+				<Property name="Text" value="Edelmann" />
 				<Property name="MaxTextLength" value="1073741823" />
 				<Property name="Area" value="{{0.1,0},{0,130},{0.4,0},{0,155}}" />
 			</Window>
 			
 			<!-- MaleRank2 -->
 			<Window type="TaharezLook/Editbox" name="GuildCreate.MaleRank2" >
-				<Property name="Text" value="Member" />
+				<Property name="Text" value="Mitglied" />
 				<Property name="MaxTextLength" value="1073741823" />
 				<Property name="Area" value="{{0.1,0},{0,160},{0.4,0},{0,185}}" />
 			</Window>
 			
 			<!-- MaleRank1 -->
 			<Window type="TaharezLook/Editbox" name="GuildCreate.MaleRank1" >
-				<Property name="Text" value="Initiate" />
+				<Property name="Text" value="Anwärter" />
 				<Property name="MaxTextLength" value="1073741823" />
 				<Property name="Area" value="{{0.1,0},{0,190},{0.4,0},{0,215}}" />
 			</Window>
 			
 			<!-- FemaleRank5 -->
 			<Window type="TaharezLook/Editbox" name="GuildCreate.FemaleRank5" >
-				<Property name="Text" value="Guildmistress" />
+				<Property name="Text" value="Gildenmeisterin" />
 				<Property name="MaxTextLength" value="1073741823" />
 				<Property name="Area" value="{{0.6,0},{0,70},{0.9,0},{0,95}}" />
 			</Window>
 			
 			<!-- FemaleRank4 -->
 			<Window type="TaharezLook/Editbox" name="GuildCreate.FemaleRank4" >
-				<Property name="Text" value="Heroine" />
+				<Property name="Text" value="Heldin" />
 				<Property name="MaxTextLength" value="1073741823" />
 				<Property name="Area" value="{{0.6,0},{0,100},{0.9,0},{0,125}}" />
 			</Window>
 			
 			<!-- FemaleRank3 -->
 			<Window type="TaharezLook/Editbox" name="GuildCreate.FemaleRank3" >
-				<Property name="Text" value="Lady" />
+				<Property name="Text" value="Edelfrau" />
 				<Property name="MaxTextLength" value="1073741823" />
 				<Property name="Area" value="{{0.6,0},{0,130},{0.9,0},{0,155}}" />
 			</Window>
 			
 			<!-- FemaleRank2 -->
 			<Window type="TaharezLook/Editbox" name="GuildCreate.FemaleRank2" >
-				<Property name="Text" value="Member" />
+				<Property name="Text" value="Mitglied" />
 				<Property name="MaxTextLength" value="1073741823" />
 				<Property name="Area" value="{{0.6,0},{0,160},{0.9,0},{0,185}}" />
 			</Window>
 			
 			<!-- FemaleRank1 -->
 			<Window type="TaharezLook/Editbox" name="GuildCreate.FemaleRank1" >
-				<Property name="Text" value="Initiate" />
+				<Property name="Text" value="Anwärterin" />
 				<Property name="MaxTextLength" value="1073741823" />
 				<Property name="Area" value="{{0.6,0},{0,190},{0.9,0},{0,215}}" />
 			</Window>
 			
 			<!-- SecretGuildCheckBox -->
 			<Window type="TaharezLook/Checkbox" name="GuildCreate.SecretGuild" >
-				<Property name="Text" value="Secret guild" />
+				<Property name="Text" value="Geheime Gilde" />
 				<Property name="Area" value="{{0.1,0},{0,225},{0.3,0},{0,250}}" />							
 			</Window>
 			
 			<!-- CostDesc -->
 			<Window type="TaharezLook/Label" name="GuildCreate.CostDesc" >
-				<Property name="Text" value="Cost:" />
+				<Property name="Text" value="Kosten:" />
 				<Property name="Area" value="{{0.4,0},{0,225},{0.4,40},{0,250}}" />
 				<Property name="HorzFormatting" value="LeftAligned" />				
 			</Window>
@@ -1529,7 +1533,7 @@
 			
 			<!-- Create -->
 			<Window type="TaharezLook/Button" name="GuildCreate.Create" >
-				<Property name="Text" value="Create" />
+				<Property name="Text" value="Gilde Erstellen" />
 				<Property name="Area" value="{{1,-80},{1,-30},{1,-5},{1,-5}}" />
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
@@ -1537,7 +1541,7 @@
 		
 		<!-- AvatarCreateWizard -->
 		<Window type="TaharezLook/FrameWindow" name="AvatarCreateWizard" >
-			<Property name="Text" value="Create your avatar" />
+			<Property name="Text" value="Erstelle Deinen Character" />
 			<Property name="TitlebarEnabled" value="True" />
 			<Property name="TitlebarFont" value="DejaVuSerif-10-Bold" />
 			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
@@ -1553,7 +1557,7 @@
 
 				<!-- TabBasic -->
 				<Window type="DefaultWindow" name="AvatarCreateWizard.TabBasic" >
-					<Property name="Text" value="Appearance" />
+					<Property name="Text" value="Aussehen" />
 					<Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
 
 					<!-- Name -->
@@ -1572,30 +1576,30 @@
 						<Property name="Area" value="{{0,10},{0,45},{0,202},{0,301}}" />
 						<Property name="FrameEnabled" value="True" />
 						<Property name="BackgroundEnabled" value="True" />
-						<Property name="TooltipText" value="The portrait of your new avatar" />
+						<Property name="TooltipText" value="Das Portrait Deines neuen Characters" />
 					</Window>
 			
 					<!-- Gender -->
 					<Window type="TaharezLook/Label" name="AvatarCreateWizard.GenderDescription" >
-						<Property name="Text" value="Gender:" />
+						<Property name="Text" value="Geschlecht:" />
 						<Property name="Area" value="{{0,212},{0,45},{0,287},{0,70}}" />
 						<Property name="HorzFormatting" value="LeftAligned" />				
 					</Window>
 					<Window type="TaharezLook/RadioButton" name="AvatarCreateWizard.GenderMale" >
 						<Property name="GroupID" value="653945" />
-						<Property name="Text" value="Male" />
+						<Property name="Text" value="Männlich" />
 						<Property name="Selected" value="True" />
 						<Property name="Area" value="{{0,292},{0,45},{0,375},{0,70}}" />											
 					</Window>
 					<Window type="TaharezLook/RadioButton" name="AvatarCreateWizard.GenderFemale" >
 						<Property name="GroupID" value="653945" />
-						<Property name="Text" value="Female" />
+						<Property name="Text" value="Weiblich" />
 						<Property name="Area" value="{{0,380},{0,45},{0,445},{0,70}}" />											
 					</Window>
 
 					<!-- Skincolor -->
 					<Window type="TaharezLook/Label" name="AvatarCreateWizard.SkinColorDescription" >
-						<Property name="Text" value="Skin color:" />
+						<Property name="Text" value="Hautfarbe:" />
 						<Property name="Area" value="{{0,212},{0,75},{0,287},{0,100}}" />
 						<Property name="HorzFormatting" value="LeftAligned" />				
 					</Window>
@@ -1605,7 +1609,7 @@
 
 					<!-- Hair -->
 					<Window type="TaharezLook/Label" name="AvatarCreateWizard.HairDescription" >
-						<Property name="Text" value="Hair:" />
+						<Property name="Text" value="Frisur:" />
 						<Property name="Area" value="{{0,212},{0,105},{0,287},{0,130}}" />
 						<Property name="HorzFormatting" value="LeftAligned" />				
 					</Window>
@@ -1615,7 +1619,7 @@
 
 					<!-- HairColor -->
 					<Window type="TaharezLook/Label" name="AvatarCreateWizard.HairColorDescription" >
-						<Property name="Text" value="Hair color:" />
+						<Property name="Text" value="Haarfarbe:" />
 						<Property name="Area" value="{{0,212},{0,135},{0,287},{0,160}}" />
 						<Property name="HorzFormatting" value="LeftAligned" />				
 					</Window>
@@ -1625,7 +1629,7 @@
 
 					<!-- Eyes -->
 					<Window type="TaharezLook/Label" name="AvatarCreateWizard.EyesDescription" >
-						<Property name="Text" value="Eyes:" />
+						<Property name="Text" value="Augen:" />
 						<Property name="Area" value="{{0,212},{0,165},{0,287},{0,190}}" />
 						<Property name="HorzFormatting" value="LeftAligned" />				
 					</Window>
@@ -1635,7 +1639,7 @@
 
 					<!-- Nose -->
 					<Window type="TaharezLook/Label" name="AvatarCreateWizard.NoseDescription" >
-						<Property name="Text" value="Nose:" />
+						<Property name="Text" value="Nase:" />
 						<Property name="Area" value="{{0,212},{0,195},{0,287},{0,220}}" />
 						<Property name="HorzFormatting" value="LeftAligned" />				
 					</Window>
@@ -1645,7 +1649,7 @@
 
 					<!-- Mouth -->
 					<Window type="TaharezLook/Label" name="AvatarCreateWizard.MouthDescription" >
-						<Property name="Text" value="Mouth:" />
+						<Property name="Text" value="Mund:" />
 						<Property name="Area" value="{{0,212},{0,225},{0,287},{0,250}}" />
 						<Property name="HorzFormatting" value="LeftAligned" />				
 					</Window>
@@ -1655,7 +1659,7 @@
 
 					<!-- Description -->
 					<Window type="TaharezLook/Label" name="AvatarCreateWizard.DescriptionDescription" >
-						<Property name="Text" value="Description:" />
+						<Property name="Text" value="Beschreibung:" />
 						<Property name="Area" value="{{0,10},{0,306},{0,110},{0,331}}" />
 						<Property name="HorzFormatting" value="LeftAligned" />				
 					</Window>
@@ -1663,8 +1667,8 @@
 						<Property name="Area" value="{{0,10},{0,336},{1,-10},{1,-10}}" />
 						<Property name="ReadOnly" value="False" />
 						<Property name="TextParsingEnabled" value="False" />
-						<Property name="TooltipText" value="You can always change this later!" />
-					</Window>					
+						<Property name="TooltipText" value="Dies kann zu jeder Zeit verändert werden!" />
+					</Window>
 				</Window>
 				
 				<!-- TabAttributes -->
@@ -1674,7 +1678,7 @@
 										
 					<!-- Profiles -->
 					<Window type="TaharezLook/Label" name="AvatarCreateWizard.ProfilesDescription" >
-						<Property name="Text" value="Profiles" />
+						<Property name="Text" value="Profile" />
 						<Property name="Area" value="{{0.25,0},{0.1,10},{0.25,100},{0.1,35}}" />
 						<Property name="HorzFormatting" value="LeftAligned" />				
 					</Window>
@@ -1685,85 +1689,85 @@
 					
 					<!-- Might -->
 					<Window type="TaharezLook/Label" name="AvatarCreateWizard.MightDescription" >
-						<Property name="Text" value="Might" />
+						<Property name="Text" value="Stärke" />
 						<Property name="Area" value="{{0.25,0},{0.1,50},{0.25,100},{0.1,75}}" />
 						<Property name="HorzFormatting" value="LeftAligned" />				
 					</Window>
 					<Window type="TaharezLook/VUMeter" name="AvatarCreateWizard.Might" >
 						<Property name="Text" value="25/50" />
 						<Property name="Area" value="{{0.25,105},{0.1,50},{0.75,0},{0.1,75}}" />	
-						<Property name="TooltipText" value="Might affects how much you can carry and the damage you inflict. Important for warriors." />
+						<Property name="TooltipText" value="Stärke beeinflusst, wieviel Du tragen kannst und den Schaden, den Du pro Treffer ausübst. Für Krieger unerlässlich." />
 						<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 					</Window>
 					
 					<!-- Intellect -->
 					<Window type="TaharezLook/Label" name="AvatarCreateWizard.IntellectDescription" >
-						<Property name="Text" value="Intellect" />
+						<Property name="Text" value="Intellekt" />
 						<Property name="Area" value="{{0.25,0},{0.1,80},{0.25,100},{0.1,105}}" />
 						<Property name="HorzFormatting" value="LeftAligned" />				
 					</Window>
 					<Window type="TaharezLook/VUMeter" name="AvatarCreateWizard.Intellect" >
 						<Property name="Text" value="25/50" />
 						<Property name="Area" value="{{0.25,105},{0.1,80},{0.75,0},{0.1,105}}" />
-						<Property name="TooltipText" value="With a high intellect, you can learn more spells and skills faster than others. Used for advanced magics." />
+						<Property name="TooltipText" value="Mit einem hohen Intellekt kannst Du schneller und mehr Zaubersprüche und Fähigkeiten erlernen. Ein Muss für fortgeschrittene Zauberer." />
 						<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 					</Window>
 					
 					<!-- Stamina -->
 					<Window type="TaharezLook/Label" name="AvatarCreateWizard.StaminaDescription" >
-						<Property name="Text" value="Stamina" />
+						<Property name="Text" value="Ausdauer" />
 						<Property name="Area" value="{{0.25,0},{0.1,110},{0.25,100},{0.1,135}}" />
 						<Property name="HorzFormatting" value="LeftAligned" />				
 					</Window>
 					<Window type="TaharezLook/VUMeter" name="AvatarCreateWizard.Stamina" >
 						<Property name="Text" value="25/50" />
 						<Property name="Area" value="{{0.25,105},{0.1,110},{0.75,0},{0.1,135}}" />
-						<Property name="TooltipText" value="Stamina helps you weather the rough times when you are hurt and tired. Used for Kraanan spells." />
+						<Property name="TooltipText" value="Je höher Deine Ausdauer unso höher Deine maximale Lebenskraft. Wird für Zaubersprüche der Schule Kraanan benötigt." />
 						<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 					</Window>
 					
 					<!-- Agility -->
 					<Window type="TaharezLook/Label" name="AvatarCreateWizard.AgilityDescription" >
-						<Property name="Text" value="Agility" />
+						<Property name="Text" value="Gewandheit" />
 						<Property name="Area" value="{{0.25,0},{0.1,140},{0.25,100},{0.1,165}}" />
 						<Property name="HorzFormatting" value="LeftAligned" />				
 					</Window>
 					<Window type="TaharezLook/VUMeter" name="AvatarCreateWizard.Agility" >
 						<Property name="Text" value="25/50" />
 						<Property name="Area" value="{{0.25,105},{0.1,140},{0.75,0},{0.1,165}}" />
-						<Property name="TooltipText" value="An agile fighter dodges his opponent's attacks and is more skilled in certain fighting and defensive arts." />
+						<Property name="TooltipText" value="Ein Kämpfer mit einer hohen Gewandheit weicht den Angriffen seiner Gegner leichter aus und hat bessere Fähigkeiten in diversen passiven und aktiven Kampffertigkeiten." />
 						<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 					</Window>
 					
 					<!-- Mysticism -->
 					<Window type="TaharezLook/Label" name="AvatarCreateWizard.MysticismDescription" >
-						<Property name="Text" value="Mysticsm" />
+						<Property name="Text" value="Magie" />
 						<Property name="Area" value="{{0.25,0},{0.1,170},{0.25,100},{0.1,195}}" />
 						<Property name="HorzFormatting" value="LeftAligned" />				
 					</Window>
 					<Window type="TaharezLook/VUMeter" name="AvatarCreateWizard.Mysticism" >
 						<Property name="Text" value="25/50" />
 						<Property name="Area" value="{{0.25,105},{0.1,170},{0.75,0},{0.1,195}}" />
-						<Property name="TooltipText" value="Mysticism is important for gaining and restoring your magical energy. Used for Faren, Shal'ille, and Qor." />
+						<Property name="TooltipText" value="Magie bestimmt, wie hoch das maximale Mana sein kann und wie schnell Mana wiederhergestellt werden kann. Wird für die Zauberschulen Faren, Shal'ille, und Qor benötigt." />
 						<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 					</Window>
 					
 					<!-- Aim -->
 					<Window type="TaharezLook/Label" name="AvatarCreateWizard.AimDescription" >
-						<Property name="Text" value="Aim" />
+						<Property name="Text" value="Zielen" />
 						<Property name="Area" value="{{0.25,0},{0.1,200},{0.25,100},{0.1,225}}" />
 						<Property name="HorzFormatting" value="LeftAligned" />				
 					</Window>
 					<Window type="TaharezLook/VUMeter" name="AvatarCreateWizard.Aim" >
 						<Property name="Text" value="25/50" />
 						<Property name="Area" value="{{0.25,105},{0.1,200},{0.75,0},{0.1,225}}" />
-						<Property name="TooltipText" value="A true aim guides an attack to its target. Vital for high skill with ranged weapons." />
+						<Property name="TooltipText" value="Hohe Werte beeinflussen die Treffsicherheit positiv. Gut für ausgeprägte Fähigkeiten mit Fernwaffen." />
 						<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 					</Window>
 					
 					<!-- AttributesAvailable -->
 					<Window type="TaharezLook/Label" name="AvatarCreateWizard.AttributesAvailableDescription" >
-						<Property name="Text" value="Available" />
+						<Property name="Text" value="Verfügbar" />
 						<Property name="Area" value="{{0.25,0},{0.1,240},{0.25,100},{0.1,265}}" />
 						<Property name="HorzFormatting" value="LeftAligned" />				
 					</Window>
@@ -1775,12 +1779,12 @@
 				
 				<!-- TabSpellsSkills -->
 				<Window type="DefaultWindow" name="AvatarCreateWizard.TabSpellsSkills" >
-					<Property name="Text" value="Spells & Skills" />
+					<Property name="Text" value="Zaubersprüche & Fähigkeiten" />
 					<Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
 					
 					<!-- Skills -->
 					<Window type="TaharezLook/Label" name="AvatarCreateWizard.SkillsDescription" >
-						<Property name="Text" value="Skills" />
+						<Property name="Text" value="Fähigkeiten" />
 						<Property name="Area" value="{{0,10},{0,10},{0.5,-10},{0,35}}" />
 						<Property name="HorzFormatting" value="LeftAligned" />				
 					</Window>
@@ -1788,7 +1792,7 @@
 						<Property name="Area" value="{{0,10},{0,40},{0.5,-10},{0.6,-10}}" />
 					</Window>
 					<Window type="TaharezLook/Label" name="AvatarCreateWizard.SelectedSkillsDescription" >
-						<Property name="Text" value="Selected" />
+						<Property name="Text" value="Ausgewählt" />
 						<Property name="Area" value="{{0,10},{0.6,0},{0.5,-10},{0.6,25}}" />
 						<Property name="HorzFormatting" value="LeftAligned" />				
 					</Window>
@@ -1798,7 +1802,7 @@
 					
 					<!-- Spells -->
 					<Window type="TaharezLook/Label" name="AvatarCreateWizard.SpellsDescription" >
-						<Property name="Text" value="Spells" />
+						<Property name="Text" value="Zaubersprüche" />
 						<Property name="Area" value="{{0.5,10},{0,10},{1,-10},{0,35}}" />
 						<Property name="HorzFormatting" value="LeftAligned" />				
 					</Window>
@@ -1806,7 +1810,7 @@
 						<Property name="Area" value="{{0.5,10},{0,40},{1,-10},{0.6,-10}}" />						
 					</Window>
 					<Window type="TaharezLook/Label" name="AvatarCreateWizard.SelectedSpellsDescription" >
-						<Property name="Text" value="Selected" />
+						<Property name="Text" value="Ausgewählt" />
 						<Property name="Area" value="{{0.5,10},{0.6,0},{1,-10},{0.6,25}}" />
 						<Property name="HorzFormatting" value="LeftAligned" />				
 					</Window>
@@ -1824,15 +1828,15 @@
 		
 			<!-- Back button -->
 			<Window type="TaharezLook/Button" name="AvatarCreateWizard.ButtonBack" >
-				<Property name="Text" value="Back" />
+				<Property name="Text" value="Zurück" />
 				<Property name="Area" value="{{0,5},{1,-30},{0,155},{1,-5}}" />
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
-				<Property name="TooltipText" value="Create the avatar!" />
+				<Property name="TooltipText" value="Character erstellen!" />
 			</Window>
 			
 			<!-- NOTOK Label -->
 			<Window type="TaharezLook/Label" name="AvatarCreateWizard.DataOK" >
-				<Property name="Text" value="Data not OK!" />
+				<Property name="Text" value="Daten nicht OK!" />
 				<Property name="NormalTextColour" value="FFFF0000" />
 				<Property name="Visible" value="false" />
 				<Property name="Area" value="{{0.5,-50},{1,-30},{0.5,50},{1,-5}}" />				
@@ -1840,16 +1844,16 @@
 					
 			<!-- Next/OK button -->
 			<Window type="TaharezLook/Button" name="AvatarCreateWizard.ButtonNext" >
-				<Property name="Text" value="Next" />
+				<Property name="Text" value="Weiter" />
 				<Property name="Area" value="{{1,-155},{1,-30},{1,-5},{1,-5}}" />
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
-				<Property name="TooltipText" value="Create the avatar!" />
+				<Property name="TooltipText" value="Character erstellen!" />
 			</Window>			
 		</Window>
 		
 		<!-- ConfirmPopup -->
 		<Window type="TaharezLook/FrameWindow" name="ConfirmPopup" >
-			<Property name="Text" value="Warning" />
+			<Property name="Text" value="Warnung" />
 			<Property name="TitlebarEnabled" value="True" />
 			<Property name="TitlebarFont" value="DejaVuSerif-10-Bold" />
 			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
@@ -1861,7 +1865,7 @@
 
 			<!-- Text -->
 			<Window type="TaharezLook/Label" name="ConfirmPopup.Text" >
-				<Property name="Text" value="Are you sure?" />
+				<Property name="Text" value="Bist Du sicher?" />
 				<Property name="NormalTextColour" value="FFFF0000" />
 				<Property name="Font" value="DejaVuSerif-10-Bold" />
 				<Property name="HorzFormatting" value="LeftAligned" />	
@@ -1870,14 +1874,14 @@
 							
 			<!-- Yes -->
 			<Window type="TaharezLook/Button" name="ConfirmPopup.Yes" >
-				<Property name="Text" value="Yes" />
+				<Property name="Text" value="Ja" />
 				<Property name="Area" value="{{0,5},{1,-30},{0,105},{1,-5}}" />
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 				
 			<!-- No -->
 			<Window type="TaharezLook/Button" name="ConfirmPopup.No" >
-				<Property name="Text" value="No" />
+				<Property name="Text" value="Nein" />
 				<Property name="Area" value="{{1,-105},{1,-30},{1,-5},{1,-5}}" />
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
@@ -1885,7 +1889,7 @@
 		
 		<!-- ObjectContents -->
 		<Window type="TaharezLook/FrameWindow" name="ObjectContents" >
-			<Property name="Text" value="Objects" />
+			<Property name="Text" value="Objekte" />
 			<Property name="TitlebarEnabled" value="True" />
 			<Property name="TitlebarFont" value="DejaVuSerif-10-Bold" />
 			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
@@ -1902,7 +1906,7 @@
 			
 			<!-- Get button -->
 			<Window type="TaharezLook/Button" name="ObjectContents.Get" >
-				<Property name="Text" value="Get" />
+				<Property name="Text" value="Aufheben" />
 				<Property name="Area" value="{{1,-60},{1,-25},{1,-5},{1,-5}}" />				
 			</Window>
 		</Window>
@@ -1915,7 +1919,7 @@
 			<Property name="Position" value="{{0.5,-192},{0.5,-240}}" />
 
 			<Window type="TaharezLook/Label" name="Login.Title" >
-				<Property name="Text" value="LOGIN" />
+				<Property name="Text" value="Einwählen" />
 				<Property name="Area" value="{{0.5,-60},{0,0},{0.5,60},{0,30}}" />
 				<Property name="HorzFormatting" value="LeftAligned" />
 				<Property name="Font" value="EBGaramondSC-26" />				
@@ -1935,7 +1939,7 @@
 			
 			<!-- Username -->
 			<Window type="TaharezLook/Label" name="Login.UsernameDescription" >
-				<Property name="Text" value="Username" />
+				<Property name="Text" value="Benutzername" />
 				<Property name="Area" value="{{0.5,-125},{0,85},{0.5,-35},{0,110}}" />			
 				<Property name="HorzFormatting" value="LeftAligned" />					
 			</Window>
@@ -1946,7 +1950,7 @@
 			
 			<!-- Password -->
 			<Window type="TaharezLook/Label" name="Login.PasswordDescription" >
-				<Property name="Text" value="Password" />
+				<Property name="Text" value="Passwort" />
 				<Property name="Area" value="{{0.5,-125},{0,115},{0.5,-35},{0,140}}" />			
 				<Property name="HorzFormatting" value="LeftAligned" />					
 			</Window>
@@ -1958,14 +1962,14 @@
 			
 			<!-- Connect -->
 			<Window type="TaharezLook/Button" name="Login.Connect" >
-				<Property name="Text" value="Connect" />
+				<Property name="Text" value="Verbinden" />
 				<Property name="Area" value="{{0.5,-105},{0,170},{0.5,-5},{0,195}}" />
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 			
 			<!-- Options -->
 			<Window type="TaharezLook/Button" name="Login.Options" >
-				<Property name="Text" value="Options" />
+				<Property name="Text" value="Optionen" />
 				<Property name="Area" value="{{0.5,5},{0,170},{0.5,105},{0,195}}" />
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
@@ -1973,7 +1977,7 @@
 			
 		<!-- Options -->
 		<Window type="TaharezLook/FrameWindow" name="Options" >
-			<Property name="Text" value="Options" />
+			<Property name="Text" value="Optionen" />
 			<Property name="TitlebarEnabled" value="True" />
 			<Property name="TitlebarFont" value="DejaVuSerif-10-Bold" />
 			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
@@ -1992,7 +1996,7 @@
 			
 			<!-- Input -->
 			<Window type="TaharezLook/Button" name="Options.Input" >
-				<Property name="Text" value="Input" />
+				<Property name="Text" value="Eingabe" />
 				<Property name="Area" value="{{0,15},{0,225},{0,115},{0,250}}" />
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
@@ -2013,7 +2017,7 @@
 			
 			<!-- About -->
 			<Window type="TaharezLook/Button" name="Options.About" >
-				<Property name="Text" value="About" />
+				<Property name="Text" value="Über..." />
 				<Property name="Area" value="{{0,15},{0,315},{0,115},{0,340}}" />
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
@@ -2030,7 +2034,7 @@
 
 					<!-- Display -->
 					<Window type="TaharezLook/Label" name="Options.TabEngine.DisplayDescription" >
-						<Property name="Text" value="Display" />
+						<Property name="Text" value="Anzeige" />
 						<Property name="Area" value="{{0,20},{0,20},{0,110},{0,40}}" />
 						<Property name="HorzFormatting" value="LeftAligned" />
 						<Property name="NormalTextColour" value="FFffeeee" />								
@@ -2043,7 +2047,7 @@
 
 					<!-- Resolution -->
 					<Window type="TaharezLook/Label" name="Options.TabEngine.ResolutionDescription" >
-						<Property name="Text" value="Resolution" />
+						<Property name="Text" value="Auflösung" />
 						<Property name="Area" value="{{0,20},{0,45},{0,110},{0,65}}" />
 						<Property name="HorzFormatting" value="LeftAligned" />
 						<Property name="NormalTextColour" value="FFffeeee" />								
@@ -2056,13 +2060,13 @@
 					
 					<!-- Window mode -->
 					<Window type="TaharezLook/Checkbox" name="Options.TabEngine.WindowMode" >
-						<Property name="Text" value="Window" />
+						<Property name="Text" value="Fenster" />
 						<Property name="Area" value="{{0,120},{0,70},{0,200},{0,90}}" />				
 					</Window>
 					
 					<!-- Window borders -->
 					<Window type="TaharezLook/Checkbox" name="Options.TabEngine.WindowBorders" >
-						<Property name="Text" value="Borders" />
+						<Property name="Text" value="Ränder" />
 						<Property name="Area" value="{{0,210},{0,70},{0,285},{0,90}}" />
 					</Window>
 									
@@ -2089,7 +2093,7 @@
 					
 					<!-- Filtering -->
 					<Window type="TaharezLook/Label" name="Options.TabEngine.FilteringDescription" >
-						<Property name="Text" value="Filtering" />
+						<Property name="Text" value="Filter" />
 						<Property name="Area" value="{{0,20},{0,130},{0,110},{0,150}}" />
 						<Property name="HorzFormatting" value="LeftAligned" />
 						<Property name="NormalTextColour" value="FFffeeee" />								
@@ -2111,12 +2115,12 @@
 						<Property name="Area" value="{{0,115},{0,155},{0,245},{0,255}}" />
 						<Property name="ClippedByParent" value="False" />
 						<Property name="ReadOnly" value="True" />
-						<Property name="TooltipText" value="Restart required." />
+						<Property name="TooltipText" value="Neustart erforderlich." />
 					</Window>					
 					
 					<!-- ScalingQuality -->
 					<Window type="TaharezLook/Label" name="Options.TabEngine.ScalingQualityDescription" >
-						<Property name="Text" value="ScalingQuality" />
+						<Property name="Text" value="Skalierungsqualität" />
 						<Property name="Area" value="{{0,20},{0,180},{0,110},{0,200}}" />
 						<Property name="HorzFormatting" value="LeftAligned" />
 						<Property name="NormalTextColour" value="FFffeeee" />								
@@ -2129,7 +2133,7 @@
 					
 					<!-- TextureQuality -->
 					<Window type="TaharezLook/Label" name="Options.TabEngine.TextureQualityDescription" >
-						<Property name="Text" value="TextureQuality" />
+						<Property name="Text" value="Texturqualität" />
 						<Property name="Area" value="{{0,20},{0,205},{0,110},{0,225}}" />
 						<Property name="HorzFormatting" value="LeftAligned" />
 						<Property name="NormalTextColour" value="FFffeeee" />								
@@ -2146,32 +2150,32 @@
 					<Window type="TaharezLook/Checkbox" name="Options.TabEngine.DisableMipmaps" >
 						<Property name="Text" value="Mipmaps" />
 						<Property name="Area" value="{{0,250},{0,105},{0,365},{0,125}}" />
-						<Property name="TooltipText" value="Restart required." />
+						<Property name="TooltipText" value="Neustart erforderlich." />
 					</Window>
 					
 					<!-- DisableNewRoomTextures -->
 					<Window type="TaharezLook/Checkbox" name="Options.TabEngine.DisableNewRoomTextures" >
-						<Property name="Text" value="New Textures" />
+						<Property name="Text" value="Neue Texturen" />
 						<Property name="Area" value="{{0,250},{0,130},{0,365},{0,150}}" />
-						<Property name="TooltipText" value="Restart required." />
+						<Property name="TooltipText" value="Neustart erforderlich." />
 					</Window>
 					
 					<!-- Disable3DModels -->
 					<Window type="TaharezLook/Checkbox" name="Options.TabEngine.Disable3DModels" >
-						<Property name="Text" value="New 3D Models" />
+						<Property name="Text" value="Neue 3D Modelle" />
 						<Property name="Area" value="{{0,250},{0,155},{0,365},{0,175}}" />
-						<Property name="TooltipText" value="Restart required." />
+						<Property name="TooltipText" value="Neustart erforderlich." />
 					</Window>
 					
 					<!-- DisableNewSky -->
 					<Window type="TaharezLook/Checkbox" name="Options.TabEngine.DisableNewSky" >
-						<Property name="Text" value="New Sky" />
+						<Property name="Text" value="Neuer Himmel" />
 						<Property name="Area" value="{{0,250},{0,180},{0,365},{0,200}}" />					
 					</Window>
 					
 					<!-- DisableWeather -->
 					<Window type="TaharezLook/Checkbox" name="Options.TabEngine.DisableWeather" >
-						<Property name="Text" value="Weather Effects" />
+						<Property name="Text" value="Wetter Effekte" />
 						<Property name="Area" value="{{0,250},{0,205},{0,365},{0,225}}" />
 					</Window>
 					
@@ -2179,7 +2183,7 @@
 					
 					<!-- Particles -->
 					<Window type="TaharezLook/Label" name="Options.TabEngine.ParticlesDescription" >
-						<Property name="Text" value="Particles" />
+						<Property name="Text" value="Partikel" />
 						<Property name="Area" value="{{0,20},{0,240},{0,110},{0,260}}" />
 						<Property name="HorzFormatting" value="LeftAligned" />
 						<Property name="NormalTextColour" value="FFffeeee" />								
@@ -2190,7 +2194,7 @@
 					
 					<!-- Decoration -->
 					<Window type="TaharezLook/Label" name="Options.TabEngine.DecorationDescription" >
-						<Property name="Text" value="Decoration" />
+						<Property name="Text" value="Verzierungen" />
 						<Property name="Area" value="{{0,20},{0,265},{0,110},{0,285}}" />
 						<Property name="HorzFormatting" value="LeftAligned" />
 						<Property name="NormalTextColour" value="FFffeeee" />								
@@ -2203,7 +2207,7 @@
 					
 					<!-- MusicVolume -->
 					<Window type="TaharezLook/Label" name="Options.TabEngine.MusicVolumeDescription" >
-						<Property name="Text" value="MusicVolume" />
+						<Property name="Text" value="Musik Lautstärke" />
 						<Property name="Area" value="{{0,20},{0,300},{0,110},{0,320}}" />
 						<Property name="HorzFormatting" value="LeftAligned" />
 						<Property name="NormalTextColour" value="FFffeeee" />								
@@ -2214,7 +2218,7 @@
 					
 					<!-- SoundVolume -->
 					<Window type="TaharezLook/Label" name="Options.TabEngine.SoundVolumeDescription" >
-						<Property name="Text" value="SoundVolume" />
+						<Property name="Text" value="Geräusche Lautstärke" />
 						<Property name="Area" value="{{0,20},{0,325},{0,110},{0,345}}" />
 						<Property name="HorzFormatting" value="LeftAligned" />
 						<Property name="NormalTextColour" value="FFffeeee" />								
@@ -2225,47 +2229,47 @@
 					
 					<!-- DisableLoopingSounds -->
 					<Window type="TaharezLook/Checkbox" name="Options.TabEngine.DisableLoopSounds" >
-						<Property name="Text" value="Disable Loop Sounds" />
+						<Property name="Text" value="Sich wiederholende Geräusche deaktivieren" />
 						<Property name="Area" value="{{0,125},{0,350},{0,290},{0,370}}" />					
 					</Window>
 					
 					<!-- Preloading -->
 					<Window type="TaharezLook/Label" name="Options.TabEngine.PreloadDescription" >
-						<Property name="Text" value="Preload" />
+						<Property name="Text" value="Vorab laden" />
 						<Property name="Area" value="{{0,20},{0,390},{0,120},{0,410}}" />
 						<Property name="HorzFormatting" value="LeftAligned" />
 						<Property name="NormalTextColour" value="FFffeeee" />								
 					</Window>
 					<Window type="TaharezLook/Checkbox" name="Options.TabEngine.PreloadRooms" >
-						<Property name="Text" value="Rooms" />
+						<Property name="Text" value="Räume" />
 						<Property name="Area" value="{{0,125},{0,390},{0,200},{0,410}}" />
-						<Property name="TooltipText" value="Restart required." />
+						<Property name="TooltipText" value="Neustart erforderlich." />
 					</Window>
 					<Window type="TaharezLook/Checkbox" name="Options.TabEngine.PreloadRoomTextures" >
-						<Property name="Text" value="Room Textures" />
+						<Property name="Text" value="Raum Texturen" />
 						<Property name="Area" value="{{0,205},{0,390},{0,360},{0,410}}" />
-						<Property name="TooltipText" value="Restart required." />
+						<Property name="TooltipText" value="Neustart erforderlich." />
 					</Window>
 					<Window type="TaharezLook/Checkbox" name="Options.TabEngine.PreloadObjects" >
-						<Property name="Text" value="Objects" />
+						<Property name="Text" value="Objekte" />
 						<Property name="Area" value="{{0,125},{0,415},{0,200},{0,435}}" />
-						<Property name="TooltipText" value="Restart required." />
+						<Property name="TooltipText" value="Neustart erforderlich." />
 					</Window>
 					<Window type="TaharezLook/Checkbox" name="Options.TabEngine.PreloadSounds" >
-						<Property name="Text" value="Sounds" />
+						<Property name="Text" value="Geräusche" />
 						<Property name="Area" value="{{0,205},{0,415},{0,280},{0,435}}" />
-						<Property name="TooltipText" value="Restart required." />
+						<Property name="TooltipText" value="Neustart erforderlich." />
 					</Window>
 					<Window type="TaharezLook/Checkbox" name="Options.TabEngine.PreloadMusic" >
-						<Property name="Text" value="Music" />
+						<Property name="Text" value="Musik" />
 						<Property name="Area" value="{{0,285},{0,415},{0,360},{0,435}}" />
-						<Property name="TooltipText" value="Restart required." />					
+						<Property name="TooltipText" value="Neustart erforderlich." />					
 					</Window>
 				</Window>
 				
 				<!-- TabInput -->
 				<Window type="DefaultWindow" name="Options.TabInput" >
-					<Property name="Text" value="Input" />
+					<Property name="Text" value="Eingabe" />
 					<Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
 
 					<!-- TabControl -->
@@ -2275,12 +2279,12 @@
 						
 						<!-- TabGeneral -->
 						<Window type="DefaultWindow" name="Options.TabInput.TabGeneral" >
-							<Property name="Text" value="General" />
+							<Property name="Text" value="Allgemein" />
 							<Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
 
 							<!-- Move forward -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabGeneral.MoveForwardDescription" >
-								<Property name="Text" value="Forward" />
+								<Property name="Text" value="Vorwärts" />
 								<Property name="Area" value="{{0,30},{0,45},{0,100},{0,65}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2293,7 +2297,7 @@
 							
 							<!-- Move backward -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabGeneral.MoveBackwardDescription" >
-								<Property name="Text" value="Backward" />
+								<Property name="Text" value="Rückwärts" />
 								<Property name="Area" value="{{0,30},{0,70},{0,100},{0,90}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2306,7 +2310,7 @@
 							
 							<!-- Move left -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabGeneral.MoveLeftDescription" >
-								<Property name="Text" value="Left" />
+								<Property name="Text" value="Links" />
 								<Property name="Area" value="{{0,30},{0,95},{0,100},{0,115}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2319,7 +2323,7 @@
 							
 							<!-- Move right -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabGeneral.MoveRightDescription" >
-								<Property name="Text" value="Right" />
+								<Property name="Text" value="Rechts" />
 								<Property name="Area" value="{{0,30},{0,120},{0,100},{0,140}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2332,7 +2336,7 @@
 							
 							<!-- Rotate left -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabGeneral.RotateLeftDescription" >
-								<Property name="Text" value="Rotate left" />
+								<Property name="Text" value="Links drehen" />
 								<Property name="Area" value="{{0,30},{0,145},{0,100},{0,165}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2345,7 +2349,7 @@
 							
 							<!-- Rotate right -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabGeneral.RotateRightDescription" >
-								<Property name="Text" value="Rotate right" />
+								<Property name="Text" value="Rechts drehen" />
 								<Property name="Area" value="{{0,30},{0,170},{0,100},{0,190}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2360,7 +2364,7 @@
 							
 							<!-- Walk -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabGeneral.WalkDescription" >
-								<Property name="Text" value="Walk" />
+								<Property name="Text" value="Gehen" />
 								<Property name="Area" value="{{0,210},{0,45},{0,280},{0,65}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2373,7 +2377,7 @@
 														
 							<!-- AutoMove -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabGeneral.AutoMoveDescription" >
-								<Property name="Text" value="AutoMove" />
+								<Property name="Text" value="Auto Gehen" />
 								<Property name="Area" value="{{0,210},{0,70},{0,280},{0,90}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2386,7 +2390,7 @@
 							
 							<!-- NextTarget -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabGeneral.NextTargetDescription" >
-								<Property name="Text" value="NextTarget" />
+								<Property name="Text" value="Nächstes Ziel" />
 								<Property name="Area" value="{{0,210},{0,95},{0,280},{0,115}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2399,7 +2403,7 @@
 							
 							<!-- SelfTarget -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabGeneral.SelfTargetDescription" >
-								<Property name="Text" value="SelfTarget" />
+								<Property name="Text" value="Selbst Anwählen" />
 								<Property name="Area" value="{{0,210},{0,120},{0,280},{0,140}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2412,7 +2416,7 @@
 							
 							<!-- Open -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabGeneral.OpenDescription" >
-								<Property name="Text" value="Open" />
+								<Property name="Text" value="Öffnen" />
 								<Property name="Area" value="{{0,210},{0,145},{0,280},{0,165}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2425,7 +2429,7 @@
 							
 							<!-- Close -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabGeneral.CloseDescription" >
-								<Property name="Text" value="Close" />
+								<Property name="Text" value="Schließen" />
 								<Property name="Area" value="{{0,210},{0,170},{0,280},{0,190}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2440,7 +2444,7 @@
 							
 							<!-- Mouse aim speed -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabGeneral.MouseAimSpeedDescription" >
-								<Property name="Text" value="Mouse aim speed" />
+								<Property name="Text" value="Maus Zielgeschwindigkeit" />
 								<Property name="Area" value="{{0,30},{0,215},{0,160},{0,235}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />								
@@ -2451,7 +2455,7 @@
 					
 							<!-- Key rotate speed -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabGeneral.KeyRotateSpeedDescription" >
-								<Property name="Text" value="Key rotate speed" />
+								<Property name="Text" value="Drehgeschwindigkeit" />
 								<Property name="Area" value="{{0,30},{0,240},{0,160},{0,260}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />								
@@ -2464,7 +2468,7 @@
 														
 							<!-- RightClickAction -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabGeneral.RightClickActionDescription" >
-								<Property name="Text" value="RightClick" />
+								<Property name="Text" value="Rechtsklick" />
 								<Property name="Area" value="{{0,30},{0,280},{0,120},{0,300}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />								
@@ -2477,7 +2481,7 @@
 							
 							<!-- Invert Mouse Y -->
 							<Window type="TaharezLook/Checkbox" name="Options.TabInput.TabGeneral.InvertMouseY" >
-								<Property name="Text" value="Invert Mouse Y" />
+								<Property name="Text" value="Mausachse umkehren" />
 								<Property name="Area" value="{{0,240},{0,280},{0,360},{0,300}}" />	
 							</Window>
 
@@ -2498,12 +2502,12 @@
 						
 						<!-- TabActionButtons1 -->
 						<Window type="DefaultWindow" name="Options.TabInput.TabActionButtons1" >
-							<Property name="Text" value="Action 01-24" />
+							<Property name="Text" value="Aktionen 01-24" />
 							<Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
 
 							<!-- ActionButton01 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button01Description" >
-								<Property name="Text" value="Action 01" />
+								<Property name="Text" value="Aktion 01" />
 								<Property name="Area" value="{{0,30},{0,45},{0,100},{0,65}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2516,7 +2520,7 @@
 							
 							<!-- ActionButton02 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button02Description" >
-								<Property name="Text" value="Action 02" />
+								<Property name="Text" value="Aktion 02" />
 								<Property name="Area" value="{{0,30},{0,70},{0,100},{0,90}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2529,7 +2533,7 @@
 							
 							<!-- ActionButton03 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button03Description" >
-								<Property name="Text" value="Action 03" />
+								<Property name="Text" value="Aktion 03" />
 								<Property name="Area" value="{{0,30},{0,95},{0,100},{0,115}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2542,7 +2546,7 @@
 							
 							<!-- ActionButton04 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button04Description" >
-								<Property name="Text" value="Action 04" />
+								<Property name="Text" value="Aktion 04" />
 								<Property name="Area" value="{{0,30},{0,120},{0,100},{0,140}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2555,7 +2559,7 @@
 							
 							<!-- ActionButton05 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button05Description" >
-								<Property name="Text" value="Action 05" />
+								<Property name="Text" value="Aktion 05" />
 								<Property name="Area" value="{{0,30},{0,145},{0,100},{0,165}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2568,7 +2572,7 @@
 							
 							<!-- ActionButton06 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button06Description" >
-								<Property name="Text" value="Action 06" />
+								<Property name="Text" value="Aktion 06" />
 								<Property name="Area" value="{{0,30},{0,170},{0,100},{0,190}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2581,7 +2585,7 @@
 							
 							<!-- ActionButton07 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button07Description" >
-								<Property name="Text" value="Action 07" />
+								<Property name="Text" value="Aktion 07" />
 								<Property name="Area" value="{{0,30},{0,195},{0,100},{0,215}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2594,7 +2598,7 @@
 							
 							<!-- ActionButton08 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button08Description" >
-								<Property name="Text" value="Action 08" />
+								<Property name="Text" value="Aktion 08" />
 								<Property name="Area" value="{{0,30},{0,220},{0,100},{0,240}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2607,7 +2611,7 @@
 							
 							<!-- ActionButton09 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button09Description" >
-								<Property name="Text" value="Action 09" />
+								<Property name="Text" value="Aktion 09" />
 								<Property name="Area" value="{{0,30},{0,245},{0,100},{0,265}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2620,7 +2624,7 @@
 							
 							<!-- ActionButton10 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button10Description" >
-								<Property name="Text" value="Action 10" />
+								<Property name="Text" value="Aktion 10" />
 								<Property name="Area" value="{{0,30},{0,270},{0,100},{0,290}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2633,7 +2637,7 @@
 							
 							<!-- ActionButton11 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button11Description" >
-								<Property name="Text" value="Action 11" />
+								<Property name="Text" value="Aktion 11" />
 								<Property name="Area" value="{{0,30},{0,295},{0,100},{0,315}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2646,7 +2650,7 @@
 							
 							<!-- ActionButton12 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button12Description" >
-								<Property name="Text" value="Action 12" />
+								<Property name="Text" value="Aktion 12" />
 								<Property name="Area" value="{{0,30},{0,320},{0,100},{0,340}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2661,7 +2665,7 @@
 							
 							<!-- ActionButton13 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button13Description" >
-								<Property name="Text" value="Action 13" />
+								<Property name="Text" value="Aktion 13" />
 								<Property name="Area" value="{{0,210},{0,45},{0,280},{0,65}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2674,7 +2678,7 @@
 														
 							<!-- ActionButton14 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button14Description" >
-								<Property name="Text" value="Action 14" />
+								<Property name="Text" value="Aktion 14" />
 								<Property name="Area" value="{{0,210},{0,70},{0,280},{0,90}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2687,7 +2691,7 @@
 							
 							<!-- ActionButton15 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button15Description" >
-								<Property name="Text" value="Action 15" />
+								<Property name="Text" value="Aktion 15" />
 								<Property name="Area" value="{{0,210},{0,95},{0,280},{0,115}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2700,7 +2704,7 @@
 							
 							<!-- ActionButton16 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button16Description" >
-								<Property name="Text" value="Action 16" />
+								<Property name="Text" value="Aktion 16" />
 								<Property name="Area" value="{{0,210},{0,120},{0,280},{0,140}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2713,7 +2717,7 @@
 							
 							<!-- ActionButton17 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button17Description" >
-								<Property name="Text" value="Action 17" />
+								<Property name="Text" value="Aktion 17" />
 								<Property name="Area" value="{{0,210},{0,145},{0,280},{0,165}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2726,7 +2730,7 @@
 							
 							<!-- ActionButton18 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button18Description" >
-								<Property name="Text" value="Action 18" />
+								<Property name="Text" value="Aktion 18" />
 								<Property name="Area" value="{{0,210},{0,170},{0,280},{0,190}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2739,7 +2743,7 @@
 							
 							<!-- ActionButton19 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button19Description" >
-								<Property name="Text" value="Action 19" />
+								<Property name="Text" value="Aktion 19" />
 								<Property name="Area" value="{{0,210},{0,195},{0,280},{0,215}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2752,7 +2756,7 @@
 							
 							<!-- ActionButton20 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button20Description" >
-								<Property name="Text" value="Action 20" />
+								<Property name="Text" value="Aktion 20" />
 								<Property name="Area" value="{{0,210},{0,220},{0,280},{0,240}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2765,7 +2769,7 @@
 							
 							<!-- ActionButton21 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button21Description" >
-								<Property name="Text" value="Action 21" />
+								<Property name="Text" value="Aktion 21" />
 								<Property name="Area" value="{{0,210},{0,245},{0,280},{0,265}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2778,7 +2782,7 @@
 							
 							<!-- ActionButton22 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button22Description" >
-								<Property name="Text" value="Action 22" />
+								<Property name="Text" value="Aktion 22" />
 								<Property name="Area" value="{{0,210},{0,270},{0,280},{0,290}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2791,7 +2795,7 @@
 							
 							<!-- ActionButton23 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button23Description" >
-								<Property name="Text" value="Action 23" />
+								<Property name="Text" value="Aktion 23" />
 								<Property name="Area" value="{{0,210},{0,295},{0,280},{0,315}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2804,7 +2808,7 @@
 							
 							<!-- ActionButton24 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button24Description" >
-								<Property name="Text" value="Action 24" />
+								<Property name="Text" value="Aktion 24" />
 								<Property name="Area" value="{{0,210},{0,320},{0,280},{0,340}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2819,12 +2823,12 @@
 						
 						<!-- TabActionButtons2 -->
 						<Window type="DefaultWindow" name="Options.TabInput.TabActionButtons2" >
-							<Property name="Text" value="Action 25-48" />
+							<Property name="Text" value="Aktionen 25-48" />
 							<Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
 						
 							<!-- ActionButton25 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button25Description" >
-								<Property name="Text" value="Action 25" />
+								<Property name="Text" value="Aktion 25" />
 								<Property name="Area" value="{{0,30},{0,45},{0,100},{0,65}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2837,7 +2841,7 @@
 							
 							<!-- ActionButton26 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button26Description" >
-								<Property name="Text" value="Action 26" />
+								<Property name="Text" value="Aktion 26" />
 								<Property name="Area" value="{{0,30},{0,70},{0,100},{0,90}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2850,7 +2854,7 @@
 							
 							<!-- ActionButton27 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button27Description" >
-								<Property name="Text" value="Action 27" />
+								<Property name="Text" value="Aktion 27" />
 								<Property name="Area" value="{{0,30},{0,95},{0,100},{0,115}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2863,7 +2867,7 @@
 							
 							<!-- ActionButton28 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button28Description" >
-								<Property name="Text" value="Action 28" />
+								<Property name="Text" value="Aktion 28" />
 								<Property name="Area" value="{{0,30},{0,120},{0,100},{0,140}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2876,7 +2880,7 @@
 							
 							<!-- ActionButton29 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button29Description" >
-								<Property name="Text" value="Action 29" />
+								<Property name="Text" value="Aktion 29" />
 								<Property name="Area" value="{{0,30},{0,145},{0,100},{0,165}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2889,7 +2893,7 @@
 							
 							<!-- ActionButton30 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button30Description" >
-								<Property name="Text" value="Action 30" />
+								<Property name="Text" value="Aktion 30" />
 								<Property name="Area" value="{{0,30},{0,170},{0,100},{0,190}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2902,7 +2906,7 @@
 							
 							<!-- ActionButton31 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button31Description" >
-								<Property name="Text" value="Action 31" />
+								<Property name="Text" value="Aktion 31" />
 								<Property name="Area" value="{{0,30},{0,195},{0,100},{0,215}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2915,7 +2919,7 @@
 							
 							<!-- ActionButton32 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button32Description" >
-								<Property name="Text" value="Action 32" />
+								<Property name="Text" value="Aktion 32" />
 								<Property name="Area" value="{{0,30},{0,220},{0,100},{0,240}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2928,7 +2932,7 @@
 							
 							<!-- ActionButton33 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button33Description" >
-								<Property name="Text" value="Action 33" />
+								<Property name="Text" value="Aktion 33" />
 								<Property name="Area" value="{{0,30},{0,245},{0,100},{0,265}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2941,7 +2945,7 @@
 							
 							<!-- ActionButton34 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button34Description" >
-								<Property name="Text" value="Action 34" />
+								<Property name="Text" value="Aktion 34" />
 								<Property name="Area" value="{{0,30},{0,270},{0,100},{0,290}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2954,7 +2958,7 @@
 							
 							<!-- ActionButton35 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button35Description" >
-								<Property name="Text" value="Action 35" />
+								<Property name="Text" value="Aktion 35" />
 								<Property name="Area" value="{{0,30},{0,295},{0,100},{0,315}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2967,7 +2971,7 @@
 							
 							<!-- ActionButton36 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button36Description" >
-								<Property name="Text" value="Action 36" />
+								<Property name="Text" value="Aktion 36" />
 								<Property name="Area" value="{{0,30},{0,320},{0,100},{0,340}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2982,7 +2986,7 @@
 							
 							<!-- ActionButton37 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button37Description" >
-								<Property name="Text" value="Action 37" />
+								<Property name="Text" value="Aktion 37" />
 								<Property name="Area" value="{{0,210},{0,45},{0,280},{0,65}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -2995,7 +2999,7 @@
 														
 							<!-- ActionButton38 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button38Description" >
-								<Property name="Text" value="Action 38" />
+								<Property name="Text" value="Aktion 38" />
 								<Property name="Area" value="{{0,210},{0,70},{0,280},{0,90}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -3008,7 +3012,7 @@
 							
 							<!-- ActionButton39 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button39Description" >
-								<Property name="Text" value="Action 39" />
+								<Property name="Text" value="Aktion 39" />
 								<Property name="Area" value="{{0,210},{0,95},{0,280},{0,115}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -3021,7 +3025,7 @@
 							
 							<!-- ActionButton40 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button40Description" >
-								<Property name="Text" value="Action 40" />
+								<Property name="Text" value="Aktion 40" />
 								<Property name="Area" value="{{0,210},{0,120},{0,280},{0,140}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -3034,7 +3038,7 @@
 							
 							<!-- ActionButton41 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button41Description" >
-								<Property name="Text" value="Action 41" />
+								<Property name="Text" value="Aktion 41" />
 								<Property name="Area" value="{{0,210},{0,145},{0,280},{0,165}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -3047,7 +3051,7 @@
 							
 							<!-- ActionButton42 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button42Description" >
-								<Property name="Text" value="Action 42" />
+								<Property name="Text" value="Aktion 42" />
 								<Property name="Area" value="{{0,210},{0,170},{0,280},{0,190}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -3060,7 +3064,7 @@
 							
 							<!-- ActionButton43 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button43Description" >
-								<Property name="Text" value="Action 43" />
+								<Property name="Text" value="Aktion 43" />
 								<Property name="Area" value="{{0,210},{0,195},{0,280},{0,215}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -3073,7 +3077,7 @@
 							
 							<!-- ActionButton44 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button44Description" >
-								<Property name="Text" value="Action 44" />
+								<Property name="Text" value="Aktion 44" />
 								<Property name="Area" value="{{0,210},{0,220},{0,280},{0,240}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -3086,7 +3090,7 @@
 							
 							<!-- ActionButton45 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button45Description" >
-								<Property name="Text" value="Action 45" />
+								<Property name="Text" value="Aktion 45" />
 								<Property name="Area" value="{{0,210},{0,245},{0,280},{0,265}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -3099,7 +3103,7 @@
 							
 							<!-- ActionButton46 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button46Description" >
-								<Property name="Text" value="Action 46" />
+								<Property name="Text" value="Aktion 46" />
 								<Property name="Area" value="{{0,210},{0,270},{0,280},{0,290}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -3112,7 +3116,7 @@
 							
 							<!-- ActionButton47 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button47Description" >
-								<Property name="Text" value="Action 47" />
+								<Property name="Text" value="Aktion 47" />
 								<Property name="Area" value="{{0,210},{0,295},{0,280},{0,315}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -3125,7 +3129,7 @@
 							
 							<!-- ActionButton48 -->
 							<Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button48Description" >
-								<Property name="Text" value="Action 48" />
+								<Property name="Text" value="Aktion 48" />
 								<Property name="Area" value="{{0,210},{0,320},{0,280},{0,340}}" />
 								<Property name="HorzFormatting" value="LeftAligned" />
 								<Property name="NormalTextColour" value="FFffeeee" />
@@ -3147,47 +3151,47 @@
 
 					<!-- Server saved settings -->
 					<Window type="TaharezLook/Checkbox" name="Options.TabGamePlay.Safety" >
-						<Property name="Text" value="Safety" />
+						<Property name="Text" value="Sicherheit" />
 						<Property name="Area" value="{{0.5,-150},{0,100},{0.5,0},{0,120}}" />
-						<Property name="TooltipText" value="Prevents you from attacking innocents." />
+						<Property name="TooltipText" value="Wenn Deine Sicherheit eingeschaltet ist, kannst Du keine\r\nunschuldigen Spieler angreifen." />
 					</Window>
 					<Window type="TaharezLook/Checkbox" name="Options.TabGamePlay.Grouping" >
-						<Property name="Text" value="Grouping" />
+						<Property name="Text" value="Gruppenbildung" />
 						<Property name="Area" value="{{0.5,-150},{0,125},{0.5,0},{0,145}}" />
-						<Property name="TooltipText" value="You will form groups with other players in your room." />
+						<Property name="TooltipText" value="Du wirst Gruppen mit anderen Spielern im gleichen Raum bilden." />
 					</Window>
 					<Window type="TaharezLook/Checkbox" name="Options.TabGamePlay.SpellPower" >
-						<Property name="Text" value="Spell Power" />
+						<Property name="Text" value="Zauberkraft" />
 						<Property name="Area" value="{{0.5,-150},{0,150},{0.5,0},{0,170}}" />
-						<Property name="TooltipText" value="Will display your spellpower when you cast." />					
+						<Property name="TooltipText" value="Zeigt Deine Zauberkraft, wann immer Du einen Zauberspruch wirkst." />					
 					</Window>
 					<Window type="TaharezLook/Checkbox" name="Options.TabGamePlay.ReagentBag" >
-						<Property name="Text" value="Reagent Bag" />
+						<Property name="Text" value="Reagenzienbeutel" />
 						<Property name="Area" value="{{0.5,-150},{0,175},{0.5,0},{0,195}}" />
-						<Property name="TooltipText" value="Reagents will automatically be put into your reagent bag." />
+						<Property name="TooltipText" value="Reagenzen werden automatisch in Deinem Reagenzienbeutel abgelegt." />
 					</Window>
 					
 					<Window type="TaharezLook/Checkbox" name="Options.TabGamePlay.TempSafe" >
-						<Property name="Text" value="Temporary Angel" />
+						<Property name="Text" value="Temporärer Schutzengel" />
 						<Property name="Area" value="{{0.5,0},{0,100},{0.5,150},{0,120}}" />
-						<Property name="TooltipText" value="Grants you a temporary guardian angel in case you get murdered." />
+						<Property name="TooltipText" value="Wenn Du ermordet wirst, erhälst Du einen temporären Schutzengel." />
 					</Window>						
 					<Window type="TaharezLook/Checkbox" name="Options.TabGamePlay.AutoLoot" >
-						<Property name="Text" value="Auto Loot" />
+						<Property name="Text" value="Auto Aufsammeln von Beute" />
 						<Property name="Area" value="{{0.5,0},{0,125},{0.5,150},{0,145}}" />
-						<Property name="TooltipText" value="You will automatically loot stackable items." />					
+						<Property name="TooltipText" value="Du wirst automatisch stapelbare Beute einsammeln, die von Gegnern fallen gelassen wird." />					
 					</Window>
 					<Window type="TaharezLook/Checkbox" name="Options.TabGamePlay.AutoCombine" >
-						<Property name="Text" value="Auto Combine" />
+						<Property name="Text" value="Auto Kombinieren" />
 						<Property name="Area" value="{{0.5,0},{0,150},{0.5,150},{0,170}}" />
-						<Property name="TooltipText" value="You will automatically combine some items." />					
+						<Property name="TooltipText" value="Du wirst automatisch Gegenstände miteinander kombinieren, wenn dies möglich ist." />					
 					</Window>
 				
 				</Window>
 				
 				<!-- TabAliases -->
 				<Window type="DefaultWindow" name="Options.TabAliases" >
-					<Property name="Text" value="Aliases" />
+					<Property name="Text" value="Aliase" />
 					<Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
 					
 					<!-- KeyDescription -->
@@ -3209,7 +3213,7 @@
 						<Property name="Area" value="{{0,101},{0,15},{0,301},{0,35}}" />			
 						<Property name="NormalTextColour" value="FF242424" />
 						<Property name="HorzFormatting" value="WordWrapLeftAligned" />
-						<Property name="Text" value="For" />						
+						<Property name="Text" value="For" />
 					</Window>
 			
 					<!-- AddValue -->
@@ -3220,7 +3224,7 @@
 					
 					<!-- Add -->
 					<Window type="TaharezLook/Button" name="Options.TabAliases.Add" >
-						<Property name="Text" value="Add" />
+						<Property name="Text" value="Hinzufügen" />
 						<Property name="Area" value="{{0,306},{0,40},{0,361},{0,65}}" />
 						<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 					</Window>
@@ -3234,7 +3238,7 @@
 				
 				<!-- TabAbout -->
 				<Window type="DefaultWindow" name="Options.TabAbout" >
-					<Property name="Text" value="About" />
+					<Property name="Text" value="Über..." />
 					<Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
 					
 					<!-- TabControl -->
@@ -3244,7 +3248,7 @@
 						
 						<!-- TabGeneral -->
 						<Window type="DefaultWindow" name="Options.TabAbout.TabGeneral" >
-							<Property name="Text" value="General" />
+							<Property name="Text" value="Allgemein" />
 							<Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
 
 							<!-- Disclaimer1Description -->
@@ -3269,14 +3273,14 @@
 								<Property name="FrameEnabled" value="False" />
 								<Property name="BackgroundEnabled" value="False" />
 								<Property name="Image" value="TaharezLook/LogoGPL3" />
-								<Property name="TooltipText" value="This software is released under GPL v3." />
+								<Property name="TooltipText" value="Diese Software its unter der GPL v3 veröffentlicht." />
 							</Window>
 									
 							<!-- ContributorsDescription -->
 							<Window type="TaharezLook/Label" name="Options.TabAbout.TabGeneral.ContributorsDescription" >
 								<Property name="Area" value="{{0,10},{0,70},{0,150},{0,90}}" />			
 								<Property name="NormalTextColour" value="FF242424" />
-								<Property name="Text" value="Contributions by" />
+								<Property name="Text" value="Mitwirkende" />
 								<Property name="Font" value="DejaVuSerif-10-Bold" />
 								<Property name="HorzFormatting" value="WordWrapLeftAligned" />						
 							</Window>	
@@ -3286,7 +3290,7 @@
 								<Property name="Area" value="{{0,10},{0,95},{1,-10},{0,145}}" />			
 								<Property name="NormalTextColour" value="FF242424" />
 								<Property name="HorzFormatting" value="WordWrapLeftAligned" />
-								<Property name="Text" value="Florian Neuner, Mario Moser, the OpenMeridian developers and all the kind folks out there providing free game resources." />						
+								<Property name="Text" value="Florian Neuner, Mario Moser, die OpenMeridian Entwickler und alle anderen da draußen, die kostenlose Game Resourcen zur Verfügung stellen und sich hier einbringen." />
 							</Window>
 
 							<!-- Disclaimer3Description -->
@@ -3340,14 +3344,14 @@
 								<Property name="NormalTextColour" value="FF242424" />
 								<Property name="HorzFormatting" value="WordWrapLeftAligned" />
 								<Property name="Text" value="Copyright © 1994-2015 Andrew and Christopher Kirmse. 
-								Meridian is a registered trademark." />						
+								Meridian ist eine geschützte Handelsmarke." />						
 							</Window>
 
 							<!-- Disclaimer1Description -->
 							<Window type="TaharezLook/Label" name="Options.TabAbout.TabGeneral.ThanksKirmses" >
 								<Property name="Area" value="{{0,20},{0,350},{1,-20},{0,370}}" />			
 								<Property name="NormalTextColour" value="FF242424" />
-								<Property name="Text" value="Thanks to you for making this game open-source." />
+								<Property name="Text" value="Danke, dass Ihr das Spiel Open-Source gemacht habt!" />
 								<Property name="Font" value="DejaVuSerif-10-Italic" />
 								<Property name="HorzFormatting" value="WordWrapLeftAligned" />							
 							</Window>								
@@ -3355,7 +3359,7 @@
 						
 						<!-- TabHistory -->
 						<Window type="DefaultWindow" name="Options.TabAbout.TabHistory" >
-							<Property name="Text" value="Meridian 59 - History" />
+							<Property name="Text" value="Meridian 59 - Geschichte" />
 							<Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
 							
 							<!-- TabControl -->
@@ -3449,7 +3453,7 @@
 								
 								<!-- TabValeOfSorrow -->
 								<Window type="TaharezLook/ScrollablePane" name="Options.TabAbout.TabHistory.TabValeOfSorrow" >
-									<Property name="Text" value="Vale of Sorrow (1997)" />
+									<Property name="Text" value="Tal der Trauer (1997)" />
 									<Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
 									
 									<!-- ImageValeOfSorrow -->
