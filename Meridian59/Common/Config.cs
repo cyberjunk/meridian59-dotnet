@@ -46,6 +46,7 @@ namespace Meridian59.Common
         public const string PROPNAME_RESOURCESVERSION           = "ResourcesVersion";
         public const string PROPNAME_CONNECTIONS                = "Connections";
         public const string PROPNAME_SELECTEDCONNECTIONINDEX    = "SelectedConnectionIndex";
+        public const string PROPNAME_LANGUAGE                   = "Language";
         public const string PROPNAME_ALIASES                    = "Aliases";
 
         public const string DEFAULTVAL_RESOURCES_PATH           = "../resources/";
@@ -67,13 +68,15 @@ namespace Meridian59.Common
         public const string DEFAULTVAL_CONNECTIONS_CHARACTER    = "";
         public const string DEFAULTVAL_ALIASES_KEY              = "";
         public const string DEFAULTVAL_ALIASES_VALUE            = "";
-
+        public const LanguageCode DEFAULTVAL_LANGUAGE           = LanguageCode.English;
+        
         protected const string XMLTAG_CONFIGURATION             = "configuration";
         protected const string XMLTAG_RESOURCES                 = "resources";
         protected const string XMLTAG_CONNECTIONS               = "connections";
         protected const string XMLTAG_CONNECTION                = "connection";
         protected const string XMLTAG_IGNORELIST                = "ignorelist";
         protected const string XMLTAG_IGNORE                    = "ignore";
+        protected const string XMLTAG_LANGUAGE                  = "language";
         protected const string XMLTAG_ALIASES                   = "aliases";
         protected const string XMLTAG_ALIAS                     = "alias";
         protected const string XMLATTRIB_VERSION                = "version";
@@ -108,6 +111,7 @@ namespace Meridian59.Common
         protected bool preloadmusic;
         protected readonly BindingList<ConnectionInfo> connections = new BindingList<ConnectionInfo>();
         protected int selectedConnectionIndex;
+        protected LanguageCode language;
         protected readonly KeyValuePairStringList aliases = new KeyValuePairStringList();
         #endregion
 
@@ -268,6 +272,22 @@ namespace Meridian59.Common
         }
 
         /// <summary>
+        /// Currently selected Language
+        /// </summary>
+        public LanguageCode Language
+        {
+            get { return language; }
+            set
+            {
+                if (language != value)
+                {
+                    language = value;
+                    OnPropertyChanged(new PropertyChangedEventArgs(PROPNAME_LANGUAGE));
+                }
+            }
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         public KeyValuePairStringList Aliases
@@ -342,6 +362,7 @@ namespace Meridian59.Common
             bool val_bool;
             int val_int;
             ushort val_ushort;
+            LanguageCode val_language;
 
             // check for ../configuration.xml existance
             if (File.Exists(CONFIGFILE))
@@ -530,7 +551,24 @@ namespace Meridian59.Common
             }
 
             /******************************************************************************/
-            // PART III: Aliases
+            // PART III: Language
+            /******************************************************************************/
+            
+            node = doc.DocumentElement.SelectSingleNode(
+                '/' + XMLTAG_CONFIGURATION + '/' + XMLTAG_LANGUAGE);
+
+            if (node != null)
+            {
+                Language = (node.Attributes[XMLATTRIB_VALUE] != null && Enum.TryParse<LanguageCode>(node.Attributes[XMLATTRIB_VALUE].Value, out val_language)) ?
+                    val_language : DEFAULTVAL_LANGUAGE;
+            }
+            else
+            {
+                Language = DEFAULTVAL_LANGUAGE;
+            }
+
+            /******************************************************************************/
+            // PART IV: Aliases
             /******************************************************************************/
             
             node = doc.DocumentElement.SelectSingleNode(
@@ -621,9 +659,16 @@ namespace Meridian59.Common
             }
 
             writer.WriteEndElement();
+            
+            /******************************************************************************/
+            // PART III: Language
+
+            writer.WriteStartElement(XMLTAG_LANGUAGE);
+            writer.WriteAttributeString(XMLATTRIB_VALUE, language.ToString());
+            writer.WriteEndElement();
 
             /******************************************************************************/
-            // PART III: Aliases
+            // PART IV: Aliases
 
             writer.WriteStartElement(XMLTAG_ALIASES);
 

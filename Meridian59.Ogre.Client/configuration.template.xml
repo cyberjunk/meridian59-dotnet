@@ -9,7 +9,7 @@
     preloadroomtextures="false"
     preloadsound="false"
     preloadmusic="false" />
-  
+
   <connections selectedindex="2">
 
     <connection
@@ -125,6 +125,7 @@
     </connection>
     
   </connections>
+  <language value="English" />
   <aliases>
     <alias key="chuckle" value="emote chuckles." />
     <alias key="giggle" value="emote giggles." />
