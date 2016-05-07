@@ -1,14 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <configuration>
-  
-  <resources 
-    version="10016" 
+
+  <resources
+    version="10016"
     path="../../../../Resources/"
-    preloadrooms="false" 
-    preloadobjects="false" 
+    preloadrooms="false"
+    preloadobjects="false"
     preloadroomtextures="false"
     preloadsound="false"
-    preloadmusic="false" />
+    preloadmusic="false"
+    language="English" />
   
   <connections selectedindex="2">
 
@@ -154,9 +155,6 @@
   </engine>
   
   <ui>
-    <selectedlanguage>
-      <language value="English" />
-    </selectedlanguage>
     <layout>
       
     </layout>

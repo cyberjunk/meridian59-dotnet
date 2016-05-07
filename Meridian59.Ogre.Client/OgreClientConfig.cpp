@@ -233,10 +233,6 @@ namespace Meridian59 { namespace Ogre
 		/*  2) UI
 		/******************************************************************************/
 
-		// selectedlanguage
-		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_SELECTEDLANGUAGE + "/" + TAG_LANGUAGE);
-		SelectedLanguage = (node && node->Attributes[XMLATTRIB_VALUE]) ? node->Attributes[XMLATTRIB_VALUE]->Value : DEFAULTVAL_INPUT_LANGUAGE;
-
 		// avatar
 		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_AVATAR);
 		ReadUILayout(UILayoutAvatar, node);
@@ -665,13 +661,6 @@ namespace Meridian59 { namespace Ogre
 		/******************************************************************************/
 		// ui-start
 		Writer->WriteStartElement(TAG_UI);
-
-		// selectedlanguage
-		Writer->WriteStartElement(TAG_SELECTEDLANGUAGE);
-		Writer->WriteStartElement(TAG_LANGUAGE);
-		Writer->WriteAttributeString(XMLATTRIB_VALUE, SelectedLanguage);
-		Writer->WriteEndElement();
-		Writer->WriteEndElement();
 
 		// layout-start
 		Writer->WriteStartElement(TAG_LAYOUT);

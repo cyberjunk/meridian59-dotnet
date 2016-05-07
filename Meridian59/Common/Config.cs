@@ -57,6 +57,7 @@ namespace Meridian59.Common
         public const bool   DEFAULTVAL_RESOURCES_PRELOADROOMTEX = false;
         public const bool   DEFAULTVAL_RESOURCES_PRELOADSOUND   = false;
         public const bool   DEFAULTVAL_RESOURCES_PRELOADMUSIC   = false;
+        public const LanguageCode DEFAULTVAL_RESOURCES_LANGUAGECODE = LanguageCode.English;
         public const int    DEFAULTVAL_CONNECTIONS_SELECTEDINDEX= 0;
         public const string DEFAULTVAL_CONNECTIONS_NAME         = "";
         public const string DEFAULTVAL_CONNECTIONS_HOST         = "";
@@ -69,7 +70,7 @@ namespace Meridian59.Common
         public const string DEFAULTVAL_ALIASES_KEY              = "";
         public const string DEFAULTVAL_ALIASES_VALUE            = "";
         public const string DEFAULTVAL_LANGUAGE                 = "English";
-        public const LanguageCode DEFAULTVAL_LANGUAGECODE       = LanguageCode.English;
+        
 
         protected const string XMLTAG_CONFIGURATION             = "configuration";
         protected const string XMLTAG_RESOURCES                 = "resources";
@@ -80,8 +81,6 @@ namespace Meridian59.Common
         protected const string XMLTAG_ALIASES                   = "aliases";
         protected const string XMLTAG_ALIAS                     = "alias";
         protected const string XMLTAG_UI                        = "ui";
-        protected const string XMLTAG_SELECTEDLANGUAGE          = "selectedlanguage";
-        protected const string XMLTAG_LANGUAGE                  = "language";
         protected const string XMLATTRIB_VERSION                = "version";
         protected const string XMLATTRIB_PATH                   = "path";
         protected const string XMLATTRIB_PRELOADROOMS           = "preloadrooms";
@@ -89,6 +88,7 @@ namespace Meridian59.Common
         protected const string XMLATTRIB_PRELOADROOMTEXTURES    = "preloadroomtextures";
         protected const string XMLATTRIB_PRELOADSOUND           = "preloadsound";
         protected const string XMLATTRIB_PRELOADMUSIC           = "preloadmusic";
+        protected const string XMLATTRIB_LANGUAGE               = "language";
         protected const string XMLATTRIB_NAME                   = "name";
         protected const string XMLATTRIB_HOST                   = "host";
         protected const string XMLATTRIB_PORT                   = "port";
@@ -240,7 +240,7 @@ namespace Meridian59.Common
         /// <summary>
         /// Which language to load.
         /// </summary>
-        public LanguageCode PreloadMusic
+        public LanguageCode Language
         {
             get { return language; }
             set
@@ -368,6 +368,7 @@ namespace Meridian59.Common
             bool val_bool;
             int val_int;
             ushort val_ushort;
+            LanguageCode val_langcode;
 
             // check for ../configuration.xml existance
             if (File.Exists(CONFIGFILE))
@@ -440,6 +441,9 @@ namespace Meridian59.Common
 
                 PreloadMusic = (node.Attributes[XMLATTRIB_PRELOADMUSIC] != null && Boolean.TryParse(node.Attributes[XMLATTRIB_PRELOADMUSIC].Value, out val_bool)) ? 
                     val_bool : DEFAULTVAL_RESOURCES_PRELOADMUSIC;
+
+                Language = (node.Attributes[XMLATTRIB_LANGUAGE] != null && LanguageCode.TryParse(node.Attributes[XMLATTRIB_LANGUAGE].Value, out val_langcode)) ?
+                    val_langcode : DEFAULTVAL_RESOURCES_LANGUAGECODE;
             }
             else
             {
@@ -450,6 +454,7 @@ namespace Meridian59.Common
                 PreloadRoomTextures = DEFAULTVAL_RESOURCES_PRELOADROOMTEX;
                 PreloadSound = DEFAULTVAL_RESOURCES_PRELOADSOUND;
                 PreloadMusic = DEFAULTVAL_RESOURCES_PRELOADMUSIC;
+                Language = DEFAULTVAL_RESOURCES_LANGUAGECODE;
             }
 
             /******************************************************************************/
@@ -580,29 +585,6 @@ namespace Meridian59.Common
             }
 
             /******************************************************************************/
-            // PART IV: UI-Language
-            /******************************************************************************/
-
-            node = doc.DocumentElement.SelectSingleNode(
-            '/' + XMLTAG_CONFIGURATION + '/' + XMLTAG_UI + '/' + XMLTAG_SELECTEDLANGUAGE);
-
-            if (node != null)
-            {
-                if (node.Name == XMLTAG_LANGUAGE)
-                {
-                    string langname = (node.Attributes[XMLATTRIB_VALUE] != null) ?
-                        node.Attributes[XMLATTRIB_VALUE].Value : DEFAULTVAL_LANGUAGE;
-                    language = StringToLangCode(langname);
-                }
-                else
-                    language = DEFAULTVAL_LANGUAGECODE;
-            }
-            else
-            {
-                language = DEFAULTVAL_LANGUAGECODE;
-            }
-
-            /******************************************************************************/
 
             // let deriving classes load their stuff
             ReadXml(doc);
@@ -636,6 +618,7 @@ namespace Meridian59.Common
             writer.WriteAttributeString(XMLATTRIB_PRELOADROOMTEXTURES, PreloadRoomTextures.ToString().ToLower());
             writer.WriteAttributeString(XMLATTRIB_PRELOADSOUND, PreloadSound.ToString().ToLower());
             writer.WriteAttributeString(XMLATTRIB_PRELOADMUSIC, PreloadMusic.ToString().ToLower());
+            writer.WriteAttributeString(XMLATTRIB_LANGUAGE, Language.ToString().ToLower());
             writer.WriteEndElement();
 
             /******************************************************************************/
@@ -691,20 +674,6 @@ namespace Meridian59.Common
             writer.WriteEndElement();
 
             /******************************************************************************/
-            // PART IV: UI-Language
-            /******************************************************************************/
-
-            writer.WriteStartElement(XMLTAG_UI);
-            writer.WriteStartElement(XMLTAG_SELECTEDLANGUAGE);
-            writer.WriteStartElement(XMLTAG_LANGUAGE);
-
-            writer.WriteAttributeString(XMLATTRIB_VALUE, LangCodeToString(language));
-
-            writer.WriteEndElement();
-            writer.WriteEndElement();
-            writer.WriteEndElement();
-
-            /******************************************************************************/
 
             // let deriving classes write their stuff
             WriteXml(writer);
@@ -742,54 +711,6 @@ namespace Meridian59.Common
         /// </summary>
         /// <param name="Writer"></param>
         public virtual void WriteXml(XmlWriter Writer) { }
-
-        /// <summary>
-        /// Converts the configuration String to its equivalent LanguageCode
-        /// </summary>
-        /// <param name="convert"></param>
-        /// <returns>The parsed LanguageCode of a set configuration String</returns>
-        private LanguageCode StringToLangCode(string convert)
-        {
-            switch (convert)
-            {
-                case "English":
-                    return LanguageCode.English;
-                case "German":
-                    return LanguageCode.German;
-                case "French":
-                    return DEFAULTVAL_LANGUAGECODE;
-                case "Spanish":
-                    return DEFAULTVAL_LANGUAGECODE;
-                case "Russian":
-                    return DEFAULTVAL_LANGUAGECODE;
-                default:
-                    return DEFAULTVAL_LANGUAGECODE;
-            }
-        }
-
-        /// <summary>
-        /// Converts the LanguageCode to its equivalent configuration String
-        /// </summary>
-        /// <param name="langcode"></param>
-        /// <returns>The parsed configuration String of a set LanguageCode</returns>
-        private string LangCodeToString(LanguageCode langcode)
-        {
-            switch (langcode)
-            {
-                case LanguageCode.English:
-                    return "English";
-                case LanguageCode.German:
-                    return "German";
-                case LanguageCode.Français:
-                    return DEFAULTVAL_LANGUAGE;
-                case LanguageCode.Spanish:
-                    return DEFAULTVAL_LANGUAGE;
-                case LanguageCode.Russian:
-                    return DEFAULTVAL_LANGUAGE;
-                default:
-                    return DEFAULTVAL_LANGUAGE;
-            }
-        }
         #endregion
     }
 }

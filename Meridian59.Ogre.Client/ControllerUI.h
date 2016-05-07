@@ -1123,6 +1123,7 @@ namespace Meridian59 { namespace Ogre
 			static ::CEGUI::ToggleButton* PreloadObjects = nullptr;
 			static ::CEGUI::ToggleButton* PreloadSounds = nullptr;
 			static ::CEGUI::ToggleButton* PreloadMusic = nullptr;
+			static ::CEGUI::Combobox* SelectedLanguage = nullptr;
 
 			//
 
@@ -1151,7 +1152,6 @@ namespace Meridian59 { namespace Ogre
 			static ::CEGUI::Slider* MouseAimSpeed = nullptr;
 			static ::CEGUI::Slider* KeyRotateSpeed = nullptr;
 			static ::CEGUI::Combobox* RightClickAction = nullptr;
-			static ::CEGUI::Combobox* SelectedLanguage = nullptr;
 			static ::CEGUI::ToggleButton* InvertMouseY = nullptr;
 			static ::CEGUI::PushButton* LearnAction01 = nullptr;
 			static ::CEGUI::PushButton* LearnAction02 = nullptr;
@@ -1709,9 +1709,9 @@ namespace Meridian59 { namespace Ogre
 			static bool OnSoundVolumeChanged(const CEGUI::EventArgs& e);
 			static bool OnDisableLoopSoundsChanged(const CEGUI::EventArgs& e);
 			static bool OnPreloadChanged(const CEGUI::EventArgs& e);
+			static bool OnSelectedLanguageChanged(const CEGUI::EventArgs& e);
 
 			static bool OnRightClickActionChanged(const CEGUI::EventArgs& e);
-			static bool OnSelectedLanguageChanged(const CEGUI::EventArgs& e);
 			static bool OnInvertMouseYChanged(const CEGUI::EventArgs& e);
 			static bool OnMouseAimSpeedChanged(const CEGUI::EventArgs& e);
 			static bool OnKeyRotateSpeedChanged(const CEGUI::EventArgs& e);

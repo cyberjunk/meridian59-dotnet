@@ -2265,6 +2265,20 @@
 						<Property name="Area" value="{{0,285},{0,415},{0,360},{0,435}}" />
 						<Property name="TooltipText" value="Neustart erforderlich." />					
 					</Window>
+					
+					<!-- SelectedLanguage -->
+					<Window type="TaharezLook/Label" name="Options.TabEngine.LanguageDescription" >
+						<Property name="Text" value="Sprache" />
+						<Property name="Area" value="{{0,20},{0,435},{0,120},{0,460}}" />
+						<Property name="HorzFormatting" value="LeftAligned" />
+						<Property name="NormalTextColour" value="FFffeeee" />								
+					</Window>
+					<Window type="TaharezLook/Combobox" name="Options.TabEngine.Language" >
+						<Property name="Area" value="{{0,200},{0,435},{0,300},{0,460}}" />
+						<Property name="ClippedByParent" value="False" />
+						<Property name="ReadOnly" value="True" />
+					</Window>
+				
 				</Window>
 				
 				<!-- TabInput -->
@@ -2483,19 +2497,6 @@
 							<Window type="TaharezLook/Checkbox" name="Options.TabInput.TabGeneral.InvertMouseY" >
 								<Property name="Text" value="Mausachse umkehren" />
 								<Property name="Area" value="{{0,240},{0,280},{0,360},{0,300}}" />	
-							</Window>
-
-							<!-- SelectedLanguage -->
-							<Window type="TaharezLook/Label" name="Options.TabInput.TabGeneral.SelectedLanguageDescription" >
-								<Property name="Text" value="Sprache" />
-								<Property name="Area" value="{{0,30},{0,320},{0,120},{0,340}}" />
-								<Property name="HorzFormatting" value="LeftAligned" />
-								<Property name="NormalTextColour" value="FFffeeee" />								
-							</Window>
-							<Window type="TaharezLook/Combobox" name="Options.TabInput.TabGeneral.SelectedLanguage" >
-								<Property name="Area" value="{{0,105},{0320},{0,200},{0,400}}" />
-								<Property name="ClippedByParent" value="False" />
-								<Property name="ReadOnly" value="True" />
 							</Window>
 							
 						</Window>

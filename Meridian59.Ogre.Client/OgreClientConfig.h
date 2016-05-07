@@ -88,8 +88,6 @@ namespace Meridian59 { namespace Ogre
 		literal ::System::String^ TAG_SOUNDVOLUME = "soundvolume";
 		literal ::System::String^ TAG_DISABLELOOPSOUNDS = "disableloopsounds";
 		literal ::System::String^ TAG_UI = "ui";
-		literal ::System::String^ TAG_SELECTEDLANGUAGE = "selectedlanguage";
-		literal ::System::String^ TAG_LANGUAGE = "language";
 		literal ::System::String^ TAG_LAYOUT = "layout";
 		literal ::System::String^ TAG_AVATAR = "avatar";
 		literal ::System::String^ TAG_TARGET = "target";
