@@ -609,6 +609,7 @@
 #define UI_NAME_OPTIONS_TABABOUT_TABHISTORY_IMAGEREVELATION		"Options.TabAbout.TabHistory.ImageRevelation"
 #define UI_NAME_OPTIONS_TABABOUT_TABHISTORY_IMAGEVALEOFSORROW	"Options.TabAbout.TabHistory.ImageValeOfSorrow"
 #define UI_NAME_OPTIONS_TABABOUT_TABHISTORY_IMAGETHEINTERNETQUESTBEGINS	"Options.TabAbout.TabHistory.ImageTheInternetQuestBegins"
+#define UI_NAME_OPTIONS_TABGAMEPLAY_LANGUAGE				"Options.TabGamePlay.Language"
 #define UI_NAME_OPTIONS_TABGAMEPLAY_SAFETY					"Options.TabGamePlay.Safety"
 #define UI_NAME_OPTIONS_TABGAMEPLAY_GROUPING				"Options.TabGamePlay.Grouping"
 #define UI_NAME_OPTIONS_TABGAMEPLAY_SPELLPOWER				"Options.TabGamePlay.SpellPower"

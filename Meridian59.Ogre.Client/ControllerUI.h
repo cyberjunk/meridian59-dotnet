@@ -1126,6 +1126,7 @@ namespace Meridian59 { namespace Ogre
 
 			//
 
+			static ::CEGUI::Combobox* Language = nullptr;
 			static ::CEGUI::ToggleButton* Safety = nullptr;
 			static ::CEGUI::ToggleButton* Grouping = nullptr;
 			static ::CEGUI::ToggleButton* SpellPower = nullptr;
@@ -1718,6 +1719,8 @@ namespace Meridian59 { namespace Ogre
 			static bool OnAliasDeleteClicked(const CEGUI::EventArgs& e);
 			static bool OnAliasKeyAccepted(const CEGUI::EventArgs& e);
 			static bool OnAliasValueAccepted(const CEGUI::EventArgs& e);
+
+			static bool OnLanguageChanged(const CEGUI::EventArgs& e);
 
 			static bool OnPreferencesCheckboxClicked(const CEGUI::EventArgs& e);
 		};

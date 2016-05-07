@@ -137,6 +137,7 @@ namespace Meridian59 { namespace Ogre
 		/******************************************************************************************************/
 
 		// tabgameplay
+		Language    = static_cast<CEGUI::Combobox*>(TabGamePlay->getChild(UI_NAME_OPTIONS_TABGAMEPLAY_LANGUAGE));
 		Safety		= static_cast<CEGUI::ToggleButton*>(TabGamePlay->getChild(UI_NAME_OPTIONS_TABGAMEPLAY_SAFETY));
 		Grouping	= static_cast<CEGUI::ToggleButton*>(TabGamePlay->getChild(UI_NAME_OPTIONS_TABGAMEPLAY_GROUPING));
 		SpellPower	= static_cast<CEGUI::ToggleButton*>(TabGamePlay->getChild(UI_NAME_OPTIONS_TABGAMEPLAY_SPELLPOWER));
@@ -413,6 +414,14 @@ namespace Meridian59 { namespace Ogre
 		/*                                  PREPARE / SET: GAMEPLAY                                           */
 		/******************************************************************************************************/
 		
+		// add available languages
+		Language->addItem(new::CEGUI::ListboxTextItem(StringConvert::CLRToCEGUI(LanguageCode::English.ToString())));
+		Language->addItem(new::CEGUI::ListboxTextItem(StringConvert::CLRToCEGUI(LanguageCode::German.ToString())));
+		
+		// set the current one from config
+		Language->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->Language.ToString()));
+		Language->selectListItemWithEditboxText();
+		
 		// these are disabled until switched enabled by event
 		Safety->setEnabled(false);
 		Grouping->setEnabled(false);
@@ -563,8 +572,10 @@ namespace Meridian59 { namespace Ogre
 		PreloadMusic->subscribeEvent(CEGUI::ToggleButton::EventSelectStateChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnPreloadChanged));
 
 		/******************************************************************************************************/
+		// gameplay events
 
-		// gameplay checkbox events
+		Language->subscribeEvent(CEGUI::Combobox::EventListSelectionAccepted, CEGUI::Event::Subscriber(UICallbacks::Options::OnLanguageChanged));
+
 		// use click event here instead of select-change, to avoid conflicts with code-raised clearing which should not trigger same behaviour
 		Safety->subscribeEvent(CEGUI::ToggleButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnPreferencesCheckboxClicked));
 		Grouping->subscribeEvent(CEGUI::ToggleButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnPreferencesCheckboxClicked));
@@ -2086,6 +2097,29 @@ namespace Meridian59 { namespace Ogre
 
 		if (OgreClient::Singleton->Config->Aliases->Count > (int)idx)
 			OgreClient::Singleton->Config->Aliases[idx]->Value = StringConvert::CEGUIToCLR(box->getText());
+
+		return true;
+	};
+
+	bool UICallbacks::Options::OnLanguageChanged(const CEGUI::EventArgs& e)
+	{
+		const CEGUI::WindowEventArgs& args = (const CEGUI::WindowEventArgs&)e;
+		const CEGUI::Combobox* combobox = (const CEGUI::Combobox*)args.window;
+
+		::System::String^ strval = StringConvert::CEGUIToCLR(combobox->getText());	
+		LanguageCode newval;
+		
+		// something wrong
+		if (!::System::Enum::TryParse<LanguageCode>(strval, newval))
+			return true;
+
+		// unchanged
+		if (OgreClient::Singleton->Config->Language == newval)
+			return true;
+
+		// set new language
+		OgreClient::Singleton->Config->Language = newval;
+		// todo
 
 		return true;
 	};

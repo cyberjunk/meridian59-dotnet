@@ -3131,7 +3131,20 @@
 				<Window type="DefaultWindow" name="Options.TabGamePlay" >
 					<Property name="Text" value="GamePlay" />
 					<Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />			
-
+					
+					<!-- Language setting -->
+					<Window type="TaharezLook/Label" name="Options.TabGamePlay.LanguageDescription" >
+						<Property name="Text" value="Language" />
+						<Property name="Area" value="{{0.5,-110},{0,50},{0.5,-40},{0,70}}" />
+						<Property name="HorzFormatting" value="LeftAligned" />
+						<Property name="NormalTextColour" value="FFffeeee" />								
+					</Window>				
+					<Window type="TaharezLook/Combobox" name="Options.TabGamePlay.Language" >
+						<Property name="Area" value="{{0.5,-30},{0,50},{0.5,110},{0,150}}" />
+						<Property name="ClippedByParent" value="False" />
+						<Property name="ReadOnly" value="True" />
+					</Window>
+					
 					<!-- Server saved settings -->
 					<Window type="TaharezLook/Checkbox" name="Options.TabGamePlay.Safety" >
 						<Property name="Text" value="Safety" />
