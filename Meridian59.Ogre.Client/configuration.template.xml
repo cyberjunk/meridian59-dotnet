@@ -152,9 +152,16 @@
     <soundvolume value="10.0" />
     <disableloopsounds value="false" />
   </engine>
+  
   <ui>
-    <layout />
+    <selectedlanguage>
+      <language value="English" />
+    </selectedlanguage>
+    <layout>
+      
+    </layout>
   </ui>
+  
   <input>
     <mouseaimspeed value="15" />
     <keyrotatespeed value="25" />

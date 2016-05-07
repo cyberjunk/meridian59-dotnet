@@ -58,6 +58,7 @@ namespace Meridian59 { namespace Ogre
 		literal int					DEFAULTVAL_INPUT_MOUSEAIMSPEED		= 25;
 		literal int					DEFAULTVAL_INPUT_KEYROTATESPEED		= 25;
 		literal bool				DEFAULTVAL_INPUT_INVERTMOUSEY		= false;
+		literal ::System::String^	DEFAULTVAL_INPUT_LANGUAGE			= "English";
 
 		literal ::System::String^ BUTTONTYPE_SPELL = "spell";
 		literal ::System::String^ BUTTONTYPE_ACTION = "action";
@@ -87,6 +88,8 @@ namespace Meridian59 { namespace Ogre
 		literal ::System::String^ TAG_SOUNDVOLUME = "soundvolume";
 		literal ::System::String^ TAG_DISABLELOOPSOUNDS = "disableloopsounds";
 		literal ::System::String^ TAG_UI = "ui";
+		literal ::System::String^ TAG_SELECTEDLANGUAGE = "selectedlanguage";
+		literal ::System::String^ TAG_LANGUAGE = "language";
 		literal ::System::String^ TAG_LAYOUT = "layout";
 		literal ::System::String^ TAG_AVATAR = "avatar";
 		literal ::System::String^ TAG_TARGET = "target";
@@ -217,6 +220,7 @@ namespace Meridian59 { namespace Ogre
 		int MouseAimSpeed;
 		int KeyRotateSpeed;
 		bool InvertMouseY;
+		::System::String^ SelectedLanguage;
 
 		::CEGUI::URect* UILayoutAvatar;
 		::CEGUI::URect* UILayoutTarget;

@@ -19,7 +19,7 @@ namespace Meridian59 { namespace Ogre
 		About		= static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_OPTIONS_ABOUT));
 
 		// tabcontrol and tabs
-		TabControl	= static_cast<CEGUI::TabControl*>(Window->getChild(UI_NAME_OPTIONS_TABCONTROL));		
+		TabControl	= static_cast<CEGUI::TabControl*>(Window->getChild(UI_NAME_OPTIONS_TABCONTROL));
 		TabEngine	= static_cast<CEGUI::Window*>(TabControl->getChild(UI_NAME_OPTIONS_TABENGINE));
 		TabInput	= static_cast<CEGUI::Window*>(TabControl->getChild(UI_NAME_OPTIONS_TABINPUT));
 		TabGamePlay = static_cast<CEGUI::Window*>(TabControl->getChild(UI_NAME_OPTIONS_TABGAMEPLAY));
@@ -50,6 +50,7 @@ namespace Meridian59 { namespace Ogre
 		MouseAimSpeed		= static_cast<CEGUI::Slider*>(TabInputTabGeneral->getChild(UI_NAME_OPTIONS_TABINPUT_TABGENERAL_MOUSEAIMSPEED));
 		KeyRotateSpeed		= static_cast<CEGUI::Slider*>(TabInputTabGeneral->getChild(UI_NAME_OPTIONS_TABINPUT_TABGENERAL_KEYROTATESPEED));
 		RightClickAction	= static_cast<CEGUI::Combobox*>(TabInputTabGeneral->getChild(UI_NAME_OPTIONS_TABINPUT_TABGENERAL_RIGHTCLICKACTION));
+		SelectedLanguage    = static_cast<CEGUI::Combobox*>(TabInputTabGeneral->getChild(UI_NAME_OPTIONS_TABINPUT_TABGENERAL_SELECTEDLANGUAGE));
 		InvertMouseY		= static_cast<CEGUI::ToggleButton*>(TabInputTabGeneral->getChild(UI_NAME_OPTIONS_TABINPUT_TABGENERAL_INVERTMOUSEY));
 
 		// tabinput - tabactionbuttons1
@@ -443,6 +444,13 @@ namespace Meridian59 { namespace Ogre
 			RightClickAction->addItem(new ::CEGUI::ListboxTextItem("Action " + ::CEGUI::PropertyHelper<int>::toString(i), i));
 		
 		/******************************************************************************************************/
+		/*                                  PREPARE / SET: LANGUAGE                                           */
+		/******************************************************************************************************/
+
+		SelectedLanguage->addItem(new ::CEGUI::ListboxTextItem("English", 1));
+		SelectedLanguage->addItem(new ::CEGUI::ListboxTextItem("German", 2));
+
+		/******************************************************************************************************/
 
 		OISKeyBinding^ keybinding = OgreClient::Singleton->Config->KeyBinding;
 		::OIS::Keyboard* keyboard = ControllerInput::OISKeyboard;
@@ -522,6 +530,17 @@ namespace Meridian59 { namespace Ogre
 
 		// set selected text
 		RightClickAction->setText(itm->getText());
+
+		/******************************************************************************************************/
+		/*                                       SET: LANGUAGE                                                */
+		/******************************************************************************************************/
+
+		// select
+		CEGUI::ListboxItem* lang = SelectedLanguage->getListboxItemFromIndex(0);
+		lang->setSelected(true);
+
+		// set selected text
+		SelectedLanguage->setText(lang->getText());
 
 		/******************************************************************************************************/
 		/*                                       SET CEGUI EVENTS                                             */
@@ -764,6 +783,7 @@ namespace Meridian59 { namespace Ogre
 
 		// subscribe other events
 		RightClickAction->subscribeEvent(CEGUI::Combobox::EventListSelectionAccepted, CEGUI::Event::Subscriber(UICallbacks::Options::OnRightClickActionChanged));
+		SelectedLanguage->subscribeEvent(CEGUI::Combobox::EventListSelectionAccepted, CEGUI::Event::Subscriber(UICallbacks::Options::OnSelectedLanguageChanged));
 		InvertMouseY->subscribeEvent(CEGUI::ToggleButton::EventSelectStateChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnInvertMouseYChanged));
 		MouseAimSpeed->subscribeEvent(CEGUI::Slider::EventValueChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnMouseAimSpeedChanged));
 		KeyRotateSpeed->subscribeEvent(CEGUI::Slider::EventValueChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyRotateSpeedChanged));
@@ -1984,6 +2004,16 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::Combobox* combobox		= (const CEGUI::Combobox*)args.window;
 
 		OgreClient::Singleton->Config->KeyBinding->RightClickAction = (int)combobox->getSelectedItem()->getID();
+
+		return true;
+	};
+
+	bool UICallbacks::Options::OnSelectedLanguageChanged(const CEGUI::EventArgs& e)
+	{
+		const CEGUI::WindowEventArgs& args = (const CEGUI::WindowEventArgs&)e;
+		const CEGUI::Combobox* combobox = (const CEGUI::Combobox*)args.window;
+
+		OgreClient::Singleton->Config->SelectedLanguage = StringConvert::CEGUIToCLR(combobox->getSelectedItem()->getText());
 
 		return true;
 	};

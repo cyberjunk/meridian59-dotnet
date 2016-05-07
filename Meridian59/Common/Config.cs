@@ -47,6 +47,7 @@ namespace Meridian59.Common
         public const string PROPNAME_CONNECTIONS                = "Connections";
         public const string PROPNAME_SELECTEDCONNECTIONINDEX    = "SelectedConnectionIndex";
         public const string PROPNAME_ALIASES                    = "Aliases";
+        public const string PROPNAME_LANGUAGE                   = "Language";
 
         public const string DEFAULTVAL_RESOURCES_PATH           = "../resources/";
         public const string DEFAULTVAL_RESOURCES_PATH_DEV       = "../../../../resources/";
@@ -67,6 +68,8 @@ namespace Meridian59.Common
         public const string DEFAULTVAL_CONNECTIONS_CHARACTER    = "";
         public const string DEFAULTVAL_ALIASES_KEY              = "";
         public const string DEFAULTVAL_ALIASES_VALUE            = "";
+        public const string DEFAULTVAL_LANGUAGE                 = "English";
+        public const LanguageCode DEFAULTVAL_LANGUAGECODE       = LanguageCode.English;
 
         protected const string XMLTAG_CONFIGURATION             = "configuration";
         protected const string XMLTAG_RESOURCES                 = "resources";
@@ -76,6 +79,9 @@ namespace Meridian59.Common
         protected const string XMLTAG_IGNORE                    = "ignore";
         protected const string XMLTAG_ALIASES                   = "aliases";
         protected const string XMLTAG_ALIAS                     = "alias";
+        protected const string XMLTAG_UI                        = "ui";
+        protected const string XMLTAG_SELECTEDLANGUAGE          = "selectedlanguage";
+        protected const string XMLTAG_LANGUAGE                  = "language";
         protected const string XMLATTRIB_VERSION                = "version";
         protected const string XMLATTRIB_PATH                   = "path";
         protected const string XMLATTRIB_PRELOADROOMS           = "preloadrooms";
@@ -94,10 +100,10 @@ namespace Meridian59.Common
         protected const string XMLATTRIB_SELECTEDINDEX          = "selectedindex";
         protected const string XMLATTRIB_KEY                    = "key"; 
         protected const string XMLATTRIB_VALUE                  = "value";
-        #endregion
-        
+
         public static readonly NumberFormatInfo NumberFormatInfo = new NumberFormatInfo();
-        
+        #endregion
+                
         #region Fields
         protected uint resourcesversion;
         protected string resourcespath;
@@ -109,6 +115,7 @@ namespace Meridian59.Common
         protected readonly BindingList<ConnectionInfo> connections = new BindingList<ConnectionInfo>();
         protected int selectedConnectionIndex;
         protected readonly KeyValuePairStringList aliases = new KeyValuePairStringList();
+        protected Meridian59.Common.Enums.LanguageCode language = LanguageCode.English;
         #endregion
 
         #region Properties
@@ -231,6 +238,22 @@ namespace Meridian59.Common
         }
 
         /// <summary>
+        /// Which language to load.
+        /// </summary>
+        public LanguageCode PreloadMusic
+        {
+            get { return language; }
+            set
+            {
+                if (language != value)
+                {
+                    language = value;
+                    OnPropertyChanged(new PropertyChangedEventArgs(PROPNAME_LANGUAGE));
+                }
+            }
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         public BindingList<ConnectionInfo> Connections
@@ -292,6 +315,7 @@ namespace Meridian59.Common
         }
         #endregion
 
+        #region Constructor
         /// <summary>
         /// Static constructor
         /// </summary>
@@ -318,7 +342,9 @@ namespace Meridian59.Common
             // past load init
             InitPastConfig();
         }
+        #endregion
 
+        #region Methods
         /// <summary>
         /// Overwrite with initialisation code supposed to run BEFORE Load()
         /// </summary>
@@ -554,6 +580,29 @@ namespace Meridian59.Common
             }
 
             /******************************************************************************/
+            // PART IV: UI-Language
+            /******************************************************************************/
+
+            node = doc.DocumentElement.SelectSingleNode(
+            '/' + XMLTAG_CONFIGURATION + '/' + XMLTAG_UI + '/' + XMLTAG_SELECTEDLANGUAGE);
+
+            if (node != null)
+            {
+                if (node.Name == XMLTAG_LANGUAGE)
+                {
+                    string langname = (node.Attributes[XMLATTRIB_VALUE] != null) ?
+                        node.Attributes[XMLATTRIB_VALUE].Value : DEFAULTVAL_LANGUAGE;
+                    language = StringToLangCode(langname);
+                }
+                else
+                    language = DEFAULTVAL_LANGUAGECODE;
+            }
+            else
+            {
+                language = DEFAULTVAL_LANGUAGECODE;
+            }
+
+            /******************************************************************************/
 
             // let deriving classes load their stuff
             ReadXml(doc);
@@ -577,6 +626,7 @@ namespace Meridian59.Common
 
             /******************************************************************************/
             // PART I: RESOURCES
+            /******************************************************************************/
 
             writer.WriteStartElement(XMLTAG_RESOURCES);
             writer.WriteAttributeString(XMLATTRIB_VERSION, ResourcesVersion.ToString());
@@ -590,6 +640,7 @@ namespace Meridian59.Common
 
             /******************************************************************************/
             // PART II: Connections
+            /******************************************************************************/
 
             writer.WriteStartElement(XMLTAG_CONNECTIONS);
             writer.WriteAttributeString(XMLATTRIB_SELECTEDINDEX, SelectedConnectionIndex.ToString());
@@ -624,6 +675,7 @@ namespace Meridian59.Common
 
             /******************************************************************************/
             // PART III: Aliases
+            /******************************************************************************/
 
             writer.WriteStartElement(XMLTAG_ALIASES);
 
@@ -636,6 +688,20 @@ namespace Meridian59.Common
                 writer.WriteEndElement();
             }
 
+            writer.WriteEndElement();
+
+            /******************************************************************************/
+            // PART IV: UI-Language
+            /******************************************************************************/
+
+            writer.WriteStartElement(XMLTAG_UI);
+            writer.WriteStartElement(XMLTAG_SELECTEDLANGUAGE);
+            writer.WriteStartElement(XMLTAG_LANGUAGE);
+
+            writer.WriteAttributeString(XMLATTRIB_VALUE, LangCodeToString(language));
+
+            writer.WriteEndElement();
+            writer.WriteEndElement();
             writer.WriteEndElement();
 
             /******************************************************************************/
@@ -676,5 +742,54 @@ namespace Meridian59.Common
         /// </summary>
         /// <param name="Writer"></param>
         public virtual void WriteXml(XmlWriter Writer) { }
+
+        /// <summary>
+        /// Converts the configuration String to its equivalent LanguageCode
+        /// </summary>
+        /// <param name="convert"></param>
+        /// <returns>The parsed LanguageCode of a set configuration String</returns>
+        private LanguageCode StringToLangCode(string convert)
+        {
+            switch (convert)
+            {
+                case "English":
+                    return LanguageCode.English;
+                case "German":
+                    return LanguageCode.German;
+                case "French":
+                    return DEFAULTVAL_LANGUAGECODE;
+                case "Spanish":
+                    return DEFAULTVAL_LANGUAGECODE;
+                case "Russian":
+                    return DEFAULTVAL_LANGUAGECODE;
+                default:
+                    return DEFAULTVAL_LANGUAGECODE;
+            }
+        }
+
+        /// <summary>
+        /// Converts the LanguageCode to its equivalent configuration String
+        /// </summary>
+        /// <param name="langcode"></param>
+        /// <returns>The parsed configuration String of a set LanguageCode</returns>
+        private string LangCodeToString(LanguageCode langcode)
+        {
+            switch (langcode)
+            {
+                case LanguageCode.English:
+                    return "English";
+                case LanguageCode.German:
+                    return "German";
+                case LanguageCode.Français:
+                    return DEFAULTVAL_LANGUAGE;
+                case LanguageCode.Spanish:
+                    return DEFAULTVAL_LANGUAGE;
+                case LanguageCode.Russian:
+                    return DEFAULTVAL_LANGUAGE;
+                default:
+                    return DEFAULTVAL_LANGUAGE;
+            }
+        }
+        #endregion
     }
 }
