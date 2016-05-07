@@ -1059,8 +1059,10 @@ namespace Meridian59 { namespace Ogre
 			static ::CEGUI::Window* Window = nullptr;
 			static ::CEGUI::Combobox* Server = nullptr;
 			static ::CEGUI::Editbox* Username = nullptr;
+			static ::CEGUI::Window* UsernameDesc = nullptr;
 			static ::CEGUI::Editbox* Password = nullptr;
-
+			static ::CEGUI::Window* PasswordDesc = nullptr;
+			
 			static ::CEGUI::PushButton* Connect = nullptr;
 			static ::CEGUI::PushButton* Options = nullptr;
 

@@ -8,8 +8,10 @@ namespace Meridian59 { namespace Ogre
 		Window = static_cast<CEGUI::Window*>(guiRoot->getChild(UI_NAME_LOGIN_WINDOW));
 		Server = static_cast<CEGUI::Combobox*>(Window->getChild(UI_NAME_LOGIN_SERVER));
 		Username = static_cast<CEGUI::Editbox*>(Window->getChild(UI_NAME_LOGIN_USERNAME));
+		UsernameDesc = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_LOGIN_USERNAMEDESC));
 		Password = static_cast<CEGUI::Editbox*>(Window->getChild(UI_NAME_LOGIN_PASSWORD));
-		
+		PasswordDesc = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_LOGIN_PASSWORDDESC));
+
 		Connect = static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_LOGIN_CONNECT));
 		Options = static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_LOGIN_OPTIONS));
 
