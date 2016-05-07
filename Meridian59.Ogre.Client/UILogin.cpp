@@ -52,10 +52,10 @@ namespace Meridian59 { namespace Ogre
 	
 	void ControllerUI::Login::ApplyLanguage()
 	{
-		UsernameDesc->setText(GETSTR(LANGSTR::USERNAME));
-		PasswordDesc->setText(GETSTR(LANGSTR::PASSWORD));
-		Connect->setText(GETSTR(LANGSTR::CONNECT));
-		Options->setText(GETSTR(LANGSTR::OPTIONS));
+		UsernameDesc->setText(GetLangLabel(LANGSTR::USERNAME));
+		PasswordDesc->setText(GetLangLabel(LANGSTR::PASSWORD));
+		Connect->setText(GetLangLabel(LANGSTR::CONNECT));
+		Options->setText(GetLangLabel(LANGSTR::OPTIONS));
 	};
 
 	bool UICallbacks::Login::OnServerChanged(const CEGUI::EventArgs& e)

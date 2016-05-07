@@ -63,6 +63,7 @@ namespace Meridian59 { namespace Ogre
 
 	void ControllerUI::Trade::ApplyLanguage()
 	{
+		Window->setText(GetLangWindowTitle(LANGSTR_WINDOW_TITLE::TRADE));
 	};
 
 	void ControllerUI::Trade::OnTradePropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)

@@ -822,6 +822,7 @@ namespace Meridian59 { namespace Ogre
 
 	void ControllerUI::Options::ApplyLanguage()
 	{
+		Window->setText(GetLangWindowTitle(LANGSTR_WINDOW_TITLE::OPTIONS));
 	};
 
 	void ControllerUI::Options::OnConfigPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)

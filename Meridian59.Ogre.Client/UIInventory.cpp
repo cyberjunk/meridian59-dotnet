@@ -98,6 +98,7 @@ namespace Meridian59 { namespace Ogre
 
 	void ControllerUI::Inventory::ApplyLanguage()
 	{
+		Window->setText(GetLangWindowTitle(LANGSTR_WINDOW_TITLE::INVENTORY));
 	};
 
 	void ControllerUI::Inventory::OnNewImageAvailable(Object^ sender, ::System::EventArgs^ e)

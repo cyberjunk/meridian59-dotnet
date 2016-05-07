@@ -50,6 +50,7 @@ namespace Meridian59 { namespace Ogre
 
 	void ControllerUI::Welcome::ApplyLanguage()
 	{
+		Window->setText(GetLangWindowTitle(LANGSTR_WINDOW_TITLE::WELCOME));
 	};
 
 	void ControllerUI::Welcome::OnWelcomeInfoPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)

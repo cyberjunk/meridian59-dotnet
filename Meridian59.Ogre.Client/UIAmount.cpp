@@ -28,6 +28,7 @@ namespace Meridian59 { namespace Ogre
 
 	void ControllerUI::Amount::ApplyLanguage()
 	{
+		Window->setText(GetLangWindowTitle(LANGSTR_WINDOW_TITLE::AMOUNT));
 	};
 
 	void ControllerUI::Amount::ShowValues(unsigned int ID, unsigned int Count)

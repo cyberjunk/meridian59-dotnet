@@ -32,6 +32,7 @@ namespace Meridian59 { namespace Ogre
 
 	void ControllerUI::Spells::ApplyLanguage()
 	{
+		Window->setText(GetLangWindowTitle(LANGSTR_WINDOW_TITLE::SPELLS));
 	};
 
 	void ControllerUI::Spells::OnSpellsListChanged(Object^ sender, ListChangedEventArgs^ e)

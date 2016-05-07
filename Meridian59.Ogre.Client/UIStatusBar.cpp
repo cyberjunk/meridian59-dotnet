@@ -74,6 +74,10 @@ namespace Meridian59 { namespace Ogre
 
 	void ControllerUI::StatusBar::ApplyLanguage()
 	{
+		MoodHappy->setTooltipText(GetLangTooltipMood(LANGSTR_TOOLTIP_MOOD::HAPPY));
+		MoodNeutral->setTooltipText(GetLangTooltipMood(LANGSTR_TOOLTIP_MOOD::NEUTRAL));
+		MoodSad->setTooltipText(GetLangTooltipMood(LANGSTR_TOOLTIP_MOOD::SAD));
+		MoodAngry->setTooltipText(GetLangTooltipMood(LANGSTR_TOOLTIP_MOOD::ANGRY));
 	};
 
 	void ControllerUI::StatusBar::OnDataPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)

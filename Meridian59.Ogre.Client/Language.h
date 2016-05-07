@@ -14,16 +14,43 @@ You should have received a copy of the GNU General Public License along with "Me
 If not, see http://www.gnu.org/licenses/.
 */
 
-// Strings available in localized language.
-// Beware: The enum value must match the array index!
-typedef enum LANGSTR
+namespace LANGSTR
 {
-	USERNAME	= 0,
-	PASSWORD	= 1,
-	CONNECT		= 2,
-	OPTIONS		= 3
-};
+	enum Enum
+	{
+		USERNAME	= 0,
+		PASSWORD	= 1,
+		CONNECT		= 2,
+		OPTIONS		= 3
+	};
+}
 
-// Call this to retrieve a language string for
-// current Language in OgreClient config.
-const char* GETSTR(const LANGSTR ID);
+namespace LANGSTR_WINDOW_TITLE
+{
+	enum Enum
+	{
+		WELCOME		= 0,
+		SPELLS		= 1,
+		SKILLS		= 2,
+		ACTIONS		= 3,
+		INVENTORY	= 4,
+		AMOUNT		= 5,
+		TRADE		= 6,
+		OPTIONS		= 7
+	};
+}
+
+namespace LANGSTR_TOOLTIP_MOOD
+{
+	enum Enum
+	{
+		HAPPY	= 0,
+		NEUTRAL = 1,
+		SAD		= 2,
+		ANGRY	= 3
+	};
+}
+
+const char* GetLangLabel(const LANGSTR::Enum ID);
+const char* GetLangWindowTitle(const LANGSTR_WINDOW_TITLE::Enum ID);
+const char* GetLangTooltipMood(const LANGSTR_TOOLTIP_MOOD::Enum ID);

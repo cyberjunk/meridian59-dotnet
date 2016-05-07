@@ -38,6 +38,7 @@ namespace Meridian59 { namespace Ogre
 
 	void ControllerUI::Actions::ApplyLanguage()
 	{
+		Window->setText(GetLangWindowTitle(LANGSTR_WINDOW_TITLE::ACTIONS));
 	};
 
 	void ControllerUI::Actions::CreateItem(AvatarAction Type)
