@@ -26,6 +26,10 @@ namespace Meridian59 { namespace Ogre
 	{				
 	};
 
+	void ControllerUI::Amount::ApplyLanguage()
+	{
+	};
+
 	void ControllerUI::Amount::ShowValues(unsigned int ID, unsigned int Count)
 	{
 		// save ID

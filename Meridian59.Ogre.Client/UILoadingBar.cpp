@@ -36,6 +36,10 @@ namespace Meridian59 { namespace Ogre
 			gcnew ::System::EventHandler<StringEventArgs^>(OnPreloadingFile);
 	};
 
+	void ControllerUI::LoadingBar::ApplyLanguage()
+	{
+	};
+
 	void ControllerUI::LoadingBar::Start(unsigned short numGroupsInit) 
     {          
 		ResourceGroupManager* resMan = ResourceGroupManager::getSingletonPtr();

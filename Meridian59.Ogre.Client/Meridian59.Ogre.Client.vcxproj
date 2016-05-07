@@ -243,6 +243,7 @@
     <ClInclude Include="ImageBuilders.h" />
     <ClInclude Include="ImageComposerCEGUI.h" />
     <ClInclude Include="ImageComposerOgre.h" />
+    <ClInclude Include="Language.h" />
     <ClInclude Include="MeshHotspot.h" />
     <ClInclude Include="MeshInfo.h" />
     <ClInclude Include="MiniMapCEGUI.h" />
@@ -281,6 +282,7 @@
     <ClCompile Include="ImageBuilders.cpp" />
     <ClCompile Include="ImageComposerCEGUI.cpp" />
     <ClCompile Include="ImageComposerOgre.cpp" />
+    <ClCompile Include="Language.cpp" />
     <ClCompile Include="MiniMapCEGUI.cpp" />
     <ClCompile Include="OgreClient.cpp" />
     <ClCompile Include="OgreClientConfig.cpp" />

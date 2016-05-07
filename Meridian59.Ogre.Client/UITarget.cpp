@@ -68,6 +68,10 @@ namespace Meridian59 { namespace Ogre
 		imageComposer->NewImageAvailable -= gcnew ::System::EventHandler(OnNewImageAvailable);			
 	};
 
+	void ControllerUI::Target::ApplyLanguage()
+	{
+	};
+
 	void ControllerUI::Target::OnDataPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{
 		// targetobject

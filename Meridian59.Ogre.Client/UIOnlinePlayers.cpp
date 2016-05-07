@@ -30,6 +30,10 @@ namespace Meridian59 { namespace Ogre
 			gcnew ListChangedEventHandler(&ControllerUI::OnlinePlayers::OnOnlinePlayersListChanged);		     		
 	};
 
+	void ControllerUI::OnlinePlayers::ApplyLanguage()
+	{
+	};
+
 	void ControllerUI::OnlinePlayers::OnOnlinePlayersListChanged(Object^ sender, ListChangedEventArgs^ e)
 	{
 		switch(e->ListChangedType)

@@ -116,6 +116,10 @@ namespace Meridian59 { namespace Ogre
 		imageComposerShield->NewImageAvailable -= gcnew ::System::EventHandler(OnNewShieldImageAvailable);
 	};
 
+	void ControllerUI::Guild::ApplyLanguage()
+	{
+	};
+
 	void ControllerUI::Guild::OnGuildInfoPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{
 		Data::Models::GuildInfo^ obj = OgreClient::Singleton->Data->GuildInfo;

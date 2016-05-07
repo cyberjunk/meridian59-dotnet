@@ -39,6 +39,10 @@ namespace Meridian59 { namespace Ogre
 			gcnew PropertyChangedEventHandler(OnParalyzePropertyChanged);  		
 	};
 
+	void ControllerUI::SplashNotifier::ApplyLanguage()
+	{
+	};
+
 	void ControllerUI::SplashNotifier::UpdateNotification()
 	{
 		if (notifications->Count > 0)

@@ -39,6 +39,10 @@ namespace Meridian59 { namespace Ogre
          gcnew ::System::EventHandler<StringEventArgs^>(OnDownloadFile);
 	};
 
+   void ControllerUI::DownloadBar::ApplyLanguage()
+   {
+   };
+
    void ControllerUI::DownloadBar::Start()
    {
       Content->setProgress(0.0f);

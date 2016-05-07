@@ -37,6 +37,10 @@ namespace Meridian59 { namespace Ogre
 	{	     			
 	};
 
+	void ControllerUI::MainButtonsRight::ApplyLanguage()
+	{
+	};
+
 	bool UICallbacks::MainButtonsRight::OnItemClicked(const CEGUI::EventArgs& e)
 	{
 		const CEGUI::MouseEventArgs& args = static_cast<const CEGUI::MouseEventArgs&>(e);

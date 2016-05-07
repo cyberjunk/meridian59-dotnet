@@ -205,6 +205,10 @@ namespace Meridian59 { namespace Ogre
         
 	};
 
+	void ControllerUI::AvatarCreateWizard::ApplyLanguage()
+	{
+	};
+
 	void ControllerUI::AvatarCreateWizard::OnCharCreationInfoPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{
 		CharCreationInfo^ creationInfo = OgreClient::Singleton->Data->CharCreationInfo;

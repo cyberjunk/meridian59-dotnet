@@ -36,6 +36,10 @@ namespace Meridian59 { namespace Ogre
 	{				
 	};
 
+	void ControllerUI::Actions::ApplyLanguage()
+	{
+	};
+
 	void ControllerUI::Actions::CreateItem(AvatarAction Type)
 	{
 		CEGUI::WindowManager* wndMgr = CEGUI::WindowManager::getSingletonPtr();

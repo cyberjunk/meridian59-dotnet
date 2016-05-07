@@ -820,6 +820,10 @@ namespace Meridian59 { namespace Ogre
 			gcnew PropertyChangedEventHandler(OnClientPreferencesPropertyChanged);
 	};
 
+	void ControllerUI::Options::ApplyLanguage()
+	{
+	};
+
 	void ControllerUI::Options::OnConfigPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{
 	};
@@ -2119,7 +2123,9 @@ namespace Meridian59 { namespace Ogre
 
 		// set new language
 		OgreClient::Singleton->Config->Language = newval;
-		// todo
+
+		// apply language
+		ControllerUI::ApplyLanguage();
 
 		return true;
 	};

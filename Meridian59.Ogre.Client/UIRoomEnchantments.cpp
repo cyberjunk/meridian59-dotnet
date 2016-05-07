@@ -76,6 +76,10 @@ namespace Meridian59 { namespace Ogre
 			imageComposersBuffs[i]->NewImageAvailable -= gcnew ::System::EventHandler(OnNewBuffImageAvailable);		
 	};
 
+	void ControllerUI::RoomEnchantments::ApplyLanguage()
+	{
+	};
+
 	void ControllerUI::RoomEnchantments::OnNewBuffImageAvailable(Object^ sender, ::System::EventArgs^ e)
     {
 		ImageComposerCEGUI<ObjectBase^>^ imageComposer = (ImageComposerCEGUI<ObjectBase^>^)sender;

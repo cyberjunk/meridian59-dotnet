@@ -72,6 +72,10 @@ namespace Meridian59 { namespace Ogre
 			gcnew ListChangedEventHandler(&ControllerUI::StatusBar::OnOnlinePlayersListChanged); 		
 	};
 
+	void ControllerUI::StatusBar::ApplyLanguage()
+	{
+	};
+
 	void ControllerUI::StatusBar::OnDataPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{
 		// update FPS/TPS

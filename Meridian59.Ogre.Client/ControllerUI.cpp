@@ -141,13 +141,16 @@ namespace Meridian59 { namespace Ogre
 		ObjectContents::Initialize();
 		Login::Initialize();
 		Options::Initialize();
-		
+
 		// attach listener to Data
 		OgreClient::Singleton->Data->PropertyChanged += 
 			gcnew PropertyChangedEventHandler(OnDataPropertyChanged);
       
 		// mark initialized
 		IsInitialized = true;
+
+		// apply language
+		ApplyLanguage();
 	};
 
 	void ControllerUI::Destroy()
@@ -218,6 +221,52 @@ namespace Meridian59 { namespace Ogre
 
 		// mark not initialized
 		IsInitialized = false;
+	};
+
+	void ControllerUI::ApplyLanguage()
+	{
+		if (!IsInitialized)
+			return;
+
+		// apply on all sub-controls
+		LoadingBar::ApplyLanguage();
+		DownloadBar::ApplyLanguage();
+		Welcome::ApplyLanguage();
+		StatusBar::ApplyLanguage();
+		OnlinePlayers::ApplyLanguage();
+		RoomObjects::ApplyLanguage();
+		Chat::ApplyLanguage();
+		Avatar::ApplyLanguage();
+		ObjectDetails::ApplyLanguage();
+		PlayerDetails::ApplyLanguage();
+		Target::ApplyLanguage();
+		SplashNotifier::ApplyLanguage();
+		MiniMap::ApplyLanguage();
+		RoomEnchantments::ApplyLanguage();
+		Buy::ApplyLanguage();
+		Attributes::ApplyLanguage();
+		Skills::ApplyLanguage();
+		Spells::ApplyLanguage();
+		Quests::ApplyLanguage();
+		Actions::ApplyLanguage();
+		Inventory::ApplyLanguage();
+		MainButtonsLeft::ApplyLanguage();
+		MainButtonsRight::ApplyLanguage();
+		Amount::ApplyLanguage();
+		Trade::ApplyLanguage();
+		ActionButtons::ApplyLanguage();
+		NewsGroup::ApplyLanguage();
+		NewsGroupCompose::ApplyLanguage();
+		Mail::ApplyLanguage();
+		MailCompose::ApplyLanguage();
+		Guild::ApplyLanguage();
+		GuildCreate::ApplyLanguage();
+		AvatarCreateWizard::ApplyLanguage();
+		ConfirmPopup::ApplyLanguage();
+		PlayerOverlays::ApplyLanguage();
+		ObjectContents::ApplyLanguage();
+		Login::ApplyLanguage();
+		Options::ApplyLanguage();
 	};
 
 	void ControllerUI::Tick(double Tick, double Span)

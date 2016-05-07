@@ -48,6 +48,10 @@ namespace Meridian59 { namespace Ogre
         
 	};
 
+	void ControllerUI::Welcome::ApplyLanguage()
+	{
+	};
+
 	void ControllerUI::Welcome::OnWelcomeInfoPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{
 		// MOTD

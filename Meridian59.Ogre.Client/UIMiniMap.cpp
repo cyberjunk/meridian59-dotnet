@@ -38,6 +38,10 @@ namespace Meridian59 { namespace Ogre
 			gcnew ::System::EventHandler(OnImageChanged);
 	};
 
+	void ControllerUI::MiniMap::ApplyLanguage()
+	{
+	};
+
 	void ControllerUI::MiniMap::OnImageChanged(::System::Object^ sender, ::System::EventArgs^ e)
 	{
 		::CEGUI::String* texName = OgreClient::Singleton->MiniMap->TextureName;

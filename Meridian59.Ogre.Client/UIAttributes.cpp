@@ -30,6 +30,10 @@ namespace Meridian59 { namespace Ogre
 			gcnew ListChangedEventHandler(OnAttributesListChanged);		
 	};
 
+	void ControllerUI::Attributes::ApplyLanguage()
+	{
+	};
+
 	void ControllerUI::Attributes::OnAttributesListChanged(Object^ sender, ListChangedEventArgs^ e)
 	{
 		switch(e->ListChangedType)

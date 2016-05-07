@@ -47,6 +47,10 @@ namespace Meridian59 { namespace Ogre
 			gcnew ListChangedEventHandler(OnBuyListChanged);			
 	};
 
+	void ControllerUI::Buy::ApplyLanguage()
+	{
+	};
+
 	void ControllerUI::Buy::OnBuyPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{
 		// tradepartner

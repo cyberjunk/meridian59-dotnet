@@ -62,6 +62,7 @@ namespace Meridian59 { namespace Ogre
 
 		static void Initialize(::Ogre::RenderTarget* Target);
 		static void Destroy();
+		static void ApplyLanguage();
 		static void Tick(double Tick, double Span);
 		static void ToggleVisibility(::CEGUI::Window* Window);
 		static bool IsRecursiveChildOf(::CEGUI::Window* Child, ::CEGUI::Window* Parent);
@@ -178,6 +179,7 @@ namespace Meridian59 { namespace Ogre
 
 			static void Initialize();
 			static void Destroy();
+			static void ApplyLanguage();
 			static void Start(unsigned short numGroupsInit);
 			static void Finish();
 
@@ -206,6 +208,7 @@ namespace Meridian59 { namespace Ogre
 
                static void Initialize();
                static void Destroy();
+			   static void ApplyLanguage();
                static void Start();
                static void Finish();
 
@@ -227,6 +230,7 @@ namespace Meridian59 { namespace Ogre
 
 			static void Initialize();
 			static void Destroy();
+			static void ApplyLanguage();
 
 			static void OnCharactersListChanged(Object^ sender, ListChangedEventArgs^ e);
 			static void OnWelcomeInfoPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
@@ -262,6 +266,7 @@ namespace Meridian59 { namespace Ogre
 
 			static void Initialize();
 			static void Destroy();
+			static void ApplyLanguage();
 			static void OnDataPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
 			static void OnClientPreferencesChanged(Object^ sender, PropertyChangedEventArgs^ e);
 			static void OnRoomInformationPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
@@ -279,6 +284,7 @@ namespace Meridian59 { namespace Ogre
 
 			static void Initialize();
 			static void Destroy();
+			static void ApplyLanguage();
 			static void OnOnlinePlayersListChanged(Object^ sender, ListChangedEventArgs^ e);
 			static void OnlinePlayerAdd(int Index);
 			static void OnlinePlayerRemove(int Index);
@@ -307,6 +313,7 @@ namespace Meridian59 { namespace Ogre
 
 			static void Initialize();
 			static void Destroy();
+			static void ApplyLanguage();
 			static void OnRoomObjectsFilteredListChanged(Object^ sender, ListChangedEventArgs^ e);
 			static void OnDataPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
 			static void RoomObjectAdd(int Index);
@@ -329,6 +336,7 @@ namespace Meridian59 { namespace Ogre
 			
 			static void Initialize();
 			static void Destroy();
+			static void ApplyLanguage();
 			static void Tick(double Tick, double Span);
 			static ::CEGUI::String GetChatString(ServerString^ ChatMessage);	
 			static void OnChatMessagesListChanged(Object^ sender, ListChangedEventArgs^ e);	
@@ -351,6 +359,7 @@ namespace Meridian59 { namespace Ogre
 
 			static void Initialize();
 			static void Destroy();
+			static void ApplyLanguage();
 			static void OnDataPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
 			static void OnNewHeadImageAvailable(Object^ sender, ::System::EventArgs^ e);
 			static void OnNewBuffImageAvailable(Object^ sender, ::System::EventArgs^ e);
@@ -380,6 +389,7 @@ namespace Meridian59 { namespace Ogre
 
 			static void Initialize();
 			static void Destroy();
+			static void ApplyLanguage();
 			static void OnNewImageAvailable(Object^ sender, ::System::EventArgs^ e);
 			static void OnLookObjectPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
 			static void SetLayout(LookTypeFlags^ LayoutType);
@@ -406,6 +416,7 @@ namespace Meridian59 { namespace Ogre
 
 			static void Initialize();
 			static void Destroy();
+			static void ApplyLanguage();
 			static void OnNewImageAvailable(Object^ sender, ::System::EventArgs^ e);
 			static void OnLookPlayerPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
 		};
@@ -433,6 +444,7 @@ namespace Meridian59 { namespace Ogre
 
 			static void Initialize();
 			static void Destroy();
+			static void ApplyLanguage();
 			static void OnDataPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
 			static void OnTargetObjectPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
 			static void OnNewImageAvailable(Object^ sender, ::System::EventArgs^ e);			
@@ -452,6 +464,7 @@ namespace Meridian59 { namespace Ogre
 
 			static void Initialize();
 			static void Destroy();
+			static void ApplyLanguage();
 			static void UpdateNotification();
 			static void ShowNotification(::System::String^ Text);
 			static void HideNotification(::System::String^ Text);
@@ -470,6 +483,7 @@ namespace Meridian59 { namespace Ogre
 
 			static void Initialize();
 			static void Destroy();
+			static void ApplyLanguage();
 			static void OnImageChanged(Object^ sender, ::System::EventArgs^ e);
 		};
 
@@ -487,6 +501,7 @@ namespace Meridian59 { namespace Ogre
 			
 			static void Initialize();
 			static void Destroy();
+			static void ApplyLanguage();
 			static void OnNewBuffImageAvailable(Object^ sender, ::System::EventArgs^ e);
 			static void OnBuffListChanged(Object^ sender, ListChangedEventArgs^ e);
 			static void BuffAdd(int Index);
@@ -510,6 +525,7 @@ namespace Meridian59 { namespace Ogre
 
 			static void Initialize();
 			static void Destroy();
+			static void ApplyLanguage();
 			static void CalculateSum();
 			static void OnBuyPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
 			static void OnBuyListChanged(Object^ sender, ListChangedEventArgs^ e);
@@ -529,6 +545,7 @@ namespace Meridian59 { namespace Ogre
 
 			static void Initialize();
 			static void Destroy();
+			static void ApplyLanguage();
 			static void OnAttributesListChanged(Object^ sender, ListChangedEventArgs^ e);
 			static void AttributeAdd(int Index);
 			static void AttributeRemove(int Index);
@@ -546,6 +563,7 @@ namespace Meridian59 { namespace Ogre
 
 			static void Initialize();
 			static void Destroy();
+			static void ApplyLanguage();
 			static void OnSkillsListChanged(Object^ sender, ListChangedEventArgs^ e);
 			static void SkillAdd(int Index);
 			static void SkillRemove(int Index);
@@ -563,6 +581,7 @@ namespace Meridian59 { namespace Ogre
 
 			static void Initialize();
 			static void Destroy();
+			static void ApplyLanguage();
 			static void OnSpellsListChanged(Object^ sender, ListChangedEventArgs^ e);
 			static void SpellAdd(int Index);
 			static void SpellRemove(int Index);
@@ -580,6 +599,7 @@ namespace Meridian59 { namespace Ogre
 
 			static void Initialize();
 			static void Destroy();
+			static void ApplyLanguage();
 			static void OnQuestsListChanged(Object^ sender, ListChangedEventArgs^ e);
 			static void QuestAdd(int Index);
 			static void QuestRemove(int Index);
@@ -600,6 +620,7 @@ namespace Meridian59 { namespace Ogre
 
 			static void Initialize();
 			static void Destroy();
+			static void ApplyLanguage();
 		};
 
 		/// <summary>
@@ -617,6 +638,7 @@ namespace Meridian59 { namespace Ogre
 
 			static void Initialize();
 			static void Destroy();
+			static void ApplyLanguage();
 			static void OnNewImageAvailable(Object^ sender, ::System::EventArgs^ e);
 			static void OnInventoryListChanged(Object^ sender, ListChangedEventArgs^ e);
 			static void InventoryAdd(int Index);
@@ -645,6 +667,7 @@ namespace Meridian59 { namespace Ogre
 
 			static void Initialize();
 			static void Destroy();
+			static void ApplyLanguage();
 		};
 
 		/// <summary>
@@ -663,6 +686,7 @@ namespace Meridian59 { namespace Ogre
 
 			static void Initialize();
 			static void Destroy();
+			static void ApplyLanguage();
 		};
 
 		/// <summary>
@@ -678,6 +702,7 @@ namespace Meridian59 { namespace Ogre
 			
 			static void Initialize();
 			static void Destroy();
+			static void ApplyLanguage();
 			static void Drop();
 			static void ShowValues(unsigned int ID, unsigned int Count);
 		};
@@ -702,6 +727,7 @@ namespace Meridian59 { namespace Ogre
 			
 			static void Initialize();
 			static void Destroy();
+			static void ApplyLanguage();
 			static void OnTradePropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
 			static void OnItemsYouListChanged(Object^ sender, ListChangedEventArgs^ e);
 			static void OnItemsPartnerListChanged(Object^ sender, ListChangedEventArgs^ e);
@@ -727,6 +753,7 @@ namespace Meridian59 { namespace Ogre
 			
 			static void Initialize();
 			static void Destroy();
+			static void ApplyLanguage();
 			static void OnNewImageAvailable(Object^ sender, ::System::EventArgs^ e);
 			static void OnActionButtonsListChanged(Object^ sender, ListChangedEventArgs^ e);
 			static void ActionButtonAdd(int Index);
@@ -752,6 +779,7 @@ namespace Meridian59 { namespace Ogre
 
 			static void Initialize();
 			static void Destroy();
+			static void ApplyLanguage();
 			static void OnNewsGroupPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
 			static void OnArticleHeadListChanged(Object^ sender, ListChangedEventArgs^ e);
 			static void ArticleHeadAdd(int Index);
@@ -775,6 +803,7 @@ namespace Meridian59 { namespace Ogre
 
 			static void Initialize();
 			static void Destroy();
+			static void ApplyLanguage();
 			static void OnNewsGroupPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
 		};
 
@@ -794,6 +823,7 @@ namespace Meridian59 { namespace Ogre
 
 			static void Initialize();
 			static void Destroy();
+			static void ApplyLanguage();
 			static void OnMailsListChanged(Object^ sender, ListChangedEventArgs^ e);
 			static void MailAdd(int Index);
 			static void MailRemove(int Index);
@@ -819,6 +849,7 @@ namespace Meridian59 { namespace Ogre
 
 			static void Initialize();
 			static void Destroy();
+			static void ApplyLanguage();
 			static void ProcessResult(array<ObjectID^>^ Result);
 		};
 
@@ -856,6 +887,7 @@ namespace Meridian59 { namespace Ogre
 			
 			static void Initialize();
 			static void Destroy();
+			static void ApplyLanguage();
 			static void OnGuildInfoPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
 			static void OnGuildShieldInfoPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
 			static void OnMembersListChanged(Object^ sender, ListChangedEventArgs^ e);
@@ -897,6 +929,7 @@ namespace Meridian59 { namespace Ogre
 			
 			static void Initialize();
 			static void Destroy();
+			static void ApplyLanguage();
 			static void OnGuildAskDataPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
 		};
 
@@ -970,6 +1003,7 @@ namespace Meridian59 { namespace Ogre
 			
 			static void Initialize();
 			static void Destroy();
+			static void ApplyLanguage();
 
 			static void OnCharCreationInfoPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
 			static void OnNewHeadImageAvailable(Object^ sender, ::System::EventArgs^ e);
@@ -999,7 +1033,8 @@ namespace Meridian59 { namespace Ogre
 			static ::CEGUI::PushButton* No = nullptr;
 
 			static void Initialize();
-			static void Destroy();			
+			static void Destroy();
+			static void ApplyLanguage();
 		};
 
 		/// <summary>
@@ -1016,6 +1051,7 @@ namespace Meridian59 { namespace Ogre
 		public:
 			static void Initialize();
 			static void Destroy();
+			static void ApplyLanguage();
 			static bool IsOverlayWindow(::CEGUI::Window* Window);
 			static void OnPlayerOverlaysListChanged(Object^ sender, ListChangedEventArgs^ e);
 			static void PlayerOverlayAdd(int Index);
@@ -1042,6 +1078,7 @@ namespace Meridian59 { namespace Ogre
 			
 			static void Initialize();
 			static void Destroy();
+			static void ApplyLanguage();
 			static void OnObjectContentsPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
 			static void OnObjectContentsListChanged(Object^ sender, ListChangedEventArgs^ e);
 			static void OnNewItemImageAvailable(Object^ sender, ::System::EventArgs^ e);
@@ -1068,6 +1105,7 @@ namespace Meridian59 { namespace Ogre
 
 			static void Initialize();
 			static void Destroy();
+			static void ApplyLanguage();
 		};
 
 		/// <summary>
@@ -1242,6 +1280,7 @@ namespace Meridian59 { namespace Ogre
 
 			static void Initialize();
 			static void Destroy();
+			static void ApplyLanguage();
 		};
 #pragma endregion
 	};

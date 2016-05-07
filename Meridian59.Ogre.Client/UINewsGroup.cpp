@@ -63,6 +63,10 @@ namespace Meridian59 { namespace Ogre
 			gcnew ListChangedEventHandler(OnArticleHeadListChanged);		
 	};
 
+	void ControllerUI::NewsGroup::ApplyLanguage()
+	{
+	};
+
 	void ControllerUI::NewsGroup::OnNewsGroupPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{
 		Data::Models::NewsGroup^ obj = OgreClient::Singleton->Data->NewsGroup;

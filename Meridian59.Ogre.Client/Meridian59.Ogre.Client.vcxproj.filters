@@ -114,6 +114,9 @@
     <ClInclude Include="Constants.h">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="Language.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="app.rc">
@@ -302,6 +305,9 @@
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="UIDownloadBar.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Language.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>

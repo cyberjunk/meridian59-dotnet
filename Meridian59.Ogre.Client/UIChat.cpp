@@ -52,6 +52,10 @@ namespace Meridian59 { namespace Ogre
 		Queue = nullptr;
 	};
 
+	void ControllerUI::Chat::ApplyLanguage()
+	{
+	};
+
 	void ControllerUI::Chat::Tick(double Tick, double Span)
 	{
 		if (OgreClient::Singleton->GameTick->CanChatUpdate())

@@ -50,6 +50,10 @@ namespace Meridian59 { namespace Ogre
         
 	};
 
+	void ControllerUI::GuildCreate::ApplyLanguage()
+	{
+	};
+
 	void ControllerUI::GuildCreate::OnGuildAskDataPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{
 		Data::Models::GuildAskData^ obj = OgreClient::Singleton->Data->GuildAskData;

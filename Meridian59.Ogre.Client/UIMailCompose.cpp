@@ -37,6 +37,10 @@ namespace Meridian59 { namespace Ogre
 	{	 
 	};
 	
+	void ControllerUI::MailCompose::ApplyLanguage()
+	{
+	};
+
 	void ControllerUI::MailCompose::ProcessResult(array<ObjectID^>^ Result)
 	{
 		// check

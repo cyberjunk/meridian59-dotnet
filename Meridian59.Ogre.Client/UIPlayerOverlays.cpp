@@ -27,6 +27,10 @@ namespace Meridian59 { namespace Ogre
 		delete overlayWindows;
 	};
 
+	void ControllerUI::PlayerOverlays::ApplyLanguage()
+	{
+	};
+
 	bool ControllerUI::PlayerOverlays::IsOverlayWindow(::CEGUI::Window* Window)
 	{
 		if (!Window)

@@ -61,6 +61,10 @@ namespace Meridian59 { namespace Ogre
 			gcnew ListChangedEventHandler(OnItemsPartnerListChanged);			
 	};
 
+	void ControllerUI::Trade::ApplyLanguage()
+	{
+	};
+
 	void ControllerUI::Trade::OnTradePropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{
 		TradeInfo^ tradeInfo = OgreClient::Singleton->Data->Trade;

@@ -31,6 +31,10 @@ namespace Meridian59 {
 				gcnew ListChangedEventHandler(OnQuestsListChanged);
 		};
 
+		void ControllerUI::Quests::ApplyLanguage()
+		{
+		};
+
 		void ControllerUI::Quests::OnQuestsListChanged(Object^ sender, ListChangedEventArgs^ e)
 		{
 			switch (e->ListChangedType)

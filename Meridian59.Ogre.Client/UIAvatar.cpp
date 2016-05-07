@@ -117,6 +117,10 @@ namespace Meridian59 { namespace Ogre
 			imageComposersBuffs[i]->NewImageAvailable -= gcnew ::System::EventHandler(OnNewBuffImageAvailable);		
 	};
 
+	void ControllerUI::Avatar::ApplyLanguage()
+	{
+	};
+
 	void ControllerUI::Avatar::OnDataPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{
 		// avatar

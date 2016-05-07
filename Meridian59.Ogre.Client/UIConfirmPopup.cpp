@@ -27,6 +27,10 @@ namespace Meridian59 { namespace Ogre
 	{				
 	};
 
+	void ControllerUI::ConfirmPopup::ApplyLanguage()
+	{
+	};
+
 	bool UICallbacks::ConfirmPopup::OnYesClicked(const CEGUI::EventArgs& e)
 	{
 		// suicide the avatar

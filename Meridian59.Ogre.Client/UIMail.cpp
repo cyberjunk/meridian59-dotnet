@@ -58,6 +58,10 @@ namespace Meridian59 { namespace Ogre
 			gcnew ListChangedEventHandler(OnMailsListChanged);		
 	};
 
+	void ControllerUI::Mail::ApplyLanguage()
+	{
+	};
+
 	void ControllerUI::Mail::OnMailsListChanged(Object^ sender, ListChangedEventArgs^ e)
 	{
 		switch(e->ListChangedType)

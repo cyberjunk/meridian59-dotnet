@@ -57,6 +57,10 @@ namespace Meridian59 { namespace Ogre
 			gcnew ::System::EventHandler(OnNewImageAvailable);      		
 	};
 
+	void ControllerUI::ObjectDetails::ApplyLanguage()
+	{
+	};
+
 	void ControllerUI::ObjectDetails::OnNewImageAvailable(Object^ sender, ::System::EventArgs^ e)
     {
 		Image->setProperty(UI_PROPNAME_IMAGE, *imageComposer->Image->TextureName);

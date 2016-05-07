@@ -96,6 +96,10 @@ namespace Meridian59 { namespace Ogre
 			imageComposers[i]->NewImageAvailable -= gcnew ::System::EventHandler(OnNewImageAvailable);		     			
 	};
 
+	void ControllerUI::Inventory::ApplyLanguage()
+	{
+	};
+
 	void ControllerUI::Inventory::OnNewImageAvailable(Object^ sender, ::System::EventArgs^ e)
     {
 		ImageComposerCEGUI<InventoryObject^>^ imageComposer = (ImageComposerCEGUI<InventoryObject^>^)sender;

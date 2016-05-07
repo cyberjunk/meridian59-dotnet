@@ -82,6 +82,10 @@ namespace Meridian59 { namespace Ogre
 			gcnew PropertyChangedEventHandler(&ControllerUI::RoomObjects::OnDataPropertyChanged);		
 	};
 
+	void ControllerUI::RoomObjects::ApplyLanguage()
+	{
+	};
+
 	void ControllerUI::RoomObjects::OnRoomObjectsFilteredListChanged(Object^ sender, ListChangedEventArgs^ e)
 	{
 		switch(e->ListChangedType)

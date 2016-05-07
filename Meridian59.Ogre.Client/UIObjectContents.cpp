@@ -42,6 +42,10 @@ namespace Meridian59 { namespace Ogre
 			gcnew ListChangedEventHandler(OnObjectContentsListChanged);			
 	};
 
+	void ControllerUI::ObjectContents::ApplyLanguage()
+	{
+	};
+
 	void ControllerUI::ObjectContents::OnObjectContentsPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{
 		// objectid
