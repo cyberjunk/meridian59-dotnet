@@ -36,7 +36,11 @@ namespace LANGSTR_WINDOW_TITLE
 		INVENTORY	= 4,
 		AMOUNT		= 5,
 		TRADE		= 6,
-		OPTIONS		= 7
+		OPTIONS		= 7,
+		ATTRIBUTES	= 8,
+		MAIL		= 9,
+		GUILD		= 10,
+		PLAYERS		= 11
 	};
 }
 
@@ -51,6 +55,20 @@ namespace LANGSTR_TOOLTIP_MOOD
 	};
 }
 
+namespace LANGSTR_TOOLTIP_ONLINEPLAYER
+{
+	enum Enum
+	{
+		LAWFUL    = 0,
+		MURDERER  = 1,
+		OUTLAW    = 2,
+		ADMIN     = 3,
+		GM        = 4,
+		MODERATOR = 5
+	};
+}
+
 const char* GetLangLabel(const LANGSTR::Enum ID);
 const char* GetLangWindowTitle(const LANGSTR_WINDOW_TITLE::Enum ID);
 const char* GetLangTooltipMood(const LANGSTR_TOOLTIP_MOOD::Enum ID);
+const char* GetLangTooltipOnlinePlayer(const LANGSTR_TOOLTIP_ONLINEPLAYER::Enum ID);

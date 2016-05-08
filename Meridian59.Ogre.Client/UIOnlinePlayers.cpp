@@ -32,6 +32,54 @@ namespace Meridian59 { namespace Ogre
 
 	void ControllerUI::OnlinePlayers::ApplyLanguage()
 	{
+		// update window title
+		Window->setText(GetLangWindowTitle(LANGSTR_WINDOW_TITLE::PLAYERS));
+
+		// update entries
+		size_t numEntries = List->getItemCount();
+
+		if (OgreClient::Singleton->Data->OnlinePlayers->Count < (int)numEntries)
+			return;
+
+		for (size_t i = 0; i < numEntries; i++)
+		{
+			CEGUI::ItemEntry* wnd = (CEGUI::ItemEntry*)List->getItemFromIndex(i);
+			OnlinePlayer^ player = OgreClient::Singleton->Data->OnlinePlayers[(int)i];
+
+			// check
+			if (wnd->getChildCount() > 1)
+			{
+				CEGUI::Window* wndName = (CEGUI::Window*)wnd->getChildAtIdx(UI_ONLINEPLAYERS_CHILDINDEX_NAME);
+				SetTooltip(wndName, player);
+			}
+		}
+	};
+
+	void ControllerUI::OnlinePlayers::SetTooltip(::CEGUI::Window* Window, OnlinePlayer^ Player)
+	{
+#ifndef VANILLA
+		// set tooltip
+		if (Player->Flags->Player == ObjectFlags::PlayerType::Moderator)
+			Window->setTooltipText(GetLangTooltipOnlinePlayer(LANGSTR_TOOLTIP_ONLINEPLAYER::MODERATOR));
+
+		else if (Player->Flags->Player == ObjectFlags::PlayerType::Creator)
+			Window->setTooltipText(GetLangTooltipOnlinePlayer(LANGSTR_TOOLTIP_ONLINEPLAYER::ADMIN));
+#else
+		if (player->Flags->Player == ObjectFlags::PlayerType::Creator)
+			wndName->setTooltipText(GetLangTooltipOnlinePlayer(LANGSTR_TOOLTIP_ONLINEPLAYER::ADMIN));
+#endif
+		else if (Player->Flags->Player == ObjectFlags::PlayerType::SuperDM ||
+			Player->Flags->Player == ObjectFlags::PlayerType::DM)
+			Window->setTooltipText(GetLangTooltipOnlinePlayer(LANGSTR_TOOLTIP_ONLINEPLAYER::GM));
+
+		else if (Player->Flags->Player == ObjectFlags::PlayerType::Killer)
+			Window->setTooltipText(GetLangTooltipOnlinePlayer(LANGSTR_TOOLTIP_ONLINEPLAYER::MURDERER));
+
+		else if (Player->Flags->Player == ObjectFlags::PlayerType::Outlaw)
+			Window->setTooltipText(GetLangTooltipOnlinePlayer(LANGSTR_TOOLTIP_ONLINEPLAYER::OUTLAW));
+
+		else
+			Window->setTooltipText(GetLangTooltipOnlinePlayer(LANGSTR_TOOLTIP_ONLINEPLAYER::LAWFUL));
 	};
 
 	void ControllerUI::OnlinePlayers::OnOnlinePlayersListChanged(Object^ sender, ListChangedEventArgs^ e)
@@ -120,30 +168,7 @@ namespace Meridian59 { namespace Ogre
 				wndName->setProperty(UI_PROPNAME_NORMALTEXTCOLOUR, ::CEGUI::PropertyHelper<::CEGUI::Colour>::toString(color));
 				wndName->setText(StringConvert::CLRToCEGUI(player->Name));
 
-#ifndef VANILLA
-				// set tooltip
-				if (player->Flags->Player == ObjectFlags::PlayerType::Moderator)
-					wndName->setTooltipText(UI_TOOLTIPTEXT_MODERATOR);
-				
-				else if (player->Flags->Player == ObjectFlags::PlayerType::Creator)
-					wndName->setTooltipText(UI_TOOLTIPTEXT_ADMIN);
-#else
-				if (player->Flags->Player == ObjectFlags::PlayerType::Creator)
-					wndName->setTooltipText(UI_TOOLTIPTEXT_ADMIN);
-#endif
-				else if (player->Flags->Player == ObjectFlags::PlayerType::SuperDM || 
-						 player->Flags->Player == ObjectFlags::PlayerType::DM)
-					wndName->setTooltipText(UI_TOOLTIPTEXT_GM);
-				
-				else if (player->Flags->Player == ObjectFlags::PlayerType::Killer)
-					wndName->setTooltipText(UI_TOOLTIPTEXT_MURDERER);
-
-				else if (player->Flags->Player == ObjectFlags::PlayerType::Outlaw)
-					wndName->setTooltipText(UI_TOOLTIPTEXT_OUTLAW);
-			
-				else
-					wndName->setTooltipText(UI_TOOLTIPTEXT_LAWFUL);
-			
+				SetTooltip(wndName, player);
 				
 				// todo: set ignorestate
 			}

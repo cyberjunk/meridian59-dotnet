@@ -118,6 +118,7 @@ namespace Meridian59 { namespace Ogre
 
 	void ControllerUI::Guild::ApplyLanguage()
 	{
+		Window->setText(GetLangWindowTitle(LANGSTR_WINDOW_TITLE::GUILD));
 	};
 
 	void ControllerUI::Guild::OnGuildInfoPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)

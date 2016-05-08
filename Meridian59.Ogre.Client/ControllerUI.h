@@ -285,6 +285,7 @@ namespace Meridian59 { namespace Ogre
 			static void Initialize();
 			static void Destroy();
 			static void ApplyLanguage();
+			static void SetTooltip(::CEGUI::Window* Window, OnlinePlayer^ Player);
 			static void OnOnlinePlayersListChanged(Object^ sender, ListChangedEventArgs^ e);
 			static void OnlinePlayerAdd(int Index);
 			static void OnlinePlayerRemove(int Index);

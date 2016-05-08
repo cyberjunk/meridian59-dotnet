@@ -60,6 +60,7 @@ namespace Meridian59 { namespace Ogre
 
 	void ControllerUI::Mail::ApplyLanguage()
 	{
+		Window->setText(GetLangWindowTitle(LANGSTR_WINDOW_TITLE::MAIL));
 	};
 
 	void ControllerUI::Mail::OnMailsListChanged(Object^ sender, ListChangedEventArgs^ e)
