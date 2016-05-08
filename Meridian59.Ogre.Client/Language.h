@@ -68,7 +68,21 @@ namespace LANGSTR_TOOLTIP_ONLINEPLAYER
 	};
 }
 
+namespace LANGSTR_TOOLTIP_STATUSBAR
+{ 
+	enum Enum
+	{
+		FPS = 0,
+		PING = 1,
+		PLAYERCOUNT = 2,
+		SAFETY = 3,
+		TIME = 4,
+		ROOMNAME = 5
+	};
+}
+
 const char* GetLangLabel(const LANGSTR::Enum ID);
 const char* GetLangWindowTitle(const LANGSTR_WINDOW_TITLE::Enum ID);
 const char* GetLangTooltipMood(const LANGSTR_TOOLTIP_MOOD::Enum ID);
 const char* GetLangTooltipOnlinePlayer(const LANGSTR_TOOLTIP_ONLINEPLAYER::Enum ID);
+const char* GetLangTooltipStausBar(const LANGSTR_TOOLTIP_STATUSBAR::Enum ID);

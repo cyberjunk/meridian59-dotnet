@@ -46,6 +46,16 @@ const char* EN_TOOLTIPS_ONLINEPLAYER[] =
 	"This player is a moderator."											// 5
 };
 
+const char* EN_TOOLTIPS_STATUSBAR[] =
+{
+	"Frames per second - Higher is better (more fluid Gameplay).",					// 0
+	"Your Connectionspeed to the Server. Lower value means faster connection.",		// 1
+	"The number of players online. Click me to show the list of online Players.",	// 2
+	"If you change your safety to Off you can attack inocent players.",				// 3
+	"Here you can see the actual Meridian 59 time.",								// 4
+	"This shows you the actual room / area name, in which you actually are."		// 5
+};
+
 /**************************************************************************************/
 /***************************      GERMAN      *****************************************/
 /**************************************************************************************/
@@ -90,6 +100,16 @@ const char* DE_TOOLTIPS_ONLINEPLAYER[] =
 	"Ein Administrator des Servers.",								// 3
 	"Ein Guide, Barde oder sonstiges Mitglied des Admin-Teams.",	// 4
 	"Ein Moderator."												// 5
+};
+
+const char* DE_TOOLTIPS_STATUSBAR[] =
+{
+	"Frames pro Sekunde - Ein hoher Wert ist besser (flüssiges Spielerlebnis).",			// 0
+	"Deine Verbindungsverzögerung (Lag) zum Server. Je niedriger, umso besser.",			// 1
+	"Anzahl der aktuell eingeloggten Spieler. Klick mich, um die Spielerliste anzuzeigen.",	// 2
+	"Wenn Du Deine Sicherheit auf Aus stellst, kannst Du unschuldige Spieler angreifen",	// 3
+	"Hier siehst Du die aktuelle Meridian 59 Zeit.",										// 4
+	"Zeigt Dir den aktuellen Raum / Bereich an, indem Du Dich befindest."					// 5
 };
 
 /**************************************************************************************/
@@ -140,5 +160,17 @@ const char* GetLangTooltipOnlinePlayer(const LANGSTR_TOOLTIP_ONLINEPLAYER::Enum 
 	{
 	case LanguageCode::German:	return DE_TOOLTIPS_ONLINEPLAYER[ID];
 	default:					return EN_TOOLTIPS_ONLINEPLAYER[ID];
+	}
+};
+
+const char* GetLangTooltipStausBar(const LANGSTR_TOOLTIP_STATUSBAR::Enum ID)
+{
+	using ::Meridian59::Ogre::OgreClient;
+	using ::Meridian59::Common::Enums::LanguageCode;
+
+	switch (OgreClient::Singleton->Config->Language)
+	{
+	case LanguageCode::German:	return EN_TOOLTIPS_STATUSBAR[ID];
+	default:					return DE_TOOLTIPS_STATUSBAR[ID];
 	}
 };
