@@ -125,4 +125,19 @@ namespace Meridian59.Common.Constants
         public const int OK = 25;
         public const int BAD = 15;
     }
+
+    /// <summary>
+    /// Defines minimum and maximum string lengths from server-side.
+    /// From blakston.khd
+    /// </summary>
+    public static class BlakservStringLengths
+    {
+        public const int MIN_CHAR_NAME_LEN = 3;
+        public const int MAX_CHAR_NAME_LEN = 30;
+        public const int MAX_CHAR_DESCRIPTION_LEN = 1000;
+        public const int MAX_GUILD_NAME_LEN = 30;
+        public const int MAX_GUILD_RANK_LEN = 20;
+        public const int MAX_URL_LEN = 200;
+        public const int MAX_CHAT_LEN = 550;
+    }
 }
