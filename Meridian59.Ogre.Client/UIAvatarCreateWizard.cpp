@@ -78,6 +78,9 @@ namespace Meridian59 { namespace Ogre
 		Nose->setClickStep(1.0f);
 		Mouth->setClickStep(1.0f);
 
+		// set maximum server-side supported avatar name-length
+		Name->setMaxTextLength(BlakservStringLengths::MAX_CHAR_NAME_LEN);
+
 		// image composer for head picture (hotspot=1 is head)
 		imageComposerHead = gcnew ImageComposerCEGUI<ObjectBase^>();
 		imageComposerHead->ApplyYOffset = false;

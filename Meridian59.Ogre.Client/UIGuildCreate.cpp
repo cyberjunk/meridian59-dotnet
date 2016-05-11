@@ -25,6 +25,19 @@ namespace Meridian59 { namespace Ogre
 		Cost			= static_cast<CEGUI::Editbox*>(Window->getChild(UI_NAME_GUILDCREATE_COST));
 		Create			= static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_GUILDCREATE_CREATE));
 		
+		// server server-side maximum string lengths
+		GuildName->setMaxTextLength(BlakservStringLengths::MAX_GUILD_NAME_LEN);
+		MaleRank1->setMaxTextLength(BlakservStringLengths::MAX_GUILD_RANK_LEN);
+		MaleRank2->setMaxTextLength(BlakservStringLengths::MAX_GUILD_RANK_LEN);
+		MaleRank3->setMaxTextLength(BlakservStringLengths::MAX_GUILD_RANK_LEN);
+		MaleRank4->setMaxTextLength(BlakservStringLengths::MAX_GUILD_RANK_LEN);
+		MaleRank5->setMaxTextLength(BlakservStringLengths::MAX_GUILD_RANK_LEN);
+		FemaleRank1->setMaxTextLength(BlakservStringLengths::MAX_GUILD_RANK_LEN);
+		FemaleRank2->setMaxTextLength(BlakservStringLengths::MAX_GUILD_RANK_LEN);
+		FemaleRank3->setMaxTextLength(BlakservStringLengths::MAX_GUILD_RANK_LEN);
+		FemaleRank4->setMaxTextLength(BlakservStringLengths::MAX_GUILD_RANK_LEN);
+		FemaleRank5->setMaxTextLength(BlakservStringLengths::MAX_GUILD_RANK_LEN);
+
 		// attach listener to guildask data
 		OgreClient::Singleton->Data->GuildAskData->PropertyChanged += 
 			gcnew PropertyChangedEventHandler(OnGuildAskDataPropertyChanged);

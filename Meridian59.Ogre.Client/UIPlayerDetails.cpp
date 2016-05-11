@@ -17,6 +17,10 @@ namespace Meridian59 { namespace Ogre
 		HomepageValue		= static_cast<CEGUI::Editbox*>(Window->getChild(UI_NAME_PLAYERDETAILS_HOMEPAGEVAL));
 		OK			= static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_PLAYERDETAILS_OK));
 
+		// set server-side maximum string lengths
+		Description->setMaxTextLength(BlakservStringLengths::MAX_CHAR_DESCRIPTION_LEN);
+		HomepageValue->setMaxTextLength(BlakservStringLengths::MAX_URL_LEN);
+
 		// image composer for picture
 		imageComposer = gcnew ImageComposerCEGUI<ObjectBase^>();
 		imageComposer->ApplyYOffset = false;

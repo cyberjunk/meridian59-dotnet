@@ -15,8 +15,8 @@ namespace Meridian59 { namespace Ogre
 		Send			= static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_MAILCOMPOSE_SEND));
 		
 		// set maximum length for title and body (check with server values...)
-		HeadLine->setMaxTextLength(UI_MAIL_MAXTITLELENGTH);
-		Text->setMaxTextLength(UI_MAIL_MAXBODYLENGTH);
+		HeadLine->setMaxTextLength(BlakservStringLengths::MAIL_MESSAGE_MAX_SUBJECT_LENGTH);
+		Text->setMaxTextLength(BlakservStringLengths::MAIL_MESSAGE_MAX_LENGTH);
 
 		// subscribe send button
 		Send->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::MailCompose::OnSendClicked));

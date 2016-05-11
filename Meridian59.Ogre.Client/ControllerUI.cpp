@@ -413,23 +413,31 @@ namespace Meridian59 { namespace Ogre
 			clipText = clipText->Replace(
 				::System::Environment::NewLine, ::System::String::Empty);
 
-			// get caretindex
-			size_t caretindex = box->getCaretIndex();
+			// shorten clipboard text in case it exceeds maxlen of box
+			size_t maxlen = box->getMaxTextLength();
+			size_t remain = maxlen - box->getText().length();
+			int insertlen = ::System::Math::Max(0, ::System::Math::Min((int)remain, clipText->Length));
+			clipText = clipText->Substring(0, insertlen);
 
 			// insert new text
+			size_t caretindex = box->getCaretIndex();
 			box->insertText(StringConvert::CLRToCEGUI(clipText), caretindex);
-
+			
 			// set caret at the end of inserted text
-			box->setCaretIndex(caretindex + clipText->Length);
+			box->setCaretIndex(caretindex + insertlen);
 		}
 
 		// type of MultiLineEditbox
 		else if (mlbox && !mlbox->isReadOnly())
 		{
-			// get caretindex
-			size_t caretindex = mlbox->getCaretIndex();
+			// shorten clipboard text in case it exceeds maxlen of box
+			size_t maxlen = mlbox->getMaxTextLength();
+			size_t remain = maxlen - mlbox->getText().length();
+			int insertlen = ::System::Math::Max(0, ::System::Math::Min((int)remain, clipText->Length));
+			clipText = clipText->Substring(0, insertlen);
 
 			// insert new text
+			size_t caretindex = mlbox->getCaretIndex();
 			mlbox->insertText(StringConvert::CLRToCEGUI(clipText), caretindex);
 
 			// set caret at the end of inserted text

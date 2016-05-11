@@ -17,6 +17,9 @@ namespace Meridian59 { namespace Ogre
 		// set autoscroll on text at start
 		Scrollbar->setEndLockEnabled(true);
 
+		// set maximum textlength for chatinput
+		Input->setMaxTextLength((size_t)BlakservStringLengths::MAX_CHAT_LEN);
+
 		// attach listener to chatmessage list
 		OgreClient::Singleton->Data->ChatMessages->ListChanged += 
 			gcnew ListChangedEventHandler(&ControllerUI::Chat::OnChatMessagesListChanged);
