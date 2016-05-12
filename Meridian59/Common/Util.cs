@@ -263,5 +263,16 @@ namespace Meridian59.Common
 
             return Text.Substring(0, position) + Replace + Text.Substring(position + Search.Length);
         }
+
+        /// <summary>
+        /// Returns a string which is either the parameter or a first MaxLength characters of it
+        /// </summary>
+        /// <param name="Text"></param>
+        /// <param name="MaxLength"></param>
+        /// <returns></returns>
+        public static string Truncate(this string Text, int MaxLength)
+        {
+            return Text.Length <= MaxLength ? Text : Text.Substring(0, MathUtil.Max(0, MaxLength)); 
+        }
     }
 }
