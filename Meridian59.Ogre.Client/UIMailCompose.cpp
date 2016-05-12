@@ -16,7 +16,7 @@ namespace Meridian59 { namespace Ogre
 		
 		// set maximum length for title and body (check with server values...)
 		HeadLine->setMaxTextLength(BlakservStringLengths::MAIL_MESSAGE_MAX_SUBJECT_LENGTH);
-		Text->setMaxTextLength(BlakservStringLengths::MAIL_MESSAGE_MAX_LENGTH);
+		Text->setMaxTextLength(BlakservStringLengths::MAIL_MESSAGE_MAX_LENGTH-1);
 
 		// subscribe send button
 		Send->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::MailCompose::OnSendClicked));
