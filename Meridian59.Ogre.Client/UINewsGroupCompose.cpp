@@ -15,7 +15,7 @@ namespace Meridian59 { namespace Ogre
 		
 		// set maximum length for title and body (check with server values...)
 		HeadLine->setMaxTextLength(BlakservStringLengths::NEWS_POSTING_MAX_SUBJECT_LENGTH);
-		Text->setMaxTextLength(BlakservStringLengths::NEWS_POSTING_MAX_LENGTH);
+		Text->setMaxTextLength(BlakservStringLengths::NEWS_POSTING_MAX_LENGTH-1);
 
 		// attach listener to newsgroup data
 		OgreClient::Singleton->Data->NewsGroup->PropertyChanged += 
