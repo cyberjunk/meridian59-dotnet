@@ -158,6 +158,18 @@ namespace Meridian59.Common
         }
 
         /// <summary>
+        /// Bounds value into range (min, max combined)
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="upper"></param>
+        /// <param name="lower"></param>
+        /// <returns></returns>
+        public static Real Bound(Real a, Real upper, Real lower)
+        {
+            return Min(upper, Max(a, lower));
+        }
+
+        /// <summary>
         /// Returns the Greatest Common Divisor
         /// </summary>
         /// <param name="a">Number a</param>
