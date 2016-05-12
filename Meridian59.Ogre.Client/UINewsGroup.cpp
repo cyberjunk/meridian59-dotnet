@@ -208,9 +208,12 @@ namespace Meridian59 { namespace Ogre
 			{
 				ArticleHead^ article = articles[index];
 
-				// show prefilled compose window
+				::System::String^ newTitle = Common::Util::Truncate(
+					"Re: " + article->Title, BlakservStringLengths::NEWS_POSTING_MAX_SUBJECT_LENGTH);
+				
+					// show prefilled compose window
 				ControllerUI::NewsGroupCompose::HeadLine->setText(
-					StringConvert::CLRToCEGUI("Re: " + article->Title));
+					StringConvert::CLRToCEGUI(newTitle));
 				
 				ControllerUI::NewsGroupCompose::Text->setText(STRINGEMPTY);
 				ControllerUI::NewsGroupCompose::Window->setVisible(true);
