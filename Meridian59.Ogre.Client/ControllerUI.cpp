@@ -416,15 +416,14 @@ namespace Meridian59 { namespace Ogre
 			// shorten clipboard text in case it exceeds maxlen of box
 			size_t maxlen = box->getMaxTextLength();
 			size_t remain = maxlen - box->getText().length();
-			int insertlen = ::System::Math::Max(0, ::System::Math::Min((int)remain, clipText->Length));
-			clipText = clipText->Substring(0, insertlen);
+			clipText = Common::Util::Truncate(clipText, (int)remain);
 
 			// insert new text
 			size_t caretindex = box->getCaretIndex();
 			box->insertText(StringConvert::CLRToCEGUI(clipText), caretindex);
 			
 			// set caret at the end of inserted text
-			box->setCaretIndex(caretindex + insertlen);
+			box->setCaretIndex(caretindex + (size_t)clipText->Length);
 		}
 
 		// type of MultiLineEditbox
@@ -433,15 +432,14 @@ namespace Meridian59 { namespace Ogre
 			// shorten clipboard text in case it exceeds maxlen of box
 			size_t maxlen = mlbox->getMaxTextLength();
 			size_t remain = maxlen - mlbox->getText().length();
-			int insertlen = ::System::Math::Max(0, ::System::Math::Min((int)remain, clipText->Length));
-			clipText = clipText->Substring(0, insertlen);
+			clipText = Common::Util::Truncate(clipText, (int)remain);
 
 			// insert new text
 			size_t caretindex = mlbox->getCaretIndex();
 			mlbox->insertText(StringConvert::CLRToCEGUI(clipText), caretindex);
 
 			// set caret at the end of inserted text
-			mlbox->setCaretIndex(caretindex + clipText->Length);
+			mlbox->setCaretIndex(caretindex + (size_t)clipText->Length);
 		}
 	};
 	
