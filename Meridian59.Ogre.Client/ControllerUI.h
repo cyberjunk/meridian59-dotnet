@@ -387,6 +387,7 @@ namespace Meridian59 { namespace Ogre
 			static ::CEGUI::Window* Name = nullptr;
 			static ::CEGUI::MultiLineEditbox* Description = nullptr;
 			static ::CEGUI::MultiLineEditbox* Inscription = nullptr;
+			static ::CEGUI::PushButton* OK = nullptr;
 
 			static void Initialize();
 			static void Destroy();
@@ -1375,6 +1376,7 @@ namespace Meridian59 { namespace Ogre
 		{
 		public:
 			static bool OnImageMouseWheel(const CEGUI::EventArgs& e);
+			static bool OnOKClicked(const CEGUI::EventArgs& e);
 			static bool OnWindowKeyUp(const CEGUI::EventArgs& e);
 			static bool OnWindowClosed(const CEGUI::EventArgs& e);
 		};

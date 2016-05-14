@@ -429,10 +429,17 @@
 			
 			<!-- Inscription -->
 			<Window type="TaharezLook/MultiLineEditbox" name="ObjectDetails.Inscription" >
-				<Property name="Area" value="{{0,5},{0,197},{1,-5},{1,-5}}" />
+				<Property name="Area" value="{{0,5},{0,197},{1,-5},{1,-30}}" />
 				<Property name="ReadOnly" value="True" />
 				<Property name="TextParsingEnabled" value="False" />
-			</Window>					
+			</Window>
+			
+			<!-- OK button -->
+			<Window type="TaharezLook/Button" name="ObjectDetails.OK" >
+				<Property name="Text" value="OK" />
+				<Property name="Area" value="{{0,5},{1,-25},{1,-5},{1,-5}}" />
+				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />				
+			</Window>
 		</Window>
 		
 		<!-- PlayerDetails -->

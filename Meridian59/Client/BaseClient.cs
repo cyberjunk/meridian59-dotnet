@@ -2238,11 +2238,21 @@ namespace Meridian59.Client
         /// <param name="Description"></param>
         public virtual void SendChangeDescription(string Description)
         {
-            if (ObjectID.IsValid(Data.AvatarID))
+            SendChangeDescription(Data.AvatarID, Description);
+        }
+
+        /// <summary>
+        /// Changes the inscription of editable object details
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="Description"></param>
+        public virtual void SendChangeDescription(uint ID, string Description)
+        {
+            if (ObjectID.IsValid(ID))
             {
                 // create message instance
                 ChangeDescriptionMessage message = new ChangeDescriptionMessage(
-                    new ObjectID(Data.AvatarID), Description);
+                    new ObjectID(ID), Description);
 
                 // send/enqueue it (async)
                 ServerConnection.SendQueue.Enqueue(message);

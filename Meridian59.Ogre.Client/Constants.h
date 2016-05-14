@@ -276,6 +276,7 @@
 #define UI_NAME_OBJECTDETAILS_NAME					"ObjectDetails.Name"
 #define UI_NAME_OBJECTDETAILS_DESCRIPTION			"ObjectDetails.Description"
 #define UI_NAME_OBJECTDETAILS_INSCRIPTION			"ObjectDetails.Inscription"
+#define UI_NAME_OBJECTDETAILS_OK					"ObjectDetails.OK"
 #define UI_NAME_PLAYERDETAILS_WINDOW				"PlayerDetails"
 #define UI_NAME_PLAYERDETAILS_IMAGE					"PlayerDetails.Image"
 #define UI_NAME_PLAYERDETAILS_NAME					"PlayerDetails.Name"

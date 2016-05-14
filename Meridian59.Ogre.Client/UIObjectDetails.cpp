@@ -13,6 +13,7 @@ namespace Meridian59 { namespace Ogre
 		Name		= static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_OBJECTDETAILS_NAME));
 		Description = static_cast<CEGUI::MultiLineEditbox*>(Window->getChild(UI_NAME_OBJECTDETAILS_DESCRIPTION));
 		Inscription = static_cast<CEGUI::MultiLineEditbox*>(Window->getChild(UI_NAME_OBJECTDETAILS_INSCRIPTION));
+		OK			= static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_OBJECTDETAILS_OK));
 
 		// set initial layout type
 		SetLayout(OgreClient::Singleton->Data->LookObject->LookType);
@@ -35,6 +36,9 @@ namespace Meridian59 { namespace Ogre
 		// subscribe mouse wheel to image
 		Image->subscribeEvent(CEGUI::Window::EventMouseWheel, CEGUI::Event::Subscriber(UICallbacks::ObjectDetails::OnImageMouseWheel));
 		
+		// subscribe OK button
+		OK->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::ObjectDetails::OnOKClicked));
+
 		// subscribe keydown on description box and inscription
 		Description->subscribeEvent(CEGUI::MultiLineEditbox::EventKeyDown, CEGUI::Event::Subscriber(UICallbacks::OnCopyPasteKeyDown));
 		Inscription->subscribeEvent(CEGUI::MultiLineEditbox::EventKeyDown, CEGUI::Event::Subscriber(UICallbacks::OnCopyPasteKeyDown));
@@ -150,7 +154,8 @@ namespace Meridian59 { namespace Ogre
 				CEGUI::UDim(0, val2),
 				CEGUI::UDim(1.0f, -val1 - (float)UI_DEFAULTPADDING),
 				CEGUI::UDim(1.0f, -val2 - (float)UI_DEFAULTPADDING));
-										
+					
+			OK->setVisible(false);
 			Window->setHeight(CEGUI::UDim(0, 221.0f));	
 		}
 
@@ -165,7 +170,8 @@ namespace Meridian59 { namespace Ogre
 				CEGUI::UDim(0, val2),
 				CEGUI::UDim(1.0f, -val1 - (float)UI_DEFAULTPADDING),
 				CEGUI::UDim(0, sizeImage.d_height - sizeName.d_height - (float)UI_DEFAULTPADDING));
-						
+
+			OK->setVisible(false);
 			Window->setHeight(CEGUI::UDim(0, 512.0f));
 		}
 
@@ -181,6 +187,7 @@ namespace Meridian59 { namespace Ogre
 				CEGUI::UDim(1.0f, -val1 - (float)UI_DEFAULTPADDING),
 				CEGUI::UDim(0, sizeImage.d_height - sizeName.d_height - (float)UI_DEFAULTPADDING));
 
+			OK->setVisible(true);
 			Window->setHeight(CEGUI::UDim(0, 512.0f));
 		}
 	};
@@ -195,6 +202,32 @@ namespace Meridian59 { namespace Ogre
 		
 		return true;
 	}
+
+
+	bool UICallbacks::ObjectDetails::OnOKClicked(const CEGUI::EventArgs& e)
+	{
+		ObjectInfo^ lookInfo = OgreClient::Singleton->Data->LookObject;
+		ObjectBase^ lookObj = lookInfo->ObjectBase;
+
+		// don't to anything for non inscribed or non editable inscriptions
+		if (!lookInfo->LookType->IsInscribed || !lookInfo->LookType->IsEditable)
+			return true;
+
+		// get text
+		::CEGUI::String inscription = ControllerUI::ObjectDetails::Inscription->getText();
+
+		// convert to CLR
+		::System::String^ clrInsc = StringConvert::CEGUIToCLR(inscription);
+
+		// if text differs, send update to server
+		if (!::System::String::Equals(lookInfo->Message->FullString, clrInsc))
+			OgreClient::Singleton->SendChangeDescription(lookObj->ID, clrInsc);
+
+		// hide		
+		OgreClient::Singleton->Data->LookObject->IsVisible = false;
+
+		return true;
+	};
 
 	bool UICallbacks::ObjectDetails::OnWindowKeyUp(const CEGUI::EventArgs& e)
 	{
