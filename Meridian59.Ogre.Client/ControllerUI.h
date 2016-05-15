@@ -820,6 +820,7 @@ namespace Meridian59 { namespace Ogre
 			static ::CEGUI::PushButton* Create = nullptr;
 			static ::CEGUI::PushButton* Respond = nullptr;
 			static ::CEGUI::PushButton* RespondAll = nullptr;
+			static ::CEGUI::PushButton* Delete = nullptr;
 			static ::CEGUI::PushButton* Refresh = nullptr;
 			static ::CEGUI::MultiLineEditbox* Text = nullptr;
 
@@ -1600,6 +1601,7 @@ namespace Meridian59 { namespace Ogre
 			static bool OnCreateClicked(const CEGUI::EventArgs& e);
 			static bool OnRespondClicked(const CEGUI::EventArgs& e);
 			static bool OnRespondAllClicked(const CEGUI::EventArgs& e);
+			static bool OnDeleteClicked(const CEGUI::EventArgs& e);
 			static bool OnRefreshClicked(const CEGUI::EventArgs& e);
 			static bool OnKeyUp(const CEGUI::EventArgs& e);
 			static bool OnWindowClosed(const CEGUI::EventArgs& e);

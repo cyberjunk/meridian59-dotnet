@@ -411,6 +411,8 @@ namespace Meridian59.Files
                 foreach (string s in files)               
                     StringDictionaries.TryAdd(Path.GetFileName(s), null);               
             }
+            else
+                Directory.CreateDirectory(StringsFolder);
 
             // register objects
             if (Directory.Exists(ObjectsFolder))
@@ -426,6 +428,8 @@ namespace Meridian59.Files
                         Objects.TryAdd(filename, null);                  
                 }
             }
+            else
+                Directory.CreateDirectory(ObjectsFolder);
 
             // register roomtextures
             if (Directory.Exists(RoomTexturesFolder))
@@ -436,6 +440,8 @@ namespace Meridian59.Files
                 foreach (string s in files)                
                     RoomTextures.TryAdd(Path.GetFileName(s), null);                
             }
+            else
+                Directory.CreateDirectory(RoomTexturesFolder);
 
             // register rooms           
             if (Directory.Exists(RoomsFolder))
@@ -446,6 +452,8 @@ namespace Meridian59.Files
                 foreach (string s in files)               
                     Rooms.TryAdd(Path.GetFileName(s), null);              
             }
+            else
+                Directory.CreateDirectory(RoomsFolder);
 
             // register wav sounds          
             if (Directory.Exists(WavFolder))
@@ -456,6 +464,8 @@ namespace Meridian59.Files
                 foreach (string s in files)                                
                     Wavs.TryAdd(Path.GetFileName(s), null);                                  
             }
+            else
+                Directory.CreateDirectory(WavFolder);
 
             // register music         
             if (Directory.Exists(MusicFolder))
@@ -466,6 +476,8 @@ namespace Meridian59.Files
                 foreach (string s in files)                
                     Music.TryAdd(Path.GetFileName(s), null);                                  
             }
+            else
+                Directory.CreateDirectory(MusicFolder);
 
             // load mails          
             if (Directory.Exists(MailFolder))
@@ -484,6 +496,8 @@ namespace Meridian59.Files
                     Mails.Add(mail);
                 }
             }
+            else
+                Directory.CreateDirectory(MailFolder);
 
             // hookup mails listener to write/delete the files
             Mails.ListChanged += OnMailsListChanged;
@@ -732,10 +746,11 @@ namespace Meridian59.Files
                     // get full path of deleted mail
                     file = Path.Combine(
                         MailFolder,
-                        Mails.LastAddedItem.GetFilename());
+                        Mails.LastDeletedItem.GetFilename());
 
                     // delete it
-                    File.Delete(file);
+                    if (File.Exists(file))
+                        File.Delete(file);
                     break;
             }
         }

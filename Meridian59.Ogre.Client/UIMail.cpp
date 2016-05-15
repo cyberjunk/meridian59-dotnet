@@ -11,6 +11,7 @@ namespace Meridian59 { namespace Ogre
 		Respond		= static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_MAIL_RESPOND));
 		RespondAll	= static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_MAIL_RESPONDALL));
 		Refresh		= static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_MAIL_REFRESH));
+		Delete		= static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_MAIL_DELETE));
 		Text		= static_cast<CEGUI::MultiLineEditbox*>(Window->getChild(UI_NAME_MAIL_TEXT));
 
 		List->setShowVertScrollbar(true);
@@ -36,6 +37,7 @@ namespace Meridian59 { namespace Ogre
 		Respond->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Mail::OnRespondClicked));
 		RespondAll->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Mail::OnRespondAllClicked));
 		Refresh->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Mail::OnRefreshClicked));
+		Delete->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Mail::OnDeleteClicked));
 
 		// subscribe keydown on text
 		Text->subscribeEvent(CEGUI::MultiLineEditbox::EventKeyDown, CEGUI::Event::Subscriber(UICallbacks::OnCopyPasteKeyDown));
@@ -247,6 +249,28 @@ namespace Meridian59 { namespace Ogre
 				ControllerUI::MailCompose::Window->moveToFront();
 			}
 		}
+		return true;
+	}
+
+	bool UICallbacks::Mail::OnDeleteClicked(const CEGUI::EventArgs& e)
+	{
+		const CEGUI::WindowEventArgs& args = (const CEGUI::WindowEventArgs&)e;
+		CEGUI::MultiColumnList* list = ControllerUI::Mail::List;
+		MailList^ mails = OgreClient::Singleton->ResourceManager->Mails;
+
+		// need selection to be able to respond
+		if (list->getSelectedCount() > 0)
+		{
+			// get selection
+			CEGUI::ListboxItem* itm = list->getFirstSelectedItem();
+			unsigned int index = list->getItemRowIndex(itm);
+
+			if (mails->Count > (int)index)
+			{
+				mails->RemoveAt(index);
+			}
+		}
+
 		return true;
 	}
 

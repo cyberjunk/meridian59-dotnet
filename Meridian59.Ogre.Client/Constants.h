@@ -364,6 +364,7 @@
 #define UI_NAME_MAIL_CREATE							"Mail.Create"
 #define UI_NAME_MAIL_RESPOND						"Mail.Respond"
 #define UI_NAME_MAIL_RESPONDALL						"Mail.RespondAll"
+#define UI_NAME_MAIL_DELETE							"Mail.Delete"
 #define UI_NAME_MAIL_REFRESH						"Mail.Refresh"
 #define UI_NAME_MAIL_TEXT							"Mail.Text"
 #define UI_NAME_MAILCOMPOSE_WINDOW					"MailCompose"

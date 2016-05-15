@@ -1192,14 +1192,21 @@
 				<Property name="Area" value="{{0,205},{0.5,-5},{0,300},{0.5,15}}" />
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
+						
+			<!-- Delete -->
+			<Window type="TaharezLook/Button" name="Mail.Delete" >
+				<Property name="Text" value="Delete" />
+				<Property name="Area" value="{{0,305},{0.5,-5},{0,400},{0.5,15}}" />			
+				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
+			</Window>
 			
 			<!-- Refresh -->
 			<Window type="TaharezLook/Button" name="Mail.Refresh" >
 				<Property name="Text" value="Refresh" />
-				<Property name="Area" value="{{0,305},{0.5,-5},{0,400},{0.5,15}}" />
+				<Property name="Area" value="{{0,405},{0.5,-5},{0,500},{0.5,15}}" />
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
-			
+
 			<!-- Text -->
 			<Window type="TaharezLook/MultiLineEditbox" name="Mail.Text" >				
 				<Property name="Area" value="{{0,5},{0.5,20},{1,-5},{1,-5}}" />
