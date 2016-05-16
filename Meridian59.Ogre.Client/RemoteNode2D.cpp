@@ -13,6 +13,10 @@ namespace Meridian59 { namespace Ogre
         billboardSet->setBillboardType(BillboardType::BBT_ORIENTED_SELF);
 		billboardSet->setUseAccurateFacing(true);
 
+		// only one billboard in this set
+		billboardSet->setPoolSize(1);
+		billboardSet->setAutoextend(false);
+
 		// note: IsHanging overlaps with some playertypes
 		// workaround: must not have set IsPlayer also
 		billboardSet->setBillboardOrigin(
