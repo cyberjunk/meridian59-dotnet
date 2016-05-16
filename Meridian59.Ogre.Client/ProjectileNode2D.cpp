@@ -22,19 +22,16 @@ namespace Meridian59 { namespace Ogre
 		::Ogre::String ostr_billboard = PREFIX_PROJECTILE2D_BILLBOARD + ostr_id;
 		::Ogre::String ostr_node	  = PREFIX_PROJECTILE2D_SCENENODE + ostr_id;
 
-        // create billboardset
-        billboardSet = sceneManager->createBillboardSet(ostr_billboard);
+        // create billboardset for 1 billboard
+        billboardSet = sceneManager->createBillboardSet(ostr_billboard, 1);
         billboardSet->setBillboardOrigin(BillboardOrigin::BBO_BOTTOM_CENTER);
         billboardSet->setBillboardType(BillboardType::BBT_POINT);
-		
+		billboardSet->setAutoextend(false);
+
 		// hide billboardset by default with no boundingbox (blank objects "something")
         billboardSet->setDefaultDimensions(0.0f, 0.0f);
 		billboardSet->setBounds(AxisAlignedBox::BOX_NULL, 0.0f);  
 		billboardSet->setVisible(false);
-
-		// only one billboard in this set
-		billboardSet->setPoolSize(1);
-		billboardSet->setAutoextend(false);
 
         // create billboard to draw image on
         billboard = billboardSet->createBillboard(::Ogre::Vector3::ZERO);

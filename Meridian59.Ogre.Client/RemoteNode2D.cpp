@@ -8,14 +8,11 @@ namespace Meridian59 { namespace Ogre
 		::Ogre::String ostr_name = 
 			PREFIX_REMOTENODE2D_BILLBOARD + ::Ogre::StringConverter::toString(roomObject->ID);
 		
-        // create billboardset
-        billboardSet = SceneManager->createBillboardSet(ostr_name);
+        // create billboardset for 1 billboard
+        billboardSet = SceneManager->createBillboardSet(ostr_name, 1);
         billboardSet->setBillboardType(BillboardType::BBT_ORIENTED_SELF);
-		billboardSet->setUseAccurateFacing(true);
-
-		// only one billboard in this set
-		billboardSet->setPoolSize(1);
 		billboardSet->setAutoextend(false);
+		billboardSet->setUseAccurateFacing(true);
 
 		// note: IsHanging overlaps with some playertypes
 		// workaround: must not have set IsPlayer also
