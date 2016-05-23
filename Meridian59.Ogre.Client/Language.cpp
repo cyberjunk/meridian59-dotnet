@@ -10,6 +10,20 @@ const char* EN[] =
 	"Password",				// 1
 	"Connect",				// 2
 	"Options",				// 3
+	"On",					// 4
+	"Off",					// 5
+	"Key",					// 6
+	"Attack",				// 7
+	"Rest",					// 8
+	"Dance",				// 9
+	"Wave",					// 10
+	"Point",				// 11
+	"Loot",					// 12
+	"Buy",					// 13
+	"Inspect",				// 14
+	"Trade",				// 15
+	"Activate",				// 16
+	"Guild invite",			// 17
 };
 
 const char* EN_WINDOW_TITLES[] =
@@ -68,12 +82,6 @@ const char* EN_DESCRIPTIONS_STATUSBAR[] =
 	"Room / Area"							// 6
 };
 
-const char* EN_VALUES_SAFETY[] =
-{
-	"On",				// 0
-	"Off"				// 1
-};
-
 /**************************************************************************************/
 /***************************      GERMAN      *****************************************/
 /**************************************************************************************/
@@ -84,6 +92,20 @@ const char* DE[] =
 	"Passwort",				// 1
 	"Verbinden",			// 2
 	"Optionen",				// 3
+	"Ein",					// 4
+	"Aus",					// 5
+	"Taste",				// 6
+	"Angriff",				// 7
+	"Rasten",				// 8
+	"Tanzen",				// 9
+	"Winken",				// 10
+	"Zeigen",				// 11
+	"Plündern",				// 12
+	"Kaufen",				// 13
+	"Untersuchen",			// 14
+	"Handeln",				// 15
+	"Aktivieren",			// 16
+	"Gilden Einladung",		// 17
 };
 
 const char* DE_WINDOW_TITLES[] =
@@ -140,12 +162,6 @@ const char* DE_DESCRIPTIONS_STATUSBAR[] =
 	"Sicherheit",							// 4
 	"Meridian-Zeit",						// 5
 	"Raum / Gebiet"							// 6
-};
-
-const char* DE_VALUES_SAFETY[] =
-{
-	"Ein",				// 0
-	"Aus"				// 1
 };
 
 /**************************************************************************************/
@@ -220,17 +236,5 @@ const char* GetLangDescriptionStatusBar(const LANGSTR_DESCRIPTION_STATUSBAR::Enu
 	{
 	case LanguageCode::German:	return DE_DESCRIPTIONS_STATUSBAR[ID];
 	default:					return EN_DESCRIPTIONS_STATUSBAR[ID];
-	}
-};
-
-const char* GetLangValueSafety(const LANGSTR_VALUE_SAFETY::Enum ID)
-{
-	using ::Meridian59::Ogre::OgreClient;
-	using ::Meridian59::Common::Enums::LanguageCode;
-
-	switch (OgreClient::Singleton->Config->Language)
-	{
-	case LanguageCode::German:	return DE_VALUES_SAFETY[ID];
-	default:					return EN_VALUES_SAFETY[ID];
 	}
 };

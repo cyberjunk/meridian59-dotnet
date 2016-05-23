@@ -67,58 +67,58 @@ namespace Meridian59 { namespace Ogre
 			switch(Type)
 			{
 				case AvatarAction::Attack:
-					strName = "Attack";
+					strName = GetLangLabel(LANGSTR::ATTACK);
 					strIconName = UI_IMAGE_ACTION_ATTACK;
 					break;
 
 				case AvatarAction::Rest:
-					strName = "Rest";
+					strName = GetLangLabel(LANGSTR::REST);
 					strIconName = UI_IMAGE_ACTION_REST;
 					break;
 
 				case AvatarAction::Dance:
-					strName = "Dance";
+					strName = GetLangLabel(LANGSTR::DANCE);
 					strIconName = UI_IMAGE_ACTION_DANCE;
 					break;
 
 				case AvatarAction::Wave:
+					strName = GetLangLabel(LANGSTR::WAVE);
 					strIconName = UI_IMAGE_ACTION_WAVE;
-					strName = "Wave";
 					break;
 
 				case AvatarAction::Point:
+					strName = GetLangLabel(LANGSTR::POINT);
 					strIconName = UI_IMAGE_ACTION_POINT;
-					strName = "Point";
 					break;
 
 				case AvatarAction::Loot:
+					strName = GetLangLabel(LANGSTR::LOOT);
 					strIconName = UI_IMAGE_ACTION_LOOT;
-					strName = "Loot";
 					break;
 
 				case AvatarAction::Buy:
+					strName = GetLangLabel(LANGSTR::BUY);
 					strIconName = UI_IMAGE_ACTION_BUY;
-					strName = "Buy";
 					break;
 
 				case AvatarAction::Inspect:
+					strName = GetLangLabel(LANGSTR::INSPECT);
 					strIconName = UI_IMAGE_ACTION_INSPECT;
-					strName = "Inspect";
 					break;
 
 				case AvatarAction::Trade:
+					strName = GetLangLabel(LANGSTR::TRADE);
 					strIconName = UI_IMAGE_ACTION_TRADE;
-					strName = "Trade";
 					break;
 
 				case AvatarAction::Activate:
+					strName = GetLangLabel(LANGSTR::ACTIVATE);
 					strIconName = UI_IMAGE_ACTION_ACTIVATE;
-					strName = "Activate";
 					break;
 
 				case AvatarAction::GuildInvite:
+					strName = GetLangLabel(LANGSTR::GUILDINVITE);
 					strIconName = UI_IMAGE_ACTION_GUILDINVITE;
-					strName = "GuildInvite";
 					break;
 
 				default:
@@ -157,37 +157,37 @@ namespace Meridian59 { namespace Ogre
 			
 			CEGUI::String strName = name->getText();
 
-			if (strName == "Attack")				
+			if (strName == GetLangLabel(LANGSTR::ATTACK))
 				OgreClient::Singleton->ExecAction(AvatarAction::Attack);
 			
-			else if (strName == "Rest")
+			else if (strName == GetLangLabel(LANGSTR::REST))
 				OgreClient::Singleton->ExecAction(AvatarAction::Rest);
 						
-			else if (strName == "Dance")
+			else if (strName == GetLangLabel(LANGSTR::DANCE))
 				OgreClient::Singleton->ExecAction(AvatarAction::Dance);
 						
-			else if (strName == "Wave")
+			else if (strName == GetLangLabel(LANGSTR::WAVE))
 				OgreClient::Singleton->ExecAction(AvatarAction::Wave);
 					
-			else if (strName == "Point")
+			else if (strName == GetLangLabel(LANGSTR::POINT))
 				OgreClient::Singleton->ExecAction(AvatarAction::Point);
 						
-			else if (strName == "Loot")
+			else if (strName == GetLangLabel(LANGSTR::LOOT))
 				OgreClient::Singleton->ExecAction(AvatarAction::Loot);
 
-			else if (strName == "Buy")
+			else if (strName == GetLangLabel(LANGSTR::BUY))
 				OgreClient::Singleton->ExecAction(AvatarAction::Buy);
 
-			else if (strName == "Inspect")
+			else if (strName == GetLangLabel(LANGSTR::INSPECT))
 				OgreClient::Singleton->ExecAction(AvatarAction::Inspect);
 
-			else if (strName == "Activate")
+			else if (strName == GetLangLabel(LANGSTR::ACTIVATE))
 				OgreClient::Singleton->ExecAction(AvatarAction::Activate);
 
-			else if (strName == "Trade")
+			else if (strName == GetLangLabel(LANGSTR::TRADE))
 				OgreClient::Singleton->ExecAction(AvatarAction::Trade);	
 
-			else if (strName == "GuildInvite")
+			else if (strName == GetLangLabel(LANGSTR::GUILDINVITE))
 				OgreClient::Singleton->ExecAction(AvatarAction::GuildInvite);	
 		}
 		
