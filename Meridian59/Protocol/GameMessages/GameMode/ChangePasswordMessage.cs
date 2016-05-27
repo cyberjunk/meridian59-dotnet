@@ -84,7 +84,7 @@ namespace Meridian59.Protocol.GameMessages
             // passwordlen, always 0x10 = 16
             cursor += TypeSizes.SHORT;
 
-            PasswordHash pwHashOld = new PasswordHash();
+            Hash128Bit pwHashOld = new Hash128Bit();
             pwHashOld.HASH1 = BitConverter.ToUInt32(Buffer, cursor);
             cursor += TypeSizes.INT;
 
@@ -102,7 +102,7 @@ namespace Meridian59.Protocol.GameMessages
             // passwordlen, always 0x10 = 16
             cursor += TypeSizes.SHORT;
 
-            PasswordHash pwHashNew = new PasswordHash();
+            Hash128Bit pwHashNew = new Hash128Bit();
             pwHashNew.HASH1 = BitConverter.ToUInt32(Buffer, cursor);
             cursor += TypeSizes.INT;
 
@@ -121,8 +121,8 @@ namespace Meridian59.Protocol.GameMessages
         }
         #endregion
 
-        public PasswordHash PasswordHashOld { get; set; }
-        public PasswordHash PasswordHashNew { get; set; }
+        public Hash128Bit PasswordHashOld { get; set; }
+        public Hash128Bit PasswordHashNew { get; set; }
         
         public ChangePasswordMessage(string PasswordOld, string PasswordNew) 
             : base(MessageTypeGameMode.ChangePassword)
@@ -130,13 +130,13 @@ namespace Meridian59.Protocol.GameMessages
             byte[] md5hashOld = MeridianMD5.ComputeMD5(PasswordOld);
             byte[] md5hashNew = MeridianMD5.ComputeMD5(PasswordNew);
 
-            PasswordHash pwHashOld = new PasswordHash();
+            Hash128Bit pwHashOld = new Hash128Bit();
             pwHashOld.HASH1 = BitConverter.ToUInt32(md5hashOld, 0);
             pwHashOld.HASH2 = BitConverter.ToUInt32(md5hashOld, 4);
             pwHashOld.HASH3 = BitConverter.ToUInt32(md5hashOld, 8);
             pwHashOld.HASH4 = BitConverter.ToUInt32(md5hashOld, 12);
-            
-            PasswordHash pwHashNew = new PasswordHash();
+
+            Hash128Bit pwHashNew = new Hash128Bit();
             pwHashNew.HASH1 = BitConverter.ToUInt32(md5hashNew, 0);
             pwHashNew.HASH2 = BitConverter.ToUInt32(md5hashNew, 4);
             pwHashNew.HASH3 = BitConverter.ToUInt32(md5hashNew, 8);

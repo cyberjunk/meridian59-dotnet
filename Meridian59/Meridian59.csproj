@@ -563,7 +563,7 @@
     <Compile Include="Protocol\Protection\PIDecoder.cs" />
     <Compile Include="Protocol\Protection\PIEncoder.cs" />
     <Compile Include="Protocol\Structs\HashTable.cs" />
-    <Compile Include="Protocol\Structs\PasswordHash.cs" />
+    <Compile Include="Common\Hash128Bit.cs" />
     <Compile Include="Files\ResourceManager.cs" />
     <Compile Include="Drawing2D\RenderInfo.cs" />
     <Compile Include="Bot\BotClient.cs" />

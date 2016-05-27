@@ -14,12 +14,12 @@
  If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Meridian59.Protocol.Structs
+namespace Meridian59.Common
 {
     /// <summary>
     /// A struct to store 128-Bit hashes in 4x 32-Bit blocks.
     /// </summary>
-    public struct PasswordHash
+    public struct Hash128Bit
     {
         public uint HASH1;
         public uint HASH2;

@@ -54,7 +54,12 @@ namespace Meridian59.Protocol.GameMessages
                     TypeSizes.INT + TypeSizes.INT +
                     TypeSizes.BYTE + TypeSizes.BYTE + TypeSizes.SHORT +
                     TypeSizes.SHORT + Username.Length +
-                    TypeSizes.SHORT + 16; // hashlen + hash
+#if VANILLA
+                    TypeSizes.SHORT + 16; // password hashlen + hash
+#else
+                    TypeSizes.SHORT + 16 + // password hashlen + hash
+                    TypeSizes.SHORT + 16; // rsbhashlen + hash
+#endif
             }
         }
 
@@ -129,7 +134,22 @@ namespace Meridian59.Protocol.GameMessages
 
             Array.Copy(BitConverter.GetBytes(PasswordHash.HASH4), 0, Buffer, cursor, TypeSizes.INT);
             cursor += TypeSizes.INT;
+#if !VANILLA
+            Array.Copy(BitConverter.GetBytes((ushort)16), 0, Buffer, cursor, TypeSizes.SHORT);
+            cursor += TypeSizes.SHORT;
 
+            Array.Copy(BitConverter.GetBytes(RsbHash.HASH1), 0, Buffer, cursor, TypeSizes.INT);
+            cursor += TypeSizes.INT;
+
+            Array.Copy(BitConverter.GetBytes(RsbHash.HASH2), 0, Buffer, cursor, TypeSizes.INT);
+            cursor += TypeSizes.INT;
+
+            Array.Copy(BitConverter.GetBytes(RsbHash.HASH3), 0, Buffer, cursor, TypeSizes.INT);
+            cursor += TypeSizes.INT;
+
+            Array.Copy(BitConverter.GetBytes(RsbHash.HASH4), 0, Buffer, cursor, TypeSizes.INT);
+            cursor += TypeSizes.INT;
+#endif
             return cursor - StartIndex;
         }
 
@@ -193,7 +213,7 @@ namespace Meridian59.Protocol.GameMessages
             // passwordlen, always 0x10 = 16
             cursor += TypeSizes.SHORT;
 
-            PasswordHash hash = new PasswordHash();
+            Hash128Bit hash = new Hash128Bit();
             hash.HASH1 = BitConverter.ToUInt32(Buffer, cursor);
             cursor += TypeSizes.INT;
 
@@ -207,7 +227,25 @@ namespace Meridian59.Protocol.GameMessages
             cursor += TypeSizes.INT;
 
             PasswordHash = hash;
+#if !VANILLA
+            // rsbhash len, always 0x10 = 16
+            cursor += TypeSizes.SHORT;
 
+            Hash128Bit rsbHash = new Hash128Bit();
+            rsbHash.HASH1 = BitConverter.ToUInt32(Buffer, cursor);
+            cursor += TypeSizes.INT;
+
+            rsbHash.HASH2 = BitConverter.ToUInt32(Buffer, cursor);
+            cursor += TypeSizes.INT;
+
+            rsbHash.HASH3 = BitConverter.ToUInt32(Buffer, cursor);
+            cursor += TypeSizes.INT;
+
+            rsbHash.HASH4 = BitConverter.ToUInt32(Buffer, cursor);
+            cursor += TypeSizes.INT;
+
+            RsbHash = rsbHash;
+#endif
             return cursor - StartIndex;
         }
         #endregion
@@ -329,7 +367,7 @@ namespace Meridian59.Protocol.GameMessages
                     // recalculate the hash
                     byte[] md5hash = MeridianMD5.ComputeMD5(value);
 
-                    PasswordHash pwHash = new PasswordHash();
+                    Hash128Bit pwHash = new Hash128Bit();
                     pwHash.HASH1 = BitConverter.ToUInt32(md5hash, 0);
                     pwHash.HASH2 = BitConverter.ToUInt32(md5hash, 4);
                     pwHash.HASH3 = BitConverter.ToUInt32(md5hash, 8);
@@ -343,13 +381,21 @@ namespace Meridian59.Protocol.GameMessages
         /// <summary>
         /// M59 MD5 of the last set of property 'Password'
         /// </summary>
-        public PasswordHash PasswordHash { get; protected set; }
-        
+        public Hash128Bit PasswordHash { get; protected set; }
+
+        /// <summary>
+        /// MD5 hash of the .rsb string resource file.
+        /// Server compares with live version on connection and
+        /// may trigger a client update.
+        /// </summary>
+        public Hash128Bit RsbHash { get; set; }
+
         /// <summary>
         /// Constructor by values
         /// </summary>
         /// <param name="Username"></param>
         /// <param name="Password"></param>
+        /// <param name="RsbHash"></param>
         /// <param name="MajorClientVersion"></param>
         /// <param name="MinorClientVersion"></param>
         /// <param name="WindowsType"></param>
@@ -368,6 +414,7 @@ namespace Meridian59.Protocol.GameMessages
         public LoginMessage(
             string Username, 
             string Password,
+            Hash128Bit RsbHash,
             byte MajorClientVersion, 
             byte MinorClientVersion,
             uint WindowsType = WINTYPE_NT, 
@@ -403,7 +450,7 @@ namespace Meridian59.Protocol.GameMessages
             this.ColorDepth = ColorDepth;
             this.PartnerNr = PartnerNr;
             this.Unused = Unused;
-            
+            this.RsbHash = RsbHash;
             this.Username = Username;
             this.Password = Password;           
         }
