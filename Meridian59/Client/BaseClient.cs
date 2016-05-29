@@ -730,7 +730,7 @@ namespace Meridian59.Client
         {
             // create message instance
             LoginMessage message = new LoginMessage(
-                Username, Password,
+                Username, Password, ResourceManager.RsbHash,
                 AppVersionMajor, AppVersionMinor,
                 LoginMessage.WINTYPE_NT, 6, 1, 512000000, LoginMessage.CPUTYPE_PENTIUM,
                 MeridianExeCRCs.NEWCLIENTDETECT,

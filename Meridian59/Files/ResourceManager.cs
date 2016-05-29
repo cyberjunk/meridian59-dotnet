@@ -69,6 +69,11 @@ namespace Meridian59.Files
 		public StringDictionary StringResources { get { return stringResources; } }
 
         /// <summary>
+        /// Hash of the currently active string resources file
+        /// </summary>
+        public Hash128Bit RsbHash { get; set; }
+
+        /// <summary>
         /// All string dictionaries (.rsb) files found
         /// </summary>
         public LockingDictionary<string, RsbFile> StringDictionaries { get { return stringDictionaries; } }
@@ -522,6 +527,15 @@ namespace Meridian59.Files
 
 			// set preferred language
 			StringResources.Language = Language;
+            
+            // Save the MD5 hash of this rsb file as our RsbHash.
+            byte[] rsbMD5Hash = MeridianMD5.ComputeGenericFileMD5(StringsFolder + "/" + RsbFile);
+            Hash128Bit rsbHash = new Hash128Bit();
+            rsbHash.HASH1 = BitConverter.ToUInt32(rsbMD5Hash, 0);
+            rsbHash.HASH2 = BitConverter.ToUInt32(rsbMD5Hash, 4);
+            rsbHash.HASH3 = BitConverter.ToUInt32(rsbMD5Hash, 8);
+            rsbHash.HASH4 = BitConverter.ToUInt32(rsbMD5Hash, 12);
+            RsbHash = rsbHash;
 
             // try get the dictionary for argument
             RsbFile file = GetStringDictionary(RsbFile);

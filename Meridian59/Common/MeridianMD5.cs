@@ -15,6 +15,7 @@
 */
 
 using System;
+using System.IO;
 using System.Text;
 using System.Security.Cryptography;
 
@@ -72,7 +73,31 @@ namespace Meridian59.Common
             // get bytes of string
             byte[] bytes = Encoding.Default.GetBytes(Input);
 
-            return ComputeMD5(bytes);         
-        }      
+            return ComputeMD5(bytes);
+        }
+
+        /// <summary>
+        /// Generates an MD5 from the filestream of the given FilePath
+        /// </summary>
+        /// <param name="FilePath">A string file (path and name) to
+        /// generate an MD5 from</param>
+        /// <returns>MD5 bytes with no modification</returns>
+        public static byte[] ComputeGenericFileMD5(string FilePath)
+        {
+            if (!File.Exists(FilePath))
+                return new byte[16];
+
+            // create filestream
+            FileStream fs = new FileStream(FilePath, FileMode.Open, FileAccess.Read);
+
+            // compute and compare md5
+            byte[] md5Fil = md5.ComputeHash(fs);
+
+            // close filestream
+            fs.Close();
+            fs.Dispose();
+
+            return md5Fil;
+        }
     }
 }
