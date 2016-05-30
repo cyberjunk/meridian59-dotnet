@@ -1233,6 +1233,29 @@ namespace Meridian59.Files.BGF
         }
 
         /// <summary>
+        /// Creates a 32-Bit color GDI+ Bitmap from BgfBitmap pixels (with transparency).
+        /// Uses FillPixelDataAsA8R8G8B8() to fill pixels.
+        /// </summary>
+        /// <param name="Palette"></param>
+        /// <returns></returns>
+        public unsafe Bitmap GetBitmapA8R8G8B8(byte Palette = 0)
+        {
+            Bitmap bitmap = new Bitmap((int)Width, (int)Height, PixelFormat.Format32bppArgb);
+            Rectangle rect = new Rectangle(0, 0, (int)Width, (int)Height);
+
+            // lock
+            BitmapData data = bitmap.LockBits(rect, ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+
+            // fill with pixels
+            FillPixelDataAsA8R8G8B8((uint*)data.Scan0.ToPointer(), Palette, Width);
+
+            // unlock
+            bitmap.UnlockBits(data);
+
+            return bitmap;
+        }
+
+        /// <summary>
         /// Sets this BgfBitmap to a given 256 color Bitmap
         /// </summary>
         public void SetBitmap(Bitmap Bitmap)
