@@ -392,11 +392,11 @@ namespace Meridian59.Data.Models
             {
                 if (RaiseChangedEvent)
                 {
-                    Resource = M59ResourceManager.GetWavFile(ResourceName);
+                    Resource = M59ResourceManager.GetSoundFile(ResourceName);
                 }
                 else
                 {
-                    resource = M59ResourceManager.GetWavFile(ResourceName);
+                    resource = M59ResourceManager.GetSoundFile(ResourceName);
                 }
             }
         }

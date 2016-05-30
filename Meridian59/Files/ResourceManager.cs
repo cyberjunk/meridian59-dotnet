@@ -37,7 +37,7 @@ namespace Meridian59.Files
     public class ResourceManager
     {
         #region Constants
-        protected const string NOTFOUND = "Error: StringResources file or Bgf/Roo/Wav/Music folder not found.";
+        protected const string NOTFOUND = "Error: StringResources file or Bgf/Roo/Sound/Music folder not found.";
         protected const string DEFAULTSTRINGFILE = "rsc0000.rsb";
 
         public const string SUBPATHSTRINGS = "strings";
@@ -94,9 +94,9 @@ namespace Meridian59.Files
         public LockingDictionary<string, RooFile> Rooms { get { return rooms; } }
 
         /// <summary>
-        /// WAV soundfiles
+        /// OGG soundfiles
         /// </summary>
-        public LockingDictionary<string, Tuple<IntPtr, uint>> Wavs { get { return sounds; } }
+        public LockingDictionary<string, Tuple<IntPtr, uint>> Sounds { get { return sounds; } }
 
         /// <summary>
         /// Music
@@ -114,6 +114,11 @@ namespace Meridian59.Files
         /// True if InitConfig was executed.
         /// </summary>
         public bool Initialized { get; protected set; }
+
+        /// <summary>
+        /// Subfolder containing server-specific files.
+        /// </summary>
+        public string ServerSubFolder { get; set; }
 
         /// <summary>
         /// Folder containing all .rsb files for different servers.
@@ -136,9 +141,9 @@ namespace Meridian59.Files
         public string RoomTexturesFolder { get; set; }
 
         /// <summary>
-        /// Folder containing all WAV soundfiles
+        /// Folder containing all non-music soundfiles
         /// </summary>
-        public string WavFolder { get; set; }
+        public string SoundFolder { get; set; }
 
         /// <summary>
         /// Folder containing music
@@ -201,7 +206,11 @@ namespace Meridian59.Files
                 if (bgfFile == null)
                 {
                     // load it
-                    bgfFile = new BgfFile(ObjectsFolder + "/" + File);
+                    if (!String.IsNullOrEmpty(ServerSubFolder)
+                        && System.IO.File.Exists(ObjectsFolder + "/" + ServerSubFolder + "/" + File))
+                        bgfFile = new BgfFile(ObjectsFolder + "/" + ServerSubFolder + "/" + File);
+                    else
+                        bgfFile = new BgfFile(ObjectsFolder + "/" + File);
 
                     // update the registry                 
                     Objects.TryUpdate(File, bgfFile, null);
@@ -228,7 +237,11 @@ namespace Meridian59.Files
                 if (rooFile == null)
                 {                  
                     // load it
-                    rooFile = new RooFile(RoomsFolder + "/" + File);
+                    if (!String.IsNullOrEmpty(ServerSubFolder)
+                        && System.IO.File.Exists(RoomsFolder + "/" + ServerSubFolder + "/" + File))
+                        rooFile = new RooFile(RoomsFolder + "/" + ServerSubFolder + "/" + File);
+                    else
+                        rooFile = new RooFile(RoomsFolder + "/" + File);
 
                     // resolve resource references (may load texture bgfs)
                     rooFile.ResolveResources(this);
@@ -258,7 +271,11 @@ namespace Meridian59.Files
                 if (bgfFile == null)
                 {
                     // load it
-                    bgfFile = new BgfFile(RoomTexturesFolder + "/" + File);
+                    if (!String.IsNullOrEmpty(ServerSubFolder)
+                        && System.IO.File.Exists(RoomTexturesFolder + "/" + ServerSubFolder + "/" + File))
+                        bgfFile = new BgfFile(RoomTexturesFolder + "/" + ServerSubFolder + "/" + File);
+                    else
+                        bgfFile = new BgfFile(RoomTexturesFolder + "/" + File);
 
                     // update the registry
                     RoomTextures.TryUpdate(File, bgfFile, null);
@@ -281,34 +298,38 @@ namespace Meridian59.Files
         }
 
         /// <summary>
-        /// Tries to retrieve a WAV file from the Wavs dictionary.
+        /// Tries to retrieve an OGG file from the Sounds dictionary.
         /// Will load the file from disk, if not yet loaded.
         /// </summary>
         /// <param name="File"></param>
         /// <returns></returns>
-        public Tuple<IntPtr, uint> GetWavFile(string File)
+        public Tuple<IntPtr, uint> GetSoundFile(string File)
         {
-            Tuple<IntPtr, uint> wavData = null;
+            Tuple<IntPtr, uint> soundData = null;
 
             // if the file is known
-            if (Wavs.TryGetValue(File, out wavData))
+            if (Sounds.TryGetValue(File, out soundData))
             {
                 // haven't loaded it yet?
-                if (wavData == null)
+                if (soundData == null)
                 {
                     // load it
-                    wavData = Util.LoadFileToUnmanagedMem(WavFolder + "/" + File);
+                    if (!String.IsNullOrEmpty(ServerSubFolder)
+                        && System.IO.File.Exists(SoundFolder + "/" + ServerSubFolder + "/" + File))
+                        soundData = Util.LoadFileToUnmanagedMem(SoundFolder + "/" + ServerSubFolder + "/" + File);
+                    else
+                        soundData = Util.LoadFileToUnmanagedMem(SoundFolder + "/" + File);
                     
                     // update the registry
-                    Wavs.TryUpdate(File, wavData, null);
+                    Sounds.TryUpdate(File, soundData, null);
                 }
             }
 
-            return wavData;
+            return soundData;
         }
 
         /// <summary>
-        /// Tries to retrieve a MP3 file from the Music dictionary.
+        /// Tries to retrieve an OGG file from the Music dictionary.
         /// Will load the file from disk, if not yet loaded.
         /// </summary>
         /// <param name="File"></param>
@@ -324,7 +345,11 @@ namespace Meridian59.Files
                 if (musicData == null)
                 {
                     // load it
-                    musicData = Util.LoadFileToUnmanagedMem(MusicFolder + "/" + File);
+                    if (!String.IsNullOrEmpty(ServerSubFolder)
+                        && System.IO.File.Exists(MusicFolder + "/" + ServerSubFolder + "/" + File))
+                        musicData = Util.LoadFileToUnmanagedMem(MusicFolder + "/" + ServerSubFolder + "/" + File);
+                    else
+                        musicData = Util.LoadFileToUnmanagedMem(MusicFolder + "/" + File);
 
                     // update the registry
                     Music.TryUpdate(File, musicData, null);
@@ -383,7 +408,7 @@ namespace Meridian59.Files
             this.RoomsFolder = PathRooms;
             this.ObjectsFolder = PathObjects;
             this.RoomTexturesFolder = PathRoomTextures;
-            this.WavFolder = PathSounds;
+            this.SoundFolder = PathSounds;
             this.MusicFolder = PathMusic;
             this.MailFolder = PathMails;
 
@@ -397,7 +422,7 @@ namespace Meridian59.Files
                 Objects.Clear();
                 RoomTextures.Clear();
                 Rooms.Clear();
-                Wavs.Clear();
+                Sounds.Clear();
                 Music.Clear();
 
                 // detach mail listener so we don't delete them
@@ -460,14 +485,14 @@ namespace Meridian59.Files
             else
                 Directory.CreateDirectory(RoomsFolder);
 
-            // register wav sounds          
-            if (Directory.Exists(WavFolder))
+            // register sounds          
+            if (Directory.Exists(SoundFolder))
             {
                 // get available files
-                files = Directory.GetFiles(WavFolder, '*' + FileExtensions.OGG);
+                files = Directory.GetFiles(SoundFolder, '*' + FileExtensions.OGG);
                 
                 foreach (string s in files)                                
-                    Wavs.TryAdd(Path.GetFileName(s), null);                                  
+                    Sounds.TryAdd(Path.GetFileName(s), null);                                  
             }
             else
                 Directory.CreateDirectory(WavFolder);
@@ -515,6 +540,21 @@ namespace Meridian59.Files
         }
 
         /// <summary>
+        /// Adds legacy resources to dictionaries based on the given server folder.
+        /// </summary>
+        /// <param name="ServerSubFolder"></param>
+        public void SelectServerResources(string ServerSubFolder)
+        {
+            this.ServerSubFolder = ServerSubFolder;
+            // Load server-specific resources if present
+            AddServerObjects();
+            AddServerRoomTextures();
+            AddServerRooms();
+            AddServerSounds();
+            AddServerMusic();
+        }
+
+        /// <summary>
         /// Clears and reloads the strings from another dictionary file within the strings folder,
         /// which was previously initialized during Init()
         /// </summary>
@@ -549,6 +589,161 @@ namespace Meridian59.Files
             // raise event
             if (StringDictionarySelected != null)
                 StringDictionarySelected(this, new EventArgs());
+        }
+
+        /// <summary>
+        /// Adds server-specific object BGF files to the Objects dictionary.
+        /// </summary>
+        protected void AddServerObjects()
+        {
+            string[] files;
+
+            // Reset rooms
+            Objects.Clear();
+
+            // Add server-specific room files.
+            if (!String.IsNullOrEmpty(ServerSubFolder)
+                && Directory.Exists(Path.Combine(ObjectsFolder, ServerSubFolder)))
+            {
+                files = Directory.GetFiles(Path.Combine(ObjectsFolder, ServerSubFolder), '*' + FileExtensions.BGF);
+                foreach (string s in files)
+                {
+                    string filename = Path.GetFileName(s);
+                    if (!filename.StartsWith("grd"))
+                        Objects.TryAdd(filename, null);
+                }
+            }
+
+            // Add defaults. Won't overwrite the ones we just added.
+            if (Directory.Exists(ObjectsFolder))
+            {
+                // get available files
+                files = Directory.GetFiles(ObjectsFolder, '*' + FileExtensions.BGF);
+
+                foreach (string s in files)
+                    Objects.TryAdd(Path.GetFileName(s), null);
+            }
+        }
+
+        /// <summary>
+        /// Adds server-specific room textures files to the RoomTextures dictionary.
+        /// </summary>
+        protected void AddServerRoomTextures()
+        {
+            string[] files;
+
+            // Reset rooms
+            RoomTextures.Clear();
+
+            // Add server-specific room files.
+            if (!String.IsNullOrEmpty(ServerSubFolder)
+                && Directory.Exists(Path.Combine(RoomTexturesFolder, ServerSubFolder)))
+            {
+                files = Directory.GetFiles(Path.Combine(RoomTexturesFolder, ServerSubFolder),
+                            "grd*" + FileExtensions.BGF);
+                foreach (string s in files)
+                    RoomTextures.TryAdd(Path.GetFileName(s), null);
+            }
+
+            // Add defaults. Won't overwrite the ones we just added.
+            if (Directory.Exists(RoomTexturesFolder))
+            {
+                // get available files
+                files = Directory.GetFiles(RoomTexturesFolder, '*' + FileExtensions.BGF);
+
+                foreach (string s in files)
+                    RoomTextures.TryAdd(Path.GetFileName(s), null);
+            }
+        }
+
+        /// <summary>
+        /// Adds server-specific rooms to the Rooms dictionary.
+        /// </summary>
+        protected void AddServerRooms()
+        {
+            string[] files;
+
+            // Reset rooms
+            Rooms.Clear();
+
+            // Add server-specific room files.
+            if (!String.IsNullOrEmpty(ServerSubFolder)
+                && Directory.Exists(Path.Combine(RoomsFolder, ServerSubFolder)))
+            {
+                files = Directory.GetFiles(Path.Combine(RoomsFolder, ServerSubFolder), '*' + FileExtensions.ROO);
+                foreach (string s in files)
+                    Rooms.TryAdd(Path.GetFileName(s), null);
+            }
+
+            // Add defaults. Won't overwrite the ones we just added.
+            if (Directory.Exists(RoomsFolder))
+            {
+                // get available files
+                files = Directory.GetFiles(RoomsFolder, '*' + FileExtensions.ROO);
+
+                foreach (string s in files)
+                    Rooms.TryAdd(Path.GetFileName(s), null);
+            }
+        }
+
+        /// <summary>
+        /// Adds server-specific sound files to the Sounds dictionary.
+        /// </summary>
+        protected void AddServerSounds()
+        {
+            string[] files;
+
+            // Reset rooms
+            Sounds.Clear();
+
+            // Add server-specific room files.
+            if (!String.IsNullOrEmpty(ServerSubFolder)
+                && Directory.Exists(Path.Combine(SoundFolder, ServerSubFolder)))
+            {
+                files = Directory.GetFiles(Path.Combine(SoundFolder, ServerSubFolder), '*' + FileExtensions.OGG);
+                foreach (string s in files)
+                    Sounds.TryAdd(Path.GetFileName(s), null);
+            }
+
+            // Add defaults. Won't overwrite the ones we just added.
+            if (Directory.Exists(SoundFolder))
+            {
+                // get available files
+                files = Directory.GetFiles(SoundFolder, '*' + FileExtensions.OGG);
+
+                foreach (string s in files)
+                    Sounds.TryAdd(Path.GetFileName(s), null);
+            }
+        }
+
+        /// <summary>
+        /// Adds server-specific music files to the Music dictionary.
+        /// </summary>
+        protected void AddServerMusic()
+        {
+            string[] files;
+
+            // Reset rooms
+            Music.Clear();
+
+            // Add server-specific room files.
+            if (!String.IsNullOrEmpty(ServerSubFolder)
+                && Directory.Exists(Path.Combine(MusicFolder, ServerSubFolder)))
+            {
+                files = Directory.GetFiles(Path.Combine(MusicFolder, ServerSubFolder), '*' + FileExtensions.OGG);
+                foreach (string s in files)
+                    Music.TryAdd(Path.GetFileName(s), null);
+            }
+
+            // Add defaults. Won't overwrite the ones we just added.
+            if (Directory.Exists(MusicFolder))
+            {
+                // get available files
+                files = Directory.GetFiles(MusicFolder, '*' + FileExtensions.OGG);
+
+                foreach (string s in files)
+                    Music.TryAdd(Path.GetFileName(s), null);
+            }
         }
 
         /// <summary>
@@ -634,7 +829,11 @@ namespace Meridian59.Files
             while (it.MoveNext())
             {
                 // load
-                file = new BgfFile(Path.Combine(ObjectsFolder, it.Current.Key));
+                if (!String.IsNullOrEmpty(ServerSubFolder)
+                    && System.IO.File.Exists(Path.Combine(ObjectsFolder, ServerSubFolder, it.Current.Key)))
+                    file = new BgfFile(Path.Combine(ObjectsFolder, ServerSubFolder, it.Current.Key));
+                else
+                    file = new BgfFile(Path.Combine(ObjectsFolder, it.Current.Key));
                 file.DecompressAll();
 
                 // update
@@ -655,7 +854,11 @@ namespace Meridian59.Files
             while (it.MoveNext())
             {
                 // load
-                file = new BgfFile(Path.Combine(RoomTexturesFolder, it.Current.Key));
+                if (!String.IsNullOrEmpty(ServerSubFolder)
+                    && System.IO.File.Exists(Path.Combine(RoomTexturesFolder, ServerSubFolder, it.Current.Key)))
+                    file = new BgfFile(Path.Combine(RoomTexturesFolder, ServerSubFolder, it.Current.Key));
+                else
+                    file = new BgfFile(Path.Combine(RoomTexturesFolder, it.Current.Key));
                 file.DecompressAll();
 
                 // update
@@ -676,7 +879,11 @@ namespace Meridian59.Files
             while (it.MoveNext())
             {
                 // load
-                file = new RooFile(Path.Combine(RoomsFolder, it.Current.Key));
+                if (!String.IsNullOrEmpty(ServerSubFolder)
+                    && System.IO.File.Exists(Path.Combine(RoomsFolder, ServerSubFolder, it.Current.Key)))
+                    file = new RooFile(Path.Combine(RoomsFolder, ServerSubFolder, it.Current.Key));
+                else
+                    file = new RooFile(Path.Combine(RoomsFolder, it.Current.Key));
 
                 // update
                 Rooms.TryUpdate(it.Current.Key, file, null);
@@ -690,17 +897,22 @@ namespace Meridian59.Files
         /// </summary>
         protected void LoadThreadSounds()
         {
-            IEnumerator<KeyValuePair<string, Tuple<IntPtr, uint>>> it = Wavs.GetEnumerator();
-            Tuple<IntPtr, uint> wavData = null;
+            IEnumerator<KeyValuePair<string, Tuple<IntPtr, uint>>> it = Sounds.GetEnumerator();
+            Tuple<IntPtr, uint> soundData = null;
 
             while (it.MoveNext())
             {
                 // load it
-                wavData = Util.LoadFileToUnmanagedMem(
-                    Path.Combine(WavFolder, it.Current.Key));
+                if (!String.IsNullOrEmpty(ServerSubFolder)
+                    && System.IO.File.Exists(Path.Combine(SoundFolder, ServerSubFolder, it.Current.Key)))
+                    soundData = Util.LoadFileToUnmanagedMem(
+                        Path.Combine(SoundFolder, ServerSubFolder, it.Current.Key));
+                else
+                    soundData = Util.LoadFileToUnmanagedMem(
+                        Path.Combine(SoundFolder, it.Current.Key));
 
                 // update
-                Wavs.TryUpdate(it.Current.Key, wavData, null);
+                Sounds.TryUpdate(it.Current.Key, soundData, null);
 
                 queueAsyncFilesLoaded.Enqueue(it.Current.Key);
             }
@@ -712,16 +924,21 @@ namespace Meridian59.Files
         protected void LoadThreadMusic()
         {
             IEnumerator<KeyValuePair<string, Tuple<IntPtr, uint>>> it = Music.GetEnumerator();
-            Tuple<IntPtr, uint> mp3Data = null;
+            Tuple<IntPtr, uint> musicData = null;
 
             while (it.MoveNext())
             {
                 // load it
-                mp3Data = Util.LoadFileToUnmanagedMem(
-                    Path.Combine(MusicFolder, it.Current.Key));
+                if (!String.IsNullOrEmpty(ServerSubFolder)
+                    && System.IO.File.Exists(Path.Combine(MusicFolder, ServerSubFolder, it.Current.Key)))
+                    musicData = Util.LoadFileToUnmanagedMem(
+                        Path.Combine(MusicFolder, ServerSubFolder, it.Current.Key));
+                else
+                    musicData = Util.LoadFileToUnmanagedMem(
+                        Path.Combine(MusicFolder, it.Current.Key));
 
                 // update
-                Music.TryUpdate(it.Current.Key, mp3Data, null);
+                Music.TryUpdate(it.Current.Key, musicData, null);
 
                 queueAsyncFilesLoaded.Enqueue(it.Current.Key);
             }

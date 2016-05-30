@@ -147,7 +147,7 @@ namespace Meridian59 { namespace Ogre
 				items += OgreClient::Singleton->ResourceManager->Rooms->Count;
 			
 			if (OgreClient::Singleton->Config->PreloadSound)
-				items += OgreClient::Singleton->ResourceManager->Wavs->Count;
+				items += OgreClient::Singleton->ResourceManager->Sounds->Count;
 
 			if (OgreClient::Singleton->Config->PreloadMusic)
 				items += OgreClient::Singleton->ResourceManager->Music->Count;

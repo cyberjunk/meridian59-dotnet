@@ -650,14 +650,6 @@ namespace Meridian59 { namespace Ogre
 		// 7. initialize caelum group
 		InitResourceGroup("Caelum", true, false, System::IO::SearchOption::TopDirectoryOnly, true, true);
 		
-		// 10. load legacy resources
-		ResourceManager->Preload(
-			Config->PreloadObjects,
-			Config->PreloadRoomTextures,
-			Config->PreloadRooms,
-			Config->PreloadSound,
-			Config->PreloadMusic);
-
 		// .NET 4.5
 		// next gc run, defragment the largeobjectheap
 		::System::Runtime::GCSettings::LargeObjectHeapCompactionMode =
@@ -844,6 +836,27 @@ namespace Meridian59 { namespace Ogre
     {
         ConnectionInfo^ info = Config->SelectedConnectionInfo;
         SendLoginMessage(info->Username, info->Password);
+
+        // Only show the bar if we preload at least one group.
+        if (Config->PreloadObjects || Config->PreloadRoomTextures || Config->PreloadRooms
+           || Config->PreloadSound || Config->PreloadMusic)
+        {
+           // Legacy resources handled as one group.
+           const ushort groups = 1;
+
+           Data->UIMode = UIMode::LoadingBar;
+           ControllerUI::LoadingBar::Start(groups);
+
+           // Preload legacy resources.
+           ResourceManager->Preload(
+              Config->PreloadObjects,
+              Config->PreloadRoomTextures,
+              Config->PreloadRooms,
+              Config->PreloadSound,
+              Config->PreloadMusic);
+
+           ControllerUI::LoadingBar::Finish();
+        }
     };
 
 	void OgreClient::HandleLookupNamesMessage(LookupNamesMessage^ Message)

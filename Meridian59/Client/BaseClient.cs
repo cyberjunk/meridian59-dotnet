@@ -121,6 +121,9 @@ namespace Meridian59.Client
                 Config.SelectedConnectionInfo.StringDictionary,
 				LanguageCode.English); // todo: from config
 
+            // Load server-specific resources if present
+            ResourceManager.SelectServerResources(Config.SelectedConnectionInfo.Name);
+
 		    // fill ignore list in datacontroller with ignored
             // playernames for this connectionentry.
 		    Data.IgnoreList.Clear();
