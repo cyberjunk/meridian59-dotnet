@@ -158,6 +158,50 @@ namespace Meridian59.Data.Models
         }
 
         /// <summary>
+        /// Tries to extract an animation instance from delimiter seperated string value
+        /// </summary>
+        /// <param name="Value"></param>
+        /// <param name="Delimiter"></param>
+        /// <returns></returns>
+        public static Animation ExtractAnimation(string Value, char Delimiter)
+        {
+            if (String.IsNullOrEmpty(Value))
+                return null;
+
+            ushort groupLow;
+            ushort groupHigh;
+            ushort groupFinal;
+            uint period;
+
+            string[] vals = Value.Split(Delimiter);
+
+            switch(vals.Length)
+            {             
+                case 1: 
+                    return 
+                        ushort.TryParse(vals[0], out groupLow) ? 
+                        new AnimationNone(groupLow) : null;
+                
+                case 3:
+                    return
+                        ushort.TryParse(vals[0], out groupLow) &&
+                        ushort.TryParse(vals[1], out groupHigh) &&
+                        uint.TryParse(vals[2], out period) ? 
+                        new AnimationCycle(period, groupLow, groupHigh) : null;
+
+                case 4:
+                    return
+                        ushort.TryParse(vals[0], out groupLow) &&
+                        ushort.TryParse(vals[1], out groupHigh) &&
+                        uint.TryParse(vals[2], out period) &&
+                        ushort.TryParse(vals[3], out groupFinal) ?
+                        new AnimationOnce(period, groupLow, groupHigh, groupFinal) : null;
+
+                default: return null;
+            }
+        }
+
+        /// <summary>
         /// Sets group values and fires a single propertychanged for currentgroup
         /// </summary>
         /// <param name="CurrentGroup"></param>
