@@ -45,28 +45,9 @@ public class Handler : IHttpHandler
         
         if (!Cache.GetBGF(parmFile, out bgfFile))
         {
-            string filePath = context.Server.MapPath("~") + "bgf/" + parmFile + ".bgf";
-            if (!File.Exists(filePath))
-            {
-                context.Response.StatusCode = 404;
-                context.Response.End();
-                return;
-            }
-            else
-            {
-                try
-                {
-                    // read from disk
-                    bgfFile = new BgfFile(filePath);
-                    
-                    // must decompress all due to multithreading (important!)
-                    bgfFile.DecompressAll();
-                    
-                    // add to cache
-                    Cache.AddBGF(parmFile, bgfFile);
-                }
-                catch(Exception) { }
-            }
+            context.Response.StatusCode = 404;
+            context.Response.End();
+            return;           
         }
 
         // --------------------------------------------------
