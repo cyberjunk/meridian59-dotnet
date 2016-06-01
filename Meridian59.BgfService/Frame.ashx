@@ -78,7 +78,7 @@ public class Frame : IHttpHandler
         // --------------------------------------------------
         // try to parse additional params
         
-        int group = 1;
+        int group = 0;
         ushort angle = 0;
         byte paletteidx = 0;
         
@@ -88,11 +88,16 @@ public class Frame : IHttpHandler
 
         // remove full periods from angle
         angle %= GeometryConstants.MAXANGLE;
+
+        // map 0 and negative groups to first group
+        // group is 1-based ...
+        if (group < 1)
+            group = 1;
         
         // --------------------------------------------------
-        // requested group out of range (group is 1-based!)
+        // requested group out of range
         
-        if (group < 1 || group > bgfFile.FrameSets.Count)
+        if (group > bgfFile.FrameSets.Count)
         {
             context.Response.StatusCode = 404;
             context.Response.End();
