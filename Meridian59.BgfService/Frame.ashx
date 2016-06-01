@@ -1,4 +1,4 @@
-﻿<%@ WebHandler Language="C#" Class="Handler" %>
+﻿<%@ WebHandler Language="C#" Class="Frame" %>
 
 using System;
 using System.IO;
@@ -10,26 +10,41 @@ using System.Collections.Concurrent;
 
 using Meridian59.Files.BGF;
 using Meridian59.Drawing2D;
+using Meridian59.Common.Constants;
 
 /// <summary>
 /// Returns a single frame from a BGF specified by a bgf-name, frame-idx and palette-idx.
 /// The returned image is 32-Bit PNG encoded with correct transparency for the Cyan pixels.
 /// </summary>
-public class Handler : IHttpHandler
+public class Frame : IHttpHandler
 {
     public void ProcessRequest (HttpContext context) 
     {
         BgfFile bgfFile;
 
         // -------------------------------------------------------       
-        // read parameters from url-path: {file}/{frame}/{palette}
+        // read parameters from url-path (see Global.asax):
+        //  frame/{format}/{file}/{group}/{angle}/{palette}
+        //  group, angle and palette are optional
         
         RouteValueDictionary parms = context.Request.RequestContext.RouteData.Values;
-           
+
+        string parmFormat   = parms.ContainsKey("format")   ? (string)parms["format"] : null;
         string parmFile     = parms.ContainsKey("file")     ? (string)parms["file"] : null;
-        string parmFrameIdx = parms.ContainsKey("frame")    ? (string)parms["frame"] : null;
+        string parmGroup    = parms.ContainsKey("group")    ? (string)parms["group"] : null;
+        string parmAngle    = parms.ContainsKey("angle")    ? (string)parms["angle"] : null;
         string parmPalette  = parms.ContainsKey("palette")  ? (string)parms["palette"] : null;
 
+        // -------------------------------------------------------
+        // no format provided or empty
+
+        if (String.IsNullOrEmpty(parmFormat))
+        {
+            context.Response.StatusCode = 404;
+            context.Response.End();
+            return;
+        }
+              
         // -------------------------------------------------------
         // no filename provided or empty
         
@@ -61,18 +76,23 @@ public class Handler : IHttpHandler
         }
 
         // --------------------------------------------------
-        // try to parse additional frame and palette param
+        // try to parse additional params
         
-        int frameidx = 0;
+        int group = 1;
+        ushort angle = 0;
         byte paletteidx = 0;
-
-        Int32.TryParse(parmFrameIdx, out frameidx);
+        
+        Int32.TryParse(parmGroup, out group);
+        UInt16.TryParse(parmAngle, out angle);
         Byte.TryParse(parmPalette, out paletteidx);
+
+        // remove full periods from angle
+        angle %= GeometryConstants.MAXANGLE;
         
         // --------------------------------------------------
-        // requested frameindex out of range
+        // requested group out of range (group is 1-based!)
         
-        if (frameidx < 0 || frameidx >= bgfFile.Frames.Count)
+        if (group < 1 || group > bgfFile.FrameSets.Count)
         {
             context.Response.StatusCode = 404;
             context.Response.End();
@@ -80,19 +100,50 @@ public class Handler : IHttpHandler
         }
 
         // --------------------------------------------------
-        // get the frmae as A8R8G8B8 bitmap
-        
-        BgfBitmap bgfBmp = bgfFile.Frames[frameidx];
-        Bitmap bmp = bgfBmp.GetBitmapA8R8G8B8(paletteidx);
+        // try get the frame
+
+        BgfBitmap bgfBmp = bgfFile.GetFrame(group, angle);
+        if (bgfBmp == null)
+        {
+            context.Response.StatusCode = 404;
+            context.Response.End();
+            return;
+        }
 
         // --------------------------------------------------
-        // write the response (encode to png)
-        
-        context.Response.ContentType = "image/png";
-        bmp.Save(context.Response.OutputStream, ImageFormat.Png);       
-        context.Response.Flush();
-        context.Response.End();
-        bmp.Dispose();                
+        // create the A8R8G8B8 bitmap
+
+        Bitmap bmp;
+        switch(parmFormat)
+        {
+            case "bmp":
+                context.Response.ContentType = "image/bmp";
+
+                bmp = bgfBmp.GetBitmap(paletteidx);
+                bmp.Save(context.Response.OutputStream, ImageFormat.Bmp);
+                
+                context.Response.Flush();
+                context.Response.End();
+                bmp.Dispose(); 
+                break;
+                
+            case "png":
+                context.Response.ContentType = "image/png";
+
+                bmp = bgfBmp.GetBitmapA8R8G8B8(paletteidx);
+                bmp.Save(context.Response.OutputStream, ImageFormat.Png);
+                
+                context.Response.Flush();
+                context.Response.End();
+                bmp.Dispose(); 
+                break;
+            
+            // invalid format
+            default:
+                context.Response.StatusCode = 404;
+                context.Response.End();
+                break;
+        }   
     }
  
     public bool IsReusable 

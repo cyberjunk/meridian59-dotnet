@@ -5,13 +5,16 @@
     void Application_Start(object sender, EventArgs e) 
     {
         System.Web.Routing.RouteTable.Routes.Add(new System.Web.Routing.Route(
-            "frame/{file}/{frame}/{palette}", new HttpHandlerRoute("~/Frame.ashx")));
+            "frame/{format}/{file}/{group}/{angle}/{palette}", new HttpHandlerRoute("~/Frame.ashx")));
 
         System.Web.Routing.RouteTable.Routes.Add(new System.Web.Routing.Route(
-            "frame/{file}/{frame}", new HttpHandlerRoute("~/Frame.ashx")));
+            "frame/{format}/{file}/{group}/{angle}", new HttpHandlerRoute("~/Frame.ashx")));
 
         System.Web.Routing.RouteTable.Routes.Add(new System.Web.Routing.Route(
-            "frame/{file}", new HttpHandlerRoute("~/Frame.ashx")));
+            "frame/{format}/{file}/{group}", new HttpHandlerRoute("~/Frame.ashx")));
+
+        System.Web.Routing.RouteTable.Routes.Add(new System.Web.Routing.Route(
+            "frame/{format}/{file}", new HttpHandlerRoute("~/Frame.ashx")));
     }
     
     void Application_End(object sender, EventArgs e) 
