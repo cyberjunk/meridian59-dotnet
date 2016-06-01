@@ -71,12 +71,12 @@
             <td>Format: png<br />Group: 11<br />Palette: 78<br />Angle: 3584</td>
         </tr>
         <tr>
-            <td><img src="object/bta/1/236/0/?subov=bla;1;236;31&subov=bra;17;236;21&subov=bfe;1;236;21&subov=phax;1;3;1&subov=pmax;1;3;12&subov=pecx;1;3;11&subov=pnax;1;3;14&subov=ptad;1;10;13" /></td>
-            <td><img src="object/bta/1/236/512/?subov=bla;1;236;31&subov=bra;17;236;21&subov=bfe;1;236;21&subov=phax;1;3;1&subov=pmax;1;3;12&subov=pecx;1;3;11&subov=pnax;1;3;14&subov=ptad;1;10;13" /></td>           
-            <td><img src="object/bta/1/236/1024/?subov=bla;1;236;31&subov=bra;17;236;21&subov=bfe;1;236;21&subov=phax;1;3;1&subov=pmax;1;3;12&subov=pecx;1;3;11&subov=pnax;1;3;14&subov=ptad;1;10;13" /></td>
-            <td><img src="object/bta/1/236/2048/?subov=bla;1;236;31&subov=bra;17;236;21&subov=bfe;1;236;21&subov=phax;1;3;1&subov=pmax;1;3;12&subov=pecx;1;3;11&subov=pnax;1;3;14&subov=ptad;1;10;13" /></td>
-            <td><img src="object/bta/1/236/3072/?subov=bla;1;236;31&subov=bra;17;236;21&subov=bfe;1;236;21&subov=phax;1;3;1&subov=pmax;1;3;12&subov=pecx;1;3;11&subov=pnax;1;3;14&subov=ptad;1;10;13" /></td>
-            <td><img src="object/bta/1/236/3584/?subov=bla;1;236;31&subov=bra;17;236;21&subov=bfe;1;236;21&subov=phax;1;3;1&subov=pmax;1;3;12&subov=pecx;1;3;11&subov=pnax;1;3;14&subov=ptad;1;10;13" /></td>            
+            <td><img src="object/bta/1/236/0/?subov=bla;1;236;31&subov=bra;17;236;21&subov=bfe;1;236;41&subov=phax;1;3;1&subov=pmax;1;3;12&subov=pecx;1;3;11&subov=pnax;1;3;14&subov=ptad;1;10;13" /></td>
+            <td><img src="object/bta/1/236/512/?subov=bla;1;236;31&subov=bra;17;236;21&subov=bfe;1;236;41&subov=phax;1;3;1&subov=pmax;1;3;12&subov=pecx;1;3;11&subov=pnax;1;3;14&subov=ptad;1;10;13" /></td>           
+            <td><img src="object/bta/1/236/1024/?subov=bla;1;236;31&subov=bra;17;236;21&subov=bfe;1;236;41&subov=phax;1;3;1&subov=pmax;1;3;12&subov=pecx;1;3;11&subov=pnax;1;3;14&subov=ptad;1;10;13" /></td>
+            <td><img src="object/bta/1/236/2048/?subov=bla;1;236;31&subov=bra;17;236;21&subov=bfe;1;236;41&subov=phax;1;3;1&subov=pmax;1;3;12&subov=pecx;1;3;11&subov=pnax;1;3;14&subov=ptad;1;10;13" /></td>
+            <td><img src="object/bta/1/236/3072/?subov=bla;1;236;31&subov=bra;17;236;21&subov=bfe;1;236;41&subov=phax;1;3;1&subov=pmax;1;3;12&subov=pecx;1;3;11&subov=pnax;1;3;14&subov=ptad;1;10;13" /></td>
+            <td><img src="object/bta/1/236/3584/?subov=bla;1;236;31&subov=bra;17;236;21&subov=bfe;1;236;41&subov=phax;1;3;1&subov=pmax;1;3;12&subov=pecx;1;3;11&subov=pnax;1;3;14&subov=ptad;1;10;13" /></td>            
         </tr>
     </tbody>
     </table>

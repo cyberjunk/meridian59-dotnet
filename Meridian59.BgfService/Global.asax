@@ -38,6 +38,20 @@
 
         System.Web.Routing.RouteTable.Routes.Add(new System.Web.Routing.Route(
             "object/{file}", new HttpHandlerRoute("~/Object.ashx")));
+
+        // ----------------------------------------------------------------
+
+        System.Web.Routing.RouteTable.Routes.Add(new System.Web.Routing.Route(
+            "render/{width}/{height}/{scale}/{file}/{group}/{palette}/{angle}", new HttpHandlerRoute("~/Render.ashx")));
+
+        System.Web.Routing.RouteTable.Routes.Add(new System.Web.Routing.Route(
+            "render/{width}/{height}/{scale}/{file}/{group}/{palette}", new HttpHandlerRoute("~/Render.ashx")));
+
+        System.Web.Routing.RouteTable.Routes.Add(new System.Web.Routing.Route(
+            "render/{width}/{height}/{scale}/{file}/{group}", new HttpHandlerRoute("~/Render.ashx")));
+
+        System.Web.Routing.RouteTable.Routes.Add(new System.Web.Routing.Route(
+            "render/{width}/{height}/{scale}/{file}", new HttpHandlerRoute("~/Render.ashx")));
     }
     
     void Application_End(object sender, EventArgs e) 
