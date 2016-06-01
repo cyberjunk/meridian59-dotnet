@@ -158,6 +158,17 @@ namespace Meridian59.Common
         }
 
         /// <summary>
+        /// Returns the minimum of two ushorts.
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static ushort Max(ushort a, ushort b)
+        {
+            return (a > b) ? a : b;
+        }
+
+        /// <summary>
         /// Returns the minimum of two floats.
         /// </summary>
         /// <param name="a"></param>
@@ -175,6 +186,17 @@ namespace Meridian59.Common
         /// <param name="b"></param>
         /// <returns></returns>
         public static int Min(int a, int b)
+        {
+            return (a < b) ? a : b;
+        }
+
+        /// <summary>
+        /// Returns the minimum of two ushorts.
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static ushort Min(ushort a, ushort b)
         {
             return (a < b) ? a : b;
         }
@@ -199,6 +221,18 @@ namespace Meridian59.Common
         /// <param name="upper"></param>
         /// <returns></returns>
         public static int Bound(int a, int lower, int upper)
+        {
+            return Min(upper, Max(a, lower));
+        }
+
+        /// <summary>
+        /// Bounds value into range (min, max combined)
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="lower"></param>
+        /// <param name="upper"></param>
+        /// <returns></returns>
+        public static ushort Bound(ushort a, ushort lower, ushort upper)
         {
             return Min(upper, Max(a, lower));
         }
