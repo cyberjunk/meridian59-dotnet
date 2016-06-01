@@ -108,6 +108,14 @@ namespace Meridian59.Data.Models
         public override AnimationType AnimationType { get { return AnimationType.NONE; } }
 
         /// <summary>
+        /// This is 0 for type 'None'
+        /// </summary>
+        public override int AnimationLength
+        {
+            get { return 0; }
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         public override ushort CurrentGroup

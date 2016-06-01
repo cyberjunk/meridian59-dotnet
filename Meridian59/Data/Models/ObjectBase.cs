@@ -637,6 +637,26 @@ namespace Meridian59.Data.Models
                 }
             }
         }
+
+        /// <summary>
+        /// The ms of the longest animation (main or suboverlay)
+        /// </summary>
+        public int AnimationLength
+        {
+            get 
+            {
+                int len = 0;
+
+                if (animation != null)
+                    len = animation.AnimationLength;
+
+                foreach (SubOverlay obj in CurrentSubOverlays)
+                    if (obj.Animation != null && obj.Animation.AnimationLength > len)
+                        len = obj.Animation.AnimationLength;
+
+                return len; 
+            }
+        }
         #endregion
 
         #region Constructors

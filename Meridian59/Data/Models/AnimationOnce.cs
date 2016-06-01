@@ -159,6 +159,26 @@ namespace Meridian59.Data.Models
         public override AnimationType AnimationType { get { return AnimationType.ONCE; } }
 
         /// <summary>
+        /// This is the period value multiplied by the amount of different frames + one more
+        /// </summary>
+        public override int AnimationLength
+        {
+            get
+            {
+                // something wrong here
+                if (groupHigh < groupLow)
+                    return 0;
+              
+                // cycle from low to high
+                else
+                {
+                    int frames = groupHigh - groupLow + 1;
+                    return (int)period * frames;
+                }
+            }
+        }
+
+        /// <summary>
         /// Interval for changing to next frame
         /// </summary>
         public uint Period

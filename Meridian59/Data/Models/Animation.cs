@@ -96,6 +96,14 @@ namespace Meridian59.Data.Models
             } 
         }
 
+        /// <summary>
+        /// The ms it requires to play the full animation once.
+        /// </summary>
+        public abstract int AnimationLength
+        {
+            get;
+        }
+
         #endregion
 
         #region Methods
