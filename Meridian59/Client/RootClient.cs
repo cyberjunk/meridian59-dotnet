@@ -120,11 +120,6 @@ namespace Meridian59.Client
             // check if system supports high resolution ticks (at least 1ms precision)
             if (!GameTick.IsHighResolution)
                 Logger.Log(MODULENAME, LogType.Warning, "System does not support high resolution ticks.");
-           
-#if DRAWING
-            // Initialize GDI variants of colorpalettes if System.Drawing available
-            PalettesGDI.Initialize();
-#endif
 
             // Initialize legacy resources (bgf, roo, ...)
             ResourceManager = new R();

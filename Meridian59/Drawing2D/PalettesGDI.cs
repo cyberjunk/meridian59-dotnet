@@ -34,14 +34,13 @@ namespace Meridian59.Drawing2D
 
         /// <summary>
         /// Create GDI+ palettes from core library palettes.
-        /// Requires initialized ColorTransformation.Provider.
         /// </summary>
-        public static void Initialize()
+        static PalettesGDI()
         {
             Palettes = new ColorPalette[ColorTransformation.PALETTECOUNT];
 
-            for (int i = 0; i < ColorTransformation.PALETTECOUNT; i++)           
-                Palettes[i] = GetColorPalette(ColorTransformation.Palettes[i]);           
+            for (int i = 0; i < ColorTransformation.PALETTECOUNT; i++)
+                Palettes[i] = GetColorPalette(ColorTransformation.Palettes[i]);
         }
 
         /// <summary>
