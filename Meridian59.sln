@@ -25,6 +25,29 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meridian59.RsbEditor", "Mer
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meridian59.Patcher", "Meridian59.Patcher\Meridian59.Patcher.csproj", "{D7C86C96-D59F-4969-A978-97E94FA7FA80}"
 EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Meridian59.BgfService", "http://localhost:21065", "{1E2F2286-81D7-4F6A-A4D1-E2843482C7F8}"
+	ProjectSection(WebsiteProperties) = preProject
+		UseIISExpress = "true"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		ProjectReferences = "{e8223f3f-3f18-4f4c-9a8f-d9102b067be3}|Meridian59.dll;"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_21065"
+		Debug.AspNetCompiler.PhysicalPath = "Meridian59.BgfService\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_21065\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_21065"
+		Release.AspNetCompiler.PhysicalPath = "Meridian59.BgfService\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_21065\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		SlnRelativePath = "Meridian59.BgfService\"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -121,6 +144,12 @@ Global
 		{D7C86C96-D59F-4969-A978-97E94FA7FA80}.Release|x64.Build.0 = Release|x86
 		{D7C86C96-D59F-4969-A978-97E94FA7FA80}.Release|x86.ActiveCfg = Release|x86
 		{D7C86C96-D59F-4969-A978-97E94FA7FA80}.Release|x86.Build.0 = Release|x86
+		{1E2F2286-81D7-4F6A-A4D1-E2843482C7F8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1E2F2286-81D7-4F6A-A4D1-E2843482C7F8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1E2F2286-81D7-4F6A-A4D1-E2843482C7F8}.Debug|x86.Build.0 = Debug|Any CPU
+		{1E2F2286-81D7-4F6A-A4D1-E2843482C7F8}.Release|x64.ActiveCfg = Debug|Any CPU
+		{1E2F2286-81D7-4F6A-A4D1-E2843482C7F8}.Release|x86.ActiveCfg = Debug|Any CPU
+		{1E2F2286-81D7-4F6A-A4D1-E2843482C7F8}.Release|x86.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
