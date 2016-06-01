@@ -3,6 +3,7 @@
 using System;
 using System.Web;
 using System.Collections.Specialized;
+using System.Collections.Generic;
 using System.Web.Routing;
 
 using System.Drawing;
@@ -23,9 +24,9 @@ public class Render : IHttpHandler
     private const ushort MAXHEIGHT = 512;
     private const ushort MINSCALE = 10;
     private const ushort MAXSCALE = 1000;
-    
-    private Gif gif;
-    private ImageComposerGDI<ObjectBase> imageComposer;
+
+    private readonly ImageComposerGDI<ObjectBase> imageComposer;   
+    private readonly Gif gif;
 
     private ushort width;
     private ushort height;
@@ -33,13 +34,19 @@ public class Render : IHttpHandler
 
     private double tick;
     private double tickLastAdd;
-    
-    static Render()
-    {              
+ 
+    public Render()
+    {
+        // create imagecomposer to render objects
+        imageComposer = new ImageComposerGDI<ObjectBase>();
+        imageComposer.NewImageAvailable += OnImageComposerNewImageAvailable;
+
+        // create gif instance
+        gif = new Gif();
     }
     
     public void ProcessRequest (HttpContext context)
-    {
+    {        
         // -------------------------------------------------------       
         // read basic and mainoverlay parameters from url-path (see Global.asax):
         //  render/{width}/{height}/{scale}/{file}/{group}/{palette}/{angle}
@@ -160,19 +167,19 @@ public class Render : IHttpHandler
         gameObject.Tick(0, 1);
         
         // --------------------------------------------------
-        // create composed image
-        gif = new Gif();
+        // set game object on image composer (causes drawing)  
 
-        imageComposer = new ImageComposerGDI<ObjectBase>();
-        imageComposer.NewImageAvailable += OnImageComposerNewImageAvailable;     
         imageComposer.DataSource = gameObject;
-
+   
         if (imageComposer.Image == null)
         {
             context.Response.StatusCode = 404;
             context.Response.End();
             return;
         }
+
+        // --------------------------------------------------
+        // run animationlength in 1 ms steps (causes new image events)
 
         tick = 0.0;
         for (int i = 0; i < gameObject.AnimationLength; i++)
@@ -182,21 +189,29 @@ public class Render : IHttpHandler
         }                   
            
         // --------------------------------------------------
-        // write the response (encode to png)
+        // write the response (encode to gif)
 
         context.Response.ContentType = "image/gif";
         gif.Save(context.Response.OutputStream);
         context.Response.Flush();
         context.Response.End();
 
+        // --------------------------------------------------
+        // cleanup
         
+        tick        = 0;
+        tickLastAdd = 0;
+        
+        // dispose the single frames ('surface' in new image event)
+        foreach (Gif.GifFrame f in gif.Frames)
+            if (f.Image != null) 
+                f.Image.Dispose();
+
+        gif.Clear(); 
     }
 
     private void OnImageComposerNewImageAvailable(object sender, EventArgs e)
     {
-        if (gif == null || imageComposer == null)
-            return;
-
         Bitmap surface = new Bitmap(width, height, PixelFormat.Format32bppArgb);
         Graphics graphics = Graphics.FromImage(surface);
 
@@ -219,19 +234,24 @@ public class Render : IHttpHandler
             new Rectangle(0, 0, imageComposer.Image.Width, imageComposer.Image.Height),
             GraphicsUnit.Pixel);
 
+        // get timespan for gif
         double span = tick - tickLastAdd;
+        tickLastAdd = tick;
         
+        // add it
         gif.AddFrame(surface, span);
-        imageComposer.Image.Dispose();
         
-        tickLastAdd = tick;                   
+        // cleanup the imagecomposer image and the graphics
+        // the 'surface' bitmap is required until stream is written and disposed later
+        imageComposer.Image.Dispose();
+        graphics.Dispose();         
     }
  
     public bool IsReusable 
     {
         get 
         {
-            return false;
+            return true;
         }
     }
 

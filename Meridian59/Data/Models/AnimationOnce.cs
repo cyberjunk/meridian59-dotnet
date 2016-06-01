@@ -172,7 +172,7 @@ namespace Meridian59.Data.Models
                 // cycle from low to high
                 else
                 {
-                    int frames = groupHigh - groupLow + 1;
+                    int frames = groupHigh - groupLow + 1 + 1;
                     return (int)period * frames;
                 }
             }

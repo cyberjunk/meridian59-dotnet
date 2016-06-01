@@ -80,5 +80,30 @@
         </tr>
     </tbody>
     </table>
+
+    <hr />
+    <h2>Animated Object</h2>
+    <h3>Query-URL: /render/{width}/{height}/{scale}/{file}/{anim}/{palette}/{angle}/?subov={file};{anim};{palette};{hotspot}&subov={file};{anim};{palette};{hotspot}&...</h3>
+    <h3>Examples</h3>
+    <table>
+    <tbody>
+        <tr>
+            <td>Format: gif<br />Width: 200<br />Height: 200<br />Scale: 300<br />Group: 2-6<br />Palette: 0<br />Angle: 0</td>
+            <td>Format: gif<br />Width: 200<br />Height: 200<br />Scale: 300<br />Group: 2-6<br />Palette: 0<br />Angle: 512</td>
+            <td>Format: gif<br />Width: 200<br />Height: 200<br />Scale: 300<br />Group: 2-6<br />Palette: 0<br />Angle: 1024</td>
+            <td>Format: gif<br />Width: 200<br />Height: 200<br />Scale: 300<br />Group: 2-6<br />Palette: 0<br />Angle: 2048</td>
+            <td>Format: gif<br />Width: 200<br />Height: 200<br />Scale: 300<br />Group: 2-6<br />Palette: 0<br />Angle: 3072</td>
+            <td>Format: gif<br />Width: 200<br />Height: 200<br />Scale: 300<br />Group: 2-6<br />Palette: 0<br />Angle: 3584</td>
+        </tr>
+        <tr>
+            <td><img src="render/200/200/300/avsham/2-6-300/0/0" /></td>
+            <td><img src="render/200/200/300/avsham/2-6-300/0/512" /></td>           
+            <td><img src="render/200/200/300/avsham/2-6-300/0/1024" /></td>
+            <td><img src="render/200/200/300/avsham/2-6-300/0/2048" /></td>
+            <td><img src="render/200/200/300/avsham/2-6-300/0/3072" /></td>
+            <td><img src="render/200/200/300/avsham/2-6-300/0/3584" /></td>            
+        </tr>
+    </tbody>
+    </table>
 </body>
 </html>

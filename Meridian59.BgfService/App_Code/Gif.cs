@@ -34,7 +34,7 @@ public class Gif : IDisposable, IEnumerable<Image>
         FileVersion = "89a";
     #endregion
 
-    class GifFrame
+    public class GifFrame
     {
         public GifFrame(Image image, double delay, int xOffset, int yOffset)
         {
@@ -49,7 +49,7 @@ public class Gif : IDisposable, IEnumerable<Image>
         public int XOffset, YOffset;
     }
 
-    List<GifFrame> Frames = new List<GifFrame>();
+    public List<GifFrame> Frames = new List<GifFrame>();
 
     public Gif() { DefaultFrameDelay = 500; }
 
@@ -108,7 +108,10 @@ public class Gif : IDisposable, IEnumerable<Image>
 
     public void RemoveAt(int Index) { Frames.RemoveAt(Index); }
 
-    public void Clear() { Frames.Clear(); }
+    public void Clear() 
+    { 
+        Frames.Clear();
+    }
 
     public void Save(Stream OutStream)
     {

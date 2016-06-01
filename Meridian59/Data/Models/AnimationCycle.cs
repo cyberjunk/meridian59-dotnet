@@ -153,14 +153,14 @@ namespace Meridian59.Data.Models
                 // cycle all case
                 else if (groupLow == groupHigh)
                 {
-                    int frames = groupMax;
+                    int frames = groupMax; //todo
                     return (int)period * frames;
                 }
 
                 // cycle from low to high
                 else
                 {
-                    int frames = groupHigh - groupLow;
+                    int frames = groupHigh - groupLow + 1;
                     return (int)period * frames;
 
                 }
