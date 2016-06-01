@@ -32,9 +32,9 @@ public class Frame : IHttpHandler
         string parmFormat   = parms.ContainsKey("format")   ? (string)parms["format"] : null;
         string parmFile     = parms.ContainsKey("file")     ? (string)parms["file"] : null;
         string parmGroup    = parms.ContainsKey("group")    ? (string)parms["group"] : null;
-        string parmAngle    = parms.ContainsKey("angle")    ? (string)parms["angle"] : null;
         string parmPalette  = parms.ContainsKey("palette")  ? (string)parms["palette"] : null;
-
+        string parmAngle    = parms.ContainsKey("angle")    ? (string)parms["angle"] : null;
+        
         // -------------------------------------------------------
         // no format provided or empty
 
@@ -79,13 +79,13 @@ public class Frame : IHttpHandler
         // try to parse additional params
         
         int group = 0;
-        ushort angle = 0;
         byte paletteidx = 0;
+        ushort angle = 0;
         
         Int32.TryParse(parmGroup, out group);
-        UInt16.TryParse(parmAngle, out angle);
         Byte.TryParse(parmPalette, out paletteidx);
-
+        UInt16.TryParse(parmAngle, out angle);
+        
         // remove full periods from angle
         angle %= GeometryConstants.MAXANGLE;
 
