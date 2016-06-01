@@ -26,9 +26,6 @@ public class Object : IHttpHandler
         // -------------------------------------------------------       
         // read basic and mainoverlay parameters from url-path (see Global.asax):
         //  object/{file}/{group}/{palette}/{angle}
-
-        string[] parmMainOvs = context.Request.Params.GetValues("mainov");
-
         
         RouteValueDictionary parms = context.Request.RequestContext.RouteData.Values;
 
@@ -163,8 +160,7 @@ public class Object : IHttpHandler
     {
         get 
         {
-            return false;
+            return true;
         }
     }
-
 }
