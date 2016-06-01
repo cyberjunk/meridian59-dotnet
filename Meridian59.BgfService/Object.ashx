@@ -18,19 +18,18 @@ using Meridian59.Files.BGF;
 public class Object : IHttpHandler 
 {
     static Object()
-    {
-        ImageComposerGDI<ObjectBase>.IsCacheEnabled = false;
-        ImageComposerGDI<ObjectBase>.InterpolationMode = InterpolationMode.HighQualityBicubic;        
+    {              
     }
     
     public void ProcessRequest (HttpContext context)
     {
-        BgfFile bgfFile;
-
         // -------------------------------------------------------       
         // read basic and mainoverlay parameters from url-path (see Global.asax):
-        //  object/{width}/{height}/{scale}/{file}/{group}/{angle}/{palette}
+        //  object/{file}/{group}/{palette}/{angle}
 
+        string[] parmMainOvs = context.Request.Params.GetValues("mainov");
+
+        
         RouteValueDictionary parms = context.Request.RequestContext.RouteData.Values;
 
         string parmFile = parms.ContainsKey("file") ? (string)parms["file"] : null;
@@ -50,7 +49,7 @@ public class Object : IHttpHandler
 
         // --------------------------------------------------
         // try to get the main BGF from cache or load from disk
-
+        BgfFile bgfFile;
         if (!Cache.GetBGF(parmFile, out bgfFile))
         {
             context.Response.StatusCode = 404;
@@ -61,35 +60,18 @@ public class Object : IHttpHandler
         // --------------------------------------------------
         // try to parse other params
         
-        ushort group = 0;
         byte paletteidx = 0;
         ushort angle = 0;
         
-        UInt16.TryParse(parmGroup, out group);
         Byte.TryParse(parmPalette, out paletteidx);
         UInt16.TryParse(parmAngle, out angle);
         
         // remove full periods from angle
         angle %= GeometryConstants.MAXANGLE;
 
-        // map 0 and negative groups to first group
-        // group is 1-based ...
-        if (group < 1)
-            group = 1;
-        
-        // requested group out of range
-        if (group > bgfFile.FrameSets.Count)
-        {
-            context.Response.StatusCode = 404;
-            context.Response.End();
-            return;
-        }
-
-        // --------------------------------------------------
-        // try get the frame
-
-        BgfBitmap bgfBmp = bgfFile.GetFrame(group, angle);
-        if (bgfBmp == null)
+        // parse animation
+        Animation anim = Animation.ExtractAnimation(parmGroup, '-');
+        if (anim == null)
         {
             context.Response.StatusCode = 404;
             context.Response.End();
@@ -102,7 +84,7 @@ public class Object : IHttpHandler
         ObjectBase gameObject = new ObjectBase();
         gameObject.Resource = bgfFile;
         gameObject.ColorTranslation = paletteidx;
-        gameObject.Animation = new AnimationNone(group);
+        gameObject.Animation = anim;
         gameObject.ViewerAngle = angle;
         
         // -------------------------------------------------------       
@@ -125,25 +107,23 @@ public class Object : IHttpHandler
                 if (!Cache.GetBGF(subOvFile, out bgfSubOv))
                     continue;
                               
-                ushort subOvGroup;
                 byte subOvPalette;
                 byte subOvHotspot;
                 
-                if (!ushort.TryParse(subOvParms[1], out subOvGroup) ||
+                if (String.IsNullOrEmpty(subOvParms[1]) ||
                     !byte.TryParse(subOvParms[2], out subOvPalette) ||
                     !byte.TryParse(subOvParms[3], out subOvHotspot))
                 {
                     continue;
                 }
 
-                // map 0 and negative groups to first group
-                // group is 1-based ...
-                if (subOvGroup < 1)
-                    subOvGroup = 1;
-        
+                Animation subOvAnim = Animation.ExtractAnimation(subOvParms[1], '-');
+
+                if (subOvAnim == null)
+                    continue;
+                
                 // create suboverlay
-                SubOverlay subOv = new SubOverlay(
-                    0, new AnimationNone(subOvGroup), subOvHotspot, subOvPalette, 0);
+                SubOverlay subOv = new SubOverlay(0, subOvAnim, subOvHotspot, subOvPalette, 0);
 
                 // set bgf resource
                 subOv.Resource = bgfSubOv;
