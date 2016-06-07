@@ -1687,6 +1687,10 @@ namespace Meridian59.Data
                 // add to list
                 RoomObjects.Add(Model);
             }
+
+            // note: server will resend room enchantments because classic client
+            //  cleans them on BP_ROOM_CONTENTS also.
+            RoomBuffs.Clear();
         }
 
         protected void HandleObjectContents(ObjectContentsMessage Message)
