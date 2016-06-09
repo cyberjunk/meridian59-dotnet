@@ -21,7 +21,21 @@ namespace LANGSTR
 		USERNAME	= 0,
 		PASSWORD	= 1,
 		CONNECT		= 2,
-		OPTIONS		= 3
+		OPTIONS		= 3,
+		ON			= 4,
+		OFF			= 5,
+		KEY			= 6,
+		ATTACK		= 7,
+		REST		= 8,
+		DANCE		= 9,
+		WAVE		= 10,
+		POINT		= 11,
+		LOOT		= 12,
+		BUY			= 13,
+		INSPECT		= 14,
+		TRADE		= 15,
+		ACTIVATE	= 16,
+		GUILDINVITE	= 17
 	};
 }
 
@@ -68,7 +82,37 @@ namespace LANGSTR_TOOLTIP_ONLINEPLAYER
 	};
 }
 
+namespace LANGSTR_TOOLTIP_STATUSBAR
+{ 
+	enum Enum
+	{
+		FPS_TOOLTIP = 0,
+		PING_TOOLTIP = 1,
+		PLAYERCOUNT_TOOLTIP = 2,
+		MOOD_TOOLTIP = 3,
+		SAFETY_TOOLTIP = 4,
+		TIME_TOOLTIP = 5,
+		ROOM_TOOLTIP = 6
+	};
+}
+
+namespace LANGSTR_DESCRIPTION_STATUSBAR
+{
+	enum Enum
+	{
+		FPS_DESCRIPTION = 1,
+		PING_DESCRIPTION = 2,
+		PLAYERCOUNT_DESCRIPTION = 3,
+		MOOD_DESCRIPTION = 4,
+		SAFETY_DESCRIPTION = 5,
+		TIME_DESCRIPTION = 6,
+		ROOM_DESCRIPTION = 7
+	};
+}
+
 const char* GetLangLabel(const LANGSTR::Enum ID);
 const char* GetLangWindowTitle(const LANGSTR_WINDOW_TITLE::Enum ID);
 const char* GetLangTooltipMood(const LANGSTR_TOOLTIP_MOOD::Enum ID);
 const char* GetLangTooltipOnlinePlayer(const LANGSTR_TOOLTIP_ONLINEPLAYER::Enum ID);
+const char* GetLangTooltipStatusBar(const LANGSTR_TOOLTIP_STATUSBAR::Enum ID);
+const char* GetLangDescriptionStatusBar(const LANGSTR_DESCRIPTION_STATUSBAR::Enum ID);

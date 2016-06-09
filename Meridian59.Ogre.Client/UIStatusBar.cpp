@@ -74,10 +74,33 @@ namespace Meridian59 { namespace Ogre
 
 	void ControllerUI::StatusBar::ApplyLanguage()
 	{
+		// Set Tooltips for selected language
+		FPSDescription->setTooltipText(GetLangTooltipStatusBar(LANGSTR_TOOLTIP_STATUSBAR::FPS_TOOLTIP));
+		FPSValue->setTooltipText(GetLangTooltipStatusBar(LANGSTR_TOOLTIP_STATUSBAR::FPS_TOOLTIP));
+		RTTDescription->setTooltipText(GetLangTooltipStatusBar(LANGSTR_TOOLTIP_STATUSBAR::FPS_TOOLTIP));
+		RTTValue->setTooltipText(GetLangTooltipStatusBar(LANGSTR_TOOLTIP_STATUSBAR::FPS_TOOLTIP));
+		PlayersDescription->setTooltipText(GetLangTooltipStatusBar(LANGSTR_TOOLTIP_STATUSBAR::PLAYERCOUNT_TOOLTIP));
+		PlayersValue->setTooltipText(GetLangTooltipStatusBar(LANGSTR_TOOLTIP_STATUSBAR::PLAYERCOUNT_TOOLTIP));
+		MoodDescription->setTooltipText(GetLangTooltipStatusBar(LANGSTR_TOOLTIP_STATUSBAR::MOOD_TOOLTIP));
 		MoodHappy->setTooltipText(GetLangTooltipMood(LANGSTR_TOOLTIP_MOOD::HAPPY));
 		MoodNeutral->setTooltipText(GetLangTooltipMood(LANGSTR_TOOLTIP_MOOD::NEUTRAL));
 		MoodSad->setTooltipText(GetLangTooltipMood(LANGSTR_TOOLTIP_MOOD::SAD));
 		MoodAngry->setTooltipText(GetLangTooltipMood(LANGSTR_TOOLTIP_MOOD::ANGRY));
+		SafetyDescription->setTooltipText(GetLangTooltipStatusBar(LANGSTR_TOOLTIP_STATUSBAR::SAFETY_TOOLTIP));
+		SafetyValue->setTooltipText(GetLangTooltipStatusBar(LANGSTR_TOOLTIP_STATUSBAR::SAFETY_TOOLTIP));
+		MTimeDescription->setTooltipText(GetLangTooltipStatusBar(LANGSTR_TOOLTIP_STATUSBAR::TIME_TOOLTIP));
+		MTimeValue->setTooltipText(GetLangTooltipStatusBar(LANGSTR_TOOLTIP_STATUSBAR::TIME_TOOLTIP));
+		RoomDescription->setTooltipText(GetLangTooltipStatusBar(LANGSTR_TOOLTIP_STATUSBAR::ROOM_TOOLTIP));
+		RoomValue->setTooltipText(GetLangTooltipStatusBar(LANGSTR_TOOLTIP_STATUSBAR::ROOM_TOOLTIP));
+
+		// Set Descriptions for selected language
+		FPSDescription->setText(GetLangDescriptionStatusBar(LANGSTR_DESCRIPTION_STATUSBAR::FPS_DESCRIPTION));
+		RTTDescription->setText(GetLangDescriptionStatusBar(LANGSTR_DESCRIPTION_STATUSBAR::PING_DESCRIPTION));
+		PlayersDescription->setText(GetLangDescriptionStatusBar(LANGSTR_DESCRIPTION_STATUSBAR::PLAYERCOUNT_DESCRIPTION));
+		MoodDescription->setText(GetLangDescriptionStatusBar(LANGSTR_DESCRIPTION_STATUSBAR::MOOD_DESCRIPTION));
+		SafetyDescription->setText(GetLangDescriptionStatusBar(LANGSTR_DESCRIPTION_STATUSBAR::SAFETY_DESCRIPTION));
+		MTimeDescription->setText(GetLangDescriptionStatusBar(LANGSTR_DESCRIPTION_STATUSBAR::TIME_DESCRIPTION));
+		RoomDescription->setText(GetLangDescriptionStatusBar(LANGSTR_DESCRIPTION_STATUSBAR::ROOM_DESCRIPTION));
 	};
 
 	void ControllerUI::StatusBar::OnDataPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
@@ -88,7 +111,7 @@ namespace Meridian59 { namespace Ogre
 			unsigned int tps = OgreClient::Singleton->Data->TPS;
 
 			// set color
-			if (tps >= FPSValues::GOOD)			
+			if (tps >= FPSValues::GOOD)
 				FPSValue->setProperty(UI_PROPNAME_NORMALTEXTCOLOUR, UI_COLOR_PALEGREEN);
 					
 			else if (tps >= FPSValues::OK)
@@ -140,7 +163,7 @@ namespace Meridian59 { namespace Ogre
 		{
 			const bool isSafetyOff = OgreClient::Singleton->Data->ClientPreferences->IsSafetyOff;
 			const CEGUI::String color = (isSafetyOff ? UI_COLOR_DARKRED : UI_COLOR_PALEGREEN);
-			const CEGUI::String val = (isSafetyOff ? "Off" : "On");
+			const CEGUI::String val = (isSafetyOff ? GetLangLabel(LANGSTR::OFF) : GetLangLabel(LANGSTR::ON));
 			SafetyValue->setProperty(UI_PROPNAME_NORMALTEXTCOLOUR, color);
 			SafetyValue->setProperty(UI_PROPNAME_HOVERTEXTCOLOUR, color);
 			SafetyValue->setText(val);

@@ -101,6 +101,7 @@ namespace Meridian59 { namespace Ogre
 
 	void ControllerUI::ActionButtons::ApplyLanguage()
 	{
+		// not sure, if we need this function here...
 	};
 
 	void ControllerUI::ActionButtons::OnNewImageAvailable(Object^ sender, ::System::EventArgs^ e)
@@ -173,7 +174,7 @@ namespace Meridian59 { namespace Ogre
 			CEGUI::Window* imgButton = dragger->getChildAtIdx(0);
 			
 			// set label
-			dragger->setTooltipText(StringConvert::CLRToCEGUI("Key: " + dataModel->Label));
+			dragger->setTooltipText(StringConvert::CLRToCEGUI(GetLangLabel(LANGSTR::KEY)^ + ": " + dataModel->Label->ToString));
 
 			if (dataModel->ButtonType == ActionButtonType::Unset)
 			{
