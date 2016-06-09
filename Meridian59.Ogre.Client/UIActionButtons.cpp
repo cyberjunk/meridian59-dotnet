@@ -174,8 +174,10 @@ namespace Meridian59 { namespace Ogre
 			CEGUI::Window* imgButton = dragger->getChildAtIdx(0);
 			
 			// set label
-			dragger->setTooltipText(StringConvert::CLRToCEGUI(GetLangLabel(LANGSTR::KEY)^ + ": " + dataModel->Label->ToString));
-
+			::CEGUI::String s = GetLangLabel(LANGSTR::KEY);
+			s = s.append(StringConvert::CLRToCEGUI(": " + dataModel->Label->ToString()));
+			dragger->setTooltipText(s);
+			
 			if (dataModel->ButtonType == ActionButtonType::Unset)
 			{
 				imgButton->setProperty(UI_PROPNAME_IMAGE, STRINGEMPTY); 
