@@ -94,13 +94,13 @@ namespace Meridian59 { namespace Ogre
 		RoomValue->setTooltipText(GetLangTooltipStatusBar(LANGSTR_TOOLTIP_STATUSBAR::ROOM_TOOLTIP));
 
 		// Set Descriptions for selected language
-		FPSDescription->setText(GetLangDescriptionStatusBar(LANGSTR_DESCRIPTION_STATUSBAR::FPS_DESCRIPTION));
+		/*FPSDescription->setText(GetLangDescriptionStatusBar(LANGSTR_DESCRIPTION_STATUSBAR::FPS_DESCRIPTION));
 		RTTDescription->setText(GetLangDescriptionStatusBar(LANGSTR_DESCRIPTION_STATUSBAR::PING_DESCRIPTION));
 		PlayersDescription->setText(GetLangDescriptionStatusBar(LANGSTR_DESCRIPTION_STATUSBAR::PLAYERCOUNT_DESCRIPTION));
 		MoodDescription->setText(GetLangDescriptionStatusBar(LANGSTR_DESCRIPTION_STATUSBAR::MOOD_DESCRIPTION));
 		SafetyDescription->setText(GetLangDescriptionStatusBar(LANGSTR_DESCRIPTION_STATUSBAR::SAFETY_DESCRIPTION));
 		MTimeDescription->setText(GetLangDescriptionStatusBar(LANGSTR_DESCRIPTION_STATUSBAR::TIME_DESCRIPTION));
-		RoomDescription->setText(GetLangDescriptionStatusBar(LANGSTR_DESCRIPTION_STATUSBAR::ROOM_DESCRIPTION));
+		RoomDescription->setText(GetLangDescriptionStatusBar(LANGSTR_DESCRIPTION_STATUSBAR::ROOM_DESCRIPTION));*/
 	};
 
 	void ControllerUI::StatusBar::OnDataPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
