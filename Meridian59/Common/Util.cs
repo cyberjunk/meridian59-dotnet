@@ -17,6 +17,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Text;
 using Meridian59.Native;
 
 namespace Meridian59.Common
@@ -26,6 +27,11 @@ namespace Meridian59.Common
     /// </summary>
     public static class Util
     {
+        /// <summary>
+        /// Default binary string encoding used in Meridian 59 (codepage 1252).
+        /// </summary>
+        public static readonly Encoding Encoding = Encoding.GetEncoding(1252);
+
         /// <summary>
         /// Loads file content from filesystem to unmanaged memory.
         /// Beware: This does not verify existance of file 
