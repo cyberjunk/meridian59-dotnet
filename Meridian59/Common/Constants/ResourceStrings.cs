@@ -220,16 +220,16 @@ namespace Meridian59.Common.Constants
             /// <summary>
             /// Strings of wands
             /// </summary>
-            public static class Wands
+            public static class Rods
             {
-                public const string WANDOFHEALING = "wand of healing";
-                public const string WANDOFVAMPIRE = "wand of vampiric shock";
+                public const string RODOFHEALING = "rod of healing";
+                public const string RODOFVAMPIRE = "rod of vampiric shock";
 
                 public static bool Is(string Value)
                 {
                     return (Value != null) && (
-                        string.Equals(Value, WANDOFHEALING) ||
-                        string.Equals(Value, WANDOFVAMPIRE));
+                        string.Equals(Value, RODOFHEALING) ||
+                        string.Equals(Value, RODOFVAMPIRE));
                 }
             }
 

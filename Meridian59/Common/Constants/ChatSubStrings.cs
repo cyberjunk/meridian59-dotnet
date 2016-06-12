@@ -29,5 +29,14 @@ namespace Meridian59.Common.Constants
         public const string IMPROVED        = "You have improved in the art of ";
         public const string EAT             = "Yum-yum good!";
         public const string FULL            = "You are too full to eat.";
+        public const string HEALTHY         = "is perfectly healthy.";
+        public const string CANTUSE         = "You can't use ";
+        public const string BROKEN          = "it's broken.";
+        public const string WELCOMEMESSAGE  = "Welcome to the world of Meridian 59! (type \"help\" to see the manual).";
+        public const string DISCORDMESSAGE  = "The fabric of space twists subtly, just enough to damage the brittle mana field.";
+        public const string ANTIMAGICAURAMESSAGE = "The mana field begins to fluctuate.";
+        public const string BREAKS          = "shatters into pieces!";
+        public const string YOUHEAL         = "You heal ";
+        public const string RODEMPTY        = "The rod must be recharged before it can be used again.";
     }
 }

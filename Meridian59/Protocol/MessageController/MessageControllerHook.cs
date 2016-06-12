@@ -124,7 +124,7 @@ namespace Meridian59.Protocol
                     typedMessage.EncryptedPI = typedMessage.PI;
                     typedMessage.MemoryStartAddress = e.MemoryAddress;
 
-                    CheckServerSave(typedMessage);
+                    //CheckServerSave(typedMessage);
 
                     // Advance the hashtable if encryption is enabled (3. TX packet) and if it's not a blacklisted packet
                     if (CRCCreatorEnabled && 
