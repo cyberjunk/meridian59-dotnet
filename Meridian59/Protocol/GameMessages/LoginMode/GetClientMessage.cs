@@ -18,6 +18,7 @@ using System;
 using System.Text;
 using Meridian59.Common.Constants;
 using Meridian59.Protocol.Enums;
+using Meridian59.Common;
 
 namespace Meridian59.Protocol.GameMessages
 {
@@ -47,13 +48,13 @@ namespace Meridian59.Protocol.GameMessages
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(UpdateURL.Length)), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(UpdateURL), 0, Buffer, cursor, UpdateURL.Length);
+            Array.Copy(Util.Encoding.GetBytes(UpdateURL), 0, Buffer, cursor, UpdateURL.Length);
             cursor += UpdateURL.Length;
 
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(FileName.Length)), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(FileName), 0, Buffer, cursor, FileName.Length);
+            Array.Copy(Util.Encoding.GetBytes(FileName), 0, Buffer, cursor, FileName.Length);
             cursor += FileName.Length;
 
             return cursor - StartIndex;
@@ -68,13 +69,13 @@ namespace Meridian59.Protocol.GameMessages
             ushort len = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            UpdateURL = Encoding.Default.GetString(Buffer, cursor, len);
+            UpdateURL = Util.Encoding.GetString(Buffer, cursor, len);
             cursor += len;
 
             len = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            FileName = Encoding.Default.GetString(Buffer, cursor, len);
+            FileName = Util.Encoding.GetString(Buffer, cursor, len);
             cursor += len;
 
             return cursor - StartIndex;

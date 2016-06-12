@@ -21,6 +21,7 @@ using Meridian59.Files;
 using Meridian59.Common.Enums;
 using Meridian59.Common.Constants;
 using System.Text;
+using Meridian59.Common;
 
 namespace Meridian59.Files.RSB
 {
@@ -118,7 +119,7 @@ namespace Meridian59.Files.RSB
                 }
 
                 // write string
-                Array.Copy(Encoding.Default.GetBytes(text), 0, Buffer, cursor, text.Length);
+                Array.Copy(Util.Encoding.GetBytes(text), 0, Buffer, cursor, text.Length);
                 cursor += text.Length;
 
                 // c-str termination
@@ -149,7 +150,7 @@ namespace Meridian59.Files.RSB
                 strlen++;
 
             // get string
-            text = Encoding.Default.GetString(Buffer, cursor, strlen);
+            text = Util.Encoding.GetString(Buffer, cursor, strlen);
             cursor += strlen + TypeSizes.BYTE;
 
             return cursor - StartIndex;

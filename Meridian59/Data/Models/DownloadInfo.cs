@@ -19,6 +19,7 @@ using System.Text;
 using System.ComponentModel;
 using Meridian59.Common.Interfaces;
 using Meridian59.Common.Constants;
+using Meridian59.Common;
 
 namespace Meridian59.Data.Models
 {
@@ -76,25 +77,25 @@ namespace Meridian59.Data.Models
             len = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            machine = Encoding.Default.GetString(Buffer, cursor, len);
+            machine = Util.Encoding.GetString(Buffer, cursor, len);
             cursor += len;
 
             len = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            path = Encoding.Default.GetString(Buffer, cursor, len);
+            path = Util.Encoding.GetString(Buffer, cursor, len);
             cursor += len;
 
             len = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            reason = Encoding.Default.GetString(Buffer, cursor, len);
+            reason = Util.Encoding.GetString(Buffer, cursor, len);
             cursor += len;
 
             len = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            demoPath = Encoding.Default.GetString(Buffer, cursor, len);
+            demoPath = Util.Encoding.GetString(Buffer, cursor, len);
             cursor += len;
 
             for (int i = 0; i < files.Length; i++)
@@ -118,25 +119,25 @@ namespace Meridian59.Data.Models
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(machine.Length)), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(machine), 0, Buffer, cursor, machine.Length);
+            Array.Copy(Util.Encoding.GetBytes(machine), 0, Buffer, cursor, machine.Length);
             cursor += machine.Length;
 
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(path.Length)), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(path), 0, Buffer, cursor, path.Length);
+            Array.Copy(Util.Encoding.GetBytes(path), 0, Buffer, cursor, path.Length);
             cursor += path.Length;
 
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(reason.Length)), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(reason), 0, Buffer, cursor, reason.Length);
+            Array.Copy(Util.Encoding.GetBytes(reason), 0, Buffer, cursor, reason.Length);
             cursor += reason.Length;
 
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(demoPath.Length)), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(demoPath), 0, Buffer, cursor, demoPath.Length);
+            Array.Copy(Util.Encoding.GetBytes(demoPath), 0, Buffer, cursor, demoPath.Length);
             cursor += demoPath.Length;
 
             foreach (DownloadFileInfo obj in files)
@@ -155,25 +156,25 @@ namespace Meridian59.Data.Models
             len = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            machine = new string((sbyte*)Buffer, 0, len);
+            machine = new string((sbyte*)Buffer, 0, len, Util.Encoding);
             Buffer += len;
 
             len = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            path = new string((sbyte*)Buffer, 0, len);
+            path = new string((sbyte*)Buffer, 0, len, Util.Encoding);
             Buffer += len;
 
             len = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            reason = new string((sbyte*)Buffer, 0, len);
+            reason = new string((sbyte*)Buffer, 0, len, Util.Encoding);
             Buffer += len;
 
             len = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            demoPath = new string((sbyte*)Buffer, 0, len);
+            demoPath = new string((sbyte*)Buffer, 0, len, Util.Encoding);
             Buffer += len;
 
             for (int i = 0; i < files.Length; i++)          
@@ -196,7 +197,7 @@ namespace Meridian59.Data.Models
                 *((ushort*)Buffer) = len;
                 Buffer += TypeSizes.SHORT;
                
-                Encoding.Default.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
+                Util.Encoding.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
                 Buffer += len;
             }
 
@@ -207,7 +208,7 @@ namespace Meridian59.Data.Models
                 *((ushort*)Buffer) = len;
                 Buffer += TypeSizes.SHORT;
 
-                Encoding.Default.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
+                Util.Encoding.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
                 Buffer += len;
             }
 
@@ -218,7 +219,7 @@ namespace Meridian59.Data.Models
                 *((ushort*)Buffer) = len;
                 Buffer += TypeSizes.SHORT;
 
-                Encoding.Default.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
+                Util.Encoding.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
                 Buffer += len;
             }
 
@@ -229,7 +230,7 @@ namespace Meridian59.Data.Models
                 *((ushort*)Buffer) = len;
                 Buffer += TypeSizes.SHORT;
 
-                Encoding.Default.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
+                Util.Encoding.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
                 Buffer += len;
             }
 

@@ -14,6 +14,7 @@
  If not, see http://www.gnu.org/licenses/.
 */
 
+using Meridian59.Common;
 using Meridian59.Common.Constants;
 using Meridian59.Common.Interfaces;
 using System;
@@ -66,7 +67,7 @@ namespace Meridian59.Files.ROO
             Array.Copy(BitConverter.GetBytes(Flags), 0, Buffer, cursor, TypeSizes.INT);
             cursor += TypeSizes.INT;
 
-            Array.Copy(Encoding.Default.GetBytes(Comments), 0, Buffer, cursor, Comments.Length);
+            Array.Copy(Util.Encoding.GetBytes(Comments), 0, Buffer, cursor, Comments.Length);
             cursor += COMMENTSLENGTH;
           
             return cursor - StartIndex;
@@ -97,7 +98,7 @@ namespace Meridian59.Files.ROO
             fixed (char* pString = Comments)
             {
                 int a, b; bool c;
-                Encoding.Default.GetEncoder().Convert(pString, Comments.Length, Buffer, COMMENTSLENGTH, true, out a, out b, out c);
+                Util.Encoding.GetEncoder().Convert(pString, Comments.Length, Buffer, COMMENTSLENGTH, true, out a, out b, out c);
                 Buffer += COMMENTSLENGTH;
             }  
         }
@@ -126,7 +127,7 @@ namespace Meridian59.Files.ROO
             Flags = BitConverter.ToInt32(Buffer, cursor);
             cursor += TypeSizes.INT;
 
-            Comments = Encoding.Default.GetString(Buffer, cursor, COMMENTSLENGTH);
+            Comments = Util.Encoding.GetString(Buffer, cursor, COMMENTSLENGTH);
             cursor += COMMENTSLENGTH;
 
             return cursor - StartIndex;

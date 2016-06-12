@@ -19,6 +19,7 @@ using System.Text;
 using System.ComponentModel;
 using Meridian59.Common.Interfaces;
 using Meridian59.Common.Constants;
+using Meridian59.Common;
 
 namespace Meridian59.Data.Models
 {
@@ -46,7 +47,7 @@ namespace Meridian59.Data.Models
             ushort strlen = BitConverter.ToUInt16(Buffer, cursor);      // NameLEN (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            name = Encoding.Default.GetString(Buffer, cursor, strlen);  // Name (n bytes)
+            name = Util.Encoding.GetString(Buffer, cursor, strlen);  // Name (n bytes)
             cursor += strlen;
 
             return cursor - StartIndex; 
@@ -60,7 +61,7 @@ namespace Meridian59.Data.Models
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(name.Length)), 0, Buffer, cursor, TypeSizes.SHORT);   // NameLEN (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(name), 0, Buffer, cursor, name.Length);                            // Name (n bytes)
+            Array.Copy(Util.Encoding.GetBytes(name), 0, Buffer, cursor, name.Length);                            // Name (n bytes)
             cursor += name.Length;
 
             return cursor - StartIndex;
@@ -73,7 +74,7 @@ namespace Meridian59.Data.Models
             ushort len = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            name = new string((sbyte*)Buffer, 0, len);
+            name = new string((sbyte*)Buffer, 0, len, Util.Encoding);
             Buffer += len;
         }
 
@@ -89,7 +90,7 @@ namespace Meridian59.Data.Models
                 Buffer += TypeSizes.SHORT;
 
                 int a, b; bool c;
-                Encoding.Default.GetEncoder().Convert(pName, len, Buffer, len, true, out a, out b, out c);
+                Util.Encoding.GetEncoder().Convert(pName, len, Buffer, len, true, out a, out b, out c);
                 Buffer += len;
             }
         }

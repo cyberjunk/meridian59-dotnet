@@ -18,6 +18,7 @@ using System;
 using System.Text;
 using Meridian59.Common.Constants;
 using Meridian59.Protocol.Enums;
+using Meridian59.Common;
 
 namespace Meridian59.Protocol.GameMessages
 {
@@ -57,7 +58,7 @@ namespace Meridian59.Protocol.GameMessages
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(Hostname.Length)), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(Hostname), 0, Buffer, cursor, Hostname.Length);
+            Array.Copy(Util.Encoding.GetBytes(Hostname), 0, Buffer, cursor, Hostname.Length);
             cursor += Hostname.Length;
 
             return cursor - StartIndex;
@@ -78,7 +79,7 @@ namespace Meridian59.Protocol.GameMessages
             ushort len = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            Hostname = Encoding.Default.GetString(Buffer, cursor, len);
+            Hostname = Util.Encoding.GetString(Buffer, cursor, len);
             cursor += len;
 
             return cursor - StartIndex;

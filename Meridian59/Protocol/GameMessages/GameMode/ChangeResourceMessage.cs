@@ -18,6 +18,7 @@ using System;
 using System.Text;
 using Meridian59.Protocol.Enums;
 using Meridian59.Common.Constants;
+using Meridian59.Common;
 
 namespace Meridian59.Protocol.GameMessages
 {
@@ -45,7 +46,7 @@ namespace Meridian59.Protocol.GameMessages
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(NewValue.Length)), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(NewValue), 0, Buffer, cursor, NewValue.Length);
+            Array.Copy(Util.Encoding.GetBytes(NewValue), 0, Buffer, cursor, NewValue.Length);
             cursor += NewValue.Length;
 
             return cursor - StartIndex;
@@ -63,7 +64,7 @@ namespace Meridian59.Protocol.GameMessages
             ushort len = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            NewValue = Encoding.Default.GetString(Buffer, cursor, len);
+            NewValue = Util.Encoding.GetString(Buffer, cursor, len);
             cursor += len;
 
             return cursor - StartIndex;
@@ -85,7 +86,7 @@ namespace Meridian59.Protocol.GameMessages
                 *((ushort*)Buffer) = len;
                 Buffer += TypeSizes.SHORT;
 
-                Encoding.Default.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
+                Util.Encoding.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
                 Buffer += len;
             }
         }
@@ -100,7 +101,7 @@ namespace Meridian59.Protocol.GameMessages
             ushort len = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            NewValue = new string((sbyte*)Buffer, 0, len);
+            NewValue = new string((sbyte*)Buffer, 0, len, Util.Encoding);
             Buffer += len;
         }
         #endregion

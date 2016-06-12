@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using Meridian59.Common.Interfaces;
 using Meridian59.Common.Constants;
 using Meridian59.Data.Lists;
+using Meridian59.Common;
 
 namespace Meridian59.Data.Models
 {
@@ -87,7 +88,7 @@ namespace Meridian59.Data.Models
             len = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            MOTD = Encoding.Default.GetString(Buffer, cursor, len);
+            MOTD = Util.Encoding.GetString(Buffer, cursor, len);
             cursor += MOTD.Length;
 
             byte blen = Buffer[cursor];
@@ -115,7 +116,7 @@ namespace Meridian59.Data.Models
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(MOTD.Length)), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(MOTD), 0, Buffer, cursor, MOTD.Length);
+            Array.Copy(Util.Encoding.GetBytes(MOTD), 0, Buffer, cursor, MOTD.Length);
             cursor += MOTD.Length;
 
             Buffer[cursor] = Convert.ToByte(Ads.Count);

@@ -18,6 +18,7 @@ using System;
 using Meridian59.Common.Enums;
 using Meridian59.Common.Constants;
 using System.Text;
+using Meridian59.Common;
 
 namespace Meridian59.Data.Models
 {
@@ -43,7 +44,7 @@ namespace Meridian59.Data.Models
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(Password.Length)), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(Password), 0, Buffer, cursor, Password.Length);
+            Array.Copy(Util.Encoding.GetBytes(Password), 0, Buffer, cursor, Password.Length);
             cursor += Password.Length;
 
             return cursor - StartIndex;
@@ -61,7 +62,7 @@ namespace Meridian59.Data.Models
                 ushort strlen = BitConverter.ToUInt16(Buffer, cursor);
                 cursor += TypeSizes.SHORT;
 
-                Password = Encoding.Default.GetString(Buffer, cursor, strlen);
+                Password = Util.Encoding.GetString(Buffer, cursor, strlen);
                 cursor += strlen;
             }
 

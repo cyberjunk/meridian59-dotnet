@@ -84,13 +84,13 @@ namespace Meridian59.Data.Models
             strlen = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            Titles = Encoding.Default.GetString(Buffer, cursor, strlen);
+            Titles = Util.Encoding.GetString(Buffer, cursor, strlen);
             cursor += strlen;
 #endif
             strlen = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            Website = Encoding.Default.GetString(Buffer, cursor, strlen);
+            Website = Util.Encoding.GetString(Buffer, cursor, strlen);
             cursor += strlen;
 
             return cursor - StartIndex; 
@@ -113,13 +113,13 @@ namespace Meridian59.Data.Models
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(Titles.Length)), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(Titles), 0, Buffer, cursor, Titles.Length);
+            Array.Copy(Util.Encoding.GetBytes(Titles), 0, Buffer, cursor, Titles.Length);
             cursor += Titles.Length;
 #endif
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(Website.Length)), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(Website), 0, Buffer, cursor, Website.Length);
+            Array.Copy(Util.Encoding.GetBytes(Website), 0, Buffer, cursor, Website.Length);
             cursor += Website.Length;
             
             return cursor - StartIndex;

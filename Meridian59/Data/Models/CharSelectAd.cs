@@ -19,6 +19,7 @@ using System.Text;
 using System.ComponentModel;
 using Meridian59.Common.Interfaces;
 using Meridian59.Common.Constants;
+using Meridian59.Common;
 
 namespace Meridian59.Data.Models
 {
@@ -56,13 +57,13 @@ namespace Meridian59.Data.Models
             ushort strlen = BitConverter.ToUInt16(Buffer, cursor);          // FileNameLEN (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            fileName = Encoding.Default.GetString(Buffer, cursor, strlen);  // FileName (n bytes)
+            fileName = Util.Encoding.GetString(Buffer, cursor, strlen);  // FileName (n bytes)
             cursor += strlen;
 
             strlen = BitConverter.ToUInt16(Buffer, cursor);                 // URLLEN (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            url = Encoding.Default.GetString(Buffer, cursor, strlen);       // URL (n bytes)
+            url = Util.Encoding.GetString(Buffer, cursor, strlen);       // URL (n bytes)
             cursor += strlen;
 
             return cursor - StartIndex; 
@@ -75,13 +76,13 @@ namespace Meridian59.Data.Models
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(fileName.Length)), 0, Buffer, cursor, TypeSizes.SHORT);       // FileNameLEN (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(fileName), 0, Buffer, cursor, fileName.Length);                            // FileName (n bytes)
+            Array.Copy(Util.Encoding.GetBytes(fileName), 0, Buffer, cursor, fileName.Length);                            // FileName (n bytes)
             cursor += fileName.Length;
 
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(url.Length)), 0, Buffer, cursor, TypeSizes.SHORT);            // URLLEN (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(url), 0, Buffer, cursor, url.Length);                                      // URL (n bytes)
+            Array.Copy(Util.Encoding.GetBytes(url), 0, Buffer, cursor, url.Length);                                      // URL (n bytes)
             cursor += url.Length;
 
             return cursor - StartIndex;
@@ -92,13 +93,13 @@ namespace Meridian59.Data.Models
             ushort len = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            fileName = new string((sbyte*)Buffer, 0, len);
+            fileName = new string((sbyte*)Buffer, 0, len, Util.Encoding);
             Buffer += len;
 
             len = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            url = new string((sbyte*)Buffer, 0, len);
+            url = new string((sbyte*)Buffer, 0, len, Util.Encoding);
             Buffer += len;
         }
 
@@ -113,7 +114,7 @@ namespace Meridian59.Data.Models
                 *((ushort*)Buffer) = len;
                 Buffer += TypeSizes.SHORT;
                
-                Encoding.Default.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
+                Util.Encoding.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
                 Buffer += len;
             }
 
@@ -124,7 +125,7 @@ namespace Meridian59.Data.Models
                 *((ushort*)Buffer) = len;
                 Buffer += TypeSizes.SHORT;
 
-                Encoding.Default.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
+                Util.Encoding.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
                 Buffer += len;
             }
         }

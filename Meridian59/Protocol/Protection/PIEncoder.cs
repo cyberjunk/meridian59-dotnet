@@ -88,7 +88,7 @@ namespace Meridian59.Protocol
             this.stringResources = StringResources;
             
             if (StringResources == null)
-                hashString = Encoding.Default.GetBytes(StaticFallbackHashString);
+                hashString = Util.Encoding.GetBytes(StaticFallbackHashString);
             
             Reset();
         }
@@ -137,7 +137,7 @@ namespace Meridian59.Protocol
             CurrentEncodeByte = SeedByte ^ XORValue;
 
             // Update the local iteration string
-            hashString = Encoding.Default.GetBytes(StaticFallbackHashString);
+            hashString = Util.Encoding.GetBytes(StaticFallbackHashString);
 
             // Reset the cursor on the local iteration string
             cursor = 0;

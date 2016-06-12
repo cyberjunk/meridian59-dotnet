@@ -18,6 +18,7 @@ using System;
 using System.Text;
 using Meridian59.Common.Enums;
 using Meridian59.Common.Constants;
+using Meridian59.Common;
 
 namespace Meridian59.Data.Models
 {
@@ -58,67 +59,67 @@ namespace Meridian59.Data.Models
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(GuildName.Length)), 0, Buffer, cursor, TypeSizes.SHORT);  // GuildNameLEN (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(GuildName), 0, Buffer, cursor, GuildName.Length);                      // GuildName (n bytes)
+            Array.Copy(Util.Encoding.GetBytes(GuildName), 0, Buffer, cursor, GuildName.Length);                      // GuildName (n bytes)
             cursor += GuildName.Length;
 
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(Rank1Male.Length)), 0, Buffer, cursor, TypeSizes.SHORT);  // Rank1MaleLEN (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(Rank1Male), 0, Buffer, cursor, Rank1Male.Length);                      // Rank1Male (n bytes)
+            Array.Copy(Util.Encoding.GetBytes(Rank1Male), 0, Buffer, cursor, Rank1Male.Length);                      // Rank1Male (n bytes)
             cursor += Rank1Male.Length;
 
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(Rank1Female.Length)), 0, Buffer, cursor, TypeSizes.SHORT);// Rank1FemaleLEN (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(Rank1Female), 0, Buffer, cursor, Rank1Female.Length);                  // Rank1Female (n bytes)
+            Array.Copy(Util.Encoding.GetBytes(Rank1Female), 0, Buffer, cursor, Rank1Female.Length);                  // Rank1Female (n bytes)
             cursor += Rank1Female.Length;
 
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(Rank2Male.Length)), 0, Buffer, cursor, TypeSizes.SHORT);  // Rank2MaleLEN (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(Rank2Male), 0, Buffer, cursor, Rank2Male.Length);                      // Rank2Male (n bytes)
+            Array.Copy(Util.Encoding.GetBytes(Rank2Male), 0, Buffer, cursor, Rank2Male.Length);                      // Rank2Male (n bytes)
             cursor += Rank2Male.Length;
 
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(Rank2Female.Length)), 0, Buffer, cursor, TypeSizes.SHORT);// Rank2FemaleLEN (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(Rank2Female), 0, Buffer, cursor, Rank2Female.Length);                  // Rank2Female (n bytes)
+            Array.Copy(Util.Encoding.GetBytes(Rank2Female), 0, Buffer, cursor, Rank2Female.Length);                  // Rank2Female (n bytes)
             cursor += Rank2Female.Length;
 
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(Rank3Male.Length)), 0, Buffer, cursor, TypeSizes.SHORT);  // Rank3MaleLEN (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(Rank3Male), 0, Buffer, cursor, Rank3Male.Length);                      // Rank3Male (n bytes)
+            Array.Copy(Util.Encoding.GetBytes(Rank3Male), 0, Buffer, cursor, Rank3Male.Length);                      // Rank3Male (n bytes)
             cursor += Rank3Male.Length;
 
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(Rank3Female.Length)), 0, Buffer, cursor, TypeSizes.SHORT);// Rank3FemaleLEN (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(Rank3Female), 0, Buffer, cursor, Rank3Female.Length);                  // Rank3Female (n bytes)
+            Array.Copy(Util.Encoding.GetBytes(Rank3Female), 0, Buffer, cursor, Rank3Female.Length);                  // Rank3Female (n bytes)
             cursor += Rank3Female.Length;
 
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(Rank4Male.Length)), 0, Buffer, cursor, TypeSizes.SHORT);  // Rank4MaleLEN (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(Rank4Male), 0, Buffer, cursor, Rank4Male.Length);                      // Rank4Male (n bytes)
+            Array.Copy(Util.Encoding.GetBytes(Rank4Male), 0, Buffer, cursor, Rank4Male.Length);                      // Rank4Male (n bytes)
             cursor += Rank4Male.Length;
 
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(Rank4Female.Length)), 0, Buffer, cursor, TypeSizes.SHORT);// Rank4FemaleLEN (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(Rank4Female), 0, Buffer, cursor, Rank4Female.Length);                  // Rank4Female (n bytes)
+            Array.Copy(Util.Encoding.GetBytes(Rank4Female), 0, Buffer, cursor, Rank4Female.Length);                  // Rank4Female (n bytes)
             cursor += Rank4Female.Length;
 
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(Rank5Male.Length)), 0, Buffer, cursor, TypeSizes.SHORT);  // Rank5MaleLEN (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(Rank5Male), 0, Buffer, cursor, Rank5Male.Length);                      // Rank5Male (n bytes)
+            Array.Copy(Util.Encoding.GetBytes(Rank5Male), 0, Buffer, cursor, Rank5Male.Length);                      // Rank5Male (n bytes)
             cursor += Rank5Male.Length;
 
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(Rank5Female.Length)), 0, Buffer, cursor, TypeSizes.SHORT);// Rank5FemaleLEN (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(Rank5Female), 0, Buffer, cursor, Rank5Female.Length);                  // Rank5Female (n bytes)
+            Array.Copy(Util.Encoding.GetBytes(Rank5Female), 0, Buffer, cursor, Rank5Female.Length);                  // Rank5Female (n bytes)
             cursor += Rank5Female.Length;
 
             Buffer[cursor] = Convert.ToByte(SecretGuild);                                                               // SecretGuild (1 byte)
@@ -140,67 +141,67 @@ namespace Meridian59.Data.Models
                 ushort len = BitConverter.ToUInt16(Buffer, cursor);                 // GuildNameLEN (2 bytes)
                 cursor += TypeSizes.SHORT;
 
-                GuildName = Encoding.Default.GetString(Buffer, cursor, len);        // GuildName    (n bytes)
+                GuildName = Util.Encoding.GetString(Buffer, cursor, len);        // GuildName    (n bytes)
                 cursor += len;
 
                 len = BitConverter.ToUInt16(Buffer, cursor);                        // Rank1MaleLEN (2 bytes)
                 cursor += TypeSizes.SHORT;
 
-                Rank1Male = Encoding.Default.GetString(Buffer, cursor, len);        // Rank1Male    (n bytes)
+                Rank1Male = Util.Encoding.GetString(Buffer, cursor, len);        // Rank1Male    (n bytes)
                 cursor += len;
 
                 len = BitConverter.ToUInt16(Buffer, cursor);                        // Rank1FemaleLEN (2 bytes)
                 cursor += TypeSizes.SHORT;
 
-                Rank1Female = Encoding.Default.GetString(Buffer, cursor, len);      // Rank1Female    (n bytes)
+                Rank1Female = Util.Encoding.GetString(Buffer, cursor, len);      // Rank1Female    (n bytes)
                 cursor += len;
                 
                 len = BitConverter.ToUInt16(Buffer, cursor);                        // Rank2MaleLEN (2 bytes)
                 cursor += TypeSizes.SHORT;
 
-                Rank2Male = Encoding.Default.GetString(Buffer, cursor, len);        // Rank2Male    (n bytes)
+                Rank2Male = Util.Encoding.GetString(Buffer, cursor, len);        // Rank2Male    (n bytes)
                 cursor += len;
 
                 len = BitConverter.ToUInt16(Buffer, cursor);                        // Rank2FemaleLEN (2 bytes)
                 cursor += TypeSizes.SHORT;
 
-                Rank2Female = Encoding.Default.GetString(Buffer, cursor, len);      // Rank2Female    (n bytes)
+                Rank2Female = Util.Encoding.GetString(Buffer, cursor, len);      // Rank2Female    (n bytes)
                 cursor += len;
                 
                 len = BitConverter.ToUInt16(Buffer, cursor);                        // Rank3MaleLEN (2 bytes)
                 cursor += TypeSizes.SHORT;
 
-                Rank3Male = Encoding.Default.GetString(Buffer, cursor, len);        // Rank3Male    (n bytes)
+                Rank3Male = Util.Encoding.GetString(Buffer, cursor, len);        // Rank3Male    (n bytes)
                 cursor += len;
 
                 len = BitConverter.ToUInt16(Buffer, cursor);                        // Rank3FemaleLEN (2 bytes)
                 cursor += TypeSizes.SHORT;
 
-                Rank3Female = Encoding.Default.GetString(Buffer, cursor, len);      // Rank3Female    (n bytes)
+                Rank3Female = Util.Encoding.GetString(Buffer, cursor, len);      // Rank3Female    (n bytes)
                 cursor += len;
               
                 len = BitConverter.ToUInt16(Buffer, cursor);                        // Rank4MaleLEN (2 bytes)
                 cursor += TypeSizes.SHORT;
 
-                Rank4Male = Encoding.Default.GetString(Buffer, cursor, len);        // Rank4Male    (n bytes)
+                Rank4Male = Util.Encoding.GetString(Buffer, cursor, len);        // Rank4Male    (n bytes)
                 cursor += len;
 
                 len = BitConverter.ToUInt16(Buffer, cursor);                        // Rank4FemaleLEN (2 bytes)
                 cursor += TypeSizes.SHORT;
 
-                Rank4Female = Encoding.Default.GetString(Buffer, cursor, len);      // Rank4Female    (n bytes)
+                Rank4Female = Util.Encoding.GetString(Buffer, cursor, len);      // Rank4Female    (n bytes)
                 cursor += len;
                
                 len = BitConverter.ToUInt16(Buffer, cursor);                        // Rank5MaleLEN (2 bytes)
                 cursor += TypeSizes.SHORT;
 
-                Rank5Male = Encoding.Default.GetString(Buffer, cursor, len);        // Rank5Male    (n bytes)
+                Rank5Male = Util.Encoding.GetString(Buffer, cursor, len);        // Rank5Male    (n bytes)
                 cursor += len;
 
                 len = BitConverter.ToUInt16(Buffer, cursor);                        // Rank5FemaleLEN (2 bytes)
                 cursor += TypeSizes.SHORT;
 
-                Rank5Female = Encoding.Default.GetString(Buffer, cursor, len);      // Rank5Female    (n bytes)
+                Rank5Female = Util.Encoding.GetString(Buffer, cursor, len);      // Rank5Female    (n bytes)
                 cursor += len;
 
                 SecretGuild = Convert.ToBoolean(Buffer[cursor]);                    // SecretGuild    (1 byte)

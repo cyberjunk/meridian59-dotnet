@@ -20,6 +20,7 @@ using System.ComponentModel;
 using Meridian59.Common.Interfaces;
 using Meridian59.Common.Constants;
 using Meridian59.Drawing2D;
+using Meridian59.Common;
 
 namespace Meridian59.Data.Models
 {
@@ -69,7 +70,7 @@ namespace Meridian59.Data.Models
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(guildName.Length)), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(guildName), 0, Buffer, cursor, guildName.Length);
+            Array.Copy(Util.Encoding.GetBytes(guildName), 0, Buffer, cursor, guildName.Length);
             cursor += guildName.Length;
 
             Buffer[cursor] = color1;
@@ -94,7 +95,7 @@ namespace Meridian59.Data.Models
             ushort len = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            guildName = Encoding.Default.GetString(Buffer, cursor, len);
+            guildName = Util.Encoding.GetString(Buffer, cursor, len);
             cursor += len;
 
             color1 = Buffer[cursor];

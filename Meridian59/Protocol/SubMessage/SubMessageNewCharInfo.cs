@@ -19,6 +19,7 @@ using System.Text;
 using Meridian59.Data.Models;
 using Meridian59.Protocol.Enums;
 using Meridian59.Common.Constants;
+using Meridian59.Common;
 
 namespace Meridian59.Protocol.SubMessage
 {
@@ -58,13 +59,13 @@ namespace Meridian59.Protocol.SubMessage
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(AvatarName.Length)), 0, Buffer, cursor, TypeSizes.SHORT); // AvatarNameLEN (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(AvatarName), 0, Buffer, cursor, AvatarName.Length);                    // AvatarName (n bytes)
+            Array.Copy(Util.Encoding.GetBytes(AvatarName), 0, Buffer, cursor, AvatarName.Length);                    // AvatarName (n bytes)
             cursor += AvatarName.Length;
 
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(AvatarDescription.Length)), 0, Buffer, cursor, TypeSizes.SHORT);    // AvatarDescLEN (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(AvatarDescription), 0, Buffer, cursor, AvatarDescription.Length);      // AvatarDescription (n bytes)
+            Array.Copy(Util.Encoding.GetBytes(AvatarDescription), 0, Buffer, cursor, AvatarDescription.Length);      // AvatarDescription (n bytes)
             cursor += AvatarDescription.Length;
 
             Buffer[cursor] = Gender;                                                                                    // Gender (1 byte)
@@ -131,13 +132,13 @@ namespace Meridian59.Protocol.SubMessage
                 ushort len = BitConverter.ToUInt16(Buffer, cursor);                     // NameLEN  (2 bytes)
                 cursor += TypeSizes.SHORT;
 
-                AvatarName = Encoding.Default.GetString(Buffer, cursor, len);           // Name     (n bytes)
+                AvatarName = Util.Encoding.GetString(Buffer, cursor, len);           // Name     (n bytes)
                 cursor += len;
 
                 len = BitConverter.ToUInt16(Buffer, cursor);                            // DescLEN  (2 bytes)
                 cursor += TypeSizes.SHORT;
 
-                AvatarDescription = Encoding.Default.GetString(Buffer, cursor, len);    // Name     (n bytes)
+                AvatarDescription = Util.Encoding.GetString(Buffer, cursor, len);    // Name     (n bytes)
                 cursor += len;
 
                 Gender = Buffer[cursor];                                                // Gender   (1 byte)

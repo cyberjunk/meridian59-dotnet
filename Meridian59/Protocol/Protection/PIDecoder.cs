@@ -78,7 +78,7 @@ namespace Meridian59.Protocol
             this.stringResources = StringResources;
             
             if (StringResources == null)
-                stringBytes = Encoding.Default.GetBytes(FALLBACKSTRING);
+                stringBytes = Util.Encoding.GetBytes(FALLBACKSTRING);
             
             Reset();
         }
@@ -132,7 +132,7 @@ namespace Meridian59.Protocol
 
             // zero resourceid indicates use of fallbackstring
             if (ResourceID == 0)
-                stringBytes = Encoding.Default.GetBytes(FALLBACKSTRING);
+                stringBytes = Util.Encoding.GetBytes(FALLBACKSTRING);
 
             else
             {
@@ -141,13 +141,13 @@ namespace Meridian59.Protocol
                 // try to get the string from dictionary (ALWAYS english!)
                 if (stringResources.TryGetValue(ResourceID, out iterateString, LanguageCode.English))
                 {
-                    stringBytes = Encoding.Default.GetBytes(iterateString);
+                    stringBytes = Util.Encoding.GetBytes(iterateString);
                 }
                 else
                 {
                     // THIS MOST LIKELY KILLS YOUR CONNECTION
                     // AND SHOULD NOT BE REACHED
-                    stringBytes = Encoding.Default.GetBytes(FALLBACKSTRING);
+                    stringBytes = Util.Encoding.GetBytes(FALLBACKSTRING);
                 }
             }
                

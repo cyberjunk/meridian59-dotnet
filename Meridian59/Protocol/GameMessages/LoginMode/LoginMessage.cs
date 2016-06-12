@@ -117,7 +117,7 @@ namespace Meridian59.Protocol.GameMessages
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(Username.Length)), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(Username), 0, Buffer, cursor, Username.Length);
+            Array.Copy(Util.Encoding.GetBytes(Username), 0, Buffer, cursor, Username.Length);
             cursor += Username.Length;
 
             Array.Copy(BitConverter.GetBytes((ushort)16), 0, Buffer, cursor, TypeSizes.SHORT);
@@ -207,7 +207,7 @@ namespace Meridian59.Protocol.GameMessages
             ushort len = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            Username = Encoding.Default.GetString(Buffer, cursor, len);
+            Username = Util.Encoding.GetString(Buffer, cursor, len);
             cursor += len;
 
             // passwordlen, always 0x10 = 16

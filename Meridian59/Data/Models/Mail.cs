@@ -90,7 +90,7 @@ namespace Meridian59.Data.Models
             ushort strlen = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
             
-            sender = Encoding.Default.GetString(Buffer, cursor, strlen);
+            sender = Util.Encoding.GetString(Buffer, cursor, strlen);
             cursor += strlen;
 
             timestamp = BitConverter.ToUInt32(Buffer, cursor);
@@ -107,7 +107,7 @@ namespace Meridian59.Data.Models
                 strlen = BitConverter.ToUInt16(Buffer, cursor);
                 cursor += TypeSizes.SHORT;
 
-                string recipient = Encoding.Default.GetString(Buffer, cursor, strlen);
+                string recipient = Util.Encoding.GetString(Buffer, cursor, strlen);
                 cursor += strlen;
 
                 recipients.Add(recipient);
@@ -140,7 +140,7 @@ namespace Meridian59.Data.Models
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(sender.Length)), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(sender), 0, Buffer, cursor, sender.Length);
+            Array.Copy(Util.Encoding.GetBytes(sender), 0, Buffer, cursor, sender.Length);
             cursor += sender.Length;
 
             Array.Copy(BitConverter.GetBytes(timestamp), 0, Buffer, cursor, TypeSizes.INT);
@@ -154,7 +154,7 @@ namespace Meridian59.Data.Models
                 Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(s.Length)), 0, Buffer, cursor, TypeSizes.SHORT);
                 cursor += TypeSizes.SHORT;
 
-                Array.Copy(Encoding.Default.GetBytes(s), 0, Buffer, cursor, s.Length);
+                Array.Copy(Util.Encoding.GetBytes(s), 0, Buffer, cursor, s.Length);
                 cursor += s.Length;
             }
 

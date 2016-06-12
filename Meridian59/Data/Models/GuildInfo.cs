@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using Meridian59.Common.Interfaces;
 using Meridian59.Common.Constants;
 using Meridian59.Data.Lists;
+using Meridian59.Common;
 
 namespace Meridian59.Data.Models
 {
@@ -97,7 +98,7 @@ namespace Meridian59.Data.Models
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(guildName.Length)), 0, Buffer, cursor, TypeSizes.SHORT);          // GuildNameLEN (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(guildName), 0, Buffer, cursor, guildName.Length);                              // GuildName (n bytes)
+            Array.Copy(Util.Encoding.GetBytes(guildName), 0, Buffer, cursor, guildName.Length);                              // GuildName (n bytes)
             cursor += guildName.Length;
 
             Buffer[cursor] = passwordSetFlag;                                                                                   // PasswordSetFlag (1 byte)
@@ -108,7 +109,7 @@ namespace Meridian59.Data.Models
                 Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(chestPassword.Length)), 0, Buffer, cursor, TypeSizes.SHORT);  // ChestPasswordLEN (2 bytes)
                 cursor += TypeSizes.SHORT;
 
-                Array.Copy(Encoding.Default.GetBytes(chestPassword), 0, Buffer, cursor, chestPassword.Length);                  // ChestPassword (n bytes)
+                Array.Copy(Util.Encoding.GetBytes(chestPassword), 0, Buffer, cursor, chestPassword.Length);                  // ChestPassword (n bytes)
                 cursor += chestPassword.Length;
             }
 
@@ -121,61 +122,61 @@ namespace Meridian59.Data.Models
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(rank1Male.Length)), 0, Buffer, cursor, TypeSizes.SHORT);          // Rank1MaleLEN (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(rank1Male), 0, Buffer, cursor, rank1Male.Length);                              // Rank1Male (n bytes)
+            Array.Copy(Util.Encoding.GetBytes(rank1Male), 0, Buffer, cursor, rank1Male.Length);                              // Rank1Male (n bytes)
             cursor += rank1Male.Length;
 
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(rank1Female.Length)), 0, Buffer, cursor, TypeSizes.SHORT);        // Rank1FemaleLEN (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(rank1Female), 0, Buffer, cursor, rank1Female.Length);                          // Rank1Female (n bytes)
+            Array.Copy(Util.Encoding.GetBytes(rank1Female), 0, Buffer, cursor, rank1Female.Length);                          // Rank1Female (n bytes)
             cursor += rank1Female.Length;
 
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(rank2Male.Length)), 0, Buffer, cursor, TypeSizes.SHORT);          // Rank2MaleLEN (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(rank2Male), 0, Buffer, cursor, rank2Male.Length);                              // Rank2Male (n bytes)
+            Array.Copy(Util.Encoding.GetBytes(rank2Male), 0, Buffer, cursor, rank2Male.Length);                              // Rank2Male (n bytes)
             cursor += rank2Male.Length;
 
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(rank2Female.Length)), 0, Buffer, cursor, TypeSizes.SHORT);        // Rank2FemaleLEN (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(rank2Female), 0, Buffer, cursor, rank2Female.Length);                          // Rank2Female (n bytes)
+            Array.Copy(Util.Encoding.GetBytes(rank2Female), 0, Buffer, cursor, rank2Female.Length);                          // Rank2Female (n bytes)
             cursor += rank2Female.Length;
 
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(rank3Male.Length)), 0, Buffer, cursor, TypeSizes.SHORT);          // Rank3MaleLEN (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(rank3Male), 0, Buffer, cursor, rank3Male.Length);                              // Rank3Male (n bytes)
+            Array.Copy(Util.Encoding.GetBytes(rank3Male), 0, Buffer, cursor, rank3Male.Length);                              // Rank3Male (n bytes)
             cursor += rank3Male.Length;
 
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(rank3Female.Length)), 0, Buffer, cursor, TypeSizes.SHORT);        // Rank3FemaleLEN (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(rank3Female), 0, Buffer, cursor, rank3Female.Length);                          // Rank3Female (n bytes)
+            Array.Copy(Util.Encoding.GetBytes(rank3Female), 0, Buffer, cursor, rank3Female.Length);                          // Rank3Female (n bytes)
             cursor += rank3Female.Length;
 
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(rank4Male.Length)), 0, Buffer, cursor, TypeSizes.SHORT);          // Rank4MaleLEN (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(rank4Male), 0, Buffer, cursor, rank4Male.Length);                              // Rank4Male (n bytes)
+            Array.Copy(Util.Encoding.GetBytes(rank4Male), 0, Buffer, cursor, rank4Male.Length);                              // Rank4Male (n bytes)
             cursor += rank4Male.Length;
 
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(rank4Female.Length)), 0, Buffer, cursor, TypeSizes.SHORT);        // Rank4FemaleLEN (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(rank4Female), 0, Buffer, cursor, rank4Female.Length);                          // Rank4Female (n bytes)
+            Array.Copy(Util.Encoding.GetBytes(rank4Female), 0, Buffer, cursor, rank4Female.Length);                          // Rank4Female (n bytes)
             cursor += rank4Female.Length;
 
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(rank5Male.Length)), 0, Buffer, cursor, TypeSizes.SHORT);          // Rank5MaleLEN (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(rank5Male), 0, Buffer, cursor, rank5Male.Length);                              // Rank5Male (n bytes)
+            Array.Copy(Util.Encoding.GetBytes(rank5Male), 0, Buffer, cursor, rank5Male.Length);                              // Rank5Male (n bytes)
             cursor += rank5Male.Length;
 
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(rank5Female.Length)), 0, Buffer, cursor, TypeSizes.SHORT);        // Rank5FemaleLEN (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(rank5Female), 0, Buffer, cursor, rank5Female.Length);                          // Rank5Female (n bytes)
+            Array.Copy(Util.Encoding.GetBytes(rank5Female), 0, Buffer, cursor, rank5Female.Length);                          // Rank5Female (n bytes)
             cursor += rank5Female.Length;
 
             cursor += supportedMember.WriteTo(Buffer, cursor);                                                                  // SupportedMember (4/8 bytes)
@@ -195,7 +196,7 @@ namespace Meridian59.Data.Models
             ushort len = BitConverter.ToUInt16(Buffer, cursor);                 // NameLEN  (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            guildName = Encoding.Default.GetString(Buffer, cursor, len);        // Name     (n bytes)
+            guildName = Util.Encoding.GetString(Buffer, cursor, len);        // Name     (n bytes)
             cursor += len;
              
             passwordSetFlag = Buffer[cursor];                                   // PasswordSetFlag (1 byte)
@@ -206,7 +207,7 @@ namespace Meridian59.Data.Models
                 len = BitConverter.ToUInt16(Buffer, cursor);                     // PasswordLEN  (2 bytes)
                 cursor += TypeSizes.SHORT;
                     
-                chestPassword = Encoding.Default.GetString(Buffer, cursor, len); // Password     (n bytes)
+                chestPassword = Util.Encoding.GetString(Buffer, cursor, len); // Password     (n bytes)
                 cursor += len;             
             }
 
@@ -219,61 +220,61 @@ namespace Meridian59.Data.Models
             len = BitConverter.ToUInt16(Buffer, cursor);                        // Rank1MaleLEN (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            rank1Male = Encoding.Default.GetString(Buffer, cursor, len);        // Rank1Male    (n bytes)
+            rank1Male = Util.Encoding.GetString(Buffer, cursor, len);        // Rank1Male    (n bytes)
             cursor += len;
 
             len = BitConverter.ToUInt16(Buffer, cursor);                        // Rank1FemaleLEN (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            rank1Female = Encoding.Default.GetString(Buffer, cursor, len);      // Rank1Female    (n bytes)
+            rank1Female = Util.Encoding.GetString(Buffer, cursor, len);      // Rank1Female    (n bytes)
             cursor += len;
 
             len = BitConverter.ToUInt16(Buffer, cursor);                        // Rank2MaleLEN (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            rank2Male = Encoding.Default.GetString(Buffer, cursor, len);        // Rank2Male    (n bytes)
+            rank2Male = Util.Encoding.GetString(Buffer, cursor, len);        // Rank2Male    (n bytes)
             cursor += len;
 
             len = BitConverter.ToUInt16(Buffer, cursor);                        // Rank2FemaleLEN (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            rank2Female = Encoding.Default.GetString(Buffer, cursor, len);      // Rank2Female    (n bytes)
+            rank2Female = Util.Encoding.GetString(Buffer, cursor, len);      // Rank2Female    (n bytes)
             cursor += len;
 
             len = BitConverter.ToUInt16(Buffer, cursor);                        // Rank3MaleLEN (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            rank3Male = Encoding.Default.GetString(Buffer, cursor, len);        // Rank3Male    (n bytes)
+            rank3Male = Util.Encoding.GetString(Buffer, cursor, len);        // Rank3Male    (n bytes)
             cursor += len;
 
             len = BitConverter.ToUInt16(Buffer, cursor);                        // Rank3FemaleLEN (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            rank3Female = Encoding.Default.GetString(Buffer, cursor, len);      // Rank3Female    (n bytes)
+            rank3Female = Util.Encoding.GetString(Buffer, cursor, len);      // Rank3Female    (n bytes)
             cursor += len;
 
             len = BitConverter.ToUInt16(Buffer, cursor);                        // Rank4MaleLEN (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            rank4Male = Encoding.Default.GetString(Buffer, cursor, len);        // Rank4Male    (n bytes)
+            rank4Male = Util.Encoding.GetString(Buffer, cursor, len);        // Rank4Male    (n bytes)
             cursor += len;
 
             len = BitConverter.ToUInt16(Buffer, cursor);                        // Rank4FemaleLEN (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            rank4Female = Encoding.Default.GetString(Buffer, cursor, len);      // Rank4Female    (n bytes)
+            rank4Female = Util.Encoding.GetString(Buffer, cursor, len);      // Rank4Female    (n bytes)
             cursor += len;
 
             len = BitConverter.ToUInt16(Buffer, cursor);                        // Rank5MaleLEN (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            rank5Male = Encoding.Default.GetString(Buffer, cursor, len);        // Rank5Male    (n bytes)
+            rank5Male = Util.Encoding.GetString(Buffer, cursor, len);        // Rank5Male    (n bytes)
             cursor += len;
 
             len = BitConverter.ToUInt16(Buffer, cursor);                        // Rank5FemaleLEN (2 bytes)
             cursor += TypeSizes.SHORT;
 
-            rank5Female = Encoding.Default.GetString(Buffer, cursor, len);      // Rank5Female    (n bytes)
+            rank5Female = Util.Encoding.GetString(Buffer, cursor, len);      // Rank5Female    (n bytes)
             cursor += len;
 
             supportedMember = new ObjectID(Buffer, cursor);                     // SupportedMember(4/8 bytes)
@@ -298,7 +299,7 @@ namespace Meridian59.Data.Models
             ushort len = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            guildName = new string((sbyte*)Buffer, 0, len);
+            guildName = new string((sbyte*)Buffer, 0, len, Util.Encoding);
             Buffer += len;
 
             passwordSetFlag = Buffer[0];
@@ -309,7 +310,7 @@ namespace Meridian59.Data.Models
                 len = *((ushort*)Buffer);
                 Buffer += TypeSizes.SHORT;
 
-                chestPassword = new string((sbyte*)Buffer, 0, len);
+                chestPassword = new string((sbyte*)Buffer, 0, len, Util.Encoding);
                 Buffer += len;
             }
 
@@ -321,61 +322,61 @@ namespace Meridian59.Data.Models
             len = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            rank1Male = new string((sbyte*)Buffer, 0, len);
+            rank1Male = new string((sbyte*)Buffer, 0, len, Util.Encoding);
             Buffer += len;
 
             len = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            rank1Female = new string((sbyte*)Buffer, 0, len);
+            rank1Female = new string((sbyte*)Buffer, 0, len, Util.Encoding);
             Buffer += len;
 
             len = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            rank2Male = new string((sbyte*)Buffer, 0, len);
+            rank2Male = new string((sbyte*)Buffer, 0, len, Util.Encoding);
             Buffer += len;
 
             len = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            rank2Female = new string((sbyte*)Buffer, 0, len);
+            rank2Female = new string((sbyte*)Buffer, 0, len, Util.Encoding);
             Buffer += len;
 
             len = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            rank3Male = new string((sbyte*)Buffer, 0, len);
+            rank3Male = new string((sbyte*)Buffer, 0, len, Util.Encoding);
             Buffer += len;
 
             len = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            rank3Female = new string((sbyte*)Buffer, 0, len);
+            rank3Female = new string((sbyte*)Buffer, 0, len, Util.Encoding);
             Buffer += len;
 
             len = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            rank4Male = new string((sbyte*)Buffer, 0, len);
+            rank4Male = new string((sbyte*)Buffer, 0, len, Util.Encoding);
             Buffer += len;
 
             len = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            rank4Female = new string((sbyte*)Buffer, 0, len);
+            rank4Female = new string((sbyte*)Buffer, 0, len, Util.Encoding);
             Buffer += len;
 
             len = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            rank5Male = new string((sbyte*)Buffer, 0, len);
+            rank5Male = new string((sbyte*)Buffer, 0, len, Util.Encoding);
             Buffer += len;
 
             len = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            rank5Female = new string((sbyte*)Buffer, 0, len);
+            rank5Female = new string((sbyte*)Buffer, 0, len, Util.Encoding);
             Buffer += len;
 
             supportedMember = new ObjectID(ref Buffer);
@@ -399,7 +400,7 @@ namespace Meridian59.Data.Models
                 *((ushort*)Buffer) = len;
                 Buffer += TypeSizes.SHORT;
                
-                Encoding.Default.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
+                Util.Encoding.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
                 Buffer += len;
             }
 
@@ -415,7 +416,7 @@ namespace Meridian59.Data.Models
                     *((ushort*)Buffer) = len;
                     Buffer += TypeSizes.SHORT;
                     
-                    Encoding.Default.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
+                    Util.Encoding.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
                     Buffer += len;
                 }
             }
@@ -432,7 +433,7 @@ namespace Meridian59.Data.Models
                 *((ushort*)Buffer) = len;
                 Buffer += TypeSizes.SHORT;
 
-                Encoding.Default.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
+                Util.Encoding.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
                 Buffer += len;
             }
 
@@ -443,7 +444,7 @@ namespace Meridian59.Data.Models
                 *((ushort*)Buffer) = len;
                 Buffer += TypeSizes.SHORT;
 
-                Encoding.Default.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
+                Util.Encoding.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
                 Buffer += len;
             }
 
@@ -454,7 +455,7 @@ namespace Meridian59.Data.Models
                 *((ushort*)Buffer) = len;
                 Buffer += TypeSizes.SHORT;
 
-                Encoding.Default.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
+                Util.Encoding.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
                 Buffer += len;
             }
 
@@ -465,7 +466,7 @@ namespace Meridian59.Data.Models
                 *((ushort*)Buffer) = len;
                 Buffer += TypeSizes.SHORT;
 
-                Encoding.Default.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
+                Util.Encoding.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
                 Buffer += len;
             }
 
@@ -476,7 +477,7 @@ namespace Meridian59.Data.Models
                 *((ushort*)Buffer) = len;
                 Buffer += TypeSizes.SHORT;
 
-                Encoding.Default.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
+                Util.Encoding.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
                 Buffer += len;
             }
 
@@ -487,7 +488,7 @@ namespace Meridian59.Data.Models
                 *((ushort*)Buffer) = len;
                 Buffer += TypeSizes.SHORT;
 
-                Encoding.Default.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
+                Util.Encoding.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
                 Buffer += len;
             }
 
@@ -498,7 +499,7 @@ namespace Meridian59.Data.Models
                 *((ushort*)Buffer) = len;
                 Buffer += TypeSizes.SHORT;
 
-                Encoding.Default.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
+                Util.Encoding.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
                 Buffer += len;
             }
 
@@ -509,7 +510,7 @@ namespace Meridian59.Data.Models
                 *((ushort*)Buffer) = len;
                 Buffer += TypeSizes.SHORT;
 
-                Encoding.Default.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
+                Util.Encoding.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
                 Buffer += len;
             }
 
@@ -520,7 +521,7 @@ namespace Meridian59.Data.Models
                 *((ushort*)Buffer) = len;
                 Buffer += TypeSizes.SHORT;
 
-                Encoding.Default.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
+                Util.Encoding.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
                 Buffer += len;
             }
 
@@ -531,7 +532,7 @@ namespace Meridian59.Data.Models
                 *((ushort*)Buffer) = len;
                 Buffer += TypeSizes.SHORT;
 
-                Encoding.Default.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
+                Util.Encoding.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
                 Buffer += len;
             }
 

@@ -19,6 +19,7 @@ using System.Text;
 using System.ComponentModel;
 using Meridian59.Common.Interfaces;
 using Meridian59.Common.Constants;
+using Meridian59.Common;
 
 namespace Meridian59.Data.Models
 {
@@ -68,37 +69,37 @@ namespace Meridian59.Data.Models
             ushort len = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            machine = Encoding.Default.GetString(Buffer, cursor, len);
+            machine = Util.Encoding.GetString(Buffer, cursor, len);
             cursor += len;
 
             len = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            patchPath = Encoding.Default.GetString(Buffer, cursor, len);
+            patchPath = Util.Encoding.GetString(Buffer, cursor, len);
             cursor += len;
 
             len = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            patchCachePath = Encoding.Default.GetString(Buffer, cursor, len);
+            patchCachePath = Util.Encoding.GetString(Buffer, cursor, len);
             cursor += len;
 
             len = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            patchFile = Encoding.Default.GetString(Buffer, cursor, len);
+            patchFile = Util.Encoding.GetString(Buffer, cursor, len);
             cursor += len;
 
             len = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            updaterFile = Encoding.Default.GetString(Buffer, cursor, len);
+            updaterFile = Util.Encoding.GetString(Buffer, cursor, len);
             cursor += len;
 
             len = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            reason = Encoding.Default.GetString(Buffer, cursor, len);
+            reason = Util.Encoding.GetString(Buffer, cursor, len);
             cursor += len;
 
             return cursor - StartIndex; 
@@ -111,37 +112,37 @@ namespace Meridian59.Data.Models
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(machine.Length)), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(machine), 0, Buffer, cursor, machine.Length);
+            Array.Copy(Util.Encoding.GetBytes(machine), 0, Buffer, cursor, machine.Length);
             cursor += machine.Length;
 
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(patchPath.Length)), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(patchPath), 0, Buffer, cursor, patchPath.Length);
+            Array.Copy(Util.Encoding.GetBytes(patchPath), 0, Buffer, cursor, patchPath.Length);
             cursor += patchPath.Length;
 
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(patchCachePath.Length)), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(patchCachePath), 0, Buffer, cursor, patchCachePath.Length);
+            Array.Copy(Util.Encoding.GetBytes(patchCachePath), 0, Buffer, cursor, patchCachePath.Length);
             cursor += patchCachePath.Length;
 
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(patchFile.Length)), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(patchFile), 0, Buffer, cursor, patchFile.Length);
+            Array.Copy(Util.Encoding.GetBytes(patchFile), 0, Buffer, cursor, patchFile.Length);
             cursor += patchFile.Length;
             
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(updaterFile.Length)), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(updaterFile), 0, Buffer, cursor, updaterFile.Length);
+            Array.Copy(Util.Encoding.GetBytes(updaterFile), 0, Buffer, cursor, updaterFile.Length);
             cursor += updaterFile.Length;
 
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(reason.Length)), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
-            Array.Copy(Encoding.Default.GetBytes(reason), 0, Buffer, cursor, reason.Length);
+            Array.Copy(Util.Encoding.GetBytes(reason), 0, Buffer, cursor, reason.Length);
             cursor += reason.Length;
 
             return cursor - StartIndex;
@@ -152,37 +153,37 @@ namespace Meridian59.Data.Models
             ushort len = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            machine = new string((sbyte*)Buffer, 0, len);
+            machine = new string((sbyte*)Buffer, 0, len, Util.Encoding);
             Buffer += len;
 
             len = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            patchPath = new string((sbyte*)Buffer, 0, len);
+            patchPath = new string((sbyte*)Buffer, 0, len, Util.Encoding);
             Buffer += len;
 
             len = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            patchCachePath = new string((sbyte*)Buffer, 0, len);
+            patchCachePath = new string((sbyte*)Buffer, 0, len, Util.Encoding);
             Buffer += len;
 
             len = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            patchFile = new string((sbyte*)Buffer, 0, len);
+            patchFile = new string((sbyte*)Buffer, 0, len, Util.Encoding);
             Buffer += len;
 
             len = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            updaterFile = new string((sbyte*)Buffer, 0, len);
+            updaterFile = new string((sbyte*)Buffer, 0, len, Util.Encoding);
             Buffer += len;
 
             len = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            reason = new string((sbyte*)Buffer, 0, len);
+            reason = new string((sbyte*)Buffer, 0, len, Util.Encoding);
             Buffer += len;
         }
 
@@ -199,7 +200,7 @@ namespace Meridian59.Data.Models
                 *((ushort*)Buffer) = len;
                 Buffer += TypeSizes.SHORT;
                
-                Encoding.Default.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
+                Util.Encoding.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
                 Buffer += len;
             }
 
@@ -210,7 +211,7 @@ namespace Meridian59.Data.Models
                 *((ushort*)Buffer) = len;
                 Buffer += TypeSizes.SHORT;
 
-                Encoding.Default.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
+                Util.Encoding.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
                 Buffer += len;
             }
 
@@ -221,7 +222,7 @@ namespace Meridian59.Data.Models
                 *((ushort*)Buffer) = len;
                 Buffer += TypeSizes.SHORT;
 
-                Encoding.Default.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
+                Util.Encoding.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
                 Buffer += len;
             }
 
@@ -232,7 +233,7 @@ namespace Meridian59.Data.Models
                 *((ushort*)Buffer) = len;
                 Buffer += TypeSizes.SHORT;
 
-                Encoding.Default.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
+                Util.Encoding.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
                 Buffer += len;
             }
 
@@ -243,7 +244,7 @@ namespace Meridian59.Data.Models
                 *((ushort*)Buffer) = len;
                 Buffer += TypeSizes.SHORT;
 
-                Encoding.Default.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
+                Util.Encoding.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
                 Buffer += len;
             }
 
@@ -254,7 +255,7 @@ namespace Meridian59.Data.Models
                 *((ushort*)Buffer) = len;
                 Buffer += TypeSizes.SHORT;
 
-                Encoding.Default.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
+                Util.Encoding.GetEncoder().Convert(pString, len, Buffer, len, true, out a, out b, out c);
                 Buffer += len;
             }
         }

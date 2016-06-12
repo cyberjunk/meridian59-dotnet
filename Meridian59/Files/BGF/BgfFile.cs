@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using Meridian59.Common.Interfaces;
 using Meridian59.Common.Constants;
 using Meridian59.Data.Lists;
+using Meridian59.Common;
 using System.Xml;
 
 #if DRAWING
@@ -104,7 +105,7 @@ namespace Meridian59.Files.BGF
             Array.Copy(BitConverter.GetBytes(Version), 0, Buffer, cursor, TypeSizes.INT);
             cursor += TypeSizes.INT;
 
-            Array.Copy(Encoding.Default.GetBytes(name), 0, Buffer, cursor, name.Length);
+            Array.Copy(Util.Encoding.GetBytes(name), 0, Buffer, cursor, name.Length);
             cursor += NAMELENGTH;
           
             Array.Copy(BitConverter.GetBytes(Frames.Count), 0, Buffer, cursor, TypeSizes.INT);
@@ -144,7 +145,7 @@ namespace Meridian59.Files.BGF
                 if (version >= VERSION9)
                 {
                     // name string has always fixed length
-                    Name = Encoding.Default.GetString(Buffer, cursor, NAMELENGTH);
+                    Name = Util.Encoding.GetString(Buffer, cursor, NAMELENGTH);
                     cursor += NAMELENGTH;
 
                     uint frameCount = BitConverter.ToUInt32(Buffer, cursor);

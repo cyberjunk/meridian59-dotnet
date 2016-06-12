@@ -71,7 +71,7 @@ namespace Meridian59.Common
         public static byte[] ComputeMD5(string Input)
         {
             // get bytes of string
-            byte[] bytes = Encoding.Default.GetBytes(Input);
+            byte[] bytes = Util.Encoding.GetBytes(Input);
 
             return ComputeMD5(bytes);
         }
