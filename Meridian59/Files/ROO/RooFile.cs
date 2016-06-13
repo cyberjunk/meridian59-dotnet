@@ -1800,6 +1800,10 @@ namespace Meridian59.Files.ROO
                 case MessageTypeGameMode.SectorMove:
                     HandleSectorMove((SectorMoveMessage)Message);
                     break;
+
+                case MessageTypeGameMode.WallAnimate:
+                    HandleWallAnimateMessage((WallAnimateMessage)Message);
+                    break;
             }
         }
 
@@ -1862,6 +1866,41 @@ namespace Meridian59.Files.ROO
                 // start / adjust movement on matching sectors
                 if (sector.ServerID == info.SectorNr)
                     sector.StartMove(info);
+            }
+        }
+
+        /// <summary>
+        /// Handles a wall animate message, updates the according animation object
+        /// </summary>
+        /// <param name="Message"></param>
+        protected void HandleWallAnimateMessage(WallAnimateMessage Message)
+        {
+            foreach (RooSideDef wallSide in SideDefs)
+            {
+                if (wallSide.ServerID != Message.SideDefServerID)
+                    continue;
+            
+                // set animation
+                wallSide.Animation = Message.Animation;
+
+                switch (Message.Action)
+                {
+                    case RoomAnimationAction.RA_NONE:
+                        break;
+
+                    case RoomAnimationAction.RA_PASSABLE_END:
+                        wallSide.Flags.IsPassable = true;
+                        break;
+
+                    case RoomAnimationAction.RA_IMPASSABLE_END:
+                        wallSide.Flags.IsPassable = false;
+                        break;
+
+                    case RoomAnimationAction.RA_INVISIBLE_END:
+                        wallSide.Flags.IsPassable = true;
+                        //todo: hide normal walltexture
+                        break;
+                }           
             }
         }
         #endregion

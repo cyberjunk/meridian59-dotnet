@@ -425,10 +425,6 @@ namespace Meridian59.Client
                     HandleSaidMessage((SaidMessage)Message);
                     break;
 
-                case MessageTypeGameMode.WallAnimate:                       // 225
-                    HandleWallAnimateMessage((WallAnimateMessage)Message);
-                    break;
-
                 case MessageTypeGameMode.InvalidateData:                    // 228
                     HandleInvalidateDataMessage((InvalidateDataMessage)Message);
                     break;
@@ -629,44 +625,6 @@ namespace Meridian59.Client
             // skip ignored players
             if (player != null && Data.IgnoreList.Contains(player.Name))
                 return;
-        }
-
-        /// <summary>
-        /// Handles a wall animate message, updates the according animation object
-        /// </summary>
-        /// <param name="Message"></param>
-        protected virtual void HandleWallAnimateMessage(WallAnimateMessage Message)
-        {
-            if (CurrentRoom != null)
-            {
-                foreach (RooSideDef wallSide in CurrentRoom.SideDefs)
-                {                    
-                    if (wallSide.ServerID == Message.SideDefServerID)
-                    {
-                        // set animation
-                        wallSide.Animation = Message.Animation;
-
-                        switch (Message.Action)
-                        {
-                            case RoomAnimationAction.RA_NONE:
-                                break;
-
-                            case RoomAnimationAction.RA_PASSABLE_END:
-                                wallSide.Flags.IsPassable = true;
-                                break;
-
-                            case RoomAnimationAction.RA_IMPASSABLE_END:
-                                wallSide.Flags.IsPassable = false;
-                                break;
-
-                            case RoomAnimationAction.RA_INVISIBLE_END:
-                                wallSide.Flags.IsPassable = true;
-                                //todo: hide normal walltexture
-                                break;
-                        }
-                    }
-                }
-            }
         }
 
         /// <summary>
