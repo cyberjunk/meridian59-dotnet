@@ -81,6 +81,17 @@ namespace Meridian59.Common
 			dictionary.Clear();
 		}
 
+        /// <summary>
+        /// Creates a new instance holding all entries of this instance.
+        /// </summary>
+        /// <returns></returns>
+        public StringDictionary Clone()
+        {
+            StringDictionary newDictionary = new StringDictionary(Language);
+            newDictionary.AddRange(this);
+            return newDictionary;
+        }
+
 		/// <summary>
 		/// Tries to get a string for given ID and Language only.
 		/// </summary>
