@@ -359,6 +359,7 @@
     <Compile Include="Native\Linux.cs" />
     <Compile Include="Native\Windows.cs" />
     <Compile Include="Native\Wrapper.cs" />
+    <Compile Include="Protocol\ConnectionListener.cs" />
     <Compile Include="Protocol\GameMessages\GameMode\ChangedStatsMessage.cs" />
     <Compile Include="Protocol\GameMessages\GameMode\DeleteNewsMessage.cs" />
     <Compile Include="Protocol\GameMessages\GameMode\StopWaveMessage.cs" />
