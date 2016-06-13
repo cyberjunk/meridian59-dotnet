@@ -171,12 +171,13 @@ namespace Meridian59.Data.Models
         {
         }
 
-        public OnlinePlayer(uint ID, uint NameRID, string Name, uint Flags)
+        public OnlinePlayer(uint ID, uint NameRID, string Name, ObjectFlags Flags)
             : base (ID)
         {
             this.nameRID = NameRID;          
             this.name = Name;
-            this.flags.Value = Flags;                     
+
+            this.flags.UpdateFromModel(Flags, false);                    
         }
 
         public OnlinePlayer(byte[] Buffer, int StartIndex = 0)
