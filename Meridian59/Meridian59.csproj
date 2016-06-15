@@ -131,6 +131,7 @@
     <Compile Include="Data\Models\AdminInfoObject.cs" />
     <Compile Include="Data\Models\AdminInfo.cs" />
     <Compile Include="Data\Models\ClientPatchInfo.cs" />
+    <Compile Include="Data\Models\LootInfo.cs" />
     <Compile Include="Data\Models\StopSound.cs" />
     <Compile Include="Data\Models\ResourceID.cs" />
     <Compile Include="Data\Models\ChatCommand\ChatCommandAutoLoot.cs" />

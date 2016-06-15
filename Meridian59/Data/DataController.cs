@@ -84,7 +84,7 @@ namespace Meridian59.Data
 
         protected readonly RoomObjectList roomObjects;
         protected readonly RoomObjectListFiltered roomObjectsFiltered;
-        protected readonly RoomObjectListFiltered roomObjectsLoot;
+        protected readonly LootInfo roomObjectsLoot;
         protected readonly ProjectileList projectiles;
         protected readonly OnlinePlayerList onlinePlayers;
         protected readonly InventoryObjectList inventoryObjects;
@@ -144,7 +144,7 @@ namespace Meridian59.Data
         /// Contains all objects from RoomObjects matching
         /// a distance-from-your-avater filter (these can be looted).
         /// </summary>
-        public RoomObjectListFiltered RoomObjectsLoot { get { return roomObjectsLoot; } }
+        public LootInfo RoomObjectsLoot { get { return roomObjectsLoot; } }
 
         /// <summary>
         /// List of current projectiles in room
@@ -770,7 +770,7 @@ namespace Meridian59.Data
             // create lists
             roomObjects = new RoomObjectList(300);
             roomObjectsFiltered = new RoomObjectListFiltered(roomObjects);
-            roomObjectsLoot = new RoomObjectListFiltered(roomObjects);
+            roomObjectsLoot = new LootInfo(roomObjects);
             projectiles = new ProjectileList(50);
             onlinePlayers = new OnlinePlayerList(200);
             inventoryObjects = new InventoryObjectList(100);
@@ -792,8 +792,11 @@ namespace Meridian59.Data
             ignoreList = new List<string>(20);
             chatCommandHistory = new List<string>(20);
 
-            // set the lootlist filter
-            roomObjectsLoot.SquaredDistanceToAvatarFilter = GeometryConstants.CLOSEDISTANCE;
+            // setup the lootlist filtering
+            ObjectFlags getFlags = new ObjectFlags();
+            getFlags.IsGettable = true;
+            roomObjectsLoot.Items.FlagsFilter.Add(getFlags);
+            roomObjectsLoot.Items.SquaredDistanceToAvatarFilter = GeometryConstants.CLOSEDISTANCE2;
 
             // attach some listeners
             RoomObjects.ListChanged += OnRoomObjectsListChanged;

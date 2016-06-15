@@ -2769,16 +2769,18 @@ namespace Meridian59.Client
                     break;
 
                 case AvatarAction.Loot:
-                    // loot all on no target
+                    // show lootlist on no target
                     if (Data.TargetID == 0 ||
                         Data.TargetID > ObjectID.UINT28MAX)
                     {
-                        LootAll();
+                        Data.RoomObjectsLoot.IsVisible = true;                     
                     }
+                    // loot all if modifier is pressed
                     else if (Data.SelfTarget)
                     {
-                        // not impl: show loot list
+                        LootAll();
                     }
+                    // loot target
                     else if (Data.TargetID > 0)
                         SendReqGetMessage();
                     break;
