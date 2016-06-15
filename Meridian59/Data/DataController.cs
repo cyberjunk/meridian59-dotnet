@@ -84,6 +84,7 @@ namespace Meridian59.Data
 
         protected readonly RoomObjectList roomObjects;
         protected readonly RoomObjectListFiltered roomObjectsFiltered;
+        protected readonly RoomObjectListFiltered roomObjectsLoot;
         protected readonly ProjectileList projectiles;
         protected readonly OnlinePlayerList onlinePlayers;
         protected readonly InventoryObjectList inventoryObjects;
@@ -138,6 +139,12 @@ namespace Meridian59.Data
         /// the currently set filter.
         /// </summary>
         public RoomObjectListFiltered RoomObjectsFiltered { get { return roomObjectsFiltered; } }
+
+        /// <summary>
+        /// Contains all objects from RoomObjects matching
+        /// a distance-from-your-avater filter (these can be looted).
+        /// </summary>
+        public RoomObjectListFiltered RoomObjectsLoot { get { return roomObjectsLoot; } }
 
         /// <summary>
         /// List of current projectiles in room
@@ -763,6 +770,7 @@ namespace Meridian59.Data
             // create lists
             roomObjects = new RoomObjectList(300);
             roomObjectsFiltered = new RoomObjectListFiltered(roomObjects);
+            roomObjectsLoot = new RoomObjectListFiltered(roomObjects);
             projectiles = new ProjectileList(50);
             onlinePlayers = new OnlinePlayerList(200);
             inventoryObjects = new InventoryObjectList(100);
@@ -783,6 +791,9 @@ namespace Meridian59.Data
             actionButtons = new ActionButtonList();
             ignoreList = new List<string>(20);
             chatCommandHistory = new List<string>(20);
+
+            // set the lootlist filter
+            roomObjectsLoot.SquaredDistanceToAvatarFilter = GeometryConstants.CLOSEDISTANCE;
 
             // attach some listeners
             RoomObjects.ListChanged += OnRoomObjectsListChanged;
