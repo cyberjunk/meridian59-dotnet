@@ -95,7 +95,7 @@ namespace Meridian59 { namespace Ogre
 		// subscribe click event
 		widget->subscribeEvent(
 			CEGUI::ItemEntry::EventMouseClick, 
-			CEGUI::Event::Subscriber(UICallbacks::Buy::OnItemClicked));
+			CEGUI::Event::Subscriber(UICallbacks::ObjectContents::OnItemClicked));
 		
 		// check
 		if (widget->getChildCount() > 2)
