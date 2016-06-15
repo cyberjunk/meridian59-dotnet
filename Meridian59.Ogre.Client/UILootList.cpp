@@ -273,8 +273,7 @@ namespace Meridian59 { namespace Ogre
 
 		// hide
 		OgreClient::Singleton->Data->RoomObjectsLoot->IsVisible = false;
-		OgreClient::Singleton->Data->RoomObjectsLoot->Clear(true);
-
+		
 		ControllerUI::ActivateRoot();
 
 		return true;
@@ -287,10 +286,9 @@ namespace Meridian59 { namespace Ogre
 		// close window on ESC
 		if (args.scancode == CEGUI::Key::Escape)
 		{
-			// clear (view will react)
+			// hide the lootlist
 			OgreClient::Singleton->Data->RoomObjectsLoot->IsVisible = false;
-			OgreClient::Singleton->Data->RoomObjectsLoot->Clear(true);
-
+			
 			// mark GUIroot active
 			ControllerUI::ActivateRoot();
 		}
@@ -300,10 +298,9 @@ namespace Meridian59 { namespace Ogre
 
 	bool UICallbacks::LootList::OnWindowClosed(const CEGUI::EventArgs& e)
 	{
-		// clear (view will react)
+		// hide the lootlist
 		OgreClient::Singleton->Data->RoomObjectsLoot->IsVisible = false;
-		OgreClient::Singleton->Data->RoomObjectsLoot->Clear(true);
-
+		
 		// mark GUIroot active
 		ControllerUI::ActivateRoot();
 
