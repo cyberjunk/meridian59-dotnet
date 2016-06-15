@@ -310,6 +310,9 @@
     <ClCompile Include="Language.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="UILootList.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="app.ico">

@@ -1921,6 +1921,30 @@
 			</Window>
 		</Window>
 		
+		<!-- LootList -->
+		<Window type="TaharezLook/FrameWindow" name="LootList" >
+			<Property name="Text" value="Loot" />
+			<Property name="TitlebarEnabled" value="True" />
+			<Property name="TitlebarFont" value="DejaVuSerif-10-Bold" />
+			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
+			<Property name="MaxSize" value="{{1,0},{1,0}}" />
+			<Property name="Size" value="{{0,256},{0,256}}" />
+			<Property name="MinSize" value="{{0,192},{0,192}}" />
+			<Property name="Position" value="{{0.5,-256},{0.5,-256}}" />
+			<Property name="ClientAreaColour" value="FF2f1d14" />
+
+			<!-- List -->
+			<Window type="TaharezLook/ItemListbox" name="LootList.List" >
+				<Property name="Area" value="{{0,5},{0,5},{1,-5},{1,-30}}" />
+			</Window>
+			
+			<!-- Get button -->
+			<Window type="TaharezLook/Button" name="LootList.Get" >
+				<Property name="Text" value="Get" />
+				<Property name="Area" value="{{1,-60},{1,-25},{1,-5},{1,-5}}" />				
+			</Window>
+		</Window>
+		
 		<!-- LoginWindow -->
 		<Window type="DefaultWindow" name="Login" >
 			<Property name="Text" value="Login" />

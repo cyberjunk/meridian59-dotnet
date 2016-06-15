@@ -1091,6 +1091,30 @@ namespace Meridian59 { namespace Ogre
 		};
 		
 		/// <summary>
+		/// LootList window
+		/// </summary>
+		ref class LootList abstract sealed
+		{
+		protected:
+			static ::System::Collections::Generic::List<ImageComposerCEGUI<ObjectBase^>^>^ imageComposers;
+
+		public:
+			static ::CEGUI::FrameWindow* Window = nullptr;
+			static ::CEGUI::ItemListbox* List = nullptr;
+			static ::CEGUI::PushButton* Get = nullptr;
+
+			static void Initialize();
+			static void Destroy();
+			static void ApplyLanguage();
+			static void OnLootInfoPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
+			static void OnLootInfoListChanged(Object^ sender, ListChangedEventArgs^ e);
+			static void OnNewItemImageAvailable(Object^ sender, ::System::EventArgs^ e);
+			static void ItemAdd(int Index);
+			static void ItemRemove(int Index);
+			static void ItemChange(int Index);
+		};
+
+		/// <summary>
 		/// Login window
 		/// </summary>
 		ref class Login abstract sealed
@@ -1693,6 +1717,19 @@ namespace Meridian59 { namespace Ogre
 		/// ObjectContents event handlers
 		/// </summary>
 		class ObjectContents
+		{
+		public:
+			static bool OnItemAmountDeactivated(const CEGUI::EventArgs& e);
+			static bool OnItemClicked(const CEGUI::EventArgs& e);
+			static bool OnGetClicked(const CEGUI::EventArgs& e);
+			static bool OnWindowClosed(const CEGUI::EventArgs& e);
+			static bool OnWindowKeyUp(const CEGUI::EventArgs& e);
+		};
+
+		/// <summary>
+		/// LootList event handlers
+		/// </summary>
+		class LootList
 		{
 		public:
 			static bool OnItemAmountDeactivated(const CEGUI::EventArgs& e);

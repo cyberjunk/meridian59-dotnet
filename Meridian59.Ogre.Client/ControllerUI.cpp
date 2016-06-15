@@ -139,6 +139,7 @@ namespace Meridian59 { namespace Ogre
 		ConfirmPopup::Initialize();
 		PlayerOverlays::Initialize();
 		ObjectContents::Initialize();
+		LootList::Initialize();
 		Login::Initialize();
 		Options::Initialize();
 
@@ -199,6 +200,7 @@ namespace Meridian59 { namespace Ogre
 		ConfirmPopup::Destroy();
 		PlayerOverlays::Destroy();
 		ObjectContents::Destroy();
+		LootList::Destroy();
 		Login::Destroy();
 		Options::Destroy();
 
@@ -265,6 +267,7 @@ namespace Meridian59 { namespace Ogre
 		ConfirmPopup::ApplyLanguage();
 		PlayerOverlays::ApplyLanguage();
 		ObjectContents::ApplyLanguage();
+		LootList::ApplyLanguage();
 		Login::ApplyLanguage();
 		Options::ApplyLanguage();
 	};
@@ -600,6 +603,7 @@ namespace Meridian59 { namespace Ogre
 			AvatarCreateWizard::Window->setVisible(mode == UIMode::AvatarCreation);
 			ConfirmPopup::Window->setVisible(false);
 			ObjectContents::Window->setVisible(false);
+			LootList::Window->setVisible(false);
 			Login::Window->setVisible(mode == UIMode::Login);
 			Options::Window->setVisible(false);
 
