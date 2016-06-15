@@ -1058,6 +1058,8 @@ namespace Meridian59.Files.ROO
         /// <returns></returns>
         public VertexData GetVertexData(WallPartType PartType, bool IsLeftSide, int TexWidth, int TexHeight, int TexShrink, Real Scale = 1.0f)
         {
+            const Real EPSILON = 0.001f;
+
             VertexData RI = new VertexData();
             bool drawTopDown = true;
             RooSideDefFlags flags;
@@ -1181,7 +1183,7 @@ namespace Meridian59.Files.ROO
             int bottom, top;
             if (!drawTopDown)
             {
-                if (RI.P1.Z == RI.P2.Z)
+                if (Math.Abs(RI.P1.Z - RI.P2.Z) < EPSILON)
                     bottom = (int)RI.P1.Z;
                 else
                 {
@@ -1189,7 +1191,7 @@ namespace Meridian59.Files.ROO
                     bottom = bottom & ~(GeometryConstants.FINENESS - 1);
                 }
 
-                if (RI.P0.Z == RI.P3.Z)
+                if (Math.Abs(RI.P0.Z - RI.P3.Z) < EPSILON)
                     top = (int)RI.P0.Z;
                 else
                 {
@@ -1197,7 +1199,7 @@ namespace Meridian59.Files.ROO
                     top = (top + GeometryConstants.FINENESS - 1) & ~(GeometryConstants.FINENESS - 1);
                 }
 
-                if (RI.P1.Z == RI.P2.Z)
+                if (Math.Abs(RI.P1.Z - RI.P2.Z) < EPSILON)
                 {
                     RI.UV1.Y = 1.0f - ((Real)yoffset * (Real)TexShrink * invWidth);
                     RI.UV2.Y = 1.0f - ((Real)yoffset * (Real)TexShrink * invWidth);
@@ -1217,7 +1219,7 @@ namespace Meridian59.Files.ROO
             // else, need to place tex origin at top left
             else
             {
-                if (RI.P0.Z == RI.P3.Z)
+                if (Math.Abs(RI.P0.Z - RI.P3.Z) < EPSILON)
                     top = (int)RI.P0.Z;
                 else
                 {
@@ -1225,7 +1227,7 @@ namespace Meridian59.Files.ROO
                     top = (top + GeometryConstants.FINENESS - 1) & ~(GeometryConstants.FINENESS - 1);
                 }
 
-                if (RI.P1.Z == RI.P2.Z)
+                if (Math.Abs(RI.P1.Z - RI.P2.Z) < EPSILON)
                     bottom = (int)RI.P1.Z;
                 else
                 {
@@ -1233,7 +1235,7 @@ namespace Meridian59.Files.ROO
                     bottom = bottom & ~(GeometryConstants.FINENESS - 1);
                 }
 
-                if (RI.P0.Z == RI.P3.Z)
+                if (Math.Abs(RI.P0.Z - RI.P3.Z) < EPSILON)
                 {
                     RI.UV0.Y = 0.0f;
                     RI.UV3.Y = 0.0f;
