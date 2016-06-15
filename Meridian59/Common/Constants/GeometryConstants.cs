@@ -142,6 +142,11 @@ namespace Meridian59.Common.Constants
         public const Real CLOSEDISTANCE = 5.0f * (Real)FINENESS * 0.0625f;
 
         /// <summary>
+        /// CLOSEDISTANCE Squared
+        /// </summary>
+        public const Real CLOSEDISTANCE2 = CLOSEDISTANCE * CLOSEDISTANCE;
+
+        /// <summary>
         /// Full period in radian (2*PI)
         /// </summary>
         public const Real TWOPI = (Real)(2.0 * Math.PI);
