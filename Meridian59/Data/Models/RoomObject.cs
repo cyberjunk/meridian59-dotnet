@@ -62,6 +62,7 @@ namespace Meridian59.Data.Models
         public const string PROPNAME_ISTARGET = "IsTarget";
         public const string PROPNAME_ISHIGHLIGHTED = "IsHighlighted";
         public const string PROPNAME_VIEWERAPPEARANCEHASH = "ViewerAppearanceHash";
+        public const string PROPNAME_DISTANCETOAVATARSQUARED = "DistanceToAvatarSquared";
         #endregion
 
         #region IByteSerializable
@@ -297,6 +298,7 @@ namespace Meridian59.Data.Models
         protected RooSubSector subSector;
         protected Real verticalSpeed;
         protected uint viewerAppearanceHash;
+        protected Real distanceToAvatarSquared;
         protected object userdata;
         
         protected readonly BaseList<SubOverlay> motionSubOverlays = new BaseList<SubOverlay>();
@@ -546,6 +548,22 @@ namespace Meridian59.Data.Models
                 {
                     isHighlighted = value;
                     RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_ISHIGHLIGHTED));
+                }
+            }
+        }
+
+        /// <summary>
+        /// The squared distance between this roomobject and the player's avatar object.
+        /// </summary>
+        public Real DistanceToAvatarSquared
+        {
+            get { return distanceToAvatarSquared; }
+            set
+            {
+                if (distanceToAvatarSquared != value)
+                {
+                    distanceToAvatarSquared = value;
+                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_DISTANCETOAVATARSQUARED));
                 }
             }
         }
@@ -1244,6 +1262,16 @@ namespace Meridian59.Data.Models
         {
             // update viewer angle
             ViewerAngle = MathUtil.GetAngle(ViewerPosition, Position2D, AngleUnits);
+        }
+
+        /// <summary>
+        /// Recalculates the DistanceToAvatarSquared property based on the AvatarObject parameter.
+        /// </summary>
+        /// <param name="AvatarObject"></param>
+        public void UpdateDistanceToAvatarSquared(RoomObject AvatarObject)
+        {
+            if (AvatarObject != null)
+                DistanceToAvatarSquared = GetDistanceSquared(AvatarObject);
         }
 
         /// <summary>

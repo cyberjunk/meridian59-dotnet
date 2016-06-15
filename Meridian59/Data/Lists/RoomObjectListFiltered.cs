@@ -51,6 +51,16 @@ namespace Meridian59.Data.Lists
         public List<ObjectFlags.PlayerType> PlayerTypesFilter { get; protected set; }
 
         /// <summary>
+        /// Maximum value for SquaredDistanceToAvatar property (0=disabled)
+        /// </summary>
+        public Real SquaredDistanceToAvatarFilter { get; set; }
+
+        /// <summary>
+        /// True if SquaredDistanceToAvatarFilter is greater than 0.0
+        /// </summary>
+        public bool IsSquaredDistancetoAvatarFilterEnabled { get { return SquaredDistanceToAvatarFilter > 0.0f; } }
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="Source"></param>
@@ -96,12 +106,19 @@ namespace Meridian59.Data.Lists
             if (Item.Flags.Drawing == ObjectFlags.DrawingType.Invisible)
                 return;
 
-            // add it if there is no filter active
-            if (FlagsFilter.Count == 0 && PlayerTypesFilter.Count == 0)
+            // first check if distance filter is active and possibly skip
+            if (IsSquaredDistancetoAvatarFilterEnabled &&
+                Item.DistanceToAvatarSquared > SquaredDistanceToAvatarFilter)
             {
+                return;
+            }
+
+            // add it if there is no filter active
+            if (FlagsFilter.Count == 0 && PlayerTypesFilter.Count == 0)                
+            {               
                 // sorted add
                 Insert(0, Item);
-
+ 
                 return;
             }
 
@@ -152,6 +169,14 @@ namespace Meridian59.Data.Lists
                 // otherwise verify against filters
                 else
                 {
+                    // verify still in range limit
+                    if (IsSquaredDistancetoAvatarFilterEnabled &&
+                        Item.DistanceToAvatarSquared > SquaredDistanceToAvatarFilter)
+                    {
+                        Remove(Item);
+                        return;
+                    }
+
                     // no need to remove it if we don't have a filter
                     if (FlagsFilter.Count == 0 && PlayerTypesFilter.Count == 0)
                         return;
@@ -197,7 +222,8 @@ namespace Meridian59.Data.Lists
                     // the item into the filtered list
                     // if we don't have it yet (or off the list)
                     if (e.NewIndex > -1 && e.NewIndex < source.Count &&
-                        String.Equals(e.PropertyDescriptor.Name, RoomObject.PROPNAME_FLAGS))  
+                        (String.Equals(e.PropertyDescriptor.Name, RoomObject.PROPNAME_FLAGS) ||
+                        (IsSquaredDistancetoAvatarFilterEnabled && String.Equals(e.PropertyDescriptor.Name, RoomObject.PROPNAME_DISTANCETOAVATARSQUARED))))  
                     {
                         // possibly add it if it matches a filter now
                         // or possibly remove it, if it does not match anymore

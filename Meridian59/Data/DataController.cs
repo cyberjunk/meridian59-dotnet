@@ -1252,6 +1252,22 @@ namespace Meridian59.Data
             switch (e.PropertyName)
             {
                 case RoomObject.PROPNAME_POSITION3D:
+                    // update viewerangle in case the object moved or rotated
+                    obj.UpdateViewerAngle(new V2(viewerPosition.X, viewerPosition.Z));
+
+                    // if this is another object, update its
+                    // squared distance to the player's avatar
+                    if (!obj.IsAvatar)
+                        obj.UpdateDistanceToAvatarSquared(avatarObject);
+
+                    // if this was the avatar itself, update all objects
+                    else
+                    {
+                        foreach (RoomObject item in roomObjects)
+                            item.UpdateDistanceToAvatarSquared(avatarObject);
+                    }
+                    break;
+
                 case RoomObject.PROPNAME_ANGLE:
                     // update viewerangle in case the object moved or rotated
                     obj.UpdateViewerAngle(new V2(viewerPosition.X, viewerPosition.Z));
@@ -1667,22 +1683,32 @@ namespace Meridian59.Data
         {              
             RoomObjects.Clear();
 
+            // find our own avatar first (required in next loop)
             foreach (RoomObject Model in Message.RoomObjects)
             {
-                // set initial height from mapdata
-                if (RoomInformation.ResourceRoom != null)
-                    Model.UpdateHeightPosition(RoomInformation);
-              
                 // check if this is our avatar
                 if (Model.ID == AvatarID)
                 {
                     AvatarObject = Model;
                     Model.IsAvatar = true;
-                }
+                    break;
+                }            
+            }
+
+            // now setup things
+            foreach (RoomObject Model in Message.RoomObjects)
+            {
+                // set initial height from mapdata
+                if (RoomInformation.ResourceRoom != null)
+                    Model.UpdateHeightPosition(RoomInformation);
 
                 // reassign target if same id
-                if (Model.ID == TargetID)              
+                if (Model.ID == TargetID)
                     TargetObject = Model;
+
+                // init some values which will be updated on triggers (e.g. moves)
+                Model.UpdateDistanceToAvatarSquared(avatarObject);
+                Model.UpdateViewerAngle(new V2(viewerPosition.X, viewerPosition.Z));
                 
                 // add to list
                 RoomObjects.Add(Model);
@@ -1708,12 +1734,18 @@ namespace Meridian59.Data
 
         protected void HandleCreate(CreateMessage Message)
         {
+            RoomObject obj = Message.NewRoomObject;
+
             // set initial height from current mapdata
             if (RoomInformation.ResourceRoom != null)
-                Message.NewRoomObject.UpdateHeightPosition(RoomInformation);
+                obj.UpdateHeightPosition(RoomInformation);
 
+            // init some values which will be updated on triggers (e.g. moves)
+            obj.UpdateDistanceToAvatarSquared(avatarObject);
+            obj.UpdateViewerAngle(new V2(viewerPosition.X, viewerPosition.Z));
+                
             // add to list
-            RoomObjects.Add(Message.NewRoomObject);
+            RoomObjects.Add(obj);
         }
 
         protected void HandleRemove(RemoveMessage Message)
