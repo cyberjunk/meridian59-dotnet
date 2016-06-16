@@ -1058,7 +1058,7 @@ namespace Meridian59.Files.ROO
         /// <returns></returns>
         public VertexData GetVertexData(WallPartType PartType, bool IsLeftSide, int TexWidth, int TexHeight, int TexShrink, Real Scale = 1.0f)
         {
-            const Real EPSILON = 0.001f;
+            const Real EPSILON = 0.01f;
 
             VertexData RI = new VertexData();
             bool drawTopDown = true;
