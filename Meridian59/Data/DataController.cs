@@ -1033,7 +1033,6 @@ namespace Meridian59.Data
 
                 // 1. iteration, look for guild enemies
                 bool found = false;
-                Real dist2;
                 Real mindist2 = Real.MaxValue;
                 RoomObject minObj = null;
                 foreach (RoomObject obj in bettercandidates)
@@ -1043,14 +1042,11 @@ namespace Meridian59.Data
                         // mark found
                         found = true;
 
-                        // get distsquared
-                        dist2 = AvatarObject.GetDistanceSquared(obj);
-                        
                         // closer than last candidate?
-                        if (dist2 < mindist2)
+                        if (obj.DistanceToAvatarSquared < mindist2)
                         {
                             // save obj and min dist
-                            mindist2 = dist2;
+                            mindist2 = obj.DistanceToAvatarSquared;
                             minObj = obj;
                         }
                     }
@@ -1072,14 +1068,11 @@ namespace Meridian59.Data
                             // mark found
                             found = true;
 
-                            // get distsquared
-                            dist2 = AvatarObject.GetDistanceSquared(obj);
-                            
                             // closer than last candidate?
-                            if (dist2 < mindist2)
+                            if (obj.DistanceToAvatarSquared < mindist2)
                             {
                                 // save obj and min dist
-                                mindist2 = dist2;
+                                mindist2 = obj.DistanceToAvatarSquared;
                                 minObj = obj;
                             }
                         }
@@ -1154,7 +1147,6 @@ namespace Meridian59.Data
                 32.0f, 512.0f, false);
 
             // get the closest
-            Real dist2;
             Real mindist2 = Real.MaxValue;
             RoomObject minObj = null;
 
@@ -1162,14 +1154,11 @@ namespace Meridian59.Data
             {
                 if (obj.Flags.IsAttackable)
                 {
-                    // get distsquared
-                    dist2 = AvatarObject.GetDistanceSquared(obj);
-
                     // closer than last candidate?
-                    if (dist2 < mindist2)
+                    if (obj.DistanceToAvatarSquared < mindist2)
                     {
                         // save obj and min dist
-                        mindist2 = dist2;
+                        mindist2 = obj.DistanceToAvatarSquared;
                         minObj = obj;
                     }
                 }
