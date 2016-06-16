@@ -119,6 +119,7 @@ namespace Meridian59.Drawing2D
         public RenderInfo()
         {
             SubBgf = new List<SubOverlay.RenderInfo>();
+            Clear();
         }
 
         /// <summary>
