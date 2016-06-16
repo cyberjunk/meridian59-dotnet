@@ -46,24 +46,20 @@ namespace Meridian59.Drawing2D
         /// <returns></returns>
         public static uint GetColorFor(ObjectFlags Flags)
         {
+#if !VANILLA
+            // openmeridian has a name-color transferred from server in flags
+            // however it has opacity set to 0, so we make it full opaque here.
+            return Flags.NameColor | 0xFF000000;
+#else
             if (Flags.Player == ObjectFlags.PlayerType.SuperDM)
                 return SUPERDM;
 
             else if (Flags.Player == ObjectFlags.PlayerType.EventChar)
                 return EVENTCHAR;
-#if !VANILLA
-            else if (Flags.Player == ObjectFlags.PlayerType.Moderator)
-                return MODERATOR;
 
-            else if (Flags.Player == ObjectFlags.PlayerType.Creator)
-                return DAENKS;
-
-            else if (Flags.IsMagicItem)
-                return MAGIC;
-#else
             else if (Flags.Player == ObjectFlags.PlayerType.Creator)
                 return CREATOR;
-#endif
+
             else if (Flags.Player == ObjectFlags.PlayerType.DM)
                 return DM;
 
@@ -81,6 +77,7 @@ namespace Meridian59.Drawing2D
 
             else
                 return NORMAL;
+#endif
         }
 
         /// <summary>
