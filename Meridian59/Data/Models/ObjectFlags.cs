@@ -47,6 +47,8 @@ namespace Meridian59.Data.Models
         private const uint OF_MOVEON_NOTIFY     = 0x00000003;
         
         // BOOLS - OLD FLAGS
+        private const uint OF_DISPLAY_NAME      = 0x00000001;    // Set if object should have name displayed
+        private const uint OF_SIGN              = 0x00000002;    // Set if object is an informational sign (custom name display)
         private const uint OF_PLAYER            = 0x00000004;    // Set if object is a player
         private const uint OF_ATTACKABLE        = 0x00000008;    // Set if object is legal target for an attack
         private const uint OF_GETTABLE          = 0x00000010;    // Set if player can try to pick up object
@@ -58,6 +60,7 @@ namespace Meridian59.Data.Models
         private const uint OF_BUYABLE           = 0x00000400;    // Set if object can be bought from
         private const uint OF_ACTIVATABLE       = 0x00000800;    // Set if object can be activated
         private const uint OF_APPLYABLE         = 0x00001000;    // Set if object can be applied to another object
+        private const uint OF_NPC               = 0x00002000;    // Set if object is an NPC (not necessarily offerable/buyable)
 
         private const uint OF_BOUNCING          = 0x00010000;    // If both flags on then object is bouncing
         private const uint OF_FLICKERING        = 0x00020000;    // For players or objects if holding a flickering light.
@@ -101,6 +104,7 @@ namespace Meridian59.Data.Models
         private const uint MM_TEMPSAFE      = 0x00000200; // Set if player has a temporary angel.
         private const uint MM_MINIBOSS      = 0x00000400; // Set if mob is a miniboss (survival arena).
         private const uint MM_BOSS          = 0x00000800; // Set if mob is a boss (survival arena).
+        private const uint MM_RARE_ITEM     = 0x00001000; // Set if item is rare.
         #endregion
 
         #region Enums
@@ -433,6 +437,36 @@ namespace Meridian59.Data.Models
 
         #region Bools
         /// <summary>
+        /// True if the object should have a name displayed.
+        /// </summary>
+        public bool IsDisplayName
+        {
+            get { return (flags & OF_DISPLAY_NAME) == OF_DISPLAY_NAME; }
+            set
+            {
+                if (value) flags |= OF_DISPLAY_NAME;
+                else flags &= ~OF_DISPLAY_NAME;
+
+                RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
+            }
+        }
+
+        /// <summary>
+        /// True if the object is a sign.
+        /// </summary>
+        public bool IsSign
+        {
+            get { return (flags & OF_SIGN) == OF_SIGN; }
+            set
+            {
+                if (value) flags |= OF_SIGN;
+                else flags &= ~OF_SIGN;
+
+                RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
+            }
+        }
+
+        /// <summary>
         /// True if the object is a player.
         /// </summary>
         public bool IsPlayer
@@ -593,6 +627,21 @@ namespace Meridian59.Data.Models
             {
                 if (value) flags |= OF_APPLYABLE;
                 else flags &= ~OF_APPLYABLE;
+
+                RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
+            }
+        }
+
+        /// <summary>
+        /// True if the object is a NPC.
+        /// </summary>
+        public bool IsNPC
+        {
+            get { return (flags & OF_NPC) == OF_NPC; }
+            set
+            {
+                if (value) flags |= OF_NPC;
+                else flags &= ~OF_NPC;
 
                 RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
             }
@@ -836,6 +885,21 @@ namespace Meridian59.Data.Models
             {
                 if (value) minimap |= MM_BOSS;
                 else minimap &= ~MM_BOSS;
+
+                RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
+            }
+        }
+
+        /// <summary>
+        /// Set if an object is a rare item.
+        /// </summary>
+        public bool IsRareItem
+        {
+            get { return (minimap & MM_RARE_ITEM) == MM_RARE_ITEM; }
+            set
+            {
+                if (value) minimap |= MM_RARE_ITEM;
+                else minimap &= ~MM_RARE_ITEM;
 
                 RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
             }
