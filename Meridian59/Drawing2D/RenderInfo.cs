@@ -43,11 +43,17 @@ namespace Meridian59.Drawing2D
         protected V2 uvend;
         protected V2 origin;
         protected V2 size;
+        protected V2 worldsize;
 
         /// <summary>
         /// Overall size of composed image
         /// </summary>
         public V2 Dimension { get { return dimension; } protected set { dimension = value; } }
+
+        /// <summary>
+        /// Size of the whole object in client world-scale
+        /// </summary>
+        public V2 WorldSize { get { return worldsize; } protected set { worldsize = value; } }
 
         /// <summary>
         /// UV coordinates of start
@@ -108,13 +114,25 @@ namespace Meridian59.Drawing2D
         public List<SubOverlay.RenderInfo> SubBgf { get; protected set; }
 
         /// <summary>
-        /// Empty constructor
+        /// Constructor
         /// </summary>
         public RenderInfo()
         {
-            Clear();
+            SubBgf = new List<SubOverlay.RenderInfo>();
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="Data"></param>
+        /// <param name="ApplyYOffset"></param>
+        /// <param name="RootHotspotIndex"></param>
+        /// <param name="Quality"></param>
+        /// <param name="ScalePow2"></param>
+        /// <param name="Width"></param>
+        /// <param name="Height"></param>
+        /// <param name="CenterVertical"></param>
+        /// <param name="CenterHorizontal"></param>
         public RenderInfo(
             ObjectBase Data,
             bool ApplyYOffset = true,
@@ -126,12 +144,80 @@ namespace Meridian59.Drawing2D
             bool CenterVertical = false,
             bool CenterHorizontal = false)
         {
-            Clear();
+            SubBgf = new List<SubOverlay.RenderInfo>();
+            Refresh(Data, ApplyYOffset, RootHotspotIndex, Quality, ScalePow2, Width, Height, CenterVertical, CenterHorizontal);
+        }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="Data"></param>
+        /// <param name="UseViewerFrame"></param>
+        /// <param name="ApplyYOffset"></param>
+        /// <param name="RootHotspotIndex"></param>
+        /// <param name="Quality"></param>
+        /// <param name="ScalePow2"></param>
+        /// <param name="Width"></param>
+        /// <param name="Height"></param>
+        /// <param name="CenterVertical"></param>
+        /// <param name="CenterHorizontal"></param>
+        public RenderInfo(
+            RoomObject Data,
+            bool UseViewerFrame = true,
+            bool ApplyYOffset = true,
+            byte RootHotspotIndex = 0,
+            Real Quality = DEFAULTQUALITY,
+            bool ScalePow2 = false,
+            uint Width = 0,
+            uint Height = 0,
+            bool CenterVertical = false,
+            bool CenterHorizontal = false)
+        {
+            SubBgf = new List<SubOverlay.RenderInfo>();
+            Refresh(Data, UseViewerFrame, ApplyYOffset, RootHotspotIndex, Quality, ScalePow2, Width, Height, CenterVertical, CenterHorizontal);
+        }
+
+        /// <summary>
+        /// Creates RenderInfo for an ObjectBase
+        /// </summary>
+        /// <param name="Data"></param>
+        /// <param name="ApplyYOffset"></param>
+        /// <param name="RootHotspotIndex"></param>
+        /// <param name="Quality"></param>
+        /// <param name="ScalePow2"></param>
+        /// <param name="Width"></param>
+        /// <param name="Height"></param>
+        /// <param name="CenterVertical"></param>
+        /// <param name="CenterHorizontal"></param>
+        public void Refresh(
+            ObjectBase Data,
+            bool ApplyYOffset = true,
+            byte RootHotspotIndex = 0,
+            Real Quality = DEFAULTQUALITY,
+            bool ScalePow2 = false,
+            uint Width = 0,
+            uint Height = 0,
+            bool CenterVertical = false,
+            bool CenterHorizontal = false)
+        {
+            Clear();
             Calculate(Data, Data.ViewerFrame, true, ApplyYOffset, RootHotspotIndex, Quality, ScalePow2, Width, Height, CenterVertical, CenterHorizontal);
         }
 
-        public RenderInfo(
+        /// <summary>
+        /// Creates RenderInfo for a RoomObject
+        /// </summary>
+        /// <param name="Data"></param>
+        /// <param name="UseViewerFrame"></param>
+        /// <param name="ApplyYOffset"></param>
+        /// <param name="RootHotspotIndex"></param>
+        /// <param name="Quality"></param>
+        /// <param name="ScalePow2"></param>
+        /// <param name="Width"></param>
+        /// <param name="Height"></param>
+        /// <param name="CenterVertical"></param>
+        /// <param name="CenterHorizontal"></param>
+        public void Refresh(
             RoomObject Data,
             bool UseViewerFrame = true,
             bool ApplyYOffset = true,
@@ -404,6 +490,10 @@ namespace Meridian59.Drawing2D
                     // scale so we use at least all pixels either from upscaled width or height
                     ScaleToBox(userSize, CenterHorizontal, CenterVertical);
                 }
+
+                // calculate the world-size (shrink=1) of the composed object from dimension, uv-coordinates and scaling
+                worldsize.X = (uvend.X * dimension.X) / Scaling;
+                worldsize.Y = (uvend.Y * dimension.Y) / Scaling;
             }
         }
 
@@ -431,9 +521,11 @@ namespace Meridian59.Drawing2D
             size.X = 0.0f;
             size.Y = 0.0f;
 
-            Bgf = null;
+            worldsize.X = 0.0f;
+            worldsize.Y = 0.0f;
 
-            SubBgf = new List<SubOverlay.RenderInfo>();
+            Bgf = null;
+            SubBgf.Clear();
         }
 
         /// <summary>

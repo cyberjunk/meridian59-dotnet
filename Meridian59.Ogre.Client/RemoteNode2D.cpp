@@ -82,8 +82,8 @@ namespace Meridian59 { namespace Ogre
 	void RemoteNode2D::OnNewImageAvailable(Object^ sender, System::EventArgs^ e)
     {
 		// get object size in world size
-		float scaledwidth = (imageComposer->RenderInfo->UVEnd.X * imageComposer->RenderInfo->Dimension.X) / imageComposer->RenderInfo->Scaling;       		
-		float scaledheight = (imageComposer->RenderInfo->UVEnd.Y * imageComposer->RenderInfo->Dimension.Y) / imageComposer->RenderInfo->Scaling;
+		float scaledwidth = (float)imageComposer->RenderInfo->WorldSize.X;
+		float scaledheight = (float)imageComposer->RenderInfo->WorldSize.Y;
         		
 		// set size of billboardset
         billboardSet->setDefaultDimensions(scaledwidth, scaledheight);
