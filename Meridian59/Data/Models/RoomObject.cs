@@ -63,6 +63,7 @@ namespace Meridian59.Data.Models
         public const string PROPNAME_ISHIGHLIGHTED = "IsHighlighted";
         public const string PROPNAME_VIEWERAPPEARANCEHASH = "ViewerAppearanceHash";
         public const string PROPNAME_DISTANCETOAVATARSQUARED = "DistanceToAvatarSquared";
+        public const string PROPNAME_DISTANCETOVIEWERSQUARED = "DistanceToViewerSquared";
         #endregion
 
         #region IByteSerializable
@@ -299,6 +300,7 @@ namespace Meridian59.Data.Models
         protected Real verticalSpeed;
         protected uint viewerAppearanceHash;
         protected Real distanceToAvatarSquared;
+        protected Real distanceToViewerSquared;
         protected object userdata;
         
         protected readonly BaseList<SubOverlay> motionSubOverlays = new BaseList<SubOverlay>();
@@ -564,6 +566,22 @@ namespace Meridian59.Data.Models
                 {
                     distanceToAvatarSquared = value;
                     RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_DISTANCETOAVATARSQUARED));
+                }
+            }
+        }
+
+        /// <summary>
+        /// The squared distance between this roomobject and viewer's (camera) position.
+        /// </summary>
+        public Real DistanceToViewerSquared
+        {
+            get { return distanceToViewerSquared; }
+            set
+            {
+                if (distanceToViewerSquared != value)
+                {
+                    distanceToViewerSquared = value;
+                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_DISTANCETOVIEWERSQUARED));
                 }
             }
         }
@@ -1265,13 +1283,23 @@ namespace Meridian59.Data.Models
         }
 
         /// <summary>
-        /// Recalculates the DistanceToAvatarSquared property based on the AvatarObject parameter.
+        /// Recalculates the DistanceToAvatarSquared property
+        /// based on the AvatarObject parameter.
         /// </summary>
         /// <param name="AvatarObject"></param>
         public void UpdateDistanceToAvatarSquared(RoomObject AvatarObject)
         {
             if (AvatarObject != null)
                 DistanceToAvatarSquared = GetDistanceSquared(AvatarObject);
+        }
+
+        /// <summary>
+        /// Recalculates the DistanceToViewerSquared property
+        /// based on the Viewer parameter.
+        /// </summary>
+        public void UpdateDistanceToViewerSquared(V3 ViewerPosition)
+        {
+            DistanceToViewerSquared = GetDistanceSquared(ViewerPosition);
         }
 
         /// <summary>
@@ -1317,6 +1345,16 @@ namespace Meridian59.Data.Models
             return GetDistanceSquared(this, RoomObject);
         }
         
+        /// <summary>
+        /// Gets the squared distance between this object and a location.
+        /// </summary>
+        /// <param name="Position"></param>
+        /// <returns></returns>
+        public Real GetDistanceSquared(V3 Position)
+        {
+            return GetDistanceSquared(this, Position);
+        }
+
         /// <summary>
         /// Gets the angle that needs to bet set 
         /// to make this RoomObject
@@ -1661,6 +1699,19 @@ namespace Meridian59.Data.Models
         public static Real GetDistanceSquared(RoomObject ObjectA, RoomObject ObjectB)
         {
 			V3 AB = ObjectB.Position3D - ObjectA.Position3D;
+
+            return AB.LengthSquared;
+        }
+
+        /// <summary>
+        /// Static
+        /// </summary>
+        /// <param name="ObjectA"></param>
+        /// <param name="Position"></param>
+        /// <returns></returns>
+        public static Real GetDistanceSquared(RoomObject ObjectA, V3 Position)
+        {
+            V3 AB = ObjectA.Position3D - Position;
 
             return AB.LengthSquared;
         }

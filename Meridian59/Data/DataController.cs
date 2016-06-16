@@ -1269,6 +1269,9 @@ namespace Meridian59.Data
                     // update viewerangle in case the object moved or rotated
                     obj.UpdateViewerAngle(new V2(viewerPosition.X, viewerPosition.Z));
 
+                    // update squared distance to viewer/camera position
+                    obj.UpdateDistanceToViewerSquared(viewerPosition);
+
                     // if this is another object, update its
                     // squared distance to the player's avatar
                     if (!obj.IsAvatar)
@@ -1370,7 +1373,10 @@ namespace Meridian59.Data
 
             // update roomobjects
             foreach (RoomObject obj in RoomObjects)
+            {
                 obj.UpdateViewerAngle(position);
+                obj.UpdateDistanceToViewerSquared(viewerPosition);
+            }
 
             // update projectiles
             foreach (Projectile obj in Projectiles)
