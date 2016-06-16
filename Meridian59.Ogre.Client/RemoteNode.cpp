@@ -186,7 +186,12 @@ namespace Meridian59 { namespace Ogre
 
 	void RemoteNode::UpdateName()
     {
-		if (RoomObject->Flags->IsPlayer && 
+#ifdef VANILLA
+		bool showName = RoomObject->Flags->IsPlayer;
+#else
+		bool showName = RoomObject->Flags->IsDisplayName;
+#endif
+		if (showName && 
 			!(RoomObject->Flags->Drawing == ObjectFlags::DrawingType::Invisible) &&
 			RoomObject->Name != nullptr &&
 			!System::String::Equals(RoomObject->Name, System::String::Empty) &&
