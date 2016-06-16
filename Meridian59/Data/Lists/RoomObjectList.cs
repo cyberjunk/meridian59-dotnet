@@ -199,5 +199,140 @@ namespace Meridian59.Data.Lists
 
             HighlightedID = UInt32.MaxValue;
         }
+
+        /// <summary>
+        /// Creates a new instance with all entries sorted by 'DistanceToAvatarSquared'
+        /// </summary>
+        /// <returns></returns>
+        public RoomObjectList CloneAndSortByDistanceToAvatarSquared()
+        {
+            RoomObjectList list = new RoomObjectList(this.Capacity);
+            list.SortByDistanceToAvatarSquared();
+            list.AddRange(this);
+
+            return list;
+        }
+
+        /// <summary>
+        /// Creates a new instance with all entries sorted by 'DistanceToViewerSquared'
+        /// </summary>
+        /// <returns></returns>
+        public RoomObjectList CloneAndSortByDistanceToViewerSquared()
+        {
+            RoomObjectList list = new RoomObjectList(this.Capacity);
+            list.SortByDistanceToViewerSquared();
+            list.AddRange(this);
+
+            return list;
+        }
+
+        public override void ApplySort(PropertyDescriptor Property, ListSortDirection Direction)
+        {
+            base.ApplySort(Property, Direction);
+
+            switch (Property.Name)
+            {
+                case RoomObject.PROPNAME_DISTANCETOAVATARSQUARED:
+                    this.Sort(CompareByDistanceToAvatarSquared);
+                    break;
+
+                case RoomObject.PROPNAME_DISTANCETOVIEWERSQUARED:
+                    this.Sort(CompareByDistanceToViewerSquared);
+                    break;
+            }
+        }
+
+        public override void Insert(int Index, RoomObject Item)
+        {
+            if (!isSorted)
+                base.Insert(Index, Item);
+            else
+            {
+                switch (sortProperty.Name)
+                {
+                    case RoomObject.PROPNAME_DISTANCETOAVATARSQUARED:
+                        Index = FindSortedIndexByDistanceToAvatarSquared(Item);
+                        break;
+
+                    case RoomObject.PROPNAME_DISTANCETOVIEWERSQUARED:
+                        Index = FindSortedIndexByDistanceToViewerSquared(Item);
+                        break;
+                }
+
+                base.Insert(Index, Item);
+            }
+        }
+
+        /// <summary>
+        /// Sorts this list ascending by the 'DistanceToAvatarSquared' property
+        /// </summary>
+        public void SortByDistanceToAvatarSquared()
+        {
+            sortProperty = PDC[RoomObject.PROPNAME_DISTANCETOAVATARSQUARED];
+            sortDirection = ListSortDirection.Ascending;
+
+            ApplySort(sortProperty, sortDirection);
+        }
+
+        /// <summary>
+        /// Sorts this list ascending by the 'DistanceToViewerSquared' property
+        /// </summary>
+        public void SortByDistanceToViewerSquared()
+        {
+            sortProperty = PDC[RoomObject.PROPNAME_DISTANCETOVIEWERSQUARED];
+            sortDirection = ListSortDirection.Ascending;
+
+            ApplySort(sortProperty, sortDirection);
+        }
+
+        /// <summary>
+        /// Finds the index for an entry in a sorted list
+        /// </summary>
+        /// <param name="Candidate"></param>
+        /// <returns></returns>
+        protected int FindSortedIndexByDistanceToAvatarSquared(RoomObject Candidate)
+        {
+            for (int i = 0; i < this.Count; i++)
+                if (CompareByDistanceToAvatarSquared(this[i], Candidate) > 0)
+                    return i;
+
+            return Count;
+        }
+
+        /// <summary>
+        /// Finds the index for an entry in a sorted list
+        /// </summary>
+        /// <param name="Candidate"></param>
+        /// <returns></returns>
+        protected int FindSortedIndexByDistanceToViewerSquared(RoomObject Candidate)
+        {
+            for (int i = 0; i < this.Count; i++)
+                if (CompareByDistanceToViewerSquared(this[i], Candidate) > 0)
+                    return i;
+
+            return Count;
+        }
+
+        /// <summary>
+        /// Compares two RoomObjects by their DistanceToAvatarSquared property
+        /// </summary>
+        /// <param name="A"></param>
+        /// <param name="B"></param>
+        /// <returns></returns>
+        protected int CompareByDistanceToAvatarSquared(RoomObject A, RoomObject B)
+        {
+            return sortDirectionValue * A.DistanceToAvatarSquared.CompareTo(B.DistanceToAvatarSquared);
+        }
+
+        /// <summary>
+        /// Compares two RoomObjects by their DistanceToViewerSquared property
+        /// </summary>
+        /// <param name="A"></param>
+        /// <param name="B"></param>
+        /// <returns></returns>
+        protected int CompareByDistanceToViewerSquared(RoomObject A, RoomObject B)
+        {
+            return sortDirectionValue * A.DistanceToViewerSquared.CompareTo(B.DistanceToViewerSquared);
+        }
     }
 }
