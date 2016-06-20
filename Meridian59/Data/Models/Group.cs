@@ -56,17 +56,20 @@ namespace Meridian59.Data.Models
 
         public Group()
         {
+            members.SortByName();
             Clear(false);
         }
         
         public Group(string Name)
         {
             this.name = Name;
+            members.SortByName();
         }
 
         public Group(string Name, IEnumerable<GroupMember> Members)
         {
             this.name = Name;
+            members.SortByName();
             members.AddRange(Members);
         }
 

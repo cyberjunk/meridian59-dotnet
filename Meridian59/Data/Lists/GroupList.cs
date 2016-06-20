@@ -49,5 +49,67 @@ namespace Meridian59.Data.Lists
             
             return null;
         }
+
+        public override void ApplySort(PropertyDescriptor Property, ListSortDirection Direction)
+        {
+            base.ApplySort(Property, Direction);
+
+            switch (Property.Name)
+            {
+                case Group.PROPNAME_NAME:
+                    this.Sort(CompareByName);
+                    break;
+            }
+        }
+
+        public override void Insert(int Index, Group Item)
+        {
+            if (!isSorted)
+                base.Insert(Index, Item);
+            else
+            {
+                switch (sortProperty.Name)
+                {
+                    case Group.PROPNAME_NAME:
+                        Index = FindSortedIndexByName(Item);
+                        break;
+                }
+
+                base.Insert(Index, Item);
+            }
+        }
+
+        public void SortByName()
+        {
+            sortProperty = PDC[Group.PROPNAME_NAME];
+            sortDirection = ListSortDirection.Ascending;
+
+            ApplySort(sortProperty, sortDirection);
+        }
+
+        /// <summary>
+        /// Finds the index for an entry in a sorted list
+        /// </summary>
+        /// <param name="Candidate"></param>
+        /// <returns></returns>
+        protected int FindSortedIndexByName(Group Candidate)
+        {
+            for (int i = 0; i < this.Count; i++)
+                if (CompareByName(this[i], Candidate) > 0)
+                    return i;
+
+            return Count;
+        }
+
+        /// <summary>
+        /// Compares two Group by Name property
+        /// </summary>
+        /// <param name="A"></param>
+        /// <param name="B"></param>
+        /// <returns></returns>
+        protected int CompareByName(Group A, Group B)
+        {
+            return sortDirectionValue * A.Name.CompareTo(B.Name);
+        }
     }
 }

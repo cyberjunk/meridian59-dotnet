@@ -816,7 +816,8 @@ namespace Meridian59.Data
             AvatarSkills.SortByResourceName();
             AvatarSpells.SortByResourceName();
             SpellObjects.SortByName();
-            
+            Groups.SortByName();
+
             // create single data objects
             roomInformation = new RoomInfo();
             lightShading = new LightShading(0, new SpherePosition(0, 0));
