@@ -126,6 +126,11 @@ namespace Meridian59.Client
 		    Data.IgnoreList.Clear();
             Data.IgnoreList.AddRange(Config.SelectedConnectionInfo.IgnoreList);
 
+            // fill groups list in datacontroller with
+            // groups for this connectionentry
+            Data.Groups.Clear();
+            Data.Groups.AddRange(Config.SelectedConnectionInfo.Groups);
+
             // connect to server
             ServerConnection.Connect(
                 Config.SelectedConnectionInfo.Host, 

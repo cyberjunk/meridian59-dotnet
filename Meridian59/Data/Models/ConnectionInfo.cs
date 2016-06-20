@@ -37,6 +37,7 @@ namespace Meridian59.Data.Models
         public const string PROPNAME_PASSWORD           = "Password";
         public const string PROPNAME_CHARACTER          = "Character";
         public const string PROPNAME_IGNORELIST         = "IgnoreList";
+        public const string PROPNAME_GROUPS             = "Groups";
         #endregion
 
         #region Hardcoded ConnectionInfos
@@ -61,7 +62,8 @@ namespace Meridian59.Data.Models
         protected string username;
         protected string password;
         protected string character;
-        protected List<string> ignoreList;
+        protected readonly List<string> ignoreList = new List<string>();
+        protected readonly List<Group> groups = new List<Group>();
         #endregion
 
         #region Properties
@@ -172,14 +174,11 @@ namespace Meridian59.Data.Models
         public List<string> IgnoreList
         {
             get { return ignoreList; }
-            protected set
-            {
-                if (ignoreList != value)
-                {
-                    ignoreList = value;
-                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_IGNORELIST));
-                }
-            }
+        }
+
+        public List<Group> Groups
+        {
+            get { return groups; }
         } 
         #endregion
 
@@ -196,8 +195,6 @@ namespace Meridian59.Data.Models
 
         public ConnectionInfo() 
         {
-            ignoreList = new List<string>();
-
             Clear(false);
         }
 
@@ -210,10 +207,9 @@ namespace Meridian59.Data.Models
             string Username,
             string Password,
             string Character,
-            IEnumerable<string> IgnoreList)
+            IEnumerable<string> IgnoreList = null,
+            IEnumerable<Group> Groups = null)
         {
-            ignoreList = new List<string>();
-
             name = Name;
             host = Host;
             port = Port;
@@ -224,8 +220,10 @@ namespace Meridian59.Data.Models
             character = Character;
 
             if (IgnoreList != null)
-                foreach (string s in IgnoreList)
-                    ignoreList.Add(s);
+                ignoreList.AddRange(IgnoreList);
+
+            if (Groups != null)
+                groups.AddRange(Groups);
         }
 
         public void Clear(bool RaiseChangedEvent)

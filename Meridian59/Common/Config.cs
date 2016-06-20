@@ -76,6 +76,9 @@ namespace Meridian59.Common
         protected const string XMLTAG_CONNECTION                = "connection";
         protected const string XMLTAG_IGNORELIST                = "ignorelist";
         protected const string XMLTAG_IGNORE                    = "ignore";
+        protected const string XMLTAG_GROUPS                    = "groups";
+        protected const string XMLTAG_GROUP                     = "group";
+        protected const string XMLTAG_MEMBER                    = "member";
         protected const string XMLTAG_LANGUAGE                  = "language";
         protected const string XMLTAG_ALIASES                   = "aliases";
         protected const string XMLTAG_ALIAS                     = "alias";
@@ -488,19 +491,51 @@ namespace Meridian59.Common
                     string character = (child.Attributes[XMLATTRIB_CHARACTER] != null) ?
                         child.Attributes[XMLATTRIB_CHARACTER].Value : DEFAULTVAL_CONNECTIONS_CHARACTER;
 
-                    List<string> ignorelist = new List<string>();
+                    // read ignorelist
+                    List<string> ignorelist = new List<string>();                      
                     node2 = child.SelectSingleNode(XMLTAG_IGNORELIST);
-
-                    foreach (XmlNode subchild in node2.ChildNodes)
+                    if (node2 != null)
                     {
-                        if (subchild.Name != XMLTAG_IGNORE)
-                            continue;
+                        foreach (XmlNode subchild in node2.ChildNodes)
+                        {
+                            if (subchild.Name != XMLTAG_IGNORE)
+                                continue;
 
-                        if (subchild.Attributes[XMLATTRIB_NAME] == null)
-                            continue;
+                            if (subchild.Attributes[XMLATTRIB_NAME] == null)
+                                continue;
 
-                        ignorelist.Add(subchild.Attributes[XMLATTRIB_NAME].Value);
+                            ignorelist.Add(subchild.Attributes[XMLATTRIB_NAME].Value);
+                        }
                     }
+
+                    // read groups
+                    List<Group> groups = new List<Group>();                                            
+                    node2 = child.SelectSingleNode(XMLTAG_GROUPS);
+                    if (node2 != null)
+                    {
+                        foreach (XmlNode subchild in node2.ChildNodes)
+                        {
+                            if (subchild.Name != XMLTAG_GROUP)
+                                continue;
+
+                            if (subchild.Attributes[XMLATTRIB_NAME] == null)
+                                continue;
+
+                            List<GroupMember> members = new List<GroupMember>();
+                            foreach (XmlNode xmlMember in subchild.ChildNodes)
+                            {
+                                if (xmlMember.Name != XMLTAG_MEMBER)
+                                    continue;
+
+                                if (xmlMember.Attributes[XMLATTRIB_NAME] == null)
+                                    continue;
+
+                                members.Add(new GroupMember(xmlMember.Attributes[XMLATTRIB_NAME].Value));
+                            }
+
+                            groups.Add(new Group(subchild.Attributes[XMLATTRIB_NAME].Value, members));
+                        }
+                    }                  
 
                     // add connection
                     connections.Add(new ConnectionInfo(
@@ -512,7 +547,8 @@ namespace Meridian59.Common
                         username,
                         password,
                         character,
-                        ignorelist));
+                        ignorelist,
+                        groups));
                 }
 
                 // Double check we have all available servers in connections list.
@@ -651,6 +687,24 @@ namespace Meridian59.Common
                 {
                     writer.WriteStartElement(XMLTAG_IGNORE);
                     writer.WriteAttributeString(XMLATTRIB_NAME, connections[i].IgnoreList[j]);
+                    writer.WriteEndElement();
+                }
+                writer.WriteEndElement();
+
+                // groups
+                writer.WriteStartElement(XMLTAG_GROUPS);
+                foreach (Group group in connections[i].Groups)
+                {
+                    writer.WriteStartElement(XMLTAG_GROUP);
+                    writer.WriteAttributeString(XMLATTRIB_NAME, group.Name);
+
+                    foreach (GroupMember member in group.Members)
+                    {
+                        writer.WriteStartElement(XMLTAG_MEMBER);
+                        writer.WriteAttributeString(XMLATTRIB_NAME, member.Name);
+                        writer.WriteEndElement();
+                    }
+
                     writer.WriteEndElement();
                 }
                 writer.WriteEndElement();

@@ -132,8 +132,8 @@ namespace Meridian59.Data.Models
                 return null;
 
             // get values for id and classname
-            Group gID = matches[0].Groups["id"];
-            Group gClassName = matches[0].Groups["classname"];
+            System.Text.RegularExpressions.Group gID = matches[0].Groups["id"];
+            System.Text.RegularExpressions.Group gClassName = matches[0].Groups["classname"];
 
             if (!UInt32.TryParse(gID.ToString(), out id))
                 id = 0;
