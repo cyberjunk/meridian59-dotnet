@@ -22,6 +22,7 @@
       password=""
       character="">
       <ignorelist />
+      <groups />
     </connection>
     
     <connection 
@@ -34,6 +35,7 @@
       password=""
       character="">
       <ignorelist />
+      <groups />
     </connection>
     
     <connection 
@@ -46,6 +48,7 @@
       password=""
       character="">
       <ignorelist />
+      <groups />
     </connection>
     
     <connection 
@@ -58,6 +61,7 @@
       password=""
       character="">
       <ignorelist />
+      <groups />
     </connection>
 
     <connection
@@ -72,6 +76,11 @@
       <ignorelist>
         <ignore name="PathethicTroll0815" />
       </ignorelist>
+      <groups>
+        <group name="My Buddies">
+          <entry name="Nice Guy" />
+        </group>
+      </groups>
     </connection>
 
     <connection
@@ -86,6 +95,7 @@
       <ignorelist>
         <ignore name="PathethicTroll0815" />
       </ignorelist>
+      <groups />
     </connection>
 
     <connection
@@ -98,6 +108,7 @@
       password=""
       character="">
       <ignorelist />
+      <groups />
     </connection>
     
     <connection
@@ -110,6 +121,7 @@
       password=""
       character="">
       <ignorelist />
+      <groups />
     </connection>
     
     <connection 
@@ -122,6 +134,7 @@
       password=""
       character="">
       <ignorelist />
+      <groups />
     </connection>
     
   </connections>
