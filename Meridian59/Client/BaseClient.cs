@@ -382,6 +382,10 @@ namespace Meridian59.Client
         {
             switch ((MessageTypeGameMode)Message.PI)
             {
+                case MessageTypeGameMode.Wait:                              // 21
+                    HandleWaitMessage((WaitMessage)Message);
+                    break;
+
                 case MessageTypeGameMode.Message:                           // 32
                     HandleMessageMessage((MessageMessage)Message);
                     break;
@@ -662,6 +666,16 @@ namespace Meridian59.Client
         {
             // request all required info since everything is invalidated
             RequestInfoAfterServerSave();
+        }
+
+        /// <summary>
+        /// Handles the wait request which pauses the client.
+        /// Used in server-saves. Triggers maximum .NET Garbage Collection.
+        /// </summary>
+        /// <param name="Message"></param>
+        protected virtual void HandleWaitMessage(WaitMessage Message)
+        {
+            GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced);
         }
 
         /// <summary>
