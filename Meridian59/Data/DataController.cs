@@ -104,7 +104,7 @@ namespace Meridian59.Data
         protected readonly List<uint> clickedTargets;
         protected readonly ActionButtonList actionButtons;
         protected readonly List<string> ignoreList;
-        protected readonly BaseList<Group> groups;
+        protected readonly GroupList groups;
         protected readonly List<string> chatCommandHistory;
 
         protected readonly RoomInfo roomInformation;
@@ -231,7 +231,7 @@ namespace Meridian59.Data
         /// The user created groups for this server.
         /// Loaded for the connected server from its config section.
         /// </summary>
-        public BaseList<Group> Groups { get { return groups; } }
+        public GroupList Groups { get { return groups; } }
 
         /// <summary>
         /// List of received chat messages
@@ -797,7 +797,7 @@ namespace Meridian59.Data
             clickedTargets = new List<uint>(50);
             actionButtons = new ActionButtonList();
             ignoreList = new List<string>(20);
-            groups = new BaseList<Group>(20);
+            groups = new GroupList(20);
             chatCommandHistory = new List<string>(20);
 
             // setup the lootlist filtering

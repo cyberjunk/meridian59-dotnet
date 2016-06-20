@@ -34,7 +34,7 @@ namespace Meridian59.Data.Models
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected string name;
-        protected readonly BaseList<GroupMember> members = new BaseList<GroupMember>();
+        protected readonly GroupMemberList members = new GroupMemberList();
 
         public string Name
         {
@@ -49,7 +49,7 @@ namespace Meridian59.Data.Models
             }
         }
 
-        public BaseList<GroupMember> Members
+        public GroupMemberList Members
         {
             get { return members; }         
         }
