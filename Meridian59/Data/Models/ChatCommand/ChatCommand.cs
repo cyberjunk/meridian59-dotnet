@@ -259,10 +259,13 @@ namespace Meridian59.Data.Models
         {
             Tuple<int, int, string> quote   = null;
             ChatCommandTell command         = null;
-            OnlinePlayer player             = null;           
+            OnlinePlayer player             = null;
+            Group group                     = null;
             string prefix                   = null;
             List<OnlinePlayer> list         = null;
+            List<Group> listGroups          = null;
             int num                         = 0;
+            int sum                         = 0;
 
             if (Words == null || Words.Length < 2)
                 return null;
@@ -276,10 +279,12 @@ namespace Meridian59.Data.Models
             /********* QUOTED NAME *********/
             if (quote != null)
             {
-                // try get exact match for quoted name
+                // try get exact player and group match for quoted name
                 player = Data.OnlinePlayers.GetItemByName(quote.Item3);
+                group = Data.Groups.GetItemByName(quote.Item3);
 
-                if (player != null)
+                // player or group match
+                if (group != null || player != null)
                 {
                     // startindex of actual text
                     int idx = Words[0].Length + quote.Item2 + 2;
@@ -287,8 +292,40 @@ namespace Meridian59.Data.Models
                     // correct tell
                     if (idx < Text.Length)
                     {
-                        command = new ChatCommandTell(
-                            player.ID, Text.Substring(idx, Text.Length - idx));
+                        string sendtext = Text.Substring(idx, Text.Length - idx);
+
+                        // prefer group match
+                        if (group != null)
+                        {
+                            // collect ids from online-player list
+                            List<uint> ids = new List<uint>();
+                            foreach (GroupMember m in group.Members)
+                            {
+                                OnlinePlayer p = Data.OnlinePlayers.GetItemByName(m.Name);
+
+                                if (p != null)
+                                    ids.Add(p.ID);
+                            }
+
+                            // at least one person is online
+                            if (ids.Count > 0)
+                            {
+                                command = new ChatCommandTell(ids.ToArray(), sendtext);
+                            }
+
+                            // no one of the group is online
+                            else
+                            {
+                                Data.ChatMessages.Add(ServerString.GetServerStringForString(
+                                    "No member of the group " + group.Name + " is online."));
+                            }
+                        }
+
+                        // player match
+                        else if (player != null)
+                        {                                             
+                            command = new ChatCommandTell(player.ID, sendtext);                      
+                        }
                     }
 
                     // empty text
@@ -298,12 +335,12 @@ namespace Meridian59.Data.Models
                             "Can't send empty message."));
                     }
                 }
-
-                // no player with that name
+                
+                // no player or group with that name
                 else
                 {
                     Data.ChatMessages.Add(ServerString.GetServerStringForString(
-                        "No player with name: " + quote.Item3));
+                        "No player or group with name: " + quote.Item3));
                 }
             }
 
@@ -312,27 +349,63 @@ namespace Meridian59.Data.Models
             {
                 prefix = Words[1];
                 list = Data.OnlinePlayers.GetItemsByNamePrefix(prefix);
-                
+                listGroups = Data.Groups.GetItemsByNamePrefix(prefix);
+
                 // extend prefix with more words
                 // until there is only one or zero matches found
                 // or until there is only one more word left (supposed minimal text)
                 num = 2;
-                while (list.Count > 1 && num < Words.Length - 1)
+                sum = list.Count + listGroups.Count;
+                while (sum > 1 && num < Words.Length - 1)
                 {
                     prefix += DELIMITER + Words[num];
                     list = Data.OnlinePlayers.GetItemsByNamePrefix(prefix);
+                    listGroups = Data.Groups.GetItemsByNamePrefix(prefix);
+                    sum = list.Count + listGroups.Count;
                     num++;
                 }
 
-                if (list.Count == 1)
+                if (sum == 1)
                 {
                     // startindex of actual text
                     int idx = Words[0].Length + prefix.Length + 2;
 
                     if (idx < Text.Length)
                     {
-                        command = new ChatCommandTell(
-                            list[0].ID, Text.Substring(idx, Text.Length - idx));
+                        string sendtext = Text.Substring(idx, Text.Length - idx);
+
+                        // to player
+                        if (list.Count == 1)
+                        {
+                            command = new ChatCommandTell(list[0].ID, sendtext);
+                        }
+
+                        // to group
+                        else if (listGroups.Count == 1)
+                        {
+                            // collect ids from online-player list
+                            List<uint> ids = new List<uint>();
+                            foreach (GroupMember m in listGroups[0].Members)
+                            {
+                                OnlinePlayer p = Data.OnlinePlayers.GetItemByName(m.Name);
+
+                                if (p != null)
+                                    ids.Add(p.ID);
+                            }
+
+                            // at least one person is online
+                            if (ids.Count > 0)
+                            {
+                                command = new ChatCommandTell(ids.ToArray(), sendtext);
+                            }
+
+                            // no one of the group is online
+                            else
+                            {                              
+                                Data.ChatMessages.Add(ServerString.GetServerStringForString(
+                                    "No member of the group " + listGroups[0].Name + " is online."));
+                            }
+                        }
                     }
                     else
                     {
@@ -342,18 +415,18 @@ namespace Meridian59.Data.Models
                     }
                 }
 
-                // still more than one player with max. prefix
-                else if (list.Count > 1)
+                // still more than one player or group with max. prefix
+                else if (sum > 1)
                 {
                     Data.ChatMessages.Add(ServerString.GetServerStringForString(
-                        "More than one player with prefix: " + prefix));
+                        "More than one player or group with prefix: " + prefix));
                 }
 
-                // no player with that prefix
+                // no player or group with that prefix
                 else
                 {
                     Data.ChatMessages.Add(ServerString.GetServerStringForString(
-                        "No player with prefix: " + prefix));
+                        "No player or group with prefix: " + prefix));
                 }              
             }
 

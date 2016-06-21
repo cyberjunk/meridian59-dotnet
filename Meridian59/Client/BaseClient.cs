@@ -2657,7 +2657,7 @@ namespace Meridian59.Client
 
                     case ChatCommandType.Tell:
                         ChatCommandTell chatCommandTell = (ChatCommandTell)chatCommand;
-                        SendSayGroupMessage(new uint[] { chatCommandTell.TargetID }, chatCommandTell.Text);
+                        SendSayGroupMessage(chatCommandTell.TargetID, chatCommandTell.Text);
                         break;
 
                     case ChatCommandType.Cast:

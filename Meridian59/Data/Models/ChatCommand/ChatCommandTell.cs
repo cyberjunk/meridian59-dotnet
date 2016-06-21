@@ -26,16 +26,22 @@ namespace Meridian59.Data.Models
         public const string KEY2 = "t";
 
         public override ChatCommandType CommandType { get { return ChatCommandType.Tell; } }
-        public uint TargetID { get; set; }
+        public uint[] TargetID { get; set; }
         public string Text { get; set; }
 
         public ChatCommandTell()
         {
             Text = String.Empty;
-            TargetID = 0;
+            TargetID = new uint[0];
         }
 
         public ChatCommandTell(uint TargetID, string Text)
+        {
+            this.TargetID = new uint[] { TargetID };
+            this.Text = Text;
+        }
+
+        public ChatCommandTell(uint[] TargetID, string Text)
         {
             this.TargetID = TargetID;
             this.Text = Text;

@@ -17,6 +17,7 @@
 using System;
 using System.ComponentModel;
 using Meridian59.Data.Models;
+using System.Collections.Generic;
 
 namespace Meridian59.Data.Lists
 {
@@ -48,6 +49,36 @@ namespace Meridian59.Data.Lists
             }
             
             return null;
+        }
+
+        public List<Group> GetItemsByNamePrefix(string Prefix)
+        {
+            // list for results
+            List<Group> list = new List<Group>();
+
+            // prefix to lowercase
+            string lowerPrefix = Prefix.ToLower();
+
+            foreach (Group obj in this)
+            {
+                string lowerName = obj.Name.ToLower();
+
+                // insert full match at pos 0
+                bool equals = String.Equals(lowerPrefix, lowerName);
+                if (equals)
+                {
+                    list.Insert(0, obj);
+                }
+                else
+                {
+                    bool startwith = lowerName.StartsWith(lowerPrefix);
+
+                    if (startwith)
+                        list.Add(obj);
+                }
+            }
+
+            return list;
         }
 
         public override void ApplySort(PropertyDescriptor Property, ListSortDirection Direction)
