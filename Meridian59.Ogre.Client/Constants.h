@@ -206,6 +206,8 @@
 #define UI_WINDOWTYPE_PLAYEROVERLAY				"TaharezLook/StaticImage"
 #define UI_WINDOWTYPE_OBJECTBASELISTBOXITEM		"TaharezLook/ObjectBaseListboxItem"
 #define UI_WINDOWTYPE_ALIASLISTBOXITEM			"TaharezLook/AliasListboxItem"
+#define UI_WINDOWTYPE_GROUPLISTBOXITEM			"TaharezLook/GroupListboxItem"
+#define UI_WINDOWTYPE_GROUPMEMBERLISTBOXITEM	"TaharezLook/GroupMemberListboxItem"
 
 /* static imagenames from set */
 #define UI_IMAGE_ACTION_ATTACK					"TaharezLook/ActionAttack"
@@ -492,12 +494,14 @@
 #define UI_NAME_OPTIONS_INPUT						"Options.Input"
 #define UI_NAME_OPTIONS_GAMEPLAY					"Options.GamePlay"
 #define UI_NAME_OPTIONS_ALIASES						"Options.Aliases"
+#define UI_NAME_OPTIONS_GROUPS						"Options.Groups"
 #define UI_NAME_OPTIONS_ABOUT						"Options.About"
 #define UI_NAME_OPTIONS_TABCONTROL					"Options.TabControl"
 #define UI_NAME_OPTIONS_TABENGINE					"Options.TabEngine"
 #define UI_NAME_OPTIONS_TABINPUT					"Options.TabInput"
 #define UI_NAME_OPTIONS_TABGAMEPLAY					"Options.TabGamePlay"
 #define UI_NAME_OPTIONS_TABALIASES					"Options.TabAliases"
+#define UI_NAME_OPTIONS_TABGROUPS					"Options.TabGroups"
 #define UI_NAME_OPTIONS_TABABOUT					"Options.TabAbout"
 #define UI_NAME_OPTIONS_TABINPUT_TABCONTROL			"Options.TabInput.TabControl"
 #define UI_NAME_OPTIONS_TABINPUT_TABGENERAL			"Options.TabInput.TabGeneral"
@@ -596,6 +600,17 @@
 #define UI_NAME_OPTIONS_TABALIASES_ADDKEY					"Options.TabAliases.AddKey"
 #define UI_NAME_OPTIONS_TABALIASES_ADDVALUE					"Options.TabAliases.AddValue"
 #define UI_NAME_OPTIONS_TABALIASES_ADD						"Options.TabAliases.Add"
+#define UI_NAME_OPTIONS_TABGROUPS_DISABLEDDESCRIPTION		"Options.TabGroups.DisabledDescription"
+#define UI_NAME_OPTIONS_TABGROUPS_GROUPNAME					"Options.TabGroups.GroupName"
+#define UI_NAME_OPTIONS_TABGROUPS_MEMBERNAME				"Options.TabGroups.MemberName"
+#define UI_NAME_OPTIONS_TABGROUPS_ADDGROUP					"Options.TabGroups.AddGroup"
+#define UI_NAME_OPTIONS_TABGROUPS_ADDMEMBER					"Options.TabGroups.AddMember"
+#define UI_NAME_OPTIONS_TABGROUPS_NEWGROUP					"Options.TabGroups.NewGroup"
+#define UI_NAME_OPTIONS_TABGROUPS_NEWMEMBER					"Options.TabGroups.NewMember"
+#define UI_NAME_OPTIONS_TABGROUPS_GROUPSDESCRIPTION			"Options.TabGroups.GroupsDescription"
+#define UI_NAME_OPTIONS_TABGROUPS_MEMBERSDESCRIPTION		"Options.TabGroups.MembersDescription"
+#define UI_NAME_OPTIONS_TABGROUPS_GROUPS					"Options.TabGroups.Groups"
+#define UI_NAME_OPTIONS_TABGROUPS_MEMBERS					"Options.TabGroups.Members"
 #define UI_NAME_OPTIONS_TABABOUT_TABCONTROL					"Options.TabAbout.TabControl"
 #define UI_NAME_OPTIONS_TABABOUT_TABGENERAL					"Options.TabAbout.TabGeneral"
 #define UI_NAME_OPTIONS_TABABOUT_TABHISTORY					"Options.TabAbout.TabHistory"
@@ -689,9 +704,13 @@
 #define UI_AVATARCREATOR_CHILDINDEX_SPELLS_NAME		0
 #define UI_AVATARCREATOR_CHILDINDEX_SPELLS_SCHOOL	1
 #define UI_AVATARCREATOR_CHILDINDEX_SPELLS_POINTS	2
-#define UI_OPTIONS_CHILDINDEX_ALIAS_KEY		0
-#define UI_OPTIONS_CHILDINDEX_ALIAS_VALUE	1
-#define UI_OPTIONS_CHILDINDEX_ALIAS_DELETE	2
+#define UI_OPTIONS_CHILDINDEX_ALIAS_KEY				0
+#define UI_OPTIONS_CHILDINDEX_ALIAS_VALUE			1
+#define UI_OPTIONS_CHILDINDEX_ALIAS_DELETE			2
+#define UI_OPTIONS_CHILDINDEX_GROUP_VALUE			0
+#define UI_OPTIONS_CHILDINDEX_GROUP_DELETE			1
+#define UI_OPTIONS_CHILDINDEX_GROUPMEMBER_VALUE		0
+#define UI_OPTIONS_CHILDINDEX_GROUPMEMBER_DELETE	1
 
 #define UI_MINIMAP_CLIPPADDING		13
 

@@ -570,16 +570,19 @@ namespace Meridian59 { namespace Ogre
             }
         }
 
-		// update ignorelist from data to config
+		// TODO: Move this to the corelib's Cleanup(), it's all from there
 		ConnectionInfo^ conInfo = Config->SelectedConnectionInfo;
-
 		if (conInfo)
 		{
+			// update ignorelist from data to config
 			conInfo->IgnoreList->Clear();
-			for each(::System::String^ s in Data->IgnoreList)
-				conInfo->IgnoreList->Add(s);
-		}
+			conInfo->IgnoreList->AddRange(Data->IgnoreList);
 
+			// update groups from data to config
+			conInfo->Groups->Clear();
+			conInfo->Groups->AddRange(Data->Groups);
+		}
+	
         // save config
         Config->Save();
 

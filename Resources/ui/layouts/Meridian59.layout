@@ -2049,10 +2049,17 @@
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 			
+			<!-- Groups -->
+			<Window type="TaharezLook/Button" name="Options.Groups" >
+				<Property name="Text" value="Groups" />
+				<Property name="Area" value="{{0,15},{0,315},{0,115},{0,340}}" />
+				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
+			</Window>
+			
 			<!-- About -->
 			<Window type="TaharezLook/Button" name="Options.About" >
 				<Property name="Text" value="About" />
-				<Property name="Area" value="{{0,15},{0,315},{0,115},{0,340}}" />
+				<Property name="Area" value="{{0,15},{0,345},{0,115},{0,370}}" />
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 			
@@ -3266,6 +3273,89 @@
 					<!-- ListAliases -->
 					<Window type="TaharezLook/ItemListbox" name="Options.TabAliases.Aliases" >
 						<Property name="Area" value="{{0,15},{0,75},{1,-15},{1,-15}}" />
+						<Property name="BackgroundColours" value="tl:00000000 tr:00000000 bl:00000000 br:00000000" />						
+					</Window>					
+				</Window>
+				
+				<!-- TabGroups -->
+				<Window type="DefaultWindow" name="Options.TabGroups" >
+					<Property name="Text" value="Groups" />
+					<Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+					
+					<!-- DisabledDescription -->
+					<Window type="TaharezLook/Label" name="Options.TabGroups.DisabledDescription" >
+						<Property name="Area" value="{{0,15},{0,15},{1.0,-15},{1.0,-15}}" />			
+						<Property name="NormalTextColour" value="FF242424" />
+						<Property name="Text" value="You must be logged in to modify groups." />					
+					</Window>
+					
+					<!-- NewGroup -->
+					<Window type="TaharezLook/Label" name="Options.TabGroups.NewGroup" >
+						<Property name="Area" value="{{0,21},{0,15},{0.5,-15},{0,35}}" />			
+						<Property name="NormalTextColour" value="FF242424" />
+						<Property name="HorzFormatting" value="WordWrapLeftAligned" />
+						<Property name="Text" value="New Group" />						
+					</Window>
+			
+					<!-- GroupName -->
+					<Window type="TaharezLook/Editbox" name="Options.TabGroups.GroupName" >
+						<Property name="Text" value="" />
+						<Property name="Area" value="{{0,21},{0,40},{0.5,-60},{0,65}}" />
+					</Window>
+					
+					<!-- AddGroup -->
+					<Window type="TaharezLook/Button" name="Options.TabGroups.AddGroup" >
+						<Property name="Text" value="+" />
+						<Property name="Area" value="{{0.5,-55},{0,40},{0.5,-15},{0,65}}" />
+						<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
+					</Window>
+							
+					<!-- GroupsDescription -->
+					<Window type="TaharezLook/Label" name="Options.TabGroups.GroupsDescription" >
+						<Property name="Area" value="{{0,21},{0,80},{0.5,-15},{0,100}}" />			
+						<Property name="NormalTextColour" value="FF242424" />
+						<Property name="HorzFormatting" value="WordWrapLeftAligned" />
+						<Property name="Text" value="Groups" />						
+					</Window>
+					
+					<!-- ListGroups -->
+					<Window type="TaharezLook/ItemListbox" name="Options.TabGroups.Groups" >
+						<Property name="Area" value="{{0,15},{0,105},{0.5,-15},{1,-15}}" />
+						<Property name="BackgroundColours" value="tl:00000000 tr:00000000 bl:00000000 br:00000000" />						
+					</Window>
+
+					<!-- NewMember -->
+					<Window type="TaharezLook/Label" name="Options.TabGroups.NewMember" >
+						<Property name="Area" value="{{0.5,15},{0,15},{1,-15},{0,35}}" />			
+						<Property name="NormalTextColour" value="FF242424" />
+						<Property name="HorzFormatting" value="WordWrapLeftAligned" />
+						<Property name="Text" value="New Member" />						
+					</Window>
+			
+					<!-- MemberName -->
+					<Window type="TaharezLook/Editbox" name="Options.TabGroups.MemberName" >
+						<Property name="Text" value="" />
+						<Property name="Area" value="{{0.5,15},{0,40},{1,-60},{0,65}}" />
+					</Window>
+					
+					<!-- AddMember -->
+					<Window type="TaharezLook/Button" name="Options.TabGroups.AddMember" >
+						<Property name="Text" value="+" />
+						<Property name="Area" value="{{1,-55},{0,40},{1,-15},{0,65}}" />
+						<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
+					</Window>
+
+					<!-- MembersDescription -->
+					<Window type="TaharezLook/Label" name="Options.TabGroups.MembersDescription" >
+						<Property name="Area" value="{{0.5,15},{0,80},{1,-15},{0,100}}" />			
+						<Property name="NormalTextColour" value="FF242424" />
+						<Property name="HorzFormatting" value="WordWrapLeftAligned" />
+						<Property name="Text" value="Members" />						
+					</Window>
+					
+					<!-- ListMembers -->
+					<Window type="TaharezLook/ItemListbox" name="Options.TabGroups.Members" >
+						<Property name="Area" value="{{0.5,9},{0,105},{1,-15},{1,-15}}" />
 						<Property name="BackgroundColours" value="tl:00000000 tr:00000000 bl:00000000 br:00000000" />						
 					</Window>					
 				</Window>

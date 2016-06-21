@@ -16,6 +16,7 @@ namespace Meridian59 { namespace Ogre
 		Input		= static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_OPTIONS_INPUT));
 		GamePlay	= static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_OPTIONS_GAMEPLAY));
 		Aliases		= static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_OPTIONS_ALIASES));
+		Groups		= static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_OPTIONS_GROUPS));
 		About		= static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_OPTIONS_ABOUT));
 
 		// tabcontrol and tabs
@@ -24,6 +25,7 @@ namespace Meridian59 { namespace Ogre
 		TabInput	= static_cast<CEGUI::Window*>(TabControl->getChild(UI_NAME_OPTIONS_TABINPUT));
 		TabGamePlay = static_cast<CEGUI::Window*>(TabControl->getChild(UI_NAME_OPTIONS_TABGAMEPLAY));
 		TabAliases	= static_cast<CEGUI::Window*>(TabControl->getChild(UI_NAME_OPTIONS_TABALIASES));
+		TabGroups	= static_cast<CEGUI::Window*>(TabControl->getChild(UI_NAME_OPTIONS_TABGROUPS));
 		TabAbout	= static_cast<CEGUI::Window*>(TabControl->getChild(UI_NAME_OPTIONS_TABABOUT));
 
 		/******************************************************************************************************/
@@ -154,6 +156,21 @@ namespace Meridian59 { namespace Ogre
 		AliasValue = static_cast<CEGUI::Editbox*>(TabAliases->getChild(UI_NAME_OPTIONS_TABALIASES_ADDVALUE));
 		AliasAddBtn = static_cast<CEGUI::PushButton*>(TabAliases->getChild(UI_NAME_OPTIONS_TABALIASES_ADD));
 
+		/******************************************************************************************************/
+
+		// tabgroups
+		DisabledDescription = static_cast<CEGUI::Window*>(TabGroups->getChild(UI_NAME_OPTIONS_TABGROUPS_DISABLEDDESCRIPTION));
+		GroupName	= static_cast<CEGUI::Editbox*>(TabGroups->getChild(UI_NAME_OPTIONS_TABGROUPS_GROUPNAME));
+		MemberName	= static_cast<CEGUI::Editbox*>(TabGroups->getChild(UI_NAME_OPTIONS_TABGROUPS_MEMBERNAME));
+		AddGroup	= static_cast<CEGUI::PushButton*>(TabGroups->getChild(UI_NAME_OPTIONS_TABGROUPS_ADDGROUP));
+		AddMember	= static_cast<CEGUI::PushButton*>(TabGroups->getChild(UI_NAME_OPTIONS_TABGROUPS_ADDMEMBER));
+		NewGroup	= static_cast<CEGUI::Window*>(TabGroups->getChild(UI_NAME_OPTIONS_TABGROUPS_NEWGROUP));
+		NewMember	= static_cast<CEGUI::Window*>(TabGroups->getChild(UI_NAME_OPTIONS_TABGROUPS_NEWMEMBER));
+		GroupsDescription	= static_cast<CEGUI::Window*>(TabGroups->getChild(UI_NAME_OPTIONS_TABGROUPS_GROUPSDESCRIPTION));
+		MembersDescription	= static_cast<CEGUI::Window*>(TabGroups->getChild(UI_NAME_OPTIONS_TABGROUPS_MEMBERSDESCRIPTION));
+		ListGroups	= static_cast<CEGUI::ItemListbox*>(TabGroups->getChild(UI_NAME_OPTIONS_TABGROUPS_GROUPS));
+		ListMembers = static_cast<CEGUI::ItemListbox*>(TabGroups->getChild(UI_NAME_OPTIONS_TABGROUPS_MEMBERS));
+		
 		/******************************************************************************************************/
 
 		// tababout
@@ -439,6 +456,13 @@ namespace Meridian59 { namespace Ogre
 			AliasAdd(i);		
 
 		/******************************************************************************************************/
+		/*                                  PREPARE / SET: GROUPS                                             */
+		/******************************************************************************************************/
+
+		for (int i = 0; i < OgreClient::Singleton->Data->Groups->Count; i++)
+			GroupAdd(i);
+
+		/******************************************************************************************************/
 		/*                                  PREPARE / SET: INPUT                                              */
 		/******************************************************************************************************/
 
@@ -541,6 +565,7 @@ namespace Meridian59 { namespace Ogre
 		Input->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnCategoryButtonClicked));
 		GamePlay->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnCategoryButtonClicked));
 		Aliases->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnCategoryButtonClicked));
+		Groups->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnCategoryButtonClicked));
 		About->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnCategoryButtonClicked));
 
 		/******************************************************************************************************/
@@ -772,6 +797,18 @@ namespace Meridian59 { namespace Ogre
 		LearnAction48->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
 
 		/******************************************************************************************************/
+		// groups events
+
+		AddGroup->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnGroupAddClicked));
+		AddMember->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnMemberAddClicked));
+
+		GroupName->subscribeEvent(CEGUI::Editbox::EventKeyDown, CEGUI::Event::Subscriber(UICallbacks::OnCopyPasteKeyDown));
+		MemberName->subscribeEvent(CEGUI::Editbox::EventKeyDown, CEGUI::Event::Subscriber(UICallbacks::OnCopyPasteKeyDown));
+
+		// subscribe selection change of list
+		ListGroups->subscribeEvent(CEGUI::ItemListbox::EventSelectionChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnGroupsSelectionChanged));
+
+		/******************************************************************************************************/
 
 		// subscribe other events
 		RightClickAction->subscribeEvent(CEGUI::Combobox::EventListSelectionAccepted, CEGUI::Event::Subscriber(UICallbacks::Options::OnRightClickActionChanged));
@@ -800,6 +837,14 @@ namespace Meridian59 { namespace Ogre
 		OgreClient::Singleton->Config->Aliases->ListChanged +=
 			gcnew ListChangedEventHandler(OnAliasListChanged);
 
+		// attach listener to groups
+		OgreClient::Singleton->Data->Groups->ListChanged +=
+			gcnew ListChangedEventHandler(OnGroupsListChanged);
+
+		// attach listener to data
+		OgreClient::Singleton->Data->PropertyChanged +=
+			gcnew PropertyChangedEventHandler(OnDataPropertyChanged);
+
 		// attach listener to clientpreferences
 		OgreClient::Singleton->Data->ClientPreferences->PropertyChanged +=
 			gcnew PropertyChangedEventHandler(OnClientPreferencesPropertyChanged);
@@ -815,6 +860,14 @@ namespace Meridian59 { namespace Ogre
 		OgreClient::Singleton->Config->Aliases->ListChanged -=
 			gcnew ListChangedEventHandler(OnAliasListChanged);
 
+		// detach listener from groups
+		OgreClient::Singleton->Data->Groups->ListChanged -=
+			gcnew ListChangedEventHandler(OnGroupsListChanged);
+
+		// detach listener from data
+		OgreClient::Singleton->Data->PropertyChanged -=
+			gcnew PropertyChangedEventHandler(OnDataPropertyChanged);
+
 		// detach listener from clientpreferences
 		OgreClient::Singleton->Data->ClientPreferences->PropertyChanged -=
 			gcnew PropertyChangedEventHandler(OnClientPreferencesPropertyChanged);
@@ -827,6 +880,27 @@ namespace Meridian59 { namespace Ogre
 
 	void ControllerUI::Options::OnConfigPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{
+	};
+
+	void ControllerUI::Options::OnDataPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
+	{
+		if (::System::String::Equals(e->PropertyName, DataController::PROPNAME_UIMODE))
+		{
+			UIMode mode = OgreClient::Singleton->Data->UIMode;
+
+			// switch the groups options visibility
+			DisabledDescription->setVisible(mode != UIMode::Playing);					
+			GroupName->setVisible(mode == UIMode::Playing);
+			MemberName->setVisible(mode == UIMode::Playing);
+			GroupsDescription->setVisible(mode == UIMode::Playing);
+			MembersDescription->setVisible(mode == UIMode::Playing);
+			AddGroup->setVisible(mode == UIMode::Playing);
+			AddMember->setVisible(mode == UIMode::Playing);
+			NewGroup->setVisible(mode == UIMode::Playing);
+			NewMember->setVisible(mode == UIMode::Playing);
+			ListGroups->setVisible(mode == UIMode::Playing);
+			ListMembers->setVisible(mode == UIMode::Playing);
+		}
 	};
 
 	void ControllerUI::Options::OnClientPreferencesPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
@@ -867,6 +941,34 @@ namespace Meridian59 { namespace Ogre
 
 		case ::System::ComponentModel::ListChangedType::ItemDeleted:
 			AliasRemove(e->NewIndex);
+			break;
+		}
+	};
+
+	void ControllerUI::Options::OnGroupsListChanged(Object^ sender, ListChangedEventArgs^ e)
+	{
+		switch (e->ListChangedType)
+		{
+		case ::System::ComponentModel::ListChangedType::ItemAdded:
+			GroupAdd(e->NewIndex);
+			break;
+
+		case ::System::ComponentModel::ListChangedType::ItemDeleted:
+			GroupRemove(e->NewIndex);
+			break;
+		}
+	};
+
+	void ControllerUI::Options::OnMembersListChanged(Object^ sender, ListChangedEventArgs^ e)
+	{
+		switch (e->ListChangedType)
+		{
+		case ::System::ComponentModel::ListChangedType::ItemAdded:
+			MemberAdd(e->NewIndex);
+			break;
+
+		case ::System::ComponentModel::ListChangedType::ItemDeleted:
+			MemberRemove(e->NewIndex);
 			break;
 		}
 	};
@@ -920,6 +1022,111 @@ namespace Meridian59 { namespace Ogre
 			ListAliases->removeItem(ListAliases->getItemFromIndex(Index));
 	};
 
+	void ControllerUI::Options::GroupAdd(int Index)
+	{
+		CEGUI::WindowManager* wndMgr	= CEGUI::WindowManager::getSingletonPtr();
+		Group^ group					= OgreClient::Singleton->Data->Groups[Index];
+
+		// create widget (item)
+		CEGUI::ItemEntry* widget = (CEGUI::ItemEntry*)wndMgr->createWindow(
+			UI_WINDOWTYPE_GROUPLISTBOXITEM);
+
+		// get children
+		CEGUI::Window* value	= (CEGUI::Editbox*)widget->getChildAtIdx(UI_OPTIONS_CHILDINDEX_GROUP_VALUE);
+		CEGUI::PushButton* del	= (CEGUI::PushButton*)widget->getChildAtIdx(UI_OPTIONS_CHILDINDEX_GROUP_DELETE);
+		
+		// set values
+		value->setText(StringConvert::CLRToCEGUI(group->Name));
+
+		// subscribe del event
+		del->subscribeEvent(
+			CEGUI::PushButton::EventClicked,
+			CEGUI::Event::Subscriber(UICallbacks::Options::OnGroupDeleteClicked));
+
+		// copy&paste for name value
+		//value->subscribeEvent(CEGUI::Editbox::EventKeyDown, CEGUI::Event::Subscriber(UICallbacks::OnCopyPasteKeyDown));
+		//value->subscribeEvent(CEGUI::Editbox::EventTextAccepted, CEGUI::Event::Subscriber(UICallbacks::Options::OnGroupValueAccepted));
+		//value->subscribeEvent(CEGUI::Editbox::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnGroupValueAccepted));
+
+		// insert in ui-list
+		if ((int)ListGroups->getItemCount() > Index)
+			ListGroups->insertItem(widget, ListGroups->getItemFromIndex(Index));
+
+		// or add
+		else
+			ListGroups->addItem(widget);
+
+		// fix a bug with last item not visible
+		ListGroups->notifyScreenAreaChanged(true);
+	}
+
+	void ControllerUI::Options::GroupRemove(int Index)
+	{
+		if ((int)ListGroups->getItemCount() > Index)
+		{
+			CEGUI::ItemEntry* entry = ListGroups->getItemFromIndex(Index);
+
+			if (entry->isSelected())
+			{
+				// remove old ui entries
+				int count = (int)ListMembers->getItemCount();
+				for (int i = count - 1; i >= 0; i--)
+					ControllerUI::Options::MemberRemove((int)i);
+
+				CurrentGroup = nullptr;
+			}
+
+			ListGroups->removeItem(entry);		
+		}						
+	};
+
+	void ControllerUI::Options::MemberAdd(int Index)
+	{	
+		if (CurrentGroup == nullptr)
+			return;
+
+		CEGUI::WindowManager* wndMgr	= CEGUI::WindowManager::getSingletonPtr();
+		GroupMember^ member				= CurrentGroup->Members[Index];
+
+		// create widget (item)
+		CEGUI::ItemEntry* widget = (CEGUI::ItemEntry*)wndMgr->createWindow(
+			UI_WINDOWTYPE_GROUPMEMBERLISTBOXITEM);
+
+		// get children
+		CEGUI::Window* value = (CEGUI::Editbox*)widget->getChildAtIdx(UI_OPTIONS_CHILDINDEX_GROUPMEMBER_VALUE);
+		CEGUI::PushButton* del = (CEGUI::PushButton*)widget->getChildAtIdx(UI_OPTIONS_CHILDINDEX_GROUPMEMBER_DELETE);
+
+		// set values
+		value->setText(StringConvert::CLRToCEGUI(member->Name));
+
+		// subscribe del event
+		del->subscribeEvent(
+			CEGUI::PushButton::EventClicked,
+			CEGUI::Event::Subscriber(UICallbacks::Options::OnMemberDeleteClicked));
+
+		// copy&paste for name value
+		//value->subscribeEvent(CEGUI::Editbox::EventKeyDown, CEGUI::Event::Subscriber(UICallbacks::OnCopyPasteKeyDown));
+		//value->subscribeEvent(CEGUI::Editbox::EventTextAccepted, CEGUI::Event::Subscriber(UICallbacks::Options::OnGroupValueAccepted));
+		//value->subscribeEvent(CEGUI::Editbox::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnGroupValueAccepted));
+
+		// insert in ui-list
+		if ((int)ListMembers->getItemCount() > Index)
+			ListMembers->insertItem(widget, ListMembers->getItemFromIndex(Index));
+
+		// or add
+		else
+			ListMembers->addItem(widget);
+
+		// fix a bug with last item not visible
+		ListMembers->notifyScreenAreaChanged(true);
+	}
+
+	void ControllerUI::Options::MemberRemove(int Index)
+	{
+		if ((int)ListMembers->getItemCount() > Index)
+			ListMembers->removeItem(ListMembers->getItemFromIndex(Index));
+	};
+
 	bool UICallbacks::Options::OnCategoryButtonClicked(const CEGUI::EventArgs& e)
 	{
 		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
@@ -937,8 +1144,11 @@ namespace Meridian59 { namespace Ogre
 		else if (btn == ControllerUI::Options::Aliases)
 			ControllerUI::Options::TabControl->setSelectedTabAtIndex(3);
 		
-		else if (btn == ControllerUI::Options::About)
+		else if (btn == ControllerUI::Options::Groups)
 			ControllerUI::Options::TabControl->setSelectedTabAtIndex(4);
+
+		else if (btn == ControllerUI::Options::About)
+			ControllerUI::Options::TabControl->setSelectedTabAtIndex(5);
 
 		return true;
 	};
@@ -2102,6 +2312,167 @@ namespace Meridian59 { namespace Ogre
 
 		if (OgreClient::Singleton->Config->Aliases->Count > (int)idx)
 			OgreClient::Singleton->Config->Aliases[idx]->Value = StringConvert::CEGUIToCLR(box->getText());
+
+		return true;
+	};
+
+	bool UICallbacks::Options::OnGroupAddClicked(const CEGUI::EventArgs& e)
+	{
+		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
+		const CEGUI::PushButton* btn		= (const CEGUI::PushButton*)args.window;
+		CEGUI::ItemListbox* list			= ControllerUI::Options::ListGroups;
+		GroupList^ grplist					= OgreClient::Singleton->Data->Groups;
+
+		// get groupname from ui-element and convert to clr
+		::CEGUI::String grpname		= ControllerUI::Options::GroupName->getText();
+		::System::String^ nameclr	= StringConvert::CEGUIToCLR(grpname);
+
+		// remove whitespaces
+		nameclr = nameclr->Trim();
+
+		if (nameclr == STRINGEMPTY)
+			return true;
+
+		// clear text
+		ControllerUI::Options::GroupName->setText(STRINGEMPTY);
+
+		// must not have this group already
+		if (grplist->GetItemByName(nameclr, false) != nullptr)
+			return true;
+
+		// add the new group to data
+		Group^ newgrp = gcnew Group(nameclr);
+		grplist->Add(newgrp);
+
+		size_t index = (size_t)grplist->IndexOf(newgrp);
+		list->clearAllSelections();
+		list->selectRange(index, index);
+		list->ensureItemIsVisibleVert(*list->getItemFromIndex(index));
+
+		return true;
+	};
+
+	bool UICallbacks::Options::OnGroupDeleteClicked(const CEGUI::EventArgs& e)
+	{
+		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
+		const CEGUI::PushButton* btn		= (const CEGUI::PushButton*)args.window;
+		const CEGUI::ItemListbox* list		= ControllerUI::Options::ListGroups;
+
+		// get index
+		size_t idx = list->getItemIndex((CEGUI::ItemEntry*)btn->getParent());
+
+		// remove from model-list
+		OgreClient::Singleton->Data->Groups->RemoveAt((int)idx);
+
+		return true;
+	};
+
+	bool UICallbacks::Options::OnMemberAddClicked(const CEGUI::EventArgs& e)
+	{
+		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
+		const CEGUI::PushButton* btn		= (const CEGUI::PushButton*)args.window;
+		CEGUI::ItemListbox* list			= ControllerUI::Options::ListMembers;
+		Group^ currentGroup					= ControllerUI::Options::CurrentGroup;
+
+		// get membername from ui-element and conver to clr
+		::CEGUI::String membername	= ControllerUI::Options::MemberName->getText();
+		::System::String^ nameclr	= StringConvert::CEGUIToCLR(membername);
+
+		// remove whitespaces
+		nameclr = nameclr->Trim();
+
+		if (nameclr == STRINGEMPTY)
+			return true;
+
+		// clear text
+		ControllerUI::Options::MemberName->setText(STRINGEMPTY);
+
+		// no group selected
+		if (currentGroup == nullptr)
+			return true;
+
+		// must not have this name already
+		if (currentGroup->Members->GetItemByName(nameclr, false) != nullptr)
+			return true;
+
+		// create new groupmember data entry
+		GroupMember^ newmember = gcnew GroupMember(nameclr, false);
+
+		// add the new member to group
+		currentGroup->Members->Add(newmember);
+
+		size_t index = (size_t)currentGroup->Members->IndexOf(newmember);
+		list->ensureItemIsVisibleVert(*list->getItemFromIndex(index));
+
+		return true;
+	};
+
+	bool UICallbacks::Options::OnMemberDeleteClicked(const CEGUI::EventArgs& e)
+	{
+		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
+		const CEGUI::PushButton* btn		= (const CEGUI::PushButton*)args.window;
+		const CEGUI::ItemListbox* list		= ControllerUI::Options::ListMembers;
+		Group^ currentGroup					= ControllerUI::Options::CurrentGroup;
+
+		// must have a group selected
+		if (currentGroup == nullptr)
+			return true;
+
+		// get index
+		size_t idx = list->getItemIndex((CEGUI::ItemEntry*)btn->getParent());
+
+		// remove from model-list
+		currentGroup->Members->RemoveAt((int)idx);
+
+		return true;
+	};
+
+	bool UICallbacks::Options::OnGroupsSelectionChanged(const CEGUI::EventArgs& e)
+	{
+		const CEGUI::ItemListbox* groups	= ControllerUI::Options::ListGroups;
+		CEGUI::ItemListbox* members			= ControllerUI::Options::ListMembers;
+		CEGUI::ItemEntry* item				= groups->getFirstSelectedItem();		
+		GroupList^ groupsData				= OgreClient::Singleton->Data->Groups;
+
+		// detach listener and remove old members
+		if (ControllerUI::Options::CurrentGroup != nullptr)
+		{
+			// detach listener from CurrentGroup Members
+			ControllerUI::Options::CurrentGroup->Members->ListChanged -=
+				gcnew ListChangedEventHandler(ControllerUI::Options::OnMembersListChanged);
+
+			// remove old ui entries
+			int count = (int)members->getItemCount();
+			for (int i = count - 1; i >= 0; i--)
+				ControllerUI::Options::MemberRemove((int)i);
+		}
+
+		// no selection anymore
+		if (!item)
+		{
+			ControllerUI::Options::CurrentGroup = nullptr;
+
+			// remove old ui entries
+			int count = (int)members->getItemCount();		
+			for (int i = count - 1; i >= 0; i--)
+				ControllerUI::Options::MemberRemove((int)i);
+		}
+		else
+		{
+			// get selected ui index
+			size_t index = groups->getItemIndex(item);
+
+			// get the datamodel for index and keep a reference
+			ControllerUI::Options::CurrentGroup = groupsData[index];
+
+			// create new ui entries
+			for (int i = 0; i < ControllerUI::Options::CurrentGroup->Members->Count; i++)
+				ControllerUI::Options::MemberAdd(i);
+
+			// attach listener from CurrentGroup Members
+			ControllerUI::Options::CurrentGroup->Members->ListChanged +=
+				gcnew ListChangedEventHandler(ControllerUI::Options::OnMembersListChanged);
+		}
 
 		return true;
 	};

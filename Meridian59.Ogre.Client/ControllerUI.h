@@ -1147,6 +1147,7 @@ namespace Meridian59 { namespace Ogre
 			static ::CEGUI::PushButton* Input = nullptr;
 			static ::CEGUI::PushButton* GamePlay = nullptr;
 			static ::CEGUI::PushButton* Aliases = nullptr;
+			static ::CEGUI::PushButton* Groups = nullptr;
 			static ::CEGUI::PushButton* About = nullptr;
 
 			static ::CEGUI::TabControl* TabControl = nullptr;
@@ -1154,6 +1155,7 @@ namespace Meridian59 { namespace Ogre
 			static ::CEGUI::Window* TabInput = nullptr;
 			static ::CEGUI::Window* TabGamePlay = nullptr;
 			static ::CEGUI::Window* TabAliases = nullptr;
+			static ::CEGUI::Window* TabGroups = nullptr;
 			static ::CEGUI::Window* TabAbout = nullptr;
 
 			static ::CEGUI::TabControl* TabInputTabControl = nullptr;
@@ -1276,6 +1278,19 @@ namespace Meridian59 { namespace Ogre
 			static ::CEGUI::PushButton* AliasAddBtn = nullptr;
 
 			//
+			static ::CEGUI::Window* DisabledDescription = nullptr;
+			static ::CEGUI::Editbox* GroupName = nullptr;
+			static ::CEGUI::Editbox* MemberName = nullptr;
+			static ::CEGUI::PushButton* AddGroup = nullptr;
+			static ::CEGUI::PushButton* AddMember = nullptr;
+			static ::CEGUI::Window* NewGroup = nullptr;
+			static ::CEGUI::Window* NewMember = nullptr;
+			static ::CEGUI::Window* GroupsDescription = nullptr;
+			static ::CEGUI::Window* MembersDescription = nullptr;
+			static ::CEGUI::ItemListbox* ListGroups = nullptr;
+			static ::CEGUI::ItemListbox* ListMembers = nullptr;
+
+			//
 			static ::CEGUI::TabControl* TabAboutTabControl = nullptr;
 			static ::CEGUI::Window* TabAboutTabGeneral = nullptr;
 			static ::CEGUI::Window* TabAboutTabHistory = nullptr;
@@ -1300,10 +1315,20 @@ namespace Meridian59 { namespace Ogre
 
 			static void AliasAdd(int Index);
 			static void AliasRemove(int Index);
+			static void GroupAdd(int Index);
+			static void GroupRemove(int Index);
+			static void MemberAdd(int Index);
+			static void MemberRemove(int Index);
+
+			static Group^ CurrentGroup = nullptr;
 
 			static void OnConfigPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
+			static void OnDataPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
 			static void OnClientPreferencesPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
+
 			static void OnAliasListChanged(Object^ sender, ListChangedEventArgs^ e);
+			static void OnGroupsListChanged(Object^ sender, ListChangedEventArgs^ e);
+			static void OnMembersListChanged(Object^ sender, ListChangedEventArgs^ e);
 
 			static void Initialize();
 			static void Destroy();
@@ -1802,6 +1827,14 @@ namespace Meridian59 { namespace Ogre
 			static bool OnAliasDeleteClicked(const CEGUI::EventArgs& e);
 			static bool OnAliasKeyAccepted(const CEGUI::EventArgs& e);
 			static bool OnAliasValueAccepted(const CEGUI::EventArgs& e);
+
+			static bool OnGroupAddClicked(const CEGUI::EventArgs& e);
+			static bool OnGroupDeleteClicked(const CEGUI::EventArgs& e);
+
+			static bool OnMemberAddClicked(const CEGUI::EventArgs& e);
+			static bool OnMemberDeleteClicked(const CEGUI::EventArgs& e);
+
+			static bool OnGroupsSelectionChanged(const CEGUI::EventArgs& e);
 
 			static bool OnLanguageChanged(const CEGUI::EventArgs& e);
 

@@ -6869,5 +6869,208 @@
 		</StateImagery>
 	</WidgetLook>
 
+	<!--
+	/**********************************************************************************************************
+	TaharezLook/GroupListboxItem
+	***********************************************************************************************************/
+	-->
+	<WidgetLook name="TaharezLook/GroupListboxItem">
+		<PropertyDefinition name="SelectionBrush" initialValue="TaharezLook/ListboxSelectionBrush" redrawOnWrite="true" />
+		<PropertyDefinition name="SelectionColour" initialValue="FF812700" redrawOnWrite="true" />
+		<Property name="Selectable" value="True" />
+		<Property name="MouseInputPropagationEnabled" value="True" />
+		<NamedArea name="ContentSize">
+			<Area>
+				<Dim type="LeftEdge" >
+					<UnifiedDim scale="0" offset="0" type="LeftEdge" />
+				</Dim>
+				<Dim type="TopEdge" >
+					<UnifiedDim scale="0" offset="0" type="TopEdge" />
+				</Dim>
+				<Dim type="Width" >
+					<UnifiedDim scale="1" offset="-5" type="Width" />
+				</Dim>
+				<Dim type="Height" >
+					<UnifiedDim scale="0" offset="25" type="Height"/>
+				</Dim>
+			</Area>
+		</NamedArea>		
+		<Child type ="TaharezLook/Label" nameSuffix="__auto__label_name">
+			<Area>
+				<Dim type="LeftEdge">
+					<UnifiedDim scale="0" offset="5" type="LeftEdge" />				
+				</Dim>
+				<Dim type="TopEdge">
+					<UnifiedDim scale="0" offset="0" type="TopEdge" />
+				</Dim>
+				<Dim type="Width">
+					<UnifiedDim scale="1" offset="-30" type="Width" />
+				</Dim>
+				<Dim type="Height">
+					<UnifiedDim scale="1" offset="0" type="Height"/>
+				</Dim>
+			</Area>
+			<Property name="HorzFormatting" value="LeftAligned" />
+			<Property name="MouseInputPropagationEnabled" value="True" />
+		</Child>		
+		<Child type ="TaharezLook/ImageButton" nameSuffix="__auto__imagebutton">
+			<Area>
+				<Dim type="LeftEdge">
+					<UnifiedDim scale="1" offset="-18" type="LeftEdge" />
+				</Dim>
+				<Dim type="TopEdge">
+					<UnifiedDim scale="0" offset="6" type="TopEdge" />
+				</Dim>
+				<Dim type="Width">
+					<UnifiedDim scale="0" offset="14" type="Width" />
+				</Dim>
+				<Dim type="Height">
+					<UnifiedDim scale="0" offset="14" type="Height"/>
+				</Dim>
+			</Area>
+			<Property name="TooltipText" value="Delete this group" />
+			<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
+			<Property name="NormalImage" value="TaharezLook/RedCloseButton" />
+            <Property name="HoverImage" value="TaharezLook/RedCloseButtonHover" />
+			<Property name="PushedImage" value="TaharezLook/RedCloseButtonHover" />
+            <Property name="DisabledImage" value="TaharezLook/RedCloseButtonDisabled" />
+		</Child>
+		<ImagerySection name="selection">
+			<ImageryComponent>
+				<Area>
+					<Dim type="TopEdge">
+						<AbsoluteDim value="0" />
+					</Dim>
+					<Dim type="LeftEdge">
+						<AbsoluteDim value="0" />
+					</Dim>
+					<Dim type="RightEdge">
+						<UnifiedDim scale="1" type="RightEdge" />
+					</Dim>
+					<Dim type="BottomEdge">
+						<UnifiedDim scale="1" type="BottomEdge" />
+					</Dim>
+				</Area>
+				<ImageProperty name="SelectionBrush" />
+				<ColourProperty name="SelectionColour" />
+				<VertFormat type="Stretched" />
+				<HorzFormat type="Stretched" />
+			</ImageryComponent>
+		</ImagerySection>
+		<StateImagery name="Enabled" />
+		<StateImagery name="Disabled" />
+		<StateImagery name="SelectedEnabled">
+			<Layer>
+				<Section section="selection" />				
+			</Layer>
+		</StateImagery>
+		<StateImagery name="SelectedDisabled">
+			<Layer>
+				<Section section="selection" />
+			</Layer>
+		</StateImagery>
+	</WidgetLook>
+	
+	<!--
+	/**********************************************************************************************************
+	TaharezLook/GroupMemberListboxItem
+	***********************************************************************************************************/
+	-->
+	<WidgetLook name="TaharezLook/GroupMemberListboxItem">
+		<PropertyDefinition name="SelectionBrush" initialValue="TaharezLook/ListboxSelectionBrush" redrawOnWrite="true" />
+		<PropertyDefinition name="SelectionColour" initialValue="FF812700" redrawOnWrite="true" />
+		<Property name="Selectable" value="False" />
+		<Property name="MouseInputPropagationEnabled" value="True" />
+		<NamedArea name="ContentSize">
+			<Area>
+				<Dim type="LeftEdge" >
+					<UnifiedDim scale="0" offset="0" type="LeftEdge" />
+				</Dim>
+				<Dim type="TopEdge" >
+					<UnifiedDim scale="0" offset="0" type="TopEdge" />
+				</Dim>
+				<Dim type="Width" >
+					<UnifiedDim scale="1" offset="-5" type="Width" />
+				</Dim>
+				<Dim type="Height" >
+					<UnifiedDim scale="0" offset="25" type="Height"/>
+				</Dim>
+			</Area>
+		</NamedArea>		
+		<Child type ="TaharezLook/Label" nameSuffix="__auto__label_name">
+			<Area>
+				<Dim type="LeftEdge">
+					<UnifiedDim scale="0" offset="5" type="LeftEdge" />				
+				</Dim>
+				<Dim type="TopEdge">
+					<UnifiedDim scale="0" offset="0" type="TopEdge" />
+				</Dim>
+				<Dim type="Width">
+					<UnifiedDim scale="1" offset="-30" type="Width" />
+				</Dim>
+				<Dim type="Height">
+					<UnifiedDim scale="1" offset="0" type="Height"/>
+				</Dim>
+			</Area>
+			<Property name="HorzFormatting" value="LeftAligned" />
+			<Property name="MouseInputPropagationEnabled" value="True" />
+		</Child>		
+		<Child type ="TaharezLook/ImageButton" nameSuffix="__auto__imagebutton">
+			<Area>
+				<Dim type="LeftEdge">
+					<UnifiedDim scale="1" offset="-18" type="LeftEdge" />
+				</Dim>
+				<Dim type="TopEdge">
+					<UnifiedDim scale="0" offset="6" type="TopEdge" />
+				</Dim>
+				<Dim type="Width">
+					<UnifiedDim scale="0" offset="14" type="Width" />
+				</Dim>
+				<Dim type="Height">
+					<UnifiedDim scale="0" offset="14" type="Height"/>
+				</Dim>
+			</Area>
+			<Property name="TooltipText" value="Delete this member" />
+			<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
+			<Property name="NormalImage" value="TaharezLook/RedCloseButton" />
+            <Property name="HoverImage" value="TaharezLook/RedCloseButtonHover" />
+			<Property name="PushedImage" value="TaharezLook/RedCloseButtonHover" />
+            <Property name="DisabledImage" value="TaharezLook/RedCloseButtonDisabled" />
+		</Child>
+		<ImagerySection name="selection">
+			<ImageryComponent>
+				<Area>
+					<Dim type="TopEdge">
+						<AbsoluteDim value="0" />
+					</Dim>
+					<Dim type="LeftEdge">
+						<AbsoluteDim value="0" />
+					</Dim>
+					<Dim type="RightEdge">
+						<UnifiedDim scale="1" type="RightEdge" />
+					</Dim>
+					<Dim type="BottomEdge">
+						<UnifiedDim scale="1" type="BottomEdge" />
+					</Dim>
+				</Area>
+				<ImageProperty name="SelectionBrush" />
+				<ColourProperty name="SelectionColour" />
+				<VertFormat type="Stretched" />
+				<HorzFormat type="Stretched" />
+			</ImageryComponent>
+		</ImagerySection>
+		<StateImagery name="Enabled" />
+		<StateImagery name="Disabled" />
+		<StateImagery name="SelectedEnabled">
+			<Layer>
+				<Section section="selection" />				
+			</Layer>
+		</StateImagery>
+		<StateImagery name="SelectedDisabled">
+			<Layer>
+				<Section section="selection" />
+			</Layer>
+		</StateImagery>
+	</WidgetLook>
 </Falagard>
 
