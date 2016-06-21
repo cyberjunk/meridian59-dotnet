@@ -66,11 +66,6 @@ namespace Meridian59.Protocol
         protected ushort serverPort;
 
         /// <summary>
-        /// If true will use IPv6
-        /// </summary>
-        protected bool useIPv6;
-
-        /// <summary>
         /// Handles the TCP connection
         /// </summary>
         protected Socket socket;
@@ -213,8 +208,7 @@ namespace Meridian59.Protocol
         /// </summary>
         /// <param name="ServerAddr">IP or DNS to connect to</param>
         /// <param name="Port">TCP-Port to connect to</param>
-        /// <param name="UseIPv6">If true connection will be made using IPv6 instead of IPv4</param>
-        public void Connect(string ServerAddr, ushort Port, bool UseIPv6 = false)
+        public void Connect(string ServerAddr, ushort Port)
         {
             // make sure we're disconnected
             Disconnect();
@@ -222,8 +216,7 @@ namespace Meridian59.Protocol
             // save connection settings
             serverAddress = ServerAddr;
             serverPort = Port;
-            useIPv6 = UseIPv6;
-
+ 
             // make log entry
             Logger.Log(MODULENAME, LogType.Info, "Connecting to " + serverAddress + ":" + serverPort.ToString());
             
@@ -305,9 +298,6 @@ namespace Meridian59.Protocol
         /// </summary>
         protected void ThreadProc()
         {
-            AddressFamily ipv = useIPv6 ? AddressFamily.InterNetworkV6 : 
-                AddressFamily.InterNetwork;
-            
             // cleanup old socket if any
             if (socket != null)
             {
@@ -326,7 +316,12 @@ namespace Meridian59.Protocol
             while (ExceptionQueue.TryDequeue(out error)) ;
 
             // init a new Socket 
-            socket = new Socket(ipv, SocketType.Stream, ProtocolType.Tcp);
+            socket = new Socket(AddressFamily.InterNetworkV6, SocketType.Stream, ProtocolType.Tcp);
+
+            // set ipv6 socket to dualstack so it can handle our IPv4 connections too
+            socket.SetSocketOption(SocketOptionLevel.IPv6, SocketOptionName.IPv6Only, false);
+
+            // enable no-delay on send
             socket.NoDelay = true;
 
             // try connect to server

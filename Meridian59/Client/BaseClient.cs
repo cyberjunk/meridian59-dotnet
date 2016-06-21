@@ -134,8 +134,7 @@ namespace Meridian59.Client
             // connect to server
             ServerConnection.Connect(
                 Config.SelectedConnectionInfo.Host, 
-                Config.SelectedConnectionInfo.Port,
-                Config.SelectedConnectionInfo.UseIPv6);
+                Config.SelectedConnectionInfo.Port);
         }
 
         /// <summary>

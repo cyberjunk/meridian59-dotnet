@@ -31,7 +31,6 @@ namespace Meridian59.Data.Models
         public const string PROPNAME_NAME   = "Name";
         public const string PROPNAME_HOST   = "Host";
         public const string PROPNAME_PORT   = "Port";
-        public const string PROPNAME_USEIPV6 = "UseIPv6";
         public const string PROPNAME_STRINGDICTIONARY   = "StringDictionary";
         public const string PROPNAME_USERNAME           = "Username";
         public const string PROPNAME_PASSWORD           = "Password";
@@ -42,14 +41,14 @@ namespace Meridian59.Data.Models
 
         #region Hardcoded ConnectionInfos
 #if VANILLA
-        public static readonly ConnectionInfo CON101 = new ConnectionInfo("101", "meridian101.meridian59.com",  5901, false, "rsc0000-101.rsb", "", "", "", null);
-        public static readonly ConnectionInfo CON102 = new ConnectionInfo("102", "meridian102.meridian59.com",  5902, false, "rsc0000-101.rsb", "", "", "", null);
+        public static readonly ConnectionInfo CON101 = new ConnectionInfo("101", "meridian101.meridian59.com",  5901, "rsc0000-101.rsb", "", "", "", null);
+        public static readonly ConnectionInfo CON102 = new ConnectionInfo("102", "meridian102.meridian59.com",  5902, "rsc0000-101.rsb", "", "", "", null);
 #else
-        public static readonly ConnectionInfo CON103 = new ConnectionInfo("103", "meridian103.openmeridian.org",5903, false, "rsc0000-103.rsb", "", "", "", null);
-        public static readonly ConnectionInfo CON104 = new ConnectionInfo("104", "meridian104.openmeridian.org",5904, false, "rsc0000-104.rsb", "", "", "", null);
-        public static readonly ConnectionInfo CON105 = new ConnectionInfo("105", "meridian105.meridiannext.com",5905, false, "rsc0000-105.rsb", "", "", "", null);
-        public static readonly ConnectionInfo CON106 = new ConnectionInfo("106", "meridian106.meridiannext.com",5906, false, "rsc0000-106.rsb", "", "", "", null);
-        public static readonly ConnectionInfo CON112 = new ConnectionInfo("112", "meridian112.arantis.eu",      5912, false, "rsc0000-112.rsb", "", "", "", null);
+        public static readonly ConnectionInfo CON103 = new ConnectionInfo("103", "meridian103.openmeridian.org",5903, "rsc0000-103.rsb", "", "", "", null);
+        public static readonly ConnectionInfo CON104 = new ConnectionInfo("104", "meridian104.openmeridian.org",5904, "rsc0000-104.rsb", "", "", "", null);
+        public static readonly ConnectionInfo CON105 = new ConnectionInfo("105", "meridian105.meridiannext.com",5905, "rsc0000-105.rsb", "", "", "", null);
+        public static readonly ConnectionInfo CON106 = new ConnectionInfo("106", "meridian106.meridiannext.com",5906, "rsc0000-106.rsb", "", "", "", null);
+        public static readonly ConnectionInfo CON112 = new ConnectionInfo("112", "meridian112.arantis.eu",      5912, "rsc0000-112.rsb", "", "", "", null);
 #endif
         #endregion
 
@@ -57,7 +56,6 @@ namespace Meridian59.Data.Models
         protected string name;
         protected string host;
         protected ushort port;
-        protected bool useIPv6;
         protected string stringdictionary;
         protected string username;
         protected string password;
@@ -102,19 +100,6 @@ namespace Meridian59.Data.Models
                 {
                     port = value;
                     RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_PORT));
-                }
-            }
-        }
-
-        public bool UseIPv6
-        {
-            get { return useIPv6; }
-            set
-            {
-                if (useIPv6 != value)
-                {
-                    useIPv6 = value;
-                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_USEIPV6));
                 }
             }
         }
@@ -202,7 +187,6 @@ namespace Meridian59.Data.Models
             string Name, 
             string Host, 
             ushort Port,
-            bool UseIPv6,
             string StringDictionary, 
             string Username,
             string Password,
@@ -213,7 +197,6 @@ namespace Meridian59.Data.Models
             name = Name;
             host = Host;
             port = Port;
-            useIPv6 = UseIPv6;
             stringdictionary = StringDictionary;
             username = Username;
             password = Password;
@@ -233,7 +216,7 @@ namespace Meridian59.Data.Models
                 Name = String.Empty;
                 Host = String.Empty;
                 Port = DEFAULTPORT;
-                UseIPv6 = false;
+
                 StringDictionary = String.Empty;
                 Username = String.Empty;
                 Password = String.Empty;
@@ -245,7 +228,6 @@ namespace Meridian59.Data.Models
                 name = String.Empty;
                 host = String.Empty;
                 port = DEFAULTPORT;
-                useIPv6 = false;
                 stringdictionary = String.Empty;
                 username = String.Empty;
                 password = String.Empty;
