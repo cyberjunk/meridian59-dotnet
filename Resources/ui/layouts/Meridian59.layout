@@ -3379,7 +3379,7 @@
 							<Window type="TaharezLook/Label" name="Options.TabAbout.TabGeneral.Disclaimer1Desc" >
 								<Property name="Area" value="{{0,10},{0,10},{0,150},{0,30}}" />			
 								<Property name="NormalTextColour" value="FF242424" />
-								<Property name="Text" value="OgreClient 1.0.4.2" />
+								<Property name="Text" value="OgreClient 1.0.4.3" />
 								<Property name="Font" value="DejaVuSerif-10-Bold" />
 								<Property name="HorzFormatting" value="WordWrapLeftAligned" />							
 							</Window>							
