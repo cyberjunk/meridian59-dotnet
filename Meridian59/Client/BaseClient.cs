@@ -1096,6 +1096,34 @@ namespace Meridian59.Client
         }
 
         /// <summary>
+        /// Requests to abandon your current guild hall.
+        /// </summary>
+        public virtual void SendUserCommandGuildAbandonHall()
+        {
+            // create message instance
+            UserCommand command = new UserCommandGuildAbandonHall();
+            UserCommandMessage message = new UserCommandMessage(command, null);
+
+            // send/enqueue it (async)
+            ServerConnection.SendQueue.Enqueue(message);
+        }
+
+        /// <summary>
+        /// Requests to rent a specific guildhall.
+        /// </summary>
+        /// <param name="HallID">Object ID of hall to rent</param>
+        /// <param name="Password">Guild password for verification</param>
+        public virtual void SendUserCommandGuildRent(uint HallID, string Password)
+        {
+            // create message instance
+            UserCommand command = new UserCommandGuildRent(HallID, Password);
+            UserCommandMessage message = new UserCommandMessage(command, null);
+
+            // send/enqueue it (async)
+            ServerConnection.SendQueue.Enqueue(message);
+        }
+
+        /// <summary>
         /// Requests to make a guild your ally
         /// </summary>
         /// <param name="GuildID"></param>
