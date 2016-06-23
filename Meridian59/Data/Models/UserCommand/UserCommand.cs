@@ -169,6 +169,10 @@ namespace Meridian59.Data.Models
                     returnValue = new UserCommandGuildEndEnemy(Buffer, StartIndex);
                     break;
 
+                case UserCommandType.GuildHalls:                                                        // 27
+                    returnValue = new UserCommandGuildHalls(Buffer, StartIndex);
+                    break;
+
                 case UserCommandType.GuildSetPassword:                                                  // 30
                     returnValue = new UserCommandGuildSetPassword(Buffer, StartIndex);
                     break;
