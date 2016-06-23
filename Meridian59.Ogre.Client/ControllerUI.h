@@ -1834,6 +1834,9 @@ namespace Meridian59 { namespace Ogre
 			static bool OnMemberAddClicked(const CEGUI::EventArgs& e);
 			static bool OnMemberDeleteClicked(const CEGUI::EventArgs& e);
 
+			static bool OnGroupNameKeyDown(const CEGUI::EventArgs& e);
+			static bool OnMemberNameKeyDown(const CEGUI::EventArgs& e);
+			
 			static bool OnGroupsSelectionChanged(const CEGUI::EventArgs& e);
 
 			static bool OnLanguageChanged(const CEGUI::EventArgs& e);

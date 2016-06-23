@@ -802,8 +802,8 @@ namespace Meridian59 { namespace Ogre
 		AddGroup->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnGroupAddClicked));
 		AddMember->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnMemberAddClicked));
 
-		GroupName->subscribeEvent(CEGUI::Editbox::EventKeyDown, CEGUI::Event::Subscriber(UICallbacks::OnCopyPasteKeyDown));
-		MemberName->subscribeEvent(CEGUI::Editbox::EventKeyDown, CEGUI::Event::Subscriber(UICallbacks::OnCopyPasteKeyDown));
+		GroupName->subscribeEvent(CEGUI::Editbox::EventKeyDown, CEGUI::Event::Subscriber(UICallbacks::Options::OnGroupNameKeyDown));
+		MemberName->subscribeEvent(CEGUI::Editbox::EventKeyDown, CEGUI::Event::Subscriber(UICallbacks::Options::OnMemberNameKeyDown));
 
 		// subscribe selection change of list
 		ListGroups->subscribeEvent(CEGUI::ItemListbox::EventSelectionChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnGroupsSelectionChanged));
@@ -2475,6 +2475,48 @@ namespace Meridian59 { namespace Ogre
 		}
 
 		return true;
+	};
+
+	bool UICallbacks::Options::OnGroupNameKeyDown(const CEGUI::EventArgs& e)
+	{
+		// handle copy&paste generically
+		if (UICallbacks::OnCopyPasteKeyDown(e))
+			return true;
+
+		// handle other keys
+		const CEGUI::KeyEventArgs& args = static_cast<const CEGUI::KeyEventArgs&>(e);
+		bool handled = false;
+
+		switch (args.scancode)
+		{		
+		case CEGUI::Key::Scan::Return:		
+			OnGroupAddClicked(::CEGUI::WindowEventArgs(ControllerUI::Options::AddGroup));
+			handled = true;		
+			break;
+		}
+
+		return handled;
+	};
+
+	bool UICallbacks::Options::OnMemberNameKeyDown(const CEGUI::EventArgs& e)
+	{
+		// handle copy&paste generically
+		if (UICallbacks::OnCopyPasteKeyDown(e))
+			return true;
+
+		// handle other keys
+		const CEGUI::KeyEventArgs& args = static_cast<const CEGUI::KeyEventArgs&>(e);
+		bool handled = false;
+
+		switch (args.scancode)
+		{
+		case CEGUI::Key::Scan::Return:
+			OnMemberAddClicked(::CEGUI::WindowEventArgs(ControllerUI::Options::AddMember));
+			handled = true;
+			break;
+		}
+
+		return handled;
 	};
 
 	bool UICallbacks::Options::OnLanguageChanged(const CEGUI::EventArgs& e)
