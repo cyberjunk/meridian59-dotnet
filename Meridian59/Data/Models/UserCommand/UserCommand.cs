@@ -173,6 +173,10 @@ namespace Meridian59.Data.Models
                     returnValue = new UserCommandGuildHalls(Buffer, StartIndex);
                     break;
 
+                case UserCommandType.AbandonGuildHall:                                                  // 28
+                    returnValue = new UserCommandGuildAbandonHall(Buffer, StartIndex);
+                    break;
+
                 case UserCommandType.GuildRent:                                                         // 29
                     returnValue = new UserCommandGuildRent(Buffer, StartIndex);
                     break;
