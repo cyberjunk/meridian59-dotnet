@@ -171,6 +171,7 @@
     <Compile Include="Data\Models\KeyValuePairString.cs" />
     <Compile Include="Data\Models\RoomInfoFlags.cs" />
     <Compile Include="Data\Models\UserCommand\UserCommandGuildHalls.cs" />
+    <Compile Include="Data\Models\UserCommand\UserCommandGuildRent.cs" />
     <Compile Include="Data\Models\UserCommand\UserCommandReceivePreferences.cs" />
     <Compile Include="Data\Models\UserCommand\UserCommandReqPreferences.cs" />
     <Compile Include="Data\Models\UserCommand\UserCommandClaimShield.cs" />

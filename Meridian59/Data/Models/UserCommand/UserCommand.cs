@@ -173,6 +173,10 @@ namespace Meridian59.Data.Models
                     returnValue = new UserCommandGuildHalls(Buffer, StartIndex);
                     break;
 
+                case UserCommandType.GuildRent:                                                         // 29
+                    returnValue = new UserCommandGuildRent(Buffer, StartIndex);
+                    break;
+
                 case UserCommandType.GuildSetPassword:                                                  // 30
                     returnValue = new UserCommandGuildSetPassword(Buffer, StartIndex);
                     break;
