@@ -563,6 +563,8 @@ namespace Meridian59.Common
                     connections.Add(ConnectionInfo.CON106);
                 if (!HasConnection(ConnectionInfo.CON112.Host, ConnectionInfo.CON112.Port))
                     connections.Add(ConnectionInfo.CON112);
+                if (!HasConnection(ConnectionInfo.CON200.Host, ConnectionInfo.CON200.Port))
+                    connections.Add(ConnectionInfo.CON200);
 #endif
             }
             else
@@ -578,6 +580,7 @@ namespace Meridian59.Common
                 connections.Add(ConnectionInfo.CON105);
                 connections.Add(ConnectionInfo.CON106);
                 connections.Add(ConnectionInfo.CON112);
+                connections.Add(ConnectionInfo.CON200);
 #endif
             }
 
