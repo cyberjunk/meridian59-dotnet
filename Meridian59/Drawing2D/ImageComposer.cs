@@ -37,7 +37,7 @@ namespace Meridian59.Drawing2D
     /// <typeparam name="U">Type of composed image</typeparam>
     public abstract class ImageComposer<T, U> where T:ObjectBase
     {
-        public struct CacheItem<V>
+        public class CacheItem<V>
         {
             public V Image;
             public uint Hits;
@@ -368,6 +368,24 @@ namespace Meridian59.Drawing2D
         {
             if (NewImageAvailable != null)
                 NewImageAvailable(this, new EventArgs());
+        }
+
+        /// <summary>
+        /// Prints cache stats to console
+        /// </summary>
+        public static void PrintCacheStats()
+        {
+            Console.WriteLine("SIZE: " + CacheSize.ToString());
+            Console.WriteLine("HASH\t\tHITS");
+            Console.WriteLine("--------------------");
+
+            foreach(KeyValuePair<uint, CacheItem<U>> entry in Cache)
+            {
+                Console.WriteLine(
+                    entry.Key.ToString() + "\t" + 
+                    entry.Value.Hits.ToString());
+            }
+            Console.WriteLine("--------------------");
         }
     }
 }
