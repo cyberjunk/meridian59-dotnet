@@ -436,5 +436,71 @@ namespace Meridian59.Common.Constants
             public const string JONASEMBLEM2    = "gshrebk.bgf";
 
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static class BGF
+        {
+            /// <summary>
+            /// Filenames of typical game-icons.
+            /// </summary>
+            public static readonly string[] Icons =
+            {
+                "iacidtou.bgf",     "ianimate.bgf",     "ianonym.bgf",      "ianonymo.bgf",
+                "iantimag.bgf",     "iapparit.bgf",     "iartific.bgf",     "ibetraya.bgf",
+                "iblfire.bgf",      "iblind.bgf",       "iblink.bgf",       "iblock.bgf",
+                "ibloodin.bgf",     "ibond.bgf",        "iboonagi.bgf",     "iboonaim.bgf",
+                "iboonhea.bgf",     "iboonint.bgf",     "iboonman.bgf",     "iboonmig.bgf",
+                "iboonmys.bgf",     "iboonsta.bgf",     "iboonvig.bgf",     "ibreath.bgf",
+                "ibrittle.bgf",     "icamofla.bgf",     "icanniba.bgf",     "icivilty.bgf",
+                "icloak.bgf",       "iconcil.bgf",      "iconveyance.bgf",  "icounter.bgf",              
+                
+                "icrefood.bgf",     "icremace.bgf",     "icrysman.bgf",     "icuredis.bgf",
+                "icurpoi.bgf",      "icursed.bgf",      "icurswpn.bgf",     "idarknes.bgf",
+                "idazzle.bgf",      "ideadoor.bgf",     "ideathli.bgf",     "idefile.bgf",
+                "idement.bgf",      "idenial.bgf",      "idetevil.bgf",     "idetgood.bgf",              
+                "idetinvi.bgf",     "idisarm.bgf",      "idiscord.bgf",     "idisharm.bgf",
+                "idispill.bgf",     "idistill.bgf",     "idistrac.bgf",     "ieagleye.bgf",
+                "ieavesdr.bgf",     "ielusion.bgf",     "ienchant.bgf",     "ienfeebl.bgf",
+                "ievltwin.bgf",     "iexfrost.bgf",     "iexplosion.bgf",   "ifade.bgf",
+                
+                "ifeignde.bgf",     "ifinrite.bgf",     "ifirebal.bgf",     "ifirestorm.bgf",
+                "iflash.bgf",       "ifog.bgf",         "iforesig.bgf",     "iforget.bgf",
+                "ifrclite.bgf",     "ifreeact.bgf",     "iglow.bgf",        "igort.bgf",
+                "igreyinvis.bgf",   "ihaste.bgf",       "iheal.bgf",        "iheat.bgf",              
+                "ihold.bgf",        "iholyres.bgf",     "iholysym.bgf",     "iholyt.bgf",
+                "iholywpn.bgf",     "ihospice.bgf",     "ihunt.bgf",        "iicyfing.bgf",
+                "iidentif.bgf",     "iillufrm.bgf",     "iilluwou.bgf",     "iinvigor.bgf",
+                "iinvisib.bgf",     "ijig.bgf",         "ikarahol.bgf",     "ikillfel.bgf",           
+                
+                "ilitning.bgf",     "imajheal.bgf",     "imanabom.bgf",     "imanacon.bgf",
+                "imanafoc.bgf",     "imarkdis.bgf",     "imartyrs.bgf",     "imeditate.bgf",
+                "imend.bgf",        "imirror.bgf",      "imirth.bgf",       "imlnchly.bgf",
+                "imorph.bgf",       "imysticc.bgf",     "iparalyz.bgf",     "ipersona.bgf",
+                "ipoiscld.bgf",     "iposoned.bgf",     "iprofres.bgf",     "ipurge.bgf",
+                "ipurify.bgf",      "iqorbane.bgf",     "irasdead.bgf",     "ireflect.bgf",
+                "irejuven.bgf",     "irelay.bgf",       "iremcurs.bgf",     "iresacid.bgf",
+                "irescold.bgf",     "iresfire.bgf",     "iresgood.bgf",     "iresmagc.bgf",
+                
+                "irespois.bgf",     "iresshok.bgf",     "irestor.bgf",      "ireveal.bgf",
+                "irift.bgf",        "iringfir.bgf",     "irthquak.bgf",     "isacrres.bgf",
+                "isandsto.bgf",     "iseance.bgf",      "isecwind.bgf",     "iseduce.bgf",
+                "ishabane.bgf",     "ishadfrm.bgf",     "ishatlok.bgf",     "ishatter.bgf",               
+                "ishkfury.bgf",     "ishroud.bgf",      "isilence.bgf",     "isitting.bgf",
+                "ispebane.bgf",     "ispectate.bgf",    "ispirith.bgf",     "isplacid.bgf",
+                "isporecl.bgf",     "istreng.bgf",      "isunlite.bgf",     "iswap.bgf",
+                "isweep.bgf",       "itoucfla.bgf",     "itruth.bgf",       "iumbrela.bgf",                
+                
+                "iunholyt.bgf",     "iunholyw.bgf",     "ivamptou.bgf",     "ivertigo.bgf",
+                "iwalfire.bgf",     "iwallfla.bgf",     "iwallill.bgf",     "iwalllit.bgf",
+                "iwalltho.bgf",     "iwarptim.bgf",     "iweb.bgf",         "iwinds.bgf",
+                "izap.bgf",         "parryico.bgf",     "slashico.bgf",     "dodgeico.bgf",
+                "punchico.bgf",     "brawlico.bgf",     "archrico.bgf",     "armorico.bgf",
+                "shswdico.bgf",     "rescuico.bgf",     "nitvsico.bgf",     "maceico.bgf",
+                "hammrico.bgf",     "fibowico.bgf",     "fenceico.bgf",     "blessico.bgf",
+                "axeico.bgf",       "avlanico.bgf",     "iicenova.bgf", 
+            };
+        }
     }
 }
