@@ -306,10 +306,10 @@ namespace Meridian59.Drawing2D
         public static void DumpCacheToDisk(string Directory)
         {
             string filename;
-            foreach (KeyValuePair<uint, Bitmap> pair in Cache)
+            foreach (KeyValuePair<uint, CacheItem<Bitmap>> pair in Cache)
             {
                 filename = Path.Combine(Directory, pair.Key.ToString());
-                pair.Value.Save(filename + FileExtensions.BMP);
+                pair.Value.Image.Save(filename + FileExtensions.BMP);
             }
         }
     }

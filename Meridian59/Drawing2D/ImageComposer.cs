@@ -37,6 +37,12 @@ namespace Meridian59.Drawing2D
     /// <typeparam name="U">Type of composed image</typeparam>
     public abstract class ImageComposer<T, U> where T:ObjectBase
     {
+        public struct CacheItem<V>
+        {
+            public V Image;
+            public uint Hits;
+        }
+
         /// <summary>
         /// The texture quality
         /// </summary>
@@ -50,7 +56,7 @@ namespace Meridian59.Drawing2D
         /// <summary>
         /// Cache used in lookup
         /// </summary>
-        public static Dictionary<uint, U> Cache = new Dictionary<uint, U>();
+        public static Dictionary<uint, CacheItem<U>> Cache = new Dictionary<uint, CacheItem<U>>();
 
         /// <summary>
         /// Size of the cache in bytes (for 32-bit pixeldata)
@@ -167,8 +173,10 @@ namespace Meridian59.Drawing2D
                 if (RenderInfo.Dimension.X > 0.0f &&
                     RenderInfo.Dimension.Y > 0.0f)
                 {
+                    CacheItem<U> item;
+ 
                     // try get image from cache
-                    if (!IsCacheEnabled || !Cache.TryGetValue(AppearanceHash, out image))
+                    if (!Cache.TryGetValue(AppearanceHash, out item))
                     {
                         // prepare drawing
                         PrepareDraw();
@@ -191,9 +199,18 @@ namespace Meridian59.Drawing2D
                         // possibly add image to cache
                         if (IsCacheEnabled)
                         {
-                            Cache.Add(AppearanceHash, image);
+                            item = new CacheItem<U>();
+                            item.Image = image;
+                            item.Hits = 0;
+
+                            Cache.Add(AppearanceHash, item);
                             CacheSize += (4U * (uint)(RenderInfo.Dimension.X * RenderInfo.Dimension.Y));
                         }
+                    }
+                    else
+                    {
+                        image = item.Image;
+                        item.Hits++;
                     }
 
                     // fire event
