@@ -47,7 +47,9 @@ namespace Meridian59 { namespace Ogre
 		::Ogre::Light*			light;
 		::Ogre::Billboard*		billboardName;
         ::Ogre::BillboardSet*	billboardSetName;
-		
+		float					nameTextureWidth;
+		float					nameTextureHeight;
+
 		std::list<::irrklang::ISound*>* sounds;
 		RoomObject^ roomObject;
 		

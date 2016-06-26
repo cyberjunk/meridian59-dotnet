@@ -125,6 +125,20 @@ namespace Meridian59 { namespace Ogre
 		{
 			UpdateMaterial();
 		}
+
+		else if (System::String::Equals(e->PropertyName, Data::Models::RoomObject::PROPNAME_DISTANCETOVIEWERSQUARED))
+		{
+			// scale name a bit based on distance to camera
+			if (billboardSetName)
+			{
+				float w = 0.0000045f * (float)RoomObject->DistanceToViewerSquared * nameTextureWidth;
+				float h = 0.0000045f * (float)RoomObject->DistanceToViewerSquared * nameTextureHeight;
+
+				billboardSetName->setDefaultDimensions(
+					MathUtil::Bound(w, nameTextureWidth * 0.2f, nameTextureWidth * 0.5f),
+					MathUtil::Bound(h, nameTextureHeight * 0.2f, nameTextureHeight * 0.5f));
+			}
+		}
     };
 
     void RemoteNode::CreateLight()
@@ -255,11 +269,11 @@ namespace Meridian59 { namespace Ogre
 			TexturePtr texPtr = TextureManager::getSingletonPtr()->createOrRetrieve(
 				texName, TEXTUREGROUP_MOVABLETEXT).first.staticCast<Texture>();
 
-			float width = (float)texPtr->getWidth() * 0.25f;
-			float height = (float)texPtr->getHeight() * 0.25f;
+			nameTextureWidth = (::Ogre::Real)texPtr->getWidth();
+			nameTextureHeight = (::Ogre::Real)texPtr->getHeight();
 
 			// refresh size of billboard
-			billboardSetName->setDefaultDimensions(width, height);
+			billboardSetName->setDefaultDimensions(nameTextureWidth, nameTextureHeight);
 			billboardSetName->setBounds(AxisAlignedBox::BOX_NULL, 0.0f);
 
 			// update position of name
