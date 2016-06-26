@@ -61,7 +61,9 @@ namespace Meridian59 { namespace Ogre
 
 		void CreateName();
 		void UpdateName();
-		void UpdateNamePosition();	
+		void UpdateNamePosition();
+		void UpdateNameSize();
+
 		virtual void UpdateMaterial();
 
 	public:
