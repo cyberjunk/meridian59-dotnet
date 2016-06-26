@@ -39,18 +39,16 @@ namespace Meridian59.RooViewer
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            PalettesGDI.Initialize();
-
             // init resources
             ResourceManager = new ResourceManager();
             ResourceManager.Init(
-                "",
-                "",
-                "",
+                "./",
+                "./",
+                "./",
                 Properties.Settings.Default.PathTextures,
-                "",
-                "",
-                "");
+                "./",
+                "./",
+                "./");
 
             // create ui
             MainForm = new MainForm();
