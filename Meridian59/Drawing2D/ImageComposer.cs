@@ -53,6 +53,11 @@ namespace Meridian59.Drawing2D
         public static Dictionary<uint, U> Cache = new Dictionary<uint, U>();
 
         /// <summary>
+        /// Size of the cache in bytes (for 32-bit pixeldata)
+        /// </summary>
+        public static uint CacheSize = 0;
+
+        /// <summary>
         /// Raised when new image was composed or retrieved from cache
         /// </summary>
         public event EventHandler NewImageAvailable;
@@ -185,7 +190,10 @@ namespace Meridian59.Drawing2D
 
                         // possibly add image to cache
                         if (IsCacheEnabled)
+                        {
                             Cache.Add(AppearanceHash, image);
+                            CacheSize += (4U * (uint)(RenderInfo.Dimension.X * RenderInfo.Dimension.Y));
+                        }
                     }
 
                     // fire event
