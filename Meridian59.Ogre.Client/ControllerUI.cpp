@@ -612,6 +612,93 @@ namespace Meridian59 { namespace Ogre
 		}
 	};
 
+	void ControllerUI::BuildIconAtlas()
+	{
+		::CEGUI::ImageManager* imgMan = CEGUI::ImageManager::getSingletonPtr();
+		::Ogre::TextureManager* texMan = Ogre::TextureManager::getSingletonPtr();
+		::Meridian59::Files::ResourceManager^ resMan = OgreClient::Singleton->ResourceManager;
+
+		const char* TEXNAME = "ICONS-16x16";
+		const int WIDTH = 256;
+		const int HEIGHT = 256;
+		const int ICONWIDTH = 16;
+		const int ICONHEIGHT = 16;
+
+		// create manual (empty) ogre texture
+		TexturePtr texPtr = texMan->createManual(
+			TEXNAME,
+			UI_RESGROUP_IMAGESETS,
+			TextureType::TEX_TYPE_2D,
+			WIDTH, HEIGHT, 0,
+			::Ogre::PixelFormat::PF_A8R8G8B8,
+			TU_DEFAULT, 0, false, 0);
+
+		// make ogre texture visible to CEGUI
+		CEGUI::Texture* mTexture = &renderer->createTexture(TEXNAME, texPtr);
+
+		// get pixelbuffer
+		HardwarePixelBufferSharedPtr pixPtr = texPtr->getBuffer();
+
+		// lock it
+		unsigned int* pixels = (unsigned int*)pixPtr->lock(HardwareBuffer::LockOptions::HBL_WRITE_ONLY);
+
+		int x = 0;
+		int y = 0;
+
+		for each(::System::String^ icon in ResourceStrings::BGF::Icons)
+		{
+			// try to get bgf file for filename from resource manager
+			BgfFile^ bgf = resMan->GetObject(icon);
+
+			// not found or 0 frames
+			if (bgf == nullptr || bgf->Frames->Count == 0)
+				continue;
+
+			BgfBitmap^ frame = bgf->Frames[0];
+
+			if (frame->Width != ICONWIDTH || frame->Height != ICONHEIGHT)
+				continue;
+
+			// build cegui image name for icon
+			::Ogre::String imgName =
+				StringConvert::CLRToOgre(UI_NAMEPREFIX_STATICICON + icon + "/0");
+
+			// already defined
+			if (imgMan->isDefined(imgName))
+				continue;
+
+			// create cegui image
+			CEGUI::BasicImage* img = (CEGUI::BasicImage*)&imgMan->create("BasicImage", imgName);
+
+			// set texture and uv-coords
+			img->setTexture(mTexture);
+			img->setArea(CEGUI::Rectf((float)x, (float)y, (float)(x + ICONWIDTH), (float)(y + ICONHEIGHT)));
+			
+			// fill the pixeldata to buffer
+			frame->FillPixelDataAsA8R8G8B8TransparencyBlack(pixels, WIDTH);
+
+			// move to next slot in row
+			pixels += 16;
+			x += 16;
+
+			// next row
+			if (x > WIDTH - 16)
+			{
+				x = 0;
+				y += 16;
+
+				pixels += (ICONHEIGHT - 1) * WIDTH;
+			}
+
+			// icon texture can't hold any more
+			if (y > HEIGHT - 16)
+				break;
+		}
+
+		// unlock buffer
+		pixPtr->unlock();
+	};
+
 #pragma region Input injection
 
 	void ControllerUI::InjectMousePosition(float x, float y)

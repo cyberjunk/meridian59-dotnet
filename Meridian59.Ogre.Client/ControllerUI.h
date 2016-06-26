@@ -82,6 +82,8 @@ namespace Meridian59 { namespace Ogre
 		static void InjectKeyUp(::CEGUI::Key::Scan Key);
 		static void InjectChar(::CEGUI::Key::Scan Key);
 			
+		static void BuildIconAtlas();
+
 		static property ::CEGUI::OgreRenderer* Renderer 
 		{ 
 			public: ::CEGUI::OgreRenderer* get() { return renderer; }

@@ -126,30 +126,40 @@ namespace Meridian59 { namespace Ogre
 			name->setText(StringConvert::CLRToCEGUI(obj->ResourceName));
 			percent->setText(CEGUI::PropertyHelper<unsigned int>::toString(obj->SkillPoints) + '%');
 
-			// set image if available
-			if (obj->Resource != nullptr && obj->Resource->Frames->Count > 0)
+			// build imagename
+			::Ogre::String oStrName =
+				StringConvert::CLRToOgre(UI_NAMEPREFIX_STATICICON + obj->ResourceIconName->ToLower() + "/0");
+
+			// define image (use same name)
+			CEGUI::ImageManager* imgMan = CEGUI::ImageManager::getSingletonPtr();
+
+			// create image no the fly
+			if (!imgMan->isDefined(oStrName))
 			{
-				Ogre::TextureManager* texMan = Ogre::TextureManager::getSingletonPtr();
-					
-				// build name
-				::Ogre::String oStrName = 
-					StringConvert::CLRToOgre(UI_NAMEPREFIX_STATICICON + obj->ResourceIconName + "/0");
-
-				// possibly create texture
-				Util::CreateTextureA8R8G8B8(obj->Resource->Frames[0], oStrName, UI_RESGROUP_IMAGESETS, MIP_DEFAULT);
-
-				// reget TexPtr (no return from function works, ugh..)
-				TexturePtr texPtr = texMan->getByName(oStrName);
-
-				if (!texPtr.isNull())
+				if (obj->Resource != nullptr && obj->Resource->Frames->Count > 0)
 				{
-					// possibly create cegui wrap around it
-					Util::CreateCEGUITextureFromOgre(ControllerUI::Renderer, texPtr);
+					Ogre::TextureManager* texMan = Ogre::TextureManager::getSingletonPtr();
 
-					// set image
-					icon->setProperty(UI_PROPNAME_IMAGE, oStrName);
+					// possibly create texture
+					Util::CreateTextureA8R8G8B8(obj->Resource->Frames[0], oStrName, UI_RESGROUP_IMAGESETS, MIP_DEFAULT);
+
+					// reget TexPtr (no return from function works, ugh..)
+					TexturePtr texPtr = texMan->getByName(oStrName);
+
+					if (!texPtr.isNull())
+					{
+						// possibly create cegui wrap around it
+						Util::CreateCEGUITextureFromOgre(ControllerUI::Renderer, texPtr);
+
+						// set image
+						icon->setProperty(UI_PROPNAME_IMAGE, oStrName);
+					}
 				}
 			}
+
+			// set existing image
+			else
+				icon->setProperty(UI_PROPNAME_IMAGE, oStrName);
 		}
 	};
 

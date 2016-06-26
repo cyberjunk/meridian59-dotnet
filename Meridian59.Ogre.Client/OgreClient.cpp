@@ -661,6 +661,9 @@ namespace Meridian59 { namespace Ogre
 			Config->PreloadSound,
 			Config->PreloadMusic);
 
+		// build a texture-atlas for all the small 16x16 spell/skill icons which are not built from object
+		ControllerUI::BuildIconAtlas();
+
 		// .NET 4.5
 		// next gc run, defragment the largeobjectheap
 		::System::Runtime::GCSettings::LargeObjectHeapCompactionMode =
