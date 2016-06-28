@@ -53,9 +53,6 @@ namespace Meridian59.BgfEditor
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            // initialize color palettes
-            PalettesGDI.Initialize();
-
             // init bgf data model
             CurrentFile = new BgfFile();
             CurrentFile.Frames.AllowEdit = true;
