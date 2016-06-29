@@ -54,8 +54,28 @@ namespace Meridian59 { namespace Ogre
 	{
 		const CEGUI::MouseEventArgs& args = static_cast<const CEGUI::MouseEventArgs&>(e);
 
+		// adjust minimap size
+		if (ControllerInput::IsSelfTargetDown)
+		{
+			const float MINSIZE = 256.0f;
+			const float MAXSIZE = 512.0f;
+
+			MiniMapCEGUI^ minimap = OgreClient::Singleton->MiniMap;
+
+			int width  = (int)MathUtil::Bound((float)minimap->Width  + args.wheelChange * -2.0f, MINSIZE, MAXSIZE);
+			int height = (int)MathUtil::Bound((float)minimap->Height + args.wheelChange * -2.0f, MINSIZE, MAXSIZE);
+
+			::CEGUI::USize size = ::CEGUI::USize(
+				::CEGUI::UDim(0.0f, (float)width), ::CEGUI::UDim(0.0f, (float)height));
+
+			OgreClient::Singleton->MiniMap->SetDimension(width, height);
+			ControllerUI::MiniMap::Window->setMaxSize(size);
+			ControllerUI::MiniMap::Window->setSize(size);
+		}
+
 		// adjust zoomlevel
-		OgreClient::Singleton->MiniMap->Zoom += (args.wheelChange * -0.2f);
+		else
+			OgreClient::Singleton->MiniMap->Zoom += (args.wheelChange * -0.2f);
 
 		return true;
 	};

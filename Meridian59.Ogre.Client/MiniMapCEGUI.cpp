@@ -105,11 +105,11 @@ namespace Meridian59 { namespace Ogre
 		// create pie clipping
 		GraphicsPath^ gpath = gcnew GraphicsPath();
 		gpath->AddPie(
-			UI_MINIMAP_CLIPPADDING, 
-			UI_MINIMAP_CLIPPADDING, 
-			Width - (2 * UI_MINIMAP_CLIPPADDING), 
-			Height - (2 * UI_MINIMAP_CLIPPADDING), 
-			0, 360);
+			UI_MINIMAP_CLIPPADDING * (float)Width, 
+			UI_MINIMAP_CLIPPADDING * (float)Height,
+			(float)Width - (2.0f * UI_MINIMAP_CLIPPADDING * (float)Width),
+			(float)Height - (2.0f * UI_MINIMAP_CLIPPADDING * (float)Height),
+			0.0f, 360.0f);
         
 		gpath->CloseFigure();
 
