@@ -60,7 +60,7 @@ namespace Meridian59 { namespace Ogre
             UI_MINIMAP_TEXNAME,
             UI_RESGROUP_IMAGESETS,
             TextureType::TEX_TYPE_2D,
-			(unsigned short)Width, (unsigned short)Height, MIP_DEFAULT,
+			(unsigned short)Width, (unsigned short)Height, 0,
             ::Ogre::PixelFormat::PF_A8R8G8B8,
 			TU_DEFAULT, 0, false, 0);
 		
