@@ -212,6 +212,26 @@ namespace Meridian59 { namespace Ogre
 		/// </summary>
 		void OnAdminFormPacketSend(Object^ sender, GameMessageEventArgs^ e);
 
+		/// <summary>
+		/// Eventhandler when cache suggest removal of entry
+		/// </summary>
+		void OnImageComposerOgreRoomObjectCacheRemove(Object^ sender, ImageComposerOgre<RoomObject^>::Cache::ItemEventArgs^ e);
+
+		/// <summary>
+		/// Eventhandler when cache suggest removal of entry
+		/// </summary>
+		void OnImageComposerCEGUIObjectBaseCacheRemove(Object^ sender, ImageComposerCEGUI<ObjectBase^>::Cache::ItemEventArgs^ e);
+
+		/// <summary>
+		/// Eventhandler when cache suggest removal of entry
+		/// </summary>
+		void OnImageComposerCEGUIRoomObjectCacheRemove(Object^ sender, ImageComposerCEGUI<RoomObject^>::Cache::ItemEventArgs^ e);
+
+		/// <summary>
+		/// Eventhandler when cache suggest removal of entry
+		/// </summary>
+		void OnImageComposerCEGUIInventoryObjectCacheRemove(Object^ sender, ImageComposerCEGUI<InventoryObject^>::Cache::ItemEventArgs^ e);
+
 	public:
 		bool RecreateWindow = false;
 

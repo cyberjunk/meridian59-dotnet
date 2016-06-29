@@ -35,33 +35,12 @@ namespace Meridian59.Drawing2D
     /// </summary>
     /// <typeparam name="T">Class of Data (ObjectBase or above)</typeparam>
     /// <typeparam name="U">Type of composed image</typeparam>
-    public abstract class ImageComposer<T, U> where T:ObjectBase
+    public abstract class ImageComposer<T, U> where T:ObjectBase 
     {
-        public class CacheItem<V>
-        {
-            public V Image;
-            public uint Hits;
-        }
-
         /// <summary>
         /// The texture quality
         /// </summary>
         public static Real DefaultQuality = RenderInfo.DEFAULTQUALITY;
-
-        /// <summary>
-        /// Whether to cache created images
-        /// </summary>
-        public static bool IsCacheEnabled = true;
-
-        /// <summary>
-        /// Cache used in lookup
-        /// </summary>
-        public static Dictionary<uint, CacheItem<U>> Cache = new Dictionary<uint, CacheItem<U>>();
-
-        /// <summary>
-        /// Size of the cache in bytes (for 32-bit pixeldata)
-        /// </summary>
-        public static uint CacheSize = 0;
 
         /// <summary>
         /// Raised when new image was composed or retrieved from cache
@@ -70,6 +49,7 @@ namespace Meridian59.Drawing2D
 
         protected T dataSource;
         protected U image;
+        protected Cache.Item item;
         protected bool drawBackground;
         protected readonly Murmur3 hash = new Murmur3();
 
@@ -123,6 +103,18 @@ namespace Meridian59.Drawing2D
         }
 
         /// <summary>
+        /// Destructor
+        /// </summary>
+        ~ImageComposer()
+        {
+            if (item != null)
+            {
+                item.Refs--;
+                item = null;
+            }
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="Data"></param>
@@ -164,59 +156,65 @@ namespace Meridian59.Drawing2D
         /// </summary>
         public void Refresh()
         {
-            if (dataSource != null)
+            // must have datasource to draw
+            if (dataSource == null)
+                return;
+
+            // refresh the renderinfo
+            // and hashvalue for cache retrieval
+            UpdateRenderInfo(dataSource);
+
+            if (RenderInfo.Dimension.X > 0.0f &&
+                RenderInfo.Dimension.Y > 0.0f)
             {
-                // refresh the renderinfo
-                // and hashvalue for cache retrieval
-                UpdateRenderInfo(dataSource);
+                // decrease ref counts on last used cache-hit
+                if (item != null)
+                    item.Refs--;
 
-                if (RenderInfo.Dimension.X > 0.0f &&
-                    RenderInfo.Dimension.Y > 0.0f)
+                // try get image from cache
+                if (!Cache.TryGetValue(AppearanceHash, out item))
                 {
-                    CacheItem<U> item;
- 
-                    // try get image from cache
-                    if (!Cache.TryGetValue(AppearanceHash, out item))
+                    // prepare drawing
+                    PrepareDraw();
+
+                    // glowing background if marked
+                    if (drawBackground)
+                        DrawBackground();
+
+                    // main rendering
+                    DrawSubOverlays(true);
+                    DrawMainOverlay();
+                    DrawSubOverlays(false);
+
+                    // post effects
+                    DrawPostEffects();
+
+                    // finish drawing
+                    FinishDraw();
+
+                    // possibly add image to cache
+                    if (Cache.IsEnabled)
                     {
-                        // prepare drawing
-                        PrepareDraw();
+                        item = new Cache.Item();
+                        item.Key = AppearanceHash;
+                        item.Image = image;
+                        item.Refs = 1;
+                        item.Hits = 0;
+                        item.Size = 4U * (uint)(RenderInfo.Dimension.X * RenderInfo.Dimension.Y);
 
-                        // glowing background if marked
-                        if (drawBackground)
-                            DrawBackground();
-
-                        // main rendering
-                        DrawSubOverlays(true);
-                        DrawMainOverlay();
-                        DrawSubOverlays(false);
-
-                        // post effects
-                        DrawPostEffects();
-
-                        // finish drawing
-                        FinishDraw();
-
-                        // possibly add image to cache
-                        if (IsCacheEnabled)
-                        {
-                            item = new CacheItem<U>();
-                            item.Image = image;
-                            item.Hits = 0;
-
-                            Cache.Add(AppearanceHash, item);
-                            CacheSize += (4U * (uint)(RenderInfo.Dimension.X * RenderInfo.Dimension.Y));
-                        }
+                        Cache.Add(AppearanceHash, item);
                     }
-                    else
-                    {
-                        image = item.Image;
-                        item.Hits++;
-                    }
-
-                    // fire event
-                    RaiseNewImageAvailable();
                 }
-            }
+                else
+                {
+                    image = item.Image;
+                    item.Refs++;
+                    item.Hits++;
+                }
+
+                // fire event
+                RaiseNewImageAvailable();
+            }          
         }
 
         /// <summary>
@@ -371,21 +369,163 @@ namespace Meridian59.Drawing2D
         }
 
         /// <summary>
-        /// Prints cache stats to console
+        /// Cache providing entries
         /// </summary>
-        public static void PrintCacheStats()
+        public static class Cache
         {
-            Console.WriteLine("SIZE: " + CacheSize.ToString());
-            Console.WriteLine("HASH\t\tHITS");
-            Console.WriteLine("--------------------");
-
-            foreach(KeyValuePair<uint, CacheItem<U>> entry in Cache)
+            /// <summary>
+            /// The type of the cache entries
+            /// </summary>
+            public class Item
             {
-                Console.WriteLine(
-                    entry.Key.ToString() + "\t" + 
-                    entry.Value.Hits.ToString());
+                public uint Key;
+                public U Image;
+                public uint Size;
+                public uint Refs;
+                public uint Hits;
             }
-            Console.WriteLine("--------------------");
+
+            /// <summary>
+            /// EventArgs carrying a cache item
+            /// </summary>
+            public class ItemEventArgs : EventArgs
+            {
+                public readonly Item Item;
+                
+                public ItemEventArgs(Item Item)
+                {
+                    this.Item = Item;
+                }
+            }
+
+            /// <summary>
+            /// Raised by 'Prune()' for entries without active references.
+            /// </summary>
+            public static event EventHandler<ItemEventArgs> RemoveSuggested;
+
+            /// <summary>
+            /// Cache used in lookup
+            /// </summary>
+            private static readonly Dictionary<uint, Item> cache = new Dictionary<uint, Item>();
+
+            /// <summary>
+            /// Whether to cache created images
+            /// </summary>
+            public static bool IsEnabled = true;
+
+            /// <summary>
+            /// Size of the cache in bytes (for 32-bit pixeldata)
+            /// </summary>
+            public static uint CacheSize = 0;
+
+            /// <summary>
+            /// Maximum size of the cache in bytes (default: 32 MB)
+            /// </summary>
+            public static uint CacheSizeMax = 32 * 1024 * 1024;
+
+            /// <summary>
+            /// Tries to lookup an item from the cache
+            /// </summary>
+            /// <param name="Key"></param>
+            /// <param name="Value"></param>
+            /// <returns></returns>
+            public static bool TryGetValue(uint Key, out Item Value)
+            {
+                return cache.TryGetValue(Key, out Value);
+            }
+
+            /// <summary>
+            /// Adds an item to the cache
+            /// </summary>
+            /// <param name="Key"></param>
+            /// <param name="Value"></param>
+            public static void Add(uint Key, Item Value)
+            {
+                cache.Add(Key, Value);
+                CacheSize += Value.Size;
+
+                if (CacheSize > CacheSizeMax)
+                    Prune();
+            }
+
+            /// <summary>
+            /// Tries to remove a cache item
+            /// </summary>
+            /// <param name="Item"></param>
+            /// <returns></returns>
+            public static bool Remove(Item Item)
+            {
+                if (Item.Refs > 0)
+                    return false;
+
+                bool ok = cache.Remove(Item.Key);
+
+                if (ok)
+                    CacheSize -= Item.Size;
+
+                return ok;
+            }
+
+            /// <summary>
+            /// Clears all entries from the cache
+            /// </summary>
+            public static void Clear()
+            {
+                cache.Clear();
+                CacheSize = 0;
+            }
+
+            /// <summary>
+            /// Raises a 'RemoveSuggested' event for all cache entries without active references.
+            /// Automatically called if the maximum cache size is exceeded.
+            /// </summary>
+            public static void Prune()
+            {
+                if (RemoveSuggested == null)
+                    return;
+
+                // collect them first so we don't have to remove during iteration
+                List<Item> candidates = new List<Item>();
+
+                // select ones without references
+                foreach(KeyValuePair<uint, Item> item in cache)
+                {
+                    // skip ones in use
+                    if (item.Value.Refs > 0)
+                        continue;
+
+                    candidates.Add(item.Value);  
+                }
+
+                // raise events
+                foreach (Item item in candidates)
+                    RemoveSuggested(typeof(ImageComposer<T, U>.Cache), new ItemEventArgs(item));
+            }
+
+            /// <summary>
+            /// Prints cache stats to console
+            /// </summary>
+            public static void PrintCacheStats()
+            {
+                Console.WriteLine("--------------------------------");
+                Console.WriteLine("T:    " + typeof(T).ToString());
+                Console.WriteLine("U:    " + typeof(U).ToString());
+                Console.WriteLine("SIZE: " + (CacheSize / 1024).ToString() + " KB");
+                Console.WriteLine("MAX:  " + (CacheSizeMax / 1024).ToString() + " KB");               
+                Console.WriteLine("HASH         HITS   REFS   KB");
+                Console.WriteLine("--------------------------------");
+
+                foreach (KeyValuePair<uint, Item> entry in cache)
+                {
+                    string hash = entry.Key.ToString().PadRight(13);
+                    string hits = entry.Value.Hits.ToString().PadRight(7);
+                    string refs = entry.Value.Refs.ToString().PadRight(7);
+                    string size = (entry.Value.Size / 1024).ToString().PadRight(7);
+
+                    Console.WriteLine(hash + hits + refs + size);
+                }
+                Console.WriteLine("--------------------------------");
+            }
         }
     }
 }

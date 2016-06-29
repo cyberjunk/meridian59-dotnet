@@ -477,7 +477,7 @@ namespace Meridian59 { namespace Ogre
 				if (!OgreRenderer->isTextureDefined(texName))
 				{					
 					// make ogre texture visible to CEGUI
-					CEGUI::Texture* mTexture = &OgreRenderer->createTexture(texName, OgreTexture);
+					CEGUI::Texture* mTexture = &OgreRenderer->createTexture(texName, OgreTexture, true);
 
 					// define image (use same name)
 					CEGUI::ImageManager* imgMan = CEGUI::ImageManager::getSingletonPtr();

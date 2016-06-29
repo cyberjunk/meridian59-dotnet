@@ -241,6 +241,27 @@ namespace Meridian59 { namespace Ogre
 		}
 
 		/********************************************************************************************************/
+		/*                                   Setup ImageComposer Caches                                         */
+		/********************************************************************************************************/
+		
+		ImageComposerOgre<RoomObject^>::Cache::CacheSizeMax			= 128 * 1024 * 1024;
+		ImageComposerCEGUI<ObjectBase^>::Cache::CacheSizeMax		= 16 * 1024 * 1024;
+		ImageComposerCEGUI<RoomObject^>::Cache::CacheSizeMax		= 16 * 1024 * 1024;
+		ImageComposerCEGUI<InventoryObject^>::Cache::CacheSizeMax	= 16 * 1024 * 1024;
+
+		ImageComposerOgre<RoomObject^>::Cache::RemoveSuggested +=
+			gcnew ::System::EventHandler<ImageComposerOgre<RoomObject^>::Cache::ItemEventArgs^>(this, &OgreClient::OnImageComposerOgreRoomObjectCacheRemove);
+
+		ImageComposerCEGUI<ObjectBase^>::Cache::RemoveSuggested +=
+			gcnew ::System::EventHandler<ImageComposerCEGUI<ObjectBase^>::Cache::ItemEventArgs^>(this, &OgreClient::OnImageComposerCEGUIObjectBaseCacheRemove);
+
+		ImageComposerCEGUI<RoomObject^>::Cache::RemoveSuggested +=
+			gcnew ::System::EventHandler<ImageComposerCEGUI<RoomObject^>::Cache::ItemEventArgs^>(this, &OgreClient::OnImageComposerCEGUIRoomObjectCacheRemove);
+
+		ImageComposerCEGUI<InventoryObject^>::Cache::RemoveSuggested +=
+			gcnew ::System::EventHandler<ImageComposerCEGUI<InventoryObject^>::Cache::ItemEventArgs^>(this, &OgreClient::OnImageComposerCEGUIInventoryObjectCacheRemove);
+
+		/********************************************************************************************************/
 		/*                                                                                                      */
 		/********************************************************************************************************/
 
@@ -484,10 +505,10 @@ namespace Meridian59 { namespace Ogre
 		if (cameraListener)
 			OGRE_DELETE cameraListener;
 
-		ImageComposerCEGUI<ObjectBase^>::Cache->Clear();
-		ImageComposerCEGUI<RoomObject^>::Cache->Clear();
-		ImageComposerCEGUI<InventoryObject^>::Cache->Clear();
-		ImageComposerOgre<RoomObject^>::Cache->Clear();
+		ImageComposerCEGUI<ObjectBase^>::Cache::Clear();
+		ImageComposerCEGUI<RoomObject^>::Cache::Clear();
+		ImageComposerCEGUI<InventoryObject^>::Cache::Clear();
+		ImageComposerOgre<RoomObject^>::Cache::Clear();
 
 		cameraListener = nullptr;
 		camera = nullptr;
@@ -971,6 +992,42 @@ namespace Meridian59 { namespace Ogre
     {
         ServerConnection->SendQueue->Enqueue(e->Message);
     };
+
+	void OgreClient::OnImageComposerOgreRoomObjectCacheRemove(Object^ sender, ImageComposerOgre<RoomObject^>::Cache::ItemEventArgs^ e)
+	{
+		// delete materials and texture
+		e->Item->Image->Delete();
+
+		// remove from cache
+		ImageComposerOgre<RoomObject^>::Cache::Remove(e->Item);
+	};
+
+	void OgreClient::OnImageComposerCEGUIObjectBaseCacheRemove(Object^ sender, ImageComposerCEGUI<ObjectBase^>::Cache::ItemEventArgs^ e)
+	{
+		// delete materials and texture
+		e->Item->Image->Delete();
+
+		// remove from cache
+		ImageComposerCEGUI<ObjectBase^>::Cache::Remove(e->Item);
+	};
+
+	void OgreClient::OnImageComposerCEGUIRoomObjectCacheRemove(Object^ sender, ImageComposerCEGUI<RoomObject^>::Cache::ItemEventArgs^ e)
+	{
+		// delete materials and texture
+		e->Item->Image->Delete();
+
+		// remove from cache
+		ImageComposerCEGUI<RoomObject^>::Cache::Remove(e->Item);
+	};
+
+	void OgreClient::OnImageComposerCEGUIInventoryObjectCacheRemove(Object^ sender, ImageComposerCEGUI<InventoryObject^>::Cache::ItemEventArgs^ e)
+	{
+		// delete materials and texture
+		e->Item->Image->Delete();
+
+		// remove from cache
+		ImageComposerCEGUI<InventoryObject^>::Cache::Remove(e->Item);
+	};
 
 	void OgreClient::DemoSceneDestroy()
 	{

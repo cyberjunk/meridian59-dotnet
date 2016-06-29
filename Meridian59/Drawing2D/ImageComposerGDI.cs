@@ -298,20 +298,6 @@ namespace Meridian59.Drawing2D
             // unlock
             Bitmap.UnlockBits(bmpData);
         }
-
-        /// <summary>
-        /// Writes all Bitmaps in cache to Directory
-        /// </summary>
-        /// <param name="Directory"></param>
-        public static void DumpCacheToDisk(string Directory)
-        {
-            string filename;
-            foreach (KeyValuePair<uint, CacheItem<Bitmap>> pair in Cache)
-            {
-                filename = Path.Combine(Directory, pair.Key.ToString());
-                pair.Value.Image.Save(filename + FileExtensions.BMP);
-            }
-        }
     }
 }
 #endif

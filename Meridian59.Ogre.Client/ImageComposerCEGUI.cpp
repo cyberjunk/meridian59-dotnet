@@ -2,6 +2,18 @@
 
 namespace Meridian59 { namespace Ogre 
 {
+	void TextureInfoCEGUI::Delete(void)
+	{
+		// destroy CEGUI image
+		::CEGUI::ImageManager::getSingletonPtr()->destroy(*TextureName);
+
+		// destroy Ogre/CEGUI texture
+		ControllerUI::Renderer->destroyTexture(TextureName->c_str());
+
+		// delete texture string
+		delete TextureName;
+	}
+
 	generic <typename T>
 	static ImageComposerCEGUI<T>::ImageComposerCEGUI(void)
 	{

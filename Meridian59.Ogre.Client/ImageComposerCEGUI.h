@@ -34,6 +34,8 @@ namespace Meridian59 { namespace Ogre
 	{
 	public:
 		::CEGUI::String* TextureName;
+
+		void Delete();
 	};
 
 	/// <summary>
