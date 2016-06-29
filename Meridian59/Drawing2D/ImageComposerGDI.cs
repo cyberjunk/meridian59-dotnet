@@ -162,48 +162,6 @@ namespace Meridian59.Drawing2D
         }
 
         /// <summary>
-        /// Returns a A8R8G8B8 (pow2 sized) bitmap with the name of the object drawn in it.
-        /// </summary>
-        /// <param name="Object"></param>
-        /// <returns></returns>
-        public static Bitmap GetBitmapForName(ObjectBase Object)
-        {
-            const int ESTIMATEDCHARWIDTH = 16;
-            const int HEIGHT = 32;
-
-            int width = (int)MathUtil.NextPowerOf2((uint)(Object.Name.Length * ESTIMATEDCHARWIDTH));
-            
-            // get color to use for name based on objectflags
-            Color color = Color.FromArgb((int)NameColors.GetColorFor(Object.Flags));
-
-            // font to use
-            Font font = new Font(FontFamily.GenericSansSerif, 20,
-                FontStyle.Regular, GraphicsUnit.Pixel);
-           
-            // create bitmap to draw on
-            Bitmap bitmap = new Bitmap(width, HEIGHT, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-
-            // draw name into bitmap
-            using (Graphics g = Graphics.FromImage(bitmap))
-            {
-                string text = Object.Name;
-
-                StringFormat format = new StringFormat();
-                format.Alignment = StringAlignment.Center;
-                format.LineAlignment = StringAlignment.Center;
-
-                // draw text
-                using (SolidBrush brush = new SolidBrush(color))
-                {
-                    g.Clear(Color.Transparent);
-                    g.DrawString(text, font, brush, new RectangleF(0, 0, width, HEIGHT), format);
-                }               
-            }
-
-            return bitmap;
-        }
-
-        /// <summary>
         /// Adds a red border next to non transparent pixels
         /// </summary>
         /// <param name="Bitmap"></param>
@@ -297,6 +255,79 @@ namespace Meridian59.Drawing2D
 
             // unlock
             Bitmap.UnlockBits(bmpData);
+        }
+
+        /// <summary>
+        /// Provides bitmaps with object names drawn into
+        /// </summary>
+        public static class NameBitmap
+        {
+            /// <summary>
+            /// The font used to draw object names
+            /// </summary>
+            private static readonly Font FONT = new Font(
+                FontFamily.GenericSansSerif, 24, FontStyle.Regular, GraphicsUnit.Pixel);
+
+            /// <summary>
+            /// Dummy to get a Graphics instance to text measuring
+            /// </summary>
+            private static readonly Bitmap DUMMY = new Bitmap(1, 1, PixelFormat.Format32bppArgb);
+            
+            /// <summary>
+            /// Graphics instance for text size measuring
+            /// </summary>
+            private static readonly Graphics MEASURE = Graphics.FromImage(DUMMY);
+
+            /// <summary>
+            /// String alignment
+            /// </summary>
+            private static readonly StringFormat STRINGFORMAT = new StringFormat();
+
+            /// <summary>
+            /// Static constructor
+            /// </summary>
+            static NameBitmap()
+            {
+                STRINGFORMAT.Alignment = StringAlignment.Center;
+                STRINGFORMAT.LineAlignment = StringAlignment.Center;
+            }
+
+            /// <summary>
+            /// Returns a A8R8G8B8 (pow2 sized) bitmap with the name of the object drawn in it.
+            /// </summary>
+            /// <param name="Object"></param>
+            /// <returns></returns>
+            public static Bitmap Get(ObjectBase Object)
+            {
+                // calculate size of object name
+                SizeF textSize = MEASURE.MeasureString(Object.Name, FONT);
+
+                // get to next greater power of two
+                int width = (int)MathUtil.NextPowerOf2((uint)Math.Round(textSize.Width));
+                int height = (int)MathUtil.NextPowerOf2((uint)Math.Round(textSize.Height));
+
+                // get color to use for name based on objectflags
+                Color color = Color.FromArgb((int)NameColors.GetColorFor(Object.Flags));
+
+                // create bitmap to draw on
+                Bitmap bitmap = new Bitmap(width, height, PixelFormat.Format32bppArgb);
+
+                // draw name into bitmap
+                using (Graphics g = Graphics.FromImage(bitmap))
+                {
+                    g.InterpolationMode = InterpolationMode.Bicubic;
+                    g.SmoothingMode = SmoothingMode.AntiAlias;
+
+                    // draw text
+                    using (SolidBrush brush = new SolidBrush(color))
+                    {
+                        g.Clear(Color.Transparent);
+                        g.DrawString(Object.Name, FONT, brush, new RectangleF(0, 0, width, height), STRINGFORMAT);
+                    }
+                }
+
+                return bitmap;
+            }
         }
     }
 }
