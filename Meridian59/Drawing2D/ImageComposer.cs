@@ -199,9 +199,9 @@ namespace Meridian59.Drawing2D
                         item.Key = AppearanceHash;
                         item.Image = image;
                         item.Refs = 1;
-                        item.Hits = 0;
+                        item.Tick = DateTime.Now.Ticks;
                         item.Size = 4U * (uint)(RenderInfo.Dimension.X * RenderInfo.Dimension.Y);
-
+                                             
                         Cache.Add(AppearanceHash, item);
                     }
                 }
@@ -209,7 +209,7 @@ namespace Meridian59.Drawing2D
                 {
                     image = item.Image;
                     item.Refs++;
-                    item.Hits++;
+                    item.Tick = DateTime.Now.Ticks;
                 }
 
                 // fire event
@@ -382,7 +382,7 @@ namespace Meridian59.Drawing2D
                 public U Image;
                 public uint Size;
                 public uint Refs;
-                public uint Hits;
+                public long Tick;
             }
 
             /// <summary>
@@ -487,11 +487,22 @@ namespace Meridian59.Drawing2D
                 // collect them first so we don't have to remove during iteration
                 List<Item> candidates = new List<Item>();
 
-                // select ones without references
+                // get current tick
+                long tick = DateTime.Now.Ticks;
+
+                // select ones to remove
                 foreach(KeyValuePair<uint, Item> item in cache)
                 {
                     // skip ones in use
                     if (item.Value.Refs > 0)
+                        continue;
+
+                    // get time delta
+                    long span = tick - item.Value.Tick;
+
+                    // skip ones accessed within last 60 seconds
+                    const long SIXTYSECONDS = 60 * 1000 * 10000;
+                    if (span <= SIXTYSECONDS)
                         continue;
 
                     candidates.Add(item.Value);  
@@ -507,24 +518,24 @@ namespace Meridian59.Drawing2D
             /// </summary>
             public static void PrintCacheStats()
             {
-                Console.WriteLine("--------------------------------");
+                Console.WriteLine("---------------------------------------------");
                 Console.WriteLine("T:    " + typeof(T).ToString());
                 Console.WriteLine("U:    " + typeof(U).ToString());
                 Console.WriteLine("SIZE: " + (CacheSize / 1024).ToString() + " KB");
-                Console.WriteLine("MAX:  " + (CacheSizeMax / 1024).ToString() + " KB");               
-                Console.WriteLine("HASH         HITS   REFS   KB");
-                Console.WriteLine("--------------------------------");
+                Console.WriteLine("MAX:  " + (CacheSizeMax / 1024).ToString() + " KB");
+                Console.WriteLine("HASH         REFS   KB     TICK");
+                Console.WriteLine("---------------------------------------------");
 
                 foreach (KeyValuePair<uint, Item> entry in cache)
                 {
                     string hash = entry.Key.ToString().PadRight(13);
-                    string hits = entry.Value.Hits.ToString().PadRight(7);
                     string refs = entry.Value.Refs.ToString().PadRight(7);
                     string size = (entry.Value.Size / 1024).ToString().PadRight(7);
-
-                    Console.WriteLine(hash + hits + refs + size);
+                    string tick = entry.Value.Tick.ToString();
+                    
+                    Console.WriteLine(hash + refs + size + tick);
                 }
-                Console.WriteLine("--------------------------------");
+                Console.WriteLine("---------------------------------------------");
             }
         }
     }
