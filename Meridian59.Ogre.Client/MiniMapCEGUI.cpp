@@ -5,9 +5,6 @@ namespace Meridian59 { namespace Ogre
 	MiniMapCEGUI::MiniMapCEGUI(::Meridian59::Data::DataController^ Data, int Width, int Height, CLRReal Zoom)
 		: MiniMap<::System::Drawing::Bitmap^>(Data, Width, Height, Zoom) 
 	{
-		// default background
-        backgroundColor = Color::Transparent;
-
 		penWall = gcnew Pen(Color::Black, 1.0f);
 
 		brushPlayer		= gcnew SolidBrush(::System::Drawing::Color::FromArgb(MiniMap::COLOR_MAP_PLAYER));
@@ -62,13 +59,13 @@ namespace Meridian59 { namespace Ogre
             TextureType::TEX_TYPE_2D,
 			(unsigned short)Width, (unsigned short)Height, 0,
             ::Ogre::PixelFormat::PF_A8R8G8B8,
-			TU_DEFAULT, 0, false, 0);
+			TU_STATIC_WRITE_ONLY, 0, false, 0);
 		
 		// save reference
 		texture = texPtr.get();
 		
 		// lock the texturebuffer
-		void* texBuffer = texture->getBuffer()->lock(::Ogre::HardwareBuffer::LockOptions::HBL_DISCARD);
+		void* texBuffer = texture->getBuffer()->lock(::Ogre::HardwareBuffer::LockOptions::HBL_WRITE_ONLY);
 		
 		// save the pointer for later comparison
 		// we must adjust the gdi bitmap and graphics
@@ -96,7 +93,7 @@ namespace Meridian59 { namespace Ogre
 		Image = gcnew Bitmap(
 			(int)Width, 
 			(int)Height, 
-			(int)Width * (int)ImageComposerCEGUI<ObjectBase^>::BYTESPERPIXEL, 
+			(int)Width * 4, 
 			System::Drawing::Imaging::PixelFormat::Format32bppArgb, 
 			(System::IntPtr)texbuf);
 
@@ -123,8 +120,11 @@ namespace Meridian59 { namespace Ogre
 	void MiniMapCEGUI::PrepareDraw()
 	{
 		// lock the texturebuffer (released in finish)
-		void* texBuffer = texture->getBuffer()->lock(::Ogre::HardwareBuffer::LockOptions::HBL_DISCARD);
+		void* texBuffer = texture->getBuffer()->lock(::Ogre::HardwareBuffer::LockOptions::HBL_WRITE_ONLY);
 		
+		// clear buffer
+		ZeroMemory(texBuffer, Width * Height * 4);
+
 		// check if buffer was moved
 		if (texBuffer != texbuf)
 		{
@@ -134,9 +134,6 @@ namespace Meridian59 { namespace Ogre
 			// recreate gdi stuff on new buffer loc
 			RecreateImageAndGraphics();		
 		}
-
-		// clear 
-		g->Clear(backgroundColor);
 	};
 
 	void MiniMapCEGUI::DrawWall(RooWall^ Wall, CLRReal x1, CLRReal y1, CLRReal x2, CLRReal y2)

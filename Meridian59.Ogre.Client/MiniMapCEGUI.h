@@ -40,7 +40,6 @@ namespace Meridian59 { namespace Ogre
 		void* texbuf;
 		::Ogre::Texture* texture;
 		
-		::System::Drawing::Color backgroundColor;
 		::System::Drawing::Graphics^ g;
         
 		::System::Drawing::Pen^ penWall;
