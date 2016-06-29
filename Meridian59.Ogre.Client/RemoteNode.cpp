@@ -211,10 +211,10 @@ namespace Meridian59 { namespace Ogre
 
 			// start update
 			System::String^ strTex = PREFIX_NAMETEXT_TEXTURE + RoomObject->Name + 
-				'/' + NameColors::GetColorFor(RoomObject->Flags).ToString();
+				"/" + NameColors::GetColorFor(RoomObject->Flags).ToString();
 
 			System::String^ strMat = PREFIX_NAMETEXT_MATERIAL + RoomObject->Name + 
-				'/' + NameColors::GetColorFor(RoomObject->Flags).ToString();
+				"/" + NameColors::GetColorFor(RoomObject->Flags).ToString();
 		
 			::Ogre::String texName = StringConvert::CLRToOgre(strTex);
 			::Ogre::String matName = StringConvert::CLRToOgre(strMat);
