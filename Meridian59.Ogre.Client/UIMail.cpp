@@ -306,6 +306,9 @@ namespace Meridian59 { namespace Ogre
 				list->setItemSelectState(CEGUI::MCLGridRef(index-1, 1), true);
 				list->setItemSelectState(CEGUI::MCLGridRef(index-1, 2), true);	
 				list->setItemSelectState(CEGUI::MCLGridRef(index-1, 3), true);	
+
+				// make sure new selected row is visible (scroll if necessary)
+				list->ensureRowIsVisible(index - 1);
 			}
 			else if (args.scancode == CEGUI::Key::Scan::ArrowDown && index < count - 1)
 			{
@@ -320,6 +323,9 @@ namespace Meridian59 { namespace Ogre
 				list->setItemSelectState(CEGUI::MCLGridRef(index+1, 1), true);
 				list->setItemSelectState(CEGUI::MCLGridRef(index+1, 2), true);
 				list->setItemSelectState(CEGUI::MCLGridRef(index+1, 3), true);
+
+				// make sure new selected row is visible (scroll if necessary)
+				list->ensureRowIsVisible(index + 1);
 			}
 		}
 		
