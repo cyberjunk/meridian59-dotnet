@@ -50,6 +50,29 @@ namespace Meridian59 { namespace Ogre
 			DrawSurface->setProperty(UI_PROPNAME_IMAGE, *texName);
 	};
 
+	bool ControllerUI::MiniMap::IsMouseOnCircle()
+	{
+		const CEGUI::Vector2f absMouse	= ControllerUI::MouseCursor->getPosition();
+		const CEGUI::Vector2f wndPt		= CEGUI::CoordConverter::screenToWindow(*Window, absMouse);
+		const CEGUI::USize size			= Window->getSize();
+
+		// center of the minimap window
+		const CEGUI::Vector2f center = CEGUI::Vector2f(
+			size.d_width.d_offset * 0.5f,
+			size.d_height.d_offset * 0.5f);
+
+		// radius of the minimap circle
+		const float radius = 0.5f * (size.d_width.d_offset * 0.93f);
+		const float radius2 = radius * radius;
+
+		// get squared distance from clickpoint to center
+		const float dx = wndPt.d_x - center.d_x;
+		const float dy = wndPt.d_y - center.d_y;
+		const float dist2 = dx * dx + dy * dy;
+
+		return (dist2 < radius2);
+	};
+
 	bool UICallbacks::MiniMap::OnMouseWheel(const CEGUI::EventArgs& e)
 	{
 		const CEGUI::MouseEventArgs& args = static_cast<const CEGUI::MouseEventArgs&>(e);
@@ -82,7 +105,11 @@ namespace Meridian59 { namespace Ogre
 
 	bool UICallbacks::MiniMap::OnMouseDown(const CEGUI::EventArgs& e)
 	{
-		const CEGUI::MouseEventArgs& args = static_cast<const CEGUI::MouseEventArgs&>(e);
+		const CEGUI::MouseEventArgs& args	= static_cast<const CEGUI::MouseEventArgs&>(e);
+
+		// ignore click if not on circle
+		if (!ControllerUI::MiniMap::IsMouseOnCircle())
+			return true;
 
 		// set this window as moving one
 		ControllerUI::MovingWindow = ControllerUI::MiniMap::Window;
@@ -103,6 +130,10 @@ namespace Meridian59 { namespace Ogre
 	bool UICallbacks::MiniMap::OnMouseDoubleClick(const CEGUI::EventArgs& e)
 	{
 		const CEGUI::MouseEventArgs& args = static_cast<const CEGUI::MouseEventArgs&>(e);
+
+		// ignore click if not on circle
+		if (!ControllerUI::MiniMap::IsMouseOnCircle())
+			return true;
 
 		// toggle visibility of roomobjects
 		ControllerUI::ToggleVisibility(ControllerUI::RoomObjects::Window);

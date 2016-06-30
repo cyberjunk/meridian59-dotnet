@@ -489,6 +489,7 @@ namespace Meridian59 { namespace Ogre
 			static void Destroy();
 			static void ApplyLanguage();
 			static void OnImageChanged(Object^ sender, ::System::EventArgs^ e);
+			static bool IsMouseOnCircle();
 		};
 
 		/// <summary>
