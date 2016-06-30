@@ -54,15 +54,15 @@ namespace Meridian59 { namespace Ogre
 	{
 		const CEGUI::Vector2f absMouse	= ControllerUI::MouseCursor->getPosition();
 		const CEGUI::Vector2f wndPt		= CEGUI::CoordConverter::screenToWindow(*Window, absMouse);
-		const CEGUI::USize size			= Window->getSize();
+		const CEGUI::Sizef size			= Window->getPixelSize();
 
 		// center of the minimap window
 		const CEGUI::Vector2f center = CEGUI::Vector2f(
-			size.d_width.d_offset * 0.5f,
-			size.d_height.d_offset * 0.5f);
+			size.d_width * 0.5f,
+			size.d_height * 0.5f);
 
 		// radius of the minimap circle
-		const float radius = 0.5f * (size.d_width.d_offset * 0.93f);
+		const float radius = 0.5f * (size.d_width * 0.93f);
 		const float radius2 = radius * radius;
 
 		// get squared distance from clickpoint to center
@@ -85,15 +85,33 @@ namespace Meridian59 { namespace Ogre
 
 			MiniMapCEGUI^ minimap = OgreClient::Singleton->MiniMap;
 
+			int oldwidth = minimap->Width;
+			int oldheight = minimap->Height;
+
 			int width  = (int)MathUtil::Bound((float)minimap->Width  + args.wheelChange * -2.0f, MINSIZE, MAXSIZE);
 			int height = (int)MathUtil::Bound((float)minimap->Height + args.wheelChange * -2.0f, MINSIZE, MAXSIZE);
+
+			int dw = width - oldwidth;
+			int dh = height - oldheight;
 
 			::CEGUI::USize size = ::CEGUI::USize(
 				::CEGUI::UDim(0.0f, (float)width), ::CEGUI::UDim(0.0f, (float)height));
 
-			OgreClient::Singleton->MiniMap->SetDimension(width, height);
+			::CEGUI::UVector2 position = ControllerUI::MiniMap::Window->getPosition();
+
+			// adjust position on size differences
+			// e.g. move half of the additional width to the left,
+			// so we grow into all direction
+			position.d_x.d_offset -= 0.5f * (float)dw;
+			position.d_y.d_offset -= 0.5f * (float)dh;
+
+			// apply size on minimap
+			minimap->SetDimension(width, height);
+
+			// apply size on cegui window
 			ControllerUI::MiniMap::Window->setMaxSize(size);
 			ControllerUI::MiniMap::Window->setSize(size);
+			ControllerUI::MiniMap::Window->setPosition(position);
 		}
 
 		// adjust zoomlevel
