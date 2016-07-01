@@ -35,7 +35,8 @@ namespace Meridian59 { namespace Ogre
         
 		// subscribe mouse wheel to image
 		Image->subscribeEvent(CEGUI::Window::EventMouseWheel, CEGUI::Event::Subscriber(UICallbacks::ObjectDetails::OnImageMouseWheel));
-		
+		Image->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::ObjectDetails::OnImageMouseClick));
+
 		// subscribe OK button
 		OK->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::ObjectDetails::OnOKClicked));
 
@@ -201,8 +202,28 @@ namespace Meridian59 { namespace Ogre
 			lookObject->ViewerAngle += (unsigned short)(args.wheelChange * 200.0f);
 		
 		return true;
-	}
+	};
 
+	bool UICallbacks::ObjectDetails::OnImageMouseClick(const CEGUI::EventArgs& e)
+	{
+		const CEGUI::MouseEventArgs& args = static_cast<const CEGUI::MouseEventArgs&>(e);
+		ObjectBase^ lookObject = OgreClient::Singleton->Data->LookObject->ObjectBase;
+
+		if (lookObject == nullptr)
+			return true;
+
+		// increment angle by this (each click is a new frame for 6 frames-groups)
+		unsigned short increment = GeometryConstants::MAXANGLE / 6;
+
+		// flip direction for right button
+		if (args.button == CEGUI::MouseButton::RightButton)
+			increment = -increment;
+
+		// rotate
+		lookObject->ViewerAngle += increment;
+
+		return true;
+	};
 
 	bool UICallbacks::ObjectDetails::OnOKClicked(const CEGUI::EventArgs& e)
 	{

@@ -1430,6 +1430,7 @@ namespace Meridian59 { namespace Ogre
 		{
 		public:
 			static bool OnImageMouseWheel(const CEGUI::EventArgs& e);
+			static bool OnImageMouseClick(const CEGUI::EventArgs& e);
 			static bool OnOKClicked(const CEGUI::EventArgs& e);
 			static bool OnWindowKeyUp(const CEGUI::EventArgs& e);
 			static bool OnWindowClosed(const CEGUI::EventArgs& e);
@@ -1442,6 +1443,7 @@ namespace Meridian59 { namespace Ogre
 		{
 		public:
 			static bool OnImageMouseWheel(const CEGUI::EventArgs& e);
+			static bool OnImageMouseClick(const CEGUI::EventArgs& e);			
 			static bool OnOKClicked(const CEGUI::EventArgs& e);
 			static bool OnWindowKeyUp(const CEGUI::EventArgs& e);
 			static bool OnWindowClosed(const CEGUI::EventArgs& e);
