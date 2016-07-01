@@ -12,13 +12,17 @@ namespace Meridian59 { namespace Ogre
 		DrawSurface		= static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_MINIMAP_DRAWSURFACE));
 				
 		// set window layout from config
-		Window->setPosition(OgreClient::Singleton->Config->UILayoutMinimap->getPosition());
-		Window->setSize(OgreClient::Singleton->Config->UILayoutMinimap->getSize());
+		CEGUI::UVector2 pos = OgreClient::Singleton->Config->UILayoutMinimap->getPosition();
+		CEGUI::USize size = OgreClient::Singleton->Config->UILayoutMinimap->getSize();
+
+		Window->setPosition(pos);
+		Window->setMaxSize(size);
+		Window->setSize(size);
 
 		// set minimap sizes
 		OgreClient::Singleton->MiniMap->SetDimension(
-			::System::Convert::ToInt32(Window->getPixelSize().d_width), 
-			::System::Convert::ToInt32(Window->getPixelSize().d_height));
+			::System::Convert::ToInt32(size.d_width.d_offset), 
+			::System::Convert::ToInt32(size.d_height.d_offset));
 
 		// attach listener to minimap
 		OgreClient::Singleton->MiniMap->ImageChanged += 
