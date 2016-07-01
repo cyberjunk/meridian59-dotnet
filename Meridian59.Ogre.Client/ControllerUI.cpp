@@ -870,5 +870,17 @@ namespace Meridian59 { namespace Ogre
 
 		return handled;
 	};
+
+	bool UICallbacks::OnItemListboxSelectionChangedUndo(const CEGUI::EventArgs& e)
+	{
+		const CEGUI::WindowEventArgs& args	= static_cast<const CEGUI::WindowEventArgs&>(e);		
+		CEGUI::ItemListbox* list = static_cast<CEGUI::ItemListbox*>(args.window);
+
+		// undo any selection
+		if (list->getFirstSelectedItem() != nullptr)
+			list->clearAllSelections();
+
+		return true;
+	};
 #pragma endregion
 };};

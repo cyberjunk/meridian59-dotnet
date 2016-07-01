@@ -1352,7 +1352,8 @@ namespace Meridian59 { namespace Ogre
 		static bool OnRootMouseDown(const CEGUI::EventArgs& e);
 		static bool OnRootKeyDown(const CEGUI::EventArgs& e);
 		static bool OnCopyPasteKeyDown(const CEGUI::EventArgs& e);
-		
+		static bool OnItemListboxSelectionChangedUndo(const CEGUI::EventArgs& e);
+
 		/// <summary>
 		/// Welcome event handlers
 		/// </summary>
