@@ -150,6 +150,7 @@ namespace Meridian59 { namespace Ogre
 					ControllerUI::TopControl == ControllerUI::GUIRoot ||
 					ControllerUI::TopControl == ControllerUI::SplashNotifier::Window ||
 					ControllerUI::TopControl == ControllerUI::DraggedWindow ||
+					(ControllerUI::TopControl == ControllerUI::MiniMap::DrawSurface && !ControllerUI::MiniMap::IsMouseOnCircle()) ||
 					(ControllerUI::TopControl->getParent() && ControllerUI::TopControl->getParent() == ControllerUI::DraggedWindow) ||
 					ControllerUI::PlayerOverlays::IsOverlayWindow(ControllerUI::TopControl);
 			}
