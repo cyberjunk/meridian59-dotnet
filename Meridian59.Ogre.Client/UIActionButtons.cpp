@@ -61,7 +61,7 @@ namespace Meridian59 { namespace Ogre
 			// some settings
 			dragger->setSize(size);
 			dragger->setMouseInputPropagationEnabled(false);
-			dragger->setMouseCursor(UI_MOUSECURSOR_HAND);
+			dragger->setMouseCursor(UI_DEFAULTARROW);
 			
 			widget->setSize(size2);
 			widget->setPosition(CEGUI::UVector2(CEGUI::UDim(0, 2.5f), CEGUI::UDim(0, 2.5f)));
@@ -180,11 +180,14 @@ namespace Meridian59 { namespace Ogre
 			
 			if (dataModel->ButtonType == ActionButtonType::Unset)
 			{
-				imgButton->setProperty(UI_PROPNAME_IMAGE, STRINGEMPTY); 
+				imgButton->setProperty(UI_PROPNAME_IMAGE, STRINGEMPTY);
+				dragger->setMouseCursor(UI_DEFAULTARROW);
 			}
 
 			else if (dataModel->ButtonType == ActionButtonType::Action)
 			{
+				dragger->setMouseCursor(UI_MOUSECURSOR_HAND);
+
 				AvatarAction action = (AvatarAction)dataModel->Data;
 
 				switch(action)
@@ -236,11 +239,15 @@ namespace Meridian59 { namespace Ogre
 			}
 			else if (dataModel->ButtonType == ActionButtonType::Item)
 			{
+				dragger->setMouseCursor(UI_MOUSECURSOR_HAND);
+
 				if (dataModel->Data)
 					imageComposers[Index]->DataSource = (InventoryObject^)dataModel->Data;
 			}
 			else if (dataModel->ButtonType == ActionButtonType::Spell)
 			{
+				dragger->setMouseCursor(UI_MOUSECURSOR_HAND);
+
 				//imageComposers[Index]->DataSource = (SpellObject^)dataModel->Data;
 				
 				// hack: use higher resolution if available
