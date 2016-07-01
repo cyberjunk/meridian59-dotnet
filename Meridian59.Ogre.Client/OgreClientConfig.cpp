@@ -44,6 +44,10 @@ namespace Meridian59 { namespace Ogre
 			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(1.0f, -257.0f), ::CEGUI::UDim(0.0f, 25.0f)),
 			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 256.0f),  ::CEGUI::UDim(0.0f, 256.0f)));
 
+		UILayoutRoomEnchantments = new ::CEGUI::URect(
+			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.0f, 5.0f), ::CEGUI::UDim(0.0f, 145.0f)),
+			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 250.0f), ::CEGUI::UDim(0.0f, 28.0f)));
+
 		UILayoutChat = new ::CEGUI::URect(
 			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.0f, 0.0f),  ::CEGUI::UDim(0.5f, 0.0f)),
 			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.35f, 0.0f), ::CEGUI::UDim(0.3f, 0.0f)));
@@ -244,6 +248,10 @@ namespace Meridian59 { namespace Ogre
 		// minimap
 		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_MINIMAP);
 		ReadUILayout(UILayoutMinimap, node);
+		
+		// roomenchantments
+		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_ROOMENCHANTMENTS);
+		ReadUILayout(UILayoutRoomEnchantments, node);
 
 		// chat
 		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_CHAT);
@@ -698,6 +706,18 @@ namespace Meridian59 { namespace Ogre
 		Writer->WriteAttributeString(XMLATTRIB_WABS, UILayoutMinimap->getSize().d_width.d_offset.ToString(Config::NumberFormatInfo));
 		Writer->WriteAttributeString(XMLATTRIB_HREL, UILayoutMinimap->getSize().d_height.d_scale.ToString(Config::NumberFormatInfo));
 		Writer->WriteAttributeString(XMLATTRIB_HABS, UILayoutMinimap->getSize().d_height.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteEndElement();
+
+		// roomenchantments
+		Writer->WriteStartElement(TAG_ROOMENCHANTMENTS);
+		Writer->WriteAttributeString(XMLATTRIB_XREL, UILayoutRoomEnchantments->getPosition().d_x.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_XABS, UILayoutRoomEnchantments->getPosition().d_x.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_YREL, UILayoutRoomEnchantments->getPosition().d_y.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_YABS, UILayoutRoomEnchantments->getPosition().d_y.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_WREL, UILayoutRoomEnchantments->getSize().d_width.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_WABS, UILayoutRoomEnchantments->getSize().d_width.d_offset.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_HREL, UILayoutRoomEnchantments->getSize().d_height.d_scale.ToString(Config::NumberFormatInfo));
+		Writer->WriteAttributeString(XMLATTRIB_HABS, UILayoutRoomEnchantments->getSize().d_height.d_offset.ToString(Config::NumberFormatInfo));
 		Writer->WriteEndElement();
 
 		// chat

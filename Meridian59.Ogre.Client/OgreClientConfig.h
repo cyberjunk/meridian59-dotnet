@@ -91,6 +91,7 @@ namespace Meridian59 { namespace Ogre
 		literal ::System::String^ TAG_AVATAR = "avatar";
 		literal ::System::String^ TAG_TARGET = "target";
 		literal ::System::String^ TAG_MINIMAP = "minimap";
+		literal ::System::String^ TAG_ROOMENCHANTMENTS = "roomenchantments";
 		literal ::System::String^ TAG_CHAT = "chat";
 		literal ::System::String^ TAG_INVENTORY = "inventory";
 		literal ::System::String^ TAG_SPELLS = "spells";
@@ -221,6 +222,7 @@ namespace Meridian59 { namespace Ogre
 		::CEGUI::URect* UILayoutAvatar;
 		::CEGUI::URect* UILayoutTarget;
 		::CEGUI::URect* UILayoutMinimap;
+		::CEGUI::URect* UILayoutRoomEnchantments;
 		::CEGUI::URect* UILayoutChat;
 		::CEGUI::URect* UILayoutInventory;
 		::CEGUI::URect* UILayoutSpells;

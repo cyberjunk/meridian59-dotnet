@@ -517,6 +517,10 @@ namespace Meridian59 { namespace Ogre
 		OgreClient::Singleton->Config->UILayoutMinimap->setPosition(MiniMap::Window->getPosition());
 		OgreClient::Singleton->Config->UILayoutMinimap->setSize(MiniMap::Window->getSize());
 
+		// roomenchantments
+		OgreClient::Singleton->Config->UILayoutRoomEnchantments->setPosition(RoomEnchantments::Window->getPosition());
+		OgreClient::Singleton->Config->UILayoutRoomEnchantments->setSize(RoomEnchantments::Window->getSize());
+
 		// chat
 		OgreClient::Singleton->Config->UILayoutChat->setPosition(Chat::Window->getPosition());
 		OgreClient::Singleton->Config->UILayoutChat->setSize(Chat::Window->getSize());

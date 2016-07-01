@@ -11,6 +11,10 @@ namespace Meridian59 { namespace Ogre
 		Window	= static_cast<CEGUI::Window*>(guiRoot->getChild(UI_NAME_ROOMENCHANTMENTS_WINDOW));
 		Grid	= static_cast<CEGUI::GridLayoutContainer*>(Window->getChild(UI_NAME_ROOMENCHANTMENTS_GRID));
 
+		// set window layout from config
+		Window->setPosition(OgreClient::Singleton->Config->UILayoutRoomEnchantments->getPosition());
+		Window->setSize(OgreClient::Singleton->Config->UILayoutRoomEnchantments->getSize());
+
 		// attach listener to room enchantments
 		OgreClient::Singleton->Data->RoomBuffs->ListChanged += 
 			gcnew ListChangedEventHandler(OnBuffListChanged);
