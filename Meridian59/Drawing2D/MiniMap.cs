@@ -199,10 +199,19 @@ namespace Meridian59.Drawing2D
 
                 if (!obj.IsAvatar)
                 {
-                    Real width = 50.0f * ZoomInv;
-                    Real widthhalf = width / 2.0f;
+                    Real width = 100.0f * ZoomInv;
+                    Real widthhalf = width * 0.5f;
                     Real rectx = transx1 - widthhalf;
                     Real recty = transy1 - widthhalf;
+
+                    DrawObjectOutter(obj, rectx, recty, width, width);
+
+                    //
+
+                    width = 50.0f * ZoomInv;
+                    widthhalf = width * 0.5f;
+                    rectx = transx1 - widthhalf;
+                    recty = transy1 - widthhalf;
 
                     DrawObject(obj, rectx, recty, width, width);
                 }
@@ -268,6 +277,18 @@ namespace Meridian59.Drawing2D
         /// <param name="width"></param>
         /// <param name="height"></param>
         public abstract void DrawObject(RoomObject RoomObject, Real x, Real y, Real width, Real height);
+
+        /// <summary>
+        /// Draw an object outter circle.
+        /// Will be invoked before each DrawObject() with sligthly bigger rectangle.
+        /// </summary>
+        /// <param name="RoomObject"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        public abstract void DrawObjectOutter(RoomObject RoomObject, Real x, Real y, Real width, Real height);
+
 
         /// <summary>
         /// 

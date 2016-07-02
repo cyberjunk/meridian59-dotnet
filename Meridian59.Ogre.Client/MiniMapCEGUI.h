@@ -58,6 +58,7 @@ namespace Meridian59 { namespace Ogre
 		::System::Drawing::SolidBrush^ brushTempSafe;
 		::System::Drawing::SolidBrush^ brushMiniBoss;
 		::System::Drawing::SolidBrush^ brushBoss;
+		::System::Drawing::SolidBrush^ brushItem;
 #endif
 
 		array<::System::Drawing::PointF>^ playerArrowPts;
@@ -76,6 +77,7 @@ namespace Meridian59 { namespace Ogre
 		virtual void PrepareDraw() override;
 		virtual void DrawWall(RooWall^ Wall, CLRReal x1, CLRReal y1, CLRReal x2, CLRReal y2) override;
 		virtual void DrawObject(RoomObject^ RoomObject, CLRReal x, CLRReal y, CLRReal width, CLRReal height) override;
+		virtual void DrawObjectOutter(RoomObject^ RoomObject, CLRReal x, CLRReal y, CLRReal width, CLRReal height) override;
 		virtual void DrawAvatar(RoomObject^ RoomObject, V2 P1, V2 P2, V2 P3) override;
 		virtual void FinishDraw() override;
 	};
