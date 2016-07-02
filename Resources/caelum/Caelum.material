@@ -27,6 +27,7 @@ vertex_program CaelumLayeredCloudsVP hlsl
 	source CaelumLayeredClouds.hlsl
 	entry_point LayeredClouds_vp
 	target vs_2_0
+	optimisation_level 3
 	
 	default_params
 	{
@@ -41,6 +42,7 @@ fragment_program CaelumLayeredCloudsFP hlsl
 	source CaelumLayeredClouds.hlsl
     entry_point LayeredClouds_fp
     target ps_3_0
+	optimisation_level 3
 
     default_params
     {
@@ -144,7 +146,8 @@ vertex_program Caelum/StarPointVP hlsl
 	source CaelumPointStarfield.hlsl
 	entry_point StarPointVP
 	target vs_2_0
-
+	optimisation_level 3
+	
 	default_params
 	{
 	    param_named_auto worldviewproj_matrix worldviewproj_matrix
@@ -164,7 +167,8 @@ fragment_program Caelum/StarPointFP hlsl
 	source CaelumPointStarfield.hlsl
 	entry_point StarPointFP
 	target ps_2_0
-
+	optimisation_level 3
+	
 	default_params
 	{
 	}
@@ -252,7 +256,8 @@ fragment_program Caelum/PhaseMoonFP hlsl
 	source CaelumPhaseMoon.hlsl
 	entry_point PhaseMoonFP
 	target ps_2_0
-
+	optimisation_level 3
+	
 	default_params
 	{
 		param_named phase float 0.3
@@ -344,7 +349,8 @@ fragment_program CaelumSkyDomeFP hlsl
 	entry_point SkyDomeFP
 	compile_arguments -DHAZE
 	target ps_2_0
-
+	optimisation_level 3
+	
 	default_params
 	{
 		// Caelum sky properties
@@ -357,7 +363,8 @@ fragment_program CaelumSkyDomeFP_NoHaze hlsl
 	source CaelumSkyDome.hlsl
 	entry_point SkyDomeFP
 	target ps_2_0
-
+	optimisation_level 3
+	
 	default_params
 	{
 		// Caelum sky properties
@@ -370,6 +377,7 @@ vertex_program CaelumSkyDomeVP hlsl
 	source CaelumSkyDome.hlsl
 	entry_point SkyDomeVP
 	target vs_2_0
+	optimisation_level 3
 	
 	default_params
 	{
