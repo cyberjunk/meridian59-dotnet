@@ -79,6 +79,7 @@
         <PropertyDefinition name="HorzImageFormatting" initialValue="Stretched" redrawOnWrite="true" type="HorizontalFormatting" />  
         <Property name="Size" value="{{0, 96}, {0, 32}}" />
         <Property name="Font" value="Xolonium-8-Bold" />
+		<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
         <ImagerySection name="label">
             <TextComponent>
                 <Area>

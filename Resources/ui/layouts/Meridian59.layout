@@ -79,7 +79,6 @@
 			<Window type="TaharezLook/Button" name="Welcome.Select" >
 				<Property name="Text" value="Select" />
 				<Property name="Area" value="{{1,-100},{0,0},{1,0},{0,25}}" />
-				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 			
 			<!-- MOTD -->
@@ -148,7 +147,6 @@
 				<Property name="Text" value="0" />
 				<Property name="Area" value="{{0,210},{0,3},{0,260},{0,19}}" />
 				<Property name="Font" value="Xolonium-8-Bold" />
-            <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 			
 			<!-- Mood -->
@@ -206,7 +204,6 @@
 				<Property name="Text" value="On" />
 				<Property name="Area" value="{{0,455},{0,3},{0,505},{0,19}}" />
 				<Property name="Font" value="Xolonium-8-Bold" />
-				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 			
 			<!-- MeridianTime -->
@@ -446,7 +443,6 @@
 			<Window type="TaharezLook/Button" name="ObjectDetails.OK" >
 				<Property name="Text" value="OK" />
 				<Property name="Area" value="{{0,5},{1,-25},{1,-5},{1,-5}}" />
-				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />				
 			</Window>
 		</Window>
 		
@@ -505,7 +501,6 @@
 			<Window type="TaharezLook/Button" name="PlayerDetails.OK" >
 				<Property name="Text" value="OK" />
 				<Property name="Area" value="{{0,197},{1,-25},{1,-5},{1,-5}}" />
-				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />				
 			</Window>
 		</Window>
 		
@@ -953,7 +948,6 @@
 			<Window type="TaharezLook/Button" name="Amount.OK" >
 				<Property name="Text" value="OK" />
 				<Property name="Area" value="{{1,-50},{0,0},{1,0},{1,0}}" />
-				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />				
 			</Window>
 		</Window>
 		
@@ -1000,14 +994,12 @@
 			<Window type="TaharezLook/Button" name="Trade.Offer" >
 				<Property name="Text" value="Offer" />
 				<Property name="Area" value="{{0,0},{1,-25},{0.5,-2},{1,0}}" />
-				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>		
 
 			<!-- Accept button -->
 			<Window type="TaharezLook/Button" name="Trade.Accept" >
 				<Property name="Text" value="Accept" />
 				<Property name="Area" value="{{0.5,2},{1,-25},{1,0},{1,0}}" />
-				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 		</Window>
 		
@@ -1054,35 +1046,30 @@
 			<Window type="TaharezLook/Button" name="NewsGroup.Create" >
 				<Property name="Text" value="Create" />
 				<Property name="Area" value="{{0,0},{0.5,0},{0.2,-2},{0.5,20}}" />
-				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 			
 			<!-- Respond -->
 			<Window type="TaharezLook/Button" name="NewsGroup.Respond" >
 				<Property name="Text" value="Respond" />
 				<Property name="Area" value="{{0.2,2},{0.5,0},{0.4,-2},{0.5,20}}" />
-				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 			
 			<!-- MailAuthor  -->
 			<Window type="TaharezLook/Button" name="NewsGroup.MailAuthor" >
 				<Property name="Text" value="Mail author" />
 				<Property name="Area" value="{{0.4,2},{0.5,0},{0.6,-2},{0.5,20}}" />
-				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 						
 			<!-- Delete -->
 			<Window type="TaharezLook/Button" name="NewsGroup.Delete" >
 				<Property name="Text" value="Delete" />
 				<Property name="Area" value="{{0.6,2},{0.5,0},{0.8,-2},{0.5,20}}" />			
-				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 			
 			<!-- Refresh -->
 			<Window type="TaharezLook/Button" name="NewsGroup.Refresh" >
 				<Property name="Text" value="Refresh" />
 				<Property name="Area" value="{{0.8,2},{0.5,0},{1,0},{0.5,20}}" />
-				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 
 			<!-- Text -->
@@ -1139,7 +1126,6 @@
 			<Window type="TaharezLook/Button" name="NewsGroupCompose.Send" >
 				<Property name="Text" value="Send" />
 				<Property name="Area" value="{{0,0},{1,-25},{1,0},{1,0}}" />
-				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 		</Window>
 		
@@ -1161,35 +1147,30 @@
 			<Window type="TaharezLook/Button" name="Mail.Create" >
 				<Property name="Text" value="Create" />
 				<Property name="Area" value="{{0,0},{0.5,0},{0.2,-2},{0.5,20}}" />
-				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 			
 			<!-- Respond -->
 			<Window type="TaharezLook/Button" name="Mail.Respond" >
 				<Property name="Text" value="Respond" />
 				<Property name="Area" value="{{0.2,2},{0.5,0},{0.4,-2},{0.5,20}}" />
-				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 			
 			<!-- RespondAll -->
 			<Window type="TaharezLook/Button" name="Mail.RespondAll" >
 				<Property name="Text" value="To All" />
 				<Property name="Area" value="{{0.4,2},{0.5,0},{0.6,-2},{0.5,20}}" />
-				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 						
 			<!-- Delete -->
 			<Window type="TaharezLook/Button" name="Mail.Delete" >
 				<Property name="Text" value="Delete" />
 				<Property name="Area" value="{{0.6,2},{0.5,0},{0.8,-2},{0.5,20}}" />			
-				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 			
 			<!-- Refresh -->
 			<Window type="TaharezLook/Button" name="Mail.Refresh" >
 				<Property name="Text" value="Refresh" />
 				<Property name="Area" value="{{0.8,2},{0.5,0},{1,0},{0.5,20}}" />
-				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 
 			<!-- Text -->
@@ -1255,7 +1236,6 @@
 			<Window type="TaharezLook/Button" name="MailCompose.Send" >
 				<Property name="Text" value="Send" />
 				<Property name="Area" value="{{0,0},{1,-25},{1,0},{1,0}}" />
-				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 		</Window>
 		
@@ -1312,7 +1292,6 @@
 					<Window type="TaharezLook/Button" name="Guild.SetPassword" >
 						<Property name="Text" value="Set" />
 						<Property name="Area" value="{{0,205},{0,5},{0,270},{0,30}}" />
-						<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 						<Property name="TooltipText" value="Changes your password." />
 					</Window>
 				</Window>
@@ -1376,7 +1355,6 @@
 					<Window type="TaharezLook/Button" name="Guild.ShieldClaim" >
 						<Property name="Text" value="Claim" />
 						<Property name="Area" value="{{0,270},{0,175},{0,370},{0,200}}" />
-						<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 						<Property name="TooltipText" value="Claim this design!" />
 					</Window>					
 				</Window>
@@ -1386,7 +1364,6 @@
 			<Window type="TaharezLook/Button" name="Guild.Renounce" >
 				<Property name="Text" value="Renounce" />
 				<Property name="Area" value="{{1,-155},{1,-30},{1,-5},{1,-5}}" />
-				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 				<Property name="TooltipText" value="Leave or disband your guild!" />
 			</Window>			
 		</Window>
@@ -1521,7 +1498,6 @@
 			<Window type="TaharezLook/Button" name="GuildCreate.Create" >
 				<Property name="Text" value="Create" />
 				<Property name="Area" value="{{1,-80},{1,-30},{1,-5},{1,-5}}" />
-				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 		</Window>
 		
@@ -1813,7 +1789,6 @@
 			<Window type="TaharezLook/Button" name="AvatarCreateWizard.ButtonBack" >
 				<Property name="Text" value="Back" />
 				<Property name="Area" value="{{0,5},{1,-30},{0,155},{1,-5}}" />
-				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 				<Property name="TooltipText" value="Create the avatar!" />
 			</Window>
 			
@@ -1829,7 +1804,6 @@
 			<Window type="TaharezLook/Button" name="AvatarCreateWizard.ButtonNext" >
 				<Property name="Text" value="Next" />
 				<Property name="Area" value="{{1,-155},{1,-30},{1,-5},{1,-5}}" />
-				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 				<Property name="TooltipText" value="Create the avatar!" />
 			</Window>			
 		</Window>
@@ -1856,14 +1830,12 @@
 			<Window type="TaharezLook/Button" name="ConfirmPopup.Yes" >
 				<Property name="Text" value="Yes" />
 				<Property name="Area" value="{{0,5},{1,-30},{0,105},{1,-5}}" />
-				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 				
 			<!-- No -->
 			<Window type="TaharezLook/Button" name="ConfirmPopup.No" >
 				<Property name="Text" value="No" />
 				<Property name="Area" value="{{1,-105},{1,-30},{1,-5},{1,-5}}" />
-				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 		</Window>
 		
@@ -1971,14 +1943,12 @@
 			<Window type="TaharezLook/Button" name="Login.Connect" >
 				<Property name="Text" value="Connect" />
 				<Property name="Area" value="{{0.5,-105},{0,170},{0.5,-5},{0,195}}" />
-				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 			
 			<!-- Options -->
 			<Window type="TaharezLook/Button" name="Login.Options" >
 				<Property name="Text" value="Options" />
 				<Property name="Area" value="{{0.5,5},{0,170},{0.5,105},{0,195}}" />
-				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 		</Window>
 			
@@ -1996,42 +1966,36 @@
 			<Window type="TaharezLook/Button" name="Options.Engine" >
 				<Property name="Text" value="Engine" />
 				<Property name="Area" value="{{0,5},{0,5},{0,100},{0,30}}" />
-				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 			
 			<!-- Input -->
 			<Window type="TaharezLook/Button" name="Options.Input" >
 				<Property name="Text" value="Input" />
 				<Property name="Area" value="{{0,5},{0,35},{0,100},{0,60}}" />
-				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 			
 			<!-- UI -->
 			<Window type="TaharezLook/Button" name="Options.GamePlay" >
 				<Property name="Text" value="Gameplay" />							
 				<Property name="Area" value="{{0,5},{0,65},{0,100},{0,90}}" />
-				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 			
 			<!-- Aliases -->
 			<Window type="TaharezLook/Button" name="Options.Aliases" >
 				<Property name="Text" value="Aliases" />
 				<Property name="Area" value="{{0,5},{0,95},{0,100},{0,120}}" />
-				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 			
 			<!-- Groups -->
 			<Window type="TaharezLook/Button" name="Options.Groups" >
 				<Property name="Text" value="Groups" />
 				<Property name="Area" value="{{0,5},{0,125},{0,100},{0,150}}" />
-				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 			
 			<!-- About -->
 			<Window type="TaharezLook/Button" name="Options.About" >
 				<Property name="Text" value="About" />
 				<Property name="Area" value="{{0,5},{0,155},{0,100},{0,180}}" />
-				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 			
 			<!-- TabControl -->
@@ -2304,7 +2268,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabGeneral.MoveForward" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,105},{0,45},{0,185},{0,65}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- Move backward -->
@@ -2317,7 +2280,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabGeneral.MoveBackward" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,105},{0,70},{0,185},{0,90}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- Move left -->
@@ -2330,7 +2292,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabGeneral.MoveLeft" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,105},{0,95},{0,185},{0,115}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- Move right -->
@@ -2343,7 +2304,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabGeneral.MoveRight" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,105},{0,120},{0,185},{0,140}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- Rotate left -->
@@ -2356,7 +2316,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabGeneral.RotateLeft" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,105},{0,145},{0,185},{0,165}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- Rotate right -->
@@ -2369,7 +2328,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabGeneral.RotateRight" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,105},{0,170},{0,185},{0,190}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- -->
@@ -2384,7 +2342,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabGeneral.Walk" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,285},{0,45},{0,365},{0,65}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 														
 							<!-- AutoMove -->
@@ -2397,7 +2354,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabGeneral.AutoMove" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,285},{0,70},{0,365},{0,90}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- NextTarget -->
@@ -2410,7 +2366,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabGeneral.NextTarget" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,285},{0,95},{0,365},{0,115}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- SelfTarget -->
@@ -2423,7 +2378,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabGeneral.SelfTarget" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,285},{0,120},{0,365},{0,140}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- Open -->
@@ -2436,7 +2390,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabGeneral.Open" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,285},{0,145},{0,365},{0,165}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- Close -->
@@ -2449,7 +2402,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabGeneral.Close" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,285},{0,170},{0,365},{0,190}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- -->
@@ -2514,7 +2466,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button01" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,105},{0,45},{0,185},{0,65}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- ActionButton02 -->
@@ -2527,7 +2478,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button02" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,105},{0,70},{0,185},{0,90}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- ActionButton03 -->
@@ -2540,7 +2490,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button03" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,105},{0,95},{0,185},{0,115}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- ActionButton04 -->
@@ -2553,7 +2502,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button04" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,105},{0,120},{0,185},{0,140}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- ActionButton05 -->
@@ -2566,7 +2514,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button05" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,105},{0,145},{0,185},{0,165}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- ActionButton06 -->
@@ -2579,7 +2526,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button06" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,105},{0,170},{0,185},{0,190}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- ActionButton07 -->
@@ -2592,7 +2538,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button07" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,105},{0,195},{0,185},{0,215}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- ActionButton08 -->
@@ -2605,7 +2550,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button08" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,105},{0,220},{0,185},{0,240}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- ActionButton09 -->
@@ -2618,7 +2562,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button09" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,105},{0,245},{0,185},{0,265}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- ActionButton10 -->
@@ -2631,7 +2574,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button10" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,105},{0,270},{0,185},{0,290}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- ActionButton11 -->
@@ -2644,7 +2586,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button11" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,105},{0,295},{0,185},{0,315}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- ActionButton12 -->
@@ -2657,7 +2598,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button12" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,105},{0,320},{0,185},{0,340}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- -->
@@ -2672,7 +2612,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button13" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,285},{0,45},{0,365},{0,65}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 														
 							<!-- ActionButton14 -->
@@ -2685,7 +2624,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button14" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,285},{0,70},{0,365},{0,90}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- ActionButton15 -->
@@ -2698,7 +2636,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button15" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,285},{0,95},{0,365},{0,115}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- ActionButton16 -->
@@ -2711,7 +2648,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button16" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,285},{0,120},{0,365},{0,140}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- ActionButton17 -->
@@ -2724,7 +2660,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button17" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,285},{0,145},{0,365},{0,165}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- ActionButton18 -->
@@ -2737,7 +2672,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button18" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,285},{0,170},{0,365},{0,190}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- ActionButton19 -->
@@ -2750,7 +2684,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button19" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,285},{0,195},{0,365},{0,215}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- ActionButton20 -->
@@ -2763,7 +2696,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button20" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,285},{0,220},{0,365},{0,240}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- ActionButton21 -->
@@ -2776,7 +2708,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button21" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,285},{0,245},{0,365},{0,265}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- ActionButton22 -->
@@ -2789,7 +2720,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button22" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,285},{0,270},{0,365},{0,290}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- ActionButton23 -->
@@ -2802,7 +2732,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button23" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,285},{0,295},{0,365},{0,315}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- ActionButton24 -->
@@ -2815,7 +2744,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button24" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,285},{0,320},{0,365},{0,340}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 						</Window>
@@ -2835,7 +2763,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button25" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,105},{0,45},{0,185},{0,65}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- ActionButton26 -->
@@ -2848,7 +2775,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button26" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,105},{0,70},{0,185},{0,90}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- ActionButton27 -->
@@ -2861,7 +2787,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button27" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,105},{0,95},{0,185},{0,115}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- ActionButton28 -->
@@ -2874,7 +2799,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button28" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,105},{0,120},{0,185},{0,140}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- ActionButton29 -->
@@ -2887,7 +2811,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button29" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,105},{0,145},{0,185},{0,165}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- ActionButton30 -->
@@ -2900,7 +2823,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button30" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,105},{0,170},{0,185},{0,190}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- ActionButton31 -->
@@ -2913,7 +2835,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button31" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,105},{0,195},{0,185},{0,215}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- ActionButton32 -->
@@ -2926,7 +2847,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button32" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,105},{0,220},{0,185},{0,240}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- ActionButton33 -->
@@ -2939,7 +2859,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button33" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,105},{0,245},{0,185},{0,265}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- ActionButton34 -->
@@ -2952,7 +2871,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button34" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,105},{0,270},{0,185},{0,290}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- ActionButton35 -->
@@ -2965,7 +2883,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button35" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,105},{0,295},{0,185},{0,315}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- ActionButton36 -->
@@ -2978,7 +2895,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button36" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,105},{0,320},{0,185},{0,340}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- -->
@@ -2993,7 +2909,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button37" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,285},{0,45},{0,365},{0,65}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 														
 							<!-- ActionButton38 -->
@@ -3006,7 +2921,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button38" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,285},{0,70},{0,365},{0,90}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- ActionButton39 -->
@@ -3019,7 +2933,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button39" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,285},{0,95},{0,365},{0,115}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- ActionButton40 -->
@@ -3032,7 +2945,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button40" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,285},{0,120},{0,365},{0,140}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- ActionButton41 -->
@@ -3045,7 +2957,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button41" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,285},{0,145},{0,365},{0,165}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- ActionButton42 -->
@@ -3058,7 +2969,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button42" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,285},{0,170},{0,365},{0,190}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- ActionButton43 -->
@@ -3071,7 +2981,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button43" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,285},{0,195},{0,365},{0,215}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- ActionButton44 -->
@@ -3084,7 +2993,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button44" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,285},{0,220},{0,365},{0,240}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- ActionButton45 -->
@@ -3097,7 +3005,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button45" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,285},{0,245},{0,365},{0,265}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- ActionButton46 -->
@@ -3110,7 +3017,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button46" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,285},{0,270},{0,365},{0,290}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- ActionButton47 -->
@@ -3123,7 +3029,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button47" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,285},{0,295},{0,365},{0,315}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 							<!-- ActionButton48 -->
@@ -3136,7 +3041,6 @@
 							<Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button48" >
 								<Property name="Text" value="-" />
 								<Property name="Area" value="{{0,285},{0,320},{0,365},{0,340}}" />
-								<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 							</Window>
 							
 						</Window>
@@ -3238,7 +3142,6 @@
 					<Window type="TaharezLook/Button" name="Options.TabAliases.Add" >
 						<Property name="Text" value="+" />
 						<Property name="Area" value="{{0,306},{0,40},{0,331},{0,65}}" />
-						<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 					</Window>
 							
 					<!-- ListAliases -->
@@ -3279,7 +3182,6 @@
 					<Window type="TaharezLook/Button" name="Options.TabGroups.AddGroup" >
 						<Property name="Text" value="+" />
 						<Property name="Area" value="{{0.5,-55},{0,40},{0.5,-30},{0,65}}" />
-						<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 					</Window>
 							
 					<!-- GroupsDescription -->
@@ -3314,7 +3216,6 @@
 					<Window type="TaharezLook/Button" name="Options.TabGroups.AddMember" >
 						<Property name="Text" value="+" />
 						<Property name="Area" value="{{1,-55},{0,40},{1,-30},{0,65}}" />
-						<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />								
 					</Window>
 
 					<!-- MembersDescription -->
