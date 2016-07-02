@@ -13,9 +13,10 @@
 	<Font filename="LiberationSans-10-bold.font" />
 	<Font filename="LiberationSans-10-italic.font" />
 	<Font filename="LiberationSans-10-bolditalic.font" />
-	
-	<!-- Font: EBGaramondSC -->
-	<Font filename="EBGaramondSC-26-regular.font" />
+
+	<!-- Font: Xolonium -->
+	<Font filename="Xolonium-8-bold.font" />
+	<Font filename="Xolonium-20-bold.font" />
 	
 	<LookNFeel filename="TaharezLook.looknfeel" />
 	<WindowRendererSet filename="CEGUICoreWindowRendererSet" />
@@ -84,5 +85,6 @@
 	<FalagardMapping windowType="TaharezLook/AliasListboxItem" 			targetType="CEGUI/ItemEntry"   	renderer="Core/ItemEntry"   	lookNFeel="TaharezLook/AliasListboxItem" />
 	<FalagardMapping windowType="TaharezLook/GroupListboxItem" 			targetType="CEGUI/ItemEntry"   	renderer="Core/ItemEntry"   	lookNFeel="TaharezLook/GroupListboxItem" />
 	<FalagardMapping windowType="TaharezLook/GroupMemberListboxItem" 	targetType="CEGUI/ItemEntry"   	renderer="Core/ItemEntry"   	lookNFeel="TaharezLook/GroupMemberListboxItem" />
+	<FalagardMapping windowType="TaharezLook/ItemListboxLegacy" 				targetType="CEGUI/ItemListbox" 	renderer="Core/ItemListbox" 	lookNFeel="TaharezLook/ItemListboxLegacy" />
 </GUIScheme>
 
