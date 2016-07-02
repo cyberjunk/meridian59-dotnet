@@ -66,7 +66,7 @@ namespace Meridian59 { namespace Ogre
 			size.d_height * 0.5f);
 
 		// radius of the minimap circle
-		const float radius = 0.5f * (size.d_width * 0.93f);
+		const float radius = 0.5f * (size.d_width * 0.97f);
 		const float radius2 = radius * radius;
 
 		// get squared distance from clickpoint to center
