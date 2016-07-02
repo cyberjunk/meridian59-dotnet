@@ -8,6 +8,7 @@ namespace Meridian59 { namespace Ogre
 		Window = static_cast<CEGUI::FrameWindow*>(guiRoot->getChild(UI_NAME_LOOTLIST_WINDOW));
 		List = static_cast<CEGUI::ItemListbox*>(Window->getChild(UI_NAME_LOOTLIST_LIST));
 		Get = static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_LOOTLIST_GET));
+		GetAll = static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_LOOTLIST_GETALL));
 
 		// set multiselect
 		List->setMultiSelectEnabled(true);
@@ -25,6 +26,7 @@ namespace Meridian59 { namespace Ogre
 
 		// subscribe Get button
 		Get->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::LootList::OnGetClicked));
+		GetAll->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::LootList::OnGetAllClicked));
 
 		// subscribe close button
 		Window->subscribeEvent(CEGUI::FrameWindow::EventCloseClicked, CEGUI::Event::Subscriber(UICallbacks::LootList::OnWindowClosed));
@@ -274,6 +276,22 @@ namespace Meridian59 { namespace Ogre
 		// hide
 		OgreClient::Singleton->Data->RoomObjectsLoot->IsVisible = false;
 		
+		ControllerUI::ActivateRoot();
+
+		return true;
+	};
+
+	bool UICallbacks::LootList::OnGetAllClicked(const CEGUI::EventArgs& e)
+	{
+		const CEGUI::WindowEventArgs& args = static_cast<const CEGUI::WindowEventArgs&>(e);
+		
+		// loot everything in range
+		OgreClient::Singleton->LootAll();
+
+		// hide
+		OgreClient::Singleton->Data->RoomObjectsLoot->IsVisible = false;
+
+		// reactivate root
 		ControllerUI::ActivateRoot();
 
 		return true;

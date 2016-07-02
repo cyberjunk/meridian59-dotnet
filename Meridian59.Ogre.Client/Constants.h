@@ -481,6 +481,7 @@
 #define UI_NAME_LOOTLIST_WINDOW						"LootList"
 #define UI_NAME_LOOTLIST_LIST						"LootList.List"
 #define UI_NAME_LOOTLIST_GET						"LootList.Get"
+#define UI_NAME_LOOTLIST_GETALL						"LootList.GetAll"
 #define UI_NAME_LOGIN_WINDOW						"Login"
 #define UI_NAME_LOGIN_SERVER						"Login.Server"
 #define UI_NAME_LOGIN_USERNAME						"Login.Username"

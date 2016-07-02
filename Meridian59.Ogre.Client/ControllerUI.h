@@ -1106,6 +1106,7 @@ namespace Meridian59 { namespace Ogre
 			static ::CEGUI::FrameWindow* Window = nullptr;
 			static ::CEGUI::ItemListbox* List = nullptr;
 			static ::CEGUI::PushButton* Get = nullptr;
+			static ::CEGUI::PushButton* GetAll = nullptr;
 
 			static void Initialize();
 			static void Destroy();
@@ -1767,6 +1768,7 @@ namespace Meridian59 { namespace Ogre
 			static bool OnItemAmountDeactivated(const CEGUI::EventArgs& e);
 			static bool OnItemClicked(const CEGUI::EventArgs& e);
 			static bool OnGetClicked(const CEGUI::EventArgs& e);
+			static bool OnGetAllClicked(const CEGUI::EventArgs& e);
 			static bool OnWindowClosed(const CEGUI::EventArgs& e);
 			static bool OnWindowKeyUp(const CEGUI::EventArgs& e);
 		};
