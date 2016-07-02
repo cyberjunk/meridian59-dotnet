@@ -61,15 +61,12 @@
 		<!-- Welcome -->
 		<Window type="TaharezLook/FrameWindow" name="Welcome" >
 			<Property name="Text" value="Welcome!" />
-			<Property name="TitlebarEnabled" value="True" />
-			<Property name="TitlebarFont" value="Xolonium-8-Bold" />
 			<Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
 			<Property name="MaxSize" value="{{1,0},{1,0}}" />
 			<Property name="MinSize" value="{{0.3,0},{0.3,0}}" />
 			<Property name="Size" value="{{0,384},{0,512}}" />
 			<Property name="Position" value="{{0.5,-192},{0.5,-256}}" />
 			
-
 			<!-- List -->
 			<Window type="TaharezLook/ItemListbox" name="Welcome.Avatars" >
 				<Property name="Area" value="{{0,5},{0,5},{1,-100},{0,120}}" />
@@ -250,8 +247,6 @@
 		<!-- OnlinePlayers -->
 		<Window type="TaharezLook/FrameWindow" name="OnlinePlayers" >
 			<Property name="Text" value="Players" />
-			<Property name="TitlebarEnabled" value="True" />
-			<Property name="TitlebarFont" value="Xolonium-8-Bold" />
 			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
 			<Property name="MaxSize" value="{{1,0},{1,0}}" />
 			<Property name="Size" value="{{0,256},{0,384}}" />
@@ -269,8 +264,6 @@
 		<!-- RoomObjects -->
 		<Window type="TaharezLook/FrameWindow" name="RoomObjects" >
 			<Property name="Text" value="Entities" />
-			<Property name="TitlebarEnabled" value="True" />
-			<Property name="TitlebarFont" value="Xolonium-8-Bold" />
 			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
 			<Property name="MaxSize" value="{{1,0},{1,0}}" />
 			<Property name="Size" value="{{0,208},{0,384}}" />
@@ -352,8 +345,6 @@
 		<!-- Chat -->
 		<Window type="TaharezLook/FrameWindow" name="Chat" >
 			<Property name="Text" value="Chat" />
-			<Property name="TitlebarEnabled" value="True" />
-			<Property name="TitlebarFont" value="Xolonium-8-Bold" />
 			<Property name="MaxSize" value="{{1,0},{1,0}}" />
 			<Property name="Size" value="{{0.35,0},{0.3,0}}" />
 			<Property name="Position" value="{{0.0,0},{0.5,0}}" />
@@ -416,8 +407,6 @@
 		<!-- ObjectDetails -->
 		<Window type="TaharezLook/FrameWindow" name="ObjectDetails" >
 			<Property name="Text" value="Information" />
-			<Property name="TitlebarEnabled" value="True" />
-			<Property name="TitlebarFont" value="Xolonium-8-Bold" />
 			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
 			<Property name="MaxSize" value="{{1,0},{1,0}}" />
 			<Property name="Size" value="{{0,512},{0,512}}" />
@@ -464,8 +453,6 @@
 		<!-- PlayerDetails -->
 		<Window type="TaharezLook/FrameWindow" name="PlayerDetails" >
 			<Property name="Text" value="Biography" />
-			<Property name="TitlebarEnabled" value="True" />
-			<Property name="TitlebarFont" value="Xolonium-8-Bold" />
 			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
 			<Property name="MaxSize" value="{{0,572},{0,448}}" />
 			<Property name="Size" value="{{0,572},{0,448}}" />
@@ -669,15 +656,12 @@
 		<!-- Buy -->
 		<Window type="TaharezLook/FrameWindow" name="Buy" >
 			<Property name="Text" value="Buy" />
-			<Property name="TitlebarEnabled" value="True" />
-			<Property name="TitlebarFont" value="Xolonium-8-Bold" />
 			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
 			<Property name="MaxSize" value="{{1,0},{1,0}}" />
 			<Property name="Size" value="{{0,256},{0,256}}" />
 			<Property name="MinSize" value="{{0,192},{0,192}}" />
 			<Property name="Position" value="{{0.5,-128},{0.5,-192}}" />
 			
-
 			<!-- List -->
 			<Window type="TaharezLook/ItemListboxLegacy" name="Buy.List" >
 				<Property name="Area" value="{{0,0},{0,0},{1,0},{1,-28}}" />
@@ -705,13 +689,10 @@
 		<!-- Attributes -->
 		<Window type="TaharezLook/FrameWindow" name="Attributes" >
 			<Property name="Text" value="Stats" />
-			<Property name="TitlebarEnabled" value="True" />
-			<Property name="TitlebarFont" value="Xolonium-8-Bold" />
 			<Property name="Size" value="{{0,288},{0,380}}" />
 			<Property name="MaxSize" value="{{1,0},{1,0}}" />
 			<Property name="Position" value="{{0.5,-144},{0.5,-190}}" />
 			
-
 			<!-- List -->
 			<Window type="TaharezLook/ItemListbox" name="Attributes.List" >
 				<Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
@@ -724,14 +705,11 @@
 		<!-- Skills -->
 		<Window type="TaharezLook/FrameWindow" name="Skills" >
 			<Property name="Text" value="Skills" />
-			<Property name="TitlebarEnabled" value="True" />
-			<Property name="TitlebarFont" value="Xolonium-8-Bold" />
 			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
 			<Property name="MaxSize" value="{{1,0},{1,0}}" />
 			<Property name="Size" value="{{0,256},{0,192}}" />
 			<Property name="Position" value="{{0.5,-128},{0.5,-128}}" />
 			
-
 			<!-- List -->
 			<Window type="TaharezLook/ItemListbox" name="Skills.List" >
 				<Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
@@ -744,13 +722,10 @@
 		<!-- Spells -->
 		<Window type="TaharezLook/FrameWindow" name="Spells" >
 			<Property name="Text" value="Spells" />
-			<Property name="TitlebarEnabled" value="True" />
-			<Property name="TitlebarFont" value="Xolonium-8-Bold" />
 			<Property name="Size" value="{{0,256},{0,256}}" />
 			<Property name="MaxSize" value="{{1,0},{1,0}}" />
 			<Property name="Position" value="{{0.5,-128},{0.5,-128}}" />
 			
-
 			<!-- List -->
 			<Window type="TaharezLook/ItemListbox" name="Spells.List" >
 				<Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
@@ -763,14 +738,11 @@
 		<!-- Quests -->
 		<Window type="TaharezLook/FrameWindow" name="Quests" >
 			<Property name="Text" value="Quests" />
-			<Property name="TitlebarEnabled" value="True" />
-			<Property name="TitlebarFont" value="Xolonium-8-Bold" />
 			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
 			<Property name="MaxSize" value="{{1,0},{1,0}}" />
 			<Property name="Size" value="{{0,256},{0,192}}" />
 			<Property name="Position" value="{{0.5,-128},{0.5,-128}}" />
 			
-
 			<!-- List -->
 			<Window type="TaharezLook/ItemListbox" name="Quests.List" >
 				<Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
@@ -783,13 +755,10 @@
 		<!-- Actions -->
 		<Window type="TaharezLook/FrameWindow" name="Actions" >
 			<Property name="Text" value="Actions" />
-			<Property name="TitlebarEnabled" value="True" />
-			<Property name="TitlebarFont" value="Xolonium-8-Bold" />
 			<Property name="MaxSize" value="{{1,0},{1,0}}" />
 			<Property name="Size" value="{{0,192},{0,256}}" />
 			<Property name="Position" value="{{0.5,-128},{0.5,-128}}" />
 			
-
 			<!-- List -->
 			<Window type="TaharezLook/ItemListbox" name="Actions.List" >
 				<Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
@@ -802,14 +771,11 @@
 		<!-- Inventory -->
 		<Window type="TaharezLook/FrameWindow" name="Inventory" >
 			<Property name="Text" value="Inventory" />
-			<Property name="TitlebarEnabled" value="True" />
-			<Property name="TitlebarFont" value="Xolonium-8-Bold" />
 			<Property name="MaxSize" value="{{0,284},{1,0}}" />
 			<Property name="MinSize" value="{{0,284},{0,77}}" />
 			<Property name="Size" value="{{0,284},{0,233}}" />
 			<Property name="Position" value="{{1,-288},{1,-310}}" />
 			
-
 			<!-- ScrollPane -->
 			<Window type="TaharezLook/ScrollablePane" name="Inventory.Pane" >
 				<Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
@@ -968,8 +934,6 @@
 		<!-- Amount -->
 		<Window type="TaharezLook/FrameWindow" name="Amount" >
 			<Property name="Text" value="Amount" />
-			<Property name="TitlebarEnabled" value="True" />
-			<Property name="TitlebarFont" value="Xolonium-8-Bold" />
 			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
 			<Property name="MaxSize" value="{{1,0},{1,0}}" />
 			<Property name="Size" value="{{0,192},{0,54}}" />
@@ -977,7 +941,6 @@
 			<Property name="MaxSize" value="{{0,192},{0,54}}" />
 			<Property name="Position" value="{{0.5,-128},{0.5,-128}}" />
 			
-
 			<!-- Amount -->			
 			<Window type="TaharezLook/Editbox" name="Amount.Value" >
 				<Property name="Text" value="1" />
@@ -997,15 +960,12 @@
 		<!-- Trade -->
 		<Window type="TaharezLook/FrameWindow" name="Trade" >
 			<Property name="Text" value="Trade" />
-			<Property name="TitlebarEnabled" value="True" />
-			<Property name="TitlebarFont" value="Xolonium-8-Bold" />
 			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
 			<Property name="MaxSize" value="{{1,0},{1,0}}" />
 			<Property name="Size" value="{{0,512},{0,256}}" />
 			<Property name="MinSize" value="{{0,256},{0,256}}" />
 			<Property name="Position" value="{{0.5,-256},{0.5,-192}}" />
 			
-
 			<!-- NameYou -->
 			<Window type="TaharezLook/Label" name="Trade.NameYou" >
 				<Property name="Text" value="You" />
@@ -1072,15 +1032,12 @@
 		<!-- NewsGroup -->
 		<Window type="TaharezLook/FrameWindow" name="NewsGroup" >
 			<Property name="Text" value="News Group" />
-			<Property name="TitlebarEnabled" value="True" />
-			<Property name="TitlebarFont" value="Xolonium-8-Bold" />
 			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
 			<Property name="MaxSize" value="{{1,0},{1,0}}" />
 			<Property name="Size" value="{{0,600},{0,448}}" />
 			<Property name="MinSize" value="{{0,600},{0,256}}" />
 			<Property name="Position" value="{{0.5,-352},{0.5,-228}}" />
 			
-
 			<!-- HeadLine -->
 			<Window type="TaharezLook/Label" name="NewsGroup.HeadLine" >
 				<Property name="Text" value="Text" />
@@ -1139,15 +1096,12 @@
 		<!-- NewsGroupCompose -->
 		<Window type="TaharezLook/FrameWindow" name="NewsGroupCompose" >
 			<Property name="Text" value="Create Message" />
-			<Property name="TitlebarEnabled" value="True" />
-			<Property name="TitlebarFont" value="Xolonium-8-Bold" />
 			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
 			<Property name="MaxSize" value="{{1,0},{1,0}}" />
 			<Property name="Size" value="{{0,512},{0,512}}" />
 			<Property name="MinSize" value="{{0,256},{0,256}}" />
 			<Property name="Position" value="{{0.5,-256},{0.5,-256}}" />
 			
-
 			<!-- GroupDesc -->
 			<Window type="TaharezLook/Label" name="NewsGroupCompose.GroupDesc" >
 				<Property name="Text" value="Group:" />
@@ -1192,15 +1146,12 @@
 		<!-- Mail -->
 		<Window type="TaharezLook/FrameWindow" name="Mail" >
 			<Property name="Text" value="Mail" />
-			<Property name="TitlebarEnabled" value="True" />
-			<Property name="TitlebarFont" value="Xolonium-8-Bold" />
 			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
 			<Property name="MaxSize" value="{{1,0},{1,0}}" />
 			<Property name="Size" value="{{0,600},{0,448}}" />
 			<Property name="MinSize" value="{{0,600},{0,256}}" />
 			<Property name="Position" value="{{0.5,-352},{0.5,-228}}" />
 			
-
 			<!-- List -->
 			<Window type="TaharezLook/MultiColumnList" name="Mail.List" >
 				<Property name="Area" value="{{0,0},{0,0},{1,0},{0.5,-5}}" />
@@ -1252,15 +1203,12 @@
 		<!-- MailCompose -->
 		<Window type="TaharezLook/FrameWindow" name="MailCompose" >
 			<Property name="Text" value="Create Mail" />
-			<Property name="TitlebarEnabled" value="True" />
-			<Property name="TitlebarFont" value="Xolonium-8-Bold" />
 			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
 			<Property name="MaxSize" value="{{1,0},{1,0}}" />
 			<Property name="Size" value="{{0,512},{0,512}}" />
 			<Property name="MinSize" value="{{0,256},{0,256}}" />
 			<Property name="Position" value="{{0.5,-256},{0.5,-256}}" />
 			
-
 			<!-- RecipientsDesc -->
 			<Window type="TaharezLook/Label" name="MailCompose.RecipientsDesc" >
 				<Property name="Text" value="To:" />
@@ -1314,15 +1262,12 @@
 		<!-- Guild -->
 		<Window type="TaharezLook/FrameWindow" name="Guild" >
 			<Property name="Text" value="Guild" />
-			<Property name="TitlebarEnabled" value="True" />
-			<Property name="TitlebarFont" value="Xolonium-8-Bold" />
 			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
 			<Property name="MaxSize" value="{{1,0},{1,0}}" />
 			<Property name="Size" value="{{0,600},{0,512}}" />
 			<Property name="MinSize" value="{{0,600},{0,256}}" />
 			<Property name="Position" value="{{0.5,-256},{0.5,-256}}" />
 			
-
 			<!-- TabControl -->
 			<Window type="TaharezLook/TabControl" name="Guild.TabControl" >				
 				<Property name="Area" value="{{0,5},{0,5},{1,-5},{1,-35}}" />
@@ -1449,15 +1394,12 @@
 		<!-- GuildCreate -->
 		<Window type="TaharezLook/FrameWindow" name="GuildCreate" >
 			<Property name="Text" value="Create Guild" />
-			<Property name="TitlebarEnabled" value="True" />
-			<Property name="TitlebarFont" value="Xolonium-8-Bold" />
 			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
 			<Property name="MaxSize" value="{{1,0},{1,0}}" />
 			<Property name="Size" value="{{0,512},{0,300}}" />
 			<Property name="MinSize" value="{{0,256},{0,300}}" />
 			<Property name="Position" value="{{0.5,-256},{0.5,-150}}" />
 			
-
 			<!-- GuildNameDesc -->
 			<Window type="TaharezLook/Label" name="GuildCreate.GuildNameDesc" >
 				<Property name="Text" value="Name:" />
@@ -1586,15 +1528,12 @@
 		<!-- AvatarCreateWizard -->
 		<Window type="TaharezLook/FrameWindow" name="AvatarCreateWizard" >
 			<Property name="Text" value="Create your avatar" />
-			<Property name="TitlebarEnabled" value="True" />
-			<Property name="TitlebarFont" value="Xolonium-8-Bold" />
 			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
 			<Property name="MaxSize" value="{{1,0},{1,0}}" />
 			<Property name="Size" value="{{0,512},{0,512}}" />
 			<Property name="MinSize" value="{{0,512},{0,512}}" />
 			<Property name="Position" value="{{0.5,-256},{0.5,-256}}" />
 			
-
 			<!-- TabControl -->
 			<Window type="TaharezLook/TabControl" name="AvatarCreateWizard.TabControl" >				
 				<Property name="Area" value="{{0,5},{0,5},{1,-5},{1,-35}}" />
@@ -1898,15 +1837,12 @@
 		<!-- ConfirmPopup -->
 		<Window type="TaharezLook/FrameWindow" name="ConfirmPopup" >
 			<Property name="Text" value="Warning" />
-			<Property name="TitlebarEnabled" value="True" />
-			<Property name="TitlebarFont" value="Xolonium-8-Bold" />
 			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
 			<Property name="MaxSize" value="{{1,0},{1,0}}" />
 			<Property name="Size" value="{{0,256},{0,128}}" />
 			<Property name="MinSize" value="{{0,256},{0,128}}" />
 			<Property name="Position" value="{{0.5,-128},{0.5,-64}}" />
 			
-
 			<!-- Text -->
 			<Window type="TaharezLook/Label" name="ConfirmPopup.Text" >
 				<Property name="Text" value="Are you sure?" />
@@ -1934,15 +1870,12 @@
 		<!-- ObjectContents -->
 		<Window type="TaharezLook/FrameWindow" name="ObjectContents" >
 			<Property name="Text" value="Objects" />
-			<Property name="TitlebarEnabled" value="True" />
-			<Property name="TitlebarFont" value="Xolonium-8-Bold" />
 			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
 			<Property name="MaxSize" value="{{1,0},{1,0}}" />
 			<Property name="Size" value="{{0,256},{0,256}}" />
 			<Property name="MinSize" value="{{0,192},{0,192}}" />
 			<Property name="Position" value="{{0.5,-256},{0.5,-256}}" />
 			
-
 			<!-- List -->
 			<Window type="TaharezLook/ItemListboxLegacy" name="ObjectContents.List" >
 				<Property name="Area" value="{{0,0},{0,0},{1,0},{1,-28}}" />
@@ -1961,15 +1894,12 @@
 		<!-- LootList -->
 		<Window type="TaharezLook/FrameWindow" name="LootList" >
 			<Property name="Text" value="Loot" />
-			<Property name="TitlebarEnabled" value="True" />
-			<Property name="TitlebarFont" value="Xolonium-8-Bold" />
 			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
 			<Property name="MaxSize" value="{{1,0},{1,0}}" />
 			<Property name="Size" value="{{0,256},{0,256}}" />
 			<Property name="MinSize" value="{{0,192},{0,192}}" />
 			<Property name="Position" value="{{0.5,-256},{0.5,-256}}" />
 			
-
 			<!-- List -->
 			<Window type="TaharezLook/ItemListboxLegacy" name="LootList.List" >
 				<Property name="Area" value="{{0,0},{0,0},{1,0},{1,-28}}" />
@@ -2055,8 +1985,6 @@
 		<!-- Options -->
 		<Window type="TaharezLook/FrameWindow" name="Options" >
 			<Property name="Text" value="Options" />
-			<Property name="TitlebarEnabled" value="True" />
-			<Property name="TitlebarFont" value="Xolonium-8-Bold" />
 			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
 			<Property name="MaxSize" value="{{0,520},{0,500}}" />
 			<Property name="Size" value="{{0,520},{0,500}}" />
@@ -2064,7 +1992,6 @@
 			<Property name="SizingEnabled" value="FALSE" />
 			<Property name="Position" value="{{0.5,-277},{0.5,-256}}" />
 			
-
 			<!-- Engine -->
 			<Window type="TaharezLook/Button" name="Options.Engine" >
 				<Property name="Text" value="Engine" />

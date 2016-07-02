@@ -694,7 +694,7 @@
     -->
     <WidgetLook name="TaharezLook/FrameWindow">
 		<PropertyLinkDefinition name="CaptionColour" widget="__auto_titlebar__" targetProperty="CaptionColour" initialValue="FFFFFFFF" type="ColourRect"/>
-        <PropertyLinkDefinition name="TitlebarFont" widget="__auto_titlebar__" targetProperty="Font" type="Font"/>
+        <PropertyLinkDefinition name="TitlebarFont" widget="__auto_titlebar__" targetProperty="Font" initialValue="Xolonium-8-Bold" type="Font"/>
 		<PropertyLinkDefinition name="TitlebarBackgroundColours" widget="__auto_titlebar__" targetProperty="BackgroundColours" initialValue="tl:FFFFFFFF tr:FFFFFFFF bl:FFFFFFFF br:FFFFFFFF" type="ColourRect"/>
         <Property name="NSSizingCursorImage" value="TaharezLook/MouseNoSoCursor" />
         <Property name="EWSizingCursorImage" value="TaharezLook/MouseEsWeCursor" />
@@ -705,6 +705,7 @@
         <Property name="Size" value="{{0.3, 0}, {0.3, 0}}" />
 		<Property name="RollUpEnabled" value="False" />
 		<Property name="SizingBorderThickness" value="8.0" />
+		<Property name="TitlebarEnabled" value="True" />
         <NamedArea name="ClientWithTitleWithFrame">
             <Area>
                 <Dim type="LeftEdge" ><ImageDim name="TaharezLook/WindowTopLeft" dimension="Width" /></Dim>
