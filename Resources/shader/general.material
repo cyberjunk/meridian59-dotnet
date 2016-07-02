@@ -7,6 +7,7 @@ vertex_program ambient_vs hlsl
     source general.hlsl
     target vs_2_0
     entry_point ambient_vs
+    optimisation_level 3
  
     default_params
     {
@@ -20,6 +21,7 @@ vertex_program diffuse_vs hlsl
     source general.hlsl
     target vs_2_0
     entry_point diffuse_vs
+    optimisation_level 3
  
     default_params
     {
@@ -34,7 +36,8 @@ vertex_program invisible_vs hlsl
 	source general.hlsl
 	target vs_2_0
 	entry_point invisible_vs
-	
+    optimisation_level 3
+		
 	default_params
     {  
 		param_named_auto wvpMat worldviewproj_matrix
@@ -48,6 +51,7 @@ vertex_program water_vs hlsl
 	source general.hlsl
 	target vs_2_0
 	entry_point water_vs
+    optimisation_level 3
 
 	default_params
 	{
@@ -62,7 +66,8 @@ fragment_program ambient_ps hlsl
     source general.hlsl
     target ps_2_0
     entry_point ambient_ps
- 
+    optimisation_level 3
+	 
     default_params
     {
         param_named_auto ambient ambient_light_colour
@@ -77,7 +82,8 @@ fragment_program diffuse_ps hlsl
     source general.hlsl
     target ps_2_0
     entry_point diffuse_ps
- 
+    optimisation_level 3
+	 
     default_params
     {
         param_named_auto lightCol0 light_diffuse_colour 0
@@ -107,6 +113,7 @@ fragment_program invisible_ps hlsl
 	source general.hlsl
 	target ps_2_0
 	entry_point invisible_ps
+    optimisation_level 3
 	
 	default_params
     {
@@ -119,7 +126,8 @@ fragment_program water_ps hlsl
 	source general.hlsl
 	target ps_2_0
 	entry_point water_ps
-
+    optimisation_level 3
+	
 	default_params
 	{
 		param_named_auto ambient ambient_light_colour
