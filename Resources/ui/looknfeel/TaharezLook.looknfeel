@@ -7128,6 +7128,7 @@
 					<UnifiedDim scale="0" offset="10" type="Height"/>
 				</Dim>
 			</Area>
+			<Property name="MouseInputPropagationEnabled" value="True" />
 			<Property name="TooltipText" value="Delete this group" />
 			<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			<Property name="NormalImage" value="TaharezLook/RedCloseButton" />
@@ -7230,6 +7231,7 @@
 					<UnifiedDim scale="0" offset="10" type="Height"/>
 				</Dim>
 			</Area>
+			<Property name="MouseInputPropagationEnabled" value="True" />
 			<Property name="TooltipText" value="Delete this member" />
 			<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			<Property name="NormalImage" value="TaharezLook/RedCloseButton" />
