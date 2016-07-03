@@ -5,7 +5,7 @@
     void Application_Start(object sender, EventArgs e) 
     {
         // warning: don't use cache, it has no limits so far
-        Meridian59.Drawing2D.ImageComposerGDI<Meridian59.Data.Models.ObjectBase>.IsCacheEnabled = false;
+        Meridian59.Drawing2D.ImageComposerGDI<Meridian59.Data.Models.ObjectBase>.Cache.IsEnabled = false;
         
         // interpolation mode for GDI+ alpha-blending/scaling
         Meridian59.Drawing2D.ImageComposerGDI<Meridian59.Data.Models.ObjectBase>.InterpolationMode = 
