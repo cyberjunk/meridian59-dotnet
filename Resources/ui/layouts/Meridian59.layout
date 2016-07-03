@@ -3154,7 +3154,7 @@
 				<!-- TabGroups -->
 				<Window type="DefaultWindow" name="Options.TabGroups" >
 					<Property name="Text" value="Groups" />
-               <Property name="Font" value="Xolonium-8-Bold" />
+					<Property name="Font" value="Xolonium-8-Bold" />
 					<Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
 					
 					<!-- DisabledDescription -->
@@ -3176,6 +3176,7 @@
 					<Window type="TaharezLook/Editbox" name="Options.TabGroups.GroupName" >
 						<Property name="Text" value="" />
 						<Property name="Area" value="{{0,21},{0,40},{0.5,-60},{0,65}}" />
+						<Property name="MaxTextLength" value="15" />
 					</Window>
 					
 					<!-- AddGroup -->
