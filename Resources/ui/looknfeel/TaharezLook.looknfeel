@@ -7088,7 +7088,7 @@
 					<UnifiedDim scale="0" offset="0" type="TopEdge" />
 				</Dim>
 				<Dim type="Width" >
-					<UnifiedDim scale="1" offset="0" type="Width" />
+					<UnifiedDim scale="1" offset="-20" type="Width" />
 				</Dim>
 				<Dim type="Height" >
 					<UnifiedDim scale="0" offset="24" type="Height"/>
@@ -7104,7 +7104,7 @@
 					<UnifiedDim scale="0" offset="2" type="TopEdge" />
 				</Dim>
 				<Dim type="Width">
-					<UnifiedDim scale="1" offset="-20" type="Width" />
+					<UnifiedDim scale="1" offset="-25" type="Width" />
 				</Dim>
 				<Dim type="Height">
 					<UnifiedDim scale="1" offset="-4" type="Height"/>
@@ -7116,7 +7116,7 @@
 		<Child type ="TaharezLook/ImageButton" nameSuffix="__auto__imagebutton">
 			<Area>
 				<Dim type="LeftEdge">
-					<UnifiedDim scale="1" offset="-17" type="LeftEdge" />
+					<UnifiedDim scale="1" offset="-15" type="LeftEdge" />
 				</Dim>
 				<Dim type="TopEdge">
 					<UnifiedDim scale="0" offset="7" type="TopEdge" />
@@ -7190,7 +7190,7 @@
 					<UnifiedDim scale="0" offset="0" type="TopEdge" />
 				</Dim>
 				<Dim type="Width" >
-					<UnifiedDim scale="1" offset="0" type="Width" />
+					<UnifiedDim scale="1" offset="-20" type="Width" />
 				</Dim>
 				<Dim type="Height" >
 					<UnifiedDim scale="0" offset="24" type="Height"/>
@@ -7206,7 +7206,7 @@
 					<UnifiedDim scale="0" offset="2" type="TopEdge" />
 				</Dim>
 				<Dim type="Width">
-					<UnifiedDim scale="1" offset="-20" type="Width" />
+					<UnifiedDim scale="1" offset="-25" type="Width" />
 				</Dim>
 				<Dim type="Height">
 					<UnifiedDim scale="1" offset="-4" type="Height"/>
@@ -7218,7 +7218,7 @@
 		<Child type ="TaharezLook/ImageButton" nameSuffix="__auto__imagebutton">
 			<Area>
 				<Dim type="LeftEdge">
-					<UnifiedDim scale="1" offset="-17" type="LeftEdge" />
+					<UnifiedDim scale="1" offset="-15" type="LeftEdge" />
 				</Dim>
 				<Dim type="TopEdge">
 					<UnifiedDim scale="0" offset="7" type="TopEdge" />
