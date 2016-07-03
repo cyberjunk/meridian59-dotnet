@@ -5043,10 +5043,8 @@
 	***********************************************************************************************************/
 	-->
 	<WidgetLook name="TaharezLook/OnlinePlayerListboxItem">
-		<PropertyDefinition name="TextColour" initialValue="FF101a1f" redrawOnWrite="true" />
-		<PropertyDefinition name="SelectedTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" />
 		<PropertyDefinition name="SelectionBrush" initialValue="TaharezLook/ListboxSelectionBrush" redrawOnWrite="true" />
-		<PropertyDefinition name="SelectionColour" initialValue="FF888888" redrawOnWrite="true" />
+		<PropertyDefinition name="SelectionColour" initialValue="FF444444" redrawOnWrite="true" />
 		<Property name="Selectable" value="True" />
 		<Property name="MouseInputPropagationEnabled" value="True" />
 		<NamedArea name="ContentSize">
@@ -5101,24 +5099,6 @@
 			<Property name="HorzFormatting" value="LeftAligned" />
 			<Property name="MouseInputPropagationEnabled" value="True" />
 		</Child>
-		<ImagerySection name="label">
-			<TextComponent>
-				<Area>
-					<Dim type="TopEdge">
-						<AbsoluteDim value="0" />
-					</Dim>
-					<Dim type="LeftEdge">
-						<AbsoluteDim value="18" />
-					</Dim>
-					<Dim type="RightEdge">
-						<UnifiedDim scale="1" offset="-3" type="RightEdge" />
-					</Dim>
-					<Dim type="BottomEdge">
-						<UnifiedDim scale="1" type="BottomEdge" />
-					</Dim>
-				</Area>
-			</TextComponent>
-		</ImagerySection>
 		<ImagerySection name="selection">
 			<ImageryComponent>
 				<Area>
@@ -5141,34 +5121,16 @@
 				<HorzFormat type="Stretched" />
 			</ImageryComponent>
 		</ImagerySection>
-		<StateImagery name="Enabled">
-			 <Layer>
-				  <Section section="label">
-					  <ColourProperty name="TextColour" />
-				  </Section>
-			 </Layer>
-		</StateImagery>
-		<StateImagery name="Disabled">
-			 <Layer>
-				  <Section section="label">
-					  <ColourProperty name="TextColour" />
-				  </Section>
-			 </Layer>
-		</StateImagery>
+		<StateImagery name="Enabled" />
+		<StateImagery name="Disabled" />
 		<StateImagery name="SelectedEnabled">
 			<Layer>
 				<Section section="selection" />
-				<Section section="label">
-					 <ColourProperty name="SelectedTextColour" />
-				</Section>
 			</Layer>
 		</StateImagery>
 		<StateImagery name="SelectedDisabled">
 			<Layer>
 				<Section section="selection" />
-				<Section section="label">
-					<ColourProperty name="SelectedTextColour" />
-				</Section>
 			</Layer>
 		</StateImagery>
 	</WidgetLook>
@@ -5180,7 +5142,7 @@
 	-->
 	<WidgetLook name="TaharezLook/RoomObjectListboxItem">
 		<PropertyDefinition name="SelectionBrush" initialValue="TaharezLook/ListboxSelectionBrush" redrawOnWrite="true" />
-		<PropertyDefinition name="SelectionColour" initialValue="FF222222" redrawOnWrite="true" />
+		<PropertyDefinition name="SelectionColour" initialValue="FF444444" redrawOnWrite="true" />
 		<Property name="Selectable" value="True" />
 		<Property name="MouseInputPropagationEnabled" value="True" />
 		<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
@@ -5253,24 +5215,6 @@
 			<Property name="HorzFormatting" value="LeftAligned" />
 			<Property name="MousePassThroughEnabled" value="True" />
 		</Child>
-		<ImagerySection name="label">
-			<TextComponent>
-				<Area>
-					<Dim type="TopEdge">
-						<AbsoluteDim value="0" />
-					</Dim>
-					<Dim type="LeftEdge">
-						<AbsoluteDim value="20" />
-					</Dim>
-					<Dim type="RightEdge">
-						<UnifiedDim scale="1" offset="-40" type="RightEdge" />
-					</Dim>
-					<Dim type="BottomEdge">
-						<UnifiedDim scale="1" type="BottomEdge" />
-					</Dim>
-				</Area>
-			</TextComponent>
-		</ImagerySection>
 		<ImagerySection name="selection">
 			<ImageryComponent>
 				<Area>
@@ -5293,34 +5237,16 @@
 				<HorzFormat type="Stretched" />
 			</ImageryComponent>
 		</ImagerySection>
-		<StateImagery name="Enabled">
-			 <Layer>
-				  <Section section="label">
-					  <ColourProperty name="TextColour" />
-				  </Section>
-			 </Layer>
-		</StateImagery>
-		<StateImagery name="Disabled">
-			 <Layer>
-				  <Section section="label">
-					  <ColourProperty name="TextColour" />
-				  </Section>
-			 </Layer>
-		</StateImagery>
+		<StateImagery name="Enabled" />
+		<StateImagery name="Disabled" />
 		<StateImagery name="SelectedEnabled">
 			<Layer>
 				<Section section="selection" />
-				<Section section="label">
-					 <ColourProperty name="SelectedTextColour" />
-				</Section>
 			</Layer>
 		</StateImagery>
 		<StateImagery name="SelectedDisabled">
 			<Layer>
 				<Section section="selection" />
-				<Section section="label">
-					<ColourProperty name="SelectedTextColour" />
-				</Section>
 			</Layer>
 		</StateImagery>
 	</WidgetLook>
@@ -5331,8 +5257,6 @@
 	***********************************************************************************************************/
 	-->
 	<WidgetLook name="TaharezLook/BuyListboxItem">
-		<PropertyDefinition name="TextColour" initialValue="FFFFFFFF" redrawOnWrite="true" />
-		<PropertyDefinition name="SelectedTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" />
 		<PropertyDefinition name="SelectionBrush" initialValue="TaharezLook/ListboxSelectionBrush" redrawOnWrite="true" />
 		<PropertyDefinition name="SelectionColour" initialValue="FF444444" redrawOnWrite="true" />
 		<Property name="Selectable" value="True" />
@@ -5431,25 +5355,7 @@
 			<Property name="ValidationString" value="\A\Z|[1-9][0-9]*" />
 			<Property name="MouseInputPropagationEnabled" value="False" />
 			<Property name="MaxTextLength" value="5" />
-		</Child>
-		<ImagerySection name="label">
-			<TextComponent>
-				<Area>
-					<Dim type="TopEdge">
-						<AbsoluteDim value="2" />
-					</Dim>
-					<Dim type="LeftEdge">
-						<AbsoluteDim value="18" />
-					</Dim>
-					<Dim type="RightEdge">
-						<UnifiedDim scale="1" offset="-3" type="RightEdge" />
-					</Dim>
-					<Dim type="BottomEdge">
-						<UnifiedDim scale="1" offset="-2" type="BottomEdge" />
-					</Dim>
-				</Area>
-			</TextComponent>
-		</ImagerySection>
+		</Child>	
 		<ImagerySection name="selection">
 			<ImageryComponent>
 				<Area>
@@ -5472,34 +5378,16 @@
 				<HorzFormat type="Stretched" />
 			</ImageryComponent>
 		</ImagerySection>
-		<StateImagery name="Enabled">
-			 <Layer>
-				  <Section section="label">
-					  <ColourProperty name="TextColour" />
-				  </Section>
-			 </Layer>
-		</StateImagery>
-		<StateImagery name="Disabled">
-			 <Layer>
-				  <Section section="label">
-					  <ColourProperty name="TextColour" />
-				  </Section>
-			 </Layer>
-		</StateImagery>
+		<StateImagery name="Enabled" />
+		<StateImagery name="Disabled" />
 		<StateImagery name="SelectedEnabled">
 			<Layer>
-				<Section section="selection" />
-				<Section section="label">
-					 <ColourProperty name="SelectedTextColour" />
-				</Section>
+				<Section section="selection" />				
 			</Layer>
 		</StateImagery>
 		<StateImagery name="SelectedDisabled">
 			<Layer>
-				<Section section="selection" />
-				<Section section="label">
-					<ColourProperty name="SelectedTextColour" />
-				</Section>
+				<Section section="selection" />				
 			</Layer>
 		</StateImagery>
 	</WidgetLook>
@@ -5510,12 +5398,11 @@
 	***********************************************************************************************************/
 	-->
 	<WidgetLook name="TaharezLook/ObjectBaseListboxItem">
-		<PropertyDefinition name="TextColour" initialValue="FF101a1f" redrawOnWrite="true" />
-		<PropertyDefinition name="SelectedTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" />
 		<PropertyDefinition name="SelectionBrush" initialValue="TaharezLook/ListboxSelectionBrush" redrawOnWrite="true" />
-		<PropertyDefinition name="SelectionColour" initialValue="FFDDDDDD" redrawOnWrite="true" />
+		<PropertyDefinition name="SelectionColour" initialValue="FF444444" redrawOnWrite="true" />
 		<Property name="Selectable" value="True" />
 		<Property name="MouseInputPropagationEnabled" value="True" />
+		<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 		<NamedArea name="ContentSize">
 			<Area>
 				<Dim type="LeftEdge" >
@@ -5550,7 +5437,7 @@
 			</Area>
 			<Property name="FrameEnabled" value="False" />
 			<Property name="BackgroundEnabled" value="False" />
-			<Property name="MouseInputPropagationEnabled" value="True" />
+			<Property name="MousePassThroughEnabled" value="True" />
 		</Child>
 		<!-- Name -->
 		<Child type ="TaharezLook/Label" nameSuffix="__auto__label">
@@ -5569,7 +5456,7 @@
 				</Dim>
 			</Area>
 			<Property name="HorzFormatting" value="LeftAligned" />
-			<Property name="MouseInputPropagationEnabled" value="True" />
+			<Property name="MousePassThroughEnabled" value="True" />
 		</Child>
 		<!-- Amount -->
 		<Child type ="TaharezLook/Editbox" nameSuffix="__auto__editbox">
@@ -5588,26 +5475,8 @@
 				</Dim>
 			</Area>
 			<Property name="ValidationString" value="\A\Z|[1-9][0-9]*" />
-			<Property name="MouseInputPropagationEnabled" value="False" />
+			<Property name="MouseInputPropagationEnabled" value="True" />
 		</Child>
-		<ImagerySection name="label">
-			<TextComponent>
-				<Area>
-					<Dim type="TopEdge">
-						<AbsoluteDim value="0" />
-					</Dim>
-					<Dim type="LeftEdge">
-						<AbsoluteDim value="18" />
-					</Dim>
-					<Dim type="RightEdge">
-						<UnifiedDim scale="1" offset="-3" type="RightEdge" />
-					</Dim>
-					<Dim type="BottomEdge">
-						<UnifiedDim scale="1" type="BottomEdge" />
-					</Dim>
-				</Area>
-			</TextComponent>
-		</ImagerySection>
 		<ImagerySection name="selection">
 			<ImageryComponent>
 				<Area>
@@ -5630,34 +5499,16 @@
 				<HorzFormat type="Stretched" />
 			</ImageryComponent>
 		</ImagerySection>
-		<StateImagery name="Enabled">
-			 <Layer>
-				  <Section section="label">
-					  <ColourProperty name="TextColour" />
-				  </Section>
-			 </Layer>
-		</StateImagery>
-		<StateImagery name="Disabled">
-			 <Layer>
-				  <Section section="label">
-					  <ColourProperty name="TextColour" />
-				  </Section>
-			 </Layer>
-		</StateImagery>
+		<StateImagery name="Enabled" />
+		<StateImagery name="Disabled" />
 		<StateImagery name="SelectedEnabled">
 			<Layer>
 				<Section section="selection" />
-				<Section section="label">
-					 <ColourProperty name="SelectedTextColour" />
-				</Section>
 			</Layer>
 		</StateImagery>
 		<StateImagery name="SelectedDisabled">
 			<Layer>
 				<Section section="selection" />
-				<Section section="label">
-					<ColourProperty name="SelectedTextColour" />
-				</Section>
 			</Layer>
 		</StateImagery>
 	</WidgetLook>
@@ -5668,10 +5519,8 @@
 	***********************************************************************************************************/
 	-->
 	<WidgetLook name="TaharezLook/AvatarAttributeItem">
-		<PropertyDefinition name="TextColour" initialValue="FF101a1f" redrawOnWrite="true" />
-		<PropertyDefinition name="SelectedTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" />
 		<PropertyDefinition name="SelectionBrush" initialValue="TaharezLook/ListboxSelectionBrush" redrawOnWrite="true" />
-		<PropertyDefinition name="SelectionColour" initialValue="FF888888" redrawOnWrite="true" />
+		<PropertyDefinition name="SelectionColour" initialValue="FF444444" redrawOnWrite="true" />
 		<Property name="Selectable" value="False" />
 		<Property name="MouseInputPropagationEnabled" value="True" />
 		<NamedArea name="ContentSize">
@@ -5726,25 +5575,7 @@
 				</Dim>
 			</Area>
 			<Property name="MouseInputPropagationEnabled" value="True" />
-		</Child>	
-		<ImagerySection name="label">
-			<TextComponent>
-				<Area>
-					<Dim type="TopEdge">
-						<AbsoluteDim value="0" />
-					</Dim>
-					<Dim type="LeftEdge">
-						<AbsoluteDim value="18" />
-					</Dim>
-					<Dim type="RightEdge">
-						<UnifiedDim scale="1" offset="-3" type="RightEdge" />
-					</Dim>
-					<Dim type="BottomEdge">
-						<UnifiedDim scale="1" type="BottomEdge" />
-					</Dim>
-				</Area>
-			</TextComponent>
-		</ImagerySection>
+		</Child>			
 		<ImagerySection name="selection">
 			<ImageryComponent>
 				<Area>
@@ -5767,34 +5598,16 @@
 				<HorzFormat type="Stretched" />
 			</ImageryComponent>
 		</ImagerySection>
-		<StateImagery name="Enabled">
-			 <Layer>
-				  <Section section="label">
-					  <ColourProperty name="TextColour" />
-				  </Section>
-			 </Layer>
-		</StateImagery>
-		<StateImagery name="Disabled">
-			 <Layer>
-				  <Section section="label">
-					  <ColourProperty name="TextColour" />
-				  </Section>
-			 </Layer>
-		</StateImagery>
+		<StateImagery name="Enabled" />
+		<StateImagery name="Disabled" />
 		<StateImagery name="SelectedEnabled">
 			<Layer>
 				<Section section="selection" />
-				<Section section="label">
-					 <ColourProperty name="SelectedTextColour" />
-				</Section>
 			</Layer>
 		</StateImagery>
 		<StateImagery name="SelectedDisabled">
 			<Layer>
 				<Section section="selection" />
-				<Section section="label">
-					<ColourProperty name="SelectedTextColour" />
-				</Section>
 			</Layer>
 		</StateImagery>
 	</WidgetLook>
@@ -5806,7 +5619,7 @@
 	-->
 	<WidgetLook name="TaharezLook/AvatarSkillItem">
 		<PropertyDefinition name="SelectionBrush" initialValue="TaharezLook/ListboxSelectionBrush" redrawOnWrite="true" />
-		<PropertyDefinition name="SelectionColour" initialValue="FF888888" redrawOnWrite="true" />
+		<PropertyDefinition name="SelectionColour" initialValue="FF444444" redrawOnWrite="true" />
 		<Property name="Selectable" value="True" />
 		<Property name="MouseInputPropagationEnabled" value="True" />
 		<NamedArea name="ContentSize">
@@ -5927,9 +5740,10 @@
 	-->
 	<WidgetLook name="TaharezLook/AvatarQuestItem">
 		<PropertyDefinition name="SelectionBrush" initialValue="TaharezLook/ListboxSelectionBrush" redrawOnWrite="true" />
-		<PropertyDefinition name="SelectionColour" initialValue="FF888888" redrawOnWrite="true" />
+		<PropertyDefinition name="SelectionColour" initialValue="FF444444" redrawOnWrite="true" />
 		<Property name="Selectable" value="True" />
 		<Property name="MouseInputPropagationEnabled" value="True" />
+		<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 		<NamedArea name="ContentSize">
 			<Area>
 				<Dim type="LeftEdge" >
@@ -5983,7 +5797,7 @@
 			</Area>
 			<Property name="AlwaysOnTop" value="True" />
 			<Property name="HorzFormatting" value="LeftAligned" />
-			<Property name="MouseInputPropagationEnabled" value="True" />
+			<Property name="MousePassThroughEnabled" value="True" />
 		</Child>	
 		<ImagerySection name="selection">
 			<ImageryComponent>
@@ -6027,10 +5841,8 @@
 	***********************************************************************************************************/
 	-->
 	<WidgetLook name="TaharezLook/ActionItem">
-		<PropertyDefinition name="TextColour" initialValue="FF101a1f" redrawOnWrite="true" />
-		<PropertyDefinition name="SelectedTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" />
 		<PropertyDefinition name="SelectionBrush" initialValue="TaharezLook/ListboxSelectionBrush" redrawOnWrite="true" />
-		<PropertyDefinition name="SelectionColour" initialValue="FF888888" redrawOnWrite="true" />
+		<PropertyDefinition name="SelectionColour" initialValue="FF444444" redrawOnWrite="true" />
 		<Property name="Selectable" value="True" />
 		<Property name="MouseInputPropagationEnabled" value="True" />
 		<NamedArea name="ContentSize">
@@ -6085,25 +5897,7 @@
 			</Area>
 			<Property name="HorzFormatting" value="LeftAligned" />
 			<Property name="MouseInputPropagationEnabled" value="True" />
-		</Child>		
-		<ImagerySection name="label">
-			<TextComponent>
-				<Area>
-					<Dim type="TopEdge">
-						<AbsoluteDim value="0" />
-					</Dim>
-					<Dim type="LeftEdge">
-						<AbsoluteDim value="18" />
-					</Dim>
-					<Dim type="RightEdge">
-						<UnifiedDim scale="1" offset="-3" type="RightEdge" />
-					</Dim>
-					<Dim type="BottomEdge">
-						<UnifiedDim scale="1" type="BottomEdge" />
-					</Dim>
-				</Area>
-			</TextComponent>
-		</ImagerySection>
+		</Child>
 		<ImagerySection name="selection">
 			<ImageryComponent>
 				<Area>
@@ -6126,34 +5920,16 @@
 				<HorzFormat type="Stretched" />
 			</ImageryComponent>
 		</ImagerySection>
-		<StateImagery name="Enabled">
-			 <Layer>
-				  <Section section="label">
-					  <ColourProperty name="TextColour" />
-				  </Section>
-			 </Layer>
-		</StateImagery>
-		<StateImagery name="Disabled">
-			 <Layer>
-				  <Section section="label">
-					  <ColourProperty name="TextColour" />
-				  </Section>
-			 </Layer>
-		</StateImagery>
+		<StateImagery name="Enabled" />
+		<StateImagery name="Disabled" />
 		<StateImagery name="SelectedEnabled">
 			<Layer>
 				<Section section="selection" />
-				<Section section="label">
-					 <ColourProperty name="SelectedTextColour" />
-				</Section>
 			</Layer>
 		</StateImagery>
 		<StateImagery name="SelectedDisabled">
 			<Layer>
 				<Section section="selection" />
-				<Section section="label">
-					<ColourProperty name="SelectedTextColour" />
-				</Section>
 			</Layer>
 		</StateImagery>
 	</WidgetLook>
@@ -6164,11 +5940,9 @@
 	***********************************************************************************************************/
 	-->
 	<WidgetLook name="TaharezLook/TradeListboxItem">
-		<PropertyDefinition name="TextColour" initialValue="FF101a1f" redrawOnWrite="true" />
-		<PropertyDefinition name="SelectedTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" />
 		<PropertyDefinition name="SelectionBrush" initialValue="TaharezLook/ListboxSelectionBrush" redrawOnWrite="true" />
-		<PropertyDefinition name="SelectionColour" initialValue="FFCCCCCC" redrawOnWrite="true" />
-		<Property name="Selectable" value="True" />
+		<PropertyDefinition name="SelectionColour" initialValue="FF444444" redrawOnWrite="true" />
+		<Property name="Selectable" value="False" />
 		<Property name="MouseInputPropagationEnabled" value="True" />
 		<NamedArea name="ContentSize">
 			<Area>
@@ -6243,25 +6017,8 @@
 			</Area>
 			<Property name="ValidationString" value="\A\Z|[1-9][0-9]*" />
 			<Property name="MouseInputPropagationEnabled" value="False" />
+			<Property name="MaxTextLength" value="7" />
 		</Child>
-		<ImagerySection name="label">
-			<TextComponent>
-				<Area>
-					<Dim type="TopEdge">
-						<AbsoluteDim value="2" />
-					</Dim>
-					<Dim type="LeftEdge">
-						<AbsoluteDim value="18" />
-					</Dim>
-					<Dim type="RightEdge">
-						<UnifiedDim scale="1" offset="-3" type="RightEdge" />
-					</Dim>
-					<Dim type="BottomEdge">
-						<UnifiedDim scale="1" offset="-2" type="BottomEdge" />
-					</Dim>
-				</Area>
-			</TextComponent>
-		</ImagerySection>
 		<ImagerySection name="selection">
 			<ImageryComponent>
 				<Area>
@@ -6284,34 +6041,16 @@
 				<HorzFormat type="Stretched" />
 			</ImageryComponent>
 		</ImagerySection>
-		<StateImagery name="Enabled">
-			 <Layer>
-				  <Section section="label">
-					  <ColourProperty name="TextColour" />
-				  </Section>
-			 </Layer>
-		</StateImagery>
-		<StateImagery name="Disabled">
-			 <Layer>
-				  <Section section="label">
-					  <ColourProperty name="TextColour" />
-				  </Section>
-			 </Layer>
-		</StateImagery>
+		<StateImagery name="Enabled" />
+		<StateImagery name="Disabled" />
 		<StateImagery name="SelectedEnabled">
 			<Layer>
 				<Section section="selection" />
-				<Section section="label">
-					 <ColourProperty name="SelectedTextColour" />
-				</Section>
 			</Layer>
 		</StateImagery>
 		<StateImagery name="SelectedDisabled">
 			<Layer>
 				<Section section="selection" />
-				<Section section="label">
-					<ColourProperty name="SelectedTextColour" />
-				</Section>
 			</Layer>
 		</StateImagery>
 	</WidgetLook>
@@ -6323,7 +6062,7 @@
 	-->
 	<WidgetLook name="TaharezLook/CharacterListboxItem">
 		<PropertyDefinition name="SelectionBrush" initialValue="TaharezLook/ListboxSelectionBrush" redrawOnWrite="true" />
-		<PropertyDefinition name="SelectionColour" initialValue="FF888888" redrawOnWrite="true" />
+		<PropertyDefinition name="SelectionColour" initialValue="FF444444" redrawOnWrite="true" />
 		<Property name="Selectable" value="True" />
 		<Property name="MouseInputPropagationEnabled" value="True" />
 		<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
@@ -6406,7 +6145,7 @@
 	-->
 	<WidgetLook name="TaharezLook/GuildMemberListboxItem">
 		<PropertyDefinition name="SelectionBrush" initialValue="TaharezLook/ListboxSelectionBrush" redrawOnWrite="true" />
-		<PropertyDefinition name="SelectionColour" initialValue="FF888888" redrawOnWrite="true" />
+		<PropertyDefinition name="SelectionColour" initialValue="FF444444" redrawOnWrite="true" />
 		<Property name="Selectable" value="True" />
 		<Property name="MouseInputPropagationEnabled" value="True" />
 		<NamedArea name="ContentSize">
@@ -6545,7 +6284,7 @@
 	-->
 	<WidgetLook name="TaharezLook/GuildEntryListboxItem">
 		<PropertyDefinition name="SelectionBrush" initialValue="TaharezLook/ListboxSelectionBrush" redrawOnWrite="true" />
-		<PropertyDefinition name="SelectionColour" initialValue="FF888888" redrawOnWrite="true" />
+		<PropertyDefinition name="SelectionColour" initialValue="FF444444" redrawOnWrite="true" />
 		<Property name="Selectable" value="True" />
 		<Property name="MouseInputPropagationEnabled" value="True" />
 		<NamedArea name="ContentSize">
@@ -6660,10 +6399,8 @@
 	***********************************************************************************************************/
 	-->
 	<WidgetLook name="TaharezLook/AvatarCreatorSkillObjectListboxItem">
-		<PropertyDefinition name="TextColour" initialValue="FF101a1f" redrawOnWrite="true" />
-		<PropertyDefinition name="SelectedTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" />
 		<PropertyDefinition name="SelectionBrush" initialValue="TaharezLook/ListboxSelectionBrush" redrawOnWrite="true" />
-		<PropertyDefinition name="SelectionColour" initialValue="FF888888" redrawOnWrite="true" />
+		<PropertyDefinition name="SelectionColour" initialValue="FF444444" redrawOnWrite="true" />
 		<Property name="Selectable" value="True" />
 		<Property name="MouseInputPropagationEnabled" value="True" />
 		<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
@@ -6721,24 +6458,6 @@
 			<Property name="HorzFormatting" value="LeftAligned" />
 			<Property name="MousePassThroughEnabled" value="True" />
 		</Child>
-		<ImagerySection name="label">
-			<TextComponent>
-				<Area>
-					<Dim type="TopEdge">
-						<AbsoluteDim value="0" />
-					</Dim>
-					<Dim type="LeftEdge">
-						<AbsoluteDim value="18" />
-					</Dim>
-					<Dim type="RightEdge">
-						<UnifiedDim scale="1" offset="-3" type="RightEdge" />
-					</Dim>
-					<Dim type="BottomEdge">
-						<UnifiedDim scale="1" type="BottomEdge" />
-					</Dim>
-				</Area>
-			</TextComponent>
-		</ImagerySection>
 		<ImagerySection name="selection">
 			<ImageryComponent>
 				<Area>
@@ -6761,34 +6480,16 @@
 				<HorzFormat type="Stretched" />
 			</ImageryComponent>
 		</ImagerySection>
-		<StateImagery name="Enabled">
-			 <Layer>
-				  <Section section="label">
-					  <ColourProperty name="TextColour" />
-				  </Section>
-			 </Layer>
-		</StateImagery>
-		<StateImagery name="Disabled">
-			 <Layer>
-				  <Section section="label">
-					  <ColourProperty name="TextColour" />
-				  </Section>
-			 </Layer>
-		</StateImagery>
+		<StateImagery name="Enabled" />
+		<StateImagery name="Disabled" />
 		<StateImagery name="SelectedEnabled">
 			<Layer>
 				<Section section="selection" />
-				<Section section="label">
-					 <ColourProperty name="SelectedTextColour" />
-				</Section>
 			</Layer>
 		</StateImagery>
 		<StateImagery name="SelectedDisabled">
 			<Layer>
 				<Section section="selection" />
-				<Section section="label">
-					<ColourProperty name="SelectedTextColour" />
-				</Section>
 			</Layer>
 		</StateImagery>
 	</WidgetLook>
@@ -6799,10 +6500,8 @@
 	***********************************************************************************************************/
 	-->
 	<WidgetLook name="TaharezLook/AvatarCreatorSpellObjectListboxItem">
-		<PropertyDefinition name="TextColour" initialValue="FF101a1f" redrawOnWrite="true" />
-		<PropertyDefinition name="SelectedTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" />
 		<PropertyDefinition name="SelectionBrush" initialValue="TaharezLook/ListboxSelectionBrush" redrawOnWrite="true" />
-		<PropertyDefinition name="SelectionColour" initialValue="FF888888" redrawOnWrite="true" />
+		<PropertyDefinition name="SelectionColour" initialValue="FF444444" redrawOnWrite="true" />
 		<Property name="Selectable" value="True" />
 		<Property name="MouseInputPropagationEnabled" value="True" />
 		<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
@@ -6878,25 +6577,7 @@
 			</Area>
 			<Property name="HorzFormatting" value="LeftAligned" />
 			<Property name="MousePassThroughEnabled" value="True" />
-		</Child>
-		<ImagerySection name="label">
-			<TextComponent>
-				<Area>
-					<Dim type="TopEdge">
-						<AbsoluteDim value="0" />
-					</Dim>
-					<Dim type="LeftEdge">
-						<AbsoluteDim value="18" />
-					</Dim>
-					<Dim type="RightEdge">
-						<UnifiedDim scale="1" offset="-3" type="RightEdge" />
-					</Dim>
-					<Dim type="BottomEdge">
-						<UnifiedDim scale="1" type="BottomEdge" />
-					</Dim>
-				</Area>
-			</TextComponent>
-		</ImagerySection>
+		</Child>		
 		<ImagerySection name="selection">
 			<ImageryComponent>
 				<Area>
@@ -6919,34 +6600,16 @@
 				<HorzFormat type="Stretched" />
 			</ImageryComponent>
 		</ImagerySection>
-		<StateImagery name="Enabled">
-			 <Layer>
-				  <Section section="label">
-					  <ColourProperty name="TextColour" />
-				  </Section>
-			 </Layer>
-		</StateImagery>
-		<StateImagery name="Disabled">
-			 <Layer>
-				  <Section section="label">
-					  <ColourProperty name="TextColour" />
-				  </Section>
-			 </Layer>
-		</StateImagery>
+		<StateImagery name="Enabled" />
+		<StateImagery name="Disabled" />
 		<StateImagery name="SelectedEnabled">
 			<Layer>
 				<Section section="selection" />
-				<Section section="label">
-					 <ColourProperty name="SelectedTextColour" />
-				</Section>
 			</Layer>
 		</StateImagery>
 		<StateImagery name="SelectedDisabled">
 			<Layer>
 				<Section section="selection" />
-				<Section section="label">
-					<ColourProperty name="SelectedTextColour" />
-				</Section>
 			</Layer>
 		</StateImagery>
 	</WidgetLook>
@@ -6958,7 +6621,7 @@
 	-->
 	<WidgetLook name="TaharezLook/AliasListboxItem">
 		<PropertyDefinition name="SelectionBrush" initialValue="TaharezLook/ListboxSelectionBrush" redrawOnWrite="true" />
-		<PropertyDefinition name="SelectionColour" initialValue="FF888888" redrawOnWrite="true" />
+		<PropertyDefinition name="SelectionColour" initialValue="FF444444" redrawOnWrite="true" />
 		<Property name="Selectable" value="False" />
 		<Property name="MouseInputPropagationEnabled" value="True" />
 		<NamedArea name="ContentSize">
@@ -7076,7 +6739,7 @@
 	-->
 	<WidgetLook name="TaharezLook/GroupListboxItem">
 		<PropertyDefinition name="SelectionBrush" initialValue="TaharezLook/ListboxSelectionBrush" redrawOnWrite="true" />
-		<PropertyDefinition name="SelectionColour" initialValue="FF222222" redrawOnWrite="true" />
+		<PropertyDefinition name="SelectionColour" initialValue="FF444444" redrawOnWrite="true" />
 		<Property name="Selectable" value="True" />
 		<Property name="MouseInputPropagationEnabled" value="True" />
 		<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
@@ -7180,7 +6843,7 @@
 	-->
 	<WidgetLook name="TaharezLook/GroupMemberListboxItem">
 		<PropertyDefinition name="SelectionBrush" initialValue="TaharezLook/ListboxSelectionBrush" redrawOnWrite="true" />
-		<PropertyDefinition name="SelectionColour" initialValue="FF222222" redrawOnWrite="true" />
+		<PropertyDefinition name="SelectionColour" initialValue="FF444444" redrawOnWrite="true" />
 		<Property name="Selectable" value="False" />
 		<Property name="MouseInputPropagationEnabled" value="True" />
 		<NamedArea name="ContentSize">
