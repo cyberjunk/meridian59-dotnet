@@ -72,6 +72,68 @@ namespace Meridian59 { namespace Ogre
 	{
 	};
 
+	void ControllerUI::Target::SetButtons()
+	{
+		if (targetObject == nullptr)
+			return;
+
+		// set button availability
+		if (targetObject->Flags->IsAttackable)
+		{
+			Attack->setEnabled(true);
+			Attack->setMouseCursor(UI_MOUSECURSOR_HAND);
+		}
+		else
+		{
+			Attack->setEnabled(false);
+			Attack->setMouseCursor(UI_DEFAULTARROW);
+		}
+
+		if (targetObject->Flags->IsActivatable || targetObject->Flags->IsContainer)
+		{
+			Activate->setEnabled(true);
+			Activate->setMouseCursor(UI_MOUSECURSOR_HAND);
+		}
+		else
+		{
+			Activate->setEnabled(false);
+			Activate->setMouseCursor(UI_DEFAULTARROW);
+		}
+
+		if (targetObject->Flags->IsBuyable)
+		{
+			Buy->setEnabled(true);
+			Buy->setMouseCursor(UI_MOUSECURSOR_HAND);
+		}
+		else
+		{
+			Buy->setEnabled(false);
+			Buy->setMouseCursor(UI_DEFAULTARROW);
+		}
+
+		if (targetObject->Flags->IsOfferable)
+		{
+			Trade->setEnabled(true);
+			Trade->setMouseCursor(UI_MOUSECURSOR_HAND);
+		}
+		else
+		{
+			Trade->setEnabled(false);
+			Trade->setMouseCursor(UI_DEFAULTARROW);
+		}
+
+		if (targetObject->Flags->IsGettable)
+		{
+			Loot->setEnabled(true);
+			Loot->setMouseCursor(UI_MOUSECURSOR_HAND);
+		}
+		else
+		{
+			Loot->setEnabled(false);
+			Loot->setMouseCursor(UI_DEFAULTARROW);
+		}
+	};
+
 	void ControllerUI::Target::OnDataPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{
 		// targetobject
@@ -114,11 +176,7 @@ namespace Meridian59 { namespace Ogre
 				}
 				
 				// set button availability
-				Attack->setEnabled(targetObject->Flags->IsAttackable);
-				Activate->setEnabled(targetObject->Flags->IsActivatable || targetObject->Flags->IsContainer);
-				Buy->setEnabled(targetObject->Flags->IsBuyable);
-				Trade->setEnabled(targetObject->Flags->IsOfferable);
-				Loot->setEnabled(targetObject->Flags->IsGettable);
+				SetButtons();
 
 				// show target window but don't give it input focus
 				Window->show();
@@ -167,12 +225,7 @@ namespace Meridian59 { namespace Ogre
 				Image->setVisible(true);			
 			}
 				
-			// set button availability
-			Attack->setEnabled(targetObject->Flags->IsAttackable);
-			Activate->setEnabled(targetObject->Flags->IsActivatable || targetObject->Flags->IsContainer);
-			Buy->setEnabled(targetObject->Flags->IsBuyable);
-			Trade->setEnabled(targetObject->Flags->IsOfferable);
-			Loot->setEnabled(targetObject->Flags->IsGettable);
+			SetButtons();
 		}
 	};
 

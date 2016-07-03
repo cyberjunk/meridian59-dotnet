@@ -450,6 +450,7 @@ namespace Meridian59 { namespace Ogre
 			static void Initialize();
 			static void Destroy();
 			static void ApplyLanguage();
+			static void SetButtons();
 			static void OnDataPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
 			static void OnTargetObjectPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
 			static void OnNewImageAvailable(Object^ sender, ::System::EventArgs^ e);			
