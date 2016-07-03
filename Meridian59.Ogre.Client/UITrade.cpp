@@ -278,7 +278,9 @@ namespace Meridian59 { namespace Ogre
 			CEGUI::Window* name		= (CEGUI::Window*)widget->getChildAtIdx(UI_TRADE_CHILDINDEX_NAME);
 			CEGUI::Editbox* amount	= (CEGUI::Editbox*)widget->getChildAtIdx(UI_TRADE_CHILDINDEX_AMOUNT);
 
-			amount->setReadOnly(true);
+			// deactivate the amount for offered items and show normal cursor
+			amount->setEnabled(false);
+			amount->setMousePassThroughEnabled(true);
 
 			// get color
 			::CEGUI::Colour color = ::CEGUI::Colour(
