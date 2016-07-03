@@ -670,6 +670,7 @@ namespace Meridian59 { namespace Ogre
 			static ::CEGUI::Window* Mail = nullptr;
 			static ::CEGUI::Window* Map = nullptr;
 			static ::CEGUI::Window* Options = nullptr;
+			static ::CEGUI::Window* RoomObjects = nullptr;
 
 			static void Initialize();
 			static void Destroy();

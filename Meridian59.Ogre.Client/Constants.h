@@ -326,6 +326,7 @@
 #define UI_NAME_MAINBUTTONSLEFT_MAIL				"MainButtonsLeft.Mail"
 #define UI_NAME_MAINBUTTONSLEFT_MAP					"MainButtonsLeft.Map"
 #define UI_NAME_MAINBUTTONSLEFT_OPTIONS				"MainButtonsLeft.Options"
+#define UI_NAME_MAINBUTTONSLEFT_ROOMOBJECTS			"MainButtonsLeft.RoomObjects"
 #define UI_NAME_MAINBUTTONSRIGHT_WINDOW				"MainButtonsRight"
 #define UI_NAME_MAINBUTTONSRIGHT_INVENTORY			"MainButtonsRight.Inventory"
 #define UI_NAME_MAINBUTTONSRIGHT_SPELLS				"MainButtonsRight.Spells"
