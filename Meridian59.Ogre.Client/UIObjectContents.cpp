@@ -107,6 +107,7 @@ namespace Meridian59 { namespace Ogre
 			// NOTE: Currently server does not support specifying an amount in BP_REQ_GET
 			// So we can't use our amount here and deactivate it for now
 			amount->setEnabled(false);
+			amount->setMousePassThroughEnabled(true);
 
 			// subscribe event to focusleave on textbox
 			amount->subscribeEvent(CEGUI::Editbox::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::ObjectContents::OnItemAmountDeactivated));
