@@ -49,7 +49,11 @@ namespace Meridian59.Drawing2D
 #if !VANILLA
             // openmeridian has a name-color transferred from server in flags
             // however it has opacity set to 0, so we make it full opaque here.
-            return Flags.NameColor | 0xFF000000;
+            uint color = Flags.NameColor | 0xFF000000;
+
+            // lots of kod objects have black as color
+            // which is turned into white as a workaround here
+            return color != 0xFF000000 ? color : 0xFFFFFFFF;
 #else
             if (Flags.Player == ObjectFlags.PlayerType.SuperDM)
                 return SUPERDM;
