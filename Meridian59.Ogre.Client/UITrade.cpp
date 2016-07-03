@@ -280,10 +280,6 @@ namespace Meridian59 { namespace Ogre
 
 			amount->setReadOnly(true);
 
-			// subscribe event to focusleave on textbox
-			amount->subscribeEvent(CEGUI::Editbox::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Buy::OnItemAmountDeactivated));
-			amount->subscribeEvent(CEGUI::Editbox::EventTextAccepted, CEGUI::Event::Subscriber(UICallbacks::Buy::OnItemAmountDeactivated));
-
 			// get color
 			::CEGUI::Colour color = ::CEGUI::Colour(
 				NameColors::GetColorFor(obj->Flags));
@@ -451,7 +447,33 @@ namespace Meridian59 { namespace Ogre
 	};
 
 	bool UICallbacks::Trade::OnItemYouAmountDeactivated(const CEGUI::EventArgs& e)
-	{		
+	{	
+		const CEGUI::WindowEventArgs& args	= (CEGUI::MouseEventArgs&)e;
+		CEGUI::Editbox* box					= (CEGUI::Editbox*)args.window;
+		CEGUI::ItemEntry* itemEntry			= (CEGUI::ItemEntry*)box->getParent();
+		CEGUI::ItemListbox* list			= ControllerUI::Trade::ListYou;
+
+		// get user value from box
+		CEGUI::String boxText = box->getText();
+
+		// revert empty input to 1
+		if (boxText == STRINGEMPTY)
+		{
+			boxText = "1";
+			box->setText(boxText);
+		}
+
+		// data models
+		ObjectBaseList<ObjectBase^>^ dataItems =
+			OgreClient::Singleton->Data->Trade->ItemsYou;
+
+		// get index of clicked buff/widget in listbox
+		int index = (int)list->getItemIndex(itemEntry);
+
+		// found ?
+		if (dataItems->Count > index)
+			dataItems[index]->Count = ::CEGUI::PropertyHelper<unsigned int>::fromString(boxText);
+
 		return true;
 	};
 	
