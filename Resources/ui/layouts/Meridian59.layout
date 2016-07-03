@@ -331,7 +331,7 @@
 			</Window>
 			
 			<!-- List -->
-			<Window type="TaharezLook/ItemListboxLegacy" name="RoomObjects.List" >
+			<Window type="TaharezLook/ItemListbox" name="RoomObjects.List" >
 				<Property name="Area" value="{{0,0},{0,60},{1,0},{1,0}}" />
 				<!--<Property name="MaxSize" value="{{1,0},{1,0}}" />-->
 				<!--<Property name="Size" value="{{1,0},{1.0,0}}" />-->
@@ -658,7 +658,7 @@
 			<Property name="Position" value="{{0.5,-128},{0.5,-192}}" />
 			
 			<!-- List -->
-			<Window type="TaharezLook/ItemListboxLegacy" name="Buy.List" >
+			<Window type="TaharezLook/ItemListbox" name="Buy.List" >
 				<Property name="Area" value="{{0,0},{0,0},{1,0},{1,-28}}" />
 			</Window>
 			
@@ -954,7 +954,7 @@
 			</Window>
 			
 			<!-- ListYou -->
-			<Window type="TaharezLook/ItemListboxLegacy" name="Trade.ListYou" >
+			<Window type="TaharezLook/ItemListbox" name="Trade.ListYou" >
 				<Property name="Area" value="{{0,0},{0,30},{0.5,-2},{1,-30}}" />
 				<Property name="MaxSize" value="{{0.5,-2},{1,-60}}" />
 				<Property name="Size" value="{{0.5,-2},{1,-60}}" />
@@ -969,7 +969,7 @@
 			</Window>
 			
 			<!-- ListPartner -->
-			<Window type="TaharezLook/ItemListboxLegacy" name="Trade.ListPartner" >
+			<Window type="TaharezLook/ItemListbox" name="Trade.ListPartner" >
 				<Property name="Area" value="{{0.5,2},{0,30},{1,0},{1,-30}}" />
 				<Property name="MaxSize" value="{{0.5,-2},{1,-60}}" />
 				<Property name="Size" value="{{0.5,-2},{1,-60}}" />
@@ -1835,7 +1835,7 @@
 			<Property name="Position" value="{{0.5,-256},{0.5,-256}}" />
 			
 			<!-- List -->
-			<Window type="TaharezLook/ItemListboxLegacy" name="ObjectContents.List" >
+			<Window type="TaharezLook/ItemListbox" name="ObjectContents.List" >
 				<Property name="Area" value="{{0,0},{0,0},{1,0},{1,-28}}" />
 				<Property name="MaxSize" value="{{1,0},{1,-28}}" />
 				<Property name="Size" value="{{1,0},{1,-28}}" />
@@ -1859,7 +1859,7 @@
 			<Property name="Position" value="{{0.5,-256},{0.5,-256}}" />
 			
 			<!-- List -->
-			<Window type="TaharezLook/ItemListboxLegacy" name="LootList.List" >
+			<Window type="TaharezLook/ItemListbox" name="LootList.List" >
 				<Property name="Area" value="{{0,0},{0,0},{1,0},{1,-28}}" />
 			</Window>
 			
