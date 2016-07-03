@@ -5179,12 +5179,11 @@
 	***********************************************************************************************************/
 	-->
 	<WidgetLook name="TaharezLook/RoomObjectListboxItem">
-		<PropertyDefinition name="TextColour" initialValue="FF101a1f" redrawOnWrite="true" />
-		<PropertyDefinition name="SelectedTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" />
 		<PropertyDefinition name="SelectionBrush" initialValue="TaharezLook/ListboxSelectionBrush" redrawOnWrite="true" />
-		<PropertyDefinition name="SelectionColour" initialValue="FFDDDDDD" redrawOnWrite="true" />
+		<PropertyDefinition name="SelectionColour" initialValue="FF222222" redrawOnWrite="true" />
 		<Property name="Selectable" value="True" />
 		<Property name="MouseInputPropagationEnabled" value="True" />
+		<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 		<NamedArea name="ContentSize">
 			<Area>
 				<Dim type="LeftEdge" >
@@ -5216,8 +5215,7 @@
 					<UnifiedDim scale="1" offset="0" type="Height"/>
 				</Dim>
 			</Area>
-			<Property name="MouseInputPropagationEnabled" value="True" />
-			<Property name="TooltipText" value="Ignore this player!" />
+			<Property name="MousePassThroughEnabled" value="True" />
 		</Child>
 		<Child type ="TaharezLook/Label" nameSuffix="__auto__label_name">
 			<Area>
@@ -5235,7 +5233,7 @@
 				</Dim>
 			</Area>
 			<Property name="HorzFormatting" value="LeftAligned" />
-			<Property name="MouseInputPropagationEnabled" value="True" />
+			<Property name="MousePassThroughEnabled" value="True" />
 		</Child>
 		<Child type ="TaharezLook/Label" nameSuffix="__auto__label_health">
 			<Area>
@@ -5253,7 +5251,7 @@
 				</Dim>
 			</Area>
 			<Property name="HorzFormatting" value="LeftAligned" />
-			<Property name="MouseInputPropagationEnabled" value="True" />
+			<Property name="MousePassThroughEnabled" value="True" />
 		</Child>
 		<ImagerySection name="label">
 			<TextComponent>
