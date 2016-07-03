@@ -5334,7 +5334,7 @@
 		<PropertyDefinition name="TextColour" initialValue="FFFFFFFF" redrawOnWrite="true" />
 		<PropertyDefinition name="SelectedTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" />
 		<PropertyDefinition name="SelectionBrush" initialValue="TaharezLook/ListboxSelectionBrush" redrawOnWrite="true" />
-		<PropertyDefinition name="SelectionColour" initialValue="FF222222" redrawOnWrite="true" />
+		<PropertyDefinition name="SelectionColour" initialValue="FF444444" redrawOnWrite="true" />
 		<Property name="Selectable" value="True" />
 		<Property name="MouseInputPropagationEnabled" value="True" />
 		<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
@@ -5416,13 +5416,13 @@
 		<Child type ="TaharezLook/Editbox" nameSuffix="__auto__editbox">
 			<Area>
 				<Dim type="LeftEdge">
-					<UnifiedDim scale="1" offset="-45" type="LeftEdge" />
+					<UnifiedDim scale="1" offset="-49" type="LeftEdge" />
 				</Dim>
 				<Dim type="TopEdge">
 					<UnifiedDim scale="0" offset="2" type="TopEdge" />
 				</Dim>
 				<Dim type="Width">
-					<UnifiedDim scale="0" offset="45" type="Width" />
+					<UnifiedDim scale="0" offset="49" type="Width" />
 				</Dim>
 				<Dim type="Height">
 					<UnifiedDim scale="0" offset="20" type="Height"/>
@@ -5430,6 +5430,7 @@
 			</Area>
 			<Property name="ValidationString" value="\A\Z|[1-9][0-9]*" />
 			<Property name="MouseInputPropagationEnabled" value="False" />
+			<Property name="MaxTextLength" value="5" />
 		</Child>
 		<ImagerySection name="label">
 			<TextComponent>

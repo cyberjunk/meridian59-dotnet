@@ -652,7 +652,7 @@
 		<Window type="TaharezLook/FrameWindow" name="Buy" >
 			<Property name="Text" value="Buy" />
 			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
-			<Property name="MaxSize" value="{{1,0},{1,0}}" />
+			<Property name="MaxSize" value="{{0,512},{1,0}}" />
 			<Property name="Size" value="{{0,256},{0,256}}" />
 			<Property name="MinSize" value="{{0,192},{0,192}}" />
 			<Property name="Position" value="{{0.5,-128},{0.5,-192}}" />
