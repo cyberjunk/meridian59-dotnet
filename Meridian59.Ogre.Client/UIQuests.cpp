@@ -70,10 +70,7 @@ namespace Meridian59 {
 				CEGUI::ItemEntry::EventMouseClick,
 				CEGUI::Event::Subscriber(UICallbacks::Quests::OnItemClicked));
 			
-			CEGUI::DragContainer* dragger =
-				(CEGUI::DragContainer*)widget->getChildAtIdx(UI_QUESTS_CHILDINDEX_ICON);
-
-			CEGUI::Window* icon = dragger->getChildAtIdx(0);
+			CEGUI::Window* icon = widget->getChildAtIdx(UI_QUESTS_CHILDINDEX_ICON);
 			CEGUI::Window* name = widget->getChildAtIdx(UI_QUESTS_CHILDINDEX_NAME);
 			
 			// insert in ui-list
@@ -108,10 +105,7 @@ namespace Meridian59 {
 			{
 				CEGUI::ItemEntry* wnd = (CEGUI::ItemEntry*)List->getItemFromIndex(Index);
 
-				CEGUI::DragContainer* dragger =
-					(CEGUI::DragContainer*)wnd->getChildAtIdx(UI_QUESTS_CHILDINDEX_ICON);
-
-				CEGUI::Window* icon = dragger->getChildAtIdx(0);
+				CEGUI::Window* icon = wnd->getChildAtIdx(UI_QUESTS_CHILDINDEX_ICON);
 				CEGUI::Window* name = wnd->getChildAtIdx(UI_QUESTS_CHILDINDEX_NAME);
 				
 				// set name

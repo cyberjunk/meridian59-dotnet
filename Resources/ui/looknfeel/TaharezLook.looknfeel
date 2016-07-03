@@ -5761,7 +5761,7 @@
 			</Area>
 		</NamedArea>
 		<!-- Icon -->
-		<Child type ="TaharezLook/DragImage" nameSuffix="__auto__image">
+		<Child type ="TaharezLook/StaticImage" nameSuffix="__auto__image">
 			<Area>
 				<Dim type="LeftEdge">
 					<UnifiedDim scale="0" offset="0" type="LeftEdge" />				
@@ -5776,8 +5776,9 @@
 					<UnifiedDim scale="0" offset="16" type="Height"/>
 				</Dim>
 			</Area>
-			<Property name="AlwaysOnTop" value="True" />
-			<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
+			<Property name="FrameEnabled" value="False" />
+			<Property name="BackgroundEnabled" value="False" />
+			<Property name="MousePassThroughEnabled" value="True" />
 		</Child>		
 		<!-- Name -->
 		<Child type ="TaharezLook/Label" nameSuffix="__auto__label2">
@@ -5795,7 +5796,6 @@
 					<UnifiedDim scale="0" offset="20" type="Height"/>
 				</Dim>
 			</Area>
-			<Property name="AlwaysOnTop" value="True" />
 			<Property name="HorzFormatting" value="LeftAligned" />
 			<Property name="MousePassThroughEnabled" value="True" />
 		</Child>	
