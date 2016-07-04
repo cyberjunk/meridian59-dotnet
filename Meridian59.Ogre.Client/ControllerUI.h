@@ -81,7 +81,8 @@ namespace Meridian59 { namespace Ogre
 		static void InjectKeyDown(::CEGUI::Key::Scan Key);
 		static void InjectKeyUp(::CEGUI::Key::Scan Key);
 		static void InjectChar(::CEGUI::Key::Scan Key);
-			
+		
+		static void SetVUMeterColorFromProgress(::CEGUI::ProgressBar* VUMeter);
 		static void BuildIconAtlas();
 
 		static property ::CEGUI::OgreRenderer* Renderer 
@@ -1724,7 +1725,8 @@ namespace Meridian59 { namespace Ogre
 
 			static bool OnProfileChanged(const CEGUI::EventArgs& e);
 			static bool OnAttributeMouseMoveClick(const CEGUI::EventArgs& e);
-			
+			static bool OnAttributeProgressChange(const CEGUI::EventArgs& e);
+
 			static bool OnSpellDoubleClicked(const CEGUI::EventArgs& e);
 			static bool OnSkillDoubleClicked(const CEGUI::EventArgs& e);
 			static bool OnSelectedSpellDoubleClicked(const CEGUI::EventArgs& e);

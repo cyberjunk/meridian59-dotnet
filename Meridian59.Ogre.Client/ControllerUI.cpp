@@ -624,6 +624,23 @@ namespace Meridian59 { namespace Ogre
 		}
 	};
 
+	void ControllerUI::SetVUMeterColorFromProgress(::CEGUI::ProgressBar* VUMeter)
+	{
+		const float MAXVAL = 128.0f;
+		const float progress = VUMeter->getProgress();
+
+		// build red and green components
+		const float r = (progress <= 0.5f) ? MAXVAL : MathUtil::Bound(MAXVAL - ((progress - 0.5f) * 2.0f * MAXVAL), 0.0f, MAXVAL);
+		const float g = (progress >= 0.5f) ? MAXVAL : MathUtil::Bound(progress * 2.0f * MAXVAL, 0.0f, MAXVAL);
+
+		// create colourrect from components
+		const CEGUI::Colour colour = CEGUI::Colour(0xFF000000 | (unsigned int)r << 16 | (unsigned int)g << 8);
+		const CEGUI::ColourRect colours = CEGUI::ColourRect(colour, colour, colour, colour);
+
+		// set color on property
+		VUMeter->setProperty(UI_PROPNAME_BARCOLOURS, CEGUI::PropertyHelper<CEGUI::ColourRect>::toString(colours));
+	};
+
 	void ControllerUI::BuildIconAtlas()
 	{
 		::CEGUI::ImageManager* imgMan = CEGUI::ImageManager::getSingletonPtr();

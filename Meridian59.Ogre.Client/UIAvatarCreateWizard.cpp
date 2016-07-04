@@ -94,33 +94,6 @@ namespace Meridian59 { namespace Ogre
 		imageComposerHead->NewImageAvailable += gcnew ::System::EventHandler(OnNewHeadImageAvailable);
 		imageComposerHead->DataSource = info->ExampleModel;
 
-		// Profiles for attributes
-		Profiles->addItem(new::CEGUI::ListboxTextItem(UI_AVATARCREATEWIZARD_PROFILE_CUSTOM));
-		Profiles->addItem(new::CEGUI::ListboxTextItem(UI_AVATARCREATEWIZARD_PROFILE_WARRIOR));
-		Profiles->addItem(new::CEGUI::ListboxTextItem(UI_AVATARCREATEWIZARD_PROFILE_MAGE));
-		Profiles->addItem(new::CEGUI::ListboxTextItem(UI_AVATARCREATEWIZARD_PROFILE_HYBRID));
-		Profiles->setText(UI_AVATARCREATEWIZARD_PROFILE_CUSTOM);
-		Profiles->selectListItemWithEditboxText();
-
-		// initial attributes		
-		Might->setProgress((float)info->Might / (float)CharCreationInfo::ATTRIBUTE_MAXVALUE);
-		Might->setText(CEGUI::PropertyHelper<unsigned int>::toString(info->Might) + "/" + CEGUI::PropertyHelper<unsigned int>::toString(CharCreationInfo::ATTRIBUTE_MAXVALUE));
-		Intellect->setProgress((float)info->Intellect / (float)CharCreationInfo::ATTRIBUTE_MAXVALUE);
-		Intellect->setText(CEGUI::PropertyHelper<unsigned int>::toString(info->Intellect) + "/" + CEGUI::PropertyHelper<unsigned int>::toString(CharCreationInfo::ATTRIBUTE_MAXVALUE));
-		Stamina->setProgress((float)info->Stamina / (float)CharCreationInfo::ATTRIBUTE_MAXVALUE);
-		Stamina->setText(CEGUI::PropertyHelper<unsigned int>::toString(info->Stamina) + "/" + CEGUI::PropertyHelper<unsigned int>::toString(CharCreationInfo::ATTRIBUTE_MAXVALUE));
-		Agility->setProgress((float)info->Agility / (float)CharCreationInfo::ATTRIBUTE_MAXVALUE);
-		Agility->setText(CEGUI::PropertyHelper<unsigned int>::toString(info->Agility) + "/" + CEGUI::PropertyHelper<unsigned int>::toString(CharCreationInfo::ATTRIBUTE_MAXVALUE));
-		Mysticism->setProgress((float)info->Mysticism / (float)CharCreationInfo::ATTRIBUTE_MAXVALUE);
-		Mysticism->setText(CEGUI::PropertyHelper<unsigned int>::toString(info->Mysticism) + "/" + CEGUI::PropertyHelper<unsigned int>::toString(CharCreationInfo::ATTRIBUTE_MAXVALUE));
-		Aim->setProgress((float)info->Aim / (float)CharCreationInfo::ATTRIBUTE_MAXVALUE);
-		Aim->setText(CEGUI::PropertyHelper<unsigned int>::toString(info->Aim) + "/" + CEGUI::PropertyHelper<unsigned int>::toString(CharCreationInfo::ATTRIBUTE_MAXVALUE));
-		AttributesAvailable->setProgress((float)info->AttributesAvailable / (float)CharCreationInfo::ATTRIBUTE_MAXSUM);
-		AttributesAvailable->setText(CEGUI::PropertyHelper<unsigned int>::toString(info->AttributesAvailable) + "/" + CEGUI::PropertyHelper<unsigned int>::toString(CharCreationInfo::ATTRIBUTE_MAXSUM));
-		
-		SkillPointsAvailable->setProgress((float)info->SkillPointsAvailable / (float)CharCreationInfo::SKILLPOINTS_MAXSUM);
-		SkillPointsAvailable->setText(CEGUI::PropertyHelper<unsigned int>::toString(info->SkillPointsAvailable) + "/" + CEGUI::PropertyHelper<unsigned int>::toString(CharCreationInfo::SKILLPOINTS_MAXSUM));
-
 		// attach listener
 		OgreClient::Singleton->Data->CharCreationInfo->PropertyChanged += 
 			gcnew PropertyChangedEventHandler(OnCharCreationInfoPropertyChanged);
@@ -160,16 +133,25 @@ namespace Meridian59 { namespace Ogre
 		// subscribe attributes
 		Might->subscribeEvent(CEGUI::ProgressBar::EventMouseMove, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeMouseMoveClick));
 		Might->subscribeEvent(CEGUI::ProgressBar::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeMouseMoveClick));
+		Might->subscribeEvent(CEGUI::ProgressBar::EventProgressChanged, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeProgressChange));
 		Intellect->subscribeEvent(CEGUI::ProgressBar::EventMouseMove, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeMouseMoveClick));
 		Intellect->subscribeEvent(CEGUI::ProgressBar::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeMouseMoveClick));
+		Intellect->subscribeEvent(CEGUI::ProgressBar::EventProgressChanged, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeProgressChange));
 		Stamina->subscribeEvent(CEGUI::ProgressBar::EventMouseMove, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeMouseMoveClick));
 		Stamina->subscribeEvent(CEGUI::ProgressBar::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeMouseMoveClick));
+		Stamina->subscribeEvent(CEGUI::ProgressBar::EventProgressChanged, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeProgressChange));
 		Agility->subscribeEvent(CEGUI::ProgressBar::EventMouseMove, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeMouseMoveClick));
 		Agility->subscribeEvent(CEGUI::ProgressBar::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeMouseMoveClick));
+		Agility->subscribeEvent(CEGUI::ProgressBar::EventProgressChanged, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeProgressChange));
 		Mysticism->subscribeEvent(CEGUI::ProgressBar::EventMouseMove, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeMouseMoveClick));
 		Mysticism->subscribeEvent(CEGUI::ProgressBar::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeMouseMoveClick));
+		Mysticism->subscribeEvent(CEGUI::ProgressBar::EventProgressChanged, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeProgressChange));
 		Aim->subscribeEvent(CEGUI::ProgressBar::EventMouseMove, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeMouseMoveClick));
 		Aim->subscribeEvent(CEGUI::ProgressBar::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeMouseMoveClick));
+		Aim->subscribeEvent(CEGUI::ProgressBar::EventProgressChanged, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeProgressChange));
+		
+		AttributesAvailable->subscribeEvent(CEGUI::ProgressBar::EventProgressChanged, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeProgressChange));
+		SkillPointsAvailable->subscribeEvent(CEGUI::ProgressBar::EventProgressChanged, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeProgressChange));
 
 		// subscribe keydown on name and description box
 		Name->subscribeEvent(CEGUI::Editbox::EventKeyDown, CEGUI::Event::Subscriber(UICallbacks::OnCopyPasteKeyDown));
@@ -184,6 +166,33 @@ namespace Meridian59 { namespace Ogre
 
 		// subscribe keyup
 		Window->subscribeEvent(CEGUI::FrameWindow::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnWindowKeyUp));
+
+		// Profiles for attributes
+		Profiles->addItem(new::CEGUI::ListboxTextItem(UI_AVATARCREATEWIZARD_PROFILE_CUSTOM));
+		Profiles->addItem(new::CEGUI::ListboxTextItem(UI_AVATARCREATEWIZARD_PROFILE_WARRIOR));
+		Profiles->addItem(new::CEGUI::ListboxTextItem(UI_AVATARCREATEWIZARD_PROFILE_MAGE));
+		Profiles->addItem(new::CEGUI::ListboxTextItem(UI_AVATARCREATEWIZARD_PROFILE_HYBRID));
+		Profiles->setText(UI_AVATARCREATEWIZARD_PROFILE_CUSTOM);
+		Profiles->selectListItemWithEditboxText();
+
+		// initial attributes		
+		Might->setProgress((float)info->Might / (float)CharCreationInfo::ATTRIBUTE_MAXVALUE);
+		Might->setText(CEGUI::PropertyHelper<unsigned int>::toString(info->Might) + " / " + CEGUI::PropertyHelper<unsigned int>::toString(CharCreationInfo::ATTRIBUTE_MAXVALUE));
+		Intellect->setProgress((float)info->Intellect / (float)CharCreationInfo::ATTRIBUTE_MAXVALUE);
+		Intellect->setText(CEGUI::PropertyHelper<unsigned int>::toString(info->Intellect) + " / " + CEGUI::PropertyHelper<unsigned int>::toString(CharCreationInfo::ATTRIBUTE_MAXVALUE));
+		Stamina->setProgress((float)info->Stamina / (float)CharCreationInfo::ATTRIBUTE_MAXVALUE);
+		Stamina->setText(CEGUI::PropertyHelper<unsigned int>::toString(info->Stamina) + " / " + CEGUI::PropertyHelper<unsigned int>::toString(CharCreationInfo::ATTRIBUTE_MAXVALUE));
+		Agility->setProgress((float)info->Agility / (float)CharCreationInfo::ATTRIBUTE_MAXVALUE);
+		Agility->setText(CEGUI::PropertyHelper<unsigned int>::toString(info->Agility) + " / " + CEGUI::PropertyHelper<unsigned int>::toString(CharCreationInfo::ATTRIBUTE_MAXVALUE));
+		Mysticism->setProgress((float)info->Mysticism / (float)CharCreationInfo::ATTRIBUTE_MAXVALUE);
+		Mysticism->setText(CEGUI::PropertyHelper<unsigned int>::toString(info->Mysticism) + " / " + CEGUI::PropertyHelper<unsigned int>::toString(CharCreationInfo::ATTRIBUTE_MAXVALUE));
+		Aim->setProgress((float)info->Aim / (float)CharCreationInfo::ATTRIBUTE_MAXVALUE);
+		Aim->setText(CEGUI::PropertyHelper<unsigned int>::toString(info->Aim) + " / " + CEGUI::PropertyHelper<unsigned int>::toString(CharCreationInfo::ATTRIBUTE_MAXVALUE));
+		AttributesAvailable->setProgress((float)info->AttributesAvailable / (float)CharCreationInfo::ATTRIBUTE_MAXSUM);
+		AttributesAvailable->setText(CEGUI::PropertyHelper<unsigned int>::toString(info->AttributesAvailable) + " / " + CEGUI::PropertyHelper<unsigned int>::toString(CharCreationInfo::ATTRIBUTE_MAXSUM));
+
+		SkillPointsAvailable->setProgress((float)info->SkillPointsAvailable / (float)CharCreationInfo::SKILLPOINTS_MAXSUM);
+		SkillPointsAvailable->setText(CEGUI::PropertyHelper<unsigned int>::toString(info->SkillPointsAvailable) + " / " + CEGUI::PropertyHelper<unsigned int>::toString(CharCreationInfo::SKILLPOINTS_MAXSUM));
 	};
 
 	void ControllerUI::AvatarCreateWizard::Destroy()
@@ -296,9 +305,9 @@ namespace Meridian59 { namespace Ogre
 		else if (::System::String::Equals(e->PropertyName, CharCreationInfo::PROPNAME_MIGHT))
 		{
 			Might->setProgress((float)creationInfo->Might / (float)CharCreationInfo::ATTRIBUTE_MAXVALUE);
-			
+
 			Might->setText(
-				CEGUI::PropertyHelper<unsigned int>::toString(creationInfo->Might) + "/" + 
+				CEGUI::PropertyHelper<unsigned int>::toString(creationInfo->Might) + " / " + 
 				CEGUI::PropertyHelper<unsigned int>::toString(CharCreationInfo::ATTRIBUTE_MAXVALUE));
 		}
 
@@ -308,7 +317,7 @@ namespace Meridian59 { namespace Ogre
 			Intellect->setProgress((float)creationInfo->Intellect / (float)CharCreationInfo::ATTRIBUTE_MAXVALUE);
 			
 			Intellect->setText(
-				CEGUI::PropertyHelper<unsigned int>::toString(creationInfo->Intellect) + "/" + 
+				CEGUI::PropertyHelper<unsigned int>::toString(creationInfo->Intellect) + "  /" + 
 				CEGUI::PropertyHelper<unsigned int>::toString(CharCreationInfo::ATTRIBUTE_MAXVALUE));
 		}
 
@@ -316,9 +325,9 @@ namespace Meridian59 { namespace Ogre
 		else if (::System::String::Equals(e->PropertyName, CharCreationInfo::PROPNAME_STAMINA))
 		{
 			Stamina->setProgress((float)creationInfo->Stamina / (float)CharCreationInfo::ATTRIBUTE_MAXVALUE);
-			
+
 			Stamina->setText(
-				CEGUI::PropertyHelper<unsigned int>::toString(creationInfo->Stamina) + "/" + 
+				CEGUI::PropertyHelper<unsigned int>::toString(creationInfo->Stamina) + " / " + 
 				CEGUI::PropertyHelper<unsigned int>::toString(CharCreationInfo::ATTRIBUTE_MAXVALUE));
 		}
 
@@ -328,7 +337,7 @@ namespace Meridian59 { namespace Ogre
 			Agility->setProgress((float)creationInfo->Agility / (float)CharCreationInfo::ATTRIBUTE_MAXVALUE);
 			
 			Agility->setText(
-				CEGUI::PropertyHelper<unsigned int>::toString(creationInfo->Agility) + "/" + 
+				CEGUI::PropertyHelper<unsigned int>::toString(creationInfo->Agility) + " / " + 
 				CEGUI::PropertyHelper<unsigned int>::toString(CharCreationInfo::ATTRIBUTE_MAXVALUE));
 		}
 
@@ -338,7 +347,7 @@ namespace Meridian59 { namespace Ogre
 			Mysticism->setProgress((float)creationInfo->Mysticism / (float)CharCreationInfo::ATTRIBUTE_MAXVALUE);
 			
 			Mysticism->setText(
-				CEGUI::PropertyHelper<unsigned int>::toString(creationInfo->Mysticism) + "/" + 
+				CEGUI::PropertyHelper<unsigned int>::toString(creationInfo->Mysticism) + " / " + 
 				CEGUI::PropertyHelper<unsigned int>::toString(CharCreationInfo::ATTRIBUTE_MAXVALUE));
 		}
 
@@ -348,7 +357,7 @@ namespace Meridian59 { namespace Ogre
 			Aim->setProgress((float)creationInfo->Aim / (float)CharCreationInfo::ATTRIBUTE_MAXVALUE);
 			
 			Aim->setText(
-				CEGUI::PropertyHelper<unsigned int>::toString(creationInfo->Aim) + "/" + 
+				CEGUI::PropertyHelper<unsigned int>::toString(creationInfo->Aim) + " / " + 
 				CEGUI::PropertyHelper<unsigned int>::toString(CharCreationInfo::ATTRIBUTE_MAXVALUE));
 		}
 
@@ -358,7 +367,7 @@ namespace Meridian59 { namespace Ogre
 			AttributesAvailable->setProgress((float)creationInfo->AttributesAvailable / (float)CharCreationInfo::ATTRIBUTE_MAXSUM);
 			
 			AttributesAvailable->setText(
-				CEGUI::PropertyHelper<unsigned int>::toString(creationInfo->AttributesAvailable) + "/" + 
+				CEGUI::PropertyHelper<unsigned int>::toString(creationInfo->AttributesAvailable) + " / " + 
 				CEGUI::PropertyHelper<unsigned int>::toString(CharCreationInfo::ATTRIBUTE_MAXSUM));
 		}
 
@@ -370,7 +379,7 @@ namespace Meridian59 { namespace Ogre
 			SkillPointsAvailable->setProgress((float)creationInfo->SkillPointsAvailable / (float)CharCreationInfo::SKILLPOINTS_MAXSUM);
 			
 			SkillPointsAvailable->setText(
-				CEGUI::PropertyHelper<unsigned int>::toString(creationInfo->SkillPointsAvailable) + "/" + 
+				CEGUI::PropertyHelper<unsigned int>::toString(creationInfo->SkillPointsAvailable) + " / " + 
 				CEGUI::PropertyHelper<unsigned int>::toString(CharCreationInfo::SKILLPOINTS_MAXSUM));
 		}
 
@@ -820,6 +829,13 @@ namespace Meridian59 { namespace Ogre
 			ControllerUI::AvatarCreateWizard::Profiles->selectListItemWithEditboxText();
 		}
 
+		return true;
+	};
+	
+	bool UICallbacks::AvatarCreateWizard::OnAttributeProgressChange(const CEGUI::EventArgs& e)
+	{
+		const CEGUI::WindowEventArgs& args = static_cast<const CEGUI::WindowEventArgs&>(e);
+		ControllerUI::SetVUMeterColorFromProgress((CEGUI::ProgressBar*)args.window);
 		return true;
 	};
 
