@@ -72,6 +72,7 @@
 	<FalagardMapping windowType="TaharezLook/RoomObjectListboxItem" 	targetType="CEGUI/ItemEntry"   	renderer="Core/ItemEntry"   	lookNFeel="TaharezLook/RoomObjectListboxItem" />
 	<FalagardMapping windowType="TaharezLook/BuyListboxItem" 			targetType="CEGUI/ItemEntry"   	renderer="Core/ItemEntry"   	lookNFeel="TaharezLook/BuyListboxItem" />
 	<FalagardMapping windowType="TaharezLook/AvatarAttributeItem" 		targetType="CEGUI/ItemEntry"   	renderer="Core/ItemEntry"   	lookNFeel="TaharezLook/AvatarAttributeItem" />
+	<FalagardMapping windowType="TaharezLook/AvatarSpellItem" 			targetType="CEGUI/ItemEntry"   	renderer="Core/ItemEntry"   	lookNFeel="TaharezLook/AvatarSpellItem" />
 	<FalagardMapping windowType="TaharezLook/AvatarSkillItem" 			targetType="CEGUI/ItemEntry"   	renderer="Core/ItemEntry"   	lookNFeel="TaharezLook/AvatarSkillItem" />
 	<FalagardMapping windowType="TaharezLook/AvatarQuestItem" 			targetType="CEGUI/ItemEntry"   	renderer="Core/ItemEntry"   	lookNFeel="TaharezLook/AvatarQuestItem" />
 	<FalagardMapping windowType="TaharezLook/ActionItem" 				targetType="CEGUI/ItemEntry"   	renderer="Core/ItemEntry"   	lookNFeel="TaharezLook/ActionItem" />

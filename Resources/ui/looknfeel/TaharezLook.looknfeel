@@ -5614,10 +5614,10 @@
 	
 	<!--
 	/**********************************************************************************************************
-	TaharezLook/AvatarSkillItem
+	TaharezLook/AvatarSpellItem
 	***********************************************************************************************************/
 	-->
-	<WidgetLook name="TaharezLook/AvatarSkillItem">
+	<WidgetLook name="TaharezLook/AvatarSpellItem">
 		<PropertyDefinition name="SelectionBrush" initialValue="TaharezLook/ListboxSelectionBrush" redrawOnWrite="true" />
 		<PropertyDefinition name="SelectionColour" initialValue="FF444444" redrawOnWrite="true" />
 		<Property name="Selectable" value="True" />
@@ -5656,6 +5656,128 @@
 			</Area>
 			<Property name="AlwaysOnTop" value="True" />
 			<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
+		</Child>
+		<!-- Name -->
+		<Child type ="TaharezLook/Label" nameSuffix="__auto__label">
+			<Area>
+				<Dim type="LeftEdge">
+					<UnifiedDim scale="0" offset="21" type="LeftEdge" />
+				</Dim>
+				<Dim type="TopEdge">
+					<UnifiedDim scale="0" offset="0" type="TopEdge" />
+				</Dim>
+				<Dim type="Width">
+					<UnifiedDim scale="1" offset="-58" type="Width" />
+				</Dim>
+				<Dim type="Height">
+					<UnifiedDim scale="0" offset="20" type="Height"/>
+				</Dim>
+			</Area>
+			<Property name="AlwaysOnTop" value="True" />
+			<Property name="HorzFormatting" value="LeftAligned" />
+			<Property name="MouseInputPropagationEnabled" value="True" />
+		</Child>
+		<!-- Percent -->
+		<Child type ="TaharezLook/Label" nameSuffix="__auto__label2">
+			<Area>
+				<Dim type="LeftEdge">
+					<UnifiedDim scale="1" offset="-32" type="LeftEdge" />
+				</Dim>
+				<Dim type="TopEdge">
+					<UnifiedDim scale="0" offset="0" type="TopEdge" />
+				</Dim>
+				<Dim type="Width">
+					<UnifiedDim scale="0" offset="32" type="Width" />
+				</Dim>
+				<Dim type="Height">
+					<UnifiedDim scale="0" offset="20" type="Height"/>
+				</Dim>
+			</Area>
+			<Property name="AlwaysOnTop" value="True" />
+			<Property name="HorzFormatting" value="LeftAligned" />
+			<Property name="MouseInputPropagationEnabled" value="True" />
+		</Child>		
+		<ImagerySection name="selection">
+			<ImageryComponent>
+				<Area>
+					<Dim type="TopEdge">
+						<AbsoluteDim value="0" />
+					</Dim>
+					<Dim type="LeftEdge">
+						<AbsoluteDim value="0" />
+					</Dim>
+					<Dim type="RightEdge">
+						<UnifiedDim scale="1" type="RightEdge" />
+					</Dim>
+					<Dim type="BottomEdge">
+						<UnifiedDim scale="1" type="BottomEdge" />
+					</Dim>
+				</Area>
+				<ImageProperty name="SelectionBrush" />
+				<ColourProperty name="SelectionColour" />
+				<VertFormat type="Stretched" />
+				<HorzFormat type="Stretched" />
+			</ImageryComponent>
+		</ImagerySection>
+		<StateImagery name="Enabled" />
+		<StateImagery name="Disabled" />
+		<StateImagery name="SelectedEnabled">
+			<Layer>
+				<Section section="selection" />
+			</Layer>
+		</StateImagery>
+		<StateImagery name="SelectedDisabled">
+			<Layer>
+				<Section section="selection" />
+			</Layer>
+		</StateImagery>
+	</WidgetLook>
+	
+	<!--
+	/**********************************************************************************************************
+	TaharezLook/AvatarSkillItem
+	***********************************************************************************************************/
+	-->
+	<WidgetLook name="TaharezLook/AvatarSkillItem">
+		<PropertyDefinition name="SelectionBrush" initialValue="TaharezLook/ListboxSelectionBrush" redrawOnWrite="true" />
+		<PropertyDefinition name="SelectionColour" initialValue="FF444444" redrawOnWrite="true" />
+		<Property name="Selectable" value="True" />
+		<Property name="MouseInputPropagationEnabled" value="True" />
+		<NamedArea name="ContentSize">
+			<Area>
+				<Dim type="LeftEdge" >
+					<AbsoluteDim value="0" />
+				</Dim>
+				<Dim type="TopEdge" >
+					<AbsoluteDim value="0" />
+				</Dim>
+				<Dim type="Width" >
+					<UnifiedDim scale="1" offset="-20" type="Width" />
+				</Dim>
+				<Dim type="Height" >
+					<UnifiedDim scale="0" offset="20" type="Height" />
+				</Dim>
+			</Area>
+		</NamedArea>
+		<!-- Icon -->
+		<Child type ="TaharezLook/StaticImage" nameSuffix="__auto__image">
+			<Area>
+				<Dim type="LeftEdge">
+					<UnifiedDim scale="0" offset="0" type="LeftEdge" />				
+				</Dim>
+				<Dim type="TopEdge">
+					<UnifiedDim scale="0" offset="2" type="TopEdge" />
+				</Dim>
+				<Dim type="Width">
+					<UnifiedDim scale="0" offset="16" type="Width" />
+				</Dim>
+				<Dim type="Height">
+					<UnifiedDim scale="0" offset="16" type="Height"/>
+				</Dim>
+			</Area>
+			<Property name="FrameEnabled" value="False" />
+			<Property name="BackgroundEnabled" value="False" />
+			<Property name="MousePassThroughEnabled" value="True" />
 		</Child>
 		<!-- Name -->
 		<Child type ="TaharezLook/Label" nameSuffix="__auto__label">

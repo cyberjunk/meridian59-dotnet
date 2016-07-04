@@ -69,11 +69,8 @@ namespace Meridian59 { namespace Ogre
 		widget->subscribeEvent(
 			CEGUI::ItemEntry::EventMouseClick, 
 			CEGUI::Event::Subscriber(UICallbacks::Skills::OnItemClicked));
-		
-		CEGUI::DragContainer* dragger = 
-			(CEGUI::DragContainer*)widget->getChildAtIdx(UI_SKILLS_CHILDINDEX_ICON);
-			
-		CEGUI::Window* icon		= dragger->getChildAtIdx(0);				
+
+		CEGUI::Window* icon		= widget->getChildAtIdx(UI_SKILLS_CHILDINDEX_ICON);
 		CEGUI::Window* name		= widget->getChildAtIdx(UI_SKILLS_CHILDINDEX_NAME);
 		CEGUI::Window* percent	= widget->getChildAtIdx(UI_SKILLS_CHILDINDEX_PERCENT);
 
@@ -108,11 +105,8 @@ namespace Meridian59 { namespace Ogre
 		if ((int)List->getItemCount() > Index)
 		{
 			CEGUI::ItemEntry* wnd = (CEGUI::ItemEntry*)List->getItemFromIndex(Index);
-			
-			CEGUI::DragContainer* dragger = 
-				(CEGUI::DragContainer*)wnd->getChildAtIdx(UI_SKILLS_CHILDINDEX_ICON);
-			
-			CEGUI::Window* icon		= dragger->getChildAtIdx(0);				
+
+			CEGUI::Window* icon		= wnd->getChildAtIdx(UI_SKILLS_CHILDINDEX_ICON);
 			CEGUI::Window* name		= wnd->getChildAtIdx(UI_SKILLS_CHILDINDEX_NAME);
 			CEGUI::Window* percent	= wnd->getChildAtIdx(UI_SKILLS_CHILDINDEX_PERCENT);
 								

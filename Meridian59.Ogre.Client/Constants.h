@@ -190,6 +190,7 @@
 #define UI_WINDOWTYPE_BUTTON					"TaharezLook/Button"
 #define UI_WINDOWTYPE_AVATARCONDITIONITEM		"TaharezLook/AvatarConditionItem"
 #define UI_WINDOWTYPE_AVATARATTRIBUTEITEM		"TaharezLook/AvatarAttributeItem"
+#define UI_WINDOWTYPE_AVATARSPELLITEM			"TaharezLook/AvatarSpellItem"
 #define UI_WINDOWTYPE_AVATARSKILLITEM			"TaharezLook/AvatarSkillItem"
 #define UI_WINDOWTYPE_AVATARQUESTITEM			"TaharezLook/AvatarQuestItem"
 #define UI_WINDOWTYPE_ACTIONITEM				"TaharezLook/ActionItem"

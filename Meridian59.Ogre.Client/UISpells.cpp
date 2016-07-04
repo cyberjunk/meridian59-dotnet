@@ -60,7 +60,7 @@ namespace Meridian59 { namespace Ogre
 
 		// create widget (item)
 		CEGUI::ItemEntry* widget = (CEGUI::ItemEntry*)wndMgr->createWindow(
-			UI_WINDOWTYPE_AVATARSKILLITEM);
+			UI_WINDOWTYPE_AVATARSPELLITEM);
 		
 		// set ID
 		widget->setID(obj->ObjectID);
