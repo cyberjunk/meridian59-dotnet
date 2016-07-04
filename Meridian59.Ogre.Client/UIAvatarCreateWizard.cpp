@@ -317,7 +317,7 @@ namespace Meridian59 { namespace Ogre
 			Intellect->setProgress((float)creationInfo->Intellect / (float)CharCreationInfo::ATTRIBUTE_MAXVALUE);
 			
 			Intellect->setText(
-				CEGUI::PropertyHelper<unsigned int>::toString(creationInfo->Intellect) + "  /" + 
+				CEGUI::PropertyHelper<unsigned int>::toString(creationInfo->Intellect) + " / " + 
 				CEGUI::PropertyHelper<unsigned int>::toString(CharCreationInfo::ATTRIBUTE_MAXVALUE));
 		}
 
