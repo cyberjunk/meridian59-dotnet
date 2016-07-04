@@ -312,6 +312,18 @@ namespace Meridian59 { namespace Ogre
 				// set progress
 				wndBar->setProgress(perc);
 
+				// HP is red
+				if (condition->Num == StatNums::HITPOINTS)
+					wndBar->setProperty(UI_PROPNAME_BARCOLOURS, UI_COLOURRECT_BAR_RED);
+
+				// mana is blue
+				else if (condition->Num == StatNums::MANA)
+					wndBar->setProperty(UI_PROPNAME_BARCOLOURS, UI_COLOURRECT_BAR_BLUE);
+
+				// vigor is yellow
+				else if (condition->Num == StatNums::VIGOR)
+					wndBar->setProperty(UI_PROPNAME_BARCOLOURS, UI_COLOURRECT_BAR_YELLOW);
+				
 				// set text
 				wndBar->setText(
 					CEGUI::PropertyHelper<int>::toString(condition->ValueCurrent) + "/" + CEGUI::PropertyHelper<int>::toString(max));
