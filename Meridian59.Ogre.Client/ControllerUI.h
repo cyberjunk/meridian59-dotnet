@@ -354,6 +354,10 @@ namespace Meridian59 { namespace Ogre
 		protected:
 			static ImageComposerCEGUI<RoomObject^>^ imageComposerHead;
 			static array<ImageComposerCEGUI<ObjectBase^>^>^ imageComposersBuffs;
+			static ::CEGUI::AnimationInstance* animHighlightHP;
+			static ::CEGUI::AnimationInstance* animHighlightMP;
+			static ::CEGUI::AnimationInstance* animHighlightVIG;
+			static ::CEGUI::AnimationInstance* animHighlightEXP;
 
 		public:
 			static ::CEGUI::Window* Window = nullptr;

@@ -84,6 +84,14 @@ namespace Meridian59 { namespace Ogre
 			Enchantments->addChild(widget);
 		}
 
+		// load animation instances
+		CEGUI::AnimationManager* animMan = CEGUI::AnimationManager::getSingletonPtr();
+
+		animHighlightHP = animMan->instantiateAnimation(UI_ANIMATION_VUMETER_HIGHLIGHT_RED);
+		animHighlightMP = animMan->instantiateAnimation(UI_ANIMATION_VUMETER_HIGHLIGHT_BLUE);
+		animHighlightVIG = animMan->instantiateAnimation(UI_ANIMATION_VUMETER_HIGHLIGHT_YELLOW);
+		animHighlightEXP = animMan->instantiateAnimation(UI_ANIMATION_VUMETER_HIGHLIGHT_GREY);
+
 		// subscribe click to head
 		Head->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Avatar::OnHeadMouseClick));
 
@@ -114,7 +122,15 @@ namespace Meridian59 { namespace Ogre
 		
 		// detach listeners from avatar buffs
 		for(int i = 0; i < entries; i++)		
-			imageComposersBuffs[i]->NewImageAvailable -= gcnew ::System::EventHandler(OnNewBuffImageAvailable);		
+			imageComposersBuffs[i]->NewImageAvailable -= gcnew ::System::EventHandler(OnNewBuffImageAvailable);
+
+		// destroy animation instances
+		CEGUI::AnimationManager* animMan = CEGUI::AnimationManager::getSingletonPtr();
+
+		animMan->destroyAnimationInstance(animHighlightHP);
+		animMan->destroyAnimationInstance(animHighlightMP);
+		animMan->destroyAnimationInstance(animHighlightVIG);
+		animMan->destroyAnimationInstance(animHighlightEXP);
 	};
 
 	void ControllerUI::Avatar::ApplyLanguage()
@@ -311,22 +327,61 @@ namespace Meridian59 { namespace Ogre
 
 				// set progress
 				wndBar->setProgress(perc);
-
+				
 				// HP is red
 				if (condition->Num == StatNums::HITPOINTS)
+				{
 					wndBar->setProperty(UI_PROPNAME_BARCOLOURS, UI_COLOURRECT_BAR_RED);
+
+					// blink once or keep blinking for low (<33%) hitpoints
+					animHighlightHP->getDefinition()->setReplayMode(
+						perc < 0.333f ? CEGUI::Animation::ReplayMode::RM_Loop : CEGUI::Animation::ReplayMode::RM_Once);
+
+					animHighlightHP->setTargetWindow(wndBar);
+					animHighlightHP->setPosition(0.0f);
+					animHighlightHP->start();				
+				}
 
 				// mana is blue
 				else if (condition->Num == StatNums::MANA)
+				{
 					wndBar->setProperty(UI_PROPNAME_BARCOLOURS, UI_COLOURRECT_BAR_BLUE);
+
+					// blink once or keep blinking for low (<33%) mana
+					animHighlightMP->getDefinition()->setReplayMode(
+						perc < 0.333f ? CEGUI::Animation::ReplayMode::RM_Loop : CEGUI::Animation::ReplayMode::RM_Once);
+
+					animHighlightMP->setTargetWindow(wndBar);
+					animHighlightMP->setPosition(0.0f);
+					animHighlightMP->start();
+				}
 
 				// vigor is yellow
 				else if (condition->Num == StatNums::VIGOR)
+				{
 					wndBar->setProperty(UI_PROPNAME_BARCOLOURS, UI_COLOURRECT_BAR_YELLOW);
-				
+
+					// blink once or keep blinking for low (<33%) vigor
+					animHighlightVIG->getDefinition()->setReplayMode(
+						perc < 0.333f ? CEGUI::Animation::ReplayMode::RM_Loop : CEGUI::Animation::ReplayMode::RM_Once);
+
+					animHighlightVIG->setTargetWindow(wndBar);
+					animHighlightVIG->setPosition(0.0f);
+					animHighlightVIG->start();
+				}
+
+				// experience is grey (default)
+				else if (condition->Num == StatNums::TOUGHERCHANCE)
+				{
+					wndBar->setProperty(UI_PROPNAME_BARCOLOURS, UI_COLOURRECT_BAR_GREY);
+					animHighlightEXP->setTargetWindow(wndBar);
+					animHighlightEXP->setPosition(0.0f);
+					animHighlightEXP->start();
+				}
+
 				// set text
 				wndBar->setText(
-					CEGUI::PropertyHelper<int>::toString(condition->ValueCurrent) + "/" + CEGUI::PropertyHelper<int>::toString(max));
+					CEGUI::PropertyHelper<int>::toString(condition->ValueCurrent) + " / " + CEGUI::PropertyHelper<int>::toString(max));
 
 				// set tooltip
 				switch(condition->Num)

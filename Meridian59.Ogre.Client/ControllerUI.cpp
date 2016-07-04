@@ -59,24 +59,28 @@ namespace Meridian59 { namespace Ogre
 		::System::String^ schemesFolder		= ::System::IO::Path::Combine(baseFolder, UI_RESGROUP_SCHEMES);
 		::System::String^ looknfeelFolder	= ::System::IO::Path::Combine(baseFolder, UI_RESGROUP_LOOKNFEEL);
 		::System::String^ layoutsFolder		= ::System::IO::Path::Combine(baseFolder, UI_RESGROUP_LAYOUTS);
+		::System::String^ animationsFolder	= ::System::IO::Path::Combine(baseFolder, UI_RESGROUP_ANIMATIONS);
 
 		resMan->addResourceLocation(StringConvert::CLRToOgre(imageFolder), "FileSystem", UI_RESGROUP_IMAGESETS);
 		resMan->addResourceLocation(StringConvert::CLRToOgre(fontsFolder), "FileSystem", UI_RESGROUP_FONTS);
 		resMan->addResourceLocation(StringConvert::CLRToOgre(schemesFolder), "FileSystem", UI_RESGROUP_SCHEMES);
 		resMan->addResourceLocation(StringConvert::CLRToOgre(looknfeelFolder), "FileSystem", UI_RESGROUP_LOOKNFEEL);
 		resMan->addResourceLocation(StringConvert::CLRToOgre(layoutsFolder), "FileSystem", UI_RESGROUP_LAYOUTS);
+		resMan->addResourceLocation(StringConvert::CLRToOgre(animationsFolder), "FileSystem", UI_RESGROUP_ANIMATIONS);
 
 		resMan->initialiseResourceGroup(UI_RESGROUP_IMAGESETS);
 		resMan->initialiseResourceGroup(UI_RESGROUP_FONTS);
 		resMan->initialiseResourceGroup(UI_RESGROUP_SCHEMES);
 		resMan->initialiseResourceGroup(UI_RESGROUP_LOOKNFEEL);
 		resMan->initialiseResourceGroup(UI_RESGROUP_LAYOUTS);
-				
+		resMan->initialiseResourceGroup(UI_RESGROUP_ANIMATIONS);
+
 		resMan->loadResourceGroup(UI_RESGROUP_IMAGESETS);
 		resMan->loadResourceGroup(UI_RESGROUP_FONTS);
 		resMan->loadResourceGroup(UI_RESGROUP_SCHEMES);
 		resMan->loadResourceGroup(UI_RESGROUP_LOOKNFEEL);
 		resMan->loadResourceGroup(UI_RESGROUP_LAYOUTS);
+		resMan->loadResourceGroup(UI_RESGROUP_ANIMATIONS);
 
 		// set UI resourcegroups
 		CEGUI::ImageManager::setImagesetDefaultResourceGroup(UI_RESGROUP_IMAGESETS);
@@ -84,12 +88,16 @@ namespace Meridian59 { namespace Ogre
 		CEGUI::Scheme::setDefaultResourceGroup(UI_RESGROUP_SCHEMES);
 		CEGUI::WidgetLookManager::setDefaultResourceGroup(UI_RESGROUP_LOOKNFEEL);
 		CEGUI::WindowManager::setDefaultResourceGroup(UI_RESGROUP_LAYOUTS);
-		
+		CEGUI::AnimationManager::setDefaultResourceGroup(UI_RESGROUP_ANIMATIONS);
+
+		// load animations
+		CEGUI::AnimationManager::getSingleton().loadAnimationsFromXML(UI_FILE_ANIMATIONS, UI_RESGROUP_ANIMATIONS);
+
 		// load scheme
-		scheme = &CEGUI::SchemeManager::getSingleton().createFromFile(UI_FILE_SCHEME);
+		scheme = &CEGUI::SchemeManager::getSingleton().createFromFile(UI_FILE_SCHEME, UI_RESGROUP_SCHEMES);
 		
 		// load layout/rootelement
-		guiRoot = CEGUI::WindowManager::getSingleton().loadLayoutFromFile(UI_FILE_LAYOUT); 
+		guiRoot = CEGUI::WindowManager::getSingleton().loadLayoutFromFile(UI_FILE_LAYOUT, UI_RESGROUP_LAYOUTS); 
 		guiRoot->subscribeEvent(CEGUI::Window::EventMouseButtonDown, CEGUI::Event::Subscriber(UICallbacks::OnRootMouseDown));
 		guiRoot->subscribeEvent(CEGUI::Window::EventKeyDown, CEGUI::Event::Subscriber(UICallbacks::OnRootKeyDown));
 

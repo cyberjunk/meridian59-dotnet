@@ -82,11 +82,13 @@
 #define UI_DEFAULTTOOLTIP			"TaharezLook/Tooltip"
 #define UI_DEFAULTFONT				UI_FONT_LIBERATIONSANS10
 #define UI_FILE_LAYOUT				"Meridian59.layout"
+#define UI_FILE_ANIMATIONS			"animations.xml"
 #define UI_RESGROUP_IMAGESETS		"ImageSets"
 #define UI_RESGROUP_FONTS			"Fonts"
 #define UI_RESGROUP_SCHEMES			"Schemes"
 #define UI_RESGROUP_LOOKNFEEL		"LookNFeel"
 #define UI_RESGROUP_LAYOUTS			"Layouts"
+#define UI_RESGROUP_ANIMATIONS		"Animations"
 #define UI_DEFAULTPADDING			5
 #define UI_MINIMAP_TEXNAME			"CEGUI/MiniMap"
 #define UI_MOUSE_SINGLECLICKTIMEOUT	1.0f
@@ -118,6 +120,7 @@
 #define UI_COLOURRECT_BAR_RED		"tl:FF800000 tr:FF800000 bl:FF800000 br:FF800000"
 #define UI_COLOURRECT_BAR_BLUE		"tl:FF000080 tr:FF000080 bl:FF000080 br:FF000080"
 #define UI_COLOURRECT_BAR_YELLOW	"tl:FF707000 tr:FF707000 bl:FF707000 br:FF707000"
+#define UI_COLOURRECT_BAR_GREY		"tl:FF444444 tr:FF444444 bl:FF444444 br:FF444444"
 
 /* Specific chat colors */
 #define UI_COLOR_CHATRED		"FF800000"
@@ -186,6 +189,12 @@
 #define UI_PROPNAME_BACKGROUNDENABLED	"BackgroundEnabled"
 #define UI_PROPNAME_BACKGROUNDCOLOURS	"BackgroundColours"
 #define UI_PROPNAME_BARCOLOURS			"BarColours"
+
+/* Animations names as appearing in XML */
+#define UI_ANIMATION_VUMETER_HIGHLIGHT_RED		"VUMeter_highlight_red"
+#define UI_ANIMATION_VUMETER_HIGHLIGHT_BLUE		"VUMeter_highlight_blue"
+#define UI_ANIMATION_VUMETER_HIGHLIGHT_YELLOW	"VUMeter_highlight_yellow"
+#define UI_ANIMATION_VUMETER_HIGHLIGHT_GREY		"VUMeter_highlight_grey"
 
 /* Window type names (defined in looknfeel) */
 #define UI_WINDOWTYPE_ONLINEPLAYERLISTBOXITEM	"TaharezLook/OnlinePlayerListboxItem"
