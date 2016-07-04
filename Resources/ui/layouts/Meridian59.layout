@@ -820,23 +820,23 @@
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 			
-			<!-- Options -->
-			<Window type="TaharezLook/StaticImage" name="MainButtonsLeft.Options" >
-				<Property name="Area" value="{{0,119},{0,3},{0,145},{0,29}}" />
-				<Property name="FrameEnabled" value="False" />
-				<Property name="BackgroundEnabled" value="False" />
-				<Property name="Image" value="TaharezLook/MainButtonOptions" />
-				<Property name="TooltipText" value="Options" />
-				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
-			</Window>
-			
 			<!-- RoomObjects -->
 			<Window type="TaharezLook/StaticImage" name="MainButtonsLeft.RoomObjects" >
-				<Property name="Area" value="{{0,148},{0,3},{0,174},{0,29}}" />
+				<Property name="Area" value="{{0,119},{0,3},{0,145},{0,29}}" />
 				<Property name="FrameEnabled" value="False" />
 				<Property name="BackgroundEnabled" value="False" />
 				<Property name="Image" value="TaharezLook/MainButtonEntities" />
 				<Property name="TooltipText" value="Entities" />
+				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
+			</Window>
+			
+			<!-- Options -->
+			<Window type="TaharezLook/StaticImage" name="MainButtonsLeft.Options" >
+				<Property name="Area" value="{{0,148},{0,3},{0,174},{0,29}}" />
+				<Property name="FrameEnabled" value="False" />
+				<Property name="BackgroundEnabled" value="False" />
+				<Property name="Image" value="TaharezLook/MainButtonOptions" />
+				<Property name="TooltipText" value="Options" />
 				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			</Window>
 		</Window>
