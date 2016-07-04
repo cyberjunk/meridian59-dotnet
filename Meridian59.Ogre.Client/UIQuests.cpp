@@ -115,10 +115,14 @@ namespace Meridian59 {
 				if (obj->SkillPoints == 0)
 				{
 					name->setFont(UI_FONT_LIBERATIONSANS10B);
+					wnd->setMouseCursor(UI_DEFAULTARROW);
+					wnd->setSelectable(false);
 				}
 				else
 				{
 					name->setFont(UI_FONT_LIBERATIONSANS10);
+					wnd->setMouseCursor(UI_MOUSECURSOR_HAND);
+					wnd->setSelectable(true);
 				}
 
 				// set image if available
