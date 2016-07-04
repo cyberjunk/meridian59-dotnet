@@ -318,13 +318,13 @@
    <Image height="5" name="ListboxLegacyBottomLeft" width="5" xPos="225" yPos="215" />
    <Image height="5" name="ListboxLegacyBottom" width="5" xPos="235" yPos="215" />
    <Image height="5" name="ListboxLegacyBottomRight" width="5" xPos="245" yPos="215" />
-   <Image height="5" name="StaticItemTopLeft" width="5" xPos="225" yPos="255" />
-   <Image height="5" name="StaticItemTop" width="5" xPos="235" yPos="255" />
-   <Image height="5" name="StaticItemTopRight" width="5" xPos="245" yPos="255" />
-   <Image height="5" name="StaticItemLeft" width="5" xPos="225" yPos="265" />
-   <Image height="5" name="StaticItemBackdrop" width="5" xPos="235" yPos="265" />
-   <Image height="5" name="StaticItemRight" width="5" xPos="245" yPos="265" />
-   <Image height="5" name="StaticItemBottomLeft" width="5" xPos="225" yPos="275" />
-   <Image height="5" name="StaticItemBottom" width="5" xPos="235" yPos="275" />
-   <Image height="5" name="StaticItemBottomRight" width="5" xPos="245" yPos="275" />
+   <Image height="30" name="StaticItemTopLeft" width="20" xPos="205" yPos="255" />
+   <Image height="30" name="StaticItemTop" width="10" xPos="225" yPos="255" />
+   <Image height="30" name="StaticItemTopRight" width="20" xPos="235" yPos="255" />
+   <Image height="10" name="StaticItemLeft" width="20" xPos="205" yPos="285" />
+   <Image height="10" name="StaticItemBackdrop" width="10" xPos="225" yPos="285" />
+   <Image height="10" name="StaticItemRight" width="20" xPos="235" yPos="285" />
+   <Image height="10" name="StaticItemBottomLeft" width="20" xPos="205" yPos="295" />
+   <Image height="10" name="StaticItemBottom" width="10" xPos="225" yPos="295" />
+   <Image height="10" name="StaticItemBottomRight" width="20" xPos="235" yPos="295" />
 </Imageset>
