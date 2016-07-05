@@ -736,8 +736,9 @@
 		<!-- Actions -->
 		<Window type="TaharezLook/FrameWindow" name="Actions" >
 			<Property name="Text" value="Actions" />
-			<Property name="MaxSize" value="{{0,512},{1,0}}" />
-			<Property name="Size" value="{{0,192},{0,256}}" />
+			<Property name="MaxSize" value="{{0,256},{1,0}}" />
+			<Property name="MinSize" value="{{0,128},{0,256}}" />
+			<Property name="Size" value="{{0,160},{0,256}}" />
 			<Property name="Position" value="{{0.5,-128},{0.5,-128}}" />
 			
 			<!-- List -->
