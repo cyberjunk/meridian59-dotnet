@@ -2055,11 +2055,13 @@
                     <FontDim type="LineSpacing" padding="10" />
                 </Dim>
             </Area>
+			<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
         </Child>
         <Child  type="TaharezLook/ComboDropList" nameSuffix="__auto_droplist__">
             <Area>
                 <Dim type="TopEdge" ><WidgetDim widget="__auto_editbox__" dimension="BottomEdge" /></Dim>
             </Area>
+			<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
         </Child>
         <Child  type="TaharezLook/ImageButton" nameSuffix="__auto_button__">
             <Area>
