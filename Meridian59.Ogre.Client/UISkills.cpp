@@ -156,9 +156,8 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::MouseEventArgs& args	= (const CEGUI::MouseEventArgs&)e;
 		const CEGUI::ItemEntry* itm			= (CEGUI::ItemEntry*)args.window;
 
-		// rightclick requests object details
-		if (args.button == CEGUI::MouseButton::RightButton)	
-			OgreClient::Singleton->SendReqLookMessage(itm->getID());					
+		// click requests object details
+		OgreClient::Singleton->SendReqLookMessage(itm->getID());					
 		
 		return true;
 	};
