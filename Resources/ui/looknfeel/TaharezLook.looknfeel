@@ -1301,6 +1301,19 @@
 		<ImagerySection name="text">
 			<TextComponent>
 				<Area>
+					<Dim type="LeftEdge"><AbsoluteDim value="1" /></Dim>
+					<Dim type="TopEdge"><AbsoluteDim value="1" /></Dim>
+					<Dim type="Width"><UnifiedDim scale="1" type="Width" /></Dim>
+					<Dim type="Height"><UnifiedDim scale="1" type="Height" /></Dim>
+				</Area>
+				<VertFormat type="CentreAligned" />
+				<HorzFormat type="WordWrapCentreAligned" />
+				<FontProperty name="BarTextFont" />
+			</TextComponent>
+		</ImagerySection>
+		<ImagerySection name="textshadow">
+			<TextComponent>
+				<Area>
 					<Dim type="LeftEdge"><AbsoluteDim value="0" /></Dim>
 					<Dim type="TopEdge"><AbsoluteDim value="0" /></Dim>
 					<Dim type="Width"><UnifiedDim scale="1" type="Width" /></Dim>
@@ -1328,6 +1341,9 @@
 				<Section section="frame">
                     <Colours topLeft="FF7F7F7F" topRight="FF7F7F7F" bottomLeft="FF7F7F7F" bottomRight="FF7F7F7F" />
                 </Section>
+				<Section section="textshadow">
+					<Colours topLeft="FF000000" topRight="FF000000" bottomLeft="FF000000" bottomRight="FF000000" />
+				</Section>
 				<Section section="text">
 					<ColourProperty name="NoBarTextColour" />
 					<Colours topLeft="FFFFFFFF" topRight="FFFFFFFF" bottomLeft="FFFFFFFF" bottomRight="FFFFFFFF" />
@@ -1339,6 +1355,9 @@
 				<Section section="frame">
                     <Colours topLeft="FF7F7F7F" topRight="FF7F7F7F" bottomLeft="FF7F7F7F" bottomRight="FF7F7F7F" />
                 </Section>
+				<Section section="textshadow">
+					<Colours topLeft="FF000000" topRight="FF000000" bottomLeft="FF000000" bottomRight="FF000000" />
+				</Section>
 				<Section section="text">
 					<ColourProperty name="NoBarTextColour" />
 					<Colours topLeft="FFFFFFFF" topRight="FFFFFFFF" bottomLeft="FFFFFFFF" bottomRight="FFFFFFFF" />
@@ -1348,6 +1367,9 @@
         <StateImagery name="EnabledProgress">
             <Layer>
                 <Section section="progress_lights" />
+				<Section section="textshadow">
+					<Colours topLeft="FF000000" topRight="FF000000" bottomLeft="FF000000" bottomRight="FF000000" />
+				</Section>
 				<Section section="text">
 					<ColourProperty name="BarTextColour" />
 					<Colours topLeft="FFFFFFFF" topRight="FFFFFFFF" bottomLeft="FFFFFFFF" bottomRight="FFFFFFFF" />
@@ -1359,6 +1381,9 @@
                 <Section section="progress_lights">
                     <Colours topLeft="FF7F7F7F" topRight="FF7F7F7F" bottomLeft="FF7F7F7F" bottomRight="FF7F7F7F" />
                 </Section>
+				<Section section="textshadow">
+					<Colours topLeft="FF000000" topRight="FF000000" bottomLeft="FF000000" bottomRight="FF000000" />
+				</Section>
 				<Section section="text">
 					<ColourProperty name="BarTextColour" />
 					<Colours topLeft="FFFFFFFF" topRight="FFFFFFFF" bottomLeft="FFFFFFFF" bottomRight="FFFFFFFF" />
