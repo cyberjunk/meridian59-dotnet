@@ -133,21 +133,27 @@ namespace Meridian59 { namespace Ogre
 		// subscribe attributes
 		Might->subscribeEvent(CEGUI::ProgressBar::EventMouseMove, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeMouseMoveClick));
 		Might->subscribeEvent(CEGUI::ProgressBar::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeMouseMoveClick));
+		Might->subscribeEvent(CEGUI::ProgressBar::EventMouseWheel, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeMouseWheel));
 		Might->subscribeEvent(CEGUI::ProgressBar::EventProgressChanged, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeProgressChange));
 		Intellect->subscribeEvent(CEGUI::ProgressBar::EventMouseMove, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeMouseMoveClick));
 		Intellect->subscribeEvent(CEGUI::ProgressBar::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeMouseMoveClick));
+		Intellect->subscribeEvent(CEGUI::ProgressBar::EventMouseWheel, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeMouseWheel));
 		Intellect->subscribeEvent(CEGUI::ProgressBar::EventProgressChanged, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeProgressChange));
 		Stamina->subscribeEvent(CEGUI::ProgressBar::EventMouseMove, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeMouseMoveClick));
 		Stamina->subscribeEvent(CEGUI::ProgressBar::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeMouseMoveClick));
+		Stamina->subscribeEvent(CEGUI::ProgressBar::EventMouseWheel, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeMouseWheel));
 		Stamina->subscribeEvent(CEGUI::ProgressBar::EventProgressChanged, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeProgressChange));
 		Agility->subscribeEvent(CEGUI::ProgressBar::EventMouseMove, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeMouseMoveClick));
 		Agility->subscribeEvent(CEGUI::ProgressBar::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeMouseMoveClick));
+		Agility->subscribeEvent(CEGUI::ProgressBar::EventMouseWheel, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeMouseWheel));
 		Agility->subscribeEvent(CEGUI::ProgressBar::EventProgressChanged, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeProgressChange));
 		Mysticism->subscribeEvent(CEGUI::ProgressBar::EventMouseMove, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeMouseMoveClick));
 		Mysticism->subscribeEvent(CEGUI::ProgressBar::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeMouseMoveClick));
+		Mysticism->subscribeEvent(CEGUI::ProgressBar::EventMouseWheel, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeMouseWheel));
 		Mysticism->subscribeEvent(CEGUI::ProgressBar::EventProgressChanged, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeProgressChange));
 		Aim->subscribeEvent(CEGUI::ProgressBar::EventMouseMove, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeMouseMoveClick));
 		Aim->subscribeEvent(CEGUI::ProgressBar::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeMouseMoveClick));
+		Aim->subscribeEvent(CEGUI::ProgressBar::EventMouseWheel, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeMouseWheel));
 		Aim->subscribeEvent(CEGUI::ProgressBar::EventProgressChanged, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeProgressChange));
 		
 		AttributesAvailable->subscribeEvent(CEGUI::ProgressBar::EventProgressChanged, CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnAttributeProgressChange));
@@ -816,6 +822,34 @@ namespace Meridian59 { namespace Ogre
 		return true;
 	};
 	
+	bool UICallbacks::AvatarCreateWizard::OnAttributeMouseWheel(const CEGUI::EventArgs& e)
+	{
+		const CEGUI::MouseEventArgs& args = static_cast<const CEGUI::MouseEventArgs&>(e);
+		
+		if (args.window == ControllerUI::AvatarCreateWizard::Might)
+			OgreClient::Singleton->Data->CharCreationInfo->Might += args.wheelChange;
+
+		else if (args.window == ControllerUI::AvatarCreateWizard::Intellect)
+			OgreClient::Singleton->Data->CharCreationInfo->Intellect += args.wheelChange;
+
+		else if (args.window == ControllerUI::AvatarCreateWizard::Stamina)
+			OgreClient::Singleton->Data->CharCreationInfo->Stamina += args.wheelChange;
+
+		else if (args.window == ControllerUI::AvatarCreateWizard::Agility)
+			OgreClient::Singleton->Data->CharCreationInfo->Agility += args.wheelChange;
+
+		else if (args.window == ControllerUI::AvatarCreateWizard::Mysticism)
+			OgreClient::Singleton->Data->CharCreationInfo->Mysticism += args.wheelChange;
+
+		else if (args.window == ControllerUI::AvatarCreateWizard::Aim)
+			OgreClient::Singleton->Data->CharCreationInfo->Aim += args.wheelChange;
+
+		ControllerUI::AvatarCreateWizard::Profiles->setText(UI_AVATARCREATEWIZARD_PROFILE_CUSTOM);
+		ControllerUI::AvatarCreateWizard::Profiles->selectListItemWithEditboxText();
+
+		return true;
+	};
+
 	bool UICallbacks::AvatarCreateWizard::OnAttributeProgressChange(const CEGUI::EventArgs& e)
 	{
 		const CEGUI::WindowEventArgs& args = static_cast<const CEGUI::WindowEventArgs&>(e);
