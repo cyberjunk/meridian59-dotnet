@@ -5604,6 +5604,7 @@
 					<UnifiedDim scale="0" offset="16" type="Height"/>
 				</Dim>
 			</Area>
+			<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			<Property name="MouseInputPropagationEnabled" value="True" />
 		</Child>
 		<!-- Name -->
