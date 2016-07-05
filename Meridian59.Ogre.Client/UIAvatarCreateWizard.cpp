@@ -491,10 +491,6 @@ namespace Meridian59 { namespace Ogre
 
 		// subscribe click event
 		widget->subscribeEvent(
-			CEGUI::ItemEntry::EventMouseDoubleClick, 
-			CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnSpellDoubleClicked));
-		
-		widget->subscribeEvent(
 			CEGUI::ItemEntry::EventMouseClick, 
 			CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnSpellClicked));
 		
@@ -541,10 +537,6 @@ namespace Meridian59 { namespace Ogre
 
 		// subscribe click event
 		widget->subscribeEvent(
-			CEGUI::ItemEntry::EventMouseDoubleClick, 
-			CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnSkillDoubleClicked));
-		
-		widget->subscribeEvent(
 			CEGUI::ItemEntry::EventMouseClick, 
 			CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnSkillClicked));
 		
@@ -588,10 +580,6 @@ namespace Meridian59 { namespace Ogre
 		widget->setTooltipText(StringConvert::CLRToCEGUI(obj->SpellDescription));
 
 		// subscribe click event
-		widget->subscribeEvent(
-			CEGUI::ItemEntry::EventMouseDoubleClick, 
-			CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnSelectedSpellDoubleClicked));
-		
 		widget->subscribeEvent(
 			CEGUI::ItemEntry::EventMouseClick, 
 			CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnSelectedSpellClicked));
@@ -638,10 +626,6 @@ namespace Meridian59 { namespace Ogre
 		widget->setTooltipText(StringConvert::CLRToCEGUI(obj->SkillDescription));
 
 		// subscribe click event
-		widget->subscribeEvent(
-			CEGUI::ItemEntry::EventMouseDoubleClick, 
-			CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnSelectedSkillDoubleClicked));
-		
 		widget->subscribeEvent(
 			CEGUI::ItemEntry::EventMouseClick, 
 			CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnSelectedSkillClicked));
@@ -839,62 +823,13 @@ namespace Meridian59 { namespace Ogre
 		return true;
 	};
 
-	bool UICallbacks::AvatarCreateWizard::OnSpellDoubleClicked(const CEGUI::EventArgs& e)
-	{
-		const CEGUI::MouseEventArgs& args	= (const CEGUI::MouseEventArgs&)e;
-		const CEGUI::ItemEntry* itm			= (CEGUI::ItemEntry*)args.window;
-
-		// select spell
-		if (args.button == CEGUI::MouseButton::LeftButton)		
-			OgreClient::Singleton->Data->CharCreationInfo->SelectSpell(itm->getID());					
-		
-		return true;
-	};
-
-	bool UICallbacks::AvatarCreateWizard::OnSkillDoubleClicked(const CEGUI::EventArgs& e)
-	{
-		const CEGUI::MouseEventArgs& args	= (const CEGUI::MouseEventArgs&)e;
-		const CEGUI::ItemEntry* itm			= (CEGUI::ItemEntry*)args.window;
-		
-		// select skill
-		if (args.button == CEGUI::MouseButton::LeftButton)		
-			OgreClient::Singleton->Data->CharCreationInfo->SelectSkill(itm->getID());					
-		
-		return true;
-	};
-
-	bool UICallbacks::AvatarCreateWizard::OnSelectedSpellDoubleClicked(const CEGUI::EventArgs& e)
-	{
-		const CEGUI::MouseEventArgs& args	= (const CEGUI::MouseEventArgs&)e;
-		const CEGUI::ItemEntry* itm			= (CEGUI::ItemEntry*)args.window;
-
-		// deselect spell
-		if (args.button == CEGUI::MouseButton::LeftButton)		
-			OgreClient::Singleton->Data->CharCreationInfo->DeselectSpell(itm->getID());					
-		
-		return true;
-	};
-
-	bool UICallbacks::AvatarCreateWizard::OnSelectedSkillDoubleClicked(const CEGUI::EventArgs& e)
-	{
-		const CEGUI::MouseEventArgs& args	= (const CEGUI::MouseEventArgs&)e;
-		const CEGUI::ItemEntry* itm			= (CEGUI::ItemEntry*)args.window;
-
-		// deselect skill
-		if (args.button == CEGUI::MouseButton::LeftButton)		
-			OgreClient::Singleton->Data->CharCreationInfo->DeselectSkill(itm->getID());					
-		
-		return true;
-	};
-
 	bool UICallbacks::AvatarCreateWizard::OnSpellClicked(const CEGUI::EventArgs& e)
 	{
 		const CEGUI::MouseEventArgs& args	= (const CEGUI::MouseEventArgs&)e;
 		const CEGUI::ItemEntry* itm			= (CEGUI::ItemEntry*)args.window;
 
 		// select spell
-		if (args.button == CEGUI::MouseButton::RightButton)		
-			OgreClient::Singleton->Data->CharCreationInfo->SelectSpell(itm->getID());					
+		OgreClient::Singleton->Data->CharCreationInfo->SelectSpell(itm->getID());					
 		
 		return true;
 	};
@@ -904,9 +839,8 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::MouseEventArgs& args	= (const CEGUI::MouseEventArgs&)e;
 		const CEGUI::ItemEntry* itm			= (CEGUI::ItemEntry*)args.window;
 		
-		// select skill
-		if (args.button == CEGUI::MouseButton::RightButton)		
-			OgreClient::Singleton->Data->CharCreationInfo->SelectSkill(itm->getID());					
+		// select skill	
+		OgreClient::Singleton->Data->CharCreationInfo->SelectSkill(itm->getID());					
 		
 		return true;
 	};
@@ -916,9 +850,8 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::MouseEventArgs& args	= (const CEGUI::MouseEventArgs&)e;
 		const CEGUI::ItemEntry* itm			= (CEGUI::ItemEntry*)args.window;
 
-		// deselect spell
-		if (args.button == CEGUI::MouseButton::RightButton)		
-			OgreClient::Singleton->Data->CharCreationInfo->DeselectSpell(itm->getID());					
+		// deselect spell	
+		OgreClient::Singleton->Data->CharCreationInfo->DeselectSpell(itm->getID());					
 		
 		return true;
 	};
@@ -928,9 +861,8 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::MouseEventArgs& args	= (const CEGUI::MouseEventArgs&)e;
 		const CEGUI::ItemEntry* itm			= (CEGUI::ItemEntry*)args.window;
 
-		// deselect skill
-		if (args.button == CEGUI::MouseButton::RightButton)		
-			OgreClient::Singleton->Data->CharCreationInfo->DeselectSkill(itm->getID());					
+		// deselect skill	
+		OgreClient::Singleton->Data->CharCreationInfo->DeselectSkill(itm->getID());					
 		
 		return true;
 	};

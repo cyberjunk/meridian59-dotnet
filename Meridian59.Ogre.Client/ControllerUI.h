@@ -1727,11 +1727,6 @@ namespace Meridian59 { namespace Ogre
 			static bool OnAttributeMouseMoveClick(const CEGUI::EventArgs& e);
 			static bool OnAttributeProgressChange(const CEGUI::EventArgs& e);
 
-			static bool OnSpellDoubleClicked(const CEGUI::EventArgs& e);
-			static bool OnSkillDoubleClicked(const CEGUI::EventArgs& e);
-			static bool OnSelectedSpellDoubleClicked(const CEGUI::EventArgs& e);
-			static bool OnSelectedSkillDoubleClicked(const CEGUI::EventArgs& e);
-			
 			static bool OnSpellClicked(const CEGUI::EventArgs& e);
 			static bool OnSkillClicked(const CEGUI::EventArgs& e);
 			static bool OnSelectedSpellClicked(const CEGUI::EventArgs& e);
