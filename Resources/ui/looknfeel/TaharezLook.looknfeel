@@ -5571,6 +5571,7 @@
 		<PropertyDefinition name="SelectionColour" initialValue="FF444444" redrawOnWrite="true" />
 		<Property name="Selectable" value="False" />
 		<Property name="MouseInputPropagationEnabled" value="True" />
+		<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 		<NamedArea name="ContentSize">
 			<Area>
 				<Dim type="LeftEdge" >
@@ -5603,7 +5604,7 @@
 					<UnifiedDim scale="0" offset="16" type="Height"/>
 				</Dim>
 			</Area>
-			<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
+			<Property name="MouseInputPropagationEnabled" value="True" />
 		</Child>
 		<!-- Name -->
 		<Child type ="TaharezLook/Label" nameSuffix="__auto__label">
@@ -5622,7 +5623,7 @@
 				</Dim>
 			</Area>
 			<Property name="HorzFormatting" value="LeftAligned" />
-			<Property name="MouseInputPropagationEnabled" value="True" />
+			<Property name="MousePassThroughEnabled" value="True" />
 		</Child>
 		<ImagerySection name="selection">
 			<ImageryComponent>
