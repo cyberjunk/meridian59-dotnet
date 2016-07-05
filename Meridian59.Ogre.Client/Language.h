@@ -24,18 +24,7 @@ namespace LANGSTR
 		OPTIONS		= 3,
 		ON			= 4,
 		OFF			= 5,
-		KEY			= 6,
-		ATTACK		= 7,
-		REST		= 8,
-		DANCE		= 9,
-		WAVE		= 10,
-		POINT		= 11,
-		LOOT		= 12,
-		BUY			= 13,
-		INSPECT		= 14,
-		TRADE		= 15,
-		ACTIVATE	= 16,
-		GUILDINVITE	= 17
+		KEY			= 6
 	};
 }
 

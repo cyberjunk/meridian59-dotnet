@@ -13,17 +13,6 @@ const char* EN[] =
 	"On",					// 4
 	"Off",					// 5
 	"Key",					// 6
-	"Attack",				// 7
-	"Rest",					// 8
-	"Dance",				// 9
-	"Wave",					// 10
-	"Point",				// 11
-	"Loot",					// 12
-	"Buy",					// 13
-	"Inspect",				// 14
-	"Trade",				// 15
-	"Activate",				// 16
-	"Guild invite",			// 17
 };
 
 const char* EN_WINDOW_TITLES[] =

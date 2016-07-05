@@ -49,6 +49,9 @@ namespace Meridian59 { namespace Ogre
 		CEGUI::ItemEntry* widget = (CEGUI::ItemEntry*)wndMgr->createWindow(
 			UI_WINDOWTYPE_ACTIONITEM);
 
+		// save avataraction enum value in ID
+		widget->setID((unsigned int)Type);
+
 		// subscribe doubleclick event
 		widget->subscribeEvent(
 			CEGUI::ItemEntry::EventMouseDoubleClick, 
@@ -62,62 +65,53 @@ namespace Meridian59 { namespace Ogre
 			CEGUI::Window* name	= (CEGUI::Window*)widget->getChildAtIdx(UI_ACTIONS_CHILDINDEX_NAME);
 
 			CEGUI::String strIconName;
-			CEGUI::String strName;
+
+			// note: this can not be translated yet, because it must match the enum value
+			CEGUI::String strName = StringConvert::CLRToCEGUI(Type.ToString());
 
 			switch(Type)
 			{
 				case AvatarAction::Attack:
-					strName = GetLangLabel(LANGSTR::ATTACK);
 					strIconName = UI_IMAGE_ACTION_ATTACK;
 					break;
 
 				case AvatarAction::Rest:
-					strName = GetLangLabel(LANGSTR::REST);
 					strIconName = UI_IMAGE_ACTION_REST;
 					break;
 
 				case AvatarAction::Dance:
-					strName = GetLangLabel(LANGSTR::DANCE);
 					strIconName = UI_IMAGE_ACTION_DANCE;
 					break;
 
 				case AvatarAction::Wave:
-					strName = GetLangLabel(LANGSTR::WAVE);
 					strIconName = UI_IMAGE_ACTION_WAVE;
 					break;
 
 				case AvatarAction::Point:
-					strName = GetLangLabel(LANGSTR::POINT);
 					strIconName = UI_IMAGE_ACTION_POINT;
 					break;
 
 				case AvatarAction::Loot:
-					strName = GetLangLabel(LANGSTR::LOOT);
 					strIconName = UI_IMAGE_ACTION_LOOT;
 					break;
 
 				case AvatarAction::Buy:
-					strName = GetLangLabel(LANGSTR::BUY);
 					strIconName = UI_IMAGE_ACTION_BUY;
 					break;
 
 				case AvatarAction::Inspect:
-					strName = GetLangLabel(LANGSTR::INSPECT);
 					strIconName = UI_IMAGE_ACTION_INSPECT;
 					break;
 
 				case AvatarAction::Trade:
-					strName = GetLangLabel(LANGSTR::TRADE);
 					strIconName = UI_IMAGE_ACTION_TRADE;
 					break;
 
 				case AvatarAction::Activate:
-					strName = GetLangLabel(LANGSTR::ACTIVATE);
 					strIconName = UI_IMAGE_ACTION_ACTIVATE;
 					break;
 
 				case AvatarAction::GuildInvite:
-					strName = GetLangLabel(LANGSTR::GUILDINVITE);
 					strIconName = UI_IMAGE_ACTION_GUILDINVITE;
 					break;
 
@@ -146,51 +140,13 @@ namespace Meridian59 { namespace Ogre
 	{
 		const CEGUI::MouseEventArgs& args = static_cast<const CEGUI::MouseEventArgs&>(e);
 		const CEGUI::ItemEntry* itm = (CEGUI::ItemEntry*)args.window;
-		const CEGUI::ItemListbox* listBox = ControllerUI::Actions::List;
 		
-		// check
-		if (itm->getChildCount() > 1)
-		{
-			CEGUI::DragContainer* iconDrag = (CEGUI::DragContainer*)itm->getChildAtIdx(UI_ACTIONS_CHILDINDEX_ICON);			
-			CEGUI::Window* icon	= iconDrag->getChildAtIdx(0);				
-			CEGUI::Window* name	= (CEGUI::Window*)itm->getChildAtIdx(UI_ACTIONS_CHILDINDEX_NAME);
-			
-			CEGUI::String strName = name->getText();
+		// get avataraction enum value set in ID
+		AvatarAction action = (AvatarAction)itm->getID();
 
-			if (strName == GetLangLabel(LANGSTR::ATTACK))
-				OgreClient::Singleton->ExecAction(AvatarAction::Attack);
-			
-			else if (strName == GetLangLabel(LANGSTR::REST))
-				OgreClient::Singleton->ExecAction(AvatarAction::Rest);
-						
-			else if (strName == GetLangLabel(LANGSTR::DANCE))
-				OgreClient::Singleton->ExecAction(AvatarAction::Dance);
-						
-			else if (strName == GetLangLabel(LANGSTR::WAVE))
-				OgreClient::Singleton->ExecAction(AvatarAction::Wave);
-					
-			else if (strName == GetLangLabel(LANGSTR::POINT))
-				OgreClient::Singleton->ExecAction(AvatarAction::Point);
-						
-			else if (strName == GetLangLabel(LANGSTR::LOOT))
-				OgreClient::Singleton->ExecAction(AvatarAction::Loot);
+		// execute action
+		OgreClient::Singleton->ExecAction(action);
 
-			else if (strName == GetLangLabel(LANGSTR::BUY))
-				OgreClient::Singleton->ExecAction(AvatarAction::Buy);
-
-			else if (strName == GetLangLabel(LANGSTR::INSPECT))
-				OgreClient::Singleton->ExecAction(AvatarAction::Inspect);
-
-			else if (strName == GetLangLabel(LANGSTR::ACTIVATE))
-				OgreClient::Singleton->ExecAction(AvatarAction::Activate);
-
-			else if (strName == GetLangLabel(LANGSTR::TRADE))
-				OgreClient::Singleton->ExecAction(AvatarAction::Trade);	
-
-			else if (strName == GetLangLabel(LANGSTR::GUILDINVITE))
-				OgreClient::Singleton->ExecAction(AvatarAction::GuildInvite);	
-		}
-		
 		return true;
 	};
 };};
