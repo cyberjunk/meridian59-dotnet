@@ -2075,7 +2075,7 @@
 						<Property name="NormalTextColour" value="FFffeeee" />								
 					</Window>
 					<Window type="TaharezLook/Combobox" name="Options.TabEngine.ImageBuilder" >
-						<Property name="Area" value="{{0,115},{0,155},{0,245},{0,255}}" />
+						<Property name="Area" value="{{0,115},{0,155},{0,245},{0,225}}" />
 						<Property name="ClippedByParent" value="False" />
 						<Property name="ReadOnly" value="True" />
 						<Property name="TooltipText" value="Restart required." />
@@ -2089,7 +2089,7 @@
 						<Property name="NormalTextColour" value="FFffeeee" />								
 					</Window>
 					<Window type="TaharezLook/Combobox" name="Options.TabEngine.ScalingQuality" >
-						<Property name="Area" value="{{0,115},{0,180},{0,245},{0,280}}" />
+						<Property name="Area" value="{{0,115},{0,180},{0,245},{0,265}}" />
 						<Property name="ClippedByParent" value="False" />
 						<Property name="ReadOnly" value="True" />
 					</Window>
@@ -2102,7 +2102,7 @@
 						<Property name="NormalTextColour" value="FFffeeee" />								
 					</Window>
 					<Window type="TaharezLook/Combobox" name="Options.TabEngine.TextureQuality" >
-						<Property name="Area" value="{{0,115},{0,205},{0,245},{0,305}}" />
+						<Property name="Area" value="{{0,115},{0,205},{0,245},{0,290}}" />
 						<Property name="ClippedByParent" value="False" />
 						<Property name="ReadOnly" value="True" />
 					</Window>
