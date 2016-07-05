@@ -216,8 +216,8 @@ public class Render : IHttpHandler
         Graphics graphics = Graphics.FromImage(surface);
 
         // get object size in world size
-        float scaledwidth = (float)((imageComposer.RenderInfo.UVEnd.X * imageComposer.RenderInfo.Dimension.X) / imageComposer.RenderInfo.Scaling) * (float)scale * 0.01f;
-        float scaledheight = (float)((imageComposer.RenderInfo.UVEnd.Y * imageComposer.RenderInfo.Dimension.Y) / imageComposer.RenderInfo.Scaling) * (float)scale * 0.01f;
+        float scaledwidth = (float)imageComposer.RenderInfo.WorldSize.X * (float)scale * 0.01f;
+        float scaledheight = (float)imageComposer.RenderInfo.WorldSize.Y * (float)scale * 0.01f;
 
         // important:
         // center x (extends x, -x -> right, left)
