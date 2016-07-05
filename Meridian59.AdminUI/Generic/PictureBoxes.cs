@@ -71,9 +71,9 @@ namespace Meridian59.AdminUI.Generic
             if (imageComposer.Image == null)
                 return;
 
-            // get object size in world size
-            float scaledwidth = (float)((imageComposer.RenderInfo.UVEnd.X * imageComposer.RenderInfo.Dimension.X) / imageComposer.RenderInfo.Scaling) * zoom;
-            float scaledheight = (float)((imageComposer.RenderInfo.UVEnd.Y * imageComposer.RenderInfo.Dimension.Y) / imageComposer.RenderInfo.Scaling) * zoom;
+            // get object size in world size          
+            float scaledwidth = (float)imageComposer.RenderInfo.WorldSize.X * zoom;
+            float scaledheight = (float)imageComposer.RenderInfo.WorldSize.Y * zoom;
 
             // important:
             // center x (extends x, -x -> right, left)
