@@ -245,7 +245,7 @@
 		<Window type="TaharezLook/FrameWindow" name="OnlinePlayers" >
 			<Property name="Text" value="Players" />
 			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
-			<Property name="MaxSize" value="{{1,0},{1,0}}" />
+			<Property name="MaxSize" value="{{0,512},{1,0}}" />
 			<Property name="Size" value="{{0,256},{0,384}}" />
 			<Property name="Position" value="{{0.5,-128},{0.5,-192}}" />
 			
