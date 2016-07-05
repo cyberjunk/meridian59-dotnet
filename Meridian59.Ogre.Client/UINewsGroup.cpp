@@ -137,6 +137,10 @@ namespace Meridian59 { namespace Ogre
 		itmTitle->setSelectionBrushImage("TaharezLook/ListboxSelectionBrush");
 		itmAuthor->setSelectionBrushImage("TaharezLook/ListboxSelectionBrush");
 		itmDate->setSelectionBrushImage("TaharezLook/ListboxSelectionBrush");
+		
+		itmTitle->setSelectionColours(CEGUI::Colour(0xFF444444));
+		itmAuthor->setSelectionColours(CEGUI::Colour(0xFF444444));
+		itmDate->setSelectionColours(CEGUI::Colour(0xFF444444));
 
 		// insert widget in ui-list
 		if ((int)List->getRowCount() > Index)
