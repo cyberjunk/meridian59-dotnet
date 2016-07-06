@@ -79,10 +79,10 @@ namespace Meridian59 { namespace Ogre
 		CEGUI::DragContainer* dragger = 
 			(CEGUI::DragContainer*)widget->getChildAtIdx(UI_SKILLS_CHILDINDEX_ICON);
 		
-		CEGUI::Window* icon	= dragger->getChildAtIdx(0);
-		CEGUI::Window* name	= widget->getChildAtIdx(UI_SKILLS_CHILDINDEX_NAME);
-		CEGUI::Window* percent = widget->getChildAtIdx(UI_SKILLS_CHILDINDEX_PERCENT);
-				
+		// subscribe drag start and end to draggable icon
+		dragger->subscribeEvent(CEGUI::DragContainer::EventDragStarted, CEGUI::Event::Subscriber(UICallbacks::Spells::OnDragStarted));
+		dragger->subscribeEvent(CEGUI::DragContainer::EventDragEnded, CEGUI::Event::Subscriber(UICallbacks::Spells::OnDragEnded));
+			
 		// insert in ui-list
 		if ((int)List->getItemCount() > Index)
 			List->insertItem(widget, List->getItemFromIndex(Index));
@@ -305,6 +305,20 @@ namespace Meridian59 { namespace Ogre
 		if (args.button == CEGUI::MouseButton::LeftButton)					
 			OgreClient::Singleton->SendReqCastMessage(itm->getID());
 			
+		return true;
+	};
+
+	bool UICallbacks::Spells::OnDragStarted(const CEGUI::EventArgs& e)
+	{
+		const CEGUI::WindowEventArgs& args = static_cast<const CEGUI::WindowEventArgs&>(e);
+		ControllerUI::Spells::Window->setUsingAutoRenderingSurface(false);
+		return true;
+	};
+
+	bool UICallbacks::Spells::OnDragEnded(const CEGUI::EventArgs& e)
+	{
+		const CEGUI::WindowEventArgs& args = static_cast<const CEGUI::WindowEventArgs&>(e);
+		ControllerUI::Spells::Window->setUsingAutoRenderingSurface(true);
 		return true;
 	};
 };};
