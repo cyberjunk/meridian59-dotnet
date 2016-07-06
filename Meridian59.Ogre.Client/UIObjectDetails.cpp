@@ -157,7 +157,7 @@ namespace Meridian59 { namespace Ogre
 				CEGUI::UDim(1.0f, -val2 - (float)UI_DEFAULTPADDING));
 					
 			OK->setVisible(false);
-			Window->setHeight(CEGUI::UDim(0, 221.0f));	
+			Window->setHeight(CEGUI::UDim(0, 230.0f));	
 		}
 
 		// non editable inscription
