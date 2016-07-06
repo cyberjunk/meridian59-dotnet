@@ -1557,6 +1557,8 @@ namespace Meridian59 { namespace Ogre
 		{
 		public:
 			static bool OnItemDoubleClicked(const CEGUI::EventArgs& e);
+			static bool OnDragStarted(const CEGUI::EventArgs& e);
+			static bool OnDragEnded(const CEGUI::EventArgs& e);
 		};
 
 		/// <summary>

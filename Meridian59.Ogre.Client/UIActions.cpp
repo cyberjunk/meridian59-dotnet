@@ -64,6 +64,10 @@ namespace Meridian59 { namespace Ogre
 			CEGUI::Window* icon	= iconDrag->getChildAtIdx(0);			
 			CEGUI::Window* name	= (CEGUI::Window*)widget->getChildAtIdx(UI_ACTIONS_CHILDINDEX_NAME);
 
+			// subscribe drag start and end to draggable icon
+			iconDrag->subscribeEvent(CEGUI::DragContainer::EventDragStarted, CEGUI::Event::Subscriber(UICallbacks::Actions::OnDragStarted));
+			iconDrag->subscribeEvent(CEGUI::DragContainer::EventDragEnded, CEGUI::Event::Subscriber(UICallbacks::Actions::OnDragEnded));
+
 			CEGUI::String strIconName;
 
 			// note: this can not be translated yet, because it must match the enum value
@@ -147,6 +151,20 @@ namespace Meridian59 { namespace Ogre
 		// execute action
 		OgreClient::Singleton->ExecAction(action);
 
+		return true;
+	};
+
+	bool UICallbacks::Actions::OnDragStarted(const CEGUI::EventArgs& e)
+	{
+		const CEGUI::WindowEventArgs& args = static_cast<const CEGUI::WindowEventArgs&>(e);
+		ControllerUI::Actions::Window->setUsingAutoRenderingSurface(false);
+		return true;
+	};
+
+	bool UICallbacks::Actions::OnDragEnded(const CEGUI::EventArgs& e)
+	{
+		const CEGUI::WindowEventArgs& args = static_cast<const CEGUI::WindowEventArgs&>(e);
+		ControllerUI::Actions::Window->setUsingAutoRenderingSurface(true);
 		return true;
 	};
 };};
