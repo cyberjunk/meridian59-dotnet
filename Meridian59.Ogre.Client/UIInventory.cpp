@@ -307,6 +307,7 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::WindowEventArgs& args = static_cast<const CEGUI::WindowEventArgs&>(e);
 
 		ControllerUI::DraggedWindow = args.window;
+		ControllerUI::Inventory::Window->setUsingAutoRenderingSurface(false);
 
 		return true;
 	};
@@ -321,6 +322,7 @@ namespace Meridian59 { namespace Ogre
 		
 		// reset dragwindow
 		ControllerUI::DraggedWindow = nullptr;
+		ControllerUI::Inventory::Window->setUsingAutoRenderingSurface(true);
 
 		// get index and dragcontainer
 		int childcount = (int)dataViews->getChildCount();
