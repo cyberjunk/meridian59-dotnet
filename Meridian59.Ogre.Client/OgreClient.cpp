@@ -58,8 +58,7 @@ namespace Meridian59 { namespace Ogre
         misc["FSAA"]			= "0";
         misc["monitorIndex"]	= "0";
 		misc["vsync"]			= "false";
-        misc["border"]			= "false";
-		misc["hidden"]			= "true";
+        misc["hidden"]			= "true";
 		misc["depthBuffer"]		= "false";
 		misc["border"]			= "none";
 
