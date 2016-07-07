@@ -1530,6 +1530,7 @@
             </Area>
             <HorzAlignment type="RightAligned" />
             <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
+			<Property name="WantsMultiClickEvents" value="False" />
             <Property name="NormalImage" value="TaharezLook/MiniHorzScrollRightNormal" />
             <Property name="HoverImage" value="TaharezLook/MiniHorzScrollRightHover" />
             <Property name="PushedImage" value="TaharezLook/MiniHorzScrollRightNormal" />
@@ -1539,6 +1540,7 @@
                 <Dim type="Width" ><ImageDim name="TaharezLook/MiniHorzScrollLeftNormal" dimension="Width" /></Dim>
             </Area>
             <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
+			<Property name="WantsMultiClickEvents" value="False" />
             <Property name="NormalImage" value="TaharezLook/MiniHorzScrollLeftNormal" />
             <Property name="HoverImage" value="TaharezLook/MiniHorzScrollLeftHover" />
             <Property name="PushedImage" value="TaharezLook/MiniHorzScrollLeftNormal" />
@@ -1652,6 +1654,7 @@
             </Area>
             <VertAlignment type="BottomAligned" />
             <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
+			<Property name="WantsMultiClickEvents" value="False" />
             <Property name="NormalImage" value="TaharezLook/MiniVertScrollDownNormal" />
             <Property name="HoverImage" value="TaharezLook/MiniVertScrollDownHover" />
             <Property name="PushedImage" value="TaharezLook/MiniVertScrollDownNormal" />
@@ -1661,6 +1664,7 @@
                 <Dim type="Height" ><ImageDim name="TaharezLook/MiniVertScrollUpNormal" dimension="Height" /></Dim>
             </Area>
             <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
+			<Property name="WantsMultiClickEvents" value="False" />
             <Property name="NormalImage" value="TaharezLook/MiniVertScrollUpNormal" />
             <Property name="HoverImage" value="TaharezLook/MiniVertScrollUpHover" />
             <Property name="PushedImage" value="TaharezLook/MiniVertScrollUpNormal" />
