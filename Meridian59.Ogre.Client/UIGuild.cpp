@@ -370,11 +370,31 @@ namespace Meridian59 { namespace Ogre
 
 			// set supported state
 			supported->setSelected(info->Flags->IsVote && isSupportedMember);
-			supported->setEnabled(info->Flags->IsVote && !isSupportedMember);
+
+			// enable/disable supported
+			if (info->Flags->IsVote && !isSupportedMember)
+			{
+				supported->setEnabled(true);
+				supported->setMouseCursor(UI_MOUSECURSOR_HAND);
+			}
+			else
+			{
+				supported->setEnabled(false);
+				supported->setMouseCursor(UI_DEFAULTARROW);
+			}
 			
 			// enable/disable exile
-			exile->setEnabled(info->Flags->IsExile && !isAvatar);
-		
+			if (info->Flags->IsExile && !isAvatar)
+			{
+				exile->setEnabled(true);
+				exile->setMouseCursor(UI_MOUSECURSOR_HAND);
+			}
+			else
+			{
+				exile->setEnabled(false);
+				exile->setMouseCursor(UI_DEFAULTARROW);
+			}
+						
 			// select rank
 			rank->setEnabled(info->Flags->IsSetRank && !isAvatar);
 			int index = obj->Rank - 1;
