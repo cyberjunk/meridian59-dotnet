@@ -112,6 +112,10 @@ namespace Meridian59 { namespace Ogre
 		sceneManager = (OctreeSceneManager*)root->createSceneManager(SceneType::ST_GENERIC);
 		sceneManager->setCameraRelativeRendering(true);
 
+		// make sure no time is spent on disabled shadows
+		sceneManager->setShadowTechnique(ShadowTechnique::SHADOWTYPE_NONE);
+		sceneManager->getRenderQueue()->getQueueGroup(Ogre::RENDER_QUEUE_MAIN)->setShadowsEnabled(false);
+
 		/********************************************************************************************************/
 
 		// create camera listener
