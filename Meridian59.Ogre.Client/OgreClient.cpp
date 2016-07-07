@@ -65,7 +65,9 @@ namespace Meridian59 { namespace Ogre
 		misc["vsync"]			= "false";
         misc["border"]			= "false";
 		misc["hidden"]			= "true";
-		
+		misc["depthBuffer"]		= "false";
+		misc["border"]			= "none";
+
 		// create the hidden, primary dummy renderwindow
         renderWindowDummy = (D3D9RenderWindow*)root->createRenderWindow(
             "PrimaryWindowDummy", 1, 1, false, &misc);
@@ -126,6 +128,7 @@ namespace Meridian59 { namespace Ogre
 		camera->setPosition(::Ogre::Vector3(0, 0, 0));
 		camera->setNearClipDistance(1.0f);
 		camera->setListener(cameraListener);
+		camera->setUseRenderingDistance(false);
 
 		// create camera node
 		cameraNode = sceneManager->createSceneNode(AVATARCAMNODE);
