@@ -1514,6 +1514,8 @@
     <WidgetLook name="TaharezLook/HorizontalScrollbar">
         <Property name="Size" value="{{1, 0}, {0, 16}}" />
 		<Property name="WantsMultiClickEvents" value="False" />
+		<Property name="MouseAutoRepeatEnabled" value="True" />
+		<Property name="MouseAutoRepeatDelay" value="0.5" />
         <NamedArea name="ThumbTrackArea">
             <Area>
                 <Dim type="LeftEdge" ><ImageDim name="TaharezLook/MiniHorzScrollLeftNormal" dimension="Width" /></Dim>
@@ -1639,6 +1641,8 @@
         <Property name="VerticalScrollbar" value="True" />
         <Property name="Size" value="{{0, 16}, {1, 0}}" />
 		<Property name="WantsMultiClickEvents" value="False" />
+		<Property name="MouseAutoRepeatEnabled" value="True" />
+		<Property name="MouseAutoRepeatDelay" value="0.5" />
         <NamedArea name="ThumbTrackArea">
             <Area>
                 <Dim type="TopEdge" ><ImageDim name="TaharezLook/MiniVertScrollUpNormal" dimension="Height" /></Dim>
