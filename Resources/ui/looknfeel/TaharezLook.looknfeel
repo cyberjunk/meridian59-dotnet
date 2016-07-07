@@ -1515,7 +1515,6 @@
         <Property name="Size" value="{{1, 0}, {0, 16}}" />
 		<Property name="WantsMultiClickEvents" value="False" />
 		<Property name="MouseAutoRepeatEnabled" value="True" />
-		<Property name="MouseAutoRepeatDelay" value="0.5" />
         <NamedArea name="ThumbTrackArea">
             <Area>
                 <Dim type="LeftEdge" ><ImageDim name="TaharezLook/MiniHorzScrollLeftNormal" dimension="Width" /></Dim>
@@ -1642,7 +1641,6 @@
         <Property name="Size" value="{{0, 16}, {1, 0}}" />
 		<Property name="WantsMultiClickEvents" value="False" />
 		<Property name="MouseAutoRepeatEnabled" value="True" />
-		<Property name="MouseAutoRepeatDelay" value="0.5" />
         <NamedArea name="ThumbTrackArea">
             <Area>
                 <Dim type="TopEdge" ><ImageDim name="TaharezLook/MiniVertScrollUpNormal" dimension="Height" /></Dim>
@@ -4208,7 +4206,6 @@
         <PropertyDefinition name="VertImageFormatting" initialValue="Stretched" redrawOnWrite="true" type="VerticalFormatting" />
         <PropertyDefinition name="HorzImageFormatting" initialValue="Stretched" redrawOnWrite="true" type="HorizontalFormatting" />
 		<Property name="MouseAutoRepeatEnabled" value="True" />
-		<Property name="MouseAutoRepeatDelay" value="0.5" />
 		
 		<!-- additional text -->
 		<ImagerySection name="text">
@@ -5892,16 +5889,16 @@
 		<Property name="MouseInputPropagationEnabled" value="True" />
 		<NamedArea name="ContentSize">
 			<Area>
-				<Dim type="LeftEdge" >
+				<Dim type="LeftEdge">
 					<UnifiedDim scale="0" offset="0" type="LeftEdge" />
 				</Dim>
-				<Dim type="TopEdge" >
+				<Dim type="TopEdge">
 					<UnifiedDim scale="0" offset="0" type="TopEdge" />
 				</Dim>
-				<Dim type="Width" >
+				<Dim type="Width">
 					<UnifiedDim scale="1" offset="0" type="Width" />
 				</Dim>
-				<Dim type="Height" >
+				<Dim type="Height">
 					<UnifiedDim scale="0" offset="25" type="Height"/>
 				</Dim>
 			</Area>
@@ -5981,7 +5978,6 @@
 			</Area>
 			<Property name="ClippedByParent" value="False" />
 			<Property name="ReadOnly" value="True" />
-
 		</Child>
 		<ImagerySection name="selection">
 			<ImageryComponent>
