@@ -1292,7 +1292,7 @@
 					<Window type="TaharezLook/StaticImage" name="Guild.ShieldImage" >
 						<Property name="Area" value="{{0,10},{0,45},{0,202},{0,301}}" />
 						<Property name="FrameEnabled" value="False" />
-						<Property name="BackgroundEnabled" value="True" />
+						<Property name="BackgroundEnabled" value="False" />
 						<Property name="TooltipText" value="The image of the selected design" />
 					</Window>
 					
