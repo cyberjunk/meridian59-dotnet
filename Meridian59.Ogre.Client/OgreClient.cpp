@@ -48,11 +48,6 @@ namespace Meridian59 { namespace Ogre
 		// init root
 		root->initialise(false, WINDOWNAME);
 
-		// get ogre singleton managers
-		::Ogre::ResourceGroupManager* resMan	= ::Ogre::ResourceGroupManager::getSingletonPtr();
-		::Ogre::TextureManager* texMan			= ::Ogre::TextureManager::getSingletonPtr();
-		::Ogre::MaterialManager* matMan			= ::Ogre::MaterialManager::getSingletonPtr();
-
 		/********************************************************************************************************/
 
 		// settings for the dummy renderwindow
@@ -74,9 +69,13 @@ namespace Meridian59 { namespace Ogre
 
 		renderWindowDummy->setActive(false);
 		renderWindowDummy->setAutoUpdated(false);
-
-		/********************************************************************************************************/
 		
+		/********************************************************************************************************/
+
+		::Ogre::ResourceGroupManager* resMan = ::Ogre::ResourceGroupManager::getSingletonPtr();
+		::Ogre::TextureManager* texMan = ::Ogre::TextureManager::getSingletonPtr();
+		::Ogre::MaterialManager* matMan = ::Ogre::MaterialManager::getSingletonPtr();
+	
 		// make sure basic resource groups are created
 		if (!resMan->resourceGroupExists(RESOURCEGROUPSHADER))
             resMan->createResourceGroup(RESOURCEGROUPSHADER);
