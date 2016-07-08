@@ -2,6 +2,7 @@
 *.sdf
 *.suo
 *.pdb
+*.opendb
 *.opensdf
 *.ipch
 
