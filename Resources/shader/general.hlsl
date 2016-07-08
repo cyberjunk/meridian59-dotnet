@@ -181,40 +181,41 @@ float4 diffuse_ps(
 	uniform float4 colormodifier,
 	uniform sampler2D diffusetex : TEXUNIT0) : COLOR0
 {  
-	float lightDist, lightScale;
+	float lightScale;
 	float3 light;
+	float3 delta;
 	
 	// base pixel from texture
 	float4 diffuseTex = tex2D(diffusetex, vsout.uv);
 	
 	// 1. light
-	lightDist  = length(lightPos0.xyz - vsout.wp.xyz) / lightAtt0.r;
-	lightScale = 1.0 - (lightDist * lightDist);
+	delta      = lightPos0.xyz - vsout.wp.xyz;
+	lightScale = 1.0 - (dot(delta, delta) / (lightAtt0.r * lightAtt0.r));
 	light      = max(float3(0, 0, 0), lightCol0 * lightScale);
 
 	// 2. light
-	lightDist  = length(lightPos1.xyz - vsout.wp.xyz) / lightAtt1.r;
-	lightScale = 1.0 - (lightDist * lightDist);
+	delta      = lightPos1.xyz - vsout.wp.xyz;
+	lightScale = 1.0 - (dot(delta, delta) / (lightAtt1.r * lightAtt1.r));
 	light      += max(float3(0, 0, 0), lightCol1 * lightScale);
 
 	// 3. light
-	lightDist  = length(lightPos2.xyz - vsout.wp.xyz) / lightAtt2.r;
-	lightScale = 1.0 - (lightDist * lightDist);
+	delta      = lightPos2.xyz - vsout.wp.xyz;
+	lightScale = 1.0 - (dot(delta, delta) / (lightAtt2.r * lightAtt2.r));
 	light      += max(float3(0, 0, 0), lightCol2 * lightScale);
 
 	// 4. light
-	lightDist  = length(lightPos3.xyz - vsout.wp.xyz) / lightAtt3.r;
-	lightScale = 1.0 - (lightDist * lightDist);
+	delta      = lightPos3.xyz - vsout.wp.xyz;
+	lightScale = 1.0 - (dot(delta, delta) / (lightAtt3.r * lightAtt3.r));
 	light      += max(float3(0, 0, 0), lightCol3 * lightScale);
 
 	// 5. light
-	lightDist  = length(lightPos4.xyz - vsout.wp.xyz) / lightAtt4.r;
-	lightScale = 1.0 - (lightDist * lightDist);
+	delta      = lightPos4.xyz - vsout.wp.xyz;
+	lightScale = 1.0 - (dot(delta, delta) / (lightAtt4.r * lightAtt4.r));
 	light      += max(float3(0, 0, 0), lightCol4 * lightScale);
 
 	// 6. light
-	lightDist  = length(lightPos5.xyz - vsout.wp.xyz) / lightAtt5.r;
-	lightScale = 1.0 - (lightDist * lightDist);
+	delta      = lightPos5.xyz - vsout.wp.xyz;
+	lightScale = 1.0 - (dot(delta, delta) / (lightAtt5.r * lightAtt5.r));
 	light      += max(float3(0, 0, 0), lightCol5 * lightScale);
 
 	return colormodifier * float4(
