@@ -200,6 +200,7 @@ namespace Meridian59 { namespace Ogre
 		/*                             APPLY BITMAPSCALING SETTINGS                                             */
 		/********************************************************************************************************/
 
+		// select imagebuilder
 		if (::System::String::Equals(Config->ImageBuilder, "GDI"))
 			ImageBuilder::Initialize(ImageBuilderType::GDI);
 
@@ -209,19 +210,30 @@ namespace Meridian59 { namespace Ogre
 		else if (::System::String::Equals(Config->ImageBuilder, "DirectX"))
 			ImageBuilder::Initialize(ImageBuilderType::DirectX);
 
+		// texturescaling in gdi+
 		if (System::String::Equals(Config->BitmapScaling, "Low"))
 		{
-			ImageBuilder::GDI::InterpolationMode = ::System::Drawing::Drawing2D::InterpolationMode::NearestNeighbor;
-		}
-		else if (System::String::Equals(Config->BitmapScaling, "Default"))
-		{
-			ImageBuilder::GDI::InterpolationMode = ::System::Drawing::Drawing2D::InterpolationMode::Default;
+			ImageBuilder::GDI::InterpolationMode  = ::System::Drawing::Drawing2D::InterpolationMode::NearestNeighbor;
+			ImageBuilder::GDI::PixelOffsetMode    = ::System::Drawing::Drawing2D::PixelOffsetMode::Half;
+			ImageBuilder::GDI::CompositingQuality = ::System::Drawing::Drawing2D::CompositingQuality::HighSpeed;
+			ImageBuilder::GDI::SmoothingMode      = ::System::Drawing::Drawing2D::SmoothingMode::None;
 		}
 		else if (System::String::Equals(Config->BitmapScaling, "High"))
 		{
-			ImageBuilder::GDI::InterpolationMode = ::System::Drawing::Drawing2D::InterpolationMode::HighQualityBicubic;
+			ImageBuilder::GDI::InterpolationMode  = ::System::Drawing::Drawing2D::InterpolationMode::HighQualityBicubic;
+			ImageBuilder::GDI::PixelOffsetMode    = ::System::Drawing::Drawing2D::PixelOffsetMode::HighQuality;
+			ImageBuilder::GDI::CompositingQuality = ::System::Drawing::Drawing2D::CompositingQuality::HighQuality;
+			ImageBuilder::GDI::SmoothingMode      = ::System::Drawing::Drawing2D::SmoothingMode::HighQuality;
+		}
+		else // "Default"
+		{
+			ImageBuilder::GDI::InterpolationMode  = ::System::Drawing::Drawing2D::InterpolationMode::Default;
+			ImageBuilder::GDI::PixelOffsetMode    = ::System::Drawing::Drawing2D::PixelOffsetMode::Default;
+			ImageBuilder::GDI::CompositingQuality = ::System::Drawing::Drawing2D::CompositingQuality::Default;
+			ImageBuilder::GDI::SmoothingMode      = ::System::Drawing::Drawing2D::SmoothingMode::Default;
 		}
 
+		// texturequality
 		if (System::String::Equals(Config->TextureQuality, "Low"))
 		{
 			ImageComposerOgre<RoomObject^>::DefaultQuality = 0.25f; // used in RemoteNode2D		
@@ -229,19 +241,19 @@ namespace Meridian59 { namespace Ogre
 			ImageComposerCEGUI<RoomObject^>::DefaultQuality = 0.25f; // used in CEGUI
 			ImageComposerCEGUI<InventoryObject^>::DefaultQuality = 0.25f; // used in CEGUI
 		}
-		else if (System::String::Equals(Config->TextureQuality, "Default"))
-		{
-			ImageComposerOgre<RoomObject^>::DefaultQuality = 0.5f; // used in RemoteNode2D
-			ImageComposerCEGUI<ObjectBase^>::DefaultQuality = 0.5f; // used in CEGUI
-			ImageComposerCEGUI<RoomObject^>::DefaultQuality = 0.5f; // used in CEGUI
-			ImageComposerCEGUI<InventoryObject^>::DefaultQuality = 0.5f; // used in CEGUI
-		}
 		else if (System::String::Equals(Config->TextureQuality, "High"))
 		{
 			ImageComposerOgre<RoomObject^>::DefaultQuality = 1.0f; // used in RemoteNode2D
 			ImageComposerCEGUI<ObjectBase^>::DefaultQuality = 1.0f; // used in CEGUI
 			ImageComposerCEGUI<RoomObject^>::DefaultQuality = 1.0f; // used in CEGUI
 			ImageComposerCEGUI<InventoryObject^>::DefaultQuality = 1.0f; // used in CEGUI
+		}
+		else
+		{
+			ImageComposerOgre<RoomObject^>::DefaultQuality = 0.5f; // used in RemoteNode2D
+			ImageComposerCEGUI<ObjectBase^>::DefaultQuality = 0.5f; // used in CEGUI
+			ImageComposerCEGUI<RoomObject^>::DefaultQuality = 0.5f; // used in CEGUI
+			ImageComposerCEGUI<InventoryObject^>::DefaultQuality = 0.5f; // used in CEGUI
 		}
 
 		/********************************************************************************************************/

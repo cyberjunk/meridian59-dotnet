@@ -63,6 +63,15 @@ namespace Meridian59 { namespace Ogre
 			static ::System::Drawing::Drawing2D::InterpolationMode InterpolationMode = 
 				::System::Drawing::Drawing2D::InterpolationMode::Default;
 
+			static ::System::Drawing::Drawing2D::PixelOffsetMode PixelOffsetMode =
+				::System::Drawing::Drawing2D::PixelOffsetMode::Default;
+			
+			static ::System::Drawing::Drawing2D::SmoothingMode SmoothingMode =
+				::System::Drawing::Drawing2D::SmoothingMode::Default;
+			
+			static ::System::Drawing::Drawing2D::CompositingQuality CompositingQuality =
+				::System::Drawing::Drawing2D::CompositingQuality::Default;
+		
 			static bool IsInitialized;
 			static bool Initialize();
 			static void Destroy();

@@ -100,9 +100,12 @@ namespace Meridian59 { namespace Ogre
 
 		// initialize the Drawing object
 		g = Graphics::FromImage(Image);
-		g->InterpolationMode = InterpolationMode::HighQualityBicubic;
-		g->SmoothingMode = SmoothingMode::HighQuality;
-
+		g->InterpolationMode  = InterpolationMode::High;
+		g->PixelOffsetMode    = PixelOffsetMode::HighSpeed;
+		g->SmoothingMode      = SmoothingMode::HighQuality;
+		g->CompositingMode    = CompositingMode::SourceOver;
+		g->CompositingQuality = CompositingQuality::HighSpeed;
+		
 		// create pie clipping
 		GraphicsPath^ gpath = gcnew GraphicsPath();
 		gpath->AddPie(
