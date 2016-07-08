@@ -141,7 +141,8 @@ namespace Meridian59.Patcher
                         pi.Arguments        = "install Meridian59.Ogre.Client.exe";
                         pi.UseShellExecute  = true;
                         pi.WorkingDirectory = CLIENTPATHX64;
-                        
+                        pi.WindowStyle      = ProcessWindowStyle.Hidden;
+
                         process = new Process();
                         process.StartInfo = pi;
                         process.Start();
@@ -156,6 +157,7 @@ namespace Meridian59.Patcher
                         pi.Arguments        = "install Meridian59.Ogre.Client.exe";
                         pi.UseShellExecute  = true;
                         pi.WorkingDirectory = CLIENTPATHX86;
+                        pi.WindowStyle      = ProcessWindowStyle.Hidden;
 
                         process = new Process();
                         process.StartInfo = pi;
