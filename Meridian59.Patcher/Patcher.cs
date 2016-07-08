@@ -7,6 +7,7 @@ using System.IO;
 using System.Net;
 using System.Reflection;
 using System.Runtime.Serialization.Json;
+using System.Security.Principal;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -26,6 +27,8 @@ namespace Meridian59.Patcher
         private const string PATCHEREXENAME = "Meridian59.Patcher.exe";
         private const string FOLDERX64      = "x64";
         private const string FOLDERX86      = "x86";
+        private const string NGENX64        = "C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319\\ngen.exe";
+        private const string NGENX86        = "C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\ngen.exe";
 
         private static readonly string[] EXCLUSIONS   = new string[] { "club.exe", PATCHEREXENAME };
         private static readonly double MSTICKDIVISOR  = (double)Stopwatch.Frequency / 1000.0;
@@ -37,7 +40,9 @@ namespace Meridian59.Patcher
         private static readonly string CLIENTEXE64    = Path.Combine(CLIENTPATHX64, CLIENTEXENAME);
         private static readonly string CLIENTEXEAUTO  = Environment.Is64BitOperatingSystem ? CLIENTEXE64 : CLIENTEXE86;
         private static readonly string CLIENTPATHAUTO = Environment.Is64BitOperatingSystem ? CLIENTPATHX64 : CLIENTPATHX86;
-
+        
+        private static readonly WindowsIdentity identity   = WindowsIdentity.GetCurrent();
+        private static readonly WindowsPrincipal principal = new WindowsPrincipal(identity);
         private static readonly PatchFileQueue queue       = new PatchFileQueue();
         private static readonly PatchFileQueue queueDone   = new PatchFileQueue();
         private static readonly PatchFileQueue queueErrors = new PatchFileQueue();
@@ -119,16 +124,54 @@ namespace Meridian59.Patcher
                 if (w != null)
                     w.Stop();
      
-            // start client in case patching went well
+            // in case patching went well
             if (!abort)
             {
-                ProcessStartInfo pi = new ProcessStartInfo();
+                ProcessStartInfo pi;
+                Process process;
+
+                // if admin, try to 'ngen' the exe files
+                if (principal.IsInRole(WindowsBuiltInRole.Administrator))                  
+                {
+                    if (File.Exists(NGENX64))
+                    {
+                        // start ngen
+                        pi                  = new ProcessStartInfo();
+                        pi.FileName         = NGENX64;
+                        pi.Arguments        = "install Meridian59.Ogre.Client.exe";
+                        pi.UseShellExecute  = true;
+                        pi.WorkingDirectory = CLIENTPATHX64;
+                        
+                        process = new Process();
+                        process.StartInfo = pi;
+                        process.Start();
+                        process.WaitForExit();
+                    }                  
+                    
+                    if (File.Exists(NGENX86))
+                    {
+                        // start ngen
+                        pi                  = new ProcessStartInfo();
+                        pi.FileName         = NGENX86;
+                        pi.Arguments        = "install Meridian59.Ogre.Client.exe";
+                        pi.UseShellExecute  = true;
+                        pi.WorkingDirectory = CLIENTPATHX86;
+
+                        process = new Process();
+                        process.StartInfo = pi;
+                        process.Start();
+                        process.WaitForExit();
+                    }
+                }
+
+                // start client
+                pi                  = new ProcessStartInfo();
                 pi.FileName         = CLIENTEXEAUTO;
                 pi.Arguments        = "";
                 pi.UseShellExecute  = true;
                 pi.WorkingDirectory = CLIENTPATHAUTO;
 
-                Process process = new Process();
+                process = new Process();
                 process.StartInfo = pi;
                 process.Start();
             }
