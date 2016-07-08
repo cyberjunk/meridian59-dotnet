@@ -185,6 +185,12 @@ namespace Meridian59 { namespace Ogre
 		virtual void HandleCharactersMessage(CharactersMessage^ Message) override;
 
 		/// <summary>
+		/// Handler for message quit
+		/// </summary>
+		/// <param name="Message"></param>
+		virtual void HandleQuitMessage(QuitMessage^ Message) override;
+
+		/// <summary>
         /// Handler for server requesting login credentials.
         /// </summary>
         /// <param name="Message"></param>

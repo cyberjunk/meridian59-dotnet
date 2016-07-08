@@ -132,7 +132,6 @@ namespace Meridian59 { namespace Ogre
 		cameraNode = sceneManager->createSceneNode(AVATARCAMNODE);
 		cameraNode->attachObject(camera);
 		cameraNode->setFixedYawAxis(true);
-		cameraNode->setInitialState();
 
 		/********************************************************************************************************/
 
@@ -872,6 +871,14 @@ namespace Meridian59 { namespace Ogre
         Data->UIMode = UIMode::AvatarSelection;        
 	};
 
+	void OgreClient::HandleQuitMessage(QuitMessage^ Message)
+	{
+		SingletonClient::HandleQuitMessage(Message);
+
+		// reload the demoscene
+		DemoSceneLoadBrax();
+	};
+
 	void OgreClient::HandleGetLoginMessage(GetLoginMessage^ Message)
     {
         ConnectionInfo^ info = Config->SelectedConnectionInfo;
@@ -1036,20 +1043,22 @@ namespace Meridian59 { namespace Ogre
 
 	void OgreClient::DemoSceneDestroy()
 	{
-		CameraNode->resetToInitialState();
-		
 		ControllerRoom::UnloadRoom();
+		Data->RoomObjects->Clear();
+
+		Camera->setPosition(::Ogre::Vector3(0.0f, 0.0f, 0.0f));
+		CameraNode->resetToInitialState();
 	};
 
 	void OgreClient::DemoSceneLoadBrax()
 	{
-		RoomInfo^ roomInfo = Data->RoomInformation;
+		DemoSceneDestroy();
 
-
-		CameraNode->resetToInitialState(); 
 		CameraNode->setPosition(1266, 460, 1344);		
 		CameraNode->rotate(::Ogre::Vector3::UNIT_Y, ::Ogre::Radian(-0.55f));
 		
+		RoomInfo^ roomInfo = Data->RoomInformation;
+
 		roomInfo->RoomFile = "necarea3.roo";
 		roomInfo->AmbientLight = 40;
 		roomInfo->ResolveResources(OgreClient::Singleton->ResourceManager, false);
