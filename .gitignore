@@ -44,6 +44,7 @@
 # Excludings in Resources
 /Resources/bgfobjects/*.bgf
 /Resources/bgftextures/*.bgf
+/Resources/mails
 
 # Others
 /Meridian59.BgfService/Bin
