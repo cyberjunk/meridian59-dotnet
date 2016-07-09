@@ -109,7 +109,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>irrklang.lib;boost_d.lib;ogremain_d.lib;ogreoctree_d.lib;ogred3d9_d.lib;particleuniverse_d.lib;particleuniverse2_d.lib;ois_d.lib;zlib_d.lib;zziplib_d.lib;freeimage_d.lib;freetype_d.lib;LibTIFF4_d.lib;LibJPEG_d.lib;LibOpenJPEG_d.lib;LibPNG_d.lib;OpenEXR_d.lib;pcre_d.lib;d3d9.lib;d3dx9d.lib;dinput8.lib;dxerr.lib;dxguid.lib;ddraw.lib;CEGUIBase_d.lib;CEGUICommonDialogs_d.lib;CEGUICoreWindowRendererSet_d.lib;CEGUIOgreRenderer_d.lib;CEGUIRapidXMLParser_d.lib;CEGUISTBImageCodec_d.lib;caelum_d.lib;dbghelp.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>irrklang.lib;boost_d.lib;ogremain_d.lib;ogreoctree_d.lib;ogred3d9_d.lib;particleuniverse_d.lib;particleuniverse2_d.lib;ois_d.lib;zlib_d.lib;zziplib_d.lib;freeimage_d.lib;freetype_d.lib;LibJPEG_d.lib;LibOpenJPEG_d.lib;LibPNG_d.lib;OpenEXR_d.lib;pcre_d.lib;d3d9.lib;d3dx9d.lib;dinput8.lib;dxerr.lib;dxguid.lib;ddraw.lib;CEGUIBase_d.lib;CEGUICommonDialogs_d.lib;CEGUICoreWindowRendererSet_d.lib;CEGUIOgreRenderer_d.lib;CEGUIRapidXMLParser_d.lib;CEGUISTBImageCodec_d.lib;caelum_d.lib;dbghelp.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>..\Engine\lib\x86</AdditionalLibraryDirectories>
       <Version>
@@ -134,7 +134,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>irrklang.lib;boost_d.lib;ogremain_d.lib;ogreoctree_d.lib;ogred3d9_d.lib;particleuniverse_d.lib;particleuniverse2_d.lib;ois_d.lib;zlib_d.lib;zziplib_d.lib;freeimage_d.lib;freetype_d.lib;LibTIFF4_d.lib;LibJPEG_d.lib;LibOpenJPEG_d.lib;LibPNG_d.lib;OpenEXR_d.lib;pcre_d.lib;d3d9.lib;d3dx9d.lib;dinput8.lib;dxerr.lib;dxguid.lib;ddraw.lib;CEGUIBase_d.lib;CEGUICommonDialogs_d.lib;CEGUICoreWindowRendererSet_d.lib;CEGUIOgreRenderer_d.lib;CEGUIRapidXMLParser_d.lib;CEGUISTBImageCodec_d.lib;caelum_d.lib;dbghelp.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>irrklang.lib;boost_d.lib;ogremain_d.lib;ogreoctree_d.lib;ogred3d9_d.lib;particleuniverse_d.lib;particleuniverse2_d.lib;ois_d.lib;zlib_d.lib;zziplib_d.lib;freeimage_d.lib;freetype_d.lib;LibJPEG_d.lib;LibOpenJPEG_d.lib;LibPNG_d.lib;OpenEXR_d.lib;pcre_d.lib;d3d9.lib;d3dx9d.lib;dinput8.lib;dxerr.lib;dxguid.lib;ddraw.lib;CEGUIBase_d.lib;CEGUICommonDialogs_d.lib;CEGUICoreWindowRendererSet_d.lib;CEGUIOgreRenderer_d.lib;CEGUIRapidXMLParser_d.lib;CEGUISTBImageCodec_d.lib;caelum_d.lib;dbghelp.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>..\Engine\lib\x64</AdditionalLibraryDirectories>
       <Version>
@@ -171,7 +171,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <AdditionalDependencies>irrklang.lib;boost.lib;ogremain.lib;ogreoctree.lib;ogred3d9.lib;particleuniverse.lib;particleuniverse2.lib;ois.lib;zlib.lib;zziplib.lib;freeimage.lib;freetype.lib;LibTIFF4.lib;LibJPEG.lib;LibOpenJPEG.lib;LibPNG.lib;OpenEXR.lib;pcre.lib;d3d9.lib;d3dx9.lib;dinput8.lib;dxerr.lib;dxguid.lib;ddraw.lib;CEGUIBase.lib;CEGUICommonDialogs.lib;CEGUICoreWindowRendererSet.lib;CEGUIOgreRenderer.lib;CEGUIRapidXMLParser.lib;CEGUISTBImageCodec.lib;caelum.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>irrklang.lib;boost.lib;ogremain.lib;ogreoctree.lib;ogred3d9.lib;particleuniverse.lib;particleuniverse2.lib;ois.lib;zlib.lib;zziplib.lib;freeimage.lib;freetype.lib;LibJPEG.lib;LibOpenJPEG.lib;LibPNG.lib;OpenEXR.lib;pcre.lib;d3d9.lib;d3dx9.lib;dinput8.lib;dxerr.lib;dxguid.lib;ddraw.lib;CEGUIBase.lib;CEGUICommonDialogs.lib;CEGUICoreWindowRendererSet.lib;CEGUIOgreRenderer.lib;CEGUIRapidXMLParser.lib;CEGUISTBImageCodec.lib;caelum.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>..\Engine\lib\x86</AdditionalLibraryDirectories>
       <Version>
@@ -209,7 +209,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <AdditionalDependencies>irrklang.lib;boost.lib;ogremain.lib;ogreoctree.lib;ogred3d9.lib;particleuniverse.lib;particleuniverse2.lib;ois.lib;zlib.lib;zziplib.lib;freeimage.lib;freetype.lib;LibTIFF4.lib;LibJPEG.lib;LibOpenJPEG.lib;LibPNG.lib;OpenEXR.lib;pcre.lib;d3d9.lib;d3dx9.lib;dinput8.lib;dxerr.lib;dxguid.lib;ddraw.lib;CEGUIBase.lib;CEGUICommonDialogs.lib;CEGUICoreWindowRendererSet.lib;CEGUIOgreRenderer.lib;CEGUIRapidXMLParser.lib;CEGUISTBImageCodec.lib;caelum.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>irrklang.lib;boost.lib;ogremain.lib;ogreoctree.lib;ogred3d9.lib;particleuniverse.lib;particleuniverse2.lib;ois.lib;zlib.lib;zziplib.lib;freeimage.lib;freetype.lib;LibJPEG.lib;LibOpenJPEG.lib;LibPNG.lib;OpenEXR.lib;pcre.lib;d3d9.lib;d3dx9.lib;dinput8.lib;dxerr.lib;dxguid.lib;ddraw.lib;CEGUIBase.lib;CEGUICommonDialogs.lib;CEGUICoreWindowRendererSet.lib;CEGUIOgreRenderer.lib;CEGUIRapidXMLParser.lib;CEGUISTBImageCodec.lib;caelum.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>..\Engine\lib\x64</AdditionalLibraryDirectories>
       <Version>
