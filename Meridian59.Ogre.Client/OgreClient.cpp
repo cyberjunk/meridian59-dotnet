@@ -222,15 +222,15 @@ namespace Meridian59 { namespace Ogre
 		{
 			ImageBuilder::GDI::InterpolationMode  = ::System::Drawing::Drawing2D::InterpolationMode::HighQualityBicubic;
 			ImageBuilder::GDI::PixelOffsetMode    = ::System::Drawing::Drawing2D::PixelOffsetMode::HighQuality;
-			ImageBuilder::GDI::CompositingQuality = ::System::Drawing::Drawing2D::CompositingQuality::HighQuality;
-			ImageBuilder::GDI::SmoothingMode      = ::System::Drawing::Drawing2D::SmoothingMode::HighQuality;
+			ImageBuilder::GDI::CompositingQuality = ::System::Drawing::Drawing2D::CompositingQuality::HighSpeed;
+			ImageBuilder::GDI::SmoothingMode      = ::System::Drawing::Drawing2D::SmoothingMode::None;
 		}
 		else // "Default"
 		{
-			ImageBuilder::GDI::InterpolationMode  = ::System::Drawing::Drawing2D::InterpolationMode::Default;
-			ImageBuilder::GDI::PixelOffsetMode    = ::System::Drawing::Drawing2D::PixelOffsetMode::Default;
-			ImageBuilder::GDI::CompositingQuality = ::System::Drawing::Drawing2D::CompositingQuality::Default;
-			ImageBuilder::GDI::SmoothingMode      = ::System::Drawing::Drawing2D::SmoothingMode::Default;
+			ImageBuilder::GDI::InterpolationMode  = ::System::Drawing::Drawing2D::InterpolationMode::Bilinear;
+			ImageBuilder::GDI::PixelOffsetMode    = ::System::Drawing::Drawing2D::PixelOffsetMode::HighSpeed;
+			ImageBuilder::GDI::CompositingQuality = ::System::Drawing::Drawing2D::CompositingQuality::HighSpeed;
+			ImageBuilder::GDI::SmoothingMode      = ::System::Drawing::Drawing2D::SmoothingMode::None;
 		}
 
 		// texturequality
