@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Drawing.Text;
 using System.ComponentModel;
 using Meridian59.Common;
 using Meridian59.Common.Constants;
@@ -315,13 +316,17 @@ namespace Meridian59.Drawing2D
                 // draw name into bitmap
                 using (Graphics g = Graphics.FromImage(bitmap))
                 {
-                    g.InterpolationMode = InterpolationMode.Bicubic;
-                    g.SmoothingMode = SmoothingMode.AntiAlias;
+                    // currently tuned for performance
+                    g.InterpolationMode  = InterpolationMode.NearestNeighbor;
+                    g.PixelOffsetMode    = PixelOffsetMode.Half;
+                    g.SmoothingMode      = SmoothingMode.HighSpeed;
+                    g.CompositingMode    = CompositingMode.SourceOver;
+                    g.CompositingQuality = CompositingQuality.HighSpeed;
+                    g.TextRenderingHint  = TextRenderingHint.SystemDefault;
 
                     // draw text
                     using (SolidBrush brush = new SolidBrush(color))
                     {
-                        g.Clear(Color.Transparent);
                         g.DrawString(Object.Name, FONT, brush, new RectangleF(0, 0, width, height), STRINGFORMAT);
                     }
                 }
