@@ -1952,37 +1952,37 @@
 			<!-- Engine -->
 			<Window type="TaharezLook/Button" name="Options.Engine" >
 				<Property name="Text" value="Engine" />
-				<Property name="Area" value="{{0,5},{0,5},{0,100},{0,30}}" />
+				<Property name="Area" value="{{0,5},{0.5,-90},{0,100},{0.5,-65}}" />
 			</Window>
 			
 			<!-- Input -->
 			<Window type="TaharezLook/Button" name="Options.Input" >
 				<Property name="Text" value="Input" />
-				<Property name="Area" value="{{0,5},{0,35},{0,100},{0,60}}" />
+				<Property name="Area" value="{{0,5},{0.5,-60},{0,100},{0.5,-35}}" />
 			</Window>
 			
 			<!-- UI -->
 			<Window type="TaharezLook/Button" name="Options.GamePlay" >
 				<Property name="Text" value="Gameplay" />							
-				<Property name="Area" value="{{0,5},{0,65},{0,100},{0,90}}" />
+				<Property name="Area" value="{{0,5},{0.5,-30},{0,100},{0.5,-5}}" />
 			</Window>
 			
 			<!-- Aliases -->
 			<Window type="TaharezLook/Button" name="Options.Aliases" >
 				<Property name="Text" value="Aliases" />
-				<Property name="Area" value="{{0,5},{0,95},{0,100},{0,120}}" />
+				<Property name="Area" value="{{0,5},{0.5,0},{0,100},{0.5,25}}" />
 			</Window>
 			
 			<!-- Groups -->
 			<Window type="TaharezLook/Button" name="Options.Groups" >
 				<Property name="Text" value="Groups" />
-				<Property name="Area" value="{{0,5},{0,125},{0,100},{0,150}}" />
+				<Property name="Area" value="{{0,5},{0.5,30},{0,100},{0.5,55}}" />
 			</Window>
 			
 			<!-- About -->
 			<Window type="TaharezLook/Button" name="Options.About" >
 				<Property name="Text" value="About" />
-				<Property name="Area" value="{{0,5},{0,155},{0,100},{0,180}}" />
+				<Property name="Area" value="{{0,5},{0.5,60},{0,100},{0.5,85}}" />
 			</Window>
 			
 			<!-- TabControl -->
