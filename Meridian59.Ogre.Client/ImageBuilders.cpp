@@ -336,7 +336,7 @@ namespace Meridian59 { namespace Ogre
 
 		// create temporary source image
 		source = gcnew ::System::Drawing::Bitmap(
-			CACHESURFACEWIDTH, CACHESURFACEHEIGHT, ::System::Drawing::Imaging::PixelFormat::Format32bppPArgb);
+			CACHESURFACEWIDTH, CACHESURFACEHEIGHT, ::System::Drawing::Imaging::PixelFormat::Format32bppArgb);
 		
 		// load glow background resource
 		HANDLE handle = ::LoadImage(
@@ -409,7 +409,7 @@ namespace Meridian59 { namespace Ogre
 		void* texBuffer = texture->getBuffer()->lock(::Ogre::HardwareBuffer::LockOptions::HBL_WRITE_ONLY);
 		
 		dest = gcnew ::System::Drawing::Bitmap(
-			Width, Height, Width * 4, ::System::Drawing::Imaging::PixelFormat::Format32bppPArgb, (::System::IntPtr)texBuffer);
+			Width, Height, Width * 4, ::System::Drawing::Imaging::PixelFormat::Format32bppArgb, (::System::IntPtr)texBuffer);
 			
 		// create painer
 		graphics = ::System::Drawing::Graphics::FromImage(dest);
