@@ -197,7 +197,7 @@ namespace Meridian59 { namespace Ogre
 			TextureName,
 			TEXTUREGROUP_REMOTENODE2D,
 			TextureType::TEX_TYPE_2D,
-			Width, Height, MIP_DEFAULT,
+			Width, Height, AddToCEGUI ? 0 : MIP_DEFAULT,
 			::Ogre::PixelFormat::PF_A8R8G8B8,
 			TU_DEFAULT, 0, false, 0);
 				
@@ -396,7 +396,7 @@ namespace Meridian59 { namespace Ogre
 			TextureName,
 			TEXTUREGROUP_REMOTENODE2D,
 			TextureType::TEX_TYPE_2D,
-			Width, Height, MIP_DEFAULT,
+			Width, Height, AddToCEGUI ? 0 : MIP_DEFAULT,
 			::Ogre::PixelFormat::PF_A8R8G8B8,
 			TU_DEFAULT, 0, false, 0);
 				
