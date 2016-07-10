@@ -199,7 +199,7 @@ namespace Meridian59 { namespace Ogre
 			TextureType::TEX_TYPE_2D,
 			Width, Height, AddToCEGUI ? 0 : MIP_DEFAULT,
 			::Ogre::PixelFormat::PF_A8R8G8B8,
-			TU_DEFAULT, 0, false, 0);
+			AddToCEGUI ? TU_STATIC_WRITE_ONLY : TU_DEFAULT, 0, false, 0);
 				
 		if (AddToCEGUI)
 			Util::CreateCEGUITextureFromOgre(ControllerUI::Renderer, texPtr);
@@ -398,7 +398,7 @@ namespace Meridian59 { namespace Ogre
 			TextureType::TEX_TYPE_2D,
 			Width, Height, AddToCEGUI ? 0 : MIP_DEFAULT,
 			::Ogre::PixelFormat::PF_A8R8G8B8,
-			TU_DEFAULT, 0, false, 0);
+			AddToCEGUI ? TU_STATIC_WRITE_ONLY : TU_DEFAULT, 0, false, 0);
 				
 		if (AddToCEGUI)
 			Util::CreateCEGUITextureFromOgre(ControllerUI::Renderer, texPtr);
