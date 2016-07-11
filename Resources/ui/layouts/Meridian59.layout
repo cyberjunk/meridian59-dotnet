@@ -1799,9 +1799,8 @@
 		<Window type="TaharezLook/FrameWindow" name="ConfirmPopup" >
 			<Property name="Text" value="Warning" />
 			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
-			<Property name="MaxSize" value="{{1,0},{1,0}}" />
-			<Property name="Size" value="{{0,256},{0,128}}" />
-			<Property name="MinSize" value="{{0,256},{0,128}}" />
+			<Property name="Size" value="{{0,256},{0,96}}" />
+			<Property name="SizingEnabled" value="False" />
 			<Property name="Position" value="{{0.5,-128},{0.5,-64}}" />
 			
 			<!-- Text -->
@@ -1809,20 +1808,21 @@
 				<Property name="Text" value="Are you sure?" />
 				<Property name="NormalTextColour" value="FFFF0000" />
 				<Property name="Font" value="LiberationSans-10-Bold" />
-				<Property name="HorzFormatting" value="LeftAligned" />	
-				<Property name="Area" value="{{0,5},{0,5},{1,-50},{1,-5}}" />				
+				<Property name="HorzFormatting" value="CentreAligned" />
+				<Property name="VertFormatting" value="CentreAligned" />
+				<Property name="Area" value="{{0,5},{0,5},{1,-5},{1,-35}}" />				
 			</Window>
 							
 			<!-- Yes -->
 			<Window type="TaharezLook/Button" name="ConfirmPopup.Yes" >
 				<Property name="Text" value="Yes" />
-				<Property name="Area" value="{{0,5},{1,-30},{0,105},{1,-5}}" />
+				<Property name="Area" value="{{0,5},{1,-30},{0.5,-2},{1,-5}}" />
 			</Window>
 				
 			<!-- No -->
 			<Window type="TaharezLook/Button" name="ConfirmPopup.No" >
 				<Property name="Text" value="No" />
-				<Property name="Area" value="{{1,-105},{1,-30},{1,-5},{1,-5}}" />
+				<Property name="Area" value="{{0.5,2},{1,-30},{1,-5},{1,-5}}" />
 			</Window>
 		</Window>
 		
