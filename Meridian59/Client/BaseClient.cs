@@ -2403,12 +2403,14 @@ namespace Meridian59.Client
             // request stats
             SendSendStatsMessage(StatGroup.Condition);
             SendSendStatsMessage(StatGroup.Attributes);
-            SendSendStatsMessage(StatGroup.Skills);
-            SendSendStatsMessage(StatGroup.Spells);
 #if !VANILLA
             SendSendStatsMessage(StatGroup.Quests);
             SendUserCommandReqPreferences();
 #endif
+
+            // careful: these are always sent and don't need to be requested manually
+            //SendSendStatsMessage(StatGroup.Skills);
+            //SendSendStatsMessage(StatGroup.Spells);
 
             // request inventory
             SendReqInventoryMessage();
