@@ -100,7 +100,7 @@ namespace Meridian59 { namespace Ogre
 
 		// initialize the Drawing object
 		g = Graphics::FromImage(Image);
-		g->InterpolationMode  = InterpolationMode::High;
+		g->InterpolationMode  = InterpolationMode::Bilinear;
 		g->PixelOffsetMode    = PixelOffsetMode::HighSpeed;
 		g->SmoothingMode      = SmoothingMode::HighQuality;
 		g->CompositingMode    = CompositingMode::SourceOver;
