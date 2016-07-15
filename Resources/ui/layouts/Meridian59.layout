@@ -383,6 +383,7 @@
 			<Property name="BackgroundEnabled" value="False" />
 			<Property name="Image" value="TaharezLook/AvatarBackground" />
 			<Property name="AlwaysOnTop" value="True" />
+			<Property name="MouseCursorImage" value="TaharezLook/MouseDrag" />
 				
 			<!-- Head -->
 			<Window type="TaharezLook/ImageButton" name="Avatar.Head" >
@@ -641,6 +642,7 @@
 			<Property name="BackgroundEnabled" value="False" />
 			<Property name="Image" value="TaharezLook/RoomEnchantsBackground" />
 			<Property name="AlwaysOnTop" value="True" />
+			<Property name="MouseCursorImage" value="TaharezLook/MouseDrag" />
 			
 			<!-- Enchantments -->
 			<Window type="GridLayoutContainer" name="RoomEnchantments.Grid" >
