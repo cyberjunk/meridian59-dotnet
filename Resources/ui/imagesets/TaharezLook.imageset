@@ -181,8 +181,9 @@
     <Image height="6" name="MultiLineEditboxBottomRight" width="6" xPos="59" yPos="96" />
     <Image height="16" name="MultiLineEditboxSelectionBrush" width="1" xPos="17" yPos="70" />
     <Image height="17" name="MouseTarget" width="17" xOffset="-8" xPos="182" yOffset="-8" yPos="127" />
-    <Image height="27" name="MouseArrow" width="27" xPos="138" yPos="127" />
-    <Image height="27" name="MouseHand" width="27" xPos="128"  yPos="157" />
+    <Image height="18" name="MouseArrow" width="25" xPos="138" yPos="127" />
+    <Image height="18" name="MouseHand" width="25" xPos="128"  yPos="157" />
+    <Image height="21" name="MouseDrag" width="29" xPos="128"  yPos="177" />
     <Image height="18" name="MouseMoveCursor" width="18" xOffset="-8" xPos="201" yOffset="-8" yPos="127" />
     <Image height="18" name="MouseNoSoCursor" width="8" xOffset="-3" xPos="221" yOffset="-8" yPos="127" />
     <Image height="8" name="MouseEsWeCursor" width="18" xOffset="-8" xPos="182" yOffset="-3" yPos="150" />
@@ -327,4 +328,5 @@
    <Image height="10" name="StaticItemBottomLeft" width="20" xPos="205" yPos="295" />
    <Image height="10" name="StaticItemBottom" width="10" xPos="225" yPos="295" />
    <Image height="10" name="StaticItemBottomRight" width="20" xPos="235" yPos="295" />
+   <Image height="15" name="Coin" width="15" xPos="137" yPos="201" />
 </Imageset>

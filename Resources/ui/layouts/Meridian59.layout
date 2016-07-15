@@ -653,8 +653,8 @@
 			<Property name="Text" value="Buy" />
 			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
 			<Property name="MaxSize" value="{{0,512},{1,0}}" />
-			<Property name="Size" value="{{0,256},{0,256}}" />
-			<Property name="MinSize" value="{{0,192},{0,192}}" />
+			<Property name="Size" value="{{0,300},{0,320}}" />
+			<Property name="MinSize" value="{{0,256},{0,192}}" />
 			<Property name="Position" value="{{0.5,-128},{0.5,-192}}" />
 			
 			<!-- List -->
@@ -665,12 +665,20 @@
 			<!-- Sum -->
 			<Window type="TaharezLook/Label" name="Buy.SumDescription" >
 				<Property name="Text" value="Sum:" />
-				<Property name="Area" value="{{0,5},{1,-25},{0,50},{1,0}}" />
+				<Property name="Area" value="{{0,5},{1,-25},{0,40},{1,0}}" />
 				<Property name="HorzFormatting" value="LeftAligned" />				
+			</Window>
+			<!-- Shilling icon -->
+			<Window type="TaharezLook/StaticImage" name="Buy.SumIcon" >
+				<Property name="Area" value="{{0,45},{1,-21},{0,61},{1,-5}}" />
+				<Property name="BackgroundEnabled" value="False" />
+				<Property name="FrameEnabled" value="False" />
+				<Property name="MousePassThroughEnabled" value="True" />
+				<Property name="Image" value="TaharezLook/Coin" />
 			</Window>
 			<Window type="TaharezLook/Label" name="Buy.SumValue" >
 				<Property name="Text" value="0" />
-				<Property name="Area" value="{{0,40},{1,-25},{0,150},{1,0}}" />
+				<Property name="Area" value="{{0,63},{1,-25},{0,150},{1,0}}" />
 				<Property name="HorzFormatting" value="LeftAligned" />				
 			</Window>
 		

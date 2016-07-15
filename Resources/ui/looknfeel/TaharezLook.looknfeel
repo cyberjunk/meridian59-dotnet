@@ -4890,30 +4890,52 @@
 				</Dim>
 			</Area>
 		</NamedArea>
+		<!-- Shilling Icon -->
+		<Child type ="TaharezLook/StaticImage" nameSuffix="__auto__image_shilling">
+			<Area>
+				<Dim type="LeftEdge">
+					<UnifiedDim scale="0" offset="0" type="LeftEdge" />				
+				</Dim>
+				<Dim type="TopEdge">
+					<UnifiedDim scale="0" offset="6" type="TopEdge" />
+				</Dim>
+				<Dim type="Width">
+					<UnifiedDim scale="0" offset="12" type="Width" />
+				</Dim>
+				<Dim type="Height">
+					<UnifiedDim scale="0" offset="12" type="Height"/>
+				</Dim>
+			</Area>
+			<Property name="FrameEnabled" value="False" />
+			<Property name="BackgroundEnabled" value="False" />
+			<Property name="MousePassThroughEnabled" value="True" />
+			<Property name="Image" value="TaharezLook/Coin" />
+		</Child>
 		<!-- Price -->
 		<Child type ="TaharezLook/Label" nameSuffix="__auto__checkbox">
 			<Area>
 				<Dim type="LeftEdge">
-					<UnifiedDim scale="0" offset="0" type="LeftEdge" />
+					<UnifiedDim scale="0" offset="14" type="LeftEdge" />
 				</Dim>
 				<Dim type="TopEdge">
 					<UnifiedDim scale="0" offset="2" type="TopEdge" />
 				</Dim>
 				<Dim type="Width">
-					<UnifiedDim scale="0" offset="35" type="Width" />
+					<UnifiedDim scale="0" offset="40" type="Width" />
 				</Dim>
 				<Dim type="Height">
 					<UnifiedDim scale="0" offset="20" type="Height"/>
 				</Dim>
 			</Area>
 			<Property name="HorzFormatting" value="LeftAligned" />
+			<Property name="VertFormatting" value="CentreAligned" />
 			<Property name="MousePassThroughEnabled" value="True" />
-		</Child>
+		</Child>	
 		<!-- Icon -->
 		<Child type ="TaharezLook/StaticImage" nameSuffix="__auto__image">
 			<Area>
 				<Dim type="LeftEdge">
-					<UnifiedDim scale="0" offset="40" type="LeftEdge" />				
+					<UnifiedDim scale="0" offset="62" type="LeftEdge" />				
 				</Dim>
 				<Dim type="TopEdge">
 					<UnifiedDim scale="0" offset="4" type="TopEdge" />
@@ -4933,7 +4955,7 @@
 		<Child type ="TaharezLook/Label" nameSuffix="__auto__label">
 			<Area>
 				<Dim type="LeftEdge">
-					<UnifiedDim scale="0" offset="61" type="LeftEdge" />
+					<UnifiedDim scale="0" offset="80" type="LeftEdge" />
 				</Dim>
 				<Dim type="TopEdge">
 					<UnifiedDim scale="0" offset="2" type="TopEdge" />
@@ -4946,6 +4968,7 @@
 				</Dim>
 			</Area>
 			<Property name="HorzFormatting" value="LeftAligned" />
+			<Property name="VertFormatting" value="CentreAligned" />
 			<Property name="MousePassThroughEnabled" value="True" />
 		</Child>
 		<!-- Amount -->
