@@ -763,6 +763,7 @@
                 <Dim type="Height" ><FontDim type="LineSpacing" padding="8" /></Dim>
             </Area>
             <Property name="AlwaysOnTop" value="False" />
+			<Property name="MouseCursorImage" value="TaharezLook/MouseDrag" />
 			<Property name="BackgroundColours" value="tl:FFFFFFFF tr:FFFFFFFF bl:FFFFFFFF br:FFFFFFFF" />
         </Child>
         <Child type="TaharezLook/ImageButton" nameSuffix="__auto_closebutton__">
@@ -4581,6 +4582,7 @@
     -->
     <WidgetLook name="TaharezLook/DragImage">
        <Property name="Size" value="{{0, 128}, {0, 128}}" />
+	   <Property name="MouseCursorImage" value="TaharezLook/MouseDrag" />
        <Property name="MouseInputPropagationEnabled" value="True" />
        <Child type ="TaharezLook/StaticImage" nameSuffix="__auto__image">
           <Property name="BackgroundEnabled" value="False" />
@@ -5291,7 +5293,6 @@
 				</Dim>
 			</Area>
 			<Property name="MouseInputPropagationEnabled" value="True" />
-			<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 		</Child>
 		<!-- Name -->
 		<Child type ="TaharezLook/Label" nameSuffix="__auto__label">
@@ -5638,7 +5639,6 @@
 					<UnifiedDim scale="0" offset="16" type="Height"/>
 				</Dim>
 			</Area>
-			<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
 			<Property name="MouseInputPropagationEnabled" value="True" />
 		</Child>
 		<!-- Name -->
