@@ -792,6 +792,7 @@
 			<Property name="BackgroundEnabled" value="False" />
 			<Property name="Image" value="TaharezLook/MainButtonsBackground" />
 			<Property name="AlwaysOnTop" value="True" />
+			<Property name="MouseCursorImage" value="TaharezLook/MouseDrag" />
 			
 			<!-- Chat -->
 			<Window type="TaharezLook/StaticImage" name="MainButtonsLeft.Chat" >
@@ -863,6 +864,7 @@
 			<Property name="BackgroundEnabled" value="False" />
 			<Property name="Image" value="TaharezLook/MainButtonsBackground" />
 			<Property name="AlwaysOnTop" value="True" />
+			<Property name="MouseCursorImage" value="TaharezLook/MouseDrag" />
 			
 			<!-- Inventory -->
 			<Window type="TaharezLook/StaticImage" name="MainButtonsRight.Inventory" >
@@ -1012,6 +1014,7 @@
 			<Property name="BackgroundEnabled" value="False" />
 			<Property name="Image" value="TaharezLook/ActionButtonsBackground" />
 			<Property name="AlwaysOnTop" value="True" />
+			<Property name="MouseCursorImage" value="TaharezLook/MouseDrag" />
 			
 			<!-- Grid -->
 			<Window type="GridLayoutContainer" name="ActionButtons.Grid" >
