@@ -13,12 +13,12 @@
     <Image height="25" name="ButtonLeftNormal" width="12" xPos="460" yPos="140" />
     <Image height="25" name="ButtonMiddleNormal" width="12" xPos="474" yPos="140" />
     <Image height="25" name="ButtonRightNormal" width="12" xPos="488" yPos="140" />
-    <Image height="25" name="ButtonLeftPushed" width="12" xPos="460" yPos="170" />
-    <Image height="25" name="ButtonMiddlePushed" width="12" xPos="474" yPos="170" />
-    <Image height="25" name="ButtonRightPushed" width="12" xPos="488" yPos="170" />
-    <Image height="25" name="ButtonLeftHighlight" width="12" xPos="460" yPos="200" />
-    <Image height="25" name="ButtonMiddleHighlight" width="12" xPos="474" yPos="200" />
-    <Image height="25" name="ButtonRightHighlight" width="12" xPos="488" yPos="200" />
+    <Image height="25" name="ButtonLeftHighlight" width="12" xPos="460" yPos="170" />
+    <Image height="25" name="ButtonMiddleHighlight" width="12" xPos="474" yPos="170" />
+    <Image height="25" name="ButtonRightHighlight" width="12" xPos="488" yPos="170" />
+    <Image height="25" name="ButtonLeftPushed" width="12" xPos="460" yPos="200" />
+    <Image height="25" name="ButtonMiddlePushed" width="12" xPos="474" yPos="200" />
+    <Image height="25" name="ButtonRightPushed" width="12" xPos="488" yPos="200" />
     <Image height="12" name="CheckboxNormal" width="12" xPos="110" yPos="2" />
     <Image height="12" name="CheckboxHover" width="12" xPos="110" yPos="30" />
     <Image height="12" name="CheckboxMark" width="12" xPos="110" yPos="16" />
@@ -90,9 +90,11 @@
     <Image height="9" name="MiniVertScrollDownNormal" width="10" xPos="182" yPos="59" />
     <Image height="9" name="MiniVertScrollUpHover" width="10" xPos="194" yPos="69" />
     <Image height="9" name="MiniVertScrollDownHover" width="10" xPos="182" yPos="69" />
-    <Image height="10" name="VertSliderBody" width="10" xPos="234" yPos="2" />
-    <Image height="10" name="VertSliderThumbNormal" width="20" xPos="215" yPos="28" />
-    <Image height="10" name="VertSliderThumbHover" width="20" xPos="215" yPos="42" />
+    <Image height="10" name="VertSliderBodyLeft" width="3" xPos="234" yPos="2" />
+    <Image height="10" name="VertSliderBodyCenter" width="10" xPos="237" yPos="2" />
+    <Image height="10" name="VertSliderBodyRight" width="3" xPos="247" yPos="2" />
+    <Image height="10" name="VertSliderThumbNormal" width="24" xPos="213" yPos="28" />
+    <Image height="10" name="VertSliderThumbHover" width="24" xPos="213" yPos="42" />
     <Image height="4" name="MiniHorzScrollBarSegment" width="10" xPos="244" yPos="80" />
     <Image height="10" name="MiniHorzScrollThumbNormal" width="22" xPos="200" yPos="112" />
     <Image height="10" name="MiniHorzScrollThumbLeftNormal" width="5" xPos="200" yPos="112" />

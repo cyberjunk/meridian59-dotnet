@@ -674,7 +674,7 @@
 			</Window>
 			<!-- Shilling icon -->
 			<Window type="TaharezLook/StaticImage" name="Buy.SumIcon" >
-				<Property name="Area" value="{{0,45},{1,-21},{0,61},{1,-5}}" />
+				<Property name="Area" value="{{0,47},{1,-19},{0,59},{1,-7}}" />
 				<Property name="BackgroundEnabled" value="False" />
 				<Property name="FrameEnabled" value="False" />
 				<Property name="MousePassThroughEnabled" value="True" />

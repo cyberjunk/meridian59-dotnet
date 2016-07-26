@@ -1437,10 +1437,28 @@
         <ImagerySection name="main">
             <ImageryComponent>
                 <Area>
+                    <Dim type="LeftEdge" ><AbsoluteDim value="0" /></Dim>
+                    <Dim type="Width" ><AbsoluteDim value="3" /></Dim>
+                </Area>
+                <Image name="TaharezLook/VertSliderBodyLeft" />
+                <VertFormat type="Stretched" />
+                <HorzFormat type="Tiled" />
+            </ImageryComponent>
+            <ImageryComponent>
+                <Area>
                     <Dim type="LeftEdge" ><AbsoluteDim value="3" /></Dim>
                     <Dim type="Width" ><UnifiedDim scale="1.0" offset="-6" type="Width" /></Dim>
                 </Area>
-                <Image name="TaharezLook/VertSliderBody" />
+                <Image name="TaharezLook/VertSliderBodyCenter" />
+                <VertFormat type="Stretched" />
+                <HorzFormat type="Tiled" />
+            </ImageryComponent>
+            <ImageryComponent>
+                <Area>
+                    <Dim type="LeftEdge" ><UnifiedDim scale="1.0" offset="-3" type="Width" /></Dim>
+                    <Dim type="Width" ><AbsoluteDim value="3" /></Dim>
+                </Area>
+                <Image name="TaharezLook/VertSliderBodyRight" />
                 <VertFormat type="Stretched" />
                 <HorzFormat type="Tiled" />
             </ImageryComponent>
