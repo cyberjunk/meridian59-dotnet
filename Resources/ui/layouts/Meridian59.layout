@@ -1242,9 +1242,10 @@
 		<Window type="TaharezLook/FrameWindow" name="Guild" >
 			<Property name="Text" value="Guild" />
 			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
-			<Property name="MaxSize" value="{{1,0},{1,0}}" />
+			<Property name="MaxSize" value="{{0,600},{0,512}}" />
 			<Property name="Size" value="{{0,600},{0,512}}" />
-			<Property name="MinSize" value="{{0,600},{0,256}}" />
+			<Property name="MinSize" value="{{0,600},{0,512}}" />
+			<Property name="SizingEnabled" value="FALSE" />
 			<Property name="Position" value="{{0.5,-256},{0.5,-256}}" />
 			
 			<!-- TabControl -->
@@ -1281,16 +1282,16 @@
 					<!-- Password -->
 					<Window type="TaharezLook/Label" name="Guild.PasswordDescription" >
 						<Property name="Text" value="Password:" />
-						<Property name="Area" value="{{0,5},{0,5},{0,85},{0,30}}" />
-						<Property name="HorzFormatting" value="LeftAligned" />				
+						<Property name="Area" value="{{0.5,-135},{0.5,-100},{0.5,-70},{0.5,-75}" />
+						<Property name="HorzFormatting" value="RightAligned" />				
 					</Window>
 					<Window type="TaharezLook/Editbox" name="Guild.PasswordValue" >
 						<Property name="Text" value="Text" />
-						<Property name="Area" value="{{0,90},{0,5},{0,200},{0,30}}" />			
+						<Property name="Area" value="{{0.5,-65},{0.5,-100},{0.5,65},{0.5,-75}" />			
 					</Window>
 					<Window type="TaharezLook/Button" name="Guild.SetPassword" >
 						<Property name="Text" value="Set" />
-						<Property name="Area" value="{{0,205},{0,5},{0,270},{0,30}}" />
+						<Property name="Area" value="{{0.5,70},{0.5,-100},{0.5,135},{0.5,-75}}" />
 						<Property name="TooltipText" value="Changes your password." />
 					</Window>
 				</Window>
@@ -1347,13 +1348,13 @@
 					<Window type="TaharezLook/Label" name="Guild.ShieldClaimedBy" >
 						<Property name="Text" value="" />
 						<Property name="Area" value="{{0,292},{0,145},{1,-10},{0,170}}" />
-						<Property name="HorzFormatting" value="LeftAligned" />						
+						<Property name="HorzFormatting" value="CentreAligned" />						
 					</Window>
 
 					<!-- Claim button -->
 					<Window type="TaharezLook/Button" name="Guild.ShieldClaim" >
 						<Property name="Text" value="Claim" />
-						<Property name="Area" value="{{0,270},{0,175},{0,370},{0,200}}" />
+						<Property name="Area" value="{{0,212},{0,185},{1,-10},{0,210}}" />
 						<Property name="TooltipText" value="Claim this design!" />
 					</Window>					
 				</Window>
@@ -3134,13 +3135,13 @@
 					<!-- AddValue -->
 					<Window type="TaharezLook/Editbox" name="Options.TabAliases.AddValue" >
 						<Property name="Text" value="" />
-						<Property name="Area" value="{{0,101},{0,40},{0,301},{0,65}}" />
+						<Property name="Area" value="{{0,101},{0,40},{1,-47},{0,65}}" />
 					</Window>
 					
 					<!-- Add -->
 					<Window type="TaharezLook/Button" name="Options.TabAliases.Add" >
 						<Property name="Text" value="+" />
-						<Property name="Area" value="{{0,306},{0,40},{0,331},{0,65}}" />
+						<Property name="Area" value="{{1,-42},{0,42},{1,-21},{0,63}}" />
 					</Window>
 							
 					<!-- ListAliases -->
@@ -3174,14 +3175,14 @@
 					<!-- GroupName -->
 					<Window type="TaharezLook/Editbox" name="Options.TabGroups.GroupName" >
 						<Property name="Text" value="" />
-						<Property name="Area" value="{{0,21},{0,40},{0.5,-60},{0,65}}" />
+						<Property name="Area" value="{{0,21},{0,40},{0.5,-47},{0,65}}" />
 						<Property name="MaxTextLength" value="15" />
 					</Window>
 					
 					<!-- AddGroup -->
 					<Window type="TaharezLook/Button" name="Options.TabGroups.AddGroup" >
 						<Property name="Text" value="+" />
-						<Property name="Area" value="{{0.5,-55},{0,40},{0.5,-30},{0,65}}" />
+						<Property name="Area" value="{{0.5,-42},{0,42},{0.5,-20},{0,63}}" />
 					</Window>
 							
 					<!-- GroupsDescription -->
@@ -3209,13 +3210,13 @@
 					<!-- MemberName -->
 					<Window type="TaharezLook/Editbox" name="Options.TabGroups.MemberName" >
 						<Property name="Text" value="" />
-						<Property name="Area" value="{{0.5,15},{0,40},{1,-60},{0,65}}" />
+						<Property name="Area" value="{{0.5,15},{0,40},{1,-46},{0,65}}" />
 					</Window>
 					
 					<!-- AddMember -->
 					<Window type="TaharezLook/Button" name="Options.TabGroups.AddMember" >
 						<Property name="Text" value="+" />
-						<Property name="Area" value="{{1,-55},{0,40},{1,-30},{0,65}}" />
+						<Property name="Area" value="{{1,-41},{0,42},{1,-19},{0,63}}" />
 					</Window>
 
 					<!-- MembersDescription -->

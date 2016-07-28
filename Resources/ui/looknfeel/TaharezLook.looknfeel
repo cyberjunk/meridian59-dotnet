@@ -6068,7 +6068,7 @@
 					<UnifiedDim scale="0" offset="25" type="LeftEdge" />
 				</Dim>
 				<Dim type="TopEdge">
-					<UnifiedDim scale="0" offset="6" type="TopEdge" />
+					<UnifiedDim scale="0" offset="8" type="TopEdge" />
 				</Dim>
 				<Dim type="Width">
 					<UnifiedDim scale="0" offset="10" type="Width" />
@@ -6093,7 +6093,7 @@
 					<UnifiedDim scale="0" offset="0" type="TopEdge" />
 				</Dim>
 				<Dim type="Width">
-					<UnifiedDim scale="1" offset="-175" type="Width" />
+					<AbsoluteDim value="245" />
 				</Dim>
 				<Dim type="Height">
 					<UnifiedDim scale="1" offset="0" type="Height"/>
@@ -6105,13 +6105,13 @@
 		<Child type ="TaharezLook/Combobox" nameSuffix="__auto__droplist">
 			<Area>
 				<Dim type="LeftEdge">
-					<UnifiedDim scale="1" offset="-150" type="LeftEdge" />				
+					<UnifiedDim scale="0" offset="400" type="LeftEdge" />				
 				</Dim>
 				<Dim type="TopEdge">
 					<UnifiedDim scale="0" offset="0" type="TopEdge" />
 				</Dim>
 				<Dim type="Width">
-					<UnifiedDim scale="0" offset="150" type="Width" />
+					<UnifiedDim scale="0" offset="148" type="Width" />
 				</Dim>
 				<Dim type="Height">
 					<UnifiedDim scale="0" offset="120" type="Height"/>
@@ -6191,7 +6191,7 @@
 					<UnifiedDim scale="0" offset="0" type="TopEdge" />
 				</Dim>
 				<Dim type="Width">
-					<UnifiedDim scale="1" offset="-210" type="Width" />
+					<UnifiedDim scale="0" offset="250" type="Width" />
 				</Dim>
 				<Dim type="Height">
 					<UnifiedDim scale="1" offset="0" type="Height"/>
@@ -6203,7 +6203,7 @@
 		<Child type ="TaharezLook/Label" nameSuffix="__auto__label2">
 			<Area>
 				<Dim type="LeftEdge">
-					<UnifiedDim scale="1" offset="-205" type="LeftEdge" />				
+					<UnifiedDim scale="0" offset="350" type="LeftEdge" />				
 				</Dim>
 				<Dim type="TopEdge">
 					<UnifiedDim scale="0" offset="0" type="TopEdge" />
@@ -6221,19 +6221,19 @@
 		<Child type ="TaharezLook/Combobox" nameSuffix="__auto__droplist">
 			<Area>
 				<Dim type="LeftEdge">
-					<UnifiedDim scale="1" offset="-100" type="LeftEdge" />				
+					<UnifiedDim scale="0" offset="450" type="LeftEdge" />				
 				</Dim>
 				<Dim type="TopEdge">
 					<UnifiedDim scale="0" offset="0" type="TopEdge" />
 				</Dim>
 				<Dim type="Width">
-					<UnifiedDim scale="0" offset="100" type="Width" />
+					<UnifiedDim scale="0" offset="98" type="Width" />
 				</Dim>
 				<Dim type="Height">
 					<UnifiedDim scale="0" offset="120" type="Height"/>
 				</Dim>
 			</Area>
-			<Property name="ClippedByParent" value="False" />
+			<Property name="ClippedByParent" value="True" />
 			<Property name="ReadOnly" value="True" />
 		</Child>
 		<ImagerySection name="selection">
@@ -6545,7 +6545,7 @@
 					<UnifiedDim scale="0" offset="2" type="TopEdge" />
 				</Dim>
 				<Dim type="Width">
-					<UnifiedDim scale="0" offset="200" type="Width" />
+					<UnifiedDim scale="1" offset="-107" type="Width" />
 				</Dim>
 				<Dim type="Height">
 					<UnifiedDim scale="1" offset="-4" type="Height"/>
@@ -6553,27 +6553,23 @@
 			</Area>
 			<Property name="MouseInputPropagationEnabled" value="True" />
 		</Child>
-		<Child type ="TaharezLook/ImageButton" nameSuffix="__auto__imagebutton">
-			<Area>
-				<Dim type="LeftEdge">
-					<UnifiedDim scale="0" offset="290" type="LeftEdge" />
-				</Dim>
-				<Dim type="TopEdge">
-					<UnifiedDim scale="0" offset="6" type="TopEdge" />
-				</Dim>
-				<Dim type="Width">
-					<UnifiedDim scale="0" offset="10" type="Width" />
-				</Dim>
-				<Dim type="Height">
-					<UnifiedDim scale="0" offset="10" type="Height"/>
-				</Dim>
-			</Area>
-			<Property name="TooltipText" value="Delete this alias" />
-			<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
-			<Property name="NormalImage" value="TaharezLook/RedCloseButton" />
-            <Property name="HoverImage" value="TaharezLook/RedCloseButtonHover" />
-			<Property name="PushedImage" value="TaharezLook/RedCloseButtonHover" />
-            <Property name="DisabledImage" value="TaharezLook/RedCloseButtonDisabled" />
+		<Child type="TaharezLook/Button" nameSuffix="__auto__button1" >
+			<Property name="Text" value="-" />
+         <Area>
+            <Dim type="Width">
+               <AbsoluteDim value="21" />
+            </Dim>
+            <Dim type="LeftEdge">
+               <UnifiedDim scale="1" offset="-22" type="Width" />
+            </Dim>
+            <Dim type="TopEdge">
+               <UnifiedDim scale="0" offset="2" type="Height" />
+            </Dim>
+            <Dim type="Height">
+               <AbsoluteDim value="21" />
+            </Dim>
+         </Area>
+		   <Property name="TooltipText" value="Delete this alias" />
 		</Child>
 		<ImagerySection name="selection">
 			<ImageryComponent>
@@ -6656,28 +6652,23 @@
 			<Property name="HorzFormatting" value="LeftAligned" />
 			<Property name="MousePassThroughEnabled" value="True" />
 		</Child>		
-		<Child type ="TaharezLook/ImageButton" nameSuffix="__auto__imagebutton">
-			<Area>
-				<Dim type="LeftEdge">
-					<UnifiedDim scale="1" offset="-15" type="LeftEdge" />
-				</Dim>
-				<Dim type="TopEdge">
-					<UnifiedDim scale="0" offset="7" type="TopEdge" />
-				</Dim>
-				<Dim type="Width">
-					<UnifiedDim scale="0" offset="10" type="Width" />
-				</Dim>
-				<Dim type="Height">
-					<UnifiedDim scale="0" offset="10" type="Height"/>
-				</Dim>
-			</Area>
-			<Property name="MouseInputPropagationEnabled" value="True" />
-			<Property name="TooltipText" value="Delete this group" />
-			<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
-			<Property name="NormalImage" value="TaharezLook/RedCloseButton" />
-            <Property name="HoverImage" value="TaharezLook/RedCloseButtonHover" />
-			<Property name="PushedImage" value="TaharezLook/RedCloseButtonHover" />
-            <Property name="DisabledImage" value="TaharezLook/RedCloseButtonDisabled" />
+		<Child type="TaharezLook/Button" nameSuffix="__auto__button2" >
+			<Property name="Text" value="-" />
+         <Area>
+            <Dim type="Width">
+               <AbsoluteDim value="21" />
+            </Dim>
+            <Dim type="LeftEdge">
+               <UnifiedDim scale="1" offset="-22" type="Width" />
+            </Dim>
+            <Dim type="TopEdge">
+               <UnifiedDim scale="0" offset="2" type="Height" />
+            </Dim>
+            <Dim type="Height">
+               <AbsoluteDim value="21" />
+            </Dim>
+         </Area>
+			<Property name="TooltipText" value="Delete this alias" />
 		</Child>
 		<ImagerySection name="selection">
 			<ImageryComponent>
@@ -6759,28 +6750,23 @@
 			<Property name="HorzFormatting" value="LeftAligned" />
 			<Property name="MouseInputPropagationEnabled" value="True" />
 		</Child>		
-		<Child type ="TaharezLook/ImageButton" nameSuffix="__auto__imagebutton">
-			<Area>
-				<Dim type="LeftEdge">
-					<UnifiedDim scale="1" offset="-15" type="LeftEdge" />
-				</Dim>
-				<Dim type="TopEdge">
-					<UnifiedDim scale="0" offset="7" type="TopEdge" />
-				</Dim>
-				<Dim type="Width">
-					<UnifiedDim scale="0" offset="10" type="Width" />
-				</Dim>
-				<Dim type="Height">
-					<UnifiedDim scale="0" offset="10" type="Height"/>
-				</Dim>
-			</Area>
-			<Property name="MouseInputPropagationEnabled" value="True" />
-			<Property name="TooltipText" value="Delete this member" />
-			<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
-			<Property name="NormalImage" value="TaharezLook/RedCloseButton" />
-            <Property name="HoverImage" value="TaharezLook/RedCloseButtonHover" />
-			<Property name="PushedImage" value="TaharezLook/RedCloseButtonHover" />
-            <Property name="DisabledImage" value="TaharezLook/RedCloseButtonDisabled" />
+		<Child type="TaharezLook/Button" nameSuffix="__auto__button3" >
+			<Property name="Text" value="-" />
+         <Area>
+            <Dim type="Width">
+               <AbsoluteDim value="21" />
+            </Dim>
+            <Dim type="LeftEdge">
+               <UnifiedDim scale="1" offset="-22" type="Width" />
+            </Dim>
+            <Dim type="TopEdge">
+               <UnifiedDim scale="0" offset="2" type="Height" />
+            </Dim>
+            <Dim type="Height">
+               <AbsoluteDim value="21" />
+            </Dim>
+         </Area>
+			<Property name="TooltipText" value="Delete this alias" />
 		</Child>
 		<ImagerySection name="selection">
 			<ImageryComponent>
