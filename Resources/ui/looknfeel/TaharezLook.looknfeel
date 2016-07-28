@@ -78,7 +78,7 @@
         <PropertyDefinition name="VertImageFormatting" initialValue="Stretched" redrawOnWrite="true" type="VerticalFormatting" />
         <PropertyDefinition name="HorzImageFormatting" initialValue="Stretched" redrawOnWrite="true" type="HorizontalFormatting" />  
         <Property name="Size" value="{{0, 96}, {0, 32}}" />
-        <Property name="Font" value="Xolonium-8-Bold" />
+        <Property name="Font" value="Berenika-8-Bold" />
 		<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
         <ImagerySection name="label">
             <TextComponent>
@@ -695,7 +695,7 @@
     -->
     <WidgetLook name="TaharezLook/FrameWindow">
 		<PropertyLinkDefinition name="CaptionColour" widget="__auto_titlebar__" targetProperty="CaptionColour" initialValue="FFFFFFFF" type="ColourRect"/>
-        <PropertyLinkDefinition name="TitlebarFont" widget="__auto_titlebar__" targetProperty="Font" initialValue="Xolonium-8-Bold" type="Font"/>
+        <PropertyLinkDefinition name="TitlebarFont" widget="__auto_titlebar__" targetProperty="Font" initialValue="Berenika-8-Bold" type="Font"/>
 		<PropertyLinkDefinition name="TitlebarBackgroundColours" widget="__auto_titlebar__" targetProperty="BackgroundColours" initialValue="tl:FFFFFFFF tr:FFFFFFFF bl:FFFFFFFF br:FFFFFFFF" type="ColourRect"/>
         <Property name="NSSizingCursorImage" value="TaharezLook/MouseNoSoCursor" />
         <Property name="EWSizingCursorImage" value="TaharezLook/MouseEsWeCursor" />
@@ -1273,6 +1273,106 @@
     ***************************************************
     -->
     <WidgetLook name="TaharezLook/VUMeter">
+		<PropertyDefinition name="NoBarTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" />
+		<PropertyDefinition name="BarTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" />
+		<PropertyDefinition name="BarColours" initialValue="tl:FF444444 tr:FF444444 bl:FF444444 br:FF444444" redrawOnWrite="true" type="ColourRect"/>
+		<PropertyDefinition name="BarTextFont" initialValue="Berenika-8-Bold" redrawOnWrite="true" />
+        <Property name="VerticalProgress" value="False" />
+        <Property name="Size" value="{{0, 256}, {0, 16}}" />
+        <NamedArea name="ProgressArea">
+            <Area>
+                <Dim type="LeftEdge" ><ImageDim name="TaharezLook/AltProgressLeft" dimension="Width" /></Dim>
+                <Dim type="TopEdge" ><AbsoluteDim value="2" /></Dim>
+                <Dim type="RightEdge" >
+                    <OperatorDim op="Subtract">
+                        <UnifiedDim scale="1" type="RightEdge" />
+                        <ImageDim name="TaharezLook/AltProgressRight" dimension="Width" />
+                    </OperatorDim>
+                </Dim>
+                <Dim type="Height" ><UnifiedDim scale="1" offset="-4" type="Height" /></Dim>
+            </Area>
+        </NamedArea>
+		<ImagerySection name="frame">
+            <FrameComponent>
+                <Image component="LeftEdge" name="TaharezLook/AltProgressLeft" />
+                <Image component="RightEdge" name="TaharezLook/AltProgressRight" />
+                <Image component="Background" name="TaharezLook/AltProgressMiddle" />
+            </FrameComponent>
+        </ImagerySection>
+		<ImagerySection name="text">
+			<TextComponent>
+				<Area>
+					<Dim type="LeftEdge"><AbsoluteDim value="0" /></Dim>
+					<Dim type="TopEdge"><AbsoluteDim value="0" /></Dim>
+					<Dim type="Width"><UnifiedDim scale="1" type="Width" /></Dim>
+					<Dim type="Height"><UnifiedDim scale="1" type="Height" /></Dim>
+				</Area>
+				<VertFormat type="CentreAligned" />
+				<HorzFormat type="WordWrapCentreAligned" />
+				<FontProperty name="BarTextFont" />
+			</TextComponent>
+		</ImagerySection>
+        <ImagerySection name="progress_lights" >	
+            <ImageryComponent>
+                <Area>
+                    <Dim type="LeftEdge" ><UnifiedDim scale="0.0" type="LeftEdge" /></Dim>
+                    <Dim type="Width" ><UnifiedDim scale="1" offset="0" type="Width" /></Dim>
+                </Area>
+                <Image name="TaharezLook/TextSelectionBrush" />
+                <ColourRectProperty name="BarColours" />
+                <VertFormat type="Stretched" />
+                <HorzFormat type="Stretched" />
+            </ImageryComponent>
+        </ImagerySection>
+        <StateImagery name="Enabled">
+			<Layer>
+				<Section section="frame">
+                    <Colours topLeft="FF7F7F7F" topRight="FF7F7F7F" bottomLeft="FF7F7F7F" bottomRight="FF7F7F7F" />
+                </Section>
+				<Section section="text">
+					<ColourProperty name="NoBarTextColour" />
+					<Colours topLeft="FFFFFFFF" topRight="FFFFFFFF" bottomLeft="FFFFFFFF" bottomRight="FFFFFFFF" />
+				</Section>
+			</Layer>
+        </StateImagery>
+        <StateImagery name="Disabled">
+			<Layer>
+				<Section section="frame">
+                    <Colours topLeft="FF7F7F7F" topRight="FF7F7F7F" bottomLeft="FF7F7F7F" bottomRight="FF7F7F7F" />
+                </Section>
+				<Section section="text">
+					<ColourProperty name="NoBarTextColour" />
+					<Colours topLeft="FFFFFFFF" topRight="FFFFFFFF" bottomLeft="FFFFFFFF" bottomRight="FFFFFFFF" />
+				</Section>
+			</Layer>
+        </StateImagery>
+        <StateImagery name="EnabledProgress">
+            <Layer>
+                <Section section="progress_lights" />
+				<Section section="text">
+					<ColourProperty name="BarTextColour" />
+					<Colours topLeft="FFFFFFFF" topRight="FFFFFFFF" bottomLeft="FFFFFFFF" bottomRight="FFFFFFFF" />
+				</Section>
+            </Layer>
+        </StateImagery>
+        <StateImagery name="DisabledProgress">
+            <Layer>
+                <Section section="progress_lights">
+                    <Colours topLeft="FF7F7F7F" topRight="FF7F7F7F" bottomLeft="FF7F7F7F" bottomRight="FF7F7F7F" />
+                </Section>
+				<Section section="text">
+					<ColourProperty name="BarTextColour" />
+					<Colours topLeft="FFFFFFFF" topRight="FFFFFFFF" bottomLeft="FFFFFFFF" bottomRight="FFFFFFFF" />
+				</Section>
+            </Layer>
+        </StateImagery>
+    </WidgetLook>
+    
+    ***************************************************
+        TaharezLook/VUMeterNumeric (progress bar)
+    ***************************************************
+    -->
+    <WidgetLook name="TaharezLook/VUMeterNumeric">
 		<PropertyDefinition name="NoBarTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" />
 		<PropertyDefinition name="BarTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" />
 		<PropertyDefinition name="BarColours" initialValue="tl:FF444444 tr:FF444444 bl:FF444444 br:FF444444" redrawOnWrite="true" type="ColourRect"/>
@@ -3560,7 +3660,7 @@
     <WidgetLook name="TaharezLook/TabControl">
         <Property name="TabButtonType" value="TaharezLook/TabButton" />
         <Property name="TabTextPadding" value="{0,6}" />
-        <Property name="Font" value="Xolonium-8-Bold" />
+        <Property name="Font" value="Berenika-8-Bold" />
         <Child type="TaharezLook/TabContentPane" nameSuffix="__auto_TabPane__">
             <Area>
                 <Dim type="TopEdge">
@@ -4648,7 +4748,7 @@
 			<Property name="FrameEnabled" value="False" />
 			<Property name="BackgroundEnabled" value="False" />
 		</Child>
-		<Child type ="TaharezLook/VUMeter" nameSuffix="__auto__vumeter">
+		<Child type ="TaharezLook/VUMeterNumeric" nameSuffix="__auto__vumeter">
 			<Area>
 				<Dim type="LeftEdge">
 					<UnifiedDim scale="0" offset="18" type="LeftEdge" />
@@ -5214,7 +5314,7 @@
 			<Property name="MouseInputPropagationEnabled" value="True" />
 		</Child>
 		<!-- Bar -->
-		<Child type ="TaharezLook/VUMeter" nameSuffix="__auto__vumeter">
+		<Child type ="TaharezLook/VUMeterNumeric" nameSuffix="__auto__vumeter">
 			<Area>
 				<Dim type="LeftEdge">
 					<UnifiedDim scale="1" offset="-128" type="LeftEdge" />
