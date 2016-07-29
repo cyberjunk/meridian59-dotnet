@@ -5,85 +5,118 @@
 		<Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
         <Property name="MaxSize" value="{{1,0},{1,0}}" />
         <Property name="InheritsAlpha" value="False" />
-		
+
 		<!-- LoadingBar -->
 		<Window type="TaharezLook/StaticImage" name="LoadingBar" >
 			<Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
-			<Property name="Size" value="{{0.9,0},{0,128}}" />
-			<Property name="Position" value="{{0.05,0},{0.75,-64}}" />
+			<Property name="Size" value="{{1,0},{1,0}}" />
+			<Property name="Position" value="{{0,0},{0,0}}" />
 			<Property name="FrameEnabled" value="False" />
 			<Property name="BackgroundEnabled" value="False" />
-				
+
+         <Window type="TaharezLook/StaticImage" name="LoadingBar.Backdrop" >
+            <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+            <Property name="FrameEnabled" value="False" />
+            <Property name="Image" value="TaharezLook/RootBackdrop" />
+            <Property name="VertFormatting" value="Tiled" />
+            <Property name="HorzFormatting" value="Tiled" />
+            <Property name="BackgroundEnabled" value="False" />
+         </Window>
+         
+			<!-- Meridian59 -->
+			<Window type="TaharezLook/Label" name="LoadingBar.Meridian59" >
+				<Property name="Text" value="Meridian59" />
+				<Property name="Area" value="{{0,0},{0.1,0},{1,0},{0.1,80}}" />
+				<Property name="Font" value="Berenika-48-Bold" />
+				<Property name="NormalTextColour" value="FFffffff" />
+			</Window>
+
+			<!-- Community Edition -->
+			<Window type="TaharezLook/Label" name="LoadingBar.CommunityEdition" >
+				<Property name="Text" value="- Community Edition -" />
+				<Property name="Area" value="{{0,0},{0.1,80},{1,0},{0.1,130}}" />
+				<Property name="Font" value="Berenika-20-Bold" />
+				<Property name="NormalTextColour" value="FFffffff" />
+			</Window>
+
 			<!-- Title -->
 			<Window type="TaharezLook/Label" name="LoadingBar.Title" >
 				<Property name="Text" value="Loading..." />
-				<Property name="Area" value="{{0,0},{0,0},{1,0},{0,32}}" />
+				<Property name="Area" value="{{0,0},{1,-150},{1,0},{1,-120}}" />
 				<Property name="Font" value="Berenika-20-Bold" />
-				<Property name="NormalTextColour" value="FFFF0000" />			
+				<Property name="NormalTextColour" value="FFffffff" />
 			</Window>
 			
 			<!-- GroupBar -->
 			<Window type="TaharezLook/VUMeter" name="LoadingBar.Group" >
-				<Property name="Area" value="{{0,0},{0,40},{0,316},{0,32}}" />
-				<Property name="Size" value="{{1,0},{0,16}}" />
+				<Property name="Area" value="{{0.2,0},{1,-100},{0.8,0},{1,-60}}" />
+				<Property name="Size" value="{{0.6,0},{0,32}}" />
 			</Window>
 			
 			<!-- ContentBar -->
 			<Window type="TaharezLook/VUMeter" name="LoadingBar.Content" >
-				<Property name="Area" value="{{0,0},{0,60},{0,316},{0,32}}" />
-				<Property name="Size" value="{{1,0},{0,16}}" />
+				<Property name="Area" value="{{0.2,0},{1,-60},{0.8,0},{1,-20}}" />
+				<Property name="Size" value="{{0.6,0},{0,32}}" />
 			</Window>
 		</Window>
 		
 		<!-- DownloadBar -->
 		<Window type="TaharezLook/StaticImage" name="DownloadBar" >
 			<Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
-			<Property name="Size" value="{{0,316},{0,128}}" />
-			<Property name="Position" value="{{0.5,-158},{0.75,-48}}" />
+			<Property name="Size" value="{{1,0},{1,0}}" />
+			<Property name="Position" value="{{0,0},{0,0}}" />
 			<Property name="FrameEnabled" value="False" />
 			<Property name="BackgroundEnabled" value="False" />
 				
 			<!-- Title -->
 			<Window type="TaharezLook/Label" name="DownloadBar.Title" >
 				<Property name="Text" value="Updating..." />
-				<Property name="Area" value="{{0,0},{0,0},{1,0},{0,32}}" />
+				<Property name="Area" value="{{0,0},{1,-150},{1,0},{1,-120}}" />
 				<Property name="Font" value="Berenika-20-Bold" />
-				<Property name="NormalTextColour" value="FFFF0000" />			
+				<Property name="NormalTextColour" value="FFffffff" />
 			</Window>
 			
 			<!-- ContentBar -->
 			<Window type="TaharezLook/VUMeter" name="DownloadBar.Content" >
-				<Property name="Area" value="{{0,0},{0,40},{0,316},{0,32}}" />
-				<Property name="Size" value="{{0,316},{0,32}}" />
+				<Property name="Area" value="{{0.2,0},{1,-100},{0.8,0},{1,-60}}" />
+				<Property name="Size" value="{{0.6,0},{0,32}}" />
 			</Window>
 		</Window>
 		
 		<!-- Welcome -->
 		<Window type="TaharezLook/FrameWindow" name="Welcome" >
+         <Property name="TitlebarEnabled" value="False" />
+         <Property name="CloseButtonEnabled" value="False" />
 			<Property name="Text" value="Welcome!" />
 			<Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
 			<Property name="MaxSize" value="{{1,0},{1,0}}" />
 			<Property name="MinSize" value="{{0.3,0},{0.3,0}}" />
 			<Property name="Size" value="{{0,384},{0,512}}" />
+			<Property name="SizingEnabled" value="FALSE" />
 			<Property name="Position" value="{{0.5,-192},{0.5,-256}}" />
-			
+
+			<Window type="TaharezLook/Label" name="Welcome.Title" >
+				<Property name="Text" value="Welcome!" />
+				<Property name="Area" value="{{0.5,-100},{0,20},{0.5,100},{0,50}}" />
+				<Property name="HorzFormatting" value="CentreAligned" />
+				<Property name="Font" value="Berenika-20-Bold" />
+				<Property name="NormalTextColour" value="FFffffff" />
+			</Window>
+
 			<!-- List -->
 			<Window type="TaharezLook/ItemListbox" name="Welcome.Avatars" >
-				<Property name="Area" value="{{0,5},{0,5},{1,-100},{0,120}}" />
-				<Property name="MaxSize" value="{{1,-105},{0,115}}" />
-				<Property name="Size" value="{{1,-105},{0,115}}" />
-				<Property name="Position" value="{{0,0},{0,0}}" />
+				<Property name="Area" value="{{0,0},{0,70},{1,0},{0,165}}" />
 			</Window>
 			
 			<!-- Button -->
 			<Window type="TaharezLook/Button" name="Welcome.Select" >
 				<Property name="Text" value="Select" />
-				<Property name="Area" value="{{1,-100},{0,0},{1,0},{0,25}}" />
+				<Property name="Area" value="{{0,0},{0,170},{1,0},{0,195}}" />
 			</Window>
 			
 			<!-- MOTD -->
 			<Window type="TaharezLook/MultiLineEditbox" name="Welcome.MOTD" >				
-				<Property name="Area" value="{{0,0},{0,120},{1,0},{1,0}}" />
+				<Property name="Area" value="{{0,10},{0,210},{1,-10},{1,-10}}" />
 				<Property name="ReadOnly" value="True" />
 				<Property name="TextParsingEnabled" value="False" />					
 			</Window>
@@ -145,8 +178,8 @@
 			</Window>
 			<Window type="TaharezLook/Button" name="StatusBar.PlayersValue" >
 				<Property name="Text" value="0" />
-				<Property name="Area" value="{{0,210},{0,3},{0,260},{0,19}}" />
-				<Property name="Font" value="Berenika-8-Bold" />
+				<Property name="Area" value="{{0,210},{0,3},{0,260},{0,20}}" />
+				<Property name="Font" value="Xolonium-6-Bold" />
 			</Window>
 			
 			<!-- Mood -->
@@ -158,43 +191,31 @@
 				<Property name="Font" value="Berenika-8-Bold" />
 				<Property name="NormalTextColour" value="FFFFFFFF" />				
 			</Window>
-			<Window type="TaharezLook/ImageButton" name="StatusBar.MoodHappy" >
-				<Property name="Area" value="{{0,320},{0,2},{0,336},{0,18}}" />
-				<Property name="NormalImage" value="TaharezLook/MoodHappy" />
-				<Property name="HoverImage" value="TaharezLook/MoodHappyHover" />
-				<Property name="PushedImage" value="TaharezLook/MoodHappy" />
-				<Property name="TooltipText" value="Click me to change your mood to happy." />
-				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
+			<Window type="TaharezLook/Button" name="StatusBar.MoodHappy" >
+				<Property name="Area" value="{{0,320},{0,3},{0,374},{0,20}}" />
+				<Property name="Font" value="Xolonium-6-Bold" />
+				<Property name="Text" value="Happy" />
 			</Window>
-			<Window type="TaharezLook/ImageButton" name="StatusBar.MoodNeutral" >
-				<Property name="Area" value="{{0,336},{0,2},{0,352},{0,18}}" />
-				<Property name="NormalImage" value="TaharezLook/MoodNeutral" />
-				<Property name="HoverImage" value="TaharezLook/MoodNeutralHover" />
-				<Property name="PushedImage" value="TaharezLook/MoodNeutral" />
-				<Property name="TooltipText" value="Click me to change your mood to neutral." />
-				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
+			<Window type="TaharezLook/Button" name="StatusBar.MoodNeutral" >
+				<Property name="Area" value="{{0,375},{0,3},{0,429},{0,20}}" />
+				<Property name="Font" value="Xolonium-6-Bold" />
+				<Property name="Text" value="Neutral" />
 			</Window>
-			<Window type="TaharezLook/ImageButton" name="StatusBar.MoodSad" >
-				<Property name="Area" value="{{0,352},{0,2},{0,368},{0,18}}" />
-				<Property name="NormalImage" value="TaharezLook/MoodSad" />
-				<Property name="HoverImage" value="TaharezLook/MoodSadHover" />
-				<Property name="PushedImage" value="TaharezLook/MoodSad" />
-				<Property name="TooltipText" value="Click me to change your mood to sad." />
-				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
+			<Window type="TaharezLook/Button" name="StatusBar.MoodSad" >
+				<Property name="Area" value="{{0,430},{0,3},{0,484},{0,20}}" />
+				<Property name="Font" value="Xolonium-6-Bold" />
+				<Property name="Text" value="Sad" />
 			</Window>
-			<Window type="TaharezLook/ImageButton" name="StatusBar.MoodAngry" >
-				<Property name="Area" value="{{0,368},{0,2},{0,384},{0,18}}" />
-				<Property name="NormalImage" value="TaharezLook/MoodAngry" />
-				<Property name="HoverImage" value="TaharezLook/MoodAngryHover" />
-				<Property name="PushedImage" value="TaharezLook/MoodAngry" />
-				<Property name="TooltipText" value="Click me to change your mood to angry." />
-				<Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
+			<Window type="TaharezLook/Button" name="StatusBar.MoodAngry" >
+				<Property name="Area" value="{{0,485},{0,3},{0,539},{0,20}}" />
+				<Property name="Font" value="Xolonium-6-Bold" />
+				<Property name="Text" value="Angry" />
 			</Window>
 			
 			<!-- Safety -->
 			<Window type="TaharezLook/Label" name="StatusBar.SafetyDescription" >
 				<Property name="Text" value="Safety:" />
-				<Property name="Area" value="{{0,400},{0,0},{0,455},{0,24}}" />
+				<Property name="Area" value="{{0,556},{0,0},{0,611},{0,24}}" />
 				<Property name="HorzFormatting" value="LeftAligned" />
 				<Property name="VertFormatting" value="CentreAligned" />
 				<Property name="Font" value="Berenika-8-Bold" />
@@ -202,14 +223,14 @@
 			</Window>
 			<Window type="TaharezLook/Button" name="StatusBar.SafetyValue" >
 				<Property name="Text" value="On" />
-				<Property name="Area" value="{{0,455},{0,3},{0,505},{0,19}}" />
-				<Property name="Font" value="Berenika-8-Bold" />
+				<Property name="Area" value="{{0,611},{0,3},{0,661},{0,20}}" />
+				<Property name="Font" value="Xolonium-6-Bold" />
 			</Window>
 			
 			<!-- MeridianTime -->
 			<Window type="TaharezLook/Label" name="StatusBar.MTimeDescription" >
 				<Property name="Text" value="Time:" />
-				<Property name="Area" value="{{0,520},{0,0},{0,560},{0,24}}" />
+				<Property name="Area" value="{{0,676},{0,0},{0,716},{0,24}}" />
 				<Property name="HorzFormatting" value="LeftAligned" />
 				<Property name="VertFormatting" value="CentreAligned" />
 				<Property name="Font" value="Berenika-8-Bold" />
@@ -217,7 +238,7 @@
 			</Window>
 			<Window type="TaharezLook/Label" name="StatusBar.MTimeValue" >
 				<Property name="Text" value="00:00" />
-				<Property name="Area" value="{{0,560},{0,0},{0,630},{0,24}}" />
+				<Property name="Area" value="{{0,716},{0,0},{0,786},{0,24}}" />
 				<Property name="HorzFormatting" value="LeftAligned" />
 				<Property name="VertFormatting" value="CentreAligned" />
 				<Property name="Font" value="Berenika-8-Bold" />
@@ -226,7 +247,7 @@
 			<!-- RoomName -->
 			<Window type="TaharezLook/Label" name="StatusBar.RoomDescription" >
 				<Property name="Text" value="Zone:" />
-				<Property name="Area" value="{{0,645},{0,0},{0,685},{0,24}}" />
+				<Property name="Area" value="{{0,801},{0,0},{0,841},{0,24}}" />
 				<Property name="HorzFormatting" value="LeftAligned" />
 				<Property name="VertFormatting" value="CentreAligned" />
 				<Property name="Font" value="Berenika-8-Bold" />
@@ -234,7 +255,7 @@
 			</Window>
 			<Window type="TaharezLook/Label" name="StatusBar.RoomValue" >
 				<Property name="Text" value="-" />
-				<Property name="Area" value="{{0,690},{0,0},{1,0},{0,24}}" />
+				<Property name="Area" value="{{0,846},{0,0},{1,0},{0,24}}" />
 				<Property name="HorzFormatting" value="LeftAligned" />
 				<Property name="VertFormatting" value="CentreAligned" />
 				<Property name="Font" value="Berenika-8-Bold" />
@@ -1891,27 +1912,31 @@
 		</Window>
 		
 		<!-- LoginWindow -->
-		<Window type="DefaultWindow" name="Login" >
+		<Window type="TaharezLook/FrameWindow" name="Login" >
+         <Property name="TitlebarEnabled" value="False" />
+         <Property name="CloseButtonEnabled" value="False" />
 			<Property name="Text" value="Login" />
-			<Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
-			<Property name="Size" value="{{0,384},{0,240}}" />
+			<Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+			<Property name="Size" value="{{0,384},{0,260}}" />
+			<Property name="SizingEnabled" value="FALSE" />
 			<Property name="Position" value="{{0.5,-192},{0.5,-240}}" />
 
 			<Window type="TaharezLook/Label" name="Login.Title" >
 				<Property name="Text" value="LOGIN" />
-				<Property name="Area" value="{{0.5,-60},{0,0},{0.5,60},{0,30}}" />
-				<Property name="HorzFormatting" value="LeftAligned" />
-				<Property name="Font" value="Berenika-20-Bold" />				
+				<Property name="Area" value="{{0.5,-60},{0,20},{0.5,60},{0,50}}" />
+				<Property name="HorzFormatting" value="CentreAligned" />
+				<Property name="Font" value="Berenika-20-Bold" />
+				<Property name="NormalTextColour" value="FFffffff" />
 			</Window>
 			
 			<!-- Server -->
 			<Window type="TaharezLook/Label" name="Login.ServerDescription" >
 				<Property name="Text" value="Server" />
-				<Property name="Area" value="{{0.5,-125},{0,50},{0.5,-35},{0,70}}" />
+				<Property name="Area" value="{{0.5,-125},{0,70},{0.5,-35},{0,90}}" />
 				<Property name="HorzFormatting" value="LeftAligned" />								
 			</Window>
 			<Window type="TaharezLook/Combobox" name="Login.Server" >
-				<Property name="Area" value="{{0.5,-35},{0,50},{0.5,125},{0,140}}" />
+				<Property name="Area" value="{{0.5,-35},{0,70},{0.5,125},{0,160}}" />
 				<Property name="ClippedByParent" value="False" />
 				<Property name="ReadOnly" value="True" />
 			</Window>
@@ -1919,36 +1944,36 @@
 			<!-- Username -->
 			<Window type="TaharezLook/Label" name="Login.UsernameDescription" >
 				<Property name="Text" value="Username" />
-				<Property name="Area" value="{{0.5,-125},{0,85},{0.5,-35},{0,110}}" />			
+				<Property name="Area" value="{{0.5,-125},{0,105},{0.5,-35},{0,130}}" />			
 				<Property name="HorzFormatting" value="LeftAligned" />					
 			</Window>
 			<Window type="TaharezLook/Editbox" name="Login.Username" >
-				<Property name="Area" value="{{0.5,-35},{0,85},{0.5,125},{0,110}}" />
+				<Property name="Area" value="{{0.5,-35},{0,105},{0.5,125},{0,130}}" />
 				<Property name="TextParsingEnabled" value="False" />					
 			</Window>
 			
 			<!-- Password -->
 			<Window type="TaharezLook/Label" name="Login.PasswordDescription" >
 				<Property name="Text" value="Password" />
-				<Property name="Area" value="{{0.5,-125},{0,115},{0.5,-35},{0,140}}" />			
+				<Property name="Area" value="{{0.5,-125},{0,135},{0.5,-35},{0,160}}" />			
 				<Property name="HorzFormatting" value="LeftAligned" />					
 			</Window>
 			<Window type="TaharezLook/Editbox" name="Login.Password" >
-				<Property name="Area" value="{{0.5,-35},{0,115},{0.5,125},{0,140}}" />
+				<Property name="Area" value="{{0.5,-35},{0,135},{0.5,125},{0,160}}" />
 				<Property name="TextParsingEnabled" value="False" />
 				<Property name="MaskText" value="True" />
 			</Window>
-			
-			<!-- Connect -->
-			<Window type="TaharezLook/Button" name="Login.Connect" >
-				<Property name="Text" value="Connect" />
-				<Property name="Area" value="{{0.5,-105},{0,170},{0.5,-5},{0,195}}" />
-			</Window>
-			
+
 			<!-- Options -->
 			<Window type="TaharezLook/Button" name="Login.Options" >
 				<Property name="Text" value="Options" />
-				<Property name="Area" value="{{0.5,5},{0,170},{0.5,105},{0,195}}" />
+				<Property name="Area" value="{{0.5,-105},{0,190},{0.5,-5},{0,215}}" />
+			</Window>
+
+			<!-- Connect -->
+			<Window type="TaharezLook/Button" name="Login.Connect" >
+				<Property name="Text" value="Connect" />
+				<Property name="Area" value="{{0.5,5},{0,190},{0.5,105},{0,215}}" />
 			</Window>
 		</Window>
 			
@@ -3216,7 +3241,7 @@
 					<!-- AddMember -->
 					<Window type="TaharezLook/Button" name="Options.TabGroups.AddMember" >
 						<Property name="Text" value="+" />
-						<Property name="Area" value="{{1,-41},{0,42},{1,-19},{0,63}}" />
+						<Property name="Area" value="{{1,-41},{0,42},{1,-20},{0,63}}" />
 					</Window>
 
 					<!-- MembersDescription -->

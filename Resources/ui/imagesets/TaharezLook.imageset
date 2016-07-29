@@ -5,7 +5,8 @@
     <Image height="5" name="WindowTopEdge" width="5" xOffset="0" yOffset="0" xPos="235" yPos="225" />
     <Image height="5" name="WindowTopRight" width="5" xOffset="0" yOffset="0" xPos="245" yPos="225" />
     <Image height="5" name="WindowLeftEdge" width="5" xOffset="0" yOffset="0" xPos="225" yPos="235" />
-    <Image height="100" name="WindowBackdrop" width="100" xOffset="0" yOffset="0" xPos="550" yPos="300" />    
+    <Image height="100" name="WindowBackdrop" width="100" xOffset="0" yOffset="0" xPos="550" yPos="300" />
+    <Image height="100" name="RootBackdrop" width="100" xOffset="0" yOffset="0" xPos="550" yPos="410" />    
     <Image height="5" name="WindowRightEdge" width="5" xOffset="0" yOffset="0" xPos="245" yPos="235" />
     <Image height="5" name="WindowBottomLeft" width="5" xOffset="0" yOffset="0" xPos="225" yPos="245" />
     <Image height="5" name="WindowBottomEdge" width="5" xOffset="0" yOffset="0" xPos="235" yPos="245" />
@@ -154,6 +155,9 @@
     <Image height="16" name="AltProgressLeft" width="8" xPos="71" yPos="88" />
     <Image height="16" name="AltProgressMiddle" width="8" xPos="81" yPos="88" />
     <Image height="16" name="AltProgressRight" width="8" xPos="91" yPos="88" />
+    <Image height="32" name="ProgressLeft" width="8" xPos="71" yPos="32" />
+    <Image height="32" name="ProgressMiddle" width="8" xPos="81" yPos="32" />
+    <Image height="32" name="ProgressRight" width="8" xPos="91" yPos="32" />
     <Image height="4" name="AltProgressQuarter" width="3" xPos="102" yPos="89" />
     <Image height="5" name="AltProgressHalf" width="4" xPos="109" yPos="89" />
     <Image height="8" name="AltProgressLight1" width="4" xPos="100" yPos="97" />
@@ -257,14 +261,14 @@
     <Image height="7" name="TreeListOpened" width="11" xPos="164" yPos="111" />
 	
 	<!-- Own -->
-	<Image height="18" name="MoodAngry" width="18" xPos="50" yPos="201" />
-	<Image height="18" name="MoodAngryHover" width="18" xPos="50" yPos="221" />
-	<Image height="18" name="MoodSad" width="18" xPos="71" yPos="201" />
-	<Image height="18" name="MoodSadHover" width="18" xPos="71" yPos="221" />
-	<Image height="18" name="MoodNeutral" width="18" xPos="91" yPos="201" />
-	<Image height="18" name="MoodNeutralHover" width="18" xPos="91" yPos="221" />
-	<Image height="18" name="MoodHappy" width="18" xPos="111" yPos="201" />
-	<Image height="18" name="MoodHappyHover" width="18" xPos="111" yPos="221" />
+	<Image height="24" name="MoodAngry" width="46" xPos="140" yPos="418" />
+	<Image height="24" name="MoodAngryHover" width="46" xPos="186" yPos="418" />
+	<Image height="24" name="MoodSad" width="46" xPos="140" yPos="394" />
+	<Image height="24" name="MoodSadHover" width="46" xPos="186" yPos="394" />
+	<Image height="24" name="MoodNeutral" width="46" xPos="140" yPos="370" />
+	<Image height="24" name="MoodNeutralHover" width="46" xPos="186" yPos="370" />
+	<Image height="24" name="MoodHappy" width="46" xPos="140" yPos="442" />
+	<Image height="24" name="MoodHappyHover" width="46" xPos="186" yPos="442" />
 	<Image height="22" name="StatusBarBackground" width="40" xPos="5" yPos="230" />
 	<Image height="135" name="AvatarBackground" width="250" xPos="259" yPos="2" />
 	<Image height="93" name="TargetBackground" width="248" xPos="539" yPos="138" />

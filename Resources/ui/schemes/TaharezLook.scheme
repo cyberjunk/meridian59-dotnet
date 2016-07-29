@@ -12,6 +12,7 @@
 	<Font filename="Xolonium-6-Bold.font" />
 	<Font filename="Berenika-8-bold.font" />
 	<Font filename="Berenika-20-bold.font" />
+	<Font filename="Berenika-48-bold.font" />
 	
 	<LookNFeel filename="TaharezLook.looknfeel" />
 	<WindowRendererSet filename="CEGUICoreWindowRendererSet" />

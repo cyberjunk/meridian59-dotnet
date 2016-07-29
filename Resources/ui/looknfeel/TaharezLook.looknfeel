@@ -836,6 +836,7 @@
                 <Image component="TopRightCorner" name="TaharezLook/WindowTopRight" />
                 <Image component="BottomLeftCorner" name="TaharezLook/WindowBottomLeft" />
                 <Image component="BottomRightCorner" name="TaharezLook/WindowBottomRight" />
+                <Image component="TopEdge" name="TaharezLook/WindowTopEdge" />
                 <Image component="LeftEdge" name="TaharezLook/WindowLeftEdge" />
                 <Image component="RightEdge" name="TaharezLook/WindowRightEdge" />
                 <Image component="BottomEdge" name="TaharezLook/WindowBottomEdge" />
@@ -1275,18 +1276,18 @@
     <WidgetLook name="TaharezLook/VUMeter">
 		<PropertyDefinition name="NoBarTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" />
 		<PropertyDefinition name="BarTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" />
-		<PropertyDefinition name="BarColours" initialValue="tl:FF444444 tr:FF444444 bl:FF444444 br:FF444444" redrawOnWrite="true" type="ColourRect"/>
+		<PropertyDefinition name="BarColours" initialValue="tl:FF2a353d tr:FF384751 bl:FF2a353d br:FF384751" redrawOnWrite="true" type="ColourRect"/>
 		<PropertyDefinition name="BarTextFont" initialValue="Berenika-8-Bold" redrawOnWrite="true" />
         <Property name="VerticalProgress" value="False" />
-        <Property name="Size" value="{{0, 256}, {0, 16}}" />
+        <Property name="Size" value="{{0, 256}, {0, 32}}" />
         <NamedArea name="ProgressArea">
             <Area>
-                <Dim type="LeftEdge" ><ImageDim name="TaharezLook/AltProgressLeft" dimension="Width" /></Dim>
+                <Dim type="LeftEdge" ><ImageDim name="TaharezLook/ProgressLeft" dimension="Width" /></Dim>
                 <Dim type="TopEdge" ><AbsoluteDim value="2" /></Dim>
                 <Dim type="RightEdge" >
                     <OperatorDim op="Subtract">
                         <UnifiedDim scale="1" type="RightEdge" />
-                        <ImageDim name="TaharezLook/AltProgressRight" dimension="Width" />
+                        <ImageDim name="TaharezLook/ProgressRight" dimension="Width" />
                     </OperatorDim>
                 </Dim>
                 <Dim type="Height" ><UnifiedDim scale="1" offset="-4" type="Height" /></Dim>
@@ -1294,9 +1295,9 @@
         </NamedArea>
 		<ImagerySection name="frame">
             <FrameComponent>
-                <Image component="LeftEdge" name="TaharezLook/AltProgressLeft" />
-                <Image component="RightEdge" name="TaharezLook/AltProgressRight" />
-                <Image component="Background" name="TaharezLook/AltProgressMiddle" />
+                <Image component="LeftEdge" name="TaharezLook/ProgressLeft" />
+                <Image component="RightEdge" name="TaharezLook/ProgressRight" />
+                <Image component="Background" name="TaharezLook/ProgressMiddle" />
             </FrameComponent>
         </ImagerySection>
 		<ImagerySection name="text">
@@ -1327,7 +1328,7 @@
         <StateImagery name="Enabled">
 			<Layer>
 				<Section section="frame">
-                    <Colours topLeft="FF7F7F7F" topRight="FF7F7F7F" bottomLeft="FF7F7F7F" bottomRight="FF7F7F7F" />
+                    <Colours topLeft="FFFFFFFF" topRight="FFFFFFFF" bottomLeft="FFFFFFFF" bottomRight="FFFFFFFF" />
                 </Section>
 				<Section section="text">
 					<ColourProperty name="NoBarTextColour" />
@@ -1338,7 +1339,7 @@
         <StateImagery name="Disabled">
 			<Layer>
 				<Section section="frame">
-                    <Colours topLeft="FF7F7F7F" topRight="FF7F7F7F" bottomLeft="FF7F7F7F" bottomRight="FF7F7F7F" />
+                    <Colours topLeft="FFFFFFFF" topRight="FFFFFFFF" bottomLeft="FFFFFFFF" bottomRight="FFFFFFFF" />
                 </Section>
 				<Section section="text">
 					<ColourProperty name="NoBarTextColour" />
@@ -1375,7 +1376,7 @@
     <WidgetLook name="TaharezLook/VUMeterNumeric">
 		<PropertyDefinition name="NoBarTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" />
 		<PropertyDefinition name="BarTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" />
-		<PropertyDefinition name="BarColours" initialValue="tl:FF444444 tr:FF444444 bl:FF444444 br:FF444444" redrawOnWrite="true" type="ColourRect"/>
+		<PropertyDefinition name="BarColours" initialValue="tl:FF2a353d tr:FF384751 bl:FF2a353d br:FF384751" redrawOnWrite="true" type="ColourRect"/>
 		<PropertyDefinition name="BarTextFont" initialValue="Xolonium-6-Bold" redrawOnWrite="true" />
         <Property name="VerticalProgress" value="False" />
         <Property name="Size" value="{{0, 256}, {0, 16}}" />
@@ -1427,7 +1428,7 @@
         <StateImagery name="Enabled">
 			<Layer>
 				<Section section="frame">
-                    <Colours topLeft="FF7F7F7F" topRight="FF7F7F7F" bottomLeft="FF7F7F7F" bottomRight="FF7F7F7F" />
+                    <Colours topLeft="FFFFFFFF" topRight="FFFFFFFF" bottomLeft="FFFFFFFF" bottomRight="FFFFFFFF" />
                 </Section>
 				<Section section="text">
 					<ColourProperty name="NoBarTextColour" />
@@ -1438,7 +1439,7 @@
         <StateImagery name="Disabled">
 			<Layer>
 				<Section section="frame">
-                    <Colours topLeft="FF7F7F7F" topRight="FF7F7F7F" bottomLeft="FF7F7F7F" bottomRight="FF7F7F7F" />
+                    <Colours topLeft="FFFFFFFF" topRight="FFFFFFFF" bottomLeft="FFFFFFFF" bottomRight="FFFFFFFF" />
                 </Section>
 				<Section section="text">
 					<ColourProperty name="NoBarTextColour" />

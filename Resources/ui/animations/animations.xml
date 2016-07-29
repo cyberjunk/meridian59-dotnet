@@ -18,10 +18,10 @@
 	</AnimationDefinition>
 	<AnimationDefinition name="VUMeter_highlight_yellow" duration="1.0" replayMode="once" autoStart="False">
 		<Affector property="BarColours" interpolator="ColourRect">
-			<KeyFrame position="0.0" value="tl:EEff9c00 tr:EEffc600 bl:EEff9c00 br:EEffc600" />
-			<KeyFrame position="0.1" value="tl:EEffe899 tr:EEffe899 bl:EEffe899 br:EEffe899" progression="quadratic accelerating" />
-			<KeyFrame position="0.15" value="tl:EEffe899 tr:EEffe899 bl:EEffe899 br:EEffe899" progression="quadratic accelerating" />
-			<KeyFrame position="1.0" value="tl:EEff9c00 tr:EEffc600 bl:EEff9c00 br:EEffc600" progression="quadratic decelerating" />
+			<KeyFrame position="0.0" value="tl:CCff9c00 tr:CCffc600 bl:CCff9c00 br:CCffc600" />
+			<KeyFrame position="0.1" value="tl:CCffe899 tr:CCffe899 bl:CCffe899 br:CCffe899" progression="quadratic accelerating" />
+			<KeyFrame position="0.15" value="tl:CCffe899 tr:CCffe899 bl:CCffe899 br:CCffe899" progression="quadratic accelerating" />
+			<KeyFrame position="1.0" value="tl:CCff9c00 tr:CCffc600 bl:CCff9c00 br:CCffc600" progression="quadratic decelerating" />
 		</Affector>
 	</AnimationDefinition>
 	<AnimationDefinition name="VUMeter_highlight_grey" duration="2.5" replayMode="once" autoStart="False">
