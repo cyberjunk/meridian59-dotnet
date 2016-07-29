@@ -3224,7 +3224,7 @@
                         </OperatorDim>
                     </Dim>
                 </Area>
-                <Colours topLeft="FF101a1f" topRight="FF101a1f" bottomLeft="FF101a1f" bottomRight="FF101a1f" />
+                <Colours topLeft="FFFFCC99" topRight="FFFFCC99" bottomLeft="AAFFCC99" bottomRight="AAFFCC99" />
                 <VertFormat type="CentreAligned" />
                 <HorzFormat type="CentreAligned" />
             </TextComponent>
