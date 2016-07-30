@@ -1,35 +1,35 @@
 <?xml version="1.0" ?>
 <Animations>
-	<AnimationDefinition name="VUMeter_highlight_red" duration="1.0" replayMode="once" autoStart="False">
-		<Affector property="BarColours" interpolator="ColourRect">
-			<KeyFrame position="0.0" value="tl:EEdd0000 tr:EEf94343 bl:EEdd0000 br:EEf94343" />
-			<KeyFrame position="0.1" value="tl:FFff8888 tr:FFff8888 bl:FFff8888 br:FFff8888" progression="quadratic accelerating" />
-			<KeyFrame position="0.15" value="tl:FFff8888 tr:FFff8888 bl:FFff8888 br:FFff8888" progression="quadratic accelerating" />
-			<KeyFrame position="1.0" value="tl:EEdd0000 tr:EEf94343 bl:EEdd0000 br:EEf94343" progression="quadratic decelerating" />
-		</Affector>
-	</AnimationDefinition>
-	<AnimationDefinition name="VUMeter_highlight_blue" duration="1.0" replayMode="once" autoStart="False">
-		<Affector property="BarColours" interpolator="ColourRect">
-			<KeyFrame position="0.0" value="tl:EE006aae tr:EE2590d4 bl:EE006aae br:EE2590d4" />
-			<KeyFrame position="0.1" value="tl:FFacdfff tr:FFacdfff bl:FFacdfff br:FFacdfff" progression="quadratic accelerating" />
-			<KeyFrame position="0.15" value="tl:FFacdfff tr:FFacdfff bl:FFacdfff br:FFacdfff" progression="quadratic accelerating" />
-			<KeyFrame position="1.0" value="tl:EE006aae tr:EE2590d4 bl:EE006aae br:EE2590d4" progression="quadratic decelerating" />
-		</Affector>
-	</AnimationDefinition>
-	<AnimationDefinition name="VUMeter_highlight_yellow" duration="1.0" replayMode="once" autoStart="False">
-		<Affector property="BarColours" interpolator="ColourRect">
-			<KeyFrame position="0.0" value="tl:CCff9c00 tr:CCffc600 bl:CCff9c00 br:CCffc600" />
-			<KeyFrame position="0.1" value="tl:CCffe899 tr:CCffe899 bl:CCffe899 br:CCffe899" progression="quadratic accelerating" />
-			<KeyFrame position="0.15" value="tl:CCffe899 tr:CCffe899 bl:CCffe899 br:CCffe899" progression="quadratic accelerating" />
-			<KeyFrame position="1.0" value="tl:CCff9c00 tr:CCffc600 bl:CCff9c00 br:CCffc600" progression="quadratic decelerating" />
-		</Affector>
-	</AnimationDefinition>
-	<AnimationDefinition name="VUMeter_highlight_grey" duration="2.5" replayMode="once" autoStart="False">
-		<Affector property="BarColours" interpolator="ColourRect">
-			<KeyFrame position="0.0" value="tl:EE646464 tr:EE888888 bl:EE646464 br:EE888888" />
-			<KeyFrame position="0.1" value="tl:FFcccccc tr:FFcccccc bl:FFcccccc br:FFcccccc" progression="quadratic accelerating" />
-			<KeyFrame position="0.7" value="tl:FFcccccc tr:FFcccccc bl:FFcccccc br:FFcccccc" progression="quadratic decelerating" />
-			<KeyFrame position="2.5" value="tl:EE646464 tr:EE888888 bl:EE646464 br:EE888888" progression="quadratic accelerating" />
-		</Affector>
-	</AnimationDefinition>
+   <AnimationDefinition name="VUMeter_highlight_red" duration="1.0" replayMode="once" autoStart="False">
+      <Affector property="BarColours" interpolator="ColourRect">
+         <KeyFrame position="0.0" value="tl:EEdd0000 tr:EEf94343 bl:EEdd0000 br:EEf94343" />
+         <KeyFrame position="0.1" value="tl:FFff8888 tr:FFff8888 bl:FFff8888 br:FFff8888" progression="quadratic accelerating" />
+         <KeyFrame position="0.15" value="tl:FFff8888 tr:FFff8888 bl:FFff8888 br:FFff8888" progression="quadratic accelerating" />
+         <KeyFrame position="1.0" value="tl:EEdd0000 tr:EEf94343 bl:EEdd0000 br:EEf94343" progression="quadratic decelerating" />
+      </Affector>
+   </AnimationDefinition>
+   <AnimationDefinition name="VUMeter_highlight_blue" duration="1.0" replayMode="once" autoStart="False">
+      <Affector property="BarColours" interpolator="ColourRect">
+         <KeyFrame position="0.0" value="tl:EE006aae tr:EE2590d4 bl:EE006aae br:EE2590d4" />
+         <KeyFrame position="0.1" value="tl:FFacdfff tr:FFacdfff bl:FFacdfff br:FFacdfff" progression="quadratic accelerating" />
+         <KeyFrame position="0.15" value="tl:FFacdfff tr:FFacdfff bl:FFacdfff br:FFacdfff" progression="quadratic accelerating" />
+         <KeyFrame position="1.0" value="tl:EE006aae tr:EE2590d4 bl:EE006aae br:EE2590d4" progression="quadratic decelerating" />
+      </Affector>
+   </AnimationDefinition>
+   <AnimationDefinition name="VUMeter_highlight_yellow" duration="1.0" replayMode="once" autoStart="False">
+      <Affector property="BarColours" interpolator="ColourRect">
+         <KeyFrame position="0.0" value="tl:CCff9c00 tr:CCffc600 bl:CCff9c00 br:CCffc600" />
+         <KeyFrame position="0.1" value="tl:CCffe899 tr:CCffe899 bl:CCffe899 br:CCffe899" progression="quadratic accelerating" />
+         <KeyFrame position="0.15" value="tl:CCffe899 tr:CCffe899 bl:CCffe899 br:CCffe899" progression="quadratic accelerating" />
+         <KeyFrame position="1.0" value="tl:CCff9c00 tr:CCffc600 bl:CCff9c00 br:CCffc600" progression="quadratic decelerating" />
+      </Affector>
+   </AnimationDefinition>
+   <AnimationDefinition name="VUMeter_highlight_grey" duration="2.5" replayMode="once" autoStart="False">
+      <Affector property="BarColours" interpolator="ColourRect">
+         <KeyFrame position="0.0" value="tl:EE646464 tr:EE888888 bl:EE646464 br:EE888888" />
+         <KeyFrame position="0.1" value="tl:FFcccccc tr:FFcccccc bl:FFcccccc br:FFcccccc" progression="quadratic accelerating" />
+         <KeyFrame position="0.7" value="tl:FFcccccc tr:FFcccccc bl:FFcccccc br:FFcccccc" progression="quadratic decelerating" />
+         <KeyFrame position="2.5" value="tl:EE646464 tr:EE888888 bl:EE646464 br:EE888888" progression="quadratic accelerating" />
+      </Affector>
+   </AnimationDefinition>
 </Animations>

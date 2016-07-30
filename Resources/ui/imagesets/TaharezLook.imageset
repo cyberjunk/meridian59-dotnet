@@ -26,16 +26,16 @@
     <Image height="12" name="RadioButtonNormal" width="12" xPos="124" yPos="2" />
     <Image height="12" name="RadioButtonHover" width="12" xPos="124" yPos="30" />
     <Image height="12" name="RadioButtonMark" width="12" xPos="124" yPos="16" />
-    <Image height="23" name="TitlebarLeft" width="5" xPos="271" yPos="192" />
-    <Image height="23" name="TitlebarMiddle" width="60" xPos="277" yPos="192" />
-    <Image height="23" name="TitlebarRight" width="5" xPos="338" yPos="192" />
-    <Image height="23" name="NewTitlebarLeft" width="5" xPos="271" yPos="192" />
-    <Image height="23" name="NewTitlebarMiddle" width="60" xPos="277" yPos="192" />
-    <Image height="23" name="NewTitlebarRight" width="5" xPos="338" yPos="192" />
-    <Image height="23" name="NewTitlebarFrillLeft" width="20" xPos="350" yPos="192" />
-    <Image height="23" name="NewTitlebarFrillMiddle" width="30" xPos="371" yPos="192" />
-    <Image height="23" name="NewTitlebarFrillRight" width="20" xPos="402" yPos="192" />
-    <Image height="23" name="SysArea" width="32" xPos="288" yPos="225" />
+    <Image height="19" name="TitlebarLeft" width="5" xPos="271" yPos="192" />
+    <Image height="19" name="TitlebarMiddle" width="60" xPos="277" yPos="192" />
+    <Image height="19" name="TitlebarRight" width="5" xPos="338" yPos="192" />
+    <Image height="19" name="NewTitlebarLeft" width="5" xPos="271" yPos="192" />
+    <Image height="19" name="NewTitlebarMiddle" width="60" xPos="277" yPos="192" />
+    <Image height="19" name="NewTitlebarRight" width="5" xPos="338" yPos="192" />
+    <Image height="19" name="NewTitlebarFrillLeft" width="20" xPos="350" yPos="192" />
+    <Image height="19" name="NewTitlebarFrillMiddle" width="30" xPos="371" yPos="192" />
+    <Image height="19" name="NewTitlebarFrillRight" width="20" xPos="402" yPos="192" />
+    <Image height="19" name="SysArea" width="32" xPos="288" yPos="225" />
     <Image height="5" name="StaticLeft" width="5" xPos="255" yPos="235" />
     <Image height="5" name="StaticRight" width="5" xPos="275" yPos="235" />
     <Image height="5" name="StaticTop" width="5" xPos="265" yPos="225" />
@@ -259,63 +259,63 @@
     <Image height="5" name="PopupMenuArrowLeft" width="5" xPos="179" yPos="210" />
     <Image height="11" name="TreeListClosed" width="7" xPos="175" yPos="111" />
     <Image height="7" name="TreeListOpened" width="11" xPos="164" yPos="111" />
-	
-	<!-- Own -->
-	<Image height="24" name="MoodAngry" width="46" xPos="140" yPos="418" />
-	<Image height="24" name="MoodAngryHover" width="46" xPos="186" yPos="418" />
-	<Image height="24" name="MoodSad" width="46" xPos="140" yPos="394" />
-	<Image height="24" name="MoodSadHover" width="46" xPos="186" yPos="394" />
-	<Image height="24" name="MoodNeutral" width="46" xPos="140" yPos="370" />
-	<Image height="24" name="MoodNeutralHover" width="46" xPos="186" yPos="370" />
-	<Image height="24" name="MoodHappy" width="46" xPos="140" yPos="442" />
-	<Image height="24" name="MoodHappyHover" width="46" xPos="186" yPos="442" />
-	<Image height="22" name="StatusBarBackground" width="40" xPos="5" yPos="230" />
-	<Image height="135" name="AvatarBackground" width="250" xPos="259" yPos="2" />
-	<Image height="93" name="TargetBackground" width="248" xPos="539" yPos="138" />
-	<Image height="30" name="MainButtonsBackground" width="175" xPos="272" yPos="156" />
-	<Image height="117" name="ActionButtonsBackground" width="349" xPos="537" yPos="8" />
-	<Image height="28" name="RoomEnchantsBackground" width="250" xPos="552" yPos="254" />
-	<Image height="24" name="ActionActivate" 			width="24" xPos="5" yPos="255" />
-	<Image height="24" name="ActionActivateDisabled" 	width="24" xPos="5" yPos="280" />
-	<Image height="24" name="ActionAttack" 				width="24" xPos="30" yPos="255" />
-	<Image height="24" name="ActionAttackDisabled" 		width="24" xPos="30" yPos="280" />
-	<Image height="24" name="ActionBuy" 				width="24" xPos="55" yPos="255" />
-	<Image height="24" name="ActionBuyDisabled" 		width="24" xPos="55" yPos="280" />
-	<Image height="24" name="ActionInspect" 			width="24" xPos="80" yPos="255" />
-	<Image height="24" name="ActionInspectDisabled" 	width="24" xPos="80" yPos="280" />
-	<Image height="24" name="ActionLoot" 				width="24" xPos="105" yPos="255" />
-	<Image height="24" name="ActionLootDisabled" 		width="24" xPos="105" yPos="280" />
-	<Image height="24" name="ActionOffer" 				width="24" xPos="130" yPos="255" />
-	<Image height="24" name="ActionOfferDisabled" 		width="24" xPos="130" yPos="280" />
-	<Image height="24" name="ActionTrade" 				width="24" xPos="155" yPos="255" />
-	<Image height="24" name="ActionTradeDisabled" 		width="24" xPos="155" yPos="280" />
-	<Image height="24" name="ActionVisible" 			width="24" xPos="180" yPos="255" />
-	<Image height="24" name="ActionVisibleDisabled" 	width="24" xPos="180" yPos="280" />
-	<Image height="24" name="ActionDance" 				width="24" xPos="5" yPos="305" />
-	<Image height="24" name="ActionPoint" 				width="24" xPos="30" yPos="305" />
-	<Image height="24" name="ActionRest" 				width="24" xPos="55" yPos="305" />
-	<Image height="24" name="ActionWave" 				width="24" xPos="80" yPos="305" />
-	<Image height="24" name="ActionGuildInvite" 		width="24" xPos="105" yPos="305" />
-	<Image height="256" name="MiniMapBackground" 		width="256" xPos="256" yPos="256" />
-	<Image height="26" name="MainButtonActions" 		width="26" xPos="5" yPos="330" />
-	<Image height="26" name="MainButtonAttributes" 		width="26" xPos="32" yPos="330" />
-	<Image height="26" name="MainButtonChat" 			width="26" xPos="59" yPos="330" />
-	<Image height="26" name="MainButtonGuild" 			width="26" xPos="86" yPos="330" />
-	<Image height="26" name="MainButtonInventory"		width="26" xPos="113" yPos="330" />
-	<Image height="26" name="MainButtonMail"			width="26" xPos="140" yPos="330" />
-	<Image height="26" name="MainButtonMap"				width="26" xPos="167" yPos="330" />
-	<Image height="26" name="MainButtonSkills"			width="26" xPos="194" yPos="330" />
-	<Image height="26" name="MainButtonSpells"			width="26" xPos="221" yPos="330" />
-	<Image height="26" name="MainButtonOptions"			width="26" xPos="5" yPos="357" />
-	<Image height="26" name="MainButtonQuests"			width="26" xPos="32" yPos="357" />
-	<Image height="26" name="MainButtonEntities"			width="26" xPos="59" yPos="357" />
-	<Image height="10" name="RedCloseButton"			width="10" xPos="139" yPos="230" />
-	<Image height="10" name="RedCloseButtonHover"		width="10" xPos="150" yPos="230" />
-	<Image height="10" name="RedCloseButtonDisabled"	width="10" xPos="161" yPos="230" />
-	<Image height="51" name="LogoGPL3"		width="127" xPos="1" yPos="384" />
-	<Image height="50" name="LogoOgre3D"	width="125" xPos="1" yPos="433" />
-	<Image height="90" name="LogoCEGUI"		width="199" xPos="1" yPos="484" />
-	<Image height="55" name="LogoIrrKlang"	width="190" xPos="1" yPos="576" />
+   
+   <!-- Own -->
+   <Image height="24" name="MoodAngry" width="46" xPos="140" yPos="418" />
+   <Image height="24" name="MoodAngryHover" width="46" xPos="186" yPos="418" />
+   <Image height="24" name="MoodSad" width="46" xPos="140" yPos="394" />
+   <Image height="24" name="MoodSadHover" width="46" xPos="186" yPos="394" />
+   <Image height="24" name="MoodNeutral" width="46" xPos="140" yPos="370" />
+   <Image height="24" name="MoodNeutralHover" width="46" xPos="186" yPos="370" />
+   <Image height="24" name="MoodHappy" width="46" xPos="140" yPos="442" />
+   <Image height="24" name="MoodHappyHover" width="46" xPos="186" yPos="442" />
+   <Image height="22" name="StatusBarBackground" width="40" xPos="5" yPos="230" />
+   <Image height="135" name="AvatarBackground" width="250" xPos="259" yPos="2" />
+   <Image height="93" name="TargetBackground" width="248" xPos="539" yPos="138" />
+   <Image height="30" name="MainButtonsBackground" width="175" xPos="272" yPos="156" />
+   <Image height="117" name="ActionButtonsBackground" width="349" xPos="537" yPos="8" />
+   <Image height="28" name="RoomEnchantsBackground" width="250" xPos="552" yPos="254" />
+   <Image height="24" name="ActionActivate"          width="24" xPos="5" yPos="255" />
+   <Image height="24" name="ActionActivateDisabled"    width="24" xPos="5" yPos="280" />
+   <Image height="24" name="ActionAttack"             width="24" xPos="30" yPos="255" />
+   <Image height="24" name="ActionAttackDisabled"       width="24" xPos="30" yPos="280" />
+   <Image height="24" name="ActionBuy"             width="24" xPos="55" yPos="255" />
+   <Image height="24" name="ActionBuyDisabled"       width="24" xPos="55" yPos="280" />
+   <Image height="24" name="ActionInspect"          width="24" xPos="80" yPos="255" />
+   <Image height="24" name="ActionInspectDisabled"    width="24" xPos="80" yPos="280" />
+   <Image height="24" name="ActionLoot"             width="24" xPos="105" yPos="255" />
+   <Image height="24" name="ActionLootDisabled"       width="24" xPos="105" yPos="280" />
+   <Image height="24" name="ActionOffer"             width="24" xPos="130" yPos="255" />
+   <Image height="24" name="ActionOfferDisabled"       width="24" xPos="130" yPos="280" />
+   <Image height="24" name="ActionTrade"             width="24" xPos="155" yPos="255" />
+   <Image height="24" name="ActionTradeDisabled"       width="24" xPos="155" yPos="280" />
+   <Image height="24" name="ActionVisible"          width="24" xPos="180" yPos="255" />
+   <Image height="24" name="ActionVisibleDisabled"    width="24" xPos="180" yPos="280" />
+   <Image height="24" name="ActionDance"             width="24" xPos="5" yPos="305" />
+   <Image height="24" name="ActionPoint"             width="24" xPos="30" yPos="305" />
+   <Image height="24" name="ActionRest"             width="24" xPos="55" yPos="305" />
+   <Image height="24" name="ActionWave"             width="24" xPos="80" yPos="305" />
+   <Image height="24" name="ActionGuildInvite"       width="24" xPos="105" yPos="305" />
+   <Image height="256" name="MiniMapBackground"       width="256" xPos="256" yPos="256" />
+   <Image height="26" name="MainButtonActions"       width="26" xPos="5" yPos="330" />
+   <Image height="26" name="MainButtonAttributes"       width="26" xPos="32" yPos="330" />
+   <Image height="26" name="MainButtonChat"          width="26" xPos="59" yPos="330" />
+   <Image height="26" name="MainButtonGuild"          width="26" xPos="86" yPos="330" />
+   <Image height="26" name="MainButtonInventory"      width="26" xPos="113" yPos="330" />
+   <Image height="26" name="MainButtonMail"         width="26" xPos="140" yPos="330" />
+   <Image height="26" name="MainButtonMap"            width="26" xPos="167" yPos="330" />
+   <Image height="26" name="MainButtonSkills"         width="26" xPos="194" yPos="330" />
+   <Image height="26" name="MainButtonSpells"         width="26" xPos="221" yPos="330" />
+   <Image height="26" name="MainButtonOptions"         width="26" xPos="5" yPos="357" />
+   <Image height="26" name="MainButtonQuests"         width="26" xPos="32" yPos="357" />
+   <Image height="26" name="MainButtonEntities"         width="26" xPos="59" yPos="357" />
+   <Image height="10" name="RedCloseButton"         width="10" xPos="139" yPos="230" />
+   <Image height="10" name="RedCloseButtonHover"      width="10" xPos="150" yPos="230" />
+   <Image height="10" name="RedCloseButtonDisabled"   width="10" xPos="161" yPos="230" />
+   <Image height="51" name="LogoGPL3"      width="127" xPos="1" yPos="384" />
+   <Image height="50" name="LogoOgre3D"   width="125" xPos="1" yPos="433" />
+   <Image height="90" name="LogoCEGUI"      width="199" xPos="1" yPos="484" />
+   <Image height="55" name="LogoIrrKlang"   width="190" xPos="1" yPos="576" />
    <Image height="5" name="ListboxLegacyTopLeft" width="5" xPos="225" yPos="195" />
    <Image height="5" name="ListboxLegacyTop" width="5" xPos="235" yPos="195" />
    <Image height="5" name="ListboxLegacyTopRight" width="5" xPos="245" yPos="195" />
