@@ -6858,25 +6858,13 @@
         <Property name="TabButtonType" value="TaharezLook/TabButton" />
         <Property name="TabTextPadding" value="{0,6}" />
         <Property name="Font" value="Berenika-8-Bold" />
-        <Child type="TaharezLook/FrameWindow" nameSuffix="__auto_FrameWindow__" >
-            <Property name="TitlebarEnabled" value="False" />
-            <Property name="CloseButtonEnabled" value="False" />
+        <Child type="TaharezLook/ZeroTabContentPane" nameSuffix="__auto_TabPane__" >
             <Area>
                 <Dim type="TopEdge">
                     <AbsoluteDim value="0" />
                 </Dim>
                 <Dim type="Height">
                     <UnifiedDim scale="1" type="Height" />
-                </Dim>
-            </Area>
-        </Child>
-        <Child type="TaharezLook/TabContentPane" nameSuffix="__auto_TabPane__">
-            <Area>
-                <Dim type="TopEdge">
-                    <AbsoluteDim value="1" />
-                </Dim>
-                <Dim type="Height">
-                    <UnifiedDim scale="1" offset="-1" type="Height" />
                 </Dim>
             </Area>
         </Child>
@@ -6891,6 +6879,69 @@
         </Child>
         <StateImagery name="Enabled" />
         <StateImagery name="Disabled" />
+    </WidgetLook>
+
+    <!--
+    ***************************************************
+        TaharezLook/ZeroTabContentPane
+    ***************************************************
+    -->
+    <WidgetLook name="TaharezLook/ZeroTabContentPane">
+        <PropertyDefinition name="EnableTop" initialValue="0" redrawOnWrite="true" layoutOnWrite="true" type="uint"/>
+        <PropertyDefinition name="EnableBottom" initialValue="0" redrawOnWrite="true" layoutOnWrite="true" type="uint"/>
+        <ImagerySection name="normal">
+            <FrameComponent>
+                <Area>
+                    <Dim type="BottomEdge" >
+                        <ImageDim name="TaharezLook/WindowTopLeft" dimension="Height" />
+                    </Dim>
+                </Area>
+                <Image component="TopLeftCorner" name="TaharezLook/WindowTopLeft" />
+                <Image component="TopEdge" name="TaharezLook/WindowTopEdge" />
+                <Image component="TopRightCorner" name="TaharezLook/WindowTopRight" />
+            </FrameComponent>
+            <FrameComponent>
+                <Area>
+                    <Dim type="TopEdge" >
+                        <ImageDim name="TaharezLook/WindowTopLeft" dimension="Height" />
+                    </Dim>
+                    <Dim type="BottomEdge" >
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Height" />
+                            <ImageDim name="TaharezLook/WindowBottomLeft" dimension="Height" />
+                        </OperatorDim>
+                    </Dim>
+                </Area>
+                <Image component="LeftEdge" name="TaharezLook/WindowLeftEdge" />
+                <Image component="Background" name="TaharezLook/WindowBackdrop" />
+                <Image component="RightEdge" name="TaharezLook/WindowRightEdge" />
+            </FrameComponent>
+            <FrameComponent>
+                <Area>
+                    <Dim type="TopEdge" >
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Height" />
+                            <ImageDim name="TaharezLook/WindowBottomLeft" dimension="Height" />
+                        </OperatorDim>
+                    </Dim>
+                </Area>
+                <Image component="BottomLeftCorner" name="TaharezLook/WindowBottomLeft" />
+                <Image component="BottomEdge" name="TaharezLook/WindowBottomEdge" />
+                <Image component="BottomRightCorner" name="TaharezLook/WindowBottomRight" />
+            </FrameComponent>
+        </ImagerySection>
+        <StateImagery name="Enabled">
+            <Layer>
+                <Section section="normal" />
+            </Layer>
+        </StateImagery>
+        <StateImagery name="Disabled">
+            <Layer>
+                <Section section="normal">
+                    <Colours topLeft="FF7F7F7F" topRight="FF7F7F7F" bottomLeft="FF7F7F7F" bottomRight="FF7F7F7F" />
+                </Section>
+            </Layer>
+        </StateImagery>
     </WidgetLook>
 </Falagard>
 
