@@ -6849,5 +6849,48 @@
         </StateImagery>
     </WidgetLook>
 
+    <!--
+    ***************************************************
+        TaharezLook/ZeroTabControl
+    ***************************************************
+    -->
+    <WidgetLook name="TaharezLook/ZeroTabControl">
+        <Property name="TabButtonType" value="TaharezLook/TabButton" />
+        <Property name="TabTextPadding" value="{0,6}" />
+        <Property name="Font" value="Berenika-8-Bold" />
+        <Child type="TaharezLook/FrameWindow" nameSuffix="__auto_FrameWindow__" >
+            <Property name="TitlebarEnabled" value="False" />
+            <Property name="CloseButtonEnabled" value="False" />
+            <Area>
+                <Dim type="TopEdge">
+                    <AbsoluteDim value="0" />
+                </Dim>
+                <Dim type="Height">
+                    <UnifiedDim scale="1" type="Height" />
+                </Dim>
+            </Area>
+        </Child>
+        <Child type="TaharezLook/TabContentPane" nameSuffix="__auto_TabPane__">
+            <Area>
+                <Dim type="TopEdge">
+                    <AbsoluteDim value="1" />
+                </Dim>
+                <Dim type="Height">
+                    <UnifiedDim scale="1" offset="-1" type="Height" />
+                </Dim>
+            </Area>
+        </Child>
+        <Child  type="TaharezLook/TabButtonPane" nameSuffix="__auto_TabPane__Buttons">
+            <Property name="Visible" value="False" />
+        </Child>
+        <Child type="TaharezLook/Button" nameSuffix="__auto_TabPane__ScrollLeft">
+            <Property name="Visible" value="False" />
+        </Child>
+        <Child type="TaharezLook/Button" nameSuffix="__auto_TabPane__ScrollRight">
+            <Property name="Visible" value="False" />
+        </Child>
+        <StateImagery name="Enabled" />
+        <StateImagery name="Disabled" />
+    </WidgetLook>
 </Falagard>
 

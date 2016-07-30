@@ -2014,7 +2014,7 @@
          </Window>
          
          <!-- TabControl -->
-         <Window type="TaharezLook/TabControl" name="Options.TabControl" >            
+         <Window type="TaharezLook/ZeroTabControl" name="Options.TabControl" >            
             <Property name="Area" value="{{0,110},{0,5},{1,-5},{1,-5}}" />
             <Property name="TabHeight" value="{0,0}" />
 
@@ -2261,7 +2261,7 @@
             <!-- TabInput -->
             <Window type="DefaultWindow" name="Options.TabInput" >
                <Property name="Text" value="Input" />
-               <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+               <Property name="Area" value="{{0,5},{0,5},{1,-5},{1,-5}}" />
 
                <!-- TabControl -->
                <Window type="TaharezLook/TabControl" name="Options.TabInput.TabControl" >            
@@ -2271,7 +2271,7 @@
                   <!-- TabGeneral -->
                   <Window type="DefaultWindow" name="Options.TabInput.TabGeneral" >
                      <Property name="Text" value="General" />
-                     <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+                     <Property name="Area" value="{{0,-5},{0,0},{1,-5},{1,0}}" />
 
                      <!-- Move forward -->
                      <Window type="TaharezLook/Label" name="Options.TabInput.TabGeneral.MoveForwardDescription" >
@@ -2469,7 +2469,7 @@
                   <!-- TabActionButtons1 -->
                   <Window type="DefaultWindow" name="Options.TabInput.TabActionButtons1" >
                      <Property name="Text" value="Action 01-24" />
-                     <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+                     <Property name="Area" value="{{0,-5},{0,0},{1,-5},{1,0}}" />
 
                      <!-- ActionButton01 -->
                      <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button01Description" >
@@ -2766,7 +2766,7 @@
                   <!-- TabActionButtons2 -->
                   <Window type="DefaultWindow" name="Options.TabInput.TabActionButtons2" >
                      <Property name="Text" value="Action 25-48" />
-                     <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+                     <Property name="Area" value="{{0,-5},{0,0},{1,-5},{1,0}}" />
                   
                      <!-- ActionButton25 -->
                      <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button25Description" >
@@ -3252,7 +3252,7 @@
             <!-- TabAbout -->
             <Window type="DefaultWindow" name="Options.TabAbout" >
                <Property name="Text" value="About" />
-               <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+               <Property name="Area" value="{{0,5},{0,5},{1,-5},{1,-5}}" />
                
                <!-- TabControl -->
                <Window type="TaharezLook/TabControl" name="Options.TabAbout.TabControl" >            
@@ -3262,7 +3262,7 @@
                   <!-- TabGeneral -->
                   <Window type="DefaultWindow" name="Options.TabAbout.TabGeneral" >
                      <Property name="Text" value="General" />
-                     <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+                     <Property name="Area" value="{{0,-5},{0,0},{1,-5},{1,0}}" />
 
                      <!-- Disclaimer1Description -->
                      <Window type="TaharezLook/Label" name="Options.TabAbout.TabGeneral.Disclaimer1Desc" >
@@ -3373,17 +3373,17 @@
                   <!-- TabHistory -->
                   <Window type="DefaultWindow" name="Options.TabAbout.TabHistory" >
                      <Property name="Text" value="Meridian 59 - History" />
-                     <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+                     <Property name="Area" value="{{0,5},{0,5},{1,-5},{1,-5}}" />
                      
                      <!-- TabControl -->
                      <Window type="TaharezLook/TabControl" name="Options.TabAbout.TabHistory.TabControl" >            
-                        <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+                        <Property name="Area" value="{{0,5},{0,5},{1,-5},{1,-5}}" />
                         <Property name="TabHeight" value="{0,20}" />
                      
                         <!-- TabEvolution -->
                         <Window type="TaharezLook/ScrollablePane" name="Options.TabAbout.TabHistory.TabEvolution" >
                            <Property name="Text" value="Evolution (2004)" />
-                           <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+                           <Property name="Area" value="{{0,-5},{0,5},{1,-5},{1,-5}}" />
                         
                            <!-- ImageEvolution -->
                            <Window type="TaharezLook/StaticImage" name="Options.TabAbout.TabHistory.ImageEvolution" >
@@ -3397,7 +3397,7 @@
                         <!-- TabResurrection -->
                         <Window type="TaharezLook/ScrollablePane" name="Options.TabAbout.TabHistory.TabResurrection" >
                            <Property name="Text" value="Resurrection (2002)" />
-                           <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+                           <Property name="Area" value="{{0,-5},{0,5},{1,-5},{1,-5}}" />
                            
                            <!-- ImageResurrection -->
                            <Window type="TaharezLook/StaticImage" name="Options.TabAbout.TabHistory.ImageResurrection" >
@@ -3411,7 +3411,7 @@
                         <!-- TabDarkAuspices -->
                         <Window type="TaharezLook/ScrollablePane" name="Options.TabAbout.TabHistory.TabDarkAuspices" >
                            <Property name="Text" value="Dark Auspices (1999)" />
-                           <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+                           <Property name="Area" value="{{0,-5},{0,5},{1,-5},{1,-5}}" />
                            
                            <!-- ImageDarkAuspices -->
                            <Window type="TaharezLook/StaticImage" name="Options.TabAbout.TabHistory.ImageDarkAuspices" >
@@ -3425,7 +3425,7 @@
                         <!-- TabInsurrection -->
                         <Window type="TaharezLook/ScrollablePane" name="Options.TabAbout.TabHistory.TabInsurrection" >
                            <Property name="Text" value="Insurrection (1998)" />
-                           <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+                           <Property name="Area" value="{{0,-5},{0,5},{1,-5},{1,-5}}" />
                            
                            <!-- ImageInsurrection -->
                            <Window type="TaharezLook/StaticImage" name="Options.TabAbout.TabHistory.ImageInsurrection" >
@@ -3439,7 +3439,7 @@
                         <!-- TabRenaissance -->
                         <Window type="TaharezLook/ScrollablePane" name="Options.TabAbout.TabHistory.TabRenaissance" >
                            <Property name="Text" value="Renaissance (1998)" />
-                           <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+                           <Property name="Area" value="{{0,-5},{0,5},{1,-5},{1,-5}}" />
                            
                            <!-- ImageRenaissance -->
                            <Window type="TaharezLook/StaticImage" name="Options.TabAbout.TabHistory.ImageRenaissance" >
@@ -3453,7 +3453,7 @@
                         <!-- TabRevelation -->
                         <Window type="TaharezLook/ScrollablePane" name="Options.TabAbout.TabHistory.TabRevelation" >
                            <Property name="Text" value="Revelation (1997)" />
-                           <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+                           <Property name="Area" value="{{0,-5},{0,5},{1,-5},{1,-5}}" />
                            
                            <!-- ImageRevelation -->
                            <Window type="TaharezLook/StaticImage" name="Options.TabAbout.TabHistory.ImageRevelation" >
@@ -3467,7 +3467,7 @@
                         <!-- TabValeOfSorrow -->
                         <Window type="TaharezLook/ScrollablePane" name="Options.TabAbout.TabHistory.TabValeOfSorrow" >
                            <Property name="Text" value="Vale of Sorrow (1997)" />
-                           <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+                           <Property name="Area" value="{{0,-5},{0,5},{1,-5},{1,-5}}" />
                            
                            <!-- ImageValeOfSorrow -->
                            <Window type="TaharezLook/StaticImage" name="Options.TabAbout.TabHistory.ImageValeOfSorrow" >
@@ -3481,7 +3481,7 @@
                         <!-- TabTheInternetQuestBegins -->
                         <Window type="TaharezLook/ScrollablePane" name="Options.TabAbout.TabHistory.TabTheInternetQuestBegins" >
                            <Property name="Text" value="The Internet Quest Begins (1996)" />
-                           <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+                           <Property name="Area" value="{{0,-5},{0,5},{1,-5},{1,-5}}" />
                            
                            <!-- ImageTheInternetQuestBegins -->
                            <Window type="TaharezLook/StaticImage" name="Options.TabAbout.TabHistory.ImageTheInternetQuestBegins" >
