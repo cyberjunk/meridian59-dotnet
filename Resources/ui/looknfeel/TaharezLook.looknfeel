@@ -3211,7 +3211,7 @@
                         </OperatorDim>
                     </Dim>
                 </Area>
-                <Colours topLeft="FFFFCC99" topRight="FFFFCC99" bottomLeft="AAFFCC99" bottomRight="AAFFCC99" />
+                <Colours topLeft="FFFFFFFF" topRight="FFFFFFFF" bottomLeft="CCFFFFFF" bottomRight="CCFFFFFF" />
                 <VertFormat type="CentreAligned" />
                 <HorzFormat type="CentreAligned" />
             </TextComponent>
@@ -3229,23 +3229,24 @@
             </Layer>
         </StateImagery>
         
-        <AnimationDefinition name="FadeIn" duration="0.33" replayMode="once">
+        <AnimationDefinition name="FadeIn" duration="0.8" replayMode="once">
             <Affector property="Alpha" interpolator="float">
                 <KeyFrame position="0" sourceProperty="Alpha" />
-                <KeyFrame position="0.33" value="1" progression="linear" />
+                <KeyFrame position="0.5" sourceProperty="Alpha" />
+                <KeyFrame position="0.8" value="1" progression="quadratic accelerating" />
             </Affector>
             
             <Subscription event="TooltipActive" action="Start" />
         </AnimationDefinition>
         
-        <AnimationDefinition name="FadeOut" duration="0.33" replayMode="once">
+        <AnimationDefinition name="FadeOut" duration="0.2" replayMode="once">
             <Affector property="Alpha" interpolator="float">
-                <KeyFrame position="0" sourceProperty="Alpha" />
-                <KeyFrame position="0.33" value="0" progression="linear" />
+                <KeyFrame position="0" value="1" sourceProperty="Alpha" />
+                <KeyFrame position="0.2" value="0" progression="quadratic accelerating" />
             </Affector>
-            <Affector property="Visible" interpolator="bool">
-                <KeyFrame position="0" sourceProperty="Visible" />
-                <KeyFrame position="0.33" value="false" progression="discrete" />
+            <Affector property="Visible" duration="1.2" interpolator="bool">
+                <KeyFrame position="0" value="1" sourceProperty="Visible" />
+                <KeyFrame position="0.2" value="false" progression="discrete" />
             </Affector>
             
             <Subscription event="TooltipInactive" action="Start" />

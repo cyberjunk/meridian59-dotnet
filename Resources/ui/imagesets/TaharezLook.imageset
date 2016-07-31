@@ -228,15 +228,15 @@
     <Image height="17" name="TabButtonScrollRightNormal" width="16" xPos="112" yPos="108" />
     <Image height="17" name="TabButtonScrollLeftHover" width="16" xPos="127" yPos="108" />
     <Image height="17" name="TabButtonScrollRightHover" width="16" xPos="142" yPos="108" />
-    <Image height="4" name="TooltipTopLeft" width="4" xPos="61" yPos="160" />
-    <Image height="4" name="TooltipTopRight" width="5" xPos="85" yPos="160" />
-    <Image height="5" name="TooltipBottomLeft" width="4" xPos="61" yPos="184" />
-    <Image height="5" name="TooltipBottomRight" width="5" xPos="85" yPos="184" />
-    <Image height="6" name="TooltipLeftEdge" width="4" xPos="61" yPos="171" />
-    <Image height="6" name="TooltipRightEdge" width="5" xPos="85" yPos="171" />
-    <Image height="4" name="TooltipTopEdge" width="6" xPos="72" yPos="160" />
-    <Image height="5" name="TooltipBottomEdge" width="6" xPos="72" yPos="184" />
-    <Image height="6" name="TooltipMiddle" width="6" xPos="72" yPos="171" />
+    <Image height="4" name="TooltipTopLeft" width="5" xPos="2" yPos="141" />
+    <Image height="4" name="TooltipTopEdge" width="14" xPos="8" yPos="141" />
+    <Image height="4" name="TooltipTopRight" width="5" xPos="21" yPos="141" />
+    <Image height="4" name="TooltipLeftEdge" width="5" xPos="2" yPos="145" />
+    <Image height="4" name="TooltipMiddle" width="14" xPos="8" yPos="145" />
+    <Image height="4" name="TooltipRightEdge" width="5" xPos="21" yPos="145" />
+    <Image height="4" name="TooltipBottomLeft" width="5" xPos="2" yPos="149" />
+    <Image height="4" name="TooltipBottomEdge" width="14" xPos="8" yPos="149" />
+    <Image height="4" name="TooltipBottomRight" width="5" xPos="21" yPos="149" />
     <Image height="2" name="MenuTopLeft" width="2" xPos="166" yPos="204" />
     <Image height="2" name="MenuTopRight" width="3" xPos="175" yPos="204" />
     <Image height="3" name="MenuBottomLeft" width="2" xPos="166" yPos="213" />
