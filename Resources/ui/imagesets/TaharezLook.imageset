@@ -20,6 +20,15 @@
     <Image height="25" name="ButtonLeftPushed" width="12" xPos="460" yPos="200" />
     <Image height="25" name="ButtonMiddlePushed" width="12" xPos="474" yPos="200" />
     <Image height="25" name="ButtonRightPushed" width="12" xPos="488" yPos="200" />
+    <Image height="17" name="MiniButtonLeftNormal" width="5" xPos="503" yPos="140" />
+    <Image height="17" name="MiniButtonMiddleNormal" width="15" xPos="509" yPos="140" />
+    <Image height="17" name="MiniButtonRightNormal" width="5" xPos="525" yPos="140" />
+    <Image height="17" name="MiniButtonLeftHighlight" width="5" xPos="503" yPos="170" />
+    <Image height="17" name="MiniButtonMiddleHighlight" width="15" xPos="509" yPos="170" />
+    <Image height="17" name="MiniButtonRightHighlight" width="5" xPos="525" yPos="170" />
+    <Image height="17" name="MiniButtonLeftPushed" width="5" xPos="503" yPos="200" />
+    <Image height="17" name="MiniButtonMiddlePushed" width="15" xPos="509" yPos="200" />
+    <Image height="17" name="MiniButtonRightPushed" width="5" xPos="525" yPos="200" />
     <Image height="12" name="CheckboxNormal" width="12" xPos="110" yPos="2" />
     <Image height="12" name="CheckboxHover" width="12" xPos="110" yPos="30" />
     <Image height="12" name="CheckboxMark" width="12" xPos="110" yPos="16" />

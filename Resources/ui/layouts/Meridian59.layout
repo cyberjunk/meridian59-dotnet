@@ -119,7 +119,7 @@
       
       <!-- Status bar -->
       <Window type="TaharezLook/StaticImage" name="StatusBar" >
-         <Property name="Area" value="{{0,0},{0,0},{1,0},{0,24}}" />
+         <Property name="Area" value="{{0,0},{0,0},{1,0},{0,23}}" />
          <Property name="FrameEnabled" value="False" />
          <Property name="Image" value="TaharezLook/StatusBarBackground" />
          <Property name="VertFormatting" value="Stretched" />
@@ -130,7 +130,7 @@
          <!-- TPS / FPS -->
          <Window type="TaharezLook/LabelWhite" name="StatusBar.FPSDescription" >
             <Property name="Text" value="FPS:" />
-            <Property name="Area" value="{{0,5},{0,0},{0,41},{0,24}}" />
+            <Property name="Area" value="{{0,5},{0,0},{0,41},{0,23}}" />
             <Property name="HorzFormatting" value="LeftAligned" />
             <Property name="VertFormatting" value="CentreAligned" />
             <Property name="Font" value="Berenika-8-Bold" />
@@ -138,7 +138,7 @@
          </Window>
          <Window type="TaharezLook/Label" name="StatusBar.FPSValue" >
             <Property name="Text" value="0" />
-            <Property name="Area" value="{{0,41},{0,0},{0,75},{0,24}}" />
+            <Property name="Area" value="{{0,41},{0,0},{0,75},{0,23}}" />
             <Property name="HorzFormatting" value="LeftAligned" />
             <Property name="VertFormatting" value="CentreAligned" />
             <Property name="Font" value="Berenika-8-Bold" />
@@ -147,14 +147,14 @@
          <!-- RTT -->
          <Window type="TaharezLook/LabelWhite" name="StatusBar.RTTDescription" >
             <Property name="Text" value="Ping:" />
-            <Property name="Area" value="{{0,77},{0,0},{0,114},{0,24}}" />
+            <Property name="Area" value="{{0,77},{0,0},{0,114},{0,23}}" />
             <Property name="HorzFormatting" value="LeftAligned" />
             <Property name="VertFormatting" value="CentreAligned" />
             <Property name="Font" value="Berenika-8-Bold" />
          </Window>
          <Window type="TaharezLook/Label" name="StatusBar.RTTValue" >
             <Property name="Text" value="0" />
-            <Property name="Area" value="{{0,114},{0,0},{0,150},{0,24}}" />
+            <Property name="Area" value="{{0,114},{0,0},{0,150},{0,23}}" />
             <Property name="HorzFormatting" value="LeftAligned" />
             <Property name="VertFormatting" value="CentreAligned" />
             <Property name="Font" value="Berenika-8-Bold" />
@@ -163,71 +163,65 @@
          <!-- OnlinePlayers -->
          <Window type="TaharezLook/LabelWhite" name="StatusBar.PlayersDescription" >
             <Property name="Text" value="Players:" />
-            <Property name="Area" value="{{0,150},{0,0},{0,210},{0,24}}" />
+            <Property name="Area" value="{{0,150},{0,0},{0,210},{0,23}}" />
             <Property name="HorzFormatting" value="LeftAligned" />
             <Property name="VertFormatting" value="CentreAligned" />
             <Property name="Font" value="Berenika-8-Bold" />
          </Window>
-         <Window type="TaharezLook/Button" name="StatusBar.PlayersValue" >
+         <Window type="TaharezLook/MiniButton" name="StatusBar.PlayersValue" >
             <Property name="Text" value="0" />
             <Property name="Area" value="{{0,210},{0,3},{0,260},{0,20}}" />
-            <Property name="Font" value="Xolonium-6-Bold" />
          </Window>
          
          <!-- Mood -->
          <Window type="TaharezLook/LabelWhite" name="StatusBar.MoodDescription" >
             <Property name="Text" value="Mood:" />
-            <Property name="Area" value="{{0,275},{0,0},{0,315},{0,24}}" />
+            <Property name="Area" value="{{0,275},{0,0},{0,315},{0,23}}" />
             <Property name="HorzFormatting" value="LeftAligned" />
             <Property name="VertFormatting" value="CentreAligned" />
             <Property name="Font" value="Berenika-8-Bold" />
          </Window>
-         <Window type="TaharezLook/Button" name="StatusBar.MoodHappy" >
+         <Window type="TaharezLook/MiniButton" name="StatusBar.MoodHappy" >
             <Property name="Area" value="{{0,320},{0,3},{0,374},{0,20}}" />
-            <Property name="Font" value="Xolonium-6-Bold" />
             <Property name="Text" value="Happy" />
          </Window>
-         <Window type="TaharezLook/Button" name="StatusBar.MoodNeutral" >
+         <Window type="TaharezLook/MiniButton" name="StatusBar.MoodNeutral" >
             <Property name="Area" value="{{0,375},{0,3},{0,429},{0,20}}" />
-            <Property name="Font" value="Xolonium-6-Bold" />
             <Property name="Text" value="Neutral" />
          </Window>
-         <Window type="TaharezLook/Button" name="StatusBar.MoodSad" >
+         <Window type="TaharezLook/MiniButton" name="StatusBar.MoodSad" >
             <Property name="Area" value="{{0,430},{0,3},{0,484},{0,20}}" />
-            <Property name="Font" value="Xolonium-6-Bold" />
             <Property name="Text" value="Sad" />
          </Window>
-         <Window type="TaharezLook/Button" name="StatusBar.MoodAngry" >
+         <Window type="TaharezLook/MiniButton" name="StatusBar.MoodAngry" >
             <Property name="Area" value="{{0,485},{0,3},{0,539},{0,20}}" />
-            <Property name="Font" value="Xolonium-6-Bold" />
             <Property name="Text" value="Angry" />
          </Window>
          
          <!-- Safety -->
          <Window type="TaharezLook/LabelWhite" name="StatusBar.SafetyDescription" >
             <Property name="Text" value="Safety:" />
-            <Property name="Area" value="{{0,556},{0,0},{0,611},{0,24}}" />
+            <Property name="Area" value="{{0,556},{0,0},{0,611},{0,23}}" />
             <Property name="HorzFormatting" value="LeftAligned" />
             <Property name="VertFormatting" value="CentreAligned" />
             <Property name="Font" value="Berenika-8-Bold" />
          </Window>
-         <Window type="TaharezLook/Button" name="StatusBar.SafetyValue" >
+         <Window type="TaharezLook/MiniButton" name="StatusBar.SafetyValue" >
             <Property name="Text" value="On" />
             <Property name="Area" value="{{0,611},{0,3},{0,661},{0,20}}" />
-            <Property name="Font" value="Xolonium-6-Bold" />
          </Window>
          
          <!-- MeridianTime -->
          <Window type="TaharezLook/LabelWhite" name="StatusBar.MTimeDescription" >
             <Property name="Text" value="Time:" />
-            <Property name="Area" value="{{0,676},{0,0},{0,716},{0,24}}" />
+            <Property name="Area" value="{{0,676},{0,0},{0,716},{0,23}}" />
             <Property name="HorzFormatting" value="LeftAligned" />
             <Property name="VertFormatting" value="CentreAligned" />
             <Property name="Font" value="Berenika-8-Bold" />
          </Window>
          <Window type="TaharezLook/LabelWhite" name="StatusBar.MTimeValue" >
             <Property name="Text" value="00:00" />
-            <Property name="Area" value="{{0,716},{0,0},{0,786},{0,24}}" />
+            <Property name="Area" value="{{0,716},{0,0},{0,786},{0,23}}" />
             <Property name="HorzFormatting" value="LeftAligned" />
             <Property name="VertFormatting" value="CentreAligned" />
             <Property name="Font" value="Berenika-8-Bold" />
@@ -236,14 +230,14 @@
          <!-- RoomName -->
          <Window type="TaharezLook/LabelWhite" name="StatusBar.RoomDescription" >
             <Property name="Text" value="Zone:" />
-            <Property name="Area" value="{{0,801},{0,0},{0,841},{0,24}}" />
+            <Property name="Area" value="{{0,801},{0,0},{0,841},{0,23}}" />
             <Property name="HorzFormatting" value="LeftAligned" />
             <Property name="VertFormatting" value="CentreAligned" />
             <Property name="Font" value="Berenika-8-Bold" />
          </Window>
          <Window type="TaharezLook/LabelWhite" name="StatusBar.RoomValue" >
             <Property name="Text" value="-" />
-            <Property name="Area" value="{{0,846},{0,0},{1,0},{0,24}}" />
+            <Property name="Area" value="{{0,846},{0,0},{1,0},{0,23}}" />
             <Property name="HorzFormatting" value="LeftAligned" />
             <Property name="VertFormatting" value="CentreAligned" />
             <Property name="Font" value="Berenika-8-Bold" />

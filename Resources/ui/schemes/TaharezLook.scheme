@@ -86,5 +86,6 @@
 	<FalagardMapping windowType="TaharezLook/LabelWhite"       				targetType="DefaultWindow"     	renderer="Core/Default"      	lookNFeel="TaharezLook/LabelWhite" />
 	<FalagardMapping windowType="TaharezLook/ZeroTabControl" 				targetType="CEGUI/TabControl" 	renderer="Core/TabControl" 		lookNFeel="TaharezLook/ZeroTabControl" />
 	<FalagardMapping windowType="TaharezLook/ZeroTabContentPane"    		targetType="DefaultWindow"    	renderer="Core/Default"    		lookNFeel="TaharezLook/ZeroTabContentPane" />
+	<FalagardMapping windowType="TaharezLook/MiniButton"      				targetType="CEGUI/PushButton"  	renderer="Core/Button"       	lookNFeel="TaharezLook/MiniButton" />
 </GUIScheme>
 
