@@ -317,6 +317,7 @@
                         </OperatorDim>
                     </Dim>
                 </Area>
+                <Colours topLeft="FFFFFFFF" topRight="FFFFFFFF" bottomLeft="CCFFFFFF" bottomRight="CCFFFFFF" />
                 <VertFormat type="CentreAligned" />
                 <HorzFormat type="LeftAligned" />
             </TextComponent>
@@ -6894,41 +6895,41 @@
             <FrameComponent>
                 <Area>
                     <Dim type="BottomEdge" >
-                        <ImageDim name="TaharezLook/WindowTopLeft" dimension="Height" />
+                        <ImageDim name="TaharezLook/ListboxTopLeft" dimension="Height" />
                     </Dim>
                 </Area>
-                <Image component="TopLeftCorner" name="TaharezLook/WindowTopLeft" />
-                <Image component="TopEdge" name="TaharezLook/WindowTopEdge" />
-                <Image component="TopRightCorner" name="TaharezLook/WindowTopRight" />
+                <Image component="TopLeftCorner" name="TaharezLook/ListboxTopLeft" />
+                <Image component="TopEdge" name="TaharezLook/ListboxTop" />
+                <Image component="TopRightCorner" name="TaharezLook/ListboxTopRight" />
             </FrameComponent>
             <FrameComponent>
                 <Area>
                     <Dim type="TopEdge" >
-                        <ImageDim name="TaharezLook/WindowTopLeft" dimension="Height" />
+                        <ImageDim name="TaharezLook/ListboxTopLeft" dimension="Height" />
                     </Dim>
                     <Dim type="BottomEdge" >
                         <OperatorDim op="Subtract">
                             <UnifiedDim scale="1" type="Height" />
-                            <ImageDim name="TaharezLook/WindowBottomLeft" dimension="Height" />
+                            <ImageDim name="TaharezLook/ListboxBottomLeft" dimension="Height" />
                         </OperatorDim>
                     </Dim>
                 </Area>
-                <Image component="LeftEdge" name="TaharezLook/WindowLeftEdge" />
-                <Image component="Background" name="TaharezLook/WindowBackdrop" />
-                <Image component="RightEdge" name="TaharezLook/WindowRightEdge" />
+                <Image component="LeftEdge" name="TaharezLook/ListboxLeft" />
+                <Image component="Background" name="TaharezLook/ListboxBackdrop" />
+                <Image component="RightEdge" name="TaharezLook/ListboxRight" />
             </FrameComponent>
             <FrameComponent>
                 <Area>
                     <Dim type="TopEdge" >
                         <OperatorDim op="Subtract">
                             <UnifiedDim scale="1" type="Height" />
-                            <ImageDim name="TaharezLook/WindowBottomLeft" dimension="Height" />
+                            <ImageDim name="TaharezLook/ListboxBottomLeft" dimension="Height" />
                         </OperatorDim>
                     </Dim>
                 </Area>
-                <Image component="BottomLeftCorner" name="TaharezLook/WindowBottomLeft" />
-                <Image component="BottomEdge" name="TaharezLook/WindowBottomEdge" />
-                <Image component="BottomRightCorner" name="TaharezLook/WindowBottomRight" />
+                <Image component="BottomLeftCorner" name="TaharezLook/ListboxBottomLeft" />
+                <Image component="BottomEdge" name="TaharezLook/ListboxBottom" />
+                <Image component="BottomRightCorner" name="TaharezLook/ListboxBottomRight" />
             </FrameComponent>
         </ImagerySection>
         <StateImagery name="Enabled">

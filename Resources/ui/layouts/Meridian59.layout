@@ -1824,7 +1824,7 @@
          <Window type="TaharezLook/Label" name="ConfirmPopup.Text" >
             <Property name="Text" value="Are you sure?" />
             <Property name="NormalTextColour" value="FFFF0000" />
-            <Property name="Font" value="LiberationSans-10-Bold" />
+            <Property name="Font" value="Berenika-8-Bold" />
             <Property name="HorzFormatting" value="CentreAligned" />
             <Property name="VertFormatting" value="CentreAligned" />
             <Property name="Area" value="{{0,5},{0,5},{1,-5},{1,-35}}" />            
@@ -2018,11 +2018,10 @@
                <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
 
                <!-- Display -->
-               <Window type="TaharezLook/Label" name="Options.TabEngine.DisplayDescription" >
+               <Window type="TaharezLook/LabelWhite" name="Options.TabEngine.DisplayDescription" >
                   <Property name="Text" value="Display" />
                   <Property name="Area" value="{{0,20},{0,20},{0,110},{0,40}}" />
                   <Property name="HorzFormatting" value="LeftAligned" />
-                  <Property name="NormalTextColour" value="FFffeeee" />                        
                </Window>
                <Window type="TaharezLook/Combobox" name="Options.TabEngine.Display" >
                   <Property name="Area" value="{{0,115},{0,20},{0,370},{0,120}}" />
@@ -2031,11 +2030,10 @@
                </Window>   
 
                <!-- Resolution -->
-               <Window type="TaharezLook/Label" name="Options.TabEngine.ResolutionDescription" >
+               <Window type="TaharezLook/LabelWhite" name="Options.TabEngine.ResolutionDescription" >
                   <Property name="Text" value="Resolution" />
                   <Property name="Area" value="{{0,20},{0,45},{0,110},{0,65}}" />
                   <Property name="HorzFormatting" value="LeftAligned" />
-                  <Property name="NormalTextColour" value="FFffeeee" />                        
                </Window>
                <Window type="TaharezLook/Combobox" name="Options.TabEngine.Resolution" >
                   <Property name="Area" value="{{0,115},{0,45},{0,370},{0,245}}" />
@@ -2064,11 +2062,10 @@
                <!-- -->
                
                <!-- FSAA -->
-               <Window type="TaharezLook/Label" name="Options.TabEngine.FSAADescription" >
+               <Window type="TaharezLook/LabelWhite" name="Options.TabEngine.FSAADescription" >
                   <Property name="Text" value="FSAA" />
                   <Property name="Area" value="{{0,20},{0,105},{0,110},{0,125}}" />
                   <Property name="HorzFormatting" value="LeftAligned" />
-                  <Property name="NormalTextColour" value="FFffeeee" />                        
                </Window>
                <Window type="TaharezLook/Combobox" name="Options.TabEngine.FSAA" >
                   <Property name="Area" value="{{0,115},{0,105},{0,245},{0,220}}" />
@@ -2077,11 +2074,10 @@
                </Window>
                
                <!-- Filtering -->
-               <Window type="TaharezLook/Label" name="Options.TabEngine.FilteringDescription" >
+               <Window type="TaharezLook/LabelWhite" name="Options.TabEngine.FilteringDescription" >
                   <Property name="Text" value="Filtering" />
                   <Property name="Area" value="{{0,20},{0,130},{0,110},{0,150}}" />
                   <Property name="HorzFormatting" value="LeftAligned" />
-                  <Property name="NormalTextColour" value="FFffeeee" />                        
                </Window>
                <Window type="TaharezLook/Combobox" name="Options.TabEngine.Filtering" >
                   <Property name="Area" value="{{0,115},{0,130},{0,245},{0,245}}" />
@@ -2090,11 +2086,10 @@
                </Window>
 
                <!-- ImageBuilder -->
-               <Window type="TaharezLook/Label" name="Options.TabEngine.ImageBuilderDescription" >
+               <Window type="TaharezLook/LabelWhite" name="Options.TabEngine.ImageBuilderDescription" >
                   <Property name="Text" value="Image Builder" />
                   <Property name="Area" value="{{0,20},{0,155},{0,110},{0,175}}" />
                   <Property name="HorzFormatting" value="LeftAligned" />
-                  <Property name="NormalTextColour" value="FFffeeee" />                        
                </Window>
                <Window type="TaharezLook/Combobox" name="Options.TabEngine.ImageBuilder" >
                   <Property name="Area" value="{{0,115},{0,155},{0,245},{0,225}}" />
@@ -2104,11 +2099,10 @@
                </Window>               
                
                <!-- ScalingQuality -->
-               <Window type="TaharezLook/Label" name="Options.TabEngine.ScalingQualityDescription" >
+               <Window type="TaharezLook/LabelWhite" name="Options.TabEngine.ScalingQualityDescription" >
                   <Property name="Text" value="Scaling Quality" />
                   <Property name="Area" value="{{0,20},{0,180},{0,110},{0,200}}" />
                   <Property name="HorzFormatting" value="LeftAligned" />
-                  <Property name="NormalTextColour" value="FFffeeee" />                        
                </Window>
                <Window type="TaharezLook/Combobox" name="Options.TabEngine.ScalingQuality" >
                   <Property name="Area" value="{{0,115},{0,180},{0,245},{0,265}}" />
@@ -2117,11 +2111,10 @@
                </Window>
                
                <!-- TextureQuality -->
-               <Window type="TaharezLook/Label" name="Options.TabEngine.TextureQualityDescription" >
+               <Window type="TaharezLook/LabelWhite" name="Options.TabEngine.TextureQualityDescription" >
                   <Property name="Text" value="Texture Quality" />
                   <Property name="Area" value="{{0,20},{0,205},{0,110},{0,225}}" />
                   <Property name="HorzFormatting" value="LeftAligned" />
-                  <Property name="NormalTextColour" value="FFffeeee" />                        
                </Window>
                <Window type="TaharezLook/Combobox" name="Options.TabEngine.TextureQuality" >
                   <Property name="Area" value="{{0,115},{0,205},{0,245},{0,290}}" />
@@ -2167,22 +2160,20 @@
                <!-- -->
                
                <!-- Particles -->
-               <Window type="TaharezLook/Label" name="Options.TabEngine.ParticlesDescription" >
+               <Window type="TaharezLook/LabelWhite" name="Options.TabEngine.ParticlesDescription" >
                   <Property name="Text" value="Particles" />
                   <Property name="Area" value="{{0,20},{0,240},{0,110},{0,260}}" />
                   <Property name="HorzFormatting" value="LeftAligned" />
-                  <Property name="NormalTextColour" value="FFffeeee" />                        
                </Window>
                <Window type="TaharezLook/Slider" name="Options.TabEngine.Particles" >
                   <Property name="Area" value="{{0,115},{0,245},{0,360},{0,255}}" />                        
                </Window>
                
                <!-- Decoration -->
-               <Window type="TaharezLook/Label" name="Options.TabEngine.DecorationDescription" >
+               <Window type="TaharezLook/LabelWhite" name="Options.TabEngine.DecorationDescription" >
                   <Property name="Text" value="Decoration" />
                   <Property name="Area" value="{{0,20},{0,265},{0,110},{0,285}}" />
                   <Property name="HorzFormatting" value="LeftAligned" />
-                  <Property name="NormalTextColour" value="FFffeeee" />                        
                </Window>
                <Window type="TaharezLook/Slider" name="Options.TabEngine.Decoration" >
                   <Property name="Area" value="{{0,115},{0,270},{0,360},{0,280}}" />                        
@@ -2191,22 +2182,20 @@
                <!-- -->
                
                <!-- MusicVolume -->
-               <Window type="TaharezLook/Label" name="Options.TabEngine.MusicVolumeDescription" >
+               <Window type="TaharezLook/LabelWhite" name="Options.TabEngine.MusicVolumeDescription" >
                   <Property name="Text" value="Music Volume" />
                   <Property name="Area" value="{{0,20},{0,300},{0,110},{0,320}}" />
                   <Property name="HorzFormatting" value="LeftAligned" />
-                  <Property name="NormalTextColour" value="FFffeeee" />                        
                </Window>
                <Window type="TaharezLook/Slider" name="Options.TabEngine.MusicVolume" >
                   <Property name="Area" value="{{0,115},{0,305},{0,360},{0,315}}" />                        
                </Window>
                
                <!-- SoundVolume -->
-               <Window type="TaharezLook/Label" name="Options.TabEngine.SoundVolumeDescription" >
+               <Window type="TaharezLook/LabelWhite" name="Options.TabEngine.SoundVolumeDescription" >
                   <Property name="Text" value="Sound Volume" />
                   <Property name="Area" value="{{0,20},{0,325},{0,110},{0,345}}" />
                   <Property name="HorzFormatting" value="LeftAligned" />
-                  <Property name="NormalTextColour" value="FFffeeee" />                        
                </Window>
                <Window type="TaharezLook/Slider" name="Options.TabEngine.SoundVolume" >
                   <Property name="Area" value="{{0,115},{0,330},{0,360},{0,340}}" />                        
@@ -2219,11 +2208,10 @@
                </Window>
                
                <!-- Preloading -->
-               <Window type="TaharezLook/Label" name="Options.TabEngine.PreloadDescription" >
+               <Window type="TaharezLook/LabelWhite" name="Options.TabEngine.PreloadDescription" >
                   <Property name="Text" value="Preload" />
                   <Property name="Area" value="{{0,20},{0,390},{0,120},{0,410}}" />
                   <Property name="HorzFormatting" value="LeftAligned" />
-                  <Property name="NormalTextColour" value="FFffeeee" />                        
                </Window>
                <Window type="TaharezLook/Checkbox" name="Options.TabEngine.PreloadRooms" >
                   <Property name="Text" value="Rooms" />
@@ -2265,173 +2253,171 @@
                   <!-- TabGeneral -->
                   <Window type="DefaultWindow" name="Options.TabInput.TabGeneral" >
                      <Property name="Text" value="General" />
-                     <Property name="Area" value="{{0,-5},{0,0},{1,-5},{1,0}}" />
+                     <Property name="Area" value="{{0,0},{0,5},{1,0},{1,0}}" />
 
                      <!-- Move forward -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabGeneral.MoveForwardDescription" >
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabGeneral.MoveForwardDescription" >
                         <Property name="Text" value="Forward" />
-                        <Property name="Area" value="{{0,30},{0,45},{0,100},{0,65}}" />
+                        <Property name="Area" value="{{0,10},{0,10},{0,80},{0,27}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
+                        <Property name="TooltipText" value="Move forward." />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabGeneral.MoveForward" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,105},{0,45},{0,185},{0,65}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabGeneral.MoveForward" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0,80},{0,10},{0.5,-10},{0,27}}" />
                      </Window>
                      
-                     <!-- Move backward -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabGeneral.MoveBackwardDescription" >
+                     <!-- Move Backward -->
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabGeneral.MoveBackwardDescription" >
                         <Property name="Text" value="Backward" />
-                        <Property name="Area" value="{{0,30},{0,70},{0,100},{0,90}}" />
+                        <Property name="Area" value="{{0,10},{0,40},{0,80},{0,57}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
+                        <Property name="TooltipText" value="Move backward." />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabGeneral.MoveBackward" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,105},{0,70},{0,185},{0,90}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabGeneral.MoveBackward" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0,80},{0,40},{0.5,-10},{0,57}}" />
                      </Window>
                      
-                     <!-- Move left -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabGeneral.MoveLeftDescription" >
+                     <!-- Move Left -->
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabGeneral.MoveLeftDescription" >
                         <Property name="Text" value="Left" />
-                        <Property name="Area" value="{{0,30},{0,95},{0,100},{0,115}}" />
+                        <Property name="Area" value="{{0,10},{0,70},{0,80},{0,87}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
+                        <Property name="TooltipText" value="Move/strafe to the left." />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabGeneral.MoveLeft" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,105},{0,95},{0,185},{0,115}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabGeneral.MoveLeft" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0,80},{0,70},{0.5,-10},{0,87}}" />
                      </Window>
                      
-                     <!-- Move right -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabGeneral.MoveRightDescription" >
+                     <!-- Move Right -->
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabGeneral.MoveRightDescription" >
                         <Property name="Text" value="Right" />
-                        <Property name="Area" value="{{0,30},{0,120},{0,100},{0,140}}" />
+                        <Property name="Area" value="{{0,10},{0,100},{0,80},{0,117}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
+                        <Property name="TooltipText" value="Move/strafe to the right." />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabGeneral.MoveRight" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,105},{0,120},{0,185},{0,140}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabGeneral.MoveRight" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0,80},{0,100},{0.5,-10},{0,117}}" />
                      </Window>
                      
-                     <!-- Rotate left -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabGeneral.RotateLeftDescription" >
-                        <Property name="Text" value="Rotate left" />
-                        <Property name="Area" value="{{0,30},{0,145},{0,100},{0,165}}" />
+                     <!-- Rotate Left -->
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabGeneral.RotateLeftDescription" >
+                        <Property name="Text" value="Turn Left" />
+                        <Property name="Area" value="{{0,10},{0,130},{0,80},{0,147}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
+                        <Property name="TooltipText" value="Turn/rotate to the left." />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabGeneral.RotateLeft" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,105},{0,145},{0,185},{0,165}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabGeneral.RotateLeft" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0,80},{0,130},{0.5,-10},{0,147}}" />
                      </Window>
                      
-                     <!-- Rotate right -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabGeneral.RotateRightDescription" >
-                        <Property name="Text" value="Rotate right" />
-                        <Property name="Area" value="{{0,30},{0,170},{0,100},{0,190}}" />
+                     <!-- Rotate Right -->
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabGeneral.RotateRightDescription" >
+                        <Property name="Text" value="Turn Right" />
+                        <Property name="Area" value="{{0,10},{0,160},{0,80},{0,177}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
+                        <Property name="TooltipText" value="Turn/rotate to the right." />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabGeneral.RotateRight" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,105},{0,170},{0,185},{0,190}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabGeneral.RotateRight" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0,80},{0,160},{0.5,-10},{0,177}}" />
                      </Window>
                      
                      <!-- -->
                      
                      <!-- Walk -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabGeneral.WalkDescription" >
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabGeneral.WalkDescription" >
                         <Property name="Text" value="Walk" />
-                        <Property name="Area" value="{{0,210},{0,45},{0,280},{0,65}}" />
+                        <Property name="Area" value="{{0.5,10},{0,10},{0.5,80},{0,27}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
+                        <Property name="TooltipText" value="Hold to walk slowly. Very useful for when you need to watch your step." />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabGeneral.Walk" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,285},{0,45},{0,365},{0,65}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabGeneral.Walk" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0.5,80},{0,10},{1,-10},{0,27}}" />
                      </Window>
-                                          
+                     
                      <!-- AutoMove -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabGeneral.AutoMoveDescription" >
-                        <Property name="Text" value="AutoMove" />
-                        <Property name="Area" value="{{0,210},{0,70},{0,280},{0,90}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabGeneral.AutoMoveDescription" >
+                        <Property name="Text" value="Autorun" />
+                        <Property name="Area" value="{{0.5,10},{0,40},{0.5,80},{0,57}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
+                        <Property name="TooltipText" value="Toggle to run forward until toggled off." />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabGeneral.AutoMove" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,285},{0,70},{0,365},{0,90}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabGeneral.AutoMove" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0.5,80},{0,40},{1,-10},{0,57}}" />
                      </Window>
                      
                      <!-- NextTarget -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabGeneral.NextTargetDescription" >
-                        <Property name="Text" value="NextTarget" />
-                        <Property name="Area" value="{{0,210},{0,95},{0,280},{0,115}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabGeneral.NextTargetDescription" >
+                        <Property name="Text" value="Target" />
+                        <Property name="Area" value="{{0.5,10},{0,70},{0.5,80},{0,87}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
+                        <Property name="TooltipText" value="Targets the nearest enemy if you don't have a target. Targets the next enemy instead if you do." />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabGeneral.NextTarget" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,285},{0,95},{0,365},{0,115}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabGeneral.NextTarget" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0.5,80},{0,70},{1,-10},{0,87}}" />
                      </Window>
                      
                      <!-- SelfTarget -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabGeneral.SelfTargetDescription" >
-                        <Property name="Text" value="SelfTarget" />
-                        <Property name="Area" value="{{0,210},{0,120},{0,280},{0,140}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabGeneral.SelfTargetDescription" >
+                        <Property name="Text" value="Selftarget" />
+                        <Property name="Area" value="{{0.5,10},{0,100},{0.5,80},{0,117}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
+                        <Property name="TooltipText" value="Hold while casting to automatically make yourself the target of your spell." />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabGeneral.SelfTarget" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,285},{0,120},{0,365},{0,140}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabGeneral.SelfTarget" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0.5,80},{0,100},{1,-10},{0,117}}" />
                      </Window>
                      
                      <!-- Open -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabGeneral.OpenDescription" >
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabGeneral.OpenDescription" >
                         <Property name="Text" value="Open" />
-                        <Property name="Area" value="{{0,210},{0,145},{0,280},{0,165}}" />
+                        <Property name="Area" value="{{0.5,10},{0,130},{0.5,80},{0,147}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
+                        <Property name="TooltipText" value="Open doors to enter and exit areas." />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabGeneral.Open" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,285},{0,145},{0,365},{0,165}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabGeneral.Open" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0.5,80},{0,130},{1,-10},{0,147}}" />
                      </Window>
                      
                      <!-- Close -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabGeneral.CloseDescription" >
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabGeneral.CloseDescription" >
                         <Property name="Text" value="Close" />
-                        <Property name="Area" value="{{0,210},{0,170},{0,280},{0,190}}" />
+                        <Property name="Area" value="{{0.5,10},{0,160},{0.5,80},{0,177}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
+                        <Property name="TooltipText" value="Close the active window." />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabGeneral.Close" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,285},{0,170},{0,365},{0,190}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabGeneral.Close" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0.5,80},{0,160},{1,-10},{0,177}}" />
                      </Window>
                      
                      <!-- -->
                      
                      <!-- Mouse aim speed -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabGeneral.MouseAimSpeedDescription" >
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabGeneral.MouseAimSpeedDescription" >
                         <Property name="Text" value="Mouse aim speed" />
                         <Property name="Area" value="{{0,30},{0,215},{0,160},{0,235}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />                        
                      </Window>
                      <Window type="TaharezLook/Slider" name="Options.TabInput.TabGeneral.MouseAimSpeed" >
                         <Property name="Area" value="{{0,165},{0,220},{0,360},{0,230}}" />                        
                      </Window>
                
                      <!-- Key rotate speed -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabGeneral.KeyRotateSpeedDescription" >
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabGeneral.KeyRotateSpeedDescription" >
                         <Property name="Text" value="Key rotate speed" />
                         <Property name="Area" value="{{0,30},{0,240},{0,160},{0,260}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />                        
                      </Window>
                      <Window type="TaharezLook/Slider" name="Options.TabInput.TabGeneral.KeyRotateSpeed" >
                         <Property name="Area" value="{{0,165},{0,245},{0,360},{0,255}}" />                        
@@ -2440,11 +2426,10 @@
                      <!---->
                                           
                      <!-- RightClickAction -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabGeneral.RightClickActionDescription" >
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabGeneral.RightClickActionDescription" >
                         <Property name="Text" value="Right Click" />
                         <Property name="Area" value="{{0,30},{0,280},{0,120},{0,300}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />                        
                      </Window>
                      <Window type="TaharezLook/Combobox" name="Options.TabInput.TabGeneral.RightClickAction" >
                         <Property name="Area" value="{{0,105},{0,280},{0,200},{0,380}}" />
@@ -2462,596 +2447,546 @@
                   
                   <!-- TabActionButtons1 -->
                   <Window type="DefaultWindow" name="Options.TabInput.TabActionButtons1" >
-                     <Property name="Text" value="Action 01-24" />
-                     <Property name="Area" value="{{0,-5},{0,0},{1,-5},{1,0}}" />
+                     <Property name="Text" value="Actionpage 1" />
+                     <Property name="Area" value="{{0,0},{0,5},{1,0},{1,0}}" />
 
                      <!-- ActionButton01 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button01Description" >
-                        <Property name="Text" value="Action 01" />
-                        <Property name="Area" value="{{0,30},{0,45},{0,100},{0,65}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons1.Button01Description" >
+                        <Property name="Text" value="01" />
+                        <Property name="Area" value="{{0,10},{0,10},{0,40},{0,27}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button01" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,105},{0,45},{0,185},{0,65}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons1.Button01" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0,40},{0,10},{0.5,-10},{0,27}}" />
                      </Window>
                      
                      <!-- ActionButton02 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button02Description" >
-                        <Property name="Text" value="Action 02" />
-                        <Property name="Area" value="{{0,30},{0,70},{0,100},{0,90}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons1.Button02Description" >
+                        <Property name="Text" value="02" />
+                        <Property name="Area" value="{{0,10},{0,40},{0,40},{0,57}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button02" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,105},{0,70},{0,185},{0,90}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons1.Button02" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0,40},{0,40},{0.5,-10},{0,57}}" />
                      </Window>
                      
                      <!-- ActionButton03 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button03Description" >
-                        <Property name="Text" value="Action 03" />
-                        <Property name="Area" value="{{0,30},{0,95},{0,100},{0,115}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons1.Button03Description" >
+                        <Property name="Text" value="03" />
+                        <Property name="Area" value="{{0,10},{0,70},{0,40},{0,87}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button03" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,105},{0,95},{0,185},{0,115}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons1.Button03" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0,40},{0,70},{0.5,-10},{0,87}}" />
                      </Window>
                      
                      <!-- ActionButton04 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button04Description" >
-                        <Property name="Text" value="Action 04" />
-                        <Property name="Area" value="{{0,30},{0,120},{0,100},{0,140}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons1.Button04Description" >
+                        <Property name="Text" value="04" />
+                        <Property name="Area" value="{{0,10},{0,100},{0,40},{0,117}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button04" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,105},{0,120},{0,185},{0,140}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons1.Button04" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0,40},{0,100},{0.5,-10},{0,117}}" />
                      </Window>
                      
                      <!-- ActionButton05 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button05Description" >
-                        <Property name="Text" value="Action 05" />
-                        <Property name="Area" value="{{0,30},{0,145},{0,100},{0,165}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons1.Button05Description" >
+                        <Property name="Text" value="05" />
+                        <Property name="Area" value="{{0,10},{0,130},{0,40},{0,147}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button05" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,105},{0,145},{0,185},{0,165}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons1.Button05" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0,40},{0,130},{0.5,-10},{0,147}}" />
                      </Window>
                      
                      <!-- ActionButton06 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button06Description" >
-                        <Property name="Text" value="Action 06" />
-                        <Property name="Area" value="{{0,30},{0,170},{0,100},{0,190}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons1.Button06Description" >
+                        <Property name="Text" value="06" />
+                        <Property name="Area" value="{{0,10},{0,160},{0,40},{0,177}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button06" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,105},{0,170},{0,185},{0,190}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons1.Button06" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0,40},{0,160},{0.5,-10},{0,177}}" />
                      </Window>
                      
                      <!-- ActionButton07 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button07Description" >
-                        <Property name="Text" value="Action 07" />
-                        <Property name="Area" value="{{0,30},{0,195},{0,100},{0,215}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons1.Button07Description" >
+                        <Property name="Text" value="07" />
+                        <Property name="Area" value="{{0,10},{0,190},{0,40},{0,207}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button07" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,105},{0,195},{0,185},{0,215}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons1.Button07" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0,40},{0,190},{0.5,-10},{0,207}}" />
                      </Window>
                      
                      <!-- ActionButton08 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button08Description" >
-                        <Property name="Text" value="Action 08" />
-                        <Property name="Area" value="{{0,30},{0,220},{0,100},{0,240}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons1.Button08Description" >
+                        <Property name="Text" value="08" />
+                        <Property name="Area" value="{{0,10},{0,220},{0,40},{0,237}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button08" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,105},{0,220},{0,185},{0,240}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons1.Button08" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0,40},{0,220},{0.5,-10},{0,237}}" />
                      </Window>
                      
                      <!-- ActionButton09 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button09Description" >
-                        <Property name="Text" value="Action 09" />
-                        <Property name="Area" value="{{0,30},{0,245},{0,100},{0,265}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons1.Button09Description" >
+                        <Property name="Text" value="09" />
+                        <Property name="Area" value="{{0,10},{0,250},{0,40},{0,267}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button09" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,105},{0,245},{0,185},{0,265}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons1.Button09" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0,40},{0,250},{0.5,-10},{0,267}}" />
                      </Window>
                      
                      <!-- ActionButton10 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button10Description" >
-                        <Property name="Text" value="Action 10" />
-                        <Property name="Area" value="{{0,30},{0,270},{0,100},{0,290}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons1.Button10Description" >
+                        <Property name="Text" value="10" />
+                        <Property name="Area" value="{{0,10},{0,280},{0,40},{0,297}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button10" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,105},{0,270},{0,185},{0,290}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons1.Button10" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0,40},{0,280},{0.5,-10},{0,297}}" />
                      </Window>
                      
                      <!-- ActionButton11 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button11Description" >
-                        <Property name="Text" value="Action 11" />
-                        <Property name="Area" value="{{0,30},{0,295},{0,100},{0,315}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons1.Button11Description" >
+                        <Property name="Text" value="11" />
+                        <Property name="Area" value="{{0,10},{0,310},{0,40},{0,327}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button11" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,105},{0,295},{0,185},{0,315}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons1.Button11" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0,40},{0,310},{0.5,-10},{0,327}}" />
                      </Window>
                      
                      <!-- ActionButton12 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button12Description" >
-                        <Property name="Text" value="Action 12" />
-                        <Property name="Area" value="{{0,30},{0,320},{0,100},{0,340}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons1.Button12Description" >
+                        <Property name="Text" value="12" />
+                        <Property name="Area" value="{{0,10},{0,340},{0,40},{0,357}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button12" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,105},{0,320},{0,185},{0,340}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons1.Button12" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0,40},{0,340},{0.5,-10},{0,357}}" />
                      </Window>
                      
                      <!-- -->
                      
                      <!-- ActionButton13 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button13Description" >
-                        <Property name="Text" value="Action 13" />
-                        <Property name="Area" value="{{0,210},{0,45},{0,280},{0,65}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons1.Button13Description" >
+                        <Property name="Text" value="13" />
+                        <Property name="Area" value="{{0.5,10},{0,10},{0.5,40},{0,27}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button13" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,285},{0,45},{0,365},{0,65}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons1.Button13" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0.5,40},{0,10},{1,-10},{0,27}}" />
                      </Window>
-                                          
+                     
                      <!-- ActionButton14 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button14Description" >
-                        <Property name="Text" value="Action 14" />
-                        <Property name="Area" value="{{0,210},{0,70},{0,280},{0,90}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons1.Button14Description" >
+                        <Property name="Text" value="14" />
+                        <Property name="Area" value="{{0.5,10},{0,40},{0.5,40},{0,57}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button14" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,285},{0,70},{0,365},{0,90}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons1.Button14" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0.5,40},{0,40},{1,-10},{0,57}}" />
                      </Window>
                      
                      <!-- ActionButton15 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button15Description" >
-                        <Property name="Text" value="Action 15" />
-                        <Property name="Area" value="{{0,210},{0,95},{0,280},{0,115}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons1.Button15Description" >
+                        <Property name="Text" value="15" />
+                        <Property name="Area" value="{{0.5,10},{0,70},{0.5,40},{0,87}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button15" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,285},{0,95},{0,365},{0,115}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons1.Button15" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0.5,40},{0,70},{1,-10},{0,87}}" />
                      </Window>
                      
                      <!-- ActionButton16 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button16Description" >
-                        <Property name="Text" value="Action 16" />
-                        <Property name="Area" value="{{0,210},{0,120},{0,280},{0,140}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons1.Button16Description" >
+                        <Property name="Text" value="16" />
+                        <Property name="Area" value="{{0.5,10},{0,100},{0.5,40},{0,117}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button16" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,285},{0,120},{0,365},{0,140}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons1.Button16" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0.5,40},{0,100},{1,-10},{0,117}}" />
                      </Window>
                      
                      <!-- ActionButton17 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button17Description" >
-                        <Property name="Text" value="Action 17" />
-                        <Property name="Area" value="{{0,210},{0,145},{0,280},{0,165}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons1.Button17Description" >
+                        <Property name="Text" value="17" />
+                        <Property name="Area" value="{{0.5,10},{0,130},{0.5,40},{0,147}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button17" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,285},{0,145},{0,365},{0,165}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons1.Button17" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0.5,40},{0,130},{1,-10},{0,147}}" />
                      </Window>
                      
                      <!-- ActionButton18 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button18Description" >
-                        <Property name="Text" value="Action 18" />
-                        <Property name="Area" value="{{0,210},{0,170},{0,280},{0,190}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons1.Button18Description" >
+                        <Property name="Text" value="18" />
+                        <Property name="Area" value="{{0.5,10},{0,160},{0.5,40},{0,177}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button18" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,285},{0,170},{0,365},{0,190}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons1.Button18" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0.5,40},{0,160},{1,-10},{0,177}}" />
                      </Window>
                      
                      <!-- ActionButton19 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button19Description" >
-                        <Property name="Text" value="Action 19" />
-                        <Property name="Area" value="{{0,210},{0,195},{0,280},{0,215}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons1.Button19Description" >
+                        <Property name="Text" value="19" />
+                        <Property name="Area" value="{{0.5,10},{0,190},{0.5,40},{0,207}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button19" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,285},{0,195},{0,365},{0,215}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons1.Button19" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0.5,40},{0,190},{1,-10},{0,207}}" />
                      </Window>
                      
                      <!-- ActionButton20 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button20Description" >
-                        <Property name="Text" value="Action 20" />
-                        <Property name="Area" value="{{0,210},{0,220},{0,280},{0,240}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons1.Button20Description" >
+                        <Property name="Text" value="20" />
+                        <Property name="Area" value="{{0.5,10},{0,220},{0.5,40},{0,237}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button20" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,285},{0,220},{0,365},{0,240}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons1.Button20" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0.5,40},{0,220},{1,-10},{0,237}}" />
                      </Window>
                      
                      <!-- ActionButton21 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button21Description" >
-                        <Property name="Text" value="Action 21" />
-                        <Property name="Area" value="{{0,210},{0,245},{0,280},{0,265}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons1.Button21Description" >
+                        <Property name="Text" value="21" />
+                        <Property name="Area" value="{{0.5,10},{0,250},{0.5,40},{0,267}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button21" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,285},{0,245},{0,365},{0,265}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons1.Button21" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0.5,40},{0,250},{1,-10},{0,267}}" />
                      </Window>
                      
                      <!-- ActionButton22 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button22Description" >
-                        <Property name="Text" value="Action 22" />
-                        <Property name="Area" value="{{0,210},{0,270},{0,280},{0,290}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons1.Button22Description" >
+                        <Property name="Text" value="22" />
+                        <Property name="Area" value="{{0.5,10},{0,280},{0.5,40},{0,297}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button22" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,285},{0,270},{0,365},{0,290}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons1.Button22" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0.5,40},{0,280},{1,-10},{0,297}}" />
                      </Window>
                      
                      <!-- ActionButton23 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button23Description" >
-                        <Property name="Text" value="Action 23" />
-                        <Property name="Area" value="{{0,210},{0,295},{0,280},{0,315}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons1.Button23Description" >
+                        <Property name="Text" value="23" />
+                        <Property name="Area" value="{{0.5,10},{0,310},{0.5,40},{0,327}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button23" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,285},{0,295},{0,365},{0,315}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons1.Button23" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0.5,40},{0,310},{1,-10},{0,327}}" />
                      </Window>
                      
                      <!-- ActionButton24 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons1.Button24Description" >
-                        <Property name="Text" value="Action 24" />
-                        <Property name="Area" value="{{0,210},{0,320},{0,280},{0,340}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons1.Button24Description" >
+                        <Property name="Text" value="24" />
+                        <Property name="Area" value="{{0.5,10},{0,340},{0.5,40},{0,357}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons1.Button24" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,285},{0,320},{0,365},{0,340}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons1.Button24" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0.5,40},{0,340},{1,-10},{0,357}}" />
                      </Window>
-                     
                   </Window>
                   
                   <!-- TabActionButtons2 -->
                   <Window type="DefaultWindow" name="Options.TabInput.TabActionButtons2" >
-                     <Property name="Text" value="Action 25-48" />
-                     <Property name="Area" value="{{0,-5},{0,0},{1,-5},{1,0}}" />
-                  
+                     <Property name="Text" value="Actionpage 2" />
+                     <Property name="Area" value="{{0,0},{0,5},{1,0},{1,0}}" />
+
                      <!-- ActionButton25 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button25Description" >
-                        <Property name="Text" value="Action 25" />
-                        <Property name="Area" value="{{0,30},{0,45},{0,100},{0,65}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons2.Button25Description" >
+                        <Property name="Text" value="25" />
+                        <Property name="Area" value="{{0,10},{0,10},{0,40},{0,27}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button25" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,105},{0,45},{0,185},{0,65}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons2.Button25" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0,40},{0,10},{0.5,-10},{0,27}}" />
                      </Window>
                      
                      <!-- ActionButton26 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button26Description" >
-                        <Property name="Text" value="Action 26" />
-                        <Property name="Area" value="{{0,30},{0,70},{0,100},{0,90}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons2.Button26Description" >
+                        <Property name="Text" value="26" />
+                        <Property name="Area" value="{{0,10},{0,40},{0,40},{0,57}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button26" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,105},{0,70},{0,185},{0,90}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons2.Button26" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0,40},{0,40},{0.5,-10},{0,57}}" />
                      </Window>
                      
                      <!-- ActionButton27 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button27Description" >
-                        <Property name="Text" value="Action 27" />
-                        <Property name="Area" value="{{0,30},{0,95},{0,100},{0,115}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons2.Button27Description" >
+                        <Property name="Text" value="27" />
+                        <Property name="Area" value="{{0,10},{0,70},{0,40},{0,87}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button27" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,105},{0,95},{0,185},{0,115}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons2.Button27" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0,40},{0,70},{0.5,-10},{0,87}}" />
                      </Window>
                      
                      <!-- ActionButton28 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button28Description" >
-                        <Property name="Text" value="Action 28" />
-                        <Property name="Area" value="{{0,30},{0,120},{0,100},{0,140}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons2.Button28Description" >
+                        <Property name="Text" value="28" />
+                        <Property name="Area" value="{{0,10},{0,100},{0,40},{0,117}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button28" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,105},{0,120},{0,185},{0,140}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons2.Button28" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0,40},{0,100},{0.5,-10},{0,117}}" />
                      </Window>
                      
                      <!-- ActionButton29 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button29Description" >
-                        <Property name="Text" value="Action 29" />
-                        <Property name="Area" value="{{0,30},{0,145},{0,100},{0,165}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons2.Button29Description" >
+                        <Property name="Text" value="29" />
+                        <Property name="Area" value="{{0,10},{0,130},{0,40},{0,147}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button29" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,105},{0,145},{0,185},{0,165}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons2.Button29" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0,40},{0,130},{0.5,-10},{0,147}}" />
                      </Window>
                      
                      <!-- ActionButton30 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button30Description" >
-                        <Property name="Text" value="Action 30" />
-                        <Property name="Area" value="{{0,30},{0,170},{0,100},{0,190}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons2.Button30Description" >
+                        <Property name="Text" value="30" />
+                        <Property name="Area" value="{{0,10},{0,160},{0,40},{0,177}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button30" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,105},{0,170},{0,185},{0,190}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons2.Button30" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0,40},{0,160},{0.5,-10},{0,177}}" />
                      </Window>
                      
                      <!-- ActionButton31 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button31Description" >
-                        <Property name="Text" value="Action 31" />
-                        <Property name="Area" value="{{0,30},{0,195},{0,100},{0,215}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons2.Button31Description" >
+                        <Property name="Text" value="31" />
+                        <Property name="Area" value="{{0,10},{0,190},{0,40},{0,207}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button31" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,105},{0,195},{0,185},{0,215}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons2.Button31" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0,40},{0,190},{0.5,-10},{0,207}}" />
                      </Window>
                      
                      <!-- ActionButton32 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button32Description" >
-                        <Property name="Text" value="Action 32" />
-                        <Property name="Area" value="{{0,30},{0,220},{0,100},{0,240}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons2.Button32Description" >
+                        <Property name="Text" value="32" />
+                        <Property name="Area" value="{{0,10},{0,220},{0,40},{0,237}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button32" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,105},{0,220},{0,185},{0,240}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons2.Button32" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0,40},{0,220},{0.5,-10},{0,237}}" />
                      </Window>
                      
                      <!-- ActionButton33 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button33Description" >
-                        <Property name="Text" value="Action 33" />
-                        <Property name="Area" value="{{0,30},{0,245},{0,100},{0,265}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons2.Button33Description" >
+                        <Property name="Text" value="33" />
+                        <Property name="Area" value="{{0,10},{0,250},{0,40},{0,267}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button33" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,105},{0,245},{0,185},{0,265}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons2.Button33" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0,40},{0,250},{0.5,-10},{0,267}}" />
                      </Window>
                      
                      <!-- ActionButton34 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button34Description" >
-                        <Property name="Text" value="Action 34" />
-                        <Property name="Area" value="{{0,30},{0,270},{0,100},{0,290}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons2.Button34Description" >
+                        <Property name="Text" value="34" />
+                        <Property name="Area" value="{{0,10},{0,280},{0,40},{0,297}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button34" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,105},{0,270},{0,185},{0,290}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons2.Button34" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0,40},{0,280},{0.5,-10},{0,297}}" />
                      </Window>
                      
                      <!-- ActionButton35 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button35Description" >
-                        <Property name="Text" value="Action 35" />
-                        <Property name="Area" value="{{0,30},{0,295},{0,100},{0,315}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons2.Button35Description" >
+                        <Property name="Text" value="35" />
+                        <Property name="Area" value="{{0,10},{0,310},{0,40},{0,327}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button35" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,105},{0,295},{0,185},{0,315}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons2.Button35" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0,40},{0,310},{0.5,-10},{0,327}}" />
                      </Window>
                      
                      <!-- ActionButton36 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button36Description" >
-                        <Property name="Text" value="Action 36" />
-                        <Property name="Area" value="{{0,30},{0,320},{0,100},{0,340}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons2.Button36Description" >
+                        <Property name="Text" value="36" />
+                        <Property name="Area" value="{{0,10},{0,340},{0,40},{0,357}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button36" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,105},{0,320},{0,185},{0,340}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons2.Button36" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0,40},{0,340},{0.5,-10},{0,357}}" />
                      </Window>
                      
                      <!-- -->
                      
                      <!-- ActionButton37 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button37Description" >
-                        <Property name="Text" value="Action 37" />
-                        <Property name="Area" value="{{0,210},{0,45},{0,280},{0,65}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons2.Button37Description" >
+                        <Property name="Text" value="37" />
+                        <Property name="Area" value="{{0.5,10},{0,10},{0.5,40},{0,27}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button37" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,285},{0,45},{0,365},{0,65}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons2.Button37" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0.5,40},{0,10},{1,-10},{0,27}}" />
                      </Window>
-                                          
+                     
                      <!-- ActionButton38 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button38Description" >
-                        <Property name="Text" value="Action 38" />
-                        <Property name="Area" value="{{0,210},{0,70},{0,280},{0,90}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons2.Button38Description" >
+                        <Property name="Text" value="38" />
+                        <Property name="Area" value="{{0.5,10},{0,40},{0.5,40},{0,57}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button38" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,285},{0,70},{0,365},{0,90}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons2.Button38" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0.5,40},{0,40},{1,-10},{0,57}}" />
                      </Window>
                      
                      <!-- ActionButton39 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button39Description" >
-                        <Property name="Text" value="Action 39" />
-                        <Property name="Area" value="{{0,210},{0,95},{0,280},{0,115}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons2.Button39Description" >
+                        <Property name="Text" value="39" />
+                        <Property name="Area" value="{{0.5,10},{0,70},{0.5,40},{0,87}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button39" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,285},{0,95},{0,365},{0,115}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons2.Button39" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0.5,40},{0,70},{1,-10},{0,87}}" />
                      </Window>
                      
                      <!-- ActionButton40 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button40Description" >
-                        <Property name="Text" value="Action 40" />
-                        <Property name="Area" value="{{0,210},{0,120},{0,280},{0,140}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons2.Button40Description" >
+                        <Property name="Text" value="40" />
+                        <Property name="Area" value="{{0.5,10},{0,100},{0.5,40},{0,117}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button40" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,285},{0,120},{0,365},{0,140}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons2.Button40" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0.5,40},{0,100},{1,-10},{0,117}}" />
                      </Window>
                      
                      <!-- ActionButton41 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button41Description" >
-                        <Property name="Text" value="Action 41" />
-                        <Property name="Area" value="{{0,210},{0,145},{0,280},{0,165}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons2.Button41Description" >
+                        <Property name="Text" value="41" />
+                        <Property name="Area" value="{{0.5,10},{0,130},{0.5,40},{0,147}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button41" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,285},{0,145},{0,365},{0,165}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons2.Button41" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0.5,40},{0,130},{1,-10},{0,147}}" />
                      </Window>
                      
                      <!-- ActionButton42 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button42Description" >
-                        <Property name="Text" value="Action 42" />
-                        <Property name="Area" value="{{0,210},{0,170},{0,280},{0,190}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons2.Button42Description" >
+                        <Property name="Text" value="42" />
+                        <Property name="Area" value="{{0.5,10},{0,160},{0.5,40},{0,177}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button42" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,285},{0,170},{0,365},{0,190}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons2.Button42" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0.5,40},{0,160},{1,-10},{0,177}}" />
                      </Window>
                      
                      <!-- ActionButton43 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button43Description" >
-                        <Property name="Text" value="Action 43" />
-                        <Property name="Area" value="{{0,210},{0,195},{0,280},{0,215}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons2.Button43Description" >
+                        <Property name="Text" value="43" />
+                        <Property name="Area" value="{{0.5,10},{0,190},{0.5,40},{0,207}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button43" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,285},{0,195},{0,365},{0,215}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons2.Button43" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0.5,40},{0,190},{1,-10},{0,207}}" />
                      </Window>
                      
                      <!-- ActionButton44 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button44Description" >
-                        <Property name="Text" value="Action 44" />
-                        <Property name="Area" value="{{0,210},{0,220},{0,280},{0,240}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons2.Button44Description" >
+                        <Property name="Text" value="44" />
+                        <Property name="Area" value="{{0.5,10},{0,220},{0.5,40},{0,237}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button44" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,285},{0,220},{0,365},{0,240}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons2.Button44" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0.5,40},{0,220},{1,-10},{0,237}}" />
                      </Window>
                      
                      <!-- ActionButton45 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button45Description" >
-                        <Property name="Text" value="Action 45" />
-                        <Property name="Area" value="{{0,210},{0,245},{0,280},{0,265}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons2.Button45Description" >
+                        <Property name="Text" value="45" />
+                        <Property name="Area" value="{{0.5,10},{0,250},{0.5,40},{0,267}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button45" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,285},{0,245},{0,365},{0,265}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons2.Button45" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0.5,40},{0,250},{1,-10},{0,267}}" />
                      </Window>
                      
                      <!-- ActionButton46 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button46Description" >
-                        <Property name="Text" value="Action 46" />
-                        <Property name="Area" value="{{0,210},{0,270},{0,280},{0,290}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons2.Button46Description" >
+                        <Property name="Text" value="46" />
+                        <Property name="Area" value="{{0.5,10},{0,280},{0.5,40},{0,297}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button46" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,285},{0,270},{0,365},{0,290}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons2.Button46" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0.5,40},{0,280},{1,-10},{0,297}}" />
                      </Window>
                      
                      <!-- ActionButton47 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button47Description" >
-                        <Property name="Text" value="Action 47" />
-                        <Property name="Area" value="{{0,210},{0,295},{0,280},{0,315}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons2.Button47Description" >
+                        <Property name="Text" value="47" />
+                        <Property name="Area" value="{{0.5,10},{0,310},{0.5,40},{0,327}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button47" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,285},{0,295},{0,365},{0,315}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons2.Button47" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0.5,40},{0,310},{1,-10},{0,327}}" />
                      </Window>
                      
                      <!-- ActionButton48 -->
-                     <Window type="TaharezLook/Label" name="Options.TabInput.TabActionButtons2.Button48Description" >
-                        <Property name="Text" value="Action 48" />
-                        <Property name="Area" value="{{0,210},{0,320},{0,280},{0,340}}" />
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabActionButtons2.Button48Description" >
+                        <Property name="Text" value="48" />
+                        <Property name="Area" value="{{0.5,10},{0,340},{0.5,40},{0,357}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
-                        <Property name="NormalTextColour" value="FFffeeee" />
                      </Window>
-                     <Window type="TaharezLook/Button" name="Options.TabInput.TabActionButtons2.Button48" >
-                        <Property name="Text" value="-" />
-                        <Property name="Area" value="{{0,285},{0,320},{0,365},{0,340}}" />
+                     <Window type="TaharezLook/MiniButton" name="Options.TabInput.TabActionButtons2.Button48" >
+                        <Property name="Text" value="-" /> <Property name="Font" value="Xolonium-6-Bold" />
+                        <Property name="Area" value="{{0.5,40},{0,340},{1,-10},{0,357}}" />
                      </Window>
-                     
                   </Window>
                </Window>                  
             </Window>
@@ -3062,11 +2997,10 @@
                <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />         
                
                <!-- Language setting -->
-               <Window type="TaharezLook/Label" name="Options.TabGamePlay.LanguageDescription" >
+               <Window type="TaharezLook/LabelWhite" name="Options.TabGamePlay.LanguageDescription" >
                   <Property name="Text" value="Language" />
                   <Property name="Area" value="{{0.5,-110},{0,50},{0.5,-40},{0,70}}" />
                   <Property name="HorzFormatting" value="LeftAligned" />
-                  <Property name="NormalTextColour" value="FFffeeee" />                        
                </Window>            
                <Window type="TaharezLook/Combobox" name="Options.TabGamePlay.Language" >
                   <Property name="Area" value="{{0.5,-30},{0,50},{0.5,110},{0,150}}" />
@@ -3120,11 +3054,11 @@
                <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
                
                <!-- KeyDescription -->
-               <Window type="TaharezLook/Label" name="Options.TabAliases.KeyDescription" >
+               <Window type="TaharezLook/LabelWhite" name="Options.TabAliases.KeyDescription" >
                   <Property name="Area" value="{{0,21},{0,15},{0,96},{0,35}}" />
-                  <Property name="NormalTextColour" value="FFFFFFFF" />
                   <Property name="HorzFormatting" value="WordWrapLeftAligned" />
-                  <Property name="Text" value="Alias" />                  
+                  <Property name="Text" value="Alias:" />
+                  <Property name="Font" value="Berenika-8-Bold" />
                </Window>
          
                <!-- AddKey -->
@@ -3134,11 +3068,11 @@
                </Window>
                
                <!-- ValueDescription -->
-               <Window type="TaharezLook/Label" name="Options.TabAliases.ValueDescription" >
+               <Window type="TaharezLook/LabelWhite" name="Options.TabAliases.ValueDescription" >
                   <Property name="Area" value="{{0,101},{0,15},{0,301},{0,35}}" />         
-                  <Property name="NormalTextColour" value="FFFFFFFF" />
                   <Property name="HorzFormatting" value="WordWrapLeftAligned" />
-                  <Property name="Text" value="For" />                  
+                  <Property name="Text" value="For:" />
+                  <Property name="Font" value="Berenika-8-Bold" />
                </Window>
          
                <!-- AddValue -->
@@ -3167,18 +3101,17 @@
                <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
                
                <!-- DisabledDescription -->
-               <Window type="TaharezLook/Label" name="Options.TabGroups.DisabledDescription" >
+               <Window type="TaharezLook/LabelWhite" name="Options.TabGroups.DisabledDescription" >
                   <Property name="Area" value="{{0,15},{0,15},{1.0,-15},{1.0,-15}}" />         
-                  <Property name="NormalTextColour" value="FFFFFFFF" />
                   <Property name="Text" value="You must be logged in to modify groups." />               
                </Window>
                
                <!-- NewGroup -->
-               <Window type="TaharezLook/Label" name="Options.TabGroups.NewGroup" >
+               <Window type="TaharezLook/LabelWhite" name="Options.TabGroups.NewGroup" >
                   <Property name="Area" value="{{0,21},{0,15},{0.5,-15},{0,35}}" />         
-                  <Property name="NormalTextColour" value="FFFFFFFF" />
                   <Property name="HorzFormatting" value="WordWrapLeftAligned" />
-                  <Property name="Text" value="New Group" />                  
+                  <Property name="Text" value="New Group:" />
+                  <Property name="Font" value="Berenika-8-Bold" />
                </Window>
          
                <!-- GroupName -->
@@ -3195,11 +3128,11 @@
                </Window>
                      
                <!-- GroupsDescription -->
-               <Window type="TaharezLook/Label" name="Options.TabGroups.GroupsDescription" >
+               <Window type="TaharezLook/LabelWhite" name="Options.TabGroups.GroupsDescription" >
                   <Property name="Area" value="{{0,21},{0,80},{0.5,-15},{0,100}}" />         
-                  <Property name="NormalTextColour" value="FFFFFFFF" />
                   <Property name="HorzFormatting" value="WordWrapLeftAligned" />
-                  <Property name="Text" value="Groups" />                  
+                  <Property name="Text" value="Groups:" />
+                  <Property name="Font" value="Berenika-8-Bold" />
                </Window>
                
                <!-- ListGroups -->
@@ -3209,11 +3142,11 @@
                </Window>
 
                <!-- NewMember -->
-               <Window type="TaharezLook/Label" name="Options.TabGroups.NewMember" >
+               <Window type="TaharezLook/LabelWhite" name="Options.TabGroups.NewMember" >
                   <Property name="Area" value="{{0.5,15},{0,15},{1,-15},{0,35}}" />         
-                  <Property name="NormalTextColour" value="FFFFFFFF" />
                   <Property name="HorzFormatting" value="WordWrapLeftAligned" />
-                  <Property name="Text" value="New Member" />                  
+                  <Property name="Text" value="New Member:" />
+                  <Property name="Font" value="Berenika-8-Bold" />
                </Window>
          
                <!-- MemberName -->
@@ -3229,11 +3162,11 @@
                </Window>
 
                <!-- MembersDescription -->
-               <Window type="TaharezLook/Label" name="Options.TabGroups.MembersDescription" >
+               <Window type="TaharezLook/LabelWhite" name="Options.TabGroups.MembersDescription" >
                   <Property name="Area" value="{{0.5,15},{0,80},{1,-15},{0,100}}" />         
-                  <Property name="NormalTextColour" value="FFFFFFFF" />
                   <Property name="HorzFormatting" value="WordWrapLeftAligned" />
-                  <Property name="Text" value="Members" />                  
+                  <Property name="Text" value="Members:" />
+                  <Property name="Font" value="Berenika-8-Bold" />
                </Window>
                
                <!-- ListMembers -->
@@ -3259,17 +3192,15 @@
                      <Property name="Area" value="{{0,-5},{0,0},{1,-5},{1,0}}" />
 
                      <!-- Disclaimer1Description -->
-                     <Window type="TaharezLook/Label" name="Options.TabAbout.TabGeneral.Disclaimer1Desc" >
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabAbout.TabGeneral.Disclaimer1Desc" >
                         <Property name="Area" value="{{0,10},{0,10},{0,150},{0,30}}" />         
-                        <Property name="NormalTextColour" value="FFDDDDDD" />
                         <Property name="Text" value="OgreClient 1.0.4.4" />
-                        <Property name="Font" value="LiberationSans-10-Bold" />
+                        <Property name="Font" value="Berenika-8-Bold" />
                         <Property name="HorzFormatting" value="WordWrapLeftAligned" />                     
                      </Window>                     
                      <!-- Disclaimer1 -->
-                     <Window type="TaharezLook/Label" name="Options.TabAbout.TabGeneral.Disclaimer1" >
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabAbout.TabGeneral.Disclaimer1" >
                         <Property name="Area" value="{{0,10},{0,35},{1,-10},{0,55}}" />         
-                        <Property name="NormalTextColour" value="FFDDDDDD" />
                         <Property name="HorzFormatting" value="WordWrapLeftAligned" />
                         <Property name="Text" value="Copyright © 2012-2016 Clint Banzhaf." />                  
                      </Window>
@@ -3284,28 +3215,25 @@
                      </Window>
                            
                      <!-- ContributorsDescription -->
-                     <Window type="TaharezLook/Label" name="Options.TabAbout.TabGeneral.ContributorsDescription" >
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabAbout.TabGeneral.ContributorsDescription" >
                         <Property name="Area" value="{{0,10},{0,70},{0,150},{0,90}}" />         
-                        <Property name="NormalTextColour" value="FFDDDDDD" />
                         <Property name="Text" value="Contributions by" />
-                        <Property name="Font" value="LiberationSans-10-Bold" />
+                        <Property name="Font" value="Berenika-8-Bold" />
                         <Property name="HorzFormatting" value="WordWrapLeftAligned" />                  
                      </Window>   
                      
                      <!-- Contributors -->
-                     <Window type="TaharezLook/Label" name="Options.TabAbout.TabGeneral.Contributors" >
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabAbout.TabGeneral.Contributors" >
                         <Property name="Area" value="{{0,10},{0,95},{1,-10},{0,145}}" />         
-                        <Property name="NormalTextColour" value="FFDDDDDD" />
                         <Property name="HorzFormatting" value="WordWrapLeftAligned" />
                         <Property name="Text" value="Florian Neuner, Mario Moser, the OpenMeridian developers and all the kind folks out there providing free game resources." />                  
                      </Window>
 
                      <!-- Disclaimer3Description -->
-                     <Window type="TaharezLook/Label" name="Options.TabAbout.TabGeneral.Disclaimer3Desc" >
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabAbout.TabGeneral.Disclaimer3Desc" >
                         <Property name="Area" value="{{0,10},{0,160},{0,150},{0,180}}" />         
-                        <Property name="NormalTextColour" value="FFDDDDDD" />
                         <Property name="Text" value="Powered by" />
-                        <Property name="Font" value="LiberationSans-10-Bold" />
+                        <Property name="Font" value="Berenika-8-Bold" />
                         <Property name="HorzFormatting" value="WordWrapLeftAligned" />                  
                      </Window>
 
@@ -3337,27 +3265,24 @@
                      </Window>   
 
                      <!-- Disclaimer2Description -->
-                     <Window type="TaharezLook/Label" name="Options.TabAbout.TabGeneral.Disclaimer2Desc" >
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabAbout.TabGeneral.Disclaimer2Desc" >
                         <Property name="Area" value="{{0,10},{0,270},{0,150},{0,290}}" />         
-                        <Property name="NormalTextColour" value="FFDDDDDD" />
                         <Property name="Text" value="Meridian 59" />
-                        <Property name="Font" value="LiberationSans-10-Bold" />
+                        <Property name="Font" value="Berenika-8-Bold" />
                         <Property name="HorzFormatting" value="WordWrapLeftAligned" />                  
                      </Window>   
                      
                      <!-- Disclaimer2 -->
-                     <Window type="TaharezLook/Label" name="Options.TabAbout.TabGeneral.Disclaimer2" >
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabAbout.TabGeneral.Disclaimer2" >
                         <Property name="Area" value="{{0,10},{0,295},{1,-10},{0,340}}" />         
-                        <Property name="NormalTextColour" value="FFDDDDDD" />
                         <Property name="HorzFormatting" value="WordWrapLeftAligned" />
                         <Property name="Text" value="Copyright © 1994-2015 Andrew and Christopher Kirmse. 
                         Meridian is a registered trademark." />                  
                      </Window>
 
                      <!-- Disclaimer1Description -->
-                     <Window type="TaharezLook/Label" name="Options.TabAbout.TabGeneral.ThanksKirmses" >
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabAbout.TabGeneral.ThanksKirmses" >
                         <Property name="Area" value="{{0,20},{0,350},{1,-20},{0,370}}" />         
-                        <Property name="NormalTextColour" value="FFDDDDDD" />
                         <Property name="Text" value="Thanks to you for making this game open-source." />
                         <Property name="Font" value="LiberationSans-10-Italic" />
                         <Property name="HorzFormatting" value="WordWrapLeftAligned" />                     
