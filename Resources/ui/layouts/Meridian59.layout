@@ -435,7 +435,7 @@
          
          <!-- Inscription -->
          <Window type="TaharezLook/MultiLineEditbox" name="ObjectDetails.Inscription" >
-            <Property name="Area" value="{{0,5},{0,197},{1,-5},{1,-30}}" />
+            <Property name="Area" value="{{0,5},{0,197},{1,-5},{1,-35}}" />
             <Property name="ReadOnly" value="True" />
             <Property name="TextParsingEnabled" value="False" />
          </Window>
@@ -443,7 +443,7 @@
          <!-- OK button -->
          <Window type="TaharezLook/Button" name="ObjectDetails.OK" >
             <Property name="Text" value="OK" />
-            <Property name="Area" value="{{0,5},{1,-25},{1,-5},{1,-5}}" />
+            <Property name="Area" value="{{0,5},{1,-30},{1,-5},{1,-5}}" />
          </Window>
       </Window>
       
@@ -481,7 +481,7 @@
          
          <!-- Description -->
          <Window type="TaharezLook/MultiLineEditbox" name="PlayerDetails.Description" >            
-            <Property name="Area" value="{{0,197},{0,65},{1,-5},{1,-60}}" />
+            <Property name="Area" value="{{0,197},{0,65},{1,-5},{1,-65}}" />
             <Property name="ReadOnly" value="True" />
             <Property name="TextParsingEnabled" value="False" />               
          </Window>
@@ -489,11 +489,11 @@
          <!-- Homepage -->
          <Window type="TaharezLook/Label" name="PlayerDetails.HomepageDescription" >
             <Property name="Text" value="Homepage:" />
-            <Property name="Area" value="{{0,197},{1,-55},{0,270},{1,-30}}" />         
+            <Property name="Area" value="{{0,197},{1,-60},{0,270},{1,-35}}" />         
             <Property name="HorzFormatting" value="WordWrapLeftAligned" />               
          </Window>
          <Window type="TaharezLook/Editbox" name="PlayerDetails.HomepageValue" >
-            <Property name="Area" value="{{0,270},{1,-55},{1,-5},{1,-30}}" />
+            <Property name="Area" value="{{0,270},{1,-60},{1,-5},{1,-35}}" />
             <Property name="ReadOnly" value="True" />
             <Property name="TextParsingEnabled" value="False" />               
          </Window>
@@ -501,7 +501,7 @@
          <!-- OK button -->
          <Window type="TaharezLook/Button" name="PlayerDetails.OK" >
             <Property name="Text" value="OK" />
-            <Property name="Area" value="{{0,197},{1,-25},{1,-5},{1,-5}}" />
+            <Property name="Area" value="{{0,197},{1,-30},{1,-5},{1,-5}}" />
          </Window>
       </Window>
       
@@ -939,7 +939,7 @@
          <!-- Amount -->         
          <Window type="TaharezLook/Editbox" name="Amount.Value" >
             <Property name="Text" value="1" />
-            <Property name="Area" value="{{0,0},{0,0},{1,-55},{1,0}}" />
+            <Property name="Area" value="{{0,0},{0,0},{1,-55},{0,25}}" />
             <Property name="ValidationString" value="\A\Z|[1-9][0-9]*" />
             <Property name="MouseInputPropagationEnabled" value="False" />            
          </Window>
@@ -947,7 +947,7 @@
          <!-- OK button -->
          <Window type="TaharezLook/Button" name="Amount.OK" >
             <Property name="Text" value="OK" />
-            <Property name="Area" value="{{1,-50},{0,0},{1,0},{1,0}}" />
+            <Property name="Area" value="{{1,-50},{0,0},{1,0},{0,25}}" />
          </Window>
       </Window>
       
@@ -1034,7 +1034,7 @@
          <Window type="TaharezLook/Label" name="NewsGroup.HeadLine" >
             <Property name="Text" value="Text" />
             <Property name="Area" value="{{0,0},{0,0},{1,0},{0,15}}" />
-            <Property name="HorzFormatting" value="LeftAligned" />            
+            <Property name="HorzFormatting" value="CentreAligned" />            
          </Window>
          
          <!-- List -->
@@ -1045,36 +1045,36 @@
          <!-- Create -->
          <Window type="TaharezLook/Button" name="NewsGroup.Create" >
             <Property name="Text" value="Create" />
-            <Property name="Area" value="{{0,0},{0.5,0},{0.2,-2},{0.5,20}}" />
+            <Property name="Area" value="{{0,0},{0.5,0},{0.2,-2},{0.5,25}}" />
          </Window>
          
          <!-- Respond -->
          <Window type="TaharezLook/Button" name="NewsGroup.Respond" >
             <Property name="Text" value="Respond" />
-            <Property name="Area" value="{{0.2,2},{0.5,0},{0.4,-2},{0.5,20}}" />
+            <Property name="Area" value="{{0.2,2},{0.5,0},{0.4,-2},{0.5,25}}" />
          </Window>
          
          <!-- MailAuthor  -->
          <Window type="TaharezLook/Button" name="NewsGroup.MailAuthor" >
             <Property name="Text" value="Mail author" />
-            <Property name="Area" value="{{0.4,2},{0.5,0},{0.6,-2},{0.5,20}}" />
+            <Property name="Area" value="{{0.4,2},{0.5,0},{0.6,-2},{0.5,25}}" />
          </Window>
                   
          <!-- Delete -->
          <Window type="TaharezLook/Button" name="NewsGroup.Delete" >
             <Property name="Text" value="Delete" />
-            <Property name="Area" value="{{0.6,2},{0.5,0},{0.8,-2},{0.5,20}}" />         
+            <Property name="Area" value="{{0.6,2},{0.5,0},{0.8,-2},{0.5,25}}" />         
          </Window>
          
          <!-- Refresh -->
          <Window type="TaharezLook/Button" name="NewsGroup.Refresh" >
             <Property name="Text" value="Refresh" />
-            <Property name="Area" value="{{0.8,2},{0.5,0},{1,0},{0.5,20}}" />
+            <Property name="Area" value="{{0.8,2},{0.5,0},{1,0},{0.5,25}}" />
          </Window>
 
          <!-- Text -->
          <Window type="TaharezLook/MultiLineEditbox" name="NewsGroup.Text" >            
-            <Property name="Area" value="{{0,0},{0.5,25},{1,0},{1,0}}" />
+            <Property name="Area" value="{{0,0},{0.5,30},{1,0},{1,0}}" />
             <Property name="ReadOnly" value="True" />
             <Property name="TextParsingEnabled" value="False" />               
          </Window>
@@ -1146,36 +1146,36 @@
          <!-- Create -->
          <Window type="TaharezLook/Button" name="Mail.Create" >
             <Property name="Text" value="Create" />
-            <Property name="Area" value="{{0,0},{0.5,0},{0.2,-2},{0.5,20}}" />
+            <Property name="Area" value="{{0,0},{0.5,0},{0.2,-2},{0.5,25}}" />
          </Window>
          
          <!-- Respond -->
          <Window type="TaharezLook/Button" name="Mail.Respond" >
             <Property name="Text" value="Respond" />
-            <Property name="Area" value="{{0.2,2},{0.5,0},{0.4,-2},{0.5,20}}" />
+            <Property name="Area" value="{{0.2,2},{0.5,0},{0.4,-2},{0.5,25}}" />
          </Window>
          
          <!-- RespondAll -->
          <Window type="TaharezLook/Button" name="Mail.RespondAll" >
             <Property name="Text" value="To All" />
-            <Property name="Area" value="{{0.4,2},{0.5,0},{0.6,-2},{0.5,20}}" />
+            <Property name="Area" value="{{0.4,2},{0.5,0},{0.6,-2},{0.5,25}}" />
          </Window>
                   
          <!-- Delete -->
          <Window type="TaharezLook/Button" name="Mail.Delete" >
             <Property name="Text" value="Delete" />
-            <Property name="Area" value="{{0.6,2},{0.5,0},{0.8,-2},{0.5,20}}" />         
+            <Property name="Area" value="{{0.6,2},{0.5,0},{0.8,-2},{0.5,25}}" />         
          </Window>
          
          <!-- Refresh -->
          <Window type="TaharezLook/Button" name="Mail.Refresh" >
             <Property name="Text" value="Refresh" />
-            <Property name="Area" value="{{0.8,2},{0.5,0},{1,0},{0.5,20}}" />
+            <Property name="Area" value="{{0.8,2},{0.5,0},{1,0},{0.5,25}}" />
          </Window>
 
          <!-- Text -->
          <Window type="TaharezLook/MultiLineEditbox" name="Mail.Text" >            
-            <Property name="Area" value="{{0,0},{0.5,25},{1,0},{1,0}}" />
+            <Property name="Area" value="{{0,0},{0.5,30},{1,0},{1,0}}" />
             <Property name="ReadOnly" value="True" />
             <Property name="TextParsingEnabled" value="False" />               
          </Window>
