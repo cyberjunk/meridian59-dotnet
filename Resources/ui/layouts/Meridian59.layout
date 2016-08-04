@@ -1504,7 +1504,7 @@
       
       <!-- AvatarCreateWizard -->
       <Window type="TaharezLook/FrameWindow" name="AvatarCreateWizard" >
-         <Property name="Text" value="Create your avatar" />
+         <Property name="Text" value="Create your avatar!" />
          <Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
          <Property name="Size" value="{{0,512},{0,512}}" />
          <Property name="MinSize" value="{{0,512},{0,512}}" />
@@ -1522,16 +1522,17 @@
                <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
 
                <!-- Name -->
-               <Window type="TaharezLook/Label" name="AvatarCreateWizard.NameDescription" >
+               <Window type="TaharezLook/LabelWhite" name="AvatarCreateWizard.NameDescription" >
                   <Property name="Text" value="Name:" />
                   <Property name="Area" value="{{0,10},{0,5},{0,55},{0,30}}" />
-                  <Property name="HorzFormatting" value="LeftAligned" />            
+                  <Property name="HorzFormatting" value="LeftAligned" />
+                  <Property name="Font" value="Berenika-8-Bold" />
                </Window>
                <Window type="TaharezLook/Editbox" name="AvatarCreateWizard.Name" >
                   <Property name="Text" value="" />
-                  <Property name="Area" value="{{0,60},{0,5},{1,-10},{0,30}}" />         
+                  <Property name="Area" value="{{0,60},{0,5},{1,-10},{0,30}}" />
                </Window>
-               
+
                <!-- Image -->
                <Window type="TaharezLook/StaticImage" name="AvatarCreateWizard.Image" >
                   <Property name="Area" value="{{0,10},{0,45},{0,202},{0,301}}" />
@@ -1539,12 +1540,13 @@
                   <Property name="BackgroundEnabled" value="False" />
                   <Property name="TooltipText" value="The portrait of your new avatar" />
                </Window>
-         
+
                <!-- Gender -->
-               <Window type="TaharezLook/Label" name="AvatarCreateWizard.GenderDescription" >
+               <Window type="TaharezLook/LabelWhite" name="AvatarCreateWizard.GenderDescription" >
                   <Property name="Text" value="Gender:" />
                   <Property name="Area" value="{{0,212},{0,45},{0,287},{0,70}}" />
-                  <Property name="HorzFormatting" value="LeftAligned" />            
+                  <Property name="HorzFormatting" value="LeftAligned" />
+                  <Property name="Font" value="Berenika-8-Bold" />
                </Window>
                <Window type="TaharezLook/RadioButton" name="AvatarCreateWizard.GenderMale" >
                   <Property name="GroupID" value="653945" />
@@ -1559,70 +1561,77 @@
                </Window>
 
                <!-- Skincolor -->
-               <Window type="TaharezLook/Label" name="AvatarCreateWizard.SkinColorDescription" >
+               <Window type="TaharezLook/LabelWhite" name="AvatarCreateWizard.SkinColorDescription" >
                   <Property name="Text" value="Skin color:" />
                   <Property name="Area" value="{{0,212},{0,75},{0,287},{0,100}}" />
-                  <Property name="HorzFormatting" value="LeftAligned" />            
+                  <Property name="HorzFormatting" value="LeftAligned" />
+                  <Property name="Font" value="Berenika-8-Bold" />
                </Window>
                <Window type="TaharezLook/Slider" name="AvatarCreateWizard.SkinColor" >
                   <Property name="Area" value="{{0,292},{0,82},{1,-10},{0,92}}" />                        
                </Window>
 
                <!-- Hair -->
-               <Window type="TaharezLook/Label" name="AvatarCreateWizard.HairDescription" >
+               <Window type="TaharezLook/LabelWhite" name="AvatarCreateWizard.HairDescription" >
                   <Property name="Text" value="Hair:" />
                   <Property name="Area" value="{{0,212},{0,105},{0,287},{0,130}}" />
-                  <Property name="HorzFormatting" value="LeftAligned" />            
+                  <Property name="HorzFormatting" value="LeftAligned" />
+                  <Property name="Font" value="Berenika-8-Bold" />                  
                </Window>
                <Window type="TaharezLook/Slider" name="AvatarCreateWizard.Hair" >
                   <Property name="Area" value="{{0,292},{0,112},{1,-10},{0,122}}" />                        
                </Window>
 
                <!-- HairColor -->
-               <Window type="TaharezLook/Label" name="AvatarCreateWizard.HairColorDescription" >
+               <Window type="TaharezLook/LabelWhite" name="AvatarCreateWizard.HairColorDescription" >
                   <Property name="Text" value="Hair color:" />
                   <Property name="Area" value="{{0,212},{0,135},{0,287},{0,160}}" />
-                  <Property name="HorzFormatting" value="LeftAligned" />            
+                  <Property name="HorzFormatting" value="LeftAligned" />
+                  <Property name="Font" value="Berenika-8-Bold" />                  
                </Window>
                <Window type="TaharezLook/Slider" name="AvatarCreateWizard.HairColor" >
                   <Property name="Area" value="{{0,292},{0,142},{1,-10},{0,152}}" />                        
                </Window>
 
                <!-- Eyes -->
-               <Window type="TaharezLook/Label" name="AvatarCreateWizard.EyesDescription" >
+               <Window type="TaharezLook/LabelWhite" name="AvatarCreateWizard.EyesDescription" >
                   <Property name="Text" value="Eyes:" />
                   <Property name="Area" value="{{0,212},{0,165},{0,287},{0,190}}" />
-                  <Property name="HorzFormatting" value="LeftAligned" />            
+                  <Property name="HorzFormatting" value="LeftAligned" />
+                  <Property name="Font" value="Berenika-8-Bold" />
                </Window>
                <Window type="TaharezLook/Slider" name="AvatarCreateWizard.Eyes" >
                   <Property name="Area" value="{{0,292},{0,172},{1,-10},{0,182}}" />                        
                </Window>
 
                <!-- Nose -->
-               <Window type="TaharezLook/Label" name="AvatarCreateWizard.NoseDescription" >
+               <Window type="TaharezLook/LabelWhite" name="AvatarCreateWizard.NoseDescription" >
                   <Property name="Text" value="Nose:" />
                   <Property name="Area" value="{{0,212},{0,195},{0,287},{0,220}}" />
-                  <Property name="HorzFormatting" value="LeftAligned" />            
+                  <Property name="HorzFormatting" value="LeftAligned" />
+                  <Property name="Font" value="Berenika-8-Bold" />
                </Window>
                <Window type="TaharezLook/Slider" name="AvatarCreateWizard.Nose" >
                   <Property name="Area" value="{{0,292},{0,202},{1,-10},{0,212}}" />                        
                </Window>
 
                <!-- Mouth -->
-               <Window type="TaharezLook/Label" name="AvatarCreateWizard.MouthDescription" >
+               <Window type="TaharezLook/LabelWhite" name="AvatarCreateWizard.MouthDescription" >
                   <Property name="Text" value="Mouth:" />
                   <Property name="Area" value="{{0,212},{0,225},{0,287},{0,250}}" />
-                  <Property name="HorzFormatting" value="LeftAligned" />            
+                  <Property name="HorzFormatting" value="LeftAligned" />
+                  <Property name="Font" value="Berenika-8-Bold" />
                </Window>
                <Window type="TaharezLook/Slider" name="AvatarCreateWizard.Mouth" >
                   <Property name="Area" value="{{0,292},{0,232},{1,-10},{0,242}}" />                        
                </Window>
 
                <!-- Description -->
-               <Window type="TaharezLook/Label" name="AvatarCreateWizard.DescriptionDescription" >
+               <Window type="TaharezLook/LabelWhite" name="AvatarCreateWizard.DescriptionDescription" >
                   <Property name="Text" value="Description:" />
                   <Property name="Area" value="{{0,10},{0,306},{0,110},{0,331}}" />
-                  <Property name="HorzFormatting" value="LeftAligned" />            
+                  <Property name="HorzFormatting" value="LeftAligned" />
+                  <Property name="Font" value="Berenika-8-Bold" />
                </Window>
                <Window type="TaharezLook/MultiLineEditbox" name="AvatarCreateWizard.Description" >            
                   <Property name="Area" value="{{0,10},{0,336},{1,-10},{1,-10}}" />
@@ -1639,102 +1648,138 @@
                               
                <!-- Profiles -->
                <Window type="TaharezLook/Label" name="AvatarCreateWizard.ProfilesDescription" >
-                  <Property name="Text" value="Profiles" />
+                  <Property name="Text" value="" />
                   <Property name="Area" value="{{0.25,0},{0.1,10},{0.25,100},{0.1,35}}" />
                   <Property name="HorzFormatting" value="LeftAligned" />            
                </Window>
                <Window type="TaharezLook/Combobox" name="AvatarCreateWizard.Profiles" >
                   <Property name="ReadOnly" value="True" />
-                  <Property name="Area" value="{{0.25,105},{0.1,10},{0.75,0},{0.1,110}}" />            
+                  <Property name="Area" value="{{0,5},{0,5},{1,-5},{0,99}}" />            
                </Window>
                
                <!-- Might -->
-               <Window type="TaharezLook/Label" name="AvatarCreateWizard.MightDescription" >
+               <Window type="TaharezLook/LabelWhite" name="AvatarCreateWizard.MightDescription" >
                   <Property name="Text" value="Might" />
-                  <Property name="Area" value="{{0.25,0},{0.1,50},{0.25,100},{0.1,75}}" />
-                  <Property name="HorzFormatting" value="LeftAligned" />            
+                  <Property name="Area" value="{{0,5},{0,40},{0.5,-5},{0,56}}" />
+                  <Property name="Font" value="Berenika-8-Bold" />
+                  <Property name="HorzFormatting" value="CentreAligned" />            
                </Window>
-               <Window type="TaharezLook/VUMeter" name="AvatarCreateWizard.Might" >
+               <Window type="TaharezLook/VUMeterNumeric" name="AvatarCreateWizard.Might" >
                   <Property name="Text" value="25/50" />
-                  <Property name="Area" value="{{0.25,105},{0.1,50},{0.75,0},{0.1,75}}" />   
-                  <Property name="TooltipText" value="Might affects how much you can carry and the damage you inflict. Important for warriors." />
+                  <Property name="Area" value="{{0,5},{0,60},{0.5,-5},{0,76}}" />   
                   <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
                </Window>
-               
-               <!-- Intellect -->
-               <Window type="TaharezLook/Label" name="AvatarCreateWizard.IntellectDescription" >
-                  <Property name="Text" value="Intellect" />
-                  <Property name="Area" value="{{0.25,0},{0.1,80},{0.25,100},{0.1,105}}" />
-                  <Property name="HorzFormatting" value="LeftAligned" />            
+               <Window type="TaharezLook/Label" name="AvatarCreateWizard.MightInformation" >
+                  <Property name="Text" value="Might increases your weight limit and melee damage. Mighty warriors can inflict great damage with maces, hammers or their bare hands." />
+                  <Property name="Area" value="{{0,5},{0,80},{0.5,-5},{0,150}}" />
+                  <Property name="VertFormatting" value="TopAligned" />  
+                  <Property name="HorzFormatting" value="WordWrapJustified" />            
                </Window>
-               <Window type="TaharezLook/VUMeter" name="AvatarCreateWizard.Intellect" >
-                  <Property name="Text" value="25/50" />
-                  <Property name="Area" value="{{0.25,105},{0.1,80},{0.75,0},{0.1,105}}" />
-                  <Property name="TooltipText" value="With a high intellect, you can learn more spells and skills faster than others. Used for advanced magics." />
-                  <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
-               </Window>
-               
-               <!-- Stamina -->
-               <Window type="TaharezLook/Label" name="AvatarCreateWizard.StaminaDescription" >
-                  <Property name="Text" value="Stamina" />
-                  <Property name="Area" value="{{0.25,0},{0.1,110},{0.25,100},{0.1,135}}" />
-                  <Property name="HorzFormatting" value="LeftAligned" />            
-               </Window>
-               <Window type="TaharezLook/VUMeter" name="AvatarCreateWizard.Stamina" >
-                  <Property name="Text" value="25/50" />
-                  <Property name="Area" value="{{0.25,105},{0.1,110},{0.75,0},{0.1,135}}" />
-                  <Property name="TooltipText" value="Stamina helps you weather the rough times when you are hurt and tired. Used for Kraanan spells." />
-                  <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
-               </Window>
-               
+
                <!-- Agility -->
                <Window type="TaharezLook/Label" name="AvatarCreateWizard.AgilityDescription" >
                   <Property name="Text" value="Agility" />
-                  <Property name="Area" value="{{0.25,0},{0.1,140},{0.25,100},{0.1,165}}" />
-                  <Property name="HorzFormatting" value="LeftAligned" />            
+                  <Property name="Area" value="{{0,5},{0,150},{0.5,-5},{0,166}}" />   
+                  <Property name="Font" value="Berenika-8-Bold" />
+                  <Property name="HorzFormatting" value="CentreAligned" />             
                </Window>
-               <Window type="TaharezLook/VUMeter" name="AvatarCreateWizard.Agility" >
+               <Window type="TaharezLook/VUMeterNumeric" name="AvatarCreateWizard.Agility" >
                   <Property name="Text" value="25/50" />
-                  <Property name="Area" value="{{0.25,105},{0.1,140},{0.75,0},{0.1,165}}" />
-                  <Property name="TooltipText" value="An agile fighter dodges his opponent's attacks and is more skilled in certain fighting and defensive arts." />
+                  <Property name="Area" value="{{0,5},{0,170},{0.5,-5},{0,186}}" />   
                   <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
                </Window>
-               
-               <!-- Mysticism -->
-               <Window type="TaharezLook/Label" name="AvatarCreateWizard.MysticismDescription" >
-                  <Property name="Text" value="Mysticsm" />
-                  <Property name="Area" value="{{0.25,0},{0.1,170},{0.25,100},{0.1,195}}" />
-                  <Property name="HorzFormatting" value="LeftAligned" />            
+               <Window type="TaharezLook/Label" name="AvatarCreateWizard.AgilityInformation" >
+                  <Property name="Text" value="Agile fighters are less likely to get hit, master many weapon skills more easily and inflict greater damage with the scimitar. " />
+                  <Property name="Area" value="{{0,5},{0,190},{0.5,-5},{0,260}}" />
+                  <Property name="VertFormatting" value="TopAligned" />  
+                  <Property name="HorzFormatting" value="WordWrapJustified" />            
                </Window>
-               <Window type="TaharezLook/VUMeter" name="AvatarCreateWizard.Mysticism" >
-                  <Property name="Text" value="25/50" />
-                  <Property name="Area" value="{{0.25,105},{0.1,170},{0.75,0},{0.1,195}}" />
-                  <Property name="TooltipText" value="Mysticism is important for gaining and restoring your magical energy. Used for Faren, Shal'ille, and Qor." />
-                  <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
-               </Window>
-               
+
                <!-- Aim -->
                <Window type="TaharezLook/Label" name="AvatarCreateWizard.AimDescription" >
                   <Property name="Text" value="Aim" />
-                  <Property name="Area" value="{{0.25,0},{0.1,200},{0.25,100},{0.1,225}}" />
-                  <Property name="HorzFormatting" value="LeftAligned" />            
+                  <Property name="Area" value="{{0,5},{0,260},{0.5,-5},{0,276}}" />   
+                  <Property name="Font" value="Berenika-8-Bold" />
+                  <Property name="HorzFormatting" value="CentreAligned" />             
                </Window>
-               <Window type="TaharezLook/VUMeter" name="AvatarCreateWizard.Aim" >
+               <Window type="TaharezLook/VUMeterNumeric" name="AvatarCreateWizard.Aim" >
                   <Property name="Text" value="25/50" />
-                  <Property name="Area" value="{{0.25,105},{0.1,200},{0.75,0},{0.1,225}}" />
-                  <Property name="TooltipText" value="A true aim guides an attack to its target. Vital for high skill with ranged weapons." />
+                  <Property name="Area" value="{{0,5},{0,280},{0.5,-5},{0,296}}" />   
                   <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
                </Window>
-               
+               <Window type="TaharezLook/Label" name="AvatarCreateWizard.AimInformation" >
+                  <Property name="Text" value="True aim helps you to hit your targets and allows you to be highly effective with long swords and bows." />
+                  <Property name="Area" value="{{0,5},{0,300},{0.5,-5},{0,370}}" />
+                  <Property name="VertFormatting" value="TopAligned" />
+                  <Property name="HorzFormatting" value="WordWrapJustified" />            
+               </Window>
+
+               <!-- Stamina -->
+               <Window type="TaharezLook/Label" name="AvatarCreateWizard.StaminaDescription" >
+                  <Property name="Text" value="Stamina" />
+                  <Property name="Area" value="{{0.5,5},{0,40},{1,-5},{0,56}}" />
+                  <Property name="Font" value="Berenika-8-Bold" />
+                  <Property name="HorzFormatting" value="CentreAligned" />             
+               </Window>
+               <Window type="TaharezLook/VUMeterNumeric" name="AvatarCreateWizard.Stamina" >
+                  <Property name="Text" value="25/50" />
+                  <Property name="Area" value="{{0.5,5},{0,60},{1,-5},{0,76}}" />   
+                  <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
+               </Window>
+               <Window type="TaharezLook/Label" name="AvatarCreateWizard.StaminaInformation" >
+                  <Property name="Text" value="Your stamina affects your maximum health and allows you to master the arts of Kraanan, the Fist, more easily." />
+                  <Property name="Area" value="{{0.5,5},{0,80},{1,-5},{0,150}}" />
+                  <Property name="VertFormatting" value="TopAligned" />  
+                  <Property name="HorzFormatting" value="WordWrapJustified" />            
+               </Window>
+
+               <!-- Mysticism -->
+               <Window type="TaharezLook/Label" name="AvatarCreateWizard.MysticismDescription" >
+                  <Property name="Text" value="Mysticsm" />
+                  <Property name="Area" value="{{0.5,5},{0,150},{1,-5},{0,166}}" />   
+                  <Property name="Font" value="Berenika-8-Bold" />
+                  <Property name="HorzFormatting" value="CentreAligned" />             
+               </Window>
+               <Window type="TaharezLook/VUMeterNumeric" name="AvatarCreateWizard.Mysticism" >
+                  <Property name="Text" value="25/50" />
+                  <Property name="Area" value="{{0.5,5},{0,170},{1,-5},{0,186}}" />   
+                  <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
+               </Window>
+               <Window type="TaharezLook/Label" name="AvatarCreateWizard.MysticismInformation" >
+                  <Property name="Text" value="Your mysticism determines your maximum mana and is needed for the magical schools of Faren, the Fury, Shal'ille, the Compassionate and Qor, the Vile. " />
+                  <Property name="Area" value="{{0.5,5},{0,190},{1,-5},{0,260}}" />
+                  <Property name="VertFormatting" value="TopAligned" />  
+                  <Property name="HorzFormatting" value="WordWrapJustified" />            
+               </Window>
+
+               <!-- Intellect -->
+               <Window type="TaharezLook/Label" name="AvatarCreateWizard.IntellectDescription" >
+                  <Property name="Text" value="Intellect" />
+                  <Property name="Area" value="{{0.5,5},{0,260},{1,-5},{0,276}}" />
+                  <Property name="Font" value="Berenika-8-Bold" />
+                  <Property name="HorzFormatting" value="CentreAligned" />          
+               </Window>
+               <Window type="TaharezLook/VUMeterNumeric" name="AvatarCreateWizard.Intellect" >
+                  <Property name="Text" value="25/50" />
+                  <Property name="Area" value="{{0.5,5},{0,280},{1,-5},{0,296}}" />   
+                  <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
+               </Window>
+               <Window type="TaharezLook/Label" name="AvatarCreateWizard.IntellectInformation" >
+                  <Property name="Text" value="An adventurer's intellect decides how much they can learn. Great intellect is a necessity to master the schools of Jala, the Muse, and Riija the Trickster." />
+                  <Property name="Area" value="{{0.5,5},{0,300},{1,-5},{0,370}}" />
+                  <Property name="VertFormatting" value="TopAligned" />  
+                  <Property name="HorzFormatting" value="WordWrapJustified" />            
+               </Window>
+
                <!-- AttributesAvailable -->
                <Window type="TaharezLook/Label" name="AvatarCreateWizard.AttributesAvailableDescription" >
-                  <Property name="Text" value="Available" />
-                  <Property name="Area" value="{{0.25,0},{0.1,240},{0.25,100},{0.1,265}}" />
-                  <Property name="HorzFormatting" value="LeftAligned" />            
+                  <Property name="Text" value="Hint: It is a good idea to use multiples of 5 when you set your stats! " />
+                  <Property name="Area" value="{{0,5},{1,-40},{1,-5},{1,-24}}" />     
+                  <Property name="HorzFormatting" value="CentreAligned" />            
                </Window>
-               <Window type="TaharezLook/VUMeter" name="AvatarCreateWizard.AttributesAvailable" >
+               <Window type="TaharezLook/VUMeterNumeric" name="AvatarCreateWizard.AttributesAvailable" >
                   <Property name="Text" value="25/50" />
-                  <Property name="Area" value="{{0.25,105},{0.1,240},{0.75,0},{0.1,265}}" />                                 
+                  <Property name="Area" value="{{0,5},{1,-21},{1,-5},{1,-5}}" />                                 
                </Window>         
             </Window>
             
@@ -1744,45 +1789,49 @@
                <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
                
                <!-- Skills -->
-               <Window type="TaharezLook/Label" name="AvatarCreateWizard.SkillsDescription" >
+               <Window type="TaharezLook/LabelWhite" name="AvatarCreateWizard.SkillsDescription" >
                   <Property name="Text" value="Skills" />
-                  <Property name="Area" value="{{0,10},{0,10},{0.5,-10},{0,35}}" />
-                  <Property name="HorzFormatting" value="LeftAligned" />            
+                  <Property name="Area" value="{{0,5},{0,5},{0.5,-5},{0,30}}" />
+                  <Property name="Font" value="Berenika-8-Bold" />
+                  <Property name="HorzFormatting" value="CentreAligned" />           
                </Window>
                <Window type="TaharezLook/ItemListbox" name="AvatarCreateWizard.Skills" >
-                  <Property name="Area" value="{{0,10},{0,40},{0.5,-10},{0.6,-10}}" />
+                  <Property name="Area" value="{{0,5},{0,35},{0.5,-5},{0.6,-15}}" />
                </Window>
-               <Window type="TaharezLook/Label" name="AvatarCreateWizard.SelectedSkillsDescription" >
+               <Window type="TaharezLook/LabelWhite" name="AvatarCreateWizard.SelectedSkillsDescription" >
                   <Property name="Text" value="Selected" />
-                  <Property name="Area" value="{{0,10},{0.6,0},{0.5,-10},{0.6,25}}" />
-                  <Property name="HorzFormatting" value="LeftAligned" />            
+                  <Property name="Area" value="{{0,5},{0.6,-5},{0.5,-5},{0.6,20}}" />
+                  <Property name="Font" value="Berenika-8-Bold" />
+                  <Property name="HorzFormatting" value="CentreAligned" />             
                </Window>
                <Window type="TaharezLook/ItemListbox" name="AvatarCreateWizard.SelectedSkills" >
-                  <Property name="Area" value="{{0,10},{0.6,35},{0.5,-10},{1,-40}}" />
+                  <Property name="Area" value="{{0,5},{0.6,25},{0.5,-5},{1,-50}}" />
                </Window>
                
                <!-- Spells -->
-               <Window type="TaharezLook/Label" name="AvatarCreateWizard.SpellsDescription" >
+               <Window type="TaharezLook/LabelWhite" name="AvatarCreateWizard.SpellsDescription" >
                   <Property name="Text" value="Spells" />
-                  <Property name="Area" value="{{0.5,10},{0,10},{1,-10},{0,35}}" />
-                  <Property name="HorzFormatting" value="LeftAligned" />            
+                  <Property name="Area" value="{{0.5,5},{0,10},{1,-5},{0,30}}" />
+                  <Property name="Font" value="Berenika-8-Bold" />
+                  <Property name="HorzFormatting" value="CentreAligned" />            
                </Window>
                <Window type="TaharezLook/ItemListbox" name="AvatarCreateWizard.Spells" >
-                  <Property name="Area" value="{{0.5,10},{0,40},{1,-10},{0.6,-10}}" />                  
+                  <Property name="Area" value="{{0.5,5},{0,35},{1,-5},{0.6,-15}}" />                  
                </Window>
-               <Window type="TaharezLook/Label" name="AvatarCreateWizard.SelectedSpellsDescription" >
+               <Window type="TaharezLook/LabelWhite" name="AvatarCreateWizard.SelectedSpellsDescription" >
                   <Property name="Text" value="Selected" />
-                  <Property name="Area" value="{{0.5,10},{0.6,0},{1,-10},{0.6,25}}" />
-                  <Property name="HorzFormatting" value="LeftAligned" />            
+                  <Property name="Area" value="{{0.5,5},{0.6,-5},{1,-5},{0.6,20}}" />
+                  <Property name="Font" value="Berenika-8-Bold" />
+                  <Property name="HorzFormatting" value="CentreAligned" />            
                </Window>
                <Window type="TaharezLook/ItemListbox" name="AvatarCreateWizard.SelectedSpells" >
-                  <Property name="Area" value="{{0.5,10},{0.6,35},{1,-10},{1,-40}}" />
+                  <Property name="Area" value="{{0.5,5},{0.6,25},{1,-5},{1,-50}}" />
                </Window>
                
                <!-- SkillsAvailable -->
-               <Window type="TaharezLook/VUMeter" name="AvatarCreateWizard.SkillPointsAvailable" >
+               <Window type="TaharezLook/VUMeterNumeric" name="AvatarCreateWizard.SkillPointsAvailable" >
                   <Property name="Text" value="45/45" />
-                  <Property name="Area" value="{{0.5,-100},{1,-30},{0.5,100},{1,-5}}" />                                 
+                  <Property name="Area" value="{{0,5},{1,-21},{1,-5},{1,-5}}" />                                 
                </Window>
             </Window>
          </Window>
