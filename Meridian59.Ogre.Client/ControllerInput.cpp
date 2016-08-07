@@ -719,7 +719,7 @@ namespace Meridian59 { namespace Ogre
 		if (!ControllerUI::ProcessingInput &&
 			oisKeyboard->isKeyDown(::OIS::KeyCode::KC_4) &&
 #ifndef DEBUG
-			OgreClient::Singleton->Data->AccountType == AccountType::ADMIN &&
+			OgreClient::Singleton->Data->IsAdminOrDM &&
 #endif
 			(oisKeyboard->isKeyDown(::OIS::KeyCode::KC_LSHIFT) ||
 			 oisKeyboard->isKeyDown(::OIS::KeyCode::KC_RSHIFT)))

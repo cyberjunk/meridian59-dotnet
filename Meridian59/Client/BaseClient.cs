@@ -1678,7 +1678,7 @@ namespace Meridian59.Client
         {
             // don't try to send admincommands if not admin
             // this gets logged, be warned :)         
-            if (Type == ChatTransmissionType.DM && Data.AccountType != AccountType.ADMIN)
+            if (Type == ChatTransmissionType.DM && !Data.IsAdminOrDM)
                 return;
 
             // get tick yesno
@@ -1950,7 +1950,7 @@ namespace Meridian59.Client
         public virtual void SendReqAdminMessage(string Text)
         {
             // we don't want to trigger ALERTS on the server
-            if (Data.AccountType != AccountType.ADMIN)
+            if (!Data.IsAdminOrDM)
                 return;
 
             // create message instance
@@ -2226,7 +2226,7 @@ namespace Meridian59.Client
             // don't try to send admincommands if not admin
             // this gets logged, be warned :)
 
-            if (Data.AccountType == AccountType.ADMIN)
+            if (Data.IsAdminOrDM)
             {
                 // create message instance
                 ReqDMMessage message = new ReqDMMessage(Type, Text);

@@ -531,6 +531,14 @@ namespace Meridian59.Data
         }
 
         /// <summary>
+        /// True if AccountType is ADMIN or DM.
+        /// </summary>
+        public bool IsAdminOrDM
+        {
+            get { return accountType == AccountType.ADMIN || accountType == AccountType.DM; }
+        }
+
+        /// <summary>
         /// The current time in Meridian 59.
         /// With date set to 1/1/1.
         /// Updated when Tick() is called.
