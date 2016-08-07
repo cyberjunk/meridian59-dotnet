@@ -21,8 +21,9 @@ namespace Meridian59.Common.Enums
     /// </summary>
     public enum AccountType : byte
     {
-        USER = 0x00,
+        USER  = 0x00,
         ADMIN = 0x01,
-        GUEST = 0x02
+        DM    = 0x02,
+        GUEST = 0x03
     }
 }
