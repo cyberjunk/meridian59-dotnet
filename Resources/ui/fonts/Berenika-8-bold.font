@@ -1,10 +1,10 @@
 <?xml version="1.0" ?>
 <Font 
 	version="3" 
-	name="DejaVuSerif-10-Bold" 
-	filename="DejaVuSerif-Bold.ttf" 
+	name="Berenika-8-Bold" 
+	filename="Berenika-Bold.ttf" 
 	type="FreeType" 
-	size="10" 
+	size="8" 
 	nativeHorzRes="1280" 
 	nativeVertRes="720" 
 	autoScaled="false" />
