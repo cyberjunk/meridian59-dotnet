@@ -2,22 +2,17 @@
 <GUIScheme version="5" name="TaharezLook">
 	<Imageset filename="TaharezLook.imageset" />
 	
-	<!-- Font: DejaVuSerif 10 -->
-	<Font filename="DejaVuSerif-10-regular.font" />
-	<Font filename="DejaVuSerif-10-bold.font" />
-	<Font filename="DejaVuSerif-10-italic.font" />
-	<Font filename="DejaVuSerif-10-bolditalic.font" />
-	
 	<!-- Font: LiberationSans 10 -->
 	<Font filename="LiberationSans-10-regular.font" />
 	<Font filename="LiberationSans-10-bold.font" />
 	<Font filename="LiberationSans-10-italic.font" />
 	<Font filename="LiberationSans-10-bolditalic.font" />
 
-	<!-- Font: Xolonium -->
-	<Font filename="Xolonium-6-bold.font" />
-	<Font filename="Xolonium-8-bold.font" />
-	<Font filename="Xolonium-20-bold.font" />
+	<!-- Font: Berenika -->
+	<Font filename="Xolonium-6-Bold.font" />
+	<Font filename="Berenika-8-bold.font" />
+	<Font filename="Berenika-20-bold.font" />
+	<Font filename="Berenika-48-bold.font" />
 	
 	<LookNFeel filename="TaharezLook.looknfeel" />
 	<WindowRendererSet filename="CEGUICoreWindowRendererSet" />
@@ -37,6 +32,7 @@
 	<FalagardMapping windowType="TaharezLook/AlternateProgressBar" 		targetType="CEGUI/ProgressBar" 	renderer="Core/ProgressBar" 	lookNFeel="TaharezLook/AltProgressBar" />
 	<FalagardMapping windowType="TaharezLook/ProgressBar"          		targetType="CEGUI/ProgressBar" 	renderer="Core/ProgressBar" 	lookNFeel="TaharezLook/ProgressBar" />
 	<FalagardMapping windowType="TaharezLook/VUMeter"              		targetType="CEGUI/ProgressBar" 	renderer="Core/ProgressBar" 	lookNFeel="TaharezLook/VUMeter" />
+	<FalagardMapping windowType="TaharezLook/VUMeterNumeric"              		targetType="CEGUI/ProgressBar" 	renderer="Core/ProgressBar" 	lookNFeel="TaharezLook/VUMeterNumeric" />
 	<FalagardMapping windowType="TaharezLook/VerticalScrollbar"   		targetType="CEGUI/Scrollbar" 	renderer="Core/Scrollbar" 		lookNFeel="TaharezLook/VerticalScrollbar" />
 	<FalagardMapping windowType="TaharezLook/HorizontalScrollbar" 		targetType="CEGUI/Scrollbar" 	renderer="Core/Scrollbar" 		lookNFeel="TaharezLook/HorizontalScrollbar" />
 	<FalagardMapping windowType="TaharezLook/VerticalScrollbarThumb"   	targetType="CEGUI/Thumb" 		renderer="Core/Button" 			lookNFeel="TaharezLook/VerticalScrollbarThumb" />
@@ -87,5 +83,9 @@
 	<FalagardMapping windowType="TaharezLook/AliasListboxItem" 			targetType="CEGUI/ItemEntry"   	renderer="Core/ItemEntry"   	lookNFeel="TaharezLook/AliasListboxItem" />
 	<FalagardMapping windowType="TaharezLook/GroupListboxItem" 			targetType="CEGUI/ItemEntry"   	renderer="Core/ItemEntry"   	lookNFeel="TaharezLook/GroupListboxItem" />
 	<FalagardMapping windowType="TaharezLook/GroupMemberListboxItem" 	targetType="CEGUI/ItemEntry"   	renderer="Core/ItemEntry"   	lookNFeel="TaharezLook/GroupMemberListboxItem" />
+	<FalagardMapping windowType="TaharezLook/LabelWhite"       				targetType="DefaultWindow"     	renderer="Core/Default"      	lookNFeel="TaharezLook/LabelWhite" />
+	<FalagardMapping windowType="TaharezLook/ZeroTabControl" 				targetType="CEGUI/TabControl" 	renderer="Core/TabControl" 		lookNFeel="TaharezLook/ZeroTabControl" />
+	<FalagardMapping windowType="TaharezLook/ZeroTabContentPane"    		targetType="DefaultWindow"    	renderer="Core/Default"    		lookNFeel="TaharezLook/ZeroTabContentPane" />
+	<FalagardMapping windowType="TaharezLook/MiniButton"      				targetType="CEGUI/PushButton"  	renderer="Core/Button"       	lookNFeel="TaharezLook/MiniButton" />
 </GUIScheme>
 

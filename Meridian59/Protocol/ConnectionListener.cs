@@ -51,8 +51,11 @@ namespace Meridian59.Protocol
         public ConnectionListener(ushort Port)
         {
             // create listener
-            listener = new TcpListener(IPAddress.Any, Port);
+            listener = new TcpListener(IPAddress.IPv6Any, Port);
             
+            // set ipv6 socket to dualstack so it can handle our IPv4 connections too
+            //listener.Server.SetSocketOption(SocketOptionLevel.IPv6, SocketOptionName.IPv6Only, false);
+
             // mark running
             isRunning = true;
 
