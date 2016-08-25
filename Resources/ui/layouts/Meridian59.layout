@@ -195,7 +195,7 @@
          </Window>
          <Window type="TaharezLook/MiniButton" name="StatusBar.MoodAngry" >
             <Property name="Area" value="{{0,485},{0,3},{0,539},{0,20}}" />
-            <Property name="Text" value="Angry" />
+            <Property name="Text" value="Wry" />
          </Window>
          
          <!-- Safety -->
@@ -507,9 +507,9 @@
       
       <!-- Target -->
       <Window type="TaharezLook/StaticImage" name="Target" >
-         <Property name="Size" value="{{0,248},{0,93}}" />
-         <Property name="MinSize" value="{{0,248},{0,93}}" />
-         <Property name="MaxSize" value="{{0,248},{0,93}}" />
+         <Property name="Size" value="{{0,250},{0,93}}" />
+         <Property name="MinSize" value="{{0,250},{0,93}}" />
+         <Property name="MaxSize" value="{{0,250},{0,93}}" />
          <Property name="Position" value="{{0,275},{0,30}}" />
          <Property name="FrameEnabled" value="False" />
          <Property name="BackgroundEnabled" value="False" />
@@ -534,7 +534,7 @@
             
          <!-- Buttons -->
          <Window type="HorizontalLayoutContainer" name="Target.Layout" >
-            <Property name="Area" value="{{0,96},{0,59},{0,240},{0,83}}" />
+            <Property name="Area" value="{{0,97},{0,59},{0,241},{0,83}}" />
             
             <!-- Inspect -->
             <Window type="TaharezLook/ImageButton" name="Target.Inspect" >
@@ -638,8 +638,8 @@
       <!-- RoomEnchantments -->
       <Window type="TaharezLook/StaticImage" name="RoomEnchantments" >
          <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
-         <Property name="MaxSize" value="{{0,250},{0,28}}" />
-         <Property name="Size" value="{{0,250},{0,28}}" />
+         <Property name="MaxSize" value="{{0,250},{0,44}}" />
+         <Property name="Size" value="{{0,250},{0,44}}" />
          <Property name="Position" value="{{0,0},{0,156}}" />
          <Property name="FrameEnabled" value="False" />
          <Property name="BackgroundEnabled" value="False" />
@@ -1949,11 +1949,11 @@
          <Property name="CloseButtonEnabled" value="False" />
          <Property name="Text" value="Login" />
          <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
-         <Property name="Size" value="{{0,384},{0,260}}" />
-         <Property name="MinSize" value="{{0,384},{0,260}}" />
-         <Property name="MaxSize" value="{{0,384},{0,260}}" />
+         <Property name="Size" value="{{0,360},{0,260}}" />
+         <Property name="MinSize" value="{{0,360},{0,260}}" />
+         <Property name="MaxSize" value="{{0,360},{0,260}}" />
          <Property name="SizingEnabled" value="FALSE" />
-         <Property name="Position" value="{{0.5,-192},{0.5,-240}}" />
+         <Property name="Position" value="{{0.5,-180},{0.3,0}}" />
 
          <Window type="TaharezLook/LabelWhite" name="Login.Title" >
             <Property name="Text" value="LOGIN" />

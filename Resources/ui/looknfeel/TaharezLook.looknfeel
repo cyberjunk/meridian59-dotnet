@@ -512,15 +512,12 @@
             <ImageryComponent>
                 <Area>
                     <Dim type="LeftEdge" >
-                            <ImageDim name="TaharezLook/NewTitlebarLeft" dimension="Width"/>
+                        <ImageDim name="TaharezLook/NewTitlebarLeft" dimension="Width"/>
                     </Dim>
                     <Dim type="RightEdge" >
-                        <OperatorDim op="Subtract">
-                            <UnifiedDim scale="0.5" type="RightEdge"/>
-                            <OperatorDim op="Add">
-                                <UnifiedDim scale="0.2" type="RightEdge"/>
-                                <ImageDim name="TaharezLook/NewTitlebarFrillLeft" dimension="Width" />
-                            </OperatorDim>
+                        <OperatorDim op="Add">
+                           <ImageDim name="TaharezLook/NewTitlebarLeft" dimension="Width"/>
+                           <UnifiedDim scale="0.07" type="RightEdge"/>
                         </OperatorDim>
                     </Dim>
                 </Area>
@@ -531,19 +528,18 @@
             <ImageryComponent>
                 <Area>
                     <Dim type="LeftEdge" >
-                        <OperatorDim op="Subtract">
-                            <UnifiedDim scale="0.5" type="RightEdge"/>
-                            <OperatorDim op="Add">
-                                <UnifiedDim scale="0.2" type="RightEdge"/>
-                                <ImageDim name="TaharezLook/NewTitlebarFrillLeft" dimension="Width" />
-                            </OperatorDim>
+                        <OperatorDim op="Add">
+                           <ImageDim name="TaharezLook/NewTitlebarLeft" dimension="Width"/>
+                           <UnifiedDim scale="0.07" type="RightEdge"/>
                         </OperatorDim>
                     </Dim>
                     <Dim type="RightEdge" >
-                        <OperatorDim op="Subtract">
-                            <UnifiedDim scale="0.5" type="RightEdge"/>
-                            <!--  Size of desired frill area divided by 2  -->
-                            <UnifiedDim scale="0.2" type="RightEdge"/>
+                        <OperatorDim op="Add">
+                           <ImageDim name="TaharezLook/NewTitlebarLeft" dimension="Width"/>
+                           <OperatorDim op="Add">
+                              <UnifiedDim scale="0.07" type="RightEdge"/>
+                              <ImageDim name="TaharezLook/NewTitlebarFrillLeft" dimension="Width"/>
+                           </OperatorDim>
                         </OperatorDim>
                     </Dim>
                 </Area>
@@ -552,111 +548,170 @@
                 <HorzFormat type="Stretched" />
             </ImageryComponent>
             <ImageryComponent>
-                <Area>
-                    <Dim type="LeftEdge" >
-                        <OperatorDim op="Subtract">
-                            <UnifiedDim scale="0.5" type="RightEdge"/>
-                            <!--  Size of desired frill area divided by 2  -->
-                            <UnifiedDim scale="0.2" type="RightEdge"/>
-                        </OperatorDim>
-                    </Dim>
-                    <Dim type="RightEdge" >
+               <Area>
+                  <Dim type="LeftEdge" >
+                     <OperatorDim op="Add">
+                        <ImageDim name="TaharezLook/NewTitlebarLeft" dimension="Width"/>
                         <OperatorDim op="Add">
-                            <UnifiedDim scale="0.5" type="RightEdge"/>
-                            <!--  Size of desired frill area divided by 2  -->
-                            <UnifiedDim scale="0.2" type="RightEdge"/>
+                           <UnifiedDim scale="0.07" type="RightEdge"/>
+                           <ImageDim name="TaharezLook/NewTitlebarFrillLeft" dimension="Width"/>
                         </OperatorDim>
-                    </Dim>
-                </Area>
-                <Image name="TaharezLook/NewTitlebarFrillMiddle" />
-                <VertFormat type="Stretched" />
-                <HorzFormat type="Stretched" />
+                     </OperatorDim>
+                  </Dim>
+                  <Dim type="RightEdge" >
+                     <OperatorDim op="Subtract">
+                        <UnifiedDim scale="1" type="RightEdge"/>
+                        <OperatorDim op="Add">
+                           <ImageDim name="TaharezLook/NewTitlebarFrillLeft" dimension="Width"/>
+                           <OperatorDim op="Add">
+                              <UnifiedDim scale="0.02" type="RightEdge"/>
+                              <OperatorDim op="Add">
+                                 <ImageDim name="TaharezLook/SysArea" dimension="Width"/>
+                                 <ImageDim name="TaharezLook/NewTitlebarRight" dimension="Width"/>
+                              </OperatorDim>
+                           </OperatorDim>
+                        </OperatorDim>
+                     </OperatorDim>
+                  </Dim>
+               </Area>
+               <Image name="TaharezLook/NewTitlebarFrillMiddle" />
+               <VertFormat type="Stretched" />
+               <HorzFormat type="Stretched" />
             </ImageryComponent>
             <ImageryComponent>
                 <Area>
-                    <Dim type="LeftEdge" >
+                  <Dim type="LeftEdge" >
+                     <OperatorDim op="Subtract">
+                        <UnifiedDim scale="1" type="RightEdge"/>
                         <OperatorDim op="Add">
-                            <UnifiedDim scale="0.5" type="RightEdge"/>
-                            <!--  Size of desired frill area divided by 2  -->
-                            <UnifiedDim scale="0.2" type="RightEdge"/>
+                           <ImageDim name="TaharezLook/NewTitlebarFrillLeft" dimension="Width"/>
+                           <OperatorDim op="Add">
+                              <UnifiedDim scale="0.02" type="RightEdge"/>
+                              <OperatorDim op="Add">
+                                 <ImageDim name="TaharezLook/SysArea" dimension="Width"/>
+                                 <ImageDim name="TaharezLook/NewTitlebarRight" dimension="Width"/>
+                              </OperatorDim>
+                           </OperatorDim>
                         </OperatorDim>
-                    </Dim>
-                    <Dim type="RightEdge" >
+                     </OperatorDim>
+                  </Dim>
+                  <Dim type="RightEdge" >
+                     <OperatorDim op="Subtract">
+                        <UnifiedDim scale="1" type="RightEdge"/>
                         <OperatorDim op="Add">
-                            <UnifiedDim scale="0.5" type="RightEdge"/>
-                            <OperatorDim op="Add">
-                                <!--  Size of desired frill area divided by 2  -->
-                                <UnifiedDim scale="0.2" type="RightEdge"/>
-                                <ImageDim name="TaharezLook/NewTitlebarFrillRight" dimension="Width" />
-                            </OperatorDim>
+                           <UnifiedDim scale="0.02" type="RightEdge"/>
+                           <OperatorDim op="Add">
+                              <ImageDim name="TaharezLook/SysArea" dimension="Width"/>
+                              <ImageDim name="TaharezLook/NewTitlebarRight" dimension="Width"/>
+                           </OperatorDim>
                         </OperatorDim>
-                    </Dim>
-                </Area>
-                <Image name="TaharezLook/NewTitlebarFrillRight" />
-                <VertFormat type="Stretched" />
-                <HorzFormat type="Stretched" />
+                     </OperatorDim>
+                  </Dim>
+               </Area>
+               <Image name="TaharezLook/NewTitlebarFrillRight" />
+               <VertFormat type="Stretched" />
+               <HorzFormat type="Stretched" />
             </ImageryComponent>
             <ImageryComponent>
                 <Area>
-                    <Dim type="LeftEdge" >
+                  <Dim type="LeftEdge" >
+                     <OperatorDim op="Subtract">
+                        <UnifiedDim scale="1" type="RightEdge"/>
                         <OperatorDim op="Add">
-                            <UnifiedDim scale="0.5" type="RightEdge"/>
-                            <OperatorDim op="Add">
-                                <!--  Size of desired frill area divided by 2  -->
-                                <UnifiedDim scale="0.2" type="RightEdge"/>
-                                <ImageDim name="TaharezLook/NewTitlebarFrillRight" dimension="Width" />
-                            </OperatorDim>
+                           <UnifiedDim scale="0.02" type="RightEdge"/>
+                           <OperatorDim op="Add">
+                              <ImageDim name="TaharezLook/SysArea" dimension="Width"/>
+                              <ImageDim name="TaharezLook/NewTitlebarRight" dimension="Width"/>
+                           </OperatorDim>
                         </OperatorDim>
-                    </Dim>
-                    <Dim type="RightEdge" >
-                        <OperatorDim op="Subtract">
-                            <UnifiedDim scale="1" type="RightEdge"/>
-                            <OperatorDim op="Add">
-                               <ImageDim name="TaharezLook/SysArea" dimension="Width"/>
-                               <ImageDim name="TaharezLook/NewTitlebarRight" dimension="Width"/>
-                            </OperatorDim>
+                     </OperatorDim>
+                  </Dim>
+                  <Dim type="RightEdge" >
+                     <OperatorDim op="Subtract">
+                        <UnifiedDim scale="1" type="RightEdge"/>
+                        <OperatorDim op="Add">
+                           <ImageDim name="TaharezLook/SysArea" dimension="Width"/>
+                           <ImageDim name="TaharezLook/NewTitlebarRight" dimension="Width"/>
                         </OperatorDim>
-                    </Dim>
+                     </OperatorDim>
+                  </Dim>
                 </Area>
                 <Image name="TaharezLook/NewTitlebarMiddle" />
                 <VertFormat type="Stretched" />
                 <HorzFormat type="Stretched" />
             </ImageryComponent>
             <ImageryComponent>
-                <Area>
-                    <Dim type="RightEdge" >
-                            <UnifiedDim scale="1" type="RightEdge"/>
-                    </Dim>
-                </Area>
-                <Image name="TaharezLook/NewTitlebarRight" />
-                <VertFormat type="Stretched" />
-                <HorzFormat type="RightAligned" />
+               <Area>
+                  <Dim type="LeftEdge" >
+                     <OperatorDim op="Subtract">
+                        <UnifiedDim scale="1" type="RightEdge"/>
+                        <OperatorDim op="Add">
+                           <ImageDim name="TaharezLook/SysArea" dimension="Width"/>
+                           <ImageDim name="TaharezLook/NewTitlebarRight" dimension="Width"/>
+                        </OperatorDim>
+                     </OperatorDim>
+                  </Dim>
+                  <Dim type="RightEdge" >
+                     <OperatorDim op="Subtract">
+                        <UnifiedDim scale="1" type="RightEdge"/>
+                        <ImageDim name="TaharezLook/NewTitlebarRight" dimension="Width"/>
+                     </OperatorDim>
+                  </Dim>
+               </Area>
+               <Image name="TaharezLook/SysArea" />
+               <VertFormat type="Stretched" />
+               <HorzFormat type="RightAligned" />
             </ImageryComponent>
             <ImageryComponent>
-                <Area>
-                    <Dim type="RightEdge" >
-                        <OperatorDim op="Subtract">
-                            <UnifiedDim scale="1" type="RightEdge"/>
-                            <ImageDim name="TaharezLook/NewTitlebarRight" dimension="Width"/>
-                        </OperatorDim>
-                    </Dim>
+               <Area>
+                  <Dim type="LeftEdge" >
+                     <OperatorDim op="Subtract">
+                        <UnifiedDim scale="1" type="RightEdge"/>
+                        <ImageDim name="TaharezLook/NewTitlebarRight" dimension="Width"/>
+                     </OperatorDim>
+                  </Dim>
+                  <Dim type="RightEdge" >
+                     <UnifiedDim scale="1" type="RightEdge"/>
+                  </Dim>
                 </Area>
-                <Image name="TaharezLook/SysArea" />
+                <Image name="TaharezLook/NewTitlebarRight" />
                 <VertFormat type="Stretched" />
                 <HorzFormat type="RightAligned" />
             </ImageryComponent>
         </ImagerySection>
         <ImagerySection name="caption">
             <TextComponent>
-                <HorzFormat type="CentreAligned" />
-                <Area>
-                    <Dim type="TopEdge" ><AbsoluteDim value="0" /></Dim>
-                    <Dim type="LeftEdge" ><UnifiedDim scale="0.35" type="Width" /></Dim>
-                    <Dim type="RightEdge" ><UnifiedDim scale="0.65" type="Width" /></Dim>
-                    <Dim type="BottomEdge" ><ImageDim name="TaharezLook/NewTitlebarLeft" dimension="Height"/></Dim>
-                </Area>
-                <Colours topLeft="FFFFFFFF" topRight="FFFFFFFF" bottomLeft="CCFFFFFF" bottomRight="CCFFFFFF" />
-                <VertFormat type="CentreAligned" />
+               <HorzFormat type="CentreAligned" />
+               <Area>
+                  <Dim type="TopEdge" ><AbsoluteDim value="0" /></Dim>
+                  <Dim type="LeftEdge" >
+                     <OperatorDim op="Add">
+                        <ImageDim name="TaharezLook/NewTitlebarLeft" dimension="Width"/>
+                        <OperatorDim op="Add">
+                           <UnifiedDim scale="0.07" type="RightEdge"/>
+                           <ImageDim name="TaharezLook/NewTitlebarFrillLeft" dimension="Width"/>
+                        </OperatorDim>
+                     </OperatorDim>
+                  </Dim>
+                  <Dim type="RightEdge" >
+                     <OperatorDim op="Subtract">
+                        <UnifiedDim scale="1" type="RightEdge"/>
+                        <OperatorDim op="Add">
+                           <ImageDim name="TaharezLook/NewTitlebarFrillLeft" dimension="Width"/>
+                           <OperatorDim op="Add">
+                              <UnifiedDim scale="0.02" type="RightEdge"/>
+                              <OperatorDim op="Add">
+                                 <ImageDim name="TaharezLook/SysArea" dimension="Width"/>
+                                 <ImageDim name="TaharezLook/NewTitlebarRight" dimension="Width"/>
+                              </OperatorDim>
+                           </OperatorDim>
+                        </OperatorDim>
+                     </OperatorDim>
+                  </Dim>
+                  <Dim type="BottomEdge" ><ImageDim name="TaharezLook/NewTitlebarLeft" dimension="Height"/></Dim>
+               </Area>
+               <Colours topLeft="FFFFFFFF" topRight="FFFFFFFF" bottomLeft="CCFFFFFF" bottomRight="CCFFFFFF" />
+               <VertFormat type="CentreAligned" />
             </TextComponent>
         </ImagerySection>
         <StateImagery name="Active">
@@ -946,10 +1001,8 @@
     <WidgetLook name="TaharezLook/GroupBox">
         <PropertyDefinition name="FrameColours" initialValue="tl:FFFFFFFF tr:FFFFFFFF bl:FFFFFFFF br:FFFFFFFF" redrawOnWrite="true" type="ColourRect"/>
         <PropertyDefinition name="BackgroundColours" initialValue="tl:FFDFDFDF tr:FFDFDFDF bl:FFDFDFDF br:FFDFDFDF" redrawOnWrite="true" type="ColourRect"/>
-
         <PropertyDefinition name="BackgroundTextColours" initialValue="tl:FF101a1f tr:FF101a1f bl:FF101a1f br:FF101a1f" redrawOnWrite="true" type="ColourRect"/>
-
-       <PropertyDefinition name="DisabledTextColour" initialValue="FFCCCCCC" redrawOnWrite="true" type="ColourRect"/>
+        <PropertyDefinition name="DisabledTextColour" initialValue="FFCCCCCC" redrawOnWrite="true" type="ColourRect"/>
         <PropertyDefinition name="NormalTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" type="ColourRect"/>
         <PropertyDefinition name="TextBackground" initialValue="FFCCCCCC" redrawOnWrite="true" type="ColourRect"/>
         <Property name="Size" value="{{0.3, 0}, {0.3, 0}}" />
@@ -1264,7 +1317,7 @@
     <WidgetLook name="TaharezLook/VUMeter">
       <PropertyDefinition name="NoBarTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" />
       <PropertyDefinition name="BarTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" />
-      <PropertyDefinition name="BarColours" initialValue="tl:FF2a353d tr:FF384751 bl:FF2a353d br:FF384751" redrawOnWrite="true" type="ColourRect"/>
+      <PropertyDefinition name="BarColours" initialValue="tl:FF281e1b tr:FF382a26 bl:DD281e1b br:DD382a26" redrawOnWrite="true" type="ColourRect"/>
       <PropertyDefinition name="BarTextFont" initialValue="Berenika-8-Bold" redrawOnWrite="true" />
         <Property name="VerticalProgress" value="False" />
         <Property name="Size" value="{{0, 256}, {0, 32}}" />
@@ -1356,7 +1409,7 @@
             </Layer>
         </StateImagery>
     </WidgetLook>
-    
+
     ***************************************************
         TaharezLook/VUMeterNumeric (progress bar)
     ***************************************************
@@ -1364,7 +1417,7 @@
     <WidgetLook name="TaharezLook/VUMeterNumeric">
       <PropertyDefinition name="NoBarTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" />
       <PropertyDefinition name="BarTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" />
-      <PropertyDefinition name="BarColours" initialValue="tl:FF2a353d tr:FF384751 bl:FF2a353d br:FF384751" redrawOnWrite="true" type="ColourRect"/>
+      <PropertyDefinition name="BarColours" initialValue="tl:FF281e1b tr:FF382a26 bl:DD281e1b br:DD382a26" redrawOnWrite="true" type="ColourRect"/>
       <PropertyDefinition name="BarTextFont" initialValue="Xolonium-6-Bold" redrawOnWrite="true" />
         <Property name="VerticalProgress" value="False" />
         <Property name="Size" value="{{0, 256}, {0, 16}}" />
@@ -1746,7 +1799,7 @@
     -->
     <WidgetLook name="TaharezLook/VerticalScrollbar">
         <Property name="VerticalScrollbar" value="True" />
-        <Property name="Size" value="{{0, 16}, {1, 0}}" />
+        <Property name="Size" value="{{0, 10}, {1, 0}}" />
       <Property name="WantsMultiClickEvents" value="False" />
       <Property name="MouseAutoRepeatEnabled" value="True" />
         <NamedArea name="ThumbTrackArea">
@@ -2288,8 +2341,8 @@
                 <ImageProperty name="Backdrop" />
                 <!--<ColourRectProperty name="BackgroundColours" />-->
                 <Colours topLeft="FFFFFFFF" topRight="FFFFFFFF" bottomLeft="FFFFFFFF" bottomRight="FFFFFFFF" />
-                <VertFormat type="Stretched" />
-                <HorzFormat type="Stretched" />
+                <VertFormat type="Tiled" />
+                <HorzFormat type="Tiled" />
             </ImageryComponent>
         </ImagerySection>
         <ImagerySection name="background_noframe">
@@ -2297,8 +2350,8 @@
                 <ImageProperty name="Backdrop" />
                 <!--<ColourRectProperty name="BackgroundColours" />-->
                 <Colours topLeft="FFFFFFFF" topRight="FFFFFFFF" bottomLeft="FFFFFFFF" bottomRight="FFFFFFFF" />
-                <VertFormat type="Stretched" />
-                <HorzFormat type="Stretched" />
+                <VertFormat type="Tiled" />
+                <HorzFormat type="Tiled" />
             </ImageryComponent>
         </ImagerySection>
     </WidgetLook>
@@ -2523,20 +2576,37 @@
         <Property name="Size" value="{{0, 256}, {0, 128}}" />
         <NamedArea name="WithFrameTextRenderArea">
             <Area>
-                <Dim type="LeftEdge" ><ImageDim name="TaharezLook/StaticLeft" dimension="Width" /></Dim>
-                <Dim type="TopEdge" ><ImageDim name="TaharezLook/StaticTop" dimension="Height" /></Dim>
-                <Dim type="RightEdge" >
-                    <OperatorDim op="Subtract">
-                        <UnifiedDim scale="1" type="RightEdge" />
+               <Dim type="LeftEdge" >
+                  <ImageDim name="TaharezLook/StaticLeft" dimension="Width" />
+                  <OperatorDim op="Add">
+                     <AbsoluteDim value="3" />
+                     <ImageDim name="TaharezLook/StaticLeft" dimension="Width" />
+                  </OperatorDim>
+               </Dim>
+               <Dim type="TopEdge" >
+                  <OperatorDim op="Add">
+                     <AbsoluteDim value="1" />
+                     <ImageDim name="TaharezLook/StaticTop" dimension="Height" />
+                  </OperatorDim>
+               </Dim>
+               <Dim type="RightEdge" >
+                  <OperatorDim op="Subtract">
+                     <UnifiedDim scale="1" type="RightEdge" />
+                     <OperatorDim op="Add">
+                        <AbsoluteDim value="3" />
                         <ImageDim name="TaharezLook/StaticRight" dimension="Width" />
-                    </OperatorDim>
-                </Dim>
-                <Dim type="BottomEdge" >
-                    <OperatorDim op="Subtract">
-                        <UnifiedDim scale="1" type="BottomEdge" />
+                     </OperatorDim>
+                  </OperatorDim>
+               </Dim>
+               <Dim type="BottomEdge" >
+                  <OperatorDim op="Subtract">
+                     <UnifiedDim scale="1" type="BottomEdge" />
+                     <OperatorDim op="Add">
+                        <AbsoluteDim value="1" />
                         <ImageDim name="TaharezLook/StaticBottom" dimension="Height" />
-                    </OperatorDim>
-                </Dim>
+                     </OperatorDim>
+                  </OperatorDim>
+               </Dim>
             </Area>
         </NamedArea>
         <NamedArea name="WithFrameTextRenderAreaHScroll">
@@ -2559,20 +2629,39 @@
         </NamedArea>
         <NamedArea name="WithFrameTextRenderAreaVScroll">
             <Area>
-                <Dim type="LeftEdge" ><ImageDim name="TaharezLook/StaticLeft" dimension="Width" /></Dim>
-                <Dim type="TopEdge" ><ImageDim name="TaharezLook/StaticTop" dimension="Height" /></Dim>
-                <Dim type="RightEdge" >
-                    <OperatorDim op="Subtract">
-                        <UnifiedDim scale="1" offset="-4" type="RightEdge" />
-                        <WidgetDim widget="__auto_vscrollbar__" dimension="Width" />
-                    </OperatorDim>
-                </Dim>
-                <Dim type="BottomEdge" >
-                    <OperatorDim op="Subtract">
-                        <UnifiedDim scale="1" type="BottomEdge" />
+               <Dim type="LeftEdge" >
+                  <OperatorDim op="Add">
+                     <AbsoluteDim value="3" />
+                     <ImageDim name="TaharezLook/StaticLeft" dimension="Width" />
+                  </OperatorDim>
+               </Dim>
+               <Dim type="TopEdge" >
+                  <OperatorDim op="Add">
+                     <AbsoluteDim value="0" />
+                     <ImageDim name="TaharezLook/StaticTop" dimension="Height" />
+                  </OperatorDim>
+               </Dim>
+               <Dim type="RightEdge" >
+                  <OperatorDim op="Subtract">
+                     <UnifiedDim scale="1" type="RightEdge" />
+                     <OperatorDim op="Add">
+                        <AbsoluteDim value="5" />
+                        <OperatorDim op="Add">
+                           <WidgetDim widget="__auto_vscrollbar__" dimension="Width" />
+                           <ImageDim name="TaharezLook/StaticRight" dimension="Width" />
+                        </OperatorDim>
+                     </OperatorDim>
+                  </OperatorDim>
+               </Dim>
+               <Dim type="BottomEdge" >
+                  <OperatorDim op="Subtract">
+                     <UnifiedDim scale="1" type="BottomEdge" />
+                     <OperatorDim op="Add">
+                        <AbsoluteDim value="0" />
                         <ImageDim name="TaharezLook/StaticBottom" dimension="Height" />
-                    </OperatorDim>
-                </Dim>
+                     </OperatorDim>
+                  </OperatorDim>
+               </Dim>
             </Area>
         </NamedArea>
         <NamedArea name="WithFrameTextRenderAreaHVScroll">
@@ -2636,19 +2725,47 @@
                 <Dim type="Height" ><AbsoluteDim value="10" /></Dim>
             </Area>
             <VertAlignment type="BottomAligned" />
-        </Child>
-        <Child  type="TaharezLook/VerticalScrollbar" nameSuffix="__auto_vscrollbar__">
+         </Child>
+         <Child  type="TaharezLook/VerticalScrollbar" nameSuffix="__auto_vscrollbar__">
             <Area>
-                <Dim type="Width" ><AbsoluteDim value="10" /></Dim>
-                <Dim type="Height" ><UnifiedDim scale="1" offset="-4" type="Height" /></Dim>
-                <Dim type="LeftEdge" >
-                    <OperatorDim op="Subtract">
-                        <UnifiedDim scale="1" offset="-2" type="Width" />
+               <Dim type="LeftEdge" >
+                  <OperatorDim op="Subtract">
+                     <UnifiedDim scale="1" type="Width" />
+                     <OperatorDim op="Add">
                         <WidgetDim widget="__auto_vscrollbar__" dimension="Width" />
-                    </OperatorDim>
-                </Dim>
+                        <OperatorDim op="Add">
+                           <AbsoluteDim value="2" />
+                           <ImageDim name="TaharezLook/StaticRight" dimension="Width" />
+                        </OperatorDim>
+                     </OperatorDim>
+                  </OperatorDim>
+               </Dim>
+               <Dim type="TopEdge" >
+                  <OperatorDim op="Add">
+                     <ImageDim name="TaharezLook/StaticTop" dimension="Height" />
+                     <AbsoluteDim value="1" />
+                  </OperatorDim>
+               </Dim>
+               <Dim type="RightEdge" >
+                  <OperatorDim op="Subtract">
+                     <UnifiedDim scale="1" type="RightEdge" />
+                     <OperatorDim op="Add">
+                        <AbsoluteDim value="2" />
+                        <ImageDim name="TaharezLook/StaticRight" dimension="Width" />
+                     </OperatorDim>
+                  </OperatorDim>
+               </Dim>
+               <Dim type="BottomEdge" >
+                  <OperatorDim op="Subtract">
+                     <UnifiedDim scale="1" type="BottomEdge" />
+                     <OperatorDim op="Add">
+                        <AbsoluteDim value="1" />
+                        <ImageDim name="TaharezLook/StaticBottom" dimension="Height" />
+                     </OperatorDim>
+                  </OperatorDim>
+               </Dim>
             </Area>
-            <VertAlignment type="CentreAligned" />
+            <VertAlignment type="TopAligned" />
         </Child>
         <StateImagery name="Enabled" />
         <StateImagery name="Disabled" />
