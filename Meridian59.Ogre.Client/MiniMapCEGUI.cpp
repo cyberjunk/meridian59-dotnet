@@ -22,6 +22,7 @@ namespace Meridian59 { namespace Ogre
 		brushMiniBoss	= gcnew SolidBrush(::System::Drawing::Color::FromArgb(MiniMap::COLOR_MAP_MINIBOSS));
 		brushBoss		= gcnew SolidBrush(::System::Drawing::Color::FromArgb(MiniMap::COLOR_MAP_BOSS));
 		brushItem		= gcnew SolidBrush(::System::Drawing::Color::FromArgb(MiniMap::COLOR_MAP_RARE_ITEM));
+		brushNonPvP		= gcnew SolidBrush(::System::Drawing::Color::FromArgb(MiniMap::COLOR_MAP_NO_PVP));
 #endif
 		
 		playerArrowPts = gcnew array<::System::Drawing::PointF>(3);
@@ -185,7 +186,7 @@ namespace Meridian59 { namespace Ogre
 		// OPEN-MERIDIAN
 
 		// draw inner
-		if (RoomObject->Flags->IsPlayer)
+		if (RoomObject->Flags->IsMinimapPlayer)
 			g->FillEllipse(brushPlayer, (float)x, (float)y, (float)width, (float)width);
 
 		else if (RoomObject->Flags->IsMinimapTempSafe)
@@ -211,6 +212,9 @@ namespace Meridian59 { namespace Ogre
 		
 		else if (RoomObject->Flags->IsMinimapBoss)
 			g->FillEllipse(brushBoss, (float)x, (float)y, (float)width, (float)width);
+
+		else if (RoomObject->Flags->IsNonPvP)
+			g->FillEllipse(brushNonPvP, (float)x, (float)y, (float)width, (float)width);
 
 #else
 		/**********************************************************************************/

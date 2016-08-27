@@ -59,6 +59,7 @@ namespace Meridian59 { namespace Ogre
 		::System::Drawing::SolidBrush^ brushMiniBoss;
 		::System::Drawing::SolidBrush^ brushBoss;
 		::System::Drawing::SolidBrush^ brushItem;
+		::System::Drawing::SolidBrush^ brushNonPvP;
 #endif
 
 		array<::System::Drawing::PointF>^ playerArrowPts;

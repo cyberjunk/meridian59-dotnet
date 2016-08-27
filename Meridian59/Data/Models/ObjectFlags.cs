@@ -105,6 +105,7 @@ namespace Meridian59.Data.Models
         private const uint MM_MINIBOSS      = 0x00000400; // Set if mob is a miniboss (survival arena).
         private const uint MM_BOSS          = 0x00000800; // Set if mob is a boss (survival arena).
         private const uint MM_RARE_ITEM     = 0x00001000; // Set if item is rare.
+        private const uint MM_NO_PVP        = 0x00002000; // Set if player has no PVP flag.
         #endregion
 
         #region Enums
@@ -900,6 +901,18 @@ namespace Meridian59.Data.Models
             {
                 if (value) minimap |= MM_RARE_ITEM;
                 else minimap &= ~MM_RARE_ITEM;
+
+                RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
+            }
+        }
+
+        public bool IsNonPvP
+        {
+            get { return (minimap & MM_NO_PVP) == MM_NO_PVP; }
+            set
+            {
+                if (value) minimap |= MM_NO_PVP;
+                else minimap &= ~MM_NO_PVP;
 
                 RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
             }
