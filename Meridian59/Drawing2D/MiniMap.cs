@@ -61,6 +61,7 @@ namespace Meridian59.Drawing2D
         public const uint COLOR_MAP_MINIBOSS        = 0xFFA042C2; //PALETTERGB(160, 66, 194) // Purple
         public const uint COLOR_MAP_BOSS            = 0xFF7F0000; //PALETTERGB(127, 0, 0)    // Dark Red
         public const uint COLOR_MAP_RARE_ITEM       = 0xFFEDFF09; //PALETTERGB(237, 255, 9)  // Orange
+        public const uint COLOR_MAP_NO_PVP          = 0xFFFFFFFF; //PALETTERGB(255,255,255)  // White
 #endif
         #endregion
 
