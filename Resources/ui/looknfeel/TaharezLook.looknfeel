@@ -9,8 +9,8 @@
       <PropertyDefinition name="BackgroundColours" initialValue="tl:00000000 tr:00000000 bl:00000000 br:00000000" redrawOnWrite="true" type="ColourRect"/>
       <PropertyDefinition name="NormalTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" type="Colour" />
         <PropertyDefinition name="DisabledTextColour" initialValue="FFDDDDDD" redrawOnWrite="true" type="Colour" />
-        <PropertyDefinition name="VertFormatting" initialValue="CentreAligned" redrawOnWrite="true" type="VerticalFormat" />
-        <PropertyDefinition name="HorzFormatting" initialValue="CentreAligned" redrawOnWrite="true" type="HorizontalFormat" />
+        <PropertyDefinition name="VertFormatting" initialValue="CentreAligned" redrawOnWrite="true" type="VerticalFormatting" />
+        <PropertyDefinition name="HorzFormatting" initialValue="CentreAligned" redrawOnWrite="true" type="HorizontalFormatting" />
         <Property name="Size" value="{{0, 128}, {0, 32}}" />
         <ImagerySection name="Label">
             <TextComponent>
@@ -65,21 +65,25 @@
     ***************************************************
     -->
     <WidgetLook name="TaharezLook/Button">
-        <PropertyDefinition name="NormalTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" type="ColourRect"/>
-        <PropertyDefinition name="HoverTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" type="ColourRect"/>
-        <PropertyDefinition name="PushedTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" type="ColourRect"/>
-        <PropertyDefinition name="DisabledTextColour" initialValue="FF7F7F7F" redrawOnWrite="true" type="ColourRect"/>
+        <PropertyDefinition name="NormalTextColour" initialValue="tl:FFFFFFFF tr:FFFFFFFF bl:CCFFFFFF br:CCFFFFFF" redrawOnWrite="true" type="ColourRect"/>
+        <PropertyDefinition name="HoverTextColour" initialValue="tl:FFFFFFFF tr:FFFFFFFF bl:FFFFFFFF br:FFFFFFFF" redrawOnWrite="true" type="ColourRect"/>
+        <PropertyDefinition name="PushedTextColour" initialValue="tl:CCFFFFFF tr:CCFFFFFF bl:CCFFFFFF br:CCFFFFFF" redrawOnWrite="true" type="ColourRect"/>
+        <PropertyDefinition name="DisabledTextColour" initialValue="tl:FF7F7F7F tr:FF7F7F7F bl:FF7F7F7F br:FF7F7F7F" redrawOnWrite="true" type="ColourRect"/>
         <PropertyDefinition name="VertLabelFormatting" initialValue="CentreAligned" type="VerticalTextFormatting"/>
         <PropertyDefinition name="HorzLabelFormatting" initialValue="CentreAligned" type="HorizontalTextFormatting"/>
         <PropertyDefinition name="NormalImage" initialValue="" redrawOnWrite="true"  type="Image"/>
         <PropertyDefinition name="HoverImage" initialValue="" redrawOnWrite="true" type="Image"/>
         <PropertyDefinition name="PushedImage" initialValue="" redrawOnWrite="true" type="Image"/>
         <PropertyDefinition name="DisabledImage" initialValue="" redrawOnWrite="true" type="Image"/>
+        <PropertyDefinition name="NormalIcon" initialValue="" redrawOnWrite="true" type="Image"/>
+        <PropertyDefinition name="HoverIcon" initialValue="" redrawOnWrite="true" type="Image"/>
+        <PropertyDefinition name="PushedIcon" initialValue="" redrawOnWrite="true" type="Image"/>
+        <PropertyDefinition name="DisabledIcon" initialValue="" redrawOnWrite="true" type="Image"/>
         <PropertyDefinition name="VertImageFormatting" initialValue="Stretched" redrawOnWrite="true" type="VerticalFormatting" />
         <PropertyDefinition name="HorzImageFormatting" initialValue="Stretched" redrawOnWrite="true" type="HorizontalFormatting" />  
         <Property name="Size" value="{{0, 96}, {0, 32}}" />
         <Property name="Font" value="Berenika-8-Bold" />
-      <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
+        <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
         <ImagerySection name="label">
             <TextComponent>
                 <Area>
@@ -108,6 +112,31 @@
                 <VertFormatProperty name="VertImageFormatting" />
                 <HorzFormatProperty name="HorzImageFormatting" />
             </ImageryComponent>
+            <ImageryComponent>
+                <Area>
+                    <Dim type="TopEdge" >
+                        <AbsoluteDim value="5" />
+                    </Dim>
+                     <Dim type="LeftEdge" >
+                        <AbsoluteDim value="5" />
+                    </Dim>
+                    <Dim type="RightEdge" >
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Width" />
+                            <AbsoluteDim value="5" />
+                        </OperatorDim>
+                    </Dim>
+                    <Dim type="BottomEdge" >
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Height" />
+                            <AbsoluteDim value="5" />
+                        </OperatorDim>
+                    </Dim>
+                </Area>
+                <ImageProperty name="NormalIcon" />
+                <VertFormatProperty name="VertImageFormatting" />
+                <HorzFormatProperty name="HorzImageFormatting" />
+            </ImageryComponent>
         </ImagerySection>
         <ImagerySection name="hover">
             <FrameComponent>
@@ -117,6 +146,31 @@
             </FrameComponent>
             <ImageryComponent>
                 <ImageProperty name="HoverImage" />
+                <VertFormatProperty name="VertImageFormatting" />
+                <HorzFormatProperty name="HorzImageFormatting" />
+            </ImageryComponent>
+            <ImageryComponent>
+                <Area>
+                    <Dim type="TopEdge" >
+                        <AbsoluteDim value="5" />
+                    </Dim>
+                     <Dim type="LeftEdge" >
+                        <AbsoluteDim value="5" />
+                    </Dim>
+                    <Dim type="RightEdge" >
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Width" />
+                            <AbsoluteDim value="5" />
+                        </OperatorDim>
+                    </Dim>
+                    <Dim type="BottomEdge" >
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Height" />
+                            <AbsoluteDim value="5" />
+                        </OperatorDim>
+                    </Dim>
+                </Area>
+                <ImageProperty name="HoverIcon" />
                 <VertFormatProperty name="VertImageFormatting" />
                 <HorzFormatProperty name="HorzImageFormatting" />
             </ImageryComponent>
@@ -132,6 +186,31 @@
                 <VertFormatProperty name="VertImageFormatting" />
                 <HorzFormatProperty name="HorzImageFormatting" />
             </ImageryComponent>
+            <ImageryComponent>
+                <Area>
+                    <Dim type="TopEdge" >
+                        <AbsoluteDim value="5" />
+                    </Dim>
+                     <Dim type="LeftEdge" >
+                        <AbsoluteDim value="5" />
+                    </Dim>
+                    <Dim type="RightEdge" >
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Width" />
+                            <AbsoluteDim value="5" />
+                        </OperatorDim>
+                    </Dim>
+                    <Dim type="BottomEdge" >
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Height" />
+                            <AbsoluteDim value="5" />
+                        </OperatorDim>
+                    </Dim>
+                </Area>
+                <ImageProperty name="PushedIcon" />
+                <VertFormatProperty name="VertImageFormatting" />
+                <HorzFormatProperty name="HorzImageFormatting" />
+            </ImageryComponent>
         </ImagerySection>
         <ImagerySection name="disabled">
             <FrameComponent>
@@ -144,12 +223,37 @@
                 <VertFormatProperty name="VertImageFormatting" />
                 <HorzFormatProperty name="HorzImageFormatting" />
             </ImageryComponent>
+            <ImageryComponent>
+                <Area>
+                    <Dim type="TopEdge" >
+                        <AbsoluteDim value="5" />
+                    </Dim>
+                     <Dim type="LeftEdge" >
+                        <AbsoluteDim value="5" />
+                    </Dim>
+                    <Dim type="RightEdge" >
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Width" />
+                            <AbsoluteDim value="5" />
+                        </OperatorDim>
+                    </Dim>
+                    <Dim type="BottomEdge" >
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Height" />
+                            <AbsoluteDim value="5" />
+                        </OperatorDim>
+                    </Dim>
+                </Area>
+                <ImageProperty name="DisabledIcon" />
+                <VertFormatProperty name="VertImageFormatting" />
+                <HorzFormatProperty name="HorzImageFormatting" />
+            </ImageryComponent>
         </ImagerySection>
         <StateImagery name="Normal">
             <Layer>
                 <Section section="normal" />
                 <Section section="label">
-                  <Colours topLeft="FFFFFFFF" topRight="FFFFFFFF" bottomLeft="CCFFFFFF" bottomRight="CCFFFFFF" />
+                  <ColourProperty name="NormalTextColour" />
                 </Section>
             </Layer>
         </StateImagery>
@@ -157,7 +261,7 @@
             <Layer>
                 <Section section="hover" />
                 <Section section="label">
-                  <Colours topLeft="FFFFFFFF" topRight="FFFFFFFF" bottomLeft="FFFFFFFF" bottomRight="FFFFFFFF" />
+                  <ColourProperty name="HoverTextColour" />
                 </Section>
             </Layer>
         </StateImagery>
@@ -165,7 +269,7 @@
             <Layer>
                 <Section section="pushed" />
                 <Section section="label">
-                  <Colours topLeft="CCFFFFFF" topRight="CCFFFFFF" bottomLeft="CCFFFFFF" bottomRight="CCFFFFFF" />
+                  <ColourProperty name="PushedTextColour" />
                 </Section>
             </Layer>
         </StateImagery>
@@ -173,15 +277,13 @@
             <Layer>
                 <Section section="hover" />
                 <Section section="label">
-                    <ColourProperty name="HoverTextColour" />
+                  <ColourProperty name="HoverTextColour" />
                 </Section>
             </Layer>
         </StateImagery>
         <StateImagery name="Disabled">
             <Layer>
-                <Section section="disabled">
-                    <Colours topLeft="FF7F7F7F" topRight="FF7F7F7F" bottomLeft="FF7F7F7F" bottomRight="FF7F7F7F" />
-                </Section>
+                <Section section="disabled" />
                 <Section section="label">
                     <ColourProperty name="DisabledTextColour" />
                 </Section>
@@ -4806,28 +4908,28 @@
     ***************************************************
     -->
     <WidgetLook name="TaharezLook/DragImage">
-       <Property name="Size" value="{{0, 128}, {0, 128}}" />
+      <Property name="Size" value="{{0, 52}, {0, 52}}" />
       <Property name="MouseCursorImage" value="TaharezLook/MouseDrag" />
-       <Property name="MouseInputPropagationEnabled" value="True" />
-       <Child type ="TaharezLook/StaticImage" nameSuffix="__auto__image">
-          <Property name="BackgroundEnabled" value="False" />
-          <Property name="FrameEnabled" value="False" />
-          <Property name="MousePassThroughEnabled" value="True" />
-          <Property name="VertFormatting" value="Stretched" redrawOnWrite="true" type="VerticalFormatting"/>
-          <Property name="HorzFormatting" value="Stretched" redrawOnWrite="true" type="HorizontalFormatting"/>
-          <Property name="TopLeftCorner" value="TaharezLook/StaticItemTopLeft" />
-          <Property name="TopRightCorner" value="TaharezLook/StaticItemTopRight" />
-          <Property name="BottomLeftCorner" value="TaharezLook/StaticItemBottomLeft" />
-          <Property name="BottomRightCorner" value="TaharezLook/StaticItemBottomRight" />
-          <Property name="LeftEdge" value="TaharezLook/StaticItemLeft" />
-          <Property name="RightEdge" value="TaharezLook/StaticItemRight" />
-          <Property name="TopEdge" value="TaharezLook/StaticItemTop" />
-          <Property name="BottomEdge" value="TaharezLook/StaticItemBottom" />
-          <Property name="Backdrop" value="TaharezLook/StaticItemBackdrop" />
-       </Child>
-       <StateImagery name="Enabled" />    
-       <StateImagery name="Disabled" />
-    </WidgetLook>
+      <Property name="MouseInputPropagationEnabled" value="True" />
+      <Child type ="TaharezLook/StaticImage" nameSuffix="__auto__image">
+         <Property name="BackgroundEnabled" value="False" />
+         <Property name="FrameEnabled" value="False" />
+         <Property name="MousePassThroughEnabled" value="True" />
+         <Property name="VertFormatting" value="Stretched" redrawOnWrite="true" type="VerticalFormatting"/>
+         <Property name="HorzFormatting" value="Stretched" redrawOnWrite="true" type="HorizontalFormatting"/>
+         <Property name="TopLeftCorner" value="TaharezLook/StaticItemTopLeft" />
+         <Property name="TopRightCorner" value="TaharezLook/StaticItemTopRight" />
+         <Property name="BottomLeftCorner" value="TaharezLook/StaticItemBottomLeft" />
+         <Property name="BottomRightCorner" value="TaharezLook/StaticItemBottomRight" />
+         <Property name="LeftEdge" value="TaharezLook/StaticItemLeft" />
+         <Property name="RightEdge" value="TaharezLook/StaticItemRight" />
+         <Property name="TopEdge" value="TaharezLook/StaticItemTop" />
+         <Property name="BottomEdge" value="TaharezLook/StaticItemBottom" />
+         <Property name="Backdrop" value="TaharezLook/StaticItemBackdrop" />
+      </Child>
+      <StateImagery name="Enabled" />    
+      <StateImagery name="Disabled" />
+   </WidgetLook>
    
    <!--
    /**********************************************************************************************************
@@ -6918,8 +7020,8 @@
     -->
     <WidgetLook name="TaharezLook/LabelWhite">
         <PropertyDefinition name="BackgroundColours" initialValue="tl:00000000 tr:00000000 bl:00000000 br:00000000" redrawOnWrite="true" type="ColourRect"/>
-        <PropertyDefinition name="VertFormatting" initialValue="CentreAligned" redrawOnWrite="true" type="VerticalFormat" />
-        <PropertyDefinition name="HorzFormatting" initialValue="CentreAligned" redrawOnWrite="true" type="HorizontalFormat" />
+        <PropertyDefinition name="VertFormatting" initialValue="CentreAligned" redrawOnWrite="true" type="VerticalFormatting" />
+        <PropertyDefinition name="HorzFormatting" initialValue="CentreAligned" redrawOnWrite="true" type="HorizontalFormatting" />
         <Property name="Size" value="{{0, 128}, {0, 32}}" />
         <ImagerySection name="Label">
             <TextComponent>

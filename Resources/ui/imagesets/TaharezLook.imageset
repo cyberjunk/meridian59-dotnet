@@ -344,4 +344,9 @@
    <Image height="10" name="StaticItemBottom" width="12" xPos="225" yPos="297" />
    <Image height="10" name="StaticItemBottomRight" width="20" xPos="237" yPos="297" />
    <Image height="15" name="Coin" width="15" xPos="137" yPos="201" />
+   <Image height="20" name="OptionsNormal" width="20" xPos="150" yPos="380" />
+   <Image height="20" name="OptionsHover" width="20" xPos="170" yPos="380" />
+   <Image height="20" name="OptionsPushed" width="20" xPos="150" yPos="400" />
+   <Image height="20" name="OptionsDisabled" width="20" xPos="170" yPos="400" />
+   
 </Imageset>

@@ -1999,14 +1999,23 @@
 
          <!-- Options -->
          <Window type="TaharezLook/Button" name="Login.Options" >
-            <Property name="Text" value="Options" />
-            <Property name="Area" value="{{0.5,-105},{0,190},{0.5,-5},{0,215}}" />
+            <Property name="Text" value="O" />
+            <Property name="Area" value="{{0.5,100},{0,190},{0.5,125},{0,215}}" />
+            <Property name="NormalIcon" value="TaharezLook/OptionsNormal" />
+            <Property name="HoverIcon" value="TaharezLook/OptionsHover" />
+            <Property name="PushedIcon" value="TaharezLook/OptionsPushed" />
+            <Property name="DisabledIcon" value="TaharezLook/OptionsDisabled" />
+            <Property name="NormalTextColour" value="00FFFFFF" />
+            <Property name="HoverTextColour" value="00FFFFFF" />
+            <Property name="PushedTextColour" value="00FFFFFF" />
+            <Property name="DisabledTextColour" value="00FFFFFF" />
+            <Property name="TooltipText" value="Options" />
          </Window>
 
          <!-- Connect -->
          <Window type="TaharezLook/Button" name="Login.Connect" >
             <Property name="Text" value="Connect" />
-            <Property name="Area" value="{{0.5,5},{0,190},{0.5,105},{0,215}}" />
+            <Property name="Area" value="{{0.5,-125},{0,190},{0.5,95},{0,215}}" />
          </Window>
       </Window>
          
