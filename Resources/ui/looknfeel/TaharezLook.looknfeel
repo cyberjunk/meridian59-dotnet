@@ -9,8 +9,8 @@
       <PropertyDefinition name="BackgroundColours" initialValue="tl:00000000 tr:00000000 bl:00000000 br:00000000" redrawOnWrite="true" type="ColourRect"/>
       <PropertyDefinition name="NormalTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" type="Colour" />
         <PropertyDefinition name="DisabledTextColour" initialValue="FFDDDDDD" redrawOnWrite="true" type="Colour" />
-        <PropertyDefinition name="VertFormatting" initialValue="CentreAligned" redrawOnWrite="true" type="VerticalFormatting" />
-        <PropertyDefinition name="HorzFormatting" initialValue="CentreAligned" redrawOnWrite="true" type="HorizontalFormatting" />
+        <PropertyDefinition name="VertFormatting" initialValue="CentreAligned" redrawOnWrite="true" type="VerticalFormat" />
+        <PropertyDefinition name="HorzFormatting" initialValue="CentreAligned" redrawOnWrite="true" type="HorizontalFormat" />
         <Property name="Size" value="{{0, 128}, {0, 32}}" />
         <ImagerySection name="Label">
             <TextComponent>
@@ -79,12 +79,16 @@
         <PropertyDefinition name="HoverIcon" initialValue="" redrawOnWrite="true" type="Image"/>
         <PropertyDefinition name="PushedIcon" initialValue="" redrawOnWrite="true" type="Image"/>
         <PropertyDefinition name="DisabledIcon" initialValue="" redrawOnWrite="true" type="Image"/>
+        <PropertyDefinition name="NormalFont" initialValue="Berenika-8-Bold" redrawOnWrite="true" type="Font"/>
+        <PropertyDefinition name="HoverFont" initialValue="Berenika-8-Bold" redrawOnWrite="true" type="Font"/>
+        <PropertyDefinition name="PushedFont" initialValue="Berenika-7-Bold" redrawOnWrite="true" type="Font"/>
+        <PropertyDefinition name="DisabledFont" initialValue="Berenika-8-Bold" redrawOnWrite="true" type="Font"/>
         <PropertyDefinition name="VertImageFormatting" initialValue="Stretched" redrawOnWrite="true" type="VerticalFormatting" />
         <PropertyDefinition name="HorzImageFormatting" initialValue="Stretched" redrawOnWrite="true" type="HorizontalFormatting" />  
         <Property name="Size" value="{{0, 96}, {0, 32}}" />
         <Property name="Font" value="Berenika-8-Bold" />
         <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
-        <ImagerySection name="label">
+        <ImagerySection name="labelnormal">
             <TextComponent>
                 <Area>
                     <Dim type="LeftEdge" >
@@ -96,7 +100,90 @@
                             <AbsoluteDim value="5" />
                         </OperatorDim>
                     </Dim>
+                    <Dim type="BottomEdge" >
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Height" />
+                            <!-- Just an offset to center the label vertically. Needs to be adjusted depending on font used. -->
+                            <AbsoluteDim value="2" />
+                        </OperatorDim>
+                    </Dim>
                 </Area>
+                <FontProperty name="NormalFont" />
+                <VertFormatProperty name="VertLabelFormatting" />
+                <HorzFormatProperty name="HorzLabelFormatting" />
+            </TextComponent>
+        </ImagerySection>
+        <ImagerySection name="labelhover">
+            <TextComponent>
+                <Area>
+                    <Dim type="LeftEdge" >
+                        <AbsoluteDim value="5" />
+                    </Dim>
+                    <Dim type="RightEdge" >
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Width" />
+                            <AbsoluteDim value="5" />
+                        </OperatorDim>
+                    </Dim>
+                    <Dim type="BottomEdge" >
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Height" />
+                            <!-- Just an offset to center the label vertically. Needs to be adjusted depending on font used. -->
+                            <AbsoluteDim value="2" />
+                        </OperatorDim>
+                    </Dim>
+                </Area>
+                <FontProperty name="HoverFont" />
+                <VertFormatProperty name="VertLabelFormatting" />
+                <HorzFormatProperty name="HorzLabelFormatting" />
+            </TextComponent>
+        </ImagerySection>
+        <ImagerySection name="labelpushed">
+            <TextComponent>
+                <Area>
+                    <Dim type="LeftEdge" >
+                        <AbsoluteDim value="5" />
+                    </Dim>
+                    <Dim type="RightEdge" >
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Width" />
+                            <AbsoluteDim value="5" />
+                        </OperatorDim>
+                    </Dim>
+                    <Dim type="BottomEdge" >
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Height" />
+                            <!-- Just an offset to center the label vertically. Needs to be adjusted depending on font used. -->
+                            <AbsoluteDim value="1" />
+                        </OperatorDim>
+                    </Dim>
+                </Area>
+                <FontProperty name="PushedFont" />
+                <VertFormatProperty name="VertLabelFormatting" />
+                <HorzFormatProperty name="HorzLabelFormatting" />
+            </TextComponent>
+        </ImagerySection>
+        <ImagerySection name="labeldisabled">
+            <TextComponent>
+                <Area>
+                    <Dim type="LeftEdge" >
+                        <AbsoluteDim value="5" />
+                    </Dim>
+                    <Dim type="RightEdge" >
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Width" />
+                            <AbsoluteDim value="5" />
+                        </OperatorDim>
+                    </Dim>
+                    <Dim type="BottomEdge" >
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Height" />
+                            <!-- Just an offset to center the label vertically. Needs to be adjusted depending on font used. -->
+                            <AbsoluteDim value="2" />
+                        </OperatorDim>
+                    </Dim>
+                </Area>
+                <FontProperty name="DisabledFont" />
                 <VertFormatProperty name="VertLabelFormatting" />
                 <HorzFormatProperty name="HorzLabelFormatting" />
             </TextComponent>
@@ -252,7 +339,7 @@
         <StateImagery name="Normal">
             <Layer>
                 <Section section="normal" />
-                <Section section="label">
+                <Section section="labelnormal">
                   <ColourProperty name="NormalTextColour" />
                 </Section>
             </Layer>
@@ -260,7 +347,7 @@
         <StateImagery name="Hover">
             <Layer>
                 <Section section="hover" />
-                <Section section="label">
+                <Section section="labelhover">
                   <ColourProperty name="HoverTextColour" />
                 </Section>
             </Layer>
@@ -268,7 +355,7 @@
         <StateImagery name="Pushed">
             <Layer>
                 <Section section="pushed" />
-                <Section section="label">
+                <Section section="labelpushed">
                   <ColourProperty name="PushedTextColour" />
                 </Section>
             </Layer>
@@ -276,7 +363,7 @@
         <StateImagery name="PushedOff">
             <Layer>
                 <Section section="hover" />
-                <Section section="label">
+                <Section section="labelhover">
                   <ColourProperty name="HoverTextColour" />
                 </Section>
             </Layer>
@@ -284,7 +371,7 @@
         <StateImagery name="Disabled">
             <Layer>
                 <Section section="disabled" />
-                <Section section="label">
+                <Section section="labeldisabled">
                     <ColourProperty name="DisabledTextColour" />
                 </Section>
             </Layer>
@@ -7020,8 +7107,8 @@
     -->
     <WidgetLook name="TaharezLook/LabelWhite">
         <PropertyDefinition name="BackgroundColours" initialValue="tl:00000000 tr:00000000 bl:00000000 br:00000000" redrawOnWrite="true" type="ColourRect"/>
-        <PropertyDefinition name="VertFormatting" initialValue="CentreAligned" redrawOnWrite="true" type="VerticalFormatting" />
-        <PropertyDefinition name="HorzFormatting" initialValue="CentreAligned" redrawOnWrite="true" type="HorizontalFormatting" />
+        <PropertyDefinition name="VertFormatting" initialValue="CentreAligned" redrawOnWrite="true" type="VerticalFormat" />
+        <PropertyDefinition name="HorzFormatting" initialValue="CentreAligned" redrawOnWrite="true" type="HorizontalFormat" />
         <Property name="Size" value="{{0, 128}, {0, 32}}" />
         <ImagerySection name="Label">
             <TextComponent>

@@ -375,9 +375,9 @@
       
       <!-- Avatar -->
       <Window type="TaharezLook/StaticImage" name="Avatar" >
-         <Property name="Size" value="{{0,250},{0,135}}" />
-         <Property name="MinSize" value="{{0,250},{0,135}}" />
-         <Property name="MaxSize" value="{{0,250},{0,135}}" />
+         <Property name="Size" value="{{0,250},{0,133}}" />
+         <Property name="MinSize" value="{{0,250},{0,133}}" />
+         <Property name="MaxSize" value="{{0,250},{0,133}}" />
          <Property name="Position" value="{{0,0},{0,0}}" />
          <Property name="FrameEnabled" value="False" />
          <Property name="BackgroundEnabled" value="False" />
@@ -393,7 +393,7 @@
          
          <!-- Enchantments -->
          <Window type="GridLayoutContainer" name="Avatar.Enchantments" >
-            <Property name="Area" value="{{0,13},{0,97},{1,-13},{0,129}}" />            
+            <Property name="Area" value="{{0,13},{0,104},{1,-13},{0,120}}" />            
          </Window>
          
          <!-- Condition bars -->
@@ -638,8 +638,8 @@
       <!-- RoomEnchantments -->
       <Window type="TaharezLook/StaticImage" name="RoomEnchantments" >
          <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
-         <Property name="MaxSize" value="{{0,250},{0,44}}" />
-         <Property name="Size" value="{{0,250},{0,44}}" />
+         <Property name="MaxSize" value="{{0,250},{0,42}}" />
+         <Property name="Size" value="{{0,250},{0,42}}" />
          <Property name="Position" value="{{0,0},{0,156}}" />
          <Property name="FrameEnabled" value="False" />
          <Property name="BackgroundEnabled" value="False" />
@@ -649,7 +649,7 @@
          
          <!-- Enchantments -->
          <Window type="GridLayoutContainer" name="RoomEnchantments.Grid" >
-            <Property name="Area" value="{{0,13},{0,6},{1,-13},{1,-6}}" />            
+            <Property name="Area" value="{{0,13},{0,13},{1,-13},{1,-13}}" />            
          </Window>
       </Window>
       

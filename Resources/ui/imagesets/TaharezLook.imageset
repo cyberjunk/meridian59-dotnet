@@ -279,11 +279,11 @@
    <Image height="24" name="MoodHappy" width="46" xPos="140" yPos="442" />
    <Image height="24" name="MoodHappyHover" width="46" xPos="186" yPos="442" />
    <Image height="22" name="StatusBarBackground" width="40" xPos="5" yPos="230" />
-   <Image height="135" name="AvatarBackground" width="250" xPos="259" yPos="2" />
+   <Image height="133" name="AvatarBackground" width="250" xPos="259" yPos="2" />
    <Image height="93" name="TargetBackground" width="250" xPos="539" yPos="138" />
    <Image height="30" name="MainButtonsBackground" width="175" xPos="272" yPos="156" />
    <Image height="117" name="ActionButtonsBackground" width="349" xPos="537" yPos="8" />
-   <Image height="44" name="RoomEnchantsBackground" width="250" xPos="539" yPos="229" />
+   <Image height="42" name="RoomEnchantsBackground" width="250" xPos="539" yPos="229" />
    <Image height="24" name="ActionActivate"          width="24" xPos="5" yPos="255" />
    <Image height="24" name="ActionActivateDisabled"    width="24" xPos="5" yPos="280" />
    <Image height="24" name="ActionAttack"             width="24" xPos="30" yPos="255" />
