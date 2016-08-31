@@ -58,6 +58,21 @@ namespace Meridian59 { namespace Ogre
 		literal int					DEFAULTVAL_INPUT_MOUSEAIMSPEED		= 25;
 		literal int					DEFAULTVAL_INPUT_KEYROTATESPEED		= 25;
 		literal bool				DEFAULTVAL_INPUT_INVERTMOUSEY		= false;
+		literal bool				DEFAULTVAL_UI_VISIBILITYAVATAR = true;
+		literal bool				DEFAULTVAL_UI_VISIBILITYTARGET = false;
+		literal bool				DEFAULTVAL_UI_VISIBILITYMINIMAP = true;
+		literal bool				DEFAULTVAL_UI_VISIBILITYROOMENCHANTMENTS = true;
+		literal bool				DEFAULTVAL_UI_VISIBILITYCHAT = true;
+		literal bool				DEFAULTVAL_UI_VISIBILITYINVENTORY = true;
+		literal bool				DEFAULTVAL_UI_VISIBILITYSPELLS = false;
+		literal bool				DEFAULTVAL_UI_VISIBILITYSKILLS = false;
+		literal bool				DEFAULTVAL_UI_VISIBILITYACTIONS = false;
+		literal bool				DEFAULTVAL_UI_VISIBILITYATTRIBUTES = false;
+		literal bool				DEFAULTVAL_UI_VISIBILITYMAINBUTTONSLEFT = true;
+		literal bool				DEFAULTVAL_UI_VISIBILITYMAINBUTTONSRIGHT = true;
+		literal bool				DEFAULTVAL_UI_VISIBILITYACTIONBUTTONGRID = true;
+		literal bool				DEFAULTVAL_UI_VISIBILITYONLINEPLAYERS = false;
+		literal bool				DEFAULTVAL_UI_VISIBILITYROOMOBJECTS = false;
 
 		literal ::System::String^ BUTTONTYPE_SPELL = "spell";
 		literal ::System::String^ BUTTONTYPE_ACTION = "action";
@@ -103,6 +118,21 @@ namespace Meridian59 { namespace Ogre
 		literal ::System::String^ TAG_ACTIONBUTTONGRID = "actionbuttongrid";
 		literal ::System::String^ TAG_ONLINEPLAYERS = "onlineplayers";
 		literal ::System::String^ TAG_ROOMOBJECTS = "roomobjects";
+		literal ::System::String^ TAG_AVATARVISIBILITY = "avatarvisibility";
+		literal ::System::String^ TAG_TARGETVISIBILITY = "avatarvisibility";
+		literal ::System::String^ TAG_MINIMAPVISIBILITY = "minimapvisibility";
+		literal ::System::String^ TAG_ROOMENCHANTMENTSVISIBILITY = "roomenchantmentsvisibility";
+		literal ::System::String^ TAG_CHATVISIBILITY = "chatvisibility";
+		literal ::System::String^ TAG_INVENTORYVISIBILITY = "inventoryvisibility";
+		literal ::System::String^ TAG_SPELLSVISIBILITY = "spellsvisibility";
+		literal ::System::String^ TAG_SKILLSVISIBILITY = "skillsvisibility";
+		literal ::System::String^ TAG_ACTIONSVISIBILITY = "actionsvisibility";
+		literal ::System::String^ TAG_ATTRIBUTESVISIBILITY = "attributesvisibility";
+		literal ::System::String^ TAG_MAINBUTTONSLEFTVISIBILITY = "mainbuttonsleftvisibility";
+		literal ::System::String^ TAG_MAINBUTTONSRIGHTVISIBILITY = "mainbuttonsrightvisibility";
+		literal ::System::String^ TAG_ACTIONBUTTONGRIDVISIBILITY = "actionbuttongridvisibility";
+		literal ::System::String^ TAG_ONLINEPLAYERSVISIBILITY = "onlineplayersvisibility";
+		literal ::System::String^ TAG_ROOMOBJECTSVISIBILITY = "roomobjectsvisibility";
 		literal ::System::String^ TAG_INPUT = "input";
 		literal ::System::String^ TAG_MOUSEAIMSPEED = "mouseaimspeed";
 		literal ::System::String^ TAG_KEYROTATESPEED = "keyrotatespeed";
@@ -187,6 +217,7 @@ namespace Meridian59 { namespace Ogre
 		literal ::System::String^ XMLATTRIB_WABS = "wabs";
 		literal ::System::String^ XMLATTRIB_HREL = "hrel";
 		literal ::System::String^ XMLATTRIB_HABS = "habs";
+		literal ::System::String^ XMLATTRIB_VSBL = "vsbl";
 
 	protected:
 		ActionButtonType GetButtonType(::System::String^ ButtonType);
@@ -218,6 +249,22 @@ namespace Meridian59 { namespace Ogre
 		int MouseAimSpeed;
 		int KeyRotateSpeed;
 		bool InvertMouseY;
+
+      bool UIVisibilityAvatar;
+      bool UIVisibilityTarget;
+      bool UIVisibilityMiniMap;
+      bool UIVisibilityRoomEnchantments;
+      bool UIVisibilityChat;
+      bool UIVisibilityInventory;
+      bool UIVisibilitySpells;
+      bool UIVisibilitySkills;
+      bool UIVisibilityActions;
+      bool UIVisibilityAttributes;
+      bool UIVisibilityMainButtonsLeft;
+      bool UIVisibilityMainButtonsRight;
+      bool UIVisibilityActionButtons;
+      bool UIVisibilityOnlinePlayers;
+      bool UIVisibilityRoomObjects;
 
 		::CEGUI::URect* UILayoutAvatar;
 		::CEGUI::URect* UILayoutTarget;
