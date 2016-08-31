@@ -119,7 +119,7 @@ namespace Meridian59 { namespace Ogre
 		literal ::System::String^ TAG_ONLINEPLAYERS = "onlineplayers";
 		literal ::System::String^ TAG_ROOMOBJECTS = "roomobjects";
 		literal ::System::String^ TAG_AVATARVISIBILITY = "avatarvisibility";
-		literal ::System::String^ TAG_TARGETVISIBILITY = "avatarvisibility";
+		literal ::System::String^ TAG_TARGETVISIBILITY = "targetvisibility";
 		literal ::System::String^ TAG_MINIMAPVISIBILITY = "minimapvisibility";
 		literal ::System::String^ TAG_ROOMENCHANTMENTSVISIBILITY = "roomenchantmentsvisibility";
 		literal ::System::String^ TAG_CHATVISIBILITY = "chatvisibility";

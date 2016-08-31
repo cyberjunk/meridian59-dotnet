@@ -125,7 +125,6 @@
          <Property name="VertFormatting" value="Stretched" />
          <Property name="HorzFormatting" value="Tiled" />
          <Property name="BackgroundEnabled" value="False" />
-         <Property name="AlwaysOnTop" value="True" />
          
          <!-- TPS / FPS -->
          <Window type="TaharezLook/LabelWhite" name="StatusBar.FPSDescription" >
@@ -249,8 +248,6 @@
          <Property name="Text" value="Players" />
          <Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
          <Property name="MaxSize" value="{{0,512},{1,0}}" />
-         <Property name="Size" value="{{0,256},{0,384}}" />
-         <Property name="Position" value="{{0.5,-128},{0.5,-192}}" />
          
          <!-- List -->
          <Window type="TaharezLook/ItemListbox" name="OnlinePlayers.List" >
@@ -265,9 +262,7 @@
       <Window type="TaharezLook/FrameWindow" name="RoomObjects" >
          <Property name="Text" value="Entities" />
          <Property name="MaxSize" value="{{1,0},{1,0}}" />
-         <Property name="Size" value="{{0,208},{0,384}}" />
          <Property name="MinSize" value="{{0,192},{0,144}}" />
-         <Property name="Position" value="{{0.5,-128},{0.5,-192}}" />
          
          <!-- ShowAll -->
          <Window type="TaharezLook/Checkbox" name="RoomObjects.ShowAll" >
@@ -342,9 +337,7 @@
       <Window type="TaharezLook/FrameWindow" name="Chat" >
          <Property name="Text" value="Chat" />
          <Property name="MaxSize" value="{{1,0},{1,0}}" />
-         <Property name="Size" value="{{0.35,0},{0.3,0}}" />
          <Property name="MinSize" value="{{0,200},{0,144}}" />
-         <Property name="Position" value="{{0.0,0},{0.5,0}}" />
 
          <!-- Text -->
          <Window type="TaharezLook/StaticText" name="Chat.Text" >
@@ -375,14 +368,11 @@
       
       <!-- Avatar -->
       <Window type="TaharezLook/StaticImage" name="Avatar" >
-         <Property name="Size" value="{{0,250},{0,133}}" />
-         <Property name="MinSize" value="{{0,250},{0,133}}" />
-         <Property name="MaxSize" value="{{0,250},{0,133}}" />
-         <Property name="Position" value="{{0,0},{0,0}}" />
+         <Property name="MinSize" value="{{0,250},{0,141}}" />
+         <Property name="MaxSize" value="{{0,250},{0,141}}" />
          <Property name="FrameEnabled" value="False" />
          <Property name="BackgroundEnabled" value="False" />
          <Property name="Image" value="TaharezLook/AvatarBackground" />
-         <Property name="AlwaysOnTop" value="True" />
          <Property name="MouseCursorImage" value="TaharezLook/MouseDrag" />
             
          <!-- Head -->
@@ -393,7 +383,7 @@
          
          <!-- Enchantments -->
          <Window type="GridLayoutContainer" name="Avatar.Enchantments" >
-            <Property name="Area" value="{{0,13},{0,104},{1,-13},{0,120}}" />            
+            <Property name="Area" value="{{0,13},{0,97},{1,-13},{0,129}}" />            
          </Window>
          
          <!-- Condition bars -->
@@ -507,14 +497,11 @@
       
       <!-- Target -->
       <Window type="TaharezLook/StaticImage" name="Target" >
-         <Property name="Size" value="{{0,250},{0,93}}" />
-         <Property name="MinSize" value="{{0,250},{0,93}}" />
-         <Property name="MaxSize" value="{{0,250},{0,93}}" />
-         <Property name="Position" value="{{0,275},{0,30}}" />
+         <Property name="MinSize" value="{{0,250},{0,90}}" />
+         <Property name="MaxSize" value="{{0,250},{0,90}}" />
          <Property name="FrameEnabled" value="False" />
          <Property name="BackgroundEnabled" value="False" />
          <Property name="Image" value="TaharezLook/TargetBackground" />
-         <Property name="AlwaysOnTop" value="True" />
          <Property name="MouseCursorImage" value="TaharezLook/MouseDrag" />
             
          <!-- Image -->
@@ -617,8 +604,6 @@
       <!-- MiniMap -->
       <Window type="TaharezLook/StaticImage" name="MiniMap" >
          <Property name="MaxSize" value="{{0,256},{0,256}}" />
-         <Property name="Size" value="{{0,256},{0,256}}" />
-         <Property name="Position" value="{{1,-257},{0,25}}" />
          <Property name="FrameEnabled" value="False" />
          <Property name="BackgroundEnabled" value="False" />
          <Property name="Image" value="TaharezLook/MiniMapBackground" />
@@ -639,12 +624,9 @@
       <Window type="TaharezLook/StaticImage" name="RoomEnchantments" >
          <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
          <Property name="MaxSize" value="{{0,250},{0,42}}" />
-         <Property name="Size" value="{{0,250},{0,42}}" />
-         <Property name="Position" value="{{0,0},{0,156}}" />
          <Property name="FrameEnabled" value="False" />
          <Property name="BackgroundEnabled" value="False" />
          <Property name="Image" value="TaharezLook/RoomEnchantsBackground" />
-         <Property name="AlwaysOnTop" value="True" />
          <Property name="MouseCursorImage" value="TaharezLook/MouseDrag" />
          
          <!-- Enchantments -->
@@ -697,9 +679,7 @@
       <!-- Attributes -->
       <Window type="TaharezLook/FrameWindow" name="Attributes" >
          <Property name="Text" value="Stats" />
-         <Property name="Size" value="{{0,288},{0,380}}" />
          <Property name="MaxSize" value="{{0,512},{1,0}}" />
-         <Property name="Position" value="{{0.5,-144},{0.5,-190}}" />
          
          <!-- List -->
          <Window type="TaharezLook/ItemListbox" name="Attributes.List" >
@@ -711,8 +691,6 @@
       <Window type="TaharezLook/FrameWindow" name="Skills" >
          <Property name="Text" value="Skills" />
          <Property name="MaxSize" value="{{0,512},{1,0}}" />
-         <Property name="Size" value="{{0,256},{0,192}}" />
-         <Property name="Position" value="{{0.5,-128},{0.5,-128}}" />
          
          <!-- List -->
          <Window type="TaharezLook/ItemListbox" name="Skills.List" >
@@ -723,9 +701,7 @@
       <!-- Spells -->
       <Window type="TaharezLook/FrameWindow" name="Spells" >
          <Property name="Text" value="Spells" />
-         <Property name="Size" value="{{0,256},{0,256}}" />
          <Property name="MaxSize" value="{{0,512},{1,0}}" />
-         <Property name="Position" value="{{0.5,-128},{0.5,-128}}" />
          
          <!-- List -->
          <Window type="TaharezLook/ItemListbox" name="Spells.List" >
@@ -751,8 +727,6 @@
          <Property name="Text" value="Actions" />
          <Property name="MaxSize" value="{{0,256},{1,0}}" />
          <Property name="MinSize" value="{{0,128},{0,144}}" />
-         <Property name="Size" value="{{0,160},{0,256}}" />
-         <Property name="Position" value="{{0.5,-128},{0.5,-128}}" />
          
          <!-- List -->
          <Window type="TaharezLook/ItemListbox" name="Actions.List" >
@@ -765,8 +739,6 @@
          <Property name="Text" value="Inventory" />
          <Property name="MaxSize" value="{{0,284},{1,0}}" />
          <Property name="MinSize" value="{{0,284},{0,144}}" />
-         <Property name="Size" value="{{0,284},{0,233}}" />
-         <Property name="Position" value="{{1,-288},{1,-310}}" />
          <Property name="EWSizingCursorImage" value="TaharezLook/MouseArrow" />
          <Property name="NWSESizingCursorImage" value="TaharezLook/MouseNoSoCursor" />
          <Property name="NESWSizingCursorImage" value="TaharezLook/MouseNoSoCursor" />
@@ -788,11 +760,10 @@
       <Window type="TaharezLook/StaticImage" name="MainButtonsLeft" >
          <Property name="MaxSize" value="{{0,175},{0,30}}" />
          <Property name="Size" value="{{0,175},{0,30}}" />
-         <Property name="Position" value="{{0.5,-372},{1,-47}}" />
+         <Property name="Position" value="{{0.5,-174},{1,-32}}" />
          <Property name="FrameEnabled" value="False" />
          <Property name="BackgroundEnabled" value="False" />
          <Property name="Image" value="TaharezLook/MainButtonsBackground" />
-         <Property name="AlwaysOnTop" value="True" />
          
          <!-- Chat -->
          <Window type="TaharezLook/StaticImage" name="MainButtonsLeft.Chat" >
@@ -859,11 +830,10 @@
       <Window type="TaharezLook/StaticImage" name="MainButtonsRight" >
          <Property name="MaxSize" value="{{0,175},{0,30}}" />
          <Property name="Size" value="{{0,175},{0,30}}" />
-         <Property name="Position" value="{{0.5,-372},{1,-47}}" />
+         <Property name="Position" value="{{0.5,0},{1,-32}}" />
          <Property name="FrameEnabled" value="False" />
          <Property name="BackgroundEnabled" value="False" />
          <Property name="Image" value="TaharezLook/MainButtonsBackground" />
-         <Property name="AlwaysOnTop" value="True" />
          
          <!-- Inventory -->
          <Window type="TaharezLook/StaticImage" name="MainButtonsRight.Inventory" >
@@ -1008,11 +978,10 @@
          <Property name="Size" value="{{0,349},{0,117}}" />
          <Property name="MinSize" value="{{0,349},{0,117}}" />
          <Property name="MaxSize" value="{{0,349},{0,117}}" />
-         <Property name="Position" value="{{0.5,-193},{1,-129}}" />
+         <Property name="Position" value="{{0.5,-174},{1,-150}}" />
          <Property name="FrameEnabled" value="False" />
          <Property name="BackgroundEnabled" value="False" />
          <Property name="Image" value="TaharezLook/ActionButtonsBackground" />
-         <Property name="AlwaysOnTop" value="True" />
          
          <!-- Grid -->
          <Window type="GridLayoutContainer" name="ActionButtons.Grid" >

@@ -33,64 +33,64 @@ namespace Meridian59 { namespace Ogre
 		// default ui layout
 
 		UILayoutAvatar = new ::CEGUI::URect(
-			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.0f, 5.0f),   ::CEGUI::UDim(0.0f, 25.0f)), 
-			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 266.0f), ::CEGUI::UDim(0.0f, 140.0f)));
+			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.0f, 2.0f),   ::CEGUI::UDim(0.0f, 25.0f)), 
+			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 250.0f), ::CEGUI::UDim(0.0f, 141.0f)));
 
 		UILayoutTarget = new ::CEGUI::URect(
-			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.0f, 275.0f), ::CEGUI::UDim(0.0f, 30.0f)),
-			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 256.0f), ::CEGUI::UDim(0.0f, 92.0f)));
+			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.0f, 254.0f), ::CEGUI::UDim(0.0f, 25.0f)),
+			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 250.0f), ::CEGUI::UDim(0.0f, 90.0f)));
 
 		UILayoutMinimap = new ::CEGUI::URect(
-			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(1.0f, -257.0f), ::CEGUI::UDim(0.0f, 25.0f)),
+			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(1.0f, -258.0f), ::CEGUI::UDim(0.0f, 25.0f)),
 			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 256.0f),  ::CEGUI::UDim(0.0f, 256.0f)));
 
 		UILayoutRoomEnchantments = new ::CEGUI::URect(
-			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.0f, 5.0f), ::CEGUI::UDim(0.0f, 145.0f)),
-			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 250.0f), ::CEGUI::UDim(0.0f, 28.0f)));
+			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.0f, 2.0f), ::CEGUI::UDim(0.0f, 168.0f)),
+			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 250.0f), ::CEGUI::UDim(0.0f, 42.0f)));
 
 		UILayoutChat = new ::CEGUI::URect(
-			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.0f, 0.0f),  ::CEGUI::UDim(0.5f, 0.0f)),
-			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.35f, 0.0f), ::CEGUI::UDim(0.3f, 0.0f)));
+			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.0f, 2.0f),  ::CEGUI::UDim(1.0f, -186.0f)),
+			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.25f, 0.0f), ::CEGUI::UDim(0.0f, 184.0f)));
 
 		UILayoutInventory = new ::CEGUI::URect(
-			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(1.0f, -288.0f), ::CEGUI::UDim(1.0f, -310.0f)),
-			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 288.0f),  ::CEGUI::UDim(0.0f, 233.0f)));
+			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(1.0f, -286.0f), ::CEGUI::UDim(1.0f, -186.0f)),
+			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 284.0f),  ::CEGUI::UDim(0.0f, 184.0f)));
 
 		UILayoutSpells = new ::CEGUI::URect(
-			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.5f, -128.0f), ::CEGUI::UDim(0.5f, -128.0f)),
-			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 256.0f),  ::CEGUI::UDim(0.0f, 256.0f)));
-
-		UILayoutSkills = new ::CEGUI::URect(
-			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.5f, -128.0f), ::CEGUI::UDim(0.5f, -128.0f)),
-			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 256.0f),  ::CEGUI::UDim(0.0f, 192.0f)));
-
-		UILayoutActions = new ::CEGUI::URect(
-			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.5f, -128.0f), ::CEGUI::UDim(0.5f, -128.0f)),
+			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.2f, 0.0f), ::CEGUI::UDim(0.4f, 0.0f)),
 			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 192.0f),  ::CEGUI::UDim(0.0f, 256.0f)));
 
+		UILayoutSkills = new ::CEGUI::URect(
+			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.3f, 0.0f), ::CEGUI::UDim(0.4f, 0.0f)),
+			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 192.0f),  ::CEGUI::UDim(0.0f, 192.0f)));
+
+		UILayoutActions = new ::CEGUI::URect(
+			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.4f, 0.0f), ::CEGUI::UDim(0.4f, 0.0f)),
+			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 128.0f),  ::CEGUI::UDim(0.0f, 256.0f)));
+
 		UILayoutAttributes = new ::CEGUI::URect(
-			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.5f, -144.0f), ::CEGUI::UDim(0.5f, -190.0f)),
+			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.5f, 0.0f), ::CEGUI::UDim(0.4f, 0.0f)),
 			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 288.0f),  ::CEGUI::UDim(0.0f, 380.0f)));
 
 		UILayoutMainButtonsLeft = new ::CEGUI::URect(
-			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.5f, -372.0f), ::CEGUI::UDim(1.0f, -47.0f)),
-			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 182.0f),  ::CEGUI::UDim(0.0f, 46.0f)));
+			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.5f, -174.0f), ::CEGUI::UDim(1.0f, -32.0f)),
+			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 175.0f),  ::CEGUI::UDim(0.0f, 30.0f)));
 
 		UILayoutMainButtonsRight = new ::CEGUI::URect(
-			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.5f, 190.0f), ::CEGUI::UDim(1.0f, -47.0f)),
-			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 182.0f), ::CEGUI::UDim(0.0f, 46.0f)));
+			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.5f, 0.0f), ::CEGUI::UDim(1.0f, -32.0f)),
+			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 175.0f), ::CEGUI::UDim(0.0f, 30.0f)));
 
 		UILayoutActionButtons = new ::CEGUI::URect(
-			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.5f, -193.0f), ::CEGUI::UDim(1.0f, -129.0f)),
-			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 385.0f),  ::CEGUI::UDim(0.0f, 128.0f)));
+			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.5f, -174.0f), ::CEGUI::UDim(1.0f, -150.0f)),
+			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 349.0f),  ::CEGUI::UDim(0.0f, 117.0f)));
 
 		UILayoutOnlinePlayers = new ::CEGUI::URect(
-			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.5f, -128.0f), ::CEGUI::UDim(0.5f, -192.0f)),
-			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 256.0f),  ::CEGUI::UDim(0.0f, 384.0f)));
+			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.6f, 0.0f), ::CEGUI::UDim(0.4f, 0.0f)),
+			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 192.0f),  ::CEGUI::UDim(0.0f, 384.0f)));
 
 		UILayoutRoomObjects = new ::CEGUI::URect(
-			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.5f, -128.0f), ::CEGUI::UDim(0.5f, -192.0f)),
-			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 208.0f), ::CEGUI::UDim(0.0f, 384.0f)));
+			::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.7f, 0.0f), ::CEGUI::UDim(0.4f, 0.0f)),
+			::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 192.0f), ::CEGUI::UDim(0.0f, 384.0f)));
 	};
 
 	void OgreClientConfig::InitPastConfig()

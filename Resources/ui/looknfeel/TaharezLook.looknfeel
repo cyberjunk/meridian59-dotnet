@@ -7289,13 +7289,6 @@
                             <AbsoluteDim value="5" />
                         </OperatorDim>
                     </Dim>
-                    <Dim type="BottomEdge" >
-                        <OperatorDim op="Subtract">
-                            <UnifiedDim scale="1" type="Height" />
-                            <!-- Just an offset to center the label vertically. Needs to be adjusted depending on font used. -->
-                            <AbsoluteDim value="2" />
-                        </OperatorDim>
-                    </Dim>
                 </Area>
                 <FontProperty name="NormalFont" />
                 <VertFormatProperty name="VertLabelFormatting" />
@@ -7312,13 +7305,6 @@
                         <OperatorDim op="Subtract">
                             <UnifiedDim scale="1" type="Width" />
                             <AbsoluteDim value="5" />
-                        </OperatorDim>
-                    </Dim>
-                    <Dim type="BottomEdge" >
-                        <OperatorDim op="Subtract">
-                            <UnifiedDim scale="1" type="Height" />
-                            <!-- Just an offset to center the label vertically. Needs to be adjusted depending on font used. -->
-                            <AbsoluteDim value="2" />
                         </OperatorDim>
                     </Dim>
                 </Area>
@@ -7339,13 +7325,6 @@
                             <AbsoluteDim value="5" />
                         </OperatorDim>
                     </Dim>
-                    <Dim type="BottomEdge" >
-                        <OperatorDim op="Subtract">
-                            <UnifiedDim scale="1" type="Height" />
-                            <!-- Just an offset to center the label vertically. Needs to be adjusted depending on font used. -->
-                            <AbsoluteDim value="1" />
-                        </OperatorDim>
-                    </Dim>
                 </Area>
                 <FontProperty name="PushedFont" />
                 <VertFormatProperty name="VertLabelFormatting" />
@@ -7362,13 +7341,6 @@
                         <OperatorDim op="Subtract">
                             <UnifiedDim scale="1" type="Width" />
                             <AbsoluteDim value="5" />
-                        </OperatorDim>
-                    </Dim>
-                    <Dim type="BottomEdge" >
-                        <OperatorDim op="Subtract">
-                            <UnifiedDim scale="1" type="Height" />
-                            <!-- Just an offset to center the label vertically. Needs to be adjusted depending on font used. -->
-                            <AbsoluteDim value="2" />
                         </OperatorDim>
                     </Dim>
                 </Area>
