@@ -586,7 +586,7 @@ namespace Meridian59 { namespace Ogre
 			Welcome::Window->setVisible(mode == UIMode::AvatarSelection);
 			StatusBar::Window->setVisible(mode == UIMode::Playing);
 			OnlinePlayers::Window->setVisible(false);
-			RoomObjects::Window->setVisible(false);
+			RoomObjects::Window->setVisible(mode == UIMode::Playing);
 			Chat::Window->setVisible(mode == UIMode::Playing);
 			Avatar::Window->setVisible(mode == UIMode::Playing);
 			ObjectDetails::Window->setVisible(false);
@@ -595,12 +595,12 @@ namespace Meridian59 { namespace Ogre
 			RoomEnchantments::Window->setVisible(mode == UIMode::Playing);
 			MiniMap::Window->setVisible(mode == UIMode::Playing);
 			Buy::Window->setVisible(false);
-			Attributes::Window->setVisible(false);
-			Actions::Window->setVisible(false);
-			Spells::Window->setVisible(false);
+			Attributes::Window->setVisible(mode == UIMode::Playing);
+			Actions::Window->setVisible(mode == UIMode::Playing);
+			Spells::Window->setVisible(mode == UIMode::Playing);
 			Skills::Window->setVisible(false);
 			Quests::Window->setVisible(false);
-			Inventory::Window->setVisible(false);
+			Inventory::Window->setVisible(mode == UIMode::Playing);
 			MainButtonsLeft::Window->setVisible(mode == UIMode::Playing);
 			MainButtonsRight::Window->setVisible(mode == UIMode::Playing);
 			Amount::Window->setVisible(false);
