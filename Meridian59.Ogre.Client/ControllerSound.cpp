@@ -416,7 +416,7 @@ namespace Meridian59 { namespace Ogre
 
 		// try start 3D playback
 		ISound* sound = soundEngine->play3D(soundsrc,
-			vec3df(x, y, z), Message->PlayInfo->PlayFlags->IsLoop, false, true, false);
+			vec3df(x, y, z), Message->PlayInfo->PlayFlags->IsLoop, true, true, false);
 
 		if (sound)
 		{
@@ -430,6 +430,9 @@ namespace Meridian59 { namespace Ogre
 			// if no soundowner save it ourself
 			else
 				sounds->push_back(sound);
+
+			// start playback
+			sound->setIsPaused(false);
 		}
 	};
 
@@ -465,10 +468,13 @@ namespace Meridian59 { namespace Ogre
 			// no current background music
 			if (!backgroundMusic)
 			{
-				backgroundMusic = soundEngine->play2D(soundsrc, true, false, true, false);
+				backgroundMusic = soundEngine->play2D(soundsrc, true, true, true, false);
 
 				if (backgroundMusic)
+				{
 					backgroundMusic->setVolume(OgreClient::Singleton->Config->MusicVolume / 10.0f);
+					backgroundMusic->setIsPaused(false);
+				}
 			}
 			
 			// stop old background music if another one is to be played
@@ -477,10 +483,13 @@ namespace Meridian59 { namespace Ogre
 				backgroundMusic->stop();
 				backgroundMusic->drop();
 
-				backgroundMusic = soundEngine->play2D(soundsrc, true, false, true, false);
+				backgroundMusic = soundEngine->play2D(soundsrc, true, true, true, false);
 
 				if (backgroundMusic)
+				{
 					backgroundMusic->setVolume(OgreClient::Singleton->Config->MusicVolume / 10.0f);
+					backgroundMusic->setIsPaused(false);
+				}
 			}
 		}
 	};
