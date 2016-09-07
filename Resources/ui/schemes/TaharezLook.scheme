@@ -8,11 +8,15 @@
 	<Font filename="LiberationSans-10-italic.font" />
 	<Font filename="LiberationSans-10-bolditalic.font" />
 
-	<!-- Font: Berenika -->
-	<Font filename="Xolonium-6-Bold.font" />
+	<!-- Font: Berenika Bold -->
+	<Font filename="Berenika-7-bold.font" />
 	<Font filename="Berenika-8-bold.font" />
 	<Font filename="Berenika-20-bold.font" />
 	<Font filename="Berenika-48-bold.font" />
+
+	<!-- Font: Xolonium Bold -->
+	<Font filename="Xolonium-5-Bold.font" />
+	<Font filename="Xolonium-6-Bold.font" />
 	
 	<LookNFeel filename="TaharezLook.looknfeel" />
 	<WindowRendererSet filename="CEGUICoreWindowRendererSet" />

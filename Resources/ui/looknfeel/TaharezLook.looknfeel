@@ -65,22 +65,30 @@
     ***************************************************
     -->
     <WidgetLook name="TaharezLook/Button">
-        <PropertyDefinition name="NormalTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" type="ColourRect"/>
-        <PropertyDefinition name="HoverTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" type="ColourRect"/>
-        <PropertyDefinition name="PushedTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" type="ColourRect"/>
-        <PropertyDefinition name="DisabledTextColour" initialValue="FF7F7F7F" redrawOnWrite="true" type="ColourRect"/>
+        <PropertyDefinition name="NormalTextColour" initialValue="tl:FFFFFFFF tr:FFFFFFFF bl:CCFFFFFF br:CCFFFFFF" redrawOnWrite="true" type="ColourRect"/>
+        <PropertyDefinition name="HoverTextColour" initialValue="tl:FFFFFFFF tr:FFFFFFFF bl:FFFFFFFF br:FFFFFFFF" redrawOnWrite="true" type="ColourRect"/>
+        <PropertyDefinition name="PushedTextColour" initialValue="tl:CCFFFFFF tr:CCFFFFFF bl:CCFFFFFF br:CCFFFFFF" redrawOnWrite="true" type="ColourRect"/>
+        <PropertyDefinition name="DisabledTextColour" initialValue="tl:FF7F7F7F tr:FF7F7F7F bl:FF7F7F7F br:FF7F7F7F" redrawOnWrite="true" type="ColourRect"/>
         <PropertyDefinition name="VertLabelFormatting" initialValue="CentreAligned" type="VerticalTextFormatting"/>
         <PropertyDefinition name="HorzLabelFormatting" initialValue="CentreAligned" type="HorizontalTextFormatting"/>
         <PropertyDefinition name="NormalImage" initialValue="" redrawOnWrite="true"  type="Image"/>
         <PropertyDefinition name="HoverImage" initialValue="" redrawOnWrite="true" type="Image"/>
         <PropertyDefinition name="PushedImage" initialValue="" redrawOnWrite="true" type="Image"/>
         <PropertyDefinition name="DisabledImage" initialValue="" redrawOnWrite="true" type="Image"/>
+        <PropertyDefinition name="NormalIcon" initialValue="" redrawOnWrite="true" type="Image"/>
+        <PropertyDefinition name="HoverIcon" initialValue="" redrawOnWrite="true" type="Image"/>
+        <PropertyDefinition name="PushedIcon" initialValue="" redrawOnWrite="true" type="Image"/>
+        <PropertyDefinition name="DisabledIcon" initialValue="" redrawOnWrite="true" type="Image"/>
+        <PropertyDefinition name="NormalFont" initialValue="Berenika-8-Bold" redrawOnWrite="true" type="Font"/>
+        <PropertyDefinition name="HoverFont" initialValue="Berenika-8-Bold" redrawOnWrite="true" type="Font"/>
+        <PropertyDefinition name="PushedFont" initialValue="Berenika-7-Bold" redrawOnWrite="true" type="Font"/>
+        <PropertyDefinition name="DisabledFont" initialValue="Berenika-8-Bold" redrawOnWrite="true" type="Font"/>
         <PropertyDefinition name="VertImageFormatting" initialValue="Stretched" redrawOnWrite="true" type="VerticalFormatting" />
         <PropertyDefinition name="HorzImageFormatting" initialValue="Stretched" redrawOnWrite="true" type="HorizontalFormatting" />  
         <Property name="Size" value="{{0, 96}, {0, 32}}" />
         <Property name="Font" value="Berenika-8-Bold" />
-      <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
-        <ImagerySection name="label">
+        <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
+        <ImagerySection name="labelnormal">
             <TextComponent>
                 <Area>
                     <Dim type="LeftEdge" >
@@ -92,7 +100,90 @@
                             <AbsoluteDim value="5" />
                         </OperatorDim>
                     </Dim>
+                    <Dim type="BottomEdge" >
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Height" />
+                            <!-- Just an offset to center the label vertically. Needs to be adjusted depending on font used. -->
+                            <AbsoluteDim value="2" />
+                        </OperatorDim>
+                    </Dim>
                 </Area>
+                <FontProperty name="NormalFont" />
+                <VertFormatProperty name="VertLabelFormatting" />
+                <HorzFormatProperty name="HorzLabelFormatting" />
+            </TextComponent>
+        </ImagerySection>
+        <ImagerySection name="labelhover">
+            <TextComponent>
+                <Area>
+                    <Dim type="LeftEdge" >
+                        <AbsoluteDim value="5" />
+                    </Dim>
+                    <Dim type="RightEdge" >
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Width" />
+                            <AbsoluteDim value="5" />
+                        </OperatorDim>
+                    </Dim>
+                    <Dim type="BottomEdge" >
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Height" />
+                            <!-- Just an offset to center the label vertically. Needs to be adjusted depending on font used. -->
+                            <AbsoluteDim value="2" />
+                        </OperatorDim>
+                    </Dim>
+                </Area>
+                <FontProperty name="HoverFont" />
+                <VertFormatProperty name="VertLabelFormatting" />
+                <HorzFormatProperty name="HorzLabelFormatting" />
+            </TextComponent>
+        </ImagerySection>
+        <ImagerySection name="labelpushed">
+            <TextComponent>
+                <Area>
+                    <Dim type="LeftEdge" >
+                        <AbsoluteDim value="5" />
+                    </Dim>
+                    <Dim type="RightEdge" >
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Width" />
+                            <AbsoluteDim value="5" />
+                        </OperatorDim>
+                    </Dim>
+                    <Dim type="BottomEdge" >
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Height" />
+                            <!-- Just an offset to center the label vertically. Needs to be adjusted depending on font used. -->
+                            <AbsoluteDim value="1" />
+                        </OperatorDim>
+                    </Dim>
+                </Area>
+                <FontProperty name="PushedFont" />
+                <VertFormatProperty name="VertLabelFormatting" />
+                <HorzFormatProperty name="HorzLabelFormatting" />
+            </TextComponent>
+        </ImagerySection>
+        <ImagerySection name="labeldisabled">
+            <TextComponent>
+                <Area>
+                    <Dim type="LeftEdge" >
+                        <AbsoluteDim value="5" />
+                    </Dim>
+                    <Dim type="RightEdge" >
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Width" />
+                            <AbsoluteDim value="5" />
+                        </OperatorDim>
+                    </Dim>
+                    <Dim type="BottomEdge" >
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Height" />
+                            <!-- Just an offset to center the label vertically. Needs to be adjusted depending on font used. -->
+                            <AbsoluteDim value="2" />
+                        </OperatorDim>
+                    </Dim>
+                </Area>
+                <FontProperty name="DisabledFont" />
                 <VertFormatProperty name="VertLabelFormatting" />
                 <HorzFormatProperty name="HorzLabelFormatting" />
             </TextComponent>
@@ -108,6 +199,31 @@
                 <VertFormatProperty name="VertImageFormatting" />
                 <HorzFormatProperty name="HorzImageFormatting" />
             </ImageryComponent>
+            <ImageryComponent>
+                <Area>
+                    <Dim type="TopEdge" >
+                        <AbsoluteDim value="5" />
+                    </Dim>
+                     <Dim type="LeftEdge" >
+                        <AbsoluteDim value="5" />
+                    </Dim>
+                    <Dim type="RightEdge" >
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Width" />
+                            <AbsoluteDim value="5" />
+                        </OperatorDim>
+                    </Dim>
+                    <Dim type="BottomEdge" >
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Height" />
+                            <AbsoluteDim value="5" />
+                        </OperatorDim>
+                    </Dim>
+                </Area>
+                <ImageProperty name="NormalIcon" />
+                <VertFormatProperty name="VertImageFormatting" />
+                <HorzFormatProperty name="HorzImageFormatting" />
+            </ImageryComponent>
         </ImagerySection>
         <ImagerySection name="hover">
             <FrameComponent>
@@ -117,6 +233,31 @@
             </FrameComponent>
             <ImageryComponent>
                 <ImageProperty name="HoverImage" />
+                <VertFormatProperty name="VertImageFormatting" />
+                <HorzFormatProperty name="HorzImageFormatting" />
+            </ImageryComponent>
+            <ImageryComponent>
+                <Area>
+                    <Dim type="TopEdge" >
+                        <AbsoluteDim value="5" />
+                    </Dim>
+                     <Dim type="LeftEdge" >
+                        <AbsoluteDim value="5" />
+                    </Dim>
+                    <Dim type="RightEdge" >
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Width" />
+                            <AbsoluteDim value="5" />
+                        </OperatorDim>
+                    </Dim>
+                    <Dim type="BottomEdge" >
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Height" />
+                            <AbsoluteDim value="5" />
+                        </OperatorDim>
+                    </Dim>
+                </Area>
+                <ImageProperty name="HoverIcon" />
                 <VertFormatProperty name="VertImageFormatting" />
                 <HorzFormatProperty name="HorzImageFormatting" />
             </ImageryComponent>
@@ -132,6 +273,31 @@
                 <VertFormatProperty name="VertImageFormatting" />
                 <HorzFormatProperty name="HorzImageFormatting" />
             </ImageryComponent>
+            <ImageryComponent>
+                <Area>
+                    <Dim type="TopEdge" >
+                        <AbsoluteDim value="5" />
+                    </Dim>
+                     <Dim type="LeftEdge" >
+                        <AbsoluteDim value="5" />
+                    </Dim>
+                    <Dim type="RightEdge" >
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Width" />
+                            <AbsoluteDim value="5" />
+                        </OperatorDim>
+                    </Dim>
+                    <Dim type="BottomEdge" >
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Height" />
+                            <AbsoluteDim value="5" />
+                        </OperatorDim>
+                    </Dim>
+                </Area>
+                <ImageProperty name="PushedIcon" />
+                <VertFormatProperty name="VertImageFormatting" />
+                <HorzFormatProperty name="HorzImageFormatting" />
+            </ImageryComponent>
         </ImagerySection>
         <ImagerySection name="disabled">
             <FrameComponent>
@@ -144,45 +310,68 @@
                 <VertFormatProperty name="VertImageFormatting" />
                 <HorzFormatProperty name="HorzImageFormatting" />
             </ImageryComponent>
+            <ImageryComponent>
+                <Area>
+                    <Dim type="TopEdge" >
+                        <AbsoluteDim value="5" />
+                    </Dim>
+                     <Dim type="LeftEdge" >
+                        <AbsoluteDim value="5" />
+                    </Dim>
+                    <Dim type="RightEdge" >
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Width" />
+                            <AbsoluteDim value="5" />
+                        </OperatorDim>
+                    </Dim>
+                    <Dim type="BottomEdge" >
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Height" />
+                            <AbsoluteDim value="5" />
+                        </OperatorDim>
+                    </Dim>
+                </Area>
+                <ImageProperty name="DisabledIcon" />
+                <VertFormatProperty name="VertImageFormatting" />
+                <HorzFormatProperty name="HorzImageFormatting" />
+            </ImageryComponent>
         </ImagerySection>
         <StateImagery name="Normal">
             <Layer>
                 <Section section="normal" />
-                <Section section="label">
-                  <Colours topLeft="FFFFFFFF" topRight="FFFFFFFF" bottomLeft="CCFFFFFF" bottomRight="CCFFFFFF" />
+                <Section section="labelnormal">
+                  <ColourProperty name="NormalTextColour" />
                 </Section>
             </Layer>
         </StateImagery>
         <StateImagery name="Hover">
             <Layer>
                 <Section section="hover" />
-                <Section section="label">
-                  <Colours topLeft="FFFFFFFF" topRight="FFFFFFFF" bottomLeft="FFFFFFFF" bottomRight="FFFFFFFF" />
+                <Section section="labelhover">
+                  <ColourProperty name="HoverTextColour" />
                 </Section>
             </Layer>
         </StateImagery>
         <StateImagery name="Pushed">
             <Layer>
                 <Section section="pushed" />
-                <Section section="label">
-                  <Colours topLeft="CCFFFFFF" topRight="CCFFFFFF" bottomLeft="CCFFFFFF" bottomRight="CCFFFFFF" />
+                <Section section="labelpushed">
+                  <ColourProperty name="PushedTextColour" />
                 </Section>
             </Layer>
         </StateImagery>
         <StateImagery name="PushedOff">
             <Layer>
                 <Section section="hover" />
-                <Section section="label">
-                    <ColourProperty name="HoverTextColour" />
+                <Section section="labelhover">
+                  <ColourProperty name="HoverTextColour" />
                 </Section>
             </Layer>
         </StateImagery>
         <StateImagery name="Disabled">
             <Layer>
-                <Section section="disabled">
-                    <Colours topLeft="FF7F7F7F" topRight="FF7F7F7F" bottomLeft="FF7F7F7F" bottomRight="FF7F7F7F" />
-                </Section>
-                <Section section="label">
+                <Section section="disabled" />
+                <Section section="labeldisabled">
                     <ColourProperty name="DisabledTextColour" />
                 </Section>
             </Layer>
@@ -512,15 +701,12 @@
             <ImageryComponent>
                 <Area>
                     <Dim type="LeftEdge" >
-                            <ImageDim name="TaharezLook/NewTitlebarLeft" dimension="Width"/>
+                        <ImageDim name="TaharezLook/NewTitlebarLeft" dimension="Width"/>
                     </Dim>
                     <Dim type="RightEdge" >
-                        <OperatorDim op="Subtract">
-                            <UnifiedDim scale="0.5" type="RightEdge"/>
-                            <OperatorDim op="Add">
-                                <UnifiedDim scale="0.2" type="RightEdge"/>
-                                <ImageDim name="TaharezLook/NewTitlebarFrillLeft" dimension="Width" />
-                            </OperatorDim>
+                        <OperatorDim op="Add">
+                           <ImageDim name="TaharezLook/NewTitlebarLeft" dimension="Width"/>
+                           <UnifiedDim scale="0.07" type="RightEdge"/>
                         </OperatorDim>
                     </Dim>
                 </Area>
@@ -531,19 +717,18 @@
             <ImageryComponent>
                 <Area>
                     <Dim type="LeftEdge" >
-                        <OperatorDim op="Subtract">
-                            <UnifiedDim scale="0.5" type="RightEdge"/>
-                            <OperatorDim op="Add">
-                                <UnifiedDim scale="0.2" type="RightEdge"/>
-                                <ImageDim name="TaharezLook/NewTitlebarFrillLeft" dimension="Width" />
-                            </OperatorDim>
+                        <OperatorDim op="Add">
+                           <ImageDim name="TaharezLook/NewTitlebarLeft" dimension="Width"/>
+                           <UnifiedDim scale="0.07" type="RightEdge"/>
                         </OperatorDim>
                     </Dim>
                     <Dim type="RightEdge" >
-                        <OperatorDim op="Subtract">
-                            <UnifiedDim scale="0.5" type="RightEdge"/>
-                            <!--  Size of desired frill area divided by 2  -->
-                            <UnifiedDim scale="0.2" type="RightEdge"/>
+                        <OperatorDim op="Add">
+                           <ImageDim name="TaharezLook/NewTitlebarLeft" dimension="Width"/>
+                           <OperatorDim op="Add">
+                              <UnifiedDim scale="0.07" type="RightEdge"/>
+                              <ImageDim name="TaharezLook/NewTitlebarFrillLeft" dimension="Width"/>
+                           </OperatorDim>
                         </OperatorDim>
                     </Dim>
                 </Area>
@@ -552,111 +737,170 @@
                 <HorzFormat type="Stretched" />
             </ImageryComponent>
             <ImageryComponent>
-                <Area>
-                    <Dim type="LeftEdge" >
-                        <OperatorDim op="Subtract">
-                            <UnifiedDim scale="0.5" type="RightEdge"/>
-                            <!--  Size of desired frill area divided by 2  -->
-                            <UnifiedDim scale="0.2" type="RightEdge"/>
-                        </OperatorDim>
-                    </Dim>
-                    <Dim type="RightEdge" >
+               <Area>
+                  <Dim type="LeftEdge" >
+                     <OperatorDim op="Add">
+                        <ImageDim name="TaharezLook/NewTitlebarLeft" dimension="Width"/>
                         <OperatorDim op="Add">
-                            <UnifiedDim scale="0.5" type="RightEdge"/>
-                            <!--  Size of desired frill area divided by 2  -->
-                            <UnifiedDim scale="0.2" type="RightEdge"/>
+                           <UnifiedDim scale="0.07" type="RightEdge"/>
+                           <ImageDim name="TaharezLook/NewTitlebarFrillLeft" dimension="Width"/>
                         </OperatorDim>
-                    </Dim>
-                </Area>
-                <Image name="TaharezLook/NewTitlebarFrillMiddle" />
-                <VertFormat type="Stretched" />
-                <HorzFormat type="Stretched" />
+                     </OperatorDim>
+                  </Dim>
+                  <Dim type="RightEdge" >
+                     <OperatorDim op="Subtract">
+                        <UnifiedDim scale="1" type="RightEdge"/>
+                        <OperatorDim op="Add">
+                           <ImageDim name="TaharezLook/NewTitlebarFrillLeft" dimension="Width"/>
+                           <OperatorDim op="Add">
+                              <UnifiedDim scale="0.02" type="RightEdge"/>
+                              <OperatorDim op="Add">
+                                 <ImageDim name="TaharezLook/SysArea" dimension="Width"/>
+                                 <ImageDim name="TaharezLook/NewTitlebarRight" dimension="Width"/>
+                              </OperatorDim>
+                           </OperatorDim>
+                        </OperatorDim>
+                     </OperatorDim>
+                  </Dim>
+               </Area>
+               <Image name="TaharezLook/NewTitlebarFrillMiddle" />
+               <VertFormat type="Stretched" />
+               <HorzFormat type="Stretched" />
             </ImageryComponent>
             <ImageryComponent>
                 <Area>
-                    <Dim type="LeftEdge" >
+                  <Dim type="LeftEdge" >
+                     <OperatorDim op="Subtract">
+                        <UnifiedDim scale="1" type="RightEdge"/>
                         <OperatorDim op="Add">
-                            <UnifiedDim scale="0.5" type="RightEdge"/>
-                            <!--  Size of desired frill area divided by 2  -->
-                            <UnifiedDim scale="0.2" type="RightEdge"/>
+                           <ImageDim name="TaharezLook/NewTitlebarFrillLeft" dimension="Width"/>
+                           <OperatorDim op="Add">
+                              <UnifiedDim scale="0.02" type="RightEdge"/>
+                              <OperatorDim op="Add">
+                                 <ImageDim name="TaharezLook/SysArea" dimension="Width"/>
+                                 <ImageDim name="TaharezLook/NewTitlebarRight" dimension="Width"/>
+                              </OperatorDim>
+                           </OperatorDim>
                         </OperatorDim>
-                    </Dim>
-                    <Dim type="RightEdge" >
+                     </OperatorDim>
+                  </Dim>
+                  <Dim type="RightEdge" >
+                     <OperatorDim op="Subtract">
+                        <UnifiedDim scale="1" type="RightEdge"/>
                         <OperatorDim op="Add">
-                            <UnifiedDim scale="0.5" type="RightEdge"/>
-                            <OperatorDim op="Add">
-                                <!--  Size of desired frill area divided by 2  -->
-                                <UnifiedDim scale="0.2" type="RightEdge"/>
-                                <ImageDim name="TaharezLook/NewTitlebarFrillRight" dimension="Width" />
-                            </OperatorDim>
+                           <UnifiedDim scale="0.02" type="RightEdge"/>
+                           <OperatorDim op="Add">
+                              <ImageDim name="TaharezLook/SysArea" dimension="Width"/>
+                              <ImageDim name="TaharezLook/NewTitlebarRight" dimension="Width"/>
+                           </OperatorDim>
                         </OperatorDim>
-                    </Dim>
-                </Area>
-                <Image name="TaharezLook/NewTitlebarFrillRight" />
-                <VertFormat type="Stretched" />
-                <HorzFormat type="Stretched" />
+                     </OperatorDim>
+                  </Dim>
+               </Area>
+               <Image name="TaharezLook/NewTitlebarFrillRight" />
+               <VertFormat type="Stretched" />
+               <HorzFormat type="Stretched" />
             </ImageryComponent>
             <ImageryComponent>
                 <Area>
-                    <Dim type="LeftEdge" >
+                  <Dim type="LeftEdge" >
+                     <OperatorDim op="Subtract">
+                        <UnifiedDim scale="1" type="RightEdge"/>
                         <OperatorDim op="Add">
-                            <UnifiedDim scale="0.5" type="RightEdge"/>
-                            <OperatorDim op="Add">
-                                <!--  Size of desired frill area divided by 2  -->
-                                <UnifiedDim scale="0.2" type="RightEdge"/>
-                                <ImageDim name="TaharezLook/NewTitlebarFrillRight" dimension="Width" />
-                            </OperatorDim>
+                           <UnifiedDim scale="0.02" type="RightEdge"/>
+                           <OperatorDim op="Add">
+                              <ImageDim name="TaharezLook/SysArea" dimension="Width"/>
+                              <ImageDim name="TaharezLook/NewTitlebarRight" dimension="Width"/>
+                           </OperatorDim>
                         </OperatorDim>
-                    </Dim>
-                    <Dim type="RightEdge" >
-                        <OperatorDim op="Subtract">
-                            <UnifiedDim scale="1" type="RightEdge"/>
-                            <OperatorDim op="Add">
-                               <ImageDim name="TaharezLook/SysArea" dimension="Width"/>
-                               <ImageDim name="TaharezLook/NewTitlebarRight" dimension="Width"/>
-                            </OperatorDim>
+                     </OperatorDim>
+                  </Dim>
+                  <Dim type="RightEdge" >
+                     <OperatorDim op="Subtract">
+                        <UnifiedDim scale="1" type="RightEdge"/>
+                        <OperatorDim op="Add">
+                           <ImageDim name="TaharezLook/SysArea" dimension="Width"/>
+                           <ImageDim name="TaharezLook/NewTitlebarRight" dimension="Width"/>
                         </OperatorDim>
-                    </Dim>
+                     </OperatorDim>
+                  </Dim>
                 </Area>
                 <Image name="TaharezLook/NewTitlebarMiddle" />
                 <VertFormat type="Stretched" />
                 <HorzFormat type="Stretched" />
             </ImageryComponent>
             <ImageryComponent>
-                <Area>
-                    <Dim type="RightEdge" >
-                            <UnifiedDim scale="1" type="RightEdge"/>
-                    </Dim>
-                </Area>
-                <Image name="TaharezLook/NewTitlebarRight" />
-                <VertFormat type="Stretched" />
-                <HorzFormat type="RightAligned" />
+               <Area>
+                  <Dim type="LeftEdge" >
+                     <OperatorDim op="Subtract">
+                        <UnifiedDim scale="1" type="RightEdge"/>
+                        <OperatorDim op="Add">
+                           <ImageDim name="TaharezLook/SysArea" dimension="Width"/>
+                           <ImageDim name="TaharezLook/NewTitlebarRight" dimension="Width"/>
+                        </OperatorDim>
+                     </OperatorDim>
+                  </Dim>
+                  <Dim type="RightEdge" >
+                     <OperatorDim op="Subtract">
+                        <UnifiedDim scale="1" type="RightEdge"/>
+                        <ImageDim name="TaharezLook/NewTitlebarRight" dimension="Width"/>
+                     </OperatorDim>
+                  </Dim>
+               </Area>
+               <Image name="TaharezLook/SysArea" />
+               <VertFormat type="Stretched" />
+               <HorzFormat type="RightAligned" />
             </ImageryComponent>
             <ImageryComponent>
-                <Area>
-                    <Dim type="RightEdge" >
-                        <OperatorDim op="Subtract">
-                            <UnifiedDim scale="1" type="RightEdge"/>
-                            <ImageDim name="TaharezLook/NewTitlebarRight" dimension="Width"/>
-                        </OperatorDim>
-                    </Dim>
+               <Area>
+                  <Dim type="LeftEdge" >
+                     <OperatorDim op="Subtract">
+                        <UnifiedDim scale="1" type="RightEdge"/>
+                        <ImageDim name="TaharezLook/NewTitlebarRight" dimension="Width"/>
+                     </OperatorDim>
+                  </Dim>
+                  <Dim type="RightEdge" >
+                     <UnifiedDim scale="1" type="RightEdge"/>
+                  </Dim>
                 </Area>
-                <Image name="TaharezLook/SysArea" />
+                <Image name="TaharezLook/NewTitlebarRight" />
                 <VertFormat type="Stretched" />
                 <HorzFormat type="RightAligned" />
             </ImageryComponent>
         </ImagerySection>
         <ImagerySection name="caption">
             <TextComponent>
-                <HorzFormat type="CentreAligned" />
-                <Area>
-                    <Dim type="TopEdge" ><AbsoluteDim value="0" /></Dim>
-                    <Dim type="LeftEdge" ><UnifiedDim scale="0.35" type="Width" /></Dim>
-                    <Dim type="RightEdge" ><UnifiedDim scale="0.65" type="Width" /></Dim>
-                    <Dim type="BottomEdge" ><ImageDim name="TaharezLook/NewTitlebarLeft" dimension="Height"/></Dim>
-                </Area>
-                <Colours topLeft="FFFFFFFF" topRight="FFFFFFFF" bottomLeft="CCFFFFFF" bottomRight="CCFFFFFF" />
-                <VertFormat type="CentreAligned" />
+               <HorzFormat type="CentreAligned" />
+               <Area>
+                  <Dim type="TopEdge" ><AbsoluteDim value="0" /></Dim>
+                  <Dim type="LeftEdge" >
+                     <OperatorDim op="Add">
+                        <ImageDim name="TaharezLook/NewTitlebarLeft" dimension="Width"/>
+                        <OperatorDim op="Add">
+                           <UnifiedDim scale="0.07" type="RightEdge"/>
+                           <ImageDim name="TaharezLook/NewTitlebarFrillLeft" dimension="Width"/>
+                        </OperatorDim>
+                     </OperatorDim>
+                  </Dim>
+                  <Dim type="RightEdge" >
+                     <OperatorDim op="Subtract">
+                        <UnifiedDim scale="1" type="RightEdge"/>
+                        <OperatorDim op="Add">
+                           <ImageDim name="TaharezLook/NewTitlebarFrillLeft" dimension="Width"/>
+                           <OperatorDim op="Add">
+                              <UnifiedDim scale="0.02" type="RightEdge"/>
+                              <OperatorDim op="Add">
+                                 <ImageDim name="TaharezLook/SysArea" dimension="Width"/>
+                                 <ImageDim name="TaharezLook/NewTitlebarRight" dimension="Width"/>
+                              </OperatorDim>
+                           </OperatorDim>
+                        </OperatorDim>
+                     </OperatorDim>
+                  </Dim>
+                  <Dim type="BottomEdge" ><ImageDim name="TaharezLook/NewTitlebarLeft" dimension="Height"/></Dim>
+               </Area>
+               <Colours topLeft="FFFFFFFF" topRight="FFFFFFFF" bottomLeft="CCFFFFFF" bottomRight="CCFFFFFF" />
+               <VertFormat type="CentreAligned" />
             </TextComponent>
         </ImagerySection>
         <StateImagery name="Active">
@@ -946,10 +1190,8 @@
     <WidgetLook name="TaharezLook/GroupBox">
         <PropertyDefinition name="FrameColours" initialValue="tl:FFFFFFFF tr:FFFFFFFF bl:FFFFFFFF br:FFFFFFFF" redrawOnWrite="true" type="ColourRect"/>
         <PropertyDefinition name="BackgroundColours" initialValue="tl:FFDFDFDF tr:FFDFDFDF bl:FFDFDFDF br:FFDFDFDF" redrawOnWrite="true" type="ColourRect"/>
-
         <PropertyDefinition name="BackgroundTextColours" initialValue="tl:FF101a1f tr:FF101a1f bl:FF101a1f br:FF101a1f" redrawOnWrite="true" type="ColourRect"/>
-
-       <PropertyDefinition name="DisabledTextColour" initialValue="FFCCCCCC" redrawOnWrite="true" type="ColourRect"/>
+        <PropertyDefinition name="DisabledTextColour" initialValue="FFCCCCCC" redrawOnWrite="true" type="ColourRect"/>
         <PropertyDefinition name="NormalTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" type="ColourRect"/>
         <PropertyDefinition name="TextBackground" initialValue="FFCCCCCC" redrawOnWrite="true" type="ColourRect"/>
         <Property name="Size" value="{{0.3, 0}, {0.3, 0}}" />
@@ -1264,7 +1506,7 @@
     <WidgetLook name="TaharezLook/VUMeter">
       <PropertyDefinition name="NoBarTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" />
       <PropertyDefinition name="BarTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" />
-      <PropertyDefinition name="BarColours" initialValue="tl:FF2a353d tr:FF384751 bl:FF2a353d br:FF384751" redrawOnWrite="true" type="ColourRect"/>
+      <PropertyDefinition name="BarColours" initialValue="tl:FF281e1b tr:FF382a26 bl:DD281e1b br:DD382a26" redrawOnWrite="true" type="ColourRect"/>
       <PropertyDefinition name="BarTextFont" initialValue="Berenika-8-Bold" redrawOnWrite="true" />
         <Property name="VerticalProgress" value="False" />
         <Property name="Size" value="{{0, 256}, {0, 32}}" />
@@ -1356,7 +1598,7 @@
             </Layer>
         </StateImagery>
     </WidgetLook>
-    
+
     ***************************************************
         TaharezLook/VUMeterNumeric (progress bar)
     ***************************************************
@@ -1364,7 +1606,7 @@
     <WidgetLook name="TaharezLook/VUMeterNumeric">
       <PropertyDefinition name="NoBarTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" />
       <PropertyDefinition name="BarTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" />
-      <PropertyDefinition name="BarColours" initialValue="tl:FF2a353d tr:FF384751 bl:FF2a353d br:FF384751" redrawOnWrite="true" type="ColourRect"/>
+      <PropertyDefinition name="BarColours" initialValue="tl:FF281e1b tr:FF382a26 bl:DD281e1b br:DD382a26" redrawOnWrite="true" type="ColourRect"/>
       <PropertyDefinition name="BarTextFont" initialValue="Xolonium-6-Bold" redrawOnWrite="true" />
         <Property name="VerticalProgress" value="False" />
         <Property name="Size" value="{{0, 256}, {0, 16}}" />
@@ -1746,7 +1988,7 @@
     -->
     <WidgetLook name="TaharezLook/VerticalScrollbar">
         <Property name="VerticalScrollbar" value="True" />
-        <Property name="Size" value="{{0, 16}, {1, 0}}" />
+        <Property name="Size" value="{{0, 10}, {1, 0}}" />
       <Property name="WantsMultiClickEvents" value="False" />
       <Property name="MouseAutoRepeatEnabled" value="True" />
         <NamedArea name="ThumbTrackArea">
@@ -2288,8 +2530,8 @@
                 <ImageProperty name="Backdrop" />
                 <!--<ColourRectProperty name="BackgroundColours" />-->
                 <Colours topLeft="FFFFFFFF" topRight="FFFFFFFF" bottomLeft="FFFFFFFF" bottomRight="FFFFFFFF" />
-                <VertFormat type="Stretched" />
-                <HorzFormat type="Stretched" />
+                <VertFormat type="Tiled" />
+                <HorzFormat type="Tiled" />
             </ImageryComponent>
         </ImagerySection>
         <ImagerySection name="background_noframe">
@@ -2297,8 +2539,8 @@
                 <ImageProperty name="Backdrop" />
                 <!--<ColourRectProperty name="BackgroundColours" />-->
                 <Colours topLeft="FFFFFFFF" topRight="FFFFFFFF" bottomLeft="FFFFFFFF" bottomRight="FFFFFFFF" />
-                <VertFormat type="Stretched" />
-                <HorzFormat type="Stretched" />
+                <VertFormat type="Tiled" />
+                <HorzFormat type="Tiled" />
             </ImageryComponent>
         </ImagerySection>
     </WidgetLook>
@@ -2523,20 +2765,37 @@
         <Property name="Size" value="{{0, 256}, {0, 128}}" />
         <NamedArea name="WithFrameTextRenderArea">
             <Area>
-                <Dim type="LeftEdge" ><ImageDim name="TaharezLook/StaticLeft" dimension="Width" /></Dim>
-                <Dim type="TopEdge" ><ImageDim name="TaharezLook/StaticTop" dimension="Height" /></Dim>
-                <Dim type="RightEdge" >
-                    <OperatorDim op="Subtract">
-                        <UnifiedDim scale="1" type="RightEdge" />
+               <Dim type="LeftEdge" >
+                  <ImageDim name="TaharezLook/StaticLeft" dimension="Width" />
+                  <OperatorDim op="Add">
+                     <AbsoluteDim value="3" />
+                     <ImageDim name="TaharezLook/StaticLeft" dimension="Width" />
+                  </OperatorDim>
+               </Dim>
+               <Dim type="TopEdge" >
+                  <OperatorDim op="Add">
+                     <AbsoluteDim value="1" />
+                     <ImageDim name="TaharezLook/StaticTop" dimension="Height" />
+                  </OperatorDim>
+               </Dim>
+               <Dim type="RightEdge" >
+                  <OperatorDim op="Subtract">
+                     <UnifiedDim scale="1" type="RightEdge" />
+                     <OperatorDim op="Add">
+                        <AbsoluteDim value="3" />
                         <ImageDim name="TaharezLook/StaticRight" dimension="Width" />
-                    </OperatorDim>
-                </Dim>
-                <Dim type="BottomEdge" >
-                    <OperatorDim op="Subtract">
-                        <UnifiedDim scale="1" type="BottomEdge" />
+                     </OperatorDim>
+                  </OperatorDim>
+               </Dim>
+               <Dim type="BottomEdge" >
+                  <OperatorDim op="Subtract">
+                     <UnifiedDim scale="1" type="BottomEdge" />
+                     <OperatorDim op="Add">
+                        <AbsoluteDim value="1" />
                         <ImageDim name="TaharezLook/StaticBottom" dimension="Height" />
-                    </OperatorDim>
-                </Dim>
+                     </OperatorDim>
+                  </OperatorDim>
+               </Dim>
             </Area>
         </NamedArea>
         <NamedArea name="WithFrameTextRenderAreaHScroll">
@@ -2559,20 +2818,39 @@
         </NamedArea>
         <NamedArea name="WithFrameTextRenderAreaVScroll">
             <Area>
-                <Dim type="LeftEdge" ><ImageDim name="TaharezLook/StaticLeft" dimension="Width" /></Dim>
-                <Dim type="TopEdge" ><ImageDim name="TaharezLook/StaticTop" dimension="Height" /></Dim>
-                <Dim type="RightEdge" >
-                    <OperatorDim op="Subtract">
-                        <UnifiedDim scale="1" offset="-4" type="RightEdge" />
-                        <WidgetDim widget="__auto_vscrollbar__" dimension="Width" />
-                    </OperatorDim>
-                </Dim>
-                <Dim type="BottomEdge" >
-                    <OperatorDim op="Subtract">
-                        <UnifiedDim scale="1" type="BottomEdge" />
+               <Dim type="LeftEdge" >
+                  <OperatorDim op="Add">
+                     <AbsoluteDim value="3" />
+                     <ImageDim name="TaharezLook/StaticLeft" dimension="Width" />
+                  </OperatorDim>
+               </Dim>
+               <Dim type="TopEdge" >
+                  <OperatorDim op="Add">
+                     <AbsoluteDim value="0" />
+                     <ImageDim name="TaharezLook/StaticTop" dimension="Height" />
+                  </OperatorDim>
+               </Dim>
+               <Dim type="RightEdge" >
+                  <OperatorDim op="Subtract">
+                     <UnifiedDim scale="1" type="RightEdge" />
+                     <OperatorDim op="Add">
+                        <AbsoluteDim value="5" />
+                        <OperatorDim op="Add">
+                           <WidgetDim widget="__auto_vscrollbar__" dimension="Width" />
+                           <ImageDim name="TaharezLook/StaticRight" dimension="Width" />
+                        </OperatorDim>
+                     </OperatorDim>
+                  </OperatorDim>
+               </Dim>
+               <Dim type="BottomEdge" >
+                  <OperatorDim op="Subtract">
+                     <UnifiedDim scale="1" type="BottomEdge" />
+                     <OperatorDim op="Add">
+                        <AbsoluteDim value="0" />
                         <ImageDim name="TaharezLook/StaticBottom" dimension="Height" />
-                    </OperatorDim>
-                </Dim>
+                     </OperatorDim>
+                  </OperatorDim>
+               </Dim>
             </Area>
         </NamedArea>
         <NamedArea name="WithFrameTextRenderAreaHVScroll">
@@ -2636,19 +2914,47 @@
                 <Dim type="Height" ><AbsoluteDim value="10" /></Dim>
             </Area>
             <VertAlignment type="BottomAligned" />
-        </Child>
-        <Child  type="TaharezLook/VerticalScrollbar" nameSuffix="__auto_vscrollbar__">
+         </Child>
+         <Child  type="TaharezLook/VerticalScrollbar" nameSuffix="__auto_vscrollbar__">
             <Area>
-                <Dim type="Width" ><AbsoluteDim value="10" /></Dim>
-                <Dim type="Height" ><UnifiedDim scale="1" offset="-4" type="Height" /></Dim>
-                <Dim type="LeftEdge" >
-                    <OperatorDim op="Subtract">
-                        <UnifiedDim scale="1" offset="-2" type="Width" />
+               <Dim type="LeftEdge" >
+                  <OperatorDim op="Subtract">
+                     <UnifiedDim scale="1" type="Width" />
+                     <OperatorDim op="Add">
                         <WidgetDim widget="__auto_vscrollbar__" dimension="Width" />
-                    </OperatorDim>
-                </Dim>
+                        <OperatorDim op="Add">
+                           <AbsoluteDim value="2" />
+                           <ImageDim name="TaharezLook/StaticRight" dimension="Width" />
+                        </OperatorDim>
+                     </OperatorDim>
+                  </OperatorDim>
+               </Dim>
+               <Dim type="TopEdge" >
+                  <OperatorDim op="Add">
+                     <ImageDim name="TaharezLook/StaticTop" dimension="Height" />
+                     <AbsoluteDim value="1" />
+                  </OperatorDim>
+               </Dim>
+               <Dim type="RightEdge" >
+                  <OperatorDim op="Subtract">
+                     <UnifiedDim scale="1" type="RightEdge" />
+                     <OperatorDim op="Add">
+                        <AbsoluteDim value="2" />
+                        <ImageDim name="TaharezLook/StaticRight" dimension="Width" />
+                     </OperatorDim>
+                  </OperatorDim>
+               </Dim>
+               <Dim type="BottomEdge" >
+                  <OperatorDim op="Subtract">
+                     <UnifiedDim scale="1" type="BottomEdge" />
+                     <OperatorDim op="Add">
+                        <AbsoluteDim value="1" />
+                        <ImageDim name="TaharezLook/StaticBottom" dimension="Height" />
+                     </OperatorDim>
+                  </OperatorDim>
+               </Dim>
             </Area>
-            <VertAlignment type="CentreAligned" />
+            <VertAlignment type="TopAligned" />
         </Child>
         <StateImagery name="Enabled" />
         <StateImagery name="Disabled" />
@@ -4689,28 +4995,28 @@
     ***************************************************
     -->
     <WidgetLook name="TaharezLook/DragImage">
-       <Property name="Size" value="{{0, 128}, {0, 128}}" />
+      <Property name="Size" value="{{0, 52}, {0, 52}}" />
       <Property name="MouseCursorImage" value="TaharezLook/MouseDrag" />
-       <Property name="MouseInputPropagationEnabled" value="True" />
-       <Child type ="TaharezLook/StaticImage" nameSuffix="__auto__image">
-          <Property name="BackgroundEnabled" value="False" />
-          <Property name="FrameEnabled" value="False" />
-          <Property name="MousePassThroughEnabled" value="True" />
-          <Property name="VertFormatting" value="Stretched" redrawOnWrite="true" type="VerticalFormatting"/>
-          <Property name="HorzFormatting" value="Stretched" redrawOnWrite="true" type="HorizontalFormatting"/>
-          <Property name="TopLeftCorner" value="TaharezLook/StaticItemTopLeft" />
-          <Property name="TopRightCorner" value="TaharezLook/StaticItemTopRight" />
-          <Property name="BottomLeftCorner" value="TaharezLook/StaticItemBottomLeft" />
-          <Property name="BottomRightCorner" value="TaharezLook/StaticItemBottomRight" />
-          <Property name="LeftEdge" value="TaharezLook/StaticItemLeft" />
-          <Property name="RightEdge" value="TaharezLook/StaticItemRight" />
-          <Property name="TopEdge" value="TaharezLook/StaticItemTop" />
-          <Property name="BottomEdge" value="TaharezLook/StaticItemBottom" />
-          <Property name="Backdrop" value="TaharezLook/StaticItemBackdrop" />
-       </Child>
-       <StateImagery name="Enabled" />    
-       <StateImagery name="Disabled" />
-    </WidgetLook>
+      <Property name="MouseInputPropagationEnabled" value="True" />
+      <Child type ="TaharezLook/StaticImage" nameSuffix="__auto__image">
+         <Property name="BackgroundEnabled" value="False" />
+         <Property name="FrameEnabled" value="False" />
+         <Property name="MousePassThroughEnabled" value="True" />
+         <Property name="VertFormatting" value="Stretched" redrawOnWrite="true" type="VerticalFormatting"/>
+         <Property name="HorzFormatting" value="Stretched" redrawOnWrite="true" type="HorizontalFormatting"/>
+         <Property name="TopLeftCorner" value="TaharezLook/StaticItemTopLeft" />
+         <Property name="TopRightCorner" value="TaharezLook/StaticItemTopRight" />
+         <Property name="BottomLeftCorner" value="TaharezLook/StaticItemBottomLeft" />
+         <Property name="BottomRightCorner" value="TaharezLook/StaticItemBottomRight" />
+         <Property name="LeftEdge" value="TaharezLook/StaticItemLeft" />
+         <Property name="RightEdge" value="TaharezLook/StaticItemRight" />
+         <Property name="TopEdge" value="TaharezLook/StaticItemTop" />
+         <Property name="BottomEdge" value="TaharezLook/StaticItemBottom" />
+         <Property name="Backdrop" value="TaharezLook/StaticItemBackdrop" />
+      </Child>
+      <StateImagery name="Enabled" />    
+      <StateImagery name="Disabled" />
+   </WidgetLook>
    
    <!--
    /**********************************************************************************************************
@@ -6952,22 +7258,26 @@
     ***************************************************
     -->
     <WidgetLook name="TaharezLook/MiniButton">
-        <PropertyDefinition name="NormalTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" type="ColourRect"/>
-        <PropertyDefinition name="HoverTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" type="ColourRect"/>
-        <PropertyDefinition name="PushedTextColour" initialValue="FFFFFFFF" redrawOnWrite="true" type="ColourRect"/>
-        <PropertyDefinition name="DisabledTextColour" initialValue="FF7F7F7F" redrawOnWrite="true" type="ColourRect"/>
+        <PropertyDefinition name="NormalTextColour" initialValue="tl:FFFFFFFF tr:FFFFFFFF bl:CCFFFFFF br:CCFFFFFF" redrawOnWrite="true" type="ColourRect"/>
+        <PropertyDefinition name="HoverTextColour" initialValue="tl:FFFFFFFF tr:FFFFFFFF bl:FFFFFFFF br:FFFFFFFF" redrawOnWrite="true" type="ColourRect"/>
+        <PropertyDefinition name="PushedTextColour" initialValue="tl:CCFFFFFF tr:CCFFFFFF bl:CCFFFFFF br:CCFFFFFF" redrawOnWrite="true" type="ColourRect"/>
+        <PropertyDefinition name="DisabledTextColour" initialValue="tl:FF7F7F7F tr:FF7F7F7F bl:FF7F7F7F br:FF7F7F7F" redrawOnWrite="true" type="ColourRect"/>
         <PropertyDefinition name="VertLabelFormatting" initialValue="CentreAligned" type="VerticalTextFormatting"/>
         <PropertyDefinition name="HorzLabelFormatting" initialValue="CentreAligned" type="HorizontalTextFormatting"/>
         <PropertyDefinition name="NormalImage" initialValue="" redrawOnWrite="true"  type="Image"/>
         <PropertyDefinition name="HoverImage" initialValue="" redrawOnWrite="true" type="Image"/>
         <PropertyDefinition name="PushedImage" initialValue="" redrawOnWrite="true" type="Image"/>
         <PropertyDefinition name="DisabledImage" initialValue="" redrawOnWrite="true" type="Image"/>
+        <PropertyDefinition name="NormalFont" initialValue="Xolonium-6-Bold" redrawOnWrite="true" type="Font"/>
+        <PropertyDefinition name="HoverFont" initialValue="Xolonium-6-Bold" redrawOnWrite="true" type="Font"/>
+        <PropertyDefinition name="PushedFont" initialValue="Xolonium-5-Bold" redrawOnWrite="true" type="Font"/>
+        <PropertyDefinition name="DisabledFont" initialValue="Xolonium-6-Bold" redrawOnWrite="true" type="Font"/>
         <PropertyDefinition name="VertImageFormatting" initialValue="Stretched" redrawOnWrite="true" type="VerticalFormatting" />
         <PropertyDefinition name="HorzImageFormatting" initialValue="Stretched" redrawOnWrite="true" type="HorizontalFormatting" />  
         <Property name="Size" value="{{0, 96}, {0, 17}}" />
         <Property name="Font" value="Xolonium-6-Bold" />
-      <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
-        <ImagerySection name="label">
+        <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
+        <ImagerySection name="labelnormal">
             <TextComponent>
                 <Area>
                     <Dim type="LeftEdge" >
@@ -6980,6 +7290,61 @@
                         </OperatorDim>
                     </Dim>
                 </Area>
+                <FontProperty name="NormalFont" />
+                <VertFormatProperty name="VertLabelFormatting" />
+                <HorzFormatProperty name="HorzLabelFormatting" />
+            </TextComponent>
+        </ImagerySection>
+        <ImagerySection name="labelhover">
+            <TextComponent>
+                <Area>
+                    <Dim type="LeftEdge" >
+                        <AbsoluteDim value="5" />
+                    </Dim>
+                    <Dim type="RightEdge" >
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Width" />
+                            <AbsoluteDim value="5" />
+                        </OperatorDim>
+                    </Dim>
+                </Area>
+                <FontProperty name="HoverFont" />
+                <VertFormatProperty name="VertLabelFormatting" />
+                <HorzFormatProperty name="HorzLabelFormatting" />
+            </TextComponent>
+        </ImagerySection>
+        <ImagerySection name="labelpushed">
+            <TextComponent>
+                <Area>
+                    <Dim type="LeftEdge" >
+                        <AbsoluteDim value="5" />
+                    </Dim>
+                    <Dim type="RightEdge" >
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Width" />
+                            <AbsoluteDim value="5" />
+                        </OperatorDim>
+                    </Dim>
+                </Area>
+                <FontProperty name="PushedFont" />
+                <VertFormatProperty name="VertLabelFormatting" />
+                <HorzFormatProperty name="HorzLabelFormatting" />
+            </TextComponent>
+        </ImagerySection>
+        <ImagerySection name="labeldisabled">
+            <TextComponent>
+                <Area>
+                    <Dim type="LeftEdge" >
+                        <AbsoluteDim value="5" />
+                    </Dim>
+                    <Dim type="RightEdge" >
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Width" />
+                            <AbsoluteDim value="5" />
+                        </OperatorDim>
+                    </Dim>
+                </Area>
+                <FontProperty name="DisabledFont" />
                 <VertFormatProperty name="VertLabelFormatting" />
                 <HorzFormatProperty name="HorzLabelFormatting" />
             </TextComponent>
@@ -7035,41 +7400,39 @@
         <StateImagery name="Normal">
             <Layer>
                 <Section section="normal" />
-                <Section section="label">
-                  <Colours topLeft="FFFFFFFF" topRight="FFFFFFFF" bottomLeft="CCFFFFFF" bottomRight="CCFFFFFF" />
+                <Section section="labelnormal">
+                    <ColourProperty name="NormalTextColour" />
                 </Section>
             </Layer>
         </StateImagery>
         <StateImagery name="Hover">
             <Layer>
                 <Section section="hover" />
-                <Section section="label">
-                  <Colours topLeft="FFFFFFFF" topRight="FFFFFFFF" bottomLeft="FFFFFFFF" bottomRight="FFFFFFFF" />
+                <Section section="labelhover">
+                    <ColourProperty name="HoverTextColour" />
                 </Section>
             </Layer>
         </StateImagery>
         <StateImagery name="Pushed">
             <Layer>
                 <Section section="pushed" />
-                <Section section="label">
-                  <Colours topLeft="CCFFFFFF" topRight="CCFFFFFF" bottomLeft="CCFFFFFF" bottomRight="CCFFFFFF" />
+                <Section section="labelpushed">
+                    <ColourProperty name="PushedTextColour" />
                 </Section>
             </Layer>
         </StateImagery>
         <StateImagery name="PushedOff">
             <Layer>
                 <Section section="hover" />
-                <Section section="label">
+                <Section section="labelhover">
                     <ColourProperty name="HoverTextColour" />
                 </Section>
             </Layer>
         </StateImagery>
         <StateImagery name="Disabled">
             <Layer>
-                <Section section="disabled">
-                    <Colours topLeft="FF7F7F7F" topRight="FF7F7F7F" bottomLeft="FF7F7F7F" bottomRight="FF7F7F7F" />
-                </Section>
-                <Section section="label">
+                <Section section="disabled" />
+                <Section section="labeldisabled">
                     <ColourProperty name="DisabledTextColour" />
                 </Section>
             </Layer>
