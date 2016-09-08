@@ -222,7 +222,7 @@ namespace Meridian59 { namespace Ogre
 	protected:
 		ActionButtonType GetButtonType(::System::String^ ButtonType);
 
-		void ReadUILayout(::CEGUI::URect* Layout, XmlNode^ Node);
+		void ReadUILayout(::CEGUI::URect* Layout, XmlNode^ Node, bool DoSize);
 
 	public:
 		int Display;
@@ -250,21 +250,21 @@ namespace Meridian59 { namespace Ogre
 		int KeyRotateSpeed;
 		bool InvertMouseY;
 
-      bool UIVisibilityAvatar;
-      bool UIVisibilityTarget;
-      bool UIVisibilityMiniMap;
-      bool UIVisibilityRoomEnchantments;
-      bool UIVisibilityChat;
-      bool UIVisibilityInventory;
-      bool UIVisibilitySpells;
-      bool UIVisibilitySkills;
-      bool UIVisibilityActions;
-      bool UIVisibilityAttributes;
-      bool UIVisibilityMainButtonsLeft;
-      bool UIVisibilityMainButtonsRight;
-      bool UIVisibilityActionButtons;
-      bool UIVisibilityOnlinePlayers;
-      bool UIVisibilityRoomObjects;
+		bool UIVisibilityAvatar;
+		bool UIVisibilityTarget;
+		bool UIVisibilityMiniMap;
+		bool UIVisibilityRoomEnchantments;
+		bool UIVisibilityChat;
+		bool UIVisibilityInventory;
+		bool UIVisibilitySpells;
+		bool UIVisibilitySkills;
+		bool UIVisibilityActions;
+		bool UIVisibilityAttributes;
+		bool UIVisibilityMainButtonsLeft;
+		bool UIVisibilityMainButtonsRight;
+		bool UIVisibilityActionButtons;
+		bool UIVisibilityOnlinePlayers;
+		bool UIVisibilityRoomObjects;
 
 		::CEGUI::URect* UILayoutAvatar;
 		::CEGUI::URect* UILayoutTarget;

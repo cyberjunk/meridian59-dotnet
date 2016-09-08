@@ -98,7 +98,7 @@ namespace Meridian59 { namespace Ogre
 		Config::InitPastConfig();
 	};
 
-	void OgreClientConfig::ReadUILayout(::CEGUI::URect* Layout, XmlNode^ Node)
+	void OgreClientConfig::ReadUILayout(::CEGUI::URect* Layout, XmlNode^ Node, bool DoSize)
 	{
 		if (!Layout || !Node)
 			return;
@@ -108,35 +108,43 @@ namespace Meridian59 { namespace Ogre
 			!Node->Attributes[XMLATTRIB_XABS] ||
 			!Node->Attributes[XMLATTRIB_YREL] ||
 			!Node->Attributes[XMLATTRIB_YABS] ||
-			!Node->Attributes[XMLATTRIB_WREL] || 
-			!Node->Attributes[XMLATTRIB_WABS] ||
-			!Node->Attributes[XMLATTRIB_HREL] ||
-			!Node->Attributes[XMLATTRIB_HABS])
+			(!Node->Attributes[XMLATTRIB_WREL] && DoSize) ||
+			(!Node->Attributes[XMLATTRIB_WABS] && DoSize) ||
+			(!Node->Attributes[XMLATTRIB_HREL] && DoSize) ||
+			(!Node->Attributes[XMLATTRIB_HABS] && DoSize))
 			return;
 		
 		float xrel, xabs, yrel, yabs;
-		float wrel, wabs, hrel, habs;
-
+		
+		// position
 		// must all be parsable or we keep default
 		if (!::System::Single::TryParse(Node->Attributes[XMLATTRIB_XREL]->Value, ::System::Globalization::NumberStyles::Float, Config::NumberFormatInfo, xrel) ||
 			!::System::Single::TryParse(Node->Attributes[XMLATTRIB_XABS]->Value, ::System::Globalization::NumberStyles::Float, Config::NumberFormatInfo, xabs) ||
 			!::System::Single::TryParse(Node->Attributes[XMLATTRIB_YREL]->Value, ::System::Globalization::NumberStyles::Float, Config::NumberFormatInfo, yrel) ||
-			!::System::Single::TryParse(Node->Attributes[XMLATTRIB_YABS]->Value, ::System::Globalization::NumberStyles::Float, Config::NumberFormatInfo, yabs) ||
-			!::System::Single::TryParse(Node->Attributes[XMLATTRIB_WREL]->Value, ::System::Globalization::NumberStyles::Float, Config::NumberFormatInfo, wrel) ||
-			!::System::Single::TryParse(Node->Attributes[XMLATTRIB_WABS]->Value, ::System::Globalization::NumberStyles::Float, Config::NumberFormatInfo, wabs) ||
-			!::System::Single::TryParse(Node->Attributes[XMLATTRIB_HREL]->Value, ::System::Globalization::NumberStyles::Float, Config::NumberFormatInfo, hrel) ||
-			!::System::Single::TryParse(Node->Attributes[XMLATTRIB_HABS]->Value, ::System::Globalization::NumberStyles::Float, Config::NumberFormatInfo, habs))
+			!::System::Single::TryParse(Node->Attributes[XMLATTRIB_YABS]->Value, ::System::Globalization::NumberStyles::Float, Config::NumberFormatInfo, yabs))
 			return;
 
 		// set position
 		Layout->setPosition(::CEGUI::Vector2<::CEGUI::UDim>(
 			::CEGUI::UDim(xrel, xabs),
 			::CEGUI::UDim(yrel, yabs)));
-		
-		// set size
-		Layout->setSize(::CEGUI::Size<::CEGUI::UDim>(
-			::CEGUI::UDim(wrel, wabs),
-			::CEGUI::UDim(hrel, habs)));
+
+		// size
+		if (DoSize)
+		{
+			float wrel, wabs, hrel, habs;
+
+			if (!::System::Single::TryParse(Node->Attributes[XMLATTRIB_WREL]->Value, ::System::Globalization::NumberStyles::Float, Config::NumberFormatInfo, wrel) ||
+				!::System::Single::TryParse(Node->Attributes[XMLATTRIB_WABS]->Value, ::System::Globalization::NumberStyles::Float, Config::NumberFormatInfo, wabs) ||
+				!::System::Single::TryParse(Node->Attributes[XMLATTRIB_HREL]->Value, ::System::Globalization::NumberStyles::Float, Config::NumberFormatInfo, hrel) ||
+				!::System::Single::TryParse(Node->Attributes[XMLATTRIB_HABS]->Value, ::System::Globalization::NumberStyles::Float, Config::NumberFormatInfo, habs))
+				return;
+
+			// set size
+			Layout->setSize(::CEGUI::Size<::CEGUI::UDim>(
+				::CEGUI::UDim(wrel, wabs),
+				::CEGUI::UDim(hrel, habs)));
+		}
 	};
 
 	void OgreClientConfig::ReadXml(::System::Xml::XmlDocument^ Document)
@@ -239,7 +247,7 @@ namespace Meridian59 { namespace Ogre
 
 		// avatar
 		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_AVATAR);
-		ReadUILayout(UILayoutAvatar, node);
+		ReadUILayout(UILayoutAvatar, node, false);
 
 		// avatar visibility
 		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_AVATARVISIBILITY);
@@ -247,7 +255,7 @@ namespace Meridian59 { namespace Ogre
 
 		// target
 		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_TARGET);
-		ReadUILayout(UILayoutTarget, node);
+		ReadUILayout(UILayoutTarget, node, false);
 
 		// target visibility
 		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_TARGETVISIBILITY);
@@ -255,7 +263,7 @@ namespace Meridian59 { namespace Ogre
 
 		// minimap
 		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_MINIMAP);
-		ReadUILayout(UILayoutMinimap, node);
+		ReadUILayout(UILayoutMinimap, node, true);
 
 		// minimap visibility
 		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_MINIMAPVISIBILITY);
@@ -263,7 +271,7 @@ namespace Meridian59 { namespace Ogre
 
 		// roomenchantments
 		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_ROOMENCHANTMENTS);
-		ReadUILayout(UILayoutRoomEnchantments, node);
+		ReadUILayout(UILayoutRoomEnchantments, node, false);
 
 		// roomenchantments visibility
 		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_ROOMENCHANTMENTSVISIBILITY);
@@ -271,7 +279,7 @@ namespace Meridian59 { namespace Ogre
 
 		// chat
 		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_CHAT);
-		ReadUILayout(UILayoutChat, node);
+		ReadUILayout(UILayoutChat, node, true);
 
 		// chat visibility
 		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_CHATVISIBILITY);
@@ -279,7 +287,7 @@ namespace Meridian59 { namespace Ogre
 
 		// inventory
 		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_INVENTORY);
-		ReadUILayout(UILayoutInventory, node);
+		ReadUILayout(UILayoutInventory, node, true);
 
 		// inventory visibility
 		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_INVENTORYVISIBILITY);
@@ -287,7 +295,7 @@ namespace Meridian59 { namespace Ogre
 
 		// spells
 		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_SPELLS);
-		ReadUILayout(UILayoutSpells, node);
+		ReadUILayout(UILayoutSpells, node, true);
 
 		// spells visibility
 		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_SPELLSVISIBILITY);
@@ -295,7 +303,7 @@ namespace Meridian59 { namespace Ogre
 
 		// skills
 		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_SKILLS);
-		ReadUILayout(UILayoutSkills, node);
+		ReadUILayout(UILayoutSkills, node, true);
 
 		// skills visibility
 		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_SKILLSVISIBILITY);
@@ -303,7 +311,7 @@ namespace Meridian59 { namespace Ogre
 
 		// actions
 		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_ACTIONS);
-		ReadUILayout(UILayoutActions, node);
+		ReadUILayout(UILayoutActions, node, true);
 
 		// actions visibility
 		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_ACTIONSVISIBILITY);
@@ -311,7 +319,7 @@ namespace Meridian59 { namespace Ogre
 
 		// attributes
 		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_ATTRIBUTES);
-		ReadUILayout(UILayoutAttributes, node);
+		ReadUILayout(UILayoutAttributes, node, true);
 
 		// attributes visibility
 		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_ATTRIBUTESVISIBILITY);
@@ -319,7 +327,7 @@ namespace Meridian59 { namespace Ogre
 
 		// mainbuttonsleft
 		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_MAINBUTTONSLEFT);
-		ReadUILayout(UILayoutMainButtonsLeft, node);
+		ReadUILayout(UILayoutMainButtonsLeft, node, false);
 
 		// mainbuttonsleft visibility
 		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_MAINBUTTONSLEFTVISIBILITY);
@@ -327,7 +335,7 @@ namespace Meridian59 { namespace Ogre
 
 		// mainbuttonsright
 		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_MAINBUTTONSRIGHT);
-		ReadUILayout(UILayoutMainButtonsRight, node);
+		ReadUILayout(UILayoutMainButtonsRight, node, false);
 
 		// mainbuttonsright visibility
 		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_MAINBUTTONSRIGHTVISIBILITY);
@@ -335,7 +343,7 @@ namespace Meridian59 { namespace Ogre
 
 		// actionbuttons
 		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_ACTIONBUTTONGRID);
-		ReadUILayout(UILayoutActionButtons, node);
+		ReadUILayout(UILayoutActionButtons, node, false);
 
 		// actionbuttons visibility
 		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_ACTIONBUTTONGRID);
@@ -343,7 +351,7 @@ namespace Meridian59 { namespace Ogre
 
 		// onlineplayers
 		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_ONLINEPLAYERS);
-		ReadUILayout(UILayoutOnlinePlayers, node);
+		ReadUILayout(UILayoutOnlinePlayers, node, true);
 
 		// onlineplayers visibility
 		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_ONLINEPLAYERSVISIBILITY);
@@ -351,7 +359,7 @@ namespace Meridian59 { namespace Ogre
 
 		// roomobjects
 		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_ROOMOBJECTS);
-		ReadUILayout(UILayoutRoomObjects, node);
+		ReadUILayout(UILayoutRoomObjects, node, true);
 
 		// roomobjects visibility
 		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_ROOMOBJECTSVISIBILITY);
