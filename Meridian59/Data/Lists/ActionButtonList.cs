@@ -106,25 +106,25 @@ namespace Meridian59.Data.Lists
                 ActionButtonList buttons = new ActionButtonList();
                 buttons.PlayerName = "Default";
 
-                buttons.Add(new ActionButtonConfig(0, ActionButtonType.Unset, String.Empty));
-                buttons.Add(new ActionButtonConfig(1, ActionButtonType.Unset, String.Empty));
-                buttons.Add(new ActionButtonConfig(2, ActionButtonType.Unset, String.Empty));
+                buttons.Add(new ActionButtonConfig(0, ActionButtonType.Action, AvatarAction.Activate.ToString().ToLower()));
+                buttons.Add(new ActionButtonConfig(1, ActionButtonType.Action, AvatarAction.Attack.ToString().ToLower()));
+                buttons.Add(new ActionButtonConfig(2, ActionButtonType.Action, AvatarAction.Rest.ToString().ToLower()));
                 buttons.Add(new ActionButtonConfig(3, ActionButtonType.Unset, String.Empty));
                 buttons.Add(new ActionButtonConfig(4, ActionButtonType.Unset, String.Empty));
-                buttons.Add(new ActionButtonConfig(5, ActionButtonType.Unset, String.Empty));
+                buttons.Add(new ActionButtonConfig(5, ActionButtonType.Action, AvatarAction.Loot.ToString().ToLower()));
                 buttons.Add(new ActionButtonConfig(6, ActionButtonType.Unset, String.Empty));
                 buttons.Add(new ActionButtonConfig(7, ActionButtonType.Unset, String.Empty));
                 buttons.Add(new ActionButtonConfig(8, ActionButtonType.Unset, String.Empty));
                 buttons.Add(new ActionButtonConfig(9, ActionButtonType.Unset, String.Empty));
                 buttons.Add(new ActionButtonConfig(10, ActionButtonType.Unset, String.Empty));
                 buttons.Add(new ActionButtonConfig(11, ActionButtonType.Unset, String.Empty));
-                buttons.Add(new ActionButtonConfig(12, ActionButtonType.Action, AvatarAction.Attack.ToString().ToLower()));
-                buttons.Add(new ActionButtonConfig(13, ActionButtonType.Action, AvatarAction.Rest.ToString().ToLower()));
-                buttons.Add(new ActionButtonConfig(14, ActionButtonType.Action, AvatarAction.Loot.ToString().ToLower()));
-                buttons.Add(new ActionButtonConfig(15, ActionButtonType.Action, AvatarAction.Inspect.ToString().ToLower()));
-                buttons.Add(new ActionButtonConfig(16, ActionButtonType.Action, AvatarAction.Activate.ToString().ToLower()));
-                buttons.Add(new ActionButtonConfig(17, ActionButtonType.Action, AvatarAction.Buy.ToString().ToLower()));
-                buttons.Add(new ActionButtonConfig(18, ActionButtonType.Action, AvatarAction.Trade.ToString().ToLower()));
+                buttons.Add(new ActionButtonConfig(12, ActionButtonType.Unset, String.Empty));
+                buttons.Add(new ActionButtonConfig(13, ActionButtonType.Unset, String.Empty));
+                buttons.Add(new ActionButtonConfig(14, ActionButtonType.Unset, String.Empty));
+                buttons.Add(new ActionButtonConfig(15, ActionButtonType.Unset, String.Empty));
+                buttons.Add(new ActionButtonConfig(16, ActionButtonType.Action, AvatarAction.Buy.ToString().ToLower()));
+                buttons.Add(new ActionButtonConfig(17, ActionButtonType.Action, AvatarAction.Trade.ToString().ToLower()));
+                buttons.Add(new ActionButtonConfig(18, ActionButtonType.Unset, String.Empty));
                 buttons.Add(new ActionButtonConfig(19, ActionButtonType.Unset, String.Empty));
                 buttons.Add(new ActionButtonConfig(20, ActionButtonType.Unset, String.Empty));
                 buttons.Add(new ActionButtonConfig(21, ActionButtonType.Unset, String.Empty));
@@ -153,7 +153,7 @@ namespace Meridian59.Data.Lists
                 buttons.Add(new ActionButtonConfig(44, ActionButtonType.Unset, String.Empty));
                 buttons.Add(new ActionButtonConfig(45, ActionButtonType.Unset, String.Empty));
                 buttons.Add(new ActionButtonConfig(46, ActionButtonType.Unset, String.Empty));
-                buttons.Add(new ActionButtonConfig(47, ActionButtonType.Unset, String.Empty));
+                buttons.Add(new ActionButtonConfig(47, ActionButtonType.Action, AvatarAction.Inspect.ToString().ToLower()));
 
                 return buttons;
             }
