@@ -80,7 +80,7 @@
       </Window>
       
       <!-- Welcome -->
-      <Window type="TaharezLook/FrameWindow" name="Welcome" >
+      <Window type="TaharezLook/FrameWindowOrnamental" name="Welcome" >
          <Property name="TitlebarEnabled" value="False" />
          <Property name="CloseButtonEnabled" value="False" />
          <Property name="Text" value="Welcome!" />
@@ -1913,7 +1913,7 @@
       </Window>
       
       <!-- LoginWindow -->
-      <Window type="TaharezLook/FrameWindow" name="Login" >
+      <Window type="TaharezLook/FrameWindowOrnamental" name="Login" >
          <Property name="TitlebarEnabled" value="False" />
          <Property name="CloseButtonEnabled" value="False" />
          <Property name="Text" value="Login" />
@@ -1922,7 +1922,7 @@
          <Property name="MinSize" value="{{0,360},{0,260}}" />
          <Property name="MaxSize" value="{{0,360},{0,260}}" />
          <Property name="SizingEnabled" value="FALSE" />
-         <Property name="Position" value="{{0.5,-180},{0.3,0}}" />
+         <Property name="Position" value="{{0.5,-180},{0.4,-130}}" />
 
          <Window type="TaharezLook/LabelWhite" name="Login.Title" >
             <Property name="Text" value="LOGIN" />
