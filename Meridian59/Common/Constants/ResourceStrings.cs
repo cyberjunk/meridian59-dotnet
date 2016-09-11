@@ -304,6 +304,7 @@ namespace Meridian59.Common.Constants
                 public const string EAGLEEYES       = "eagle eyes";
                 public const string FREEACTION      = "free action";
                 public const string ANTIMAGICAURA   = "anti-magic aura";
+                public const string CONVEYANCE      = "conveyance";
 
                 public static bool Is(string Value)
                 {
@@ -318,12 +319,20 @@ namespace Meridian59.Common.Constants
                         string.Equals(Value, MAGICSHIELD) ||
                         string.Equals(Value, EAGLEEYES) ||
                         string.Equals(Value, FREEACTION) ||
-                        string.Equals(Value, ANTIMAGICAURA));
+                        string.Equals(Value, ANTIMAGICAURA) ||
+                        string.Equals(Value, CONVEYANCE));
                 }
             }
 
             public static class Faren
             {
+                public const string MEDITATE        = "meditate";
+
+                public static bool Is(string Value)
+                {
+                    return (Value != null) && (
+                        string.Equals(Value, MEDITATE));
+                }
             }
 
             public static class Riija
@@ -331,13 +340,15 @@ namespace Meridian59.Common.Constants
                 public const string SHADOWFORM  = "shadowform";
                 public const string ELUSION     = "elusion";
                 public const string BLINK       = "blink";
+                public const string PHASE       = "phase";
 
                 public static bool Is(string Value)
                 {
                     return (Value != null) && (
                         string.Equals(Value, SHADOWFORM) ||
                         string.Equals(Value, ELUSION) ||
-                        string.Equals(Value, BLINK));
+                        string.Equals(Value, BLINK) ||
+                        string.Equals(Value, PHASE));
                 }
             }
 

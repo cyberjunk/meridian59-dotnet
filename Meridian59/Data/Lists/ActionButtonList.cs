@@ -109,8 +109,8 @@ namespace Meridian59.Data.Lists
                 buttons.Add(new ActionButtonConfig(0, ActionButtonType.Action, AvatarAction.Activate.ToString().ToLower()));
                 buttons.Add(new ActionButtonConfig(1, ActionButtonType.Action, AvatarAction.Attack.ToString().ToLower()));
                 buttons.Add(new ActionButtonConfig(2, ActionButtonType.Action, AvatarAction.Rest.ToString().ToLower()));
-                buttons.Add(new ActionButtonConfig(3, ActionButtonType.Unset, String.Empty));
-                buttons.Add(new ActionButtonConfig(4, ActionButtonType.Unset, String.Empty));
+                buttons.Add(new ActionButtonConfig(3, ActionButtonType.Spell, Common.Constants.ResourceStrings.Spells.Faren.MEDITATE));
+                buttons.Add(new ActionButtonConfig(4, ActionButtonType.Spell, Common.Constants.ResourceStrings.Spells.Kraanan.CONVEYANCE));
                 buttons.Add(new ActionButtonConfig(5, ActionButtonType.Action, AvatarAction.Loot.ToString().ToLower()));
                 buttons.Add(new ActionButtonConfig(6, ActionButtonType.Unset, String.Empty));
                 buttons.Add(new ActionButtonConfig(7, ActionButtonType.Unset, String.Empty));
@@ -151,8 +151,8 @@ namespace Meridian59.Data.Lists
                 buttons.Add(new ActionButtonConfig(42, ActionButtonType.Unset, String.Empty));
                 buttons.Add(new ActionButtonConfig(43, ActionButtonType.Unset, String.Empty));
                 buttons.Add(new ActionButtonConfig(44, ActionButtonType.Unset, String.Empty));
-                buttons.Add(new ActionButtonConfig(45, ActionButtonType.Unset, String.Empty));
-                buttons.Add(new ActionButtonConfig(46, ActionButtonType.Unset, String.Empty));
+                buttons.Add(new ActionButtonConfig(45, ActionButtonType.Spell, Common.Constants.ResourceStrings.Spells.Riija.BLINK));
+                buttons.Add(new ActionButtonConfig(46, ActionButtonType.Spell, Common.Constants.ResourceStrings.Spells.Riija.PHASE));
                 buttons.Add(new ActionButtonConfig(47, ActionButtonType.Action, AvatarAction.Inspect.ToString().ToLower()));
 
                 return buttons;
