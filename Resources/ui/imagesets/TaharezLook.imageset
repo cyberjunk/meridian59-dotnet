@@ -348,5 +348,15 @@
    <Image height="20" name="OptionsHover" width="20" xPos="170" yPos="380" />
    <Image height="20" name="OptionsPushed" width="20" xPos="150" yPos="400" />
    <Image height="20" name="OptionsDisabled" width="20" xPos="170" yPos="400" />
-   
+   <Image height="45" name="OrnamentalWindowTopLeft" width="45" xPos="660" yPos="410" />
+   <Image height="10" name="OrnamentalWindowTopEdge" width="10" xPos="705" yPos="410" />
+   <Image height="45" name="OrnamentalWindowTopRight" width="45" xPos="715" yPos="410" />
+   <Image height="10" name="OrnamentalWindowLeftEdge" width="10" xPos="660" yPos="455" />
+   <Image height="100" name="OrnamentalWindowBackdrop" width="100" xPos="660" yPos="300" />
+   <Image height="10" name="OrnamentalWindowRightEdge" width="10" xPos="750" yPos="455" />
+   <Image height="45" name="OrnamentalWindowBottomLeft" width="45" xPos="660" yPos="465" />
+   <Image height="10" name="OrnamentalWindowBottomEdge" width="10" xPos="705" yPos="500" />
+   <Image height="45" name="OrnamentalWindowBottomRight" width="45" xPos="715" yPos="465" />
+   <Image height="10" name="OrnamentalWindowOrnament" width="60" xPos="680" yPos="455" />
+
 </Imageset>

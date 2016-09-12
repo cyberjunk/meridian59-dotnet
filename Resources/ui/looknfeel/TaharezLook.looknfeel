@@ -955,7 +955,7 @@
                 <Dim type="TopEdge" >
                     <OperatorDim op="Add">
                         <WidgetDim widget="__auto_titlebar__" dimension="BottomEdge" />
-                        <ImageDim name="TaharezLook/WindowBottomEdge" dimension="Height" />
+                        <ImageDim name="TaharezLook/WindowTopEdge" dimension="Height" />
                     </OperatorDim>
                 </Dim>
                 <Dim type="RightEdge" >
@@ -7434,6 +7434,282 @@
                 <Section section="disabled" />
                 <Section section="labeldisabled">
                     <ColourProperty name="DisabledTextColour" />
+                </Section>
+            </Layer>
+        </StateImagery>
+    </WidgetLook>
+
+    <!--
+    ***************************************************
+        TaharezLook/FrameWindowOrnamental
+    ***************************************************
+    -->
+    <WidgetLook name="TaharezLook/FrameWindowOrnamental">
+        <PropertyLinkDefinition name="TitlebarFont" widget="__auto_titlebar__" targetProperty="Font" initialValue="Berenika-8-Bold" type="Font"/>
+        <PropertyLinkDefinition name="TitlebarBackgroundColours" widget="__auto_titlebar__" targetProperty="BackgroundColours" initialValue="tl:FFFFFFFF tr:FFFFFFFF bl:FFFFFFFF br:FFFFFFFF" type="ColourRect"/>
+        <Property name="NSSizingCursorImage" value="TaharezLook/MouseNoSoCursor" />
+        <Property name="EWSizingCursorImage" value="TaharezLook/MouseEsWeCursor" />
+        <Property name="NWSESizingCursorImage" value="TaharezLook/MouseNwSeCursor" />
+        <Property name="NESWSizingCursorImage" value="TaharezLook/MouseNeSwCursor" />
+        <Property name="MinSize" value="{{0,192},{0.1,0}}" />
+        <Property name="AutoRenderingSurface" value="True" />
+        <Property name="Size" value="{{0.3, 0}, {0.3, 0}}" />
+        <Property name="RollUpEnabled" value="False" />
+        <Property name="SizingBorderThickness" value="8.0" />
+        <Property name="TitlebarEnabled" value="True" />
+        <NamedArea name="ClientWithTitleWithFrame">
+            <Area>
+                <Dim type="LeftEdge" ><ImageDim name="TaharezLook/OrnamentalWindowLeftEdge" dimension="Width" /></Dim>
+                <Dim type="TopEdge" >
+                    <OperatorDim op="Add">
+                        <WidgetDim widget="__auto_titlebar__" dimension="BottomEdge" />
+                        <ImageDim name="TaharezLook/OrnamentalWindowTopEdge" dimension="Height" />
+                    </OperatorDim>
+                </Dim>
+                <Dim type="RightEdge" >
+                    <OperatorDim op="Subtract">
+                        <UnifiedDim scale="1" type="RightEdge" />
+                        <ImageDim name="TaharezLook/OrnamentalWindowRightEdge" dimension="Width" />
+                    </OperatorDim>
+                </Dim>
+                <Dim type="BottomEdge" >
+                    <OperatorDim op="Subtract">
+                        <UnifiedDim scale="1" type="BottomEdge" />
+                        <ImageDim name="TaharezLook/OrnamentalWindowBottomEdge" dimension="Height" />
+                    </OperatorDim>
+                </Dim>
+            </Area>
+        </NamedArea>
+        <NamedArea name="ClientWithTitleNoFrame">
+            <Area>
+                <Dim type="LeftEdge" ><AbsoluteDim value="0" /></Dim>
+                <Dim type="TopEdge" ><WidgetDim widget="__auto_titlebar__" dimension="BottomEdge" /></Dim>
+                <Dim type="Width" ><UnifiedDim scale="1" type="Width" /></Dim>
+                <Dim type="BottomEdge" ><WidgetDim dimension="BottomEdge" /></Dim>
+            </Area>
+        </NamedArea>
+        <NamedArea name="ClientNoTitleWithFrame">
+            <Area>
+                <Dim type="LeftEdge" ><ImageDim name="TaharezLook/OrnamentalWindowLeftEdge" dimension="Width" /></Dim>
+                <Dim type="TopEdge" ><ImageDim name="TaharezLook/OrnamentalWindowTopEdge" dimension="Height" /></Dim>
+                <Dim type="RightEdge" >
+                    <OperatorDim op="Subtract">
+                        <UnifiedDim scale="1" type="RightEdge" />
+                        <ImageDim name="TaharezLook/OrnamentalWindowRightEdge" dimension="Width" />
+                    </OperatorDim>
+                </Dim>
+                <Dim type="BottomEdge" >
+                    <OperatorDim op="Subtract">
+                        <UnifiedDim scale="1" type="BottomEdge" />
+                        <ImageDim name="TaharezLook/OrnamentalWindowBottomEdge" dimension="Height" />
+                    </OperatorDim>
+                </Dim>
+            </Area>
+        </NamedArea>
+        <NamedArea name="ClientNoTitleNoFrame" />
+        <Child type="TaharezLook/Titlebar" nameSuffix="__auto_titlebar__">
+            <Area>
+                <Dim type="Width" ><UnifiedDim scale="1" type="Width" /></Dim>
+                <Dim type="Height" ><ImageDim name="TaharezLook/NewTitlebarLeft" dimension="Height"/></Dim>
+            </Area>
+            <Property name="AlwaysOnTop" value="False" />
+         <Property name="MouseCursorImage" value="TaharezLook/MouseDrag" />
+         <Property name="BackgroundColours" value="tl:FFFFFFFF tr:FFFFFFFF bl:FFFFFFFF br:FFFFFFFF" />
+        </Child>
+        <Child type="TaharezLook/ImageButton" nameSuffix="__auto_closebutton__">
+            <Area>
+                <Dim type="LeftEdge" >
+                    <OperatorDim op="Subtract">
+                        <UnifiedDim scale="1" type="LeftEdge"/>
+                        <ImageDim name="TaharezLook/SysArea" dimension="Width" />
+                    </OperatorDim>
+                </Dim>
+                <Dim type="TopEdge" >
+                    <AbsoluteDim value="4" />
+                </Dim>
+                <Dim type="Width" ><ImageDim name="TaharezLook/NewCloseButtonNormal" dimension="Width" /></Dim>
+                <Dim type="Height" ><ImageDim name="TaharezLook/NewCloseButtonNormal" dimension="Height" /></Dim>
+            </Area>
+            <Property name="AlwaysOnTop" value="True" />
+            <Property name="NormalImage" value="TaharezLook/NewCloseButtonNormal" />
+            <Property name="HoverImage" value="TaharezLook/NewCloseButtonHover" />
+            <Property name="PushedImage" value="TaharezLook/NewCloseButtonPressed" />
+            <Property name="NonClient" value="True" />
+         <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
+        </Child>
+        <ImagerySection name="withtitle_frame">
+            <FrameComponent>
+                <Area>
+                    <Dim type="TopEdge" ><WidgetDim widget="__auto_titlebar__" dimension="BottomEdge" /></Dim>
+                </Area>
+                <Image component="BottomLeftCorner" name="TaharezLook/OrnamentalWindowBottomLeft" />
+                <Image component="BottomRightCorner" name="TaharezLook/OrnamentalWindowBottomRight" />
+                <Image component="LeftEdge" name="TaharezLook/OrnamentalWindowLeftEdge" />
+                <Image component="RightEdge" name="TaharezLook/OrnamentalWindowRightEdge" />
+                <Image component="BottomEdge" name="TaharezLook/OrnamentalWindowBottomEdge" />
+            </FrameComponent>
+            <ImageryComponent>
+                <Area>
+                    <Dim type="LeftEdge" ><ImageDim name="TaharezLook/OrnamentalWindowLeftEdge" dimension="Width" /></Dim>
+                    <Dim type="TopEdge" ><WidgetDim widget="__auto_titlebar__" dimension="BottomEdge" /></Dim>
+                    <Dim type="RightEdge" >
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Width" />
+                            <ImageDim name="TaharezLook/OrnamentalWindowRightEdge" dimension="Width" />
+                        </OperatorDim>
+                    </Dim>
+                    <Dim type="BottomEdge" >
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Height" />
+                            <ImageDim name="TaharezLook/OrnamentalWindowBottomEdge" dimension="Height" />
+                        </OperatorDim>
+                    </Dim>
+                </Area>
+                <Image name="TaharezLook/OrnamentalWindowBackdrop" />
+                <VertFormat type="Tiled" />
+                <HorzFormat type="Tiled" />
+            </ImageryComponent>
+        </ImagerySection>
+        <ImagerySection name="notitle_frame">
+            <FrameComponent>
+                <Image component="TopLeftCorner" name="TaharezLook/OrnamentalWindowTopLeft" />
+                <Image component="TopRightCorner" name="TaharezLook/OrnamentalWindowTopRight" />
+                <Image component="BottomLeftCorner" name="TaharezLook/OrnamentalWindowBottomLeft" />
+                <Image component="BottomRightCorner" name="TaharezLook/OrnamentalWindowBottomRight" />
+                <Image component="TopEdge" name="TaharezLook/OrnamentalWindowTopEdge" />
+                <Image component="LeftEdge" name="TaharezLook/OrnamentalWindowLeftEdge" />
+                <Image component="RightEdge" name="TaharezLook/OrnamentalWindowRightEdge" />
+                <Image component="BottomEdge" name="TaharezLook/OrnamentalWindowBottomEdge" />
+            </FrameComponent>
+            <ImageryComponent>
+                <Area>
+                    <Dim type="LeftEdge" >
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="0.5" type="Width" />
+                            <OperatorDim op="Divide">
+                                <ImageDim name="TaharezLook/OrnamentalWindowOrnament" dimension="Width" />
+                                <AbsoluteDim value="2" />
+                            </OperatorDim>
+                        </OperatorDim>
+                    </Dim>
+                    <Dim type="TopEdge" ><UnifiedDim scale="0" type="Height" /></Dim>
+                    <Dim type="RightEdge" >
+                        <OperatorDim op="Add">
+                            <UnifiedDim scale="0.5" type="Width" />
+                            <OperatorDim op="Divide">
+                                <ImageDim name="TaharezLook/OrnamentalWindowOrnament" dimension="Width" />
+                                <AbsoluteDim value="2" />
+                            </OperatorDim>
+                        </OperatorDim>
+                    </Dim>
+                    <Dim type="BottomEdge" ><ImageDim name="TaharezLook/OrnamentalWindowTopEdge" dimension="Height" /></Dim>
+                </Area>
+                <Image name="TaharezLook/OrnamentalWindowOrnament" />
+            </ImageryComponent>
+            <ImageryComponent>
+                <Area>
+                    <Dim type="LeftEdge" ><ImageDim name="TaharezLook/OrnamentalWindowLeftEdge" dimension="Width" /></Dim>
+                    <Dim type="TopEdge" ><ImageDim name="TaharezLook/OrnamentalWindowTopEdge" dimension="Width" /></Dim>
+                    <Dim type="RightEdge" >
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Width" />
+                            <ImageDim name="TaharezLook/OrnamentalWindowRightEdge" dimension="Width" />
+                        </OperatorDim>
+                    </Dim>
+                    <Dim type="BottomEdge" >
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Height" />
+                            <ImageDim name="TaharezLook/OrnamentalWindowBottomEdge" dimension="Height" />
+                        </OperatorDim>
+                    </Dim>
+                </Area>
+                <Image name="TaharezLook/OrnamentalWindowBackdrop" />
+                <VertFormat type="Tiled" />
+                <HorzFormat type="Tiled" />
+            </ImageryComponent>
+        </ImagerySection>
+        <ImagerySection name="withtitle_noframe_client_area">
+            <ImageryComponent>
+                <Area>
+                    <Dim type="TopEdge" ><WidgetDim widget="__auto_titlebar__" dimension="Height" /></Dim>
+                </Area>
+                <Image name="TaharezLook/OrnamentalWindowBackdrop" />
+                <VertFormat type="Tiled" />
+                <HorzFormat type="Tiled" />
+            </ImageryComponent>
+        </ImagerySection>
+        <ImagerySection name="notitle_noframe_client_area">
+            <ImageryComponent>
+                <Image name="TaharezLook/OrnamentalWindowBackdrop" />
+                <VertFormat type="Tiled" />
+                <HorzFormat type="Tiled" />
+            </ImageryComponent>
+        </ImagerySection>
+        <StateImagery name="ActiveWithTitleWithFrame">
+            <Layer>
+                <Section section="withtitle_frame" />
+            </Layer>
+        </StateImagery>
+        <StateImagery name="InactiveWithTitleWithFrame">
+            <Layer>
+                <Section section="withtitle_frame" />
+            </Layer>
+        </StateImagery>
+        <StateImagery name="DisabledWithTitleWithFrame">
+            <Layer>
+                <Section section="withtitle_frame">
+                    <Colours topLeft="FF7F7F7F" topRight="FF7F7F7F" bottomLeft="FF7F7F7F" bottomRight="FF7F7F7F" />
+                </Section>
+            </Layer>
+        </StateImagery>
+        <StateImagery name="ActiveWithTitleNoFrame">
+            <Layer>
+                <Section section="withtitle_noframe_client_area" />
+            </Layer>
+        </StateImagery>
+        <StateImagery name="InactiveWithTitleNoFrame">
+            <Layer>
+                <Section section="withtitle_noframe_client_area" />
+            </Layer>
+        </StateImagery>
+        <StateImagery name="DisabledWithTitleNoFrame">
+            <Layer>
+                <Section section="withtitle_noframe_client_area">
+                    <Colours topLeft="FF7F7F7F" topRight="FF7F7F7F" bottomLeft="FF7F7F7F" bottomRight="FF7F7F7F" />
+                </Section>
+            </Layer>
+        </StateImagery>
+        <StateImagery name="ActiveNoTitleWithFrame">
+            <Layer>
+                <Section section="notitle_frame" />
+            </Layer>
+        </StateImagery>
+        <StateImagery name="InactiveNoTitleWithFrame">
+            <Layer>
+                <Section section="notitle_frame" />
+            </Layer>
+        </StateImagery>
+        <StateImagery name="DisabledNoTitleWithFrame">
+            <Layer>
+                <Section section="notitle_frame">
+                    <Colours topLeft="FF7F7F7F" topRight="FF7F7F7F" bottomLeft="FF7F7F7F" bottomRight="FF7F7F7F" />
+                </Section>
+            </Layer>
+        </StateImagery>
+        <StateImagery name="ActiveNoTitleNoFrame">
+            <Layer>
+                <Section section="notitle_noframe_client_area" />
+            </Layer>
+        </StateImagery>
+        <StateImagery name="InactiveNoTitleNoFrame">
+            <Layer>
+                <Section section="notitle_noframe_client_area" />
+            </Layer>
+        </StateImagery>
+        <StateImagery name="DisabledNoTitleNoFrame">
+            <Layer>
+                <Section section="notitle_noframe_client_area">
+                    <Colours topLeft="FF7F7F7F" topRight="FF7F7F7F" bottomLeft="FF7F7F7F" bottomRight="FF7F7F7F" />
                 </Section>
             </Layer>
         </StateImagery>
