@@ -7583,6 +7583,31 @@
             </FrameComponent>
             <ImageryComponent>
                 <Area>
+                    <Dim type="LeftEdge" >
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="0.5" type="Width" />
+                            <OperatorDim op="Divide">
+                                <ImageDim name="TaharezLook/OrnamentalWindowOrnament" dimension="Width" />
+                                <AbsoluteDim value="2" />
+                            </OperatorDim>
+                        </OperatorDim>
+                    </Dim>
+                    <Dim type="TopEdge" ><UnifiedDim scale="0" type="Height" /></Dim>
+                    <Dim type="RightEdge" >
+                        <OperatorDim op="Add">
+                            <UnifiedDim scale="0.5" type="Width" />
+                            <OperatorDim op="Divide">
+                                <ImageDim name="TaharezLook/OrnamentalWindowOrnament" dimension="Width" />
+                                <AbsoluteDim value="2" />
+                            </OperatorDim>
+                        </OperatorDim>
+                    </Dim>
+                    <Dim type="BottomEdge" ><ImageDim name="TaharezLook/OrnamentalWindowTopEdge" dimension="Height" /></Dim>
+                </Area>
+                <Image name="TaharezLook/OrnamentalWindowOrnament" />
+            </ImageryComponent>
+            <ImageryComponent>
+                <Area>
                     <Dim type="LeftEdge" ><ImageDim name="TaharezLook/OrnamentalWindowLeftEdge" dimension="Width" /></Dim>
                     <Dim type="TopEdge" ><ImageDim name="TaharezLook/OrnamentalWindowTopEdge" dimension="Width" /></Dim>
                     <Dim type="RightEdge" >

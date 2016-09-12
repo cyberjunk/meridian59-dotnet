@@ -357,5 +357,6 @@
    <Image height="45" name="OrnamentalWindowBottomLeft" width="45" xPos="660" yPos="465" />
    <Image height="10" name="OrnamentalWindowBottomEdge" width="10" xPos="705" yPos="500" />
    <Image height="45" name="OrnamentalWindowBottomRight" width="45" xPos="715" yPos="465" />
+   <Image height="10" name="OrnamentalWindowOrnament" width="60" xPos="680" yPos="455" />
 
 </Imageset>
