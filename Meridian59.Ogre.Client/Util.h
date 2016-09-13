@@ -210,6 +210,9 @@ namespace Meridian59 { namespace Ogre
             float range = (LightOwner->LightingInfo->LightIntensity > 0) ?
                 120.0f + 460.0f * ratio : 0.0f;
 
+            if (LightOwner->LightingInfo->IsLightHighlight)
+                range *= 0.12f;
+
             // only distance value is used in pixelshader
             Light->setAttenuation(range, 0.0f, 0.0f, 0.0f);
         };
