@@ -1526,12 +1526,35 @@ namespace Meridian59.Client
         }
 
         /// <summary>
-        /// Requests additional information about the current target object 
+        /// Requests additional information about the current target, highlight target or closest object 
         /// (i.e. item or character popup)
         /// </summary>
         public virtual void SendReqLookMessage()
         {
-            SendReqLookMessage(Data.TargetID);            
+            // inspect highlighted
+            if (Data.IsNextAttackApplyCastOnHighlightedObject)
+            {
+                if (ObjectID.IsValid(Data.RoomObjects.HighlightedID))               
+                    SendReqLookMessage(Data.RoomObjects.HighlightedID);
+                
+                // unset nexttarget on highlight
+                Data.IsNextAttackApplyCastOnHighlightedObject = false;
+            }
+           
+            // inspect current target
+            else if (Data.TargetObject != null)
+            {
+                SendReqLookMessage(Data.TargetObject.ID);
+            }     
+      
+            // else inspect closest in front
+            else
+            {
+                RoomObject obj = Data.ClosestInspectableInFront();
+
+                if (obj != null)
+                    SendReqLookMessage(obj.ID);
+            }
         }
 
         /// <summary>
@@ -1804,15 +1827,55 @@ namespace Meridian59.Client
         }
 
         /// <summary>
-        /// Requests to activate your current target.
+        /// Requests to activate your current target, highlight target or closest object.
+        /// If we have a container, send its objects instead.
         /// </summary>
         public virtual void SendReqActivate()
         {
-            SendReqActivate(Data.TargetID);
+            // activate highlighted
+            if (Data.IsNextAttackApplyCastOnHighlightedObject)
+            {
+                if (ObjectID.IsValid(Data.RoomObjects.HighlightedID))
+                {
+                    RoomObject highlight = Data.RoomObjects.GetHighlightedItem();
+                    if (highlight.Flags.IsContainer)                           
+                        SendSendObjectContents(Data.RoomObjects.HighlightedID);
+                    
+                    else 
+                        SendReqActivate(Data.RoomObjects.HighlightedID);
+                }
+                // unset nexttarget on highlight
+                Data.IsNextAttackApplyCastOnHighlightedObject = false;
+            }
+           
+            // activate current target
+            else if (Data.TargetObject != null)
+            {
+                if (Data.TargetObject.Flags.IsContainer)                           
+                    SendSendObjectContents(Data.TargetObject.ID);
+
+                else 
+                    SendReqActivate(Data.TargetObject.ID);
+            }
+      
+            // else activate closest in front
+            else
+            {
+                RoomObject obj = Data.ClosestActivatableInFront();
+
+                if (obj != null)
+                {
+                    if (obj.Flags.IsContainer)                           
+                        SendSendObjectContents(obj.ID);
+
+                    else 
+                        SendReqActivate(obj.ID);
+                }
+            }
         }
 
         /// <summary>
-        /// Requests to activate an object with given ID.
+        /// Requests to activate an object with given ID. If the object is a container, send object contents instead.
         /// </summary>
         /// <param name="ID"></param>
         public virtual void SendReqActivate(uint ID)
@@ -1825,7 +1888,7 @@ namespace Meridian59.Client
                 // send/enqueue it (async)
                 ServerConnection.SendQueue.Enqueue(message);
 
-                // save tick
+                 // save tick
                 GameTick.DidInteract(ID);
             }
         }
@@ -2172,11 +2235,17 @@ namespace Meridian59.Client
         /// </summary>
         public virtual void SendSendObjectContents(uint ID)
         {
-            // create message instance
-            SendObjectContentsMessage message = new SendObjectContentsMessage(ID);
+            // verify IDs and delay
+            if (ObjectID.IsValid(ID) && GameTick.CanInteract(ID))
+            {                
+                // create message instance
+                SendObjectContentsMessage message = new SendObjectContentsMessage(ID);
 
-            // send/enqueue it (async)
-            ServerConnection.SendQueue.Enqueue(message);
+                // send/enqueue it (async)
+                ServerConnection.SendQueue.Enqueue(message);
+            
+                GameTick.DidInteract(ID);
+            }
         }
 
         /// <summary>
@@ -2842,16 +2911,7 @@ namespace Meridian59.Client
                     break;
 
                 case AvatarAction.Activate:
-                    // for objects set with cointaier flag
-                    if (Data.TargetObject != null)
-                    {
-                        if (Data.TargetObject.Flags.IsContainer)                           
-                            SendSendObjectContents();
-                        
-                        else 
-                            SendReqActivate();
-                    }
-                   
+                    SendReqActivate();
                     break;
 
                 case AvatarAction.Trade:
