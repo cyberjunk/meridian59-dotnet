@@ -7583,6 +7583,27 @@
             </FrameComponent>
             <ImageryComponent>
                 <Area>
+                    <Dim type="LeftEdge" ><ImageDim name="TaharezLook/OrnamentalWindowLeftEdge" dimension="Width" /></Dim>
+                    <Dim type="TopEdge" ><ImageDim name="TaharezLook/OrnamentalWindowTopEdge" dimension="Width" /></Dim>
+                    <Dim type="RightEdge" >
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Width" />
+                            <ImageDim name="TaharezLook/OrnamentalWindowRightEdge" dimension="Width" />
+                        </OperatorDim>
+                    </Dim>
+                    <Dim type="BottomEdge" >
+                        <OperatorDim op="Subtract">
+                            <UnifiedDim scale="1" type="Height" />
+                            <ImageDim name="TaharezLook/OrnamentalWindowBottomEdge" dimension="Height" />
+                        </OperatorDim>
+                    </Dim>
+                </Area>
+                <Image name="TaharezLook/OrnamentalWindowBackdrop" />
+                <VertFormat type="Tiled" />
+                <HorzFormat type="Tiled" />
+            </ImageryComponent>
+            <ImageryComponent>
+                <Area>
                     <Dim type="LeftEdge" >
                         <OperatorDim op="Subtract">
                             <UnifiedDim scale="0.5" type="Width" />
@@ -7602,30 +7623,9 @@
                             </OperatorDim>
                         </OperatorDim>
                     </Dim>
-                    <Dim type="BottomEdge" ><ImageDim name="TaharezLook/OrnamentalWindowTopEdge" dimension="Height" /></Dim>
+                    <Dim type="BottomEdge" ><ImageDim name="TaharezLook/OrnamentalWindowOrnament" dimension="Height" /></Dim>
                 </Area>
                 <Image name="TaharezLook/OrnamentalWindowOrnament" />
-            </ImageryComponent>
-            <ImageryComponent>
-                <Area>
-                    <Dim type="LeftEdge" ><ImageDim name="TaharezLook/OrnamentalWindowLeftEdge" dimension="Width" /></Dim>
-                    <Dim type="TopEdge" ><ImageDim name="TaharezLook/OrnamentalWindowTopEdge" dimension="Width" /></Dim>
-                    <Dim type="RightEdge" >
-                        <OperatorDim op="Subtract">
-                            <UnifiedDim scale="1" type="Width" />
-                            <ImageDim name="TaharezLook/OrnamentalWindowRightEdge" dimension="Width" />
-                        </OperatorDim>
-                    </Dim>
-                    <Dim type="BottomEdge" >
-                        <OperatorDim op="Subtract">
-                            <UnifiedDim scale="1" type="Height" />
-                            <ImageDim name="TaharezLook/OrnamentalWindowBottomEdge" dimension="Height" />
-                        </OperatorDim>
-                    </Dim>
-                </Area>
-                <Image name="TaharezLook/OrnamentalWindowBackdrop" />
-                <VertFormat type="Tiled" />
-                <HorzFormat type="Tiled" />
             </ImageryComponent>
         </ImagerySection>
         <ImagerySection name="withtitle_noframe_client_area">
