@@ -1380,7 +1380,10 @@ namespace Meridian59.Client
             // else attack attackable in front
             else
             {
-                RoomObject obj = Data.ClosestAttackableInFront();
+                ObjectFlags attackFlags  = new ObjectFlags();
+                attackFlags.IsAttackable = true;
+
+                RoomObject obj = Data.GetClosestObjectInFront(attackFlags);
 
                 if (obj != null)
                     SendReqAttackMessage(obj.ID);

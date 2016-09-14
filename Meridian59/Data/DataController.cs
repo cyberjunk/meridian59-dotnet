@@ -1151,10 +1151,11 @@ namespace Meridian59.Data
         }
 
         /// <summary>
-        /// Returns the closest attackble roomobject in front of the avatar.
+        /// Returns the closest roomobject in front of the avatar.
         /// </summary>
+        /// <param name="FilterFlags">Optional Flags to filter for</param>
         /// <returns></returns>
-        public RoomObject ClosestAttackableInFront()
+        public RoomObject GetClosestObjectInFront(params ObjectFlags[] FilterFlags)
         {
             if (RoomInformation.ResourceRoom == null || AvatarObject == null)
                 return null;
@@ -1167,9 +1168,32 @@ namespace Meridian59.Data
             Real mindist2 = Real.MaxValue;
             RoomObject minObj = null;
 
-            foreach (RoomObject obj in candidates)
+            // with filters
+            if (FilterFlags.Length > 0)
             {
-                if (obj.Flags.IsAttackable)
+                foreach (RoomObject obj in candidates)
+                {
+                    foreach (ObjectFlags flags in FilterFlags)
+                    {
+                        if (obj.Flags.IsSubset(flags))
+                        {
+                            // closer than last candidate?
+                            if (obj.DistanceToAvatarSquared < mindist2)
+                            {
+                                // save obj and min dist
+                                mindist2 = obj.DistanceToAvatarSquared;
+                                minObj = obj;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // simply the closest of any
+            else
+            {
+                foreach (RoomObject obj in candidates)
                 {
                     // closer than last candidate?
                     if (obj.DistanceToAvatarSquared < mindist2)
@@ -1180,7 +1204,7 @@ namespace Meridian59.Data
                     }
                 }
             }
-
+            
             return minObj;
         }
 
