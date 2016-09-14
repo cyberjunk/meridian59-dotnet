@@ -43,9 +43,7 @@
             this.colOverlayRID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNameRID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colFlags = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colLightFlags = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colLightIntensity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colLightColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colLightingInfo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colColorTranslation = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colEffect = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colAnimation = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -108,9 +106,7 @@
             this.colOverlayRID,
             this.colNameRID,
             this.colFlags,
-            this.colLightFlags,
-            this.colLightIntensity,
-            this.colLightColor,
+            this.colLightingInfo,
             this.colColorTranslation,
             this.colEffect,
             this.colAnimation,
@@ -168,38 +164,15 @@
             this.colFlags.ReadOnly = true;
             this.colFlags.Width = 50;
             // 
-            // colLightFlags
+            // colLightingInfo
             // 
-            this.colLightFlags.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colLightFlags.DataPropertyName = "LightFlags";
+            this.colLightingInfo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colLightingInfo.DataPropertyName = "LightingInfo";
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.PaleGoldenrod;
-            this.colLightFlags.DefaultCellStyle = dataGridViewCellStyle1;
-            this.colLightFlags.HeaderText = "LF";
-            this.colLightFlags.Name = "colLightFlags";
-            this.colLightFlags.ReadOnly = true;
-            this.colLightFlags.Width = 35;
-            // 
-            // colLightIntensity
-            // 
-            this.colLightIntensity.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colLightIntensity.DataPropertyName = "LightIntensity";
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.PaleGoldenrod;
-            this.colLightIntensity.DefaultCellStyle = dataGridViewCellStyle2;
-            this.colLightIntensity.HeaderText = "LI";
-            this.colLightIntensity.Name = "colLightIntensity";
-            this.colLightIntensity.ReadOnly = true;
-            this.colLightIntensity.Width = 35;
-            // 
-            // colLightColor
-            // 
-            this.colLightColor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colLightColor.DataPropertyName = "LightColor";
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.PaleGoldenrod;
-            this.colLightColor.DefaultCellStyle = dataGridViewCellStyle3;
-            this.colLightColor.HeaderText = "LC";
-            this.colLightColor.Name = "colLightColor";
-            this.colLightColor.ReadOnly = true;
-            this.colLightColor.Width = 50;
+            this.colLightingInfo.DefaultCellStyle = dataGridViewCellStyle1;
+            this.colLightingInfo.HeaderText = "LI";
+            this.colLightingInfo.Name = "colLightingInfo";
+            this.colLightingInfo.ReadOnly = true;
             // 
             // colColorTranslation
             // 
@@ -463,9 +436,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colOverlayRID;
         private System.Windows.Forms.DataGridViewTextBoxColumn colNameRID;
         private System.Windows.Forms.DataGridViewTextBoxColumn colFlags;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colLightFlags;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colLightIntensity;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colLightColor;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colLightingInfo;
         private System.Windows.Forms.DataGridViewTextBoxColumn colColorTranslation;
         private System.Windows.Forms.DataGridViewTextBoxColumn colEffect;
         private System.Windows.Forms.DataGridViewTextBoxColumn colAnimation;

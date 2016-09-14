@@ -271,6 +271,17 @@ namespace Meridian59.Data.Models
         }
         #endregion
 
+        #region Methods
+        /// <summary>
+        /// Returns a string like (0,0,0)
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return '(' + flags.ToString() + '/' + lightIntensity.ToString() + '/' + lightColor.ToString() + ')';
+        }
+        #endregion
+
         #region IClearable
         public void Clear(bool RaiseChangedEvent)
         {
