@@ -2258,7 +2258,10 @@ namespace Meridian59.Client
             RoomObject SelectedObject = GetSelectedObject(FilterFlag,PassOn);
 
             // If we found something, and we can open it, do that.
-            if (SelectedObject != null)
+            // Special case: If we have an actual target, but can't open it
+            // we don't want to create an error message but move on to activate
+            // instead.
+            if (SelectedObject != null && SelectedObject.Flags.IsContainer)
                 SendSendObjectContents(SelectedObject.ID);
             else
                 // Nope. Let's check if we can find something to activate.
