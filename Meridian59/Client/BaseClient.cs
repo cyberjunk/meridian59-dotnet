@@ -1666,7 +1666,7 @@ namespace Meridian59.Client
         /// if there is one, the player's target, if there isn't and the closest object if
         /// neither is available.
         /// </summary>
-        /// <param name="FilterFlag">Optional Flags to filter for</param>
+        /// <param name="FilterFlag">Optional Flag to filter for</param>
         /// <returns></returns>
         public RoomObject GetSelectedObject(ObjectFlags FilterFlag = null, bool PassOn = false)
         {
@@ -1862,7 +1862,6 @@ namespace Meridian59.Client
 
         /// <summary>
         /// Activates your current target, highlight target or closest object.
-        /// If that can't be done, check if there's a container.
         /// </summary>
         public virtual void SendReqActivate()
         {
@@ -2242,7 +2241,8 @@ namespace Meridian59.Client
         }
 
         /// <summary>
-        /// Requests the contents of an object
+        /// Requests the contents of an object. If that can't be done,
+        /// try to activate the object.
         /// </summary>
         public virtual void SendSendObjectContents()
         {
