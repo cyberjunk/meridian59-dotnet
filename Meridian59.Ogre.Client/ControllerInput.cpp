@@ -292,7 +292,7 @@ namespace Meridian59 { namespace Ogre
 			// mark highlighted for next target on some actions
 			OgreClient::Singleton->Data->IsNextAttackApplyCastOnHighlightedObject = true;
 
-			// activate the mapped acton for rightlicck
+			// activate the mapped action for rightlicck
 			OgreClient::Singleton->Data->ActionButtons[ActiveKeyBinding->RightClickAction - 1]->Activate();		
 		}
 

@@ -1209,6 +1209,71 @@ namespace Meridian59.Data
         }
 
         /// <summary>
+        /// Returns the closest inspectable roomobject in front of the avatar.
+        /// </summary>
+        /// <returns></returns>
+        public RoomObject ClosestInspectableInFront()
+        {
+            if (RoomInformation.ResourceRoom == null || AvatarObject == null)
+                return null;
+           
+            // get visible objects within distances
+            List<RoomObject> candidates = avatarObject.GetObjectsWithinDistance(RoomObjects, RoomInformation.ResourceRoom,
+                32.0f, 512.0f, false);
+
+            // get the closest
+            Real mindist2 = Real.MaxValue;
+            RoomObject minObj = null;
+
+            foreach (RoomObject obj in candidates)
+            {
+                // closer than last candidate?
+                if (obj.DistanceToAvatarSquared < mindist2)
+                {
+                    // save obj and min dist
+                    mindist2 = obj.DistanceToAvatarSquared;
+                    minObj = obj;
+                }
+            }
+
+            return minObj;
+        }
+
+        /// <summary>
+        /// Returns the closest activatable roomobject in front of the avatar.
+        /// </summary>
+        /// <returns></returns>
+        public RoomObject ClosestActivatableInFront()
+        {
+            if (RoomInformation.ResourceRoom == null || AvatarObject == null)
+                return null;
+           
+            // get visible objects within distances
+            List<RoomObject> candidates = avatarObject.GetObjectsWithinDistance(RoomObjects, RoomInformation.ResourceRoom,
+                32.0f, 512.0f, false);
+
+            // get the closest
+            Real mindist2 = Real.MaxValue;
+            RoomObject minObj = null;
+
+            foreach (RoomObject obj in candidates)
+            {
+                if (obj.Flags.IsActivatable || obj.Flags.IsContainer)
+                {
+                    // closer than last candidate?
+                    if (obj.DistanceToAvatarSquared < mindist2)
+                    {
+                        // save obj and min dist
+                        mindist2 = obj.DistanceToAvatarSquared;
+                        minObj = obj;
+                    }
+                }
+            }
+
+            return minObj;
+        }
+
+        /// <summary>
         /// Adds a string at the beginning of the chatcommandhistory.
         /// May remove the last element.
         /// </summary>
