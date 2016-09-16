@@ -667,30 +667,27 @@ namespace Meridian59.Data.Models
 
         public RoomObject(
             uint ID,
-            uint Count,           
+            uint Count,
             uint OverlayFileRID,
-            uint NameRID, 
+            uint NameRID,
             uint Flags,
-            ushort LightFlags, 
-            byte LightIntensity, 
-            ushort LightColor, 
-            AnimationType FirstAnimationType, 
-            byte ColorTranslation, 
-            byte Effect, 
-            Animation Animation, 
-            IEnumerable<SubOverlay> SubOverlays,            
+            LightingInfo LightingInfo,
+            AnimationType FirstAnimationType,
+            byte ColorTranslation,
+            byte Effect,
+            Animation Animation,
+            IEnumerable<SubOverlay> SubOverlays,
             V3 Position3D,
-            ushort Angle, 
-            AnimationType MotionFirstAnimationType, 
-            byte MotionColorTranslation, 
-            byte MotionEffect, 
-            Animation MotionAnimation, 
-            IEnumerable<SubOverlay> MotionSubOverlays)            
+            ushort Angle,
+            AnimationType MotionFirstAnimationType,
+            byte MotionColorTranslation,
+            byte MotionEffect,
+            Animation MotionAnimation,
+            IEnumerable<SubOverlay> MotionSubOverlays)
             : base(
-                ID, Count, 
-                OverlayFileRID, NameRID, Flags, 
-                LightFlags, LightIntensity, LightColor, 
-                FirstAnimationType, ColorTranslation, Effect, Animation, SubOverlays)
+                ID, Count, OverlayFileRID, NameRID, Flags,
+                LightingInfo, FirstAnimationType,
+                ColorTranslation, Effect, Animation, SubOverlays)
         {
             // attach motionsuboverlays listener
             motionSubOverlays.ListChanged += OnMotionSubOverlaysListChanged;

@@ -117,23 +117,21 @@ namespace Meridian59.Data.Models
 
         public PlayerOverlay(
             uint ID,
-            uint Count, 
-            uint OverlayFileRID, 
-            uint NameRID, 
+            uint Count,
+            uint OverlayFileRID,
+            uint NameRID,
             uint Flags,
-            ushort LightFlags, 
-            byte LightIntensity, 
-            ushort LightColor, 
-            AnimationType FirstAnimationType, 
-            byte ColorTranslation, 
+            LightingInfo LightingInfo,
+            AnimationType FirstAnimationType,
+            byte ColorTranslation,
             byte Effect,
-            Animation Animation, 
+            Animation Animation,
             BaseList<SubOverlay> SubOverlays,
-            PlayerOverlayHotspot RenderPosition)        
+            PlayerOverlayHotspot RenderPosition)
             : base(
-                ID, Count, OverlayFileRID, NameRID, Flags, 
-                LightFlags, LightIntensity, LightColor, 
-                FirstAnimationType, ColorTranslation, Effect, 
+                ID, Count, OverlayFileRID, NameRID, Flags,
+                LightingInfo, FirstAnimationType,
+                ColorTranslation, Effect,
                 Animation, SubOverlays, false)
         {
             renderPosition = RenderPosition;

@@ -197,20 +197,23 @@ namespace Meridian59 { namespace Ogre
         static void UpdateFromILightOwner(Light* Light, ILightOwner^ LightOwner)
         {
             // decode color from ushort (see d3drender.c for formulas)                
-            ColourValue baseColor = Util::LightColorToOgreRGB(LightOwner->LightColor);
+            ColourValue baseColor = Util::LightColorToOgreRGB(LightOwner->LightingInfo->LightColor);
 
             // brigthness ratio (between 0.0 and 1.0)
-            float ratio = (float)LightOwner->LightIntensity / 255.0f;
+            float ratio = (float)LightOwner->LightingInfo->LightIntensity / 255.0f;
 
             // set colors based on decoded color and intensity ratio
             Light->setDiffuseColour(baseColor);
             Light->setSpecularColour(baseColor);
 
             // light scaling by intensity
-			float range = (LightOwner->LightIntensity > 0) ? 
-				120.0f + 460.0f * ratio : 0.0f;
+            float range = (LightOwner->LightingInfo->LightIntensity > 0) ?
+                120.0f + 460.0f * ratio : 0.0f;
 
-			// only distance value is used in pixelshader
+            if (LightOwner->LightingInfo->IsLightHighlight)
+                range *= 0.12f;
+
+            // only distance value is used in pixelshader
             Light->setAttenuation(range, 0.0f, 0.0f, 0.0f);
         };
 
@@ -230,7 +233,7 @@ namespace Meridian59 { namespace Ogre
 			::Ogre::Light* light = nullptr;
 
 			// check if the m59 object is supposed to have a light
-            if (LightOwner->LightFlags > 0)
+            if (LightOwner->LightingInfo->IsLightOn)
             {
 				// create ogre light
                 light = SceneManager->createLight(LightName);
