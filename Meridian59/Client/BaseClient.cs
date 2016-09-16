@@ -1529,12 +1529,35 @@ namespace Meridian59.Client
         }
 
         /// <summary>
-        /// Requests additional information about the current target object 
+        /// Requests additional information about the current target, highlighted or closest object 
         /// (i.e. item or character popup)
         /// </summary>
         public virtual void SendReqLookMessage()
         {
-            SendReqLookMessage(Data.TargetID);            
+            // inspect highlighted
+            if (Data.IsNextAttackApplyCastOnHighlightedObject)
+            {
+                if (ObjectID.IsValid(Data.RoomObjects.HighlightedID))
+                    SendReqLookMessage(Data.RoomObjects.HighlightedID);
+                
+                // unset nexttarget on highlight
+                Data.IsNextAttackApplyCastOnHighlightedObject = false;
+            }
+            
+            // inspect current target
+            else if (Data.TargetObject != null)
+            {
+                SendReqLookMessage(Data.TargetObject.ID);
+            }
+            
+            // else inspect closest in front
+            else
+            {
+                RoomObject obj = Data.GetClosestObjectInFront();
+
+                if (obj != null)
+                    SendReqLookMessage(obj.ID);
+            }
         }
 
         /// <summary>
