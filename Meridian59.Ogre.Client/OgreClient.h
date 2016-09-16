@@ -350,6 +350,12 @@ namespace Meridian59 { namespace Ogre
         /// <param name="RequestBasicInfo"></param>
         /// <param name="Name"></param>
         virtual void SendUseCharacterMessage(ObjectID^ ID, bool RequestBasicInfo, ::System::String^ Name) override;
+
+		/// <summary>
+		/// Overwritten from base class to also save config layout back to config
+		/// </summary>
+		/// <param name="Message"></param>
+		virtual void SendReqQuit() override;
 	};
 };};
 

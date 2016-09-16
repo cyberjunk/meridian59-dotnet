@@ -981,6 +981,15 @@ namespace Meridian59 { namespace Ogre
         }
     };
 
+	void OgreClient::SendReqQuit()
+	{
+		// call base method
+		SingletonClient::SendReqQuit();
+
+		// save layout to config
+		ControllerUI::SaveLayoutToConfig();
+	};
+
 	void OgreClient::Suicide()
     {
 		// show	
