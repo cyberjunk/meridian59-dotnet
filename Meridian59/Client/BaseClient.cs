@@ -1355,39 +1355,23 @@ namespace Meridian59.Client
                 GameTick.DidReqAction();
             }
         }
-      
+
         /// <summary>
-        /// Requests to hit your current target or highlighted target
+        /// Requests to hit your current target, highlighted target or closest
+        /// attackable object.
         /// </summary>
         public virtual void SendReqAttackMessage()
         {
-            // attack highlighted
-            if (Data.IsNextAttackApplyCastOnHighlightedObject)
-            {
-                if (ObjectID.IsValid(Data.RoomObjects.HighlightedID))               
-                    SendReqAttackMessage(Data.RoomObjects.HighlightedID);
-                
-                // unset nexttarget on highlight
-                Data.IsNextAttackApplyCastOnHighlightedObject = false;
-            }
-           
-            // attack current target
-            else if (Data.TargetObject != null)
-            {
-                SendReqAttackMessage(Data.TargetObject.ID);
-            }     
-      
-            // else attack attackable in front
-            else
-            {
-                ObjectFlags attackFlags  = new ObjectFlags();
-                attackFlags.IsAttackable = true;
+            // Set the appropriate flags to check for.
+            ObjectFlags FilterFlag = new ObjectFlags();
+            FilterFlag.IsAttackable = true;
+        
+            // Let's figure out our target.
+            RoomObject SelectedObject = GetSelectedObject(FilterFlag);
 
-                RoomObject obj = Data.GetClosestObjectInFront(attackFlags);
-
-                if (obj != null)
-                    SendReqAttackMessage(obj.ID);
-            }
+            // If we found something, interact with it.
+            if (SelectedObject != null)
+                SendReqAttackMessage(SelectedObject.ID);
         }
 
         /// <summary>
@@ -1529,35 +1513,17 @@ namespace Meridian59.Client
         }
 
         /// <summary>
-        /// Requests additional information about the current target, highlighted or closest object 
+        /// Requests additional information about the current target, highlight target or closest object 
         /// (i.e. item or character popup)
         /// </summary>
         public virtual void SendReqLookMessage()
         {
-            // inspect highlighted
-            if (Data.IsNextAttackApplyCastOnHighlightedObject)
-            {
-                if (ObjectID.IsValid(Data.RoomObjects.HighlightedID))
-                    SendReqLookMessage(Data.RoomObjects.HighlightedID);
-                
-                // unset nexttarget on highlight
-                Data.IsNextAttackApplyCastOnHighlightedObject = false;
-            }
-            
-            // inspect current target
-            else if (Data.TargetObject != null)
-            {
-                SendReqLookMessage(Data.TargetObject.ID);
-            }
-            
-            // else inspect closest in front
-            else
-            {
-                RoomObject obj = Data.GetClosestObjectInFront();
+            // Let's figure out our target.
+            RoomObject SelectedObject = GetSelectedObject();
 
-                if (obj != null)
-                    SendReqLookMessage(obj.ID);
-            }
+            // If we found something, interact with it.
+            if (SelectedObject != null)
+                SendReqLookMessage(SelectedObject.ID);
         }
 
         /// <summary>
@@ -1694,7 +1660,72 @@ namespace Meridian59.Client
             if (Data.IsNextAttackApplyCastOnHighlightedObject)
                 Data.IsNextAttackApplyCastOnHighlightedObject = false;
         }
-        
+
+        /// <summary>
+        /// Finds the object the player wants to interact with. Returns the mouseover target
+        /// if there is one, the player's target, if there isn't and the closest object if
+        /// neither is available.
+        /// </summary>
+        /// <param name="FilterFlag">Optional Flags to filter for</param>
+        /// <returns></returns>
+        public RoomObject GetSelectedObject(ObjectFlags FilterFlag = null, bool PassOn = false)
+        {
+            // Introducing our selected object to be. Null by default.
+            RoomObject SelectedObject = null;
+            
+            // If we have a highlight, pick it, regardless of flag.
+            if (Data.IsNextAttackApplyCastOnHighlightedObject)
+            {
+                // Just a precaution. We should have a valid highlight target
+                // if IsNextAttackApplyCastOnHighlightedObject is true.
+                if (ObjectID.IsValid(Data.RoomObjects.HighlightedID))
+                {
+                    SelectedObject = Data.RoomObjects.GetHighlightedItem();
+
+                    // No filter provided, return highlight and reset IsNext...
+                    if (FilterFlag == null)
+                    {
+                        Data.IsNextAttackApplyCastOnHighlightedObject = false;
+                        return SelectedObject;
+                    }
+
+                    // If highlight matches our flag, return it and reset IsNext...
+                    if (FilterFlag.IsSubset(SelectedObject.Flags))
+                    {
+                        Data.IsNextAttackApplyCastOnHighlightedObject = false;
+                        return SelectedObject;
+                    }
+
+                    // Highlight doesn't match the flag. Let's see if another action
+                    // wants to have a go. If not, reset IsNext...
+                    if (!PassOn)
+                        Data.IsNextAttackApplyCastOnHighlightedObject = false;
+
+                    // No suitable highlight found but another actions is queued. Let's return
+                    // null.
+                    else
+                        return null;
+                }
+            }
+
+            // If we don't have a highlight, but a regular target, pick that one instead.
+            else if (Data.TargetObject != null)
+            {
+                SelectedObject = (RoomObject) Data.TargetObject;
+            }
+
+            // If we can find neither highlight nor regular target, let's get the closest
+            // suitable object for our intended purpose. We filter by flags, allowing
+            // us to interact with our desired object, even if it is blocked by unsuitable
+            // objects in front of it.
+            else
+            {
+                SelectedObject = Data.GetClosestObjectInFront(FilterFlag);
+            }
+
+            return SelectedObject;
+        }
+
         /// <summary>
         /// Sends chatmessage as say, yell, broadcast, ...
         /// </summary>
@@ -1830,11 +1861,21 @@ namespace Meridian59.Client
         }
 
         /// <summary>
-        /// Requests to activate your current target.
+        /// Activates your current target, highlight target or closest object.
+        /// If that can't be done, check if there's a container.
         /// </summary>
         public virtual void SendReqActivate()
         {
-            SendReqActivate(Data.TargetID);
+            // Set the appropriate flags to check for.
+            ObjectFlags FilterFlag = new ObjectFlags();
+            FilterFlag.IsActivatable = true;
+
+            // Let's figure out the target.
+            RoomObject SelectedObject = GetSelectedObject(FilterFlag);
+
+            // If we found something, interact with it if possible.
+            if (SelectedObject != null)
+                SendReqActivate(SelectedObject.ID);
         }
 
         /// <summary>
@@ -1899,16 +1940,23 @@ namespace Meridian59.Client
         /// </summary>
         public virtual void SendReqBuyMessage()
         {
-            if (ObjectID.IsValid(Data.TargetID) &&
+            // Set the appropriate flags to check for.
+            ObjectFlags FilterFlag = new ObjectFlags();
+            FilterFlag.IsBuyable = true;
+        
+            // Let's figure out our target.
+            RoomObject SelectedObject = GetSelectedObject(FilterFlag);
+            
+            if (SelectedObject != null &&
                 GameTick.CanInteract(Data.TargetID))
             {            
                 // create message instance
-                ReqBuyMessage message = new ReqBuyMessage(Data.TargetID);
+                ReqBuyMessage message = new ReqBuyMessage(SelectedObject.ID);
 
                 // send/enqueue it (async)
                 ServerConnection.SendQueue.Enqueue(message);
 
-                GameTick.DidInteract(Data.TargetID);
+                GameTick.DidInteract(SelectedObject.ID);
             }
         }
 
@@ -2196,24 +2244,43 @@ namespace Meridian59.Client
         /// <summary>
         /// Requests the contents of an object
         /// </summary>
-        public virtual void SendSendObjectContents(uint ID)
+        public virtual void SendSendObjectContents()
         {
-            // create message instance
-            SendObjectContentsMessage message = new SendObjectContentsMessage(ID);
+            // Set the appropriate flags to check for.
+            ObjectFlags FilterFlag = new ObjectFlags();
+            FilterFlag.IsContainer = true;
 
-            // send/enqueue it (async)
-            ServerConnection.SendQueue.Enqueue(message);
+            // In case we can't find a container, we'll check for something
+            // to activate.
+            bool PassOn = true;
+        
+            // Let's figure out our target.
+            RoomObject SelectedObject = GetSelectedObject(FilterFlag,PassOn);
+
+            // If we found something, and we can open it, do that.
+            if (SelectedObject != null)
+                SendSendObjectContents(SelectedObject.ID);
+            else
+                // Nope. Let's check if we can find something to activate.
+                SendReqActivate();
         }
 
         /// <summary>
-        /// Requests the contents of your current target ID
+        /// Requests the contents of the object with the given ID
         /// </summary>
-        public virtual void SendSendObjectContents()
+        public virtual void SendSendObjectContents(uint ID)
         {
-            if (!ObjectID.IsValid(Data.TargetID))
-                return;
+            // verify IDs and delay
+            if (ObjectID.IsValid(ID) && GameTick.CanInteract(ID))
+            {                
+                // create message instance
+                SendObjectContentsMessage message = new SendObjectContentsMessage(ID);
+
+                // send/enqueue it (async)
+                ServerConnection.SendQueue.Enqueue(message);
             
-            SendSendObjectContents(Data.TargetID);
+                GameTick.DidInteract(ID);
+            }
         }
 
         /// <summary>
@@ -2843,20 +2910,41 @@ namespace Meridian59.Client
                     break;
 
                 case AvatarAction.Loot:
-                    // show lootlist on no target
-                    if (Data.TargetID == 0 ||
-                        Data.TargetID > ObjectID.UINT28MAX)
-                    {
-                        Data.RoomObjectsLoot.IsVisible = true;                     
-                    }
-                    // loot all if modifier is pressed
-                    else if (Data.SelfTarget)
+                    // Before we do anything else, check if the modifier
+                    // key is held down. In that case: Loot all and break.
+                    if(Data.SelfTarget)
                     {
                         LootAll();
+                        break;
                     }
-                    // loot target
-                    else if (Data.TargetID > 0)
-                        SendReqGetMessage();
+
+                    // Now, let's check if we have a target
+                    if (Data.TargetObject != null)
+                    {
+                        // Check if it's actually lootable
+                        if (Data.TargetObject.Flags.IsGettable)
+                        {
+                            // Yes it is. Get it and break.
+                            SendReqGetMessage();
+                            break;
+                        }
+                    }
+
+                    // Prevent loot window flickering in held loot button.
+                    if (GameTick.CanReqAction())
+                        GameTick.DidReqAction();
+                    else
+                        break;
+                    
+                    // It looks like we want to loot, but haven't decided what.
+                    // Bring up the loot window if it isn't up yet.
+                    if (!Data.RoomObjectsLoot.IsVisible)
+                        {
+                            Data.RoomObjectsLoot.IsVisible = true;
+                            break;
+                        }
+                    // Loot window was already up. Close again.
+                    Data.RoomObjectsLoot.IsVisible = false;
                     break;
 
                 case AvatarAction.Buy:
@@ -2868,23 +2956,24 @@ namespace Meridian59.Client
                     break;
 
                 case AvatarAction.Activate:
-                    // for objects set with cointaier flag
-                    if (Data.TargetObject != null)
-                    {
-                        if (Data.TargetObject.Flags.IsContainer)                           
-                            SendSendObjectContents();
-                        
-                        else 
-                            SendReqActivate();
-                    }
-                   
+                    // check for container first, will be passed on
+                    // to SendReqActivate() if required.
+                    SendSendObjectContents();
                     break;
 
                 case AvatarAction.Trade:
-                    if (Data.TargetObject != null || Data.Trade.IsBackgroundOffer)
+                     // Set the appropriate flags to check for.
+                     ObjectFlags FilterFlag = new ObjectFlags();
+                     FilterFlag.IsOfferable = true;
+                 
+                     // Let's figure out our target.
+                     RoomObject SelectedObject = GetSelectedObject(FilterFlag);
+
+                     // If we found something, trade with it.
+                    if (SelectedObject != null || Data.Trade.IsBackgroundOffer)
                     {
                         if (!Data.Trade.IsBackgroundOffer)
-                            Data.Trade.TradePartner = Data.TargetObject;
+                            Data.Trade.TradePartner = SelectedObject;
 
                         Data.Trade.IsVisible = true;
                     }
