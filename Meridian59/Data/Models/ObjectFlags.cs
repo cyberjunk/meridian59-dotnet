@@ -945,6 +945,10 @@ namespace Meridian59.Data.Models
         /// <returns></returns>
         public bool IsSubset(params ObjectFlags[] Flags)
         {
+            // handle special case (no flags=match)
+            if (Flags.Length == 0)
+                return true;
+
             foreach (ObjectFlags flags in Flags)
                 if (IsSubset(flags))
                     return true;
