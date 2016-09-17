@@ -938,6 +938,21 @@ namespace Meridian59.Data.Models
         }
 
         /// <summary>
+        /// Returns true if at least one (=OR) of Flags parameters
+        /// is a subset of this objectflags.
+        /// </summary>
+        /// <param name="Flags"></param>
+        /// <returns></returns>
+        public bool IsSubset(params ObjectFlags[] Flags)
+        {
+            foreach (ObjectFlags flags in Flags)
+                if (IsSubset(flags))
+                    return true;
+
+            return false;
+        }
+
+        /// <summary>
         /// True if attackable, not a player and moveon=no
         /// </summary>     
         public bool IsCreature
