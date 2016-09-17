@@ -1793,11 +1793,20 @@ namespace Meridian59.Client
         }
 
         /// <summary>
-        /// Requests to activate your current target.
+        /// Requests to activate the higlighted object or current target or
+        /// else the closest activatable object.
         /// </summary>
         public virtual void SendReqActivate()
         {
-            SendReqActivate(Data.TargetID);
+            // set filter
+            ObjectFlags flags = new ObjectFlags();
+            flags.IsActivatable = true;
+
+            // try to get an object
+            ObjectBase obj = Data.GetInteractObject(flags);
+
+            if (obj != null)
+                SendReqActivate(obj.ID);
         }
 
         /// <summary>
@@ -1862,16 +1871,22 @@ namespace Meridian59.Client
         /// </summary>
         public virtual void SendReqBuyMessage()
         {
-            if (ObjectID.IsValid(Data.TargetID) &&
-                GameTick.CanInteract(Data.TargetID))
+            // filter for object that can be bought from
+            ObjectFlags flags = new ObjectFlags();
+            flags.IsBuyable = true;
+
+            // try get object to interact with
+            ObjectBase obj = Data.GetInteractObject(flags);
+
+            if (obj != null && GameTick.CanInteract(obj.ID))
             {            
                 // create message instance
-                ReqBuyMessage message = new ReqBuyMessage(Data.TargetID);
+                ReqBuyMessage message = new ReqBuyMessage(obj.ID);
 
                 // send/enqueue it (async)
                 ServerConnection.SendQueue.Enqueue(message);
 
-                GameTick.DidInteract(Data.TargetID);
+                GameTick.DidInteract(obj.ID);
             }
         }
 
@@ -2161,22 +2176,33 @@ namespace Meridian59.Client
         /// </summary>
         public virtual void SendSendObjectContents(uint ID)
         {
-            // create message instance
-            SendObjectContentsMessage message = new SendObjectContentsMessage(ID);
+            if (ObjectID.IsValid(ID) && GameTick.CanInteract(ID))
+            {
+                // create message instance
+                SendObjectContentsMessage message = new SendObjectContentsMessage(ID);
 
-            // send/enqueue it (async)
-            ServerConnection.SendQueue.Enqueue(message);
+                // send/enqueue it (async)
+                ServerConnection.SendQueue.Enqueue(message);
+
+                GameTick.DidInteract(ID);
+            }
         }
 
         /// <summary>
-        /// Requests the contents of your current target ID
+        /// Requests the contents of the higlighted object or current target or
+        /// else the closest object marked as container.
         /// </summary>
         public virtual void SendSendObjectContents()
         {
-            if (!ObjectID.IsValid(Data.TargetID))
-                return;
-            
-            SendSendObjectContents(Data.TargetID);
+            // filter
+            ObjectFlags flags = new ObjectFlags();
+            flags.IsContainer = true;
+
+            // try get an object
+            ObjectBase obj = Data.GetInteractObject(flags);
+
+            if (obj != null)
+                SendSendObjectContents(obj.ID);
         }
 
         /// <summary>
@@ -2772,6 +2798,8 @@ namespace Meridian59.Client
         /// <param name="Action"></param>
         public void ExecAction(AvatarAction Action)
         {
+            ObjectBase obj;
+
             switch (Action)
             {
                 case AvatarAction.Attack:
@@ -2831,26 +2859,47 @@ namespace Meridian59.Client
                     break;
 
                 case AvatarAction.Activate:
-                    // for objects set with cointaier flag
-                    if (Data.TargetObject != null)
+                    // refers to activate OR container contents
+                    ObjectFlags flags1 = new ObjectFlags();
+                    flags1.IsActivatable = true;
+
+                    ObjectFlags flags2 = new ObjectFlags();
+                    flags2.IsContainer = true;
+
+                    // try find object
+                    obj = Data.GetInteractObject(flags1, flags2);
+
+                    if (obj != null)
                     {
-                        if (Data.TargetObject.Flags.IsContainer)                           
-                            SendSendObjectContents();
-                        
-                        else 
-                            SendReqActivate();
+                        if (obj.Flags.IsContainer)
+                            SendSendObjectContents(obj.ID);
+
+                        else
+                            SendReqActivate(obj.ID);
                     }
-                   
                     break;
 
                 case AvatarAction.Trade:
-                    if (Data.TargetObject != null || Data.Trade.IsBackgroundOffer)
-                    {
-                        if (!Data.Trade.IsBackgroundOffer)
-                            Data.Trade.TradePartner = Data.TargetObject;
-
+                    // just popup a background initiated trade (by other party)
+                    if (Data.Trade.IsBackgroundOffer)
                         Data.Trade.IsVisible = true;
-                    }
+
+                    // initate trade ourself
+                    else
+                    {
+                        // filter for offerable targets
+                        ObjectFlags flags = new ObjectFlags();
+                        flags.IsOfferable = true;
+
+                        // find object
+                        obj = Data.GetInteractObject(flags);
+
+                        if (obj != null)
+                        {
+                            Data.Trade.TradePartner = obj;
+                            Data.Trade.IsVisible = true;
+                        }
+                    }                
                     break;
 
                 case AvatarAction.GuildInvite:
