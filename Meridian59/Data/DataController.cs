@@ -1155,32 +1155,50 @@ namespace Meridian59.Data
         /// else the closest object matching filterflags. Also resets 
         /// IsNextAttackApplyCastOnHighlightedObject back to false in case it was used.
         /// </summary>
+        /// <param name="CheckFlagsOnTarget">
+        /// If true, the current target or highlighted object must also match FilterFlags.
+        /// If it does not, a possible closest candidate is returned instead (controlled by UseClosestInstead)
+        /// If false, the current target or highlighted object will be returned no matter of FilterFlags.
+        /// </param>
+        /// <param name="UseClosestInstead">
+        /// If true, will try to use the closest object matching flags in case the target object does not match flags.
+        /// If false will return null if target is set but does not match filter.
+        /// No effect until CheckFlagsOnTarget is also set to True.
+        /// </param>
         /// <param name="FilterFlags">Optional Flags to filter for</param>
         /// <returns></returns>
-        public ObjectBase GetInteractObject(params ObjectFlags[] FilterFlags)
+        public ObjectBase GetInteractObject(bool CheckFlagsOnTarget = false, bool UseClosestInstead = false, params ObjectFlags[] FilterFlags)
         {
-            ObjectBase interactObject = null;
+            ObjectBase obj = null;
 
             // use highlighted
             if (IsNextAttackApplyCastOnHighlightedObject)
             {
                 if (ObjectID.IsValid(RoomObjects.HighlightedID))
-                    interactObject = RoomObjects.GetHighlightedItem();
+                    obj = RoomObjects.GetHighlightedItem();
 
                 // unset nexttarget on highlight
                 IsNextAttackApplyCastOnHighlightedObject = false;
             }
 
             // use current target
-            else if (TargetObject != null)           
-                interactObject = TargetObject;
+            else if (TargetObject != null)
+            {
+                // use target if not checking for flags or if matching flags
+                if (!CheckFlagsOnTarget || TargetObject.Flags.IsSubset(FilterFlags))
+                    obj = TargetObject;
+
+                // use closest instead if enabled
+                else if (UseClosestInstead)
+                    obj = GetClosestObjectInFront(FilterFlags);
+            }
 
             // closest in front matching filter
             else
-                interactObject = GetClosestObjectInFront(FilterFlags);
+                obj = GetClosestObjectInFront(FilterFlags);
 
             // return selection or null
-            return interactObject;
+            return obj;
         }
 
         /// <summary>
@@ -1194,48 +1212,23 @@ namespace Meridian59.Data
                 return null;
            
             // get visible objects within distances
-            List<RoomObject> candidates = avatarObject.GetObjectsWithinDistance(RoomObjects, RoomInformation.ResourceRoom,
-                32.0f, 512.0f, false);
+            List<RoomObject> candidates = avatarObject.GetObjectsWithinDistance(
+                RoomObjects, RoomInformation.ResourceRoom, 32.0f, 512.0f, false);
 
             // get the closest
             Real mindist2 = Real.MaxValue;
             RoomObject minObj = null;
 
-            // with filters
-            if (FilterFlags.Length > 0)
-            {
-                foreach (RoomObject obj in candidates)
+            foreach (RoomObject obj in candidates)
+            {            
+                // matches filter and is closer       
+                if (obj.Flags.IsSubset(FilterFlags) &&
+                    obj.DistanceToAvatarSquared < mindist2)
                 {
-                    foreach (ObjectFlags flags in FilterFlags)
-                    {
-                        if (obj.Flags.IsSubset(flags))
-                        {
-                            // closer than last candidate?
-                            if (obj.DistanceToAvatarSquared < mindist2)
-                            {
-                                // save obj and min dist
-                                mindist2 = obj.DistanceToAvatarSquared;
-                                minObj = obj;
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-
-            // simply the closest of any
-            else
-            {
-                foreach (RoomObject obj in candidates)
-                {
-                    // closer than last candidate?
-                    if (obj.DistanceToAvatarSquared < mindist2)
-                    {
-                        // save obj and min dist
-                        mindist2 = obj.DistanceToAvatarSquared;
-                        minObj = obj;
-                    }
-                }
+                    // save obj and min dist
+                    mindist2 = obj.DistanceToAvatarSquared;
+                    minObj = obj;
+                }                  
             }
             
             return minObj;

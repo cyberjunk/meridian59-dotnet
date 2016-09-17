@@ -1366,7 +1366,7 @@ namespace Meridian59.Client
             attackFlags.IsAttackable = true;
 
             // try to get matching object
-            ObjectBase obj = Data.GetInteractObject(attackFlags);
+            ObjectBase obj = Data.GetInteractObject(false, false, attackFlags);
 
             if (obj != null)
                 SendReqAttackMessage(obj.ID);
@@ -1803,7 +1803,7 @@ namespace Meridian59.Client
             flags.IsActivatable = true;
 
             // try to get an object
-            ObjectBase obj = Data.GetInteractObject(flags);
+            ObjectBase obj = Data.GetInteractObject(true, true, flags);
 
             if (obj != null)
                 SendReqActivate(obj.ID);
@@ -1876,7 +1876,7 @@ namespace Meridian59.Client
             flags.IsBuyable = true;
 
             // try get object to interact with
-            ObjectBase obj = Data.GetInteractObject(flags);
+            ObjectBase obj = Data.GetInteractObject(true, true, flags);
 
             if (obj != null && GameTick.CanInteract(obj.ID))
             {            
@@ -2199,7 +2199,7 @@ namespace Meridian59.Client
             flags.IsContainer = true;
 
             // try get an object
-            ObjectBase obj = Data.GetInteractObject(flags);
+            ObjectBase obj = Data.GetInteractObject(true, true, flags);
 
             if (obj != null)
                 SendSendObjectContents(obj.ID);
@@ -2867,7 +2867,7 @@ namespace Meridian59.Client
                     flags2.IsContainer = true;
 
                     // try find object
-                    obj = Data.GetInteractObject(flags1, flags2);
+                    obj = Data.GetInteractObject(true, true, flags1, flags2);
 
                     if (obj != null)
                     {
@@ -2892,7 +2892,7 @@ namespace Meridian59.Client
                         flags.IsOfferable = true;
 
                         // find object
-                        obj = Data.GetInteractObject(flags);
+                        obj = Data.GetInteractObject(true, true, flags);
 
                         if (obj != null)
                         {
