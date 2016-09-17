@@ -1361,33 +1361,15 @@ namespace Meridian59.Client
         /// </summary>
         public virtual void SendReqAttackMessage()
         {
-            // attack highlighted
-            if (Data.IsNextAttackApplyCastOnHighlightedObject)
-            {
-                if (ObjectID.IsValid(Data.RoomObjects.HighlightedID))               
-                    SendReqAttackMessage(Data.RoomObjects.HighlightedID);
-                
-                // unset nexttarget on highlight
-                Data.IsNextAttackApplyCastOnHighlightedObject = false;
-            }
-           
-            // attack current target
-            else if (Data.TargetObject != null)
-            {
-                SendReqAttackMessage(Data.TargetObject.ID);
-            }     
-      
-            // else attack attackable in front
-            else
-            {
-                ObjectFlags attackFlags  = new ObjectFlags();
-                attackFlags.IsAttackable = true;
+            // define filters
+            ObjectFlags attackFlags = new ObjectFlags();
+            attackFlags.IsAttackable = true;
 
-                RoomObject obj = Data.GetClosestObjectInFront(attackFlags);
+            // try to get matching object
+            ObjectBase obj = Data.GetInteractObject(attackFlags);
 
-                if (obj != null)
-                    SendReqAttackMessage(obj.ID);
-            }
+            if (obj != null)
+                SendReqAttackMessage(obj.ID);
         }
 
         /// <summary>
@@ -1534,30 +1516,11 @@ namespace Meridian59.Client
         /// </summary>
         public virtual void SendReqLookMessage()
         {
-            // inspect highlighted
-            if (Data.IsNextAttackApplyCastOnHighlightedObject)
-            {
-                if (ObjectID.IsValid(Data.RoomObjects.HighlightedID))
-                    SendReqLookMessage(Data.RoomObjects.HighlightedID);
-                
-                // unset nexttarget on highlight
-                Data.IsNextAttackApplyCastOnHighlightedObject = false;
-            }
-            
-            // inspect current target
-            else if (Data.TargetObject != null)
-            {
-                SendReqLookMessage(Data.TargetObject.ID);
-            }
-            
-            // else inspect closest in front
-            else
-            {
-                RoomObject obj = Data.GetClosestObjectInFront();
+            // try to get matching object
+            ObjectBase obj = Data.GetInteractObject();
 
-                if (obj != null)
-                    SendReqLookMessage(obj.ID);
-            }
+            if (obj != null)
+                SendReqLookMessage(obj.ID);
         }
 
         /// <summary>
