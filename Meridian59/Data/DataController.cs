@@ -1151,6 +1151,39 @@ namespace Meridian59.Data
         }
 
         /// <summary>
+        /// Returns the currently highlighted object, or the current target or 
+        /// else the closest object matching filterflags. Also resets 
+        /// IsNextAttackApplyCastOnHighlightedObject back to false in case it was used.
+        /// </summary>
+        /// <param name="FilterFlags">Optional Flags to filter for</param>
+        /// <returns></returns>
+        public ObjectBase GetInteractObject(params ObjectFlags[] FilterFlags)
+        {
+            ObjectBase interactObject = null;
+
+            // use highlighted
+            if (IsNextAttackApplyCastOnHighlightedObject)
+            {
+                if (ObjectID.IsValid(RoomObjects.HighlightedID))
+                    interactObject = RoomObjects.GetHighlightedItem();
+
+                // unset nexttarget on highlight
+                IsNextAttackApplyCastOnHighlightedObject = false;
+            }
+
+            // use current target
+            else if (TargetObject != null)           
+                interactObject = TargetObject;
+
+            // closest in front matching filter
+            else
+                interactObject = GetClosestObjectInFront(FilterFlags);
+
+            // return selection or null
+            return interactObject;
+        }
+
+        /// <summary>
         /// Returns the closest roomobject in front of the avatar.
         /// </summary>
         /// <param name="FilterFlags">Optional Flags to filter for</param>
