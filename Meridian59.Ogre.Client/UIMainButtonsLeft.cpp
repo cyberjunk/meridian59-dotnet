@@ -10,11 +10,11 @@ namespace Meridian59 { namespace Ogre
 		// setup references to children from xml nodes
 		Window	= static_cast<CEGUI::Window*>(guiRoot->getChild(UI_NAME_MAINBUTTONSLEFT_WINDOW));
 		Chat	= static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_MAINBUTTONSLEFT_CHAT));
-		Guild	= static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_MAINBUTTONSLEFT_GUILD));
-		Mail	= static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_MAINBUTTONSLEFT_MAIL));
+		Inventory	= static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_MAINBUTTONSLEFT_INVENTORY));
 		Map		= static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_MAINBUTTONSLEFT_MAP));
-		Options = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_MAINBUTTONSLEFT_OPTIONS));
-		RoomObjects = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_MAINBUTTONSLEFT_ROOMOBJECTS));
+		Spells		= static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_MAINBUTTONSLEFT_SPELLS));
+		Skills		= static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_MAINBUTTONSLEFT_SKILLS));
+		Actions		= static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_MAINBUTTONSLEFT_ACTIONS));
 
 		// set window layout from config
 		Window->setPosition(OgreClient::Singleton->Config->UILayoutMainButtonsLeft->getPosition());
@@ -22,11 +22,11 @@ namespace Meridian59 { namespace Ogre
 
 		// subscribe click to head
 		Chat->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::MainButtonsLeft::OnItemClicked));
-		Guild->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::MainButtonsLeft::OnItemClicked));
-		Mail->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::MainButtonsLeft::OnItemClicked));
+		Inventory->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::MainButtonsLeft::OnItemClicked));
 		Map->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::MainButtonsLeft::OnItemClicked));
-		Options->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::MainButtonsLeft::OnItemClicked));
-		RoomObjects->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::MainButtonsLeft::OnItemClicked));
+		Spells->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::MainButtonsLeft::OnItemClicked));
+		Skills->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::MainButtonsLeft::OnItemClicked));
+		Actions->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::MainButtonsLeft::OnItemClicked));
 
 		// subscribe mouse events
 		Window->subscribeEvent(CEGUI::Window::EventMouseButtonDown, CEGUI::Event::Subscriber(UICallbacks::MainButtonsLeft::OnMouseDown));
@@ -51,32 +51,10 @@ namespace Meridian59 { namespace Ogre
 			ControllerUI::ToggleVisibility(ControllerUI::Chat::Window);
 		}
 
-		// guild clicked
-		else if (args.window == ControllerUI::MainButtonsLeft::Guild)
+		// inventory clicked
+		else if (args.window == ControllerUI::MainButtonsLeft::Inventory)
 		{
-			// hide
-			if (OgreClient::Singleton->Data->GuildInfo->IsVisible)
-				OgreClient::Singleton->Data->GuildInfo->Clear(true);
-
-			// or request info
-			else
-			{
-				OgreClient::Singleton->SendUserCommandGuildInfoReq();
-				OgreClient::Singleton->SendUserCommandGuildGuildListReq();
-				OgreClient::Singleton->SendUserCommandGuildShieldListReq();
-				OgreClient::Singleton->SendUserCommandGuildShieldInfoReq();
-			}
-		}
-
-		// mail clicked
-		else if (args.window == ControllerUI::MainButtonsLeft::Mail)
-		{
-			// show or hide
-			ControllerUI::ToggleVisibility(ControllerUI::Mail::Window);
-
-			// request mail if we made it visible
-			if (ControllerUI::Mail::Window->isVisible())						
-				OgreClient::Singleton->SendReqGetMail();
+			ControllerUI::ToggleVisibility(ControllerUI::Inventory::Window);
 		}
 
 		// map clicked
@@ -85,16 +63,22 @@ namespace Meridian59 { namespace Ogre
 			ControllerUI::ToggleVisibility(ControllerUI::MiniMap::Window);
 		}
 
-		// options clicked
-		else if (args.window == ControllerUI::MainButtonsLeft::Options)
+		// spells clicked
+		else if (args.window == ControllerUI::MainButtonsLeft::Spells)
 		{
-			ControllerUI::ToggleVisibility(ControllerUI::Options::Window);
+			ControllerUI::ToggleVisibility(ControllerUI::Spells::Window);
 		}
 
-		// roomobjects clicked
-		else if (args.window == ControllerUI::MainButtonsLeft::RoomObjects)
+		// skills clicked
+		else if (args.window == ControllerUI::MainButtonsLeft::Skills)
 		{
-			ControllerUI::ToggleVisibility(ControllerUI::RoomObjects::Window);
+			ControllerUI::ToggleVisibility(ControllerUI::Skills::Window);
+		}
+
+		// actions clicked
+		else if (args.window == ControllerUI::MainButtonsLeft::Actions)
+		{
+			ControllerUI::ToggleVisibility(ControllerUI::Actions::Window);
 		}
 
 		return true;

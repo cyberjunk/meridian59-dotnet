@@ -672,11 +672,11 @@ namespace Meridian59 { namespace Ogre
 		public:
 			static ::CEGUI::Window* Window = nullptr;
 			static ::CEGUI::Window* Chat = nullptr;
-			static ::CEGUI::Window* Guild = nullptr;
-			static ::CEGUI::Window* Mail = nullptr;
+			static ::CEGUI::Window* Inventory = nullptr;
 			static ::CEGUI::Window* Map = nullptr;
-			static ::CEGUI::Window* Options = nullptr;
-			static ::CEGUI::Window* RoomObjects = nullptr;
+			static ::CEGUI::Window* Spells = nullptr;
+			static ::CEGUI::Window* Skills = nullptr;
+			static ::CEGUI::Window* Actions = nullptr;
 
 			static void Initialize();
 			static void Destroy();
@@ -690,12 +690,12 @@ namespace Meridian59 { namespace Ogre
 		{
 		public:
 			static ::CEGUI::Window* Window = nullptr;
-			static ::CEGUI::Window* Inventory = nullptr;
-			static ::CEGUI::Window* Spells = nullptr;
-			static ::CEGUI::Window* Skills = nullptr;
-			static ::CEGUI::Window* Actions = nullptr;
+			static ::CEGUI::Window* RoomObjects = nullptr;
 			static ::CEGUI::Window* Attributes = nullptr;
 			static ::CEGUI::Window* Quests = nullptr;
+			static ::CEGUI::Window* Guild = nullptr;
+			static ::CEGUI::Window* Mail = nullptr;
+			static ::CEGUI::Window* Options = nullptr;
 
 			static void Initialize();
 			static void Destroy();

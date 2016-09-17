@@ -714,7 +714,7 @@
          <Property name="Text" value="Quests" />
          <Property name="MaxSize" value="{{0,512},{1,0}}" />
          <Property name="Size" value="{{0,256},{0,192}}" />
-         <Property name="Position" value="{{0.5,-128},{0.5,-128}}" />
+         <Property name="Position" value="{{0.5,-128},{0.3,120}}" />
          
          <!-- List -->
          <Window type="TaharezLook/ItemListbox" name="Quests.List" >
@@ -775,29 +775,19 @@
             <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
          </Window>
          
-         <!-- Guild -->
-         <Window type="TaharezLook/StaticImage" name="MainButtonsLeft.Guild" >
+         <!-- Inventory -->
+         <Window type="TaharezLook/StaticImage" name="MainButtonsLeft.Inventory" >
             <Property name="Area" value="{{0,30},{0,1},{0,58},{0,29}}" />
             <Property name="FrameEnabled" value="False" />
             <Property name="BackgroundEnabled" value="False" />
-            <Property name="Image" value="TaharezLook/MainButtonGuild" />
-            <Property name="TooltipText" value="Guild" />
-            <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
-         </Window>
-         
-         <!-- Mail -->
-         <Window type="TaharezLook/StaticImage" name="MainButtonsLeft.Mail" >
-            <Property name="Area" value="{{0,59},{0,1},{0,87},{0,29}}" />
-            <Property name="FrameEnabled" value="False" />
-            <Property name="BackgroundEnabled" value="False" />
-            <Property name="Image" value="TaharezLook/MainButtonMail" />
-            <Property name="TooltipText" value="Mail" />
+            <Property name="Image" value="TaharezLook/MainButtonInventory" />
+            <Property name="TooltipText" value="Inventory" />
             <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
          </Window>
          
          <!-- Map -->
          <Window type="TaharezLook/StaticImage" name="MainButtonsLeft.Map" >
-            <Property name="Area" value="{{0,88},{0,1},{0,116},{0,29}}" />
+            <Property name="Area" value="{{0,59},{0,1},{0,87},{0,29}}" />
             <Property name="FrameEnabled" value="False" />
             <Property name="BackgroundEnabled" value="False" />
             <Property name="Image" value="TaharezLook/MainButtonMap" />
@@ -805,23 +795,33 @@
             <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
          </Window>
          
-         <!-- RoomObjects -->
-         <Window type="TaharezLook/StaticImage" name="MainButtonsLeft.RoomObjects" >
-            <Property name="Area" value="{{0,117},{0,1},{0,145},{0,29}}" />
+         <!-- Spells -->
+         <Window type="TaharezLook/StaticImage" name="MainButtonsLeft.Spells" >
+            <Property name="Area" value="{{0,88},{0,1},{0,116},{0,29}}" />
             <Property name="FrameEnabled" value="False" />
             <Property name="BackgroundEnabled" value="False" />
-            <Property name="Image" value="TaharezLook/MainButtonEntities" />
-            <Property name="TooltipText" value="Entities" />
+            <Property name="Image" value="TaharezLook/MainButtonSpells" />
+            <Property name="TooltipText" value="Spells" />
             <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
          </Window>
          
-         <!-- Options -->
-         <Window type="TaharezLook/StaticImage" name="MainButtonsLeft.Options" >
+         <!-- Skills -->
+         <Window type="TaharezLook/StaticImage" name="MainButtonsLeft.Skills" >
+            <Property name="Area" value="{{0,117},{0,1},{0,145},{0,29}}" />
+            <Property name="FrameEnabled" value="False" />
+            <Property name="BackgroundEnabled" value="False" />
+            <Property name="Image" value="TaharezLook/MainButtonSkills" />
+            <Property name="TooltipText" value="Skills" />
+            <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
+         </Window>
+         
+         <!-- Actions -->
+         <Window type="TaharezLook/StaticImage" name="MainButtonsLeft.Actions" >
             <Property name="Area" value="{{0,146},{0,1},{0,174},{0,29}}" />
             <Property name="FrameEnabled" value="False" />
             <Property name="BackgroundEnabled" value="False" />
-            <Property name="Image" value="TaharezLook/MainButtonOptions" />
-            <Property name="TooltipText" value="Options" />
+            <Property name="Image" value="TaharezLook/MainButtonActions" />
+            <Property name="TooltipText" value="Actions" />
             <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
          </Window>
       </Window>
@@ -835,49 +835,19 @@
          <Property name="BackgroundEnabled" value="False" />
          <Property name="Image" value="TaharezLook/MainButtonsBackground" />
          
-         <!-- Inventory -->
-         <Window type="TaharezLook/StaticImage" name="MainButtonsRight.Inventory" >
+         <!-- RoomObjects -->
+         <Window type="TaharezLook/StaticImage" name="MainButtonsRight.RoomObjects" >
             <Property name="Area" value="{{0,1},{0,1},{0,29},{0,29}}" />
             <Property name="FrameEnabled" value="False" />
             <Property name="BackgroundEnabled" value="False" />
-            <Property name="Image" value="TaharezLook/MainButtonInventory" />
-            <Property name="TooltipText" value="Inventory" />
-            <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
-         </Window>
-         
-         <!-- Spells -->
-         <Window type="TaharezLook/StaticImage" name="MainButtonsRight.Spells" >
-            <Property name="Area" value="{{0,30},{0,1},{0,58},{0,29}}" />
-            <Property name="FrameEnabled" value="False" />
-            <Property name="BackgroundEnabled" value="False" />
-            <Property name="Image" value="TaharezLook/MainButtonSpells" />
-            <Property name="TooltipText" value="Spells" />
-            <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
-         </Window>
-         
-         <!-- Skills -->
-         <Window type="TaharezLook/StaticImage" name="MainButtonsRight.Skills" >
-            <Property name="Area" value="{{0,59},{0,1},{0,87},{0,29}}" />
-            <Property name="FrameEnabled" value="False" />
-            <Property name="BackgroundEnabled" value="False" />
-            <Property name="Image" value="TaharezLook/MainButtonSkills" />
-            <Property name="TooltipText" value="Skills" />
-            <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
-         </Window>
-         
-         <!-- Actions -->
-         <Window type="TaharezLook/StaticImage" name="MainButtonsRight.Actions" >
-            <Property name="Area" value="{{0,88},{0,1},{0,116},{0,29}}" />
-            <Property name="FrameEnabled" value="False" />
-            <Property name="BackgroundEnabled" value="False" />
-            <Property name="Image" value="TaharezLook/MainButtonActions" />
-            <Property name="TooltipText" value="Actions" />
+            <Property name="Image" value="TaharezLook/MainButtonEntities" />
+            <Property name="TooltipText" value="Entities" />
             <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
          </Window>
          
          <!-- Attributes -->
          <Window type="TaharezLook/StaticImage" name="MainButtonsRight.Attributes" >
-            <Property name="Area" value="{{0,117},{0,1},{0,145},{0,29}}" />
+            <Property name="Area" value="{{0,30},{0,1},{0,58},{0,29}}" />
             <Property name="FrameEnabled" value="False" />
             <Property name="BackgroundEnabled" value="False" />
             <Property name="Image" value="TaharezLook/MainButtonAttributes" />
@@ -887,11 +857,41 @@
          
          <!-- Quests -->
          <Window type="TaharezLook/StaticImage" name="MainButtonsRight.Quests" >
-            <Property name="Area" value="{{0,146},{0,1},{0,174},{0,29}}" />
+            <Property name="Area" value="{{0,59},{0,1},{0,87},{0,29}}" />
             <Property name="FrameEnabled" value="False" />
             <Property name="BackgroundEnabled" value="False" />
             <Property name="Image" value="TaharezLook/MainButtonQuests" />
             <Property name="TooltipText" value="Quests" />
+            <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
+         </Window>
+         
+         <!-- Guild -->
+         <Window type="TaharezLook/StaticImage" name="MainButtonsRight.Guild" >
+            <Property name="Area" value="{{0,88},{0,1},{0,116},{0,29}}" />
+            <Property name="FrameEnabled" value="False" />
+            <Property name="BackgroundEnabled" value="False" />
+            <Property name="Image" value="TaharezLook/MainButtonGuild" />
+            <Property name="TooltipText" value="Guild" />
+            <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
+         </Window>
+         
+         <!-- Mail -->
+         <Window type="TaharezLook/StaticImage" name="MainButtonsRight.Mail" >
+            <Property name="Area" value="{{0,117},{0,1},{0,145},{0,29}}" />
+            <Property name="FrameEnabled" value="False" />
+            <Property name="BackgroundEnabled" value="False" />
+            <Property name="Image" value="TaharezLook/MainButtonMail" />
+            <Property name="TooltipText" value="Mail" />
+            <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
+         </Window>
+         
+         <!-- Options -->
+         <Window type="TaharezLook/StaticImage" name="MainButtonsRight.Options" >
+            <Property name="Area" value="{{0,146},{0,1},{0,174},{0,29}}" />
+            <Property name="FrameEnabled" value="False" />
+            <Property name="BackgroundEnabled" value="False" />
+            <Property name="Image" value="TaharezLook/MainButtonOptions" />
+            <Property name="TooltipText" value="Options" />
             <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
          </Window>
       </Window>
@@ -1105,7 +1105,7 @@
          <Property name="MaxSize" value="{{1,0},{1,0}}" />
          <Property name="Size" value="{{0,600},{0,448}}" />
          <Property name="MinSize" value="{{0,600},{0,256}}" />
-         <Property name="Position" value="{{0.5,-352},{0.5,-228}}" />
+         <Property name="Position" value="{{0.5,-300},{0.5,-224}}" />
          
          <!-- List -->
          <Window type="TaharezLook/MultiColumnList" name="Mail.List" >
@@ -1216,7 +1216,7 @@
          <Property name="MinSize" value="{{0,600},{0,512}}" />
          <Property name="MaxSize" value="{{0,600},{0,512}}" />
          <Property name="SizingEnabled" value="FALSE" />
-         <Property name="Position" value="{{0.5,-256},{0.5,-256}}" />
+         <Property name="Position" value="{{0.5,-300},{0.5,-256}}" />
          
          <!-- TabControl -->
          <Window type="TaharezLook/TabControl" name="Guild.TabControl" >            
