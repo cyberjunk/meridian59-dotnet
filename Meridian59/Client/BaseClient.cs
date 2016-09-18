@@ -2834,20 +2834,41 @@ namespace Meridian59.Client
                     break;
 
                 case AvatarAction.Loot:
-                    // show lootlist on no target
-                    if (Data.TargetID == 0 ||
-                        Data.TargetID > ObjectID.UINT28MAX)
-                    {
-                        Data.RoomObjectsLoot.IsVisible = true;                     
-                    }
-                    // loot all if modifier is pressed
-                    else if (Data.SelfTarget)
+                    // Before we do anything else, check if the modifier
+                    // key is held down. In that case: Loot all and break.
+                    if(Data.SelfTarget)
                     {
                         LootAll();
+                        break;
                     }
-                    // loot target
-                    else if (Data.TargetID > 0)
-                        SendReqGetMessage();
+
+                    // Now, let's check if we have a target
+                    if (Data.TargetObject != null)
+                    {
+                        // Check if it's actually lootable
+                        if (Data.TargetObject.Flags.IsGettable)
+                        {
+                            // Yes it is. Get it and break.
+                            SendReqGetMessage();
+                            break;
+                        }
+                    }
+
+                    // Prevent loot window flickering in held loot button.
+                    if (GameTick.CanReqAction())
+                        GameTick.DidReqAction();
+                    else
+                        break;
+                    
+                    // It looks like we want to loot, but haven't decided what.
+                    // Bring up the loot window if it isn't up yet.
+                    if (!Data.RoomObjectsLoot.IsVisible)
+                        {
+                            Data.RoomObjectsLoot.IsVisible = true;
+                            break;
+                        }
+                    // Loot window was already up. Close again.
+                    Data.RoomObjectsLoot.IsVisible = false;
                     break;
 
                 case AvatarAction.Buy:
