@@ -5373,11 +5373,11 @@
             <Dim type="LeftEdge">
                <UnifiedDim scale="0" offset="80" type="LeftEdge" />
             </Dim>
+            <Dim type="RightEdge">
+               <UnifiedDim scale="1" offset="-53" type="LeftEdge" />
+            </Dim>
             <Dim type="TopEdge">
                <UnifiedDim scale="0" offset="2" type="TopEdge" />
-            </Dim>
-            <Dim type="Width">
-               <UnifiedDim scale="1" offset="-110" type="Width" />
             </Dim>
             <Dim type="Height">
                <UnifiedDim scale="0" offset="20" type="Height"/>
@@ -5496,11 +5496,11 @@
             <Dim type="LeftEdge">
                <UnifiedDim scale="0" offset="26" type="LeftEdge" />
             </Dim>
+            <Dim type="RightEdge">
+               <UnifiedDim scale="1" offset="-53" type="LeftEdge" />
+            </Dim>
             <Dim type="TopEdge">
                <UnifiedDim scale="0" offset="0" type="TopEdge" />
-            </Dim>
-            <Dim type="Width">
-               <UnifiedDim scale="1" offset="-110" type="Width" />
             </Dim>
             <Dim type="Height">
                <UnifiedDim scale="0" offset="20" type="Height"/>

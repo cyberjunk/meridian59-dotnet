@@ -640,9 +640,9 @@
          <Property name="Text" value="Buy" />
          <Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
          <Property name="MaxSize" value="{{0,512},{1,0}}" />
-         <Property name="Size" value="{{0,300},{0,320}}" />
-         <Property name="MinSize" value="{{0,256},{0,144}}" />
-         <Property name="Position" value="{{0.5,-128},{0.5,-192}}" />
+         <Property name="Size" value="{{0,288},{0,320}}" />
+         <Property name="MinSize" value="{{0,192},{0,144}}" />
+         <Property name="Position" value="{{0.5,-144},{0.5,-192}}" />
          
          <!-- List -->
          <Window type="TaharezLook/ItemListbox" name="Buy.List" >
@@ -713,8 +713,8 @@
       <Window type="TaharezLook/FrameWindow" name="Quests" >
          <Property name="Text" value="Quests" />
          <Property name="MaxSize" value="{{0,512},{1,0}}" />
-         <Property name="Size" value="{{0,256},{0,192}}" />
-         <Property name="Position" value="{{0.5,-128},{0.3,120}}" />
+         <Property name="Size" value="{{0,288},{0,192}}" />
+         <Property name="Position" value="{{0.5,-144},{0.3,120}}" />
          
          <!-- List -->
          <Window type="TaharezLook/ItemListbox" name="Quests.List" >
@@ -1890,9 +1890,9 @@
          <Property name="Text" value="Loot" />
          <Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
          <Property name="MaxSize" value="{{1,0},{1,0}}" />
-         <Property name="Size" value="{{0,192},{0,192}}" />
+         <Property name="Size" value="{{0,288},{0,192}}" />
          <Property name="MinSize" value="{{0,192},{0,144}}" />
-         <Property name="Position" value="{{0.5,-96},{0.3,144}}" />
+         <Property name="Position" value="{{0.5,-144},{0.3,144}}" />
          
          <!-- List -->
          <Window type="TaharezLook/ItemListbox" name="LootList.List" >
@@ -3298,21 +3298,21 @@
                         <Property name="Font" value="Berenika-8-Bold" />
                         <Property name="HorzFormatting" value="WordWrapLeftAligned" />                  
                      </Window>   
-                     
+
                      <!-- Disclaimer2 -->
                      <Window type="TaharezLook/LabelWhite" name="Options.TabAbout.TabGeneral.Disclaimer2" >
                         <Property name="Area" value="{{0,10},{0,295},{1,-10},{0,340}}" />         
                         <Property name="HorzFormatting" value="WordWrapLeftAligned" />
-                        <Property name="Text" value="Copyright © 1994-2015 Andrew and Christopher Kirmse. 
-                        Meridian is a registered trademark." />                  
+                        <Property name="Text" value="Copyright © 1994-2015 Andrew and Christopher Kirmse.
+Meridian 59 is a registered trademark." />                  
                      </Window>
 
                      <!-- Disclaimer1Description -->
                      <Window type="TaharezLook/LabelWhite" name="Options.TabAbout.TabGeneral.ThanksKirmses" >
-                        <Property name="Area" value="{{0,20},{0,350},{1,-20},{0,370}}" />         
+                        <Property name="Area" value="{{0,10},{0,350},{1,-10},{0,370}}" />         
                         <Property name="Text" value="Thanks to you for making this game open-source." />
                         <Property name="Font" value="LiberationSans-10-Italic" />
-                        <Property name="HorzFormatting" value="WordWrapLeftAligned" />                     
+                        <Property name="HorzFormatting" value="CentreAligned" />                     
                      </Window>                        
                   </Window>
                   
