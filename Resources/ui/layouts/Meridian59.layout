@@ -3312,7 +3312,7 @@ Meridian 59 is a registered trademark." />
                         <Property name="Area" value="{{0,10},{0,350},{1,-10},{0,370}}" />         
                         <Property name="Text" value="Thanks to you for making this game open-source." />
                         <Property name="Font" value="LiberationSans-10-Italic" />
-                        <Property name="HorzFormatting" value="CentreAligned" />                     
+                        <Property name="HorzFormatting" value="WordWrapLeftAligned" />                     
                      </Window>                        
                   </Window>
                   
