@@ -115,6 +115,11 @@ namespace Meridian59.Protocol
         /// </summary>
         protected DateTime lastPingSent;
 
+        /// <summary>
+        /// True after sending BP_REQ_QUIT and waiting for BP_QUIT.
+        /// </summary>
+        protected bool isQuitting;
+
         #endregion
 
         #region Properties
@@ -255,7 +260,12 @@ namespace Meridian59.Protocol
         /// <param name="Message">The GameMessage instance to be sent</param>
         /// <param name="Flush">Flush TCP buffer or not</param>
         protected void Send(GameMessage Message, bool Flush = true)
-        {           
+        {
+            // surpress accidentially sent messages
+            // after BP_REQ_QUIT and while we're waiting for BP_QUIT (server won't understand)
+            if (isQuitting)
+                return;
+            
             // use MessageController to sign the message with valid CRC and SS
             messageController.SignMessage(Message);
             
@@ -270,13 +280,20 @@ namespace Meridian59.Protocol
                 tcpStream.Flush();
 
             // track sending of UseCharacter message
-            if ((MessageTypeGameMode)Message.PI == MessageTypeGameMode.UseCharacter)
+            if (Message is UseCharacterMessage)
             {
                 // set state
                 connectionState = ConnectionState.Playing;
 
                 // log
                 Logger.Log(MODULENAME, LogType.Info, "ConnectionState: Playing");
+            }
+
+            else if (Message is ReqQuitMessage)
+            {
+                // flip quitting. no more message can be sent
+                // until flipped back to false on BP_QUIT
+                isQuitting = true;
             }
 
             // loop back game message for logging purposes
@@ -466,18 +483,12 @@ namespace Meridian59.Protocol
         /// <param name="e"></param>
         protected void OnMessageControllerNewMessageAvailable(object sender, GameMessageEventArgs e)
         {
-            // Internally process some of the messages  that are linked to the connection
-            switch (messageController.Mode)
-            {
-                case ProtocolMode.Login:
-                    HandleLoginModeMessage(e.Message);
-                    break;
-
-                case ProtocolMode.Game:
-                    HandleGameModeMessage(e.Message);
-                    break;
-            }
-               
+            if (e.Message is LoginModeMessage)           
+                HandleLoginModeMessage((LoginModeMessage)e.Message);
+            
+            else if (e.Message is GameModeMessage)           
+                HandleGameModeMessage((GameModeMessage)e.Message);           
+            
             // Add the message to the received Message queue
             ReceiveQueue.Enqueue(e.Message);
         }
@@ -489,7 +500,7 @@ namespace Meridian59.Protocol
         /// Internally handle some LoginModeMessages
         /// </summary>
         /// <param name="Message"></param>
-        protected void HandleLoginModeMessage(GameMessage Message)
+        protected void HandleLoginModeMessage(LoginModeMessage Message)
         {
             switch ((MessageTypeLoginMode)Message.PI)
             {
@@ -515,7 +526,7 @@ namespace Meridian59.Protocol
         /// Internally handle some GameModeMessages
         /// </summary>
         /// <param name="Message"></param>
-        protected void HandleGameModeMessage(GameMessage Message)
+        protected void HandleGameModeMessage(GameModeMessage Message)
         {
             switch ((MessageTypeGameMode)Message.PI)
             {
@@ -535,6 +546,10 @@ namespace Meridian59.Protocol
                     connectionState = ConnectionState.Playing;
 
                     Logger.Log(MODULENAME, LogType.Info, "ConnectionState: Playing");
+                    break;
+
+                case MessageTypeGameMode.Quit:
+                    isQuitting = false;
                     break;
             }
         }
