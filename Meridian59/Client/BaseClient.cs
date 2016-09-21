@@ -2333,6 +2333,9 @@ namespace Meridian59.Client
 
             // send/enqueue it (async)
             ServerConnection.SendQueue.Enqueue(message);
+
+            // flip to waiting like serversave
+            Data.IsWaiting = true;
         }
 
         /// <summary>

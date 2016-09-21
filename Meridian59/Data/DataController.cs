@@ -880,6 +880,9 @@ namespace Meridian59.Data
             // reset UI mode
             UIMode = UIMode.None;
 
+            // reset waiting flag
+            IsWaiting = false;
+
             // reset others
             Invalidate();
         }
