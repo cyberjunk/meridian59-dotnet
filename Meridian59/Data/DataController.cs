@@ -876,7 +876,10 @@ namespace Meridian59.Data
             // clear values
             ChatCommandHistoryIndex = -1;
             ViewerPosition = V3.ZERO;
-            
+
+            // reset UI mode
+            UIMode = UIMode.None;
+
             // reset others
             Invalidate();
         }
