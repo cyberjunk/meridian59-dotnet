@@ -175,6 +175,13 @@ namespace Meridian59.Data.Models
                     }     
                     break;
 
+                case ChatCommandBalance.KEY1:
+                    if (splitted.Length == 1)
+                    {
+                        returnValue = new ChatCommandBalance();
+                    }
+                    break;
+
                 case ChatCommandSuicide.KEY1:
                     if (splitted.Length == 1)
                     {

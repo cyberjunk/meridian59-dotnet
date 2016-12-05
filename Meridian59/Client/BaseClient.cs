@@ -931,6 +931,19 @@ namespace Meridian59.Client
         }
 
         /// <summary>
+        /// Requests to have bank balance displayed.
+        /// </summary>
+        public virtual void SendUserCommandBalance()
+        {
+            // create message instance
+            UserCommandBalance userCommand = new UserCommandBalance();
+            UserCommandMessage message = new UserCommandMessage(userCommand, null);
+
+            // send/enqueue it (async)
+            ServerConnection.SendQueue.Enqueue(message);
+        }
+
+        /// <summary>
         /// Requests the basic info about your guild
         /// </summary>
         public virtual void SendUserCommandGuildInfoReq()
@@ -2720,6 +2733,10 @@ namespace Meridian59.Client
                     case ChatCommandType.WithDraw:
                         ChatCommandWithDraw chatCommandWithDraw = (ChatCommandWithDraw)chatCommand;
                         SendUserCommandWithDraw(chatCommandWithDraw.Amount);
+                        break;
+
+                    case ChatCommandType.Balance:
+                        SendUserCommandBalance();
                         break;
 
                     case ChatCommandType.Suicide:
