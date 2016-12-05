@@ -1226,19 +1226,19 @@ namespace Meridian59.Client
         /// <param name="Rank3Female"></param>
         /// <param name="Rank4Female"></param>
         /// <param name="Rank5Female"></param>
-        /// <param name="SecredGuild"></param>
+        /// <param name="SecretGuild"></param>
         public virtual void SendUserCommandGuildCreate(
             string GuildName,
             string Rank1Male, string Rank2Male, string Rank3Male, string Rank4Male, string Rank5Male, 
             string Rank1Female, string Rank2Female, string Rank3Female, string Rank4Female, string Rank5Female, 
-            bool SecredGuild)
+            bool SecretGuild)
         {
             // create user command
             UserCommand command = new UserCommandGuildCreate(
                 GuildName,
                 Rank1Male, Rank2Male, Rank3Male, Rank4Male, Rank5Male, 
                 Rank1Female, Rank2Female, Rank3Female, Rank4Female, Rank5Female, 
-                SecredGuild);
+                SecretGuild);
 
             // create message
             UserCommandMessage message = new UserCommandMessage(command, null);

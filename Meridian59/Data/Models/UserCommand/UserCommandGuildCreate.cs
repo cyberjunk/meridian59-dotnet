@@ -229,7 +229,7 @@ namespace Meridian59.Data.Models
             string GuildName,
             string Rank1Male, string Rank2Male, string Rank3Male, string Rank4Male, string Rank5Male, 
             string Rank1Female, string Rank2Female, string Rank3Female, string Rank4Female, string Rank5Female, 
-            bool SecredGuild)
+            bool SecretGuild)
         {
             this.GuildName = GuildName;
             this.Rank1Male = Rank1Male;
