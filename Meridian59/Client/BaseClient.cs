@@ -1742,6 +1742,20 @@ namespace Meridian59.Client
         }
 
         /// <summary>
+        /// Sends an appeal with a message.
+        /// </summary>
+        /// <param name="Text"></param>
+        public virtual void SendUserCommandAppeal(string Text)
+        {
+            // create message instance
+            UserCommandAppeal userCommand = new UserCommandAppeal(Text);
+            UserCommandMessage message = new UserCommandMessage(userCommand, null);
+
+            // send/enqueue it (async)
+            ServerConnection.SendQueue.Enqueue(message);
+        }
+
+        /// <summary>
         /// Requests to use (equip) an inventory item.
         /// </summary>
         /// <param name="ID"></param>
@@ -2713,6 +2727,11 @@ namespace Meridian59.Client
                     case ChatCommandType.Guild:
                         ChatCommandGuild chatCommandGuild = (ChatCommandGuild)chatCommand;
                         SendSayToMessage(ChatTransmissionType.Guild, chatCommandGuild.Text);
+                        break;
+
+                    case ChatCommandType.Appeal:
+                        ChatCommandAppeal chatCommandAppeal = (ChatCommandAppeal)chatCommand;
+                        SendUserCommandAppeal(chatCommandAppeal.Text);
                         break;
 
                     case ChatCommandType.Tell:

@@ -14,18 +14,27 @@
  If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Meridian59.Common.Enums
-{
-    /// <summary>
-    /// Different types of chatcommands
-    /// </summary>
-    public enum ChatCommandType
-    {
-        Say, Emote, Yell, Broadcast, Tell, Guild, Cast, DM, Go, GoPlayer, GetPlayer,
-        WithDraw, Deposit, Suicide, Rest, Stand, Quit, Balance, Appeal
+using System;
+using Meridian59.Common.Enums;
 
-#if !VANILLA
-        , TempSafe, Grouping, AutoLoot, AutoCombine, ReagentBag, SpellPower
-#endif
+namespace Meridian59.Data.Models
+{
+    [Serializable]
+    public class ChatCommandAppeal: ChatCommand
+    {
+        public const string KEY1 = "appeal";
+
+        public override ChatCommandType CommandType { get { return ChatCommandType.Appeal; } }
+        public string Text { get; set; }
+
+        public ChatCommandAppeal()
+        {
+            Text = String.Empty;
+        }
+
+        public ChatCommandAppeal(string Text)
+        {
+            this.Text = Text;
+        }
     }
 }

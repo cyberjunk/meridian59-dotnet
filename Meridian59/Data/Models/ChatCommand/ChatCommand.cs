@@ -145,6 +145,14 @@ namespace Meridian59.Data.Models
                     }
                     break;
 
+                case ChatCommandAppeal.KEY1:
+                    if (splitted.Length > 1)
+                    {
+                        text = String.Join(DELIMITER.ToString(), splitted, 1, splitted.Length - 1);
+                        returnValue = new ChatCommandAppeal(text);
+                    }
+                    break;
+
                 case ChatCommandTell.KEY1:
                 case ChatCommandTell.KEY2:
                     returnValue = ParseTell(splitted, lower, DataController);                                           
