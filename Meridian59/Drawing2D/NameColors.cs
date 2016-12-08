@@ -47,9 +47,13 @@ namespace Meridian59.Drawing2D
         public static uint GetColorFor(ObjectFlags Flags)
         {
 #if !VANILLA
+            uint color;
             // openmeridian has a name-color transferred from server in flags
             // however it has opacity set to 0, so we make it full opaque here.
-            uint color = Flags.NameColor | 0xFF000000;
+            if (Flags.IsMagicItem)
+                color = MAGIC | 0xFF000000;
+            else
+                color = Flags.NameColor | 0xFF000000;
 
             // lots of kod objects have black as color
             // which is turned into white as a workaround here
