@@ -211,6 +211,14 @@ namespace Meridian59.Data.Models
                     returnValue = new UserCommandWithDraw(Buffer, StartIndex);
                     break;
 
+                case UserCommandType.Balance:                                                           // 37
+                    returnValue = new UserCommandBalance(Buffer, StartIndex);
+                    break;
+
+                case UserCommandType.Appeal:                                                            // 40
+                    returnValue = new UserCommandAppeal(Buffer, StartIndex);
+                    break;
+
                 default:
                     returnValue = new UserCommandGeneric(Buffer, StartIndex, Length);
                     break;

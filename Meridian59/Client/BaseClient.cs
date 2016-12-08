@@ -931,6 +931,19 @@ namespace Meridian59.Client
         }
 
         /// <summary>
+        /// Requests to have bank balance displayed.
+        /// </summary>
+        public virtual void SendUserCommandBalance()
+        {
+            // create message instance
+            UserCommandBalance userCommand = new UserCommandBalance();
+            UserCommandMessage message = new UserCommandMessage(userCommand, null);
+
+            // send/enqueue it (async)
+            ServerConnection.SendQueue.Enqueue(message);
+        }
+
+        /// <summary>
         /// Requests the basic info about your guild
         /// </summary>
         public virtual void SendUserCommandGuildInfoReq()
@@ -1213,19 +1226,19 @@ namespace Meridian59.Client
         /// <param name="Rank3Female"></param>
         /// <param name="Rank4Female"></param>
         /// <param name="Rank5Female"></param>
-        /// <param name="SecredGuild"></param>
+        /// <param name="SecretGuild"></param>
         public virtual void SendUserCommandGuildCreate(
             string GuildName,
             string Rank1Male, string Rank2Male, string Rank3Male, string Rank4Male, string Rank5Male, 
             string Rank1Female, string Rank2Female, string Rank3Female, string Rank4Female, string Rank5Female, 
-            bool SecredGuild)
+            bool SecretGuild)
         {
             // create user command
             UserCommand command = new UserCommandGuildCreate(
                 GuildName,
                 Rank1Male, Rank2Male, Rank3Male, Rank4Male, Rank5Male, 
                 Rank1Female, Rank2Female, Rank3Female, Rank4Female, Rank5Female, 
-                SecredGuild);
+                SecretGuild);
 
             // create message
             UserCommandMessage message = new UserCommandMessage(command, null);
@@ -1726,6 +1739,20 @@ namespace Meridian59.Client
         public virtual void SendSayGroupMessage(uint TargetID, string Text)
         {
             SendSayGroupMessage(new uint[] { TargetID }, Text);
+        }
+
+        /// <summary>
+        /// Sends an appeal with a message.
+        /// </summary>
+        /// <param name="Text"></param>
+        public virtual void SendUserCommandAppeal(string Text)
+        {
+            // create message instance
+            UserCommandAppeal userCommand = new UserCommandAppeal(Text);
+            UserCommandMessage message = new UserCommandMessage(userCommand, null);
+
+            // send/enqueue it (async)
+            ServerConnection.SendQueue.Enqueue(message);
         }
 
         /// <summary>
@@ -2702,6 +2729,11 @@ namespace Meridian59.Client
                         SendSayToMessage(ChatTransmissionType.Guild, chatCommandGuild.Text);
                         break;
 
+                    case ChatCommandType.Appeal:
+                        ChatCommandAppeal chatCommandAppeal = (ChatCommandAppeal)chatCommand;
+                        SendUserCommandAppeal(chatCommandAppeal.Text);
+                        break;
+
                     case ChatCommandType.Tell:
                         ChatCommandTell chatCommandTell = (ChatCommandTell)chatCommand;
                         SendSayGroupMessage(chatCommandTell.TargetID, chatCommandTell.Text);
@@ -2720,6 +2752,10 @@ namespace Meridian59.Client
                     case ChatCommandType.WithDraw:
                         ChatCommandWithDraw chatCommandWithDraw = (ChatCommandWithDraw)chatCommand;
                         SendUserCommandWithDraw(chatCommandWithDraw.Amount);
+                        break;
+
+                    case ChatCommandType.Balance:
+                        SendUserCommandBalance();
                         break;
 
                     case ChatCommandType.Suicide:

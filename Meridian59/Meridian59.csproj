@@ -132,6 +132,8 @@
     <Compile Include="Data\Models\AdminInfoProperty.cs" />
     <Compile Include="Data\Models\AdminInfoObject.cs" />
     <Compile Include="Data\Models\AdminInfo.cs" />
+    <Compile Include="Data\Models\ChatCommand\ChatCommandBalance.cs" />
+    <Compile Include="Data\Models\ChatCommand\ChatCommandAppeal.cs" />
     <Compile Include="Data\Models\ClientPatchInfo.cs" />
     <Compile Include="Data\Models\GroupMember.cs" />
     <Compile Include="Data\Models\GuildHall.cs" />
@@ -171,12 +173,14 @@
     <Compile Include="Data\Models\PlayerOverlay.cs" />
     <Compile Include="Data\Models\KeyValuePairString.cs" />
     <Compile Include="Data\Models\RoomInfoFlags.cs" />
+    <Compile Include="Data\Models\UserCommand\UserCommandAppeal.cs" />
     <Compile Include="Data\Models\UserCommand\UserCommandGuildAbandonHall.cs" />
     <Compile Include="Data\Models\UserCommand\UserCommandGuildHalls.cs" />
     <Compile Include="Data\Models\UserCommand\UserCommandGuildRent.cs" />
     <Compile Include="Data\Models\UserCommand\UserCommandReceivePreferences.cs" />
     <Compile Include="Data\Models\UserCommand\UserCommandReqPreferences.cs" />
     <Compile Include="Data\Models\UserCommand\UserCommandClaimShield.cs" />
+    <Compile Include="Data\Models\UserCommand\UserCommandBalance.cs" />
     <Compile Include="Data\Models\UserCommand\UserCommandSendPreferences.cs" />
     <Compile Include="Data\Models\UserCommand\UserCommandSuicide.cs" />
     <Compile Include="Data\Models\UserCommand\UserCommandDeposit.cs" />
