@@ -257,6 +257,13 @@ namespace Meridian59.Data.Models
                 case ChatCommandSpellPower.KEY1:
                     returnValue = ParseSpellPower(splitted, lower, DataController);
                     break;
+
+                case ChatCommandTime.KEY1:
+                    if (splitted.Length == 1)
+                    {
+                        returnValue = new ChatCommandTime();
+                    }
+                    break;
 #endif
             }
             

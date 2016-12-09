@@ -134,6 +134,7 @@
     <Compile Include="Data\Models\AdminInfo.cs" />
     <Compile Include="Data\Models\ChatCommand\ChatCommandBalance.cs" />
     <Compile Include="Data\Models\ChatCommand\ChatCommandAppeal.cs" />
+    <Compile Include="Data\Models\ChatCommand\ChatCommandTime.cs" />
     <Compile Include="Data\Models\ClientPatchInfo.cs" />
     <Compile Include="Data\Models\GroupMember.cs" />
     <Compile Include="Data\Models\GuildHall.cs" />
@@ -174,6 +175,7 @@
     <Compile Include="Data\Models\KeyValuePairString.cs" />
     <Compile Include="Data\Models\RoomInfoFlags.cs" />
     <Compile Include="Data\Models\UserCommand\UserCommandAppeal.cs" />
+    <Compile Include="Data\Models\UserCommand\UserCommandTime.cs" />
     <Compile Include="Data\Models\UserCommand\UserCommandGuildAbandonHall.cs" />
     <Compile Include="Data\Models\UserCommand\UserCommandGuildHalls.cs" />
     <Compile Include="Data\Models\UserCommand\UserCommandGuildRent.cs" />

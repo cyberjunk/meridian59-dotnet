@@ -76,6 +76,10 @@ namespace Meridian59.Common.Enums
         MiniGameState       = 46,
         MiniGameMove        = 47,
         MiniGamePlayer      = 48,
-        MiniGameResetPlayers= 49        
+        MiniGameResetPlayers= 49,
+
+#if !VANILLA
+        Time                = 60
+#endif
     }
 }
