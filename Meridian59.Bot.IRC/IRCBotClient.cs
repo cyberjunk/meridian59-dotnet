@@ -477,12 +477,12 @@ namespace Meridian59.Bot.IRC
 
             if (words.Length > 0)
             {
-                if ((Regex.Match(words[0], @"^(dm|get|go|echo)", RegexOptions.IgnoreCase)).Success)
+                if ((Regex.Match(words[0], @"^(get|go|echo)", RegexOptions.IgnoreCase)).Success)
                 {
                     
                     IrcClient.LocalUser.SendMessage(
                         IrcChannel,
-                        e.Source.Name + " you can't use this feature. This incident has been logged");
+                        e.Source.Name + " you can't use this feature. This incident has been logged.");
                     foreach (string admin in Config.Admins)
                     {
                         // try get channeluser by name

@@ -3,5 +3,5 @@ The bot will automatically detect when being executed as service.
 --------------------------------------------------------
 Example:
 
-sc create M59-IRC-BOT binPath="C:\IRCBot\Meridian59.IRC.Bot.exe"
+sc create M59-IRC-BOT binPath="C:\IRCBot\Meridian59.Bot.IRC.exe"
 
