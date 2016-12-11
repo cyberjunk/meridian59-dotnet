@@ -901,6 +901,19 @@ namespace Meridian59.Client
             // send/enqueue it (async)
             ServerConnection.SendQueue.Enqueue(message);
         }
+
+        /// <summary>
+        /// Requests the time from the server.
+        /// </summary>
+        public virtual void SendUserCommandTime()
+        {
+            // create message instance
+            UserCommandTime userCommand = new UserCommandTime();
+            UserCommandMessage message = new UserCommandMessage(userCommand, null);
+
+            // send/enqueue it (async)
+            ServerConnection.SendQueue.Enqueue(message);
+        }
 #endif
         /// <summary>
         /// Requests to deposit something to the closest NPC? (no ID!)
@@ -2825,6 +2838,10 @@ namespace Meridian59.Client
                     case ChatCommandType.SpellPower:
                         Data.ClientPreferences.SpellPower = ((ChatCommandSpellPower)chatCommand).On;
                         SendUserCommandSendPreferences();
+                        break;
+
+                    case ChatCommandType.Time:
+                        SendUserCommandTime();
                         break;
 #endif
                 }

@@ -218,7 +218,11 @@ namespace Meridian59.Data.Models
                 case UserCommandType.Appeal:                                                            // 40
                     returnValue = new UserCommandAppeal(Buffer, StartIndex);
                     break;
-
+#if !VANILLA
+                case UserCommandType.Time:                                                              // 60
+                    returnValue = new UserCommandTime(Buffer, StartIndex);
+                    break;
+#endif
                 default:
                     returnValue = new UserCommandGeneric(Buffer, StartIndex, Length);
                     break;
