@@ -17,6 +17,7 @@
 using System;
 using System.Threading;
 using System.ComponentModel;
+using System.Collections.Generic;
 using Meridian59.Common;
 using Meridian59.Common.Enums;
 using Meridian59.Protocol.GameMessages;
@@ -42,7 +43,7 @@ namespace Meridian59.Bot.IRC
         /// <summary>
         /// The IRC client from the lib
         /// </summary>
-        public IrcClient IrcClient { get; protected set; }
+        public StandardIrcClient IrcClient { get; protected set; }
         
         /// <summary>
         /// Once successfully connected and joined,
@@ -61,6 +62,17 @@ namespace Meridian59.Bot.IRC
         /// thread and read by the bot mainthread later.
         /// </summary>
         public LockingQueue<string> AdminCommandQueue { get; protected set; }
+
+        /// <summary>
+        /// WhoX queries to be sent.
+        /// </summary>
+        public LockingQueue<string> WhoXQueryQueue { get; protected set; }
+
+        public Dictionary<string, bool> UserRegistration { get; protected set; }
+
+        public bool DisplayMessages { get; set; }
+
+        public List<string> RecentAdmins { get; protected set; }
 
         /// <summary>
         /// Constructor
@@ -84,9 +96,19 @@ namespace Meridian59.Bot.IRC
             // create IRC command queues
             ChatCommandQueue = new LockingQueue<string>();
             AdminCommandQueue = new LockingQueue<string>();
+            WhoXQueryQueue = new LockingQueue<string>();
+
+            // Whether bot echoes to IRC or not.
+            DisplayMessages = true;
+
+            // Create list for keeping track of user registration.
+            UserRegistration = new Dictionary<string, bool>();
+
+            // Init list of recent admins to send a command.
+            RecentAdmins = new List<string>();
 
             // create an IRC client instance
-            IrcClient = new IrcClient();
+            IrcClient = new StandardIrcClient();
             IrcClient.FloodPreventer = new FloodPreventer(Config.MaxBurst, Config.Refill);
             
             // hook up IRC client event handlers
@@ -97,6 +119,7 @@ namespace Meridian59.Bot.IRC
             IrcClient.Disconnected += OnIrcClientDisconnected;
             IrcClient.Registered += OnIrcClientRegistered;
             IrcClient.ProtocolError += OnIrcClientProtocolError;
+            IrcClient.WhoXReplyReceived += OnWhoXReplyReceived;
 
             // build our IRC connection info
             IrcUserRegistrationInfo regInfo = new IrcUserRegistrationInfo();
@@ -129,13 +152,15 @@ namespace Meridian59.Bot.IRC
                 IrcClient.Disconnected -= OnIrcClientDisconnected;
                 IrcClient.Registered -= OnIrcClientRegistered;
                 IrcClient.ProtocolError -= OnIrcClientProtocolError;
-               
+                IrcClient.WhoXReplyReceived -= OnWhoXReplyReceived;
                 IrcClient.Disconnect();
                 IrcClient.Dispose();
                 IrcClient = null;
 
                 IrcChannel = null;
             }
+
+            RecentAdmins.Clear();
 
             base.Cleanup();
         }
@@ -161,7 +186,7 @@ namespace Meridian59.Bot.IRC
             base.HandleSaidMessage(Message);
 
             // log chat from players to IRC
-            if (IrcClient.IsRegistered && IrcChannel != null)
+            if (DisplayMessages && IrcClient.IsRegistered && IrcChannel != null)
             {
                 // build a str to log
                 // this has a prefix (e.g. "103: ") and a m59 message
@@ -187,7 +212,8 @@ namespace Meridian59.Bot.IRC
             const string ignore1 = "Your safety is now";
             
             // starts with prefix and does not contain ignores
-            if (s.IndexOf(prefix) == 0 && 
+            if (DisplayMessages &&
+                s.IndexOf(prefix) == 0 && 
                 s.IndexOf(ignore1) == -1 &&
                 IrcClient.IsRegistered && 
                 IrcChannel != null)
@@ -220,13 +246,27 @@ namespace Meridian59.Bot.IRC
             {
                 // IRC does not allow \r \n \0 
                 // so we remove \0 and remove \r\n by splitting up into lines               
-                string[] lines = SplitLinebreaks(Message.Message.Replace("\0", String.Empty));
+                string[] lines = Util.SplitLinebreaks(Message.Message.Replace("\0", String.Empty));
+
+                // Only want to send to any admins who've sent a command since last GC.
+                // Other admins don't need to know about GC.
+                List<string> recipients;
+                bool clearRecent = false;
+                if (Util.IsGarbageCollectMessage(lines[0]))
+                {
+                    recipients = RecentAdmins;
+                    clearRecent = true;
+                }
+                else
+                {
+                    recipients = Config.Admins;
+                }
 
                 // forward line by line
                 foreach (string line in lines)
                 {
                     // forward this line to each admin
-                    foreach (string admin in Config.Admins)
+                    foreach (string admin in recipients)
                     {
                         // try get channeluser by name
                         IrcChannelUser usr = GetChannelUser(admin);
@@ -235,6 +275,10 @@ namespace Meridian59.Bot.IRC
                         if (usr != null)
                             IrcClient.LocalUser.SendMessage(admin, line);
                     }
+                }
+                if (clearRecent)
+                {
+                    RecentAdmins.Clear();
                 }
             }
         }
@@ -256,7 +300,12 @@ namespace Meridian59.Bot.IRC
         {
             base.Update();
 
-            string command;
+            // Just send one at a time.
+            if (WhoXQueryQueue.TryDequeue(out string command))
+            {
+                SendWhoXQuery(command);
+                Thread.Sleep(1500);
+            }
 
             // execute the chatcommands - this is all which work in the 3d client also
             // like tell, say, broadcast - but also "dm", "getplayer" etc.
@@ -286,23 +335,6 @@ namespace Meridian59.Bot.IRC
             
             // default
             return null;
-        }
-
-        /// <summary>
-        /// Utility: IRC does not allow line breaks - 
-        /// so we have to split up into lines first.
-        /// </summary>
-        /// <returns></returns>
-        public static string[] SplitLinebreaks(string Text)
-        {            
-            // replace \r\n linebreaks (adminconsole) with \n
-            string s = Text.Replace("\r\n", "\n");
-
-            // remove single \r
-            s = s.Replace("\r", String.Empty);
-
-            // now split into lines by \n
-            return s.Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
         }
 
         #region IRC client events
@@ -345,7 +377,7 @@ namespace Meridian59.Bot.IRC
         {
             IrcClient.LocalUser.JoinedChannel += OnLocalUserJoinedChannel;
             IrcClient.LocalUser.MessageReceived += OnLocalUserMessageReceived;
-            
+
             // join the IRC channel
             IrcClient.Channels.Join(Config.Channel);
         }
@@ -388,6 +420,9 @@ namespace Meridian59.Bot.IRC
 
             // hook up new message listener
             e.Channel.MessageReceived += OnMessageReceived;
+            e.Channel.UserJoined += OnUserJoined;
+            e.Channel.UserLeft += OnUserLeft;
+            e.Channel.UsersListReceived += OnUsersListReceived;
 
             string ver = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
@@ -456,16 +491,28 @@ namespace Meridian59.Bot.IRC
                 // Ignore messages without @prefix start.
                 if (!relayMsg && e.Text.IndexOf("@" + Config.ChatPrefix) != 0)
                     return;
-                // only allow operators
-                if (!usr.Modes.Contains('o'))
+
+                // only allowed users and admins can use the bot
+                if (!(Config.AllowedUsers.Contains(e.Source.Name)
+                        || Config.Admins.Contains(e.Source.Name)))
                 {
                     // respond user he can't use this feature
                     IrcClient.LocalUser.SendMessage(
                         IrcChannel,
-                        e.Source.Name + " you can't use this feature. Only operators allowed.");
+                        e.Source.Name + " you can't use this feature.");
 
                     return;
                 }
+
+                if (!IsUserRegistered(e.Source.Name))
+                {
+                    // Must have registered nickname.
+                    IrcClient.LocalUser.SendMessage(IrcChannel,
+                        e.Source.Name + " you must register your nickname to use this feature.");
+
+                    return;
+                }
+
                 // now remove the @103 start
                 s = e.Text.Substring(Config.ChatPrefix.Length + 1 + 1);
             }
@@ -477,9 +524,8 @@ namespace Meridian59.Bot.IRC
 
             if (words.Length > 0)
             {
-                if ((Regex.Match(words[0], @"^(get|go|echo)", RegexOptions.IgnoreCase)).Success)
+                if (Util.IsDisallowedDMCommand(words[0]))
                 {
-                    
                     IrcClient.LocalUser.SendMessage(
                         IrcChannel,
                         e.Source.Name + " you can't use this feature. This incident has been logged.");
@@ -581,48 +627,167 @@ namespace Meridian59.Bot.IRC
             if (usr == null)
                 return;
 
-            // only allow operators
-            if (!usr.Modes.Contains('o'))
-                return;
-
             // only allow ADMINS from config
-            if (Config.Admins.Contains(e.Source.Name))
-            {
-                // invalid
-                if (e.Text == null || e.Text == String.Empty)
-                    return;
-
-                // get first space in text
-                int firstspace = e.Text.IndexOf(' ');
-                    
-                // either use first part up to first space or full text if no space
-                string comtype = 
-                    (firstspace > 0) ? e.Text.Substring(0, firstspace) : comtype = e.Text;
-
-                // check if commandtype is allowed
-                if (Config.AdminCommands.Contains(comtype))
-                {
-                    // enqueue it for execution
-                    AdminCommandQueue.Enqueue(e.Text);
-                }
-                else
-                {
-                    // respond admin he can't use this admincommand
-                    IrcClient.LocalUser.SendMessage(
-                        e.Source.Name,
-                        e.Source.Name + " you can't use the admin command '" + comtype + "'");
-                }                              
-            }
-            else
+            if (!Config.Admins.Contains(e.Source.Name))
             {
                 // respond user he can't use this feature
                 IrcClient.LocalUser.SendMessage(
                     e.Source.Name,
                     e.Source.Name + " you can't use the admin console - Only admins allowed.");
+                return;
+            }
+
+            // Must be registered.
+            if (!IsUserRegistered(e.Source.Name))
+            {
+                // respond user he can't use this feature
+                IrcClient.LocalUser.SendMessage(
+                    e.Source.Name,
+                    e.Source.Name + " you can't use the admin console - nickname must be registered.");
+                return;
+            }
+
+            // invalid
+            if (e.Text == null || e.Text == String.Empty)
+                return;
+
+            Log("ADM", e.Source.Name + " used the command " + e.Text);
+
+            // Bot admin command?
+            if (e.Text.StartsWith("@"))
+            {
+                IRCAdminBotCommand.ParseAdminCommand(e.Source.Name, e.Text, this);
+
+                return;
+            }
+
+            // get first space in text
+            int firstspace = e.Text.IndexOf(' ');
+                    
+            // either use first part up to first space or full text if no space
+            string comtype = 
+                (firstspace > 0) ? e.Text.Substring(0, firstspace) : comtype = e.Text;
+
+            // check if commandtype is allowed
+            if (Config.AdminCommands.Contains(comtype))
+            {
+                // Record this admin as recent.
+                if (!RecentAdmins.Contains(e.Source.Name))
+                    RecentAdmins.Add(e.Source.Name);
+                // enqueue it for execution
+                AdminCommandQueue.Enqueue(e.Text);
+            }
+            else
+            {
+                // respond admin he can't use this admincommand
+                IrcClient.LocalUser.SendMessage(
+                    e.Source.Name,
+                    e.Source.Name + " you can't use the admin command '" + comtype + "'");
             }
         }
 
-        #endregion       
+        /// <summary>
+        /// Invoked when a user joins the IRC channel.
+        /// Calls a nick registration check on the user.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void OnUserJoined(object sender, IrcChannelUserEventArgs e)
+        {
+            // Perform WhoIs query to determine registration status on user.
+            UserRegCheck(e.ChannelUser.User.NickName);
+        }
+
+        /// <summary>
+        /// Invoked when a user leaves the IRC channel.
+        /// Removes the user from the user registration list.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void OnUserLeft(object sender, IrcChannelUserEventArgs e)
+        {
+            RemoveUserRegistration(e.ChannelUser.User.NickName);
+        }
+
+        protected void OnUsersListReceived(object sender, EventArgs e)
+        {
+            IrcClient.QueryWhoX(IrcChannel.Name,"%a");
+        }
+
+        /// <summary>
+        /// Invoked when a RPL_WHOSPCRPL message is received from IRC server.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void OnWhoXReplyReceived(object sender, IrcRawMessageEventArgs e)
+        {
+            if (e == null || e.RawContent == null)
+                return;
+            if (!e.RawContent.Equals("0"))
+                AddUserRegistration(e.RawContent, true);
+            Log("IRC", "Received WhoX response for " + e.RawContent);
+        }
+        #endregion
+
+        #region User nick registrations
+        /// <summary>
+        /// Returns the registration status of user with nickname Name.
+        /// </summary>
+        /// <param name="Name"></param>
+        /// <returns></returns>
+        public bool IsUserRegistered(string Name)
+        {
+            UserRegistration.TryGetValue(Name, out bool isRegistered);
+
+            return isRegistered;
+        }
+
+        /// <summary>
+        /// Adds a user nickname registration to list.
+        /// </summary>
+        /// <param name="Name"></param>
+        /// <param name="IsRegistered"></param>
+        private void AddUserRegistration(string Name, bool IsRegistered)
+        {
+            if (UserRegistration.TryGetValue(Name, out bool isAlreadyRegistered))
+                UserRegistration[Name] = IsRegistered;
+            else
+                UserRegistration.Add(Name, IsRegistered);
+        }
+
+        /// <summary>
+        /// Removes a user nickname registration from list.
+        /// </summary>
+        /// <param name="Name"></param>
+        private void RemoveUserRegistration(string Name)
+        {
+            if (UserRegistration.ContainsKey(Name))
+                UserRegistration.Remove(Name);
+        }
+
+        /// <summary>
+        /// Enqueue a message to send a WhoX query for the nickname.
+        /// and a nickname.
+        /// </summary>
+        /// <param name="Name"></param>
+        public void UserRegCheck(string Name)
+        {
+            if (Name != string.Empty)
+            {
+                WhoXQueryQueue.Enqueue(Name);
+            }
+        }
+
+        /// <summary>
+        /// Send a WhoX (who extended) query to IRC server, with
+        /// %a flag for returning logged-in account status.
+        /// </summary>
+        /// <param name="Message"></param>
+        private void SendWhoXQuery(string Name)
+        {
+            IrcClient.QueryWhoX(Name, "%a");
+        }
+        #endregion
     }
 
 }
