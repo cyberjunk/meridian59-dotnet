@@ -94,7 +94,7 @@
 
     <connection
       name="112"
-      host="meridian112.arantis.eu"
+      host="meridian112.meridian59.de"
       port="5912"
       stringdictionary="rsc0000-112.rsb"
       username="user"
