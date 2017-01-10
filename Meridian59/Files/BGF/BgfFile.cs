@@ -519,6 +519,15 @@ namespace Meridian59.Files.BGF
         }
         #endregion
 
+        /// <summary>
+        /// Converts all frames from vale colortable to new color table.
+        /// </summary>
+        public void ConvertFromVale()
+        {
+            foreach (BgfBitmap f in Frames)
+                f.ConvertFromVale();
+        }
+
         #region BUILDDEPENDENT
 
 #if DRAWING
