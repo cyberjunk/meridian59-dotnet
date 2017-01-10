@@ -239,9 +239,13 @@ namespace Meridian59.Drawing2D
         {
             Palettes = new uint[PALETTECOUNT][];
             LightPalettes = new uint[LIGHTLEVELS + 1][];
+            bool useVale = false;
 
+#if VALEBGF
+            useVale = true;
+#endif
             // load default palette from resource (also called IDENTITY)
-            Palettes[0] = GetDefaultPalette();
+            Palettes[0] = GetDefaultPalette(useVale);
 
             BlockIndices();
 
