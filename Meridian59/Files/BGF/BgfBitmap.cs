@@ -1256,10 +1256,6 @@ namespace Meridian59.Files.BGF
         {
             bool returnValue = true;
 
-            // check if it's BMP format
-            if (!Bitmap.RawFormat.Equals(ImageFormat.Bmp))
-                returnValue = false;
-
             // make sure it's 8bpp indexed
             if (Bitmap.PixelFormat != PixelFormat.Format8bppIndexed)
                 returnValue = false;
