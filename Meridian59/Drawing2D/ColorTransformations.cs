@@ -615,17 +615,14 @@ namespace Meridian59.Drawing2D
         /// <summary>
         /// Returns the default colorpalette from embedded byte[] colortable
         /// </summary>
+        /// <param name="UseVale">If true will use the super old colortable of vale of sorrow.</param>
         /// <returns></returns>
-        private static unsafe uint[] GetDefaultPalette()
+        private static unsafe uint[] GetDefaultPalette(bool UseVale = false)
         {
             uint[] pal = new uint[COLORCOUNT];
-
-#if VALEBGF
+            
             // very old vale of sorrow and internet quest begins come with their own colortable
-            byte[] colortable = Resources.BitmapColorTableVale;
-#else
-            byte[] colortable = Resources.BitmapColorTable;
-#endif
+            byte[] colortable = (UseVale) ? Resources.BitmapColorTableVale : Resources.BitmapColorTable;
 
             fixed (byte* ptable = colortable)
             {
