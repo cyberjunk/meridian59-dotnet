@@ -31,6 +31,11 @@ namespace Meridian59.Drawing2D
         /// The GDI+ colortable variants of core library palettes
         /// </summary>
         public static ColorPalette[] Palettes;
+        
+        /// <summary>
+        /// The GDI+ colortable variant of the core library vale of sorrow palette
+        /// </summary>
+        public static ColorPalette PaletteVale;
 
         /// <summary>
         /// Create GDI+ palettes from core library palettes.
@@ -41,6 +46,8 @@ namespace Meridian59.Drawing2D
 
             for (int i = 0; i < ColorTransformation.PALETTECOUNT; i++)
                 Palettes[i] = GetColorPalette(ColorTransformation.Palettes[i]);
+
+            PaletteVale = GetColorPalette(ColorTransformation.DefaultPaletteVale);
         }
 
         /// <summary>
@@ -66,9 +73,9 @@ namespace Meridian59.Drawing2D
         /// Creates a bitmap of a palette with size 16x16. Each pixel has the
         /// color of the corresponding palette index.
         /// </summary>
-        /// <param name="Index"></param>
+        /// <param name="Palette"></param>
         /// <returns></returns>
-        public unsafe static System.Drawing.Bitmap GetPaletteBitmap(byte Index)
+        public unsafe static System.Drawing.Bitmap GetPaletteBitmap(ColorPalette Palette)
         {
             // create bitmap
             System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(
@@ -97,7 +104,7 @@ namespace Meridian59.Drawing2D
             bmp.UnlockBits(data);
 
             // set palette
-            bmp.Palette = Palettes[Index];
+            bmp.Palette = Palette;
 
             return bmp;
         }

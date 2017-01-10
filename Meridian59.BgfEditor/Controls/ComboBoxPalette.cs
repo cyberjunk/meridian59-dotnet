@@ -31,6 +31,9 @@ namespace Meridian59.BgfEditor.Controls
                 Items.Add("(" + prefix + i.ToString() + ") - " + ColorTransformation.GetNameOfPalette((byte)i));
             }
 
+            // add the special legacy vale palette last
+            Items.Add("(999) - VALE OF SORROW)");
+
             SelectedIndex = 0;
         }
     }

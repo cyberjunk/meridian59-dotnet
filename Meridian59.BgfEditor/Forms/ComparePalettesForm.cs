@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -16,8 +17,8 @@ namespace Meridian59.BgfEditor
         {           
             InitializeComponent();
 
-            picPaletteLeft.Image = PalettesGDI.GetPaletteBitmap(0);
-            picPaletteRight.Image = PalettesGDI.GetPaletteBitmap(0);
+            picPaletteLeft.Image = PalettesGDI.GetPaletteBitmap(PalettesGDI.Palettes[0]);
+            picPaletteRight.Image = PalettesGDI.GetPaletteBitmap(PalettesGDI.Palettes[0]);
         }
 
         private void cbPaletteLeft_SelectedIndexChanged(object sender, EventArgs e)
@@ -31,8 +32,11 @@ namespace Meridian59.BgfEditor
                 oldImg.Dispose();
             }
 
-            picPaletteLeft.Image = PalettesGDI.GetPaletteBitmap(
-                (byte)cbPaletteLeft.SelectedIndex);
+            // pick palette or special vale palette
+            ColorPalette pal = (cbPaletteLeft.SelectedIndex > 255) ? PalettesGDI.PaletteVale 
+                : PalettesGDI.Palettes[(byte)cbPaletteLeft.SelectedIndex];
+
+            picPaletteLeft.Image = PalettesGDI.GetPaletteBitmap(pal);
         }
 
         private void cbPaletteRight_SelectedIndexChanged(object sender, EventArgs e)
@@ -46,8 +50,11 @@ namespace Meridian59.BgfEditor
                 oldImg.Dispose();
             }
 
-            picPaletteRight.Image = PalettesGDI.GetPaletteBitmap(
-                (byte)cbPaletteRight.SelectedIndex);
+            // pick palette or special vale palette
+            ColorPalette pal = (cbPaletteRight.SelectedIndex > 255) ? PalettesGDI.PaletteVale
+                : PalettesGDI.Palettes[(byte)cbPaletteRight.SelectedIndex];
+
+            picPaletteRight.Image = PalettesGDI.GetPaletteBitmap(pal);
         }
     }
 }
