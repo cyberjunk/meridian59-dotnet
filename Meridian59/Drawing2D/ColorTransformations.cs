@@ -619,7 +619,13 @@ namespace Meridian59.Drawing2D
         private static unsafe uint[] GetDefaultPalette()
         {
             uint[] pal = new uint[COLORCOUNT];
+
+#if VALEBGF
+            // very old vale of sorrow and internet quest begins come with their own colortable
+            byte[] colortable = Resources.BitmapColorTableVale;
+#else
             byte[] colortable = Resources.BitmapColorTable;
+#endif
 
             fixed (byte* ptable = colortable)
             {

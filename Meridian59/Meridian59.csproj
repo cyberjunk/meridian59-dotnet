@@ -600,6 +600,7 @@
     <Compile Include="zlib\ZStreamException.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="colortable-vale.hex" />
     <None Include="colortable.hex" />
     <None Include="Design\ClientComponents.cd" />
     <None Include="Design\ClientClassHierarchy.cd" />
