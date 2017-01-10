@@ -498,6 +498,20 @@ namespace Meridian59.BgfEditor
             frm.Show();
         }
 
+        protected void OnMenuConverFromValeColors(object sender, EventArgs e)
+        {
+            if (Program.CurrentFile == null)
+                return;
+
+            foreach (BgfBitmap bmp in Program.CurrentFile.Frames)
+                bmp.ConvertFromVale();
+
+            UpdateFrameNums();
+            UpdateFrameSetFlow();
+            SetAnimation();
+            OnFramesSelectionChanged(this, null);
+        }
+
         protected void OnMenuComparePalettesClick(object sender, EventArgs e)
         {
             ComparePalettesForm frm = new ComparePalettesForm();
