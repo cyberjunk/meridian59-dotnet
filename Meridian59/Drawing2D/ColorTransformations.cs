@@ -239,13 +239,9 @@ namespace Meridian59.Drawing2D
         {
             Palettes = new uint[PALETTECOUNT][];
             LightPalettes = new uint[LIGHTLEVELS + 1][];
-            bool useVale = false;
 
-#if VALEBGF
-            useVale = true;
-#endif
             // load default palette from resource (also called IDENTITY)
-            Palettes[0] = GetDefaultPalette(useVale);
+            Palettes[0] = GetDefaultPalette(false);
 
             BlockIndices();
 
@@ -259,6 +255,9 @@ namespace Meridian59.Drawing2D
             // with transparent color set to black
             DefaultPaletteBlackTransparency = ClonePalette(DefaultPalette);
             DefaultPaletteBlackTransparency[TRANSPARENTCOLORINDEX] = 0x00000000;
+
+            // create the legacy vale of sorrow palette
+            DefaultPaletteVale = GetDefaultPalette(true);
         }
 
         /// <summary>
@@ -284,6 +283,15 @@ namespace Meridian59.Drawing2D
         /// black instead of cyan.
         /// </summary>
         public static uint[] DefaultPaletteBlackTransparency
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// The default palette used in Vale of Sorrow and before.
+        /// </summary>
+        public static uint[] DefaultPaletteVale
         {
             get;
             private set;
@@ -565,7 +573,7 @@ namespace Meridian59.Drawing2D
         /// <param name="Palette">256 ARGB colors</param>
         /// <param name="InputColor">ARGB color</param>
         /// <returns></returns>
-        private static int GetClosestPaletteIndex(uint[] Palette, uint InputColor)
+        public static int GetClosestPaletteIndex(uint[] Palette, uint InputColor)
         {
             uint color;
             byte r, g, b;

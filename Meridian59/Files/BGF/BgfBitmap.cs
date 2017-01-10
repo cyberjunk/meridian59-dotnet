@@ -1139,6 +1139,34 @@ namespace Meridian59.Files.BGF
         }
         #endregion
 
+        /// <summary>
+        /// Converts pixeldata from legacy color table of Vale of Sorrow into new table.
+        /// </summary>
+        public void ConvertFromVale()
+        {
+            // make sure pixeldata is uncompressed
+            IsCompressed = false;
+
+            // find best color match in new table for each pixel
+            for(int i = 0; i < pixeldata.Length; i++)
+            {
+                // get vale color for index
+                uint valeColor = ColorTransformation.DefaultPaletteVale[pixeldata[i]];
+
+                // get index of best match in new color table
+                byte idx = (byte)ColorTransformation.GetClosestPaletteIndex(ColorTransformation.DefaultPalette, valeColor);
+
+                // save
+                pixeldata[i] = idx;
+
+                // get the new color
+                //uint newcolor = ColorTransformation.DefaultPalette[idx];
+
+                // notify about changed pixeldata
+                RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_PIXELDATA));
+            }
+        }
+
         #region Static
         /// <summary>
         /// Blank, transparent dummy (1 pixel, 1x1)
