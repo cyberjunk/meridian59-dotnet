@@ -3,6 +3,6 @@ namespace Meridian59.BgfEditor
 {
     public enum SourceTargetMode
     {
-        Extract, Decompress, SetVersion9, SetVersion10
+        Extract, Decompress, SetVersion9, SetVersion10, SetVersion10FromVale
     }
 }

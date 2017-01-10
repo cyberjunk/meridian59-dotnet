@@ -44,6 +44,7 @@
             this.menuConvertAllToV10 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuConvertAllToV9 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuComparePalettes = new System.Windows.Forms.ToolStripMenuItem();
+            this.convertFromValeColorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.menuAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.tabMain = new System.Windows.Forms.TabControl();
@@ -118,7 +119,7 @@
             this.fdAddFrame = new System.Windows.Forms.OpenFileDialog();
             this.fdOpenFile = new System.Windows.Forms.OpenFileDialog();
             this.fdSaveFile = new System.Windows.Forms.SaveFileDialog();
-            this.convertFromValeColorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.convertAllToV10zlibFromValeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tabFrames.SuspendLayout();
@@ -233,9 +234,10 @@
             this.menuExportAllBGFToXML,
             this.menuDecompressAllBGF,
             this.menuConvertAllToV10,
+            this.convertAllToV10zlibFromValeToolStripMenuItem,
             this.menuConvertAllToV9,
-            this.menuComparePalettes,
-            this.convertFromValeColorsToolStripMenuItem});
+            this.convertFromValeColorsToolStripMenuItem,
+            this.menuComparePalettes});
             this.menuTasks.Name = "menuTasks";
             this.menuTasks.Size = new System.Drawing.Size(47, 20);
             this.menuTasks.Text = "Tools";
@@ -243,37 +245,44 @@
             // menuExportAllBGFToXML
             // 
             this.menuExportAllBGFToXML.Name = "menuExportAllBGFToXML";
-            this.menuExportAllBGFToXML.Size = new System.Drawing.Size(217, 22);
+            this.menuExportAllBGFToXML.Size = new System.Drawing.Size(249, 22);
             this.menuExportAllBGFToXML.Text = "Export all BGF to XML/BMP";
             this.menuExportAllBGFToXML.Click += new System.EventHandler(this.OnMenuExportAllBGFToXMLClick);
             // 
             // menuDecompressAllBGF
             // 
             this.menuDecompressAllBGF.Name = "menuDecompressAllBGF";
-            this.menuDecompressAllBGF.Size = new System.Drawing.Size(217, 22);
+            this.menuDecompressAllBGF.Size = new System.Drawing.Size(249, 22);
             this.menuDecompressAllBGF.Text = "Decompress all BGF";
             this.menuDecompressAllBGF.Click += new System.EventHandler(this.OnMenuDecompressAllBGFClick);
             // 
             // menuConvertAllToV10
             // 
             this.menuConvertAllToV10.Name = "menuConvertAllToV10";
-            this.menuConvertAllToV10.Size = new System.Drawing.Size(217, 22);
+            this.menuConvertAllToV10.Size = new System.Drawing.Size(249, 22);
             this.menuConvertAllToV10.Text = "Convert all to V10 (zlib)";
             this.menuConvertAllToV10.Click += new System.EventHandler(this.OnMenuConvertAllToV10Click);
             // 
             // menuConvertAllToV9
             // 
             this.menuConvertAllToV9.Name = "menuConvertAllToV9";
-            this.menuConvertAllToV9.Size = new System.Drawing.Size(217, 22);
+            this.menuConvertAllToV9.Size = new System.Drawing.Size(249, 22);
             this.menuConvertAllToV9.Text = "Convert all to V9 (crush32)";
             this.menuConvertAllToV9.Click += new System.EventHandler(this.OnMenuConvertAllToV9Click);
             // 
             // menuComparePalettes
             // 
             this.menuComparePalettes.Name = "menuComparePalettes";
-            this.menuComparePalettes.Size = new System.Drawing.Size(217, 22);
+            this.menuComparePalettes.Size = new System.Drawing.Size(249, 22);
             this.menuComparePalettes.Text = "Compare palettes";
             this.menuComparePalettes.Click += new System.EventHandler(this.OnMenuComparePalettesClick);
+            // 
+            // convertFromValeColorsToolStripMenuItem
+            // 
+            this.convertFromValeColorsToolStripMenuItem.Name = "convertFromValeColorsToolStripMenuItem";
+            this.convertFromValeColorsToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
+            this.convertFromValeColorsToolStripMenuItem.Text = "Convert this from Vale colors";
+            this.convertFromValeColorsToolStripMenuItem.Click += new System.EventHandler(this.OnMenuConverFromValeColors);
             // 
             // menuHelp
             // 
@@ -1119,12 +1128,12 @@
             this.fdSaveFile.Filter = "BGF-File|*.bgf|XML-File|*.xml";
             this.fdSaveFile.FileOk += new System.ComponentModel.CancelEventHandler(this.OnFileDialogSaveFileOk);
             // 
-            // convertFromValeColorsToolStripMenuItem
+            // convertAllToV10zlibFromValeToolStripMenuItem
             // 
-            this.convertFromValeColorsToolStripMenuItem.Name = "convertFromValeColorsToolStripMenuItem";
-            this.convertFromValeColorsToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
-            this.convertFromValeColorsToolStripMenuItem.Text = "Convert from Vale colors";
-            this.convertFromValeColorsToolStripMenuItem.Click += new System.EventHandler(this.OnMenuConverFromValeColors);
+            this.convertAllToV10zlibFromValeToolStripMenuItem.Name = "convertAllToV10zlibFromValeToolStripMenuItem";
+            this.convertAllToV10zlibFromValeToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
+            this.convertAllToV10zlibFromValeToolStripMenuItem.Text = "Convert all to V10 (zlib) from Vale";
+            this.convertAllToV10zlibFromValeToolStripMenuItem.Click += new System.EventHandler(this.OnMenuConvertAllToV10FromValeClick);
             // 
             // MainForm
             // 
@@ -1290,6 +1299,7 @@
         public System.Windows.Forms.PictureBox picAnimation;
         public System.Windows.Forms.Button btnPlay;
         private System.Windows.Forms.ToolStripMenuItem convertFromValeColorsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem convertAllToV10zlibFromValeToolStripMenuItem;
     }
 }
 

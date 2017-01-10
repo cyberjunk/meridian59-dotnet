@@ -491,6 +491,13 @@ namespace Meridian59.BgfEditor
             frm.Show();
         }
 
+        protected void OnMenuConvertAllToV10FromValeClick(object sender, EventArgs e)
+        {
+            SourceTargetForm frm = new SourceTargetForm();
+            frm.Mode = SourceTargetMode.SetVersion10FromVale;
+            frm.Show();
+        }
+
         protected void OnMenuConvertAllToV9Click(object sender, EventArgs e)
         {
             SourceTargetForm frm = new SourceTargetForm();

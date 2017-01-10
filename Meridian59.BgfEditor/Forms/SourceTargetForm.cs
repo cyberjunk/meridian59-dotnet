@@ -117,6 +117,25 @@ namespace Meridian59.BgfEditor
                             }
                         }
                         break;
+
+                    case SourceTargetMode.SetVersion10FromVale:
+                        foreach (string file in files)
+                        {
+                            try
+                            {
+                                BgfFile bgf = new BgfFile(file);
+                                bgf.ConvertFromVale();
+                                bgf.Version = BgfFile.VERSION10;
+                                bgf.Save(txtTarget.Text + "\\" + bgf.Filename + ".bgf");
+
+                                txtLog.Text += "Converted " + bgf.Filename + ".bgf" + " to V10 (zlib)" + Environment.NewLine;
+                            }
+                            catch (Exception)
+                            {
+                                txtLog.Text += "Error with file " + file;
+                            }
+                        }
+                        break;
                 }
             }
         }
