@@ -1105,6 +1105,74 @@ namespace Meridian59.Files.BGF
                 targetindex += rightstride;
             }
         }
+
+        public unsafe void FillPixelDataAsA8R8G8B8TransparencyBlackScaled(
+            uint* Buffer, 
+            uint UnderlayWidth, 
+            uint UnderlayHeight, 
+            uint OverlayX, 
+            uint OverlayY, 
+            uint OverlayWidth, 
+            uint OverlayHeight,
+            byte Palette)
+        {
+            // widht and height ratios
+            float wr = (float)Width / (float)OverlayWidth;
+            float hr = (float)Height / (float)OverlayHeight;
+
+            // box
+            uint startX = OverlayX;
+            uint startY = OverlayY;
+            uint endX = OverlayX + OverlayWidth;
+            uint endY = OverlayY + OverlayHeight;
+
+            // rowstride to skip right and bottom
+            uint rightstride = UnderlayWidth - endX;
+
+            // possibly decompress first
+            if (IsCompressed)
+                IsCompressed = false;
+
+            // select palette
+            uint[] colorPal = ColorTransformation.Palettes[Palette];
+
+            float srcX = 0.0f;
+            float srcY = 0.0f;
+            uint targetindex = OverlayY * UnderlayWidth + OverlayX;
+            for (uint i = startY; i < endY; i++)
+            {
+                // walk pixels of row
+                for (uint j = startX; j < endX; j++)
+                {
+                    // round to actual pixel positions
+                    uint srcIntX = (uint)srcX;
+                    uint srcIntY = (uint)srcY;
+
+                    // calculate index in linear layout and get pixel color from index
+                    uint srcIdx = width * srcIntY + srcIntX;
+                    uint srcColorIdx = PixelData[srcIdx];
+
+                    // get color from table for this pixel and write color to output
+                    // but skip transparent pixels
+                    if (srcColorIdx != 254)
+                        Buffer[targetindex] = colorPal[srcColorIdx];
+
+                    // raise targetindex
+                    targetindex++;
+
+                    // increment in float
+                    srcX += wr;
+                }
+
+                // skip right stride and next left stride
+                targetindex += rightstride;
+                targetindex += startX;
+
+                // reset srcX and increment srcY
+                srcX = 0.0f;
+                srcY += hr;
+            }
+        }
         #endregion
 
         #region IClearable
