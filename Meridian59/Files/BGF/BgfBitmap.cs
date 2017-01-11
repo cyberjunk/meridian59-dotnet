@@ -1248,26 +1248,10 @@ namespace Meridian59.Files.BGF
 
 #if DRAWING
         /// <summary>
-        /// Verifies the Bitmap argument is a 8bpp indexed BMP
-        /// </summary>
-        /// <param name="Bitmap"></param>
-        /// <returns></returns>
-        public static bool IsValid(Bitmap Bitmap)
-        {
-            bool returnValue = true;
-
-            // make sure it's 8bpp indexed
-            if (Bitmap.PixelFormat != PixelFormat.Format8bppIndexed)
-                returnValue = false;
-
-            return returnValue;
-        }
-
-        /// <summary>
         /// Creates a PixelData byte[] without stride from a 256 indexedcolor Bitmap instance
         /// </summary>
         /// <returns>PixelData byte[] like it's stored in binary BGF</returns>
-        public static byte[] BitmapToPixelData(Bitmap Bitmap)
+        public static unsafe byte[] BitmapToPixelData(Bitmap Bitmap)
         {
             // difference to next multiple of 4
             uint stride = MathUtil.NextMultipleOf4((uint)Bitmap.Width) - (uint)Bitmap.Width;
@@ -1280,17 +1264,61 @@ namespace Meridian59.Files.BGF
 
             // lock bits
             BitmapData pixelData = Bitmap.LockBits(
-                lockRectangle, ImageLockMode.ReadOnly, PixelFormat.Format8bppIndexed);
+                lockRectangle, ImageLockMode.ReadOnly, Bitmap.PixelFormat);
 
-            // remove additional 0x00 because of "BMP row multiple of 4"
-            IntPtr readoffset = pixelData.Scan0;
-            int writeoffset = 0;
-            for (uint i = 0; i < Bitmap.Height; i++)
+            // based on pixelformat
+            if (Bitmap.PixelFormat == PixelFormat.Format8bppIndexed)
             {
-                Marshal.Copy(readoffset, pixels, writeoffset, Bitmap.Width);
+                byte* readoffset = (byte*)pixelData.Scan0.ToPointer();
+                int writeoffset = 0;
+                for (uint i = 0; i < Bitmap.Height; i++)
+                {
+                    for (uint j = 0; j < Bitmap.Width; j++)
+                    {
+                        
+                        pixels[writeoffset] = (byte)ColorTransformation.GetClosestPaletteIndex(
+                            ColorTransformation.DefaultPalette, (uint)Bitmap.Palette.Entries[*readoffset].ToArgb());
 
-                readoffset += pixelData.Stride;
-                writeoffset += Bitmap.Width;
+                        readoffset++;
+                        writeoffset++;
+                    }
+
+                    // skip remaining stride bytes
+                    readoffset += (pixelData.Stride - pixelData.Width);
+                }
+            }
+            else if (Bitmap.PixelFormat == PixelFormat.Format24bppRgb)
+            {
+                byte* readoffset = (byte*)pixelData.Scan0.ToPointer();
+                int writeoffset = 0;
+                for (uint i = 0; i < Bitmap.Height; i++)
+                {
+                    for (uint j = 0; j < Bitmap.Width; j++)
+                    {
+                        pixels[writeoffset] = (byte)ColorTransformation.GetClosestPaletteIndex(
+                            ColorTransformation.DefaultPalette, *((uint*)readoffset) & 0x00FFFFFF);
+
+                        readoffset += 3;
+                        writeoffset++;
+                    }
+                }
+            }
+            else if (Bitmap.PixelFormat == PixelFormat.Format32bppArgb ||
+                     Bitmap.PixelFormat == PixelFormat.Format32bppRgb)
+            {
+                uint* readoffset = (uint*)pixelData.Scan0.ToPointer();
+                int writeoffset = 0;
+                for (uint i = 0; i < Bitmap.Height; i++)
+                {
+                    for (uint j = 0; j < Bitmap.Width; j++)
+                    {
+                        pixels[writeoffset] = (byte)ColorTransformation.GetClosestPaletteIndex(
+                            ColorTransformation.DefaultPalette, *readoffset);
+
+                        readoffset++;
+                        writeoffset++;
+                    }
+                }
             }
 
             // unlock bits
@@ -1352,10 +1380,6 @@ namespace Meridian59.Files.BGF
         /// </summary>
         public void SetBitmap(Bitmap Bitmap)
         {
-            // validate (8bit indexed?)
-            if (!IsValid(Bitmap))
-                throw new Exception(BgfBitmap.ERRORIMAGEFORMAT);
-
             // Update Width/Height values
             Width = (uint)Bitmap.Width;
             Height = (uint)Bitmap.Height;
