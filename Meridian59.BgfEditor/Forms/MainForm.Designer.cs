@@ -1115,7 +1115,7 @@
             // 
             // fdAddFrame
             // 
-            this.fdAddFrame.Filter = "8-Bit Bitmap |*.bmp";
+            this.fdAddFrame.Filter = "Images|*.png;*.jpg;*.bmp";
             this.fdAddFrame.FileOk += new System.ComponentModel.CancelEventHandler(this.OnFileDialogAddFrameFileOk);
             // 
             // fdOpenFile
