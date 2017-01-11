@@ -57,9 +57,10 @@ namespace Meridian59.Common
         protected static readonly double MSTICKDIVISOR = (double)Stopwatch.Frequency / 1000.0;
 
         /// <summary>
-        /// Stopwatch object, usually high resolution on most CLR
+        /// Static Stopwatch object, usually high resolution on most CLR.
+        /// Shared across all possible instances!
         /// </summary>
-        protected readonly Stopwatch watch = new Stopwatch();
+        protected static readonly Stopwatch watch = new Stopwatch();
 
         #region Ticks
         /// <summary>
@@ -199,14 +200,20 @@ namespace Meridian59.Common
         }
 
         /// <summary>
+        /// Static constructor
+        /// </summary>
+        static GameTick()
+        {
+            // start watch
+            watch.Start();
+        }
+
+        /// <summary>
         /// Constructor
         /// </summary>
         public GameTick()
         {
             Interactions = new Dictionary<uint, double>();
-
-            // start watch
-            watch.Start();
         }
 
         /// <summary>
@@ -229,7 +236,7 @@ namespace Meridian59.Common
         /// This might be later than Current, depending on thread cycle duration.
         /// </summary>
         /// <returns></returns>
-        public double GetUpdatedTick()
+        public static double GetUpdatedTick()
         {
             return (double)watch.ElapsedTicks / MSTICKDIVISOR;
         }

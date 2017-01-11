@@ -42,6 +42,7 @@ namespace Meridian59.Protocol
     {
         #region Constants
         protected const int SLEEPTIME = 5;
+        protected const string MODULENAME = "MessageEnrichment";
         #endregion
 
         #region Fields
@@ -75,7 +76,7 @@ namespace Meridian59.Protocol
             
             // mark running
             IsRunning = true;
-
+            
             // start own workthread
             workThread = new Thread(ThreadProc);
             workThread.IsBackground = true;
@@ -283,10 +284,15 @@ namespace Meridian59.Protocol
         #region Message handlers
         protected virtual void HandlePlayerMessage(PlayerMessage Message)
         {
+            double tick = GameTick.GetUpdatedTick();
+
             Message.RoomInfo.ResolveResources(resourceManager, false);
  
             if (Message.RoomInfo.ResourceRoom != null)                             
-                Message.RoomInfo.ResourceRoom.UncompressAll();                            
+                Message.RoomInfo.ResourceRoom.UncompressAll();
+
+            double span = GameTick.GetUpdatedTick() - tick;
+            Logger.Log(MODULENAME, LogType.Info, "Loaded BP_PLAYER: " + span.ToString() + " ms");
         }
 
         protected virtual void HandleStatMessage(StatMessage Message)
@@ -310,11 +316,16 @@ namespace Meridian59.Protocol
 
         protected virtual void HandleRoomContentsMessage(RoomContentsMessage Message)
         {
+            double tick = GameTick.GetUpdatedTick();
+
             foreach (RoomObject obj in Message.RoomObjects)
             {
                 obj.ResolveResources(resourceManager, false);
                 obj.DecompressResources();
             }
+
+            double span = GameTick.GetUpdatedTick() - tick;
+            Logger.Log(MODULENAME, LogType.Info, "Loaded BP_ROOM_CONTENTS: " + span.ToString() + " ms");
         }
 
         protected virtual void HandleObjectContentsMessage(ObjectContentsMessage Message)
@@ -334,11 +345,16 @@ namespace Meridian59.Protocol
 
         protected virtual void HandleSpellsMessage(SpellsMessage Message)
         {
+            double tick = GameTick.GetUpdatedTick();
+
             foreach (SpellObject obj in Message.SpellObjects)
             {
                 obj.ResolveResources(resourceManager, false);
                 obj.DecompressResources();
             }
+
+            double span = GameTick.GetUpdatedTick() - tick;
+            Logger.Log(MODULENAME, LogType.Info, "Loaded BP_SPELLS: " + span.ToString() + " ms");
         }
 
         protected virtual void HandleSpellAddMessage(SpellAddMessage Message)
@@ -435,11 +451,16 @@ namespace Meridian59.Protocol
 
         protected virtual void HandleInventoryMessage(InventoryMessage Message)
         {
+            double tick = GameTick.GetUpdatedTick();
+
             foreach (ObjectBase obj in Message.InventoryObjects)
             {
                 obj.ResolveResources(resourceManager, false);
                 obj.DecompressResources();
             }
+
+            double span = GameTick.GetUpdatedTick() - tick;
+            Logger.Log(MODULENAME, LogType.Info, "Loaded BP_INVENTORY: " + span.ToString() + " ms");
         }
 
         protected virtual void HandleInventoryAddMessage(InventoryAddMessage Message)
