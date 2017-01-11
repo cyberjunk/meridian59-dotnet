@@ -873,4 +873,93 @@ namespace Meridian59 { namespace Ogre
 		}
 	}
 #pragma endregion
+
+#pragma region Native
+	bool ImageBuilder::Native::Initialize()
+	{
+		// don't init twice
+		if (IsInitialized)
+			return false;
+	
+		// load glow background resource
+		HANDLE handle = ::LoadImage(
+			::GetModuleHandle(0),
+			MAKEINTRESOURCE(IDB_GLOW),
+			IMAGE_BITMAP, // type
+			BGICONWIDTH, // actual width
+			BGICONHEIGHT, // actual height
+			LR_CREATEDIBSECTION); // flags make sure it stays 8bpp indexed
+
+		// create gdi bitmap for background
+		::System::Drawing::Bitmap^ bgBmp = ::System::Drawing::Image::FromHbitmap(::System::IntPtr(handle));
+	
+		// create bgf from bitmap
+		background = gcnew BgfBitmap();
+		background->SetBitmap(bgBmp);
+		delete bgBmp;
+
+		// clean
+		DeleteObject(handle);
+
+		// mark initialized
+		IsInitialized = true;
+
+		return true;
+	};
+
+	void ImageBuilder::Native::Destroy()
+	{
+		// must be initialized to destroy
+		if (!IsInitialized)
+			return;
+
+		IsInitialized = false;
+	}
+
+	void ImageBuilder::Native::PrepareDraw(::Ogre::String TextureName, int Width, int Height, bool AddToCEGUI)
+	{
+		width = Width;
+		height = Height;
+
+		::Ogre::TextureManager* texMan = ::Ogre::TextureManager::getSingletonPtr();
+
+		// create manual (empty) texture
+		::Ogre::TexturePtr texPtr = texMan->createManual(
+			TextureName,
+			TEXTUREGROUP_REMOTENODE2D,
+			TextureType::TEX_TYPE_2D,
+			Width, Height, AddToCEGUI ? 0 : MIP_DEFAULT,
+			::Ogre::PixelFormat::PF_A8R8G8B8,
+			AddToCEGUI ? TU_STATIC_WRITE_ONLY : TU_DEFAULT, 0, false, 0);
+
+		if (AddToCEGUI)
+			Util::CreateCEGUITextureFromOgre(ControllerUI::Renderer, texPtr);
+
+		texture = texPtr.get();
+
+		// lock the texturebuffer (released in finish)
+		texBuffer = (unsigned int*)texture->getBuffer()->lock(::Ogre::HardwareBuffer::LockOptions::HBL_WRITE_ONLY);
+	}
+
+	void ImageBuilder::Native::FinishDraw()
+	{
+		// release texture buffer
+		texture->getBuffer()->unlock();
+	}
+
+	void ImageBuilder::Native::DrawBackground(int Width, int Height)
+	{
+		background->FillPixelDataAsA8R8G8B8TransparencyBlackScaled(
+			texBuffer, width, height, 0, 0, Width, Height, 0);
+	}
+
+	bool ImageBuilder::Native::DrawBGF(::Meridian59::Files::BGF::BgfBitmap^ BgfBitmap, unsigned int OverlayX, unsigned int OverlayY, unsigned int OverlayWidth, unsigned int OverlayHeight, unsigned char Palette)
+	{
+		// fill with new data
+		BgfBitmap->FillPixelDataAsA8R8G8B8TransparencyBlackScaled(
+			texBuffer, width, height, OverlayX, OverlayY, OverlayWidth, OverlayHeight, Palette);
+
+		return true;
+	}
+#pragma endregion
 };};

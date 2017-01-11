@@ -34,7 +34,7 @@ namespace Meridian59 { namespace Ogre
 {
 	public enum ImageBuilderType
 	{
-		GDI, DirectDraw, DirectX
+		GDI, DirectDraw, DirectX, Native
 	};
 
 	/// <summary>
@@ -144,6 +144,30 @@ namespace Meridian59 { namespace Ogre
 			static ::System::String^ GetError(HRESULT hr);		
 		};
 
+		/// <summary>
+		///
+		/// </summary>
+		ref class Native abstract sealed
+		{
+		private:
+			static ::Ogre::Texture*				texture;
+			static int							width;
+			static int							height;
+			static unsigned int*				texBuffer;
+
+			static ::Meridian59::Files::BGF::BgfBitmap^ background;
+
+		public:			
+			static bool IsInitialized;
+			static bool Initialize();
+			static void Destroy();
+
+			static void PrepareDraw(::Ogre::String TextureName, int Width, int Height, bool AddToCEGUI);
+			static void FinishDraw();
+			static void DrawBackground(int Width, int Height);
+			static bool DrawBGF(::Meridian59::Files::BGF::BgfBitmap^ BgfBitmap, unsigned int OverlayX, unsigned int OverlayY, unsigned int OverlayWidth, unsigned int OverlayHeight, unsigned char Palette);
+		};
+
 		__forceinline static bool Initialize(ImageBuilderType Builder)
 		{
 			builderType = Builder;
@@ -156,6 +180,9 @@ namespace Meridian59 { namespace Ogre
 
 			else if (builderType == ImageBuilderType::DirectX)
 				return DirectX::Initialize();
+			
+			else if (builderType == ImageBuilderType::Native)
+				return Native::Initialize();
 
 			return false;
 		};
@@ -170,6 +197,9 @@ namespace Meridian59 { namespace Ogre
 
 			else if (builderType == ImageBuilderType::DirectX)
 				return DirectX::Destroy();
+
+			else if (builderType == ImageBuilderType::Native)
+				return Native::Destroy();
 		};
 
 		__forceinline static void PrepareDraw(::Ogre::String TextureName, int Width, int Height, bool AddToCEGUI)
@@ -182,6 +212,9 @@ namespace Meridian59 { namespace Ogre
 
 			else if (builderType == ImageBuilderType::DirectX)
 				DirectX::PrepareDraw(TextureName, Width, Height, AddToCEGUI);
+
+			else if (builderType == ImageBuilderType::Native)
+				Native::PrepareDraw(TextureName, Width, Height, AddToCEGUI);
 		};
 
 		__forceinline static void FinishDraw()
@@ -194,6 +227,9 @@ namespace Meridian59 { namespace Ogre
 
 			else if (builderType == ImageBuilderType::DirectX)
 				DirectX::FinishDraw();
+
+			else if (builderType == ImageBuilderType::Native)
+				Native::FinishDraw();
 		};
 
 		__forceinline static void DrawBackground(int Width, int Height)
@@ -206,9 +242,12 @@ namespace Meridian59 { namespace Ogre
 
 			else if (builderType == ImageBuilderType::DirectX)
 				DirectX::DrawBackground(Width, Height);
+
+			else if (builderType == ImageBuilderType::Native)
+				Native::DrawBackground(Width, Height);
 		};
 
-		__forceinline static bool DrawBGF(::Meridian59::Files::BGF::BgfBitmap^ BgfBitmap, int DestX, int DestY, int DestWidth, int DestHeight, unsigned char Palette)
+		__forceinline static bool DrawBGF(::Meridian59::Files::BGF::BgfBitmap^ BgfBitmap, int DestX, int DestY, int DestWidth, int DestHeight, char Palette)
 		{
 			if (builderType == ImageBuilderType::GDI)
 			{
@@ -236,6 +275,10 @@ namespace Meridian59 { namespace Ogre
 				rect.bottom = rect.top + DestHeight;
 				
 				return DirectX::DrawBGF(BgfBitmap, &rect, Palette);
+			}
+			else if (builderType == ImageBuilderType::Native)
+			{
+				return Native::DrawBGF(BgfBitmap, DestX, DestY, DestWidth, DestHeight, Palette);
 			}
 			return false;
 		};

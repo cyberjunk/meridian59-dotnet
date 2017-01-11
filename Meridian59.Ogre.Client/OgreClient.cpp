@@ -209,6 +209,9 @@ namespace Meridian59 { namespace Ogre
 
 		else if (::System::String::Equals(Config->ImageBuilder, "DirectX"))
 			ImageBuilder::Initialize(ImageBuilderType::DirectX);
+		
+		else if (::System::String::Equals(Config->ImageBuilder, "Native"))
+			ImageBuilder::Initialize(ImageBuilderType::Native);
 
 		// texturescaling in gdi+
 		if (System::String::Equals(Config->BitmapScaling, "Low"))

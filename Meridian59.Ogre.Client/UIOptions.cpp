@@ -341,6 +341,7 @@ namespace Meridian59 { namespace Ogre
 		// ImageBuilder values
 		ImageBuilder->addItem(new::CEGUI::ListboxTextItem("GDI"));
 		ImageBuilder->addItem(new::CEGUI::ListboxTextItem("DirectDraw"));
+		ImageBuilder->addItem(new::CEGUI::ListboxTextItem("Native"));
 
 		// ScalingQuality values
 		ScalingQuality->addItem(new::CEGUI::ListboxTextItem("Low"));
