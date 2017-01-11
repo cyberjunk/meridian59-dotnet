@@ -1275,9 +1275,16 @@ namespace Meridian59.Files.BGF
                 {
                     for (uint j = 0; j < Bitmap.Width; j++)
                     {
+                        // get pixels color index and color for index
+                        byte idx = *readoffset;
+                        uint color = (uint)Bitmap.Palette.Entries[idx].ToArgb();
+                        uint noalpha = color & 0x00FFFFFF;
+
+                        // use m59 transparency for cyan
+                        bool usetransp = (noalpha == 0x0000FFFF);
                         
-                        pixels[writeoffset] = (byte)ColorTransformation.GetClosestPaletteIndex(
-                            ColorTransformation.DefaultPalette, (uint)Bitmap.Palette.Entries[*readoffset].ToArgb());
+                        pixels[writeoffset] = (usetransp) ? (byte)254 : 
+                            (byte)ColorTransformation.GetClosestPaletteIndex(ColorTransformation.DefaultPalette, noalpha);
 
                         readoffset++;
                         writeoffset++;
@@ -1295,10 +1302,24 @@ namespace Meridian59.Files.BGF
                 {
                     for (uint j = 0; j < Bitmap.Width; j++)
                     {
-                        pixels[writeoffset] = (byte)ColorTransformation.GetClosestPaletteIndex(
-                            ColorTransformation.DefaultPalette, *((uint*)readoffset) & 0x00FFFFFF);
+                        // get pixel
+                        uint part1 = *((byte*)readoffset);
+                        readoffset += 1;
 
-                        readoffset += 3;
+                        uint part2 = *((byte*)readoffset);
+                        readoffset += 1;
+
+                        uint part3 = *((byte*)readoffset);
+                        readoffset += 1;
+
+                        uint color = (part1) | (part2 << 8) | (part3 << 16);
+
+                        // use m59 transparency for cyan
+                        bool usetransp = (color == 0x0000FFFF);
+
+                        pixels[writeoffset] = (usetransp) ? (byte)254 : 
+                            (byte)ColorTransformation.GetClosestPaletteIndex(ColorTransformation.DefaultPalette, color);
+
                         writeoffset++;
                     }
                 }
@@ -1312,8 +1333,14 @@ namespace Meridian59.Files.BGF
                 {
                     for (uint j = 0; j < Bitmap.Width; j++)
                     {
-                        pixels[writeoffset] = (byte)ColorTransformation.GetClosestPaletteIndex(
-                            ColorTransformation.DefaultPalette, *readoffset);
+                        // get pixel
+                        uint color = *readoffset;
+
+                        // use transparent color from palette for any alpha
+                        bool useTransp = (color & 0xFF000000) < 0xFF000000;
+                        
+                        pixels[writeoffset] = (useTransp) ? (byte)254 : 
+                            (byte)ColorTransformation.GetClosestPaletteIndex(ColorTransformation.DefaultPalette, color);
 
                         readoffset++;
                         writeoffset++;
