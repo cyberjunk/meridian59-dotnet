@@ -446,24 +446,26 @@ namespace Meridian59.Files.BGF
                     if (value)
                     {
                         // compress PixelData
-                        PixelData = Compress(PixelData);
+                        pixeldata = Compress(PixelData);
 
                         // Update compressedlength & compressedflag
-                        CompressedLength = PixelData.Length;
+                        compressedLength = PixelData.Length;
                         isCompressed = true;
 
                     }
                     else
                     {
                         // decompress PixelData
-                        PixelData = Decompress(PixelData);
+                        pixeldata = Decompress(PixelData);
 
                         // Update compressedlength & compressedflag
-                        CompressedLength = COMPRESSEDLENFORUNCOMPRESSED;
+                        compressedLength = COMPRESSEDLENFORUNCOMPRESSED;
                         isCompressed = false;
                     }
 
                     RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_ISCOMPRESSED));
+                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_COMPRESSEDLENGTH));
+                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_PIXELDATA));
                 }
             }
         }
@@ -1362,6 +1364,9 @@ namespace Meridian59.Files.BGF
         /// <returns></returns>
         public Bitmap GetBitmap(byte Palette = 0)
         {
+            // make sure to uncompress
+            IsCompressed = false;
+
             // create bitmap instance
             Bitmap bitmap = new Bitmap((int)Width, (int)Height, PixelFormat.Format8bppIndexed);
 
@@ -1387,6 +1392,9 @@ namespace Meridian59.Files.BGF
         /// <returns></returns>
         public unsafe Bitmap GetBitmapA8R8G8B8(byte Palette = 0)
         {
+            // make sure to uncompress
+            IsCompressed = false;
+
             Bitmap bitmap = new Bitmap((int)Width, (int)Height, PixelFormat.Format32bppArgb);
             Rectangle rect = new Rectangle(0, 0, (int)Width, (int)Height);
 
