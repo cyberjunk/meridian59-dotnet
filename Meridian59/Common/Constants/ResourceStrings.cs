@@ -445,7 +445,7 @@ namespace Meridian59.Common.Constants
             public const string DUKEEMBLEM2     = "gshdabk.bgf";
             public const string JONASEMBLEM     = "gshreov.bgf";
             public const string JONASEMBLEM2    = "gshrebk.bgf";
-
+            public const string SAFEROOM        = "Safe Room";
         }
 
         /// <summary>
