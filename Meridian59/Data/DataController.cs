@@ -1727,33 +1727,33 @@ namespace Meridian59.Data
             }
         }
 
-        protected void HandleLoginOK(LoginOKMessage Message)
+        protected virtual void HandleLoginOK(LoginOKMessage Message)
         {
             AccountType = Message.AccountType;
         }
 
-        protected void HandlePlayers(PlayersMessage Message)
+        protected virtual void HandlePlayers(PlayersMessage Message)
         {
             OnlinePlayers.Clear();
             OnlinePlayers.AddRange(Message.OnlinePlayers);
         }
 
-        protected void HandlePlayerAdd(PlayerAddMessage Message)
+        protected virtual void HandlePlayerAdd(PlayerAddMessage Message)
         {
             OnlinePlayers.Add(Message.NewOnlinePlayer);
         }
 
-        protected void HandlePlayerRemove(PlayerRemoveMessage Message)
+        protected virtual void HandlePlayerRemove(PlayerRemoveMessage Message)
         {
             OnlinePlayers.RemoveByID(Message.ObjectID);           
         }
 
-        protected void HandleCharacters(CharactersMessage Message)
+        protected virtual void HandleCharacters(CharactersMessage Message)
         {
             WelcomeInfo.UpdateFromModel(Message.WelcomeInfo, true);
         }
 
-        protected void HandleCharInfo(CharInfoMessage Message)
+        protected virtual void HandleCharInfo(CharInfoMessage Message)
         {
             CharCreationInfo.UpdateFromModel(Message.CharCreationInfo, true);
 
@@ -1761,7 +1761,7 @@ namespace Meridian59.Data
             CharCreationInfo.SetExampleModel();
         }
 
-        protected void HandleRoomContents(RoomContentsMessage Message)
+        protected virtual void HandleRoomContents(RoomContentsMessage Message)
         {              
             RoomObjects.Clear();
 
@@ -1801,7 +1801,7 @@ namespace Meridian59.Data
             RoomBuffs.Clear();
         }
 
-        protected void HandleObjectContents(ObjectContentsMessage Message)
+        protected virtual void HandleObjectContents(ObjectContentsMessage Message)
         {
             // update objectID value
             ObjectContents.ObjectID = Message.ObjectID;
@@ -1814,7 +1814,7 @@ namespace Meridian59.Data
             ObjectContents.IsVisible = true;
         }
 
-        protected void HandleCreate(CreateMessage Message)
+        protected virtual void HandleCreate(CreateMessage Message)
         {
             RoomObject obj = Message.NewRoomObject;
 
@@ -1830,7 +1830,7 @@ namespace Meridian59.Data
             RoomObjects.Add(obj);
         }
 
-        protected void HandleRemove(RemoveMessage Message)
+        protected virtual void HandleRemove(RemoveMessage Message)
         {
             RoomObjects.RemoveByID(Message.ObjectID);   
             
@@ -1843,7 +1843,7 @@ namespace Meridian59.Data
                 Trade.Clear(true);
         }
 
-        protected void HandleChange(ChangeMessage Message)
+        protected virtual void HandleChange(ChangeMessage Message)
         {
             RoomObject roomObject = RoomObjects.GetItemByID(Message.UpdatedObject.ID);
             if (roomObject != null)
@@ -1860,7 +1860,7 @@ namespace Meridian59.Data
             }
         }
 
-        protected void HandleMove(MoveMessage Message)
+        protected virtual void HandleMove(MoveMessage Message)
         {
             RoomObject roomObject = RoomObjects.GetItemByID(Message.ObjectID);
             if (roomObject != null)
@@ -1873,14 +1873,14 @@ namespace Meridian59.Data
             }
         }
 
-        protected void HandleTurn(TurnMessage Message)
+        protected virtual void HandleTurn(TurnMessage Message)
         {
             RoomObject roomObject = RoomObjects.GetItemByID(Message.ObjectID);
             if (roomObject != null)
                 roomObject.AngleUnits = Message.Angle;               
         }
 
-        protected void HandlePlayer(PlayerMessage Message)
+        protected virtual void HandlePlayer(PlayerMessage Message)
         {
             // detach old sectormove listener
             if (RoomInformation.ResourceRoom != null)
@@ -1919,13 +1919,13 @@ namespace Meridian59.Data
             AvatarObject = null;
         }
 
-        protected void HandleBackground(BackgroundMessage Message)
+        protected virtual void HandleBackground(BackgroundMessage Message)
         {
             RoomInformation.BackgroundFileRID = Message.ResourceID.Value;
             RoomInformation.BackgroundFile = Message.ResourceID.Name;
         }
 
-        protected void HandlePlayerOverlay(PlayerOverlayMessage Message)
+        protected virtual void HandlePlayerOverlay(PlayerOverlayMessage Message)
         {
             // remove
             if (Message.HandItemObject.RenderPosition == PlayerOverlayHotspot.HOTSPOT_HIDE)
@@ -1961,22 +1961,22 @@ namespace Meridian59.Data
             }
         }
 
-        protected void HandleLightAmbient(LightAmbientMessage Message)
+        protected virtual void HandleLightAmbient(LightAmbientMessage Message)
         {
             RoomInformation.AmbientLight = Message.RoomBrightness;           
         }
 
-        protected void HandleLightPlayer(LightPlayerMessage Message)
+        protected virtual void HandleLightPlayer(LightPlayerMessage Message)
         {
             RoomInformation.AvatarLight = Message.CharacterBrightness;
         }
 
-        protected void HandleLightShading(LightShadingMessage Message)
+        protected virtual void HandleLightShading(LightShadingMessage Message)
         {
             LightShading.UpdateFromModel(Message.LightShading, true);
         }
 
-        protected void HandleInventory(InventoryMessage Message)
+        protected virtual void HandleInventory(InventoryMessage Message)
         {
             InventoryObjects.Clear();
 
@@ -1998,7 +1998,7 @@ namespace Meridian59.Data
             }                                  
         }
 
-        protected void HandleInventoryAdd(InventoryAddMessage Message)
+        protected virtual void HandleInventoryAdd(InventoryAddMessage Message)
         {
             InventoryObjects.Add(Message.NewInventoryObject);
 
@@ -2015,7 +2015,7 @@ namespace Meridian59.Data
             }
         }
 
-        protected void HandleInventoryRemove(InventoryRemoveMessage Message)
+        protected virtual void HandleInventoryRemove(InventoryRemoveMessage Message)
         {
             InventoryObjects.RemoveByID(Message.ID.ID);
 
@@ -2024,7 +2024,7 @@ namespace Meridian59.Data
                 TargetID = UInt32.MaxValue;
         }
 
-        protected void HandleUseList(UseListMessage Message)
+        protected virtual void HandleUseList(UseListMessage Message)
         {            
             // mark inventory objects as in use
             foreach (ObjectID objectID in Message.EquippedObjects)
@@ -2040,7 +2040,7 @@ namespace Meridian59.Data
             }
         }
 
-        protected void HandleUnuse(UnuseMessage Message)
+        protected virtual void HandleUnuse(UnuseMessage Message)
         {
             InventoryObject inventoryObject = InventoryObjects.GetItemByID(Message.ID.ID);
 
@@ -2048,7 +2048,7 @@ namespace Meridian59.Data
                 inventoryObject.IsInUse = false;  
         }
 
-        protected void HandleUse(UseMessage Message)
+        protected virtual void HandleUse(UseMessage Message)
         {
             InventoryObject inventoryObject = InventoryObjects.GetItemByID(Message.NewEquippedItem.ID);
 
@@ -2056,7 +2056,7 @@ namespace Meridian59.Data
                 inventoryObject.IsInUse = true;          
         }
 
-        protected void HandleSpells(SpellsMessage Message)
+        protected virtual void HandleSpells(SpellsMessage Message)
         {
             SpellObjects.Clear();
 
@@ -2076,7 +2076,7 @@ namespace Meridian59.Data
             }
         }
 
-        protected void HandleSpellAdd(SpellAddMessage Message)
+        protected virtual void HandleSpellAdd(SpellAddMessage Message)
         {           
             SpellObjects.Add(Message.NewSpellObject);
 
@@ -2091,12 +2091,12 @@ namespace Meridian59.Data
             }
         }
 
-        protected void HandleSpellRemove(SpellRemoveMessage Message)
+        protected virtual void HandleSpellRemove(SpellRemoveMessage Message)
         {
             SpellObjects.RemoveByID(Message.ID.ID);
         }
 
-        protected void HandleStatGroup(StatGroupMessage Message)
+        protected virtual void HandleStatGroup(StatGroupMessage Message)
         {
             switch (Message.Group)
             {
@@ -2133,7 +2133,7 @@ namespace Meridian59.Data
             }
         }
 
-        protected void HandleStat(StatMessage Message)
+        protected virtual void HandleStat(StatMessage Message)
         {
             StatNumeric newValueBarData;
             StatNumeric oldValueBarData;
@@ -2193,7 +2193,7 @@ namespace Meridian59.Data
             }
         }
 
-        protected void HandleAddEnchantment(AddEnchantmentMessage Message)
+        protected virtual void HandleAddEnchantment(AddEnchantmentMessage Message)
         {         
             switch (Message.BuffType)
             {
@@ -2207,7 +2207,7 @@ namespace Meridian59.Data
             }
         }
 
-        protected void HandleRemoveEnchantment(RemoveEnchantmentMessage Message)
+        protected virtual void HandleRemoveEnchantment(RemoveEnchantmentMessage Message)
         {
             switch (Message.BuffType)
             {
@@ -2221,7 +2221,7 @@ namespace Meridian59.Data
             }
         }
 
-        protected void HandleMessage(MessageMessage Message)
+        protected virtual void HandleMessage(MessageMessage Message)
         {
             if (ChatMessages.Count > ChatMessagesMaximum)
                 ChatMessages.Remove(ChatMessages[0]);
@@ -2229,13 +2229,13 @@ namespace Meridian59.Data
             ChatMessages.Add(Message.Message);           
         }
 
-        protected void HandleCharInfoNotOKMessage(CharInfoNotOkMessage Message)
+        protected virtual void HandleCharInfoNotOKMessage(CharInfoNotOkMessage Message)
         {
             // mark as not OK
             CharCreationInfo.IsDataOK = false;
         }
 
-        protected void HandleSaid(SaidMessage Message)
+        protected virtual void HandleSaid(SaidMessage Message)
         {
             // try get player for this message
             OnlinePlayer player = OnlinePlayers.GetItemByID(Message.Message.SourceObjectID);
@@ -2250,7 +2250,7 @@ namespace Meridian59.Data
             }
         }
 
-        protected void HandleSysMessage(SysMessageMessage Message)
+        protected virtual void HandleSysMessage(SysMessageMessage Message)
         {
             if (ChatMessages.Count > ChatMessagesMaximum)
                 ChatMessages.Remove(ChatMessages[0]);
@@ -2258,7 +2258,7 @@ namespace Meridian59.Data
             ChatMessages.Add(Message.Message);
         }
 
-        protected void HandleUserCommand(UserCommandMessage Message)
+        protected virtual void HandleUserCommand(UserCommandMessage Message)
         {
             switch (Message.Command.CommandType)
             {
@@ -2306,7 +2306,7 @@ namespace Meridian59.Data
         }
 
 #if !VANILLA
-        protected void HandleReqStatChange(ReqStatChangeMessage Message)
+        protected virtual void HandleReqStatChange(ReqStatChangeMessage Message)
         {
             // update own instance with new values
             StatChangeInfo.UpdateFromModel(Message.StatChangeInfo, true);
@@ -2314,12 +2314,12 @@ namespace Meridian59.Data
         }
 #endif
 
-        protected void HandleAddBgOverlay(AddBgOverlayMessage Message)
+        protected virtual void HandleAddBgOverlay(AddBgOverlayMessage Message)
         {
             BackgroundOverlays.Add(Message.BackgroundOverlay);
         }
 
-        protected void HandleChangeBgOverlay(ChangeBgOverlayMessage Message)
+        protected virtual void HandleChangeBgOverlay(ChangeBgOverlayMessage Message)
         {
             BackgroundOverlay bgOverlay = BackgroundOverlays.GetItemByID(Message.BackgroundOverlay.ID);
 
@@ -2327,12 +2327,12 @@ namespace Meridian59.Data
                 bgOverlay.UpdateFromModel(Message.BackgroundOverlay, true); 
         }
 
-        protected void HandleAdmin(AdminMessage Message)
+        protected virtual void HandleAdmin(AdminMessage Message)
         {
             AdminInfo.ProcessServerResponse(Message.Message);
         }
 
-        protected void HandlePlayWave(PlayWaveMessage Message)
+        protected virtual void HandlePlayWave(PlayWaveMessage Message)
         {
             // care only for sounds played with source object id
             if (Message.PlayInfo.ID > 0)
@@ -2355,12 +2355,12 @@ namespace Meridian59.Data
             }
         }
 
-        protected void HandlePlayMusic(PlayMusicMessage Message)
+        protected virtual void HandlePlayMusic(PlayMusicMessage Message)
         {
             BackgroundMusic.UpdateFromModel(Message.PlayInfo, true);
         }
 
-        protected void HandleShoot(ShootMessage Message)
+        protected virtual void HandleShoot(ShootMessage Message)
         {
             Projectile projectile = Message.Projectile;
             
@@ -2378,7 +2378,7 @@ namespace Meridian59.Data
             }
         }
 
-        protected void HandleLook(LookMessage Message)
+        protected virtual void HandleLook(LookMessage Message)
         {
             LookObject.UpdateFromModel(Message.ObjectInfo, true);
 
@@ -2386,45 +2386,45 @@ namespace Meridian59.Data
             lookObject.IsVisible = true;
         }
 
-        protected void HandleLookNewsGroup(LookNewsGroupMessage Message)
+        protected virtual void HandleLookNewsGroup(LookNewsGroupMessage Message)
         {
             NewsGroup.UpdateFromModel(Message.NewsGroup, true);
 
             NewsGroup.IsVisible = true;
         }
 
-        protected void HandleArticles(ArticlesMessage Message)
+        protected virtual void HandleArticles(ArticlesMessage Message)
         {
             NewsGroup.Articles.AddRange(Message.Articles);
         }
 
-        protected void HandleArticle(ArticleMessage Message)
+        protected virtual void HandleArticle(ArticleMessage Message)
         {
             NewsGroup.Text = Message.Message;
         }
 
-        protected void HandleInvalidateData(InvalidateDataMessage Message)
+        protected virtual void HandleInvalidateData(InvalidateDataMessage Message)
         {
             // clear all invalid data
             Invalidate();
         }
 
-        protected void HandleEffect(EffectMessage Message)
+        protected virtual void HandleEffect(EffectMessage Message)
         {
             Effects.HandleEffect(Message.Effect);
         }
 
-        protected void HandleWait(WaitMessage Message)
+        protected virtual void HandleWait(WaitMessage Message)
         {
             IsWaiting = true;
         }
 
-        protected void HandleUnwait(UnwaitMessage Message)
+        protected virtual void HandleUnwait(UnwaitMessage Message)
         {
             IsWaiting = false;
         }
 
-        protected void HandleCounterOffer(CounterOfferMessage Message)
+        protected virtual void HandleCounterOffer(CounterOfferMessage Message)
         {
             Trade.ItemsPartner.Clear();
             Trade.ItemsPartner.AddRange(Message.OfferedItems);
@@ -2434,7 +2434,7 @@ namespace Meridian59.Data
             Trade.IsPending = true;
         }
 
-        protected void HandleCounterOffered(CounterOfferedMessage Message)
+        protected virtual void HandleCounterOffered(CounterOfferedMessage Message)
         {
             Trade.ItemsYou.Clear();
             Trade.ItemsYou.AddRange(Message.OfferedItems);
@@ -2444,7 +2444,7 @@ namespace Meridian59.Data
             Trade.IsPending = true;
         }
 
-        protected void HandleOffered(OfferedMessage Message)
+        protected virtual void HandleOffered(OfferedMessage Message)
         {           
             Trade.ItemsYou.Clear();
             Trade.ItemsYou.AddRange(Message.OfferedItems);
@@ -2454,7 +2454,7 @@ namespace Meridian59.Data
             Trade.IsPending = true;
         }
 
-        protected void HandleOffer(OfferMessage Message)
+        protected virtual void HandleOffer(OfferMessage Message)
         {
             // this is a background trade start
             Trade.Clear(true);
@@ -2470,12 +2470,12 @@ namespace Meridian59.Data
             Trade.IsPending = true;
         }
 
-        protected void HandleOfferCanceled(OfferCanceledMessage Message)
+        protected virtual void HandleOfferCanceled(OfferCanceledMessage Message)
         {
             Trade.Clear(true);
         }
 
-        protected void HandleBuyList(BuyListMessage Message)
+        protected virtual void HandleBuyList(BuyListMessage Message)
         {
             // set tradepartner
             Buy.TradePartner = Message.TradePartner;
