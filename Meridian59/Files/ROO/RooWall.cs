@@ -1003,24 +1003,24 @@ namespace Meridian59.Files.ROO
                     bool a, b;
                     
                     // test upper part
-                    a = (startside <= 0 && LeftSide != null && LeftSide.ResourceUpper != null && (LeftSide.Flags.IsNoLookThrough || !LeftSide.Flags.IsTransparent));
-                    b = (startside >= 0 && RightSide != null && RightSide.ResourceUpper != null && (RightSide.Flags.IsNoLookThrough || !RightSide.Flags.IsTransparent));
+                    a = (startside <= 0 && LeftSide != null && LeftSide.UpperTexture > 0 && (LeftSide.Flags.IsNoLookThrough || !LeftSide.Flags.IsTransparent));
+                    b = (startside >= 0 && RightSide != null && RightSide.UpperTexture > 0 && (RightSide.Flags.IsNoLookThrough || !RightSide.Flags.IsTransparent));
                     if ((a || b) &&
                         rayheight < h3 &&
                         rayheight > h2)
                         return true;
 
                     // test middle part
-                    a = (startside <= 0 && LeftSide != null && LeftSide.ResourceMiddle != null && (LeftSide.Flags.IsNoLookThrough || !LeftSide.Flags.IsTransparent));
-                    b = (startside >= 0 && RightSide != null && RightSide.ResourceMiddle != null && (RightSide.Flags.IsNoLookThrough || !RightSide.Flags.IsTransparent));
+                    a = (startside <= 0 && LeftSide != null && LeftSide.MiddleTexture > 0 && (LeftSide.Flags.IsNoLookThrough || !LeftSide.Flags.IsTransparent));
+                    b = (startside >= 0 && RightSide != null && RightSide.MiddleTexture > 0 && (RightSide.Flags.IsNoLookThrough || !RightSide.Flags.IsTransparent));
                     if ((a || b) &&
                         rayheight < h2 &&
                         rayheight > h1)
                         return true;
 
                     // test lower part (nolookthrough)
-                    a = (startside <= 0 && LeftSide != null && LeftSide.ResourceLower != null);
-                    b = (startside >= 0 && RightSide != null && RightSide.ResourceLower != null);
+                    a = (startside <= 0 && LeftSide != null && LeftSide.LowerTexture > 0);
+                    b = (startside >= 0 && RightSide != null && RightSide.LowerTexture > 0);
                     if ((a || b) &&
                         rayheight < h1 &&
                         rayheight > h0)
