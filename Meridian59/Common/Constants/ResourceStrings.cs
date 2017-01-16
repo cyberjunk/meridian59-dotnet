@@ -234,6 +234,30 @@ namespace Meridian59.Common.Constants
             }
 
             /// <summary>
+            /// Strings of reagents
+            /// </summary>
+            public static class Reagents
+            {
+                public const string EMERALD = "emerald";
+                public const string SAPPHIRE = "sapphire";
+                public const string POLISHEDSERAPHYM = "polished seraphym";
+                public const string HERB = "herb";
+                public const string PURPLEMUSHROOM = "purple mushroom";
+                public const string ENTROOTBERRY = "entroot berry";
+
+                public static bool Is(string Value)
+                {
+                    return (Value != null) && (
+                        string.Equals(Value, EMERALD) ||
+                        string.Equals(Value, SAPPHIRE) ||
+                        string.Equals(Value, POLISHEDSERAPHYM) ||
+                        string.Equals(Value, HERB) ||
+                        string.Equals(Value, PURPLEMUSHROOM) ||
+                        string.Equals(Value, ENTROOTBERRY));
+                }
+            }
+
+            /// <summary>
             /// Others
             /// </summary>
             public static class Others
