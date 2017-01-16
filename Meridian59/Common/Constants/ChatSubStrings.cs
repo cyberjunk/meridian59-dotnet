@@ -24,6 +24,7 @@ namespace Meridian59.Common.Constants
         public const string NOTENOUGHMANA   = "You don't have enough mana to cast ";
         public const string NOTENOUGHVIGOR  = "You are too tired to cast ";
         public const string CONCENBROKEN    = "Your concentration is broken and the ";
+        public const string CONCENSTART     = "You focus your whole will";
         public const string NOREAGENTS      = "You don't have the reagents to cast ";
         public const string UNSUCCESSFUL    = "You were unsuccessful in casting ";
         public const string IMPROVED        = "You have improved in the art of ";

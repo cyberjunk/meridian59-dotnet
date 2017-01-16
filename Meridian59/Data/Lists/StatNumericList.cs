@@ -71,6 +71,15 @@ namespace Meridian59.Data.Lists
             return null;
         }
 
+        public StatNumeric GetItemByName(string Name)
+        {
+            foreach (StatNumeric entry in this)
+                if (entry.ResourceName == Name)
+                    return entry;
+
+            return null;
+        }
+
         public IEnumerable<StatNumeric> GetItemsByNums(uint[] Nums)
         {
             List<StatNumeric> list = new List<StatNumeric>(Capacity);
