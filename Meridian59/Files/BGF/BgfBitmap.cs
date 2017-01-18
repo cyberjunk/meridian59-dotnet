@@ -1125,8 +1125,8 @@ namespace Meridian59.Files.BGF
             // box
             uint startX = OverlayX;
             uint startY = OverlayY;
-            uint endX = OverlayX + OverlayWidth;
-            uint endY = OverlayY + OverlayHeight;
+            uint endX = Math.Min(OverlayX + OverlayWidth, UnderlayWidth);
+            uint endY = Math.Min(OverlayY + OverlayHeight, UnderlayHeight);
 
             // rowstride to skip right and bottom
             uint rightstride = UnderlayWidth - endX;
