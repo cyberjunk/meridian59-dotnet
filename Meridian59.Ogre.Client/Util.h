@@ -54,7 +54,7 @@ namespace Meridian59 { namespace Ogre
         /// </summary>
         /// <param name="Vector"></param>
         /// <returns></returns>
-        __forceinline static ::Ogre::Vector3 ToOgre(::Meridian59::Common::V3 Vector)
+        __forceinline static ::Ogre::Vector3 ToOgre(::Meridian59::Common::V3% Vector)
         {
             return ::Ogre::Vector3(Vector.X, Vector.Y, Vector.Z);
         };
@@ -64,10 +64,20 @@ namespace Meridian59 { namespace Ogre
         /// </summary>
         /// <param name="Vector"></param>
         /// <returns></returns>
-        __forceinline static ::Meridian59::Common::V3 ToV3(::Ogre::Vector3 Vector)
+        __forceinline static ::Meridian59::Common::V3 ToV3(::Ogre::Vector3& Vector)
         {
             return ::Meridian59::Common::V3(Vector.x, Vector.y, Vector.z);
         };
+
+		/// <summary>
+		/// Creates a V3 from an Ogre Vector3
+		/// </summary>
+		/// <param name="Vector"></param>
+		/// <returns></returns>
+		__forceinline static ::Meridian59::Common::V3 ToV3(const ::Ogre::Vector3& Vector)
+		{
+			return ::Meridian59::Common::V3(Vector.x, Vector.y, Vector.z);
+		};
 
         /// <summary>
         /// Creates an Ogre Vector3 from a V3 instance
@@ -75,7 +85,7 @@ namespace Meridian59 { namespace Ogre
         /// </summary>
         /// <param name="Vector"></param>
         /// <returns></returns>
-        __forceinline static ::Ogre::Vector3 ToOgreYZFlipped(V3 Vector)
+        __forceinline static ::Ogre::Vector3 ToOgreYZFlipped(V3% Vector)
         {
             return ::Ogre::Vector3(Vector.X, Vector.Z, Vector.Y);
         };
@@ -86,17 +96,28 @@ namespace Meridian59 { namespace Ogre
         /// </summary>
         /// <param name="Vector"></param>
         /// <returns></returns>
-        __forceinline static ::Meridian59::Common::V3 ToV3YZFlipped(::Ogre::Vector3 Vector)
+        __forceinline static ::Meridian59::Common::V3 ToV3YZFlipped(::Ogre::Vector3& Vector)
         {
             return ::Meridian59::Common::V3(Vector.x, Vector.z, Vector.y);
         };
+
+		/// <summary>
+		/// Creates a V3 from an Ogre Vector3 instance
+		/// with Y, Z parts flipped.
+		/// </summary>
+		/// <param name="Vector"></param>
+		/// <returns></returns>
+		__forceinline static ::Meridian59::Common::V3 ToV3YZFlipped(const ::Ogre::Vector3& Vector)
+		{
+			return ::Meridian59::Common::V3(Vector.x, Vector.z, Vector.y);
+		};
 
         /// <summary>
         /// Creates an Ogre Vector2 from a V2 instance
         /// </summary>
         /// <param name="Vector"></param>
         /// <returns></returns>
-        __forceinline static ::Ogre::Vector2 ToOgre(V2 Vector)
+        __forceinline static ::Ogre::Vector2 ToOgre(V2% Vector)
         {
             return ::Ogre::Vector2(Vector.X, Vector.Y);
         };
@@ -106,7 +127,7 @@ namespace Meridian59 { namespace Ogre
         /// </summary>
         /// <param name="Vector"></param>
         /// <returns></returns>
-        __forceinline static ::Ogre::Vector2 ToOgreXYFlipped(V2 Vector)
+        __forceinline static ::Ogre::Vector2 ToOgreXYFlipped(V2% Vector)
         {
             return ::Ogre::Vector2(Vector.Y, Vector.X);
         };
