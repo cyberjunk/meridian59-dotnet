@@ -88,6 +88,7 @@
 	<FalagardMapping windowType="TaharezLook/GroupListboxItem" 			targetType="CEGUI/ItemEntry"   	renderer="Core/ItemEntry"   	lookNFeel="TaharezLook/GroupListboxItem" />
 	<FalagardMapping windowType="TaharezLook/GroupMemberListboxItem" 	targetType="CEGUI/ItemEntry"   	renderer="Core/ItemEntry"   	lookNFeel="TaharezLook/GroupMemberListboxItem" />
 	<FalagardMapping windowType="TaharezLook/LabelWhite"       				targetType="DefaultWindow"     	renderer="Core/Default"      	lookNFeel="TaharezLook/LabelWhite" />
+	<FalagardMapping windowType="TaharezLook/LabelRed"       				targetType="DefaultWindow"     	renderer="Core/Default"      	lookNFeel="TaharezLook/LabelRed" />
 	<FalagardMapping windowType="TaharezLook/ZeroTabControl" 				targetType="CEGUI/TabControl" 	renderer="Core/TabControl" 		lookNFeel="TaharezLook/ZeroTabControl" />
 	<FalagardMapping windowType="TaharezLook/ZeroTabContentPane"    		targetType="DefaultWindow"    	renderer="Core/Default"    		lookNFeel="TaharezLook/ZeroTabContentPane" />
 	<FalagardMapping windowType="TaharezLook/MiniButton"      				targetType="CEGUI/PushButton"  	renderer="Core/Button"       	lookNFeel="TaharezLook/MiniButton" />
