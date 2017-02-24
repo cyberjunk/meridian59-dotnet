@@ -7159,6 +7159,63 @@
 
     <!--
     ***************************************************
+        TaharezLook/LabelRed
+    ***************************************************
+    -->
+    <WidgetLook name="TaharezLook/LabelRed">
+        <PropertyDefinition name="BackgroundColours" initialValue="tl:00000000 tr:00000000 bl:00000000 br:00000000" redrawOnWrite="true" type="ColourRect"/>
+        <PropertyDefinition name="VertFormatting" initialValue="CentreAligned" redrawOnWrite="true" type="VerticalFormat" />
+        <PropertyDefinition name="HorzFormatting" initialValue="CentreAligned" redrawOnWrite="true" type="HorizontalFormat" />
+        <Property name="Size" value="{{0, 128}, {0, 32}}" />
+        <ImagerySection name="Label">
+            <TextComponent>
+                <Area>
+               <Dim type="LeftEdge"><AbsoluteDim value="0" /></Dim>
+               <Dim type="TopEdge"><AbsoluteDim value="0" /></Dim>
+               <Dim type="Width"><UnifiedDim scale="1" type="Width" /></Dim>
+               <Dim type="Height"><UnifiedDim scale="1" type="Height" /></Dim>
+                </Area>
+                <VertFormatProperty name="VertFormatting" />
+                <HorzFormatProperty name="HorzFormatting" />            
+            </TextComponent>
+        </ImagerySection>
+      <ImagerySection name="background">
+            <ImageryComponent>
+                <Area>
+               <Dim type="LeftEdge"><AbsoluteDim value="0" /></Dim>
+               <Dim type="TopEdge"><AbsoluteDim value="0" /></Dim>
+               <Dim type="Width"><UnifiedDim scale="1" type="Width" /></Dim>
+               <Dim type="Height"><UnifiedDim scale="1" type="Height" /></Dim>
+                </Area>
+                <Image name="TaharezLook/TextSelectionBrush" />
+                <VertFormat type="Stretched" />
+                <HorzFormat type="Stretched" />
+            </ImageryComponent>
+        </ImagerySection>
+        <StateImagery name="Enabled">
+            <Layer>
+                <Section section="background">            
+                   <ColourRectProperty name="BackgroundColours" />
+                </Section>
+                <Section section="Label">            
+                   <Colours topLeft="FFBB2233" topRight="FFBB2233" bottomLeft="CCBB2233" bottomRight="CCBB2233" />
+                </Section>
+            </Layer>
+        </StateImagery>
+        <StateImagery name="Disabled">
+            <Layer>      
+            <Section section="background">            
+                    <ColourRectProperty name="BackgroundColours" />
+                </Section>
+                <Section section="Label">            
+                   <Colours topLeft="99FFFFFF" topRight="99FFFFFF" bottomLeft="77FFFFFF" bottomRight="77FFFFFF" />
+                </Section>
+            </Layer>
+        </StateImagery>
+    </WidgetLook>
+
+    <!--
+    ***************************************************
         TaharezLook/ZeroTabControl
     ***************************************************
     -->

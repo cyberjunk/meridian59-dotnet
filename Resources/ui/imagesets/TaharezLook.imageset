@@ -6,7 +6,7 @@
     <Image height="5" name="WindowTopRight" width="5" xOffset="0" yOffset="0" xPos="245" yPos="225" />
     <Image height="5" name="WindowLeftEdge" width="5" xOffset="0" yOffset="0" xPos="225" yPos="235" />
     <Image height="100" name="WindowBackdrop" width="100" xOffset="0" yOffset="0" xPos="550" yPos="300" />
-    <Image height="100" name="RootBackdrop" width="100" xOffset="0" yOffset="0" xPos="550" yPos="410" />    
+    <Image height="100" name="RootBackdrop" width="100" xOffset="0" yOffset="0" xPos="660" yPos="520" />
     <Image height="5" name="WindowRightEdge" width="5" xOffset="0" yOffset="0" xPos="245" yPos="235" />
     <Image height="5" name="WindowBottomLeft" width="5" xOffset="0" yOffset="0" xPos="225" yPos="245" />
     <Image height="5" name="WindowBottomEdge" width="5" xOffset="0" yOffset="0" xPos="235" yPos="245" />
