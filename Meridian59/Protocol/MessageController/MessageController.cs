@@ -744,6 +744,16 @@ namespace Meridian59.Protocol
                         TypedMessage = new LookupNamesMessage(e.MessageBuffer);
                         break;
 
+                    case MessageTypeGameMode.LookSpell:                                       // PI: 191
+                        TypedMessage = new LookSpellMessage(stringResources, e.MessageBuffer);
+                        HandleLookSpell((LookSpellMessage)TypedMessage);
+                        break;
+
+                    case MessageTypeGameMode.LookSkill:                                       // PI: 192
+                        TypedMessage = new LookSkillMessage(stringResources, e.MessageBuffer);
+                        HandleLookSkill((LookSkillMessage)TypedMessage);
+                        break;
+
                     case MessageTypeGameMode.Move:                                            // PI: 200
                         TypedMessage = new MoveMessage(ref pMessage);
                         break;
@@ -1139,6 +1149,18 @@ namespace Meridian59.Protocol
         {
             ObjectBase objectBase = Message.ObjectInfo.ObjectBase;
             objectBase.ResolveStrings(stringResources, false);          
+        }
+
+        protected void HandleLookSpell(LookSpellMessage Message)
+        {
+            ObjectBase objectBase = Message.SpellInfo.ObjectBase;
+            objectBase.ResolveStrings(stringResources, false);
+        }
+
+        protected void HandleLookSkill(LookSkillMessage Message)
+        {
+            ObjectBase objectBase = Message.SkillInfo.ObjectBase;
+            objectBase.ResolveStrings(stringResources, false);
         }
 
         protected void HandlePlayer(PlayerMessage Message)
