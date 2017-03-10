@@ -439,6 +439,118 @@
          </Window>
       </Window>
       
+      <!-- SpellDetails -->
+      <Window type="TaharezLook/FrameWindow" name="SpellDetails" >
+         <Property name="Text" value="Spell Description" />
+         <Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
+         <Property name="MaxSize" value="{{1,0},{1,0}}" />
+         <Property name="Size" value="{{0,512},{0,260}}" />
+         <Property name="MinSize" value="{{0,512},{0,192}}" />
+         <Property name="Position" value="{{0.5,-256},{0.5,-192}}" />
+         
+         <!-- Image -->
+         <Window type="TaharezLook/StaticImage" name="SpellDetails.Image" >
+            <Property name="Area" value="{{0,5},{0,5},{0,192},{0,192}}" />
+            <Property name="FrameEnabled" value="False" />
+            <Property name="BackgroundEnabled" value="False" />
+         </Window>
+         
+         <!-- Name -->
+         <Window type="TaharezLook/Label" name="SpellDetails.Name" >
+            <Property name="Area" value="{{0,197},{0,5},{1,-5},{0,30}}" />
+            <Property name="Font" value="Berenika-12-Bold" />
+            <Property name="NormalTextColour" value="FFFFFFFF" />
+            <Property name="HorzFormatting" value="WordWrapCentreAligned" />
+         </Window>
+         
+         <!-- School Name -->
+         <Window type="TaharezLook/Label" name="SpellDetails.SchoolName" >
+             <Property name="Area" value="{{0,222},{0,36},{1,-146},{0,47}}" />
+             <Property name="Font" value="Berenika-8-Bold" />
+             <Property name="MaxSize" value="{{1,0},{1,0}}" />
+             <Property name="HorzFormatting" value="WordWrapLeftAligned" />
+         </Window>
+         
+         <!-- Spell Level -->
+         <Window type="TaharezLook/Label" name="SpellDetails.SpellLevel" >
+             <Property name="Area" value="{{0,222},{0,54},{1,-145},{0,64}}" />
+             <Property name="Font" value="Berenika-8-Bold" />
+             <Property name="MaxSize" value="{{1,0},{1,0}}" />
+             <Property name="HorzFormatting" value="WordWrapLeftAligned" />
+         </Window>
+         
+         <!-- Mana Cost -->
+         <Window type="TaharezLook/Label" name="SpellDetails.ManaCost" >
+             <Property name="Area" value="{{0,386},{0,36},{1,-5},{0,45}}" />
+             <Property name="Font" value="Berenika-8-Bold" />
+             <Property name="MaxSize" value="{{1,0},{1,0}}" />
+             <Property name="HorzFormatting" value="WordWrapLeftAligned" />
+         </Window>
+         
+         <!-- Vigor Cost -->
+         <Window type="TaharezLook/Label" name="SpellDetails.VigorCost" >
+             <Property name="Area" value="{{0,386},{0,54},{1,-5},{0,63}}" />
+             <Property name="Font" value="Berenika-8-Bold" />
+             <Property name="MaxSize" value="{{1,0},{1,0}}" />
+             <Property name="HorzFormatting" value="WordWrapLeftAligned" />
+         </Window>
+         
+         <!-- Description -->
+         <Window type="TaharezLook/MultiLineEditbox" name="SpellDetails.Description" >
+            <Property name="Area" value="{{0,197},{0,76},{1,-5},{1,-5}}" />
+            <Property name="ReadOnly" value="True" />
+            <Property name="TextParsingEnabled" value="False" />
+         </Window>
+      </Window>
+      
+      <!-- SkillDetails -->
+      <Window type="TaharezLook/FrameWindow" name="SkillDetails" >
+         <Property name="Text" value="Spell Description" />
+         <Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
+         <Property name="MaxSize" value="{{1,0},{1,0}}" />
+         <Property name="Size" value="{{0,512},{0,260}}" />
+         <Property name="MinSize" value="{{0,512},{0,192}}" />
+         <Property name="Position" value="{{0.5,-256},{0.5,-192}}" />
+         
+         <!-- Image -->
+         <Window type="TaharezLook/StaticImage" name="SkillDetails.Image" >
+            <Property name="Area" value="{{0,5},{0,5},{0,192},{0,192}}" />
+            <Property name="FrameEnabled" value="False" />
+            <Property name="BackgroundEnabled" value="False" />
+         </Window>
+         
+         <!-- Name -->
+         <Window type="TaharezLook/Label" name="SkillDetails.Name" >
+            <Property name="Area" value="{{0,197},{0,5},{1,-5},{0,30}}" />
+            <Property name="Font" value="Berenika-12-Bold" />
+            <Property name="NormalTextColour" value="FFFFFFFF" />
+            <Property name="HorzFormatting" value="WordWrapCentreAligned" />
+         </Window>
+         
+         <!-- School Name -->
+         <Window type="TaharezLook/Label" name="SkillDetails.SchoolName" >
+             <Property name="Area" value="{{0,212},{0,36},{1,-102},{0,47}}" />
+             <Property name="Font" value="Berenika-8-Bold" />
+             <Property name="MaxSize" value="{{1,0},{1,0}}" />
+             <Property name="HorzFormatting" value="WordWrapLeftAligned" />
+         </Window>
+         
+         <!-- Skill Level -->
+         <Window type="TaharezLook/Label" name="SkillDetails.SkillLevel" >
+             <Property name="Area" value="{{0,412},{0,36},{1,-5},{0,45}}" />
+             <Property name="Font" value="Berenika-8-Bold" />
+             <Property name="MaxSize" value="{{1,0},{1,0}}" />
+             <Property name="HorzFormatting" value="WordWrapLeftAligned" />
+         </Window>
+         
+         <!-- Description -->
+         <Window type="TaharezLook/MultiLineEditbox" name="SkillDetails.Description" >
+            <Property name="Area" value="{{0,197},{0,58},{1,-5},{1,-5}}" />
+            <Property name="ReadOnly" value="True" />
+            <Property name="TextParsingEnabled" value="False" />
+         </Window>
+      </Window>
+      
       <!-- PlayerDetails -->
       <Window type="TaharezLook/FrameWindow" name="PlayerDetails" >
          <Property name="Text" value="Biography" />
@@ -449,7 +561,6 @@
          <Property name="SizingEnabled" value="FALSE" />
          <Property name="Position" value="{{0.5,-286},{0.5,-224}}" />
          
-
          <!-- Image -->
          <Window type="TaharezLook/StaticImage" name="PlayerDetails.Image" >
             <Property name="Area" value="{{0,5},{0,5},{0,192},{0,256}}" />
