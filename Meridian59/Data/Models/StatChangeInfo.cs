@@ -27,14 +27,22 @@ namespace Meridian59.Data.Models
     /// </summary>
     [Serializable]
     public class StatChangeInfo : INotifyPropertyChanged, IClearable, IByteSerializable, IUpdatable<StatChangeInfo>
-    {        
+    {
         #region Constants
+        public const uint ATTRIBUTE_MINVALUE = 1;
+        public const uint ATTRIBUTE_MAXVALUE = 50;
+        public const uint ATTRIBUTE_MAXSUM = 200;
+        public const uint SCHOOL_MINVALUE = 0;
+        public const uint SCHOOL_MAXVALUE = 6;
+
         public const string PROPNAME_MIGHT          = "Might";
         public const string PROPNAME_INTELLECT      = "Intellect";
         public const string PROPNAME_STAMINA        = "Stamina";
         public const string PROPNAME_AGILITY        = "Agility";
         public const string PROPNAME_MYSTICISM      = "Mysticism";
         public const string PROPNAME_AIM            = "Aim";
+        public const string PROPNAME_ATTRIBUTESCURRENT = "AttributesCurrent";
+        public const string PROPNAME_ATTRIBUTESAVAILABLE = "AttributesAvailable";
         public const string PROPNAME_LEVELSHA       = "LevelSha";
         public const string PROPNAME_LEVELQOR       = "LevelQor";
         public const string PROPNAME_LEVELKRAANAN   = "LevelKraanan";
@@ -42,7 +50,13 @@ namespace Meridian59.Data.Models
         public const string PROPNAME_LEVELRIIJA     = "LevelRiija";
         public const string PROPNAME_LEVELJALA      = "LevelJala";
         public const string PROPNAME_LEVELWC        = "LevelWC";
-
+        public const string PROPNAME_ORIGLEVELSHA = "OrigLevelSha";
+        public const string PROPNAME_ORIGLEVELQOR = "OrigLevelQor";
+        public const string PROPNAME_ORIGLEVELKRAANAN = "OrigLevelKraanan";
+        public const string PROPNAME_ORIGLEVELFAREN = "OrigLevelFaren";
+        public const string PROPNAME_ORIGLEVELRIIJA = "OrigLevelRiija";
+        public const string PROPNAME_ORIGLEVELJALA = "OrigLevelJala";
+        public const string PROPNAME_ORIGLEVELWC = "OrigLevelWC";
         public const string PROPNAME_ISVISIBLE      = "IsVisible";
         #endregion
 
@@ -90,25 +104,32 @@ namespace Meridian59.Data.Models
             Aim = Buffer[cursor];
             cursor++;
 
-            LevelSha = Buffer[cursor];
+            OrigLevelSha = Buffer[cursor];
+            LevelSha = OrigLevelSha;
             cursor++;
 
-            LevelQor = Buffer[cursor];
+            OrigLevelQor = Buffer[cursor];
+            LevelQor = OrigLevelQor;
             cursor++;
 
-            LevelKraanan = Buffer[cursor];
+            OrigLevelKraanan = Buffer[cursor];
+            LevelKraanan = OrigLevelKraanan;
             cursor++;
 
-            LevelFaren = Buffer[cursor];
+            OrigLevelFaren = Buffer[cursor];
+            LevelFaren = OrigLevelFaren;
             cursor++;
 
-            LevelRiija = Buffer[cursor];
+            OrigLevelRiija = Buffer[cursor];
+            LevelRiija = OrigLevelRiija;
             cursor++;
 
-            LevelJala = Buffer[cursor];
+            OrigLevelJala = Buffer[cursor];
+            LevelJala = OrigLevelJala;
             cursor++;
 
-            LevelWC = Buffer[cursor];
+            OrigLevelWC = Buffer[cursor];
+            LevelWC = origLevelWC;
             cursor++;
 
             return cursor - StartIndex;
@@ -178,6 +199,7 @@ namespace Meridian59.Data.Models
         protected byte agility;
         protected byte mysticism;
         protected byte aim;
+        protected byte availableStats;
         protected byte levelSha;
         protected byte levelQor;
         protected byte levelKraanan;
@@ -186,104 +208,123 @@ namespace Meridian59.Data.Models
         protected byte levelJala;
         protected byte levelWC;
 
+        // Original Levels
+        protected byte origLevelSha;
+        protected byte origLevelQor;
+        protected byte origLevelKraanan;
+        protected byte origLevelFaren;
+        protected byte origLevelRiija;
+        protected byte origLevelJala;
+        protected byte origLevelWC;
+
         protected bool isVisible;
         #endregion
 
         #region Properties
         public byte Might
         {
-            get
-            {
-                return might;
-            }
+            get { return might; }
             set
             {
-                if (might != value)
+                if (might != value && value >= ATTRIBUTE_MINVALUE && value <= ATTRIBUTE_MAXVALUE &&
+                   (value < might || (int)AttributesAvailable + (int)might - (int)value >= 0))
                 {
                     might = value;
                     RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_MIGHT));
+                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_ATTRIBUTESCURRENT));
+                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_ATTRIBUTESAVAILABLE));
                 }
             }
         }
 
         public byte Intellect
         {
-            get
-            {
-                return intellect;
-            }
+            get { return intellect; }
             set
             {
-                if (intellect != value)
+                if (intellect != value && value >= ATTRIBUTE_MINVALUE && value <= ATTRIBUTE_MAXVALUE &&
+                   (value < intellect || (int)AttributesAvailable + (int)intellect - (int)value >= 0))
                 {
-                    intellect = value;
+                    intellect = (value >= IntellectNeeded) ? value : (byte)IntellectNeeded;
                     RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_INTELLECT));
+                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_ATTRIBUTESCURRENT));
+                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_ATTRIBUTESAVAILABLE));
                 }
             }
         }
 
         public byte Stamina
         {
-            get
-            {
-                return stamina;
-            }
+            get { return stamina; }
             set
             {
-                if (stamina != value)
+                if (stamina != value && value >= ATTRIBUTE_MINVALUE && value <= ATTRIBUTE_MAXVALUE &&
+                   (value < stamina || (int)AttributesAvailable + (int)stamina - (int)value >= 0))
                 {
                     stamina = value;
                     RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_STAMINA));
+                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_ATTRIBUTESCURRENT));
+                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_ATTRIBUTESAVAILABLE));
                 }
             }
         }
 
         public byte Agility
         {
-            get
-            {
-                return agility;
-            }
+            get { return agility; }
             set
             {
-                if (agility != value)
+                if (agility != value && value >= ATTRIBUTE_MINVALUE && value <= ATTRIBUTE_MAXVALUE &&
+                   (value < agility || (int)AttributesAvailable + (int)agility - (int)value >= 0))
                 {
                     agility = value;
                     RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_AGILITY));
+                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_ATTRIBUTESCURRENT));
+                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_ATTRIBUTESAVAILABLE));
                 }
             }
         }
 
         public byte Mysticism
         {
-            get
-            {
-                return mysticism;
-            }
+            get { return mysticism; }
             set
             {
-                if (mysticism != value)
+                if (mysticism != value && value >= ATTRIBUTE_MINVALUE && value <= ATTRIBUTE_MAXVALUE &&
+                   (value < mysticism || (int)AttributesAvailable + (int)mysticism - (int)value >= 0))
                 {
                     mysticism = value;
                     RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_MYSTICISM));
+                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_ATTRIBUTESCURRENT));
+                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_ATTRIBUTESAVAILABLE));
                 }
             }
         }
 
         public byte Aim
         {
-            get
-            {
-                return aim;
-            }
+            get { return aim; }
             set
             {
-                if (aim != value)
+                if (aim != value && value >= ATTRIBUTE_MINVALUE && value <= ATTRIBUTE_MAXVALUE &&
+                   (value < aim || (int)AttributesAvailable + (int)aim - (int)value >= 0))
                 {
                     aim = value;
                     RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_AIM));
+                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_ATTRIBUTESCURRENT));
+                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_ATTRIBUTESAVAILABLE));
                 }
             }
+        }
+
+        public uint AttributesCurrent
+        {
+            get { return (uint) (might + intellect + stamina + agility + mysticism + aim); }
+        }
+
+        public uint AttributesAvailable
+        {
+            get { return ATTRIBUTE_MAXSUM - Math.Min(AttributesCurrent, ATTRIBUTE_MAXSUM); }
         }
 
         public byte LevelSha
@@ -294,7 +335,7 @@ namespace Meridian59.Data.Models
             }
             set
             {
-                if (levelSha != value)
+                if (levelSha != value && value <= origLevelSha)
                 {
                     levelSha = value;
                     RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_LEVELSHA));
@@ -310,7 +351,7 @@ namespace Meridian59.Data.Models
             }
             set
             {
-                if (levelQor != value)
+                if (levelQor != value && value <= origLevelQor)
                 {
                     levelQor = value;
                     RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_LEVELQOR));
@@ -326,7 +367,7 @@ namespace Meridian59.Data.Models
             }
             set
             {
-                if (levelKraanan != value)
+                if (levelKraanan != value && value <= origLevelKraanan)
                 {
                     levelKraanan = value;
                     RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_LEVELKRAANAN));
@@ -342,7 +383,7 @@ namespace Meridian59.Data.Models
             }
             set
             {
-                if (levelFaren != value)
+                if (levelFaren != value && value <= origLevelFaren)
                 {
                     levelFaren = value;
                     RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_LEVELFAREN));
@@ -358,7 +399,7 @@ namespace Meridian59.Data.Models
             }
             set
             {
-                if (levelRiija != value)
+                if (levelRiija != value && value <= origLevelRiija)
                 {
                     levelRiija = value;
                     RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_LEVELRIIJA));
@@ -374,7 +415,7 @@ namespace Meridian59.Data.Models
             }
             set
             {
-                if (levelJala != value)
+                if (levelJala != value && value <= origLevelJala)
                 {
                     levelJala = value;
                     RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_LEVELJALA));
@@ -390,10 +431,122 @@ namespace Meridian59.Data.Models
             }
             set
             {
-                if (levelWC != value)
+                if (levelWC != value && value <= origLevelWC)
                 {
                     levelWC = value;
                     RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_LEVELWC));
+                }
+            }
+        }
+
+       public byte OrigLevelSha
+        {
+            get
+            {
+                return origLevelSha;
+            }
+            protected set
+            {
+                if (origLevelSha != value)
+                {
+                    origLevelSha = value;
+                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_ORIGLEVELSHA));
+                }
+            }
+        }
+
+       public byte OrigLevelQor
+        {
+            get
+            {
+                return origLevelQor;
+            }
+            protected set
+            {
+                if (origLevelQor != value)
+                {
+                    origLevelQor = value;
+                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_ORIGLEVELQOR));
+                }
+            }
+        }
+
+       public byte OrigLevelKraanan
+        {
+            get
+            {
+                return origLevelKraanan;
+            }
+            protected set
+            {
+                if (origLevelKraanan != value)
+                {
+                    origLevelKraanan = value;
+                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_ORIGLEVELKRAANAN));
+                }
+            }
+        }
+
+       public byte OrigLevelFaren
+        {
+            get
+            {
+                return origLevelFaren;
+            }
+            protected set
+            {
+                if (origLevelFaren != value)
+                {
+                    origLevelFaren = value;
+                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_ORIGLEVELFAREN));
+                }
+            }
+        }
+
+       public byte OrigLevelRiija
+        {
+            get
+            {
+                return origLevelRiija;
+            }
+            protected set
+            {
+                if (origLevelRiija != value)
+                {
+                    origLevelRiija = value;
+                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_ORIGLEVELRIIJA));
+                }
+            }
+        }
+
+       public byte OrigLevelJala
+        {
+            get
+            {
+                return origLevelJala;
+            }
+            protected set
+            {
+                if (origLevelJala != value)
+                {
+                    origLevelJala = value;
+                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_ORIGLEVELJALA));
+                }
+            }
+        }
+
+       public byte OrigLevelWC
+        {
+            get
+            {
+                return origLevelWC;
+            }
+            protected set
+            {
+                if (origLevelWC != value)
+                {
+                    origLevelWC = value;
+                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_ORIGLEVELWC));
                 }
             }
         }
@@ -411,6 +564,52 @@ namespace Meridian59.Data.Models
                     isVisible = value;
                     RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_ISVISIBLE));
                 }
+            }
+        }
+
+        /// <summary>
+        /// Returns total number of levels.
+        /// </summary>
+        public int TotalLevels
+        {
+            get { return (LevelSha + LevelQor + LevelKraanan + LevelFaren + LevelRiija + LevelJala + LevelWC); }
+        }
+
+        /// <summary>
+        /// Returns current number of schools level 1 or greater.
+        /// </summary>
+        public int SchoolCount
+        {
+            get
+            {
+                int schoolCount = 0;
+                if (LevelSha > 0)
+                    ++schoolCount;
+                if (LevelQor > 0)
+                    ++schoolCount;
+                if (LevelKraanan > 0)
+                    ++schoolCount;
+                if (LevelFaren > 0)
+                    ++schoolCount;
+                if (LevelRiija > 0)
+                    ++schoolCount;
+                if (LevelJala > 0)
+                    ++schoolCount;
+                if (LevelWC > 0)
+                    ++schoolCount;
+                return schoolCount;
+            }
+        }
+
+        /// <summary>
+        /// Returns the amount of intellect needed for the schools
+        /// and levels we have set.
+        /// </summary>
+        public int IntellectNeeded
+        {
+            get
+            {
+                return (TotalLevels <= 8) ? 1 : (TotalLevels - SchoolCount - 8) * 5;
             }
         }
         #endregion
@@ -480,6 +679,16 @@ namespace Meridian59.Data.Models
                 Agility = Model.Agility;
                 Mysticism = Model.Mysticism;
                 Aim = Model.Aim;
+
+                // Set original levels first.
+                OrigLevelSha = Model.LevelSha;
+                OrigLevelQor = Model.LevelQor;
+                OrigLevelKraanan = Model.LevelKraanan;
+                OrigLevelFaren = Model.LevelFaren;
+                OrigLevelRiija = Model.LevelRiija;
+                OrigLevelJala = Model.LevelJala;
+                OrigLevelWC = Model.LevelWC;
+
                 LevelSha = Model.LevelSha;
                 LevelQor = Model.levelQor;
                 LevelKraanan = Model.LevelKraanan;
@@ -496,13 +705,23 @@ namespace Meridian59.Data.Models
                 agility = Model.Agility;
                 mysticism = Model.Mysticism;
                 aim = Model.Aim;
+
+                // Set original levels first.
+                origLevelSha = Model.LevelSha;
+                origLevelQor = Model.LevelQor;
+                origLevelKraanan = Model.LevelKraanan;
+                origLevelFaren = Model.LevelFaren;
+                origLevelRiija = Model.LevelRiija;
+                origLevelJala = Model.LevelJala;
+                origLevelWC = Model.LevelWC;
+
                 levelSha = Model.LevelSha;
-                levelQor = Model.levelQor;
+                levelQor = Model.LevelQor;
                 levelKraanan = Model.LevelKraanan;
                 levelFaren = Model.LevelFaren;
                 levelRiija = Model.LevelRiija;
                 levelJala = Model.LevelJala;
-                levelWC = Model.LevelWC;             
+                levelWC = Model.LevelWC;
             }
         }
         #endregion
