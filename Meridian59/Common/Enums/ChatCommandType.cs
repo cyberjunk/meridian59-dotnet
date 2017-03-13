@@ -22,7 +22,8 @@ namespace Meridian59.Common.Enums
     public enum ChatCommandType
     {
         Say, Emote, Yell, Broadcast, Tell, Guild, Cast, DM, Go, GoPlayer, GetPlayer,
-        WithDraw, Deposit, Suicide, Rest, Stand, Quit, Balance, Appeal
+        WithDraw, Deposit, Suicide, Rest, Stand, Quit, Balance, Appeal, Dance, Point,
+        Wave
 
 #if !VANILLA
         , TempSafe, Grouping, AutoLoot, AutoCombine, ReagentBag, SpellPower, Time

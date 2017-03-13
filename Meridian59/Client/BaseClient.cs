@@ -2809,6 +2809,18 @@ namespace Meridian59.Client
                     case ChatCommandType.Quit:
                         SendReqQuit();
                         break;
+
+                    case ChatCommandType.Dance:
+                        SendActionMessage(ActionType.Dance);
+                        break;
+
+                    case ChatCommandType.Point:
+                        SendActionMessage(ActionType.Point);
+                        break;
+
+                    case ChatCommandType.Wave:
+                        SendActionMessage(ActionType.Wave);
+                        break;
 #if !VANILLA
                     case ChatCommandType.TempSafe:
                         Data.ClientPreferences.TempSafe = ((ChatCommandTempSafe)chatCommand).On;

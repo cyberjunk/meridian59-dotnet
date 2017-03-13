@@ -20,23 +20,12 @@ using Meridian59.Common.Enums;
 namespace Meridian59.Data.Models
 {
     [Serializable]
-    public class ChatCommandWithDraw : ChatCommand
+    public class ChatCommandDance: ChatCommand
     {
-        public const string KEY1 = "withdraw";
-        public const string KEY2 = "with";
+        public const string KEY1 = "dance";
 
-        public override ChatCommandType CommandType { get { return ChatCommandType.WithDraw; } }
-        public uint Amount { get; set; }
+        public override ChatCommandType CommandType { get { return ChatCommandType.Dance; } }
 
-        public ChatCommandWithDraw()
-        {
-            Amount = 0;
-        }
-
-        public ChatCommandWithDraw(uint Amount)
-        {
-            this.Amount = Amount;
-
-        }
+        public ChatCommandDance() { }
     }
 }
