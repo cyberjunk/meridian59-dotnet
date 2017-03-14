@@ -900,7 +900,11 @@ namespace Meridian59 { namespace Ogre
 			static ::CEGUI::Window* ShieldClaimedByDesc = nullptr;
 			static ::CEGUI::Window* ShieldClaimedBy = nullptr;
 			static ::CEGUI::PushButton* ShieldClaim = nullptr;
-			
+
+			// Object ID we need to keep track of for confirm dialogs
+			// sending data to server.
+			static uint ObjectID = 0;
+
 			static void Initialize();
 			static void Destroy();
 			static void ApplyLanguage();
@@ -908,7 +912,11 @@ namespace Meridian59 { namespace Ogre
 			static void OnGuildShieldInfoPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
 			static void OnMembersListChanged(Object^ sender, ListChangedEventArgs^ e);
 			static void OnGuildsListChanged(Object^ sender, ListChangedEventArgs^ e);
-			static void OnNewShieldImageAvailable(Object^ sender, ::System::EventArgs^ e);			
+			static void OnNewShieldImageAvailable(Object^ sender, ::System::EventArgs^ e);
+			static void OnExileConfirmed(Object^ sender, ::System::EventArgs^ e);
+			static void OnRenounceConfirmed(Object^ sender, ::System::EventArgs^ e);
+			static void OnAbdicateConfirmed(Object^ sender, ::System::EventArgs^ e);
+			static void OnAbandonHallConfirmed(Object^ sender, ::System::EventArgs^ e);
 			static void MemberAdd(int Index);
 			static void MemberRemove(int Index);
 			static void MemberChange(int Index);

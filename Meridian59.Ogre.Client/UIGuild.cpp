@@ -641,15 +641,12 @@ namespace Meridian59 { namespace Ogre
 			// abdicate
 			else if (guildInfo->Flags->IsAbdicate && avatar->Rank == 5 && rank == 5)
 			{
-				OgreClient::Singleton->SendUserCommandGuildAbdicate(member->ID);
+				ControllerUI::Guild::ObjectID = member->ID;
 
-				// clear and re-request (workaroung since there's no updating)
-				OgreClient::Singleton->Data->GuildInfo->Clear(true);
-				OgreClient::Singleton->Data->GuildShieldInfo->Clear(true);
-				OgreClient::Singleton->SendUserCommandGuildInfoReq();
-				OgreClient::Singleton->SendUserCommandGuildShieldInfoReq();
+				// attach yes listener to confirm popup
+				ControllerUI::ConfirmPopup::Confirmed += gcnew System::EventHandler(ControllerUI::Guild::OnAbdicateConfirmed);
+				ControllerUI::ConfirmPopup::ShowChoice("Are you sure you want to abdicate to " + StringConvert::CLRToCEGUI(member->Name) + "?");
 			}
-
 			// reset value
 			else
 			{
@@ -771,18 +768,47 @@ namespace Meridian59 { namespace Ogre
 
 	bool UICallbacks::Guild::OnAbandonHallClicked(const CEGUI::EventArgs& e)
 	{
+		// attach yes listener to confirm popup
+		ControllerUI::ConfirmPopup::Confirmed += gcnew System::EventHandler(ControllerUI::Guild::OnAbandonHallConfirmed);
+		ControllerUI::ConfirmPopup::ShowChoice("Are you sure you want to abandon your hall?");
+
+		return true;
+	};
+
+	void ControllerUI::Guild::OnAbandonHallConfirmed(Object^ sender, ::System::EventArgs^ e)
+	{
 		// request to drop guild hall
 		OgreClient::Singleton->SendUserCommandGuildAbandonHall();
 
-		return true;
+		return;
 	};
 
 	bool UICallbacks::Guild::OnRenounceClicked(const CEGUI::EventArgs& e)
 	{
 		GuildInfo^ guildInfo = OgreClient::Singleton->Data->GuildInfo;
-		
+
 		if (guildInfo->Flags->IsRenounce)
-		{	
+		{
+			// attach yes listener to confirm popup
+			ControllerUI::ConfirmPopup::Confirmed += gcnew System::EventHandler(ControllerUI::Guild::OnRenounceConfirmed);
+			ControllerUI::ConfirmPopup::ShowChoice("Are you sure you want to leave your guild?");
+		}
+		else if (guildInfo->Flags->IsDisband)
+		{
+			// attach yes listener to confirm popup
+			ControllerUI::ConfirmPopup::Confirmed += gcnew System::EventHandler(ControllerUI::Guild::OnRenounceConfirmed);
+			ControllerUI::ConfirmPopup::ShowChoice("Are you sure you want to disband your guild?");
+		}
+
+		return true;
+	};
+
+	void ControllerUI::Guild::OnRenounceConfirmed(Object^ sender, ::System::EventArgs^ e)
+	{
+		GuildInfo^ guildInfo = OgreClient::Singleton->Data->GuildInfo;
+
+		if (guildInfo->Flags->IsRenounce)
+		{
 			// request
 			OgreClient::Singleton->SendUserCommandGuildRenounce();
 
@@ -799,8 +825,8 @@ namespace Meridian59 { namespace Ogre
 			OgreClient::Singleton->Data->GuildInfo->Clear(true);
 			OgreClient::Singleton->Data->GuildShieldInfo->Clear(true);
 		}
-				
-		return true;
+
+		return;
 	};
 
 	bool UICallbacks::Guild::OnExileClicked(const CEGUI::EventArgs& e)
@@ -812,9 +838,27 @@ namespace Meridian59 { namespace Ogre
 		GuildInfo^ guildInfo = OgreClient::Singleton->Data->GuildInfo;
 		
 		if (guildInfo->Flags->IsExile)
-		{						
-			// request to exile
-			OgreClient::Singleton->SendUserCommandGuildExile(itm->getID());
+		{
+			GuildMemberEntry^ member = guildInfo->GuildMembers->GetItemByID(itm->getID());
+			// Save object id for use in confirm box.
+			ControllerUI::Guild::ObjectID = member->ID;
+
+			// attach yes listener to confirm popup
+			ControllerUI::ConfirmPopup::Confirmed += gcnew System::EventHandler(ControllerUI::Guild::OnExileConfirmed);
+			ControllerUI::ConfirmPopup::ShowChoice("Are you sure you want to exile " + StringConvert::CLRToCEGUI(member->Name) + "?");
+		}
+	
+		return true;
+	};
+
+	void ControllerUI::Guild::OnExileConfirmed(Object^ sender, ::System::EventArgs^ e)
+	{
+		GuildInfo^ guildInfo = OgreClient::Singleton->Data->GuildInfo;
+
+		if (guildInfo->Flags->IsExile)
+		{
+			if (ControllerUI::Guild::ObjectID > 0)
+				OgreClient::Singleton->SendUserCommandGuildExile(ControllerUI::Guild::ObjectID);
 
 			// clear and re-request (workaroung since there's no updating)
 			OgreClient::Singleton->Data->GuildInfo->Clear(true);
@@ -824,9 +868,26 @@ namespace Meridian59 { namespace Ogre
 			OgreClient::Singleton->SendUserCommandGuildShieldListReq();
 			OgreClient::Singleton->SendUserCommandGuildShieldInfoReq();
 		}
-	
-		return true;
+
+		ControllerUI::Guild::ObjectID = 0;
+
+		return;
 	};
+
+	void ControllerUI::Guild::OnAbdicateConfirmed(Object^ sender, ::System::EventArgs^ e)
+	{
+		if (ControllerUI::Guild::ObjectID > 0)
+			OgreClient::Singleton->SendUserCommandGuildAbdicate(ControllerUI::Guild::ObjectID);
+		ControllerUI::Guild::ObjectID = 0;
+
+		// clear and re-request (workaround since there's no updating)
+		OgreClient::Singleton->Data->GuildInfo->Clear(true);
+		OgreClient::Singleton->Data->GuildShieldInfo->Clear(true);
+		OgreClient::Singleton->SendUserCommandGuildInfoReq();
+		OgreClient::Singleton->SendUserCommandGuildShieldInfoReq();
+
+		return;
+	}
 
 	bool UICallbacks::Guild::OnGuildShieldSettingChanged(const CEGUI::EventArgs& e)
 	{
