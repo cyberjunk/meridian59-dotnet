@@ -948,6 +948,30 @@ namespace Meridian59 { namespace Ogre
 		};
 
 		/// <summary>
+		/// GuildHallBuy window
+		/// </summary>
+		ref class GuildHallBuy abstract sealed
+		{
+		public:
+			static ::CEGUI::FrameWindow* Window = nullptr;
+			static ::CEGUI::MultiColumnList* List = nullptr;
+			static ::CEGUI::PushButton* ButtonBuy = nullptr;
+			static ::CEGUI::PushButton* ButtonCancel = nullptr;
+			static ::CEGUI::Editbox* GuildPassword = nullptr;
+			static ::CEGUI::Window* SelectedHall = nullptr;
+			static ::CEGUI::Window* PasswordInvalid = nullptr;
+
+			static void Initialize();
+			static void Destroy();
+			static void ApplyLanguage();
+			static void OnGuildHallsInfoPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
+			static void OnGuildHallsListChanged(Object^ sender, ListChangedEventArgs^ e);
+			static void GuildHallAdd(int Index);
+			static void GuildHallRemove(int Index);
+			static void GuildHallChange(int Index);
+		};
+
+		/// <summary>
 		/// AvatarCreateWizard window
 		/// </summary>
 		ref class AvatarCreateWizard abstract sealed
@@ -1712,6 +1736,20 @@ namespace Meridian59 { namespace Ogre
 		public:
 			static bool OnCreateClicked(const CEGUI::EventArgs& e);
 			static bool OnSecretGuildSelectChange(const CEGUI::EventArgs& e);
+			static bool OnWindowClosed(const CEGUI::EventArgs& e);
+			static bool OnWindowKeyUp(const CEGUI::EventArgs& e);
+		};
+
+		/// <summary>
+		/// GuildHallBuy event handlers
+		/// </summary>
+		class GuildHallBuy
+		{
+		public:
+			static bool OnSelectionChanged(const CEGUI::EventArgs& e);
+			static bool OnCancelClicked(const CEGUI::EventArgs& e);
+			static bool OnBuyClicked(const CEGUI::EventArgs& e);
+			static bool OnKeyUp(const CEGUI::EventArgs& e);
 			static bool OnWindowClosed(const CEGUI::EventArgs& e);
 			static bool OnWindowKeyUp(const CEGUI::EventArgs& e);
 		};

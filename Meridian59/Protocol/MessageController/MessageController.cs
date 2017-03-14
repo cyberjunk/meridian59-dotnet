@@ -1128,7 +1128,7 @@ namespace Meridian59.Protocol
 
                 case UserCommandType.GuildHalls:
                     UserCommandGuildHalls comGuildHalls = (UserCommandGuildHalls)Message.Command;
-                    foreach (GuildHall obj in comGuildHalls.GuildHalls)
+                    foreach (GuildHall obj in comGuildHalls.GuildHallsInfo.GuildHalls)
                         obj.ResolveStrings(stringResources, false);
 
                     break;

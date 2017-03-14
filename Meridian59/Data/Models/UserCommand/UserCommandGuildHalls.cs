@@ -30,18 +30,13 @@ namespace Meridian59.Data.Models
 
         #region IByteSerializable
         public override int ByteLength 
-        { 
-            get 
+        {
+            get
             {
-                int len = TypeSizes.BYTE + TypeSizes.SHORT;
-
-                foreach (GuildHall o in GuildHalls)
-                    len += o.ByteLength;
-
-                return len;
+                return TypeSizes.BYTE + GuildHallsInfo.ByteLength;
             }
-        }    
-    
+        }
+
         public override int WriteTo(byte[] Buffer, int StartIndex=0)
         {
             int cursor = StartIndex;
@@ -49,12 +44,8 @@ namespace Meridian59.Data.Models
             Buffer[cursor] = (byte)CommandType;
             cursor++;
 
-            Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(GuildHalls.Length)), 0, Buffer, cursor, TypeSizes.SHORT);
-            cursor += TypeSizes.SHORT;
+            cursor += GuildHallsInfo.WriteTo(Buffer, cursor);                // GuildHallsInfo (n bytes)
 
-            foreach (GuildHall hall in GuildHalls)
-                cursor += hall.WriteTo(Buffer, cursor);
-           
             return cursor - StartIndex;
         }
 
@@ -68,26 +59,19 @@ namespace Meridian59.Data.Models
             {
                 cursor++;
 
-                ushort len = BitConverter.ToUInt16(Buffer, cursor);
-                cursor += TypeSizes.SHORT;
-
-                GuildHalls = new GuildHall[len];
-                for (int i = 0; i < len; i++)
-                {
-                    GuildHalls[i] = new GuildHall(Buffer, cursor);
-                    cursor += GuildHalls[i].ByteLength;
-                }
+                GuildHallsInfo = new GuildHallsInfo(Buffer, cursor);          // GuildHallsInfo (n bytes)
+                cursor += GuildHallsInfo.ByteLength;
             }
 
             return cursor - StartIndex;
-        }        
+        }
         #endregion
 
-        public GuildHall[] GuildHalls { get; set; }
+        public GuildHallsInfo GuildHallsInfo { get; set; }
 
-        public UserCommandGuildHalls(GuildHall[] GuildHalls)
+        public UserCommandGuildHalls(GuildHallsInfo GuildHallsInfo)
         {
-            this.GuildHalls = GuildHalls;
+            this.GuildHallsInfo = GuildHallsInfo;
         }
 
         public UserCommandGuildHalls(byte[] Buffer, int StartIndex = 0)

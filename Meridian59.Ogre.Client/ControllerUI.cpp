@@ -143,6 +143,7 @@ namespace Meridian59 { namespace Ogre
 		MailCompose::Initialize();
 		Guild::Initialize();
 		GuildCreate::Initialize();
+		GuildHallBuy::Initialize();
 		AvatarCreateWizard::Initialize();
 		ConfirmPopup::Initialize();
 		PlayerOverlays::Initialize();
@@ -204,6 +205,7 @@ namespace Meridian59 { namespace Ogre
 		MailCompose::Destroy();
 		Guild::Destroy();
 		GuildCreate::Destroy();
+		GuildHallBuy::Destroy();
 		AvatarCreateWizard::Destroy();
 		ConfirmPopup::Destroy();
 		PlayerOverlays::Destroy();
@@ -271,6 +273,7 @@ namespace Meridian59 { namespace Ogre
 		MailCompose::ApplyLanguage();
 		Guild::ApplyLanguage();
 		GuildCreate::ApplyLanguage();
+		GuildHallBuy::ApplyLanguage();
 		AvatarCreateWizard::ApplyLanguage();
 		ConfirmPopup::ApplyLanguage();
 		PlayerOverlays::ApplyLanguage();
@@ -627,6 +630,7 @@ namespace Meridian59 { namespace Ogre
 			MailCompose::Window->setVisible(false);
 			Guild::Window->setVisible(false);
 			GuildCreate::Window->setVisible(false);
+			GuildHallBuy::Window->setVisible(false);
 			AvatarCreateWizard::Window->setVisible(mode == UIMode::AvatarCreation);
 			ConfirmPopup::Window->setVisible(false);
 			ObjectContents::Window->setVisible(false);
