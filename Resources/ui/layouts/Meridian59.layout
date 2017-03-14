@@ -1335,6 +1335,21 @@
                   <Property name="Area" value="{{0.5,70},{0.5,-100},{0.5,135},{0.5,-75}}" />
                   <Property name="TooltipText" value="Changes your password." />
                </Window>
+               
+               <!-- AbandonHall -->
+               <Window type="TaharezLook/Button" name="Guild.AbandonHall" >
+                  <Property name="Area" value="{{0,165},{0,215},{0,415},{0,247}}" />
+                  <Property name="Text" value="Abandon Guild Hall" />
+                  <Property name="TooltipText" value="Gets rid of your guild hall." />
+               </Window>
+               
+               <!-- NoGuildHall -->
+               <Window type="TaharezLook/Label" name="Guild.NoGuildHall" >
+                  <Property name="Area" value="{{0.5,-190},{0.5,-56},{0.5,185},{0.5,-31}}" />
+                  <Property name="Text" value="Your guild does not have a guild hall." />
+                  <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                  <Property name="HorzFormatting" value="CentreAligned" />
+               </Window>
             </Window>
             
             <!-- TabShield -->

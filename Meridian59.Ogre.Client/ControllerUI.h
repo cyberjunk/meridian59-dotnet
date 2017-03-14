@@ -888,6 +888,8 @@ namespace Meridian59 { namespace Ogre
 			static ::CEGUI::Window* PasswordDesc = nullptr;
 			static ::CEGUI::Editbox* PasswordVal = nullptr;
 			static ::CEGUI::PushButton* SetPassword = nullptr;
+			static ::CEGUI::PushButton* AbandonHall = nullptr;
+			static ::CEGUI::Window* NoGuildHall = nullptr;
 			static ::CEGUI::Window* ShieldImage = nullptr;
 			static ::CEGUI::Window* ShieldColor1Desc = nullptr;
 			static ::CEGUI::Slider* ShieldColor1 = nullptr;
@@ -1744,6 +1746,7 @@ namespace Meridian59 { namespace Ogre
 			static bool OnRankSelectionChanged(const CEGUI::EventArgs& e);
 			static bool OnDiploSelectionChanged(const CEGUI::EventArgs& e);
 			static bool OnSetPasswordClicked(const CEGUI::EventArgs& e);
+			static bool OnAbandonHallClicked(const CEGUI::EventArgs& e);
 			static bool OnRenounceClicked(const CEGUI::EventArgs& e);
 			static bool OnExileClicked(const CEGUI::EventArgs& e);
 			static bool OnGuildShieldSettingChanged(const CEGUI::EventArgs& e);
