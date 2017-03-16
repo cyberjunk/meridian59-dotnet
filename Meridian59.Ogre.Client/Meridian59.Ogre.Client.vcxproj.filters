@@ -313,6 +313,9 @@
     <ClCompile Include="UILootList.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="UIGuildHallBuy.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="app.ico">

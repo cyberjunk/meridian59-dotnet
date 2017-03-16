@@ -106,6 +106,7 @@ namespace Meridian59.Data
         protected readonly List<string> ignoreList;
         protected readonly GroupList groups;
         protected readonly List<string> chatCommandHistory;
+        protected readonly GuildHallsInfo guildHallsInfo;
 
         protected readonly RoomInfo roomInformation;
         protected readonly LightShading lightShading;
@@ -279,6 +280,11 @@ namespace Meridian59.Data
         /// Data for your or the currently selected guildshield
         /// </summary>
         public GuildShieldInfo GuildShieldInfo { get { return guildShieldInfo; } }
+
+        /// <summary>
+        /// List of available guildhalls for sale
+        /// </summary>
+        public GuildHallsInfo GuildHallsInfo { get { return guildHallsInfo; } }
 
         /// <summary>
         /// Info transmitted for the GuildCreate window (e.g. cost)
@@ -807,6 +813,7 @@ namespace Meridian59.Data
             ignoreList = new List<string>(20);
             groups = new GroupList(20);
             chatCommandHistory = new List<string>(20);
+            guildHallsInfo = new GuildHallsInfo();
 
             // setup the lootlist filtering
             ObjectFlags getFlags = new ObjectFlags();
@@ -910,7 +917,7 @@ namespace Meridian59.Data
             PlayerOverlays.Clear();
             VisitedTargets.Clear();
             ClickedTargets.Clear();
-            
+
             // clear single data models
             Effects.Clear(true);
             GuildInfo.Clear(true);
@@ -931,6 +938,7 @@ namespace Meridian59.Data
             CharCreationInfo.Clear(true);
             ObjectContents.Clear(true);
             GuildShieldInfo.Clear(true);
+            GuildHallsInfo.Clear(true);
             StatChangeInfo.Clear(true);
 
             // reset values/references
@@ -2301,6 +2309,11 @@ namespace Meridian59.Data
 
                 case UserCommandType.GuildList:
                     DiplomacyInfo.UpdateFromModel(((UserCommandGuildGuildList)Message.Command).DiplomacyInfo, true);
+                    break;
+
+                case UserCommandType.GuildHalls:
+                    GuildHallsInfo.UpdateFromModel(((UserCommandGuildHalls)Message.Command).GuildHallsInfo, true);
+                    GuildHallsInfo.IsVisible = true;
                     break;
             }
         }

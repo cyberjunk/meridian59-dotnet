@@ -313,6 +313,7 @@
     <ClCompile Include="UIDownloadBar.cpp" />
     <ClCompile Include="UIGuild.cpp" />
     <ClCompile Include="UIGuildCreate.cpp" />
+    <ClCompile Include="UIGuildHallBuy.cpp" />
     <ClCompile Include="UIInventory.cpp" />
     <ClCompile Include="UILoadingBar.cpp" />
     <ClCompile Include="UILogin.cpp" />

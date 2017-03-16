@@ -990,6 +990,77 @@
          </Window>
       </Window>
       
+      <!-- GuildHallBuy -->
+      <Window type="TaharezLook/FrameWindow" name="GuildHallBuy" >
+         <Property name="Area" value="{{0.5,-432},{0.5,-226},{0.5,10},{0.5,234}}" />
+         <Property name="Text" value="Rent Guild Hall" />
+         <Property name="MaxSize" value="{{1,0},{1,0}}" />
+         <Property name="MinSize" value="{{0,300},{0,256}}" />
+         <Property name="RollUpEnabled" value="false" />
+         <Property name="TitlebarEnabled" value="true" />
+         <Property name="AutoRenderingSurface" value="true" />
+         <Property name="SizingBorderThickness" value="8" />
+         
+         <!-- HeadLine -->
+         <Window type="TaharezLook/Label" name="GuildHallBuy.HeadLine" >
+            <Property name="Area" value="{{0,0},{0,0},{1,-2},{0,15}}" />
+            <Property name="Text" value="Select a hall to house your guild:" />
+            <Property name="MaxSize" value="{{1,0},{1,0}}" />
+         </Window>
+         
+         <!-- List -->
+         <Window type="TaharezLook/MultiColumnList" name="GuildHallBuy.List" >
+            <Property name="Area" value="{{0,0},{0,20},{0,430},{0,271}}" />
+         </Window>
+         
+         <!-- ButtonBuy -->
+         <Window type="TaharezLook/Button" name="GuildHallBuy.ButtonBuy" >
+            <Property name="Area" value="{{0,125},{0,400},{0,209},{0,425}}" />
+            <Property name="Text" value="Buy" />
+         </Window>
+         
+         <!-- ButtonCancel -->
+         <Window type="TaharezLook/Button" name="GuildHallBuy.ButtonCancel" >
+            <Property name="Area" value="{{0,225},{0,400},{0,307},{0,425}}" />
+            <Property name="Text" value="Cancel" />
+         </Window>
+         
+         <!-- GuildPasswordDesc -->
+         <Window type="TaharezLook/Label" name="GuildHallBuy.GuildPasswordDesc" >
+            <Property name="Area" value="{{0,10},{0,335},{0,155},{0,350}}" />
+            <Property name="Text" value="Guild Password:" />
+            <Property name="MaxSize" value="{{1,0},{1,0}}" />
+         </Window>
+         
+         <!-- GuildPassword -->
+         <Window type="TaharezLook/Editbox" name="GuildHallBuy.GuildPassword" >
+            <Property name="Area" value="{{0,160},{0,325},{0,415},{0,360}}" />
+            <Property name="ReadOnly" value="false" />
+            <Property name="BlinkCaret" value="true" />
+         </Window>
+         
+         <!-- GuildHallSelectedDesc -->
+         <Window type="TaharezLook/Label" name="GuildHallBuy.GuildHallSelectedDesc" >
+            <Property name="Area" value="{{0,10},{0,290},{0,156},{0,305}}" />
+            <Property name="Text" value="Selected guild hall:" />
+            <Property name="MaxSize" value="{{1,0},{1,0}}" />
+         </Window>
+         
+         <!-- GuildHallSelected -->
+         <Window type="TaharezLook/Label" name="GuildHallBuy.GuildHallSelected" >
+            <Property name="Area" value="{{0,160},{0,280},{0,415},{0,315}}" />
+            <Property name="MaxSize" value="{{1,0},{1,0}}" />
+         </Window>
+         
+         <!-- PasswordInvalid -->
+         <Window type="TaharezLook/Label" name="GuildHallBuy.PasswordInvalid" >
+            <Property name="Area" value="{{0,5},{0,370},{0,425},{0,385}}" />
+            <Property name="Text" value="You must specify a guild password!" />
+            <Property name="MaxSize" value="{{1,0},{1,0}}" />
+            <Property name="Visible" value="false" />
+         </Window>
+      </Window>
+      
       <!-- NewsGroup -->
       <Window type="TaharezLook/FrameWindow" name="NewsGroup" >
          <Property name="Text" value="News Group" />
