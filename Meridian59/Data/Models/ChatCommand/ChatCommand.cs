@@ -174,6 +174,7 @@ namespace Meridian59.Data.Models
                     break;
 
                 case ChatCommandWithDraw.KEY1:
+                case ChatCommandWithDraw.KEY2:
                     if (splitted.Length == 2)
                     {
                         uint amount = 0;
@@ -232,6 +233,18 @@ namespace Meridian59.Data.Models
 
                 case ChatCommandQuit.KEY1:
                     returnValue = new ChatCommandQuit();
+                    break;
+
+                case ChatCommandDance.KEY1:
+                    returnValue = new ChatCommandDance();
+                    break;
+
+                case ChatCommandPoint.KEY1:
+                    returnValue = new ChatCommandPoint();
+                    break;
+
+                case ChatCommandWave.KEY1:
+                    returnValue = new ChatCommandWave();
                     break;
 #if !VANILLA
                 case ChatCommandTempSafe.KEY1:

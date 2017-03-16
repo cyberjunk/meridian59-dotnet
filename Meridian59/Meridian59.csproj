@@ -134,6 +134,9 @@
     <Compile Include="Data\Models\AdminInfo.cs" />
     <Compile Include="Data\Models\ChatCommand\ChatCommandBalance.cs" />
     <Compile Include="Data\Models\ChatCommand\ChatCommandAppeal.cs" />
+    <Compile Include="Data\Models\ChatCommand\ChatCommandWave.cs" />
+    <Compile Include="Data\Models\ChatCommand\ChatCommandPoint.cs" />
+    <Compile Include="Data\Models\ChatCommand\ChatCommandDance.cs" />
     <Compile Include="Data\Models\ChatCommand\ChatCommandTime.cs" />
     <Compile Include="Data\Models\ClientPatchInfo.cs" />
     <Compile Include="Data\Models\GroupMember.cs" />
