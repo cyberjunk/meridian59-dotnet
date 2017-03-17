@@ -31,16 +31,46 @@ namespace Meridian59 { namespace Ogre
 	{
 	};
 
+	void ControllerUI::ConfirmPopup::Show(const ::CEGUI::String& text)
+	{
+		// set text
+		Text->setText(text);
+
+		// show popup
+		Window->show();
+		Window->moveToFront();
+	};
+
+	void ControllerUI::ConfirmPopup::_RaiseConfirm()
+	{
+		// execute handler(s)
+		if (_confirmed != nullptr)
+			_confirmed(nullptr, nullptr);
+
+		// remove handler(s)
+		_confirmed = nullptr;
+	};
+
+	void ControllerUI::ConfirmPopup::_RaiseCancel()
+	{
+		// execute handler(s)
+		if (_cancelled != nullptr)
+			_cancelled(nullptr, nullptr);
+
+		// remove handler(s)
+		_cancelled = nullptr;
+	};
+
 	bool UICallbacks::ConfirmPopup::OnYesClicked(const CEGUI::EventArgs& e)
 	{
-		// suicide the avatar
-		OgreClient::Singleton->SendUserCommandSuicide();
-
 		// hide window
 		ControllerUI::ConfirmPopup::Window->hide();
 
 		// mark GUIroot active
 		ControllerUI::ActivateRoot();
+	
+		// raise event
+		ControllerUI::ConfirmPopup::_RaiseConfirm();
 
 		return true;
 	};
@@ -52,6 +82,9 @@ namespace Meridian59 { namespace Ogre
 
 		// mark GUIroot active
 		ControllerUI::ActivateRoot();
+
+		// raise event
+		ControllerUI::ConfirmPopup::_RaiseCancel();
 
 		return true;
 	};

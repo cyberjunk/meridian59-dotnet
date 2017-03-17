@@ -995,9 +995,12 @@ namespace Meridian59 { namespace Ogre
 
 	void OgreClient::Suicide()
     {
+		// attach yes listener to confirm popup
+		ControllerUI::ConfirmPopup::Confirmed += 
+			gcnew System::EventHandler(this, &OgreClient::OnSuicideConfirmed);
+
 		// show	
-		ControllerUI::ConfirmPopup::Window->show();
-		ControllerUI::ConfirmPopup::Window->moveToFront();
+		ControllerUI::ConfirmPopup::Show("Are you sure?");
 	};
 
 	void OgreClient::ShowAdminForm()
@@ -1023,6 +1026,12 @@ namespace Meridian59 { namespace Ogre
         // tell networkclient to potentially loopback sent messages
         ServerConnection->IsOutgoingPacketLogEnabled = e->LogOutgoing;
     };
+
+	void OgreClient::OnSuicideConfirmed(Object ^sender, ::System::EventArgs ^e)
+	{
+		// suicide the avatar
+		OgreClient::Singleton->SendUserCommandSuicide();
+	};
 
 	void OgreClient::OnAdminFormPacketSend(Object^ sender, GameMessageEventArgs^ e)
     {

@@ -1064,7 +1064,23 @@ namespace Meridian59 { namespace Ogre
 		/// </summary>
 		ref class ConfirmPopup abstract sealed
 		{
+		private: 
+			static ::System::EventHandler^ _confirmed;
+			static ::System::EventHandler^ _cancelled;
+
 		public:
+			static event ::System::EventHandler^ Confirmed
+			{
+				void add(::System::EventHandler^ handler) { _confirmed += handler; }
+				void remove(::System::EventHandler^ handler) { _confirmed -= handler; }
+			}
+
+			static event ::System::EventHandler^ Cancelled
+			{
+				void add(::System::EventHandler^ handler) { _cancelled += handler; }
+				void remove(::System::EventHandler^ handler) { _cancelled -= handler; }
+			}
+
 			static ::CEGUI::FrameWindow* Window = nullptr;
 			static ::CEGUI::Window* Text = nullptr;
 			static ::CEGUI::PushButton* Yes = nullptr;
@@ -1073,6 +1089,10 @@ namespace Meridian59 { namespace Ogre
 			static void Initialize();
 			static void Destroy();
 			static void ApplyLanguage();
+			static void Show(const ::CEGUI::String& text);
+
+			static void _RaiseConfirm();
+			static void _RaiseCancel();
 		};
 
 		/// <summary>

@@ -209,6 +209,11 @@ namespace Meridian59 { namespace Ogre
 		virtual void Suicide() override;
 		
 		/// <summary>
+		/// Eventhandler when popup for suicide was confirmed
+		/// </summary>
+		void OnSuicideConfirmed(Object ^sender, ::System::EventArgs ^e);
+		
+		/// <summary>
 		/// Eventhandler when AdminForm changed logging settings for network connection
 		/// </summary>
 		void OnAdminFormPacketLogChanged(Object^ sender, PacketLogChangeEventArgs^ e);
