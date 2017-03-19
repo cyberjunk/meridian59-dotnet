@@ -1081,15 +1081,18 @@ namespace Meridian59 { namespace Ogre
 				void remove(::System::EventHandler^ handler) { _cancelled -= handler; }
 			}
 
-			static ::CEGUI::FrameWindow* Window = nullptr;
+			static ::CEGUI::DefaultWindow* Window = nullptr;
+			static ::CEGUI::FrameWindow* SubWindow = nullptr;
 			static ::CEGUI::Window* Text = nullptr;
 			static ::CEGUI::PushButton* Yes = nullptr;
 			static ::CEGUI::PushButton* No = nullptr;
+			static ::CEGUI::PushButton* OK = nullptr;
 
 			static void Initialize();
 			static void Destroy();
 			static void ApplyLanguage();
-			static void Show(const ::CEGUI::String& text);
+			static void ShowChoice(const ::CEGUI::String& text);
+			static void ShowOK(const ::CEGUI::String& text);
 
 			static void _RaiseConfirm();
 			static void _RaiseCancel();

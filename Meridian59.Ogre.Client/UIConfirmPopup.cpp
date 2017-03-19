@@ -8,33 +8,60 @@ namespace Meridian59 { namespace Ogre
 		CEGUI::WindowManager* wndMgr = CEGUI::WindowManager::getSingletonPtr();
 
 		// setup references to children from xml nodes
-		Window	= static_cast<CEGUI::FrameWindow*>(guiRoot->getChild(UI_NAME_CONFIRMPOPUP_WINDOW));
-		Text	= static_cast<CEGUI::Editbox*>(Window->getChild(UI_NAME_CONFIRMPOPUP_TEXT));
-		Yes		= static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_CONFIRMPOPUP_YES));
-		No		= static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_CONFIRMPOPUP_NO));
-		
+		Window	= static_cast<CEGUI::DefaultWindow*>(guiRoot->getChild(UI_NAME_CONFIRMPOPUP_WINDOW));
+		SubWindow = static_cast<CEGUI::FrameWindow*>(Window->getChild(UI_NAME_CONFIRMPOPUP_SUBWINDOW));
+		Text	= static_cast<CEGUI::Window*>(SubWindow->getChild(UI_NAME_CONFIRMPOPUP_TEXT));
+		Yes		= static_cast<CEGUI::PushButton*>(SubWindow->getChild(UI_NAME_CONFIRMPOPUP_YES));
+		No		= static_cast<CEGUI::PushButton*>(SubWindow->getChild(UI_NAME_CONFIRMPOPUP_NO));
+		OK = static_cast<CEGUI::PushButton*>(SubWindow->getChild(UI_NAME_CONFIRMPOPUP_OK));
+
 		// subscribe key event
 		Yes->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::ConfirmPopup::OnYesClicked));
 		
-		// subscribe OK button
+		// subscribe No button
 		No->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::ConfirmPopup::OnNoClicked));
 		
+		// subscribe OK button (uses No button handler)
+		OK->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::ConfirmPopup::OnNoClicked));
+
 		// subscribe close button
-		Window->subscribeEvent(CEGUI::FrameWindow::EventCloseClicked, CEGUI::Event::Subscriber(UICallbacks::OnWindowClosed));				
+		Window->subscribeEvent(CEGUI::FrameWindow::EventCloseClicked, CEGUI::Event::Subscriber(UICallbacks::OnWindowClosed));
 	};
 
 	void ControllerUI::ConfirmPopup::Destroy()
-	{				
+	{
 	};
 
 	void ControllerUI::ConfirmPopup::ApplyLanguage()
 	{
 	};
 
-	void ControllerUI::ConfirmPopup::Show(const ::CEGUI::String& text)
+	// Makes the Yes/No buttons visible.
+	void ControllerUI::ConfirmPopup::ShowChoice(const ::CEGUI::String& text)
 	{
 		// set text
 		Text->setText(text);
+
+		// set buttons
+		Yes->setVisible(true);
+		No->setVisible(true);
+		OK->setVisible(false);
+
+		// show popup
+		Window->show();
+		Window->moveToFront();
+	};
+
+	// Makes the OK button visible.
+	void ControllerUI::ConfirmPopup::ShowOK(const ::CEGUI::String& text)
+	{
+		// set text
+		Text->setText(text);
+
+		// set buttons
+		OK->setVisible(true);
+		Yes->setVisible(false);
+		No->setVisible(false);
 
 		// show popup
 		Window->show();

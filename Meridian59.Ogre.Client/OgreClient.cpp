@@ -999,8 +999,8 @@ namespace Meridian59 { namespace Ogre
 		ControllerUI::ConfirmPopup::Confirmed += 
 			gcnew System::EventHandler(this, &OgreClient::OnSuicideConfirmed);
 
-		// show	
-		ControllerUI::ConfirmPopup::Show("Are you sure?");
+		// show a yes/no dialog
+		ControllerUI::ConfirmPopup::ShowChoice("Are you sure?");
 	};
 
 	void OgreClient::ShowAdminForm()

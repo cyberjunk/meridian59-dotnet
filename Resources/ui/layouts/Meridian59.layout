@@ -1900,35 +1900,77 @@
       </Window>
       
       <!-- ConfirmPopup -->
-      <Window type="TaharezLook/FrameWindow" name="ConfirmPopup" >
-         <Property name="Text" value="Warning" />
-         <Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
-         <Property name="Size" value="{{0,256},{0,96}}" />
-         <Property name="MinSize" value="{{0,256},{0,96}}" />
-         <Property name="MaxSize" value="{{0,256},{0,96}}" />
-         <Property name="SizingEnabled" value="False" />
-         <Property name="Position" value="{{0.5,-128},{0.5,-64}}" />
+      <Window type="DefaultWindow" name="ConfirmPopup" >
+         <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+         <Property name="MaxSize" value="{{1,0},{1,0}}" />
+         <Property name="AlwaysOnTop" value="true" />
          
-         <!-- Text -->
-         <Window type="TaharezLook/Label" name="ConfirmPopup.Text" >
-            <Property name="Text" value="Are you sure?" />
-            <Property name="NormalTextColour" value="FFFF0000" />
-            <Property name="Font" value="Berenika-8-Bold" />
-            <Property name="HorzFormatting" value="CentreAligned" />
-            <Property name="VertFormatting" value="CentreAligned" />
-            <Property name="Area" value="{{0,5},{0,5},{1,-5},{1,-35}}" />            
+         <!-- Background -->
+         <Window type="TaharezLook/StaticImage" name="Background" >
+            <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+            <Property name="Alpha" value="0.25" />
+            <Property name="MaxSize" value="{{1,0},{1,0}}" />
+            <Property name="FrameEnabled" value="false" />
+            <Property name="BackgroundEnabled" value="true" />
          </Window>
-                     
-         <!-- Yes -->
-         <Window type="TaharezLook/Button" name="ConfirmPopup.Yes" >
-            <Property name="Text" value="Yes" />
-            <Property name="Area" value="{{0,5},{1,-30},{0.5,-2},{1,-5}}" />
-         </Window>
+         
+         <!-- Window -->
+         <Window type="TaharezLook/FrameWindow" name="ConfirmPopup.Window" >
+            <Property name="Area" value="{{0,465},{0,179},{0,846},{0,331}}" />
+            <Property name="Text" value="Confirm" />
+            <Property name="MaxSize" value="{{1,0},{1,0}}" />
+            <Property name="AlwaysOnTop" value="true" />
+            <Property name="TitlebarFont" value="" />
+            <Property name="RollUpEnabled" value="false" />
+            <Property name="SizingEnabled" value="false" />
+            <Property name="TitlebarEnabled" value="true" />
+            <Property name="CloseButtonEnabled" value="false" />
+            <Property name="AutoRenderingSurface" value="true" />
+            <Property name="SizingBorderThickness" value="8" />
             
-         <!-- No -->
-         <Window type="TaharezLook/Button" name="ConfirmPopup.No" >
-            <Property name="Text" value="No" />
-            <Property name="Area" value="{{0.5,2},{1,-30},{1,-5},{1,-5}}" />
+            <!-- Text -->
+            <Window type="TaharezLook/StaticText" name="ConfirmPopup.Text" >
+               <Property name="Area" value="{{0,0},{0,20},{0,371},{0,52}}" />
+               <Property name="Text" value="Are you sure?" />
+               <Property name="MaxSize" value="{{1,0},{1,0}}" />
+               <Property name="HorzFormatting" value="CentreAligned" />
+               <Property name="FrameEnabled" value="false" />
+               <Property name="BackgroundEnabled" value="false" />
+               <Property name="HorzScrollPageSize" value="274" />
+               <Property name="VertScrollPageSize" value="20" />
+               <Property name="HorzScrollDocumentSize" value="275" />
+               <Property name="VertScrollDocumentSize" value="11.2138" />
+            </Window>
+            
+            <!-- Yes -->
+            <Window type="TaharezLook/Button" name="ConfirmPopup.Yes" >
+               <Property name="Area" value="{{0,50},{0,85},{0,170},{0,115}}" />
+               <Property name="Font" value="" />
+               <Property name="Text" value="Yes" />
+               <Property name="MaxSize" value="{{1,0},{1,0}}" />
+               <Property name="Visible" value="false" />
+               <Property name="MouseCursorImage" value="TaharezLook/MouseArrow" />
+            </Window>
+            
+            <!-- OK -->
+            <Window type="TaharezLook/Button" name="ConfirmPopup.OK" >
+               <Property name="Area" value="{{0,125},{0,85},{0,245},{0,115}}" />
+               <Property name="Font" value="" />
+               <Property name="Text" value="OK" />
+               <Property name="MaxSize" value="{{1,0},{1,0}}" />
+               <Property name="Visible" value="false" />
+               <Property name="MouseCursorImage" value="TaharezLook/MouseArrow" />
+            </Window>
+            
+            <!-- No -->
+            <Window type="TaharezLook/Button" name="ConfirmPopup.No" >
+               <Property name="Area" value="{{0,200},{0,85},{0,320},{0,115}}" />
+               <Property name="Font" value="" />
+               <Property name="Text" value="No" />
+               <Property name="MaxSize" value="{{1,0},{1,0}}" />
+               <Property name="Visible" value="false" />
+               <Property name="MouseCursorImage" value="TaharezLook/MouseArrow" />
+            </Window>
          </Window>
       </Window>
       
