@@ -833,50 +833,60 @@ namespace Meridian59 { namespace Ogre
 	};
 	
 	void OgreClient::HandleLoginFailedMessage(LoginFailedMessage^ Message)
-    {
+	{
 		// call base handler
-        SingletonClient::HandleLoginFailedMessage(Message);
+		SingletonClient::HandleLoginFailedMessage(Message);
 
-        // tell user about wrong credentials
-        ::System::Windows::Forms::MessageBox::Show(WRONGCREDENTIALS);
-
-		Disconnect();
+		// attach OK listener to confirm popup
+		ControllerUI::ConfirmPopup::Confirmed +=
+			gcnew System::EventHandler(this, &OgreClient::OnLoginErrorConfirmed);
+		// tell user about wrong credentials
+		ControllerUI::ConfirmPopup::ShowOK(StringConvert::CLRToCEGUI(WRONGCREDENTIALS));
 	};
 
 	void OgreClient::HandleNoCharactersMessage(NoCharactersMessage^ Message)
-    {
-        // call base handler
-        SingletonClient::HandleNoCharactersMessage(Message);
+	{
+		// call base handler
+		SingletonClient::HandleNoCharactersMessage(Message);
 
-        // tell user about wrong credentials
-        ::System::Windows::Forms::MessageBox::Show(NOCHARACTERS);
-
-		Disconnect();
-    };
+		// attach OK listener to confirm popup
+		ControllerUI::ConfirmPopup::Confirmed +=
+			gcnew System::EventHandler(this, &OgreClient::OnLoginErrorConfirmed);
+		// tell user about no characters
+		ControllerUI::ConfirmPopup::ShowOK(StringConvert::CLRToCEGUI(NOCHARACTERS));
+	};
 
 	void OgreClient::HandleLoginModeMessageMessage(LoginModeMessageMessage^ Message)
-    {
-        // tell user about wrong credentials
-        ::System::Windows::Forms::MessageBox::Show(Message->Message);
-
-		Disconnect();
-    };
+	{
+		// attach OK listener to confirm popup
+		ControllerUI::ConfirmPopup::Confirmed +=
+			gcnew System::EventHandler(this, &OgreClient::OnLoginErrorConfirmed);
+		// tell user about wrong credentials
+		ControllerUI::ConfirmPopup::ShowOK(StringConvert::CLRToCEGUI(Message->Message));
+	};
 
 	void OgreClient::HandleGetClientMessage(GetClientMessage^ Message)
 	{
+		// attach OK listener to confirm popup
+		ControllerUI::ConfirmPopup::Confirmed +=
+			gcnew System::EventHandler(this, &OgreClient::OnLoginErrorConfirmed);
 		// tell user about mismatching major/minor version
-        ::System::Windows::Forms::MessageBox::Show(APPVERSIONMISMATCH);
-
-		Disconnect();
+		ControllerUI::ConfirmPopup::ShowOK(StringConvert::CLRToCEGUI(APPVERSIONMISMATCH));
 	};
 
 	void OgreClient::HandleDownloadMessage(DownloadMessage^ Message)
 	{
 		SingletonClient::HandleDownloadMessage(Message);
 
+		// attach OK listener to confirm popup
+		ControllerUI::ConfirmPopup::Confirmed +=
+			gcnew System::EventHandler(this, &OgreClient::OnLoginErrorConfirmed);
 		// tell user about mismatching resources version
-        ::System::Windows::Forms::MessageBox::Show("Resources mismatch");
+		ControllerUI::ConfirmPopup::ShowOK("Resources mismatch");
+	};
 
+	void OgreClient::OnLoginErrorConfirmed(Object ^sender, ::System::EventArgs ^e)
+	{
 		Disconnect();
 	};
 		

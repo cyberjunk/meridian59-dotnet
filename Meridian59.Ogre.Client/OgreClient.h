@@ -177,7 +177,12 @@ namespace Meridian59 { namespace Ogre
         /// </summary>
         /// <param name="Message"></param>
 		virtual void HandleDownloadMessage(DownloadMessage^ Message) override;
-		
+
+		/// <summary>
+		/// Eventhandler when popup for a login error box was closed.
+		/// </summary>
+		void OnLoginErrorConfirmed(Object ^sender, ::System::EventArgs ^e);
+
 		/// <summary>
         /// Handler for message containing selectable avatars and welcome msg
         /// </summary>
