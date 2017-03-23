@@ -641,11 +641,12 @@ namespace Meridian59 { namespace Ogre
 			// abdicate
 			else if (guildInfo->Flags->IsAbdicate && avatar->Rank == 5 && rank == 5)
 			{
-				ControllerUI::Guild::ObjectID = member->ID;
-
 				// attach yes listener to confirm popup
+
 				ControllerUI::ConfirmPopup::Confirmed += gcnew System::EventHandler(ControllerUI::Guild::OnAbdicateConfirmed);
-				ControllerUI::ConfirmPopup::ShowChoice("Are you sure you want to abdicate to " + StringConvert::CLRToCEGUI(member->Name) + "?");
+				ControllerUI::ConfirmPopup::ShowChoice(
+					"Are you sure you want to abdicate to " + StringConvert::CLRToCEGUI(member->Name) + "?",
+					member->ID);
 			}
 			// reset value
 			else
@@ -770,7 +771,7 @@ namespace Meridian59 { namespace Ogre
 	{
 		// attach yes listener to confirm popup
 		ControllerUI::ConfirmPopup::Confirmed += gcnew System::EventHandler(ControllerUI::Guild::OnAbandonHallConfirmed);
-		ControllerUI::ConfirmPopup::ShowChoice("Are you sure you want to abandon your hall?");
+		ControllerUI::ConfirmPopup::ShowChoice("Are you sure you want to abandon your hall?", 0);
 
 		return true;
 	};
@@ -791,13 +792,13 @@ namespace Meridian59 { namespace Ogre
 		{
 			// attach yes listener to confirm popup
 			ControllerUI::ConfirmPopup::Confirmed += gcnew System::EventHandler(ControllerUI::Guild::OnRenounceConfirmed);
-			ControllerUI::ConfirmPopup::ShowChoice("Are you sure you want to leave your guild?");
+			ControllerUI::ConfirmPopup::ShowChoice("Are you sure you want to leave your guild?", 0);
 		}
 		else if (guildInfo->Flags->IsDisband)
 		{
 			// attach yes listener to confirm popup
 			ControllerUI::ConfirmPopup::Confirmed += gcnew System::EventHandler(ControllerUI::Guild::OnRenounceConfirmed);
-			ControllerUI::ConfirmPopup::ShowChoice("Are you sure you want to disband your guild?");
+			ControllerUI::ConfirmPopup::ShowChoice("Are you sure you want to disband your guild?", 0);
 		}
 
 		return true;
@@ -840,12 +841,12 @@ namespace Meridian59 { namespace Ogre
 		if (guildInfo->Flags->IsExile)
 		{
 			GuildMemberEntry^ member = guildInfo->GuildMembers->GetItemByID(itm->getID());
-			// Save object id for use in confirm box.
-			ControllerUI::Guild::ObjectID = member->ID;
 
 			// attach yes listener to confirm popup
 			ControllerUI::ConfirmPopup::Confirmed += gcnew System::EventHandler(ControllerUI::Guild::OnExileConfirmed);
-			ControllerUI::ConfirmPopup::ShowChoice("Are you sure you want to exile " + StringConvert::CLRToCEGUI(member->Name) + "?");
+			ControllerUI::ConfirmPopup::ShowChoice(
+				"Are you sure you want to exile " + StringConvert::CLRToCEGUI(member->Name) + "?",
+				member->ID);
 		}
 	
 		return true;
@@ -857,8 +858,8 @@ namespace Meridian59 { namespace Ogre
 
 		if (guildInfo->Flags->IsExile)
 		{
-			if (ControllerUI::Guild::ObjectID > 0)
-				OgreClient::Singleton->SendUserCommandGuildExile(ControllerUI::Guild::ObjectID);
+			if (ControllerUI::ConfirmPopup::ID > 0)
+				OgreClient::Singleton->SendUserCommandGuildExile(ControllerUI::ConfirmPopup::ID);
 
 			// clear and re-request (workaroung since there's no updating)
 			OgreClient::Singleton->Data->GuildInfo->Clear(true);
@@ -869,16 +870,13 @@ namespace Meridian59 { namespace Ogre
 			OgreClient::Singleton->SendUserCommandGuildShieldInfoReq();
 		}
 
-		ControllerUI::Guild::ObjectID = 0;
-
 		return;
 	};
 
 	void ControllerUI::Guild::OnAbdicateConfirmed(Object^ sender, ::System::EventArgs^ e)
 	{
-		if (ControllerUI::Guild::ObjectID > 0)
-			OgreClient::Singleton->SendUserCommandGuildAbdicate(ControllerUI::Guild::ObjectID);
-		ControllerUI::Guild::ObjectID = 0;
+		if (ControllerUI::ConfirmPopup::ID > 0)
+			OgreClient::Singleton->SendUserCommandGuildAbdicate(ControllerUI::ConfirmPopup::ID);
 
 		// clear and re-request (workaround since there's no updating)
 		OgreClient::Singleton->Data->GuildInfo->Clear(true);

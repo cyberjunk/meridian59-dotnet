@@ -901,10 +901,6 @@ namespace Meridian59 { namespace Ogre
 			static ::CEGUI::Window* ShieldClaimedBy = nullptr;
 			static ::CEGUI::PushButton* ShieldClaim = nullptr;
 
-			// Object ID we need to keep track of for confirm dialogs
-			// sending data to server.
-			static uint ObjectID = 0;
-
 			static void Initialize();
 			static void Destroy();
 			static void ApplyLanguage();
@@ -1098,11 +1094,13 @@ namespace Meridian59 { namespace Ogre
 			static ::CEGUI::PushButton* No = nullptr;
 			static ::CEGUI::PushButton* OK = nullptr;
 
+			static uint ID = 0;
+
 			static void Initialize();
 			static void Destroy();
 			static void ApplyLanguage();
-			static void ShowChoice(const ::CEGUI::String& text);
-			static void ShowOK(const ::CEGUI::String& text);
+			static void ShowChoice(const ::CEGUI::String& text, uint id);
+			static void ShowOK(const ::CEGUI::String& text, uint id);
 
 			static void _RaiseConfirm();
 			static void _RaiseCancel();

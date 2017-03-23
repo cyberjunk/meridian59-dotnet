@@ -36,11 +36,14 @@ namespace Meridian59 { namespace Ogre
 	{
 	};
 
-	// Makes the Yes/No buttons visible.
-	void ControllerUI::ConfirmPopup::ShowChoice(const ::CEGUI::String& text)
+	// Makes the Yes/No buttons visible, sets ID.
+	void ControllerUI::ConfirmPopup::ShowChoice(const ::CEGUI::String& text, uint id)
 	{
 		// set text
 		Text->setText(text);
+
+		// set ID
+		ID = id;
 
 		// set buttons
 		Yes->setVisible(true);
@@ -52,11 +55,14 @@ namespace Meridian59 { namespace Ogre
 		Window->moveToFront();
 	};
 
-	// Makes the OK button visible.
-	void ControllerUI::ConfirmPopup::ShowOK(const ::CEGUI::String& text)
+	// Makes the OK button visible, sets ID.
+	void ControllerUI::ConfirmPopup::ShowOK(const ::CEGUI::String& text, uint id)
 	{
 		// set text
 		Text->setText(text);
+
+		// set ID
+		ID = id;
 
 		// set buttons
 		OK->setVisible(true);
@@ -76,6 +82,8 @@ namespace Meridian59 { namespace Ogre
 
 		// remove handler(s)
 		_confirmed = nullptr;
+		_cancelled = nullptr;
+		ID = 0;
 	};
 
 	void ControllerUI::ConfirmPopup::_RaiseCancel()
@@ -85,7 +93,9 @@ namespace Meridian59 { namespace Ogre
 			_cancelled(nullptr, nullptr);
 
 		// remove handler(s)
+		_confirmed = nullptr;
 		_cancelled = nullptr;
+		ID = 0;
 	};
 
 	bool UICallbacks::ConfirmPopup::OnYesClicked(const CEGUI::EventArgs& e)
