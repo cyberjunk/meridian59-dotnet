@@ -405,6 +405,8 @@
 #define UI_NAME_GUILD_PASSWORDDESC					"Guild.PasswordDescription"
 #define UI_NAME_GUILD_PASSWORDVAL					"Guild.PasswordValue"
 #define UI_NAME_GUILD_SETPASSWORD					"Guild.SetPassword"
+#define UI_NAME_GUILD_ABANDONHALL					"Guild.AbandonHall"
+#define UI_NAME_GUILD_NOGUILDHALL					"Guild.NoGuildHall"
 #define UI_NAME_GUILD_RENOUNCE						"Guild.Renounce"
 #define UI_NAME_GUILD_SHIELDIMAGE					"Guild.ShieldImage"
 #define UI_NAME_GUILD_SHIELDCOLOR1DESC				"Guild.ShieldColor1Description"

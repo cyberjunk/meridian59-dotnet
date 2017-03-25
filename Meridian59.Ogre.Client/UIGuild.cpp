@@ -20,7 +20,16 @@ namespace Meridian59 { namespace Ogre
 		PasswordDesc	= static_cast<CEGUI::Window*>(TabGuildmaster->getChild(UI_NAME_GUILD_PASSWORDDESC));
 		PasswordVal		= static_cast<CEGUI::Editbox*>(TabGuildmaster->getChild(UI_NAME_GUILD_PASSWORDVAL));
 		SetPassword		= static_cast<CEGUI::PushButton*>(TabGuildmaster->getChild(UI_NAME_GUILD_SETPASSWORD));
-			
+		AbandonHall = static_cast<CEGUI::PushButton*>(TabGuildmaster->getChild(UI_NAME_GUILD_ABANDONHALL));
+		NoGuildHall = static_cast<CEGUI::Window*>(TabGuildmaster->getChild(UI_NAME_GUILD_NOGUILDHALL));
+
+		// Set visibility for guildhall options.
+		PasswordVal->setVisible(OgreClient::Singleton->Data->GuildInfo->PasswordSetFlag);
+		PasswordDesc->setVisible(OgreClient::Singleton->Data->GuildInfo->PasswordSetFlag);
+		SetPassword->setVisible(OgreClient::Singleton->Data->GuildInfo->PasswordSetFlag);
+		AbandonHall->setVisible(OgreClient::Singleton->Data->GuildInfo->PasswordSetFlag);
+		NoGuildHall->setVisible(!OgreClient::Singleton->Data->GuildInfo->PasswordSetFlag);
+
 		ShieldImage			= static_cast<CEGUI::Window*>(TabShield->getChild(UI_NAME_GUILD_SHIELDIMAGE));		
 		ShieldColor1Desc	= static_cast<CEGUI::Window*>(TabShield->getChild(UI_NAME_GUILD_SHIELDCOLOR1DESC));
 		ShieldColor1		= static_cast<CEGUI::Slider*>(TabShield->getChild(UI_NAME_GUILD_SHIELDCOLOR1));
@@ -47,22 +56,22 @@ namespace Meridian59 { namespace Ogre
 		imageComposerShield = gcnew ImageComposerCEGUI<ObjectBase^>();
 		imageComposerShield->ApplyYOffset = false;
 		imageComposerShield->IsScalePow2 = false;
-        imageComposerShield->UseViewerFrame = false;
+		imageComposerShield->UseViewerFrame = false;
 		imageComposerShield->Width = (unsigned int)ShieldImage->getPixelSize().d_width;
-        imageComposerShield->Height = (unsigned int)ShieldImage->getPixelSize().d_height;
-        imageComposerShield->CenterHorizontal = true;
-        imageComposerShield->CenterVertical = true;
+		imageComposerShield->Height = (unsigned int)ShieldImage->getPixelSize().d_height;
+		imageComposerShield->CenterHorizontal = true;
+		imageComposerShield->CenterVertical = true;
 		imageComposerShield->NewImageAvailable += gcnew ::System::EventHandler(OnNewShieldImageAvailable);
 		imageComposerShield->DataSource = OgreClient::Singleton->Data->GuildShieldInfo->ExampleModel;
 
 		// attach listener to guildinfo data
 		OgreClient::Singleton->Data->GuildInfo->PropertyChanged += 
 			gcnew PropertyChangedEventHandler(OnGuildInfoPropertyChanged);
-        
+
 		// attach listener to guildshieldinfo data
 		OgreClient::Singleton->Data->GuildShieldInfo->PropertyChanged += 
 			gcnew PropertyChangedEventHandler(OnGuildShieldInfoPropertyChanged);
-        
+
 		// attach listener to guildmembers
 		OgreClient::Singleton->Data->GuildInfo->GuildMembers->ListChanged += 
 			gcnew ListChangedEventHandler(OnMembersListChanged);
@@ -73,6 +82,9 @@ namespace Meridian59 { namespace Ogre
 
 		// subscribe passwordset button
 		SetPassword->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Guild::OnSetPasswordClicked));
+
+		// subscribe abandonhall button
+		AbandonHall->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Guild::OnAbandonHallClicked));
 
 		// subscribe renounec/abandon button
 		Renounce->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Guild::OnRenounceClicked));
@@ -100,11 +112,11 @@ namespace Meridian59 { namespace Ogre
 		// detach listener from guildinfo data
 		OgreClient::Singleton->Data->GuildInfo->PropertyChanged -= 
 			gcnew PropertyChangedEventHandler(OnGuildInfoPropertyChanged);
-         
+
 		// detach listener from guildshieldinfo data
 		OgreClient::Singleton->Data->GuildShieldInfo->PropertyChanged -= 
 			gcnew PropertyChangedEventHandler(OnGuildShieldInfoPropertyChanged);
-        
+
 		// detach listener from guildmembers
 		OgreClient::Singleton->Data->GuildInfo->GuildMembers->ListChanged -= 
 			gcnew ListChangedEventHandler(OnMembersListChanged);
@@ -148,15 +160,54 @@ namespace Meridian59 { namespace Ogre
 			PasswordVal->setText(StringConvert::CLRToCEGUI(obj->ChestPassword));
 		}
 
+		// password flag (determines presense of guild hall info)
+		else if (::System::String::Equals(e->PropertyName, Data::Models::GuildInfo::PROPNAME_PASSWORDSETFLAG))
+		{
+			// Display the 'no guild' label if we have no hall info, otherwise
+			// display password set box and abandon hall button.
+			PasswordVal->setVisible(obj->PasswordSetFlag);
+			PasswordDesc->setVisible(obj->PasswordSetFlag);
+			SetPassword->setVisible(obj->PasswordSetFlag);
+			AbandonHall->setVisible(obj->PasswordSetFlag);
+			NoGuildHall->setVisible(!obj->PasswordSetFlag);
+		}
+
 		// flags
 		else if (::System::String::Equals(e->PropertyName, Data::Models::GuildInfo::PROPNAME_FLAGS))
 		{
 			if (obj->Flags->IsRenounce)
 			{
+				// If we don't have guildmaster powers, we shouldn't have the
+				// guildmaster tabs. There isn't a way to disable tabs in CEGUI
+				// so the only option is to remove them and replace later if
+				// needed (see http://cegui.org.uk/forum/viewtopic.php?t=3736).
+
+				// Make sure tab isn't the selected one (e.g. we used to be
+				// guildmaster but no longer are).
+				if (TabControl->getTabCount() >= 4)
+				{
+					if (TabControl->isTabContentsSelected(TabGuildmaster)
+						|| TabControl->isTabContentsSelected(TabShield))
+					{
+						// Select first tab instead.
+						TabControl->makeTabVisibleAtIndex(0);
+						TabMembers->setVisible(true);
+					}
+					// Remove Shield and GuildMaster tabs.
+					TabControl->removeTab(TabShield->getName());
+					TabControl->removeTab(TabGuildmaster->getName());
+				}
 				Renounce->setText("Renounce");
 			}
 			else if (obj->Flags->IsDisband)
 			{
+				// Add back guildmaster-only tabs if we removed them before.
+				if (TabControl->getTabCount() < 4)
+				{
+					TabControl->addTab(TabGuildmaster);
+					TabControl->addTab(TabShield);
+				}
+
 				Renounce->setText("Disband");
 			}
 		}
@@ -241,7 +292,7 @@ namespace Meridian59 { namespace Ogre
 	};
 
 	void ControllerUI::Guild::OnNewShieldImageAvailable(Object^ sender, ::System::EventArgs^ e)
-    {
+	{
 		ShieldImage->setProperty(UI_PROPNAME_IMAGE, *imageComposerShield->Image->TextureName);
 	};
 
@@ -384,7 +435,7 @@ namespace Meridian59 { namespace Ogre
 			}
 			
 			// enable/disable exile
-			if (info->Flags->IsExile && !isAvatar)
+			if (info->Flags->IsExile && !(isAvatar || obj->Rank == 5 || (obj->Rank == 4 && !info->Flags->IsDisband)))
 			{
 				exile->setEnabled(true);
 				exile->setMouseCursor(UI_MOUSECURSOR_HAND);
@@ -590,15 +641,13 @@ namespace Meridian59 { namespace Ogre
 			// abdicate
 			else if (guildInfo->Flags->IsAbdicate && avatar->Rank == 5 && rank == 5)
 			{
-				OgreClient::Singleton->SendUserCommandGuildAbdicate(member->ID);
+				// attach yes listener to confirm popup
 
-				// clear and re-request (workaroung since there's no updating)
-				OgreClient::Singleton->Data->GuildInfo->Clear(true);
-				OgreClient::Singleton->Data->GuildShieldInfo->Clear(true);
-				OgreClient::Singleton->SendUserCommandGuildInfoReq();
-				OgreClient::Singleton->SendUserCommandGuildShieldInfoReq();
+				ControllerUI::ConfirmPopup::Confirmed += gcnew System::EventHandler(ControllerUI::Guild::OnAbdicateConfirmed);
+				ControllerUI::ConfirmPopup::ShowChoice(
+					"Are you sure you want to abdicate to " + StringConvert::CLRToCEGUI(member->Name) + "?",
+					member->ID);
 			}
-
 			// reset value
 			else
 			{
@@ -718,12 +767,49 @@ namespace Meridian59 { namespace Ogre
 		return true;
 	};
 
+	bool UICallbacks::Guild::OnAbandonHallClicked(const CEGUI::EventArgs& e)
+	{
+		// attach yes listener to confirm popup
+		ControllerUI::ConfirmPopup::Confirmed += gcnew System::EventHandler(ControllerUI::Guild::OnAbandonHallConfirmed);
+		ControllerUI::ConfirmPopup::ShowChoice("Are you sure you want to abandon your hall?", 0);
+
+		return true;
+	};
+
+	void ControllerUI::Guild::OnAbandonHallConfirmed(Object^ sender, ::System::EventArgs^ e)
+	{
+		// request to drop guild hall
+		OgreClient::Singleton->SendUserCommandGuildAbandonHall();
+
+		return;
+	};
+
 	bool UICallbacks::Guild::OnRenounceClicked(const CEGUI::EventArgs& e)
 	{
 		GuildInfo^ guildInfo = OgreClient::Singleton->Data->GuildInfo;
-		
+
 		if (guildInfo->Flags->IsRenounce)
-		{	
+		{
+			// attach yes listener to confirm popup
+			ControllerUI::ConfirmPopup::Confirmed += gcnew System::EventHandler(ControllerUI::Guild::OnRenounceConfirmed);
+			ControllerUI::ConfirmPopup::ShowChoice("Are you sure you want to leave your guild?", 0);
+		}
+		else if (guildInfo->Flags->IsDisband)
+		{
+			// attach yes listener to confirm popup
+			ControllerUI::ConfirmPopup::Confirmed += gcnew System::EventHandler(ControllerUI::Guild::OnRenounceConfirmed);
+			ControllerUI::ConfirmPopup::ShowChoice("Are you sure you want to disband your guild?", 0);
+		}
+
+		return true;
+	};
+
+	void ControllerUI::Guild::OnRenounceConfirmed(Object^ sender, ::System::EventArgs^ e)
+	{
+		GuildInfo^ guildInfo = OgreClient::Singleton->Data->GuildInfo;
+
+		if (guildInfo->Flags->IsRenounce)
+		{
 			// request
 			OgreClient::Singleton->SendUserCommandGuildRenounce();
 
@@ -740,8 +826,8 @@ namespace Meridian59 { namespace Ogre
 			OgreClient::Singleton->Data->GuildInfo->Clear(true);
 			OgreClient::Singleton->Data->GuildShieldInfo->Clear(true);
 		}
-				
-		return true;
+
+		return;
 	};
 
 	bool UICallbacks::Guild::OnExileClicked(const CEGUI::EventArgs& e)
@@ -753,9 +839,27 @@ namespace Meridian59 { namespace Ogre
 		GuildInfo^ guildInfo = OgreClient::Singleton->Data->GuildInfo;
 		
 		if (guildInfo->Flags->IsExile)
-		{						
-			// request to exile
-			OgreClient::Singleton->SendUserCommandGuildExile(itm->getID());
+		{
+			GuildMemberEntry^ member = guildInfo->GuildMembers->GetItemByID(itm->getID());
+
+			// attach yes listener to confirm popup
+			ControllerUI::ConfirmPopup::Confirmed += gcnew System::EventHandler(ControllerUI::Guild::OnExileConfirmed);
+			ControllerUI::ConfirmPopup::ShowChoice(
+				"Are you sure you want to exile " + StringConvert::CLRToCEGUI(member->Name) + "?",
+				member->ID);
+		}
+	
+		return true;
+	};
+
+	void ControllerUI::Guild::OnExileConfirmed(Object^ sender, ::System::EventArgs^ e)
+	{
+		GuildInfo^ guildInfo = OgreClient::Singleton->Data->GuildInfo;
+
+		if (guildInfo->Flags->IsExile)
+		{
+			if (ControllerUI::ConfirmPopup::ID > 0)
+				OgreClient::Singleton->SendUserCommandGuildExile(ControllerUI::ConfirmPopup::ID);
 
 			// clear and re-request (workaroung since there's no updating)
 			OgreClient::Singleton->Data->GuildInfo->Clear(true);
@@ -765,9 +869,23 @@ namespace Meridian59 { namespace Ogre
 			OgreClient::Singleton->SendUserCommandGuildShieldListReq();
 			OgreClient::Singleton->SendUserCommandGuildShieldInfoReq();
 		}
-	
-		return true;
+
+		return;
 	};
+
+	void ControllerUI::Guild::OnAbdicateConfirmed(Object^ sender, ::System::EventArgs^ e)
+	{
+		if (ControllerUI::ConfirmPopup::ID > 0)
+			OgreClient::Singleton->SendUserCommandGuildAbdicate(ControllerUI::ConfirmPopup::ID);
+
+		// clear and re-request (workaround since there's no updating)
+		OgreClient::Singleton->Data->GuildInfo->Clear(true);
+		OgreClient::Singleton->Data->GuildShieldInfo->Clear(true);
+		OgreClient::Singleton->SendUserCommandGuildInfoReq();
+		OgreClient::Singleton->SendUserCommandGuildShieldInfoReq();
+
+		return;
+	}
 
 	bool UICallbacks::Guild::OnGuildShieldSettingChanged(const CEGUI::EventArgs& e)
 	{

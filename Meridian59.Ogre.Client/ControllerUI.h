@@ -888,6 +888,8 @@ namespace Meridian59 { namespace Ogre
 			static ::CEGUI::Window* PasswordDesc = nullptr;
 			static ::CEGUI::Editbox* PasswordVal = nullptr;
 			static ::CEGUI::PushButton* SetPassword = nullptr;
+			static ::CEGUI::PushButton* AbandonHall = nullptr;
+			static ::CEGUI::Window* NoGuildHall = nullptr;
 			static ::CEGUI::Window* ShieldImage = nullptr;
 			static ::CEGUI::Window* ShieldColor1Desc = nullptr;
 			static ::CEGUI::Slider* ShieldColor1 = nullptr;
@@ -898,7 +900,7 @@ namespace Meridian59 { namespace Ogre
 			static ::CEGUI::Window* ShieldClaimedByDesc = nullptr;
 			static ::CEGUI::Window* ShieldClaimedBy = nullptr;
 			static ::CEGUI::PushButton* ShieldClaim = nullptr;
-			
+
 			static void Initialize();
 			static void Destroy();
 			static void ApplyLanguage();
@@ -906,7 +908,11 @@ namespace Meridian59 { namespace Ogre
 			static void OnGuildShieldInfoPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
 			static void OnMembersListChanged(Object^ sender, ListChangedEventArgs^ e);
 			static void OnGuildsListChanged(Object^ sender, ListChangedEventArgs^ e);
-			static void OnNewShieldImageAvailable(Object^ sender, ::System::EventArgs^ e);			
+			static void OnNewShieldImageAvailable(Object^ sender, ::System::EventArgs^ e);
+			static void OnExileConfirmed(Object^ sender, ::System::EventArgs^ e);
+			static void OnRenounceConfirmed(Object^ sender, ::System::EventArgs^ e);
+			static void OnAbdicateConfirmed(Object^ sender, ::System::EventArgs^ e);
+			static void OnAbandonHallConfirmed(Object^ sender, ::System::EventArgs^ e);
 			static void MemberAdd(int Index);
 			static void MemberRemove(int Index);
 			static void MemberChange(int Index);
@@ -1088,11 +1094,13 @@ namespace Meridian59 { namespace Ogre
 			static ::CEGUI::PushButton* No = nullptr;
 			static ::CEGUI::PushButton* OK = nullptr;
 
+			static uint ID = 0;
+
 			static void Initialize();
 			static void Destroy();
 			static void ApplyLanguage();
-			static void ShowChoice(const ::CEGUI::String& text);
-			static void ShowOK(const ::CEGUI::String& text);
+			static void ShowChoice(const ::CEGUI::String& text, uint id);
+			static void ShowOK(const ::CEGUI::String& text, uint id);
 
 			static void _RaiseConfirm();
 			static void _RaiseCancel();
@@ -1744,6 +1752,7 @@ namespace Meridian59 { namespace Ogre
 			static bool OnRankSelectionChanged(const CEGUI::EventArgs& e);
 			static bool OnDiploSelectionChanged(const CEGUI::EventArgs& e);
 			static bool OnSetPasswordClicked(const CEGUI::EventArgs& e);
+			static bool OnAbandonHallClicked(const CEGUI::EventArgs& e);
 			static bool OnRenounceClicked(const CEGUI::EventArgs& e);
 			static bool OnExileClicked(const CEGUI::EventArgs& e);
 			static bool OnGuildShieldSettingChanged(const CEGUI::EventArgs& e);
