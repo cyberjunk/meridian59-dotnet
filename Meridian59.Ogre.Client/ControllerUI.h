@@ -1064,7 +1064,49 @@ namespace Meridian59 { namespace Ogre
 			static void SelectedSkillAdd(int Index);
 			static void SelectedSkillRemove(int Index);
 		};
-		
+
+		/// <summary>
+		/// StatChangeWizard window
+		/// </summary>
+		ref class StatChangeWizard abstract sealed
+		{
+		private:
+			static void SetAttributeProgressbar(CEGUI::ProgressBar* AttrBar, unsigned char Attr);
+			static void SetSchoolProgressbar(CEGUI::ProgressBar* SchoolBar, unsigned char OrigLevel, unsigned char Level);
+		public:
+			static ::CEGUI::FrameWindow* Window = nullptr;
+			static ::CEGUI::DefaultWindow* ConfirmDialog = nullptr;
+			static ::CEGUI::FrameWindow* ConfirmWindow = nullptr;
+			static ::CEGUI::DefaultWindow* ConfirmText = nullptr;
+			static ::CEGUI::DefaultWindow* AttributeWindow = nullptr;
+			static ::CEGUI::DefaultWindow* SchoolWindow = nullptr;
+			static ::CEGUI::TabControl* TabControlAttr = nullptr;
+			static ::CEGUI::TabControl* TabControlSch = nullptr;
+			static ::CEGUI::ProgressBar* Might = nullptr;
+			static ::CEGUI::ProgressBar* Intellect = nullptr;
+			static ::CEGUI::ProgressBar* Stamina = nullptr;
+			static ::CEGUI::ProgressBar* Agility = nullptr;
+			static ::CEGUI::ProgressBar* Mysticism = nullptr;
+			static ::CEGUI::ProgressBar* Aim = nullptr;
+			static ::CEGUI::ProgressBar* AttributesAvailable = nullptr;
+
+			static ::CEGUI::ProgressBar* ShalilleLevel = nullptr;
+			static ::CEGUI::ProgressBar* QorLevel = nullptr;
+			static ::CEGUI::ProgressBar* KraananLevel = nullptr;
+			static ::CEGUI::ProgressBar* FarenLevel = nullptr;
+			static ::CEGUI::ProgressBar* RiijaLevel = nullptr;
+			static ::CEGUI::ProgressBar* JalaLevel = nullptr;
+			static ::CEGUI::ProgressBar* WCLevel = nullptr;
+
+			static ::CEGUI::PushButton* ButtonOK = nullptr;
+
+			static void Initialize();
+			static void Destroy();
+			static void ApplyLanguage();
+			static void OnStatChangeConfirmed(Object ^sender, ::System::EventArgs ^e);
+			static void OnStatChangeInfoPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
+		};
+
 		/// <summary>
 		/// ConfirmPopup window
 		/// </summary>
@@ -1810,6 +1852,22 @@ namespace Meridian59 { namespace Ogre
 			static bool OnButtonBackClicked(const CEGUI::EventArgs& e);
 			static bool OnButtonNextClicked(const CEGUI::EventArgs& e);
 
+			static bool OnWindowClosed(const CEGUI::EventArgs& e);
+			static bool OnWindowKeyUp(const CEGUI::EventArgs& e);
+		};
+
+		/// <summary>
+		/// StatChangeWizard event handlers
+		/// </summary>
+		class StatChangeWizard
+		{
+		public:
+			static bool OnAttributeMouseMoveClick(const CEGUI::EventArgs& e);
+			static bool OnAttributeMouseWheel(const CEGUI::EventArgs& e);
+			static bool OnSchoolMouseMoveClick(const CEGUI::EventArgs& e);
+			static bool OnSchoolMouseWheel(const CEGUI::EventArgs& e);
+			static bool OnStatChangeProgressChange(const CEGUI::EventArgs& e);
+			static bool OnButtonOKClicked(const CEGUI::EventArgs& e);
 			static bool OnWindowClosed(const CEGUI::EventArgs& e);
 			static bool OnWindowKeyUp(const CEGUI::EventArgs& e);
 		};

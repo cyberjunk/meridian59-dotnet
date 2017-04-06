@@ -145,6 +145,7 @@ namespace Meridian59 { namespace Ogre
 		GuildCreate::Initialize();
 		GuildHallBuy::Initialize();
 		AvatarCreateWizard::Initialize();
+		StatChangeWizard::Initialize();
 		ConfirmPopup::Initialize();
 		PlayerOverlays::Initialize();
 		ObjectContents::Initialize();
@@ -207,6 +208,7 @@ namespace Meridian59 { namespace Ogre
 		GuildCreate::Destroy();
 		GuildHallBuy::Destroy();
 		AvatarCreateWizard::Destroy();
+		StatChangeWizard::Destroy();
 		ConfirmPopup::Destroy();
 		PlayerOverlays::Destroy();
 		ObjectContents::Destroy();
@@ -275,6 +277,7 @@ namespace Meridian59 { namespace Ogre
 		GuildCreate::ApplyLanguage();
 		GuildHallBuy::ApplyLanguage();
 		AvatarCreateWizard::ApplyLanguage();
+		StatChangeWizard::ApplyLanguage();
 		ConfirmPopup::ApplyLanguage();
 		PlayerOverlays::ApplyLanguage();
 		ObjectContents::ApplyLanguage();
@@ -632,6 +635,7 @@ namespace Meridian59 { namespace Ogre
 			GuildCreate::Window->setVisible(false);
 			GuildHallBuy::Window->setVisible(false);
 			AvatarCreateWizard::Window->setVisible(mode == UIMode::AvatarCreation);
+			StatChangeWizard::Window->setVisible(false);
 			ConfirmPopup::Window->setVisible(false);
 			ObjectContents::Window->setVisible(false);
 			LootList::Window->setVisible(false);
