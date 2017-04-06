@@ -12,6 +12,7 @@
         <PropertyDefinition name="VertFormatting" initialValue="CentreAligned" redrawOnWrite="true" type="VerticalFormat" />
         <PropertyDefinition name="HorzFormatting" initialValue="CentreAligned" redrawOnWrite="true" type="HorizontalFormat" />
         <Property name="Size" value="{{0, 128}, {0, 32}}" />
+        <Property name="TextParsingEnabled" value="False" />
         <ImagerySection name="Label">
             <TextComponent>
                 <Area>
