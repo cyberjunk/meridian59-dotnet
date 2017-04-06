@@ -75,7 +75,7 @@ namespace Meridian59 { namespace Ogre
 		/// <summary>
 		/// Converts const Ogre::String to System::String 
 		/// </summary>
-		__inline static System::String^ OgreToCLR(const ::Ogre::String OgreString)
+		__inline static System::String^ OgreToCLR(const ::Ogre::String& OgreString)
 		{
 			return gcnew System::String(OgreString.c_str());
 		};
@@ -83,7 +83,7 @@ namespace Meridian59 { namespace Ogre
 		/// <summary>
 		/// Converts CEGUI::String (native, UTF32) to System::String (managed, UTF16)
 		/// </summary>
-		__inline static System::String^ CEGUIToCLR(const ::CEGUI::String CEGUIString)
+		__inline static System::String^ CEGUIToCLR(const ::CEGUI::String& CEGUIString)
 		{
 			// handle empty string
 			if (CEGUIString.length() == 0)
