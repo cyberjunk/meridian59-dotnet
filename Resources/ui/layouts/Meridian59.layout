@@ -992,71 +992,69 @@
       
       <!-- GuildHallBuy -->
       <Window type="TaharezLook/FrameWindow" name="GuildHallBuy" >
-         <Property name="Area" value="{{0.5,-432},{0.5,-226},{0.5,10},{0.5,234}}" />
          <Property name="Text" value="Rent Guild Hall" />
-         <Property name="MaxSize" value="{{1,0},{1,0}}" />
-         <Property name="MinSize" value="{{0,300},{0,256}}" />
-         <Property name="RollUpEnabled" value="false" />
-         <Property name="TitlebarEnabled" value="true" />
-         <Property name="AutoRenderingSurface" value="true" />
-         <Property name="SizingBorderThickness" value="8" />
+         <Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
+         <Property name="Size" value="{{0,470},{0,281}}" />
+         <Property name="MinSize" value="{{0,470},{0,281}}" />
+         <Property name="MaxSize" value="{{0,470},{0,281}}" />
+         <Property name="SizingEnabled" value="FALSE" />
+         <Property name="Position" value="{{0.5,-235},{0.5,-256}}" />
          
          <!-- HeadLine -->
          <Window type="TaharezLook/Label" name="GuildHallBuy.HeadLine" >
-            <Property name="Area" value="{{0,0},{0,0},{1,-2},{0,15}}" />
+            <Property name="Area" value="{{0,5},{0,5},{1,-5},{0,25}}" />
             <Property name="Text" value="Select a hall to house your guild:" />
-            <Property name="MaxSize" value="{{1,0},{1,0}}" />
          </Window>
          
          <!-- List -->
          <Window type="TaharezLook/MultiColumnList" name="GuildHallBuy.List" >
-            <Property name="Area" value="{{0,0},{0,20},{0,430},{0,271}}" />
+            <Property name="Area" value="{{0,5},{0,35},{1,-5},{0,150}}" />
+         </Window>
+
+         <!-- GuildHallSelectedDesc -->
+         <Window type="TaharezLook/Label" name="GuildHallBuy.GuildHallSelectedDesc" >
+            <Property name="Area" value="{{0,5},{0,155},{0,70},{0,180}}" />
+            <Property name="Text" value="Guild hall:" />
+            <Property name="HorzFormatting" value="LeftAligned" />
          </Window>
          
-         <!-- ButtonBuy -->
-         <Window type="TaharezLook/Button" name="GuildHallBuy.ButtonBuy" >
-            <Property name="Area" value="{{0,125},{0,400},{0,209},{0,425}}" />
-            <Property name="Text" value="Buy" />
+         <!-- GuildHallSelected -->
+         <Window type="TaharezLook/Editbox" name="GuildHallBuy.GuildHallSelected" >
+            <Property name="Area" value="{{0,75},{0,155},{1,-5},{0,180}}" />
+            <Property name="ReadOnly" value="true" />
          </Window>
-         
-         <!-- ButtonCancel -->
-         <Window type="TaharezLook/Button" name="GuildHallBuy.ButtonCancel" >
-            <Property name="Area" value="{{0,225},{0,400},{0,307},{0,425}}" />
-            <Property name="Text" value="Cancel" />
-         </Window>
-         
+
          <!-- GuildPasswordDesc -->
          <Window type="TaharezLook/Label" name="GuildHallBuy.GuildPasswordDesc" >
-            <Property name="Area" value="{{0,10},{0,335},{0,155},{0,350}}" />
-            <Property name="Text" value="Guild Password:" />
-            <Property name="MaxSize" value="{{1,0},{1,0}}" />
+            <Property name="Area" value="{{0,5},{0,185},{0,70},{0,210}}" />
+            <Property name="Text" value="Password:" />
+            <Property name="HorzFormatting" value="LeftAligned" />
          </Window>
          
          <!-- GuildPassword -->
          <Window type="TaharezLook/Editbox" name="GuildHallBuy.GuildPassword" >
-            <Property name="Area" value="{{0,160},{0,325},{0,415},{0,360}}" />
+            <Property name="Area" value="{{0,75},{0,185},{1,-5},{0,210}}" />
             <Property name="ReadOnly" value="false" />
             <Property name="BlinkCaret" value="true" />
          </Window>
-         
-         <!-- GuildHallSelectedDesc -->
-         <Window type="TaharezLook/Label" name="GuildHallBuy.GuildHallSelectedDesc" >
-            <Property name="Area" value="{{0,10},{0,290},{0,156},{0,305}}" />
-            <Property name="Text" value="Selected guild hall:" />
-            <Property name="MaxSize" value="{{1,0},{1,0}}" />
+
+         <!-- ButtonCancel -->
+         <Window type="TaharezLook/Button" name="GuildHallBuy.ButtonCancel" >
+            <Property name="Area" value="{{0,5},{0,220},{0.5,-5},{0,245}}" />
+            <Property name="Text" value="Cancel" />
          </Window>
-         
-         <!-- GuildHallSelected -->
-         <Window type="TaharezLook/Label" name="GuildHallBuy.GuildHallSelected" >
-            <Property name="Area" value="{{0,160},{0,280},{0,415},{0,315}}" />
-            <Property name="MaxSize" value="{{1,0},{1,0}}" />
+
+         <!-- ButtonBuy -->
+         <Window type="TaharezLook/Button" name="GuildHallBuy.ButtonBuy" >
+            <Property name="Area" value="{{0.5,5},{0,220},{1,-5},{0,245}}" />
+            <Property name="Text" value="Buy" />
          </Window>
-         
+
          <!-- PasswordInvalid -->
          <Window type="TaharezLook/Label" name="GuildHallBuy.PasswordInvalid" >
-            <Property name="Area" value="{{0,5},{0,370},{0,425},{0,385}}" />
+            <Property name="Area" value="{{0,75},{0,185},{1,-5},{0,210}}" />
+            <Property name="HorzFormatting" value="LeftAligned" />
             <Property name="Text" value="You must specify a guild password!" />
-            <Property name="MaxSize" value="{{1,0},{1,0}}" />
             <Property name="Visible" value="false" />
          </Window>
       </Window>
@@ -1074,7 +1072,7 @@
          <Window type="TaharezLook/Label" name="NewsGroup.HeadLine" >
             <Property name="Text" value="Text" />
             <Property name="Area" value="{{0,0},{0,0},{1,0},{0,15}}" />
-            <Property name="HorzFormatting" value="CentreAligned" />            
+            <Property name="HorzFormatting" value="CentreAligned" />
          </Window>
          
          <!-- List -->
@@ -1428,132 +1426,133 @@
       <Window type="TaharezLook/FrameWindow" name="GuildCreate" >
          <Property name="Text" value="Create Guild" />
          <Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
-         <Property name="MaxSize" value="{{1,0},{1,0}}" />
-         <Property name="Size" value="{{0,512},{0,300}}" />
-         <Property name="MinSize" value="{{0,256},{0,300}}" />
-         <Property name="Position" value="{{0.5,-256},{0.5,-150}}" />
+         <Property name="Size" value="{{0,400},{0,284}}" />
+         <Property name="MinSize" value="{{0,400},{0,284}}" />
+         <Property name="MaxSize" value="{{0,400},{0,284}}" />
+         <Property name="SizingEnabled" value="FALSE" />
+         <Property name="Position" value="{{0.5,-200},{0.5,-256}}" />
          
          <!-- GuildNameDesc -->
          <Window type="TaharezLook/Label" name="GuildCreate.GuildNameDesc" >
             <Property name="Text" value="Name:" />
-            <Property name="Area" value="{{0.1,0},{0,10},{0.1,65},{0,35}}" />
-            <Property name="HorzFormatting" value="LeftAligned" />            
+            <Property name="Area" value="{{0,5},{0,10},{0,50},{0,35}}" />
+            <Property name="HorzFormatting" value="LeftAligned" />
          </Window>
          
          <!-- GuildName -->
          <Window type="TaharezLook/Editbox" name="GuildCreate.GuildName" >
-            <Property name="Area" value="{{0.1,70},{0,10},{0.9,0},{0,35}}" />
-            <Property name="MaxTextLength" value="1073741823" />         
+            <Property name="Area" value="{{0,55},{0,10},{1,-5},{0,35}}" />
+            <Property name="MaxTextLength" value="1073741823" />
          </Window>
          
          <!-- MaleRanksDesc -->
          <Window type="TaharezLook/Label" name="GuildCreate.MaleRanksDesc" >
             <Property name="Text" value="Male ranks:" />
-            <Property name="Area" value="{{0.1,0},{0,40},{0.4,0},{0,65}}" />
-            <Property name="HorzFormatting" value="LeftAligned" />            
+            <Property name="Area" value="{{0,5},{0,40},{0.5,-5},{0,65}}" />
+            <Property name="HorzFormatting" value="LeftAligned" />
          </Window>
          
          <!-- FemaleRanksDesc -->
          <Window type="TaharezLook/Label" name="GuildCreate.FemaleRanksDesc" >
             <Property name="Text" value="Female ranks:" />
-            <Property name="Area" value="{{0.6,0},{0,40},{0.9,0},{0,65}}" />
-            <Property name="HorzFormatting" value="LeftAligned" />            
+            <Property name="Area" value="{{0.5,5},{0,40},{1,-5},{0,65}}" />
+            <Property name="HorzFormatting" value="LeftAligned" />
          </Window>
          
          <!-- MaleRank5 -->
          <Window type="TaharezLook/Editbox" name="GuildCreate.MaleRank5" >
             <Property name="Text" value="Guildmaster" />
             <Property name="MaxTextLength" value="1073741823" />
-            <Property name="Area" value="{{0.1,0},{0,70},{0.4,0},{0,95}}" />
+            <Property name="Area" value="{{0,5},{0,70},{0.5,-5},{0,95}}" />
          </Window>
 
          <!-- MaleRank4 -->
          <Window type="TaharezLook/Editbox" name="GuildCreate.MaleRank4" >
             <Property name="Text" value="Hero" />
             <Property name="MaxTextLength" value="1073741823" />
-            <Property name="Area" value="{{0.1,0},{0,100},{0.4,0},{0,125}}" />
+            <Property name="Area" value="{{0,5},{0,100},{0.5,-5},{0,125}}" />
          </Window>
          
          <!-- MaleRank3 -->
          <Window type="TaharezLook/Editbox" name="GuildCreate.MaleRank3" >
             <Property name="Text" value="Lord" />
             <Property name="MaxTextLength" value="1073741823" />
-            <Property name="Area" value="{{0.1,0},{0,130},{0.4,0},{0,155}}" />
+            <Property name="Area" value="{{0,5},{0,130},{0.5,-5},{0,155}}" />
          </Window>
          
          <!-- MaleRank2 -->
          <Window type="TaharezLook/Editbox" name="GuildCreate.MaleRank2" >
             <Property name="Text" value="Member" />
             <Property name="MaxTextLength" value="1073741823" />
-            <Property name="Area" value="{{0.1,0},{0,160},{0.4,0},{0,185}}" />
+            <Property name="Area" value="{{0,5},{0,160},{0.5,-5},{0,185}}" />
          </Window>
          
          <!-- MaleRank1 -->
          <Window type="TaharezLook/Editbox" name="GuildCreate.MaleRank1" >
             <Property name="Text" value="Initiate" />
             <Property name="MaxTextLength" value="1073741823" />
-            <Property name="Area" value="{{0.1,0},{0,190},{0.4,0},{0,215}}" />
+            <Property name="Area" value="{{0,5},{0,190},{0.5,-5},{0,215}}" />
          </Window>
          
          <!-- FemaleRank5 -->
          <Window type="TaharezLook/Editbox" name="GuildCreate.FemaleRank5" >
             <Property name="Text" value="Guildmistress" />
             <Property name="MaxTextLength" value="1073741823" />
-            <Property name="Area" value="{{0.6,0},{0,70},{0.9,0},{0,95}}" />
+            <Property name="Area" value="{{0.5,5},{0,70},{1,-5},{0,95}}" />
          </Window>
          
          <!-- FemaleRank4 -->
          <Window type="TaharezLook/Editbox" name="GuildCreate.FemaleRank4" >
             <Property name="Text" value="Heroine" />
             <Property name="MaxTextLength" value="1073741823" />
-            <Property name="Area" value="{{0.6,0},{0,100},{0.9,0},{0,125}}" />
+            <Property name="Area" value="{{0.5,5},{0,100},{1,-5},{0,125}}" />
          </Window>
          
          <!-- FemaleRank3 -->
          <Window type="TaharezLook/Editbox" name="GuildCreate.FemaleRank3" >
             <Property name="Text" value="Lady" />
             <Property name="MaxTextLength" value="1073741823" />
-            <Property name="Area" value="{{0.6,0},{0,130},{0.9,0},{0,155}}" />
+            <Property name="Area" value="{{0.5,5},{0,130},{1,-5},{0,155}}" />
          </Window>
          
          <!-- FemaleRank2 -->
          <Window type="TaharezLook/Editbox" name="GuildCreate.FemaleRank2" >
             <Property name="Text" value="Member" />
             <Property name="MaxTextLength" value="1073741823" />
-            <Property name="Area" value="{{0.6,0},{0,160},{0.9,0},{0,185}}" />
+            <Property name="Area" value="{{0.5,5},{0,160},{1,-5},{0,185}}" />
          </Window>
          
          <!-- FemaleRank1 -->
          <Window type="TaharezLook/Editbox" name="GuildCreate.FemaleRank1" >
             <Property name="Text" value="Initiate" />
             <Property name="MaxTextLength" value="1073741823" />
-            <Property name="Area" value="{{0.6,0},{0,190},{0.9,0},{0,215}}" />
+            <Property name="Area" value="{{0.5,5},{0,190},{1,-5},{0,215}}" />
          </Window>
          
          <!-- SecretGuildCheckBox -->
          <Window type="TaharezLook/Checkbox" name="GuildCreate.SecretGuild" >
             <Property name="Text" value="Secret guild" />
-            <Property name="Area" value="{{0.1,0},{0,225},{0.3,0},{0,250}}" />                     
+            <Property name="Area" value="{{0,5},{0,225},{0.25,-5},{0,250}}" />
          </Window>
          
          <!-- CostDesc -->
          <Window type="TaharezLook/Label" name="GuildCreate.CostDesc" >
             <Property name="Text" value="Cost:" />
-            <Property name="Area" value="{{0.4,0},{0,225},{0.4,40},{0,250}}" />
-            <Property name="HorzFormatting" value="LeftAligned" />            
+            <Property name="Area" value="{{0.25,5},{0,225},{0.25,45},{0,250}}" />
+            <Property name="HorzFormatting" value="LeftAligned" />
          </Window>
          
          <!-- Cost -->
          <Window type="TaharezLook/Label" name="GuildCreate.Cost" >
             <Property name="Text" value="0" />
-            <Property name="Area" value="{{0.4,45},{0,225},{0.7,0},{0,250}}" />
+            <Property name="Area" value="{{0.25,45},{0,225},{0.5,-5},{0,250}}" />
             <Property name="HorzFormatting" value="LeftAligned" />            
          </Window>
          
          <!-- Create -->
          <Window type="TaharezLook/Button" name="GuildCreate.Create" >
             <Property name="Text" value="Create" />
-            <Property name="Area" value="{{1,-80},{1,-30},{1,-5},{1,-5}}" />
+            <Property name="Area" value="{{0.5,5},{0,225},{1,-5},{0,250}}" />
          </Window>
       </Window>
       
