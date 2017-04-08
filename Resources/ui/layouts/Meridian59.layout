@@ -1560,9 +1560,9 @@
       <Window type="TaharezLook/FrameWindow" name="StatChangeWizard" >
          <Property name="Text" value="Change your stats!" />
          <Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
-         <Property name="Size" value="{{0,480},{0,510}}" />
-         <Property name="MinSize" value="{{0,480},{0,510}}" />
-         <Property name="MaxSize" value="{{0,480},{0,510}}" />
+         <Property name="Size" value="{{0,600},{0,359}}" />
+         <Property name="MinSize" value="{{0,600},{0,359}}" />
+         <Property name="MaxSize" value="{{0,600},{0,359}}" />
          <Property name="SizingEnabled" value="FALSE" />
          <Property name="Position" value="{{0.5,-256},{0.5,-256}}" />
 
@@ -1570,7 +1570,7 @@
          <Window type="TaharezLook/Label" name="StatChangeWizard.InfoA" >
             <Property name="Area" value="{{0,5},{0,5},{1,-5},{0,50}}" />
             <Property name="Font" value="LiberationSans-10-Regular" />
-            <Property name="Text" value="You can reallocate your attributes, but be warned: Each point you remove will cost you 2% in any spells or skills dependent on that attribute that are higher than 2x the original attribute value." />
+            <Property name="Text" value="You can reallocate your attributes, but be warned: Each point you remove will cost you 2% in any spells or skills dependent on that attribute that are higher than 2x the original attribute value. To adjust intellect, you may need to forget one or more levels of your known schools." />
             <Property name="HorzFormatting" value="WordWrapJustified" />
             <Property name="VertFormatting" value="TopAligned" />
             <Property name="TextParsingEnabled" value="false" />
@@ -1579,47 +1579,39 @@
          <Window type="TaharezLook/Label" name="StatChangeWizard.InfoB" >
             <Property name="Area" value="{{0,5},{0,55},{1,-5},{0,85}}" />
             <Property name="Font" value="LiberationSans-10-Regular" />
-            <Property name="Text" value="To adjust intellect, you may need to forget one or more levels of your known schools." />
-            <Property name="HorzFormatting" value="WordWrapJustified" />
-            <Property name="VertFormatting" value="TopAligned" />
-            <Property name="TextParsingEnabled" value="false" />
-         </Window>
-
-         <Window type="TaharezLook/Label" name="StatChangeWizard.InfoC" >
-            <Property name="Area" value="{{0,5},{0,90},{1,-5},{0,120}}" />
-            <Property name="Font" value="LiberationSans-10-Regular" />
             <Property name="Text" value="WARNING: Forgetting a level will remove all abilities from that level, and if you want them back you will need to re-purchase and rebuild them." />
             <Property name="HorzFormatting" value="WordWrapJustified" />
             <Property name="VertFormatting" value="TopAligned" />
             <Property name="TextParsingEnabled" value="false" />
          </Window>
 
-         <Window type="TaharezLook/LabelWhite" name="StatChangeWizard.AttributeDescription" >
-            <Property name="Area" value="{{0.25,-100},{0,130},{0.25,100},{0,150}}" />
-            <Property name="Font" value="Berenika-8-Bold" />
-            <Property name="HorzFormatting" value="CentreAligned" />
-            <Property name="Text" value="Attributes" />
-         </Window>
-
          <Window type="TaharezLook/LabelWhite" name="StatChangeWizard.SchoolsDescription" >
-            <Property name="Area" value="{{0.75,-100},{0,130},{0.75,100},{0,150}}" />
+            <Property name="Area" value="{{0.25,-100},{0,90},{0.25,100},{0,110}}" />
             <Property name="Font" value="Berenika-8-Bold" />
             <Property name="HorzFormatting" value="CentreAligned" />
             <Property name="Text" value="Schools" />
          </Window>
 
+         <Window type="TaharezLook/LabelWhite" name="StatChangeWizard.AttributeDescription" >
+            <Property name="Area" value="{{0.75,-100},{0,90},{0.75,100},{0,110}}" />
+            <Property name="Font" value="Berenika-8-Bold" />
+            <Property name="HorzFormatting" value="CentreAligned" />
+            <Property name="Text" value="Attributes" />
+         </Window>
+
          <!-- Attributes window -->
          <Window type="TaharezLook/ZeroTabContentPane" name="StatChangeWizard.AttributeWindow" >
-            <Property name="Area" value="{{0,5},{0,155},{0.5,-5},{1,-40}}" />
+            <Property name="Area" value="{{0.5,5},{0,110},{1,-5},{1,-40}}" />
 
             <!-- Might -->
             <Window type="TaharezLook/LabelWhite" name="StatChangeWizard.MightDescription" >
-               <Property name="Area" value="{{0,5},{0,5},{1,-5},{0,20}}" />
+               <Property name="Area" value="{{0,5},{0,5},{0,70},{0,25}}" />
                <Property name="Font" value="Berenika-7-Bold" />
-               <Property name="Text" value="Might" />
+               <Property name="HorzFormatting" value="LeftAligned" />
+               <Property name="Text" value="Might:" />
             </Window>
             <Window type="TaharezLook/VUMeterNumeric" name="StatChangeWizard.Might" >
-               <Property name="Area" value="{{0,5},{0,20},{1,-5},{0,36}}" />
+               <Property name="Area" value="{{0,70},{0,7},{1,-5},{0,23}}" />
                <Property name="Text" value="25/50" />
                <Property name="StepSize" value="0.01" />
                <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
@@ -1628,13 +1620,13 @@
             
             <!-- Intellect -->
             <Window type="TaharezLook/Label" name="StatChangeWizard.IntellectDescription" >
-               <Property name="Area" value="{{0,5},{0,45},{1,-5},{0,60}}" />
+               <Property name="Area" value="{{0,5},{0,30},{0,70},{0,50}}" />
                <Property name="Font" value="Berenika-7-Bold" />
-               <Property name="Text" value="Intellect" />
-               <Property name="MaxSize" value="{{1,0},{1,0}}" />
+               <Property name="HorzFormatting" value="LeftAligned" />
+               <Property name="Text" value="Intellect:" />
             </Window>
             <Window type="TaharezLook/VUMeterNumeric" name="StatChangeWizard.Intellect" >
-               <Property name="Area" value="{{0,5},{0,60},{1,-5},{0,76}}" />
+               <Property name="Area" value="{{0,70},{0,32},{1,-5},{0,48}}" />
                <Property name="Text" value="25/50" />
                <Property name="StepSize" value="0.01" />
                <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
@@ -1643,13 +1635,13 @@
             
             <!-- Stamina -->
             <Window type="TaharezLook/Label" name="StatChangeWizard.StaminaDescription" >
-               <Property name="Area" value="{{0,5},{0,85},{1,-5},{0,100}}" />
+               <Property name="Area" value="{{0,5},{0,55},{0,70},{0,75}}" />
                <Property name="Font" value="Berenika-7-Bold" />
-               <Property name="Text" value="Stamina" />
-               <Property name="MaxSize" value="{{1,0},{1,0}}" />
+               <Property name="HorzFormatting" value="LeftAligned" />
+               <Property name="Text" value="Stamina:" />
             </Window>
             <Window type="TaharezLook/VUMeterNumeric" name="StatChangeWizard.Stamina" >
-               <Property name="Area" value="{{0,5},{0,100},{1,-5},{0,116}}" />
+               <Property name="Area" value="{{0,70},{0,57},{1,-5},{0,73}}" />
                <Property name="Text" value="25/50" />
                <Property name="StepSize" value="0.01" />
                <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
@@ -1658,13 +1650,13 @@
             
             <!-- Agility -->
             <Window type="TaharezLook/Label" name="StatChangeWizard.AgilityDescription" >
-               <Property name="Area" value="{{0,5},{0,125},{1,-5},{0,140}}" />
+               <Property name="Area" value="{{0,5},{0,80},{0,70},{0,100}}" />
                <Property name="Font" value="Berenika-7-Bold" />
-               <Property name="Text" value="Agility" />
-               <Property name="MaxSize" value="{{1,0},{1,0}}" />
+               <Property name="HorzFormatting" value="LeftAligned" />
+               <Property name="Text" value="Agility:" />
             </Window>
             <Window type="TaharezLook/VUMeterNumeric" name="StatChangeWizard.Agility" >
-               <Property name="Area" value="{{0,5},{0,140},{1,-5},{0,156}}" />
+               <Property name="Area" value="{{0,70},{0,82},{1,-5},{0,98}}" />
                <Property name="Text" value="25/50" />
                <Property name="StepSize" value="0.01" />
                <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
@@ -1673,13 +1665,13 @@
             
             <!-- Mysticism -->
             <Window type="TaharezLook/Label" name="StatChangeWizard.MysticismDescription" >
-               <Property name="Area" value="{{0,5},{0,165},{1,-5},{0,180}}" />
+               <Property name="Area" value="{{0,5},{0,105},{0,70},{0,125}}" />
                <Property name="Font" value="Berenika-7-Bold" />
-               <Property name="Text" value="Mysticsm" />
-               <Property name="MaxSize" value="{{1,0},{1,0}}" />
+               <Property name="HorzFormatting" value="LeftAligned" />
+               <Property name="Text" value="Mysticsm:" />
             </Window>
             <Window type="TaharezLook/VUMeterNumeric" name="StatChangeWizard.Mysticism" >
-               <Property name="Area" value="{{0,5},{0,180},{1,-5},{0,196}}" />
+               <Property name="Area" value="{{0,70},{0,107},{1,-5},{0,123}}" />
                <Property name="Text" value="25/50" />
                <Property name="StepSize" value="0.01" />
                <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
@@ -1688,13 +1680,13 @@
             
             <!-- Aim -->
             <Window type="TaharezLook/Label" name="StatChangeWizard.AimDescription" >
-               <Property name="Area" value="{{0,5},{0,205},{1,-5},{0,220}}" />
+               <Property name="Area" value="{{0,5},{0,130},{0,70},{0,150}}" />
                <Property name="Font" value="Berenika-7-Bold" />
-               <Property name="Text" value="Aim" />
-               <Property name="MaxSize" value="{{1,0},{1,0}}" />
+               <Property name="HorzFormatting" value="LeftAligned" />
+               <Property name="Text" value="Aim:" />
             </Window>
             <Window type="TaharezLook/VUMeterNumeric" name="StatChangeWizard.Aim" >
-               <Property name="Area" value="{{0,5},{0,220},{1,-5},{0,236}}" />
+               <Property name="Area" value="{{0,70},{0,132},{1,-5},{0,148}}" />
                <Property name="Text" value="25/50" />
                <Property name="StepSize" value="0.01" />
                <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
@@ -1703,13 +1695,13 @@
             
             <!-- Attribute points remaining -->
             <Window type="TaharezLook/Label" name="StatChangeWizard.AttributesAvailableDescription" >
-               <Property name="Area" value="{{0,5},{0,245},{1,-5},{0,260}}" />
+               <Property name="Area" value="{{0,5},{0,155},{0,70},{0,175}}" />
                <Property name="Font" value="Berenika-7-Bold" />
-               <Property name="Text" value="Remaining attribute points" />
-               <Property name="MaxSize" value="{{1,0},{1,0}}" />
+               <Property name="HorzFormatting" value="LeftAligned" />
+               <Property name="Text" value="Remaining:" />
             </Window>
             <Window type="TaharezLook/VUMeterNumeric" name="StatChangeWizard.AttributesAvailable" >
-               <Property name="Area" value="{{0,5},{0,260},{1,-5},{0,276}}" />
+               <Property name="Area" value="{{0,70},{0,157},{1,-5},{0,173}}" />
                <Property name="Text" value="25/50" />
                <Property name="StepSize" value="0.01" />
                <Property name="VerticalProgress" value="false" />
@@ -1718,18 +1710,48 @@
 
          <!-- Schools window -->
          <Window type="TaharezLook/ZeroTabContentPane" name="StatChangeWizard.SchoolWindow" >
-            <Property name="Area" value="{{0.5,5},{0,155},{1,-5},{1,-40}}" />
+            <Property name="Area" value="{{0,5},{0,110},{0.5,-5},{1,-40}}" />
             <Property name="MaxSize" value="{{1,0},{1,0}}" />
+
+            <!-- WC  -->
+            <Window type="TaharezLook/Label" name="StatChangeWizard.WCDesc" >
+               <Property name="Area" value="{{0,5},{0,5},{0,70},{0,25}}" />
+               <Property name="Font" value="Berenika-7-Bold" />
+               <Property name="HorzFormatting" value="LeftAligned" />
+               <Property name="Text" value="Weaponc.:" />
+            </Window>
+            <Window type="TaharezLook/VUMeterNumeric" name="StatChangeWizard.WC" >
+               <Property name="Area" value="{{0,70},{0,7},{1,-5},{0,23}}" />
+               <Property name="Text" value="0/6" />
+               <Property name="StepSize" value="0.01" />
+               <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
+               <Property name="VerticalProgress" value="false" />
+            </Window>
+
+            <!-- Kraanan -->
+            <Window type="TaharezLook/Label" name="StatChangeWizard.KraananDesc" >
+               <Property name="Area" value="{{0,5},{0,30},{0,70},{0,50}}" />
+               <Property name="Font" value="Berenika-7-Bold" />
+               <Property name="HorzFormatting" value="LeftAligned" />
+               <Property name="Text" value="Kraanan:" />
+            </Window>
+            <Window type="TaharezLook/VUMeterNumeric" name="StatChangeWizard.Kraanan" >
+               <Property name="Area" value="{{0,70},{0,32},{1,-5},{0,48}}" />
+               <Property name="Text" value="0/6" />
+               <Property name="StepSize" value="0.01" />
+               <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
+               <Property name="VerticalProgress" value="false" />
+            </Window>
 
            <!-- Shal'ille -->
            <Window type="TaharezLook/Label" name="StatChangeWizard.ShalilleDesc" >
-               <Property name="Area" value="{{0,5},{0,5},{1,-5},{0,20}}" />
+               <Property name="Area" value="{{0,5},{0,55},{0,70},{0,75}}" />
                <Property name="Font" value="Berenika-7-Bold" />
-               <Property name="Text" value="Shal&apos;ille" />
-               <Property name="MaxSize" value="{{1,0},{1,0}}" />
+               <Property name="HorzFormatting" value="LeftAligned" />
+               <Property name="Text" value="Shal&apos;ille:" />
             </Window>
             <Window type="TaharezLook/VUMeterNumeric" name="StatChangeWizard.Shalille" >
-               <Property name="Area" value="{{0,5},{0,20},{1,-5},{0,36}}" />
+               <Property name="Area" value="{{0,70},{0,57},{1,-5},{0,73}}" />
                <Property name="Text" value="0/6" />
                <Property name="StepSize" value="0.01" />
                <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
@@ -1738,58 +1760,28 @@
             
             <!-- Qor -->
             <Window type="TaharezLook/Label" name="StatChangeWizard.QorDesc" >
-               <Property name="Area" value="{{0,5},{0,45},{1,-5},{0,60}}" />
+               <Property name="Area" value="{{0,5},{0,80},{0,70},{0,100}}" />
                <Property name="Font" value="Berenika-7-Bold" />
-               <Property name="Text" value="Qor" />
-               <Property name="MaxSize" value="{{1,0},{1,0}}" />
+               <Property name="HorzFormatting" value="LeftAligned" />
+               <Property name="Text" value="Qor:" />
             </Window>
             <Window type="TaharezLook/VUMeterNumeric" name="StatChangeWizard.Qor" >
-               <Property name="Area" value="{{0,5},{0,60},{1,-5},{0,76}}" />
+               <Property name="Area" value="{{0,70},{0,82},{1,-5},{0,98}}" />
                <Property name="Text" value="0/6" />
                <Property name="StepSize" value="0.01" />
                <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
                <Property name="VerticalProgress" value="false" />
             </Window>
-            
-            <!-- Kraanan -->
-            <Window type="TaharezLook/Label" name="StatChangeWizard.KraananDesc" >
-               <Property name="Area" value="{{0,5},{0,85},{1,-5},{0,100}}" />
-               <Property name="Font" value="Berenika-7-Bold" />
-               <Property name="Text" value="Kraanan" />
-               <Property name="MaxSize" value="{{1,0},{1,0}}" />
-            </Window>
-            <Window type="TaharezLook/VUMeterNumeric" name="StatChangeWizard.Kraanan" >
-               <Property name="Area" value="{{0,5},{0,100},{1,-5},{0,116}}" />
-               <Property name="Text" value="0/6" />
-               <Property name="StepSize" value="0.01" />
-               <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
-               <Property name="VerticalProgress" value="false" />
-            </Window>
-            
-            <!-- WC  -->
-            <Window type="TaharezLook/Label" name="StatChangeWizard.WCDesc" >
-               <Property name="Area" value="{{0,5},{0,125},{1,-5},{0,140}}" />
-               <Property name="Font" value="Berenika-7-Bold" />
-               <Property name="Text" value="Weaponcraft" />
-               <Property name="MaxSize" value="{{1,0},{1,0}}" />
-            </Window>
-            <Window type="TaharezLook/VUMeterNumeric" name="StatChangeWizard.WC" >
-               <Property name="Area" value="{{0,5},{0,140},{1,-5},{0,156}}" />
-               <Property name="Text" value="0/6" />
-               <Property name="StepSize" value="0.01" />
-               <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
-               <Property name="VerticalProgress" value="false" />
-            </Window>
-            
+
             <!-- Faren -->
             <Window type="TaharezLook/Label" name="StatChangeWizard.FarenDesc" >
-               <Property name="Area" value="{{0,5},{0,165},{1,-5},{0,180}}" />
+               <Property name="Area" value="{{0,5},{0,105},{0,70},{0,125}}" />
                <Property name="Font" value="Berenika-7-Bold" />
-               <Property name="Text" value="Faren" />
-               <Property name="MaxSize" value="{{1,0},{1,0}}" />
+               <Property name="HorzFormatting" value="LeftAligned" />
+               <Property name="Text" value="Faren:" />
             </Window>
             <Window type="TaharezLook/VUMeterNumeric" name="StatChangeWizard.Faren" >
-               <Property name="Area" value="{{0,5},{0,180},{1,-5},{0,196}}" />
+               <Property name="Area" value="{{0,70},{0,107},{1,-5},{0,123}}" />
                <Property name="Text" value="0/6" />
                <Property name="StepSize" value="0.01" />
                <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
@@ -1798,13 +1790,13 @@
             
             <!-- Riija -->
             <Window type="TaharezLook/Label" name="StatChangeWizard.RiijaDesc" >
-               <Property name="Area" value="{{0,5},{0,205},{1,-5},{0,220}}" />
+               <Property name="Area" value="{{0,5},{0,130},{0,70},{0,150}}" />
                <Property name="Font" value="Berenika-7-Bold" />
-               <Property name="Text" value="Riija" />
-               <Property name="MaxSize" value="{{1,0},{1,0}}" />
+               <Property name="HorzFormatting" value="LeftAligned" />
+               <Property name="Text" value="Riija:" />
             </Window>
             <Window type="TaharezLook/VUMeterNumeric" name="StatChangeWizard.Riija" >
-               <Property name="Area" value="{{0,5},{0,220},{1,-5},{0,236}}" />
+               <Property name="Area" value="{{0,70},{0,132},{1,-5},{0,148}}" />
                <Property name="Text" value="0/6" />
                <Property name="StepSize" value="0.01" />
                <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
@@ -1813,13 +1805,13 @@
             
             <!-- Jala -->
             <Window type="TaharezLook/Label" name="StatChangeWizard.JalaDesc" >
-               <Property name="Area" value="{{0,5},{0,245},{1,-5},{0,260}}" />
+               <Property name="Area" value="{{0,5},{0,155},{0,70},{0,175}}" />
                <Property name="Font" value="Berenika-7-Bold" />
-               <Property name="Text" value="Jala" />
-               <Property name="MaxSize" value="{{1,0},{1,0}}" />
+               <Property name="HorzFormatting" value="LeftAligned" />
+               <Property name="Text" value="Jala:" />
             </Window>
             <Window type="TaharezLook/VUMeterNumeric" name="StatChangeWizard.Jala" >
-               <Property name="Area" value="{{0,5},{0,260},{1,-5},{0,276}}" />
+               <Property name="Area" value="{{0,70},{0,157},{1,-5},{0,173}}" />
                <Property name="Text" value="0/6" />
                <Property name="StepSize" value="0.01" />
                <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
