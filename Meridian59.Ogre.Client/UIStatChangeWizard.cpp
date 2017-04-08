@@ -8,14 +8,14 @@ namespace Meridian59 { namespace Ogre
 
       // setup references to children from xml nodes
       Window = static_cast<CEGUI::FrameWindow*>(guiRoot->getChild(UI_NAME_STATCHANGEWIZARD_WINDOW));
-      
-      // Empty tab windows
-      TabControlAttr = static_cast<CEGUI::TabControl*>(Window->getChild(UI_NAME_STATCHANGEWIZARD_TABCONTROLATTR));
-      TabControlSch = static_cast<CEGUI::TabControl*>(Window->getChild(UI_NAME_STATCHANGEWIZARD_TABCONTROLSCH));
 
       // Sub-windows
-      AttributeWindow = static_cast<CEGUI::DefaultWindow*>(TabControlAttr->getChild(UI_NAME_STATCHANGEWIZARD_ATTRIBUTEWINDOW));
-      SchoolWindow = static_cast<CEGUI::DefaultWindow*>(TabControlSch->getChild(UI_NAME_STATCHANGEWIZARD_SCHOOLWINDOW));
+      AttributeWindow = static_cast<CEGUI::DefaultWindow*>(Window->getChild(UI_NAME_STATCHANGEWIZARD_ATTRIBUTEWINDOW));
+      SchoolWindow = static_cast<CEGUI::DefaultWindow*>(Window->getChild(UI_NAME_STATCHANGEWIZARD_SCHOOLWINDOW));
+
+      // Button at the bottom (apply changes)
+      ButtonOK = static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_STATCHANGEWIZARD_BUTTONOK));
+      ButtonOK->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::StatChangeWizard::OnButtonOKClicked));
 
       // Stats
       Might = static_cast<CEGUI::ProgressBar*>(AttributeWindow->getChild(UI_NAME_STATCHANGEWIZARD_MIGHT));
@@ -36,10 +36,6 @@ namespace Meridian59 { namespace Ogre
       RiijaLevel = static_cast<CEGUI::ProgressBar*>(SchoolWindow->getChild(UI_NAME_STATCHANGEWIZARD_RIIJA));
       JalaLevel = static_cast<CEGUI::ProgressBar*>(SchoolWindow->getChild(UI_NAME_STATCHANGEWIZARD_JALA));
       WCLevel = static_cast<CEGUI::ProgressBar*>(SchoolWindow->getChild(UI_NAME_STATCHANGEWIZARD_WC));
-
-      // Button at the bottom (apply changes)
-      ButtonOK = static_cast<CEGUI::PushButton*>(SchoolWindow->getChild(UI_NAME_STATCHANGEWIZARD_BUTTONOK));
-      ButtonOK->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::StatChangeWizard::OnButtonOKClicked));
 
       // Attach listener for stats/schools changes
       OgreClient::Singleton->Data->StatChangeInfo->PropertyChanged += 
