@@ -2538,6 +2538,7 @@ namespace Meridian59 { namespace Ogre
 
 		// set new language
 		OgreClient::Singleton->Config->Language = newval;
+      OgreClient::Singleton->ResourceManager->StringResources->Language = newval;
 
 		// apply language
 		ControllerUI::ApplyLanguage();

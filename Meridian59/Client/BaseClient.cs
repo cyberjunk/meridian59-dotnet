@@ -117,13 +117,13 @@ namespace Meridian59.Client
                 return;
 
             // load the strings for this connectionentry
-		    ResourceManager.SelectStringDictionary(
+            ResourceManager.SelectStringDictionary(
                 Config.SelectedConnectionInfo.StringDictionary,
-				LanguageCode.English); // todo: from config
+                Config.Language);
 
-		    // fill ignore list in datacontroller with ignored
+            // fill ignore list in datacontroller with ignored
             // playernames for this connectionentry.
-		    Data.IgnoreList.Clear();
+            Data.IgnoreList.Clear();
             Data.IgnoreList.AddRange(Config.SelectedConnectionInfo.IgnoreList);
 
             // fill groups list in datacontroller with

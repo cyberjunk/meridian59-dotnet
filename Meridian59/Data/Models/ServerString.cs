@@ -483,149 +483,263 @@ namespace Meridian59.Data.Models
             return -1;
         }
 
-		/// <summary>
-		/// Builds the 'FullString' property based on 
-		/// the available parameters in 'Variables',
-		/// the root resource id and the user-language dependent strings.
-		/// </summary>
-		protected void BuildString()
-		{
-			int index, varindex;
-			InlineVariable var;
-			string strval;
-			int intval;
-			uint uintval;
-			List<int> q_indices = new List<int>();
-			List<string> q_strings = new List<string>();
-			
-			// In this iteration we will use the parsed 'Variables' to actually build
-			// the string in the user-lanuage, honoring the $ordering.
+        /// <summary>
+        /// Tries to extract a $pos number from string and removes it.
+        /// </summary>
+        /// <param name="String"></param>
+        /// <param name="StartIndex"></param>
+        /// <param name="Edited"></param>
+        /// <param name="Position"></param>
+        /// <param name="Removed"></param>
+        /// <returns></returns>
+        protected bool ExtractPosition(string String, int StartIndex, out string Edited, out int Position, out int Removed)
+        {
+            // need at least 2 remaining chars (e.g. $2)
+            if (StartIndex >= String.Length - 1)
+            {
+                Edited = String;
+                Position = -2;
+                Removed = 0;
+                return false;
+            }
 
-			// resolve root resource string in user-language
-			if (!stringResources.TryGetValue(resourceID, out resourceName))
-				resourceName = String.Empty;
+            // check for order flag char
+            if (String[StartIndex] != ORDERFLAG)
+            {
+                Edited = String;
+                Position = -2;
+                Removed = 0;
+                return false;
+            }
 
-			// will store fully constructed string
-			fullString = String.Copy(resourceName);
+            // can be up to 2 digits
+            int numdigits = 0;
 
-			// specifies the index of next variable to use
-			varindex = 0;
+            // check first (must be digit)
+            if (String[StartIndex + 1] >= '0' && String[StartIndex + 1] <= '9')
+                numdigits++;
+            else
+            {
+                Edited = String;
+                Position = -2;
+                Removed = 0;
+                return false;
+            }
 
-			// build string
-			index = HasVariable(fullString);
-			while (index > -1)
-			{
-				while (index > -1)
-				{
-					// which type of inline var
-					switch (fullString[index + 1])
-					{
-						// %i or %d are 4 byte integers. Their value should be inserted as a string.
-						case INTEGERFLAG:
-						case INTEGERFLAG2:
-							var = Variables[varindex];
-							intval = (int)var.Data; // todo check type
-							varindex++;
+            // check second (can be digit or not or out of bound)
+            if (StartIndex + 2 < String.Length &&
+                String[StartIndex + 2] >= '0' && String[StartIndex + 2] <= '9')
+                numdigits++;
 
-							string intstr = intval.ToString();
+            // extract number str
+            string number = String.Substring(StartIndex + 1, numdigits);
 
-							// remove the %i, %d and insert the integer directly
-							fullString = fullString.Remove(index, 2);
-							fullString = fullString.Insert(index, intstr);
+            // try to parse as integer
+            if (!Int32.TryParse(number, out Position))
+            {
+                Edited = String;
+                Position = -2;
+                Removed = 0;
+                return false;
+            }
 
-							// adjust stringliteral indices right to this index
-							for (int i = 0; i < q_indices.Count; i++)
-								if (q_indices[i] > index)
-									q_indices[i] = q_indices[i] + intstr.Length - 2;
-							break;
+            // remove charnumber and $
+            Edited = String.Remove(StartIndex, numdigits + 1);
+            Removed = numdigits + 1;
 
-						// %q is a server-sent string which is directly attached to the message and not looked up from rsb
-						// if it contains any %vars itself, these MUST NOT be resolved further (won't be available in params)
-						case EMBEDDEDSTRINGLITERALFLAG:
-							var = Variables[varindex];
-							strval = (string)var.Data;
-							varindex++;
+            // make position 0-based (it is 1)
+            // can be -1 here: means it was a $0 skip
+            Position--;
 
-							// remove the %q, save string and position for insert later
-							fullString = fullString.Remove(index, 2);
-							q_strings.Add(strval);
-							q_indices.Add(index);
+            return true;
+        }
 
-							// adjust stringliteral indices right to this index
-							for (int i = 0; i < q_indices.Count; i++)
-								if (q_indices[i] > index)
-									q_indices[i] = q_indices[i] - 2;
-							break;
+        /// <summary>
+        /// Builds the 'FullString' property based on 
+        /// the available parameters in 'Variables',
+        /// the root resource id and the user-language dependent strings.
+        /// </summary>
+        protected void BuildString()
+        {
+            int index, varindex;
+            int position = 0;
+            int removed = 0;
+            InlineVariable var;
+            string strval;
+            int intval;
+            uint uintval;
+            List<int> q_indices = new List<int>();
+            List<string> q_strings = new List<string>();
 
-						// %s is a server-sent string resource id. It must be resolved from .rsb
-						// If it contains any %vars itself, these sub-vars must be resolved AFTER any next-vars.
-						case STRINGRESOURCELITERALFLAG:
-							var = Variables[varindex];
-							uintval = (uint)var.Data;
-							varindex++;
+            // In this iteration we will use the parsed 'Variables' to actually build
+            // the string in the user-lanuage, honoring the $ordering.
 
-							if (!stringResources.TryGetValue(uintval, out strval))
-								strval = String.Empty;
+            // resolve root resource string in user-language
+            if (!stringResources.TryGetValue(resourceID, out resourceName))
+                resourceName = String.Empty;
 
-							// remove the %s, and insert the string,
-							// but skip its content in this inner while()                     
-							fullString = fullString.Remove(index, 2);
-							fullString = fullString.Insert(index, strval);
+            // will store fully constructed string
+            fullString = String.Copy(resourceName);
 
-							// adjust stringliteral indices right to this index
-							for (int i = 0; i < q_indices.Count; i++)
-								if (q_indices[i] > index)
-									q_indices[i] = q_indices[i] + strval.Length - 2;
+            // specifies the index of next variable to use
+            varindex = 0;
 
-							// skip
-							index += strval.Length;
+            // build string
+            index = HasVariable(fullString);
+            while (index > -1)
+            {
+                while (index > -1)
+                {
+                    // which type of inline var
+                    switch (fullString[index + 1])
+                    {
+                        // %i or %d are 4 byte integers. Their value should be inserted as a string.
+                        case INTEGERFLAG:
+                        case INTEGERFLAG2:
+#if !VANILLA
+                            if (ExtractPosition(fullString, index + 2, out fullString, out position, out removed) &&
+                                position >= 0)
+                            {
+                                var = Variables[position];
+                            }
+                            else
+                                var = Variables[varindex];
+#else
+                            var = Variables[varindex];
+#endif
+                            intval = (int)var.Data; // todo check type
+                            varindex++;
 
-							break;
+                            string intstr = (position != -1) ? intval.ToString() : String.Empty;
+
+                            // remove the %i, %d and insert the integer directly
+                            fullString = fullString.Remove(index, 2);
+                            fullString = fullString.Insert(index, intstr);
+
+                            // adjust stringliteral indices right to this index
+                            for (int i = 0; i < q_indices.Count; i++)
+                                if (q_indices[i] > index)
+                                    q_indices[i] = q_indices[i] + intstr.Length - 2 - removed;
+                            break;
+
+                        // %q is a server-sent string which is directly attached to the message and not looked up from rsb
+                        // if it contains any %vars itself, these MUST NOT be resolved further (won't be available in params)
+                        case EMBEDDEDSTRINGLITERALFLAG:
+#if !VANILLA
+                            if (ExtractPosition(fullString, index + 2, out fullString, out position, out removed) &&
+                                position >= 0)
+                            {
+                                var = Variables[position];
+                            }
+                            else
+                                var = Variables[varindex];
+#else
+                            var = Variables[varindex];
+#endif
+                            strval = (position != -1) ? (string)var.Data : String.Empty;
+                            varindex++;
+
+                            // remove the %q, save string and position for insert later
+                            fullString = fullString.Remove(index, 2);
+                            q_strings.Add(strval);
+                            q_indices.Add(index);
+
+                            // adjust stringliteral indices right to this index
+                            for (int i = 0; i < q_indices.Count; i++)
+                                if (q_indices[i] > index)
+                                    q_indices[i] = q_indices[i] - 2 - removed;
+                            break;
+
+                        // %s is a server-sent string resource id. It must be resolved from .rsb
+                        // If it contains any %vars itself, these sub-vars must be resolved AFTER any next-vars.
+                        case STRINGRESOURCELITERALFLAG:
+#if !VANILLA
+                            // try to extract a $pos and possibly use it instead of the current index
+                            if (ExtractPosition(fullString, index + 2, out fullString, out position, out removed) &&
+                                position >= 0)
+                            {
+                                var = Variables[position];
+                            }
+                            else
+                                var = Variables[varindex];
+#else
+                            var = Variables[varindex];
+#endif
+                            uintval = (uint)var.Data;
+                            varindex++;
+
+                            // use empty string for $0 or in case not found
+                            if (position == -1 || !stringResources.TryGetValue(uintval, out strval))
+                                strval = String.Empty;
+
+                            // remove the %s, and insert the string,
+                            // but skip its content in this inner while()                     
+                            fullString = fullString.Remove(index, 2);
+                            fullString = fullString.Insert(index, strval);
+
+                            // adjust stringliteral indices right to this index
+                            for (int i = 0; i < q_indices.Count; i++)
+                                if (q_indices[i] > index)
+                                    q_indices[i] = q_indices[i] + strval.Length - 2 - removed;
+
+                            // skip
+                            index += strval.Length;
+                            break;
 
 #if !VANILLA
-						// %r is a server-sent string resource id. It must be resolved from .rsb
-						// If it contains any %vars itself, these sub-vars must be resolved BEFORE any next-vars.
-						case STRINGRESOURCERECURSIVEFLAG:
-							var = Variables[varindex];
-							uintval = (uint)var.Data;
-							varindex++;
+                        // %r is a server-sent string resource id. It must be resolved from .rsb
+                        // If it contains any %vars itself, these sub-vars must be resolved BEFORE any next-vars.
+                        case STRINGRESOURCERECURSIVEFLAG:
 
-							if (!stringResources.TryGetValue(uintval, out strval))
-								strval = String.Empty;
+                            // try to extract a $pos and possibly use it instead of the current index
+                            if (ExtractPosition(fullString, index + 2, out fullString, out position, out removed) &&
+                                position >= 0)
+                            {
+                                var = Variables[position];
+                            }
+                            else
+                                var = Variables[varindex];
 
-							// remove the %r, insert the content (so we process it next)
-							fullString = fullString.Remove(index, 2);
-							fullString = fullString.Insert(index, strval);
+                            uintval = (uint)var.Data;
+                            varindex++;
 
-							// adjust stringliteral indices right to this index
-							for (int i = 0; i < q_indices.Count; i++)
-								if (q_indices[i] > index)
-									q_indices[i] = q_indices[i] + strval.Length - 2;
-							break;
+                            // use empty string for $0 or in case not found
+                            if (position == -1 || !stringResources.TryGetValue(uintval, out strval))
+                                strval = String.Empty;
+
+                            // remove the %r, insert the content (so we process it next)
+                            fullString = fullString.Remove(index, 2);
+                            fullString = fullString.Insert(index, strval);
+
+                            // adjust stringliteral indices right to this index
+                            for (int i = 0; i < q_indices.Count; i++)
+                                if (q_indices[i] > index)
+                                    q_indices[i] = q_indices[i] + strval.Length - 2 - removed;
+                            break;
 #endif
-						default:
-							break;
-					}
+                        default:
+                            break;
+                    }
 
-					// see if there is more inline vars to the right of current index
-					// this makes sure we don't yet process nested and already inserted %s
-					index = HasVariable(fullString, index);
-				}
+                    // see if there is more inline vars to the right of current index
+                    // this makes sure we don't yet process nested and already inserted %s
+                    index = HasVariable(fullString, index);
+                }
 
-				// start from the beginning again, this will process nested %s
-				index = HasVariable(fullString);
-			}
+                // start from the beginning again, this will process nested %s
+                index = HasVariable(fullString);
+            }
 
-			// Now finally add the %q stringliterals:
-			// MUST iterate backwards (right to left in string)
-			// so these inserts don't invalidate the other indices
-			for (int i = q_indices.Count - 1; i >= 0; i--)
-				fullString = fullString.Insert(q_indices[i], q_strings[i]);
+            // Now finally add the %q stringliterals:
+            // MUST iterate backwards (right to left in string)
+            // so these inserts don't invalidate the other indices
+            for (int i = q_indices.Count - 1; i >= 0; i--)
+                fullString = fullString.Insert(q_indices[i], q_strings[i]);
 
-			// extract and remove the inline styles (~B ...)
-			Styles = ChatStyle.GetStyles(fullString, chatMessageType);
-			fullString = ChatStyle.RemoveInlineStyles(fullString);
-		}
+            // extract and remove the inline styles (~B ...)
+            Styles = ChatStyle.GetStyles(fullString, chatMessageType);
+            fullString = ChatStyle.RemoveInlineStyles(fullString);
+        }
 
         public override string ToString()
         {
@@ -658,9 +772,9 @@ namespace Meridian59.Data.Models
                 
             return message;
         }
-        #endregion
+#endregion
 
-        #region IClearable
+#region IClearable
         public virtual void Clear(bool RaiseChangedEvent)
         {
             if (RaiseChangedEvent)
@@ -680,6 +794,6 @@ namespace Meridian59.Data.Models
                 Styles.Clear();
             }
         }
-        #endregion
+#endregion
     }
 }
