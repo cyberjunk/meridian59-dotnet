@@ -5,7 +5,7 @@
 vertex_program ambient_vs hlsl
 {
     source general.hlsl
-    target vs_2_0
+    target vs_3_0
     entry_point ambient_vs
     optimisation_level 3
  
@@ -19,7 +19,7 @@ vertex_program ambient_vs hlsl
 vertex_program diffuse_vs hlsl
 {
     source general.hlsl
-    target vs_2_0
+    target vs_3_0
     entry_point diffuse_vs
     optimisation_level 3
  
@@ -34,7 +34,7 @@ vertex_program diffuse_vs hlsl
 vertex_program invisible_vs hlsl
 {
 	source general.hlsl
-	target vs_2_0
+	target vs_3_0
 	entry_point invisible_vs
     optimisation_level 3
 		
@@ -49,7 +49,7 @@ vertex_program invisible_vs hlsl
 vertex_program water_vs hlsl
 {
 	source general.hlsl
-	target vs_2_0
+	target vs_3_0
 	entry_point water_vs
     optimisation_level 3
 
@@ -64,7 +64,7 @@ vertex_program water_vs hlsl
 fragment_program ambient_ps hlsl
 {
     source general.hlsl
-    target ps_2_0
+    target ps_3_0
     entry_point ambient_ps
     optimisation_level 3
 	 
@@ -80,7 +80,7 @@ fragment_program ambient_ps hlsl
 fragment_program diffuse_ps hlsl
 {
     source general.hlsl
-    target ps_2_0
+    target ps_3_0
     entry_point diffuse_ps
     optimisation_level 3
 	 
@@ -104,6 +104,12 @@ fragment_program diffuse_ps hlsl
 		param_named_auto lightCol5 light_diffuse_colour 5
 		param_named_auto lightPos5 light_position 5
         param_named_auto lightAtt5 light_attenuation 5
+		param_named_auto lightCol6 light_diffuse_colour 6
+		param_named_auto lightPos6 light_position 6
+        param_named_auto lightAtt6 light_attenuation 6
+		param_named_auto lightCol7 light_diffuse_colour 7
+		param_named_auto lightPos7 light_position 7
+        param_named_auto lightAtt7 light_attenuation 7
 		param_named colormodifier float4 1 1 1 1			
     }
 }
@@ -111,7 +117,7 @@ fragment_program diffuse_ps hlsl
 fragment_program invisible_ps hlsl
 {
 	source general.hlsl
-	target ps_2_0
+	target ps_3_0
 	entry_point invisible_ps
     optimisation_level 3
 	
@@ -124,7 +130,7 @@ fragment_program invisible_ps hlsl
 fragment_program water_ps hlsl
 {
 	source general.hlsl
-	target ps_2_0
+	target ps_3_0
 	entry_point water_ps
     optimisation_level 3
 	
@@ -186,7 +192,7 @@ material base_material
         {
 			alpha_rejection greater_equal 64
 			alpha_to_coverage on
-			iteration 1 per_n_lights 6 point
+			iteration 1 per_n_lights 8 point
 			max_lights 48
 			scene_blend add
             
