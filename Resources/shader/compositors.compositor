@@ -71,7 +71,7 @@ compositor Black
             
 			pass render_quad
             {
-                material Compositor/Black
+                material Compositor/Blend
                 input 0 rt0
             }
         }
@@ -96,7 +96,7 @@ compositor Pain
 
             pass render_quad
             {
-                material Compositor/Pain
+                material Compositor/Blend
                 input 0 rt0
             }
         }
@@ -121,7 +121,7 @@ compositor Whiteout
 
             pass render_quad
             {
-                material Compositor/Whiteout
+                material Compositor/Blend
                 input 0 rt0
             }
         }

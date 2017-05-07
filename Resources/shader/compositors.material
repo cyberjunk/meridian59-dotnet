@@ -1,8 +1,21 @@
+vertex_program Compositor/Compositor_vs hlsl
+{
+   source compositors.hlsl
+   target vs_3_0
+   entry_point Compositor_vs
+   optimisation_level 3
+
+   default_params
+   {
+      param_named_auto cWorldViewProj worldviewproj_matrix
+   }
+}
+
 fragment_program Compositor/BlackAndWhite_ps hlsl
 {
 	source compositors.hlsl
 	entry_point BlackAndWhite_ps
-	target ps_2_0
+	target ps_3_0
 	optimisation_level 3
 }
 
@@ -10,46 +23,7 @@ fragment_program Compositor/Blend_ps hlsl
 {
 	source compositors.hlsl
 	entry_point Blend_ps
-	target ps_2_0
-	optimisation_level 3
-	
-	default_params
-    {
-		param_named blendcolor float4 1.0 1.0 1.0 0.0
-    }
-}
-
-fragment_program Compositor/Black_ps hlsl
-{
-	source compositors.hlsl
-	entry_point Blend_ps
-	target ps_2_0
-	optimisation_level 3
-	
-	default_params
-    {
-		param_named blendcolor float4 1.0 1.0 1.0 0.0
-    }
-}
-
-fragment_program Compositor/Pain_ps hlsl
-{
-	source compositors.hlsl
-	entry_point Blend_ps
-	target ps_2_0
-	optimisation_level 3
-	
-	default_params
-    {
-		param_named blendcolor float4 1.0 1.0 1.0 0.0
-    }
-}
-
-fragment_program Compositor/Whiteout_ps hlsl
-{
-	source compositors.hlsl
-	entry_point Blend_ps
-	target ps_2_0
+	target ps_3_0
 	optimisation_level 3
 	
 	default_params
@@ -62,7 +36,7 @@ fragment_program Compositor/Blur_ps hlsl
 {
 	source compositors.hlsl
 	entry_point Blur_ps
-	target ps_2_0
+	target ps_3_0
 	optimisation_level 3
 }
 
@@ -70,7 +44,7 @@ fragment_program Compositor/Invert_ps hlsl
 {
 	source compositors.hlsl
 	entry_point Invert_ps
-	target ps_2_0
+	target ps_3_0
 	optimisation_level 3
 }
 
@@ -80,8 +54,15 @@ material Compositor/BlackAndWhite
 	{
 		pass
 		{
+			cull_hardware none
+			cull_software none
 			depth_check off
-
+			lighting off
+			
+			vertex_program_ref Compositor/Compositor_vs
+			{
+			}
+			
 			fragment_program_ref Compositor/BlackAndWhite_ps
 			{
 			}
@@ -99,68 +80,15 @@ material Compositor/Blend
 	{
 		pass
 		{
+			cull_hardware none
+			cull_software none
 			depth_check off
-
-			fragment_program_ref Compositor/Blend_ps
-			{
-				param_named blendcolor float4 1.0 1.0 1.0 0.0
-			}
-
-			texture_unit
+			lighting off
+			
+			vertex_program_ref Compositor/Compositor_vs
 			{
 			}
-		}
-	}
-}
-
-material Compositor/Black
-{
-	technique
-	{
-		pass
-		{
-			depth_check off
-
-			fragment_program_ref Compositor/Blend_ps
-			{
-				param_named blendcolor float4 1.0 1.0 1.0 0.0
-			}
-
-			texture_unit
-			{
-			}
-		}
-	}
-}
-
-material Compositor/Pain
-{
-	technique
-	{
-		pass
-		{
-			depth_check off
-
-			fragment_program_ref Compositor/Blend_ps
-			{
-				param_named blendcolor float4 1.0 1.0 1.0 0.0
-			}
-
-			texture_unit
-			{
-			}
-		}
-	}
-}
-
-material Compositor/Whiteout
-{
-	technique
-	{
-		pass
-		{
-			depth_check off
-
+			
 			fragment_program_ref Compositor/Blend_ps
 			{
 				param_named blendcolor float4 1.0 1.0 1.0 0.0
@@ -182,7 +110,12 @@ material Compositor/Blur
 			cull_hardware none
 			cull_software none
 			depth_check off
-
+			lighting off
+			
+			vertex_program_ref Compositor/Compositor_vs
+			{
+			}
+			
 			fragment_program_ref Compositor/Blur_ps
 			{
 	            param_named sampleDist float 1.0
@@ -205,8 +138,15 @@ material Compositor/Invert
 	{
 		pass
 		{
+			cull_hardware none
+			cull_software none
 			depth_check off
-
+			lighting off
+			
+			vertex_program_ref Compositor/Compositor_vs
+			{
+			}
+			
 			fragment_program_ref Compositor/Invert_ps
 			{
 			}

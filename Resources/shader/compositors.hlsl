@@ -1,4 +1,23 @@
-sampler RT : register(s0);
+uniform sampler2D RT : register(s0);
+
+struct VOut
+{
+	float4 p	: POSITION;
+	float2 uv	: TEXCOORD0;
+};
+
+VOut Compositor_vs(
+	float4 iPosition : POSITION,
+	float2 iUV0 : TEXCOORD0,
+	uniform float4x4 cWorldViewProj)
+{
+	VOut OUT;
+
+    OUT.p = mul(cWorldViewProj, iPosition);
+    OUT.uv = iUV0;
+	
+	return OUT;
+}
 
 // examplecompositor
 float4 BlackAndWhite_ps(float2 iTexCoord : TEXCOORD0) : COLOR
@@ -9,19 +28,22 @@ float4 BlackAndWhite_ps(float2 iTexCoord : TEXCOORD0) : COLOR
 
 // blendcompositor (used by blind, whiteout, pain and others)
 float4 Blend_ps(
-	float2 iTexCoord : TEXCOORD0,
-	uniform float4 blendcolor) : COLOR
+	VOut vsout,
+	uniform float4 blendcolor) : COLOR0
 {
 	// get pixelcolor
-	float3 color = tex2D(RT, iTexCoord).rgb;
+	const float4 color = tex2D(RT, vsout.uv);
 
-	float oneminusa = 1.0 - blendcolor.a;
+	// get the weight of the base-color
+	const float oneminusa = 1.0 - blendcolor.a;
 	
-	return float4(
-		blendcolor.a * blendcolor.r + oneminusa * color.r,
-		blendcolor.a * blendcolor.g + oneminusa * color.g,
-		blendcolor.a * blendcolor.b + oneminusa * color.b,
-		1.0);
+	// apply the weights on base and blend color
+	// and combine them
+	const float4 blend = blendcolor.a * blendcolor;
+	const float4 base  = oneminusa * color;
+	const float4 comb  = blend + base;
+
+	return comb;
 }
 
 // invert compositor
