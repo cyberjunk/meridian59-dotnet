@@ -3,6 +3,7 @@ fragment_program Compositor/BlackAndWhite_ps hlsl
 	source compositors.hlsl
 	entry_point BlackAndWhite_ps
 	target ps_2_0
+	optimisation_level 3
 }
 
 fragment_program Compositor/Blend_ps hlsl
@@ -10,6 +11,7 @@ fragment_program Compositor/Blend_ps hlsl
 	source compositors.hlsl
 	entry_point Blend_ps
 	target ps_2_0
+	optimisation_level 3
 	
 	default_params
     {
@@ -22,6 +24,7 @@ fragment_program Compositor/Black_ps hlsl
 	source compositors.hlsl
 	entry_point Blend_ps
 	target ps_2_0
+	optimisation_level 3
 	
 	default_params
     {
@@ -34,6 +37,7 @@ fragment_program Compositor/Pain_ps hlsl
 	source compositors.hlsl
 	entry_point Blend_ps
 	target ps_2_0
+	optimisation_level 3
 	
 	default_params
     {
@@ -46,6 +50,7 @@ fragment_program Compositor/Whiteout_ps hlsl
 	source compositors.hlsl
 	entry_point Blend_ps
 	target ps_2_0
+	optimisation_level 3
 	
 	default_params
     {
@@ -58,6 +63,7 @@ fragment_program Compositor/Blur_ps hlsl
 	source compositors.hlsl
 	entry_point Blur_ps
 	target ps_2_0
+	optimisation_level 3
 }
 
 fragment_program Compositor/Invert_ps hlsl
@@ -65,6 +71,7 @@ fragment_program Compositor/Invert_ps hlsl
 	source compositors.hlsl
 	entry_point Invert_ps
 	target ps_2_0
+	optimisation_level 3
 }
 
 material Compositor/BlackAndWhite
