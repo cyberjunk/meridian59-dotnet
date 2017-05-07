@@ -157,47 +157,47 @@ float4 diffuse_ps(
 	float3 delta;
 	
 	// base pixel from texture
-	float4 diffuseTex = tex2D(diffusetex, vsout.uv);
+	const float4 diffuseTex = tex2D(diffusetex, vsout.uv);
 	
 	// 1. light
-	delta      = lightPos[0].xyz - vsout.wp.xyz;
-	lightScale = 1.0 - (dot(delta, delta) / (lightAtt[0].r * lightAtt[0].r));
-	light      = max(float3(0, 0, 0), lightCol[0] * lightScale);
+	delta      = lightPos[0] - vsout.wp;
+	lightScale = max(0.0, 1.0 - (dot(delta, delta) / (lightAtt[0].r * lightAtt[0].r)));
+	light      = lightCol[0] * lightScale;
 
 	// 2. light
-	delta      = lightPos[1].xyz - vsout.wp.xyz;
-	lightScale = 1.0 - (dot(delta, delta) / (lightAtt[1].r * lightAtt[1].r));
-	light      += max(float3(0, 0, 0), lightCol[1] * lightScale);
+	delta      = lightPos[1] - vsout.wp;
+	lightScale = max(0.0, 1.0 - (dot(delta, delta) / (lightAtt[1].r * lightAtt[1].r)));
+	light      += lightCol[1] * lightScale;
 
 	// 3. light
-	delta      = lightPos[2].xyz - vsout.wp.xyz;
-	lightScale = 1.0 - (dot(delta, delta) / (lightAtt[2].r * lightAtt[2].r));
-	light      += max(float3(0, 0, 0), lightCol[2] * lightScale);
+	delta      = lightPos[2] - vsout.wp;
+	lightScale = max(0.0, 1.0 - (dot(delta, delta) / (lightAtt[2].r * lightAtt[2].r)));
+	light      += lightCol[2] * lightScale;
 
 	// 4. light
-	delta      = lightPos[3].xyz - vsout.wp.xyz;
-	lightScale = 1.0 - (dot(delta, delta) / (lightAtt[3].r * lightAtt[3].r));
-	light      += max(float3(0, 0, 0), lightCol[3] * lightScale);
+	delta      = lightPos[3] - vsout.wp;
+	lightScale = max(0.0, 1.0 - (dot(delta, delta) / (lightAtt[3].r * lightAtt[3].r)));
+	light      += lightCol[3] * lightScale;
 
 	// 5. light
-	delta      = lightPos[4].xyz - vsout.wp.xyz;
-	lightScale = 1.0 - (dot(delta, delta) / (lightAtt[4].r * lightAtt[4].r));
-	light      += max(float3(0, 0, 0), lightCol[4] * lightScale);
+	delta      = lightPos[4] - vsout.wp;
+	lightScale = max(0.0, 1.0 - (dot(delta, delta) / (lightAtt[4].r * lightAtt[4].r)));
+	light      += lightCol[4] * lightScale;
 
 	// 6. light
-	delta      = lightPos[5].xyz - vsout.wp.xyz;
-	lightScale = 1.0 - (dot(delta, delta) / (lightAtt[5].r * lightAtt[5].r));
-	light      += max(float3(0, 0, 0), lightCol[5] * lightScale);
+	delta      = lightPos[5] - vsout.wp;
+	lightScale = max(0.0, 1.0 - (dot(delta, delta) / (lightAtt[5].r * lightAtt[5].r)));
+	light      += lightCol[5] * lightScale;
 
 	// 7. light
-	delta      = lightPos[6].xyz - vsout.wp.xyz;
-	lightScale = 1.0 - (dot(delta, delta) / (lightAtt[6].r * lightAtt[6].r));
-	light      += max(float3(0, 0, 0), lightCol[6] * lightScale);
+	delta      = lightPos[6] - vsout.wp;
+	lightScale = max(0.0, 1.0 - (dot(delta, delta) / (lightAtt[6].r * lightAtt[6].r)));
+	light      += lightCol[6] * lightScale;
 
 	// 8. light
-	delta      = lightPos[7].xyz - vsout.wp.xyz;
-	lightScale = 1.0 - (dot(delta, delta) / (lightAtt[7].r * lightAtt[7].r));
-	light      += max(float3(0, 0, 0), lightCol[7] * lightScale);
+	delta      = lightPos[7] - vsout.wp;
+	lightScale = max(0.0, 1.0 - (dot(delta, delta) / (lightAtt[7].r * lightAtt[7].r)));
+	light      += lightCol[7] * lightScale;
 
 	return colormodifier * float4(diffuseTex.rgb * light.rgb, diffuseTex.a);
 }
