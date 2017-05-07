@@ -208,19 +208,17 @@ float4 invisible_ps(
 	uniform sampler2D noisetex : TEXUNIT1,
 	uniform sampler2D refracttex : TEXUNIT2) : COLOR0
 {	
-	float4 diffuseTex = tex2D(diffusetex, vsout.uv);
+	// get color of pixel of object texture
+	float4 color = tex2D(diffusetex, vsout.uv);
 	
-	if (diffuseTex.a > 0.0)
-	{
-		float3 noisen = (tex2D(noisetex, (vsout.uvnoise * 0.2)).rgb - 0.5).rbg * 0.05;
-		float2 final  = (vsout.pproj.xy / vsout.pproj.w) + noisen.xz;
+	// skip anything half or more transparent
+	clip(color.a - 0.5);
+	
+	// build randomized uv coords on refracttex
+	float3 noisen = (tex2D(noisetex, (vsout.uvnoise * 0.2)).rgb - 0.5).rbg * 0.05;
+	float2 final  = (vsout.pproj.xy / vsout.pproj.w) + noisen.xz;
 
-		return tex2D(refracttex, final);
-	}	
-	else
-	{
-		return diffuseTex;
-	}
+	return tex2D(refracttex, final);
 }
 
 float4 water_ps(
