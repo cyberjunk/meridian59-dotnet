@@ -47,7 +47,7 @@ VOut1 ambient_vs(
 
 	OUT.p  = mul(wvpMat, p);
 	OUT.uv = mul(texMat, float4(uv, 0, 1)).xy;
-	OUT.normal = normal;
+	OUT.normal = normalize(normal);
 	
 	return OUT;
 }
@@ -133,7 +133,7 @@ float4 ambient_ps(
 	lightDir = -lightDir;
 
 	// represents how much this pixel should be affected by directional light
-	float angle = max(dot(normalize(lightDir.xyz), normalize(vsout.normal)), 0);		
+	float angle = max(dot(normalize(lightDir.xyz), vsout.normal), 0);
 	
 	// directional, ambient and combined light
 	float3 dir  = angle * lightCol.rgb * texcol.rgb;
