@@ -134,28 +134,14 @@ float4 ambient_ps(
 
 	// represents how much this pixel should be affected by directional light
 	float angle = max(dot(normalize(lightDir.xyz), normalize(vsout.normal)), 0);		
-
-	// directional light contribution
-	float3 dir = float3(
-		angle * lightCol.r * texcol.r,
-		angle * lightCol.g * texcol.g,
-		angle * lightCol.b * texcol.b);
-		
-	// ambient light contribution
-	float3 ambi = float3(
-		ambient.r * texcol.r,
-		ambient.g * texcol.g,
-		ambient.b * texcol.b);
 	
-	// combine ambientlight and directionallight weightened
-	float3 sum = (0.2 * dir) + (0.8 * ambi);
+	// directional, ambient and combined light
+	float3 dir  = angle * lightCol.rgb * texcol.rgb;
+	float3 ambi = ambient.rgb * texcol.rgb;
+	float3 sum  = (0.2 * dir) + (0.8 * ambi);
 	
 	// output pixel
-	return float4(
-		sum.r * colormodifier.r,
-		sum.g * colormodifier.g,
-		sum.b * colormodifier.b,		
-		texcol.a * colormodifier.a);
+	return float4(sum * colormodifier.rgb, texcol.a * colormodifier.a);
 }
 
 float4 diffuse_ps(
@@ -234,11 +220,7 @@ float4 diffuse_ps(
 	lightScale = 1.0 - (dot(delta, delta) / (lightAtt7.r * lightAtt7.r));
 	light      += max(float3(0, 0, 0), lightCol7 * lightScale);
 
-	return colormodifier * float4(
-		diffuseTex.r * light[0],
-		diffuseTex.g * light[1],
-		diffuseTex.b * light[2],
-		diffuseTex.a);
+	return colormodifier * float4(diffuseTex.rgb * light.rgb, diffuseTex.a);
 }
 
 float4 invisible_ps(
