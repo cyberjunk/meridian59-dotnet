@@ -236,12 +236,7 @@ float4 water_ps(
 
 	float3 normView = normalize(vsout.vVec);
 	float3 reflVec = reflect(normView, bump);
-   
-	reflVec.z = -reflVec.z;
-   
 	float4 reflcol = tex2D(diffusetex, reflVec.xy); 
 
-	ambient = ambient + float3(0.01, 0.01, 0.01);
-   
 	return float4(ambient, 0) * reflcol;
 }
