@@ -76,6 +76,7 @@ namespace Meridian59 { namespace Ogre
 			widget->setText(CEGUI::PropertyHelper<int>::toString(i));
 #endif			
 			// subscribe dragend
+         dragger->subscribeEvent(CEGUI::DragContainer::EventDragStarted, CEGUI::Event::Subscriber(UICallbacks::ActionButtons::OnDragStarted));
 			dragger->subscribeEvent(CEGUI::DragContainer::EventDragEnded, CEGUI::Event::Subscriber(UICallbacks::ActionButtons::OnDragEnded));
 			dragger->subscribeEvent(CEGUI::DragContainer::EventDragDropItemDropped, CEGUI::Event::Subscriber(UICallbacks::ActionButtons::OnItemDropped));
 			dragger->subscribeEvent(CEGUI::DragContainer::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::ActionButtons::OnItemClicked));
@@ -355,6 +356,15 @@ namespace Meridian59 { namespace Ogre
 		return true;
 	}
 
+   bool UICallbacks::ActionButtons::OnDragStarted(const CEGUI::EventArgs& e)
+   {
+      const CEGUI::WindowEventArgs& args = static_cast<const CEGUI::WindowEventArgs&>(e);
+
+      ControllerUI::ActionButtons::Window->setUsingAutoRenderingSurface(false);
+
+      return true;
+   };
+
 	bool UICallbacks::ActionButtons::OnDragEnded(const CEGUI::EventArgs& e)
 	{
 		const CEGUI::WindowEventArgs& args		= (const CEGUI::WindowEventArgs&)e;
@@ -363,6 +373,8 @@ namespace Meridian59 { namespace Ogre
 		CEGUI::Window* destWindow				= dragContainer->getCurrentDropTarget();
 		ActionButtonList^ buttonModels			= OgreClient::Singleton->Data->ActionButtons;
 		
+      ControllerUI::ActionButtons::Window->setUsingAutoRenderingSurface(true);
+
 		if (!destWindow)
 			return true;
 				

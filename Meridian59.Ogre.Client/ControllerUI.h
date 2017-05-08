@@ -1727,6 +1727,7 @@ namespace Meridian59 { namespace Ogre
 			static bool OnItemDropped(const CEGUI::EventArgs& e);
 			static bool OnMouseDown(const CEGUI::EventArgs& e);
 			static bool OnMouseUp(const CEGUI::EventArgs& e);
+         static bool OnDragStarted(const CEGUI::EventArgs& e);
 			static bool OnDragEnded(const CEGUI::EventArgs& e);
 		};
 

@@ -119,6 +119,7 @@
       
       <!-- Status bar -->
       <Window type="TaharezLook/StaticImage" name="StatusBar" >
+         <Property name="AutoRenderingSurface" value="True" />
          <Property name="Area" value="{{0,0},{0,0},{1,0},{0,23}}" />
          <Property name="FrameEnabled" value="False" />
          <Property name="Image" value="TaharezLook/StatusBarBackground" />
@@ -368,6 +369,7 @@
       
       <!-- Avatar -->
       <Window type="TaharezLook/StaticImage" name="Avatar" >
+         <Property name="AutoRenderingSurface" value="True" />
          <Property name="MinSize" value="{{0,250},{0,141}}" />
          <Property name="MaxSize" value="{{0,250},{0,141}}" />
          <Property name="FrameEnabled" value="False" />
@@ -497,6 +499,7 @@
       
       <!-- Target -->
       <Window type="TaharezLook/StaticImage" name="Target" >
+         <Property name="AutoRenderingSurface" value="True" />
          <Property name="MinSize" value="{{0,250},{0,90}}" />
          <Property name="MaxSize" value="{{0,250},{0,90}}" />
          <Property name="FrameEnabled" value="False" />
@@ -622,6 +625,7 @@
       
       <!-- RoomEnchantments -->
       <Window type="TaharezLook/StaticImage" name="RoomEnchantments" >
+         <Property name="AutoRenderingSurface" value="True" />
          <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
          <Property name="MaxSize" value="{{0,250},{0,42}}" />
          <Property name="FrameEnabled" value="False" />
@@ -758,6 +762,7 @@
       
       <!-- MainButtonsLeft -->
       <Window type="TaharezLook/StaticImage" name="MainButtonsLeft" >
+         <Property name="AutoRenderingSurface" value="True" />
          <Property name="MaxSize" value="{{0,175},{0,30}}" />
          <Property name="Size" value="{{0,175},{0,30}}" />
          <Property name="Position" value="{{0.5,-174},{1,-32}}" />
@@ -828,6 +833,7 @@
       
       <!-- MainButtonsRight -->
       <Window type="TaharezLook/StaticImage" name="MainButtonsRight" >
+         <Property name="AutoRenderingSurface" value="True" />
          <Property name="MaxSize" value="{{0,175},{0,30}}" />
          <Property name="Size" value="{{0,175},{0,30}}" />
          <Property name="Position" value="{{0.5,0},{1,-32}}" />
@@ -974,8 +980,9 @@
       </Window>
       
       <!-- ActionButtons -->
-      <Window type="TaharezLook/StaticImage" name="ActionButtons" >
-         <Property name="Size" value="{{0,349},{0,117}}" />
+      <Window type="TaharezLook/StaticImage" name="ActionButtons" >	  
+         <Property name="AutoRenderingSurface" value="True" />
+		 <Property name="Size" value="{{0,349},{0,117}}" />
          <Property name="MinSize" value="{{0,349},{0,117}}" />
          <Property name="MaxSize" value="{{0,349},{0,117}}" />
          <Property name="Position" value="{{0.5,-174},{1,-150}}" />
@@ -2185,6 +2192,7 @@
       
       <!-- ConfirmPopup -->
       <Window type="DefaultWindow" name="ConfirmPopup" >
+         <Property name="AutoRenderingSurface" value="True" />
          <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
          <Property name="AlwaysOnTop" value="true" />
          
