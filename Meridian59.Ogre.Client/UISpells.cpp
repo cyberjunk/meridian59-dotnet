@@ -311,6 +311,12 @@ namespace Meridian59 { namespace Ogre
 	bool UICallbacks::Spells::OnDragStarted(const CEGUI::EventArgs& e)
 	{
 		const CEGUI::WindowEventArgs& args = static_cast<const CEGUI::WindowEventArgs&>(e);
+
+      CEGUI::DragContainer* drag = (CEGUI::DragContainer*)args.window;
+
+      if (!drag->isDraggingEnabled())
+         return true;
+
 		ControllerUI::Spells::Window->setUsingAutoRenderingSurface(false);
 		return true;
 	};

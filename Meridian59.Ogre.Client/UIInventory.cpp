@@ -306,6 +306,11 @@ namespace Meridian59 { namespace Ogre
 	{
 		const CEGUI::WindowEventArgs& args = static_cast<const CEGUI::WindowEventArgs&>(e);
 
+      CEGUI::DragContainer* drag = (CEGUI::DragContainer*)args.window;
+      
+      if (!drag->isDraggingEnabled())
+         return true;
+
 		ControllerUI::DraggedWindow = args.window;
 		ControllerUI::Inventory::Window->setUsingAutoRenderingSurface(false);
 
