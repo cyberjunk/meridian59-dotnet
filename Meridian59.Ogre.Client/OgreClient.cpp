@@ -460,7 +460,8 @@ namespace Meridian59 { namespace Ogre
 		ControllerUI::Tick(GameTick->Current, GameTick->Span);
 		ControllerRoom::Tick(GameTick->Current, GameTick->Span);
 		
-		miniMap->Tick(GameTick->Current, GameTick->Span);
+      if (ControllerUI::MiniMap::Window->isVisible())
+		   miniMap->Tick(GameTick->Current, GameTick->Span);
 		
 		// update the invis viewport every second frame
 		// and only if there's an invis object
