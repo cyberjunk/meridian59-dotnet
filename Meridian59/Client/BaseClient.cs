@@ -60,14 +60,6 @@ namespace Meridian59.Client
         where D:DataController, new()
         where C:Config, new()
     {
-        #region Constants
-        protected const string REQSPELLTCERROR      = "Warning: Can't send ReqCast. This spell seems to require more than 1 target.";
-        protected const string WRONGCREDENTIALS     = "Your account credentials are not correct.";
-        protected const string APPVERSIONMISMATCH   = "Your major/minor versions don't match the server.";
-        protected const string RESVERSIONMISMATCH   = "Your Download (resources) version don't match the server.";
-        protected const string NOCHARACTERS         = "Your account doesn't have any character slots.";
-        #endregion
-
         #region Abstract properties to implement
         public abstract byte AppVersionMajor { get; }
         public abstract byte AppVersionMinor { get; }

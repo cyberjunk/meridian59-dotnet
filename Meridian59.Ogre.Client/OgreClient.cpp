@@ -841,7 +841,7 @@ namespace Meridian59 { namespace Ogre
 		ControllerUI::ConfirmPopup::Confirmed +=
 			gcnew System::EventHandler(this, &OgreClient::OnLoginErrorConfirmed);
 		// tell user about wrong credentials
-		ControllerUI::ConfirmPopup::ShowOK(StringConvert::CLRToCEGUI(WRONGCREDENTIALS), 0);
+		ControllerUI::ConfirmPopup::ShowOK("Your account credentials are not correct.", 0);
 	};
 
 	void OgreClient::HandleNoCharactersMessage(NoCharactersMessage^ Message)
@@ -853,7 +853,7 @@ namespace Meridian59 { namespace Ogre
 		ControllerUI::ConfirmPopup::Confirmed +=
 			gcnew System::EventHandler(this, &OgreClient::OnLoginErrorConfirmed);
 		// tell user about no characters
-		ControllerUI::ConfirmPopup::ShowOK(StringConvert::CLRToCEGUI(NOCHARACTERS), 0);
+		ControllerUI::ConfirmPopup::ShowOK("Your account doesn't have any character slots.", 0);
 	};
 
 	void OgreClient::HandleLoginModeMessageMessage(LoginModeMessageMessage^ Message)
@@ -871,7 +871,7 @@ namespace Meridian59 { namespace Ogre
 		ControllerUI::ConfirmPopup::Confirmed +=
 			gcnew System::EventHandler(this, &OgreClient::OnLoginErrorConfirmed);
 		// tell user about mismatching major/minor version
-		ControllerUI::ConfirmPopup::ShowOK(StringConvert::CLRToCEGUI(APPVERSIONMISMATCH), 0);
+		ControllerUI::ConfirmPopup::ShowOK("Your major/minor versions don't match the server.", 0);
 	};
 
 	void OgreClient::HandleDownloadMessage(DownloadMessage^ Message)
