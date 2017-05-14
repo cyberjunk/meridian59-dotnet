@@ -229,7 +229,15 @@ namespace Meridian59.Protocol
                 case MessageTypeGameMode.LookNewsGroup:                         // 180
                     HandleLookNewsGroupMessage((LookNewsGroupMessage)Message);
                     break;
-                
+
+                case MessageTypeGameMode.LookSpell:                             // 191
+                    HandleLookSpellMessage((LookSpellMessage)Message);
+                    break;
+
+                case MessageTypeGameMode.LookSkill:                             // 192
+                    HandleLookSkillMessage((LookSkillMessage)Message);
+                    break;
+
                 case MessageTypeGameMode.Shoot:                                 // 202
                     HandleShootMessage((ShootMessage)Message);
                     break;
@@ -447,6 +455,18 @@ namespace Meridian59.Protocol
         {
             Message.ObjectInfo.ObjectBase.ResolveResources(resourceManager, false);
             Message.ObjectInfo.ObjectBase.DecompressResources();
+        }
+
+        protected virtual void HandleLookSpellMessage(LookSpellMessage Message)
+        {
+            Message.SpellInfo.ObjectBase.ResolveResources(resourceManager, false);
+            Message.SpellInfo.ObjectBase.DecompressResources();
+        }
+
+        protected virtual void HandleLookSkillMessage(LookSkillMessage Message)
+        {
+            Message.SkillInfo.ObjectBase.ResolveResources(resourceManager, false);
+            Message.SkillInfo.ObjectBase.DecompressResources();
         }
 
         protected virtual void HandleInventoryMessage(InventoryMessage Message)

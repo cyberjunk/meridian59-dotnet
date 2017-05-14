@@ -334,7 +334,9 @@
     <ClCompile Include="UIQuests.cpp" />
     <ClCompile Include="UIRoomEnchantments.cpp" />
     <ClCompile Include="UIRoomObjects.cpp" />
+    <ClCompile Include="UISkillDetails.cpp" />
     <ClCompile Include="UISkills.cpp" />
+    <ClCompile Include="UISpellDetails.cpp" />
     <ClCompile Include="UISpells.cpp" />
     <ClCompile Include="UISplashNotifier.cpp" />
     <ClCompile Include="UIStatChangeWizard.cpp" />

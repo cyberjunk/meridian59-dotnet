@@ -158,6 +158,8 @@ namespace Meridian59.Protocol.Enums
         Article             = 182,
 
         LookupNames         = 190,
+        LookSpell           = 191,
+        LookSkill           = 192,
 
         Move                = 200,
         Turn                = 201,

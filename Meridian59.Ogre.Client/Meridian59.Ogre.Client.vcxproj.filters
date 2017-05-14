@@ -319,6 +319,12 @@
     <ClCompile Include="UIStatChangeWizard.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="UISpellDetails.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="UISkillDetails.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="app.ico">

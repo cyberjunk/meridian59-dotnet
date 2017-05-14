@@ -126,6 +126,8 @@ namespace Meridian59.Data
         protected readonly Effects effects;
         protected readonly PlayerInfo lookPlayer;
         protected readonly ObjectInfo lookObject;
+        protected readonly SpellInfo lookSpell;
+        protected readonly SkillInfo lookSkill;
         protected readonly PreferencesFlags clientPreferences;
         #endregion
 
@@ -352,6 +354,18 @@ namespace Meridian59.Data
         /// This instance stays the same. Its properties change!
         /// </summary>
         public ObjectInfo LookObject { get { return lookObject; } }
+
+        /// <summary>
+        /// The last inspected spell object.
+        /// This instance stays the same. Its properties change!
+        /// </summary>
+        public SpellInfo LookSpell { get { return lookSpell; } }
+
+        /// <summary>
+        /// The last inspected skill object.
+        /// This instance stays the same. Its properties change!
+        /// </summary>
+        public SkillInfo LookSkill { get { return lookSkill; } }
 
         /// <summary>
         /// Current client gameplay preferences (e.g. safety, tempsafe).
@@ -852,6 +866,8 @@ namespace Meridian59.Data
             effects = new Effects();
             lookPlayer = new PlayerInfo();
             lookObject = new ObjectInfo();
+            lookSpell = new SpellInfo();
+            lookSkill = new SkillInfo();
             clientPreferences = new PreferencesFlags();
 
             // some values
@@ -928,6 +944,8 @@ namespace Meridian59.Data
 
             LookObject.Clear(true);
             LookPlayer.Clear(true);
+            LookSpell.Clear(true);
+            LookSkill.Clear(true);
             RoomInformation.Clear(true);
             LightShading.Clear(true);
             BackgroundMusic.Clear(true);
@@ -1016,6 +1034,14 @@ namespace Meridian59.Data
             // update lookplayer
             if (LookPlayer != null && LookPlayer.ObjectBase != null)           
                 LookPlayer.ObjectBase.Tick(Tick, Span);
+
+            // update lookspell
+            if (LookSpell != null && LookSpell.ObjectBase != null)
+                LookSpell.ObjectBase.Tick(Tick, Span);
+
+            // update lookskill
+            if (LookSkill != null && LookSkill.ObjectBase != null)
+                LookSkill.ObjectBase.Tick(Tick, Span);
 
             // update charcreation model
             if (CharCreationInfo != null && CharCreationInfo.ExampleModel != null)
@@ -1637,6 +1663,14 @@ namespace Meridian59.Data
                     HandleArticle((ArticleMessage)Message);
                     break;
 
+                case MessageTypeGameMode.LookSpell:                 // 191
+                    HandleLookSpell((LookSpellMessage)Message);
+                    break;
+
+                case MessageTypeGameMode.LookSkill:                 // 192
+                    HandleLookSkill((LookSkillMessage)Message);
+                    break;
+
                 case MessageTypeGameMode.Move:                      // 200
                     HandleMove((MoveMessage)Message);
                     break;
@@ -1922,6 +1956,8 @@ namespace Meridian59.Data
             NewsGroup.Clear(true);
             LookObject.Clear(true);
             LookPlayer.Clear(true);
+            LookSpell.Clear(true);
+            LookSkill.Clear(true);
 
             // reset avatar object
             AvatarObject = null;
@@ -2397,6 +2433,28 @@ namespace Meridian59.Data
 
             // set visible if not
             lookObject.IsVisible = true;
+            lookSpell.IsVisible = false;
+            lookSkill.IsVisible = false;
+        }
+
+        protected virtual void HandleLookSpell(LookSpellMessage Message)
+        {
+            LookSpell.UpdateFromModel(Message.SpellInfo, true);
+
+            // set visible if not
+            lookSpell.IsVisible = true;
+            lookSkill.IsVisible = false;
+            lookObject.IsVisible = false;
+        }
+
+        protected virtual void HandleLookSkill(LookSkillMessage Message)
+        {
+            LookSkill.UpdateFromModel(Message.SkillInfo, true);
+
+            // set visible if not
+            lookSkill.IsVisible = true;
+            lookObject.IsVisible = false;
+            lookSpell.IsVisible = false;
         }
 
         protected virtual void HandleLookNewsGroup(LookNewsGroupMessage Message)

@@ -406,6 +406,54 @@ namespace Meridian59 { namespace Ogre
 		};
 
 		/// <summary>
+		/// SpellDetails window
+		/// </summary>
+		ref class SpellDetails abstract sealed
+		{
+		protected:
+			static ImageComposerCEGUI<ObjectBase^>^ imageComposer;
+
+		public:
+			static ::CEGUI::FrameWindow* Window = nullptr;
+			static ::CEGUI::Window* Image = nullptr;
+			static ::CEGUI::Window* Name = nullptr;
+			static ::CEGUI::Window* SchoolName = nullptr;
+			static ::CEGUI::Window* SpellLevel = nullptr;
+			static ::CEGUI::Window* ManaCost = nullptr;
+			static ::CEGUI::Window* VigorCost = nullptr;
+			static ::CEGUI::MultiLineEditbox* Description = nullptr;
+
+			static void Initialize();
+			static void Destroy();
+			static void ApplyLanguage();
+			static void OnNewImageAvailable(Object^ sender, ::System::EventArgs^ e);
+			static void OnLookSpellObjectPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
+		};
+
+		/// <summary>
+		/// SkillDetails window
+		/// </summary>
+		ref class SkillDetails abstract sealed
+		{
+		protected:
+			static ImageComposerCEGUI<ObjectBase^>^ imageComposer;
+
+		public:
+			static ::CEGUI::FrameWindow* Window = nullptr;
+			static ::CEGUI::Window* Image = nullptr;
+			static ::CEGUI::Window* Name = nullptr;
+			static ::CEGUI::Window* SchoolName = nullptr;
+			static ::CEGUI::Window* SkillLevel = nullptr;
+			static ::CEGUI::MultiLineEditbox* Description = nullptr;
+
+			static void Initialize();
+			static void Destroy();
+			static void ApplyLanguage();
+			static void OnNewImageAvailable(Object^ sender, ::System::EventArgs^ e);
+			static void OnLookSkillObjectPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
+		};
+
+		/// <summary>
 		/// PlayerDetails window
 		/// </summary>
 		ref class PlayerDetails abstract sealed
@@ -1538,6 +1586,30 @@ namespace Meridian59 { namespace Ogre
 			static bool OnImageMouseWheel(const CEGUI::EventArgs& e);
 			static bool OnImageMouseClick(const CEGUI::EventArgs& e);
 			static bool OnOKClicked(const CEGUI::EventArgs& e);
+			static bool OnWindowKeyUp(const CEGUI::EventArgs& e);
+			static bool OnWindowClosed(const CEGUI::EventArgs& e);
+		};
+
+		/// <summary>
+		/// SpellDetails event handlers
+		/// </summary>
+		class SpellDetails
+		{
+		public:
+			static bool OnImageMouseWheel(const CEGUI::EventArgs& e);
+			static bool OnImageMouseClick(const CEGUI::EventArgs& e);
+			static bool OnWindowKeyUp(const CEGUI::EventArgs& e);
+			static bool OnWindowClosed(const CEGUI::EventArgs& e);
+		};
+
+		/// <summary>
+		/// SkillDetails event handlers
+		/// </summary>
+		class SkillDetails
+		{
+		public:
+			static bool OnImageMouseWheel(const CEGUI::EventArgs& e);
+			static bool OnImageMouseClick(const CEGUI::EventArgs& e);
 			static bool OnWindowKeyUp(const CEGUI::EventArgs& e);
 			static bool OnWindowClosed(const CEGUI::EventArgs& e);
 		};
