@@ -63,6 +63,7 @@ namespace Meridian59 { namespace Ogre
 		static void Initialize(::Ogre::RenderTarget* Target);
 		static void Destroy();
 		static void ApplyLanguage();
+      static void ApplyLock();
 		static void Tick(double Tick, double Span);
 		static void ToggleVisibility(::CEGUI::Window* Window);
 		static bool IsRecursiveChildOf(::CEGUI::Window* Child, ::CEGUI::Window* Parent);
@@ -267,6 +268,7 @@ namespace Meridian59 { namespace Ogre
 			static ::CEGUI::Window* MTimeValue = nullptr;
 			static ::CEGUI::Window* RoomDescription = nullptr;
 			static ::CEGUI::Window* RoomValue = nullptr;
+         static ::CEGUI::PushButton* Lock = nullptr;
 
 			static void Initialize();
 			static void Destroy();
@@ -1533,6 +1535,7 @@ namespace Meridian59 { namespace Ogre
 			static bool OnMoodAngryClicked(const CEGUI::EventArgs& e);
 			static bool OnSafetyClicked(const CEGUI::EventArgs& e);
 			static bool OnPlayersClicked(const CEGUI::EventArgs& e);
+         static bool OnLockClicked(const CEGUI::EventArgs& e);
 		};
 
 		/// <summary>

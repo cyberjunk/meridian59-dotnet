@@ -79,6 +79,7 @@
 #define UI_DEFAULTARROW				"TaharezLook/MouseArrow"
 #define UI_MOUSECURSOR_TARGET		"TaharezLook/MouseTarget"
 #define UI_MOUSECURSOR_HAND			"TaharezLook/MouseHand"
+#define UI_MOUSECURSOR_DRAG			"TaharezLook/MouseDrag"
 #define UI_DEFAULTTOOLTIP			"TaharezLook/Tooltip"
 #define UI_DEFAULTFONT				UI_FONT_LIBERATIONSANS10
 #define UI_FILE_LAYOUT				"Meridian59.layout"
@@ -269,6 +270,7 @@
 #define UI_NAME_STATUSBAR_MTIMEVAL					"StatusBar.MTimeValue"
 #define UI_NAME_STATUSBAR_ROOMDESC					"StatusBar.RoomDescription"
 #define UI_NAME_STATUSBAR_ROOMVAL					"StatusBar.RoomValue"
+#define UI_NAME_STATUSBAR_LOCK					"StatusBar.Lock"
 #define UI_NAME_ONLINEPLAYERS_WINDOW				"OnlinePlayers"
 #define UI_NAME_ONLINEPLAYERS_LIST					"OnlinePlayers.List"
 #define UI_NAME_ROOMOBJECTS_WINDOW					"RoomObjects"

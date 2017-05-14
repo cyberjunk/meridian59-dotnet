@@ -164,6 +164,9 @@ namespace Meridian59 { namespace Ogre
 
 		// apply language
 		ApplyLanguage();
+
+      // apply lockstate
+      ApplyLock();
 	};
 
 	void ControllerUI::Destroy()
@@ -291,6 +294,84 @@ namespace Meridian59 { namespace Ogre
 		Login::ApplyLanguage();
 		Options::ApplyLanguage();
 	};
+
+   void ControllerUI::ApplyLock()
+   {
+      const bool LOCKED = OgreClient::Singleton->Config->UILocked;
+      const size_t ACTIONBUTTONS = ActionButtons::Grid->getChildCount();
+
+      // reset any moving window
+      movingWindow = nullptr;
+
+      if (LOCKED)
+      {
+         // non-framewindow elements
+         Avatar::Window->setMouseCursor(UI_DEFAULTARROW);
+         Target::Window->setMouseCursor(UI_DEFAULTARROW);
+         RoomEnchantments::Window->setMouseCursor(UI_DEFAULTARROW);
+
+         // switch lock image
+         StatusBar::Lock->setProperty(UI_PROPNAME_NORMALIMAGE, "TaharezLook/LockClosed");
+         StatusBar::Lock->setProperty(UI_PROPNAME_HOVERIMAGE, "TaharezLook/LockClosed");
+         StatusBar::Lock->setProperty(UI_PROPNAME_PUSHEDIMAGE, "TaharezLook/LockClosed");
+
+         // disable dragging of actionbuttons
+         for (size_t i = 0; i < ACTIONBUTTONS; i++)
+            ((CEGUI::DragContainer*)ActionButtons::Grid->getChildAtIdx(i))->setDraggingEnabled(false);
+
+         // framewindows
+
+         Inventory::Window->setDragMovingEnabled(false);
+         Inventory::Window->setSizingEnabled(false);
+         Inventory::Window->getTitlebar()->setMouseCursor(UI_DEFAULTARROW);
+
+         Chat::Window->setDragMovingEnabled(false);
+         Chat::Window->setSizingEnabled(false);
+         Chat::Window->getTitlebar()->setMouseCursor(UI_DEFAULTARROW);
+
+         OnlinePlayers::Window->setDragMovingEnabled(false);
+         OnlinePlayers::Window->setSizingEnabled(false);
+         OnlinePlayers::Window->getTitlebar()->setMouseCursor(UI_DEFAULTARROW);
+
+         RoomObjects::Window->setDragMovingEnabled(false);
+         RoomObjects::Window->setSizingEnabled(false);
+         RoomObjects::Window->getTitlebar()->setMouseCursor(UI_DEFAULTARROW);
+      }
+      else
+      {
+         // non-framewindow elements
+         Avatar::Window->setMouseCursor(UI_MOUSECURSOR_DRAG);
+         Target::Window->setMouseCursor(UI_MOUSECURSOR_DRAG);
+         RoomEnchantments::Window->setMouseCursor(UI_MOUSECURSOR_DRAG);
+
+         // switch lock image
+         StatusBar::Lock->setProperty(UI_PROPNAME_NORMALIMAGE, "TaharezLook/LockOpen");
+         StatusBar::Lock->setProperty(UI_PROPNAME_HOVERIMAGE, "TaharezLook/LockOpen");
+         StatusBar::Lock->setProperty(UI_PROPNAME_PUSHEDIMAGE, "TaharezLook/LockOpen");
+
+         // enable dragging of actionbuttons
+         for (size_t i = 0; i < ACTIONBUTTONS; i++)
+            ((CEGUI::DragContainer*)ActionButtons::Grid->getChildAtIdx(i))->setDraggingEnabled(true);
+
+         // framewindows
+
+         Inventory::Window->setDragMovingEnabled(true);
+         Inventory::Window->setSizingEnabled(true);
+         Inventory::Window->getTitlebar()->setMouseCursor(UI_MOUSECURSOR_DRAG);
+
+         Chat::Window->setDragMovingEnabled(true);
+         Chat::Window->setSizingEnabled(true);
+         Chat::Window->getTitlebar()->setMouseCursor(UI_MOUSECURSOR_DRAG);
+
+         OnlinePlayers::Window->setDragMovingEnabled(true);
+         OnlinePlayers::Window->setSizingEnabled(true);
+         OnlinePlayers::Window->getTitlebar()->setMouseCursor(UI_MOUSECURSOR_DRAG);
+
+         RoomObjects::Window->setDragMovingEnabled(true);
+         RoomObjects::Window->setSizingEnabled(true);
+         RoomObjects::Window->getTitlebar()->setMouseCursor(UI_MOUSECURSOR_DRAG);
+      }
+   };
 
 	void ControllerUI::Tick(double Tick, double Span)
 	{
@@ -774,6 +855,10 @@ namespace Meridian59 { namespace Ogre
 		// set current top level control
 		if (guiRoot != nullptr)		
 			topControl = guiRoot->getChildAtPosition(::CEGUI::Vector2f(x, y));
+
+      // unset moving window if ui is locked
+      if (OgreClient::Singleton->Config->UILocked)
+         movingWindow = nullptr;
 
 		// move grabbed window (hanldes moves on non FrameWindow widgets)
 		if (movingWindow != nullptr)

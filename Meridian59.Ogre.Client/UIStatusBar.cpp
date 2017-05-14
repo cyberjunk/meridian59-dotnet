@@ -23,6 +23,7 @@ namespace Meridian59 { namespace Ogre
 		MTimeValue			= static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_STATUSBAR_MTIMEVAL));
 		RoomDescription		= static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_STATUSBAR_ROOMDESC));
 		RoomValue			= static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_STATUSBAR_ROOMVAL));
+      Lock              = static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_STATUSBAR_LOCK));
 
 		// attach listener to Data
 		OgreClient::Singleton->Data->PropertyChanged += 
@@ -51,6 +52,9 @@ namespace Meridian59 { namespace Ogre
 
 		// subscribe players click
 		PlayersValue->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::StatusBar::OnPlayersClicked));
+
+      // subscribe ui lock click
+      Lock->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::StatusBar::OnLockClicked));
 	};
 
 	void ControllerUI::StatusBar::Destroy()
@@ -231,4 +235,16 @@ namespace Meridian59 { namespace Ogre
 
 		return true;
 	};
+
+   bool UICallbacks::StatusBar::OnLockClicked(const CEGUI::EventArgs& e)
+   {
+      // flip lock in config
+      OgreClient::Singleton->Config->UILocked = 
+         !OgreClient::Singleton->Config->UILocked;
+
+      // update ui locking
+      ControllerUI::ApplyLock();
+
+      return true;
+   };
 };};
