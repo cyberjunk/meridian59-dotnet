@@ -58,6 +58,7 @@ namespace Meridian59 { namespace Ogre
 		literal int					DEFAULTVAL_INPUT_MOUSEAIMSPEED		= 25;
 		literal int					DEFAULTVAL_INPUT_KEYROTATESPEED		= 25;
 		literal bool				DEFAULTVAL_INPUT_INVERTMOUSEY		= false;
+      literal bool				DEFAULTVAL_UI_LOCKED = false;
 		literal bool				DEFAULTVAL_UI_VISIBILITYAVATAR = true;
 		literal bool				DEFAULTVAL_UI_VISIBILITYTARGET = false;
 		literal bool				DEFAULTVAL_UI_VISIBILITYMINIMAP = true;
@@ -218,6 +219,7 @@ namespace Meridian59 { namespace Ogre
 		literal ::System::String^ XMLATTRIB_HREL = "hrel";
 		literal ::System::String^ XMLATTRIB_HABS = "habs";
 		literal ::System::String^ XMLATTRIB_VSBL = "vsbl";
+      literal ::System::String^ XMLATTRIB_LOCKED = "locked";
 
 	protected:
 		ActionButtonType GetButtonType(::System::String^ ButtonType);
@@ -249,6 +251,8 @@ namespace Meridian59 { namespace Ogre
 		int MouseAimSpeed;
 		int KeyRotateSpeed;
 		bool InvertMouseY;
+
+      bool UILocked;
 
 		bool UIVisibilityAvatar;
 		bool UIVisibilityTarget;

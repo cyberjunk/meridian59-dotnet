@@ -245,6 +245,10 @@ namespace Meridian59 { namespace Ogre
 		/******************************************************************************/
 		/*  2) UI
 		/******************************************************************************/
+      
+      // locked state
+      node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT);
+      UILocked = (PARSE_BOOL_ATTRIB(node, XMLATTRIB_LOCKED, val_bool)) ? val_bool : DEFAULTVAL_UI_LOCKED;
 
 		// avatar
 		node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_AVATAR);
@@ -740,6 +744,7 @@ namespace Meridian59 { namespace Ogre
 
 		Writer->WriteStartElement(TAG_UI);
 		Writer->WriteStartElement(TAG_LAYOUT);
+      Writer->WriteAttributeString(XMLATTRIB_LOCKED, UILocked.ToString()->ToLower());
 
 		// avatar
 		Writer->WriteStartElement(TAG_AVATAR);
