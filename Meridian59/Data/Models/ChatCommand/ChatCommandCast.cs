@@ -24,6 +24,8 @@ namespace Meridian59.Data.Models
     {
         public const string KEY1 = "cast";
         public const string KEY2 = "c";
+        public const string KEY3 = "zaubern";
+        public const string KEY4 = "z";
 
         public override ChatCommandType CommandType { get { return ChatCommandType.Cast; } }
         public SpellObject Spell { get; set; }

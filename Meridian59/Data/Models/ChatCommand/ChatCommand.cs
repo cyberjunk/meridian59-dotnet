@@ -102,6 +102,7 @@ namespace Meridian59.Data.Models
             {
                 case ChatCommandSay.KEY1:
                 case ChatCommandSay.KEY2:
+                case ChatCommandSay.KEY3:
                     if (splitted.Length > 1)
                     {
                         text = String.Join(DELIMITER.ToString(), splitted, 1, splitted.Length - 1);
@@ -111,6 +112,7 @@ namespace Meridian59.Data.Models
                 
                 case ChatCommandEmote.KEY1:
                 case ChatCommandEmote.KEY2:
+                case ChatCommandEmote.KEY3:
                     if (splitted.Length > 1)
                     {
                         text = String.Join(DELIMITER.ToString(), splitted, 1, splitted.Length - 1);
@@ -120,6 +122,7 @@ namespace Meridian59.Data.Models
                 
                 case ChatCommandYell.KEY1:
                 case ChatCommandYell.KEY2:
+                case ChatCommandYell.KEY3:
                     if (splitted.Length > 1)
                     {
                         text = String.Join(DELIMITER.ToString(), splitted, 1, splitted.Length - 1);
@@ -138,6 +141,7 @@ namespace Meridian59.Data.Models
 
                 case ChatCommandGuild.KEY1:
                 case ChatCommandGuild.KEY2:
+                case ChatCommandGuild.KEY3:
                     if (splitted.Length > 1)
                     {
                         text = String.Join(DELIMITER.ToString(), splitted, 1, splitted.Length - 1);
@@ -155,15 +159,19 @@ namespace Meridian59.Data.Models
 
                 case ChatCommandTell.KEY1:
                 case ChatCommandTell.KEY2:
+                case ChatCommandTell.KEY3:
                     returnValue = ParseTell(splitted, lower, DataController);                                           
                     break;
                 
                 case ChatCommandCast.KEY1:
                 case ChatCommandCast.KEY2:
+                case ChatCommandCast.KEY3:
+                case ChatCommandCast.KEY4:
                     returnValue = ParseCast(splitted, lower, DataController);
                     break;
 
                 case ChatCommandDeposit.KEY1:
+                case ChatCommandDeposit.KEY2:
                     if (splitted.Length == 2)
                     {
                         uint amount = 0;
@@ -175,6 +183,7 @@ namespace Meridian59.Data.Models
 
                 case ChatCommandWithDraw.KEY1:
                 case ChatCommandWithDraw.KEY2:
+                case ChatCommandWithDraw.KEY3:
                     if (splitted.Length == 2)
                     {
                         uint amount = 0;
@@ -185,6 +194,7 @@ namespace Meridian59.Data.Models
                     break;
 
                 case ChatCommandBalance.KEY1:
+                case ChatCommandBalance.KEY2:
                     if (splitted.Length == 1)
                     {
                         returnValue = new ChatCommandBalance();
@@ -192,6 +202,7 @@ namespace Meridian59.Data.Models
                     break;
 
                 case ChatCommandSuicide.KEY1:
+                case ChatCommandSuicide.KEY2:
                     if (splitted.Length == 1)
                     {
                         returnValue = new ChatCommandSuicide();
@@ -224,10 +235,12 @@ namespace Meridian59.Data.Models
                     break;
 
                 case ChatCommandRest.KEY1:
+                case ChatCommandRest.KEY2:
                     returnValue = new ChatCommandRest();
                     break;
 
                 case ChatCommandStand.KEY1:
+                case ChatCommandStand.KEY2:
                     returnValue = new ChatCommandStand();
                     break;
 
@@ -236,14 +249,17 @@ namespace Meridian59.Data.Models
                     break;
 
                 case ChatCommandDance.KEY1:
+                case ChatCommandDance.KEY2:
                     returnValue = new ChatCommandDance();
                     break;
 
                 case ChatCommandPoint.KEY1:
+                case ChatCommandPoint.KEY2:
                     returnValue = new ChatCommandPoint();
                     break;
 
                 case ChatCommandWave.KEY1:
+                case ChatCommandWave.KEY2:
                     returnValue = new ChatCommandWave();
                     break;
 #if !VANILLA
@@ -272,6 +288,7 @@ namespace Meridian59.Data.Models
                     break;
 
                 case ChatCommandTime.KEY1:
+                case ChatCommandTime.KEY2:
                     if (splitted.Length == 1)
                     {
                         returnValue = new ChatCommandTime();

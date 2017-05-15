@@ -24,6 +24,7 @@ namespace Meridian59.Data.Models
     {
         public const string KEY1 = "withdraw";
         public const string KEY2 = "with";
+        public const string KEY3 = "abheben";
 
         public override ChatCommandType CommandType { get { return ChatCommandType.WithDraw; } }
         public uint Amount { get; set; }

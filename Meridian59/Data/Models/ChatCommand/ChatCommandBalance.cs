@@ -23,6 +23,7 @@ namespace Meridian59.Data.Models
     public class ChatCommandBalance : ChatCommand
     {
         public const string KEY1 = "balance";
+        public const string KEY2 = "kontostand";
 
         public override ChatCommandType CommandType { get { return ChatCommandType.Balance; } }
 

@@ -23,6 +23,7 @@ namespace Meridian59.Data.Models
     public class ChatCommandSuicide : ChatCommand
     {
         public const string KEY1 = "suicide";
+        public const string KEY2 = "harakiri";
 
         public override ChatCommandType CommandType { get { return ChatCommandType.Suicide; } }
 

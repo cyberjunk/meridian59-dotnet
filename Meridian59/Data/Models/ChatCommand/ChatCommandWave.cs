@@ -23,6 +23,7 @@ namespace Meridian59.Data.Models
     public class ChatCommandWave: ChatCommand
     {
         public const string KEY1 = "wave";
+        public const string KEY2 = "winken";
 
         public override ChatCommandType CommandType { get { return ChatCommandType.Wave; } }
 

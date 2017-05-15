@@ -24,6 +24,7 @@ namespace Meridian59.Data.Models
     {
         public const string KEY1 = "guild";
         public const string KEY2 = "g";
+        public const string KEY3 = "gilde";
 
         public override ChatCommandType CommandType { get { return ChatCommandType.Guild; } }
         public string Text { get; set; }

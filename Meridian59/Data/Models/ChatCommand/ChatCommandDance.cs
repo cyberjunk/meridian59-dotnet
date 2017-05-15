@@ -23,6 +23,7 @@ namespace Meridian59.Data.Models
     public class ChatCommandDance: ChatCommand
     {
         public const string KEY1 = "dance";
+        public const string KEY2 = "tanzen";
 
         public override ChatCommandType CommandType { get { return ChatCommandType.Dance; } }
 

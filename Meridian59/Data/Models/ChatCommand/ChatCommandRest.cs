@@ -23,6 +23,7 @@ namespace Meridian59.Data.Models
     public class ChatCommandRest: ChatCommand
     {
         public const string KEY1 = "rest";
+        public const string KEY2 = "rasten";
 
         public override ChatCommandType CommandType { get { return ChatCommandType.Rest; } }
 

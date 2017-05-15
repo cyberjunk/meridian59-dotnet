@@ -25,6 +25,7 @@ namespace Meridian59.Data.Models
     public class ChatCommandTime : ChatCommand
     {
         public const string KEY1 = "time";
+        public const string KEY2 = "zeit";
 
         public override ChatCommandType CommandType { get { return ChatCommandType.Time; } }
 

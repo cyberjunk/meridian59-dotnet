@@ -23,6 +23,7 @@ namespace Meridian59.Data.Models
     public class ChatCommandDeposit : ChatCommand
     {
         public const string KEY1 = "deposit";
+        public const string KEY2 = "einzahlen";
 
         public override ChatCommandType CommandType { get { return ChatCommandType.Deposit; } }
         
