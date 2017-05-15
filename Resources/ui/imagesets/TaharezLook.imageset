@@ -185,6 +185,9 @@
     <Image height="14" name="NewCloseButtonNormal" width="14" xPos="91" yPos="145" />
     <Image height="14" name="NewCloseButtonHover" width="14" xPos="91" yPos="160" />
     <Image height="14" name="NewCloseButtonPressed" width="14" xPos="91" yPos="160" />
+    <Image height="14" name="WindowLockButtonNormal" width="14" xPos="59" yPos="145" />
+    <Image height="14" name="WindowLockButtonHover" width="14" xPos="59" yPos="160" />
+    <Image height="14" name="WindowLockButtonPressed" width="14" xPos="75" yPos="160" />
     <Image height="6" name="MultiLineEditboxTopLeft" width="6" xPos="41" yPos="78" />
     <Image height="6" name="MultiLineEditboxTop" width="6" xPos="50" yPos="78" />
     <Image height="6" name="MultiLineEditboxTopRight" width="6" xPos="59" yPos="78" />
