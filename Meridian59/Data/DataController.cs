@@ -41,7 +41,7 @@ namespace Meridian59.Data
     /// This contains basically any information you need at runtime.
     /// Make sure to call the Message handlers.
     /// </summary>
-    public class DataController : INotifyPropertyChanged, ITickable
+    public class DataController : INotifyPropertyChanged, ITickable, IStringResolvable
     {
         #region Constants
         public const string PROPNAME_AVATAROBJECT = "AvatarObject";
@@ -1056,6 +1056,97 @@ namespace Meridian59.Data
 
             // update current m59 time
             MeridianTime = MeridianDate.GetMeridianTime();
+        }
+
+        /// <summary>
+        /// Executes ResolveStrings() on all stored datamodels.
+        /// </summary>
+        /// <param name="Strings">Strings to use for re-resolve</param>
+        /// <param name="RaiseChangedEvent">Raise changed event or not</param>
+        public void ResolveStrings(StringDictionary Strings, bool RaiseChangedEvent)
+        {
+            // resolve all dictionary strings for list entries again
+
+            foreach (RoomObject o in roomObjects)
+                o.ResolveStrings(Strings, RaiseChangedEvent);
+
+            foreach (Projectile o in projectiles)
+                o.ResolveStrings(Strings, RaiseChangedEvent);
+
+            foreach (InventoryObject o in inventoryObjects)
+                o.ResolveStrings(Strings, RaiseChangedEvent);
+
+            foreach (StatNumeric o in avatarCondition)
+                o.ResolveStrings(Strings, RaiseChangedEvent);
+
+            foreach (StatNumeric o in avatarAttributes)
+                o.ResolveStrings(Strings, RaiseChangedEvent);
+
+            foreach (StatList o in avatarSkills)
+                o.ResolveStrings(Strings, RaiseChangedEvent);
+
+            foreach (StatList o in avatarSpells)
+                o.ResolveStrings(Strings, RaiseChangedEvent);
+
+            foreach (ObjectBase o in avatarBuffs)
+                o.ResolveStrings(Strings, RaiseChangedEvent);
+
+            foreach (StatList o in avatarQuests)
+                o.ResolveStrings(Strings, RaiseChangedEvent);
+
+            foreach (ObjectBase o in roomBuffs)
+                o.ResolveStrings(Strings, RaiseChangedEvent);
+
+            foreach (SpellObject o in spellObjects)
+                o.ResolveStrings(Strings, RaiseChangedEvent);
+
+            foreach (BackgroundOverlay o in backgroundOverlays)
+                o.ResolveStrings(Strings, RaiseChangedEvent);
+
+            foreach (PlayerOverlay o in playerOverlays)
+                o.ResolveStrings(Strings, RaiseChangedEvent);
+
+            // re-sort the sorted ones
+            //OnlinePlayers.SortByName();
+            AvatarSkills.SortByResourceName();
+            AvatarSpells.SortByResourceName();
+            SpellObjects.SortByName();
+
+            // single data models
+
+            LookObject.ObjectBase.ResolveStrings(Strings, RaiseChangedEvent);
+            LookPlayer.ObjectBase.ResolveStrings(Strings, RaiseChangedEvent);
+            LookSpell.ObjectBase.ResolveStrings(Strings, RaiseChangedEvent);
+            LookSkill.ObjectBase.ResolveStrings(Strings, RaiseChangedEvent);
+            RoomInformation.ResolveStrings(Strings, RaiseChangedEvent);
+            BackgroundMusic.ResolveStrings(Strings, RaiseChangedEvent);
+            NewsGroup.ResolveStrings(Strings, RaiseChangedEvent);
+
+            foreach (ObjectBase o in Trade.ItemsPartner)
+                o.ResolveStrings(Strings, RaiseChangedEvent);
+
+            foreach (ObjectBase o in Trade.ItemsYou)
+                o.ResolveStrings(Strings, RaiseChangedEvent);
+
+            if (Trade.TradePartner != null)
+                Trade.TradePartner.ResolveStrings(Strings, RaiseChangedEvent);
+
+            foreach (TradeOfferObject o in Buy.Items)
+                o.ResolveStrings(Strings, RaiseChangedEvent);
+
+            charCreationInfo.ResolveStrings(Strings, RaiseChangedEvent);
+
+            foreach (AvatarCreatorSpellObject o in charCreationInfo.Spells)
+                o.ResolveStrings(Strings, RaiseChangedEvent);
+
+            foreach (AvatarCreatorSkillObject o in charCreationInfo.Skills)
+                o.ResolveStrings(Strings, RaiseChangedEvent);
+
+            foreach (ObjectBase o in objectContents.Items)
+                o.ResolveStrings(Strings, RaiseChangedEvent);
+
+            foreach (GuildHall o in guildHallsInfo.GuildHalls)
+                o.ResolveStrings(Strings, RaiseChangedEvent);
         }
 
         /// <summary>

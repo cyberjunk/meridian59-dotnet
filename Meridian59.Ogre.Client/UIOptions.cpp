@@ -2543,6 +2543,9 @@ namespace Meridian59 { namespace Ogre
 		// apply language
 		ControllerUI::ApplyLanguage();
 
+      // resolve again all rsb strings on existing datamodels
+      OgreClient::Singleton->Data->ResolveStrings(OgreClient::Singleton->ResourceManager->StringResources, true);
+
 		return true;
 	};
 

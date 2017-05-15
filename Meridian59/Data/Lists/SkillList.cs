@@ -188,7 +188,10 @@ namespace Meridian59.Data.Lists
                 case StatList.PROPNAME_RESOURCENAME:
                     this.Sort(CompareByResourceName);
                     break;
-            }        
+            }
+
+            for (int i = 0; i < Count; i++)
+                OnListChanged(this, new ListChangedEventArgs(ListChangedType.ItemChanged, i));
         }
 
         public override void Insert(int Index, StatList Item)

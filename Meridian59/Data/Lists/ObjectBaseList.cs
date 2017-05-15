@@ -92,7 +92,10 @@ namespace Meridian59.Data.Lists
                 case ObjectBase.PROPNAME_OVERLAYFILE:
                     this.Sort(CompareByOverlayFile);
                     break;
-            }       
+            }
+
+            for (int i = 0; i < Count; i++)
+                OnListChanged(this, new ListChangedEventArgs(ListChangedType.ItemChanged, i));
         }
 
         public override void Insert(int Index, T Item)
