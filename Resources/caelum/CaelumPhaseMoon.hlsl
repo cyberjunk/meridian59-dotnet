@@ -18,6 +18,26 @@ You should have received a copy of the GNU Lesser General Public License
 along with Caelum. If not, see <http://www.gnu.org/licenses/>.
 */
 
+struct VOut
+{
+	float4 p	: POSITION;
+	float2 uv	: TEXCOORD0;
+};
+
+VOut PhaseMoonVP(
+	float4 p : POSITION,
+	float2 uv : TEXCOORD0,
+	uniform float4x4 wvpMat,
+	uniform float4x4 texMat)
+{
+	VOut OUT;
+
+	OUT.p  = mul(wvpMat, p);
+	OUT.uv = mul(texMat, float4(uv, 0, 1)).xy;
+
+	return OUT;
+}
+
 // Get how much of a certain point on the moon is seen (or not) because of the phase.
 // uv is the rect position on moon; as seen from the earth.
 // phase ranges from 0 (full moon) to 1 (again fool moon)

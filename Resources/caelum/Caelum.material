@@ -26,7 +26,7 @@ vertex_program CaelumLayeredCloudsVP hlsl
 {
 	source CaelumLayeredClouds.hlsl
 	entry_point LayeredClouds_vp
-	target vs_2_0
+	target vs_3_0
 	optimisation_level 3
 	
 	default_params
@@ -145,7 +145,7 @@ vertex_program Caelum/StarPointVP hlsl
 {
 	source CaelumPointStarfield.hlsl
 	entry_point StarPointVP
-	target vs_2_0
+	target vs_3_0
 	optimisation_level 3
 	
 	default_params
@@ -166,7 +166,7 @@ fragment_program Caelum/StarPointFP hlsl
 {
 	source CaelumPointStarfield.hlsl
 	entry_point StarPointFP
-	target ps_2_0
+	target ps_3_0
 	optimisation_level 3
 	
 	default_params
@@ -251,11 +251,25 @@ material CaelumSpriteSun
 //                          MOON                               //
 /////////////////////////////////////////////////////////////////
 
+vertex_program Caelum/PhaseMoonVP hlsl
+{
+	source CaelumPhaseMoon.hlsl
+	entry_point PhaseMoonVP
+	target vs_3_0
+	optimisation_level 3
+	
+	default_params
+	{
+        param_named_auto wvpMat worldviewproj_matrix
+		param_named_auto texMat texture_matrix 0
+	}
+}
+
 fragment_program Caelum/PhaseMoonFP hlsl
 {
 	source CaelumPhaseMoon.hlsl
 	entry_point PhaseMoonFP
-	target ps_2_0
+	target ps_3_0
 	optimisation_level 3
 	
 	default_params
@@ -308,6 +322,10 @@ material Caelum/PhaseMoon
                 texture moon_disc.dds
             }
             
+			vertex_program_ref Caelum/PhaseMoonVP
+            {
+            }
+			
             fragment_program_ref Caelum/PhaseMoonFP
             {
             }
@@ -348,7 +366,7 @@ fragment_program CaelumSkyDomeFP hlsl
 	source CaelumSkyDome.hlsl
 	entry_point SkyDomeFP
 	compile_arguments -DHAZE
-	target ps_2_0
+	target ps_3_0
 	optimisation_level 3
 	
 	default_params
@@ -362,7 +380,7 @@ fragment_program CaelumSkyDomeFP_NoHaze hlsl
 {
 	source CaelumSkyDome.hlsl
 	entry_point SkyDomeFP
-	target ps_2_0
+	target ps_3_0
 	optimisation_level 3
 	
 	default_params
@@ -376,7 +394,7 @@ vertex_program CaelumSkyDomeVP hlsl
 {
 	source CaelumSkyDome.hlsl
 	entry_point SkyDomeVP
-	target vs_2_0
+	target vs_3_0
 	optimisation_level 3
 	
 	default_params
