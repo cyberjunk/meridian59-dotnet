@@ -442,7 +442,7 @@ namespace Meridian59 { namespace Ogre
 			}
 
 			// left mousebutton pressed and delay for mouseaim exceeded
-			else if (IsLeftMouseDown && dtLeftButton > MOUSELOOKMINDELAY)
+			else if (IsLeftMouseDown && dtLeftButton > MOUSELOOKMINDELAY && !isCameraFirstPerson)
 			{                    
 				if (dx != 0)
 				{
@@ -850,6 +850,9 @@ namespace Meridian59 { namespace Ogre
 					camera->_notifyMoved();
  
 					cameraZDelta = 0.0f;
+
+               // rotate the avatar to match camera
+               SetAvatarOrientationFromCamera();
 				}
 			}
 		}
