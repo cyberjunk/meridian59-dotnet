@@ -185,6 +185,9 @@
     <Image height="14" name="NewCloseButtonNormal" width="14" xPos="91" yPos="145" />
     <Image height="14" name="NewCloseButtonHover" width="14" xPos="91" yPos="160" />
     <Image height="14" name="NewCloseButtonPressed" width="14" xPos="91" yPos="160" />
+    <Image height="16" name="WindowLockButtonNormal" width="16" xPos="58" yPos="144" />
+    <Image height="16" name="WindowLockButtonHover" width="16" xPos="58" yPos="159" />
+    <Image height="16" name="WindowLockButtonPushed" width="16" xPos="74" yPos="159" />
     <Image height="6" name="MultiLineEditboxTopLeft" width="6" xPos="41" yPos="78" />
     <Image height="6" name="MultiLineEditboxTop" width="6" xPos="50" yPos="78" />
     <Image height="6" name="MultiLineEditboxTopRight" width="6" xPos="59" yPos="78" />
@@ -358,7 +361,5 @@
    <Image height="10" name="OrnamentalWindowBottomEdge" width="10" xPos="705" yPos="500" />
    <Image height="45" name="OrnamentalWindowBottomRight" width="45" xPos="715" yPos="465" />
    <Image height="30" name="OrnamentalWindowOrnament" width="60" xPos="680" yPos="455" />
-   <Image height="26" name="LockOpen"          width="26" xPos="59" yPos="330" />
-   <Image height="26" name="LockClosed"        width="26" xPos="86" yPos="330" />
-   
+
 </Imageset>
