@@ -221,7 +221,7 @@ namespace Meridian59 { namespace Ogre
 			CEGUI::DragContainer* dragger = (CEGUI::DragContainer*)List->getChildAtIdx(Index);
 			CEGUI::Window* imgButton = dragger->getChildAtIdx(0);
 
-			imgButton->setTooltipText(StringConvert::CLRToCEGUI(obj->Name));
+			dragger->setTooltipText(StringConvert::CLRToCEGUI(obj->Name));
 			dragger->setDraggingEnabled(true);
 
 			if (obj->Count > 0)
