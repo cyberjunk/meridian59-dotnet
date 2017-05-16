@@ -23,6 +23,9 @@ namespace Meridian59 { namespace Ogre
 		brushBoss		= gcnew SolidBrush(::System::Drawing::Color::FromArgb(MiniMap::COLOR_MAP_BOSS));
 		brushItem		= gcnew SolidBrush(::System::Drawing::Color::FromArgb(MiniMap::COLOR_MAP_RARE_ITEM));
 		brushNonPvP		= gcnew SolidBrush(::System::Drawing::Color::FromArgb(MiniMap::COLOR_MAP_NO_PVP));
+		brushAggroSelf = gcnew SolidBrush(::System::Drawing::Color::FromArgb(MiniMap::COLOR_MAP_AGGRO_SELF));
+		brushAggroOther = gcnew SolidBrush(::System::Drawing::Color::FromArgb(MiniMap::COLOR_MAP_AGGRO_OTHER));
+		brushMercenary = gcnew SolidBrush(::System::Drawing::Color::FromArgb(MiniMap::COLOR_MAP_MERCENARY));
 #endif
 		
 		playerArrowPts = gcnew array<::System::Drawing::PointF>(3);
@@ -155,7 +158,7 @@ namespace Meridian59 { namespace Ogre
 
 #ifndef VANILLA
 		/**********************************************************************************/
-		// OPEN-MERIDIAN
+		// MERIDIANNEXT
 
 		// draw outter circle
 		if (RoomObject->Flags->IsPlayer)
@@ -172,6 +175,14 @@ namespace Meridian59 { namespace Ogre
 			else if (RoomObject->Flags->IsMinimapGuildMate)
 				g->FillEllipse(brushGuildMate, (float)x, (float)y, (float)width, (float)width);
 		}
+		else
+		{
+			if (RoomObject->Flags->IsMinimapAggroSelf)
+				g->FillEllipse(brushAggroSelf, (float)x, (float)y, (float)width, (float)width);
+
+			else if (RoomObject->Flags->IsMinimapAggroOther)
+				g->FillEllipse(brushAggroOther, (float)x, (float)y, (float)width, (float)width);
+		}
 #endif
 	};
 
@@ -183,7 +194,7 @@ namespace Meridian59 { namespace Ogre
 		
 #ifndef VANILLA
 		/**********************************************************************************/
-		// OPEN-MERIDIAN
+		// MERIDIANNEXT
 
 		// draw inner
 		if (RoomObject->Flags->IsMinimapPlayer)
@@ -197,6 +208,9 @@ namespace Meridian59 { namespace Ogre
 
 		else if (RoomObject->Flags->IsMinimapMinionOther)
 			g->FillEllipse(brushMinionOther, (float)x, (float)y, (float)width, (float)width);
+
+		else if (RoomObject->Flags->IsMinimapMercenary)
+			g->FillEllipse(brushMercenary, (float)x, (float)y, (float)width, (float)width);
 
 		else if (RoomObject->Flags->IsMinimapMonster)
 			g->FillEllipse(brushObject, (float)x, (float)y, (float)width, (float)width);

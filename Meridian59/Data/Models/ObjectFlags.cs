@@ -106,6 +106,9 @@ namespace Meridian59.Data.Models
         private const uint MM_BOSS          = 0x00000800; // Set if mob is a boss (survival arena).
         private const uint MM_RARE_ITEM     = 0x00001000; // Set if item is rare.
         private const uint MM_NO_PVP        = 0x00002000; // Set if player has no PVP flag.
+        private const uint MM_AGGRO_SELF    = 0x00004000; // Set if monster has aggro on the player.
+        private const uint MM_AGGRO_OTHER   = 0x00008000; // Set if monster has aggro on another player.
+        private const uint MM_MERCENARY     = 0x00010000; // Set if monster is our mercenary.
         #endregion
 
         #region Enums
@@ -913,6 +916,51 @@ namespace Meridian59.Data.Models
             {
                 if (value) minimap |= MM_NO_PVP;
                 else minimap &= ~MM_NO_PVP;
+
+                RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
+            }
+        }
+
+        /// <summary>
+        /// Set if mob is aggroed on us.
+        /// </summary>
+        public bool IsMinimapAggroSelf
+        {
+            get { return (minimap & MM_AGGRO_SELF) == MM_AGGRO_SELF; }
+            set
+            {
+                if (value) minimap |= MM_AGGRO_SELF;
+                else minimap &= ~MM_AGGRO_SELF;
+
+                RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
+            }
+        }
+
+        /// <summary>
+        /// Set if mob is aggroed on someone else.
+        /// </summary>
+        public bool IsMinimapAggroOther
+        {
+            get { return (minimap & MM_AGGRO_OTHER) == MM_AGGRO_OTHER; }
+            set
+            {
+                if (value) minimap |= MM_AGGRO_OTHER;
+                else minimap &= ~MM_AGGRO_OTHER;
+
+                RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
+            }
+        }
+
+        /// <summary>
+        /// Set if mob is our mercenary/follower.
+        /// </summary>
+        public bool IsMinimapMercenary
+        {
+            get { return (minimap & MM_MERCENARY) == MM_MERCENARY; }
+            set
+            {
+                if (value) minimap |= MM_MERCENARY;
+                else minimap &= ~MM_MERCENARY;
 
                 RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
             }
