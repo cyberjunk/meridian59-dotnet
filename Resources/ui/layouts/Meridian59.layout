@@ -3736,7 +3736,7 @@
                      <!-- Disclaimer1Description -->
                      <Window type="TaharezLook/LabelWhite" name="Options.TabAbout.TabGeneral.Disclaimer1Desc" >
                         <Property name="Area" value="{{0,10},{0,10},{0,150},{0,30}}" />         
-                        <Property name="Text" value="OgreClient 1.0.4.7" />
+                        <Property name="Text" value="OgreClient 0.0.0.0" />
                         <Property name="Font" value="Berenika-8-Bold" />
                         <Property name="HorzFormatting" value="WordWrapLeftAligned" />                     
                      </Window>                     

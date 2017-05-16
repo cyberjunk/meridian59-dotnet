@@ -1452,6 +1452,8 @@ namespace Meridian59 { namespace Ogre
 			//
 			static ::CEGUI::TabControl* TabAboutTabControl = nullptr;
 			static ::CEGUI::Window* TabAboutTabGeneral = nullptr;
+         static ::CEGUI::Window* TabAboutTabGeneralVersion = nullptr;
+
 			static ::CEGUI::Window* TabAboutTabHistory = nullptr;
 			
 			static ::CEGUI::TabControl* TabAboutTabHistoryTabControl = nullptr;

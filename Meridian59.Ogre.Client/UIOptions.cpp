@@ -178,6 +178,9 @@ namespace Meridian59 { namespace Ogre
 		TabAboutTabGeneral = static_cast<CEGUI::Window*>(TabAboutTabControl->getChild(UI_NAME_OPTIONS_TABABOUT_TABGENERAL));
 		TabAboutTabHistory = static_cast<CEGUI::Window*>(TabAboutTabControl->getChild(UI_NAME_OPTIONS_TABABOUT_TABHISTORY));
 
+      // tababout - tabgeneral
+      TabAboutTabGeneralVersion = static_cast<CEGUI::Window*>(TabAboutTabGeneral->getChild(UI_NAME_OPTIONS_TABABOUT_TABGENERAL_VERSION));
+
 		// tababout - tabhistory
 		TabAboutTabHistoryTabControl = static_cast<CEGUI::TabControl*>(TabAboutTabHistory->getChild(UI_NAME_OPTIONS_TABABOUT_TABHISTORY_TABCONTROL));
 		TabAboutTabHistoryTabEvolution = static_cast<CEGUI::Window*>(TabAboutTabHistoryTabControl->getChild(UI_NAME_OPTIONS_TABABOUT_TABHISTORY_TABEVOLUTION));
@@ -556,6 +559,13 @@ namespace Meridian59 { namespace Ogre
 
 		// set selected text
 		RightClickAction->setText(itm->getText());
+
+      /******************************************************************************************************/
+      /*                                  PREPARE / SET: ABOUT                                              */
+      /******************************************************************************************************/
+
+      TabAboutTabGeneralVersion->setText("OgreClient " + StringConvert::CLRToCEGUI(
+         ::System::Reflection::Assembly::GetExecutingAssembly()->GetName()->Version->ToString()));
 
 		/******************************************************************************************************/
 		/*                                       SET CEGUI EVENTS                                             */
