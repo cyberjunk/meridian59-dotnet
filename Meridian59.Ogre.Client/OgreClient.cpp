@@ -711,8 +711,7 @@ namespace Meridian59 { namespace Ogre
 			System::Runtime::GCLargeObjectHeapCompactionMode::CompactOnce;
 		
 		// make maximum gc run
-		::System::GC::Collect(2, ::System::GCCollectionMode::Forced, true);
-		//::System::GC::Collect(2, ::System::GCCollectionMode::Forced);
+		::System::GC::Collect(::System::GC::MaxGeneration, ::System::GCCollectionMode::Forced, true);
 
         // 10. initialize general group
         resMan->initialiseResourceGroup(RESOURCEGROUPGENERAL);
