@@ -16,6 +16,9 @@ namespace Meridian59 { namespace Ogre
 		OgreClient::Singleton->Data->AvatarSkills->ListChanged += 
 			gcnew ListChangedEventHandler(OnSkillsListChanged);
 		
+      // subscribe end of sizing to force update
+      Window->subscribeEvent(CEGUI::FrameWindow::EventDragSizingEnded, CEGUI::Event::Subscriber(UICallbacks::Skills::OnDragSizingEnded));
+
 		// subscribe close button
 		Window->subscribeEvent(CEGUI::FrameWindow::EventCloseClicked, CEGUI::Event::Subscriber(UICallbacks::OnWindowClosed));
 
@@ -161,4 +164,12 @@ namespace Meridian59 { namespace Ogre
 		
 		return true;
 	};
+
+   bool UICallbacks::Skills::OnDragSizingEnded(const CEGUI::EventArgs& e)
+   {
+      ControllerUI::Skills::List->notifyScreenAreaChanged(true);
+      ControllerUI::Skills::List->invalidate(false);
+
+      return true;
+   };
 };};

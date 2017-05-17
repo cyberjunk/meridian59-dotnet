@@ -16,6 +16,9 @@ namespace Meridian59 { namespace Ogre
 		OgreClient::Singleton->Data->OnlinePlayers->ListChanged += 
 			gcnew ListChangedEventHandler(&ControllerUI::OnlinePlayers::OnOnlinePlayersListChanged);
 		
+      // subscribe end of sizing to force update
+      Window->subscribeEvent(CEGUI::FrameWindow::EventDragSizingEnded, CEGUI::Event::Subscriber(UICallbacks::OnlinePlayers::OnDragSizingEnded));
+
 		// subscribe close button
 		Window->subscribeEvent(CEGUI::FrameWindow::EventCloseClicked, CEGUI::Event::Subscriber(UICallbacks::OnWindowClosed));
 
@@ -196,4 +199,12 @@ namespace Meridian59 { namespace Ogre
 
 		return true;
 	};
+
+   bool UICallbacks::OnlinePlayers::OnDragSizingEnded(const CEGUI::EventArgs& e)
+   {
+      ControllerUI::OnlinePlayers::List->notifyScreenAreaChanged(true);
+      ControllerUI::OnlinePlayers::List->invalidate(false);
+
+      return true;
+   };
 };};
