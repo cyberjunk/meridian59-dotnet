@@ -55,6 +55,9 @@ namespace Meridian59.BgfEditor.Controls
             // required for proper drawing
             DoubleBuffered = true;
 
+            // use yoffset
+            imageComposer.ApplyYOffset = true;
+
             // hookup event when new image is available
             imageComposer.NewImageAvailable += OnImageComposerNewImageAvailable;
         }
