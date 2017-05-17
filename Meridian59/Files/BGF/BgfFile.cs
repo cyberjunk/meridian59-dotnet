@@ -19,6 +19,7 @@ using System.IO;
 using System.Text;
 using System.ComponentModel;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Meridian59.Common.Interfaces;
 using Meridian59.Common.Constants;
 using Meridian59.Data.Lists;
@@ -535,6 +536,15 @@ namespace Meridian59.Files.BGF
         {
             foreach (BgfBitmap f in frames)
                 f.Cut();
+        }
+
+        /// <summary>
+        /// Calls Cut() on all existing BgfBitmap instances
+        /// using Parallel looping.
+        /// </summary>
+        public void CutParallel()
+        {
+            Parallel.ForEach<BgfBitmap>(frames, frame => { frame.Cut(); });
         }
         #region BUILDDEPENDENT
 
