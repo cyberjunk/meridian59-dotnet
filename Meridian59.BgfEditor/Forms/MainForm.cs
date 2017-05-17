@@ -461,7 +461,7 @@ namespace Meridian59.BgfEditor
 
         protected void OnMenuCutTransparency(object sender, EventArgs e)
         {
-            Program.CurrentFile.Cut();
+            Program.CurrentFile.CutParallel();
         }
 
         protected void OnMenuAboutClick(object sender, EventArgs e)
