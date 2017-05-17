@@ -1287,6 +1287,8 @@ namespace Meridian59.Files.BGF
             uint strideRight  = width  - lastcol - 1;
 
             // use smaller one of left/right side and adjust other side
+            // we can cut only same num of cols from both sides, since x-offset is not supported on mainoverlays
+            // uncomment this to cut away left/right transparent cols independently
             if (strideLeft > strideRight)
             {
                 // use right on left
@@ -1332,6 +1334,9 @@ namespace Meridian59.Files.BGF
             // adjust the y offset
             // only for the pixels removed from the bottom, top does not matter
             YOffset -= (int)strideBottom;
+            
+            // stays the same, enable if sides are cut independently
+            //XOffset += ((int)strideLeft - (int)strideRight);
 
             // update pixels
             PixelData = pixels;
