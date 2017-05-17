@@ -38,8 +38,7 @@ namespace Meridian59.BgfEditor
         public static SettingsForm SettingsForm { get; private set; }
         public static AddFrameSetIndexForm AddFrameSetIndexForm { get; private set; }
         public static RoomObject RoomObject { get; private set; }
-        public static ImageComposerGDI<RoomObject> ImageComposer { get; private set; }
-        
+
         private static Stopwatch stopWatch;
         private static long MSTICKDIVISOR = Stopwatch.Frequency / 1000;
 
@@ -60,11 +59,6 @@ namespace Meridian59.BgfEditor
             // init roomobject model for viewer
             RoomObject = new RoomObject();
             RoomObject.Resource = CurrentFile;
-
-            // init imagecomposer for this roomobject
-            ImageComposer = new ImageComposerGDI<RoomObject>();
-            ImageComposer.UseViewerFrame = true;           
-            ImageComposer.DataSource = RoomObject;
 
             // init mainform
             MainForm = new MainForm();
@@ -196,7 +190,7 @@ namespace Meridian59.BgfEditor
 
             // unset current imageboxes
             ShowFrame(true, null, MainForm.picFrameImage);
-            ShowFrame(true, null, MainForm.picAnimation);
+            //ShowFrame(true, null, MainForm.picAnimation);
         }
 
         /// <summary>

@@ -77,8 +77,8 @@ namespace Meridian59.BgfEditor
             // attach listener to framsetlist changes
             Program.CurrentFile.FrameSets.ListChanged += OnFrameSetsListChanged;
                        
-            // register listener for new images
-            Program.ImageComposer.NewImageAvailable += OnImageComposerNewImageAvailable;
+            // set datasource on animation viewer
+            picAnimation.DataSource = Program.RoomObject;
         }
 
         protected void OnResizeEnd(object sender, EventArgs e)
@@ -583,12 +583,6 @@ namespace Meridian59.BgfEditor
         {
             UpdateFrameNums();
             UpdateFrameSetFlow();
-        }
-
-        protected void OnImageComposerNewImageAvailable(object sender, EventArgs e)
-        {
-            // update picbox            
-            picAnimation.Image = Program.ImageComposer.Image;
         }
 
         protected void OnPlayClick(object sender, EventArgs e)

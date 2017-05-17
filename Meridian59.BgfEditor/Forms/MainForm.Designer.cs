@@ -115,7 +115,7 @@
             this.cbHigh = new System.Windows.Forms.ComboBox();
             this.cbLow = new System.Windows.Forms.ComboBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.picAnimation = new System.Windows.Forms.PictureBox();
+            this.picAnimation = new Meridian59.BgfEditor.Controls.PictureBoxRoomObject();
             this.fdAddFrame = new System.Windows.Forms.OpenFileDialog();
             this.fdOpenFile = new System.Windows.Forms.OpenFileDialog();
             this.fdSaveFile = new System.Windows.Forms.SaveFileDialog();
@@ -174,7 +174,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackAngle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numInterval)).BeginInit();
             this.groupBox6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picAnimation)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -1109,7 +1108,6 @@
             this.picAnimation.Location = new System.Drawing.Point(3, 16);
             this.picAnimation.Name = "picAnimation";
             this.picAnimation.Size = new System.Drawing.Size(747, 382);
-            this.picAnimation.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.picAnimation.TabIndex = 0;
             this.picAnimation.TabStop = false;
             // 
@@ -1204,7 +1202,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackAngle)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numInterval)).EndInit();
             this.groupBox6.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.picAnimation)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1296,7 +1293,7 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox cbFinal;
         public System.Windows.Forms.PictureBox picFrameImage;
-        public System.Windows.Forms.PictureBox picAnimation;
+        public Meridian59.BgfEditor.Controls.PictureBoxRoomObject picAnimation;
         public System.Windows.Forms.Button btnPlay;
         private System.Windows.Forms.ToolStripMenuItem convertFromValeColorsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem convertAllToV10zlibFromValeToolStripMenuItem;
