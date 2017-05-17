@@ -420,10 +420,31 @@ namespace Meridian59.Files.BGF
         /// <summary>
         /// Iterates all BgfBitmaps and decompresses them if still compressed.
         /// </summary>
-        public void DecompressAll()
+        public void DecompressAllSingle()
         {
             foreach (BgfBitmap frame in Frames)
                 frame.IsCompressed = false;
+        }
+
+        /// <summary>
+        /// Decompresses all still compressed frames in parallel.
+        /// </summary>
+        public void DecompressAllParallel()
+        {
+            Parallel.ForEach<BgfBitmap>(frames, frame => { frame.IsCompressed = false; });
+        }
+
+        /// <summary>
+        /// Decompresses all still compressed frames either 
+        /// parallel or single.
+        /// </summary>
+        public void DecompressAll()
+        {
+            if (frames.Count >= 8 && frames[0].IsCompressed)
+                DecompressAllParallel();
+
+            else
+                DecompressAllSingle();
         }
 
         /// <summary>
