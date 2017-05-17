@@ -38,6 +38,7 @@
             this.menuOpen = new System.Windows.Forms.ToolStripMenuItem();
             this.menuSaveAs = new System.Windows.Forms.ToolStripMenuItem();
             this.menuSetShrink = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuCutTransparency = new System.Windows.Forms.ToolStripMenuItem();
             this.menuTasks = new System.Windows.Forms.ToolStripMenuItem();
             this.menuExportAllBGFToXML = new System.Windows.Forms.ToolStripMenuItem();
             this.menuDecompressAllBGF = new System.Windows.Forms.ToolStripMenuItem();
@@ -194,7 +195,8 @@
             this.menuNew,
             this.menuOpen,
             this.menuSaveAs,
-            this.menuSetShrink});
+            this.menuSetShrink,
+            this.menuCutTransparency});
             this.menuFile.Name = "menuFile";
             this.menuFile.Size = new System.Drawing.Size(37, 20);
             this.menuFile.Text = "File";
@@ -226,6 +228,13 @@
             this.menuSetShrink.Size = new System.Drawing.Size(116, 22);
             this.menuSetShrink.Text = "Settings";
             this.menuSetShrink.Click += new System.EventHandler(this.OnMenuSetShrinkClick);
+            // 
+            // menuCutTransparency
+            // 
+            this.menuCutTransparency.Name = "menuCutTransparency";
+            this.menuCutTransparency.Size = new System.Drawing.Size(116, 22);
+            this.menuCutTransparency.Text = "Cut Transparency";
+            this.menuCutTransparency.Click += new System.EventHandler(this.OnMenuCutTransparency);
             // 
             // menuTasks
             // 
@@ -1274,6 +1283,7 @@
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ToolStripMenuItem menuSetShrink;
+        private System.Windows.Forms.ToolStripMenuItem menuCutTransparency;
         private System.Windows.Forms.GroupBox groupFrameImage;
         private System.Windows.Forms.ToolStripMenuItem menuConvertAllToV10;
         private System.Windows.Forms.ToolStripMenuItem menuConvertAllToV9;
@@ -1297,6 +1307,7 @@
         public System.Windows.Forms.Button btnPlay;
         private System.Windows.Forms.ToolStripMenuItem convertFromValeColorsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem convertAllToV10zlibFromValeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cutTransparencyToolStripMenuItem;
     }
 }
 

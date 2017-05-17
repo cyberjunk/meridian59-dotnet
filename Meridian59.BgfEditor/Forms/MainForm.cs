@@ -459,6 +459,11 @@ namespace Meridian59.BgfEditor
             fdSaveFile.ShowDialog();
         }
 
+        protected void OnMenuCutTransparency(object sender, EventArgs e)
+        {
+            Program.CurrentFile.Cut();
+        }
+
         protected void OnMenuAboutClick(object sender, EventArgs e)
         {
             AboutBox aboutBox = new AboutBox();
@@ -740,5 +745,6 @@ namespace Meridian59.BgfEditor
         {
             SetAnimation();
         }
+
     }
 }
