@@ -1303,8 +1303,8 @@ namespace Meridian59.Files.BGF
             }
 
             // cutted height and weight
-            uint cutWidth = lastcol - firstcol;
-            uint cutHeight = lastrow - firstrow;
+            uint cutWidth = lastcol - firstcol + 1;
+            uint cutHeight = lastrow - firstrow + 1;
 
             // allocate pixel mem for cutted
             byte[] pixels = new byte[cutWidth * cutHeight];
