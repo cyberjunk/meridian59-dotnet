@@ -28,6 +28,10 @@ namespace Meridian59 { namespace Ogre
 
 	void MyWindowEventListener::windowFocusChange (RenderWindow* rw)
 	{
+      // fix bug in cegui with some windows not being drawn
+      // after ctrl+alt+entf or long idle
+      if (ControllerUI::IsInitialized && ControllerUI::GUIRoot)
+         ControllerUI::GUIRoot->invalidate(true);
 	};
 
 	////////////////////////////////////////////
