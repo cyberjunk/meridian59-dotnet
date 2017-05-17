@@ -528,6 +528,14 @@ namespace Meridian59.Files.BGF
                 f.ConvertFromVale();
         }
 
+        /// <summary>
+        /// Calls Cut() on all existing BgfBitmap instances
+        /// </summary>
+        public void Cut()
+        {
+            foreach (BgfBitmap f in frames)
+                f.Cut();
+        }
         #region BUILDDEPENDENT
 
 #if DRAWING

@@ -1237,6 +1237,106 @@ namespace Meridian59.Files.BGF
             }
         }
 
+        /// <summary>
+        /// Removes transparent pixel rows and columns from
+        /// the image without changing its rendered appearance.
+        /// </summary>
+        public void Cut()
+        {
+            // make sure frame is uncompressed
+            IsCompressed = false;
+
+            uint firstrow = UInt32.MaxValue;
+            uint lastrow = 0;
+            uint firstcol = UInt32.MaxValue;
+            uint lastcol = 0;
+
+            // walk all pixels
+            for (uint i = 0; i < PixelData.Length; i++)
+            {
+                // calc row/col index (this is due to multiple-4 thing)
+                uint row = i / multiple4width;
+                uint col = i % multiple4width;
+
+                // check for non-transparent
+                if (PixelData[i] != 254)
+                {
+                    if (col < firstcol)
+                        firstcol = col;
+
+                    else if (col > lastcol)
+                        lastcol = col;
+
+                    if (row < firstrow)
+                        firstrow = row;
+
+                    else if (row > lastrow)
+                        lastrow = row;
+                }
+            }
+
+            // something wrong (e.g. all transparent)
+            if (firstrow == UInt32.MaxValue ||
+                firstcol == UInt32.MaxValue)
+                return;
+
+            // unused strides
+            uint strideTop    = firstrow;
+            uint strideLeft   = firstcol;
+            uint strideBottom = height - lastrow - 1;
+            uint strideRight  = width  - lastcol - 1;
+
+            // use smaller one of left/right side and adjust other side
+            if (strideLeft > strideRight)
+            {
+                // use right on left
+                firstcol = strideRight;
+                strideLeft = strideRight;
+            }
+            else if (strideLeft < strideRight)
+            {
+                // use left on right
+                lastcol = width - strideLeft - 1;
+                strideRight = strideLeft;
+            }
+
+            // cutted height and weight
+            uint cutWidth = lastcol - firstcol;
+            uint cutHeight = lastrow - firstrow;
+
+            // allocate pixel mem for cutted
+            byte[] pixels = new byte[cutWidth * cutHeight];
+
+            // walk rows that are to be transferred
+            uint idxDst = 0;
+            uint idxSrc = firstrow * width;
+            for (uint r = 0; r < cutHeight; r++)
+            {
+                // copy row
+                Array.Copy(PixelData, idxSrc + firstcol, pixels, idxDst, cutWidth);
+
+                // increment indices to next row starts in src and dest
+                idxSrc += width;
+                idxDst += cutWidth;
+            }
+            
+            // update width +height
+            Width  = cutWidth;
+            Height = cutHeight;
+
+            // recalc the pow2 and next-multiply4 widths
+            multiple4width = MathUtil.NextMultipleOf4(width);
+            pow2width = MathUtil.NextPowerOf2(width);
+            pow2height = MathUtil.NextPowerOf2(height);
+
+            // adjust the y offset
+            // only for the pixels removed from the bottom, top does not matter
+            YOffset -= (int)strideBottom;
+
+            // update pixels
+            PixelData = pixels;
+        }
+
         #region Static
         /// <summary>
         /// Blank, transparent dummy (1 pixel, 1x1)
