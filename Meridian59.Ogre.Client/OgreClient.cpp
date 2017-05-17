@@ -645,18 +645,12 @@ namespace Meridian59 { namespace Ogre
 
 	void OgreClient::OnServerConnectionException(System::Exception^ Error)
     {
-        //LauncherClient::OnServerConnectionException(Error);
-        
-		// tell user about unknown exception
-        ::System::Windows::Forms::MessageBox::Show(
-			Error->Message, "Error",
-            ::System::Windows::Forms::MessageBoxButtons::OK, 
-			::System::Windows::Forms::MessageBoxIcon::Error,
-			::System::Windows::Forms::MessageBoxDefaultButton::Button1,
-            ::System::Windows::Forms::MessageBoxOptions::DefaultDesktopOnly, 
-			false);
-
-		Disconnect();
+      // attach OK listener to confirm popup
+      ControllerUI::ConfirmPopup::Confirmed +=
+         gcnew System::EventHandler(this, &OgreClient::OnLoginErrorConfirmed);
+      
+      // tell user about failed connection
+      ControllerUI::ConfirmPopup::ShowOK("Connection failed", 0);
     };
 	
 	void OgreClient::InitResources()
