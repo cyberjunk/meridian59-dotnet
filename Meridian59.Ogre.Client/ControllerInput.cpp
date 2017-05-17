@@ -193,8 +193,8 @@ namespace Meridian59 { namespace Ogre
 					{
 						RoomObject^ obj = OgreClient::Singleton->Data->RoomObjects->GetItemByID(objectid);
 
-						// don't select own avatar by clicks
-						if (obj != nullptr && !obj->IsAvatar)
+						// don't select own avatar or already selected target
+						if (obj != nullptr && !obj->IsAvatar && !obj->IsTarget)
 						{
 							objectIDs->Add(objectid);	
 							
