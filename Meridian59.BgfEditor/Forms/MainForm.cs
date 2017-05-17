@@ -596,6 +596,8 @@ namespace Meridian59.BgfEditor
             {
                 if (!Program.IsPlaying)
                 {
+                    ImageComposerGDI<RoomObject>.Cache.Clear();
+
                     btnPlay.Image = Properties.Resources.Stop;
                                  
                     Program.IsPlaying = true;
