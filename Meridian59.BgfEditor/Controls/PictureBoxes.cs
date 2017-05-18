@@ -34,6 +34,9 @@ namespace Meridian59.BgfEditor.Controls
         protected readonly ImageComposerGDI<T> imageComposer = new ImageComposerGDI<T>();
         protected float zoom = 1.0f;
 
+        protected int mouseX;
+        protected int mouseY;
+
         /// <summary>
         /// The object to be shown
         /// </summary>
@@ -60,8 +63,29 @@ namespace Meridian59.BgfEditor.Controls
 
             // hookup event when new image is available
             imageComposer.NewImageAvailable += OnImageComposerNewImageAvailable;
+
+            mouseX = Cursor.Position.X;
+            mouseY = Cursor.Position.Y;
         }
 
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+
+            if (imageComposer.DataSource == null)
+                return;
+
+            // use cursor position here instead of arguments
+            // because these have been initialized
+            int dx = Cursor.Position.X - mouseX;
+            int dy = Cursor.Position.Y - mouseY;
+
+            if (dx != 0 && e.Button == MouseButtons.Left)
+                imageComposer.DataSource.ViewerAngle -= (ushort)(dx * 16);
+
+            mouseX = Cursor.Position.X;
+            mouseY = Cursor.Position.Y;
+        }
         protected void OnImageComposerNewImageAvailable(object sender, EventArgs e)
         {
             Refresh();
