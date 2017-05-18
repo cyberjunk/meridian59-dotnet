@@ -21,10 +21,20 @@ If not, see http://www.gnu.org/licenses/.
 
 namespace Meridian59 { namespace Ogre
 {
-	/// <summary>
-	/// Extends the base DataController class
-	/// </summary>
-	public ref class DataControllerOgre : public ::Meridian59::Data::DataController
-	{
-	};
+   /// <summary>
+   /// Extends the base DataController class
+   /// </summary>
+   public ref class DataControllerOgre : public ::Meridian59::Data::DataController
+   {
+   public:
+      /// <summary>
+      /// Constructor
+      /// </summary>
+      DataControllerOgre();
+
+   protected:
+      void HandleRoomContents(RoomContentsMessage^ Message) override;
+      void HandleSpells(SpellsMessage^ Message) override;
+      void HandleInventory(InventoryMessage^ Message) override;
+   };
 };};

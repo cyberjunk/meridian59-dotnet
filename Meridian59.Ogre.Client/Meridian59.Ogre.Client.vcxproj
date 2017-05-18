@@ -279,6 +279,7 @@
     <ClCompile Include="ControllerRoom.cpp" />
     <ClCompile Include="ControllerSound.cpp" />
     <ClCompile Include="ControllerUI.cpp" />
+    <ClCompile Include="DataControllerOgre.cpp" />
     <ClCompile Include="ImageBuilders.cpp" />
     <ClCompile Include="ImageComposerCEGUI.cpp" />
     <ClCompile Include="ImageComposerOgre.cpp" />
