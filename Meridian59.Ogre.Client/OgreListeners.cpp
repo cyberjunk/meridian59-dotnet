@@ -44,32 +44,34 @@ namespace Meridian59 { namespace Ogre
 	{
 	};
 
-	void CameraListener::objectMoved(MovableObject* obj)
-	{
-		MovableObject::Listener::objectMoved(obj);
+   void CameraListener::objectMoved(MovableObject* obj)
+   {
+      MovableObject::Listener::objectMoved(obj);
 
-		if (OgreClient::Singleton->Camera != nullptr)
-        {			
-			::Ogre::Vector3 pos = OgreClient::Singleton->Camera->getDerivedPosition();
+      if (OgreClient::Singleton->Camera == nullptr)
+         return;
 
-            // update viewer position in datalayer
-            OgreClient::Singleton->Data->ViewerPosition = 
-				Util::ToV3(pos); 
+      // get camera position
+      const ::Ogre::Vector3& pos = 
+         OgreClient::Singleton->Camera->getDerivedPosition();
 
-			// update mousover target if mouse is not on UI
-			if (ControllerUI::IsInitialized &&
-				ControllerInput::IsInitialized && 
-				ControllerUI::TopControl == nullptr)
-			{
-				// get mouse coords
-				const OIS::MouseState mouseState = ControllerInput::OISMouse->getMouseState();
-			
-				// perform mouseover update of object if no mouse down
-				if (!ControllerInput::IsLeftMouseDown && !ControllerInput::IsRightMouseDown) 
-					ControllerInput::PerformMouseOver(mouseState.X.abs, mouseState.Y.abs, false);
-			}
-        }
-	};
+      // update viewer position in datalayer
+      OgreClient::Singleton->Data->ViewerPosition = Util::ToV3(pos); 
+
+      // quit if controllers not initialized
+      if (!ControllerUI::IsInitialized || !ControllerInput::IsInitialized)
+         return;
+
+      // also quit if mouse on cegui control or button down
+      if (ControllerUI::TopControl != nullptr || ControllerInput::IsAnyMouseDown)
+         return;
+
+      // get mouse coords
+      const OIS::MouseState& mouseState = ControllerInput::OISMouse->getMouseState();
+
+      // perform mouseover
+      ControllerInput::PerformMouseOver(mouseState.X.abs, mouseState.Y.abs, false);
+   };
 
 	////////////////////////////////////////////
 

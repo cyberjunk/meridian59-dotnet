@@ -65,6 +65,7 @@ namespace Meridian59 { namespace Ogre
 		static bool isAltgrDown;
 		static bool isAutoMove;
 		static bool isAutoMoveOnMove;
+      static bool isAiming;
 
 		static float cameraPitchCurrent;
 		static float cameraPitchDelta;
@@ -127,6 +128,15 @@ namespace Meridian59 { namespace Ogre
 			public: bool get() { return isInitialized; }
 			private: void set(bool value) { isInitialized = value; } 
 		};
+
+      /// <summary>
+      /// True if mouse aiming has triggered / is active.
+      /// </summary>
+      static property bool IsAiming
+      {
+      public: bool get() { return isAiming; }
+      private: void set(bool value) { isAiming = value; }
+      };
 
 		/// <summary>
         /// True if the camera is in first person mode

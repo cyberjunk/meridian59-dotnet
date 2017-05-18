@@ -20,6 +20,7 @@ namespace Meridian59 { namespace Ogre
 		isAltgrDown			= false;
 		isAutoMove			= false;
 		isAutoMoveOnMove	= false;
+      isAiming = false;
 
 		cameraPitchCurrent	= 0.0f;
 		cameraPitchDelta	= 0.0f;
@@ -117,6 +118,7 @@ namespace Meridian59 { namespace Ogre
 		isAltgrDown			= false;
 		isAutoMove			= false;
 		isAutoMoveOnMove	= false;
+      isAiming = false;
 
 		cameraPitchCurrent	= 0.0f;
 		cameraPitchDelta	= 0.0f;
@@ -296,6 +298,8 @@ namespace Meridian59 { namespace Ogre
 			OgreClient::Singleton->Data->ActionButtons[ActiveKeyBinding->RightClickAction - 1]->Activate();		
 		}
 
+      PerformMouseOver(arg.state.X.abs, arg.state.Y.abs, false);
+
 		isMouseWentDownOnUI = false;
 
         return true;
@@ -356,15 +360,14 @@ namespace Meridian59 { namespace Ogre
 		if (dx == 0 && dy == 0 && dz == 0)
 			return true;
 
-		bool isAiming = false;
-
 		// update flag whether mouse is in window or not
 		IsMouseInWindow = (
 			arg.state.X.abs > 0 && arg.state.Y.abs > 0 &&
 			arg.state.X.abs < arg.state.width && arg.state.Y.abs < arg.state.height);
 
-		// inject mousemove to cegui	
-		ControllerUI::InjectMousePosition((float)arg.state.X.abs, (float)arg.state.Y.abs);
+		// inject mousemove to cegui
+      //if (!ControllerInput::IsAiming)
+		   ControllerUI::InjectMousePosition((float)arg.state.X.abs, (float)arg.state.Y.abs);
 		
 		// if the cursor moved outside the window
 		// make sure to release any pressed keys
@@ -420,6 +423,7 @@ namespace Meridian59 { namespace Ogre
 					avatarYawStep = MOUSELOOKSTEPFACT * avatarYawDelta * ::System::Math::Max((float)OgreClient::Singleton->GameTick->Span, 1.0f);
 
 					isAiming = true;
+               ControllerUI::MouseCursor->hide();
 				}
 
 				if (dy != 0)
@@ -438,6 +442,7 @@ namespace Meridian59 { namespace Ogre
 					cameraPitchStep = MOUSELOOKSTEPFACT * cameraPitchDelta * ::System::Math::Max((float)OgreClient::Singleton->GameTick->Span, 1.0f);
 
 					isAiming = true;
+               ControllerUI::MouseCursor->hide();
 				}
 			}
 
@@ -456,6 +461,7 @@ namespace Meridian59 { namespace Ogre
 					cameraYawStep = MOUSELOOKSTEPFACT * cameraYawDelta * ::System::Math::Max((float)OgreClient::Singleton->GameTick->Span, 1.0f);
 
 					isAiming = true;
+               ControllerUI::MouseCursor->hide();
 				}
 	
 				if (dy != 0)
@@ -474,6 +480,7 @@ namespace Meridian59 { namespace Ogre
 					cameraPitchStep = MOUSELOOKSTEPFACT * cameraPitchDelta * ::System::Math::Max((float)OgreClient::Singleton->GameTick->Span, 1.0f);
 
 					isAiming = true;
+               ControllerUI::MouseCursor->hide();
 				}
 			}
 
@@ -487,7 +494,7 @@ namespace Meridian59 { namespace Ogre
 			}
 
 			// restore/fixed windows cursor position on mouse look										
-			if (IsAnyMouseDown)							
+			if (isAiming)							
 				SetCursorPos(mouseDownWindowsPosition->x, mouseDownWindowsPosition->y);	
 		}
 		
@@ -732,6 +739,15 @@ namespace Meridian59 { namespace Ogre
 		/******************************************************/
 		if (Avatar == nullptr || Avatar->SceneNode == nullptr)
 			return;
+
+      /********************* AIMING RESET *******************/
+      /*        Reset aiming state if no mouse is down      */
+      /******************************************************/
+      if (isAiming && !IsRightMouseDown && (!IsLeftMouseDown || isCameraFirstPerson))
+      {
+         isAiming = false;
+         ControllerUI::MouseCursor->show();
+      }
 
 		/*************** SELF TARGET MODIFIER *****************/
 		/*         Process keydown of some specific keys      */

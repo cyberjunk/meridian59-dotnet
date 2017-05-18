@@ -880,8 +880,8 @@ namespace Meridian59 { namespace Ogre
 			guiContext->injectMouseButtonDown(Button);
 		
 		// hide mouse if not went down on our UI
-		if (mouseCursor != nullptr && IgnoreTopControlForMouseInput)
-			mouseCursor->hide();
+		//if (mouseCursor != nullptr && IgnoreTopControlForMouseInput)
+		//	mouseCursor->hide();
 	};
 
 	void ControllerUI::InjectMouseButtonUp(::CEGUI::MouseButton Button)
@@ -889,8 +889,8 @@ namespace Meridian59 { namespace Ogre
 		if (guiContext != nullptr)
 			guiContext->injectMouseButtonUp(Button);
 
-		if (mouseCursor != nullptr && ControllerInput::IsMouseInWindow)
-			mouseCursor->show();
+		//if (mouseCursor != nullptr && ControllerInput::IsMouseInWindow && !ControllerInput::IsAnyMouseDown)
+		//	mouseCursor->show();
 	};
 
 	void ControllerUI::InjectKeyDown(::CEGUI::Key::Scan Key)
