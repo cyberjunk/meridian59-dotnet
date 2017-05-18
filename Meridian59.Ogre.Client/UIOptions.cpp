@@ -211,9 +211,9 @@ namespace Meridian59 { namespace Ogre
 			// Evolution
 			if (aboutBgf->Frames->Count > 0)
 			{
-				const ::Ogre::String oStrName = "CEGUI/about.bgf/0";
+				::Ogre::String oStrName = "CEGUI/about.bgf/0";
 
-				Util::CreateTextureA8R8G8B8(aboutBgf->Frames[0], oStrName, UI_RESGROUP_IMAGESETS, 0);
+				Util::CreateTextureA8R8G8B8(aboutBgf->Frames[0], oStrName, ::Ogre::String(UI_RESGROUP_IMAGESETS), 0);
 				TexturePtr texPtr = texMan->getByName(oStrName);
 
 				if (!texPtr.isNull())
@@ -226,9 +226,9 @@ namespace Meridian59 { namespace Ogre
 			// Resurrection
 			if (aboutBgf->Frames->Count > 1)
 			{
-				const ::Ogre::String oStrName = "CEGUI/about.bgf/1";
+				::Ogre::String oStrName = "CEGUI/about.bgf/1";
 
-				Util::CreateTextureA8R8G8B8(aboutBgf->Frames[1], oStrName, UI_RESGROUP_IMAGESETS, 0);
+				Util::CreateTextureA8R8G8B8(aboutBgf->Frames[1], oStrName, ::Ogre::String(UI_RESGROUP_IMAGESETS), 0);
 				TexturePtr texPtr = texMan->getByName(oStrName);
 
 				if (!texPtr.isNull())
@@ -241,9 +241,9 @@ namespace Meridian59 { namespace Ogre
 			// DarkAuspices
 			if (aboutBgf->Frames->Count > 2)
 			{
-				const ::Ogre::String oStrName = "CEGUI/about.bgf/2";
+				::Ogre::String oStrName = "CEGUI/about.bgf/2";
 
-				Util::CreateTextureA8R8G8B8(aboutBgf->Frames[2], oStrName, UI_RESGROUP_IMAGESETS, 0);
+				Util::CreateTextureA8R8G8B8(aboutBgf->Frames[2], oStrName, ::Ogre::String(UI_RESGROUP_IMAGESETS), 0);
 				TexturePtr texPtr = texMan->getByName(oStrName);
 
 				if (!texPtr.isNull())
@@ -256,9 +256,9 @@ namespace Meridian59 { namespace Ogre
 			// Insurrection
 			if (aboutBgf->Frames->Count > 3)
 			{
-				const ::Ogre::String oStrName = "CEGUI/about.bgf/3";
+				::Ogre::String oStrName = "CEGUI/about.bgf/3";
 
-				Util::CreateTextureA8R8G8B8(aboutBgf->Frames[3], oStrName, UI_RESGROUP_IMAGESETS, 0);
+				Util::CreateTextureA8R8G8B8(aboutBgf->Frames[3], oStrName, ::Ogre::String(UI_RESGROUP_IMAGESETS), 0);
 				TexturePtr texPtr = texMan->getByName(oStrName);
 
 				if (!texPtr.isNull())
@@ -271,9 +271,9 @@ namespace Meridian59 { namespace Ogre
 			// Renaissance
 			if (aboutBgf->Frames->Count > 4)
 			{
-				const ::Ogre::String oStrName = "CEGUI/about.bgf/4";
+				::Ogre::String oStrName = "CEGUI/about.bgf/4";
 
-				Util::CreateTextureA8R8G8B8(aboutBgf->Frames[4], oStrName, UI_RESGROUP_IMAGESETS, 0);
+				Util::CreateTextureA8R8G8B8(aboutBgf->Frames[4], oStrName, ::Ogre::String(UI_RESGROUP_IMAGESETS), 0);
 				TexturePtr texPtr = texMan->getByName(oStrName);
 
 				if (!texPtr.isNull())
@@ -286,9 +286,9 @@ namespace Meridian59 { namespace Ogre
 			// Revelation
 			if (aboutBgf->Frames->Count > 5)
 			{
-				const ::Ogre::String oStrName = "CEGUI/about.bgf/5";
+				::Ogre::String oStrName = "CEGUI/about.bgf/5";
 
-				Util::CreateTextureA8R8G8B8(aboutBgf->Frames[5], oStrName, UI_RESGROUP_IMAGESETS, 0);
+				Util::CreateTextureA8R8G8B8(aboutBgf->Frames[5], oStrName, ::Ogre::String(UI_RESGROUP_IMAGESETS), 0);
 				TexturePtr texPtr = texMan->getByName(oStrName);
 
 				if (!texPtr.isNull())
@@ -301,9 +301,9 @@ namespace Meridian59 { namespace Ogre
 			// ValeOfSorrow
 			if (aboutBgf->Frames->Count > 6)
 			{
-				const ::Ogre::String oStrName = "CEGUI/about.bgf/6";
+				::Ogre::String oStrName = "CEGUI/about.bgf/6";
 
-				Util::CreateTextureA8R8G8B8(aboutBgf->Frames[6], oStrName, UI_RESGROUP_IMAGESETS, 0);
+				Util::CreateTextureA8R8G8B8(aboutBgf->Frames[6], oStrName, ::Ogre::String(UI_RESGROUP_IMAGESETS), 0);
 				TexturePtr texPtr = texMan->getByName(oStrName);
 
 				if (!texPtr.isNull())
@@ -316,9 +316,9 @@ namespace Meridian59 { namespace Ogre
 			// TheInternetQuestBegins
 			if (aboutBgf->Frames->Count > 7)
 			{
-				const ::Ogre::String oStrName = "CEGUI/about.bgf/7";
+				::Ogre::String oStrName = "CEGUI/about.bgf/7";
 
-				Util::CreateTextureA8R8G8B8(aboutBgf->Frames[7], oStrName, UI_RESGROUP_IMAGESETS, 0);
+				Util::CreateTextureA8R8G8B8(aboutBgf->Frames[7], oStrName, ::Ogre::String(UI_RESGROUP_IMAGESETS), 0);
 				TexturePtr texPtr = texMan->getByName(oStrName);
 
 				if (!texPtr.isNull())

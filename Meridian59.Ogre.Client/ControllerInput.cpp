@@ -644,7 +644,7 @@ namespace Meridian59 { namespace Ogre
 			OgreClient::Singleton->CameraNode->_setDerivedOrientation(camOrient);
 
 			// update datalayey with new orientation
-			Avatar->RoomObject->Angle = Util::ToRadianAngle(&avatarOrient);
+			Avatar->RoomObject->Angle = Util::ToRadianAngle(avatarOrient);
 
 			// update orientation on server
 			OgreClient::Singleton->SendReqTurnMessage();

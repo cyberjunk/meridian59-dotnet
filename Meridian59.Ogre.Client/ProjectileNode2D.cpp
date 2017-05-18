@@ -102,17 +102,17 @@ namespace Meridian59 { namespace Ogre
 
 			unsigned int key = hash->Finish();
             
-			::Ogre::String keystr  = ::Ogre::StringConverter::toString(key);
-			::Ogre::String texName = PREFIX_PROJECTILE2D_TEXTURE + keystr;
-			::Ogre::String matName = PREFIX_PROJECTILE2D_MATERIAL + keystr;
+			::Ogre::String& keystr  = ::Ogre::StringConverter::toString(key);
+			::Ogre::String& texName = PREFIX_PROJECTILE2D_TEXTURE + keystr;
+			::Ogre::String& matName = PREFIX_PROJECTILE2D_MATERIAL + keystr;
 
 			// possibly create texture
-			Util::CreateTextureA8R8G8B8(bgfBmp, texName, TEXTUREGROUP_PROJECTILENODE2D, MIP_DEFAULT);
+			Util::CreateTextureA8R8G8B8(bgfBmp, texName, ::Ogre::String(TEXTUREGROUP_PROJECTILENODE2D), MIP_DEFAULT);
 			
 			// possibly create material
 			Util::CreateMaterial(
 				matName, texName, 
-				MATERIALGROUP_PROJECTILENODE2D, 
+            ::Ogre::String(MATERIALGROUP_PROJECTILENODE2D),
 				nullptr, &::Ogre::Vector4(1.0f, 1.0f, 1.0f, 1.0f));
 
 			float scaledwidth = (float)bgfBmp->Width / (float)projectile->Resource->ShrinkFactor;
@@ -151,7 +151,7 @@ namespace Meridian59 { namespace Ogre
     {
         // adjust the light from M59 values (light class extension)
         if (light)       		
-            Util::UpdateFromILightOwner(light, Projectile);                  
+            Util::UpdateFromILightOwner(*light, Projectile);                  
     };
 
 	void ProjectileNode2D::DestroyLight()

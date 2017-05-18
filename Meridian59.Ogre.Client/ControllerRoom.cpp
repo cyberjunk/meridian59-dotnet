@@ -917,11 +917,11 @@ namespace Meridian59 { namespace Ogre
 		if (!Texture || !TextureName || !MaterialName || TextureName == STRINGEMPTY || MaterialName == STRINGEMPTY)
 			return;
 
-		::Ogre::String ostr_texname = StringConvert::CLRToOgre(TextureName);
-		::Ogre::String ostr_matname = StringConvert::CLRToOgre(MaterialName);
+		::Ogre::String& ostr_texname = StringConvert::CLRToOgre(TextureName);
+		::Ogre::String& ostr_matname = StringConvert::CLRToOgre(MaterialName);
 		
 		// possibly create texture
-        Util::CreateTextureA8R8G8B8(Texture, ostr_texname, TEXTUREGROUP_ROOLOADER, MIP_DEFAULT);
+        Util::CreateTextureA8R8G8B8(Texture, ostr_texname, ::Ogre::String(TEXTUREGROUP_ROOLOADER), MIP_DEFAULT);
         
 		// scrolling texture data
         Vector2* scrollSpeed = nullptr;
@@ -933,14 +933,14 @@ namespace Meridian59 { namespace Ogre
 		{
 			Util::CreateMaterialWater(
 				ostr_matname, ostr_texname,
-				MATERIALGROUP_ROOLOADER,
+            ::Ogre::String(MATERIALGROUP_ROOLOADER),
 				scrollSpeed);
 		}
 		// possibly create material			
 		else
 			Util::CreateMaterial(
 				ostr_matname, ostr_texname, 
-				MATERIALGROUP_ROOLOADER,
+            ::Ogre::String(MATERIALGROUP_ROOLOADER),
 				scrollSpeed, nullptr);
 		
 	};

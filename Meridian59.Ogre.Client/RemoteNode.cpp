@@ -152,7 +152,7 @@ namespace Meridian59 { namespace Ogre
         if (Light != nullptr)
         {			
             // adjust the light from M59 values (light class extension)
-            Util::UpdateFromILightOwner(Light, RoomObject);
+            Util::UpdateFromILightOwner(*Light, RoomObject);
         }            
     };
 
@@ -229,7 +229,7 @@ namespace Meridian59 { namespace Ogre
 					Meridian59::Drawing2D::ImageComposerGDI<Data::Models::ObjectBase^>::NameBitmap::Get(RoomObject);
                 			
 				// create texture from bitmap
-				Util::CreateTexture(bitmap, texName, TEXTUREGROUP_MOVABLETEXT);
+				Util::CreateTexture(bitmap, texName, ::Ogre::String(TEXTUREGROUP_MOVABLETEXT));
             
 				// cleanup
 				delete bitmap;
@@ -300,7 +300,7 @@ namespace Meridian59 { namespace Ogre
     void RemoteNode::RefreshOrientation()
     {
 		// reset scenenode orientation to M59 angle
-        Util::SetOrientationFromAngle(SceneNode, RoomObject->Angle);                
+        Util::SetOrientationFromAngle(*SceneNode, RoomObject->Angle);                
     };
 
     void RemoteNode::RefreshPosition()

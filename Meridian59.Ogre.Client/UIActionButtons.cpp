@@ -267,7 +267,7 @@ namespace Meridian59 { namespace Ogre
 						StringConvert::CLRToOgre(UI_NAMEPREFIX_STATICICON + spellObject->OverlayFile + "/" + index.ToString());
 
 					// possibly create texture
-					Util::CreateTextureA8R8G8B8(spellObject->Resource->Frames[index], oStrName, UI_RESGROUP_IMAGESETS, MIP_DEFAULT);
+					Util::CreateTextureA8R8G8B8(spellObject->Resource->Frames[index], oStrName, ::Ogre::String(UI_RESGROUP_IMAGESETS), MIP_DEFAULT);
 
 					// reget TexPtr (no return from function works, ugh..)
 					TexturePtr texPtr = texMan->getByName(oStrName);
