@@ -249,7 +249,7 @@ namespace Meridian59 { namespace Ogre
         static ::Ogre::Light* CreateLight(
 			::Meridian59::Common::Interfaces::ILightOwner^ LightOwner, 
 			::Ogre::SceneManager* SceneManager, 
-			::Ogre::String LightName)
+			::Ogre::String& LightName)
         {
 			::Ogre::Light* light = nullptr;
 
@@ -281,7 +281,7 @@ namespace Meridian59 { namespace Ogre
         /// </summary>
         /// <param name="TextureName">Name of new Ogre texture</param>
         /// <param name="TextureGroup">ResourceGroup of new Ogre texture</param>
-		static void CreatePalettesTexture(::Ogre::String TextureName, ::Ogre::String TextureGroup)
+		static void CreatePalettesTexture(::Ogre::String& TextureName, ::Ogre::String& TextureGroup)
 		{
 			TextureManager* texMan	= TextureManager::getSingletonPtr();
 			TexturePtr texPtr		= texMan->getByName(TextureName, TextureGroup);

@@ -133,7 +133,7 @@ namespace Meridian59 { namespace Ogre
 
     void RemoteNode::CreateLight()
     {
-        ::Ogre::String ostr_ligtname = 
+        ::Ogre::String& ostr_ligtname = 
 			PREFIX_REMOTENODE_LIGHT + ::Ogre::StringConverter::toString(roomObject->ID);
 
 		Light = Util::CreateLight(RoomObject, SceneManager, ostr_ligtname);
@@ -158,7 +158,7 @@ namespace Meridian59 { namespace Ogre
 
     void RemoteNode::DestroyLight()
     {
-		::Ogre::String ostr_ligtname = 
+		::Ogre::String& ostr_ligtname = 
 			PREFIX_REMOTENODE_LIGHT + ::Ogre::StringConverter::toString(roomObject->ID);
 
         if (SceneManager->hasLight(ostr_ligtname))
@@ -169,7 +169,7 @@ namespace Meridian59 { namespace Ogre
 
 	void RemoteNode::CreateName()
     {
-		::Ogre::String ostr_billboard = 
+		::Ogre::String& ostr_billboard = 
 			PREFIX_NAMETEXT_BILLBOARD + ::Ogre::StringConverter::toString(roomObject->ID);
 
 		// create BillboardSet for name
@@ -215,8 +215,8 @@ namespace Meridian59 { namespace Ogre
 			System::String^ strMat = PREFIX_NAMETEXT_MATERIAL + RoomObject->Name + 
 				"/" + NameColors::GetColorFor(RoomObject->Flags).ToString();
 		
-			::Ogre::String texName = StringConvert::CLRToOgre(strTex);
-			::Ogre::String matName = StringConvert::CLRToOgre(strMat);
+			::Ogre::String& texName = StringConvert::CLRToOgre(strTex);
+			::Ogre::String& matName = StringConvert::CLRToOgre(strMat);
 
 			// create Texture and material
 			TextureManager* texMan = TextureManager::getSingletonPtr();
@@ -305,7 +305,7 @@ namespace Meridian59 { namespace Ogre
 
     void RemoteNode::RefreshPosition()
     {
-		::Ogre::Vector3 pos = Util::ToOgre(RoomObject->Position3D);
+		::Ogre::Vector3& pos = Util::ToOgre(RoomObject->Position3D);
 
         // update scenenode position from datamodel
 		SceneNode->setPosition(pos);

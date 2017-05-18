@@ -142,11 +142,11 @@ namespace Meridian59 { namespace Ogre
 				compBlack->getTechnique()->getOutputTargetPass();
 
 			// get material
-			MaterialPtr matPtr = 
+			const MaterialPtr& matPtr = 
 				compPass->getPass(0)->getMaterial();
          
 			// get shader parameters
-			const GpuProgramParametersSharedPtr list = 
+			const GpuProgramParametersSharedPtr& list = 
 				matPtr->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
 
 			// set blendcolor
@@ -432,11 +432,11 @@ namespace Meridian59 { namespace Ogre
 					compBlend->getTechnique()->getOutputTargetPass();
 
 				// get material
-				MaterialPtr matPtr = 
+				const MaterialPtr& matPtr = 
 					compPass->getPass(0)->getMaterial();
          
 				// get shader parameters
-				const GpuProgramParametersSharedPtr list = 
+				const GpuProgramParametersSharedPtr& list = 
 					matPtr->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
 
 				// set blendcolor

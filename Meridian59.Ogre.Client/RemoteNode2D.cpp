@@ -5,7 +5,7 @@ namespace Meridian59 { namespace Ogre
 	RemoteNode2D::RemoteNode2D(Data::Models::RoomObject^ RoomObject, ::Ogre::SceneManager* SceneManager)
 		: RemoteNode(RoomObject, SceneManager)
 	{
-		::Ogre::String ostr_name = 
+		::Ogre::String& ostr_name = 
 			PREFIX_REMOTENODE2D_BILLBOARD + ::Ogre::StringConverter::toString(roomObject->ID);
 		
         // create billboardset for 1 billboard

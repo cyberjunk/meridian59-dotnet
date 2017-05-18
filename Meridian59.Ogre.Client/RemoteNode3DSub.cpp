@@ -11,7 +11,7 @@ namespace Meridian59 { namespace Ogre
         this->AttachedHotspot = AttachedHotspot;
 
         System::String^ resource = SubOverlay->Name->Replace(FileExtensions::BGF, FileExtensions::XML);
-        ::Ogre::String ostr_resource = StringConvert::CLRToOgre(resource);
+        ::Ogre::String& ostr_resource = StringConvert::CLRToOgre(resource);
 
 		ResourceGroupManager* resMan = ResourceGroupManager::getSingletonPtr();
                   
@@ -37,8 +37,8 @@ namespace Meridian59 { namespace Ogre
         // get info from datamodel
         MeshInfo^ info = Model3DInfo->MeshInfo;
 
-		::Ogre::String ostr_name = StringConvert::CLRToOgre(PREFIX_REMOTENODE_ENTITY + ID);
-		::Ogre::String ostr_name2 = StringConvert::CLRToOgre(PREFIX_REMOTENODE_SCENENODE + ID);
+		::Ogre::String& ostr_name = StringConvert::CLRToOgre(PREFIX_REMOTENODE_ENTITY + ID);
+		::Ogre::String& ostr_name2 = StringConvert::CLRToOgre(PREFIX_REMOTENODE_SCENENODE + ID);
 
         // create entity
         Entity = RootNode->SceneManager->createEntity(
@@ -83,8 +83,8 @@ namespace Meridian59 { namespace Ogre
 			if (!info->TemplateValue || !info->Position)
 				continue;
 
-			::Ogre::String ostr_particleid = StringConvert::CLRToOgre(ID);
-			::Ogre::String ostr_particlename = ostr_particleid.append("_").append(*info->Name);
+			::Ogre::String& ostr_particleid = StringConvert::CLRToOgre(ID);
+			::Ogre::String& ostr_particlename = ostr_particleid.append("_").append(*info->Name);
 
            ::ParticleUniverse::ParticleSystemManager* particleMan =
 				::ParticleUniverse::ParticleSystemManager::getSingletonPtr();
@@ -108,8 +108,8 @@ namespace Meridian59 { namespace Ogre
 
 	void RemoteNode3DSub::Destroy()
     {
-		::Ogre::String ostr_scenenode = StringConvert::CLRToOgre(PREFIX_REMOTENODE_SCENENODE + ID);
-		::Ogre::String ostr_entity = StringConvert::CLRToOgre(PREFIX_REMOTENODE_ENTITY + ID);
+		::Ogre::String& ostr_scenenode = StringConvert::CLRToOgre(PREFIX_REMOTENODE_SCENENODE + ID);
+		::Ogre::String& ostr_entity = StringConvert::CLRToOgre(PREFIX_REMOTENODE_ENTITY + ID);
 		
         // cleanup scenenode
         if (RootNode->SceneManager->hasSceneNode(ostr_scenenode))

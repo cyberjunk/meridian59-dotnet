@@ -8,7 +8,7 @@ namespace Meridian59 { namespace Ogre
 		this->SubNodes = gcnew List<RemoteNode3DSub^>();
         
 		System::String^ mainOverlay		= RoomObject->OverlayFile->Replace(FileExtensions::BGF, FileExtensions::XML);
-		::Ogre::String ostr_mainOverlay = StringConvert::CLRToOgre(mainOverlay);
+		::Ogre::String& ostr_mainOverlay = StringConvert::CLRToOgre(mainOverlay);
 
 		ResourceGroupManager* resMan = ResourceGroupManager::getSingletonPtr();
 
@@ -112,8 +112,7 @@ namespace Meridian59 { namespace Ogre
                 // find marker
                 // material name scheme:
                 // group/material_modifier
-				::Ogre::String oldname = oldMaterial->getName();
-				System::String^ str = StringConvert::OgreToCLR(oldname);
+				System::String^ str = StringConvert::OgreToCLR(oldMaterial->getName());
 				
 				int pos_mod = str->LastIndexOf('/');
 				
@@ -130,7 +129,7 @@ namespace Meridian59 { namespace Ogre
 						System::String^ newMaterialName =
 							prefix + RoomObject->ColorTranslation.ToString() + appendix;
 	
-						::Ogre::String ostr_newmatname = StringConvert::CLRToOgre(newMaterialName);
+						::Ogre::String& ostr_newmatname = StringConvert::CLRToOgre(newMaterialName);
 				
 						if (MaterialManager::getSingletonPtr()->resourceExists(ostr_newmatname))					
 							subEntity->setMaterialName(ostr_newmatname);
@@ -148,7 +147,7 @@ namespace Meridian59 { namespace Ogre
         // get info from datamodel
         MeshInfo^ info = Model3DInfo->MeshInfo;
 
-		::Ogre::String ostr_entity = 
+		::Ogre::String& ostr_entity = 
 			PREFIX_REMOTENODE_ENTITY + ::Ogre::StringConverter::toString(roomObject->ID);
         
 		// create entity
@@ -197,8 +196,8 @@ namespace Meridian59 { namespace Ogre
 			if (!info->TemplateValue || !info->Position)
 				continue;
 
-			::Ogre::String ostr_particleid = ::Ogre::StringConverter::toString(roomObject->ID);
-			::Ogre::String ostr_particlename = ostr_particleid.append("_").append(*info->Name);
+			::Ogre::String& ostr_particleid = ::Ogre::StringConverter::toString(roomObject->ID);
+			::Ogre::String& ostr_particlename = ostr_particleid.append("_").append(*info->Name);
 
 			::ParticleUniverse::ParticleSystemManager* particleMan =
 				::ParticleUniverse::ParticleSystemManager::getSingletonPtr();
@@ -239,19 +238,19 @@ namespace Meridian59 { namespace Ogre
 			if (movableType == "Entity")
 			{
 				::Ogre::Entity* entity = static_cast<::Ogre::Entity*>(obj);
-				::Ogre::String name = entity->getName();					
+				const ::Ogre::String& name = entity->getName();					
 					
 				int numSubs = entity->getNumSubEntities();
 					
 				for(int i = 0; i < numSubs; i++)
 				{
 					SubEntity* subEntity = entity->getSubEntity(i);
-					::Ogre::String matName = subEntity->getMaterialName();
+					const ::Ogre::String& matName = subEntity->getMaterialName();
 					size_t pos = matName.find_last_of('/');
 
 					if (pos != ::std::string::npos)
 					{
-						::Ogre::String prefix = matName.substr(0, pos + 1);
+						::Ogre::String& prefix = matName.substr(0, pos + 1);
 						::Ogre::String newmat;
 
 						// INVISIBLE
