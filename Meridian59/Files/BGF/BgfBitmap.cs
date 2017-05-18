@@ -1241,13 +1241,13 @@ namespace Meridian59.Files.BGF
         /// Removes transparent pixel rows and columns from
         /// the image without changing its rendered appearance.
         /// </summary>
-        public void Cut()
+        public void Cut(bool CutBottom = false)
         {
             // make sure frame is uncompressed
             IsCompressed = false;
 
             uint firstrow = UInt32.MaxValue;
-            uint lastrow = 0;
+            uint lastrow = (CutBottom) ? 0 : height - 1;
             uint firstcol = UInt32.MaxValue;
             uint lastcol = 0;
 
@@ -1270,7 +1270,7 @@ namespace Meridian59.Files.BGF
                     if (row < firstrow)
                         firstrow = row;
 
-                    else if (row > lastrow)
+                    else if (CutBottom && row > lastrow)
                         lastrow = row;
                 }
             }
