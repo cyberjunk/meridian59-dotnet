@@ -25,13 +25,14 @@ using Meridian59.Common.Constants;
 using Meridian59.Data.Models;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using Meridian59.BgfEditor.Forms;
 
 namespace Meridian59.BgfEditor
 {
     static class Program
     {
         public static bool IsRunning { get; private set; }
-        public static bool IsPlaying { get; set; }
+        //public static bool IsPlaying { get; set; }
         public static long Tick { get; private set; }
         public static BgfFile CurrentFile { get; private set; }
         public static MainForm MainForm { get; private set; }
@@ -64,6 +65,8 @@ namespace Meridian59.BgfEditor
             MainForm = new MainForm();
             MainForm.FormClosed += OnMainFormFormClosed;
             MainForm.Show();
+
+            ImageComposerGDI<RoomObject>.Cache.IsEnabled = false;
 
             // init shrinkform
             SettingsForm = new SettingsForm();
@@ -98,7 +101,7 @@ namespace Meridian59.BgfEditor
                 long span = Tick - oldTick;
 
                 // update roomobject
-                if (IsPlaying)
+                //if (IsPlaying)
                     RoomObject.Tick(Tick, span);
 
                 // process window messages / events
@@ -115,10 +118,6 @@ namespace Meridian59.BgfEditor
         /// <param name="Filename">Full path and filename of BGF or XML</param>
         public static void Load(string Filename)
         {
-            // stop animation playback
-            Program.IsPlaying = false;
-            MainForm.btnPlay.Image = Properties.Resources.Play;
-            
             if (File.Exists(Filename))
             {
                 string extension = Path.GetExtension(Filename).ToLower();
@@ -139,6 +138,10 @@ namespace Meridian59.BgfEditor
                 SettingsForm.ShrinkFactor = CurrentFile.ShrinkFactor;
                 SettingsForm.Version = CurrentFile.Version;
                 SettingsForm.BgfName = CurrentFile.Name;
+
+                // set mainoverlay resource to loaded file
+                RoomObject.OverlayFile = CurrentFile.Filename + ".bgf";
+                RoomObject.Resource = CurrentFile;
             }
         }
 
@@ -177,10 +180,6 @@ namespace Meridian59.BgfEditor
         /// </summary>
         public static void New()
         {
-            // stop animation playback
-            Program.IsPlaying = false;
-            MainForm.btnPlay.Image = Properties.Resources.Play;
-                      
             CurrentFile.Clear(true);
 
             // set input controls in 'settings' window to values from blank file

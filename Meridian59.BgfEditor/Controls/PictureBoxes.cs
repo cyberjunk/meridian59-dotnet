@@ -85,6 +85,12 @@ namespace Meridian59.BgfEditor.Controls
             mouseY = Cursor.Position.Y;
         }
 
+        public void RefreshImage()
+        {
+            imageComposer.Refresh();
+            Refresh();
+        }
+
         protected void RaisePropertyChanged(PropertyChangedEventArgs e)
         {
             if (PropertyChanged != null)

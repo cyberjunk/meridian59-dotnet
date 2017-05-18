@@ -6,6 +6,7 @@ using Meridian59.Files.BGF;
 using Meridian59.Data.Models;
 using Meridian59.Drawing2D;
 using Meridian59.Common.Enums;
+using Meridian59.BgfEditor.Forms;
 
 namespace Meridian59.BgfEditor
 {
@@ -58,40 +59,12 @@ namespace Meridian59.BgfEditor
         {
             dgFrames.AutoGenerateColumns = false;
             dgHotspots.AutoGenerateColumns = false;
-            cbType.SelectedIndex = 0;
 
             // set frames datasource, selection changes hotspots
             dgFrames.DataSource = Program.CurrentFile.Frames;
 
             // set framesets/groups datasource, selection changes framenums
             listFrameSets.DataSource = Program.CurrentFile.FrameSets;
-
-            // set datasource on animation viewer
-            picAnimation.DataSource = Program.RoomObject;
-            picAnimation.PropertyChanged += OnAnimationViewerPropertyChanged;
-
-            // add binding for trackbar on zoom
-            //trackZoom.DataBindings.Add(
-            //    "Value", picAnimation, "Zoom", true, DataSourceUpdateMode.OnPropertyChanged);
-
-            // add binding for trackbar on viewerangle
-            trackAngle.DataBindings.Add(
-                "Value", Program.RoomObject, RoomObject.PROPNAME_VIEWERANGLE, true, DataSourceUpdateMode.OnPropertyChanged);
-
-            // add binding for color            
-            cbPalette.DataBindings.Add(
-                "SelectedIndex", Program.RoomObject, RoomObject.PROPNAME_COLORTRANSLATION, true, DataSourceUpdateMode.OnPropertyChanged);
-
-            // attach listener to framsetlist changes
-            Program.CurrentFile.FrameSets.ListChanged += OnFrameSetsListChanged;
-
-            // use cycle by default
-            cbType.SelectedIndex = 1;
-        }
-
-        private void OnAnimationViewerPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            trackZoom.Value = picAnimation.Zoom;
         }
 
         protected void OnResizeEnd(object sender, EventArgs e)
@@ -100,36 +73,6 @@ namespace Meridian59.BgfEditor
 
             if (bgfBitmap != null)
                 Program.ShowFrame(true, bgfBitmap.GetBitmap(), picFrameImage);
-        }
-
-        protected void OnFrameSetsListChanged(object sender, ListChangedEventArgs e)
-        {
-            // clear high/low items
-            cbGroup.Items.Clear();
-            cbHigh.Items.Clear();
-            cbLow.Items.Clear();
-            cbFinal.Items.Clear();
-
-            // add available group nums to comboboxes
-            for (int i = 0; i < Program.CurrentFile.FrameSets.Count; i++)
-            {
-                cbGroup.Items.Add(i + 1);
-                cbHigh.Items.Add(i + 1);
-                cbLow.Items.Add(i + 1);
-                cbFinal.Items.Add(i + 1);
-            }
-
-            if (cbGroup.Items.Count > 0)
-                cbGroup.SelectedIndex = 0;
-
-            if (cbHigh.Items.Count > 0)
-                cbHigh.SelectedIndex = 0;
-
-            if (cbLow.Items.Count > 0)
-                cbLow.SelectedIndex = 0;
-
-            if (cbFinal.Items.Count > 0)
-                cbFinal.SelectedIndex = 0;
         }
 
         protected void OnFrameAddClick(object sender, EventArgs e)
@@ -528,7 +471,7 @@ namespace Meridian59.BgfEditor
 
             UpdateFrameNums();
             UpdateFrameSetFlow();
-            SetAnimation();
+
             OnFramesSelectionChanged(this, null);
         }
 
@@ -597,30 +540,7 @@ namespace Meridian59.BgfEditor
             UpdateFrameNums();
             UpdateFrameSetFlow();
         }
-
-        protected void OnPlayClick(object sender, EventArgs e)
-        {
-            if (cbLow.SelectedItem != null && cbHigh.SelectedItem != null)
-            {
-                if (!Program.IsPlaying)
-                {
-                    ImageComposerGDI<RoomObject>.Cache.Clear();
-
-                    btnPlay.Image = Properties.Resources.Stop;
-
-                    Program.IsPlaying = true;
-
-                    SetAnimation();
-                }
-                else
-                {
-                    btnPlay.Image = Properties.Resources.Play;
-
-                    Program.IsPlaying = false;
-                }
-            }
-        }
-
+        
         public void UpdateFrameNums()
         {
             BgfFrameSet bgfFrameSet = SelectedFrameSet;
@@ -663,118 +583,16 @@ namespace Meridian59.BgfEditor
             }
         }
 
-        public void SetAnimation()
-        {
-
-            ushort group = (cbGroup.SelectedItem == null) ? (ushort)1 : (ushort)((int)cbGroup.SelectedItem);
-            ushort low = (cbLow.SelectedItem == null) ? (ushort)1 : (ushort)((int)cbLow.SelectedItem);
-            ushort high = (cbHigh.SelectedItem == null) ? (ushort)1 : (ushort)((int)cbHigh.SelectedItem);
-            ushort final = (cbFinal.SelectedItem == null) ? (ushort)1 : (ushort)((int)cbFinal.SelectedItem);
-            uint period = Convert.ToUInt32(numInterval.Value);
-            int groupmax = Program.CurrentFile.FrameSets.Count;
-
-            Animation anim;
-
-            switch (cbType.SelectedIndex)
-            {
-                // cycle
-                case 1:
-                    anim = new AnimationCycle(period, low, high);
-                    anim.GroupMax = groupmax;
-                    break;
-
-                // once
-                case 2:
-                    anim = new AnimationOnce(period, low, high, final);
-                    anim.GroupMax = groupmax;
-                    break;
-
-                // none (and others)
-                default:
-                    anim = new AnimationNone(group);
-                    anim.GroupMax = groupmax;
-                    break;
-            }
-
-            // set color
-            Program.RoomObject.FirstAnimationType = AnimationType.TRANSLATION;
-            Program.RoomObject.ColorTranslation = Convert.ToByte(cbPalette.SelectedIndex);
-
-            // set cycle anim
-            Program.RoomObject.Animation = anim;
-        }
-
-        protected void OnTypeSelectedIndexChanged(object sender, EventArgs e)
-        {
-            switch (cbType.SelectedIndex)
-            {
-                case 0:
-                    cbGroup.Enabled = true;
-                    cbHigh.Enabled = false;
-                    cbLow.Enabled = false;
-                    cbFinal.Enabled = false;
-                    numInterval.Enabled = false;
-                    break;
-
-                case 1:
-                    cbGroup.Enabled = false;
-                    cbHigh.Enabled = true;
-                    cbLow.Enabled = true;
-                    cbFinal.Enabled = false;
-                    numInterval.Enabled = true;
-                    break;
-
-                case 2:
-                    cbGroup.Enabled = false;
-                    cbHigh.Enabled = true;
-                    cbLow.Enabled = true;
-                    cbFinal.Enabled = true;
-                    numInterval.Enabled = true;
-                    break;
-            }
-
-            SetAnimation();
-        }
-
-        protected void OnGroupSelectedIndexChanged(object sender, EventArgs e)
-        {
-            SetAnimation();
-        }
-
-        protected void OnLowSelectedIndexChanged(object sender, EventArgs e)
-        {
-            SetAnimation();
-        }
-
-        protected void OnHighSelectedIndexChanged(object sender, EventArgs e)
-        {
-            SetAnimation();
-        }
-
-        protected void OnFinalSelectedIndexChanged(object sender, EventArgs e)
-        {
-            SetAnimation();
-        }
-
-        protected void OnIntervalChanged(object sender, EventArgs e)
-        {
-            SetAnimation();
-        }
-
-        private void OnUseOffsetChanged(object sender, EventArgs e)
-        {
-            picAnimation.UseOffset = chkUseOffset.Checked;
-        }
-
-        private void OnZoomValueChanged(object sender, EventArgs e)
-        {
-            picAnimation.Zoom = trackZoom.Value;
-            picAnimation.Refresh();
-        }
-
         private void OnMenuCutTransparency(object sender, EventArgs e)
         {
             Program.CurrentFile.CutParallel();
+        }
+
+        private void OnMenuOpenAnimationViewer(object sender, EventArgs e)
+        {
+            Viewer v = new Viewer();
+            v.DataSource = Program.RoomObject;
+            v.Show();
         }
     }
 }
