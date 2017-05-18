@@ -29,13 +29,30 @@ namespace Meridian59.BgfEditor.Controls
     /// Extends PictureBox to show image provided by ImageComposer
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class PictureBoxGame<T> : Control where T: ObjectBase
+    public class PictureBoxGame<T> : Control where T: ObjectBase, INotifyPropertyChanged
     {
         protected readonly ImageComposerGDI<T> imageComposer = new ImageComposerGDI<T>();
         protected float zoom = 1.0f;
 
         protected int mouseX;
         protected int mouseY;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Zoom Level in Integer increments
+        /// </summary>
+        public int Zoom
+        {
+            get { return (int)(zoom * 1000.0f); }
+            set { zoom = 0.001f * (float)value; }
+        }
+
+        public bool UseOffset
+        {
+            get { return imageComposer.ApplyYOffset; }
+            set { imageComposer.ApplyYOffset = value; }
+        }
 
         /// <summary>
         /// The object to be shown
@@ -58,8 +75,8 @@ namespace Meridian59.BgfEditor.Controls
             // required for proper drawing
             DoubleBuffered = true;
 
-            // use yoffset
-            imageComposer.ApplyYOffset = true;
+            // don't use yoffset by default
+            imageComposer.ApplyYOffset = false;
 
             // hookup event when new image is available
             imageComposer.NewImageAvailable += OnImageComposerNewImageAvailable;
@@ -68,24 +85,12 @@ namespace Meridian59.BgfEditor.Controls
             mouseY = Cursor.Position.Y;
         }
 
-        protected override void OnMouseMove(MouseEventArgs e)
+        protected void RaisePropertyChanged(PropertyChangedEventArgs e)
         {
-            base.OnMouseMove(e);
-
-            if (imageComposer.DataSource == null)
-                return;
-
-            // use cursor position here instead of arguments
-            // because these have been initialized
-            int dx = Cursor.Position.X - mouseX;
-            int dy = Cursor.Position.Y - mouseY;
-
-            if (dx != 0 && e.Button == MouseButtons.Left)
-                imageComposer.DataSource.ViewerAngle -= (ushort)(dx * 16);
-
-            mouseX = Cursor.Position.X;
-            mouseY = Cursor.Position.Y;
+            if (PropertyChanged != null)
+                PropertyChanged(this, e);
         }
+
         protected void OnImageComposerNewImageAvailable(object sender, EventArgs e)
         {
             Refresh();
@@ -125,10 +130,30 @@ namespace Meridian59.BgfEditor.Controls
             zoom += e.Delta * 0.001f;
 
             // bound
-            zoom = System.Math.Max(0.1f, zoom);
-            zoom = System.Math.Min(10.0f, zoom);
+            zoom = System.Math.Max(1.0f, zoom);
+            zoom = System.Math.Min(30.0f, zoom);
 
             Refresh();
+            RaisePropertyChanged(new PropertyChangedEventArgs("Zoom"));
+        }
+
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+
+            if (imageComposer.DataSource == null)
+                return;
+
+            // use cursor position here instead of arguments
+            // because these have been initialized
+            int dx = Cursor.Position.X - mouseX;
+            int dy = Cursor.Position.Y - mouseY;
+
+            if (dx != 0 && e.Button == MouseButtons.Left)
+                imageComposer.DataSource.ViewerAngle -= (ushort)(dx * 16);
+
+            mouseX = Cursor.Position.X;
+            mouseY = Cursor.Position.Y;
         }
     }
 

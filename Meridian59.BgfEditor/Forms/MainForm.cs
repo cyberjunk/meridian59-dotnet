@@ -51,7 +51,7 @@ namespace Meridian59.BgfEditor
 
         public MainForm()
         {
-            InitializeComponent(); 
+            InitializeComponent();
         }
 
         protected void OnLoad(object sender, EventArgs e)
@@ -66,19 +66,32 @@ namespace Meridian59.BgfEditor
             // set framesets/groups datasource, selection changes framenums
             listFrameSets.DataSource = Program.CurrentFile.FrameSets;
 
+            // set datasource on animation viewer
+            picAnimation.DataSource = Program.RoomObject;
+            picAnimation.PropertyChanged += OnAnimationViewerPropertyChanged;
+
+            // add binding for trackbar on zoom
+            //trackZoom.DataBindings.Add(
+            //    "Value", picAnimation, "Zoom", true, DataSourceUpdateMode.OnPropertyChanged);
+
             // add binding for trackbar on viewerangle
             trackAngle.DataBindings.Add(
                 "Value", Program.RoomObject, RoomObject.PROPNAME_VIEWERANGLE, true, DataSourceUpdateMode.OnPropertyChanged);
-            
+
             // add binding for color            
             cbPalette.DataBindings.Add(
                 "SelectedIndex", Program.RoomObject, RoomObject.PROPNAME_COLORTRANSLATION, true, DataSourceUpdateMode.OnPropertyChanged);
 
             // attach listener to framsetlist changes
             Program.CurrentFile.FrameSets.ListChanged += OnFrameSetsListChanged;
-                       
-            // set datasource on animation viewer
-            picAnimation.DataSource = Program.RoomObject;
+
+            // use cycle by default
+            cbType.SelectedIndex = 1;
+        }
+
+        private void OnAnimationViewerPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            trackZoom.Value = picAnimation.Zoom;
         }
 
         protected void OnResizeEnd(object sender, EventArgs e)
@@ -125,9 +138,9 @@ namespace Meridian59.BgfEditor
         }
 
         protected void OnFrameRemoveClick(object sender, EventArgs e)
-        {          
+        {
             BgfBitmap bgfBitmap = SelectedFrame;
-           
+
             if (bgfBitmap != null)
             {
                 uint oldnum = bgfBitmap.Num;
@@ -147,8 +160,8 @@ namespace Meridian59.BgfEditor
                             Program.CurrentFile.Frames.Remove(bgfBitmap);
 
                             // adjust nums for rest
-                            for (int i = (int)oldnum - 1; i < Program.CurrentFile.Frames.Count; i++)                                                         
-                                Program.CurrentFile.Frames[i].Num--;                                                         
+                            for (int i = (int)oldnum - 1; i < Program.CurrentFile.Frames.Count; i++)
+                                Program.CurrentFile.Frames[i].Num--;
                         }
                     }
                 }
@@ -169,7 +182,7 @@ namespace Meridian59.BgfEditor
                     BgfBitmap temp = Program.CurrentFile.Frames[index - 1];
                     Program.CurrentFile.Frames[index - 1] = bgfBitmap;
                     Program.CurrentFile.Frames[index] = temp;
-                  
+
                     // update selection
                     dgFrames.Rows[index - 1].Selected = true;
 
@@ -214,7 +227,7 @@ namespace Meridian59.BgfEditor
 
                     UpdateFrameNums();
                 }
-            } 
+            }
         }
 
         protected void OnHotspotAddClick(object sender, EventArgs e)
@@ -226,7 +239,7 @@ namespace Meridian59.BgfEditor
                 bgfBitmap.HotSpots.Add(new BgfBitmapHotspot());
             }
         }
-        
+
         protected void OnHotspotRemoveClick(object sender, EventArgs e)
         {
             BgfBitmapHotspot bgfHotspot = SelectedHotspot;
@@ -268,7 +281,7 @@ namespace Meridian59.BgfEditor
                 }
             }
         }
-        
+
         protected void OnHotspotDownClick(object sender, EventArgs e)
         {
             BgfBitmapHotspot bgfHotspot = SelectedHotspot;
@@ -306,7 +319,7 @@ namespace Meridian59.BgfEditor
         protected void OnFrameSetRemoveClick(object sender, EventArgs e)
         {
             BgfFrameSet bgfFrameSet = SelectedFrameSet;
-            
+
             if (bgfFrameSet != null)
             {
                 uint oldnum = bgfFrameSet.Num;
@@ -319,7 +332,7 @@ namespace Meridian59.BgfEditor
                     // adjust nums for rest
                     for (int i = (int)oldnum - 1; i < Program.CurrentFile.FrameSets.Count; i++)
                         Program.CurrentFile.FrameSets[i].Num--;
-                        
+
                     UpdateFrameSetFlow();
                 }
             }
@@ -445,7 +458,7 @@ namespace Meridian59.BgfEditor
 
         protected void OnMenuNewClick(object sender, EventArgs e)
         {
-            Program.New();            
+            Program.New();
         }
 
         protected void OnMenuOpenClick(object sender, EventArgs e)
@@ -457,11 +470,6 @@ namespace Meridian59.BgfEditor
         {
             fdSaveFile.FileName = Program.CurrentFile.Filename;
             fdSaveFile.ShowDialog();
-        }
-
-        protected void OnMenuCutTransparency(object sender, EventArgs e)
-        {
-            Program.CurrentFile.CutParallel();
         }
 
         protected void OnMenuAboutClick(object sender, EventArgs e)
@@ -533,7 +541,7 @@ namespace Meridian59.BgfEditor
         protected void OnFileDialogOpenFileOk(object sender, CancelEventArgs e)
         {
             // load from file
-            Program.Load(fdOpenFile.FileName);          
+            Program.Load(fdOpenFile.FileName);
         }
 
         protected void OnFileDialogAddFrameFileOk(object sender, CancelEventArgs e)
@@ -559,7 +567,7 @@ namespace Meridian59.BgfEditor
 
             // cleanp temporary bitmap
             bitmap.Dispose();
-                          
+
             // add to frames
             Program.CurrentFile.Frames.Add(bgfBitmap);
         }
@@ -567,7 +575,7 @@ namespace Meridian59.BgfEditor
         protected void OnFileDialogSaveFileOk(object sender, CancelEventArgs e)
         {
             // save to file
-            Program.Save(fdSaveFile.FileName);           
+            Program.Save(fdSaveFile.FileName);
         }
 
         protected void OnFramesSelectionChanged(object sender, EventArgs e)
@@ -591,7 +599,7 @@ namespace Meridian59.BgfEditor
         }
 
         protected void OnPlayClick(object sender, EventArgs e)
-        {          
+        {
             if (cbLow.SelectedItem != null && cbHigh.SelectedItem != null)
             {
                 if (!Program.IsPlaying)
@@ -599,7 +607,7 @@ namespace Meridian59.BgfEditor
                     ImageComposerGDI<RoomObject>.Cache.Clear();
 
                     btnPlay.Image = Properties.Resources.Stop;
-                                 
+
                     Program.IsPlaying = true;
 
                     SetAnimation();
@@ -607,7 +615,7 @@ namespace Meridian59.BgfEditor
                 else
                 {
                     btnPlay.Image = Properties.Resources.Play;
-                  
+
                     Program.IsPlaying = false;
                 }
             }
@@ -697,7 +705,7 @@ namespace Meridian59.BgfEditor
         }
 
         protected void OnTypeSelectedIndexChanged(object sender, EventArgs e)
-        {           
+        {
             switch (cbType.SelectedIndex)
             {
                 case 0:
@@ -748,5 +756,25 @@ namespace Meridian59.BgfEditor
             SetAnimation();
         }
 
+        protected void OnIntervalChanged(object sender, EventArgs e)
+        {
+            SetAnimation();
+        }
+
+        private void OnUseOffsetChanged(object sender, EventArgs e)
+        {
+            picAnimation.UseOffset = chkUseOffset.Checked;
+        }
+
+        private void OnZoomValueChanged(object sender, EventArgs e)
+        {
+            picAnimation.Zoom = trackZoom.Value;
+            picAnimation.Refresh();
+        }
+
+        private void OnMenuCutTransparency(object sender, EventArgs e)
+        {
+            Program.CurrentFile.CutParallel();
+        }
     }
 }

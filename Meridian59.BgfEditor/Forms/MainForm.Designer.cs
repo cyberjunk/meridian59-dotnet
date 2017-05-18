@@ -38,14 +38,14 @@
             this.menuOpen = new System.Windows.Forms.ToolStripMenuItem();
             this.menuSaveAs = new System.Windows.Forms.ToolStripMenuItem();
             this.menuSetShrink = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuCutTransparency = new System.Windows.Forms.ToolStripMenuItem();
             this.menuTasks = new System.Windows.Forms.ToolStripMenuItem();
             this.menuExportAllBGFToXML = new System.Windows.Forms.ToolStripMenuItem();
             this.menuDecompressAllBGF = new System.Windows.Forms.ToolStripMenuItem();
             this.menuConvertAllToV10 = new System.Windows.Forms.ToolStripMenuItem();
+            this.convertAllToV10zlibFromValeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuConvertAllToV9 = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuComparePalettes = new System.Windows.Forms.ToolStripMenuItem();
             this.convertFromValeColorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuComparePalettes = new System.Windows.Forms.ToolStripMenuItem();
             this.menuHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.menuAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.tabMain = new System.Windows.Forms.TabControl();
@@ -97,18 +97,22 @@
             this.listFrameNums = new System.Windows.Forms.ListBox();
             this.tabAnimation = new System.Windows.Forms.TabPage();
             this.splitContainer5 = new System.Windows.Forms.SplitContainer();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.trackZoom = new System.Windows.Forms.TrackBar();
+            this.chkUseOffset = new System.Windows.Forms.CheckBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.trackAngle = new System.Windows.Forms.TrackBar();
+            this.label6 = new System.Windows.Forms.Label();
+            this.btnPlay = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label8 = new System.Windows.Forms.Label();
             this.cbType = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.cbFinal = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.cbGroup = new System.Windows.Forms.ComboBox();
-            this.cbPalette = new Meridian59.BgfEditor.Controls.ComboBoxPalette();
             this.label1 = new System.Windows.Forms.Label();
-            this.trackAngle = new System.Windows.Forms.TrackBar();
-            this.label6 = new System.Windows.Forms.Label();
-            this.btnPlay = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.numInterval = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
@@ -116,11 +120,12 @@
             this.cbHigh = new System.Windows.Forms.ComboBox();
             this.cbLow = new System.Windows.Forms.ComboBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.picAnimation = new Meridian59.BgfEditor.Controls.PictureBoxRoomObject();
             this.fdAddFrame = new System.Windows.Forms.OpenFileDialog();
             this.fdOpenFile = new System.Windows.Forms.OpenFileDialog();
             this.fdSaveFile = new System.Windows.Forms.SaveFileDialog();
-            this.convertAllToV10zlibFromValeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cbPalette = new Meridian59.BgfEditor.Controls.ComboBoxPalette();
+            this.picAnimation = new Meridian59.BgfEditor.Controls.PictureBoxRoomObject();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tabFrames.SuspendLayout();
@@ -171,8 +176,14 @@
             this.splitContainer5.Panel1.SuspendLayout();
             this.splitContainer5.Panel2.SuspendLayout();
             this.splitContainer5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
+            this.splitContainer2.Panel1.SuspendLayout();
+            this.splitContainer2.Panel2.SuspendLayout();
+            this.splitContainer2.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackZoom)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackAngle)).BeginInit();
+            this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numInterval)).BeginInit();
             this.groupBox6.SuspendLayout();
             this.SuspendLayout();
@@ -195,8 +206,7 @@
             this.menuNew,
             this.menuOpen,
             this.menuSaveAs,
-            this.menuSetShrink,
-            this.menuCutTransparency});
+            this.menuSetShrink});
             this.menuFile.Name = "menuFile";
             this.menuFile.Size = new System.Drawing.Size(37, 20);
             this.menuFile.Text = "File";
@@ -204,37 +214,30 @@
             // menuNew
             // 
             this.menuNew.Name = "menuNew";
-            this.menuNew.Size = new System.Drawing.Size(116, 22);
+            this.menuNew.Size = new System.Drawing.Size(152, 22);
             this.menuNew.Text = "New";
             this.menuNew.Click += new System.EventHandler(this.OnMenuNewClick);
             // 
             // menuOpen
             // 
             this.menuOpen.Name = "menuOpen";
-            this.menuOpen.Size = new System.Drawing.Size(116, 22);
+            this.menuOpen.Size = new System.Drawing.Size(152, 22);
             this.menuOpen.Text = "Open";
             this.menuOpen.Click += new System.EventHandler(this.OnMenuOpenClick);
             // 
             // menuSaveAs
             // 
             this.menuSaveAs.Name = "menuSaveAs";
-            this.menuSaveAs.Size = new System.Drawing.Size(116, 22);
+            this.menuSaveAs.Size = new System.Drawing.Size(152, 22);
             this.menuSaveAs.Text = "Save";
             this.menuSaveAs.Click += new System.EventHandler(this.OnMenuSaveAsClick);
             // 
             // menuSetShrink
             // 
             this.menuSetShrink.Name = "menuSetShrink";
-            this.menuSetShrink.Size = new System.Drawing.Size(116, 22);
+            this.menuSetShrink.Size = new System.Drawing.Size(152, 22);
             this.menuSetShrink.Text = "Settings";
             this.menuSetShrink.Click += new System.EventHandler(this.OnMenuSetShrinkClick);
-            // 
-            // menuCutTransparency
-            // 
-            this.menuCutTransparency.Name = "menuCutTransparency";
-            this.menuCutTransparency.Size = new System.Drawing.Size(116, 22);
-            this.menuCutTransparency.Text = "Cut Transparency";
-            this.menuCutTransparency.Click += new System.EventHandler(this.OnMenuCutTransparency);
             // 
             // menuTasks
             // 
@@ -245,7 +248,8 @@
             this.convertAllToV10zlibFromValeToolStripMenuItem,
             this.menuConvertAllToV9,
             this.convertFromValeColorsToolStripMenuItem,
-            this.menuComparePalettes});
+            this.menuComparePalettes,
+            this.toolStripMenuItem2});
             this.menuTasks.Name = "menuTasks";
             this.menuTasks.Size = new System.Drawing.Size(47, 20);
             this.menuTasks.Text = "Tools";
@@ -271,6 +275,13 @@
             this.menuConvertAllToV10.Text = "Convert all to V10 (zlib)";
             this.menuConvertAllToV10.Click += new System.EventHandler(this.OnMenuConvertAllToV10Click);
             // 
+            // convertAllToV10zlibFromValeToolStripMenuItem
+            // 
+            this.convertAllToV10zlibFromValeToolStripMenuItem.Name = "convertAllToV10zlibFromValeToolStripMenuItem";
+            this.convertAllToV10zlibFromValeToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
+            this.convertAllToV10zlibFromValeToolStripMenuItem.Text = "Convert all to V10 (zlib) from Vale";
+            this.convertAllToV10zlibFromValeToolStripMenuItem.Click += new System.EventHandler(this.OnMenuConvertAllToV10FromValeClick);
+            // 
             // menuConvertAllToV9
             // 
             this.menuConvertAllToV9.Name = "menuConvertAllToV9";
@@ -278,19 +289,19 @@
             this.menuConvertAllToV9.Text = "Convert all to V9 (crush32)";
             this.menuConvertAllToV9.Click += new System.EventHandler(this.OnMenuConvertAllToV9Click);
             // 
-            // menuComparePalettes
-            // 
-            this.menuComparePalettes.Name = "menuComparePalettes";
-            this.menuComparePalettes.Size = new System.Drawing.Size(249, 22);
-            this.menuComparePalettes.Text = "Compare palettes";
-            this.menuComparePalettes.Click += new System.EventHandler(this.OnMenuComparePalettesClick);
-            // 
             // convertFromValeColorsToolStripMenuItem
             // 
             this.convertFromValeColorsToolStripMenuItem.Name = "convertFromValeColorsToolStripMenuItem";
             this.convertFromValeColorsToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
             this.convertFromValeColorsToolStripMenuItem.Text = "Convert this from Vale colors";
             this.convertFromValeColorsToolStripMenuItem.Click += new System.EventHandler(this.OnMenuConverFromValeColors);
+            // 
+            // menuComparePalettes
+            // 
+            this.menuComparePalettes.Name = "menuComparePalettes";
+            this.menuComparePalettes.Size = new System.Drawing.Size(249, 22);
+            this.menuComparePalettes.Text = "Compare palettes";
+            this.menuComparePalettes.Click += new System.EventHandler(this.OnMenuComparePalettesClick);
             // 
             // menuHelp
             // 
@@ -887,54 +898,153 @@
             // splitContainer5
             // 
             this.splitContainer5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer5.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainer5.IsSplitterFixed = true;
             this.splitContainer5.Location = new System.Drawing.Point(3, 3);
             this.splitContainer5.Name = "splitContainer5";
             // 
             // splitContainer5.Panel1
             // 
-            this.splitContainer5.Panel1.Controls.Add(this.groupBox5);
+            this.splitContainer5.Panel1.Controls.Add(this.splitContainer2);
             // 
             // splitContainer5.Panel2
             // 
             this.splitContainer5.Panel2.Controls.Add(this.groupBox6);
             this.splitContainer5.Size = new System.Drawing.Size(970, 401);
-            this.splitContainer5.SplitterDistance = 213;
+            this.splitContainer5.SplitterDistance = 217;
             this.splitContainer5.TabIndex = 0;
+            // 
+            // splitContainer2
+            // 
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainer2.IsSplitterFixed = true;
+            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer2.Name = "splitContainer2";
+            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.Controls.Add(this.groupBox5);
+            // 
+            // splitContainer2.Panel2
+            // 
+            this.splitContainer2.Panel2.Controls.Add(this.groupBox1);
+            this.splitContainer2.Size = new System.Drawing.Size(217, 401);
+            this.splitContainer2.SplitterDistance = 118;
+            this.splitContainer2.TabIndex = 1;
             // 
             // groupBox5
             // 
-            this.groupBox5.Controls.Add(this.label8);
-            this.groupBox5.Controls.Add(this.cbType);
-            this.groupBox5.Controls.Add(this.label7);
-            this.groupBox5.Controls.Add(this.cbFinal);
-            this.groupBox5.Controls.Add(this.label2);
-            this.groupBox5.Controls.Add(this.cbGroup);
-            this.groupBox5.Controls.Add(this.cbPalette);
-            this.groupBox5.Controls.Add(this.label1);
+            this.groupBox5.Controls.Add(this.trackZoom);
+            this.groupBox5.Controls.Add(this.chkUseOffset);
+            this.groupBox5.Controls.Add(this.label9);
             this.groupBox5.Controls.Add(this.trackAngle);
             this.groupBox5.Controls.Add(this.label6);
             this.groupBox5.Controls.Add(this.btnPlay);
-            this.groupBox5.Controls.Add(this.label5);
-            this.groupBox5.Controls.Add(this.numInterval);
-            this.groupBox5.Controls.Add(this.label4);
-            this.groupBox5.Controls.Add(this.label3);
-            this.groupBox5.Controls.Add(this.cbHigh);
-            this.groupBox5.Controls.Add(this.cbLow);
             this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox5.Location = new System.Drawing.Point(0, 0);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(213, 401);
+            this.groupBox5.Size = new System.Drawing.Size(217, 118);
             this.groupBox5.TabIndex = 0;
             this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Settings";
+            this.groupBox5.Text = "Playback";
+            // 
+            // trackZoom
+            // 
+            this.trackZoom.AutoSize = false;
+            this.trackZoom.LargeChange = 500;
+            this.trackZoom.Location = new System.Drawing.Point(89, 59);
+            this.trackZoom.Maximum = 30000;
+            this.trackZoom.Minimum = 1000;
+            this.trackZoom.Name = "trackZoom";
+            this.trackZoom.Size = new System.Drawing.Size(97, 20);
+            this.trackZoom.SmallChange = 100;
+            this.trackZoom.TabIndex = 28;
+            this.trackZoom.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.trackZoom.Value = 1000;
+            this.trackZoom.ValueChanged += new System.EventHandler(this.OnZoomValueChanged);
+            // 
+            // chkUseOffset
+            // 
+            this.chkUseOffset.AutoSize = true;
+            this.chkUseOffset.Location = new System.Drawing.Point(22, 89);
+            this.chkUseOffset.Name = "chkUseOffset";
+            this.chkUseOffset.Size = new System.Drawing.Size(76, 17);
+            this.chkUseOffset.TabIndex = 27;
+            this.chkUseOffset.Text = "Use Offset";
+            this.chkUseOffset.UseVisualStyleBackColor = true;
+            this.chkUseOffset.CheckedChanged += new System.EventHandler(this.OnUseOffsetChanged);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(19, 59);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(37, 13);
+            this.label9.TabIndex = 25;
+            this.label9.Text = "Zoom:";
+            // 
+            // trackAngle
+            // 
+            this.trackAngle.AutoSize = false;
+            this.trackAngle.Location = new System.Drawing.Point(89, 33);
+            this.trackAngle.Maximum = 4096;
+            this.trackAngle.Name = "trackAngle";
+            this.trackAngle.Size = new System.Drawing.Size(97, 20);
+            this.trackAngle.TabIndex = 16;
+            this.trackAngle.TickStyle = System.Windows.Forms.TickStyle.None;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(19, 33);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(37, 13);
+            this.label6.TabIndex = 8;
+            this.label6.Text = "Angle:";
+            // 
+            // btnPlay
+            // 
+            this.btnPlay.Image = global::Meridian59.BgfEditor.Properties.Resources.Play;
+            this.btnPlay.Location = new System.Drawing.Point(123, 85);
+            this.btnPlay.Name = "btnPlay";
+            this.btnPlay.Size = new System.Drawing.Size(63, 23);
+            this.btnPlay.TabIndex = 6;
+            this.btnPlay.UseVisualStyleBackColor = true;
+            this.btnPlay.Click += new System.EventHandler(this.OnPlayClick);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.label8);
+            this.groupBox1.Controls.Add(this.cbType);
+            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.cbFinal);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.cbGroup);
+            this.groupBox1.Controls.Add(this.cbPalette);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.numInterval);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.cbHigh);
+            this.groupBox1.Controls.Add(this.cbLow);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox1.Location = new System.Drawing.Point(0, 0);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(217, 279);
+            this.groupBox1.TabIndex = 30;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Animation";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(19, 31);
+            this.label8.Location = new System.Drawing.Point(19, 41);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(34, 13);
-            this.label8.TabIndex = 24;
+            this.label8.TabIndex = 38;
             this.label8.Text = "Type:";
             // 
             // cbType
@@ -945,109 +1055,71 @@
             "None",
             "Cycle",
             "Once"});
-            this.cbType.Location = new System.Drawing.Point(123, 28);
+            this.cbType.Location = new System.Drawing.Point(123, 38);
             this.cbType.Name = "cbType";
             this.cbType.Size = new System.Drawing.Size(63, 21);
-            this.cbType.TabIndex = 23;
+            this.cbType.TabIndex = 37;
             this.cbType.SelectedIndexChanged += new System.EventHandler(this.OnTypeSelectedIndexChanged);
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(19, 142);
+            this.label7.Location = new System.Drawing.Point(19, 149);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(61, 13);
-            this.label7.TabIndex = 22;
+            this.label7.TabIndex = 36;
             this.label7.Text = "GroupFinal:";
             // 
             // cbFinal
             // 
             this.cbFinal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbFinal.FormattingEnabled = true;
-            this.cbFinal.Location = new System.Drawing.Point(123, 139);
+            this.cbFinal.Location = new System.Drawing.Point(123, 146);
             this.cbFinal.Name = "cbFinal";
             this.cbFinal.Size = new System.Drawing.Size(63, 21);
-            this.cbFinal.TabIndex = 21;
+            this.cbFinal.TabIndex = 35;
             this.cbFinal.SelectedIndexChanged += new System.EventHandler(this.OnFinalSelectedIndexChanged);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(19, 61);
+            this.label2.Location = new System.Drawing.Point(19, 68);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(39, 13);
-            this.label2.TabIndex = 20;
+            this.label2.TabIndex = 34;
             this.label2.Text = "Group:";
             // 
             // cbGroup
             // 
             this.cbGroup.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbGroup.FormattingEnabled = true;
-            this.cbGroup.Location = new System.Drawing.Point(123, 58);
+            this.cbGroup.Location = new System.Drawing.Point(123, 65);
             this.cbGroup.Name = "cbGroup";
             this.cbGroup.Size = new System.Drawing.Size(63, 21);
-            this.cbGroup.TabIndex = 19;
+            this.cbGroup.TabIndex = 33;
             this.cbGroup.SelectedIndexChanged += new System.EventHandler(this.OnGroupSelectedIndexChanged);
-            // 
-            // cbPalette
-            // 
-            this.cbPalette.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbPalette.FormattingEnabled = true;
-            this.cbPalette.Location = new System.Drawing.Point(22, 244);
-            this.cbPalette.Name = "cbPalette";
-            this.cbPalette.Size = new System.Drawing.Size(164, 21);
-            this.cbPalette.TabIndex = 18;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(19, 228);
+            this.label1.Location = new System.Drawing.Point(19, 204);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(43, 13);
-            this.label1.TabIndex = 17;
+            this.label1.TabIndex = 31;
             this.label1.Text = "Palette:";
-            // 
-            // trackAngle
-            // 
-            this.trackAngle.AutoSize = false;
-            this.trackAngle.Location = new System.Drawing.Point(123, 199);
-            this.trackAngle.Maximum = 4096;
-            this.trackAngle.Name = "trackAngle";
-            this.trackAngle.Size = new System.Drawing.Size(63, 20);
-            this.trackAngle.TabIndex = 16;
-            this.trackAngle.TickStyle = System.Windows.Forms.TickStyle.None;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(19, 199);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(37, 13);
-            this.label6.TabIndex = 8;
-            this.label6.Text = "Angle:";
-            // 
-            // btnPlay
-            // 
-            this.btnPlay.Image = global::Meridian59.BgfEditor.Properties.Resources.Play;
-            this.btnPlay.Location = new System.Drawing.Point(72, 310);
-            this.btnPlay.Name = "btnPlay";
-            this.btnPlay.Size = new System.Drawing.Size(63, 23);
-            this.btnPlay.TabIndex = 6;
-            this.btnPlay.UseVisualStyleBackColor = true;
-            this.btnPlay.Click += new System.EventHandler(this.OnPlayClick);
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(19, 170);
+            this.label5.Location = new System.Drawing.Point(19, 177);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(45, 13);
-            this.label5.TabIndex = 5;
+            this.label5.TabIndex = 30;
             this.label5.Text = "Interval:";
             // 
             // numInterval
             // 
-            this.numInterval.Location = new System.Drawing.Point(123, 168);
+            this.numInterval.Location = new System.Drawing.Point(123, 175);
             this.numInterval.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -1055,49 +1127,50 @@
             0});
             this.numInterval.Name = "numInterval";
             this.numInterval.Size = new System.Drawing.Size(63, 20);
-            this.numInterval.TabIndex = 4;
+            this.numInterval.TabIndex = 29;
             this.numInterval.Value = new decimal(new int[] {
             300,
             0,
             0,
             0});
+            this.numInterval.ValueChanged += new System.EventHandler(this.OnIntervalChanged);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(19, 115);
+            this.label4.Location = new System.Drawing.Point(19, 122);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(61, 13);
-            this.label4.TabIndex = 3;
+            this.label4.TabIndex = 28;
             this.label4.Text = "GroupHigh:";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(19, 88);
+            this.label3.Location = new System.Drawing.Point(19, 95);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(59, 13);
-            this.label3.TabIndex = 2;
+            this.label3.TabIndex = 27;
             this.label3.Text = "GroupLow:";
             // 
             // cbHigh
             // 
             this.cbHigh.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbHigh.FormattingEnabled = true;
-            this.cbHigh.Location = new System.Drawing.Point(123, 112);
+            this.cbHigh.Location = new System.Drawing.Point(123, 119);
             this.cbHigh.Name = "cbHigh";
             this.cbHigh.Size = new System.Drawing.Size(63, 21);
-            this.cbHigh.TabIndex = 1;
+            this.cbHigh.TabIndex = 26;
             this.cbHigh.SelectedIndexChanged += new System.EventHandler(this.OnHighSelectedIndexChanged);
             // 
             // cbLow
             // 
             this.cbLow.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbLow.FormattingEnabled = true;
-            this.cbLow.Location = new System.Drawing.Point(123, 85);
+            this.cbLow.Location = new System.Drawing.Point(123, 92);
             this.cbLow.Name = "cbLow";
             this.cbLow.Size = new System.Drawing.Size(63, 21);
-            this.cbLow.TabIndex = 0;
+            this.cbLow.TabIndex = 25;
             this.cbLow.SelectedIndexChanged += new System.EventHandler(this.OnLowSelectedIndexChanged);
             // 
             // groupBox6
@@ -1106,19 +1179,10 @@
             this.groupBox6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox6.Location = new System.Drawing.Point(0, 0);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(753, 401);
+            this.groupBox6.Size = new System.Drawing.Size(749, 401);
             this.groupBox6.TabIndex = 0;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Animation";
-            // 
-            // picAnimation
-            // 
-            this.picAnimation.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.picAnimation.Location = new System.Drawing.Point(3, 16);
-            this.picAnimation.Name = "picAnimation";
-            this.picAnimation.Size = new System.Drawing.Size(747, 382);
-            this.picAnimation.TabIndex = 0;
-            this.picAnimation.TabStop = false;
             // 
             // fdAddFrame
             // 
@@ -1135,12 +1199,32 @@
             this.fdSaveFile.Filter = "BGF-File|*.bgf|XML-File|*.xml";
             this.fdSaveFile.FileOk += new System.ComponentModel.CancelEventHandler(this.OnFileDialogSaveFileOk);
             // 
-            // convertAllToV10zlibFromValeToolStripMenuItem
+            // cbPalette
             // 
-            this.convertAllToV10zlibFromValeToolStripMenuItem.Name = "convertAllToV10zlibFromValeToolStripMenuItem";
-            this.convertAllToV10zlibFromValeToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
-            this.convertAllToV10zlibFromValeToolStripMenuItem.Text = "Convert all to V10 (zlib) from Vale";
-            this.convertAllToV10zlibFromValeToolStripMenuItem.Click += new System.EventHandler(this.OnMenuConvertAllToV10FromValeClick);
+            this.cbPalette.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbPalette.FormattingEnabled = true;
+            this.cbPalette.Location = new System.Drawing.Point(22, 220);
+            this.cbPalette.Name = "cbPalette";
+            this.cbPalette.Size = new System.Drawing.Size(164, 21);
+            this.cbPalette.TabIndex = 32;
+            // 
+            // picAnimation
+            // 
+            this.picAnimation.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.picAnimation.Location = new System.Drawing.Point(3, 16);
+            this.picAnimation.Name = "picAnimation";
+            this.picAnimation.Size = new System.Drawing.Size(743, 382);
+            this.picAnimation.TabIndex = 0;
+            this.picAnimation.TabStop = false;
+            this.picAnimation.UseOffset = false;
+            this.picAnimation.Zoom = 1000;
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(249, 22);
+            this.toolStripMenuItem2.Text = "Cut transparency";
+            this.toolStripMenuItem2.Click += new System.EventHandler(this.OnMenuCutTransparency);
             // 
             // MainForm
             // 
@@ -1206,9 +1290,16 @@
             this.splitContainer5.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).EndInit();
             this.splitContainer5.ResumeLayout(false);
+            this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
+            this.splitContainer2.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackZoom)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackAngle)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numInterval)).EndInit();
             this.groupBox6.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -1274,40 +1365,45 @@
         private System.Windows.Forms.TabPage tabAnimation;
         private System.Windows.Forms.SplitContainer splitContainer5;
         private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox cbHigh;
-        private System.Windows.Forms.ComboBox cbLow;
-        private System.Windows.Forms.NumericUpDown numInterval;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ToolStripMenuItem menuSetShrink;
-        private System.Windows.Forms.ToolStripMenuItem menuCutTransparency;
         private System.Windows.Forms.GroupBox groupFrameImage;
         private System.Windows.Forms.ToolStripMenuItem menuConvertAllToV10;
         private System.Windows.Forms.ToolStripMenuItem menuConvertAllToV9;
         private System.Windows.Forms.TrackBar trackAngle;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridViewTextBoxColumn colNum;
         private System.Windows.Forms.DataGridViewTextBoxColumn colWidth;
         private System.Windows.Forms.DataGridViewTextBoxColumn colHeight;
         private System.Windows.Forms.DataGridViewTextBoxColumn colXOffset;
         private System.Windows.Forms.DataGridViewTextBoxColumn colYOffset;
         private System.Windows.Forms.ToolStripMenuItem menuComparePalettes;
-        private Controls.ComboBoxPalette cbPalette;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox cbGroup;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.ComboBox cbType;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.ComboBox cbFinal;
         public System.Windows.Forms.PictureBox picFrameImage;
         public Meridian59.BgfEditor.Controls.PictureBoxRoomObject picAnimation;
         public System.Windows.Forms.Button btnPlay;
         private System.Windows.Forms.ToolStripMenuItem convertFromValeColorsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem convertAllToV10zlibFromValeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cutTransparencyToolStripMenuItem;
+        private System.Windows.Forms.SplitContainer splitContainer2;
+        private System.Windows.Forms.TrackBar trackZoom;
+        private System.Windows.Forms.CheckBox chkUseOffset;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ComboBox cbType;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox cbFinal;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox cbGroup;
+        private Controls.ComboBoxPalette cbPalette;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.NumericUpDown numInterval;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox cbHigh;
+        private System.Windows.Forms.ComboBox cbLow;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
     }
 }
 
