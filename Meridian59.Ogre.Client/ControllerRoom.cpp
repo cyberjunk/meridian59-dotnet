@@ -465,7 +465,7 @@ namespace Meridian59 { namespace Ogre
 		}
     };
 
-	int ControllerRoom::GetRoomSectionByMaterial(::Ogre::String Name)
+	int ControllerRoom::GetRoomSectionByMaterial(const ::Ogre::String& Name)
 	{
 		::Ogre::ManualObject::ManualObjectSection* section;
 
@@ -483,7 +483,7 @@ namespace Meridian59 { namespace Ogre
 		return -1;
 	};
 
-	int ControllerRoom::GetDecorationSectionByMaterial(::Ogre::String Name)
+	int ControllerRoom::GetDecorationSectionByMaterial(const ::Ogre::String& Name)
 	{
 		::Ogre::ManualObject::ManualObjectSection* section;
 
@@ -503,7 +503,7 @@ namespace Meridian59 { namespace Ogre
 
 	void ControllerRoom::CreateGeometryChunk(::System::String^ MaterialName)
 	{
-		::Ogre::String material = StringConvert::CLRToOgre(MaterialName);
+		const ::Ogre::String& material = StringConvert::CLRToOgre(MaterialName);
 		int sectionindex		= GetRoomSectionByMaterial(material);
 
 		// create new geometry chunk (vertexbuffer+indexbuffer+...)
@@ -512,7 +512,7 @@ namespace Meridian59 { namespace Ogre
 			roomManObj->beginUpdate(sectionindex);
 		
 		else		
-			roomManObj->begin(material);
+			roomManObj->begin(material, ::Ogre::RenderOperation::OT_TRIANGLE_LIST, MATERIALGROUP_ROOLOADER);
 
 		// reset vertex counter
 		verticesProcessed = 0;

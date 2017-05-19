@@ -100,8 +100,8 @@ namespace Meridian59 { namespace Ogre
 		
 		static void AdjustOctree();
 		static void AdjustAmbientLight();
-		static int GetRoomSectionByMaterial(::Ogre::String Name);
-		static int GetDecorationSectionByMaterial(::Ogre::String Name);
+		static int GetRoomSectionByMaterial(const ::Ogre::String& Name);
+		static int GetDecorationSectionByMaterial(const ::Ogre::String& Name);
 
 		/// <summary>
         /// Static constructor
