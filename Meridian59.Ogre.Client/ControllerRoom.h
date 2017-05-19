@@ -268,6 +268,12 @@ namespace Meridian59 { namespace Ogre
 			private: void set(::Caelum::CaelumSystem* value) { caelumSystem = value; }
 		}
 
+      static property ::Ogre::ManualObject* RoomManualObject
+      {
+      public: ::Ogre::ManualObject* get() { return roomManObj; }
+      private: void set(::Ogre::ManualObject* value) { roomManObj = value; }
+      }
+
 		/// <summary>
         /// The node which is the avatar we're controlling
         /// </summary>

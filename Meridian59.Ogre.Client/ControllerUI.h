@@ -1503,10 +1503,16 @@ namespace Meridian59 { namespace Ogre
       {
       public:
          static ::CEGUI::Window* Window = nullptr;
-         static ::CEGUI::Window* BatchCount = nullptr;
-         static ::CEGUI::Window* TriangleCount = nullptr;
+         static ::CEGUI::Window* RenderWindowBatches = nullptr;
+         static ::CEGUI::Window* RenderWindowTriangles = nullptr;
+         static ::CEGUI::Window* RenderSystemBatches = nullptr;
+         static ::CEGUI::Window* RenderSystemFaces = nullptr;
+         static ::CEGUI::Window* RenderSystemVertices = nullptr;
+
          static ::CEGUI::Window* OgreMemTextures = nullptr;
          static ::CEGUI::Window* OgreMemMaterials = nullptr;
+         static ::CEGUI::Window* OgreFrustumLights = nullptr;
+         static ::CEGUI::Window* OgreRoomSections = nullptr;
 
          static void Initialize();
          static void Destroy();

@@ -272,7 +272,13 @@ namespace Meridian59 { namespace Ogre
 			public: ::Ogre::D3D9RenderWindow* get() { return renderWindow; }
 			protected: void set(Ogre::D3D9RenderWindow* value) { renderWindow = value; }
 		};
-		
+
+      property ::Ogre::D3D9RenderWindow* RenderWindowDummy
+      {
+      public: ::Ogre::D3D9RenderWindow* get() { return renderWindowDummy; }
+      protected: void set(Ogre::D3D9RenderWindow* value) { renderWindowDummy = value; }
+      };
+
 		property ::Ogre::D3D9RenderSystem* RenderSystem 
 		{ 
 			public: ::Ogre::D3D9RenderSystem* get() { return renderSystem; }

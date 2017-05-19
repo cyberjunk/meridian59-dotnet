@@ -8,61 +8,151 @@
 
        <!-- Stats -->
       <Window type="TaharezLook/FrameWindow" name="Stats" >
+         <Property name="AutoRenderingSurface" value="True" />
          <Property name="Text" value="Stats" />
-         <Property name="MaxSize" value="{{0,512},{1,0}}" />
+		 <Property name="Size" value="{{0,512},{0,512}}" />       
+         <Property name="MaxSize" value="{{0,1024},{0,1024}}" />
+		 <Property name="Position" value="{{0.5,-256},{0.5,-256}}" />
          
+		 <!-- RenderWindow -->
 		 <Window type="TaharezLook/LabelWhite" name="Stats.EngineDesc" >
-            <Property name="Text" value="Engine" />
+            <Property name="Text" value="RenderWindow" />
             <Property name="Area" value="{{0,20},{0,10},{0,240},{0,30}}" />
 			<Property name="HorzFormatting" value="LeftAligned" />
 			<Property name="Font" value="Berenika-8-Bold" />
          </Window>
 		 
          <!-- BatchCount -->
-         <Window type="TaharezLook/LabelWhite" name="Stats.BatchCountDesc" >
-            <Property name="Text" value="BatchCount" />
+         <Window type="TaharezLook/LabelWhite" name="Stats.RenderWindowBatchesDesc" >
+            <Property name="Text" value="Batches" />
 			<Property name="Area" value="{{0,20},{0,40},{0,100},{0,60}}" />
             <Property name="HorzFormatting" value="LeftAligned" />	
          </Window>
-         <Window type="TaharezLook/LabelWhite" name="Stats.BatchCount" >
+         <Window type="TaharezLook/LabelWhite" name="Stats.RenderWindowBatches" >
             <Property name="Text" value="0" />
             <Property name="Area" value="{{0,120},{0,40},{0,240},{0,60}}" />
 			<Property name="HorzFormatting" value="LeftAligned" />
          </Window>
 		 
-		 <!-- TriangleCount -->
-         <Window type="TaharezLook/LabelWhite" name="Stats.TriangleCountDesc" >
+		 <!-- Triangles -->
+         <Window type="TaharezLook/LabelWhite" name="Stats.RenderWindowTrianglesDesc" >
             <Property name="Text" value="Triangles" />
 			<Property name="Area" value="{{0,20},{0,70},{0,100},{0,90}}" />
             <Property name="HorzFormatting" value="LeftAligned" />	
          </Window>
-         <Window type="TaharezLook/LabelWhite" name="Stats.TriangleCount" >
+         <Window type="TaharezLook/LabelWhite" name="Stats.RenderWindowTriangles" >
             <Property name="Text" value="0" />
             <Property name="Area" value="{{0,120},{0,70},{0,240},{0,90}}" />
 			<Property name="HorzFormatting" value="LeftAligned" />
+         </Window>
+
+		 <!-- RenderSystem -->
+		 <Window type="TaharezLook/LabelWhite" name="Stats.RenderSystemDesc" >
+            <Property name="Text" value="RenderSystem" />
+            <Property name="Area" value="{{0,20},{0,110},{0,240},{0,130}}" />
+			<Property name="HorzFormatting" value="LeftAligned" />
+			<Property name="Font" value="Berenika-8-Bold" />
+         </Window>
+		 
+		 <!-- Batches -->
+         <Window type="TaharezLook/LabelWhite" name="Stats.RenderSystemBatchesDesc" >
+            <Property name="Text" value="Batches" />
+			<Property name="Area" value="{{0,20},{0,140},{0,100},{0,160}}" />
+            <Property name="HorzFormatting" value="LeftAligned" />	
+         </Window>
+         <Window type="TaharezLook/LabelWhite" name="Stats.RenderSystemBatches" >
+            <Property name="Text" value="0" />
+            <Property name="Area" value="{{0,120},{0,140},{0,240},{0,160}}" />
+			<Property name="HorzFormatting" value="LeftAligned" />
+         </Window>
+		 
+		 <!-- Faces -->
+         <Window type="TaharezLook/LabelWhite" name="Stats.RenderSystemFacesDesc" >
+            <Property name="Text" value="Faces" />
+			<Property name="Area" value="{{0,20},{0,170},{0,100},{0,190}}" />
+            <Property name="HorzFormatting" value="LeftAligned" />	
+         </Window>
+         <Window type="TaharezLook/LabelWhite" name="Stats.RenderSystemFaces" >
+            <Property name="Text" value="0" />
+            <Property name="Area" value="{{0,120},{0,170},{0,240},{0,190}}" />
+			<Property name="HorzFormatting" value="LeftAligned" />
+         </Window>
+		 
+		 <!-- Vertices -->
+         <Window type="TaharezLook/LabelWhite" name="Stats.RenderSystemVerticesDesc" >
+            <Property name="Text" value="Vertices" />
+			<Property name="Area" value="{{0,20},{0,200},{0,100},{0,220}}" />
+            <Property name="HorzFormatting" value="LeftAligned" />	
+         </Window>
+         <Window type="TaharezLook/LabelWhite" name="Stats.RenderSystemVertices" >
+            <Property name="Text" value="0" />
+            <Property name="Area" value="{{0,120},{0,200},{0,240},{0,220}}" />
+			<Property name="HorzFormatting" value="LeftAligned" />
+         </Window>
+		 
+		 <!-- Others -->
+		 <Window type="TaharezLook/LabelWhite" name="Stats.OthersDesc" >
+            <Property name="Text" value="Other" />
+            <Property name="Area" value="{{0,20},{0,230},{0,240},{0,250}}" />
+			<Property name="HorzFormatting" value="LeftAligned" />
+			<Property name="Font" value="Berenika-8-Bold" />
+         </Window>
+		 
+		 
+		 <!-- FrustumLights -->
+         <Window type="TaharezLook/LabelWhite" name="Stats.OgreFrustumLightsDesc" >
+            <Property name="Text" value="FrustumLights" />
+			<Property name="Area" value="{{0,20},{0,250},{0,100},{0,270}}" />
+            <Property name="HorzFormatting" value="LeftAligned" />	
+         </Window>
+         <Window type="TaharezLook/LabelWhite" name="Stats.OgreFrustumLights" >
+            <Property name="Text" value="0" />
+            <Property name="Area" value="{{0,120},{0,250},{0,240},{0,270}}" />
+			<Property name="HorzFormatting" value="LeftAligned" />
+         </Window>
+		 
+		 <!-- RoomSections -->
+         <Window type="TaharezLook/LabelWhite" name="Stats.OgreRoomSectionsDesc" >
+            <Property name="Text" value="Sections" />
+			<Property name="Area" value="{{0,20},{0,280},{0,100},{0,300}}" />
+            <Property name="HorzFormatting" value="LeftAligned" />	
+         </Window>
+         <Window type="TaharezLook/LabelWhite" name="Stats.OgreRoomSections" >
+            <Property name="Text" value="0" />
+            <Property name="Area" value="{{0,120},{0,280},{0,240},{0,300}}" />
+			<Property name="HorzFormatting" value="LeftAligned" />
+         </Window>
+		 
+		 
+		 <!-- OgreMem -->
+		 <Window type="TaharezLook/LabelWhite" name="Stats.OgreMemDesc" >
+            <Property name="Text" value="Ogre Memory" />
+            <Property name="Area" value="{{0,240},{0,10},{0,460},{0,30}}" />
+			<Property name="HorzFormatting" value="LeftAligned" />
+			<Property name="Font" value="Berenika-8-Bold" />
          </Window>
 		 
 		 <!-- OgreMem: Textures -->
          <Window type="TaharezLook/LabelWhite" name="Stats.OgreMemTexturesDesc" >
             <Property name="Text" value="Textures" />
-			<Property name="Area" value="{{0,20},{0,100},{0,100},{0,120}}" />
+			<Property name="Area" value="{{0,240},{0,40},{0,320},{0,60}}" />
             <Property name="HorzFormatting" value="LeftAligned" />	
          </Window>
          <Window type="TaharezLook/LabelWhite" name="Stats.OgreMemTextures" >
             <Property name="Text" value="0" />
-            <Property name="Area" value="{{0,120},{0,100},{0,240},{0,120}}" />
+            <Property name="Area" value="{{0,340},{0,40},{0,460},{0,60}}" />
 			<Property name="HorzFormatting" value="LeftAligned" />
          </Window>
 		 
 		 <!-- OgreMem: Materials -->
          <Window type="TaharezLook/LabelWhite" name="Stats.OgreMemMaterialsDesc" >
             <Property name="Text" value="Materials" />
-			<Property name="Area" value="{{0,20},{0,130},{0,100},{0,150}}" />
+			<Property name="Area" value="{{0,240},{0,70},{0,320},{0,90}}" />
             <Property name="HorzFormatting" value="LeftAligned" />	
          </Window>
          <Window type="TaharezLook/LabelWhite" name="Stats.OgreMemMaterials" >
             <Property name="Text" value="0" />
-            <Property name="Area" value="{{0,120},{0,130},{0,240},{0,150}}" />
+            <Property name="Area" value="{{0,340},{0,70},{0,460},{0,90}}" />
 			<Property name="HorzFormatting" value="LeftAligned" />
          </Window>
       </Window>
