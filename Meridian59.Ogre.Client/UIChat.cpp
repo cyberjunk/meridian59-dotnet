@@ -290,6 +290,7 @@ namespace Meridian59 { namespace Ogre
 					chatInput->setText(ceguistr);
 					chatInput->setCaretIndex(ceguistr.length());
 				}
+            handled = true;
 				break;
 
 			case CEGUI::Key::ArrowDown:
@@ -306,6 +307,7 @@ namespace Meridian59 { namespace Ogre
 				{
 					chatInput->setText(STRINGEMPTY);
 				}
+            handled = true;
 				break;
 		}	
 
