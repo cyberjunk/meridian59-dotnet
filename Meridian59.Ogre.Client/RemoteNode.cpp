@@ -229,7 +229,7 @@ namespace Meridian59 { namespace Ogre
 					Meridian59::Drawing2D::ImageComposerGDI<Data::Models::ObjectBase^>::NameBitmap::Get(RoomObject);
                 			
 				// create texture from bitmap
-				Util::CreateTexture(bitmap, texName, ::Ogre::String(TEXTUREGROUP_MOVABLETEXT));
+				Util::CreateTexture(bitmap, texName, TEXTUREGROUP_MOVABLETEXT);
             
 				// cleanup
 				delete bitmap;

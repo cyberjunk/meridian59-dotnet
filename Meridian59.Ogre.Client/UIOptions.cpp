@@ -213,7 +213,7 @@ namespace Meridian59 { namespace Ogre
 			{
 				::Ogre::String oStrName = "CEGUI/about.bgf/0";
 
-				Util::CreateTextureA8R8G8B8(aboutBgf->Frames[0], oStrName, ::Ogre::String(UI_RESGROUP_IMAGESETS), 0);
+				Util::CreateTextureA8R8G8B8(aboutBgf->Frames[0], oStrName, UI_RESGROUP_IMAGESETS, 0);
 				TexturePtr texPtr = texMan->getByName(oStrName);
 
 				if (!texPtr.isNull())
@@ -228,7 +228,7 @@ namespace Meridian59 { namespace Ogre
 			{
 				::Ogre::String oStrName = "CEGUI/about.bgf/1";
 
-				Util::CreateTextureA8R8G8B8(aboutBgf->Frames[1], oStrName, ::Ogre::String(UI_RESGROUP_IMAGESETS), 0);
+				Util::CreateTextureA8R8G8B8(aboutBgf->Frames[1], oStrName, UI_RESGROUP_IMAGESETS, 0);
 				TexturePtr texPtr = texMan->getByName(oStrName);
 
 				if (!texPtr.isNull())
@@ -243,7 +243,7 @@ namespace Meridian59 { namespace Ogre
 			{
 				::Ogre::String oStrName = "CEGUI/about.bgf/2";
 
-				Util::CreateTextureA8R8G8B8(aboutBgf->Frames[2], oStrName, ::Ogre::String(UI_RESGROUP_IMAGESETS), 0);
+				Util::CreateTextureA8R8G8B8(aboutBgf->Frames[2], oStrName, UI_RESGROUP_IMAGESETS, 0);
 				TexturePtr texPtr = texMan->getByName(oStrName);
 
 				if (!texPtr.isNull())
@@ -258,7 +258,7 @@ namespace Meridian59 { namespace Ogre
 			{
 				::Ogre::String oStrName = "CEGUI/about.bgf/3";
 
-				Util::CreateTextureA8R8G8B8(aboutBgf->Frames[3], oStrName, ::Ogre::String(UI_RESGROUP_IMAGESETS), 0);
+				Util::CreateTextureA8R8G8B8(aboutBgf->Frames[3], oStrName, UI_RESGROUP_IMAGESETS, 0);
 				TexturePtr texPtr = texMan->getByName(oStrName);
 
 				if (!texPtr.isNull())
@@ -273,7 +273,7 @@ namespace Meridian59 { namespace Ogre
 			{
 				::Ogre::String oStrName = "CEGUI/about.bgf/4";
 
-				Util::CreateTextureA8R8G8B8(aboutBgf->Frames[4], oStrName, ::Ogre::String(UI_RESGROUP_IMAGESETS), 0);
+				Util::CreateTextureA8R8G8B8(aboutBgf->Frames[4], oStrName, UI_RESGROUP_IMAGESETS, 0);
 				TexturePtr texPtr = texMan->getByName(oStrName);
 
 				if (!texPtr.isNull())
@@ -288,7 +288,7 @@ namespace Meridian59 { namespace Ogre
 			{
 				::Ogre::String oStrName = "CEGUI/about.bgf/5";
 
-				Util::CreateTextureA8R8G8B8(aboutBgf->Frames[5], oStrName, ::Ogre::String(UI_RESGROUP_IMAGESETS), 0);
+				Util::CreateTextureA8R8G8B8(aboutBgf->Frames[5], oStrName, UI_RESGROUP_IMAGESETS, 0);
 				TexturePtr texPtr = texMan->getByName(oStrName);
 
 				if (!texPtr.isNull())
@@ -303,7 +303,7 @@ namespace Meridian59 { namespace Ogre
 			{
 				::Ogre::String oStrName = "CEGUI/about.bgf/6";
 
-				Util::CreateTextureA8R8G8B8(aboutBgf->Frames[6], oStrName, ::Ogre::String(UI_RESGROUP_IMAGESETS), 0);
+				Util::CreateTextureA8R8G8B8(aboutBgf->Frames[6], oStrName, UI_RESGROUP_IMAGESETS, 0);
 				TexturePtr texPtr = texMan->getByName(oStrName);
 
 				if (!texPtr.isNull())
@@ -318,7 +318,7 @@ namespace Meridian59 { namespace Ogre
 			{
 				::Ogre::String oStrName = "CEGUI/about.bgf/7";
 
-				Util::CreateTextureA8R8G8B8(aboutBgf->Frames[7], oStrName, ::Ogre::String(UI_RESGROUP_IMAGESETS), 0);
+				Util::CreateTextureA8R8G8B8(aboutBgf->Frames[7], oStrName, UI_RESGROUP_IMAGESETS, 0);
 				TexturePtr texPtr = texMan->getByName(oStrName);
 
 				if (!texPtr.isNull())

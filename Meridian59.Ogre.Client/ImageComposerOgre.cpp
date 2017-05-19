@@ -73,52 +73,52 @@ namespace Meridian59 { namespace Ogre
 		// create default material
 		Util::CreateMaterial(
 			*image->MaterialNameDefault, *image->TextureName,
-			::Ogre::String(MATERIALGROUP_REMOTENODE2D), 
+			MATERIALGROUP_REMOTENODE2D, 
 			nullptr, &::Ogre::Vector4(1.0f, 1.0f, 1.0f, 1.0f));
 
 		// create black material
 		Util::CreateMaterial(
 			*image->MaterialNameBlack, *image->TextureName,
-         ::Ogre::String(MATERIALGROUP_REMOTENODE2D),
+         MATERIALGROUP_REMOTENODE2D,
 			nullptr, &::Ogre::Vector4(0.0f, 0.0f, 0.0f, 1.0f));
 
 		// create target highlight material
 		Util::CreateMaterial(
 			*image->MaterialNameTarget, *image->TextureName,
-         ::Ogre::String(MATERIALGROUP_REMOTENODE2D),
+         MATERIALGROUP_REMOTENODE2D,
 			nullptr, &::Ogre::Vector4(4.0f, 1.2f, 1.2f, 1.0f));
 		 		
 		// create mouseover highlight material
 		Util::CreateMaterial(
 			*image->MaterialNameMouseOver, *image->TextureName,
-         ::Ogre::String(MATERIALGROUP_REMOTENODE2D),
+         MATERIALGROUP_REMOTENODE2D,
 			nullptr, &::Ogre::Vector4(1.2f, 4.2f, 1.2f, 1.0f));
 
 		// create 25% translucent material
 		// note: they call opacity translucent in orig, so it's NOT 1 - translucent for opaque
 		Util::CreateMaterial(
 			*image->MaterialNameTranslucent25, *image->TextureName,
-         ::Ogre::String(MATERIALGROUP_REMOTENODE2D),
+         MATERIALGROUP_REMOTENODE2D,
 			nullptr, &::Ogre::Vector4(1.0f, 1.0f, 1.0f, 0.25f));
 
 		// create 50% translucent material
 		// note: they call opacity translucent in orig, so it's NOT 1 - translucent for opaque
 		Util::CreateMaterial(
 			*image->MaterialNameTranslucent50, *image->TextureName,
-         ::Ogre::String(MATERIALGROUP_REMOTENODE2D),
+         MATERIALGROUP_REMOTENODE2D,
 			nullptr, &::Ogre::Vector4(1.0f, 1.0f, 1.0f, 0.5f));
 
 		// create 75% translucent material (note they call opacity transluent in orig)
 		// note: they call opacity translucent in orig, so it's NOT 1 - translucent for opaque
 		Util::CreateMaterial(
 			*image->MaterialNameTranslucent75, *image->TextureName,
-         ::Ogre::String(MATERIALGROUP_REMOTENODE2D),
+         MATERIALGROUP_REMOTENODE2D,
 			nullptr, &::Ogre::Vector4(1.0f, 1.0f, 1.0f, 0.75f));
 
 		// create invisible material
 		Util::CreateMaterialInvisible(
 			*image->MaterialNameInvisible, *image->TextureName,
-			::Ogre::String(MATERIALGROUP_REMOTENODE2D));    
+			MATERIALGROUP_REMOTENODE2D);    
 	};
 	
 	generic <typename T>

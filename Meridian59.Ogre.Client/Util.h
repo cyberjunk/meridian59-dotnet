@@ -318,8 +318,8 @@ namespace Meridian59 { namespace Ogre
       /// <param name="TextureGroup">ResourceGroup of new Ogre texture</param>
       __forceinline static void CreateTextureA8(
          ::Meridian59::Files::BGF::BgfBitmap^ BgfBitmap, 
-         ::Ogre::String& TextureName, 
-         ::Ogre::String& TextureGroup)
+         const ::Ogre::String& TextureName, 
+         const ::Ogre::String& TextureGroup)
       {
          if (!BgfBitmap || BgfBitmap->Width == 0 || BgfBitmap->Height == 0)
             return;
@@ -374,8 +374,8 @@ namespace Meridian59 { namespace Ogre
       /// <param name="TextureGroup">ResourceGroup of new Ogre texture</param>
       __forceinline static void CreateTextureA8R8G8B8(
          ::Meridian59::Files::BGF::BgfBitmap^ BgfBitmap, 
-         ::Ogre::String& TextureName, 
-         ::Ogre::String& TextureGroup,
+         const ::Ogre::String& TextureName, 
+         const ::Ogre::String& TextureGroup,
          int Mipmaps)
       {
          if (!BgfBitmap || BgfBitmap->Width == 0 || BgfBitmap->Height == 0)
@@ -429,8 +429,8 @@ namespace Meridian59 { namespace Ogre
       /// <param name="TextureGroup">ResourceGroup of new Ogre texture</param>
       __forceinline static void CreateTexture(
          ::System::Drawing::Bitmap^ Bitmap, 
-         ::Ogre::String& TextureName, 
-         ::Ogre::String& TextureGroup)
+         const ::Ogre::String& TextureName, 
+         const ::Ogre::String& TextureGroup)
       {
          if (!Bitmap)
             return;
@@ -589,9 +589,9 @@ namespace Meridian59 { namespace Ogre
       /// <param name="MaterialGroup">ResourceGroup of new material</param>
       /// <param name="ScrollSpeed">NULL (default) or texture scrolling speed</param>
       __forceinline static void CreateMaterialWater(
-         ::Ogre::String& MaterialName,
-         ::Ogre::String& TextureName,
-         ::Ogre::String& MaterialGroup,
+         const ::Ogre::String& MaterialName,
+         const ::Ogre::String& TextureName,
+         const ::Ogre::String& MaterialGroup,
          ::Ogre::Vector2* ScrollSpeed)
       {
          MaterialManager& matMan = MaterialManager::getSingleton();
@@ -645,9 +645,9 @@ namespace Meridian59 { namespace Ogre
       /// <param name="TextureName">Name of texture to set on new material</param>
       /// <param name="MaterialGroup">ResourceGroup of new material</param>
       __forceinline static void CreateMaterialInvisible(
-         ::Ogre::String& MaterialName, 
-         ::Ogre::String& TextureName, 
-         ::Ogre::String& MaterialGroup)
+         const ::Ogre::String& MaterialName, 
+         const ::Ogre::String& TextureName, 
+         const ::Ogre::String& MaterialGroup)
       {
          MaterialManager& matMan = MaterialManager::getSingleton();
 

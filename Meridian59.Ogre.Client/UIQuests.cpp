@@ -136,7 +136,7 @@ namespace Meridian59 {
 						StringConvert::CLRToOgre(UI_NAMEPREFIX_STATICICON + obj->ResourceIconName + "/0");
 
 					// possibly create texture
-					Util::CreateTextureA8R8G8B8(obj->Resource->Frames[0], oStrName, ::Ogre::String(UI_RESGROUP_IMAGESETS), MIP_DEFAULT);
+					Util::CreateTextureA8R8G8B8(obj->Resource->Frames[0], oStrName, UI_RESGROUP_IMAGESETS, MIP_DEFAULT);
 
 					// reget TexPtr (no return from function works, ugh..)
 					TexturePtr texPtr = texMan->getByName(oStrName);
