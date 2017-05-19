@@ -36,4 +36,24 @@ namespace Meridian59 { namespace Ogre {
 
       Logger::Log("DataControllerOgre", LogType::Info, "BP_INVENTORY: " + span.ToString() + " ms");
    };
+
+   void DataControllerOgre::HandleLookNewsGroup(LookNewsGroupMessage^ Message)
+   {
+      double tick1 = OgreClient::Singleton->GameTick->GetUpdatedTick();
+      DataController::HandleLookNewsGroup(Message);
+      double tick2 = OgreClient::Singleton->GameTick->GetUpdatedTick();
+      double span = tick2 - tick1;
+
+      Logger::Log("DataControllerOgre", LogType::Info, "BP_LOOK_NEWSGROUP: " + span.ToString() + " ms");
+   };
+
+   void DataControllerOgre::HandleArticles(ArticlesMessage^ Message)
+   {
+      double tick1 = OgreClient::Singleton->GameTick->GetUpdatedTick();
+      DataController::HandleArticles(Message);
+      double tick2 = OgreClient::Singleton->GameTick->GetUpdatedTick();
+      double span = tick2 - tick1;
+
+      Logger::Log("DataControllerOgre", LogType::Info, "BP_ARTICLES: " + span.ToString() + " ms");
+   };
 };};

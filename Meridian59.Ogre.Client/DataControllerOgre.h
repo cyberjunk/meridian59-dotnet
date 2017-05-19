@@ -36,5 +36,7 @@ namespace Meridian59 { namespace Ogre
       void HandleRoomContents(RoomContentsMessage^ Message) override;
       void HandleSpells(SpellsMessage^ Message) override;
       void HandleInventory(InventoryMessage^ Message) override;
+      void HandleLookNewsGroup(LookNewsGroupMessage^ Message) override;
+      void HandleArticles(ArticlesMessage^ Message) override;
    };
 };};
