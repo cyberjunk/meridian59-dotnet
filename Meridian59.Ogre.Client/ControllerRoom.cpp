@@ -45,10 +45,12 @@ namespace Meridian59 { namespace Ogre
 		// a manualobject for the room geometry
 		roomManObj = OGRE_NEW ManualObject(NAME_ROOM);
 		roomManObj->setDynamic(true);
+      roomManObj->setRenderQueueGroup(RENDER_QUEUE_WORLD_GEOMETRY_1);
 		
 		// a manualobject for the room decoration
 		roomDecoration = OGRE_NEW ManualObject(NAME_ROOMDECORATION);
 		roomDecoration->setDynamic(false);
+      roomDecoration->setRenderQueueGroup(RENDER_QUEUE_WORLD_GEOMETRY_1);
 
 		// create room scenenode
 		roomNode = SceneManager->getRootSceneNode()->createChildSceneNode(NAME_ROOMNODE);
