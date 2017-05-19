@@ -30,6 +30,8 @@ namespace Meridian59 { namespace Ogre
 		guiContext	= &system->getDefaultGUIContext();
 		mouseCursor = &guiContext->getMouseCursor();
 		
+      renderer->setUsingShaders(true);
+
 		// load resource to ogre
 		::Ogre::ResourceGroupManager* resMan = 
 			::Ogre::ResourceGroupManager::getSingletonPtr();
