@@ -341,6 +341,7 @@
     <ClCompile Include="UISpells.cpp" />
     <ClCompile Include="UISplashNotifier.cpp" />
     <ClCompile Include="UIStatChangeWizard.cpp" />
+    <ClCompile Include="UIStats.cpp" />
     <ClCompile Include="UIStatusBar.cpp" />
     <ClCompile Include="UITarget.cpp" />
     <ClCompile Include="UITrade.cpp" />

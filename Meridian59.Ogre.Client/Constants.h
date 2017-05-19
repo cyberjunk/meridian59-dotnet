@@ -705,7 +705,11 @@
 #define UI_NAME_OPTIONS_TABGAMEPLAY_TEMPSAFE				"Options.TabGamePlay.TempSafe"
 #define UI_NAME_OPTIONS_TABGAMEPLAY_AUTOLOOT				"Options.TabGamePlay.AutoLoot"
 #define UI_NAME_OPTIONS_TABGAMEPLAY_AUTOCOMBINE				"Options.TabGamePlay.AutoCombine"
-
+#define UI_NAME_STATS_WINDOW				"Stats"
+#define UI_NAME_STATS_BATCHCOUNT				"Stats.BatchCount"
+#define UI_NAME_STATS_TRIANGLECOUNT		"Stats.TriangleCount"
+#define UI_NAME_STATS_OGREMEMTEXTURES		"Stats.OgreMemTextures"
+#define UI_NAME_STATS_OGREMEMMATERIALS		"Stats.OgreMemMaterials"
 
 #define UI_AVATARCREATEWIZARD_PROFILE_CUSTOM	"Custom"
 #define UI_AVATARCREATEWIZARD_PROFILE_WARRIOR	"Warrior"

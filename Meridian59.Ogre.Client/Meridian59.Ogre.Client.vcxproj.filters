@@ -328,6 +328,9 @@
     <ClCompile Include="DataControllerOgre.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="UIStats.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="app.ico">

@@ -154,6 +154,7 @@ namespace Meridian59 { namespace Ogre
 		LootList::Initialize();
 		Login::Initialize();
 		Options::Initialize();
+      Stats::Initialize();
 
 		// attach listener to Data
 		OgreClient::Singleton->Data->PropertyChanged += 
@@ -222,6 +223,7 @@ namespace Meridian59 { namespace Ogre
 		LootList::Destroy();
 		Login::Destroy();
 		Options::Destroy();
+      Stats::Destroy();
 
 		// destroy cegui system
 		renderer->destroySystem();
@@ -293,6 +295,7 @@ namespace Meridian59 { namespace Ogre
 		LootList::ApplyLanguage();
 		Login::ApplyLanguage();
 		Options::ApplyLanguage();
+      Stats::ApplyLanguage();
 	};
 
    void ControllerUI::ApplyLock()
@@ -436,6 +439,8 @@ namespace Meridian59 { namespace Ogre
 				// update repeat tick
 				OgreClient::Singleton->GameTick->DidKeyRepeat();
 			}
+
+         Stats::Tick();
 		}
 	};
 
@@ -730,6 +735,7 @@ namespace Meridian59 { namespace Ogre
 			LootList::Window->setVisible(false);
 			Login::Window->setVisible(mode == UIMode::Login);
 			Options::Window->setVisible(false);
+         Stats::Window->setVisible(false);
 
 			if (mode == UIMode::AvatarSelection)
 				ControllerUI::Welcome::Avatars->activate();

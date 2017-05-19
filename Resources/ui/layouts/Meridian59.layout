@@ -6,6 +6,67 @@
         <Property name="MaxSize" value="{{1,0},{1,0}}" />
         <Property name="InheritsAlpha" value="False" />
 
+       <!-- Stats -->
+      <Window type="TaharezLook/FrameWindow" name="Stats" >
+         <Property name="Text" value="Stats" />
+         <Property name="MaxSize" value="{{0,512},{1,0}}" />
+         
+		 <Window type="TaharezLook/LabelWhite" name="Stats.EngineDesc" >
+            <Property name="Text" value="Engine" />
+            <Property name="Area" value="{{0,20},{0,10},{0,240},{0,30}}" />
+			<Property name="HorzFormatting" value="LeftAligned" />
+			<Property name="Font" value="Berenika-8-Bold" />
+         </Window>
+		 
+         <!-- BatchCount -->
+         <Window type="TaharezLook/LabelWhite" name="Stats.BatchCountDesc" >
+            <Property name="Text" value="BatchCount" />
+			<Property name="Area" value="{{0,20},{0,40},{0,100},{0,60}}" />
+            <Property name="HorzFormatting" value="LeftAligned" />	
+         </Window>
+         <Window type="TaharezLook/LabelWhite" name="Stats.BatchCount" >
+            <Property name="Text" value="0" />
+            <Property name="Area" value="{{0,120},{0,40},{0,240},{0,60}}" />
+			<Property name="HorzFormatting" value="LeftAligned" />
+         </Window>
+		 
+		 <!-- TriangleCount -->
+         <Window type="TaharezLook/LabelWhite" name="Stats.TriangleCountDesc" >
+            <Property name="Text" value="Triangles" />
+			<Property name="Area" value="{{0,20},{0,70},{0,100},{0,90}}" />
+            <Property name="HorzFormatting" value="LeftAligned" />	
+         </Window>
+         <Window type="TaharezLook/LabelWhite" name="Stats.TriangleCount" >
+            <Property name="Text" value="0" />
+            <Property name="Area" value="{{0,120},{0,70},{0,240},{0,90}}" />
+			<Property name="HorzFormatting" value="LeftAligned" />
+         </Window>
+		 
+		 <!-- OgreMem: Textures -->
+         <Window type="TaharezLook/LabelWhite" name="Stats.OgreMemTexturesDesc" >
+            <Property name="Text" value="Textures" />
+			<Property name="Area" value="{{0,20},{0,100},{0,100},{0,120}}" />
+            <Property name="HorzFormatting" value="LeftAligned" />	
+         </Window>
+         <Window type="TaharezLook/LabelWhite" name="Stats.OgreMemTextures" >
+            <Property name="Text" value="0" />
+            <Property name="Area" value="{{0,120},{0,100},{0,240},{0,120}}" />
+			<Property name="HorzFormatting" value="LeftAligned" />
+         </Window>
+		 
+		 <!-- OgreMem: Materials -->
+         <Window type="TaharezLook/LabelWhite" name="Stats.OgreMemMaterialsDesc" >
+            <Property name="Text" value="Materials" />
+			<Property name="Area" value="{{0,20},{0,130},{0,100},{0,150}}" />
+            <Property name="HorzFormatting" value="LeftAligned" />	
+         </Window>
+         <Window type="TaharezLook/LabelWhite" name="Stats.OgreMemMaterials" >
+            <Property name="Text" value="0" />
+            <Property name="Area" value="{{0,120},{0,130},{0,240},{0,150}}" />
+			<Property name="HorzFormatting" value="LeftAligned" />
+         </Window>
+      </Window>
+	  
       <!-- LoadingBar -->
       <Window type="TaharezLook/StaticImage" name="LoadingBar" >
          <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />

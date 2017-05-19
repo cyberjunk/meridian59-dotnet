@@ -1495,6 +1495,26 @@ namespace Meridian59 { namespace Ogre
 			static void Destroy();
 			static void ApplyLanguage();
 		};
+
+      /// <summary>
+      /// Stats window
+      /// </summary>
+      ref class Stats abstract sealed
+      {
+      public:
+         static ::CEGUI::Window* Window = nullptr;
+         static ::CEGUI::Window* BatchCount = nullptr;
+         static ::CEGUI::Window* TriangleCount = nullptr;
+         static ::CEGUI::Window* OgreMemTextures = nullptr;
+         static ::CEGUI::Window* OgreMemMaterials = nullptr;
+
+         static void Initialize();
+         static void Destroy();
+         static void ApplyLanguage();
+
+         static void Tick();
+      };
+
 #pragma endregion
 	};
 
@@ -1538,6 +1558,7 @@ namespace Meridian59 { namespace Ogre
 			static bool OnSafetyClicked(const CEGUI::EventArgs& e);
 			static bool OnPlayersClicked(const CEGUI::EventArgs& e);
          static bool OnLockClicked(const CEGUI::EventArgs& e);
+         static bool OnFPSClicked(const CEGUI::EventArgs& e);
 		};
 
 		/// <summary>

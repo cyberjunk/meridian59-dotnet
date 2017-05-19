@@ -55,6 +55,9 @@ namespace Meridian59 { namespace Ogre
 
       // subscribe ui lock click
       Lock->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::StatusBar::OnLockClicked));
+
+      // subscribe fps click
+      FPSValue->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::StatusBar::OnFPSClicked));
 	};
 
 	void ControllerUI::StatusBar::Destroy()
@@ -244,6 +247,18 @@ namespace Meridian59 { namespace Ogre
 
       // update ui locking
       ControllerUI::ApplyLock();
+
+      return true;
+   };
+
+   bool UICallbacks::StatusBar::OnFPSClicked(const CEGUI::EventArgs& e)
+   {
+      // flip lock in config
+      if (!ControllerUI::Stats::Window->isVisible())
+         ControllerUI::Stats::Window->show();
+
+      else
+         ControllerUI::Stats::Window->hide();
 
       return true;
    };
