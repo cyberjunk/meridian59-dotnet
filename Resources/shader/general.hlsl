@@ -12,7 +12,6 @@ void ambient_vs(
 {
    p = mul(wvpMat, p);
    uv = mul(texMat, float4(uv, 0, 1)).xy;
-   normal = normalize(normal); //todo: do in ogre/materialsetting normalizenormals
 }
 
 // pixel
@@ -39,7 +38,7 @@ void ambient_ps(
    float3 dir = angle * lightCol.rgb * texcol.rgb;
    float3 ambi = ambient.rgb * texcol.rgb;
    float3 sum = (0.2 * dir) + (0.8 * ambi);
-   
+
    // output pixel
    pixel = float4(sum * colormodifier.rgb, texcol.a * colormodifier.a);
 }
