@@ -131,7 +131,8 @@ namespace Meridian59 { namespace Ogre
 
 		// don't manage ambientlight
 		caelumSystem->setManageAmbientLight(false);
-		
+      caelumSystem->setEnsureSingleLightSource(true);
+
 		// no fog
 		caelumSystem->setManageSceneFog(::Ogre::FogMode::FOG_NONE);
 		//CaelumSystem->setSceneFogDensityMultiplier(0.0f);
