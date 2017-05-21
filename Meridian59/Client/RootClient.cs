@@ -16,6 +16,7 @@
 
 using System;
 using System.Threading;
+using System.Diagnostics;
 
 using Meridian59.Common;
 using Meridian59.Common.Enums;
@@ -101,6 +102,11 @@ namespace Meridian59.Client
         public Outfitter Outfitter { get; protected set; }
 
         /// <summary>
+        /// The process that has started OgreClient
+        /// </summary>
+        public Process Process { get; protected set; }
+
+        /// <summary>
         /// Constructor
         /// </summary>
         public RootClient()
@@ -111,8 +117,14 @@ namespace Meridian59.Client
             // log client startup
             Logger.Log(MODULENAME, LogType.Info, "Initializing client");
 
+            // save reference to process
+            Process = Process.GetCurrentProcess();
+
             // save reference to mainthread
             MainThread = Thread.CurrentThread;
+
+            // log process and thread ids
+            Logger.Log(MODULENAME, LogType.Info, "Process ID: " + Process.Id.ToString() + " MainThread: " + MainThread.ManagedThreadId);
 
             // init tick info
             GameTick = new T();
