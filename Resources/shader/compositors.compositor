@@ -54,78 +54,18 @@ compositor Blend
 }
 
 // Black compositor for black blind (this is a copy&paste of Blend)
-compositor Black
+compositor Black : Blend
 {
-    technique
-    {
-        texture rt0 target_width target_height PF_A8R8G8B8
-
-        target rt0
-        {
-            input previous
-        }
-
-		target_output
-        {
-            input none
-            
-			pass render_quad
-            {
-                material Compositor/Blend
-                input 0 rt0
-            }
-        }
-    }
 }
 
 // Pain compositor for EffectPain (this is a copy&paste of Blend)
-compositor Pain
+compositor Pain : Blend
 {
-    technique
-    {
-        texture rt0 target_width target_height PF_A8R8G8B8
-
-        target rt0
-        {
-            input previous
-        }
-
-        target_output
-        {
-            input none
-
-            pass render_quad
-            {
-                material Compositor/Blend
-                input 0 rt0
-            }
-        }
-    }
 }
 
 // Whiteout compositor for EffectWhiteout (this is a copy&paste of Blend)
-compositor Whiteout
+compositor Whiteout : Blend
 {
-    technique
-    {
-        texture rt0 target_width target_height PF_A8R8G8B8
-
-        target rt0
-        {
-            input previous
-        }
-
-        target_output
-        {
-            input none
-
-            pass render_quad
-            {
-                material Compositor/Blend
-                input 0 rt0
-            }
-        }
-    }
 }
 
 // Blur compositor used for EffectBlur
