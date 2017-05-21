@@ -20,7 +20,7 @@ void ambient_vs(
    if (!any(normal))
    {
       normal = normalize(float3(viewDir.xz, 0));
-      normal = -normal; 
+      normal.x = -normal.x; 
    }
 }
 
