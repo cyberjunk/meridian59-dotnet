@@ -1511,6 +1511,12 @@ namespace Meridian59 { namespace Ogre
 
          static ::CEGUI::Window* OgreMemTextures = nullptr;
          static ::CEGUI::Window* OgreMemMaterials = nullptr;
+
+         static ::CEGUI::Window* CEGUIObjectCacheRoom = nullptr;
+         static ::CEGUI::Window* CEGUIObjectCacheObject = nullptr;
+         static ::CEGUI::Window* CEGUIObjectCacheInventory = nullptr;
+         static ::CEGUI::Window* OgreRoomObjectCache = nullptr;
+
          static ::CEGUI::Window* OgreFrustumLights = nullptr;
          static ::CEGUI::Window* OgreRoomSections = nullptr;
 

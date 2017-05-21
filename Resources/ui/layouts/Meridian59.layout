@@ -155,6 +155,63 @@
             <Property name="Area" value="{{0,340},{0,70},{0,460},{0,90}}" />
 			<Property name="HorzFormatting" value="LeftAligned" />
          </Window>
+		 
+		 
+		 <!-- CEGUI Object Cache -->
+		 <Window type="TaharezLook/LabelWhite" name="Stats.CEGUIObjectCacheDesc" >
+            <Property name="Text" value="Object Caches" />
+            <Property name="Area" value="{{0,240},{0,110},{0,460},{0,130}}" />
+			<Property name="HorzFormatting" value="LeftAligned" />
+			<Property name="Font" value="Berenika-8-Bold" />
+         </Window>
+		 
+		 <!-- RoomObjectOgre -->
+         <Window type="TaharezLook/LabelWhite" name="Stats.CEGUIObjectCacheRoomDesc" >
+            <Property name="Text" value="UI Room" />
+			<Property name="Area" value="{{0,240},{0,140},{0,320},{0,160}}" />
+            <Property name="HorzFormatting" value="LeftAligned" />	
+         </Window>
+         <Window type="TaharezLook/LabelWhite" name="Stats.CEGUIObjectCacheRoom" >
+            <Property name="Text" value="0" />
+            <Property name="Area" value="{{0,340},{0,140},{0,460},{0,160}}" />
+			<Property name="HorzFormatting" value="LeftAligned" />
+         </Window>
+		 
+		 <!-- ObjectBaseCEGUI -->
+         <Window type="TaharezLook/LabelWhite" name="Stats.CEGUIObjectCacheObjectDesc" >
+            <Property name="Text" value="UI Object" />
+			<Property name="Area" value="{{0,240},{0,170},{0,320},{0,190}}" />
+            <Property name="HorzFormatting" value="LeftAligned" />	
+         </Window>
+         <Window type="TaharezLook/LabelWhite" name="Stats.CEGUIObjectCacheObject" >
+            <Property name="Text" value="0" />
+            <Property name="Area" value="{{0,340},{0,170},{0,460},{0,190}}" />
+			<Property name="HorzFormatting" value="LeftAligned" />
+         </Window>
+		 
+		 <!-- RoomObjectCEGUI -->
+         <Window type="TaharezLook/LabelWhite" name="Stats.CEGUIObjectCacheInventoryDesc" >
+            <Property name="Text" value="UI Inventory" />
+			<Property name="Area" value="{{0,240},{0,200},{0,320},{0,220}}" />
+            <Property name="HorzFormatting" value="LeftAligned" />	
+         </Window>
+         <Window type="TaharezLook/LabelWhite" name="Stats.CEGUIObjectCacheInventory" >
+            <Property name="Text" value="0" />
+            <Property name="Area" value="{{0,340},{0,200},{0,460},{0,220}}" />
+			<Property name="HorzFormatting" value="LeftAligned" />
+         </Window>
+		 
+		 <!-- RoomObjectOgre -->
+         <Window type="TaharezLook/LabelWhite" name="Stats.OgreRoomObjectCacheDesc" >
+            <Property name="Text" value="Ogre Room" />
+			<Property name="Area" value="{{0,240},{0,230},{0,320},{0,250}}" />
+            <Property name="HorzFormatting" value="LeftAligned" />	
+         </Window>
+         <Window type="TaharezLook/LabelWhite" name="Stats.OgreRoomObjectCache" >
+            <Property name="Text" value="0" />
+            <Property name="Area" value="{{0,340},{0,230},{0,460},{0,250}}" />
+			<Property name="HorzFormatting" value="LeftAligned" />
+         </Window>
       </Window>
 	  
       <!-- LoadingBar -->
