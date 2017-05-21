@@ -942,7 +942,7 @@ namespace Meridian59 { namespace Ogre
             if (OISKeyboard->isKeyDown(ActiveKeyBinding->RotateLeft))
             {
 				// try to yaw and yaw camera back internally if suceeded
-                if (OgreClient::Singleton->TryYaw(-diff) && IsLeftMouseDown && !isMouseWentDownOnUI)
+                if (OgreClient::Singleton->TryYaw(-diff) && IsLeftMouseDown && isAiming)
                     cameraNode->yaw(Radian(-diff), Node::TransformSpace::TS_WORLD);
             }
 
@@ -950,7 +950,7 @@ namespace Meridian59 { namespace Ogre
             if (OISKeyboard->isKeyDown(ActiveKeyBinding->RotateRight))
             {
                 // try to yaw and yaw camera back internally if suceeded                   
-                if (OgreClient::Singleton->TryYaw(diff) && IsLeftMouseDown && !isMouseWentDownOnUI)
+                if (OgreClient::Singleton->TryYaw(diff) && IsLeftMouseDown && isAiming)
                     cameraNode->yaw(Radian(diff), Node::TransformSpace::TS_WORLD);
             }
 		}
