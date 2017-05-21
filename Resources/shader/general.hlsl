@@ -32,7 +32,7 @@ void ambient_ps(
    lightDir = -lightDir;
 
    // represents how much this pixel should be affected by directional light
-   float angle = max(dot(normalize(lightDir.xyz), normal), 0);
+   float angle = max(dot(lightDir.xyz, normal), 0);
 
    // combine ambient and directional light with weights
    float3 light = (0.2 * angle * lightCol) + (0.8 * ambient);
