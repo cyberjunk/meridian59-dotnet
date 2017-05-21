@@ -34,13 +34,11 @@ void ambient_ps(
    // represents how much this pixel should be affected by directional light
    float angle = max(dot(normalize(lightDir.xyz), normal), 0);
 
-   // directional, ambient and combined light
-   float3 dir = angle * lightCol.rgb * texcol.rgb;
-   float3 ambi = ambient.rgb * texcol.rgb;
-   float3 sum = (0.2 * dir) + (0.8 * ambi);
+   // combine ambient and directional light with weights
+   float3 light = (0.2 * angle * lightCol) + (0.8 * ambient);
 
    // output pixel
-   pixel = float4(sum * colormodifier.rgb, texcol.a * colormodifier.a);
+   pixel = float4(light * colormodifier.rgb * texcol.rgb, texcol.a * colormodifier.a);
 }
 
 /********************************/
