@@ -70,54 +70,21 @@ void diffuse_ps(
    uniform float4    colormodifier,
    uniform sampler2D diffusetex    : TEXUNIT0)
 {
-   float lightScale;
-   float3 light;
-   float3 delta;
-
    // base pixel from texture
    const float4 diffuseTex = tex2D(diffusetex, uv);
 
-   // 1. light
-   delta = lightPos[0] - wp;
-   lightScale = max(0.0, 1.0 - (dot(delta, delta) / (lightAtt[0].r * lightAtt[0].r)));
-   light = lightCol[0] * lightScale;
+   // start light
+   float3 light = float3(0, 0, 0);
 
-   // 2. light
-   delta = lightPos[1] - wp;
-   lightScale = max(0.0, 1.0 - (dot(delta, delta) / (lightAtt[1].r * lightAtt[1].r)));
-   light += lightCol[1] * lightScale;
-
-   // 3. light
-   delta = lightPos[2] - wp;
-   lightScale = max(0.0, 1.0 - (dot(delta, delta) / (lightAtt[2].r * lightAtt[2].r)));
-   light += lightCol[2] * lightScale;
-
-   // 4. light
-   delta = lightPos[3] - wp;
-   lightScale = max(0.0, 1.0 - (dot(delta, delta) / (lightAtt[3].r * lightAtt[3].r)));
-   light += lightCol[3] * lightScale;
-
-   // 5. light
-   delta = lightPos[4] - wp;
-   lightScale = max(0.0, 1.0 - (dot(delta, delta) / (lightAtt[4].r * lightAtt[4].r)));
-   light += lightCol[4] * lightScale;
-
-   // 6. light
-   delta = lightPos[5] - wp;
-   lightScale = max(0.0, 1.0 - (dot(delta, delta) / (lightAtt[5].r * lightAtt[5].r)));
-   light += lightCol[5] * lightScale;
-
-   // 7. light
-   delta = lightPos[6] - wp;
-   lightScale = max(0.0, 1.0 - (dot(delta, delta) / (lightAtt[6].r * lightAtt[6].r)));
-   light += lightCol[6] * lightScale;
-
-   // 8. light
-   delta = lightPos[7] - wp;
-   lightScale = max(0.0, 1.0 - (dot(delta, delta) / (lightAtt[7].r * lightAtt[7].r)));
-   light += lightCol[7] * lightScale;
-
-   pixel = colormodifier * float4(diffuseTex.rgb * light.rgb, diffuseTex.a);
+   [unroll(8)]
+   for(uint i = 0; i < 8; i++)
+   {
+      float3 delta = lightPos[i] - wp;
+      float lightScale = max(0.0, 1.0 - (dot(delta, delta) / (lightAtt[i].r * lightAtt[i].r)));
+      light += lightCol[i] * lightScale;
+   }
+   
+   pixel = colormodifier * float4(diffuseTex.rgb * light, diffuseTex.a);
 }
 
 /********************************/
