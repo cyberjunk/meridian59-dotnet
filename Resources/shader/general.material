@@ -13,6 +13,7 @@ vertex_program ambient_vs hlsl
     {
         param_named_auto wvpMat worldviewproj_matrix
 		param_named_auto texMat texture_matrix 0
+		param_named_auto viewDir view_direction
     }
 }
 

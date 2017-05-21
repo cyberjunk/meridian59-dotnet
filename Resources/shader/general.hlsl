@@ -8,10 +8,20 @@ void ambient_vs(
    inout   float2   uv     : TEXCOORD0,
    inout   float3   normal : NORMAL,
    uniform float4x4 wvpMat,
-   uniform float4x4 texMat)
+   uniform float4x4 texMat,
+   uniform float3   viewDir)
 {
    p = mul(wvpMat, p);
    uv = mul(texMat, float4(uv, 0, 1)).xy;
+   
+   // for billboards the normals are not correct
+   // they are always (0,0,0)
+   // instead use the camera viewdirection with removed y component
+   if (!any(normal))
+   {
+      normal = normalize(float3(viewDir.xz, 0));
+      normal = -normal; 
+   }
 }
 
 // pixel
