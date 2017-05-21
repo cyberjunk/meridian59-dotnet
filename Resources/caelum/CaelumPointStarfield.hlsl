@@ -19,7 +19,7 @@ along with Caelum. If not, see <http://www.gnu.org/licenses/>.
 */
 
 void StarPointVP(
-   in      float4   in_position : POSITION,
+   inout   float4   position    : POSITION,
    in      float3   in_texcoord : TEXCOORD0,
    uniform float4x4 worldviewproj_matrix,
    uniform float    mag_scale,
@@ -29,11 +29,10 @@ void StarPointVP(
    uniform float    render_target_flipping,
    uniform float    aspect_ratio,
    out     float2   out_texcoord : TEXCOORD0,
-   out     float4   out_position : POSITION,
    out     float4   out_color    : COLOR)
 {
    float4 in_color = float4(1, 1, 1, 1);
-   out_position = mul(worldviewproj_matrix, in_position);
+   position = mul(worldviewproj_matrix, position);
    out_texcoord = in_texcoord.xy;
 
    float magnitude = in_texcoord.z;
@@ -47,20 +46,16 @@ void StarPointVP(
    size = clamp(size, min_size, max_size);
 
    // Splat the billboard on the screen.
-   out_position.xy +=
-      out_position.w *
+   position.xy +=
+      position.w *
       in_texcoord.xy *
       float2(size, size * aspect_ratio * render_target_flipping);
 }
 
 void StarPointFP(
-   in  float4 in_color    : COLOR,
-   in  float2 in_texcoord : TEXCOORD0,
-   out float4 out_color   : COLOR)
+   inout float4 color : COLOR,
+   in    float2 uv    : TEXCOORD0)
 {
-   out_color = in_color;
-   float sqlen = dot(in_texcoord, in_texcoord);
-
    // A gaussian bell of sorts.
-   out_color.a *= 1.5 * exp(-(sqlen * 8));
+   color.a *= 1.5 * exp(-(dot(uv, uv) * 8));
 }
