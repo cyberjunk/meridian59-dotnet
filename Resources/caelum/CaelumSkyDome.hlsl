@@ -40,38 +40,30 @@ float4 sunlightInscatter(
 }
 
 void SkyDomeVP(
-   in      float4   position : POSITION,
-   in      float4   normal   : NORMAL,
-   in      float2   uv       : TEXCOORD0,
+   inout   float4   position          : POSITION,
+   inout   float3   normal            : NORMAL,
+   inout   float2   uv                : TEXCOORD0,
+   out     float    incidenceAngleCos : TEXCOORD1,
+   out     float    y                 : TEXCOORD2
    uniform float    lightAbsorption,
    uniform float4x4 worldViewProj,
-   uniform float3   sunDirection,
-   out     float4   oPosition         : POSITION,
-   out     float4   oCol              : COLOR, 
-   out     float2   oUv               : TEXCOORD0,
-   out     float    incidenceAngleCos : TEXCOORD1,
-   out     float    y                 : TEXCOORD2, 
-   out     float3   oNormal           : TEXCOORD3)
+   uniform float3   sunDirection)
 {
-   sunDirection = normalize (sunDirection);
-   normal = normalize (normal);
-   float cosine = dot (-sunDirection, normal);
-   incidenceAngleCos = -cosine;
+   sunDirection = -normalize(sunDirection);
+   normal       = normalize(normal);
 
-   y = -sunDirection.y;
+   incidenceAngleCos = -dot(sunDirection, normal);
+   y = sunDirection.y;
 
-   oPosition = mul (worldViewProj, position);
-   oCol = float4 (1, 1, 1, 1);
-   oUv = uv;
-   oNormal = -normal.xyz;
+   position = mul(worldViewProj, position);
+   normal   = -normal;
 }
 
 void SkyDomeFP(
-   in      float4    col               : COLOR, 
    in      float2    uv                : TEXCOORD0,
    in      float     incidenceAngleCos : TEXCOORD1,
    in      float     y                 : TEXCOORD2, 
-   in      float3    normal            : TEXCOORD3, 
+   in      float3    normal            : NORMAL, 
    uniform sampler   gradientsMap      : register(s0), 
    uniform sampler1D atmRelativeDepth  : register(s1), 
    uniform float4    hazeColour, 
@@ -81,14 +73,13 @@ void SkyDomeFP(
    float4 sunColour = float4 (3, 3, 3, 1);
 
 #ifdef HAZE
-   float fogDensity = 15;
-   // Haze amount calculation
-   float invHazeHeight = 100;
-   float haze = fogExp (pow(clamp (1 - normal.y, 0, 1), invHazeHeight), fogDensity);
+   const float fogDensity = 15;
+   const float invHazeHeight = 100;
+   const float haze = fogExp (pow(clamp (1 - normal.y, 0, 1), invHazeHeight), fogDensity);
 #endif // HAZE
 
    // Pass the colour
-   oCol = tex2D (gradientsMap, uv + float2 (offset, 0)) * col;
+   oCol = tex2D (gradientsMap, uv + float2 (offset, 0));
 
    // Sunlight inscatter
    if (incidenceAngleCos > 0)
