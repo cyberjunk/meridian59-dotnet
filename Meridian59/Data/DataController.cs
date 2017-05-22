@@ -819,7 +819,7 @@ namespace Meridian59.Data
             spellObjects = new SpellObjectList(100);
             backgroundOverlays = new BackgroundOverlayList(5);
             playerOverlays = new ObjectBaseList<PlayerOverlay>(10);            
-            chatMessages = new BaseList<ServerString>(101);
+            chatMessages = new BaseList<ServerString>(201);
             gameMessageLog = new BaseList<GameMessage>(100);
             visitedTargets = new List<RoomObject>(50);
             clickedTargets = new List<uint>(50);
