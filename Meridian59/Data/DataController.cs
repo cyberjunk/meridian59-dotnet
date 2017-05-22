@@ -871,7 +871,7 @@ namespace Meridian59.Data
             clientPreferences = new PreferencesFlags();
 
             // some values
-            ChatMessagesMaximum = 100;
+            ChatMessagesMaximum = 200;
             ChatCommandHistoryMaximum = 20;
             ChatCommandHistoryIndex = -1;
             AvatarObject = null;
