@@ -1,5 +1,3 @@
-// Format2 (long): cubic_texture <front> <back> <left> <right> <up> <down> separateUV
-
 material Sky/Day
 {
 	technique
@@ -11,7 +9,7 @@ material Sky/Day
 
 			texture_unit
 			{
-				cubic_texture skya-0.png skya-2.png skya-3.png skya-4.png skya-5.png skya-1.png separateUV
+				cubic_texture skya.png combinedUVW
 				tex_address_mode clamp
 			}
 		}
@@ -29,7 +27,7 @@ material Sky/Evening
 
 			texture_unit
 			{
-				cubic_texture skyb-0.png skyb-2.png skyb-3.png skyb-4.png skyb-5.png skyb-1.png separateUV
+				cubic_texture skyb.png combinedUVW
 				tex_address_mode clamp
 			}
 		}
@@ -47,7 +45,7 @@ material Sky/Morning
 
 			texture_unit
 			{
-				cubic_texture skyc-0.png skyc-2.png skyc-3.png skyc-4.png skyc-5.png skyc-1.png separateUV
+				cubic_texture skyc.png combinedUVW
 				tex_address_mode clamp
 			}
 		}
@@ -65,7 +63,7 @@ material Sky/Night
 
 			texture_unit
 			{
-				cubic_texture skyd-0.png skyd-2.png skyd-3.png skyd-4.png skyd-5.png skyd-1.png separateUV
+				cubic_texture skyd.png combinedUVW
 				tex_address_mode clamp
 			}
 		}
@@ -83,7 +81,7 @@ material Sky/Frenzy
 
 			texture_unit
 			{
-				cubic_texture redsky-0.png redsky-2.png redsky-3.png redsky-4.png redsky-5.png redsky-1.png separateUV
+				cubic_texture redsky.png combinedUVW
 				tex_address_mode clamp
 			}
 		}
