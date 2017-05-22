@@ -87,30 +87,9 @@ fragment_program diffuse_ps hlsl
 	 
     default_params
     {
-        param_named_auto lightCol[0] light_diffuse_colour 0
-		param_named_auto lightPos[0] light_position 0
-        param_named_auto lightAtt[0] light_attenuation 0
-		param_named_auto lightCol[1] light_diffuse_colour 1
-		param_named_auto lightPos[1] light_position 1
-        param_named_auto lightAtt[1] light_attenuation 1	
-		param_named_auto lightCol[2] light_diffuse_colour 2
-		param_named_auto lightPos[2] light_position 2
-        param_named_auto lightAtt[2] light_attenuation 2
-		param_named_auto lightCol[3] light_diffuse_colour 3
-		param_named_auto lightPos[3] light_position 3
-        param_named_auto lightAtt[3] light_attenuation 3
-		param_named_auto lightCol[4] light_diffuse_colour 4
-		param_named_auto lightPos[4] light_position 4
-        param_named_auto lightAtt[4] light_attenuation 4
-		param_named_auto lightCol[5] light_diffuse_colour 5
-		param_named_auto lightPos[5] light_position 5
-        param_named_auto lightAtt[5] light_attenuation 5
-		param_named_auto lightCol[6] light_diffuse_colour 6
-		param_named_auto lightPos[6] light_position 6
-        param_named_auto lightAtt[6] light_attenuation 6
-		param_named_auto lightCol[7] light_diffuse_colour 7
-		param_named_auto lightPos[7] light_position 7
-        param_named_auto lightAtt[7] light_attenuation 7
+        param_named_auto lightCol light_diffuse_colour_array 8
+		param_named_auto lightPos light_position_array 8
+        param_named_auto lightAtt light_attenuation_array 8
 		param_named colormodifier float4 1 1 1 1			
     }
 }
@@ -170,6 +149,7 @@ material base_material
         {
 			alpha_rejection greater_equal 64
 			alpha_to_coverage on
+			iteration once
             illumination_stage ambient
 
             vertex_program_ref ambient_vs
@@ -194,6 +174,8 @@ material base_material
 			alpha_rejection greater_equal 64
 			alpha_to_coverage on
 			iteration 1 per_n_lights 8 point
+			illumination_stage per_light
+
 			max_lights 48
 			scene_blend add
             
