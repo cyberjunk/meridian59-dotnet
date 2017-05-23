@@ -18,7 +18,7 @@ void label_vs(
    
    float dist = length(eyePos - wp);
    dist *= 0.001; 
-   dist = clamp(dist, 0.5, 2.0);
+   dist = clamp(dist, 0.18, 1.8);
     
    p *= float4(dist, dist, dist, 1);   
    p.y += offset;   
