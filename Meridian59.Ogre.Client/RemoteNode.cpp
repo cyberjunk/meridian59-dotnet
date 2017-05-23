@@ -245,6 +245,7 @@ namespace Meridian59 { namespace Ogre
 				// adjust pass (texture / alpha / ...)
 				Pass* pass = matPtr->getTechnique(0)->getPass(0);
 				pass->createTextureUnitState(texName);
+            pass->setMaxSimultaneousLights(0);
 				pass->setAlphaRejectFunction(CompareFunction::CMPF_GREATER);
 				pass->setAlphaRejectValue(0);                
 

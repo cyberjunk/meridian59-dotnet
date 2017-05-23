@@ -944,7 +944,7 @@ namespace Meridian59 { namespace Ogre
 			Util::CreateMaterial(
 				ostr_matname, ostr_texname, 
             MATERIALGROUP_ROOLOADER,
-				scrollSpeed, nullptr);
+				scrollSpeed, nullptr, true);
 		
 	};
 

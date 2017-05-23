@@ -2,6 +2,21 @@
 // VERTEX & FRAGMENT PROGRAMS //
 ////////////////////////////////
 
+vertex_program room_vs hlsl
+{
+    source general.hlsl
+    target vs_3_0
+    entry_point room_vs
+    optimisation_level 3
+ 
+    default_params
+    {
+        param_named_auto wvpMat worldviewproj_matrix
+		param_named_auto texMat texture_matrix 0
+		param_named_auto wMat world_matrix
+    }
+}
+
 vertex_program ambient_vs hlsl
 {
     source general.hlsl
@@ -62,6 +77,23 @@ vertex_program water_vs hlsl
 	}
 }
 
+fragment_program room_ps hlsl
+{
+    source general.hlsl
+    target ps_3_0
+    entry_point room_ps
+    optimisation_level 3
+	 
+    default_params
+    {
+        param_named_auto ambient ambient_light_colour
+        param_named_auto lightCol light_diffuse_colour_array 48
+		param_named_auto lightPos light_position_array 48
+        param_named_auto lightAtt light_attenuation_array 48
+		param_named colormodifier float4 1 1 1 1
+    }
+}
+
 fragment_program ambient_ps hlsl
 {
     source general.hlsl
@@ -87,9 +119,9 @@ fragment_program diffuse_ps hlsl
 	 
     default_params
     {
-        param_named_auto lightCol light_diffuse_colour_array 8
-		param_named_auto lightPos light_position_array 8
-        param_named_auto lightAtt light_attenuation_array 8
+        param_named_auto lightCol light_diffuse_colour_array 4
+		param_named_auto lightPos light_position_array 4
+        param_named_auto lightAtt light_attenuation_array 4
 		param_named colormodifier float4 1 1 1 1			
     }
 }
@@ -140,6 +172,36 @@ material transparent
 	}
 }
 
+material base_material_room
+{
+    technique
+    {
+        pass
+        {
+			alpha_rejection greater_equal 64
+			alpha_to_coverage on
+			iteration once
+            illumination_stage ambient
+			max_lights 48
+			
+            vertex_program_ref room_vs
+            {
+            }
+ 
+            fragment_program_ref room_ps
+            {
+				param_named colormodifier float4 1 1 1 1
+            }
+ 
+			// set this in code with texture
+			// see: ApplyTextureAliases()
+            texture_unit diffuseMap
+            {   
+            }
+        }
+    }
+}
+
 material base_material
 {
     technique
@@ -173,10 +235,10 @@ material base_material
         {
 			alpha_rejection greater_equal 64
 			alpha_to_coverage on
-			iteration 1 per_n_lights 8 point
+			iteration 1 per_n_lights 4 point
 			illumination_stage per_light
 
-			max_lights 48
+			max_lights 8
 			scene_blend add
             
             vertex_program_ref diffuse_vs

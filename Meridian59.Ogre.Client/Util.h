@@ -523,7 +523,8 @@ namespace Meridian59 { namespace Ogre
          const ::Ogre::String& TextureName, 
          const ::Ogre::String& MaterialGroup, 
          const ::Ogre::Vector2* ScrollSpeed, 
-         const ::Ogre::Vector4* ColorModifier)
+         const ::Ogre::Vector4* ColorModifier,
+         const bool IsRoomMaterial)
       {
          MaterialManager& matMan = MaterialManager::getSingleton();
 
@@ -532,7 +533,7 @@ namespace Meridian59 { namespace Ogre
             return;
 
          // try to get existing base material
-         MaterialPtr baseMaterial =  matMan.getByName(BASEMATERIAL, RESOURCEGROUPSHADER);
+         MaterialPtr baseMaterial =  matMan.getByName(IsRoomMaterial ? BASEMATERIALROOM : BASEMATERIAL, RESOURCEGROUPSHADER);
 
          // something wrong here, base material missing...
          if (baseMaterial.isNull())
@@ -550,30 +551,33 @@ namespace Meridian59 { namespace Ogre
 
          // get shader passes (0 = ambient, 1 = diffuse pointlights)
          Pass* ambientPass = matPtr->getTechnique(0)->getPass(0);
-         Pass* diffusePass = matPtr->getTechnique(0)->getPass(1);
-
+         
          // get fragment shader parameters from ambient pass
          const GpuProgramParametersSharedPtr paramsAmbient = 
             ambientPass->getFragmentProgramParameters();
 
-         // get fragment shader parameters from diffuse pass
-         const GpuProgramParametersSharedPtr paramsDiffuse = 
-            diffusePass->getFragmentProgramParameters();
-
          // apply a custom color modifier on the shaders
          // its components get multiplied with the color components
          if (ColorModifier != nullptr)
-         {
-            // set the light modifier on ambient pass params
             paramsAmbient->setNamedConstant(SHADERCOLORMODIFIER, *ColorModifier);
-
-            // set the light modifier on pointlight pass params
-            paramsDiffuse->setNamedConstant(SHADERCOLORMODIFIER, *ColorModifier);
-         }
 
          // apply a scrolling if set
          if (ScrollSpeed != nullptr)
             ambientPass->getTextureUnitState(0)->setScrollAnimation(ScrollSpeed->x, ScrollSpeed->y);
+
+         // setup second pass for objects
+         if (!IsRoomMaterial)
+         {
+            Pass* diffusePass = matPtr->getTechnique(0)->getPass(1);
+
+            // get fragment shader parameters from diffuse pass
+            const GpuProgramParametersSharedPtr paramsDiffuse =
+               diffusePass->getFragmentProgramParameters();
+
+            // set the light modifier on pointlight pass params
+            if (ColorModifier != nullptr)
+               paramsDiffuse->setNamedConstant(SHADERCOLORMODIFIER, *ColorModifier);
+         }
 
          // cleanup
          baseMaterial.setNull();

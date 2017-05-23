@@ -1,4 +1,60 @@
 /********************************/
+/*     ROOM COMBINED SHADERS    */
+/********************************/
+
+// vertex
+void room_vs(
+   inout   float4   p      : POSITION,
+   inout   float2   uv     : TEXCOORD0,
+   out     float4   wp     : TEXCOORD1,
+   inout   float3   normal : NORMAL,
+   uniform float4x4 wMat,
+   uniform float4x4 wvpMat,
+   uniform float4x4 texMat)
+{
+   wp = mul(wMat, p);
+   p = mul(wvpMat, p);
+   uv = mul(texMat, float4(uv, 0, 1)).xy;
+}
+
+// pixel
+void room_ps(
+   out     float4    pixel          : COLOR0,
+   in      float2    uv             : TEXCOORD0,
+   in      float4    wp             : TEXCOORD1,
+   in      float3    normal         : NORMAL,
+   uniform float3    ambient,
+   uniform float3    lightCol[48],
+   uniform float4    lightPos[48],
+   uniform float4    lightAtt[48],
+   uniform float4    colormodifier,
+   uniform sampler2D diffusetex     : TEXUNIT0)
+{
+   // pixel from texture
+   const float4 texcol = tex2D(diffusetex, uv);
+
+   // flip direction (ogre? also normaalize in ogre)
+   //lightPos[0] = -lightPos[0];
+
+   // represents how much this pixel should be affected by directional light
+   float angle = max(dot(lightPos[0].xyz, normal), 0);
+
+   // combine ambient and directional light with weights
+   float3 light = (0.2 * angle * lightCol[0]) + (0.8 * ambient);
+
+   [unroll(48)]
+   for(uint i = 1; i < 48; i++)
+   {
+      float3 delta = lightPos[i] - wp;
+      float lightScale = max(0.0, 1.0 - (dot(delta, delta) / (lightAtt[i].r * lightAtt[i].r)));
+      light += lightCol[i] * lightScale;
+   }
+   
+   // output pixel
+   pixel = float4(light * colormodifier.rgb * texcol.rgb, texcol.a * colormodifier.a);
+}
+
+/********************************/
 /*     AMBIENT LIGHT SHADERS    */
 /********************************/
 
@@ -74,9 +130,9 @@ void diffuse_ps(
    out     float4    pixel         : COLOR0,
    in      float2    uv            : TEXCOORD0,
    in      float4    wp            : TEXCOORD1,
-   uniform float3    lightCol[8],
-   uniform float4    lightPos[8],
-   uniform float4    lightAtt[8],
+   uniform float3    lightCol[4],
+   uniform float4    lightPos[4],
+   uniform float4    lightAtt[4],
    uniform float4    colormodifier,
    uniform sampler2D diffusetex    : TEXUNIT0)
 {
@@ -86,8 +142,8 @@ void diffuse_ps(
    // start light
    float3 light = float3(0, 0, 0);
 
-   [unroll(8)]
-   for(uint i = 0; i < 8; i++)
+   [unroll(4)]
+   for(uint i = 0; i < 4; i++)
    {
       float3 delta = lightPos[i] - wp;
       float lightScale = max(0.0, 1.0 - (dot(delta, delta) / (lightAtt[i].r * lightAtt[i].r)));
