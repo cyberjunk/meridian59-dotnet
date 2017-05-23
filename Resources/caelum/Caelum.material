@@ -346,6 +346,7 @@ material Caelum/MoonBackground
     {
         pass
         {
+			scene_blend alpha_blend
             texture_unit
             {
             }
