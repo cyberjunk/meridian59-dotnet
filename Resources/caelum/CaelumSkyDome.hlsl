@@ -84,9 +84,9 @@ void SkyDomeFP(
    // Sunlight inscatter
    if (incidenceAngleCos > 0)
    {
-      float sunlightScatteringFactor = 0.05;
-      float sunlightScatteringLossFactor = 0.1;
-      float atmLightAbsorptionFactor = 0.1;
+      float sunlightScatteringFactor = 0.01;
+      float sunlightScatteringLossFactor = 0.7;
+      float atmLightAbsorptionFactor = 0.5;
 
       oCol.rgb += sunlightInscatter(
          sunColour, 
