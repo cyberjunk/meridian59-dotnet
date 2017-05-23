@@ -14,7 +14,7 @@ void label_vs(
    uniform float    offset)
 {
    wp = mul(wMat, p);
-   wp.y + offset;
+   wp.y += offset;
    
    float dist = length(eyePos - wp);
    dist *= 0.001; 
