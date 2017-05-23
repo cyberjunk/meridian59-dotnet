@@ -1423,12 +1423,6 @@ namespace Meridian59 { namespace Ogre
             // save a reference to the avatar object
             AvatarObject = newObject;
 
-            float height = Util::GetSceneNodeHeight(AvatarObject->SceneNode);						
-
-			// put camera on top of avatarnode
-			OgreClient::Singleton->CameraNode->setPosition(
-				0.0f, height * 0.93f, 0.0f);
-                
             // Attach cameranode on avatarnode
             AvatarObject->SceneNode->addChild(OgreClient::Singleton->CameraNode);               
             AvatarObject->SceneNode->setFixedYawAxis(true);

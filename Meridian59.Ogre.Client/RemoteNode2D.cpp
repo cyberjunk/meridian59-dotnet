@@ -119,7 +119,13 @@ namespace Meridian59 { namespace Ogre
 
 		// set bbox
 		billboardSet->setBounds(bbBox, 0.0f);	
-    };
+
+      // update possible attached name label
+      UpdateNamePosition();
+
+      // update camera position (might be different now)
+      UpdateCameraPosition();
+   };
 
 	void RemoteNode2D::CreateLight()
 	{

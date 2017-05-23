@@ -44,7 +44,6 @@ namespace Meridian59 { namespace Ogre
 	protected:
 		::Ogre::SceneManager*	sceneManager;
 		::Ogre::SceneNode*		sceneNode;
-      ::Ogre::SceneNode* nameNode;
 		::Ogre::Light*			light;
 		::Ogre::Billboard*		billboardName;
         ::Ogre::BillboardSet*	billboardSetName;
@@ -63,6 +62,7 @@ namespace Meridian59 { namespace Ogre
 		void CreateName();
 		void UpdateName();
 		void UpdateNamePosition();
+      void UpdateCameraPosition();
 
 		virtual void UpdateMaterial();
 

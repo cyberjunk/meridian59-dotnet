@@ -260,6 +260,20 @@ namespace Meridian59 { namespace Ogre
       }
    };
 
+   void RemoteNode::UpdateCameraPosition()
+   {
+      // if this scenenode has the cameranode attached
+      // set camera y offset
+      if (OgreClient::Singleton->CameraNode->getParentSceneNode() == sceneNode)
+      {
+         // update camera
+         float height = Util::GetSceneNodeHeight(SceneNode);
+
+         // put camera on top of avatarnode
+         OgreClient::Singleton->CameraNode->setPosition(
+            0.0f, height * 0.93f, 0.0f);
+      }
+   }
    void RemoteNode::UpdateNamePosition()
    {
       if (billboardSetName == nullptr || billboardName == nullptr || sceneNode == nullptr)
