@@ -290,7 +290,7 @@ namespace Meridian59.Drawing2D
             static NameBitmap()
             {
                 STRINGFORMAT.Alignment = StringAlignment.Center;
-                STRINGFORMAT.LineAlignment = StringAlignment.Center;
+                STRINGFORMAT.LineAlignment = StringAlignment.Far;
             }
 
             /// <summary>
