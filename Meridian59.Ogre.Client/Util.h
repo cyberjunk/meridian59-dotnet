@@ -510,6 +510,61 @@ namespace Meridian59 { namespace Ogre
       };
 
       /// <summary>
+      /// Clones the base material for name labels to a new material and applies a texture.
+      /// Only if there is no material with that name yet.
+      /// </summary>
+      /// <param name="MaterialName">Name of new material</param>
+      /// <param name="TextureName">Name of texture to set on new material</param>
+      /// <param name="MaterialGroup">ResourceGroup of new material</param>
+      /// <param name="ScrollSpeed">NULL (default) or texture scrolling speed</param>
+      /// <param name="ColorModifier">NULL (= 1 1 1 1) or a vector which components get multiplied with light components</param>
+      __forceinline static void CreateMaterialLabel(
+         const ::Ogre::String& MaterialName,
+         const ::Ogre::String& TextureName,
+         const ::Ogre::String& MaterialGroup,
+         const ::Ogre::Vector4* ColorModifier)
+      {
+         MaterialManager& matMan = MaterialManager::getSingleton();
+
+         // nothing to do, material exists already
+         if (matMan.resourceExists(MaterialName))
+            return;
+
+         // try to get existing base material
+         MaterialPtr baseMaterial = matMan.getByName(BASEMATERIALLABEL, RESOURCEGROUPSHADER);
+
+         // something wrong here, base material missing...
+         if (baseMaterial.isNull())
+            return;
+
+         // clone base material to different group
+         MaterialPtr matPtr = baseMaterial->clone(MaterialName, true, MaterialGroup);
+
+         // set the texture_unit part with name of the texture
+         AliasTextureNamePairList pairs = AliasTextureNamePairList();
+         pairs[TEXTUREUNITALIAS] = TextureName;
+
+         // apply texture name
+         matPtr->applyTextureAliases(pairs);
+
+         // get shader passes (0 = ambient, 1 = diffuse pointlights)
+         Pass* ambientPass = matPtr->getTechnique(0)->getPass(0);
+
+         // get fragment shader parameters from ambient pass
+         const GpuProgramParametersSharedPtr paramsAmbient =
+            ambientPass->getFragmentProgramParameters();
+
+         // apply a custom color modifier on the shaders
+         // its components get multiplied with the color components
+         if (ColorModifier != nullptr)
+            paramsAmbient->setNamedConstant(SHADERCOLORMODIFIER, *ColorModifier);
+
+         // cleanup
+         baseMaterial.setNull();
+         matPtr.setNull();
+      };
+
+      /// <summary>
       /// Clones the base material to a new material and applies a texture.
       /// Only if there is no material with that name yet.
       /// </summary>

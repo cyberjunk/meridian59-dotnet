@@ -9,6 +9,7 @@
 #define RESOURCEGROUPSHADER			 "shader"
 #define RESOURCEGROUPDECORATION		 "decoration"
 
+#define BASEMATERIALLABEL				"base_material_label"
 #define BASEMATERIAL				"base_material"
 #define BASEMATERIALROOM				"base_material_room"
 #define BASEMATERIALINVISIBLE		"base_material_invisible"

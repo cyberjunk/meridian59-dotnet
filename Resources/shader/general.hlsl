@@ -1,4 +1,47 @@
 /********************************/
+/*        NAME LABEL SHADERS    */
+/********************************/
+
+// vertex
+void label_vs(
+   inout   float4   p      : POSITION,
+   inout   float2   uv     : TEXCOORD0,
+   out     float4   wp     : TEXCOORD1,
+   uniform float4x4 wMat,
+   uniform float4x4 wvpMat,
+   uniform float4x4 texMat,
+   uniform float3   eyePos,
+   uniform float    offset)
+{
+   wp = mul(wMat, p);
+   wp.y + offset;
+   
+   float dist = length(eyePos - wp);
+   dist *= 0.001; 
+   dist = clamp(dist, 0.5, 2.0);
+    
+   p *= float4(dist, dist, dist, 1);   
+   p.y += offset;   
+     
+   p = mul(wvpMat, p);
+   uv = mul(texMat, float4(uv, 0, 1)).xy;
+}
+
+// pixel
+void label_ps(
+   out     float4    pixel          : COLOR0,
+   in      float2    uv             : TEXCOORD0,
+   uniform float4    colormodifier,
+   uniform sampler2D diffusetex     : TEXUNIT0)
+{
+   // pixel from texture
+   const float4 texcol = tex2D(diffusetex, uv);
+
+   // output pixel
+   pixel = float4(texcol) * colormodifier;
+}
+
+/********************************/
 /*     ROOM COMBINED SHADERS    */
 /********************************/
 

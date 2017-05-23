@@ -2,6 +2,23 @@
 // VERTEX & FRAGMENT PROGRAMS //
 ////////////////////////////////
 
+vertex_program label_vs hlsl
+{
+    source general.hlsl
+    target vs_3_0
+    entry_point label_vs
+    optimisation_level 3
+ 
+    default_params
+    {
+        param_named_auto wvpMat worldviewproj_matrix
+		param_named_auto texMat texture_matrix 0
+		param_named_auto wMat world_matrix
+		param_named_auto eyePos camera_position
+		param_named offset float 0
+    }
+}
+
 vertex_program room_vs hlsl
 {
     source general.hlsl
@@ -75,6 +92,21 @@ vertex_program water_vs hlsl
 		param_named_auto eyePos camera_position_object_space
 		param_named_auto time_0_X time_0_x 100.0
 	}
+}
+
+// pixelshaders
+
+fragment_program label_ps hlsl
+{
+    source general.hlsl
+    target ps_3_0
+    entry_point label_ps
+    optimisation_level 3
+	 
+    default_params
+    {
+		param_named colormodifier float4 1 1 1 1			
+    }
 }
 
 fragment_program room_ps hlsl
@@ -170,6 +202,37 @@ material transparent
 			depth_write off
 		}
 	}
+}
+
+material base_material_label
+{
+    technique
+    {
+        pass
+        {
+			alpha_rejection greater_equal 64
+			alpha_to_coverage on
+			iteration once
+            illumination_stage ambient
+			max_lights 4
+			
+            vertex_program_ref label_vs
+            {
+				param_named offset float 0
+            }
+ 
+            fragment_program_ref label_ps
+            {
+				param_named colormodifier float4 1 1 1 1
+            }
+ 
+			// set this in code with texture
+			// see: ApplyTextureAliases()
+            texture_unit diffuseMap
+            {   
+            }
+        }
+    }
 }
 
 material base_material_room
