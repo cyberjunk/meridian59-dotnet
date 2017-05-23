@@ -44,7 +44,7 @@ void SkyDomeVP(
    inout   float3   normal            : NORMAL,
    inout   float2   uv                : TEXCOORD0,
    out     float    incidenceAngleCos : TEXCOORD1,
-   out     float    y                 : TEXCOORD2
+   out     float    y                 : TEXCOORD2,
    uniform float    lightAbsorption,
    uniform float4x4 worldViewProj,
    uniform float3   sunDirection)
