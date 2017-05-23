@@ -2109,11 +2109,8 @@ namespace Meridian59 { namespace Ogre
 
 		OgreClient::Singleton->Config->DisableNewSky = newval;
 		
-		if (newval)
-			ControllerRoom::DestroyCaelum(); 
-		else
-			ControllerRoom::InitCaelum();
-
+		ControllerRoom::DestroyCaelum(); 
+		ControllerRoom::InitCaelum();
 		ControllerRoom::UpdateSky();
 
 		return true;

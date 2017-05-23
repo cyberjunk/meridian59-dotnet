@@ -101,81 +101,73 @@ namespace Meridian59 { namespace Ogre
 		IsInitialized = true;		
 	};
 	
-	void ControllerRoom::InitCaelum()
-	{
-		// don't init twice or if disabled
-		if (caelumSystem || OgreClient::Singleton->Config->DisableNewSky)
-			return;
-      
-      // make sure the manual direct light is gone, caelum has its own
-      DestroyDirectLight();
+   void ControllerRoom::InitCaelum()
+   {
+      // don't init twice
+      if (caelumSystem)
+         return;
 
-		/**************************** 2. INIT *******************************************************/
-		
-		// configuration flags for caelum
-		::Caelum::CaelumSystem::CaelumComponent flags = (::Caelum::CaelumSystem::CaelumComponent)(
-			::Caelum::CaelumSystem::CaelumComponent::CAELUM_COMPONENT_SKY_DOME |
-			::Caelum::CaelumSystem::CaelumComponent::CAELUM_COMPONENT_MOON |
-			::Caelum::CaelumSystem::CaelumComponent::CAELUM_COMPONENT_SUN |
-			::Caelum::CaelumSystem::CaelumComponent::CAELUM_COMPONENT_POINT_STARFIELD |
-			::Caelum::CaelumSystem::CaelumComponent::CAELUM_COMPONENT_CLOUDS);
+      /**************************** 1. INIT *******************************************************/
 
-		// the ones we don't use 
-		//CaelumComponent::CAELUM_COMPONENT_IMAGE_STARFIELD
-		//CaelumComponent::CAELUM_COMPONENT_PRECIPITATION
-		//CaelumComponent::CAELUM_COMPONENT_SCREEN_SPACE_FOG
-		//CaelumComponent::CAELUM_COMPONENT_GROUND_FOG
+      // configuration flags for caelum (either full or sun/moon only)
+      ::Caelum::CaelumSystem::CaelumComponent flags = (OgreClient::Singleton->Config->DisableNewSky) ?
+         (::Caelum::CaelumSystem::CaelumComponent)(
+            ::Caelum::CaelumSystem::CaelumComponent::CAELUM_COMPONENT_MOON |
+            ::Caelum::CaelumSystem::CaelumComponent::CAELUM_COMPONENT_SUN) :
+         (::Caelum::CaelumSystem::CaelumComponent)(
+            ::Caelum::CaelumSystem::CaelumComponent::CAELUM_COMPONENT_SKY_DOME |
+            ::Caelum::CaelumSystem::CaelumComponent::CAELUM_COMPONENT_MOON |
+            ::Caelum::CaelumSystem::CaelumComponent::CAELUM_COMPONENT_SUN |
+            ::Caelum::CaelumSystem::CaelumComponent::CAELUM_COMPONENT_POINT_STARFIELD |
+            ::Caelum::CaelumSystem::CaelumComponent::CAELUM_COMPONENT_CLOUDS);
 
-		// init caelumsystem
-		caelumSystem = new ::Caelum::CaelumSystem(
-			OgreClient::Singleton->Root, 
-			SceneManager, 			
-			flags);
+      // init caelumsystem
+      caelumSystem = new ::Caelum::CaelumSystem(
+         OgreClient::Singleton->Root,
+         SceneManager,
+         flags);
 
-		// don't manage ambientlight
-		caelumSystem->setManageAmbientLight(false);
+      // don't manage ambientlight, use only 1 directional light and no fog
+      caelumSystem->setManageAmbientLight(false);
       caelumSystem->setEnsureSingleLightSource(true);
+      caelumSystem->setManageSceneFog(::Ogre::FogMode::FOG_NONE);
+      //CaelumSystem->setSceneFogDensityMultiplier(0.0f);
 
-		// no fog
-		caelumSystem->setManageSceneFog(::Ogre::FogMode::FOG_NONE);
-		//CaelumSystem->setSceneFogDensityMultiplier(0.0f);
-		
-		// attach viewport
-		caelumSystem->attachViewport(OgreClient::Singleton->Viewport);
-		//CaelumSystem->attachViewport(OgreClient::Singleton->ViewportInvis);
-		
-		// hookup listeners
-		//OgreClient::Singleton->Root->addFrameListener(CaelumSystem);
-		//OgreClient::Singleton->RenderWindow->addListener(CaelumSystem);
+      // attach viewport
+      caelumSystem->attachViewport(OgreClient::Singleton->Viewport);
+      //CaelumSystem->attachViewport(OgreClient::Singleton->ViewportInvis);
 
-		/**************************** 2. TIME/DAY DURATION *******************************************/
-		
-		const int YEAR = 1;
-		const int MONTH = 4;
-		const int DAY = 1;
+      // hookup listeners
+      //OgreClient::Singleton->Root->addFrameListener(CaelumSystem);
+      //OgreClient::Singleton->RenderWindow->addListener(CaelumSystem);
 
-		// get caelum clock instance and current m59 time
-		::Caelum::UniversalClock* clock = caelumSystem->getUniversalClock();
-		::System::DateTime time			= MeridianDate::GetMeridianTime();
-		
-		// set caelum day duration to m59 day duration
-		clock->setTimeScale(MeridianDate::M59SECONDSPERSECOND);		
-			
-		// set caelum time to m59 time using dummy date
-		clock->setGregorianDateTime(YEAR, MONTH, DAY, time.Hour, time.Minute, time.Second);
+      /**************************** 2. TIME/DAY DURATION *******************************************/
 
-		/**************************** 3. CLOUDS ******************************************************/
-		
-		::Caelum::CloudSystem* clouds = caelumSystem->getCloudSystem();
+      const int YEAR = 1;
+      const int MONTH = 4;
+      const int DAY = 1;
 
-		if (clouds)
-		{
-			clouds->createLayerAtHeight(2000.0f);
-			clouds->createLayerAtHeight(5000.0f);
-			clouds->getLayer(0)->setCloudSpeed(Ogre::Vector2(0.00010f, -0.00018f));
-			clouds->getLayer(1)->setCloudSpeed(Ogre::Vector2(0.00009f, -0.00017f));		
-		}			
-	};
+      // get caelum clock instance and current m59 time
+      ::Caelum::UniversalClock* clock = caelumSystem->getUniversalClock();
+      ::System::DateTime time = MeridianDate::GetMeridianTime();
+
+      // set caelum day duration to m59 day duration
+      // and set current time using dummy date
+      clock->setTimeScale(MeridianDate::M59SECONDSPERSECOND);
+      clock->setGregorianDateTime(YEAR, MONTH, DAY, time.Hour, time.Minute, time.Second);
+
+      /**************************** 3. CLOUDS ******************************************************/
+
+      ::Caelum::CloudSystem* clouds = caelumSystem->getCloudSystem();
+
+      if (clouds)
+      {
+         clouds->createLayerAtHeight(2000.0f);
+         clouds->createLayerAtHeight(5000.0f);
+         clouds->getLayer(0)->setCloudSpeed(Ogre::Vector2(0.00010f, -0.00018f));
+         clouds->getLayer(1)->setCloudSpeed(Ogre::Vector2(0.00009f, -0.00017f));
+      }
+   };
 	
 	void ControllerRoom::InitParticleSystems()
 	{
@@ -280,7 +272,6 @@ namespace Meridian59 { namespace Ogre
 			return;
 		
 		UnloadRoom();		
-      DestroyDirectLight();
 		DestroyCaelum();
 		DestroyParticleSystems();
 
@@ -1216,9 +1207,6 @@ namespace Meridian59 { namespace Ogre
 		{
 			// disable ogre skybox, caelum will be used
 			SceneManager->setSkyBox(false, "");
-
-         // make sure manual light is destroyed
-         DestroyDirectLight();
 		}
 		else
 		{
@@ -1241,9 +1229,6 @@ namespace Meridian59 { namespace Ogre
 				else if (bgfFilename->Contains(SKY_FRENZY))
 					SceneManager->setSkyBox(true, SKY_FRENZY_MAT);    
 			}
-
-         // possibly create the manual direct light
-         CreateDirectLight();
 		}	
 	};
 
@@ -1332,24 +1317,6 @@ namespace Meridian59 { namespace Ogre
 				"Setting DirectionalLight to " + directional.ToString());
 		}
 	};
-	
-   void ControllerRoom::CreateDirectLight()
-   {
-      if (directLight == nullptr)
-      {
-         directLight = SceneManager->createLight("DIRECTLIGHT");
-         directLight->setType(::Ogre::Light::LightTypes::LT_DIRECTIONAL);
-         directLight->setDiffuseColour(0, 0, 0);
-      }
-   };
-
-   void ControllerRoom::DestroyDirectLight()
-   {
-      if (SceneManager->hasLight("DIRECTLIGHT"))
-         SceneManager->destroyLight("DIRECTLIGHT");
-
-      directLight = nullptr;
-   };
 
 	void ControllerRoom::ProjectileAdd(Projectile^ Projectile)
     {
