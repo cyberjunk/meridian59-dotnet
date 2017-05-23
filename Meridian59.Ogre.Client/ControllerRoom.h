@@ -79,7 +79,8 @@ namespace Meridian59 { namespace Ogre
 		static ::Caelum::CaelumSystem*				caelumSystem;
 		static ::Meridian59::Ogre::RemoteNode^		avatarObject;		
 		static ::ParticleUniverse::ParticleSystem*	particleSysSnow;
-		
+      static ::Ogre::Light* directLight;
+
 		static ::System::Collections::Generic::List<::System::String^>^ recreatequeue;
 
 		static Dictionary<unsigned short, array<System::String^>^>^ grassMaterials;
@@ -100,6 +101,8 @@ namespace Meridian59 { namespace Ogre
 		
 		static void AdjustOctree();
 		static void AdjustAmbientLight();
+      static void CreateDirectLight();
+      static void DestroyDirectLight();
 		static int GetRoomSectionByMaterial(const ::Ogre::String& Name);
 		static int GetDecorationSectionByMaterial(const ::Ogre::String& Name);
 

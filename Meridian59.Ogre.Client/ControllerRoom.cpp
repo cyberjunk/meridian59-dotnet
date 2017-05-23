@@ -106,8 +106,11 @@ namespace Meridian59 { namespace Ogre
 		// don't init twice or if disabled
 		if (caelumSystem || OgreClient::Singleton->Config->DisableNewSky)
 			return;
+      
+      // make sure the manual direct light is gone, caelum has its own
+      DestroyDirectLight();
 
-		/**************************** 1. INIT *******************************************************/
+		/**************************** 2. INIT *******************************************************/
 		
 		// configuration flags for caelum
 		::Caelum::CaelumSystem::CaelumComponent flags = (::Caelum::CaelumSystem::CaelumComponent)(
@@ -277,6 +280,7 @@ namespace Meridian59 { namespace Ogre
 			return;
 		
 		UnloadRoom();		
+      DestroyDirectLight();
 		DestroyCaelum();
 		DestroyParticleSystems();
 
@@ -1212,6 +1216,9 @@ namespace Meridian59 { namespace Ogre
 		{
 			// disable ogre skybox, caelum will be used
 			SceneManager->setSkyBox(false, "");
+
+         // make sure manual light is destroyed
+         DestroyDirectLight();
 		}
 		else
 		{
@@ -1234,6 +1241,9 @@ namespace Meridian59 { namespace Ogre
 				else if (bgfFilename->Contains(SKY_FRENZY))
 					SceneManager->setSkyBox(true, SKY_FRENZY_MAT);    
 			}
+
+         // possibly create the manual direct light
+         CreateDirectLight();
 		}	
 	};
 
@@ -1323,6 +1333,24 @@ namespace Meridian59 { namespace Ogre
 		}
 	};
 	
+   void ControllerRoom::CreateDirectLight()
+   {
+      if (directLight == nullptr)
+      {
+         directLight = SceneManager->createLight("DIRECTLIGHT");
+         directLight->setType(::Ogre::Light::LightTypes::LT_DIRECTIONAL);
+         directLight->setDiffuseColour(0, 0, 0);
+      }
+   };
+
+   void ControllerRoom::DestroyDirectLight()
+   {
+      if (SceneManager->hasLight("DIRECTLIGHT"))
+         SceneManager->destroyLight("DIRECTLIGHT");
+
+      directLight = nullptr;
+   };
+
 	void ControllerRoom::ProjectileAdd(Projectile^ Projectile)
     {
         // log
