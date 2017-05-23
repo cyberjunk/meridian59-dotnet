@@ -208,6 +208,28 @@ material Caelum/StarPoint
 //                          SUN                                //
 /////////////////////////////////////////////////////////////////
 
+vertex_program Caelum/SunVP hlsl
+{
+	source CaelumSun.hlsl
+	entry_point SunVP
+	target vs_3_0
+	optimisation_level 3
+	
+	default_params
+	{
+        param_named_auto wvpMat worldviewproj_matrix
+		param_named_auto texMat texture_matrix 0
+	}
+}
+
+fragment_program Caelum/SunFP hlsl
+{
+	source CaelumSun.hlsl
+	entry_point SunFP
+	target ps_3_0
+	optimisation_level 3
+}
+
 material CaelumSphereSun
 {
     technique Defaulto
@@ -239,7 +261,16 @@ material CaelumSpriteSun
             scene_blend src_colour one_minus_src_colour
             alpha_rejection greater_equal 128
             emissive vertexcolour
-            texture_unit Texture0
+						            
+			vertex_program_ref Caelum/SunVP
+            {
+            }
+			
+            fragment_program_ref Caelum/SunFP
+            {
+            }
+			
+            texture_unit SunDisc
             {
                 texture sun_disc.png 2d 0
             }
