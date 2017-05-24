@@ -71,9 +71,6 @@ namespace Meridian59 { namespace Ogre
 
       // perform mouseover
       ControllerInput::PerformMouseOver(mouseState.X.abs, mouseState.Y.abs, false);
-
-      if (ControllerRoom::CaelumSystem)
-         ControllerRoom::CaelumSystem->notifyCameraChanged(OgreClient::Singleton->Camera);
    };
 
 	////////////////////////////////////////////
