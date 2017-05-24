@@ -135,12 +135,12 @@ namespace Meridian59 { namespace Ogre
 			int TextureShrink);
 
 		/// <summary>
-		/// Creates a sector floor or ceiling
+		/// Creates a sector floor or ceiling material
 		/// Called from CreateSector()
 		/// </summary>
 		/// <param name="Sector"></param>
 		/// <param name="IsFloor"></param>
-		static void CreateSectorPart(RooSector^ Sector, bool IsFloor);
+		static void CreateSectorMaterial(RooSector^ Sector, bool IsFloor);
 
 		/// <summary>
         /// Creates a subsector of a floor or ceiling
