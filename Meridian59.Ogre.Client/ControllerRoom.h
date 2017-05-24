@@ -140,7 +140,7 @@ namespace Meridian59 { namespace Ogre
 		/// </summary>
 		/// <param name="Sector"></param>
 		/// <param name="IsFloor"></param>
-		static void CreateSectorMaterial(RooSector^ Sector, bool IsFloor);
+		static void CreateSectorPart(RooSector^ Sector, bool IsFloor);
 
 		/// <summary>
         /// Creates a subsector of a floor or ceiling

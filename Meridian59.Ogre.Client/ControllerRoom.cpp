@@ -521,20 +521,11 @@ namespace Meridian59 { namespace Ogre
 		for each (RooSector^ sector in Room->Sectors)
 		{
 			if (sector->MaterialNameFloor == MaterialName)
-				CreateSectorMaterial(sector, true);
+				CreateSectorPart(sector, true);
 
 			if (sector->MaterialNameCeiling == MaterialName)
-				CreateSectorMaterial(sector, false);
+				CreateSectorPart(sector, false);
 		}
-
-      for each (RooSubSector^ leaf in Room->BSPTreeLeaves)
-      {
-         if (leaf->Sector->MaterialNameFloor == MaterialName)
-            CreateSubSector(leaf, true);
-
-         if (leaf->Sector->MaterialNameCeiling == MaterialName)
-            CreateSubSector(leaf, false);
-      }
 
 		// create all side parts using this material
 		for each(RooSideDef^ side in Room->SideDefs)
@@ -685,7 +676,7 @@ namespace Meridian59 { namespace Ogre
 		verticesProcessed += 4;	
 	};
 
-	void ControllerRoom::CreateSectorMaterial(RooSector^ Sector, bool IsFloor)
+	void ControllerRoom::CreateSectorPart(RooSector^ Sector, bool IsFloor)
 	{
 		::System::String^ material		= nullptr;
 		::System::String^ texname		= nullptr;
@@ -723,6 +714,12 @@ namespace Meridian59 { namespace Ogre
 
 		// possibly create texture & material
 		CreateTextureAndMaterial(texture, texname, material, sp);
+
+      /******************************************************************************/
+
+      // add vertexdata of subsectors
+      for each (RooSubSector^ subSector in Sector->Leafs)
+            CreateSubSector(subSector, IsFloor);
 	};
 
 	void ControllerRoom::CreateSubSector(RooSubSector^ SubSector, bool IsFloor)
