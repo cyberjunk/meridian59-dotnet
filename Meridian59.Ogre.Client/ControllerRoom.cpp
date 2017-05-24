@@ -613,15 +613,12 @@ namespace Meridian59 { namespace Ogre
 
 		/******************************************************************************/
 		
-		// add vertexdata from walls using this sidedef
-		for each(RooWall^ wall in Room->Walls)
-		{
-			if (wall->LeftSide == Side)			
-				CreateWallPart(wall, PartType, true, texture->Width, texture->Height, textureFile->ShrinkFactor);
-			
-			if (wall->RightSide == Side)
-				CreateWallPart(wall, PartType, false, texture->Width, texture->Height, textureFile->ShrinkFactor);
-		}
+      // add vertexdata from walls using this sidedef
+      for each(RooWall^ wall in Side->WallsLeft)
+         CreateWallPart(wall, PartType, true, texture->Width, texture->Height, textureFile->ShrinkFactor);
+
+      for each(RooWall^ wall in Side->WallsRight)
+         CreateWallPart(wall, PartType, false, texture->Width, texture->Height, textureFile->ShrinkFactor);
 	};
 
 	void ControllerRoom::CreateWallPart(		
