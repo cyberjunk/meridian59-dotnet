@@ -153,7 +153,7 @@ namespace Meridian59 { namespace Ogre
 
       // set caelum day duration to m59 day duration
       // and set current time using dummy date
-      clock->setTimeScale(MeridianDate::M59SECONDSPERSECOND);
+      clock->setTimeScale((float)MeridianDate::M59SECONDSPERSECOND);
       clock->setGregorianDateTime(YEAR, MONTH, DAY, time.Hour, time.Minute, time.Second);
 
       /**************************** 3. CLOUDS ******************************************************/
@@ -167,6 +167,10 @@ namespace Meridian59 { namespace Ogre
          clouds->getLayer(0)->setCloudSpeed(Ogre::Vector2(0.00010f, -0.00018f));
          clouds->getLayer(1)->setCloudSpeed(Ogre::Vector2(0.00009f, -0.00017f));
       }
+
+      /**************************** 4. LIGHT ******************************************************/
+
+      AdjustAmbientLight();
    };
 	
 	void ControllerRoom::InitParticleSystems()
@@ -1295,10 +1299,7 @@ namespace Meridian59 { namespace Ogre
 			::Caelum::BaseSkyLight* sun  = caelumSystem->getSun();
 			::Caelum::BaseSkyLight* moon = caelumSystem->getMoon();
 			
-			::Ogre::ColourValue color = ::Ogre::ColourValue(
-				(float)directional * 0.1f,
-				(float)directional * 0.1f,
-				(float)directional * 0.1f);
+         ::Ogre::ColourValue color = 3.0f * Util::LightIntensityToOgreRGB(directional);
 
 			if (sun)
 			{
