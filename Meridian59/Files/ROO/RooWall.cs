@@ -628,6 +628,7 @@ namespace Meridian59.Files.ROO
                 RooFile.SideDefs.Count > RightSideNum - 1)
             {
                 RightSide = RooFile.SideDefs[RightSideNum - 1];
+                RightSide.WallsRight.Add(this);
 
                 // save as adjacent side
                 if (RightSector != null && !RightSector.Sides.Contains(RightSide))
@@ -643,6 +644,7 @@ namespace Meridian59.Files.ROO
                 RooFile.SideDefs.Count > LeftSideNum - 1)
             {
                 LeftSide = RooFile.SideDefs[LeftSideNum - 1];
+                LeftSide.WallsLeft.Add(this);
 
                 // save as adjacent side
                 if (RightSector != null && !RightSector.Sides.Contains(LeftSide))

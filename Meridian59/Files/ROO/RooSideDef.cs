@@ -21,6 +21,7 @@ using Meridian59.Common.Enums;
 using Meridian59.Common.Interfaces;
 using Meridian59.Data.Models;
 using Meridian59.Files.BGF;
+using System.Collections.Generic;
 
 // Switch FP precision based on architecture
 #if X64
@@ -42,6 +43,16 @@ namespace Meridian59.Files.ROO
         protected const int SCROLL_SLOW_PERIOD      = 96; // SCROLL_WALL_SLOW_PERIOD
         protected const int SCROLL_MEDIUM_PERIOD    = 32; // SCROLL_WALL_MEDIUM_PERIOD
         protected const int SCROLL_FAST_PERIOD      = 8;  // SCROLL_WALL_FAST_PERIOD
+        
+        /// <summary>
+        /// Walls using this side on the left
+        /// </summary>
+        protected readonly List<RooWall> wallsLeft = new List<RooWall>();
+
+        /// <summary>
+        /// Walls using this side on the right
+        /// </summary>
+        protected readonly List<RooWall> wallsRight = new List<RooWall>();
 
         #region IByteSerializable
         public int ByteLength 
@@ -200,6 +211,22 @@ namespace Meridian59.Files.ROO
         public BgfBitmap TextureUpper { get; protected set; }
         public BgfBitmap TextureMiddle { get; protected set; }
         public BgfBitmap TextureLower { get; protected set; }
+
+        /// <summary>
+        /// All walls using this as left side
+        /// </summary>
+        public List<RooWall> WallsLeft
+        {
+            get { return wallsLeft; }
+        }
+
+        /// <summary>
+        /// All walls using this as right side
+        /// </summary>
+        public List<RooWall> WallsRight
+        {
+            get { return wallsRight; }
+        }
         #endregion
 
         #region Animation
