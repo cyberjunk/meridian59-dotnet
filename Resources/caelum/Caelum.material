@@ -272,7 +272,7 @@ material CaelumSpriteSun
 			
             texture_unit SunDisc
             {
-                texture sun_disc.png 2d 0
+                texture sun_disc.png
             }
         }
     }
