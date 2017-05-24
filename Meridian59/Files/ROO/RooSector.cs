@@ -283,6 +283,11 @@ namespace Meridian59.Files.ROO
         /// </summary>
         protected readonly List<RooSideDef> sides = new List<RooSideDef>();
 
+        /// <summary>
+        /// Leafs of this sector
+        /// </summary>
+        protected readonly List<RooSubSector> leafs = new List<RooSubSector>();
+
         #region Properties
         /// <summary>
         /// 
@@ -467,6 +472,14 @@ namespace Meridian59.Files.ROO
         public List<RooSideDef> Sides
         {
             get { return sides; }
+        }
+
+        /// <summary>
+        /// All leafs belonging to this sector
+        /// </summary>
+        public List<RooSubSector> Leafs
+        {
+            get { return leafs; }
         }
 
         /// <summary>

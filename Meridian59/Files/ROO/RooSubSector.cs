@@ -282,6 +282,7 @@ namespace Meridian59.Files.ROO
                 RooFile.Sectors.Count > SectorNum - 1)
             {
                 Sector = RooFile.Sectors[SectorNum - 1];
+                Sector.Leafs.Add(this);
             }
         }
 
