@@ -620,20 +620,6 @@ namespace Meridian59 { namespace Ogre
          if (ScrollSpeed != nullptr)
             ambientPass->getTextureUnitState(0)->setScrollAnimation(ScrollSpeed->x, ScrollSpeed->y);
 
-         // setup second pass for objects
-         if (!IsRoomMaterial)
-         {
-            Pass* diffusePass = matPtr->getTechnique(0)->getPass(1);
-
-            // get fragment shader parameters from diffuse pass
-            const GpuProgramParametersSharedPtr paramsDiffuse =
-               diffusePass->getFragmentProgramParameters();
-
-            // set the light modifier on pointlight pass params
-            if (ColorModifier != nullptr)
-               paramsDiffuse->setNamedConstant(SHADERCOLORMODIFIER, *ColorModifier);
-         }
-
          // cleanup
          baseMaterial.setNull();
          matPtr.setNull();
