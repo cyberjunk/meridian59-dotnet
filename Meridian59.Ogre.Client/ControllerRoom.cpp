@@ -867,10 +867,17 @@ namespace Meridian59 { namespace Ogre
 		for each(KeyValuePair<::System::String^, ::System::Collections::Generic::List<V3>^> pair in grassPoints)
 		{
 			// create a new subsection for all grass using this material
-			roomDecoration->begin(StringConvert::CLRToOgre(pair.Key), ::Ogre::RenderOperation::OT_TRIANGLE_LIST);
+			roomDecoration->begin(StringConvert::CLRToOgre(pair.Key), ::Ogre::RenderOperation::OT_TRIANGLE_LIST, MATERIALGROUP_ROOLOADER);
 
 			// reset vertexcounter
 			vertexindex = 0;
+
+         // how often we are going to call position() and triangle() (1tri=3indx) below
+         int numVertices = pair.Value->Count * numplanes * 4;
+
+         // set buffersizes accordingly to avoid dynamic resizing
+         roomDecoration->estimateVertexCount((size_t)numVertices);
+         roomDecoration->estimateIndexCount((size_t)(3 * numVertices));
 
 			// loop points
 			for each(V3 p in pair.Value)
