@@ -560,7 +560,6 @@ namespace Meridian59 { namespace Ogre
 		{
 			caelumSystem->updateSubcomponents((CLRReal)Span * 0.001f);
 			caelumSystem->getMoon()->setPhase(0.0f); // overwrite moon				
-			caelumSystem->notifyCameraChanged(OgreClient::Singleton->Camera);
 		}
 	};
 
