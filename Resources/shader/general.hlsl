@@ -13,16 +13,23 @@ void label_vs(
    uniform float3   eyePos,
    uniform float    offset)
 {
+   // scale down the vertex position so the difference 
+   // in distance from each vertex to camera is minimized
+   p *= float4(0.001, 0.001, 0.001, 1);
+   
+   // now transform to world space and apply offset
    wp = mul(wMat, p);
    wp.y += offset;
    
-   float dist = length(eyePos - wp);
-   dist *= 0.001; 
-   dist = clamp(dist, 0.18, 1.8);
-    
-   p *= float4(dist, dist, dist, 1);   
+   // scale in worldspace based on the distance to camera
+   // bounds min and max sizes for label
+   float scale = clamp(length(eyePos - wp), 10.0, 2000.0);
+   
+   // apply scale and offset
+   p *= float4(scale, scale, scale, 1);   
    p.y += offset;   
-     
+   
+   // final transform and create uv
    p = mul(wvpMat, p);
    uv = mul(texMat, float4(uv, 0, 1)).xy;
 }
