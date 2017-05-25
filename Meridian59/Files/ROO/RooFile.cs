@@ -1104,6 +1104,17 @@ namespace Meridian59.Files.ROO
         /// </summary>
         public virtual void ResolveIndices()
         {
+            // clear all side->walls refs before resolving again
+            foreach (RooSideDef side in SideDefs)
+            {
+                side.WallsLeft.Clear();
+                side.WallsRight.Clear();
+            }
+
+            // clear all sector->leafs refs before resolving again
+            foreach (RooSector sector in Sectors)
+                sector.Leafs.Clear();
+
             foreach (RooWall wall in Walls)
                 wall.ResolveIndices(this);
 
