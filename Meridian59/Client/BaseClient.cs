@@ -561,6 +561,10 @@ namespace Meridian59.Client
         /// <param name="Message"></param>
         protected virtual void HandleMailMessage(MailMessage Message)
         {
+            // no new mails
+            if (Message.Mail.IsMessageForNoMessages())
+                return;
+
             // request to delete this mail now that we've downloaded it
             SendDeleteMail(Message.Mail.Num);
 

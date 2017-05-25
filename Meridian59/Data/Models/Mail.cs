@@ -99,7 +99,7 @@ namespace Meridian59.Data.Models
             ushort listlen = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            recipients = new List<string>();
+            recipients.Clear();
                 
             // get recipients
             for (int i = 0; i < listlen; i++)
@@ -178,7 +178,7 @@ namespace Meridian59.Data.Models
         protected uint num;
         protected string sender;
         protected uint timestamp;
-        protected List<string> recipients;
+        protected readonly List<string> recipients = new List<string>();
         protected ServerString message;
         protected string title;
 
@@ -239,14 +239,6 @@ namespace Meridian59.Data.Models
             get
             {
                 return recipients;
-            }
-            set
-            {
-                if (recipients != value)
-                {
-                    recipients = value;
-                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_RECIPIENTS));
-                }
             }
         }
 
@@ -315,7 +307,7 @@ namespace Meridian59.Data.Models
                 Num = 0;
                 Sender = String.Empty;
                 Timestamp = 0;
-                Recipients = new List<string>(10);
+                Recipients.Clear();
                 Message = new ServerString();
                 Title = String.Empty;
             }
@@ -324,7 +316,7 @@ namespace Meridian59.Data.Models
                 num = 0;
                 sender = String.Empty;
                 timestamp = 0;
-                recipients = new List<string>(10);
+                recipients.Clear();
                 message = new ServerString();
                 title = String.Empty;
             }
@@ -478,6 +470,22 @@ namespace Meridian59.Data.Models
             return str;
         }
         #endregion
+
+        /// <summary>
+        /// True if the Mail is no real mail but 
+        /// indicates that there are no new mails.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsMessageForNoMessages()
+        {
+            return
+                (num == 0)                              &&
+                (sender == null || sender.Length == 0)  &&
+                (timestamp == 0)                        &&
+                (recipients.Count == 0)                 &&
+                (message.ResourceID == 0)               &&
+                (title == null || title.Length == 0);
+        }
 
         /// <summary>
         /// Message title is encoded into the message text.
