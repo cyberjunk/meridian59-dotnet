@@ -892,9 +892,9 @@ namespace Meridian59.Data
         public void Reset()
         {
             // clear non server-related lists
-            ChatMessages.Clear();
+            //ChatMessages.Clear();
             GameMessageLog.Clear();
-            ChatCommandHistory.Clear();
+            //ChatCommandHistory.Clear();
             
             // clear values
             ChatCommandHistoryIndex = -1;
