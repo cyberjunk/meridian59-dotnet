@@ -20,6 +20,7 @@
 #include "OgreRoot.h"
 #include "OgreD3D9RenderSystem.h"
 #include "OgreD3D9RenderWindow.h"
+#include "OgreD3D9DeviceManager.h"
 #include "OgreOctreeCamera.h"
 #include "OgreOctreeSceneManager.h"
 #include "OgreSceneNode.h"

@@ -477,8 +477,15 @@ namespace Meridian59 { namespace Ogre
 		/*                                     RENDER FRAME                                                     */
 		/********************************************************************************************************/
 		
-		if (root)
-			root->renderOneFrame();
+      if (root && renderWindow && sceneManager)
+      {
+         root->_fireFrameStarted();
+         renderWindow->update(false);
+         root->_fireFrameRenderingQueued();
+         renderWindow->swapBuffers();
+         sceneManager->_handleLodEvents();
+         root->_fireFrameEnded();
+      }
 		
 		//if (renderWindow)
 		//	::System::Console::WriteLine(((int)renderWindow->getBatchCount()).ToString());
