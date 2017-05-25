@@ -407,98 +407,93 @@ namespace Meridian59 { namespace Ogre
 		windowListener	= nullptr;
 	};
 
-	void OgreClient::Update()
-    {		
-        // call base update
-        SingletonClient::Update();
-		
-		// don't do anything if the application
-		// is supposed to shut down completely
-		if (!IsRunning)
-			return;
+   void OgreClient::Update()
+   {
+      // call base update
+      SingletonClient::Update();
 
-		/********************************************************************************************************/
+      // don't do anything if the application
+      // is supposed to shut down completely
+      if (!IsRunning)
+         return;
 
-		if (RecreateWindow)
-		{
-			RenderWindowDestroy();
-			RenderWindowCreate();
+      /********************************************************************************************************/
 
-			// must reinit effects and input due to recreated window
-			ControllerEffects::Initialize();
-			ControllerInput::Initialize();
+      if (RecreateWindow)
+      {
+         RenderWindowDestroy();
+         RenderWindowCreate();
 
-			RecreateWindow = false;
-		}
+         // must reinit effects and input due to recreated window
+         ControllerEffects::Initialize();
+         ControllerInput::Initialize();
 
-		/********************************************************************************************************/
-		/*                               UPDATE FOCUSSTATE AND CURSOR                                           */
-		/********************************************************************************************************/
-		
-		// update focus state of the render window
-		hasFocus = (renderWindowHandle == GetFocus());
-		
-		// whether the windows mousecursor should be shown or not
-		bool iswincursorvisible = (!ControllerInput::IsMouseInWindow || !hasFocus);
+         RecreateWindow = false;
+      }
 
-		// hide or show win cursor if changed
-		if (iswincursorvisible != isWinCursorVisible)
-		{
-			isWinCursorVisible = iswincursorvisible;
-			ShowCursor(iswincursorvisible);
+      /********************************************************************************************************/
+      /*                               UPDATE FOCUSSTATE AND CURSOR                                           */
+      /********************************************************************************************************/
 
-			// show CEGUI cursor when win cursor is hidden
-			if (ControllerUI::MouseCursor)
-				ControllerUI::MouseCursor->setVisible(!isWinCursorVisible);
-		}
+      // update focus state of the render window
+      hasFocus = (renderWindowHandle == GetFocus());
 
-		/********************************************************************************************************/
-		/*                                     TICK SUBCOMPONENTS                                               */
-		/********************************************************************************************************/
+      // whether the windows mousecursor should be shown or not
+      bool iswincursorvisible = (!ControllerInput::IsMouseInWindow || !hasFocus);
 
-		ControllerInput::Tick(GameTick->Current, GameTick->Span);          
-		ControllerUI::Tick(GameTick->Current, GameTick->Span);
-		ControllerRoom::Tick(GameTick->Current, GameTick->Span);
-		
+      // hide or show win cursor if changed
+      if (iswincursorvisible != isWinCursorVisible)
+      {
+         isWinCursorVisible = iswincursorvisible;
+         ShowCursor(iswincursorvisible);
+
+         // show CEGUI cursor when win cursor is hidden
+         if (ControllerUI::MouseCursor)
+            ControllerUI::MouseCursor->setVisible(!isWinCursorVisible);
+      }
+
+      /********************************************************************************************************/
+      /*                                     TICK SUBCOMPONENTS                                               */
+      /********************************************************************************************************/
+
+      ControllerInput::Tick(GameTick->Current, GameTick->Span);          
+      ControllerUI::Tick(GameTick->Current, GameTick->Span);
+      ControllerRoom::Tick(GameTick->Current, GameTick->Span);
+
       if (ControllerUI::MiniMap::Window->isVisible())
-		   miniMap->Tick(GameTick->Current, GameTick->Span);
-		
-		// update the invis viewport every second frame
-		// and only if there's an invis object
-		if (viewportInvis && Data->RoomObjects->HasInvisibleRoomObject())
-		{
-			if (invisViewportUpdateFlip)			
-				viewportInvis->update();
+         miniMap->Tick(GameTick->Current, GameTick->Span);
 
-			invisViewportUpdateFlip = !invisViewportUpdateFlip;
-		}
-	
-		/********************************************************************************************************/
-		/*                                     RENDER FRAME                                                     */
-		/********************************************************************************************************/
-		
+      /********************************************************************************************************/
+      /*                                     RENDER FRAME                                                     */
+      /********************************************************************************************************/
+
+      // update the invis viewport every second frame
+      // and only if there's an invis object
+      if (viewportInvis && Data->RoomObjects->HasInvisibleRoomObject())
+      {
+         if (invisViewportUpdateFlip)
+            viewportInvis->update();
+
+         invisViewportUpdateFlip = !invisViewportUpdateFlip;
+      }
+
+      // render a frame
       if (root && renderWindow && sceneManager)
       {
          root->_fireFrameStarted();
          renderWindow->update(false);
          root->_fireFrameRenderingQueued();
+         ::Ogre::WindowEventUtilities::messagePump();
          renderWindow->swapBuffers();
          sceneManager->_handleLodEvents();
          root->_fireFrameEnded();
       }
-		
-		//if (renderWindow)
-		//	::System::Console::WriteLine(((int)renderWindow->getBatchCount()).ToString());
 
-		/********************************************************************************************************/
-		/*                                      WM_MESSAGES                                                     */
-		/********************************************************************************************************/
-		
-		::Ogre::WindowEventUtilities::messagePump();
-
-		// .NET alternative
-		//::System::Windows::Forms::Application::DoEvents();
-    };
+      // at least process WM messages
+      //
+      else
+         ::Ogre::WindowEventUtilities::messagePump();
+   };
 
 	void OgreClient::Cleanup()
     {
