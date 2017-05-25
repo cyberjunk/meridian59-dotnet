@@ -75,64 +75,105 @@ namespace Meridian59 { namespace Ogre
 	{
 	};
 
-	void ControllerUI::Chat::Tick(double Tick, double Span)
-	{
-		if (OgreClient::Singleton->GameTick->CanChatUpdate() || ChatForceRenew)
-		{
-			if (Queue->Count > 0 || DeleteCounter > 0)
-			{
-            ::CEGUI::Window* wnd = PlainMode ? Chat::TextPlain : Chat::Text;
+   void ControllerUI::Chat::Tick(double Tick, double Span)
+   {
+      // nothing to do
+      if (!OgreClient::Singleton->GameTick->CanChatUpdate() && !ChatForceRenew)
+         return;
 
-				// append new
-				if (Queue->Count > 0)
-				{
-					// get first
-					ServerString^ msg = Queue->Dequeue();
-					CEGUI::String& str = GetChatString(msg);
+      // some special handling for a forced renew first
+      if (ChatForceRenew)
+      {
+         // remove old/pending
+         Queue->Clear();
 
-					// append next ones
-					while(Queue->Count > 0)
-					{
-						msg = Queue->Dequeue();			
-						str = str.append(GetChatString(msg));
-					}
-				
-               // set fully
-               if (ChatForceRenew)
-                  wnd->setText(str);
+         // add all chat history from datamodels again
+         for each(ServerString^ msg in OgreClient::Singleton->Data->ChatMessages)
+            Queue->Enqueue(msg);
 
-               // append
-               else
-                  wnd->appendText(str);
+         // flip active chat control based on plain mode flag
+         if (PlainMode)
+         {
+            // show one, hide the other
+            Text->setVisible(false);
+            TextPlain->setVisible(true);
 
+            // transfer current scroll state to other
+            ScrollbarPlain->setScrollPosition(Scrollbar->getScrollPosition());
+            ScrollbarPlain->setPageSize(Scrollbar->getPageSize());
+            ScrollbarPlain->setDocumentSize(Scrollbar->getDocumentSize());
+         }
+         else
+         {
+            // show one, hide the other
+            Text->setVisible(true);
+            TextPlain->setVisible(false);
 
-				}
+            // transfer current scroll state to other
+            Scrollbar->setScrollPosition(ScrollbarPlain->getScrollPosition());
+            Scrollbar->setPageSize(ScrollbarPlain->getPageSize());
+            Scrollbar->setDocumentSize(ScrollbarPlain->getDocumentSize());
+         }
+      }
 
-            if (ChatForceRenew)
-               DeleteCounter = 0;
-            
-            else
-            {
-               size_t idx = CEGUI::String::npos;
+      // no adjustements to make
+      if (Queue->Count <= 0 && DeleteCounter == 0)
+         return;
 
-               // remove
-               while (DeleteCounter > 0)
-               {
-                  idx = wnd->getText().find("\n", idx + 1);
-                  DeleteCounter--;
-               }
+      // pick current chat control
+      ::CEGUI::Window* wnd = PlainMode ? TextPlain : Text;
 
-               if (idx != CEGUI::String::npos)
-                  wnd->eraseText(0, idx + 1);
-            }
+      // append new ones first
+      if (Queue->Count > 0)
+      {
+         // build string first, get first
+         ServerString^ msg = Queue->Dequeue();
+         CEGUI::String& str = GetChatString(msg);
 
-				// save update tick
-				OgreClient::Singleton->GameTick->DidChatUpdate();
-			}
+         // append next ones
+         while(Queue->Count > 0)
+         {
+            msg = Queue->Dequeue();			
+            str = str.append(GetChatString(msg));
+         }
 
-         ChatForceRenew = false;
-		}
-	};
+         // recreate cegui text completely
+         if (ChatForceRenew)
+            wnd->setText(str);
+
+         // append to existing cegui text
+         else
+            wnd->appendText(str);
+      }
+
+      // reset delete counter for full recreate
+      if (ChatForceRenew)
+         DeleteCounter = 0;
+
+      // otherwise remove lines according to delete counter
+      // assumption: one chatmessage = chars between \n
+      else
+      {
+         size_t idx = CEGUI::String::npos;
+
+         // find index for that many line breaks
+         while (DeleteCounter > 0)
+         {
+            idx = wnd->getText().find("\n", idx + 1);
+            DeleteCounter--;
+         }
+
+         // remove lines
+         if (idx != CEGUI::String::npos)
+            wnd->eraseText(0, idx + 1);
+      }
+
+      // save update tick
+      OgreClient::Singleton->GameTick->DidChatUpdate();
+
+      // unset force chat update flag
+      ChatForceRenew = false;
+   };
 
 	::CEGUI::String ControllerUI::Chat::GetChatString(ServerString^ ChatMessage)
 	{
@@ -254,24 +295,23 @@ namespace Meridian59 { namespace Ogre
 		return StringConvert::CLRToCEGUI(text);
 	};
 
-	void ControllerUI::Chat::OnChatMessagesListChanged(Object^ sender, ListChangedEventArgs^ e)
-	{
-		switch(e->ListChangedType)
-		{
-			case ::System::ComponentModel::ListChangedType::Reset:
-				Chat::Text->setText(STRINGEMPTY);
-				DeleteCounter = 0;
-				break;
+   void ControllerUI::Chat::OnChatMessagesListChanged(Object^ sender, ListChangedEventArgs^ e)
+   {
+      switch(e->ListChangedType)
+      {
+         case ::System::ComponentModel::ListChangedType::Reset:
+            ChatForceRenew = true;
+            break;
 
-			case ::System::ComponentModel::ListChangedType::ItemAdded:
-				Queue->Enqueue(OgreClient::Singleton->Data->ChatMessages[e->NewIndex]);
-				break;
+         case ::System::ComponentModel::ListChangedType::ItemAdded:
+            Queue->Enqueue(OgreClient::Singleton->Data->ChatMessages[e->NewIndex]);
+            break;
 
-			case ::System::ComponentModel::ListChangedType::ItemDeleted:
-				DeleteCounter++;		
-				break;
-		}
-	};
+         case ::System::ComponentModel::ListChangedType::ItemDeleted:
+            DeleteCounter++;		
+            break;
+      }
+   };
 
 	bool UICallbacks::Chat::OnKeyDown(const CEGUI::EventArgs& e)
 	{
@@ -355,11 +395,6 @@ namespace Meridian59 { namespace Ogre
    bool UICallbacks::Chat::OnThumbTrackStarted(const CEGUI::EventArgs& e)
    {
       const CEGUI::WindowEventArgs& e2 = static_cast<const CEGUI::WindowEventArgs&>(e);
-      
-      // pick scrollbar for text mode
-      //::CEGUI::Scrollbar* bar = ControllerUI::Chat::PlainMode ? 
-      //   ControllerUI::Chat::ScrollbarPlain : 
-      //   ControllerUI::Chat::Scrollbar;
 
       // disable autoscroll on both until we
       // re-enable it possibly in OnThumTrackEnded
@@ -406,42 +441,9 @@ namespace Meridian59 { namespace Ogre
       if (e2.button != ::CEGUI::MouseButton::RightButton)
          return true;
 
-      // get both chat controls and their scrollbars
-      ::CEGUI::Window* chat = ControllerUI::Chat::Text;
-      ::CEGUI::Window* chatPlain = ControllerUI::Chat::TextPlain;
-      ::CEGUI::Scrollbar* barNormal = ControllerUI::Chat::Scrollbar;
-      ::CEGUI::Scrollbar* barPlain = ControllerUI::Chat::ScrollbarPlain;
-
       // flip plain mode and force update on next Tick()
       ControllerUI::Chat::PlainMode = !ControllerUI::Chat::PlainMode;
       ControllerUI::Chat::ChatForceRenew = true;
-
-      if (ControllerUI::Chat::PlainMode)
-      {
-         // show one, hide the other
-         chat->setVisible(false);
-         chatPlain->setVisible(true);
-
-         // transfer current scroll state to other
-         barPlain->setScrollPosition(barNormal->getScrollPosition());
-         barPlain->setPageSize(barNormal->getPageSize());
-         barPlain->setDocumentSize(barNormal->getDocumentSize());
-      }
-      else
-      {
-         // show one, hide the other
-         chat->setVisible(true);
-         chatPlain->setVisible(false);
-
-         // transfer current scroll state to other
-         barNormal->setScrollPosition(barPlain->getScrollPosition());
-         barNormal->setPageSize(barPlain->getPageSize());
-         barNormal->setDocumentSize(barPlain->getDocumentSize());
-      }
-
-      //add all chat history again for new mode
-      for each(ServerString^ msg in OgreClient::Singleton->Data->ChatMessages)
-         ControllerUI::Chat::Queue->Enqueue(msg);
 
       return true;
    };
