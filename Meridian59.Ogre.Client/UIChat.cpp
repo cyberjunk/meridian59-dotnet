@@ -7,8 +7,10 @@ namespace Meridian59 { namespace Ogre
 		// setup references to children from xml nodes
 		Window		= static_cast<CEGUI::FrameWindow*>(guiRoot->getChild(UI_NAME_CHAT_WINDOW));
 		Text		= static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_CHAT_TEXT));
-		Input		= static_cast<CEGUI::Editbox*>(Window->getChild(UI_NAME_CHAT_INPUT));
+      TextPlain = static_cast<CEGUI::MultiLineEditbox*>(Window->getChild(UI_NAME_CHAT_TEXTPLAIN));
+      Input		= static_cast<CEGUI::Editbox*>(Window->getChild(UI_NAME_CHAT_INPUT));
 		Scrollbar	= static_cast<CEGUI::Scrollbar*>(Text->getChildAtIdx(1));
+      ScrollbarPlain = TextPlain->getVertScrollbar();
 
 		// set window layout from config
 		Window->setPosition(OgreClient::Singleton->Config->UILayoutChat->getPosition());
@@ -16,9 +18,14 @@ namespace Meridian59 { namespace Ogre
 
 		// set autoscroll on text at start
 		Scrollbar->setEndLockEnabled(true);
+      ScrollbarPlain->setEndLockEnabled(true);
 
 		// set maximum textlength for chatinput
 		Input->setMaxTextLength((size_t)BlakservStringLengths::MAX_CHAT_LEN);
+
+      TextPlain->setVerticalAlignment(::CEGUI::VerticalAlignment::VA_TOP);
+      TextPlain->setHorizontalAlignment(::CEGUI::HorizontalAlignment::HA_LEFT);
+      TextPlain->setEnsureCaretVisible(false);
 
 		// attach listener to chatmessage list
 		OgreClient::Singleton->Data->ChatMessages->ListChanged += 
@@ -30,12 +37,21 @@ namespace Meridian59 { namespace Ogre
 		// subscribe scroll
 		Scrollbar->subscribeEvent(CEGUI::Scrollbar::EventThumbTrackStarted, CEGUI::Event::Subscriber(UICallbacks::Chat::OnThumbTrackStarted));
 		Scrollbar->subscribeEvent(CEGUI::Scrollbar::EventThumbTrackEnded, CEGUI::Event::Subscriber(UICallbacks::Chat::OnThumbTrackEnded));
+      ScrollbarPlain->subscribeEvent(CEGUI::Scrollbar::EventThumbTrackStarted, CEGUI::Event::Subscriber(UICallbacks::Chat::OnThumbTrackStarted));
+      ScrollbarPlain->subscribeEvent(CEGUI::Scrollbar::EventThumbTrackEnded, CEGUI::Event::Subscriber(UICallbacks::Chat::OnThumbTrackEnded));
 
 		// subscribe close button
 		Window->subscribeEvent(CEGUI::FrameWindow::EventCloseClicked, CEGUI::Event::Subscriber(UICallbacks::OnWindowClosed));
 
 		// subscribe keyup
 		Window->subscribeEvent(CEGUI::FrameWindow::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::OnKeyUp));
+
+      // subscribe click
+      Text->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Chat::OnTextClicked));
+      TextPlain->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Chat::OnTextClicked));
+
+      // subscripe copy paste handler on plain chattext
+      TextPlain->subscribeEvent(CEGUI::Window::EventKeyDown, CEGUI::Event::Subscriber(UICallbacks::OnCopyPasteKeyDown));
 
 		// create queue for chatmessage to write at next chatupdate tick
 		Queue = gcnew ::System::Collections::Generic::Queue<::Meridian59::Data::Models::ServerString^>();
@@ -61,16 +77,18 @@ namespace Meridian59 { namespace Ogre
 
 	void ControllerUI::Chat::Tick(double Tick, double Span)
 	{
-		if (OgreClient::Singleton->GameTick->CanChatUpdate())
+		if (OgreClient::Singleton->GameTick->CanChatUpdate() || ChatForceRenew)
 		{
 			if (Queue->Count > 0 || DeleteCounter > 0)
 			{
+            ::CEGUI::Window* wnd = PlainMode ? Chat::TextPlain : Chat::Text;
+
 				// append new
 				if (Queue->Count > 0)
 				{
 					// get first
 					ServerString^ msg = Queue->Dequeue();
-					CEGUI::String str = GetChatString(msg);
+					CEGUI::String& str = GetChatString(msg);
 
 					// append next ones
 					while(Queue->Count > 0)
@@ -79,31 +97,48 @@ namespace Meridian59 { namespace Ogre
 						str = str.append(GetChatString(msg));
 					}
 				
-					// add text
-					Chat::Text->appendText(str);
+               // set fully
+               if (ChatForceRenew)
+                  wnd->setText(str);
+
+               // append
+               else
+                  wnd->appendText(str);
+
 
 				}
 
-				size_t idx = CEGUI::String::npos;
-				
-				// remove
-				while(DeleteCounter > 0)
-				{
-					idx = Chat::Text->getText().find("\n", idx + 1);
-					DeleteCounter--;
-				}
+            if (ChatForceRenew)
+               DeleteCounter = 0;
+            
+            else
+            {
+               size_t idx = CEGUI::String::npos;
 
-				if (idx != CEGUI::String::npos)					
-					Chat::Text->eraseText(0, idx + 1);
-				
+               // remove
+               while (DeleteCounter > 0)
+               {
+                  idx = wnd->getText().find("\n", idx + 1);
+                  DeleteCounter--;
+               }
+
+               if (idx != CEGUI::String::npos)
+                  wnd->eraseText(0, idx + 1);
+            }
+
 				// save update tick
 				OgreClient::Singleton->GameTick->DidChatUpdate();
 			}
+
+         ChatForceRenew = false;
 		}
 	};
 
 	::CEGUI::String ControllerUI::Chat::GetChatString(ServerString^ ChatMessage)
 	{
+      if (PlainMode)
+         return StringConvert::CLRToCEGUI(ChatMessage->FullString + ::System::Environment::NewLine);
+
 		// text with CEGUI markup and escapes
 		::System::String^ text = ::System::String::Empty;
 
@@ -317,33 +352,98 @@ namespace Meridian59 { namespace Ogre
 		return handled;
 	};
 
-	bool UICallbacks::Chat::OnThumbTrackStarted(const CEGUI::EventArgs& e)
-	{
-		const CEGUI::WindowEventArgs& e2 = static_cast<const CEGUI::WindowEventArgs&>(e);
-		::CEGUI::Scrollbar* bar = ControllerUI::Chat::Scrollbar;
+   bool UICallbacks::Chat::OnThumbTrackStarted(const CEGUI::EventArgs& e)
+   {
+      const CEGUI::WindowEventArgs& e2 = static_cast<const CEGUI::WindowEventArgs&>(e);
+      
+      // pick scrollbar for text mode
+      //::CEGUI::Scrollbar* bar = ControllerUI::Chat::PlainMode ? 
+      //   ControllerUI::Chat::ScrollbarPlain : 
+      //   ControllerUI::Chat::Scrollbar;
 
-		// disable autoscroll until we
-		// re-enable it possibly in OnThumTrackEnded
-		bar->setEndLockEnabled(false);
+      // disable autoscroll on both until we
+      // re-enable it possibly in OnThumTrackEnded
+      ControllerUI::Chat::ScrollbarPlain->setEndLockEnabled(false);
+      ControllerUI::Chat::Scrollbar->setEndLockEnabled(false);
 
-		return true;
-	};
+      return true;
+   };
 
-	bool UICallbacks::Chat::OnThumbTrackEnded(const CEGUI::EventArgs& e)
-	{
-		const CEGUI::WindowEventArgs& e2 = static_cast<const CEGUI::WindowEventArgs&>(e);
-		::CEGUI::Scrollbar* bar = ControllerUI::Chat::Scrollbar;
+   bool UICallbacks::Chat::OnThumbTrackEnded(const CEGUI::EventArgs& e)
+   {
+      const CEGUI::WindowEventArgs& e2 = static_cast<const CEGUI::WindowEventArgs&>(e);
 
-		::Ogre::Real pos = bar->getScrollPosition();
-		::Ogre::Real docsize = bar->getDocumentSize();
-		::Ogre::Real pagesize = bar->getPageSize();
-		::Ogre::Real vl = docsize - pagesize;
+      // pick scrollbar for text mode
+      ::CEGUI::Scrollbar* bar = ControllerUI::Chat::PlainMode ? 
+         ControllerUI::Chat::ScrollbarPlain : 
+         ControllerUI::Chat::Scrollbar;
 
-		// reenable autoscroll if user
-		// scrolled back to the bottom
-		if (::Ogre::Math::Abs(vl - pos) < 5.0f)		
-			bar->setEndLockEnabled(true);
-				
-		return true;
-	};
+      ::Ogre::Real pos = bar->getScrollPosition();
+      ::Ogre::Real docsize = bar->getDocumentSize();
+      ::Ogre::Real pagesize = bar->getPageSize();
+      ::Ogre::Real vl = docsize - pagesize;
+
+      // reenable autoscroll if user scrolled back to the bottom
+      if (::Ogre::Math::Abs(vl - pos) < 5.0f)
+      {
+         ControllerUI::Chat::ScrollbarPlain->setEndLockEnabled(true);
+         ControllerUI::Chat::Scrollbar->setEndLockEnabled(true);
+      }
+      else
+      {
+         ControllerUI::Chat::ScrollbarPlain->setEndLockEnabled(false);
+         ControllerUI::Chat::Scrollbar->setEndLockEnabled(false);
+      }
+
+      return true;
+   };
+
+   bool UICallbacks::Chat::OnTextClicked(const CEGUI::EventArgs& e)
+   {
+      const CEGUI::MouseEventArgs& e2 = static_cast<const CEGUI::MouseEventArgs&>(e);
+
+      // only for right mousebutton
+      if (e2.button != ::CEGUI::MouseButton::RightButton)
+         return true;
+
+      // get both chat controls and their scrollbars
+      ::CEGUI::Window* chat = ControllerUI::Chat::Text;
+      ::CEGUI::Window* chatPlain = ControllerUI::Chat::TextPlain;
+      ::CEGUI::Scrollbar* barNormal = ControllerUI::Chat::Scrollbar;
+      ::CEGUI::Scrollbar* barPlain = ControllerUI::Chat::ScrollbarPlain;
+
+      // flip plain mode and force update on next Tick()
+      ControllerUI::Chat::PlainMode = !ControllerUI::Chat::PlainMode;
+      ControllerUI::Chat::ChatForceRenew = true;
+
+      if (ControllerUI::Chat::PlainMode)
+      {
+         // show one, hide the other
+         chat->setVisible(false);
+         chatPlain->setVisible(true);
+
+         // transfer current scroll state to other
+         barPlain->setScrollPosition(barNormal->getScrollPosition());
+         barPlain->setPageSize(barNormal->getPageSize());
+         barPlain->setDocumentSize(barNormal->getDocumentSize());
+      }
+      else
+      {
+         // show one, hide the other
+         chat->setVisible(true);
+         chatPlain->setVisible(false);
+
+         // transfer current scroll state to other
+         barNormal->setScrollPosition(barPlain->getScrollPosition());
+         barNormal->setPageSize(barPlain->getPageSize());
+         barNormal->setDocumentSize(barPlain->getDocumentSize());
+      }
+
+      //add all chat history again for new mode
+      for each(ServerString^ msg in OgreClient::Singleton->Data->ChatMessages)
+         ControllerUI::Chat::Queue->Enqueue(msg);
+
+      return true;
+   };
+
 };};

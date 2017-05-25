@@ -288,6 +288,7 @@
 #define UI_NAME_ROOMOBJECTS_SHOWBUY					"RoomObjects.ShowBuy"
 #define UI_NAME_CHAT_WINDOW							"Chat"
 #define UI_NAME_CHAT_TEXT							"Chat.Text"
+#define UI_NAME_CHAT_TEXTPLAIN					"Chat.TextPlain"
 #define UI_NAME_CHAT_INPUT							"Chat.Input"
 #define UI_NAME_AVATAR_WINDOW						"Avatar"
 #define UI_NAME_AVATAR_HEAD							"Avatar.Head"

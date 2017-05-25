@@ -573,6 +573,15 @@
             <Property name="BackgroundColours" value="tl:FFFFFFFF tr:FFFFFFFF bl:FFFFFFFF br:FFFFFFFF" />
          </Window>
          
+		             
+		 <!-- Text Plain -->
+         <Window type="TaharezLook/MultiLineEditbox" name="Chat.TextPlain" >
+			<Property name="ReadOnly" value="True" />          		 
+            <Property name="Visible" value="False" />
+            <Property name="Area" value="{{0,0},{0,0},{1,0},{1,-28}}" />
+            <Property name="BackgroundColours" value="tl:FFFFFFFF tr:FFFFFFFF bl:FFFFFFFF br:FFFFFFFF" />			
+         </Window>
+		 
          <!-- Input -->
          <Window type="TaharezLook/Editbox" name="Chat.Input" >
             <Property name="MaxTextLength" value="1073741823" />

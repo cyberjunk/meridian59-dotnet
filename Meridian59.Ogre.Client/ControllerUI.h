@@ -336,11 +336,15 @@ namespace Meridian59 { namespace Ogre
 		public:
 			static ::CEGUI::FrameWindow* Window = nullptr;
 			static ::CEGUI::Window* Text = nullptr;
+         static ::CEGUI::MultiLineEditbox* TextPlain = nullptr;
 			static ::CEGUI::Editbox* Input = nullptr;
 			static ::CEGUI::Scrollbar* Scrollbar = nullptr;
+         static ::CEGUI::Scrollbar* ScrollbarPlain = nullptr;
 			static ::System::Collections::Generic::Queue<::Meridian59::Data::Models::ServerString^>^ Queue = nullptr;
 			static unsigned int DeleteCounter = 0;
-			
+         static bool PlainMode = false;
+         static bool ChatForceRenew = false;
+
 			static void Initialize();
 			static void Destroy();
 			static void ApplyLanguage();
@@ -1603,6 +1607,7 @@ namespace Meridian59 { namespace Ogre
 			static bool OnKeyDown(const CEGUI::EventArgs& e);
 			static bool OnThumbTrackStarted(const CEGUI::EventArgs& e);
 			static bool OnThumbTrackEnded(const CEGUI::EventArgs& e);
+         static bool OnTextClicked(const CEGUI::EventArgs& e);
 		};
 
 		/// <summary>
