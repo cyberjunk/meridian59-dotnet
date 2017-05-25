@@ -181,7 +181,7 @@ namespace Meridian59.Data.Models
 			// Todo: Change serverside to specify amount and type of parameters to be read.
 
 			// get root resource-string in english
-			if (!stringResources.TryGetValue(resourceID, out tempstr, LanguageCode.English))
+			if (!stringResources.TryGetValue(resourceID, out tempstr, LanguageCode.English) || tempstr == null)
 				tempstr = String.Empty;
 
 			// string building process
@@ -575,7 +575,7 @@ namespace Meridian59.Data.Models
             // the string in the user-lanuage, honoring the $ordering.
 
             // resolve root resource string in user-language
-            if (!stringResources.TryGetValue(resourceID, out resourceName))
+            if (!stringResources.TryGetValue(resourceID, out resourceName) || resourceName == null)
                 resourceName = String.Empty;
 
             // will store fully constructed string
