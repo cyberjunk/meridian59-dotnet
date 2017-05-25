@@ -116,10 +116,6 @@ namespace Meridian59 { namespace Ogre
          }
       }
 
-      // no adjustements to make
-      if (Queue->Count <= 0 && DeleteCounter == 0)
-         return;
-
       // pick current chat control
       ::CEGUI::Window* wnd = PlainMode ? TextPlain : Text;
 
@@ -131,9 +127,9 @@ namespace Meridian59 { namespace Ogre
          CEGUI::String& str = GetChatString(msg);
 
          // append next ones
-         while(Queue->Count > 0)
+         while (Queue->Count > 0)
          {
-            msg = Queue->Dequeue();			
+            msg = Queue->Dequeue();
             str = str.append(GetChatString(msg));
          }
 
