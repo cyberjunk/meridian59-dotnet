@@ -2,12 +2,13 @@
 #define RENDERSYSTEM	"Direct3D9 Rendering Subsystem"
 #define WINDOWNAME		"Meridian 59"
 
-#define RESOURCEGROUPMODELS			 "models"
 #define RESOURCEGROUPGENERAL		 "General"
+#define RESOURCEGROUPMODELS			 "models"
 #define RESOURCEGROUPPARTICLES		 "particles"
 #define RESOURCEGROUPSKY			 "sky"
 #define RESOURCEGROUPSHADER			 "shader"
 #define RESOURCEGROUPDECORATION		 "decoration"
+#define RESOURCEGROUPCAELUM		 "caelum"
 
 #define BASEMATERIALLABEL				"base_material_label"
 #define BASEMATERIAL				"base_material"
