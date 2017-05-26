@@ -735,34 +735,56 @@ namespace Meridian59 { namespace Ogre
       bool existsZip = ::System::IO::File::Exists(pathZip);
       bool existsDir = ::System::IO::Directory::Exists(pathDir);
 
-      // neither zip nor path found
+      // neither zip nor folder found, stop here
       if (!existsZip && !existsDir)
       {
          Logger::Log(MODULENAME, LogType::Error, "Failed to find resource subdirectory or zip: " + Name);
          return;
       }
 
-      // prefer zip but force folder if recursive with subfolder mode
-      ::System::String^ pathUse = (existsZip && !AddSubfolders) ? pathZip : pathDir;
-      ::Ogre::String& ostr_path = StringConvert::CLRToOgre(pathUse);
-      ::Ogre::String ostr_type  = (existsZip && !AddSubfolders) ? "Zip" : "FileSystem";
+      // prefer zip file
+      // note: zips can only have 1 folder with all files or only files, NO hierarchy.
+      if (existsZip)
+         resMan.addResourceLocation(StringConvert::CLRToOgre(pathZip), "Zip", ostr_name);
 
-      // possibly add folder itself
-      if (AddRoot)
-         resMan.addResourceLocation(ostr_path, ostr_type, ostr_name);
-
-      // possibly add subfolders
-      if (AddSubfolders)
+      // otherwise process folder contents
+      else
       {
-         // get all subfolders (possibly recursive)
-         array<System::String^>^ folders = Directory::GetDirectories(pathUse, "*", Recursive);
+         // see if the folder files should be added
+         if (AddRoot)
+            resMan.addResourceLocation(StringConvert::CLRToOgre(pathDir), "FileSystem", ostr_name);
 
-         // add subfolders as resource locations
-         for each (System::String^ s in folders)				
-            resMan.addResourceLocation(StringConvert::CLRToOgre(s), "FileSystem", ostr_name);
+         // possibly add subfolders
+         if (AddSubfolders)
+         {
+            // get all subfolders and zip files
+            array<System::String^>^ arrFolders = Directory::GetDirectories(pathDir, "*", SearchOption::TopDirectoryOnly);
+            array<System::String^>^ arrZips = Directory::GetFiles(pathDir, "*.zip", SearchOption::TopDirectoryOnly);
+
+            // add all zips to the resourcegroup
+            for each (System::String^ s in arrZips)
+               resMan.addResourceLocation(StringConvert::CLRToOgre(s), "Zip", ostr_name);
+
+            // add subfolders which don't have a zip
+            for each (System::String^ folder in arrFolders)
+            {
+               bool skip = false;
+               for each(System::String^ zip in arrZips)
+               {
+                  if ((folder + ".zip") == zip)
+                  {
+                     skip = true;
+                     break;
+                  }
+               }
+
+               if (!skip)
+                  resMan.addResourceLocation(StringConvert::CLRToOgre(folder), "FileSystem", ostr_name);
+            }
+         }
       }
 
-      // possibly initialize it
+      // possibly initialize the resource group
       if (Initialize)
          resMan.initialiseResourceGroup(ostr_name);
 
