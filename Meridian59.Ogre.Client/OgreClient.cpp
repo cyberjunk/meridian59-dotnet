@@ -716,93 +716,126 @@ namespace Meridian59 { namespace Ogre
         ControllerUI::LoadingBar::Finish();
     };
 
-	void OgreClient::InitResourceGroup(
-		::System::String^ Name, 
-		bool AddRoot, 
-		bool AddSubfolders, 
-        ::System::IO::SearchOption Recursive, 
-		bool Initialize, 
-		bool Load)
-    {
-		::Ogre::ResourceGroupManager* resMan = ::Ogre::ResourceGroupManager::getSingletonPtr();
-		
-		::System::String^ path	= Path::Combine(Config->ResourcesPath, Name);
-		::Ogre::String ostr_name = StringConvert::CLRToOgre(Name);
-		::Ogre::String ostr_path = StringConvert::CLRToOgre(path);
-			
-        // create if not exists
-        if (!resMan->resourceGroupExists(ostr_name))
-            resMan->createResourceGroup(ostr_name);
- 
-        // if path exists
-        if (::System::IO::Directory::Exists(path))
-        {
-			
-			// possibly add folder itself
-			if (AddRoot)
-				resMan->addResourceLocation(ostr_path, "FileSystem", ostr_name);
+   void OgreClient::InitResourceGroup(
+      ::System::String^ Name, 
+      bool AddRoot, 
+      bool AddSubfolders, 
+      ::System::IO::SearchOption Recursive, 
+      bool Initialize, 
+      bool Load)
+   {
+      // get ogre resource manager
+      ::Ogre::ResourceGroupManager& resMan = ::Ogre::ResourceGroupManager::getSingleton();
 
-			// possibly add subfolders
-			if (AddSubfolders)
-			{
-				// get all subfolders (possibly recursive)
-				array<System::String^>^ folders = Directory::GetDirectories(path, "*", Recursive);
+      // ogrestring for plain name
+      ::Ogre::String& ostr_name = StringConvert::CLRToOgre(Name);
 
-				// add subfolders as resource locations
-				for each (System::String^ s in folders)				
-					resMan->addResourceLocation(StringConvert::CLRToOgre(s), "FileSystem", ostr_name);				
-			}
-			
-            // possibly initialize it
-            if (Initialize)
-                resMan->initialiseResourceGroup(ostr_name);
+      // create ogre resource group if not exists yet
+      if (!resMan.resourceGroupExists(ostr_name))
+         resMan.createResourceGroup(ostr_name);
 
-            // possibly also load it
-            if (Load)
-                resMan->loadResourceGroup(ostr_name);
-        }   
-    };
+      // path to potential folder and potential zip
+      ::System::String^ pathDir = Path::Combine(Config->ResourcesPath, Name);
+      ::System::String^ pathZip = Path::Combine(Config->ResourcesPath, Name + ".zip");
 
-	void OgreClient::InitResourceGroupManually(
-		::System::String^ Name, 
-		bool Initialize, 
-		bool Load, 
-		::System::String^ Type, 
-		::System::String^ Pattern)
-	{
-		::Ogre::ResourceGroupManager* resMan = ResourceGroupManager::getSingletonPtr();
-		
-		::System::String^ path		= ::System::IO::Path::Combine(Config->ResourcesPath, Name);
-        ::Ogre::String ostr_name	= StringConvert::CLRToOgre(Name);
-		::Ogre::String ostr_type	= StringConvert::CLRToOgre(Type);
-		::Ogre::String ostr_pattern = StringConvert::CLRToOgre(Pattern);
-		::Ogre::String ostr_path	= StringConvert::CLRToOgre(path);
-			
-        // create if not exists
-        if (!resMan->resourceGroupExists(ostr_name))
-            resMan->createResourceGroup(ostr_name);
-            
-        // if path exists
-        if (::System::IO::Directory::Exists(path))
-        {		
-			// add folder
-			resMan->addResourceLocation(ostr_path, "FileSystem", ostr_name);
-			
-			// add files manually because not referenced in materials or other reasons
-			::Ogre::FileInfoListPtr fileList = resMan->findResourceFileInfo(ostr_name, ostr_pattern);
-			
-			for(unsigned int f = 0; f < fileList->size(); f++)		
-				resMan->declareResource(fileList->at(f).filename, ostr_type, ostr_name);
-			
-            // possibly initialize it
-            if (Initialize)
-                resMan->initialiseResourceGroup(ostr_name);
+      // check whether folder and or zip exists
+      bool existsZip = ::System::IO::File::Exists(pathZip);
+      bool existsDir = ::System::IO::Directory::Exists(pathDir);
 
-            // possibly also load it
-            if (Load)
-                resMan->loadResourceGroup(ostr_name);
-		}
-	};
+      // neither zip nor path found
+      if (!existsZip && !existsDir)
+      {
+         Logger::Log(MODULENAME, LogType::Error, "Failed to find resource subdirectory or zip: " + Name);
+         return;
+      }
+
+      // prefer zip but force folder if recursive with subfolder mode
+      ::System::String^ pathUse = (existsZip && !AddSubfolders) ? pathZip : pathDir;
+      ::Ogre::String& ostr_path = StringConvert::CLRToOgre(pathUse);
+      ::Ogre::String ostr_type  = (existsZip && !AddSubfolders) ? "Zip" : "FileSystem";
+
+      // possibly add folder itself
+      if (AddRoot)
+         resMan.addResourceLocation(ostr_path, ostr_type, ostr_name);
+
+      // possibly add subfolders
+      if (AddSubfolders)
+      {
+         // get all subfolders (possibly recursive)
+         array<System::String^>^ folders = Directory::GetDirectories(pathUse, "*", Recursive);
+
+         // add subfolders as resource locations
+         for each (System::String^ s in folders)				
+            resMan.addResourceLocation(StringConvert::CLRToOgre(s), "FileSystem", ostr_name);
+      }
+
+      // possibly initialize it
+      if (Initialize)
+         resMan.initialiseResourceGroup(ostr_name);
+
+      // possibly also load it
+      if (Load)
+         resMan.loadResourceGroup(ostr_name);
+   };
+
+   void OgreClient::InitResourceGroupManually(
+      ::System::String^ Name, 
+      bool Initialize, 
+      bool Load, 
+      ::System::String^ Type, 
+      ::System::String^ Pattern)
+   {
+      // get ogre resource manager
+      ::Ogre::ResourceGroupManager& resMan = ResourceGroupManager::getSingleton();
+
+      // ogre string for plain name
+      ::Ogre::String& ostr_name = StringConvert::CLRToOgre(Name);
+      
+      // create resource group if not exists
+      if (!resMan.resourceGroupExists(ostr_name))
+         resMan.createResourceGroup(ostr_name);
+
+      // path to potential folder and potential zip
+      ::System::String^ pathDir = Path::Combine(Config->ResourcesPath, Name);
+      ::System::String^ pathZip = Path::Combine(Config->ResourcesPath, Name + ".zip");
+
+      // check whether folder and or zip exists
+      bool existsZip = ::System::IO::File::Exists(pathZip);
+      bool existsDir = ::System::IO::Directory::Exists(pathDir);
+
+      // neither zip nor path found
+      if (!existsZip && !existsDir)
+      {
+         Logger::Log(MODULENAME, LogType::Error, "Failed to find resource subdirectory or zip: " + Name);
+         return;
+      }
+
+      // prefer zip
+      ::System::String^ pathUse = (existsZip) ? pathZip : pathDir;
+      ::Ogre::String& ostr_path = StringConvert::CLRToOgre(pathUse);
+      ::Ogre::String ostr_restype  = (existsZip) ? "Zip" : "FileSystem";
+
+      // add folder
+      resMan.addResourceLocation(ostr_path, ostr_restype, ostr_name);
+
+      // ogre strings for file types and pattern
+      ::Ogre::String& ostr_type = StringConvert::CLRToOgre(Type);
+      ::Ogre::String& ostr_pattern = StringConvert::CLRToOgre(Pattern);
+
+      // add files manually because not referenced in materials or other reasons
+      ::Ogre::FileInfoListPtr fileList = resMan.findResourceFileInfo(ostr_name, ostr_pattern);
+
+      for(unsigned int f = 0; f < fileList->size(); f++)
+         resMan.declareResource(fileList->at(f).filename, ostr_type, ostr_name);
+
+      // possibly initialize it
+      if (Initialize)
+         resMan.initialiseResourceGroup(ostr_name);
+
+      // possibly also load it
+      if (Load)
+         resMan.loadResourceGroup(ostr_name);
+   };
 
 	void OgreClient::HandleLoginModeMessage(LoginModeMessage^ Message)
     {
