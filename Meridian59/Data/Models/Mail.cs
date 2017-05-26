@@ -483,7 +483,6 @@ namespace Meridian59.Data.Models
                 (sender == null || sender.Length == 0)  &&
                 (timestamp == 0)                        &&
                 (recipients.Count == 0)                 &&
-                (message.ResourceID == 0)               &&
                 (title == null || title.Length == 0);
         }
 
