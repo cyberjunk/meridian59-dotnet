@@ -186,6 +186,7 @@ material base_material_label
 			iteration once
             illumination_stage ambient
 			max_lights 0
+			depth_bias 8.0
 			
             vertex_program_ref label_vs
             {
