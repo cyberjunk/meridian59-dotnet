@@ -1605,9 +1605,8 @@ namespace Meridian59 { namespace Ogre
 		{
 		public:
 			static bool OnKeyDown(const CEGUI::EventArgs& e);
-			static bool OnThumbTrackStarted(const CEGUI::EventArgs& e);
-			static bool OnThumbTrackEnded(const CEGUI::EventArgs& e);
          static bool OnTextClicked(const CEGUI::EventArgs& e);
+         static bool OnScrollPositionChanged(const CEGUI::EventArgs& e);
 		};
 
 		/// <summary>

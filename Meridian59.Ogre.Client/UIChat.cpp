@@ -35,10 +35,8 @@ namespace Meridian59 { namespace Ogre
       Input->subscribeEvent(CEGUI::Editbox::EventKeyDown, CEGUI::Event::Subscriber(UICallbacks::Chat::OnKeyDown));
 
       // subscribe scroll
-      Scrollbar->subscribeEvent(CEGUI::Scrollbar::EventThumbTrackStarted, CEGUI::Event::Subscriber(UICallbacks::Chat::OnThumbTrackStarted));
-      Scrollbar->subscribeEvent(CEGUI::Scrollbar::EventThumbTrackEnded, CEGUI::Event::Subscriber(UICallbacks::Chat::OnThumbTrackEnded));
-      ScrollbarPlain->subscribeEvent(CEGUI::Scrollbar::EventThumbTrackStarted, CEGUI::Event::Subscriber(UICallbacks::Chat::OnThumbTrackStarted));
-      ScrollbarPlain->subscribeEvent(CEGUI::Scrollbar::EventThumbTrackEnded, CEGUI::Event::Subscriber(UICallbacks::Chat::OnThumbTrackEnded));
+      Scrollbar->subscribeEvent(CEGUI::Scrollbar::EventScrollPositionChanged, CEGUI::Event::Subscriber(UICallbacks::Chat::OnScrollPositionChanged));
+      ScrollbarPlain->subscribeEvent(CEGUI::Scrollbar::EventScrollPositionChanged, CEGUI::Event::Subscriber(UICallbacks::Chat::OnScrollPositionChanged));
 
       // subscribe close button
       Window->subscribeEvent(CEGUI::FrameWindow::EventCloseClicked, CEGUI::Event::Subscriber(UICallbacks::OnWindowClosed));
@@ -327,25 +325,26 @@ namespace Meridian59 { namespace Ogre
       return handled;
    };
 
-   bool UICallbacks::Chat::OnThumbTrackStarted(const CEGUI::EventArgs& e)
+   bool UICallbacks::Chat::OnTextClicked(const CEGUI::EventArgs& e)
    {
-      const CEGUI::WindowEventArgs& e2 = static_cast<const CEGUI::WindowEventArgs&>(e);
+      const CEGUI::MouseEventArgs& e2 = static_cast<const CEGUI::MouseEventArgs&>(e);
 
-      // disable autoscroll on both until we
-      // re-enable it possibly in OnThumTrackEnded
-      ControllerUI::Chat::ScrollbarPlain->setEndLockEnabled(false);
-      ControllerUI::Chat::Scrollbar->setEndLockEnabled(false);
+      // only for right mousebutton
+      if (e2.button != ::CEGUI::MouseButton::RightButton)
+         return true;
+
+      // flip plain mode and force update on next Tick()
+      ControllerUI::Chat::PlainMode = !ControllerUI::Chat::PlainMode;
+      ControllerUI::Chat::ChatForceRenew = true;
 
       return true;
    };
 
-   bool UICallbacks::Chat::OnThumbTrackEnded(const CEGUI::EventArgs& e)
+   bool UICallbacks::Chat::OnScrollPositionChanged(const CEGUI::EventArgs& e)
    {
-      const CEGUI::WindowEventArgs& e2 = static_cast<const CEGUI::WindowEventArgs&>(e);
-
       // pick scrollbar for text mode
-      ::CEGUI::Scrollbar* bar = ControllerUI::Chat::PlainMode ? 
-         ControllerUI::Chat::ScrollbarPlain : 
+      ::CEGUI::Scrollbar* bar = ControllerUI::Chat::PlainMode ?
+         ControllerUI::Chat::ScrollbarPlain :
          ControllerUI::Chat::Scrollbar;
 
       ::Ogre::Real pos = bar->getScrollPosition();
@@ -364,21 +363,6 @@ namespace Meridian59 { namespace Ogre
          ControllerUI::Chat::ScrollbarPlain->setEndLockEnabled(false);
          ControllerUI::Chat::Scrollbar->setEndLockEnabled(false);
       }
-
-      return true;
-   };
-
-   bool UICallbacks::Chat::OnTextClicked(const CEGUI::EventArgs& e)
-   {
-      const CEGUI::MouseEventArgs& e2 = static_cast<const CEGUI::MouseEventArgs&>(e);
-
-      // only for right mousebutton
-      if (e2.button != ::CEGUI::MouseButton::RightButton)
-         return true;
-
-      // flip plain mode and force update on next Tick()
-      ControllerUI::Chat::PlainMode = !ControllerUI::Chat::PlainMode;
-      ControllerUI::Chat::ChatForceRenew = true;
 
       return true;
    };
