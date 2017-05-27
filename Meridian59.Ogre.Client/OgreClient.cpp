@@ -347,8 +347,8 @@ namespace Meridian59 { namespace Ogre
          renderWindow, windowListener);
 
       // set icon on gamewindow
-      LONG iconID = (LONG)LoadIcon(GetModuleHandle(0), MAKEINTRESOURCE(1));
-      SetClassLongPtr(renderWindowHandle, GCLP_HICON, iconID);
+      HICON iconID = LoadIcon(GetModuleHandle(0), MAKEINTRESOURCE(1));
+      SetClassLongPtr(renderWindowHandle, GCLP_HICON, (LONG_PTR)iconID);
 
       // create viewport
       viewport = renderWindow->addViewport(camera, 0);

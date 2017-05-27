@@ -157,7 +157,7 @@ namespace Meridian59 { namespace Ogre
          direction.Y = -Orientation.xAxis().x;
 
          // return radian angle
-         return MathUtil::GetRadianForDirection(direction);     
+         return (float)MathUtil::GetRadianForDirection(direction);     
       };
 
       /// <summary>
@@ -168,7 +168,7 @@ namespace Meridian59 { namespace Ogre
       __forceinline static void SetOrientationFromAngle(SceneNode& SceneNode, float RadianAngle)
       {
          // add quarter of full period offset
-         RadianAngle += GeometryConstants::QUARTERPERIOD;
+         RadianAngle += (float)GeometryConstants::QUARTERPERIOD;
 
          // get ogre radian from value
          const Radian rRadian(RadianAngle);
@@ -743,7 +743,7 @@ namespace Meridian59 { namespace Ogre
          if (dataPtr->size() == 0)
             return nullptr;
 
-         array<unsigned char>^ buffer = gcnew array<unsigned char>(dataPtr->size());
+         array<unsigned char>^ buffer = gcnew array<unsigned char>((int)dataPtr->size());
          pin_ptr<unsigned char> p = &buffer[0];
 
          //Read buffer.Length amount of data into bufferPtr
@@ -770,7 +770,7 @@ namespace Meridian59 { namespace Ogre
          while(iterator.hasMoreElements())
          {
             obj = iterator.getNext();
-            candidate = obj->getBoundingBox().getSize().y;
+            candidate = (float)obj->getBoundingBox().getSize().y;
 
             if (candidate > maxheight)
                maxheight = candidate;

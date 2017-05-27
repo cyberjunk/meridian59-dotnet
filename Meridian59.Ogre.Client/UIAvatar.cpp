@@ -241,7 +241,7 @@ namespace Meridian59 { namespace Ogre
 
 	void ControllerUI::Avatar::BuffRemove(int Index)
 	{
-		int childcount = Enchantments->getChildCount();
+		int childcount = (int)Enchantments->getChildCount();
 
 		// if we have that many slots..
 		if (childcount > Index &&

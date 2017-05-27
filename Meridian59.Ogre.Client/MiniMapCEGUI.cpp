@@ -250,9 +250,9 @@ namespace Meridian59 { namespace Ogre
 
 	void MiniMapCEGUI::DrawAvatar(RoomObject^ RoomObject, V2 P1, V2 P2, V2 P3)
 	{
-		playerArrowPts[0] = PointF(P1.X, P1.Y);
-		playerArrowPts[1] = PointF(P2.X, P2.Y);
-		playerArrowPts[2] = PointF(P3.X, P3.Y);
+		playerArrowPts[0] = PointF((float)P1.X, (float)P1.Y);
+		playerArrowPts[1] = PointF((float)P2.X, (float)P2.Y);
+		playerArrowPts[2] = PointF((float)P3.X, (float)P3.Y);
 
 		g->FillPolygon(brushPlayer, playerArrowPts);
 	};

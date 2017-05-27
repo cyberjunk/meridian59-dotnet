@@ -135,14 +135,14 @@ namespace Meridian59 { namespace Ogre
 		V2 dir = MathUtil::GetDirectionForRadian(avatar->Angle);
 	
 		vec3df irrpos;
-		irrpos.X = pos.X;
-		irrpos.Y = pos.Y;
-		irrpos.Z = -pos.Z;
+		irrpos.X = (ik_f32)pos.X;
+		irrpos.Y = (ik_f32)pos.Y;
+		irrpos.Z = (ik_f32)-pos.Z;
 
 		vec3df irrlook;
-		irrlook.X = dir.X;
+		irrlook.X = (ik_f32)dir.X;
 		irrlook.Y = 0.0f;
-		irrlook.Z = -dir.Y;
+		irrlook.Z = (ik_f32)-dir.Y;
 		
 		soundEngine->setListenerPosition(irrpos, irrlook);
 	};
@@ -346,9 +346,9 @@ namespace Meridian59 { namespace Ogre
 				if (attachNode && attachNode->SceneNode)
 				{
 					::Ogre::Vector3 pos = attachNode->SceneNode->getPosition();
-					x = pos.x;
-					y = pos.y;
-					z = -pos.z;
+					x = (float)pos.x;
+					y = (float)pos.y;
+					z = (float)-pos.z;
 				}
 			}
 		}
@@ -363,7 +363,7 @@ namespace Meridian59 { namespace Ogre
 			RooSubSector^ out;
 			
 			if (OgreClient::Singleton->CurrentRoom)
-				y = OgreClient::Singleton->CurrentRoom->GetHeightAt(x, z, out, true, false);
+				y = (float)OgreClient::Singleton->CurrentRoom->GetHeightAt(x, z, out, true, false);
 
 			// scale from roo to client and add 1 based num offset
 			x = (x * 0.0625f) + 64.0f;
@@ -382,9 +382,9 @@ namespace Meridian59 { namespace Ogre
 				if (attachNode && attachNode->SceneNode)
 				{
 					::Ogre::Vector3 pos = attachNode->SceneNode->getPosition();
-					x = pos.x;
-					y = pos.y;
-					z = -pos.z;
+					x = (float)pos.x;
+					y = (float)pos.y;
+					z = (float)-pos.z;
 				}
 			}
 		}

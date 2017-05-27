@@ -241,8 +241,8 @@ namespace Meridian59 { namespace Ogre
          TexturePtr texPtr = TextureManager::getSingletonPtr()->createOrRetrieve(
             texName, TEXTUREGROUP_MOVABLETEXT).first.staticCast<Texture>();
 
-         nameTextureWidth = (::Ogre::Real)texPtr->getWidth();
-         nameTextureHeight = (::Ogre::Real)texPtr->getHeight();
+         nameTextureWidth = (float)texPtr->getWidth();
+         nameTextureHeight = (float)texPtr->getHeight();
 
          billboardSetName->setDefaultDimensions(nameTextureWidth, nameTextureHeight);
          billboardSetName->setBounds(AxisAlignedBox::BOX_NULL, 0.0f);
@@ -307,7 +307,7 @@ namespace Meridian59 { namespace Ogre
     void RemoteNode::RefreshOrientation()
     {
 		// reset scenenode orientation to M59 angle
-        Util::SetOrientationFromAngle(*SceneNode, RoomObject->Angle);                
+        Util::SetOrientationFromAngle(*SceneNode, (float)RoomObject->Angle);                
     };
 
     void RemoteNode::RefreshPosition()
@@ -321,9 +321,9 @@ namespace Meridian59 { namespace Ogre
 		if (sounds->size() > 0)
 		{
 			vec3df irrpos;
-			irrpos.X = pos.x;
-			irrpos.Y = pos.y;
-			irrpos.Z = -pos.z;
+			irrpos.X = (ik_f32)pos.x;
+			irrpos.Y = (ik_f32)pos.y;
+			irrpos.Z = (ik_f32)-pos.z;
 
 			ISound* sound;
 

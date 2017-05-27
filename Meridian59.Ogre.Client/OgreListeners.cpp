@@ -83,7 +83,7 @@ namespace Meridian59 { namespace Ogre
 	{
 		// build a red blendcolor with alpha based on progress
 		// we scale pain effect here from 30-0% blending
-		float alpha = 0.3f - (0.3f * OgreClient::Singleton->Data->Effects->Pain->Progress);
+		float alpha = 0.3f - (0.3f * (float)OgreClient::Singleton->Data->Effects->Pain->Progress);
 		float blendcolor[4];
 		blendcolor[0] = 1.0f;  // r
 		blendcolor[1] = 0.0f;  // g
@@ -112,7 +112,7 @@ namespace Meridian59 { namespace Ogre
 	void CompositorWhiteoutListener::notifyMaterialRender( uint32 pass_id, MaterialPtr & mat )
 	{
 		// build a white blendcolor with alpha based on progress
-		float alpha = 1.0f - OgreClient::Singleton->Data->Effects->Whiteout->Progress;
+		float alpha = 1.0f - (float)OgreClient::Singleton->Data->Effects->Whiteout->Progress;
 		float blendcolor[4];
 		blendcolor[0] = 1.0f;  // r
 		blendcolor[1] = 1.0f;  // g

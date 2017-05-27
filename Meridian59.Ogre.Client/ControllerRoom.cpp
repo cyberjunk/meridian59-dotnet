@@ -472,12 +472,12 @@ namespace Meridian59 { namespace Ogre
 		if (!roomManObj || Name == STRINGEMPTY)
 			return -1;
 
-		for (size_t i = 0; i < roomManObj->getNumSections(); i++)
+		for (unsigned int i = 0; i < roomManObj->getNumSections(); i++)
 		{
 			section = roomManObj->getSection(i);
 
 			if (section->getMaterialName() == Name)
-				return i;
+				return (int)i;
 		}
 
 		return -1;
@@ -490,12 +490,12 @@ namespace Meridian59 { namespace Ogre
 		if (!roomDecoration || Name == STRINGEMPTY)
 			return -1;
 
-		for (size_t i = 0; i < roomDecoration->getNumSections(); i++)
+		for (unsigned int i = 0; i < roomDecoration->getNumSections(); i++)
 		{
 			section = roomDecoration->getSection(i);
 
 			if (section->getMaterialName() == Name)
-				return i;
+				return (int)i;
 		}
 
 		return -1;
@@ -819,7 +819,7 @@ namespace Meridian59 { namespace Ogre
 				C.Y = (float)subsect->Vertices[i + 2].Y;
 
 				// calc area
-				area = MathUtil::TriangleArea(A, B, C);
+				area = (float)MathUtil::TriangleArea(A, B, C);
 
 				// create an amount of grass to create for this triangle
 				// scaled by the area of the triangle and intensity
@@ -1250,7 +1250,7 @@ namespace Meridian59 { namespace Ogre
 		::Ogre::Vector3 diff = max - min;
 		
 		// get biggest side
-		float maxSide = System::Math::Max(diff.x, System::Math::Max(diff.y, diff.z));
+		float maxSide = System::Math::Max((float)diff.x, System::Math::Max((float)diff.y, (float)diff.z));
 
 		// the new maximum based on biggest side
 		::Ogre::Vector3 newMax = ::Ogre::Vector3(min.x + maxSide, min.y + maxSide, min.z + maxSide);

@@ -750,8 +750,8 @@ namespace Meridian59 { namespace Ogre
 		const float progress = VUMeter->getProgress();
 
 		// build red and green components
-		const float r = (progress <= 0.5f) ? MAXVAL : MathUtil::Bound(MAXVAL - ((progress - 0.5f) * 2.0f * MAXVAL), 0.0f, MAXVAL);
-		const float g = (progress >= 0.5f) ? MAXVAL : MathUtil::Bound(progress * 2.0f * MAXVAL, 0.0f, MAXVAL);
+		const float r = (progress <= 0.5f) ? MAXVAL : (float)MathUtil::Bound(MAXVAL - ((progress - 0.5f) * 2.0f * MAXVAL), 0.0f, MAXVAL);
+		const float g = (progress >= 0.5f) ? MAXVAL : (float)MathUtil::Bound(progress * 2.0f * MAXVAL, 0.0f, MAXVAL);
 
 		// create colourrect from components
 		const CEGUI::Colour colour = CEGUI::Colour(0xFF000000 | (unsigned int)r << 16 | (unsigned int)g << 8);

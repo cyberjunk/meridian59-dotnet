@@ -285,7 +285,7 @@ namespace Meridian59 { namespace Ogre
          // calc
          float mouse_x = args.position.d_x;
          float control_x = args.window->getPixelPosition().d_x;
-         float control_width = MathUtil::Max(args.window->getPixelSize().d_width, 0.1f);
+         float control_width = (float)MathUtil::Max(args.window->getPixelSize().d_width, 0.1f);
          float p = (mouse_x - control_x) / control_width;
          unsigned int val = ::System::Convert::ToUInt32(p * StatChangeInfo::ATTRIBUTE_MAXVALUE);
 
@@ -345,7 +345,7 @@ namespace Meridian59 { namespace Ogre
          // calc
          float mouse_x = args.position.d_x;
          float control_x = args.window->getPixelPosition().d_x;
-         float control_width = MathUtil::Max(args.window->getPixelSize().d_width, 0.1f);
+         float control_width = (float)MathUtil::Max(args.window->getPixelSize().d_width, 0.1f);
          float p = (mouse_x - control_x) / control_width;
          unsigned int val = ::System::Convert::ToUInt32(p * StatChangeInfo::SCHOOL_MAXVALUE);
 

@@ -138,7 +138,7 @@ namespace Meridian59 { namespace Ogre
 
 	void ControllerUI::RoomEnchantments::BuffRemove(int Index)
 	{
-		int childcount = Grid->getChildCount();
+		int childcount = (int)Grid->getChildCount();
 
 		// if we have that many slots..
 		if (childcount > Index &&

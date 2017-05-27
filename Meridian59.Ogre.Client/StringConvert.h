@@ -93,7 +93,7 @@ namespace Meridian59 { namespace Ogre
 			const CEGUI::utf32* strC = CEGUIString.ptr();
 
 			// how much bytes represent the utf32 string (4 per codepoint)
-			const int bytelength = CEGUIString.length() * 4;
+			const int bytelength = (int)CEGUIString.length() * 4;
 
 			// convert to CLR string
 			System::String^ strCLR = gcnew System::String(

@@ -169,7 +169,7 @@ namespace Meridian59 { namespace Ogre
 			
 		if (result.size() > 0)
 		{
-			List<unsigned int>^ objectIDs = gcnew List<unsigned int>(result.size());
+			List<unsigned int>^ objectIDs = gcnew List<unsigned int>((int)result.size());
 
 			// iterate hits
 			for(unsigned int i=0; i<result.size();i++)
@@ -769,8 +769,8 @@ namespace Meridian59 { namespace Ogre
 			Quaternion orientation = cameraNode->_getDerivedOrientation();
 
 			// save/update current pitch and yaw values
-			cameraPitchCurrent = orientation.getPitch().valueRadians();
-			cameraYawCurrent = orientation.getYaw().valueRadians();
+			cameraPitchCurrent = (float)orientation.getPitch().valueRadians();
+			cameraYawCurrent = (float)orientation.getYaw().valueRadians();
 
 			// calculate new pitch and yaw values for this step/frame
 			float destPitch = cameraPitchCurrent + cameraPitchStep;
@@ -784,7 +784,7 @@ namespace Meridian59 { namespace Ogre
 				
 				// verify pitchover
 				Quaternion orientation = cameraNode->_getDerivedOrientation();
-				float pitchOver = orientation.getPitch().valueRadians();
+				float pitchOver = (float)orientation.getPitch().valueRadians();
 			
 				// don't allow overpitching, so pitch back possibly
 				if (pitchOver >= Math::HALF_PI ||
@@ -827,7 +827,7 @@ namespace Meridian59 { namespace Ogre
 			// 3. ZOOM
 			if (cameraZDelta != 0.0f)
 			{	
-				float destZ = camera->getPosition().z - cameraZStep;
+				float destZ = (float)camera->getPosition().z - cameraZStep;
 
 				//
 				if (destZ > 0.0f)
@@ -911,10 +911,10 @@ namespace Meridian59 { namespace Ogre
 			V2 direction = GetMoveVector();
 
 			// get the height of the avatar in ROO format
-			float playerheight = 0.88f * 16.0f * Avatar->SceneNode->_getWorldAABB().getSize().y;
+			float playerheight = 0.88f * 16.0f * (float)Avatar->SceneNode->_getWorldAABB().getSize().y;
 				
 			// try to do the move (might get blocked)				
-			OgreClient::Singleton->TryMove(direction, (unsigned char)speed, playerheight);
+			OgreClient::Singleton->TryMove(direction, (unsigned char)speed, (CLRReal)playerheight);
 		}
 				
 		/************** KEYBOARD ONLY FROM HERE ON ************/

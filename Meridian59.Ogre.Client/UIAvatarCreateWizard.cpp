@@ -793,7 +793,7 @@ namespace Meridian59 { namespace Ogre
 			// calc
 			float mouse_x = args.position.d_x;
 			float control_x = args.window->getPixelPosition().d_x;
-			float control_width = MathUtil::Max(args.window->getPixelSize().d_width, 0.1f);		
+			float control_width = (float)MathUtil::Max(args.window->getPixelSize().d_width, 0.1f);		
 			float p = (mouse_x - control_x) / control_width;
 			unsigned int val = ::System::Convert::ToUInt32(p * CharCreationInfo::ATTRIBUTE_MAXVALUE);
 
@@ -827,22 +827,22 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::MouseEventArgs& args = static_cast<const CEGUI::MouseEventArgs&>(e);
 		
 		if (args.window == ControllerUI::AvatarCreateWizard::Might)
-			OgreClient::Singleton->Data->CharCreationInfo->Might += args.wheelChange;
+			OgreClient::Singleton->Data->CharCreationInfo->Might += (int)args.wheelChange;
 
 		else if (args.window == ControllerUI::AvatarCreateWizard::Intellect)
-			OgreClient::Singleton->Data->CharCreationInfo->Intellect += args.wheelChange;
+			OgreClient::Singleton->Data->CharCreationInfo->Intellect += (int)args.wheelChange;
 
 		else if (args.window == ControllerUI::AvatarCreateWizard::Stamina)
-			OgreClient::Singleton->Data->CharCreationInfo->Stamina += args.wheelChange;
+			OgreClient::Singleton->Data->CharCreationInfo->Stamina += (int)args.wheelChange;
 
 		else if (args.window == ControllerUI::AvatarCreateWizard::Agility)
-			OgreClient::Singleton->Data->CharCreationInfo->Agility += args.wheelChange;
+			OgreClient::Singleton->Data->CharCreationInfo->Agility += (int)args.wheelChange;
 
 		else if (args.window == ControllerUI::AvatarCreateWizard::Mysticism)
-			OgreClient::Singleton->Data->CharCreationInfo->Mysticism += args.wheelChange;
+			OgreClient::Singleton->Data->CharCreationInfo->Mysticism += (int)args.wheelChange;
 
 		else if (args.window == ControllerUI::AvatarCreateWizard::Aim)
-			OgreClient::Singleton->Data->CharCreationInfo->Aim += args.wheelChange;
+			OgreClient::Singleton->Data->CharCreationInfo->Aim += (int)args.wheelChange;
 
 		ControllerUI::AvatarCreateWizard::Profiles->setText(UI_AVATARCREATEWIZARD_PROFILE_CUSTOM);
 		ControllerUI::AvatarCreateWizard::Profiles->selectListItemWithEditboxText();

@@ -2287,7 +2287,7 @@ namespace Meridian59 { namespace Ogre
 
 		CEGUI::ItemListbox* list = ControllerUI::Options::ListAliases;
 
-		size_t idx = list->getItemIndex((CEGUI::ItemEntry*)btn->getParent());
+		int idx = (int)list->getItemIndex((CEGUI::ItemEntry*)btn->getParent());
 
 		OgreClient::Singleton->Config->Aliases->RemoveAt(idx);
 
@@ -2468,7 +2468,7 @@ namespace Meridian59 { namespace Ogre
 		else
 		{
 			// get selected ui index
-			size_t index = groups->getItemIndex(item);
+			int index = (int)groups->getItemIndex(item);
 
 			// get the datamodel for index and keep a reference
 			ControllerUI::Options::CurrentGroup = groupsData[index];

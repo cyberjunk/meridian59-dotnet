@@ -176,7 +176,7 @@ namespace Meridian59 { namespace Ogre
 
 	void ControllerUI::Inventory::InventoryRemove(int Index)
 	{
-		int childcount = List->getChildCount();
+		int childcount = (int)List->getChildCount();
 
 		// if we have that many slots..
 		if (childcount > Index &&
@@ -390,13 +390,13 @@ namespace Meridian59 { namespace Ogre
 					if (destDrag)
 					{
 						// determine the indices of the entries in the viewer/ui
-						size_t fromIndex = dataViews->getIdxOfChild(dataView);
-						size_t toIndex = dataViews->getIdxOfChild(destDrag);
+						int fromIndex = (int)dataViews->getIdxOfChild(dataView);
+                  int toIndex = (int)dataViews->getIdxOfChild(destDrag);
 
 						// beware: these can point to empty ui inventory slots 
 						// (out of bound indices in data).
-						if ((int)fromIndex < 0 || (int)fromIndex >= dataModels->Count ||
-							(int)toIndex < 0 || (int)toIndex >= dataModels->Count)
+						if (fromIndex < 0 || fromIndex >= dataModels->Count ||
+							toIndex < 0 || toIndex >= dataModels->Count)
 							return true;
 
 						// remove and reinsert at position

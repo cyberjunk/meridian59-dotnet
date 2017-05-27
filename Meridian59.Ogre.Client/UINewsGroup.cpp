@@ -252,7 +252,7 @@ namespace Meridian59 { namespace Ogre
 
 		if (itm != nullptr && news != nullptr)
 		{
-			unsigned int index = list->getItemRowIndex(itm);
+			int index = (int)list->getItemRowIndex(itm);
 
 			if (news->Articles->Count > index)
 			{

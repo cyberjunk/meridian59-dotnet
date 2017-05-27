@@ -162,8 +162,8 @@ namespace Meridian59 { namespace Ogre
 			window->setProperty(UI_PROPNAME_IMAGE, *imageComposer->Image->TextureName);
 
 			// calc size with scale
-			float x = scale * imageComposer->RenderInfo->Dimension.X;
-			float y = scale * imageComposer->RenderInfo->Dimension.Y;
+			float x = scale * (float)imageComposer->RenderInfo->Dimension.X;
+			float y = scale * (float)imageComposer->RenderInfo->Dimension.Y;
 
 			// set size
 			window->setSize(CEGUI::USize(CEGUI::UDim(0, x), CEGUI::UDim(0, y)));
@@ -189,13 +189,13 @@ namespace Meridian59 { namespace Ogre
 			case PlayerOverlayHotspot::HOTSPOT_SE:
 			case PlayerOverlayHotspot::HOTSPOT_E:
 			case PlayerOverlayHotspot::HOTSPOT_NE:
-				value.d_x.d_offset = guiRoot->getPixelSize().d_width - (scale * ImageComposer->RenderInfo->Dimension.X);
+				value.d_x.d_offset = guiRoot->getPixelSize().d_width - (scale * (float)ImageComposer->RenderInfo->Dimension.X);
 				break;
 
 			case PlayerOverlayHotspot::HOTSPOT_N:
 			case PlayerOverlayHotspot::HOTSPOT_S:
 			case PlayerOverlayHotspot::HOTSPOT_CENTER:
-				value.d_x.d_offset = 0.5f * (guiRoot->getPixelSize().d_width - (scale * ImageComposer->RenderInfo->Dimension.X));
+				value.d_x.d_offset = 0.5f * (guiRoot->getPixelSize().d_width - (scale * (float)ImageComposer->RenderInfo->Dimension.X));
 				break;
 		}
 
@@ -211,13 +211,13 @@ namespace Meridian59 { namespace Ogre
 			case PlayerOverlayHotspot::HOTSPOT_SW:
 			case PlayerOverlayHotspot::HOTSPOT_S:
 			case PlayerOverlayHotspot::HOTSPOT_SE:
-				value.d_y.d_offset = guiRoot->getPixelSize().d_height - (scale * ImageComposer->RenderInfo->Dimension.Y);
+				value.d_y.d_offset = guiRoot->getPixelSize().d_height - (scale * (float)ImageComposer->RenderInfo->Dimension.Y);
 				break;
 
 			case PlayerOverlayHotspot::HOTSPOT_W:
 			case PlayerOverlayHotspot::HOTSPOT_E:
 			case PlayerOverlayHotspot::HOTSPOT_CENTER:
-				value.d_y.d_offset = 0.5f * (guiRoot->getPixelSize().d_height - (scale * ImageComposer->RenderInfo->Dimension.Y));
+				value.d_y.d_offset = 0.5f * (guiRoot->getPixelSize().d_height - (scale * (float)ImageComposer->RenderInfo->Dimension.Y));
 				break;
 		}
 
@@ -257,8 +257,8 @@ namespace Meridian59 { namespace Ogre
 			ImageComposerCEGUI<PlayerOverlay^>^ imageComposer = imageComposers[i];
 
 			// calc size with scale
-			float x = scale * imageComposer->RenderInfo->Dimension.X;
-			float y = scale * imageComposer->RenderInfo->Dimension.Y;
+			float x = scale * (float)imageComposer->RenderInfo->Dimension.X;
+			float y = scale * (float)imageComposer->RenderInfo->Dimension.Y;
 
 			// set size
 			window->setSize(CEGUI::USize(CEGUI::UDim(0, x), CEGUI::UDim(0, y)));
