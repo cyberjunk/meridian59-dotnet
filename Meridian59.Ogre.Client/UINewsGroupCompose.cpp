@@ -95,6 +95,10 @@ namespace Meridian59 { namespace Ogre
 		// mark GUIroot active
 		ControllerUI::ActivateRoot();
 
+      // clear out sent text
+      ControllerUI::NewsGroupCompose::HeadLine->setText(STRINGEMPTY);
+      ControllerUI::NewsGroupCompose::Text->setText(STRINGEMPTY);
+
 		return true;
 	};
 };};

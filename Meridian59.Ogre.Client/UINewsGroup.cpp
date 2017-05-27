@@ -186,12 +186,10 @@ namespace Meridian59 { namespace Ogre
 	
 	bool UICallbacks::NewsGroup::OnCreateClicked(const CEGUI::EventArgs& e)
 	{		
-		// show empty compose window
-		ControllerUI::NewsGroupCompose::HeadLine->setText(STRINGEMPTY);
-		ControllerUI::NewsGroupCompose::Text->setText(STRINGEMPTY);
+		// show compose window
 		ControllerUI::NewsGroupCompose::Window->setVisible(true);
 		ControllerUI::NewsGroupCompose::Window->moveToFront();
-	
+
 		return true;
 	}
 
@@ -219,7 +217,7 @@ namespace Meridian59 { namespace Ogre
 				ControllerUI::NewsGroupCompose::HeadLine->setText(
 					StringConvert::CLRToCEGUI(newTitle));
 				
-				ControllerUI::NewsGroupCompose::Text->setText(STRINGEMPTY);
+				//ControllerUI::NewsGroupCompose::Text->setText(STRINGEMPTY);
 				ControllerUI::NewsGroupCompose::Window->setVisible(true);
 				ControllerUI::NewsGroupCompose::Window->moveToFront();
 			}
