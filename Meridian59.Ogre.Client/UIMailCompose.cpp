@@ -76,6 +76,11 @@ namespace Meridian59 { namespace Ogre
 				StringConvert::CEGUIToCLR(HeadLine->getText()),
 				StringConvert::CEGUIToCLR(Text->getText()));
 
+         // clean text
+         Recipients->setText(STRINGEMPTY);
+         HeadLine->setText(STRINGEMPTY);
+         Text->setText(STRINGEMPTY);
+
 			// hide window
 			Window->hide();
 		}

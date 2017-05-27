@@ -162,9 +162,6 @@ namespace Meridian59 { namespace Ogre
 	bool UICallbacks::Mail::OnCreateClicked(const CEGUI::EventArgs& e)
 	{		
 		// show empty compose window
-		ControllerUI::MailCompose::Recipients->setText(STRINGEMPTY);
-		ControllerUI::MailCompose::HeadLine->setText(STRINGEMPTY);
-		ControllerUI::MailCompose::Text->setText(STRINGEMPTY);
 		ControllerUI::MailCompose::Window->setVisible(true);
 		ControllerUI::MailCompose::Window->moveToFront();
 		
@@ -195,9 +192,6 @@ namespace Meridian59 { namespace Ogre
 				// set sender as recipient
 				ControllerUI::MailCompose::Recipients->setText(
 						StringConvert::CLRToCEGUI(mail->Sender));
-
-				// set empty text
-				ControllerUI::MailCompose::Text->setText(STRINGEMPTY);
 
 				// make sure no error is shown
 				ControllerUI::MailCompose::Error->setVisible(false);
