@@ -545,12 +545,11 @@ namespace Meridian59 { namespace Ogre
 		public:
 			static ::CEGUI::Window* Window = nullptr;
 			static ::CEGUI::Window* DrawSurface = nullptr;
-         static bool IsWaitingForSize;
+         static float Zoom = 8.0f;
 
 			static void Initialize();
 			static void Destroy();
 			static void ApplyLanguage();
-			static void OnImageChanged(Object^ sender, ::System::EventArgs^ e);
 			static bool IsMouseOnCircle();
 		};
 

@@ -73,6 +73,145 @@ namespace Meridian59 { namespace Ogre
          }
       };
 
+      /// <summary>
+      /// A token is handed between mainthread and worker.
+      /// It has memory, a bitmap on that memory, a gdi on the bitmap
+      /// and current player positions and flags attached.
+      /// </summary>
+      ref class Token
+      {
+      public:
+         Graphics^         gdi;
+         Bitmap^           bitmap;
+         void*             mem;
+         CLRReal           width;
+         CLRReal           height;
+         CLRReal           zoom;
+         array<MapObject>^ mapObjects;
+         int               countObjects;
+         MapObject         avatarObject;
+         Real              avatarAngle;
+
+         inline Token(int Width, int Height, CLRReal Zoom, IEnumerable<RoomObject^>^ Objects)
+         {
+            // create array for objectdata to draw
+            mapObjects   = gcnew array<MapObject>(MAXOBJECTS);
+            countObjects = 0;
+
+            // must create class instances manually
+            for (int i = 0; i < mapObjects->Length; i++)
+            {
+               mapObjects[i].Flags = gcnew ObjectFlags(0, ObjectFlags::DrawingType::Plain, 0, 0,
+                  ObjectFlags::PlayerType::None, ObjectFlags::MoveOnType::Yes);
+            }
+
+            // update to values
+            Update(Width, Height, Zoom, Objects);
+         };
+
+         inline ~Token()
+         {
+            // free bitmap
+            if (bitmap)
+               delete bitmap;
+
+            // free graphics
+            if (gdi)
+               delete gdi;
+
+            // free bitmap mem
+            free(mem);
+         };
+
+         inline void Update(int Width, int Height, CLRReal Zoom, IEnumerable<RoomObject^>^ Objects)
+         {
+            // update zoom
+            this->zoom = ::System::Math::Min(
+               ::System::Math::Max(Zoom, MINZOOM), MAXZOOM);
+
+            // need to recreate gdi+ bitmap and graphics
+            if (width != Width || height != Height ||!mem || !bitmap || !gdi)
+            {
+               // save dimensions
+               this->width = Width;
+               this->height = Height;
+
+               // possible release old imgMem
+               free(mem);
+
+               // same with image
+               if (bitmap)
+                  delete bitmap;
+
+               // and graphics
+               if (gdi)
+                  delete gdi;
+
+               // allocate new memroy
+               mem = malloc((size_t)width * (size_t)height * 4);
+
+               // create bitmap on own memory
+               bitmap = gcnew Bitmap(
+                  (int)width,
+                  (int)height,
+                  (int)width * 4,
+                  System::Drawing::Imaging::PixelFormat::Format32bppArgb,
+                  (::System::IntPtr)mem);
+
+               // initialize the gdi+ drawing object on own bitmap on own memory
+               gdi = Graphics::FromImage(bitmap);
+               gdi->InterpolationMode = InterpolationMode::Bilinear;
+               gdi->PixelOffsetMode = PixelOffsetMode::HighSpeed;
+               gdi->SmoothingMode = SmoothingMode::HighQuality;
+               gdi->CompositingMode = CompositingMode::SourceOver;
+               gdi->CompositingQuality = CompositingQuality::HighSpeed;
+
+               // create pie clipping
+               GraphicsPath^ gpath = gcnew GraphicsPath();
+               gpath->AddPie(
+                  UI_MINIMAP_CLIPPADDING * (float)width,
+                  UI_MINIMAP_CLIPPADDING * (float)height,
+                  (float)width - (2.0f * UI_MINIMAP_CLIPPADDING * (float)width),
+                  (float)height - (2.0f * UI_MINIMAP_CLIPPADDING * (float)height),
+                  0.0f, 360.0f);
+
+               gpath->CloseFigure();
+
+               // set pie clipping on graphics
+               gdi->Clip = gcnew Region(gpath);
+            }
+
+            // now update roomobject positions
+            countObjects = 0;
+
+            // iterate roomobjects
+            for each(RoomObject^ o in Objects)
+            {
+               // reached maximum supported internal objects
+               if (countObjects >= MAXOBJECTS)
+                  break;
+
+               // set object data
+               mapObjects[countObjects].UpdateFromModel(o);
+
+               // check for avatar
+               if (o->IsAvatar)
+               {
+                  avatarObject = mapObjects[countObjects];
+                  avatarAngle = o->Angle;
+               }
+
+               // increment index
+               countObjects++;
+            }
+         }
+
+         inline void ClearPixels()
+         {
+            ZeroMemory(mem, (int)width*(int)height * 4);
+         }
+      };
+
       //                                      AARRGGBB
       literal uint COLOR_MAP_WALL         = 0xFF000000; //PALETTERGB(0, 0, 0)
       literal uint COLOR_MAP_PLAYER       = 0xFF0000FF; //PALETTERGB(0, 0, 255)
@@ -103,85 +242,52 @@ namespace Meridian59 { namespace Ogre
       literal CLRReal   MAXZOOM        = 20.0f;
       literal int       DEFAULTWIDTH   = 256;
       literal int       DEFAULTHEIGHT  = 256;
-
-      /// <summary>
-      /// Fired when there is an update image to show
-      /// </summary>
-      static event ::System::EventHandler^ ImageChanged;
+      literal int       MAXTOKENS      = 4;
 
    protected:
-
       static ::System::Threading::Thread^ thread;
-      static ::System::Drawing::Graphics^ g;
-      static void* imgMem;
-
-      // INTERNAL
-      static CLRReal zoom;
-      static CLRReal width;
-      static CLRReal height;
-
-      // EXTERNAL UPDATES
-      static volatile CLRReal zoomNew;
-      static volatile CLRReal widthNew;
-      static volatile CLRReal heightNew;
-
-
-      static volatile bool isImageReady;
-      //static volatile bool isRecreateGraphics;
-
-      static ::System::Object^ locker = gcnew ::System::Object();
-      static array<MapWall>^ mapWalls = gcnew array<MapWall>(MAXWALLS);
-      static array<MapObject>^ mapObjects = gcnew array<MapObject>(MAXOBJECTS);
+      static LockingQueue<Token^>^        queueOut       = gcnew LockingQueue<Token^>();
+      static LockingQueue<Token^>^        queueIn        = gcnew LockingQueue<Token^>();
+      static array<PointF>^               playerArrowPts = gcnew array<PointF>(3);
+      static ::System::Object^            locker         = gcnew ::System::Object();
+      static array<MapWall>^              mapWalls       = gcnew array<MapWall>(MAXWALLS);
+      
+      // tracking counts of used walls and tokens
       static int countWalls;
-      static int countObjects;
-      static MapObject avatarObject = MapObject();
-      static Real avatarAngle;
+      static int countTokens;
 
-      static array<::System::Drawing::PointF>^ playerArrowPts;
+      // wall line pen
+      static Pen^ penWall = gcnew Pen(Color::Black, 1.0f);
 
-      static ::System::Drawing::Bitmap^ Image;
-
-      static ::System::Drawing::Pen^ penWall;
-
-      static ::System::Drawing::SolidBrush^ brushPlayer;
-      static ::System::Drawing::SolidBrush^ brushObject;
-      static ::System::Drawing::SolidBrush^ brushFriend;
-      static ::System::Drawing::SolidBrush^ brushEnemy;
-      static ::System::Drawing::SolidBrush^ brushGuildMate;
-#if !VANILLA
-      static ::System::Drawing::SolidBrush^ brushMinion;
-      static ::System::Drawing::SolidBrush^ brushMinionOther;
-      static ::System::Drawing::SolidBrush^ brushBuildGroup;
-      static ::System::Drawing::SolidBrush^ brushNPC;
-      static ::System::Drawing::SolidBrush^ brushTempSafe;
-      static ::System::Drawing::SolidBrush^ brushMiniBoss;
-      static ::System::Drawing::SolidBrush^ brushBoss;
-      static ::System::Drawing::SolidBrush^ brushItem;
-      static ::System::Drawing::SolidBrush^ brushNonPvP;
-      static ::System::Drawing::SolidBrush^ brushAggroSelf;
-      static ::System::Drawing::SolidBrush^ brushAggroOther;
-      static ::System::Drawing::SolidBrush^ brushMercenary;
+      // brushes for objects
+      static SolidBrush^ brushPlayer      = gcnew SolidBrush(Color::FromArgb(COLOR_MAP_PLAYER));
+      static SolidBrush^ brushObject      = gcnew SolidBrush(Color::FromArgb(COLOR_MAP_OBJECT));
+      static SolidBrush^ brushFriend      = gcnew SolidBrush(Color::FromArgb(COLOR_MAP_FRIEND));
+      static SolidBrush^ brushEnemy       = gcnew SolidBrush(Color::FromArgb(COLOR_MAP_ENEMY));
+      static SolidBrush^ brushGuildMate   = gcnew SolidBrush(Color::FromArgb(COLOR_MAP_GUILDMATE));
+#ifndef VANILLA
+      static SolidBrush^ brushMinion      = gcnew SolidBrush(Color::FromArgb(COLOR_MAP_MINION));
+      static SolidBrush^ brushMinionOther = gcnew SolidBrush(Color::FromArgb(COLOR_MAP_MINION_OTH));
+      static SolidBrush^ brushBuildGroup  = gcnew SolidBrush(Color::FromArgb(COLOR_MAP_BUILDGRP));
+      static SolidBrush^ brushNPC         = gcnew SolidBrush(Color::FromArgb(COLOR_MAP_NPC));
+      static SolidBrush^ brushTempSafe    = gcnew SolidBrush(Color::FromArgb(COLOR_MAP_TEMPSAFE));
+      static SolidBrush^ brushMiniBoss    = gcnew SolidBrush(Color::FromArgb(COLOR_MAP_MINIBOSS));
+      static SolidBrush^ brushBoss        = gcnew SolidBrush(Color::FromArgb(COLOR_MAP_BOSS));
+      static SolidBrush^ brushItem        = gcnew SolidBrush(Color::FromArgb(COLOR_MAP_RARE_ITEM));
+      static SolidBrush^ brushNonPvP      = gcnew SolidBrush(Color::FromArgb(COLOR_MAP_NO_PVP));
+      static SolidBrush^ brushAggroSelf   = gcnew SolidBrush(Color::FromArgb(COLOR_MAP_AGGRO_SELF));
+      static SolidBrush^ brushAggroOther  = gcnew SolidBrush(Color::FromArgb(COLOR_MAP_AGGRO_OTHER));
+      static SolidBrush^ brushMercenary   = gcnew SolidBrush(Color::FromArgb(COLOR_MAP_MERCENARY));
 #endif
 
-      static void RecreateImageAndGraphics();
       static void ThreadProc();
-
-      inline static void DrawObject(MapObject% RoomObject, float x, float y, float width, float height);
-      inline static void DrawObjectOutter(MapObject% RoomObject, float x, float y, float width, float height);
+      inline static void DrawObject(Token^ Token, MapObject% RoomObject, float x, float y, float width, float height);
+      inline static void DrawObjectOutter(Token^ Token, MapObject% RoomObject, float x, float y, float width, float height);
 
    public:
-      static bool IsRunning;
-      static int NewWidth;
-      static int NewHeight;
-
-      static void Initialize(int Width, int Height, CLRReal Zoom);
-      static void Tick(double Tick, double Span);
+      static bool IsRunning = false;
+      static void Initialize();
+      static void Tick(::CEGUI::Window* Window, ::CEGUI::Window* Surface, CLRReal Zoom, IEnumerable<RoomObject^>^ Objects);
       static void SetMapData(::System::Collections::Generic::IEnumerable<RooWall^>^ Walls);
-      static void SetMapData(::System::Collections::Generic::IEnumerable<RoomObject^>^ Objects);
-      static void SetDimension(int Width, int Height);
-
-      inline static void SetZoom(CLRReal value) { zoomNew = value; }
-      inline static CLRReal GetZoom() { return zoom; }
    };
-
 };};

@@ -443,6 +443,16 @@ namespace Meridian59 { namespace Ogre
 			}
 
          Stats::Tick();
+
+         // tick minimap in playing mode (get image, enqueue next)
+         if (OgreClient::Singleton->Data->UIMode == UIMode::Playing && MiniMap::Window->isVisible())
+         {
+            MiniMapCEGUI::Tick(
+               MiniMap::Window,
+               MiniMap::DrawSurface,
+               MiniMap::Zoom,
+               OgreClient::Singleton->Data->RoomObjects);
+         }
 		}
 	};
 

@@ -2,15 +2,12 @@
 
 namespace Meridian59 { namespace Ogre
 {
-	OgreClient::OgreClient()
-		: SingletonClient()
-	{							
-		// Initialize MiniMap instance
-		MiniMapCEGUI::Initialize(256, 256, 8.0f);
-
-		SLEEPTIME = 0;
-		isWinCursorVisible = true;
-	};
+   OgreClient::OgreClient() : SingletonClient()
+   {
+      MiniMapCEGUI::Initialize();
+      SLEEPTIME = 0;
+      isWinCursorVisible = true;
+   };
 
    void OgreClient::Init()
    {
@@ -454,11 +451,6 @@ namespace Meridian59 { namespace Ogre
       ControllerUI::Tick(GameTick->Current, GameTick->Span);
       ControllerRoom::Tick(GameTick->Current, GameTick->Span);
 
-      if (ControllerUI::MiniMap::Window->isVisible())
-      {
-         MiniMapCEGUI::SetMapData(Data->RoomObjects);
-         MiniMapCEGUI::Tick(GameTick->Current, GameTick->Span);
-      }
       /********************************************************************************************************/
       /*                                     RENDER FRAME                                                     */
       /********************************************************************************************************/
