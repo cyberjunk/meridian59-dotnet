@@ -133,8 +133,8 @@ namespace Meridian59 { namespace Ogre
             if (width != Width || height != Height ||!mem || !bitmap || !gdi)
             {
                // save dimensions
-               this->width = Width;
-               this->height = Height;
+               this->width = (CLRReal)Width;
+               this->height = (CLRReal)Height;
 
                // possible release old imgMem
                free(mem);

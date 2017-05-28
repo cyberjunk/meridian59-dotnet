@@ -305,7 +305,7 @@ namespace Meridian59 { namespace Ogre
                CLRReal rectx = trans.X - widthhalf;
                CLRReal recty = trans.Y - widthhalf;
 
-               DrawObjectOutter(token, obj, rectx, recty, width, width);
+               DrawObjectOutter(token, obj, (float)rectx, (float)recty, (float)width, (float)width);
 
                //
 
@@ -314,7 +314,7 @@ namespace Meridian59 { namespace Ogre
                rectx = trans.X - widthhalf;
                recty = trans.Y - widthhalf;
 
-               DrawObject(token, obj, rectx, recty, width, width);
+               DrawObject(token, obj, (float)rectx, (float)recty, (float)width, (float)width);
             }
             else
             {
