@@ -20,12 +20,12 @@ namespace Meridian59 { namespace Ogre
 		Window->setSize(size);
 
 		// set minimap sizes
-		OgreClient::Singleton->MiniMap->SetDimension(
+      MiniMapCEGUI::SetDimension(
 			::System::Convert::ToInt32(size.d_width.d_offset), 
 			::System::Convert::ToInt32(size.d_height.d_offset));
 
 		// attach listener to minimap
-		OgreClient::Singleton->MiniMap->ImageChanged += 
+      MiniMapCEGUI::ImageChanged +=
 			gcnew ::System::EventHandler(OnImageChanged);
 
 		// subscribe mouse events
@@ -38,7 +38,7 @@ namespace Meridian59 { namespace Ogre
 	void ControllerUI::MiniMap::Destroy()
 	{	 
 		// detach listener to minimap
-		OgreClient::Singleton->MiniMap->ImageChanged -= 
+      MiniMapCEGUI::ImageChanged -=
 			gcnew ::System::EventHandler(OnImageChanged);
 	};
 
@@ -46,13 +46,46 @@ namespace Meridian59 { namespace Ogre
 	{
 	};
 
-	void ControllerUI::MiniMap::OnImageChanged(::System::Object^ sender, ::System::EventArgs^ e)
-	{
-		::CEGUI::String* texName = OgreClient::Singleton->MiniMap->TextureName;
+   void ControllerUI::MiniMap::OnImageChanged(::System::Object^ sender, ::System::EventArgs^ e)
+   {
+      // force update
+      DrawSurface->setProperty(UI_PROPNAME_IMAGE, UI_MINIMAP_TEXNAME);
 
-		if (texName)
-			DrawSurface->setProperty(UI_PROPNAME_IMAGE, *texName);
-	};
+      // reenable resize
+      IsWaitingForSize = false;
+
+      // resize
+      ::CEGUI::USize size = Window->getSize();
+
+      int oldwidth = (int)size.d_width.d_offset;
+      int oldheight = (int)size.d_height.d_offset;
+      int newwidth = MiniMapCEGUI::NewWidth;
+      int newHeight = MiniMapCEGUI::NewHeight;
+
+      // same size
+      if (oldwidth == newwidth && oldheight == newHeight )
+         return;
+
+      size = ::CEGUI::USize(
+         ::CEGUI::UDim(0.0f, (float)newwidth), 
+         ::CEGUI::UDim(0.0f, (float)newHeight));
+
+      int dw = newwidth - oldwidth;
+      int dh = newHeight - oldheight;
+
+      ::CEGUI::UVector2 position = Window->getPosition();
+
+      // adjust position on size differences
+      // e.g. move half of the additional width to the left,
+      // so we grow into all direction
+      position.d_x.d_offset -= 0.5f * (float)dw;
+      position.d_y.d_offset -= 0.5f * (float)dh;
+
+      // apply size on cegui window
+      Window->setMaxSize(size);
+      Window->setSize(size);
+      Window->setPosition(position);
+   };
 
 	bool ControllerUI::MiniMap::IsMouseOnCircle()
 	{
@@ -77,53 +110,48 @@ namespace Meridian59 { namespace Ogre
 		return (dist2 < radius2);
 	};
 
-	bool UICallbacks::MiniMap::OnMouseWheel(const CEGUI::EventArgs& e)
-	{
-		const CEGUI::MouseEventArgs& args = static_cast<const CEGUI::MouseEventArgs&>(e);
+   bool UICallbacks::MiniMap::OnMouseWheel(const CEGUI::EventArgs& e)
+   {
+      const CEGUI::MouseEventArgs& args = static_cast<const CEGUI::MouseEventArgs&>(e);
 
-		// adjust minimap size
-		if (ControllerInput::IsSelfTargetDown)
-		{
-			const float MINSIZE = 256.0f;
-			const float MAXSIZE = 512.0f;
+      // adjust minimap size
+      if (ControllerInput::IsSelfTargetDown)
+      {
+         // don't start another resize while still waiting for resized image
+         if (ControllerUI::MiniMap::IsWaitingForSize)
+            return true;
 
-			MiniMapCEGUI^ minimap = OgreClient::Singleton->MiniMap;
+         const float MINSIZE = 256.0f;
+         const float MAXSIZE = 512.0f;
 
-			int oldwidth = minimap->Width;
-			int oldheight = minimap->Height;
+         ::CEGUI::USize size = ControllerUI::MiniMap::Window->getSize();
 
-			int width  = (int)MathUtil::Bound((float)minimap->Width  + args.wheelChange * -2.0f, MINSIZE, MAXSIZE);
-			int height = (int)MathUtil::Bound((float)minimap->Height + args.wheelChange * -2.0f, MINSIZE, MAXSIZE);
+         float oldwidth = size.d_width.d_offset;
+         float oldheight = size.d_height.d_offset;
 
-			int dw = width - oldwidth;
-			int dh = height - oldheight;
+         int width  = (int)MathUtil::Bound(oldwidth + args.wheelChange * -2.0f, MINSIZE, MAXSIZE);
+         int height = (int)MathUtil::Bound(oldheight + args.wheelChange * -2.0f, MINSIZE, MAXSIZE);
 
-			::CEGUI::USize size = ::CEGUI::USize(
-				::CEGUI::UDim(0.0f, (float)width), ::CEGUI::UDim(0.0f, (float)height));
+         int dw = width - (int)oldwidth;
+         int dh = height - (int)oldheight;
 
-			::CEGUI::UVector2 position = ControllerUI::MiniMap::Window->getPosition();
+         size = ::CEGUI::USize(
+            ::CEGUI::UDim(0.0f, (float)width), 
+            ::CEGUI::UDim(0.0f, (float)height));
 
-			// adjust position on size differences
-			// e.g. move half of the additional width to the left,
-			// so we grow into all direction
-			position.d_x.d_offset -= 0.5f * (float)dw;
-			position.d_y.d_offset -= 0.5f * (float)dh;
+         // apply size on minimap
+         MiniMapCEGUI::SetDimension(width, height);
 
-			// apply size on minimap
-			minimap->SetDimension(width, height);
+         // must not resize 
+         ControllerUI::MiniMap::IsWaitingForSize = true;
+      }
 
-			// apply size on cegui window
-			ControllerUI::MiniMap::Window->setMaxSize(size);
-			ControllerUI::MiniMap::Window->setSize(size);
-			ControllerUI::MiniMap::Window->setPosition(position);
-		}
+      // adjust zoomlevel
+      else
+         MiniMapCEGUI::Zoom(args.wheelChange * -0.2f);
 
-		// adjust zoomlevel
-		else
-			OgreClient::Singleton->MiniMap->Zoom += (args.wheelChange * -0.2f);
-
-		return true;
-	};
+      return true;
+   };
 
 	bool UICallbacks::MiniMap::OnMouseDown(const CEGUI::EventArgs& e)
 	{

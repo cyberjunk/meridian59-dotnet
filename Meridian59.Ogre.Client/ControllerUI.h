@@ -545,6 +545,7 @@ namespace Meridian59 { namespace Ogre
 		public:
 			static ::CEGUI::Window* Window = nullptr;
 			static ::CEGUI::Window* DrawSurface = nullptr;
+         static bool IsWaitingForSize;
 
 			static void Initialize();
 			static void Destroy();

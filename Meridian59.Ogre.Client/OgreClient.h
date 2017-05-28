@@ -91,7 +91,6 @@ namespace Meridian59 { namespace Ogre
       HWND                    renderWindowHandle;
       CameraListener*         cameraListener;
       MyWindowEventListener*  windowListener;
-      MiniMapCEGUI^           miniMap;
       AdminForm^              adminForm;
 
       bool hasFocus;
@@ -326,12 +325,6 @@ namespace Meridian59 { namespace Ogre
       { 
          public: bool get() { return hasFocus; } 
          public: void set(bool value) { hasFocus = value; }
-      };
-
-      property MiniMapCEGUI^ MiniMap 
-      { 
-         public: MiniMapCEGUI^ get() { return miniMap; } 
-         protected: void set(MiniMapCEGUI^ value) { miniMap = value; }
       };
 
       /// <summary>

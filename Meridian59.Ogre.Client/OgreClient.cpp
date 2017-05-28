@@ -6,7 +6,7 @@ namespace Meridian59 { namespace Ogre
 		: SingletonClient()
 	{							
 		// Initialize MiniMap instance
-		miniMap = gcnew MiniMapCEGUI(Data, 256, 256, 8.0f);
+		MiniMapCEGUI::Initialize(256, 256, 8.0f);
 
 		SLEEPTIME = 0;
 		isWinCursorVisible = true;
@@ -455,8 +455,10 @@ namespace Meridian59 { namespace Ogre
       ControllerRoom::Tick(GameTick->Current, GameTick->Span);
 
       if (ControllerUI::MiniMap::Window->isVisible())
-         miniMap->Tick(GameTick->Current, GameTick->Span);
-
+      {
+         MiniMapCEGUI::SetMapData(Data->RoomObjects);
+         MiniMapCEGUI::Tick(GameTick->Current, GameTick->Span);
+      }
       /********************************************************************************************************/
       /*                                     RENDER FRAME                                                     */
       /********************************************************************************************************/
@@ -491,6 +493,10 @@ namespace Meridian59 { namespace Ogre
 
    void OgreClient::Cleanup()
    {
+      // stop minimap thread
+      MiniMapCEGUI::IsRunning = false;
+
+      // save layout
       ControllerUI::SaveLayoutToConfig();
 
       // cleanup imagebuilder
