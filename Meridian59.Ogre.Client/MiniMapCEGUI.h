@@ -115,17 +115,19 @@ namespace Meridian59 { namespace Ogre
       static ::System::Drawing::Graphics^ g;
       static void* imgMem;
 
-      // zoom level INTERNAL
+      // INTERNAL
       static CLRReal zoom;
-
-      // zoom level change set EXTERNAL
-      static volatile CLRReal zoomNew;
-
       static CLRReal width;
       static CLRReal height;
 
+      // EXTERNAL UPDATES
+      static volatile CLRReal zoomNew;
+      static volatile CLRReal widthNew;
+      static volatile CLRReal heightNew;
+
+
       static volatile bool isImageReady;
-      static volatile bool isRecreateGraphics;
+      //static volatile bool isRecreateGraphics;
 
       static ::System::Object^ locker = gcnew ::System::Object();
       static array<MapWall>^ mapWalls = gcnew array<MapWall>(MAXWALLS);

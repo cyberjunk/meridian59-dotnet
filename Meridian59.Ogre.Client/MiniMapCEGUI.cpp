@@ -29,8 +29,8 @@ namespace Meridian59 { namespace Ogre
 
       playerArrowPts = gcnew array<::System::Drawing::PointF>(3);
 
-      MiniMapCEGUI::width = (CLRReal)Width;
-      MiniMapCEGUI::height = (CLRReal)Height;
+      MiniMapCEGUI::widthNew = (CLRReal)Width;
+      MiniMapCEGUI::heightNew = (CLRReal)Height;
       MiniMapCEGUI::zoomNew = Zoom;
 
       // must create class instances manually
@@ -252,9 +252,6 @@ namespace Meridian59 { namespace Ogre
 
             // get pixels from souce bitmap
             pixPtr->blitFromMemory(box);
-
-            // trigger event
-            ImageChanged(nullptr, gcnew ::System::EventArgs());
          }
       }
       finally { ::System::Threading::Monitor::Exit(locker); }
@@ -263,6 +260,9 @@ namespace Meridian59 { namespace Ogre
 
       // flip to draw a new one
       isImageReady = false;
+
+      // trigger event
+      ImageChanged(nullptr, gcnew ::System::EventArgs());
    };
 
    void MiniMapCEGUI::ThreadProc()
@@ -270,7 +270,7 @@ namespace Meridian59 { namespace Ogre
       BoundingBox2D scope = BoundingBox2D();
 
       IsRunning = true;
-      isRecreateGraphics = true;
+      bool firstRun = true;
 
       while (IsRunning)
       {
@@ -281,16 +281,21 @@ namespace Meridian59 { namespace Ogre
             continue;
          }
 
+         
          // enter lock
          ::System::Threading::Monitor::Enter(locker);
 
          try
          {
-            // recreate internal graphics and bitmap
-            if (isRecreateGraphics)
+            // (re)create internal graphics and bitmap
+            if (firstRun || (width != widthNew) || (height != heightNew))
             {
+               // use new values internally
+               width = widthNew;
+               height = heightNew;
+
                RecreateImageAndGraphics();
-               isRecreateGraphics = false;
+               firstRun = false;
             }
 
             // get possibly new zoom values for this iteration
@@ -395,20 +400,12 @@ namespace Meridian59 { namespace Ogre
 
    void MiniMapCEGUI::SetDimension(int Width, int Height)
    {
-      // lock
-      ::System::Threading::Monitor::Enter(locker);
+      // set new values
+      widthNew = (CLRReal)Width;
+      heightNew = (CLRReal)Height;
 
-      try
-      {
-         // update dimension
-         MiniMapCEGUI::width = (Real)Width;
-         MiniMapCEGUI::height = (Real)Height;
-
-         // mark for redraw, force recreate of graphics and cegui tex
-         isImageReady = false;
-         isRecreateGraphics = true;
-      }
-      finally { ::System::Threading::Monitor::Exit(locker); }
+      // mark for redraw
+      isImageReady = false;
    };
 
    void MiniMapCEGUI::SetMapData(::System::Collections::Generic::IEnumerable<RooWall^>^ Walls)
