@@ -117,76 +117,88 @@ namespace Meridian59 { namespace Ogre
 
       // get window size and position
       // this is the container, not the drawsurface!
-      ::CEGUI::USize    size     = Window->getSize();
+      ::CEGUI::USize    size = Window->getSize();
       ::CEGUI::UVector2 position = Window->getPosition();
+
+      // ogre texture manager
+      ::Ogre::TextureManager& texMan = TextureManager::getSingleton();
+
+      // try to get the minimap texture
+      TexturePtr texPtr = texMan.getByName(UI_MINIMAP_TEXNAME, UI_RESGROUP_IMAGESETS);
+
+      // must create or recreate texture because window size was changed
+      if (texPtr.isNull() ||
+         texPtr->getWidth() != (uint32)size.d_width.d_offset ||
+         texPtr->getHeight() != (uint32)size.d_height.d_offset)
+      {
+         // cegui imager manager
+         ::CEGUI::ImageManager&  imgMan = CEGUI::ImageManager::getSingleton();
+
+         // IMPORTANT: unset old texture
+         Surface->setProperty(UI_PROPNAME_IMAGE, STRINGEMPTY);
+
+         // remove cegui image
+         if (imgMan.isDefined(UI_MINIMAP_TEXNAME))
+            imgMan.destroy(UI_MINIMAP_TEXNAME);
+
+         // remove cegui texture (wrapped)
+         if (ControllerUI::Renderer->isTextureDefined(UI_MINIMAP_TEXNAME))
+            ControllerUI::Renderer->destroyTexture(UI_MINIMAP_TEXNAME);
+
+         // remove ogre tex
+         if (texMan.resourceExists(UI_MINIMAP_TEXNAME))
+            texMan.remove(UI_MINIMAP_TEXNAME);
+
+         // create manual (empty) texture
+         // beware: TU_DYNAMIC_WRITE_ONLY_DISCARDABLE seems to auto create multiple of 32 row-widths
+         texPtr = texMan.createManual(
+            UI_MINIMAP_TEXNAME,
+            UI_RESGROUP_IMAGESETS,
+            TextureType::TEX_TYPE_2D,
+            (uint32)size.d_width.d_offset, 
+            (uint32)size.d_height.d_offset, 
+            0, ::Ogre::PixelFormat::PF_A8R8G8B8,
+            TU_DYNAMIC_WRITE_ONLY_DISCARDABLE, 0, false, 0);
+
+         // make ogre texture available as texture & image in CEGUI
+         if (!texPtr.isNull())
+            Util::CreateCEGUITextureFromOgre(ControllerUI::Renderer, texPtr);
+      }
 
       // got a token back from drawer, use it
       if (queueOut->TryDequeue(token))
       {
-         // managers
-         ::CEGUI::ImageManager&  imgMan = CEGUI::ImageManager::getSingleton();
-         ::Ogre::TextureManager& texMan = TextureManager::getSingleton();
-
-         // try to get the minimap texture
-         TexturePtr texPtr = texMan.getByName(UI_MINIMAP_TEXNAME, UI_RESGROUP_IMAGESETS);
-
-         // recreate texture if not exist or different size
-         if (texPtr.isNull() || texPtr->getSrcWidth() != (uint32)token->width || texPtr->getSrcHeight() != (uint32)token->height)
-         {
-            // remove cegui image
-            if (imgMan.isDefined(UI_MINIMAP_TEXNAME))
-               imgMan.destroy(UI_MINIMAP_TEXNAME);
-
-            // remove cegui texture (wrapped)
-            if (ControllerUI::Renderer->isTextureDefined(UI_MINIMAP_TEXNAME))
-               ControllerUI::Renderer->destroyTexture(UI_MINIMAP_TEXNAME);
-
-            // remove ogre tex
-            if (texMan.resourceExists(UI_MINIMAP_TEXNAME))
-               texMan.remove(UI_MINIMAP_TEXNAME);
-
-            // create manual (empty) texture
-            // beware: TU_DYNAMIC_WRITE_ONLY_DISCARDABLE seems to auto create multiple of 32 row-widths
-            texPtr = texMan.createManual(
-               UI_MINIMAP_TEXNAME,
-               UI_RESGROUP_IMAGESETS,
-               TextureType::TEX_TYPE_2D,
-               (uint32)token->width, (uint32)token->height, 0,
-               ::Ogre::PixelFormat::PF_A8R8G8B8,
-               TU_DYNAMIC_WRITE_ONLY_DISCARDABLE, 0, false, 0);
-
-            // make ogre texture available as texture & image in CEGUI
-            if (!texPtr.isNull())
-               Util::CreateCEGUITextureFromOgre(ControllerUI::Renderer, texPtr);
-         }
-
-         // got a texture, fill its pixels
-         if (!texPtr.isNull())
+         // only use tokens if matches our texture
+         if (!texPtr.isNull() &&
+             (uint32)token->width  == texPtr->getWidth() &&
+             (uint32)token->height == texPtr->getHeight())
          {
             // get pointer to pixelbuf
             HardwarePixelBufferSharedPtr pixPtr = texPtr->getBuffer();
 
             // create pixelbox of img mem
             PixelBox box = PixelBox(
-               token->width, 
-               token->height, 
-               1, ::Ogre::PixelFormat::PF_A8R8G8B8, 
+               (uint32)token->width,
+               (uint32)token->height,
+               1, ::Ogre::PixelFormat::PF_A8R8G8B8,
                token->mem);
 
             // use fastest discard locking
-            ::Ogre::PixelBox pixBox = pixPtr->lock(box, ::Ogre::HardwareBuffer::LockOptions::HBL_DISCARD);
+            ::Ogre::PixelBox pixBox = pixPtr->lock(box, 
+               ::Ogre::HardwareBuffer::LockOptions::HBL_DISCARD);
+
+            // width * height * ARGB
+            const uint32 numBytes = (uint32)token->width * (uint32)token->height * 4;
 
             // plain copy pixels from source into texture
-            memcpy(pixBox.data, box.data, token->width * token->height * 4);
+            memcpy(pixBox.data, box.data, numBytes);
 
             // unlock
             pixPtr->unlock();
+
+            // set/refresh texture
+            Surface->setProperty(UI_PROPNAME_IMAGE, UI_MINIMAP_TEXNAME);
          }
-
-         // set/refresh texture
-         Surface->setProperty(UI_PROPNAME_IMAGE, UI_MINIMAP_TEXNAME);
-
-         /////
 
          // update token data
          token->Update(
