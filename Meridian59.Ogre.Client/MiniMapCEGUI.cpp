@@ -31,8 +31,7 @@ namespace Meridian59 { namespace Ogre
 
       MiniMapCEGUI::width = (CLRReal)Width;
       MiniMapCEGUI::height = (CLRReal)Height;
-      MiniMapCEGUI::zoom = Zoom;
-      MiniMapCEGUI::zoomInv = 1.0f / zoom;
+      MiniMapCEGUI::zoomNew = Zoom;
 
       // must create class instances manually
       for (int i = 0; i < mapObjects->Length; i++)
@@ -42,24 +41,6 @@ namespace Meridian59 { namespace Ogre
       thread = gcnew ::System::Threading::Thread(gcnew ::System::Threading::ThreadStart(&MiniMapCEGUI::ThreadProc));
       thread->IsBackground = true;
       thread->Start();
-   };
-
-   void MiniMapCEGUI::SetDimension(int Width, int Height)
-   {
-      // lock
-      ::System::Threading::Monitor::Enter(locker);
-
-      try
-      {
-         // update dimension
-         MiniMapCEGUI::width = (Real)Width;
-         MiniMapCEGUI::height = (Real)Height;
-
-         // mark for redraw, force recreate of graphics and cegui tex
-         isImageReady = false;
-         isRecreateGraphics = true;
-      }
-      finally { ::System::Threading::Monitor::Exit(locker); }
    };
 
    void MiniMapCEGUI::RecreateImageAndGraphics()
@@ -286,6 +267,8 @@ namespace Meridian59 { namespace Ogre
 
    void MiniMapCEGUI::ThreadProc()
    {
+      BoundingBox2D scope = BoundingBox2D();
+
       IsRunning = true;
       isRecreateGraphics = true;
 
@@ -310,10 +293,11 @@ namespace Meridian59 { namespace Ogre
                isRecreateGraphics = false;
             }
 
-            // get possibly new zoom values (written by mainthread!!)
-            // for this iteration
+            // get possibly new zoom values for this iteration
             zoom = ::System::Math::Min(::System::Math::Max(zoomNew, MINZOOM), MAXZOOM);
-            zoomInv = 1.0f / zoom;
+
+            // calculate inverse
+            CLRReal zoomInv = 1.0f / zoom;
 
             // get the deltas based on zoom, zoombase and mapsize
             // the center of the bounding box is the player position
@@ -407,6 +391,24 @@ namespace Meridian59 { namespace Ogre
          // sleep
          ::System::Threading::Thread::Sleep(33);
       }
+   };
+
+   void MiniMapCEGUI::SetDimension(int Width, int Height)
+   {
+      // lock
+      ::System::Threading::Monitor::Enter(locker);
+
+      try
+      {
+         // update dimension
+         MiniMapCEGUI::width = (Real)Width;
+         MiniMapCEGUI::height = (Real)Height;
+
+         // mark for redraw, force recreate of graphics and cegui tex
+         isImageReady = false;
+         isRecreateGraphics = true;
+      }
+      finally { ::System::Threading::Monitor::Exit(locker); }
    };
 
    void MiniMapCEGUI::SetMapData(::System::Collections::Generic::IEnumerable<RooWall^>^ Walls)

@@ -112,23 +112,21 @@ namespace Meridian59 { namespace Ogre
    protected:
 
       static ::System::Threading::Thread^ thread;
-      //static ::Ogre::Texture* texture;
       static ::System::Drawing::Graphics^ g;
       static void* imgMem;
 
       // zoom level INTERNAL
       static CLRReal zoom;
-      static CLRReal zoomInv;
-      
+
       // zoom level change set EXTERNAL
       static volatile CLRReal zoomNew;
 
-      static BoundingBox2D scope;
       static CLRReal width;
       static CLRReal height;
 
       static volatile bool isImageReady;
-      static bool isRecreateGraphics;
+      static volatile bool isRecreateGraphics;
+
       static ::System::Object^ locker = gcnew ::System::Object();
       static array<MapWall>^ mapWalls = gcnew array<MapWall>(MAXWALLS);
       static array<MapObject>^ mapObjects = gcnew array<MapObject>(MAXOBJECTS);
@@ -181,7 +179,7 @@ namespace Meridian59 { namespace Ogre
       static void SetDimension(int Width, int Height);
 
       inline static void SetZoom(CLRReal value) { zoomNew = value; }
-      static CLRReal GetZoom() { return zoom; }
+      inline static CLRReal GetZoom() { return zoom; }
    };
 
 };};
