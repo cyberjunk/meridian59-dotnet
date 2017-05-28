@@ -114,6 +114,7 @@ namespace Meridian59 { namespace Ogre
       static ::System::Threading::Thread^ thread;
       //static ::Ogre::Texture* texture;
       static ::System::Drawing::Graphics^ g;
+      static void* imgMem;
 
       static CLRReal zoom;
       static CLRReal zoomInv;

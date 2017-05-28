@@ -64,17 +64,27 @@ namespace Meridian59 { namespace Ogre
 
    void MiniMapCEGUI::RecreateImageAndGraphics()
    {
+      // free bitmap
       if (Image)
          delete Image;
-
+      
+      // free graphics
       if (g)
          delete g;
+
+      // free bitmap mem
+      free(imgMem);
+
+      // allocate new memroy
+      imgMem = malloc((size_t)width * (size_t)height * 4);
 
       // create bitmap on the texture buffer
       Image = gcnew Bitmap(
          (int)width,
-         (int)height, 
-         System::Drawing::Imaging::PixelFormat::Format32bppArgb);
+         (int)height,
+         (int)width * 4,
+         System::Drawing::Imaging::PixelFormat::Format32bppArgb, 
+         (::System::IntPtr)imgMem);
 
       // initialize the Drawing object
       g = Graphics::FromImage(Image);
@@ -253,25 +263,14 @@ namespace Meridian59 { namespace Ogre
 
          if (!texPtr.isNull())
          {
-            const System::Drawing::Rectangle rectangle =
-               System::Drawing::Rectangle(0, 0, Image->Width, Image->Height);
-
-            // lock source bitmap to read pixeldata
-            System::Drawing::Imaging::BitmapData^ bmpData = Image->LockBits(
-               rectangle,
-               System::Drawing::Imaging::ImageLockMode::ReadOnly,
-               System::Drawing::Imaging::PixelFormat::Format32bppArgb);
-
             // get pointer to pixelbuf
             HardwarePixelBufferSharedPtr pixPtr = texPtr->getBuffer();
 
-            PixelBox box = PixelBox(NewWidth, NewHeight, 1, ::Ogre::PixelFormat::PF_A8R8G8B8, (void*)bmpData->Scan0);
+            // create pixelbox of img mem
+            PixelBox box = PixelBox(NewWidth, NewHeight, 1, ::Ogre::PixelFormat::PF_A8R8G8B8, imgMem);
 
             // get pixels from souce bitmap
             pixPtr->blitFromMemory(box);
-
-            // unlock source bitmap
-            Image->UnlockBits(bmpData);
 
             // trigger event
             ImageChanged(nullptr, gcnew ::System::EventArgs());
@@ -324,7 +323,7 @@ namespace Meridian59 { namespace Ogre
             scope.Max.Y = avatarObject.P.Y + delta.Y;
 
             // prepare drawing
-            g->Clear(::System::Drawing::Color::Transparent);
+            ZeroMemory(imgMem, (int)width*(int)height * 4);
 
             /***************************************************************************/
             // start drawing walls from roo
