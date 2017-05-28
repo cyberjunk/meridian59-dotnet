@@ -310,6 +310,11 @@ namespace Meridian59 { namespace Ogre
                isRecreateGraphics = false;
             }
 
+            // get possibly new zoom values (written by mainthread!!)
+            // for this iteration
+            zoom = ::System::Math::Min(::System::Math::Max(zoomNew, MINZOOM), MAXZOOM);
+            zoomInv = 1.0f / zoom;
+
             // get the deltas based on zoom, zoombase and mapsize
             // the center of the bounding box is the player position
             V2 delta = V2(
@@ -474,18 +479,6 @@ namespace Meridian59 { namespace Ogre
             // increment index
             countObjects++;
          }
-      }
-      finally { ::System::Threading::Monitor::Exit(locker); }
-   };
-
-   void MiniMapCEGUI::Zoom(CLRReal value)
-   {
-      ::System::Threading::Monitor::Enter(locker);
-
-      try
-      {
-         zoom = ::System::Math::Min(::System::Math::Max(zoom + value, MINZOOM), MAXZOOM);
-         zoomInv = 1.0f / zoom;
       }
       finally { ::System::Threading::Monitor::Exit(locker); }
    };

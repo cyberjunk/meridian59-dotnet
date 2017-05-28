@@ -148,7 +148,10 @@ namespace Meridian59 { namespace Ogre
 
       // adjust zoomlevel
       else
-         MiniMapCEGUI::Zoom(args.wheelChange * -0.2f);
+      {
+         float change = args.wheelChange * -0.2f;
+         MiniMapCEGUI::SetZoom(MiniMapCEGUI::GetZoom() + (CLRReal)change);
+      }
 
       return true;
    };

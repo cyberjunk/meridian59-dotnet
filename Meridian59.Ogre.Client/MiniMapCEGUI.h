@@ -116,8 +116,13 @@ namespace Meridian59 { namespace Ogre
       static ::System::Drawing::Graphics^ g;
       static void* imgMem;
 
+      // zoom level INTERNAL
       static CLRReal zoom;
       static CLRReal zoomInv;
+      
+      // zoom level change set EXTERNAL
+      static volatile CLRReal zoomNew;
+
       static BoundingBox2D scope;
       static CLRReal width;
       static CLRReal height;
@@ -174,7 +179,9 @@ namespace Meridian59 { namespace Ogre
       static void SetMapData(::System::Collections::Generic::IEnumerable<RooWall^>^ Walls);
       static void SetMapData(::System::Collections::Generic::IEnumerable<RoomObject^>^ Objects);
       static void SetDimension(int Width, int Height);
-      static void Zoom(CLRReal value);
+
+      inline static void SetZoom(CLRReal value) { zoomNew = value; }
+      static CLRReal GetZoom() { return zoom; }
    };
 
 };};
