@@ -231,6 +231,11 @@ namespace Meridian59 { namespace Ogre
 
       while (IsRunning)
       {
+         // get start tick
+         double tickStart = GameTick::GetUpdatedTick();
+
+         //////////////////////////////////////////////////////////////////
+         
          Token^ token;
 
          // no new data, sleep a bit then check again
@@ -339,6 +344,42 @@ namespace Meridian59 { namespace Ogre
 
          // enqueue result
          queueOut->Enqueue(token);
+
+         //////////////////////////////////////////////////////////////////
+
+         // calculate exec time
+         double tickEnd  = GameTick::GetUpdatedTick();
+         double tickSpan = tickEnd - tickStart;
+
+         // add exec time on sum and raise counter
+         tpsSumTick += tickSpan;
+         tpsCounter++;
+
+         // possibly adjust max min
+         if (tickSpan < TickBest)
+            TickBest = tickSpan;
+
+         else if (tickSpan > TickWorst)
+            TickWorst = tickSpan;
+
+         // since we last updated stats and reset
+         double spanMeasure = tickEnd - tpsMeasureTick;
+
+         // time to update avg and reset
+         if (spanMeasure > 1000.0 && tpsCounter > 0.0)
+         {
+            // calc avg
+            TickAvg = tpsSumTick / tpsCounter;
+
+            // reset
+            tpsMeasureTick = tickEnd;
+            tpsSumTick = 0.0;
+            tpsCounter = 0;
+
+            // init best/worst with this one
+            TickBest = tickSpan;
+            TickWorst = tickSpan;
+         }
       }
    };
 

@@ -252,6 +252,10 @@ namespace Meridian59 { namespace Ogre
       static ::System::Object^            locker         = gcnew ::System::Object();
       static array<MapWall>^              mapWalls       = gcnew array<MapWall>(MAXWALLS);
       
+      static double tpsMeasureTick;
+      static double tpsCounter;
+      static double tpsSumTick;
+
       // tracking counts of used walls and tokens
       static int countWalls;
       static int countTokens;
@@ -286,6 +290,11 @@ namespace Meridian59 { namespace Ogre
 
    public:
       static bool IsRunning = false;
+      static float TPS = 0.0f;
+      static float TickWorst = 0.0f;
+      static float TickBest = 0.0f;
+      static float TickAvg = 0.0f;
+
       static void Initialize();
       static void Tick(::CEGUI::Window* Window, ::CEGUI::Window* Surface, CLRReal Zoom, IEnumerable<RoomObject^>^ Objects);
       static void SetMapData(::System::Collections::Generic::IEnumerable<RooWall^>^ Walls);
