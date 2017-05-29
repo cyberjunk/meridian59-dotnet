@@ -1270,4 +1270,31 @@ namespace Meridian59 { namespace Ogre
 
 		return nullptr;
 	};
+
+   void OgreClientConfig::AddOrUpdateActionButtonSet(ActionButtonList^ Buttons)
+   {
+      ActionButtonList^ set = GetActionButtonSetByName(Buttons->PlayerName);
+
+      if (set != nullptr)
+      {
+         // clear old assignments
+         set->Clear();
+
+         // fill new assigned actionbuttons
+         for each (ActionButtonConfig^ btn in Buttons)
+            set->Add(btn);
+      }
+      else
+      {
+         // create new buttonlist
+         ActionButtonList^ btnList = gcnew ActionButtonList();
+         btnList->PlayerName = Buttons->PlayerName;
+
+         // fill new assigned actionbuttons
+         for each (ActionButtonConfig^ btn in Buttons)
+            btnList->Add(btn);
+
+         ActionButtonSets->Add(btnList);
+      }
+   };
 };};

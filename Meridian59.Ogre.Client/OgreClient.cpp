@@ -577,32 +577,9 @@ namespace Meridian59 { namespace Ogre
       /*                              ACTION BUTTON / CONFIG SAVING                                           */
       /********************************************************************************************************/
 
+      // update or add the currently played actionbuttons to config
       if (Data->ActionButtons->HasPlayerName)
-      {
-         ActionButtonList^ set = Config->GetActionButtonSetByName(Data->ActionButtons->PlayerName);
-
-         if (set != nullptr)
-         {
-            // clear old assignments
-            set->Clear();
-
-            // fill new assigned actionbuttons
-            for each (ActionButtonConfig^ btn in Data->ActionButtons)
-               set->Add(btn);
-         }
-         else
-         {
-            // create new buttonlist
-            ActionButtonList^ btnList = gcnew ActionButtonList();
-            btnList->PlayerName = Data->ActionButtons->PlayerName;
-
-            // fill new assigned actionbuttons
-            for each (ActionButtonConfig^ btn in Data->ActionButtons)
-               btnList->Add(btn);
-
-            Config->ActionButtonSets->Add(btnList);
-         }
-      }
+         Config->AddOrUpdateActionButtonSet(Data->ActionButtons);
 
       // TODO: Move this to the corelib's Cleanup(), it's all from there
       ConnectionInfo^ conInfo = Config->SelectedConnectionInfo;
@@ -943,6 +920,10 @@ namespace Meridian59 { namespace Ogre
 
    void OgreClient::HandleQuitMessage(QuitMessage^ Message)
    {
+      // update or add the currently played actionbuttons to config
+      if (Data->ActionButtons->HasPlayerName)
+         Config->AddOrUpdateActionButtonSet(Data->ActionButtons);
+
       SingletonClient::HandleQuitMessage(Message);
 
       // reload the demoscene

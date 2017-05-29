@@ -297,5 +297,6 @@ namespace Meridian59 { namespace Ogre
 		virtual void WriteXml(::System::Xml::XmlWriter^ Writer) override;
 
 		ActionButtonList^ GetActionButtonSetByName(::System::String^ Name);
+      void AddOrUpdateActionButtonSet(ActionButtonList^ Buttons);
 	};
 };};
