@@ -3961,7 +3961,7 @@
                      <Window type="TaharezLook/LabelWhite" name="Options.TabAbout.TabGeneral.Disclaimer1" >
                         <Property name="Area" value="{{0,10},{0,35},{1,-10},{0,55}}" />         
                         <Property name="HorzFormatting" value="WordWrapLeftAligned" />
-                        <Property name="Text" value="Copyright © 2012-2016 Clint Banzhaf." />                  
+                        <Property name="Text" value="Copyright © 2012-2017 Clint Banzhaf." />                  
                      </Window>
 
                      <!-- ImageLogoGPL3 -->
