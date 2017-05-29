@@ -33,6 +33,7 @@ namespace Meridian59 { namespace Ogre
             
       // subscribe key-up event
       Input->subscribeEvent(CEGUI::Editbox::EventKeyDown, CEGUI::Event::Subscriber(UICallbacks::Chat::OnKeyDown));
+      Input->subscribeEvent(CEGUI::Editbox::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Chat::OnKeyUp));
 
       // subscribe scroll
       Scrollbar->subscribeEvent(CEGUI::Scrollbar::EventScrollPositionChanged, CEGUI::Event::Subscriber(UICallbacks::Chat::OnScrollPositionChanged));
@@ -263,7 +264,8 @@ namespace Meridian59 { namespace Ogre
       const CEGUI::KeyEventArgs& e2 = static_cast<const CEGUI::KeyEventArgs&>(e);
       CEGUI::KeyEventArgs& args     = const_cast<CEGUI::KeyEventArgs&>(e2);
       CEGUI::Editbox* chatInput     = ControllerUI::Chat::Input;
-      const CEGUI::String& text     = chatInput->getText();
+      //const CEGUI::String& text     = chatInput->getText();
+      //::System::String^ textCLR     = StringConvert::CEGUIToCLR(text);
 
       ::System::Collections::Generic::List<::System::String^>^ chatCommandHistory =
          OgreClient::Singleton->Data->ChatCommandHistory;
@@ -278,18 +280,11 @@ namespace Meridian59 { namespace Ogre
       {
          case CEGUI::Key::Scan::Return:
          case CEGUI::Key::Scan::NumpadEnter:
-            // exec chatcommand
-            OgreClient::Singleton->ExecChatCommand(StringConvert::CEGUIToCLR(text));
-            chatInput->setText(STRINGEMPTY);
-            OgreClient::Singleton->Data->ChatCommandHistoryIndex = -1;
-            ControllerUI::ActivateRoot();
-            handled = true;
+            handled = true; // see keyup
             break;
 
          case CEGUI::Key::Scan::Escape:
-            OgreClient::Singleton->Data->ChatCommandHistoryIndex = -1;
-            ControllerUI::ActivateRoot();
-            handled = true;
+            handled = true; // see keyup
             break;
 
          case CEGUI::Key::ArrowUp:
@@ -317,6 +312,55 @@ namespace Meridian59 { namespace Ogre
             }
             handled = true;
             break;
+      }
+
+      if (handled)
+         args.handled++;
+
+      return handled;
+   };
+
+   bool UICallbacks::Chat::OnKeyUp(const CEGUI::EventArgs& e)
+   {
+      const CEGUI::KeyEventArgs& e2 = static_cast<const CEGUI::KeyEventArgs&>(e);
+      CEGUI::KeyEventArgs& args = const_cast<CEGUI::KeyEventArgs&>(e2);
+      CEGUI::Editbox* chatInput = ControllerUI::Chat::Input;
+      const CEGUI::String& text = chatInput->getText();
+
+      ::System::Collections::Generic::List<::System::String^>^ chatCommandHistory =
+         OgreClient::Singleton->Data->ChatCommandHistory;
+
+      // base handler for copy&paste clipboard
+      bool handled = UICallbacks::OnCopyPasteKeyDown(e);
+
+      // used in some cases
+      ::System::String^ str;
+
+      switch (args.scancode)
+      {
+      case CEGUI::Key::Scan::Return:
+      case CEGUI::Key::Scan::NumpadEnter:
+         str = StringConvert::CEGUIToCLR(text);
+         chatInput->setText(STRINGEMPTY);
+         ControllerUI::ActivateRoot();
+         OgreClient::Singleton->ExecChatCommand(str);
+         OgreClient::Singleton->Data->ChatCommandHistoryIndex = -1;
+         handled = true;
+         break;
+
+      case CEGUI::Key::Scan::Escape:
+         ControllerUI::ActivateRoot();
+         OgreClient::Singleton->Data->ChatCommandHistoryIndex = -1;
+         handled = true;
+         break;
+
+      case CEGUI::Key::ArrowUp:
+         handled = true; // see keydown
+         break;
+
+      case CEGUI::Key::ArrowDown:
+         handled = true; // see keydown
+         break;
       }
 
       if (handled)

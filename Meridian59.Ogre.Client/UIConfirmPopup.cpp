@@ -23,6 +23,12 @@ namespace Meridian59 { namespace Ogre
 		
 		// subscribe OK button (uses Yes/Confirmed button handler)
 		OK->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::ConfirmPopup::OnYesClicked));
+      
+      // subscribe key up to trigger yes/no based on focused window
+      Window->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::ConfirmPopup::OnKeyUp));
+      Yes->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::ConfirmPopup::OnKeyUp));
+      No->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::ConfirmPopup::OnKeyUp));
+      OK->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::ConfirmPopup::OnKeyUp));
 
 		// subscribe close button
 		Window->subscribeEvent(CEGUI::FrameWindow::EventCloseClicked, CEGUI::Event::Subscriber(UICallbacks::OnWindowClosed));
@@ -39,6 +45,8 @@ namespace Meridian59 { namespace Ogre
 	// Makes the Yes/No buttons visible, sets ID.
 	void ControllerUI::ConfirmPopup::ShowChoice(const ::CEGUI::String& text, uint id)
 	{
+      Mode = ConfirmPopup::DialogMode::YesNo;
+
 		// set text
 		Text->setText(text);
 
@@ -53,11 +61,16 @@ namespace Meridian59 { namespace Ogre
 		// show popup
 		Window->show();
 		Window->moveToFront();
+
+      // set no active by default
+      No->activate();
 	};
 
 	// Makes the OK button visible, sets ID.
 	void ControllerUI::ConfirmPopup::ShowOK(const ::CEGUI::String& text, uint id)
 	{
+      Mode = ConfirmPopup::DialogMode::Confirm;
+
 		// set text
 		Text->setText(text);
 
@@ -72,6 +85,9 @@ namespace Meridian59 { namespace Ogre
 		// show popup
 		Window->show();
 		Window->moveToFront();
+
+      // set button active
+      OK->activate();
 	};
 
 	void ControllerUI::ConfirmPopup::_RaiseConfirm()
@@ -125,4 +141,37 @@ namespace Meridian59 { namespace Ogre
 
 		return true;
 	};
+
+   bool UICallbacks::ConfirmPopup::OnKeyUp(const CEGUI::EventArgs& e)
+   {
+      CEGUI::KeyEventArgs& args = (CEGUI::KeyEventArgs&)e;
+
+      // Confirm mode
+      if (ControllerUI::ConfirmPopup::Mode == ControllerUI::ConfirmPopup::DialogMode::Confirm)
+      {
+         // raise yes (=confirm) handler for all relevant
+         if (args.scancode == CEGUI::Key::Return ||
+             args.scancode == CEGUI::Key::NumpadEnter ||
+             args.scancode == CEGUI::Key::Space ||
+             args.scancode == CEGUI::Key::Escape)
+         {
+               OnYesClicked(e);
+         }
+      }
+
+      // YesNo mode
+      else if (ControllerUI::ConfirmPopup::Mode == ControllerUI::ConfirmPopup::DialogMode::YesNo)
+      {
+         // raise no handler for all relevant
+         if (args.scancode == CEGUI::Key::Return ||
+             args.scancode == CEGUI::Key::NumpadEnter ||
+             args.scancode == CEGUI::Key::Space ||
+             args.scancode == CEGUI::Key::Escape)
+         {
+            OnNoClicked(e);
+         }
+      }
+
+      return true;
+   };
 };};

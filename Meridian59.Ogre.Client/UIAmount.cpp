@@ -95,7 +95,8 @@ namespace Meridian59 { namespace Ogre
 		}
 		else if (args.scancode == CEGUI::Key::Escape)
 		{
-			args.window->hide();
+         // hide window
+         ControllerUI::Amount::Window->hide();
 
 			// mark GUIroot active
 			ControllerUI::ActivateRoot();

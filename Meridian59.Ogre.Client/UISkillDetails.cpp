@@ -156,12 +156,9 @@ namespace Meridian59 { namespace Ogre
 		{
 			// clear (view will react)
 			OgreClient::Singleton->Data->LookSkill->IsVisible = false;
-
-			// mark GUIroot active
-			ControllerUI::ActivateRoot();
 		}
 
-		return true;
+		return UICallbacks::OnKeyUp(args);
 	}
 
 	bool UICallbacks::SkillDetails::OnWindowClosed(const CEGUI::EventArgs& e)

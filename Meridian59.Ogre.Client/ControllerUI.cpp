@@ -101,7 +101,7 @@ namespace Meridian59 { namespace Ogre
 		// load layout/rootelement
 		guiRoot = CEGUI::WindowManager::getSingleton().loadLayoutFromFile(UI_FILE_LAYOUT, UI_RESGROUP_LAYOUTS); 
 		guiRoot->subscribeEvent(CEGUI::Window::EventMouseButtonDown, CEGUI::Event::Subscriber(UICallbacks::OnRootMouseDown));
-		guiRoot->subscribeEvent(CEGUI::Window::EventKeyDown, CEGUI::Event::Subscriber(UICallbacks::OnRootKeyDown));
+		guiRoot->subscribeEvent(CEGUI::Window::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::OnRootKeyUp));
 
 		// set mouse defaultcursor image
 		mouseCursor->setDefaultImage(UI_DEFAULTARROW);		
@@ -966,7 +966,7 @@ namespace Meridian59 { namespace Ogre
 			ControllerUI::ActivateRoot();
 		}
 
-		return true;
+      return OnRootKeyUp(args);
 	};
 	
 	bool UICallbacks::OnRootMouseDown(const CEGUI::EventArgs& e)
@@ -978,7 +978,7 @@ namespace Meridian59 { namespace Ogre
 		return true;
 	};
 
-	bool UICallbacks::OnRootKeyDown(const CEGUI::EventArgs& e)
+	bool UICallbacks::OnRootKeyUp(const CEGUI::EventArgs& e)
 	{
 		const CEGUI::KeyEventArgs& args = static_cast<const CEGUI::KeyEventArgs&>(e);
 		

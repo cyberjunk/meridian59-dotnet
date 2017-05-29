@@ -164,12 +164,9 @@ namespace Meridian59 { namespace Ogre
 		{
 			// clear (view will react)
 			OgreClient::Singleton->Data->LookSpell->IsVisible = false;
-
-			// mark GUIroot active
-			ControllerUI::ActivateRoot();
 		}
 
-		return true;
+		return UICallbacks::OnKeyUp(args);
 	}
 
 	bool UICallbacks::SpellDetails::OnWindowClosed(const CEGUI::EventArgs& e)

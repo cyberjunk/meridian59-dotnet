@@ -505,11 +505,8 @@ namespace Meridian59 { namespace Ogre
 		
 			// clear (view will react)
 			OgreClient::Singleton->Data->Trade->Clear(true);
-
-			// mark GUIroot active
-			ControllerUI::ActivateRoot();
 		}
 
-		return true;
+		return UICallbacks::OnKeyUp(args);
 	}
 };};

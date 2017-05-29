@@ -50,7 +50,7 @@ namespace Meridian59 { namespace Ogre
 		Window->subscribeEvent(CEGUI::FrameWindow::EventCloseClicked, CEGUI::Event::Subscriber(UICallbacks::Mail::OnWindowClosed));
 
 		// subscribe keyup
-		Window->subscribeEvent(CEGUI::FrameWindow::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Mail::OnWindowKeyUp));
+		Window->subscribeEvent(CEGUI::FrameWindow::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::OnKeyUp));
 	};
 
 	void ControllerUI::Mail::Destroy()
@@ -337,22 +337,6 @@ namespace Meridian59 { namespace Ogre
 
 		// mark GUIroot active
 		ControllerUI::ActivateRoot();
-
-		return true;
-	}
-
-	bool UICallbacks::Mail::OnWindowKeyUp(const CEGUI::EventArgs& e)
-	{
-		const CEGUI::KeyEventArgs& args = static_cast<const CEGUI::KeyEventArgs&>(e);
-
-		// close window on ESC
-		if (args.scancode == CEGUI::Key::Escape)
-		{
-			ControllerUI::Mail::Window->hide();
-
-			// mark GUIroot active
-			ControllerUI::ActivateRoot();
-		}
 
 		return true;
 	}

@@ -304,12 +304,9 @@ namespace Meridian59 { namespace Ogre
 			// clear (view will react)
 			OgreClient::Singleton->Data->Buy->IsVisible = false;
 			OgreClient::Singleton->Data->Buy->Clear(true);
-
-			// mark GUIroot active
-			ControllerUI::ActivateRoot();
 		}
 
-		return true;
+		return UICallbacks::OnKeyUp(args);
 	};
 
 	bool UICallbacks::Buy::OnWindowClosed(const CEGUI::EventArgs& e)

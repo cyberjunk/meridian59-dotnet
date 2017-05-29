@@ -1166,6 +1166,9 @@ namespace Meridian59 { namespace Ogre
 		/// </summary>
 		ref class ConfirmPopup abstract sealed
 		{
+      public:
+         enum class DialogMode { Confirm, YesNo };
+
 		private: 
 			static ::System::EventHandler^ _confirmed;
 			static ::System::EventHandler^ _cancelled;
@@ -1191,6 +1194,7 @@ namespace Meridian59 { namespace Ogre
 			static ::CEGUI::PushButton* OK = nullptr;
 
 			static uint ID = 0;
+         static DialogMode Mode;
 
 			static void Initialize();
 			static void Destroy();
@@ -1544,7 +1548,7 @@ namespace Meridian59 { namespace Ogre
 		static bool OnWindowClosed(const CEGUI::EventArgs& e);
 		static bool OnKeyUp(const CEGUI::EventArgs& e);
 		static bool OnRootMouseDown(const CEGUI::EventArgs& e);
-		static bool OnRootKeyDown(const CEGUI::EventArgs& e);
+		static bool OnRootKeyUp(const CEGUI::EventArgs& e);
 		static bool OnCopyPasteKeyDown(const CEGUI::EventArgs& e);
 		static bool OnItemListboxSelectionChangedUndo(const CEGUI::EventArgs& e);
 
@@ -1605,6 +1609,7 @@ namespace Meridian59 { namespace Ogre
 		{
 		public:
 			static bool OnKeyDown(const CEGUI::EventArgs& e);
+         static bool OnKeyUp(const CEGUI::EventArgs& e);
          static bool OnTextClicked(const CEGUI::EventArgs& e);
          static bool OnScrollPositionChanged(const CEGUI::EventArgs& e);
 		};
@@ -1892,7 +1897,6 @@ namespace Meridian59 { namespace Ogre
 			static bool OnRefreshClicked(const CEGUI::EventArgs& e);
 			static bool OnKeyUp(const CEGUI::EventArgs& e);
 			static bool OnWindowClosed(const CEGUI::EventArgs& e);
-			static bool OnWindowKeyUp(const CEGUI::EventArgs& e);
 		};
 
 		/// <summary>
@@ -2002,6 +2006,7 @@ namespace Meridian59 { namespace Ogre
 		public:
 			static bool OnYesClicked(const CEGUI::EventArgs& e);
 			static bool OnNoClicked(const CEGUI::EventArgs& e);
+         static bool OnKeyUp(const CEGUI::EventArgs& e);
 		};
 
 		/// <summary>

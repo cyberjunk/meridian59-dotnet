@@ -324,11 +324,8 @@ namespace Meridian59 { namespace Ogre
 		if (args.scancode == CEGUI::Key::Escape)
 		{
 			OgreClient::Singleton->Data->TargetID = 0xFFFFFFF;
-
-			// mark GUIroot active
-			ControllerUI::ActivateRoot();
 		}
 
-		return true;
+		return UICallbacks::OnKeyUp(args);
 	}
 };};
