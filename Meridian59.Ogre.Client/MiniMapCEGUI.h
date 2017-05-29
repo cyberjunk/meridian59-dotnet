@@ -126,9 +126,8 @@ namespace Meridian59 { namespace Ogre
          inline void Update(int Width, int Height, CLRReal Zoom, IEnumerable<RoomObject^>^ Objects)
          {
             // update zoom
-            this->zoom = ::System::Math::Min(
-               ::System::Math::Max(Zoom, MINZOOM), MAXZOOM);
-
+            this->zoom = Zoom;
+            
             // need to recreate gdi+ bitmap and graphics
             if (width != Width || height != Height ||!mem || !bitmap || !gdi)
             {
@@ -238,8 +237,6 @@ namespace Meridian59 { namespace Ogre
       literal int       MAXWALLS       = 2048;
       literal int       MAXOBJECTS     = 256;
       literal CLRReal   DEFAULTZOOM    = 4.0f;
-      literal CLRReal   MINZOOM        = 0.05f;
-      literal CLRReal   MAXZOOM        = 20.0f;
       literal int       DEFAULTWIDTH   = 256;
       literal int       DEFAULTHEIGHT  = 256;
       literal int       MAXTOKENS      = 4;
