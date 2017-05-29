@@ -229,6 +229,10 @@ namespace Meridian59 { namespace Ogre
    {
       BoundingBox2D scope = BoundingBox2D();
 
+      // set priority one below normal
+      ::System::Threading::Thread::CurrentThread->Priority = 
+         ::System::Threading::ThreadPriority::BelowNormal;
+      
       while (IsRunning)
       {
          // get start tick
