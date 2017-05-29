@@ -160,11 +160,11 @@ namespace Meridian59 { namespace Ogre
 
                // initialize the gdi+ drawing object on own bitmap on own memory
                gdi = Graphics::FromImage(bitmap);
-               gdi->InterpolationMode = InterpolationMode::Bilinear;
-               gdi->PixelOffsetMode = PixelOffsetMode::HighSpeed;
+               gdi->InterpolationMode = InterpolationMode::HighQualityBicubic;
+               gdi->PixelOffsetMode = PixelOffsetMode::HighQuality;
                gdi->SmoothingMode = SmoothingMode::HighQuality;
                gdi->CompositingMode = CompositingMode::SourceOver;
-               gdi->CompositingQuality = CompositingQuality::HighSpeed;
+               gdi->CompositingQuality = CompositingQuality::HighQuality;
 
                // create pie clipping
                GraphicsPath^ gpath = gcnew GraphicsPath();
@@ -261,7 +261,7 @@ namespace Meridian59 { namespace Ogre
       static int countTokens;
 
       // wall line pen
-      static Pen^ penWall = gcnew Pen(Color::Black, 1.0f);
+      static Pen^ penWall = gcnew Pen(Color::Black, 2.0f);
 
       // brushes for objects
       static SolidBrush^ brushPlayer      = gcnew SolidBrush(Color::FromArgb(COLOR_MAP_PLAYER));

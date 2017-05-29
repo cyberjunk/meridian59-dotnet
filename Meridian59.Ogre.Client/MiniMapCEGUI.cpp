@@ -305,7 +305,7 @@ namespace Meridian59 { namespace Ogre
 
             if (!obj.Equals(token->avatarObject))
             {
-               CLRReal width = 100.0f * zoomInv;
+               CLRReal width = 10.0f;
                CLRReal widthhalf = width * 0.5f;
                CLRReal rectx = trans.X - widthhalf;
                CLRReal recty = trans.Y - widthhalf;
@@ -314,7 +314,7 @@ namespace Meridian59 { namespace Ogre
 
                //
 
-               width = 50.0f * zoomInv;
+               width = 6.0f;
                widthhalf = width * 0.5f;
                rectx = trans.X - widthhalf;
                recty = trans.Y - widthhalf;
@@ -323,16 +323,18 @@ namespace Meridian59 { namespace Ogre
             }
             else
             {
-               V2 line1 = MathUtil::GetDirectionForRadian(token->avatarAngle) * 50.0f * zoomInv;
-               V2 line2 = line1.Clone();
-               V2 line3 = line1.Clone();
+               V2% line1 = MathUtil::GetDirectionForRadian(token->avatarAngle);
+               line1.Scale(8.0f);
+
+               V2% line2 = line1.Clone();
+               V2% line3 = line1.Clone();
 
                line2.Rotate(GeometryConstants::HALFPERIOD - 0.5f);
                line3.Rotate(-GeometryConstants::HALFPERIOD + 0.5f);
 
-               V2 P1 = trans + line1;
-               V2 P2 = trans + line2;
-               V2 P3 = trans + line3;
+               V2% P1 = trans + line1;
+               V2% P2 = trans + line2;
+               V2% P3 = trans + line3;
 
                playerArrowPts[0] = PointF((float)P1.X, (float)P1.Y);
                playerArrowPts[1] = PointF((float)P2.X, (float)P2.Y);
