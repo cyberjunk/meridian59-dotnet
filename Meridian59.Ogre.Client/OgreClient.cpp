@@ -4,7 +4,6 @@ namespace Meridian59 { namespace Ogre
 {
    OgreClient::OgreClient() : SingletonClient()
    {
-      MiniMapCEGUI::Initialize();
       SLEEPTIME = 0;
       isWinCursorVisible = true;
    };
@@ -276,6 +275,7 @@ namespace Meridian59 { namespace Ogre
       /********************************************************************************************************/
 
       ControllerInput::Initialize();
+      MiniMapCEGUI::Initialize();
 
       // init cegui
       ControllerUI::Initialize((::Ogre::RenderTarget*)renderWindow);
