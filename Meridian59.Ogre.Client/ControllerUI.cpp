@@ -993,6 +993,13 @@ namespace Meridian59 { namespace Ogre
 			}
 		}
 
+      else if (args.scancode == CEGUI::Key::Escape)
+      {
+         // disconnect on ESC in welcome screen
+         if (OgreClient::Singleton->Data->UIMode == UIMode::AvatarSelection)
+            OgreClient::Singleton->Disconnect();
+      }
+
 		return true;
 	};
 
