@@ -82,9 +82,9 @@ namespace Meridian59 { namespace Ogre
       RenderWindowBatches->setText(CEGUI::PropertyHelper<size_t>::toString(numRenderWindowBatches));
       RenderWindowTriangles->setText(CEGUI::PropertyHelper<size_t>::toString(numRenderWindowTriangles));
 
-      RenderSystemBatches->setText(CEGUI::PropertyHelper<double>::toString(MiniMapCEGUI::TickAvg));
-      RenderSystemFaces->setText(CEGUI::PropertyHelper<double>::toString(MiniMapCEGUI::TickBest));
-      RenderSystemVertices->setText(CEGUI::PropertyHelper<double>::toString(MiniMapCEGUI::TickWorst));
+      RenderSystemBatches->setText(CEGUI::PropertyHelper<double>::toString(numRenderSystemBatches));
+      RenderSystemFaces->setText(CEGUI::PropertyHelper<double>::toString(numRenderSystemFaces));
+      RenderSystemVertices->setText(CEGUI::PropertyHelper<double>::toString(numRenderSystemVertices));
 
       OgreMemTextures->setText(CEGUI::PropertyHelper<size_t>::toString(memTextures).append(" MB"));
       OgreMemMaterials->setText(CEGUI::PropertyHelper<size_t>::toString(memMaterials).append(" MB"));
