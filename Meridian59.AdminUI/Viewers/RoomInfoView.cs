@@ -96,6 +96,36 @@ namespace Meridian59.AdminUI.Viewers
         public RoomInfoView()
         {
             InitializeComponent();
+
+            Disposed += OnDisposed;
+        }
+
+        protected void OnDisposed(object sender, System.EventArgs e)
+        {
+            // cleanup old databindings
+            lblAvatarID.DataBindings.Clear();
+            lblAvatarOverlayRID.DataBindings.Clear();
+            lblAvatarNameRID.DataBindings.Clear();
+            lblRoomID.DataBindings.Clear();
+            lblRoomFileRID.DataBindings.Clear();
+            lblRoomNameRID.DataBindings.Clear();
+            lblRoomSecurity.DataBindings.Clear();
+            lblAmbientLight.DataBindings.Clear();
+            lblAvatarLight.DataBindings.Clear();
+            lblBackgroundFileRID.DataBindings.Clear();
+            lblWadingSoundFileRID.DataBindings.Clear();
+            lblFlags.DataBindings.Clear();
+            lblDepth1.DataBindings.Clear();
+            lblDepth2.DataBindings.Clear();
+            lblDepth3.DataBindings.Clear();
+
+            lblAvatarOverlay.DataBindings.Clear();
+            lblAvatarName.DataBindings.Clear();
+            lblRoomFile.DataBindings.Clear();
+            lblRoomName.DataBindings.Clear();
+            lblBackgroundFile.DataBindings.Clear();
+            lblWadingSoundFile.DataBindings.Clear();
+
         }
     }
 }

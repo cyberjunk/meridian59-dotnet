@@ -57,6 +57,14 @@ namespace Meridian59.AdminUI.Generic
 
             // hookup event when new image is available
             imageComposer.NewImageAvailable += OnImageComposerNewImageAvailable;
+
+            Disposed += OnDisposed;
+        }
+
+        protected void OnDisposed(object sender, EventArgs e)
+        {
+            if (imageComposer != null)
+                imageComposer.NewImageAvailable -= OnImageComposerNewImageAvailable;
         }
 
         protected void OnImageComposerNewImageAvailable(object sender, EventArgs e)

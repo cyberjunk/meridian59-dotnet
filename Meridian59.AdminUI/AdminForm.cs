@@ -110,5 +110,11 @@ namespace Meridian59.AdminUI
             if (PacketLogChanged != null) 
                 PacketLogChanged(this, e);
         }
+
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            base.OnFormClosed(e);
+            Dispose();
+        }
     }
 }

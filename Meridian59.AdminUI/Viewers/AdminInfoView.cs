@@ -71,8 +71,21 @@ namespace Meridian59.AdminUI.Viewers
         {
             InitializeComponent();
 
+            // register disposed event
+            this.Disposed += OnDisposed;
+
             // add default commands
             txtCommand.AutoCompleteCustomSource.AddRange(AdminInfo.DEFAULTCOMMANDS);
+        }
+
+        protected void OnDisposed(object sender, EventArgs e)
+        {
+            // detach listeners
+            if (dataSource != null)
+            {
+                dataSource.ServerResponses.ListChanged -= OnServerResponsesListChanged;
+                dataSource.TrackedObjects.ListChanged -= OnTrackedObjectsListChanged;
+            }
         }
 
         protected void OnCommandKeyDown(object sender, KeyEventArgs e)
