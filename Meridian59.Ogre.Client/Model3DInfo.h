@@ -148,7 +148,7 @@ namespace Meridian59 { namespace Ogre
 			protected: void set(array<ParticleSystemInfo^>^ value) { particleSystemsData = value; } 
 		};
 
-		Model3DInfo(::Ogre::String XmlModelResource, ::Ogre::String ResourceGroup)
+		Model3DInfo(const ::Ogre::String& XmlModelResource, const ::Ogre::String& ResourceGroup)
         {
             // get xmlreader on mogre resource                   
             DataStreamPtr streamPtr = 

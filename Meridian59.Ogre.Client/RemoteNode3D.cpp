@@ -38,7 +38,7 @@ namespace Meridian59 { namespace Ogre
 
 	RemoteNode3D::~RemoteNode3D()
 	{
-		::Ogre::String ostr_entity = 
+		::Ogre::String& ostr_entity = 
 			PREFIX_REMOTENODE_ENTITY + ::Ogre::StringConverter::toString(roomObject->ID);
 		
         // cleanup entity
@@ -231,7 +231,7 @@ namespace Meridian59 { namespace Ogre
 		while(it.hasMoreElements())
 		{
 			MovableObject* obj = it.getNext();
-			const ::Ogre::String movableType = obj->getMovableType();
+			const ::Ogre::String& movableType = obj->getMovableType();
 
 			if (movableType == "Entity")
 			{

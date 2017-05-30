@@ -176,7 +176,7 @@ namespace Meridian59 { namespace Ogre
 			{
 				// get next hit and its type
 				RaySceneQueryResultEntry entry = result.at(i);
-				::Ogre::String type = entry.movable->getMovableType();
+				const ::Ogre::String& type = entry.movable->getMovableType();
 				
 				// we only care for types Entity (3d model) 
 				// and billboards (2d model)
@@ -184,7 +184,7 @@ namespace Meridian59 { namespace Ogre
 					type.compare("BillboardSet") == 0)
 				{
 					// get name as CLR string
-					::Ogre::String ostr = entry.movable->getName();
+					const ::Ogre::String& ostr = entry.movable->getName();
 					System::String^ s = StringConvert::OgreToCLR(ostr);
                 
 					// try parse an id out of name string

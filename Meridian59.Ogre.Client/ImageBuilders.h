@@ -76,7 +76,7 @@ namespace Meridian59 { namespace Ogre
 			static bool Initialize();
 			static void Destroy();
 		
-			static void PrepareDraw(::Ogre::String TextureName, int Width, int Height, bool AddToCEGUI);
+			static void PrepareDraw(::Ogre::String& TextureName, int Width, int Height, bool AddToCEGUI);
 			static void FinishDraw();
 			static void DrawBackground(int Width, int Height);
 			static bool DrawBGF(::Meridian59::Files::BGF::BgfBitmap^ BgfBitmap, ::System::Drawing::Rectangle DestRect, unsigned char Palette);
@@ -102,7 +102,7 @@ namespace Meridian59 { namespace Ogre
 			static bool Initialize();
 			static void Destroy();
 		
-			static void PrepareDraw(::Ogre::String TextureName, int Width, int Height, bool AddToCEGUI);
+			static void PrepareDraw(::Ogre::String& TextureName, int Width, int Height, bool AddToCEGUI);
 			static void FinishDraw();
 			static void DrawBackground(int Width, int Height);
 			static bool DrawBGF(::Meridian59::Files::BGF::BgfBitmap^ BgfBitmap, RECT* DestRect, unsigned char Palette);
@@ -136,7 +136,7 @@ namespace Meridian59 { namespace Ogre
 			static bool Initialize();
 			static void Destroy();
 
-			static void PrepareDraw(::Ogre::String TextureName, int Width, int Height, bool AddToCEGUI);
+			static void PrepareDraw(::Ogre::String& TextureName, int Width, int Height, bool AddToCEGUI);
 			static void FinishDraw();
 			static void DrawBackground(int Width, int Height);
 			static bool DrawBGF(::Meridian59::Files::BGF::BgfBitmap^ BgfBitmap, RECT* DestRect, unsigned char Palette);
@@ -162,7 +162,7 @@ namespace Meridian59 { namespace Ogre
 			static bool Initialize();
 			static void Destroy();
 
-			static void PrepareDraw(::Ogre::String TextureName, int Width, int Height, bool AddToCEGUI);
+			static void PrepareDraw(::Ogre::String& TextureName, int Width, int Height, bool AddToCEGUI);
 			static void FinishDraw();
 			static void DrawBackground(int Width, int Height);
 			static bool DrawBGF(::Meridian59::Files::BGF::BgfBitmap^ BgfBitmap, unsigned int OverlayX, unsigned int OverlayY, unsigned int OverlayWidth, unsigned int OverlayHeight, unsigned char Palette);
@@ -202,7 +202,7 @@ namespace Meridian59 { namespace Ogre
 				return Native::Destroy();
 		};
 
-		__forceinline static void PrepareDraw(::Ogre::String TextureName, int Width, int Height, bool AddToCEGUI)
+		__forceinline static void PrepareDraw(::Ogre::String& TextureName, int Width, int Height, bool AddToCEGUI)
 		{
 			if (builderType == ImageBuilderType::GDI)
 				GDI::PrepareDraw(TextureName, Width, Height, AddToCEGUI);

@@ -18,9 +18,9 @@ namespace Meridian59 { namespace Ogre
 		Projectile->AppearanceChanged += 
 			gcnew System::EventHandler(this, &ProjectileNode2D::OnProjectileAppearanceChanged);
 
-		::Ogre::String ostr_id		  = ::Ogre::StringConverter::toString(Projectile->ID);
-		::Ogre::String ostr_billboard = PREFIX_PROJECTILE2D_BILLBOARD + ostr_id;
-		::Ogre::String ostr_node	  = PREFIX_PROJECTILE2D_SCENENODE + ostr_id;
+		::Ogre::String& ostr_id		  = ::Ogre::StringConverter::toString(Projectile->ID);
+		::Ogre::String& ostr_billboard = PREFIX_PROJECTILE2D_BILLBOARD + ostr_id;
+		::Ogre::String& ostr_node	  = PREFIX_PROJECTILE2D_SCENENODE + ostr_id;
 
         // create billboardset for 1 billboard
         billboardSet = sceneManager->createBillboardSet(ostr_billboard, 1);
@@ -62,7 +62,7 @@ namespace Meridian59 { namespace Ogre
         // LIGHT FIRST! 
         DestroyLight();
 
-		::Ogre::String ostr_nodename = 
+		::Ogre::String& ostr_nodename = 
 			PREFIX_PROJECTILE2D_SCENENODE + ::Ogre::StringConverter::toString(Projectile->ID);
 
         // cleanup scenenode
@@ -130,7 +130,7 @@ namespace Meridian59 { namespace Ogre
 
 	void ProjectileNode2D::CreateLight()
     {
-		::Ogre::String ostr_lightname = 
+		::Ogre::String& ostr_lightname = 
 			PREFIX_PROJECTILE2D_LIGHT + ::Ogre::StringConverter::toString(Projectile->ID);
 
         // possibly create a mogre light		
@@ -156,7 +156,7 @@ namespace Meridian59 { namespace Ogre
 
 	void ProjectileNode2D::DestroyLight()
     {
-		::Ogre::String ostr_lightname = 
+		::Ogre::String& ostr_lightname = 
 			PREFIX_PROJECTILE2D_LIGHT + ::Ogre::StringConverter::toString(Projectile->ID);
 
         if (sceneManager->hasLight(ostr_lightname))

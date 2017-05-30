@@ -12,7 +12,7 @@ namespace Meridian59 { namespace Ogre
         sceneManager = SceneManager;
 
 		// create scenenode
-        ::Ogre::String ostr_scenenodename = 
+        ::Ogre::String& ostr_scenenodename = 
 			PREFIX_REMOTENODE_SCENENODE + ::Ogre::StringConverter::toString(roomObject->ID);
 		
 		SceneNode = SceneManager->getRootSceneNode()->createChildSceneNode(ostr_scenenodename);
@@ -42,7 +42,7 @@ namespace Meridian59 { namespace Ogre
         // LIGHT FIRST! 
         DestroyLight();
 
-		::Ogre::String ostr_nodeid = 
+		::Ogre::String& ostr_nodeid = 
 			PREFIX_REMOTENODE_SCENENODE + ::Ogre::StringConverter::toString(roomObject->ID);
 
 		// cleanup attached name

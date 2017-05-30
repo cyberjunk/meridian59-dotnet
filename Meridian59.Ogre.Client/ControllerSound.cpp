@@ -216,7 +216,7 @@ namespace Meridian59 { namespace Ogre
 		System::String^ sourcename = Message->PlayInfo->ResourceName->ToLower();
 
 		// native string
-		::Ogre::String o_str = StringConvert::CLRToOgre(sourcename);
+		::Ogre::String& o_str = StringConvert::CLRToOgre(sourcename);
 		const char* c_str = o_str.c_str();
 
 		// check if sound is known to irrklang
@@ -393,7 +393,7 @@ namespace Meridian59 { namespace Ogre
 		System::String^ sourcename = Message->PlayInfo->ResourceName->ToLower();
 
 		// native string
-		::Ogre::String o_str = StringConvert::CLRToOgre(sourcename);
+		::Ogre::String& o_str = StringConvert::CLRToOgre(sourcename);
 		const char* c_str = o_str.c_str();
 
 		// check if sound is known to irrklang
@@ -444,7 +444,7 @@ namespace Meridian59 { namespace Ogre
 		if (OgreClient::Singleton->Config->MusicVolume > 0.0f)
 		{			
 			// native string
-			::Ogre::String o_str = StringConvert::CLRToOgre(Info->ResourceName);
+			::Ogre::String& o_str = StringConvert::CLRToOgre(Info->ResourceName);
 			const char* c_str = o_str.c_str();
 
 			// check if sound is already known to irrklang

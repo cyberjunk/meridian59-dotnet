@@ -819,7 +819,7 @@ namespace Meridian59 { namespace Ogre
 				continue;
 
 			// build cegui image name for icon
-			::Ogre::String imgName =
+			::Ogre::String& imgName =
 				StringConvert::CLRToOgre(UI_NAMEPREFIX_STATICICON + icon + "/0");
 
 			// already defined

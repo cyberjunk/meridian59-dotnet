@@ -118,7 +118,7 @@ namespace Meridian59 { namespace Ogre
 			percent->setText(CEGUI::PropertyHelper<unsigned int>::toString(obj->SkillPoints) + '%');
 
 			// build imagename
-			::Ogre::String oStrName =
+			::Ogre::String& oStrName =
 				StringConvert::CLRToOgre(UI_NAMEPREFIX_STATICICON + obj->ResourceIconName->ToLower() + "/0");
 
 			// define image (use same name)

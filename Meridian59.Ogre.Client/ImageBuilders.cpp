@@ -183,7 +183,7 @@ namespace Meridian59 { namespace Ogre
 		IsInitialized = false;
 	}
 
-	void ImageBuilder::DirectDraw::PrepareDraw(::Ogre::String TextureName, int Width, int Height, bool AddToCEGUI)
+	void ImageBuilder::DirectDraw::PrepareDraw(::Ogre::String& TextureName, int Width, int Height, bool AddToCEGUI)
 	{
 		HRESULT hr;
 
@@ -381,7 +381,7 @@ namespace Meridian59 { namespace Ogre
 		IsInitialized = false;
 	}
 
-	void ImageBuilder::GDI::PrepareDraw(::Ogre::String TextureName, int Width, int Height, bool AddToCEGUI)
+	void ImageBuilder::GDI::PrepareDraw(::Ogre::String& TextureName, int Width, int Height, bool AddToCEGUI)
 	{
 		if (dest)
 			delete dest;
@@ -670,7 +670,7 @@ namespace Meridian59 { namespace Ogre
 		IsInitialized = false;
 	}
 
-	void ImageBuilder::DirectX::PrepareDraw(::Ogre::String TextureName, int Width, int Height, bool AddToCEGUI)
+	void ImageBuilder::DirectX::PrepareDraw(::Ogre::String& TextureName, int Width, int Height, bool AddToCEGUI)
 	{
 		::Ogre::TextureManager* texMan = ::Ogre::TextureManager::getSingletonPtr();
 		
@@ -916,7 +916,7 @@ namespace Meridian59 { namespace Ogre
 		IsInitialized = false;
 	}
 
-	void ImageBuilder::Native::PrepareDraw(::Ogre::String TextureName, int Width, int Height, bool AddToCEGUI)
+	void ImageBuilder::Native::PrepareDraw(::Ogre::String& TextureName, int Width, int Height, bool AddToCEGUI)
 	{
 		width = Width;
 		height = Height;

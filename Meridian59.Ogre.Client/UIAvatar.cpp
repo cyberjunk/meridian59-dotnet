@@ -409,7 +409,7 @@ namespace Meridian59 { namespace Ogre
 					Ogre::TextureManager* texMan = Ogre::TextureManager::getSingletonPtr();
 					
 					// build name
-					::Ogre::String oStrName = 
+					::Ogre::String& oStrName = 
 						StringConvert::CLRToOgre(UI_NAMEPREFIX_STATICICON + condition->ResourceName + "/0");
 
 					// possibly create texture
