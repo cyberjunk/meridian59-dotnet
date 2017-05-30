@@ -173,7 +173,7 @@ namespace Meridian59 { namespace Ogre
 		SkillList^ spells = OgreClient::Singleton->Data->AvatarSpells;
 
 		// 1) Return/Enter
-		/*if (args.scancode == CEGUI::Key::Return ||
+		if (args.scancode == CEGUI::Key::Return ||
 			args.scancode == CEGUI::Key::NumpadEnter)
 		{
 			::CEGUI::ItemEntry* itm = list->getFirstSelectedItem();
@@ -181,15 +181,14 @@ namespace Meridian59 { namespace Ogre
 			// activate chat if no selection
 			if (!itm)
 			{
-				ControllerUI::Chat::Window->setVisible(true);
-				ControllerUI::Chat::Input->activate();			
+            return UICallbacks::OnKeyUp(args);
 			}
 
 			// otherwise try to cast the spell
 			else			
 				OgreClient::Singleton->SendReqCastMessage(itm->getID());
 			
-		}*/
+		}
 
 		// 2) ESC
 		if (args.scancode == CEGUI::Key::Escape)
