@@ -967,117 +967,138 @@ namespace Meridian59.Data.Models
         /// <param name="RoomInfo">Server sent room information, also has loaded reference to ROO</param>
         public void UpdatePosition(double TickSpan, RoomInfo RoomInfo)
         {
-            if (RoomInfo == null || RoomInfo.ResourceRoom == null)
+            if (RoomInfo == null || RoomInfo.ResourceRoom == null || !IsMoving)
                 return;
 
-            if (IsMoving)
+            // source, destination, source->destination (on plane, y=0)
+            V2 SD = MoveDestination - Position2D;
+
+            // squared distance to destination left
+            Real distance2 = SD.LengthSquared;
+
+            // when is a destination considered to be reached
+            const Real epsilon2 = 0.000001f;
+
+            // whether we need an update in the end
+            bool positionChanged = false;
+
+            // end not yet reached? process another step based on time delta
+            bool endReached = (distance2 < epsilon2);
+            if (!endReached)
             {
-                // source, destination, source->destination (on plane, y=0)
-                V2 SD = MoveDestination - Position2D;
+                positionChanged = true;
 
-                // squared distance to destination left
-                Real distance2 = SD.LengthSquared;
-
-                // when is a destination considered to be reached
-                const Real epsilon2 = 0.000001f;
-
-                // whether we need an update in the end
-                bool positionChanged = false;
-
-                // end not yet reached? process another step based on time delta
-                bool endReached = (distance2 < epsilon2);
-                if (!endReached)
+                if (horizontalSpeed != (Real)MovementSpeed.Teleport)
                 {
-                    positionChanged = true;
+                    // normalise
+                    SD.Normalize();
 
-                    if (horizontalSpeed != (Real)MovementSpeed.Teleport)
+                    // the step-vector to do this frame
+                    V2 step = SD * horizontalSpeed * (Real)TickSpan * GeometryConstants.MOVEBASECOEFF;
+
+                    // check if this step is greater than target distance
+                    // if so use distance left in one step.
+                    if (step.LengthSquared > distance2)
                     {
-                        // normalise
-                        SD.Normalize();
-
-                        // the step-vector to do this frame
-                        V2 step = SD * horizontalSpeed * (Real)TickSpan * GeometryConstants.MOVEBASECOEFF;
-
-                        // check if this step is greater than target distance
-                        // if so use distance left in one step.
-                        if (step.LengthSquared > distance2)
-                        {
-                            step.Normalize();
-                            step *= (Real)System.Math.Sqrt(distance2);
-                        }
-
-                        // apply the step on plane (y=0)
-                        position3D.X += step.X;
-                        position3D.Z += step.Y;
+                        step.Normalize();
+                        step *= (Real)System.Math.Sqrt(distance2);
                     }
-                    else
-                    {
-                        // directly update for teleport (i.e. blink, hold-move setback)
-                        position3D.X = MoveDestination.X;
-                        position3D.Z = MoveDestination.Y;
-                    }
-                }
 
-                // get height at destination from roo
-                // convert to ROO coordinates
-                Real xint = (Position3D.X - 64.0f) * 16.0f;
-                Real yint = (Position3D.Z - 64.0f) * 16.0f;
-
-                // get height from ROO and update subsector reference
-                Real oldheight = Position3D.Y;
-
-#if VANILLA
-                // note: IsHanging overlaps with some playertypes in VANILLA
-                Real newheight = (Flags.IsHanging && !Flags.IsPlayer) ?
-#else
-                Real newheight = (Flags.IsHanging) ?                   
-#endif
-                    (Real)(RoomInfo.ResourceRoom.GetHeightAt(xint, yint, out subSector, false, false) * 0.0625f) :
-                    (Real)(RoomInfo.ResourceRoom.GetHeightAt(xint, yint, out subSector, true, true) * 0.0625f);
-
-                // see if server overrides this depth type completely
-                // to another sector height
-                if (subSector != null && subSector.Sector != null)
-                {
-                    RooSector sector = subSector.Sector;
-
-                    if (RoomInfo.Flags.IsOverrideDepth1 && sector.Flags.SectorDepth == RooSectorFlags.DepthType.Depth1)
-                        newheight = RoomInfo.Depth1;
-
-                    else if (RoomInfo.Flags.IsOverrideDepth2 && sector.Flags.SectorDepth == RooSectorFlags.DepthType.Depth2)
-                        newheight = RoomInfo.Depth2;
-
-                    else if (RoomInfo.Flags.IsOverrideDepth3 && sector.Flags.SectorDepth == RooSectorFlags.DepthType.Depth3)
-                        newheight = RoomInfo.Depth3;                
-                }
-
-                if (oldheight != newheight)
-                    positionChanged = true;
-
-                bool falling = (newheight < oldheight);
-                if (!falling)
-                {
-                    // no falling? step up immediately
-                    position3D.Y = newheight;
-                    verticalSpeed = 0.0f;
+                    // apply the step on plane (y=0)
+                    position3D.X += step.X;
+                    position3D.Z += step.Y;
                 }
                 else
                 {
-                    // linear fake gravity
-                    position3D.Y += ((Real)TickSpan * verticalSpeed);
-                    verticalSpeed += ((Real)TickSpan * GeometryConstants.GRAVITYACCELERATION);
+                    // directly update for teleport (i.e. blink, hold-move setback)
+                    position3D.X = MoveDestination.X;
+                    position3D.Z = MoveDestination.Y;
                 }
-
-                // no more processing of this node necessary
-                if (!falling && endReached)
-                {
-                    IsMoving = false;                    
-                }
-
-                // if we moved somehow, trigger changed event
-                if (positionChanged)
-                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_POSITION3D));
             }
+
+            // convert to ROO coordinates
+            Real xint = (Position3D.X - 64.0f) * 16.0f;
+            Real yint = (Position3D.Z - 64.0f) * 16.0f;
+
+            // get height and leaf at destination from roo
+#if VANILLA
+            // note: IsHanging overlaps with some playertypes in VANILLA
+            Real newheight = (Flags.IsHanging && !Flags.IsPlayer) ?
+#else
+            Real newheight = (Flags.IsHanging) ?
+#endif
+                (Real)(RoomInfo.ResourceRoom.GetHeightAt(xint, yint, out subSector, false, false) * 0.0625f) :
+                (Real)(RoomInfo.ResourceRoom.GetHeightAt(xint, yint, out subSector, true, true) * 0.0625f);
+
+            // see if server overrides this depth type completely
+            // to another sector height
+            if (subSector != null && subSector.Sector != null)
+            {
+                RooSector sector = subSector.Sector;
+
+                if (RoomInfo.Flags.IsOverrideDepth1 && sector.Flags.SectorDepth == RooSectorFlags.DepthType.Depth1)
+                    newheight = RoomInfo.Depth1;
+
+                else if (RoomInfo.Flags.IsOverrideDepth2 && sector.Flags.SectorDepth == RooSectorFlags.DepthType.Depth2)
+                    newheight = RoomInfo.Depth2;
+
+                else if (RoomInfo.Flags.IsOverrideDepth3 && sector.Flags.SectorDepth == RooSectorFlags.DepthType.Depth3)
+                    newheight = RoomInfo.Depth3;
+            }
+
+            // check delta
+            Real oldheight = Position3D.Y;
+            Real hDiff = oldheight - newheight;
+            //bool falling;
+
+            // falling
+            if (hDiff > 0.001f)
+            {
+                positionChanged = true;
+
+                // gravity
+                position3D.Y += ((Real)TickSpan * verticalSpeed);
+                verticalSpeed += ((Real)TickSpan * GeometryConstants.GRAVITYACCELERATION);
+
+                // fall too much
+                if (position3D.Y <= newheight)
+                {
+                    position3D.Y = newheight;
+                    verticalSpeed = 0.0f;
+                }
+            }
+
+            // stepping up
+            else if (hDiff < -0.001f)
+            {
+                positionChanged = true;
+
+                // 4x faster, but not instant step up
+                position3D.Y += ((Real)TickSpan * verticalSpeed);
+                verticalSpeed -= ((Real)TickSpan * GeometryConstants.GRAVITYACCELERATION * 4.0f);
+
+                // stepped up too much
+                if (position3D.Y >= newheight)
+                {
+                    position3D.Y = newheight;
+                    verticalSpeed = 0.0f;
+                }
+            }
+
+            // reached height level, reset speed and set height
+            else
+            {
+                position3D.Y = newheight;
+                verticalSpeed = 0.0f;
+            }
+
+            // no more processing of this node necessary
+            if (!positionChanged && endReached)
+                IsMoving = false;
+
+            // if we moved somehow, trigger changed event
+            if (positionChanged)
+                RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_POSITION3D));
         }
 
         /// <summary>
