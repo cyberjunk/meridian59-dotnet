@@ -37,6 +37,7 @@ namespace Meridian59 { namespace Ogre
       renderSystem->setConfigOption("Resource Creation Policy", "Create on all devices");
       renderSystem->setConfigOption("Multi device memory hint", "Auto hardware buffers management");
       renderSystem->setConfigOption("Use Multihead", "Yes");
+      //renderSystem->setConfigOption("Fixed Pipeline Enabled", "No");
 
       // set rendersystem
       root->setRenderSystem(renderSystem);
