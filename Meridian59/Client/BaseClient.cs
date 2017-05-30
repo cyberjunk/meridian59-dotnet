@@ -1417,9 +1417,11 @@ namespace Meridian59.Client
             RoomObject avatar = Data.AvatarObject;
 
             if (Target != null && avatar != null && GameTick.CanReqAttack())
-            {                
+            {
+                V3 pos3D = avatar.Position3D;
+
                 // verify the object is visible
-                if (Target.IsVisibleFrom(avatar.Position3D, CurrentRoom))
+                if (Target.IsVisibleFrom(ref pos3D, CurrentRoom))
                 {
                     // create message instance
                     ReqAttackMessage message = new ReqAttackMessage(
@@ -1634,8 +1636,11 @@ namespace Meridian59.Client
                         {
                             // verify the object is visible
                             if (targetIDs[0] is RoomObject)
-                                send = ((RoomObject)targetIDs[0]).IsVisibleFrom(src.Position3D, CurrentRoom);
-                            
+                            {
+                                V3 pos3D = src.Position3D;
+                                send = ((RoomObject)targetIDs[0]).IsVisibleFrom(ref pos3D, CurrentRoom);
+                            }
+
                             // other objects are "always visible", e.g. inventory
                             else
                                 send = true;
@@ -2599,7 +2604,7 @@ namespace Meridian59.Client
                 rooEnd.ConvertToROO();
 
                 // check against roowalls (this can modify step)
-                step = CurrentRoom.VerifyMove(rooStart, rooEnd, PlayerHeight);
+                step = CurrentRoom.VerifyMove(ref rooStart, ref rooEnd, PlayerHeight);
 
                 // convert back to worldsize
                 step.Scale(0.0625f);
@@ -2610,7 +2615,7 @@ namespace Meridian59.Client
                 end = start2D + step;
 
                 // start movement
-                avatar.StartMoveTo(end, Speed);
+                avatar.StartMoveTo(ref end, Speed);
             }
         }
 

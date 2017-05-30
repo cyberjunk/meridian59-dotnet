@@ -1135,7 +1135,7 @@ namespace Meridian59.Data.Models
         /// </summary>
         /// <param name="Destination"></param>
         /// <param name="Speed"></param>
-        public void StartMoveTo(V2 Destination, byte Speed)
+        public void StartMoveTo(ref V2 Destination, byte Speed)
         {           
             // dynamic speed adjustment for objects not ourself             
             // kicks in if we receive a new move-destination before our
@@ -1273,7 +1273,7 @@ namespace Meridian59.Data.Models
         /// Call this when your viewer changes his position.
         /// </summary>
         /// <param name="ViewerPosition"></param>
-        public void UpdateViewerAngle(V2 ViewerPosition)
+        public void UpdateViewerAngle(ref V2 ViewerPosition)
         {
             V2 pos2D = Position2D;
 
@@ -1296,9 +1296,9 @@ namespace Meridian59.Data.Models
         /// Recalculates the DistanceToViewerSquared property
         /// based on the Viewer parameter.
         /// </summary>
-        public void UpdateDistanceToViewerSquared(V3 ViewerPosition)
+        public void UpdateDistanceToViewerSquared(ref V3 ViewerPosition)
         {
-            DistanceToViewerSquared = GetDistanceSquared(ViewerPosition);
+            DistanceToViewerSquared = GetDistanceSquared(ref ViewerPosition);
         }
 
         /// <summary>
@@ -1349,7 +1349,7 @@ namespace Meridian59.Data.Models
         /// </summary>
         /// <param name="Position"></param>
         /// <returns></returns>
-        public Real GetDistanceSquared(V3 Position)
+        public Real GetDistanceSquared(ref V3 Position)
         {
             return GetDistanceSquared(this, Position);
         }
@@ -1388,7 +1388,7 @@ namespace Meridian59.Data.Models
         /// <param name="Position"></param>
         /// <param name="Room"></param>
         /// <returns></returns>
-        public bool IsVisibleFrom(V3 Position, RooFile Room)
+        public bool IsVisibleFrom(ref V3 Position, RooFile Room)
         {
             if (Room != null)
             {
@@ -1405,7 +1405,7 @@ namespace Meridian59.Data.Models
                 rooEnd.ConvertToROO();
 
                 // verify the object is visible
-                return Room.VerifySight(rooStart, rooEnd);
+                return Room.VerifySight(ref rooStart, ref rooEnd);
             }
             else
                 return false;
@@ -1453,7 +1453,7 @@ namespace Meridian59.Data.Models
                             bool behind = (angle >= GeometryConstants.QUARTERMAXANGLE && dist2 <= backradius2);
 
                             // add it if also visible
-                            if ((infront || behind) && obj.IsVisibleFrom(Position3D, Room))
+                            if ((infront || behind) && obj.IsVisibleFrom(ref position3D, Room))
                                 list.Add(obj);
                         }
                     }

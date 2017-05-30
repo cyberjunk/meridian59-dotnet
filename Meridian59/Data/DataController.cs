@@ -1449,15 +1449,16 @@ namespace Meridian59.Data
         protected void OnRoomObjectPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             RoomObject obj = (RoomObject)sender;
+            V2 viewPos2D = viewerPosition.XZ;
 
             switch (e.PropertyName)
             {
                 case RoomObject.PROPNAME_POSITION3D:
                     // update viewerangle in case the object moved or rotated
-                    obj.UpdateViewerAngle(new V2(viewerPosition.X, viewerPosition.Z));
+                    obj.UpdateViewerAngle(ref viewPos2D);
 
                     // update squared distance to viewer/camera position
-                    obj.UpdateDistanceToViewerSquared(viewerPosition);
+                    obj.UpdateDistanceToViewerSquared(ref viewerPosition);
 
                     // if this is another object, update its
                     // squared distance to the player's avatar
@@ -1474,7 +1475,7 @@ namespace Meridian59.Data
 
                 case RoomObject.PROPNAME_ANGLE:
                     // update viewerangle in case the object moved or rotated
-                    obj.UpdateViewerAngle(new V2(viewerPosition.X, viewerPosition.Z));
+                    obj.UpdateViewerAngle(ref viewPos2D);
                     break;
             }
         }
@@ -1556,13 +1557,13 @@ namespace Meridian59.Data
         protected void ProcessViewerAngle()
         {
             // get 2D position of viewer
-            V2 position = new V2(ViewerPosition.X, ViewerPosition.Z);
+            V2 position = viewerPosition.XZ;
 
             // update roomobjects
             foreach (RoomObject obj in RoomObjects)
             {
-                obj.UpdateViewerAngle(position);
-                obj.UpdateDistanceToViewerSquared(viewerPosition);
+                obj.UpdateViewerAngle(ref position);
+                obj.UpdateDistanceToViewerSquared(ref viewerPosition);
             }
 
             // update projectiles
@@ -1921,9 +1922,11 @@ namespace Meridian59.Data
                 if (Model.ID == TargetID)
                     TargetObject = Model;
 
+                V2 viewPos2D = viewerPosition.XZ;
+
                 // init some values which will be updated on triggers (e.g. moves)
                 Model.UpdateDistanceToAvatarSquared(avatarObject);
-                Model.UpdateViewerAngle(new V2(viewerPosition.X, viewerPosition.Z));
+                Model.UpdateViewerAngle(ref viewPos2D);
                 
                 // add to list
                 RoomObjects.Add(Model);
@@ -1955,9 +1958,11 @@ namespace Meridian59.Data
             if (RoomInformation.ResourceRoom != null)
                 obj.UpdateHeightPosition(RoomInformation);
 
+            V2 viewPos2D = viewerPosition.XZ;
+
             // init some values which will be updated on triggers (e.g. moves)
             obj.UpdateDistanceToAvatarSquared(avatarObject);
-            obj.UpdateViewerAngle(new V2(viewerPosition.X, viewerPosition.Z));
+            obj.UpdateViewerAngle(ref viewPos2D);
                 
             // add to list
             RoomObjects.Add(obj);
@@ -2000,9 +2005,9 @@ namespace Meridian59.Data
             {
                 // create destination from values
                 V2 destination = new V2(Message.NewCoordinateX, Message.NewCoordinateY);
-                               
+
                 // initiate movement
-                roomObject.StartMoveTo(destination, (byte)Message.MovementSpeed);                            
+                roomObject.StartMoveTo(ref destination, (byte)Message.MovementSpeed);                            
             }
         }
 

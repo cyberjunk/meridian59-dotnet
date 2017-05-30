@@ -81,6 +81,16 @@ namespace Meridian59.Common
         public Real ZProp { get { return Z; } set { Z = value; } }
 
         /// <summary>
+        /// Creates V2 instances of XY values or sets XY from V2
+        /// </summary>
+        public V2 XY { get { return new V2(X, Y); } set { X = value.X; Y = value.Y; } }
+
+        /// <summary>
+        /// Creates V2 instance of XZ values or sets XZ from V2
+        /// </summary>
+        public V2 XZ { get { return new V2(X, Z); } set { X = value.X; Z = value.Y; } }
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="X"></param>

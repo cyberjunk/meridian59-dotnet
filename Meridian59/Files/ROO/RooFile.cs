@@ -1477,7 +1477,7 @@ namespace Meridian59.Files.ROO
         /// <param name="End">Endpoint of movement. In FINENESS units (1:1024).</param>
         /// <param name="PlayerHeight">Height of the player for ceiling collisions</param>
         /// <returns>Same or adjusted delta vector between Start and end (in ROO coords)</returns>
-        public V2 VerifyMove(V3 Start, V2 End, Real PlayerHeight)
+        public V2 VerifyMove(ref V3 Start, ref V2 End, Real PlayerHeight)
         {                       
             V2 Start2D = new V2(Start.X, Start.Z);
             V2 newend = End;           
@@ -1490,7 +1490,7 @@ namespace Meridian59.Files.ROO
             /**************************************************************/
 
             // first collision check
-            wall = VerifyMoveByTree(BSPTree[0], Start, End, PlayerHeight);
+            wall = VerifyMoveByTree(BSPTree[0], ref Start, ref End, PlayerHeight);
             
             // no collision with untouched move
             if (wall == null)
@@ -1500,7 +1500,7 @@ namespace Meridian59.Files.ROO
 
             // try to slide along collision wall
             newend  = wall.SlideAlong(Start2D, End);
-            wall    = VerifyMoveByTree(BSPTree[0], Start, newend, PlayerHeight);
+            wall    = VerifyMoveByTree(BSPTree[0], ref Start, ref newend, PlayerHeight);
             
             // no collision with 'slide along' move
             if (wall == null)
@@ -1509,13 +1509,13 @@ namespace Meridian59.Files.ROO
             /**************************************************************/
 
             // try find another collision wall
-            wall = VerifyMoveByTree(BSPTree[0], Start, End, PlayerHeight, wall);
+            wall = VerifyMoveByTree(BSPTree[0], ref Start, ref End, PlayerHeight, wall);
 
             if (wall != null)
             {
                 // try to slide along other collision wall
                 newend  = wall.SlideAlong(Start2D, End);
-                wall    = VerifyMoveByTree(BSPTree[0], Start, newend, PlayerHeight);
+                wall    = VerifyMoveByTree(BSPTree[0], ref Start, ref newend, PlayerHeight);
 
                 // slide along other collision wall was ok
                 if (wall == null)
@@ -1531,7 +1531,7 @@ namespace Meridian59.Files.ROO
                 rot.Rotate(-ANGLESTEP * (Real)i);
                 newend = Start2D + rot;
 
-                wall = VerifyMoveByTree(BSPTree[0], Start, newend, PlayerHeight);
+                wall = VerifyMoveByTree(BSPTree[0], ref Start, ref newend, PlayerHeight);
                 
                 // no collision
                 if (wall == null)
@@ -1541,7 +1541,7 @@ namespace Meridian59.Files.ROO
                 rot.Rotate(ANGLESTEP * (Real)i);
                 newend = Start2D + rot;
 
-                wall = VerifyMoveByTree(BSPTree[0], Start, newend, PlayerHeight);
+                wall = VerifyMoveByTree(BSPTree[0], ref Start, ref newend, PlayerHeight);
 
                 // no collision
                 if (wall == null)
@@ -1558,7 +1558,7 @@ namespace Meridian59.Files.ROO
         /// <param name="End"></param>
         /// <param name="PlayerHeight"></param>
         /// <returns></returns>
-        protected RooWall VerifyMoveByList(V3 Start, V2 End, Real PlayerHeight)
+        protected RooWall VerifyMoveByList(ref V3 Start, ref V2 End, Real PlayerHeight)
         {
             foreach (RooWall wall in Walls)
                 if (wall.IsBlockingMove(Start, End, PlayerHeight))
@@ -1577,7 +1577,7 @@ namespace Meridian59.Files.ROO
         /// <param name="PlayerHeight"></param>
         /// <param name="IgnoreWall"></param>
         /// <returns></returns>
-        protected RooWall VerifyMoveByTree(RooBSPItem Node, V3 Start, V2 End, Real PlayerHeight, RooWall IgnoreWall = null)
+        protected RooWall VerifyMoveByTree(RooBSPItem Node, ref V3 Start, ref V2 End, Real PlayerHeight, RooWall IgnoreWall = null)
         {
             if (Node == null || Node.Type != RooBSPItem.NodeType.Node)
                 return null;
@@ -1609,13 +1609,13 @@ namespace Meridian59.Files.ROO
 
             /*************************************************************/
 
-            RooWall wl = VerifyMoveByTree(line.LeftChild, Start, End, PlayerHeight, IgnoreWall);
+            RooWall wl = VerifyMoveByTree(line.LeftChild, ref Start, ref End, PlayerHeight, IgnoreWall);
 
             if (wl != null)
                 return wl;
 
             else
-                return VerifyMoveByTree(line.RightChild, Start, End, PlayerHeight, IgnoreWall);
+                return VerifyMoveByTree(line.RightChild, ref Start, ref End, PlayerHeight, IgnoreWall);
         }
 
         /// <summary>
@@ -1625,9 +1625,9 @@ namespace Meridian59.Files.ROO
         /// <param name="Start"></param>
         /// <param name="End"></param>
         /// <returns>True if OK, false if collision.</returns>
-        public bool VerifySight(V3 Start, V3 End)
+        public bool VerifySight(ref V3 Start, ref V3 End)
         {
-            return VerifySightByTree(BSPTree[0], Start, End);
+            return VerifySightByTree(BSPTree[0], ref Start, ref End);
             //return VerifySightByList(Start, End);
         }
 
@@ -1637,7 +1637,7 @@ namespace Meridian59.Files.ROO
         /// <param name="Start"></param>
         /// <param name="End"></param>
         /// <returns>True if OK, false if collision.</returns>
-        protected bool VerifySightByList(V3 Start, V3 End)
+        protected bool VerifySightByList(ref V3 Start, ref V3 End)
         {
             // look for blocking wall
             foreach (RooWall wall in Walls)            
@@ -1654,7 +1654,7 @@ namespace Meridian59.Files.ROO
         /// <param name="Start"></param>
         /// <param name="End"></param>
         /// <returns>True if OK, false if collision.</returns>
-        protected bool VerifySightByTree(RooBSPItem Node, V3 Start, V3 End)
+        protected bool VerifySightByTree(RooBSPItem Node, ref V3 Start, ref V3 End)
         {
             if (Node == null || Node.Type != RooBSPItem.NodeType.Node)
                 return true;
@@ -1675,11 +1675,11 @@ namespace Meridian59.Files.ROO
 
             // both endpoints on negative side
             if (startDist < 0.0f && endDist < 0.0f)
-                return VerifySightByTree(line.LeftChild, Start, End);
+                return VerifySightByTree(line.LeftChild, ref Start, ref End);
 
             // both endpoints on positive side
             else if (startDist > 0.0f && endDist > 0.0f)
-                return VerifySightByTree(line.RightChild, Start, End);
+                return VerifySightByTree(line.RightChild, ref Start, ref End);
 
             // crosses infinite splitter or one or both points on splitter
             else
@@ -1695,7 +1695,7 @@ namespace Meridian59.Files.ROO
                 }
 
                 // must climb down both subtrees, go left first
-                bool wl = VerifySightByTree(line.LeftChild, Start, End);
+                bool wl = VerifySightByTree(line.LeftChild, ref Start, ref End);
 
                 // return collision if already found
                 if (wl == false)
@@ -1703,8 +1703,8 @@ namespace Meridian59.Files.ROO
 
                 // try other subtree otherwise
                 else
-                    return VerifySightByTree(line.RightChild, Start, End);
-            }           
+                    return VerifySightByTree(line.RightChild, ref Start, ref End);
+            }
         }
 
         /// <summary>
