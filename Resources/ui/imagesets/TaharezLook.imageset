@@ -308,7 +308,7 @@
    <Image height="24" name="ActionRest"             width="24" xPos="55" yPos="305" />
    <Image height="24" name="ActionWave"             width="24" xPos="80" yPos="305" />
    <Image height="24" name="ActionGuildInvite"       width="24" xPos="105" yPos="305" />
-   <Image height="256" name="MiniMapBackground"       width="256" xPos="256" yPos="256" />
+   <Image height="256" name="MiniMapBackground"       width="256" xPos="257" yPos="256" />
    <Image height="26" name="MainButtonActions"       width="26" xPos="5" yPos="330" />
    <Image height="26" name="MainButtonAttributes"       width="26" xPos="32" yPos="330" />
    <Image height="26" name="MainButtonChat"          width="26" xPos="59" yPos="330" />
