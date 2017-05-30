@@ -49,7 +49,7 @@ namespace Meridian59 { namespace Ogre
         ::Ogre::BillboardSet*	billboardSetName;
 		float					nameTextureWidth;
 		float					nameTextureHeight;
-
+      float lastNameOffset = 0.0f;
 		std::list<::irrklang::ISound*>* sounds;
 		RoomObject^ roomObject;
 		

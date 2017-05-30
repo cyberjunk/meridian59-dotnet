@@ -305,10 +305,17 @@ namespace Meridian59 { namespace Ogre
          pass->getVertexProgramParameters();
 
       // determine height to place label
-      float h = Util::GetSceneNodeHeight(sceneNode);
+      float h = Util::GetSceneNodeHeight(sceneNode) + 1.0f;
 
-      // set height offset
-      paramsPass->setNamedConstant("offset", h);
+      // get change
+      float diff = h - lastNameOffset;
+      
+      // ignore small changes (due to animations)
+      if (abs(diff) > 16.0f)
+      {
+         paramsPass->setNamedConstant("offset", h);
+         lastNameOffset = h;
+      }
    };
 
     void RemoteNode::RefreshOrientation()
