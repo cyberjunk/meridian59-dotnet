@@ -1213,36 +1213,55 @@ namespace Meridian59 { namespace Ogre
 		}
 	};
 
-	void ControllerRoom::UpdateSky()
-	{
-		if (!OgreClient::Singleton->Config->DisableNewSky)
-		{
-			// disable ogre skybox, caelum will be used
-			SceneManager->setSkyBox(false, "");
-		}
-		else
-		{
-			System::String^ bgfFilename = OgreClient::Singleton->Data->RoomInformation->BackgroundFile;
-		
-			if (bgfFilename)
-			{
-				if (bgfFilename->Contains(SKY_DAY))
-					SceneManager->setSkyBox(true, SKY_DAY_MAT);
-                
-				else if (bgfFilename->Contains(SKY_EVENING))
-					SceneManager->setSkyBox(true, SKY_EVENING_MAT);
-                
-				else if (bgfFilename->Contains(SKY_MORNING))
-					SceneManager->setSkyBox(true, SKY_MORNING_MAT);
-               
-				else if (bgfFilename->Contains(SKY_NIGHT))
-					SceneManager->setSkyBox(true, SKY_NIGHT_MAT);
-                
-				else if (bgfFilename->Contains(SKY_FRENZY))
-					SceneManager->setSkyBox(true, SKY_FRENZY_MAT);    
-			}
-		}	
-	};
+   void ControllerRoom::UpdateSky()
+   {
+      // examine the background bgf
+      System::String^ bgfFilename =
+         OgreClient::Singleton->Data->RoomInformation->BackgroundFile;
+
+      char* material = 0;
+      bool isfrenzy = false;
+
+      if (bgfFilename->Contains(SKY_DAY))
+         material = SKY_DAY_MAT;
+
+      else if (bgfFilename->Contains(SKY_EVENING))
+         material = SKY_EVENING_MAT;
+
+      else if (bgfFilename->Contains(SKY_MORNING))
+         material = SKY_MORNING_MAT;
+
+      else if (bgfFilename->Contains(SKY_NIGHT))
+         material = SKY_NIGHT_MAT;
+
+      else if (bgfFilename->Contains(SKY_FRENZY))
+      {
+         material = SKY_FRENZY_MAT;
+         isfrenzy = true;
+      }
+
+      // set or disable simple skybox
+      if (material && OgreClient::Singleton->Config->DisableNewSky)
+         SceneManager->setSkyBox(true, material);
+      else
+         SceneManager->setSkyBox(false, "");
+
+      // use red as background color for frenzy mode
+      // due to caleum skydome transparent at night
+      if (OgreClient::Singleton->Viewport)
+      {
+         if (!isfrenzy)
+         {
+            OgreClient::Singleton->Viewport->setBackgroundColour(
+               ::Ogre::ColourValue(0.0f, 0.0f, 0.0f, 0.0f));
+         }
+         else
+         {
+            OgreClient::Singleton->Viewport->setBackgroundColour(
+               ::Ogre::ColourValue(0.6f, 0.0f, 0.0f, 0.0f));
+         }
+      }
+   };
 
 	void ControllerRoom::AdjustOctree()
 	{
