@@ -2573,7 +2573,7 @@ namespace Meridian59.Client
                                 V2 perp = (obj.Position2D - intersect).GetPerpendicular1();
 
                                 // project step on perpendicular vector ("slide along")
-                                step = step.GetProjection(perp);
+                                step = step.GetProjection(ref perp);
 
                                 // update end
                                 end = start2D + step;

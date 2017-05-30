@@ -340,7 +340,7 @@ namespace Meridian59.Common
             V2 AB = B - A;
             V2 AC = C - A;
 
-            return 0.5f * AB.CrossProduct(AC);
+            return 0.5f * AB.CrossProduct(ref AC);
         }
 
         /// <summary>

@@ -862,7 +862,7 @@ namespace Meridian59.Files.ROO
         public bool IsBlockingMove(V3 Start, V2 End, Real PlayerHeight)
         {          
             // get distance of end to finite line segment
-            Real distEnd = End.MinSquaredDistanceToLineSegment(P1, P2);
+            Real distEnd = End.MinSquaredDistanceToLineSegment(ref p1, ref p2);
 
             // end is far enough away, no block
             if (distEnd >= GeometryConstants.WALLMINDISTANCE2)
@@ -872,8 +872,8 @@ namespace Meridian59.Files.ROO
             // end is too 'too' close to wall
             
             V2 start2D      = new V2(Start.X, Start.Z);
-            int startside   = start2D.GetSide(P1, P2);
-            int endside     = End.GetSide(P1, P2);
+            int startside   = start2D.GetSide(ref p1, ref p2);
+            int endside     = End.GetSide(ref p1, ref p2);
             Real endheight;
             ushort bgfbmp;
 
@@ -882,7 +882,7 @@ namespace Meridian59.Files.ROO
 
             if (startside == endside)
             { 
-                Real distStart = start2D.MinSquaredDistanceToLineSegment(P1, P2);
+                Real distStart = start2D.MinSquaredDistanceToLineSegment(ref p1, ref p2);
 
                 if (distEnd > distStart)
                     return false;
@@ -952,8 +952,8 @@ namespace Meridian59.Files.ROO
             V2 End2D = new V2(End.X, End.Z);
 
             // calculate the sides of the points (returns -1, 0 or 1)
-            int startside = Start2D.GetSide(P1, P2);
-            int endside = End2D.GetSide(P1, P2);
+            int startside = Start2D.GetSide(ref p1, ref p2);
+            int endside = End2D.GetSide(ref p1, ref p2);
 
             // if points are not on same side
             // the infinite lines cross
@@ -1043,7 +1043,8 @@ namespace Meridian59.Files.ROO
         public V2 SlideAlong(V2 Begin, V2 End)
         {
             V2 diff = End - Begin;
-            V2 projection = diff.GetProjection(GetP1P2());
+            V2 l = GetP1P2();
+            V2 projection = diff.GetProjection(ref l);
             return Begin + projection;         
         }
 

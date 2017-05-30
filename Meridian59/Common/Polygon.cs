@@ -168,14 +168,14 @@ namespace Meridian59.Common
             // first two edges
             v1 = this[1] - this[0];
             v2 = this[2] - this[1];
-            lastval = Math.Sign(v1.CrossProduct(v2));
+            lastval = Math.Sign(v1.CrossProduct(ref v2));
             
             // others (access across boundary maps back, see Items property)
             for (i = 1; i < Count - 1; i++)
             {
                 v1 = this[i + 1] - this[i];
                 v2 = this[i + 2] - this[i + 1];
-                val = Math.Sign(v1.CrossProduct(v2));
+                val = Math.Sign(v1.CrossProduct(ref v2));
 
                 if ((val > 0 && lastval < 0) || (val < 0 && lastval > 0))
                     return false;
@@ -373,7 +373,7 @@ namespace Meridian59.Common
                 // determine side by finding first point not on splitter
                 for (int i = 0; i < Count; i++)
                 {
-                    side = this[i].GetSide(P1, P2);
+                    side = this[i].GetSide(ref P1, ref P2);
 
                     // add verything to right poly and return
                     if (side < 0)
@@ -451,7 +451,7 @@ namespace Meridian59.Common
                     // determine side by finding first point not on line
                     for (int i = idx1; i < idx2; i++)
                     {
-                        side = this[i].GetSide(P1, P2);
+                        side = this[i].GetSide(ref P1, ref P2);
 
                         if (side < 0) { poly = polyRight; break; }
                         else if (side > 0) { poly = polyLeft; break; }
@@ -464,7 +464,7 @@ namespace Meridian59.Common
                     // determine side by finding first point not on line
                     for (int i = idx1; i < Count; i++)
                     {
-                        side = this[i].GetSide(P1, P2);
+                        side = this[i].GetSide(ref P1, ref P2);
 
                         if (side < 0) { poly = polyRight; break; }
                         else if (side > 0) { poly = polyLeft; break; }
@@ -473,7 +473,7 @@ namespace Meridian59.Common
                     if (side == 0)
                         for (int i = 0; i <= idx2; i++)
                         {
-                            side = this[i].GetSide(P1, P2);
+                            side = this[i].GetSide(ref P1, ref P2);
 
                             if (side < 0) { poly = polyRight; break; }
                             else if (side > 0) { poly = polyLeft; break; }
@@ -497,7 +497,7 @@ namespace Meridian59.Common
                     // determine side by finding first point not on line
                     for (int i = idx2; i < idx1; i++)
                     {
-                        side = this[i].GetSide(P1, P2);
+                        side = this[i].GetSide(ref P1, ref P2);
 
                         if (side < 0) { poly = polyRight; break; }
                         else if (side > 0) { poly = polyLeft; break; }
@@ -510,7 +510,7 @@ namespace Meridian59.Common
                     // determine side by finding first point not on line
                     for (int i = idx2; i < Count; i++)
                     {
-                        side = this[i].GetSide(P1, P2);
+                        side = this[i].GetSide(ref P1, ref P2);
 
                         if (side < 0) { poly = polyRight; break; }
                         else if (side > 0) { poly = polyLeft; break; }
@@ -519,7 +519,7 @@ namespace Meridian59.Common
                     if (side == 0)
                         for (int i = 0; i <= idx1; i++)
                         {
-                            side = this[i].GetSide(P1, P2);
+                            side = this[i].GetSide(ref P1, ref P2);
 
                             if (side < 0) { poly = polyRight; break; }
                             else if (side > 0) { poly = polyLeft; break; }

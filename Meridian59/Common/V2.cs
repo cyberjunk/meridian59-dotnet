@@ -299,7 +299,7 @@ namespace Meridian59.Common
         /// </summary>
         /// <param name="Destination"></param>
         /// <returns></returns>
-        public Real DistanceTo(V2 Destination)
+        public Real DistanceTo(ref V2 Destination)
         {
             V2 diff = Destination - this;
 
@@ -311,7 +311,7 @@ namespace Meridian59.Common
         /// </summary>
         /// <param name="Destination"></param>
         /// <returns></returns>
-        public Real DistanceToSquared(V2 Destination)
+        public Real DistanceToSquared(ref V2 Destination)
         {
             V2 diff = Destination - this;
 
@@ -326,26 +326,26 @@ namespace Meridian59.Common
         /// <param name="P1"></param>
         /// <param name="P2"></param>
         /// <returns></returns>
-        public Real MinDistanceToLineSegment(V2 P1, V2 P2)
+        public Real MinDistanceToLineSegment(ref V2 P1, ref V2 P2)
         {
             V2 diff = P2 - P1;
             Real l2 = diff.LengthSquared;
 
             if (l2 == 0.0f) 
-                return DistanceTo(P1);
+                return DistanceTo(ref P1);
 
             Real t = ((this - P1) * (P2 - P1)) / l2;
 
             if (t < 0.0f)
-                return DistanceTo(P1);
+                return DistanceTo(ref P1);
 
             else if (t > 1.0f)
-                return DistanceTo(P2);
+                return DistanceTo(ref P2);
 
             diff.Scale(t);
             V2 projection = P1 + diff;
 
-            return DistanceTo(projection);
+            return DistanceTo(ref projection);
         }
 
         /// <summary>
@@ -356,26 +356,26 @@ namespace Meridian59.Common
         /// <param name="P1"></param>
         /// <param name="P2"></param>
         /// <returns></returns>
-        public Real MinSquaredDistanceToLineSegment(V2 P1, V2 P2)
+        public Real MinSquaredDistanceToLineSegment(ref V2 P1, ref V2 P2)
         {
             V2 diff = P2 - P1;
             Real l2 = diff.LengthSquared;
 
             if (l2 == 0.0f)
-                return DistanceToSquared(P1);
+                return DistanceToSquared(ref P1);
 
             Real t = ((this - P1) * (P2 - P1)) / l2;
 
             if (t < 0.0f)
-                return DistanceToSquared(P1);
+                return DistanceToSquared(ref P1);
 
             else if (t > 1.0f)
-                return DistanceToSquared(P2);
+                return DistanceToSquared(ref P2);
 
             diff.Scale(t);
             V2 projection = P1 + diff;
 
-            return DistanceToSquared(projection);
+            return DistanceToSquared(ref projection);
         }
 
         /// <summary>
@@ -385,7 +385,7 @@ namespace Meridian59.Common
         /// <param name="P1"></param>
         /// <param name="P2"></param>
         /// <returns></returns>
-        public int GetSide(V2 P1, V2 P2)
+        public int GetSide(ref V2 P1, ref V2 P2)
         {
             Real val = (P2.X - P1.X) * (Y - P1.Y) - (P2.Y - P1.Y) * (X - P1.X);
 
@@ -400,6 +400,17 @@ namespace Meridian59.Common
         }
 
         /// <summary>
+        /// See and prefer the variant with ref params!
+        /// </summary>
+        /// <param name="p1"></param>
+        /// <param name="p2"></param>
+        /// <returns></returns>
+        public int GetSide(V2 p1, V2 p2)
+        {
+            return GetSide(ref p1, ref p2);
+        }
+
+        /// <summary>
         /// Tests whether this V2 instance lies on a line segment
         /// given by points P1 and P2.
         /// </summary>
@@ -409,7 +420,7 @@ namespace Meridian59.Common
         public bool IsOnLineSegment(V2 P1, V2 P2)
         {
             // the point is not even on the infinite line given by P1P2
-            if (GetSide(P1, P2) != 0)
+            if (GetSide(ref P1, ref P2) != 0)
                 return false;
 
             // if on infinite line, must also be in boundingbox
@@ -429,7 +440,7 @@ namespace Meridian59.Common
         /// </summary>
         /// <param name="Vector"></param>
         /// <returns></returns>
-        public V2 GetProjection(V2 Vector)
+        public V2 GetProjection(ref V2 Vector)
         {
             Real denom = Vector.LengthSquared;
 
@@ -469,7 +480,7 @@ namespace Meridian59.Common
         /// </remarks>
         /// <param name="v"></param>
         /// <returns></returns>
-        public Real CrossProduct(V2 v)
+        public Real CrossProduct(ref V2 v)
         {
             return (X * v.Y) - (Y * v.X);
         }
@@ -488,8 +499,8 @@ namespace Meridian59.Common
         /// </summary>
         public void ConvertToWorld()
         {
-            X = X / 16f + 64f;
-            Y = Y / 16f + 64f;
+            X = X * 0.0625f + 64f;
+            Y = Y * 0.0625f + 64f;
         }
     }
 }
