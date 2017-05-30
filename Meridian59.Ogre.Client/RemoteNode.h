@@ -68,7 +68,7 @@ namespace Meridian59 { namespace Ogre
 
 	public:
 		literal float MAXLIGHTRENDERDISTANCE	= 20000.0f;
-		literal System::String^ MODULENAME		= "RemoteNode";        
+		literal CLRString^ MODULENAME		= "RemoteNode";        
 
 		#pragma region Properties
 		property RoomObject^ RoomObject 

@@ -107,7 +107,7 @@ namespace Meridian59 { namespace Ogre
 			static void DrawBackground(int Width, int Height);
 			static bool DrawBGF(::Meridian59::Files::BGF::BgfBitmap^ BgfBitmap, RECT* DestRect, unsigned char Palette);
 		
-			static ::System::String^ GetError(HRESULT hr);
+			static CLRString^ GetError(HRESULT hr);
 		};
 		
 		/// <summary>
@@ -141,7 +141,7 @@ namespace Meridian59 { namespace Ogre
 			static void DrawBackground(int Width, int Height);
 			static bool DrawBGF(::Meridian59::Files::BGF::BgfBitmap^ BgfBitmap, RECT* DestRect, unsigned char Palette);
 		
-			static ::System::String^ GetError(HRESULT hr);		
+			static CLRString^ GetError(HRESULT hr);		
 		};
 
 		/// <summary>

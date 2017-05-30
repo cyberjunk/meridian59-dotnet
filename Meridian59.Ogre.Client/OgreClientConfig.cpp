@@ -621,8 +621,8 @@ namespace Meridian59 { namespace Ogre
 						continue;
 
 					int num;
-					::System::String^ type;
-					::System::String^ name;
+					CLRString^ type;
+					CLRString^ name;
 					unsigned int numofsamename;
 
 					if (!PARSE_INT32_ATTRIB(subchild, ATTRIB_NUM, num) ||
@@ -1247,25 +1247,25 @@ namespace Meridian59 { namespace Ogre
 		Writer->WriteEndElement();
 	};
 
-	ActionButtonType OgreClientConfig::GetButtonType(::System::String^ ButtonType)
+	ActionButtonType OgreClientConfig::GetButtonType(CLRString^ ButtonType)
 	{
-		if (::System::String::Equals(ButtonType, BUTTONTYPE_SPELL))
+		if (CLRString::Equals(ButtonType, BUTTONTYPE_SPELL))
 			return ActionButtonType::Spell;
 
-		else if (::System::String::Equals(ButtonType, BUTTONTYPE_ACTION))
+		else if (CLRString::Equals(ButtonType, BUTTONTYPE_ACTION))
 			return ActionButtonType::Action;
 
-		else if (::System::String::Equals(ButtonType, BUTTONTYPE_ITEM))
+		else if (CLRString::Equals(ButtonType, BUTTONTYPE_ITEM))
 			return ActionButtonType::Item;
 
 		else
 			return ActionButtonType::Unset;
 	};
 
-	ActionButtonList^ OgreClientConfig::GetActionButtonSetByName(::System::String^ Name)
+	ActionButtonList^ OgreClientConfig::GetActionButtonSetByName(CLRString^ Name)
 	{
 		for each(ActionButtonList^ set in ActionButtonSets)
-			if (::System::String::Equals(set->PlayerName, Name))
+			if (CLRString::Equals(set->PlayerName, Name))
 				return set;
 
 		return nullptr;

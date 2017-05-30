@@ -71,7 +71,7 @@ namespace Meridian59 { namespace Ogre
 		TradeInfo^ tradeInfo = OgreClient::Singleton->Data->Trade;
 
 		// visible
-		if (::System::String::Equals(e->PropertyName, TradeInfo::PROPNAME_ISVISIBLE))
+		if (CLRString::Equals(e->PropertyName, TradeInfo::PROPNAME_ISVISIBLE))
 		{
 			// hide or show
 			Window->setVisible(tradeInfo->IsVisible);
@@ -82,13 +82,13 @@ namespace Meridian59 { namespace Ogre
 		}
 
 		// pending
-		else if (::System::String::Equals(e->PropertyName, TradeInfo::PROPNAME_ISPENDING))
+		else if (CLRString::Equals(e->PropertyName, TradeInfo::PROPNAME_ISPENDING))
 		{
 
 		}
 
 		// itemsyouset
-		else if (::System::String::Equals(e->PropertyName, TradeInfo::PROPNAME_ISITEMSYOUSET))
+		else if (CLRString::Equals(e->PropertyName, TradeInfo::PROPNAME_ISITEMSYOUSET))
 		{
 			Offer->setVisible(!tradeInfo->IsItemsYouSet);
 			
@@ -99,7 +99,7 @@ namespace Meridian59 { namespace Ogre
 		}
 
 		// itemspartnerset
-		else if (::System::String::Equals(e->PropertyName, TradeInfo::PROPNAME_ISITEMSPARTNERSET))
+		else if (CLRString::Equals(e->PropertyName, TradeInfo::PROPNAME_ISITEMSPARTNERSET))
 		{
 			Accept->setVisible(
                 tradeInfo->IsItemsYouSet &&
@@ -108,7 +108,7 @@ namespace Meridian59 { namespace Ogre
 		}
 
 		// tradepartner
-		else if (::System::String::Equals(e->PropertyName, TradeInfo::PROPNAME_TRADEPARTNER))
+		else if (CLRString::Equals(e->PropertyName, TradeInfo::PROPNAME_TRADEPARTNER))
 		{
 			if (tradeInfo->TradePartner != nullptr)
 			{

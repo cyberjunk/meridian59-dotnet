@@ -140,7 +140,7 @@ namespace Meridian59 { namespace Ogre
 	void ControllerUI::Avatar::OnDataPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{
 		// avatar
-		if (::System::String::Equals(e->PropertyName, DataController::PROPNAME_AVATAROBJECT))
+		if (CLRString::Equals(e->PropertyName, DataController::PROPNAME_AVATAROBJECT))
 		{
 			RoomObject^ avatarObject = OgreClient::Singleton->Data->AvatarObject;
 

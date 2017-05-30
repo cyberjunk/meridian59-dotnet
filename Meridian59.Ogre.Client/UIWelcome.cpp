@@ -56,7 +56,7 @@ namespace Meridian59 { namespace Ogre
 	void ControllerUI::Welcome::OnWelcomeInfoPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{
 		// MOTD
-		if (::System::String::Equals(e->PropertyName, WelcomeInfo::PROPNAME_MOTD))
+		if (CLRString::Equals(e->PropertyName, WelcomeInfo::PROPNAME_MOTD))
 		{
 			// set MOTD
 			MOTD->setText(

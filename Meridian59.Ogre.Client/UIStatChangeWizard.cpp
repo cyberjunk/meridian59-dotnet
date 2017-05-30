@@ -146,43 +146,43 @@ namespace Meridian59 { namespace Ogre
       /// ATTRIBUTES
 
       // might
-      if (::System::String::Equals(e->PropertyName, StatChangeInfo::PROPNAME_MIGHT))
+      if (CLRString::Equals(e->PropertyName, StatChangeInfo::PROPNAME_MIGHT))
       {
          SetAttributeProgressbar(Might, statsInfo->Might);
       }
 
       // intellect
-      else if (::System::String::Equals(e->PropertyName, StatChangeInfo::PROPNAME_INTELLECT))
+      else if (CLRString::Equals(e->PropertyName, StatChangeInfo::PROPNAME_INTELLECT))
       {
          SetAttributeProgressbar(Intellect, statsInfo->Intellect);
       }
 
       // stamina
-      else if (::System::String::Equals(e->PropertyName, StatChangeInfo::PROPNAME_STAMINA))
+      else if (CLRString::Equals(e->PropertyName, StatChangeInfo::PROPNAME_STAMINA))
       {
          SetAttributeProgressbar(Stamina, statsInfo->Stamina);
       }
 
       // agility
-      else if (::System::String::Equals(e->PropertyName, StatChangeInfo::PROPNAME_AGILITY))
+      else if (CLRString::Equals(e->PropertyName, StatChangeInfo::PROPNAME_AGILITY))
       {
          SetAttributeProgressbar(Agility, statsInfo->Agility);
       }
 
       // mysticism
-      else if (::System::String::Equals(e->PropertyName, StatChangeInfo::PROPNAME_MYSTICISM))
+      else if (CLRString::Equals(e->PropertyName, StatChangeInfo::PROPNAME_MYSTICISM))
       {
          SetAttributeProgressbar(Mysticism, statsInfo->Mysticism);
       }
 
       // aim
-      else if (::System::String::Equals(e->PropertyName, StatChangeInfo::PROPNAME_AIM))
+      else if (CLRString::Equals(e->PropertyName, StatChangeInfo::PROPNAME_AIM))
       {
          SetAttributeProgressbar(Aim, statsInfo->Aim);
       }
 
       // attribute points available
-      else if (::System::String::Equals(e->PropertyName, StatChangeInfo::PROPNAME_ATTRIBUTESAVAILABLE))
+      else if (CLRString::Equals(e->PropertyName, StatChangeInfo::PROPNAME_ATTRIBUTESAVAILABLE))
       {
          AttributesAvailable->setProgress((float)statsInfo->AttributesAvailable / (float)StatChangeInfo::ATTRIBUTE_MAXSUM);
          
@@ -192,56 +192,56 @@ namespace Meridian59 { namespace Ogre
       }
 
       // Shal level
-      else if (::System::String::Equals(e->PropertyName, StatChangeInfo::PROPNAME_LEVELSHA)
-         || ::System::String::Equals(e->PropertyName, StatChangeInfo::PROPNAME_ORIGLEVELSHA))
+      else if (CLRString::Equals(e->PropertyName, StatChangeInfo::PROPNAME_LEVELSHA)
+         || CLRString::Equals(e->PropertyName, StatChangeInfo::PROPNAME_ORIGLEVELSHA))
       {
          SetSchoolProgressbar(StatChangeWizard::ShalilleLevel, statsInfo->OrigLevelSha, statsInfo->LevelSha);
       }
 
       // Qor level
-      else if (::System::String::Equals(e->PropertyName, StatChangeInfo::PROPNAME_LEVELQOR)
-         || ::System::String::Equals(e->PropertyName, StatChangeInfo::PROPNAME_ORIGLEVELQOR))
+      else if (CLRString::Equals(e->PropertyName, StatChangeInfo::PROPNAME_LEVELQOR)
+         || CLRString::Equals(e->PropertyName, StatChangeInfo::PROPNAME_ORIGLEVELQOR))
       {
          SetSchoolProgressbar(StatChangeWizard::QorLevel, statsInfo->OrigLevelQor, statsInfo->LevelQor);
       }
 
       // Kraanan level
-      else if (::System::String::Equals(e->PropertyName, StatChangeInfo::PROPNAME_LEVELKRAANAN)
-         || ::System::String::Equals(e->PropertyName, StatChangeInfo::PROPNAME_ORIGLEVELKRAANAN))
+      else if (CLRString::Equals(e->PropertyName, StatChangeInfo::PROPNAME_LEVELKRAANAN)
+         || CLRString::Equals(e->PropertyName, StatChangeInfo::PROPNAME_ORIGLEVELKRAANAN))
       {
          SetSchoolProgressbar(StatChangeWizard::KraananLevel, statsInfo->OrigLevelKraanan, statsInfo->LevelKraanan);
       }
 
       // Faren level
-      else if (::System::String::Equals(e->PropertyName, StatChangeInfo::PROPNAME_LEVELFAREN)
-         || ::System::String::Equals(e->PropertyName, StatChangeInfo::PROPNAME_ORIGLEVELFAREN))
+      else if (CLRString::Equals(e->PropertyName, StatChangeInfo::PROPNAME_LEVELFAREN)
+         || CLRString::Equals(e->PropertyName, StatChangeInfo::PROPNAME_ORIGLEVELFAREN))
       {
          SetSchoolProgressbar(StatChangeWizard::FarenLevel, statsInfo->OrigLevelFaren, statsInfo->LevelFaren);
       }
 
       // Riija level
-      else if (::System::String::Equals(e->PropertyName, StatChangeInfo::PROPNAME_LEVELRIIJA)
-         || ::System::String::Equals(e->PropertyName, StatChangeInfo::PROPNAME_ORIGLEVELRIIJA))
+      else if (CLRString::Equals(e->PropertyName, StatChangeInfo::PROPNAME_LEVELRIIJA)
+         || CLRString::Equals(e->PropertyName, StatChangeInfo::PROPNAME_ORIGLEVELRIIJA))
       {
          SetSchoolProgressbar(StatChangeWizard::RiijaLevel, statsInfo->OrigLevelRiija, statsInfo->LevelRiija);
       }
 
       // Jala level
-      else if (::System::String::Equals(e->PropertyName, StatChangeInfo::PROPNAME_LEVELJALA)
-         || ::System::String::Equals(e->PropertyName, StatChangeInfo::PROPNAME_ORIGLEVELJALA))
+      else if (CLRString::Equals(e->PropertyName, StatChangeInfo::PROPNAME_LEVELJALA)
+         || CLRString::Equals(e->PropertyName, StatChangeInfo::PROPNAME_ORIGLEVELJALA))
       {
          SetSchoolProgressbar(StatChangeWizard::JalaLevel, statsInfo->OrigLevelJala, statsInfo->LevelJala);
       }
 
       // WC level
-      else if (::System::String::Equals(e->PropertyName, StatChangeInfo::PROPNAME_LEVELWC)
-         || ::System::String::Equals(e->PropertyName, StatChangeInfo::PROPNAME_ORIGLEVELWC))
+      else if (CLRString::Equals(e->PropertyName, StatChangeInfo::PROPNAME_LEVELWC)
+         || CLRString::Equals(e->PropertyName, StatChangeInfo::PROPNAME_ORIGLEVELWC))
       {
          SetSchoolProgressbar(StatChangeWizard::WCLevel, statsInfo->OrigLevelWC, statsInfo->LevelWC);
       }
 
       // isvisible
-      else if (::System::String::Equals(e->PropertyName, ObjectInfo::PROPNAME_ISVISIBLE))
+      else if (CLRString::Equals(e->PropertyName, ObjectInfo::PROPNAME_ISVISIBLE))
       {
          // set window visibility
          Window->setVisible(OgreClient::Singleton->Data->StatChangeInfo->IsVisible);

@@ -185,7 +185,7 @@ namespace Meridian59 { namespace Ogre
 				{
 					// get name as CLR string
 					const ::Ogre::String& ostr = entry.movable->getName();
-					System::String^ s = StringConvert::OgreToCLR(ostr);
+					CLRString^ s = StringConvert::OgreToCLR(ostr);
                 
 					// try parse an id out of name string
 					unsigned int objectid;

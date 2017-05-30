@@ -30,7 +30,7 @@ namespace Meridian59 { namespace Ogre
 		::Ogre::TextureManager* texMan = ::Ogre::TextureManager::getSingletonPtr();
 						
 		// get the unique hash for the current appearance of the object
-        System::String^ key = AppearanceHash.ToString();
+        CLRString^ key = AppearanceHash.ToString();
         
 		// create new texture info
 		image = gcnew TextureInfoCEGUI();

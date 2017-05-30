@@ -67,7 +67,7 @@ namespace Meridian59 { namespace Ogre
 	void ControllerUI::SkillDetails::OnLookSkillObjectPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{
 		// objectbase
-		if (::System::String::Equals(e->PropertyName, SkillInfo::PROPNAME_OBJECTBASE))
+		if (CLRString::Equals(e->PropertyName, SkillInfo::PROPNAME_OBJECTBASE))
 		{
 			ObjectBase^ LookSkill = OgreClient::Singleton->Data->LookSkill->ObjectBase;
 			SkillInfo^ LookInfo = OgreClient::Singleton->Data->LookSkill;
@@ -98,7 +98,7 @@ namespace Meridian59 { namespace Ogre
 		}
 
 		// description
-		else if (::System::String::Equals(e->PropertyName, ObjectInfo::PROPNAME_MESSAGE))
+		else if (CLRString::Equals(e->PropertyName, ObjectInfo::PROPNAME_MESSAGE))
 		{
 			ServerString^ text = OgreClient::Singleton->Data->LookSkill->Message;
 
@@ -107,7 +107,7 @@ namespace Meridian59 { namespace Ogre
 		}
 
 		// isvisible
-		else if (::System::String::Equals(e->PropertyName, ObjectInfo::PROPNAME_ISVISIBLE))
+		else if (CLRString::Equals(e->PropertyName, ObjectInfo::PROPNAME_ISVISIBLE))
 		{
 			// set window visibility
 			Window->setVisible(OgreClient::Singleton->Data->LookSkill->IsVisible);

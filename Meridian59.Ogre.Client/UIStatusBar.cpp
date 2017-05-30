@@ -113,7 +113,7 @@ namespace Meridian59 { namespace Ogre
 	void ControllerUI::StatusBar::OnDataPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{
 		// update FPS/TPS
-		if (::System::String::Equals(e->PropertyName, DataController::PROPNAME_TPS))
+		if (CLRString::Equals(e->PropertyName, DataController::PROPNAME_TPS))
 		{
 			unsigned int tps = OgreClient::Singleton->Data->TPS;
 
@@ -135,7 +135,7 @@ namespace Meridian59 { namespace Ogre
 		}
 
 		// update RTT
-		else if (::System::String::Equals(e->PropertyName, DataController::PROPNAME_RTT))
+		else if (CLRString::Equals(e->PropertyName, DataController::PROPNAME_RTT))
 		{
 			unsigned int rtt = OgreClient::Singleton->Data->RTT;
 
@@ -157,7 +157,7 @@ namespace Meridian59 { namespace Ogre
 		}
 
 		// update Meridian Time
-		else if (::System::String::Equals(e->PropertyName, DataController::PROPNAME_MERIDIANTIME))
+		else if (CLRString::Equals(e->PropertyName, DataController::PROPNAME_MERIDIANTIME))
 		{
 			MTimeValue->setText(
 				StringConvert::CLRToCEGUI(OgreClient::Singleton->Data->MeridianTime.ToShortTimeString()));
@@ -166,7 +166,7 @@ namespace Meridian59 { namespace Ogre
 
 	void ControllerUI::StatusBar::OnClientPreferencesChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{
-		if (::System::String::Equals(e->PropertyName, PreferencesFlags::PROPNAME_FLAGS))
+		if (CLRString::Equals(e->PropertyName, PreferencesFlags::PROPNAME_FLAGS))
 		{
 			const bool isSafetyOff = OgreClient::Singleton->Data->ClientPreferences->IsSafetyOff;
 			const CEGUI::String color = (isSafetyOff ? UI_COLOR_DARKRED : UI_COLOR_PALEGREEN);
@@ -179,7 +179,7 @@ namespace Meridian59 { namespace Ogre
 
 	void ControllerUI::StatusBar::OnRoomInformationPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{
-		if (::System::String::Equals(e->PropertyName, RoomInfo::PROPNAME_ROOMNAME))
+		if (CLRString::Equals(e->PropertyName, RoomInfo::PROPNAME_ROOMNAME))
 		{
 			RoomValue->setText(
 				StringConvert::CLRToCEGUI(OgreClient::Singleton->Data->RoomInformation->RoomName));

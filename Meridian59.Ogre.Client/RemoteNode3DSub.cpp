@@ -10,7 +10,7 @@ namespace Meridian59 { namespace Ogre
         this->RootNode = RootNode;
         this->AttachedHotspot = AttachedHotspot;
 
-        System::String^ resource = SubOverlay->Name->Replace(FileExtensions::BGF, FileExtensions::XML);
+        CLRString^ resource = SubOverlay->Name->Replace(FileExtensions::BGF, FileExtensions::XML);
         ::Ogre::String& ostr_resource = StringConvert::CLRToOgre(resource);
 
 		ResourceGroupManager* resMan = ResourceGroupManager::getSingletonPtr();
@@ -27,7 +27,7 @@ namespace Meridian59 { namespace Ogre
         }
 	};
 
-	System::String^ RemoteNode3DSub::ID::get() 
+	CLRString^ RemoteNode3DSub::ID::get() 
 	{ 
 		return RootNode->RoomObject->ID + "_" + SubOverlay->HotSpot + "_" + SubOverlay->Name; 
 	};

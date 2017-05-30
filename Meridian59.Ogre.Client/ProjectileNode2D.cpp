@@ -82,7 +82,7 @@ namespace Meridian59 { namespace Ogre
 
 	void ProjectileNode2D::OnProjectilePropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
     {
-		if (System::String::Equals(e->PropertyName, Data::Models::Projectile::PROPNAME_POSITION3D))
+		if (CLRString::Equals(e->PropertyName, Data::Models::Projectile::PROPNAME_POSITION3D))
 		{
             // update scenenode position from datamodel
 			SceneNode->setPosition(Util::ToOgre(Projectile->Position3D));

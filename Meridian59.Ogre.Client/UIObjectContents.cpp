@@ -49,12 +49,12 @@ namespace Meridian59 { namespace Ogre
 	void ControllerUI::ObjectContents::OnObjectContentsPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{
 		// objectid
-		if (::System::String::Equals(e->PropertyName, Data::Models::ObjectContents::PROPNAME_OBJECTID))
+		if (CLRString::Equals(e->PropertyName, Data::Models::ObjectContents::PROPNAME_OBJECTID))
 		{
 		}
 
 		// visible
-		else if (::System::String::Equals(e->PropertyName, Data::Models::ObjectContents::PROPNAME_ISVISIBLE))
+		else if (CLRString::Equals(e->PropertyName, Data::Models::ObjectContents::PROPNAME_ISVISIBLE))
 		{
 			// set window visibility
 			Window->setVisible(OgreClient::Singleton->Data->ObjectContents->IsVisible);

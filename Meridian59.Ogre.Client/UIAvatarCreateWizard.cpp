@@ -234,73 +234,73 @@ namespace Meridian59 { namespace Ogre
 		/// APPEARANCE STUFF
 
 		// haircolors
-		if (::System::String::Equals(e->PropertyName, CharCreationInfo::PROPNAME_HAIRCOLORS))
+		if (CLRString::Equals(e->PropertyName, CharCreationInfo::PROPNAME_HAIRCOLORS))
 		{
 			HairColor->setMaxValue((float)::System::Math::Max(creationInfo->HairColors->Length - 1, 0));
 		}
 
 		// skincolors
-		else if (::System::String::Equals(e->PropertyName, CharCreationInfo::PROPNAME_SKINCOLORS))
+		else if (CLRString::Equals(e->PropertyName, CharCreationInfo::PROPNAME_SKINCOLORS))
 		{
 			SkinColor->setMaxValue((float)::System::Math::Max(creationInfo->SkinColors->Length - 1, 0));
 		}
 
 		// hairids (male/female)
-		else if (::System::String::Equals(e->PropertyName, CharCreationInfo::PROPNAME_MALEHAIRIDS) &&
+		else if (CLRString::Equals(e->PropertyName, CharCreationInfo::PROPNAME_MALEHAIRIDS) &&
 			GenderMale->isSelected())
 		{
 			Hair->setMaxValue((float)::System::Math::Max(creationInfo->MaleHairIDs->Length - 1, 0));
 		}
-		else if (::System::String::Equals(e->PropertyName, CharCreationInfo::PROPNAME_FEMALEHAIRIDS) &&
+		else if (CLRString::Equals(e->PropertyName, CharCreationInfo::PROPNAME_FEMALEHAIRIDS) &&
 			!GenderMale->isSelected())
 		{
 			Hair->setMaxValue((float)::System::Math::Max(creationInfo->FemaleHairIDs->Length - 1, 0));
 		}
 
 		// eyeids (male/female)
-		else if (::System::String::Equals(e->PropertyName, CharCreationInfo::PROPNAME_MALEEYEIDS) &&
+		else if (CLRString::Equals(e->PropertyName, CharCreationInfo::PROPNAME_MALEEYEIDS) &&
 			GenderMale->isSelected())
 		{
 			Eyes->setMaxValue((float)::System::Math::Max(creationInfo->MaleEyeIDs->Length - 1, 0));
 		}
-		else if (::System::String::Equals(e->PropertyName, CharCreationInfo::PROPNAME_FEMALEEYEIDS) &&
+		else if (CLRString::Equals(e->PropertyName, CharCreationInfo::PROPNAME_FEMALEEYEIDS) &&
 			!GenderMale->isSelected())
 		{
 			Eyes->setMaxValue((float)::System::Math::Max(creationInfo->FemaleEyeIDs->Length - 1, 0));
 		}
 
 		// noseids (male/female)
-		else if (::System::String::Equals(e->PropertyName, CharCreationInfo::PROPNAME_MALENOSEIDS) &&
+		else if (CLRString::Equals(e->PropertyName, CharCreationInfo::PROPNAME_MALENOSEIDS) &&
 			GenderMale->isSelected())
 		{
 			Nose->setMaxValue((float)::System::Math::Max(creationInfo->MaleNoseIDs->Length - 1, 0));
 		}
-		else if (::System::String::Equals(e->PropertyName, CharCreationInfo::PROPNAME_FEMALENOSEIDS) &&
+		else if (CLRString::Equals(e->PropertyName, CharCreationInfo::PROPNAME_FEMALENOSEIDS) &&
 			!GenderMale->isSelected())
 		{
 			Nose->setMaxValue((float)::System::Math::Max(creationInfo->FemaleNoseIDs->Length - 1, 0));
 		}
 
 		// mouthids (male/female)
-		else if (::System::String::Equals(e->PropertyName, CharCreationInfo::PROPNAME_MALEMOUTHIDS) &&
+		else if (CLRString::Equals(e->PropertyName, CharCreationInfo::PROPNAME_MALEMOUTHIDS) &&
 			GenderMale->isSelected())
 		{
 			Mouth->setMaxValue((float)::System::Math::Max(creationInfo->MaleMouthIDs->Length - 1, 0));
 		}
-		else if (::System::String::Equals(e->PropertyName, CharCreationInfo::PROPNAME_FEMALEMOUTHIDS) &&
+		else if (CLRString::Equals(e->PropertyName, CharCreationInfo::PROPNAME_FEMALEMOUTHIDS) &&
 			!GenderMale->isSelected())
 		{
 			Mouth->setMaxValue((float)::System::Math::Max(creationInfo->FemaleMouthIDs->Length - 1, 0));
 		}
 
 		// name
-		else if (::System::String::Equals(e->PropertyName, CharCreationInfo::PROPNAME_AVATARNAME))
+		else if (CLRString::Equals(e->PropertyName, CharCreationInfo::PROPNAME_AVATARNAME))
 		{
 			Name->setText(StringConvert::CLRToCEGUI(creationInfo->AvatarName));
 		}
 
 		// description
-		else if (::System::String::Equals(e->PropertyName, CharCreationInfo::PROPNAME_AVATARDESCRIPTION))
+		else if (CLRString::Equals(e->PropertyName, CharCreationInfo::PROPNAME_AVATARDESCRIPTION))
 		{
 			Description->setText(StringConvert::CLRToCEGUI(creationInfo->AvatarDescription));
 		}
@@ -308,7 +308,7 @@ namespace Meridian59 { namespace Ogre
 		/// ATTRIBUTES
 
 		// might
-		else if (::System::String::Equals(e->PropertyName, CharCreationInfo::PROPNAME_MIGHT))
+		else if (CLRString::Equals(e->PropertyName, CharCreationInfo::PROPNAME_MIGHT))
 		{
 			Might->setProgress((float)creationInfo->Might / (float)CharCreationInfo::ATTRIBUTE_MAXVALUE);
 
@@ -318,7 +318,7 @@ namespace Meridian59 { namespace Ogre
 		}
 
 		// intellect
-		else if (::System::String::Equals(e->PropertyName, CharCreationInfo::PROPNAME_INTELLECT))
+		else if (CLRString::Equals(e->PropertyName, CharCreationInfo::PROPNAME_INTELLECT))
 		{
 			Intellect->setProgress((float)creationInfo->Intellect / (float)CharCreationInfo::ATTRIBUTE_MAXVALUE);
 			
@@ -328,7 +328,7 @@ namespace Meridian59 { namespace Ogre
 		}
 
 		// stamina
-		else if (::System::String::Equals(e->PropertyName, CharCreationInfo::PROPNAME_STAMINA))
+		else if (CLRString::Equals(e->PropertyName, CharCreationInfo::PROPNAME_STAMINA))
 		{
 			Stamina->setProgress((float)creationInfo->Stamina / (float)CharCreationInfo::ATTRIBUTE_MAXVALUE);
 
@@ -338,7 +338,7 @@ namespace Meridian59 { namespace Ogre
 		}
 
 		// agility
-		else if (::System::String::Equals(e->PropertyName, CharCreationInfo::PROPNAME_AGILITY))
+		else if (CLRString::Equals(e->PropertyName, CharCreationInfo::PROPNAME_AGILITY))
 		{
 			Agility->setProgress((float)creationInfo->Agility / (float)CharCreationInfo::ATTRIBUTE_MAXVALUE);
 			
@@ -348,7 +348,7 @@ namespace Meridian59 { namespace Ogre
 		}
 
 		// mysticism
-		else if (::System::String::Equals(e->PropertyName, CharCreationInfo::PROPNAME_MYSTICISM))
+		else if (CLRString::Equals(e->PropertyName, CharCreationInfo::PROPNAME_MYSTICISM))
 		{
 			Mysticism->setProgress((float)creationInfo->Mysticism / (float)CharCreationInfo::ATTRIBUTE_MAXVALUE);
 			
@@ -358,7 +358,7 @@ namespace Meridian59 { namespace Ogre
 		}
 
 		// aim
-		else if (::System::String::Equals(e->PropertyName, CharCreationInfo::PROPNAME_AIM))
+		else if (CLRString::Equals(e->PropertyName, CharCreationInfo::PROPNAME_AIM))
 		{
 			Aim->setProgress((float)creationInfo->Aim / (float)CharCreationInfo::ATTRIBUTE_MAXVALUE);
 			
@@ -368,7 +368,7 @@ namespace Meridian59 { namespace Ogre
 		}
 
 		// attributesavailable
-		else if (::System::String::Equals(e->PropertyName, CharCreationInfo::PROPNAME_ATTRIBUTESAVAILABLE))
+		else if (CLRString::Equals(e->PropertyName, CharCreationInfo::PROPNAME_ATTRIBUTESAVAILABLE))
 		{
 			AttributesAvailable->setProgress((float)creationInfo->AttributesAvailable / (float)CharCreationInfo::ATTRIBUTE_MAXSUM);
 			
@@ -380,7 +380,7 @@ namespace Meridian59 { namespace Ogre
 		/// SPELLS/SKILLS
 
 		// attributesavailable
-		else if (::System::String::Equals(e->PropertyName, CharCreationInfo::PROPNAME_SKILLPOINTSAVAILABLE))
+		else if (CLRString::Equals(e->PropertyName, CharCreationInfo::PROPNAME_SKILLPOINTSAVAILABLE))
 		{
 			SkillPointsAvailable->setProgress((float)creationInfo->SkillPointsAvailable / (float)CharCreationInfo::SKILLPOINTS_MAXSUM);
 			
@@ -390,7 +390,7 @@ namespace Meridian59 { namespace Ogre
 		}
 
 		/// NOT OK FLAG
-		else if (::System::String::Equals(e->PropertyName, CharCreationInfo::PROPNAME_ISDATAOK))
+		else if (CLRString::Equals(e->PropertyName, CharCreationInfo::PROPNAME_ISDATAOK))
 		{
 			if (creationInfo->IsDataOK)
 			{
@@ -765,7 +765,7 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
 		const CEGUI::Combobox* combobox		= (const CEGUI::Combobox*)args.window;
 
-		::System::String^ newval = StringConvert::CEGUIToCLR(combobox->getText());
+		CLRString^ newval = StringConvert::CEGUIToCLR(combobox->getText());
 		
 		if (!newval || newval == STRINGEMPTY)
 			return true;

@@ -72,7 +72,7 @@ namespace Meridian59 { namespace Ogre
 		Data::Models::GuildAskData^ obj = OgreClient::Singleton->Data->GuildAskData;
 		
 		// visible
-		if (::System::String::Equals(e->PropertyName, Data::Models::GuildAskData::PROPNAME_ISVISIBLE))
+		if (CLRString::Equals(e->PropertyName, Data::Models::GuildAskData::PROPNAME_ISVISIBLE))
 		{
 			// hide or show
 			Window->setVisible(obj->IsVisible);
@@ -83,14 +83,14 @@ namespace Meridian59 { namespace Ogre
 		}
 
 		// costnormal
-		else if (::System::String::Equals(e->PropertyName, Data::Models::GuildAskData::PROPNAME_COSTNORMAL))
+		else if (CLRString::Equals(e->PropertyName, Data::Models::GuildAskData::PROPNAME_COSTNORMAL))
 		{
 			if (!SecretGuild->isSelected())
 				Cost->setText(StringConvert::CLRToCEGUI(obj->CostNormal.ToString()));
 		}
 
 		// costsecret
-		else if (::System::String::Equals(e->PropertyName, Data::Models::GuildAskData::PROPNAME_COSTSECRET))
+		else if (CLRString::Equals(e->PropertyName, Data::Models::GuildAskData::PROPNAME_COSTSECRET))
 		{
 			if (SecretGuild->isSelected())
 				Cost->setText(StringConvert::CLRToCEGUI(obj->CostSecret.ToString()));

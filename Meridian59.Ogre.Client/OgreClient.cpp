@@ -167,21 +167,21 @@ namespace Meridian59 { namespace Ogre
       // set default mipmaps count
       texMan.setDefaultNumMipmaps(Config->NoMipmaps ? 0 : 5);
 
-      if (::System::String::Equals(Config->TextureFiltering, "Off"))
+      if (CLRString::Equals(Config->TextureFiltering, "Off"))
          matMan.setDefaultTextureFiltering(TextureFilterOptions::TFO_NONE);
 
-      else if (::System::String::Equals(Config->TextureFiltering, "Bilinear"))
+      else if (CLRString::Equals(Config->TextureFiltering, "Bilinear"))
          matMan.setDefaultTextureFiltering(TextureFilterOptions::TFO_BILINEAR);
 
-      else if (::System::String::Equals(Config->TextureFiltering, "Trilinear"))
+      else if (CLRString::Equals(Config->TextureFiltering, "Trilinear"))
          matMan.setDefaultTextureFiltering(TextureFilterOptions::TFO_TRILINEAR);
 
-      else if (::System::String::Equals(Config->TextureFiltering, "Anisotropic x4"))
+      else if (CLRString::Equals(Config->TextureFiltering, "Anisotropic x4"))
       {
          matMan.setDefaultTextureFiltering(TextureFilterOptions::TFO_ANISOTROPIC);
          matMan.setDefaultAnisotropy(4);
       }
-      else if (::System::String::Equals(Config->TextureFiltering, "Anisotropic x16"))
+      else if (CLRString::Equals(Config->TextureFiltering, "Anisotropic x16"))
       {
          matMan.setDefaultTextureFiltering(TextureFilterOptions::TFO_ANISOTROPIC);
          matMan.setDefaultAnisotropy(16);
@@ -192,27 +192,27 @@ namespace Meridian59 { namespace Ogre
       /********************************************************************************************************/
 
       // select imagebuilder
-      if (::System::String::Equals(Config->ImageBuilder, "GDI"))
+      if (CLRString::Equals(Config->ImageBuilder, "GDI"))
          ImageBuilder::Initialize(ImageBuilderType::GDI);
 
-      else if (::System::String::Equals(Config->ImageBuilder, "DirectDraw"))
+      else if (CLRString::Equals(Config->ImageBuilder, "DirectDraw"))
          ImageBuilder::Initialize(ImageBuilderType::DirectDraw);
 
-      else if (::System::String::Equals(Config->ImageBuilder, "DirectX"))
+      else if (CLRString::Equals(Config->ImageBuilder, "DirectX"))
          ImageBuilder::Initialize(ImageBuilderType::DirectX);
 
-      else if (::System::String::Equals(Config->ImageBuilder, "Native"))
+      else if (CLRString::Equals(Config->ImageBuilder, "Native"))
          ImageBuilder::Initialize(ImageBuilderType::Native);
 
       // texturescaling in gdi+
-      if (System::String::Equals(Config->BitmapScaling, "Low"))
+      if (CLRString::Equals(Config->BitmapScaling, "Low"))
       {
          ImageBuilder::GDI::InterpolationMode  = ::System::Drawing::Drawing2D::InterpolationMode::NearestNeighbor;
          ImageBuilder::GDI::PixelOffsetMode    = ::System::Drawing::Drawing2D::PixelOffsetMode::Half;
          ImageBuilder::GDI::CompositingQuality = ::System::Drawing::Drawing2D::CompositingQuality::HighSpeed;
          ImageBuilder::GDI::SmoothingMode      = ::System::Drawing::Drawing2D::SmoothingMode::None;
       }
-      else if (System::String::Equals(Config->BitmapScaling, "High"))
+      else if (CLRString::Equals(Config->BitmapScaling, "High"))
       {
          ImageBuilder::GDI::InterpolationMode  = ::System::Drawing::Drawing2D::InterpolationMode::HighQualityBicubic;
          ImageBuilder::GDI::PixelOffsetMode    = ::System::Drawing::Drawing2D::PixelOffsetMode::HighQuality;
@@ -228,14 +228,14 @@ namespace Meridian59 { namespace Ogre
       }
 
       // texturequality
-      if (System::String::Equals(Config->TextureQuality, "Low"))
+      if (CLRString::Equals(Config->TextureQuality, "Low"))
       {
          ImageComposerOgre<RoomObject^>::DefaultQuality = 0.25f; // used in RemoteNode2D		
          ImageComposerCEGUI<ObjectBase^>::DefaultQuality = 0.25f; // used in CEGUI
          ImageComposerCEGUI<RoomObject^>::DefaultQuality = 0.25f; // used in CEGUI
          ImageComposerCEGUI<InventoryObject^>::DefaultQuality = 0.25f; // used in CEGUI
       }
-      else if (System::String::Equals(Config->TextureQuality, "High"))
+      else if (CLRString::Equals(Config->TextureQuality, "High"))
       {
          ImageComposerOgre<RoomObject^>::DefaultQuality = 1.0f; // used in RemoteNode2D
          ImageComposerCEGUI<ObjectBase^>::DefaultQuality = 1.0f; // used in CEGUI
@@ -686,7 +686,7 @@ namespace Meridian59 { namespace Ogre
    };
 
    void OgreClient::InitResourceGroup(
-      ::System::String^ Name, 
+      CLRString^ Name, 
       bool AddRoot, 
       bool AddSubfolders, 
       ::System::IO::SearchOption Recursive, 
@@ -704,8 +704,8 @@ namespace Meridian59 { namespace Ogre
          resMan.createResourceGroup(ostr_name);
 
       // path to potential folder and potential zip
-      ::System::String^ pathDir = Path::Combine(Config->ResourcesPath, Name);
-      ::System::String^ pathZip = Path::Combine(Config->ResourcesPath, Name + ".zip");
+      CLRString^ pathDir = Path::Combine(Config->ResourcesPath, Name);
+      CLRString^ pathZip = Path::Combine(Config->ResourcesPath, Name + ".zip");
 
       // check whether folder and or zip exists
       bool existsZip = ::System::IO::File::Exists(pathZip);
@@ -734,18 +734,18 @@ namespace Meridian59 { namespace Ogre
          if (AddSubfolders)
          {
             // get all subfolders and zip files
-            array<System::String^>^ arrFolders = Directory::GetDirectories(pathDir, "*", SearchOption::TopDirectoryOnly);
-            array<System::String^>^ arrZips = Directory::GetFiles(pathDir, "*.zip", SearchOption::TopDirectoryOnly);
+            array<CLRString^>^ arrFolders = Directory::GetDirectories(pathDir, "*", SearchOption::TopDirectoryOnly);
+            array<CLRString^>^ arrZips = Directory::GetFiles(pathDir, "*.zip", SearchOption::TopDirectoryOnly);
 
             // add all zips to the resourcegroup
-            for each (System::String^ s in arrZips)
+            for each (CLRString^ s in arrZips)
                resMan.addResourceLocation(StringConvert::CLRToOgre(s), "Zip", ostr_name);
 
             // add subfolders which don't have a zip
-            for each (System::String^ folder in arrFolders)
+            for each (CLRString^ folder in arrFolders)
             {
                bool skip = false;
-               for each(System::String^ zip in arrZips)
+               for each(CLRString^ zip in arrZips)
                {
                   if ((folder + ".zip") == zip)
                   {
@@ -770,11 +770,11 @@ namespace Meridian59 { namespace Ogre
    };
 
    void OgreClient::InitResourceGroupManually(
-      ::System::String^ Name, 
+      CLRString^ Name, 
       bool Initialize, 
       bool Load, 
-      ::System::String^ Type, 
-      ::System::String^ Pattern)
+      CLRString^ Type, 
+      CLRString^ Pattern)
    {
       // get ogre resource manager
       ::Ogre::ResourceGroupManager& resMan = ResourceGroupManager::getSingleton();
@@ -787,8 +787,8 @@ namespace Meridian59 { namespace Ogre
          resMan.createResourceGroup(ostr_name);
 
       // path to potential folder and potential zip
-      ::System::String^ pathDir = Path::Combine(Config->ResourcesPath, Name);
-      ::System::String^ pathZip = Path::Combine(Config->ResourcesPath, Name + ".zip");
+      CLRString^ pathDir = Path::Combine(Config->ResourcesPath, Name);
+      CLRString^ pathZip = Path::Combine(Config->ResourcesPath, Name + ".zip");
 
       // check whether folder and or zip exists
       bool existsZip = ::System::IO::File::Exists(pathZip);
@@ -802,7 +802,7 @@ namespace Meridian59 { namespace Ogre
       }
 
       // prefer zip
-      ::System::String^ pathUse = (existsZip) ? pathZip : pathDir;
+      CLRString^ pathUse = (existsZip) ? pathZip : pathDir;
       ::Ogre::String& ostr_path = StringConvert::CLRToOgre(pathUse);
       ::Ogre::String ostr_restype  = (existsZip) ? "Zip" : "FileSystem";
 
@@ -945,7 +945,7 @@ namespace Meridian59 { namespace Ogre
       ControllerUI::MailCompose::ProcessResult(Message->ResolvedIDs);
    };
 
-   void OgreClient::SendUseCharacterMessage(ObjectID^ ID, bool RequestBasicInfo, ::System::String^ Name)
+   void OgreClient::SendUseCharacterMessage(ObjectID^ ID, bool RequestBasicInfo, CLRString^ Name)
    {
       // destroy the demo scene, we're going to play!
       DemoSceneDestroy();

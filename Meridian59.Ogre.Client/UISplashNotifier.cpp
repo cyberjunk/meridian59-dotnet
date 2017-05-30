@@ -17,7 +17,7 @@ namespace Meridian59 { namespace Ogre
 		Window->disable();
 
 		// create list with notifications
-		notifications = gcnew ::System::Collections::Generic::List<::System::String^>();
+		notifications = gcnew ::System::Collections::Generic::List<CLRString^>();
 
 		// attach listener to Data
 		OgreClient::Singleton->Data->PropertyChanged += 
@@ -56,7 +56,7 @@ namespace Meridian59 { namespace Ogre
 		}
 	};
 
-	void ControllerUI::SplashNotifier::ShowNotification(::System::String^ Text)
+	void ControllerUI::SplashNotifier::ShowNotification(CLRString^ Text)
 	{
 		if (!notifications->Contains(Text))
 			notifications->Add(Text);
@@ -64,7 +64,7 @@ namespace Meridian59 { namespace Ogre
 		UpdateNotification();
 	};
 
-	void ControllerUI::SplashNotifier::HideNotification(::System::String^ Text)
+	void ControllerUI::SplashNotifier::HideNotification(CLRString^ Text)
 	{
 		if (notifications->Contains(Text))
 			notifications->Remove(Text);
@@ -75,7 +75,7 @@ namespace Meridian59 { namespace Ogre
 	void ControllerUI::SplashNotifier::OnDataPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{
 		// resting
-		if (::System::String::Equals(e->PropertyName, DataController::PROPNAME_ISRESTING))
+		if (CLRString::Equals(e->PropertyName, DataController::PROPNAME_ISRESTING))
 		{
 			if (OgreClient::Singleton->Data->IsResting)
             {
@@ -92,7 +92,7 @@ namespace Meridian59 { namespace Ogre
 		}
 
 		// server saving
-		else if (::System::String::Equals(e->PropertyName, DataController::PROPNAME_ISWAITING))
+		else if (CLRString::Equals(e->PropertyName, DataController::PROPNAME_ISWAITING))
 		{
 			if (OgreClient::Singleton->Data->IsWaiting)
             {
@@ -112,7 +112,7 @@ namespace Meridian59 { namespace Ogre
 	void ControllerUI::SplashNotifier::OnParalyzePropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{
 		// isactive
-		if (::System::String::Equals(e->PropertyName, EffectParalyze::PROPNAME_ISACTIVE))
+		if (CLRString::Equals(e->PropertyName, EffectParalyze::PROPNAME_ISACTIVE))
 		{
 			if (OgreClient::Singleton->Data->Effects->Paralyze->IsActive)
             {

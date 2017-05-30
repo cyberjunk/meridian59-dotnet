@@ -74,7 +74,7 @@ namespace Meridian59 { namespace Ogre
 	void ControllerUI::ObjectDetails::OnLookObjectPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{
 		// objectbase
-		if (::System::String::Equals(e->PropertyName, ObjectInfo::PROPNAME_OBJECTBASE))
+		if (CLRString::Equals(e->PropertyName, ObjectInfo::PROPNAME_OBJECTBASE))
 		{
 			ObjectBase^ lookObject = OgreClient::Singleton->Data->LookObject->ObjectBase;
 			
@@ -98,7 +98,7 @@ namespace Meridian59 { namespace Ogre
 		}
 
 		// description
-		else if (::System::String::Equals(e->PropertyName, ObjectInfo::PROPNAME_MESSAGE))
+		else if (CLRString::Equals(e->PropertyName, ObjectInfo::PROPNAME_MESSAGE))
 		{
 			ServerString^ text = OgreClient::Singleton->Data->LookObject->Message;
 
@@ -107,7 +107,7 @@ namespace Meridian59 { namespace Ogre
 		}
 
 		// inscription
-		else if (::System::String::Equals(e->PropertyName, ObjectInfo::PROPNAME_INSCRIPTION))
+		else if (CLRString::Equals(e->PropertyName, ObjectInfo::PROPNAME_INSCRIPTION))
 		{
 			ServerString^ text = OgreClient::Singleton->Data->LookObject->Inscription;
 
@@ -116,7 +116,7 @@ namespace Meridian59 { namespace Ogre
 		}
 
 		// looktype
-		else if (::System::String::Equals(e->PropertyName, ObjectInfo::PROPNAME_LOOKTYPE))
+		else if (CLRString::Equals(e->PropertyName, ObjectInfo::PROPNAME_LOOKTYPE))
 		{
 			LookTypeFlags^ type = OgreClient::Singleton->Data->LookObject->LookType;
 
@@ -125,7 +125,7 @@ namespace Meridian59 { namespace Ogre
 		}
 
 		// isvisible
-		else if (::System::String::Equals(e->PropertyName, ObjectInfo::PROPNAME_ISVISIBLE))
+		else if (CLRString::Equals(e->PropertyName, ObjectInfo::PROPNAME_ISVISIBLE))
 		{
 			// set window visibility
 			Window->setVisible(OgreClient::Singleton->Data->LookObject->IsVisible);
@@ -238,10 +238,10 @@ namespace Meridian59 { namespace Ogre
 		::CEGUI::String inscription = ControllerUI::ObjectDetails::Inscription->getText();
 
 		// convert to CLR
-		::System::String^ clrInsc = StringConvert::CEGUIToCLR(inscription);
+		CLRString^ clrInsc = StringConvert::CEGUIToCLR(inscription);
 
 		// if text differs, send update to server
-		if (!::System::String::Equals(lookInfo->Message->FullString, clrInsc))
+		if (!CLRString::Equals(lookInfo->Message->FullString, clrInsc))
 			OgreClient::Singleton->SendChangeDescription(lookObj->ID, clrInsc);
 
 		// hide		

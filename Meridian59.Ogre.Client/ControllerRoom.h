@@ -64,12 +64,12 @@ namespace Meridian59 { namespace Ogre
 	public ref class ControllerRoom abstract sealed
 	{
 	private:
-		literal ::System::String^ SKY_DAY		= "skya.bgf";
-		literal ::System::String^ SKY_EVENING	= "skyb.bgf";
-		literal ::System::String^ SKY_MORNING	= "skyc.bgf";
-		literal ::System::String^ SKY_NIGHT		= "skyd.bgf";
-		literal ::System::String^ SKY_FRENZY	= "redsky.bgf";
-		literal ::System::String^ MODULENAME	= "ControllerRoom";
+		literal CLRString^ SKY_DAY		= "skya.bgf";
+		literal CLRString^ SKY_EVENING	= "skyb.bgf";
+		literal CLRString^ SKY_MORNING	= "skyc.bgf";
+		literal CLRString^ SKY_NIGHT		= "skyd.bgf";
+		literal CLRString^ SKY_FRENZY	= "redsky.bgf";
+		literal CLRString^ MODULENAME	= "ControllerRoom";
 		literal float SCALE						= 0.0625f;
 		literal ::Ogre::Real PARTICLESYSCAMERAOFFSET = (::Ogre::Real)200.f;
 
@@ -80,11 +80,11 @@ namespace Meridian59 { namespace Ogre
 		static ::Meridian59::Ogre::RemoteNode^		avatarObject;		
 		static ::ParticleUniverse::ParticleSystem*	particleSysSnow;
 
-		static ::System::Collections::Generic::List<::System::String^>^ recreatequeue;
+		static ::System::Collections::Generic::List<CLRString^>^ recreatequeue;
 
-		static Dictionary<unsigned short, array<System::String^>^>^ grassMaterials;
-		static Dictionary<::System::String^, ::System::Collections::Generic::List<V3>^>^ grassPoints;
-		static List<::System::String^>^ waterTextures;
+		static Dictionary<unsigned short, array<CLRString^>^>^ grassMaterials;
+		static Dictionary<CLRString^, ::System::Collections::Generic::List<V3>^>^ grassPoints;
+		static List<CLRString^>^ waterTextures;
 		static ::std::vector<::ParticleUniverse::ParticleEventHandler*>* customParticleHandlers;
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace Meridian59 { namespace Ogre
 		/// Creates all floors and sides using specific materialname
 		/// </summary>
 		/// <param name="MaterialName"></param>
-		static void CreateGeometryChunk(::System::String^ MaterialName);
+		static void CreateGeometryChunk(CLRString^ MaterialName);
 
 		/// <summary>
 		/// Creates decorations
@@ -168,7 +168,7 @@ namespace Meridian59 { namespace Ogre
 		/// <param name="TextureName"></param>
 		/// <param name="MaterialName"></param>
 		/// <param name="ScrollSpeed"></param>
-		static void CreateTextureAndMaterial(BgfBitmap^ Texture, ::System::String^ TextureName, ::System::String^ MaterialName, V2 ScrollSpeed);
+		static void CreateTextureAndMaterial(BgfBitmap^ Texture, CLRString^ TextureName, CLRString^ MaterialName, V2 ScrollSpeed);
 
 		/// <summary>
         /// Loads the room improvement data (grass, ...) from xml files

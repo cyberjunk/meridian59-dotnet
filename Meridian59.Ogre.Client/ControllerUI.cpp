@@ -52,16 +52,16 @@ namespace Meridian59 { namespace Ogre
 		if (!resMan->resourceGroupExists(UI_RESGROUP_LAYOUTS))
 			resMan->createResourceGroup(UI_RESGROUP_LAYOUTS);
 
-		::System::String^ baseFolder = ::System::IO::Path::Combine(
+		CLRString^ baseFolder = ::System::IO::Path::Combine(
 			OgreClient::Singleton->Config->ResourcesPath,
 			UI_RESOURCESUBFOLDER);
 
-		::System::String^ imageFolder		= ::System::IO::Path::Combine(baseFolder, UI_RESGROUP_IMAGESETS);
-		::System::String^ fontsFolder		= ::System::IO::Path::Combine(baseFolder, UI_RESGROUP_FONTS);
-		::System::String^ schemesFolder		= ::System::IO::Path::Combine(baseFolder, UI_RESGROUP_SCHEMES);
-		::System::String^ looknfeelFolder	= ::System::IO::Path::Combine(baseFolder, UI_RESGROUP_LOOKNFEEL);
-		::System::String^ layoutsFolder		= ::System::IO::Path::Combine(baseFolder, UI_RESGROUP_LAYOUTS);
-		::System::String^ animationsFolder	= ::System::IO::Path::Combine(baseFolder, UI_RESGROUP_ANIMATIONS);
+		CLRString^ imageFolder		= ::System::IO::Path::Combine(baseFolder, UI_RESGROUP_IMAGESETS);
+		CLRString^ fontsFolder		= ::System::IO::Path::Combine(baseFolder, UI_RESGROUP_FONTS);
+		CLRString^ schemesFolder		= ::System::IO::Path::Combine(baseFolder, UI_RESGROUP_SCHEMES);
+		CLRString^ looknfeelFolder	= ::System::IO::Path::Combine(baseFolder, UI_RESGROUP_LOOKNFEEL);
+		CLRString^ layoutsFolder		= ::System::IO::Path::Combine(baseFolder, UI_RESGROUP_LAYOUTS);
+		CLRString^ animationsFolder	= ::System::IO::Path::Combine(baseFolder, UI_RESGROUP_ANIMATIONS);
 
 		resMan->addResourceLocation(StringConvert::CLRToOgre(imageFolder), "FileSystem", UI_RESGROUP_IMAGESETS);
 		resMan->addResourceLocation(StringConvert::CLRToOgre(fontsFolder), "FileSystem", UI_RESGROUP_FONTS);
@@ -516,7 +516,7 @@ namespace Meridian59 { namespace Ogre
 			return;
 
 		// get text from clipboard
-		::System::String^ clipText = ::System::Windows::Forms::Clipboard::GetText(
+		CLRString^ clipText = ::System::Windows::Forms::Clipboard::GetText(
 			::System::Windows::Forms::TextDataFormat::Text);
 		
 		// no text
@@ -532,7 +532,7 @@ namespace Meridian59 { namespace Ogre
 		{					
 			// replace newline characters
 			clipText = clipText->Replace(
-				::System::Environment::NewLine, ::System::String::Empty);
+				::System::Environment::NewLine, CLRString::Empty);
 
 			// shorten clipboard text in case it exceeds maxlen of box
 			size_t maxlen = box->getMaxTextLength();
@@ -701,7 +701,7 @@ namespace Meridian59 { namespace Ogre
 
 	void ControllerUI::OnDataPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{		
-		if (::System::String::Equals(e->PropertyName, DataController::PROPNAME_UIMODE))
+		if (CLRString::Equals(e->PropertyName, DataController::PROPNAME_UIMODE))
 		{
 			UIMode mode = OgreClient::Singleton->Data->UIMode;
 
@@ -804,7 +804,7 @@ namespace Meridian59 { namespace Ogre
 		int x = 0;
 		int y = 0;
 
-		for each(::System::String^ icon in ResourceStrings::BGF::Icons)
+		for each(CLRString^ icon in ResourceStrings::BGF::Icons)
 		{
 			// try to get bgf file for filename from resource manager
 			BgfFile^ bgf = resMan->GetObject(icon);

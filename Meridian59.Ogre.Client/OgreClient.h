@@ -122,13 +122,13 @@ namespace Meridian59 { namespace Ogre
       /// <summary>
       /// Initializes a resourcegroup by Ogre itself
       /// </summary>
-      void InitResourceGroup(::System::String^ Name, bool AddRoot, bool AddSubfolders, System::IO::SearchOption Recursive, bool Initialize, bool Load);
+      void InitResourceGroup(CLRString^ Name, bool AddRoot, bool AddSubfolders, System::IO::SearchOption Recursive, bool Initialize, bool Load);
 
       /// <summary>
       /// Registers files in a folder of Type (e.g. Texture) and a pattern (e.g. *.png) into a resourcegroup,
       /// even if not referenced anywhere yet.
       /// </summary>
-      void InitResourceGroupManually(::System::String^ Name, bool Initialize, bool Load, ::System::String^ Type, System::String^ Pattern);
+      void InitResourceGroupManually(CLRString^ Name, bool Initialize, bool Load, CLRString^ Type, CLRString^ Pattern);
 
       /// <summary>
       /// Handler for any incoming LoginMode message
@@ -359,7 +359,7 @@ namespace Meridian59 { namespace Ogre
       /// <param name="ID"></param>
       /// <param name="RequestBasicInfo"></param>
       /// <param name="Name"></param>
-      virtual void SendUseCharacterMessage(ObjectID^ ID, bool RequestBasicInfo, ::System::String^ Name) override;
+      virtual void SendUseCharacterMessage(ObjectID^ ID, bool RequestBasicInfo, CLRString^ Name) override;
 
       /// <summary>
       /// Overwritten from base class to also save config layout back to config

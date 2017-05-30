@@ -30,8 +30,8 @@ namespace Meridian59 { namespace Ogre
 	public ref class XmlReaderExtensions abstract sealed
     {
 	public:
-        literal ::System::String^ ATTRIB_COUNT	= "count";
-        literal ::System::String^ ATTRIB_ENABLED	= "enabled";
+        literal CLRString^ ATTRIB_COUNT	= "count";
+        literal CLRString^ ATTRIB_ENABLED	= "enabled";
         
         /// <summary>
         /// Number format used (e.g. ',' or '.')
@@ -114,7 +114,7 @@ namespace Meridian59 { namespace Ogre
         /// <param name="XmlReader"></param>
         /// <param name="AttributeName"></param>
         /// <returns></returns>
-        __forceinline static float ReadFloat(::System::Xml::XmlReader^ XmlReader, ::System::String^ AttributeName)
+        __forceinline static float ReadFloat(::System::Xml::XmlReader^ XmlReader, CLRString^ AttributeName)
         {
             return float::Parse(XmlReader[AttributeName], NumberFormatInfo);
         };
@@ -125,7 +125,7 @@ namespace Meridian59 { namespace Ogre
         /// <param name="XmlReader"></param>
         /// <param name="AttributeName"></param>
         /// <returns></returns>
-        __forceinline static bool ReadBoolean(::System::Xml::XmlReader^ XmlReader, ::System::String^ AttributeName)
+        __forceinline static bool ReadBoolean(::System::Xml::XmlReader^ XmlReader, CLRString^ AttributeName)
         {
             return bool::Parse(XmlReader[AttributeName]);
         };

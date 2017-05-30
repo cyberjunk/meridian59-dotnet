@@ -69,7 +69,7 @@ namespace Meridian59 { namespace Ogre
 	void ControllerUI::SpellDetails::OnLookSpellObjectPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{
 		// objectbase
-		if (::System::String::Equals(e->PropertyName, SpellInfo::PROPNAME_OBJECTBASE))
+		if (CLRString::Equals(e->PropertyName, SpellInfo::PROPNAME_OBJECTBASE))
 		{
 			ObjectBase^ LookSpell = OgreClient::Singleton->Data->LookSpell->ObjectBase;
 			SpellInfo^ LookInfo = OgreClient::Singleton->Data->LookSpell;
@@ -106,7 +106,7 @@ namespace Meridian59 { namespace Ogre
 		}
 
 		// description
-		else if (::System::String::Equals(e->PropertyName, ObjectInfo::PROPNAME_MESSAGE))
+		else if (CLRString::Equals(e->PropertyName, ObjectInfo::PROPNAME_MESSAGE))
 		{
 			ServerString^ text = OgreClient::Singleton->Data->LookSpell->Message;
 
@@ -115,7 +115,7 @@ namespace Meridian59 { namespace Ogre
 		}
 
 		// isvisible
-		else if (::System::String::Equals(e->PropertyName, ObjectInfo::PROPNAME_ISVISIBLE))
+		else if (CLRString::Equals(e->PropertyName, ObjectInfo::PROPNAME_ISVISIBLE))
 		{
 			// set window visibility
 			Window->setVisible(OgreClient::Singleton->Data->LookSpell->IsVisible);

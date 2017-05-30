@@ -116,8 +116,8 @@ namespace Meridian59 { namespace Ogre
 
 	void ControllerSound::OnRoomObjectPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
     {
-		if(System::String::Equals(e->PropertyName, RoomObject::PROPNAME_ANGLE) ||
-		   System::String::Equals(e->PropertyName, RoomObject::PROPNAME_POSITION3D))
+		if(CLRString::Equals(e->PropertyName, RoomObject::PROPNAME_ANGLE) ||
+		   CLRString::Equals(e->PropertyName, RoomObject::PROPNAME_POSITION3D))
 		{
             // update listener if listener object changed position or orientation
             UpdateListener(listenerNode);            
@@ -213,7 +213,7 @@ namespace Meridian59 { namespace Ogre
 			return;
 
 		// get resource name of wav file
-		System::String^ sourcename = Message->PlayInfo->ResourceName->ToLower();
+		CLRString^ sourcename = Message->PlayInfo->ResourceName->ToLower();
 
 		// native string
 		::Ogre::String& o_str = StringConvert::CLRToOgre(sourcename);
@@ -390,7 +390,7 @@ namespace Meridian59 { namespace Ogre
 		}
 
 		// get resource name of wav file
-		System::String^ sourcename = Message->PlayInfo->ResourceName->ToLower();
+		CLRString^ sourcename = Message->PlayInfo->ResourceName->ToLower();
 
 		// native string
 		::Ogre::String& o_str = StringConvert::CLRToOgre(sourcename);

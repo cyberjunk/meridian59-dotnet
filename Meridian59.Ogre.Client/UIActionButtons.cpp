@@ -400,7 +400,7 @@ namespace Meridian59 { namespace Ogre
 			buttonModels->Swap(index, indexbtn);
 				
 			// restore/swap labels
-			::System::String^ temp = buttonModels[index]->Label;
+			CLRString^ temp = buttonModels[index]->Label;
 			buttonModels[index]->Label = buttonModels[indexbtn]->Label;
 			buttonModels[indexbtn]->Label = temp;			
 		}

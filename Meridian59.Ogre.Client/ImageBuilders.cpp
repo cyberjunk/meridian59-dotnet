@@ -286,7 +286,7 @@ namespace Meridian59 { namespace Ogre
 		return true;
 	}
 
-	::System::String^ ImageBuilder::DirectDraw::GetError(HRESULT hr)
+	CLRString^ ImageBuilder::DirectDraw::GetError(HRESULT hr)
 	{
 		switch(hr)
 		{
@@ -859,7 +859,7 @@ namespace Meridian59 { namespace Ogre
 		return true;
 	}
 
-	::System::String^ ImageBuilder::DirectX::GetError(HRESULT hr)
+	CLRString^ ImageBuilder::DirectX::GetError(HRESULT hr)
 	{
 		switch(hr)
 		{

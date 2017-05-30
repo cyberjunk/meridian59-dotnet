@@ -137,7 +137,7 @@ namespace Meridian59 { namespace Ogre
 	void ControllerUI::Target::OnDataPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{
 		// targetobject
-		if (::System::String::Equals(e->PropertyName, DataController::PROPNAME_TARGETOBJECT))
+		if (CLRString::Equals(e->PropertyName, DataController::PROPNAME_TARGETOBJECT))
 		{
 			// detach old listener
 			if (targetObject != nullptr)
@@ -201,8 +201,8 @@ namespace Meridian59 { namespace Ogre
 	void ControllerUI::Target::OnTargetObjectPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{
 		// flags or name
-		if (::System::String::Equals(e->PropertyName, ObjectBase::PROPNAME_FLAGS) ||
-			::System::String::Equals(e->PropertyName, ObjectBase::PROPNAME_NAME))
+		if (CLRString::Equals(e->PropertyName, ObjectBase::PROPNAME_FLAGS) ||
+			CLRString::Equals(e->PropertyName, ObjectBase::PROPNAME_NAME))
 		{
 			// get color
 			::CEGUI::Colour color = ::CEGUI::Colour(

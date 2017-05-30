@@ -126,7 +126,7 @@ namespace Meridian59 { namespace Ogre
 
 	void ControllerEffects::EffectBlindPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{
-		if (System::String::Equals(e->PropertyName, EffectBlind::PROPNAME_ISACTIVE))
+		if (CLRString::Equals(e->PropertyName, EffectBlind::PROPNAME_ISACTIVE))
 		{			
 			CompositorManager* compMan = CompositorManager::getSingletonPtr();
 		
@@ -161,7 +161,7 @@ namespace Meridian59 { namespace Ogre
 
 	void ControllerEffects::EffectInvertPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{
-		if (System::String::Equals(e->PropertyName, EffectInvert::PROPNAME_ISACTIVE))
+		if (CLRString::Equals(e->PropertyName, EffectInvert::PROPNAME_ISACTIVE))
 		{		
 			CompositorManager* compMan = CompositorManager::getSingletonPtr();
 		
@@ -174,7 +174,7 @@ namespace Meridian59 { namespace Ogre
 
 	void ControllerEffects::EffectPainPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{
-		if (System::String::Equals(e->PropertyName, EffectPain::PROPNAME_ISACTIVE))
+		if (CLRString::Equals(e->PropertyName, EffectPain::PROPNAME_ISACTIVE))
 		{			
 			CompositorManager* compMan = CompositorManager::getSingletonPtr();
 
@@ -187,7 +187,7 @@ namespace Meridian59 { namespace Ogre
 
 	void ControllerEffects::EffectWhiteoutPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{
-		if (System::String::Equals(e->PropertyName, EffectWhiteOut::PROPNAME_ISACTIVE))
+		if (CLRString::Equals(e->PropertyName, EffectWhiteOut::PROPNAME_ISACTIVE))
 		{			
 			CompositorManager* compMan = CompositorManager::getSingletonPtr();
 
@@ -200,7 +200,7 @@ namespace Meridian59 { namespace Ogre
 
 	void ControllerEffects::EffectBlurPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{
-		if (System::String::Equals(e->PropertyName, EffectBlur::PROPNAME_ISACTIVE))
+		if (CLRString::Equals(e->PropertyName, EffectBlur::PROPNAME_ISACTIVE))
 		{			
 			CompositorManager* compMan = CompositorManager::getSingletonPtr();
 
@@ -215,7 +215,7 @@ namespace Meridian59 { namespace Ogre
 	{
 		CompositorManager* compMan = CompositorManager::getSingletonPtr();
 			
-		if (System::String::Equals(e->PropertyName, EffectFlashXLat::PROPNAME_ISACTIVE))
+		if (CLRString::Equals(e->PropertyName, EffectFlashXLat::PROPNAME_ISACTIVE))
 		{		
 			if (OgreClient::Singleton->Data->Effects->FlashXLat->IsActive)
 			{

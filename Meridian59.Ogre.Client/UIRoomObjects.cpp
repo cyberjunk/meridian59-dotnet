@@ -103,9 +103,9 @@ namespace Meridian59 { namespace Ogre
 
 			case ::System::ComponentModel::ListChangedType::ItemChanged:
 				// react only to changes which affect the view				
-				if (::System::String::Equals(e->PropertyDescriptor->Name, RoomObject::PROPNAME_FLAGS) ||
-					::System::String::Equals(e->PropertyDescriptor->Name, RoomObject::PROPNAME_HEALTHSTATUS) ||
-					::System::String::Equals(e->PropertyDescriptor->Name, RoomObject::PROPNAME_SUBOVERLAYS))
+				if (CLRString::Equals(e->PropertyDescriptor->Name, RoomObject::PROPNAME_FLAGS) ||
+					CLRString::Equals(e->PropertyDescriptor->Name, RoomObject::PROPNAME_HEALTHSTATUS) ||
+					CLRString::Equals(e->PropertyDescriptor->Name, RoomObject::PROPNAME_SUBOVERLAYS))
 				{
 					RoomObjectChange(e->NewIndex);
 				}
@@ -116,7 +116,7 @@ namespace Meridian59 { namespace Ogre
 	void ControllerUI::RoomObjects::OnDataPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{
 		// targetobject
-		if (::System::String::Equals(e->PropertyName, DataController::PROPNAME_TARGETOBJECT))
+		if (CLRString::Equals(e->PropertyName, DataController::PROPNAME_TARGETOBJECT))
 		{
 			// try select target also in list
 			if (OgreClient::Singleton->Data->TargetObject)

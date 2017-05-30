@@ -149,7 +149,7 @@ namespace Meridian59 { namespace Ogre
 			unsigned int index = list->getItemRowIndex(itm);
 			
 			// get text from datamodel
-			::System::String^ text = 
+			CLRString^ text = 
 				OgreClient::Singleton->ResourceManager->Mails[index]->Message->FullString;
 
 			// set on view
@@ -227,7 +227,7 @@ namespace Meridian59 { namespace Ogre
 					StringConvert::CLRToCEGUI("Re: " + mail->Title));
 				
 				// build recipients list, start with sender
-				::System::String^ recipients = mail->Sender;
+				CLRString^ recipients = mail->Sender;
 
 				// add all recipients
 				for(int i = 0; i < mail->Recipients->Count; i++)					

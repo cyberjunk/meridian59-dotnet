@@ -24,6 +24,8 @@
 #include "Constants.h"
 #include <msclr/marshal.h>
 
+typedef ::System::String CLRString;
+
 namespace Meridian59 { namespace Ogre 
 {
 	using namespace msclr::interop;
@@ -45,10 +47,10 @@ namespace Meridian59 { namespace Ogre
 
 	public:
 		/// <summary>
-		/// Converts System::String to Ogre::String.
+		/// Converts CLRString to Ogre::String.
 		/// Turns NULL strings into empty "" strings.
 		/// </summary>
-		__inline static ::Ogre::String CLRToOgre(System::String^ CLRString)
+		__inline static ::Ogre::String CLRToOgre(CLRString^ CLRString)
 		{
 			// handle null and empty string
 			if (CLRString == nullptr || CLRString->Length == 0)
@@ -59,10 +61,10 @@ namespace Meridian59 { namespace Ogre
 		};
 
 		/// <summary>
-		/// Converts System::String to Ogre::String*.
+		/// Converts CLRString to Ogre::String*.
 		/// Turns NULL strings into empty "" strings.
 		/// </summary>
-		__inline static ::Ogre::String* CLRToOgrePtr(System::String^ CLRString)
+		__inline static ::Ogre::String* CLRToOgrePtr(CLRString^ CLRString)
 		{
 			// handle null and empty string
 			if (CLRString == nullptr || CLRString->Length == 0)
@@ -73,21 +75,21 @@ namespace Meridian59 { namespace Ogre
 		};
 
 		/// <summary>
-		/// Converts const Ogre::String to System::String 
+		/// Converts const Ogre::String to CLRString 
 		/// </summary>
-		__inline static System::String^ OgreToCLR(const ::Ogre::String& OgreString)
+		__inline static CLRString^ OgreToCLR(const ::Ogre::String& OgreString)
 		{
-			return gcnew System::String(OgreString.c_str());
+			return gcnew CLRString(OgreString.c_str());
 		};
 
 		/// <summary>
-		/// Converts CEGUI::String (native, UTF32) to System::String (managed, UTF16)
+		/// Converts CEGUI::String (native, UTF32) to CLRString (managed, UTF16)
 		/// </summary>
-		__inline static System::String^ CEGUIToCLR(const ::CEGUI::String& CEGUIString)
+		__inline static CLRString^ CEGUIToCLR(const ::CEGUI::String& CEGUIString)
 		{
 			// handle empty string
 			if (CEGUIString.length() == 0)
-				return ::System::String::Empty;
+				return CLRString::Empty;
 
 			// otherwise: get pointer to utf32 data
 			const CEGUI::utf32* strC = CEGUIString.ptr();
@@ -96,7 +98,7 @@ namespace Meridian59 { namespace Ogre
 			const int bytelength = (int)CEGUIString.length() * 4;
 
 			// convert to CLR string
-			System::String^ strCLR = gcnew System::String(
+			CLRString^ strCLR = gcnew CLRString(
 				(const char*)strC, 0, bytelength, System::Text::Encoding::UTF32);
 
 			// return
@@ -104,10 +106,10 @@ namespace Meridian59 { namespace Ogre
 		};
 
 		/// <summary>
-		/// Converts System::String (managed, UTF16) to CEGUI::String (native, UTF32).
+		/// Converts CLRString (managed, UTF16) to CEGUI::String (native, UTF32).
 		/// Turns NULL strings into empty "" strings.
 		/// </summary>
-		__inline static ::CEGUI::String CLRToCEGUI(System::String^ CLRString)
+		__inline static ::CEGUI::String CLRToCEGUI(CLRString^ CLRString)
 		{
 			// TODO: 
 			// Make this convert to UTF32 instead of UTF8
@@ -131,10 +133,10 @@ namespace Meridian59 { namespace Ogre
 		};
 
 		/// <summary>
-		/// Converts System::String (managed, UTF16) to CEGUI::String* (native, UTF32) 
+		/// Converts CLRString (managed, UTF16) to CEGUI::String* (native, UTF32) 
 		/// Turns NULL strings into empty "" strings.
 		/// </summary>
-		__inline static ::CEGUI::String* CLRToCEGUIPtr(System::String^ CLRString)
+		__inline static ::CEGUI::String* CLRToCEGUIPtr(CLRString^ CLRString)
 		{
 			// TODO: 
 			// Make this convert to UTF32 instead of UTF8

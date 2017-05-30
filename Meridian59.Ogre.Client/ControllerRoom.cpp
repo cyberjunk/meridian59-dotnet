@@ -34,13 +34,13 @@ namespace Meridian59 { namespace Ogre
          return;
 
       // init collections
-      grassMaterials = gcnew ::System::Collections::Generic::Dictionary<unsigned short, array<System::String^>^>();
-      grassPoints    = gcnew ::System::Collections::Generic::Dictionary<::System::String^, ::System::Collections::Generic::List<V3>^>();
-      waterTextures  = gcnew ::System::Collections::Generic::List<::System::String^>();
+      grassMaterials = gcnew ::System::Collections::Generic::Dictionary<unsigned short, array<CLRString^>^>();
+      grassPoints    = gcnew ::System::Collections::Generic::Dictionary<CLRString^, ::System::Collections::Generic::List<V3>^>();
+      waterTextures  = gcnew ::System::Collections::Generic::List<CLRString^>();
 
       // create the queue storing materialnames (chunks of the room) which will be recreated
       // at the end of the tick
-      recreatequeue = gcnew ::System::Collections::Generic::List<::System::String^>();
+      recreatequeue = gcnew ::System::Collections::Generic::List<CLRString^>();
 
       // a manualobject for the room geometry
       roomManObj = OGRE_NEW ManualObject(NAME_ROOM);
@@ -366,7 +366,7 @@ namespace Meridian59 { namespace Ogre
       UpdateSky();
 
       // get materialinfos
-      ::System::Collections::Generic::Dictionary<::System::String^, RooFile::MaterialInfo>^ dict =
+      ::System::Collections::Generic::Dictionary<CLRString^, RooFile::MaterialInfo>^ dict =
          Room->GetMaterialInfos();
 
       Logger::Log(MODULENAME, LogType::Info, "Start loading room: " + Room->Filename + FileExtensions::ROO);
@@ -383,7 +383,7 @@ namespace Meridian59 { namespace Ogre
       tick1 = OgreClient::Singleton->GameTick->GetUpdatedTick();
 
       // create the materials & textures
-      for each(KeyValuePair<::System::String^, RooFile::MaterialInfo> pair in dict)
+      for each(KeyValuePair<CLRString^, RooFile::MaterialInfo> pair in dict)
       {
          // create texture & material
          CreateTextureAndMaterial(
@@ -405,7 +405,7 @@ namespace Meridian59 { namespace Ogre
       tick1 = tick2;
 
       // create room geometry
-      for each(KeyValuePair<::System::String^, RooFile::MaterialInfo> pair in dict)
+      for each(KeyValuePair<CLRString^, RooFile::MaterialInfo> pair in dict)
          CreateGeometryChunk(pair.Value.MaterialName);
 
       tick2 = OgreClient::Singleton->GameTick->GetUpdatedTick();
@@ -504,7 +504,7 @@ namespace Meridian59 { namespace Ogre
       return -1;
    };
 
-   void ControllerRoom::CreateGeometryChunk(::System::String^ MaterialName)
+   void ControllerRoom::CreateGeometryChunk(CLRString^ MaterialName)
    {
       const ::Ogre::String& material = StringConvert::CLRToOgre(MaterialName);
       int sectionindex		= GetRoomSectionByMaterial(material);
@@ -553,7 +553,7 @@ namespace Meridian59 { namespace Ogre
          return;
 
       // process the queued subsections for recreation
-      for each(::System::String^ s in recreatequeue)
+      for each(CLRString^ s in recreatequeue)
          CreateGeometryChunk(s);
 
       // clear recreate queue
@@ -572,8 +572,8 @@ namespace Meridian59 { namespace Ogre
       BgfFile^ textureFile       = nullptr;
       BgfBitmap^ texture         = nullptr;
       V2 sp                      = V2::ZERO;
-      ::System::String^ texname  = nullptr;
-      ::System::String^ material = nullptr;
+      CLRString^ texname  = nullptr;
+      CLRString^ material = nullptr;
 
       /******************************************************************************/
 
@@ -678,8 +678,8 @@ namespace Meridian59 { namespace Ogre
 
    void ControllerRoom::CreateSectorPart(RooSector^ Sector, bool IsFloor)
    {
-      ::System::String^ material = nullptr;
-      ::System::String^ texname  = nullptr;
+      CLRString^ material = nullptr;
+      CLRString^ texname  = nullptr;
       V2 sp                      = V2::ZERO;
       BgfFile^ textureFile       = nullptr;
       BgfBitmap^ texture         = nullptr;
@@ -785,7 +785,7 @@ namespace Meridian59 { namespace Ogre
       ::Ogre::Vector3 vec(WIDTH / 2, 0, 0);
       ::Ogre::Quaternion rot;
 
-      array<::System::String^>^ items;
+      array<CLRString^>^ items;
       V2 A, B, C, rnd2D;
       V3 rnd3D;
 
@@ -863,7 +863,7 @@ namespace Meridian59 { namespace Ogre
       /**************************************************************************************/
 
       // loop grass materials with their attached randompoints
-      for each(KeyValuePair<::System::String^, ::System::Collections::Generic::List<V3>^> pair in grassPoints)
+      for each(KeyValuePair<CLRString^, ::System::Collections::Generic::List<V3>^> pair in grassPoints)
       {
          // create a new subsection for all grass using this material
          roomDecoration->begin(StringConvert::CLRToOgre(pair.Key), ::Ogre::RenderOperation::OT_TRIANGLE_LIST, MATERIALGROUP_ROOLOADER);
@@ -920,7 +920,7 @@ namespace Meridian59 { namespace Ogre
       }
    };
 
-   void ControllerRoom::CreateTextureAndMaterial(BgfBitmap^ Texture, ::System::String^ TextureName, ::System::String^ MaterialName, V2 ScrollSpeed)
+   void ControllerRoom::CreateTextureAndMaterial(BgfBitmap^ Texture, CLRString^ TextureName, CLRString^ MaterialName, V2 ScrollSpeed)
    {
       if (!Texture || !TextureName || !MaterialName || TextureName == STRINGEMPTY || MaterialName == STRINGEMPTY)
          return;
@@ -959,8 +959,8 @@ namespace Meridian59 { namespace Ogre
 
       /******************************************************************************/
 
-      ::System::String^ material = nullptr;
-      ::System::String^ texname  = nullptr;
+      CLRString^ material = nullptr;
+      CLRString^ texname  = nullptr;
       BgfBitmap^ texture         = nullptr;
       V2 scrollspeed             = V2::ZERO;
 
@@ -1013,8 +1013,8 @@ namespace Meridian59 { namespace Ogre
 
       /******************************************************************************/
 
-      ::System::String^ material = nullptr;
-      ::System::String^ texname  = nullptr;
+      CLRString^ material = nullptr;
+      CLRString^ texname  = nullptr;
       BgfBitmap^ texture         = nullptr;
       V2 scrollspeed             = V2::ZERO;
 
@@ -1108,7 +1108,7 @@ namespace Meridian59 { namespace Ogre
       if (!IsInitialized)
          return;
 
-      if (System::String::Equals(e->PropertyName, DataController::PROPNAME_VIEWERPOSITION))
+      if (CLRString::Equals(e->PropertyName, DataController::PROPNAME_VIEWERPOSITION))
       {
          // move particle systems with viewer position
          if (particleSysSnow &&
@@ -1153,7 +1153,7 @@ namespace Meridian59 { namespace Ogre
       if (!IsInitialized || !particleSysSnow || !Room)
          return;
 
-      if (System::String::Equals(e->PropertyName, EffectSnowing::PROPNAME_ISACTIVE) &&
+      if (CLRString::Equals(e->PropertyName, EffectSnowing::PROPNAME_ISACTIVE) &&
          !OgreClient::Singleton->Config->DisableWeatherEffects)
       {
          // start or stop snow weather
@@ -1213,7 +1213,7 @@ namespace Meridian59 { namespace Ogre
    void ControllerRoom::UpdateSky()
    {
       // examine the background bgf
-      System::String^ bgfFilename =
+      CLRString^ bgfFilename =
          OgreClient::Singleton->Data->RoomInformation->BackgroundFile;
 
       char* material = 0;
@@ -1379,7 +1379,7 @@ namespace Meridian59 { namespace Ogre
       RemoteNode^ newObject;
 
       // the name of the 3d model .xml if existant
-      System::String^ mainOverlay      = roomObject->OverlayFile->Replace(FileExtensions::BGF, FileExtensions::XML);
+      CLRString^ mainOverlay      = roomObject->OverlayFile->Replace(FileExtensions::BGF, FileExtensions::XML);
       ::Ogre::String& ostr_mainOverlay = StringConvert::CLRToOgre(mainOverlay);
 
       // Check if there is a 3D model available
@@ -1549,13 +1549,13 @@ namespace Meridian59 { namespace Ogre
       //////////////////////// PATHS ////////////////////////////////////////////
 
       // build path to decoration resource path
-      System::String^ path = Path::Combine(
+      CLRString^ path = Path::Combine(
          OgreClient::Singleton->Config->ResourcesPath, RESOURCEGROUPDECORATION);
 
       /////////////////////// GRASS ///////////////////////////////////////////////
 
       // path to grass.xml
-      System::String^ grasspath = Path::Combine(path, "grass/grass.xml");
+      CLRString^ grasspath = Path::Combine(path, "grass/grass.xml");
         
       // dont go on if file missing
       if (!System::IO::File::Exists(grasspath))
@@ -1568,15 +1568,15 @@ namespace Meridian59 { namespace Ogre
       }
 
       // dictionary to store sets definition
-      Dictionary<unsigned int, List<System::String^>^>^ grasssets = 
-         gcnew Dictionary<unsigned int, List<System::String^>^>();
+      Dictionary<unsigned int, List<CLRString^>^>^ grasssets = 
+         gcnew Dictionary<unsigned int, List<CLRString^>^>();
 
       // store parsed ids
       unsigned int texid = 0;
       unsigned int setid = 0;
 
       // temporary used
-      List<System::String^>^ grassset; 
+      List<CLRString^>^ grassset; 
 
       // create reader
       XmlReader^ reader = XmlReader::Create(grasspath);
@@ -1596,7 +1596,7 @@ namespace Meridian59 { namespace Ogre
             if (::System::UInt32::TryParse(reader["id"], setid))
             {
                // create material list
-               grassset = gcnew List<System::String^>();
+               grassset = gcnew List<CLRString^>();
 
                // loop materials
                if (reader->ReadToDescendant("material"))
@@ -1643,7 +1643,7 @@ namespace Meridian59 { namespace Ogre
       /////////////////////// WATER ///////////////////////////////////////////////
 
       // path to water.xml
-      System::String^ waterpath = Path::Combine(path, "water.xml");
+      CLRString^ waterpath = Path::Combine(path, "water.xml");
 
       // dont go on if file missing
       if (!System::IO::File::Exists(waterpath))

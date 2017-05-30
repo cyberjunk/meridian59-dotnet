@@ -7,7 +7,7 @@ namespace Meridian59 { namespace Ogre
 	{
 		this->SubNodes = gcnew List<RemoteNode3DSub^>();
         
-		System::String^ mainOverlay		= RoomObject->OverlayFile->Replace(FileExtensions::BGF, FileExtensions::XML);
+		CLRString^ mainOverlay		= RoomObject->OverlayFile->Replace(FileExtensions::BGF, FileExtensions::XML);
 		::Ogre::String& ostr_mainOverlay = StringConvert::CLRToOgre(mainOverlay);
 
 		ResourceGroupManager* resMan = ResourceGroupManager::getSingletonPtr();
@@ -83,7 +83,7 @@ namespace Meridian59 { namespace Ogre
     {
 		RemoteNode::OnRoomObjectPropertyChanged(sender, e);
 
-		if (System::String::Equals(e->PropertyName, ObjectBase::PROPNAME_COLORTRANSLATION))
+		if (CLRString::Equals(e->PropertyName, ObjectBase::PROPNAME_COLORTRANSLATION))
 			ApplyColorTranslation();                      
     };
 
@@ -112,7 +112,7 @@ namespace Meridian59 { namespace Ogre
                 // find marker
                 // material name scheme:
                 // group/material_modifier
-				System::String^ str = StringConvert::OgreToCLR(oldMaterial->getName());
+				CLRString^ str = StringConvert::OgreToCLR(oldMaterial->getName());
 				
 				int pos_mod = str->LastIndexOf('/');
 				
@@ -123,10 +123,10 @@ namespace Meridian59 { namespace Ogre
 					if (pos_col > - 1)
 					{
 						// build materialname with color modifier
-						System::String^ prefix = str->Substring(0, pos_col + 1);
-						System::String^ appendix = str->Substring(pos_mod, str->Length - pos_mod);
+						CLRString^ prefix = str->Substring(0, pos_col + 1);
+						CLRString^ appendix = str->Substring(pos_mod, str->Length - pos_mod);
 
-						System::String^ newMaterialName =
+						CLRString^ newMaterialName =
 							prefix + RoomObject->ColorTranslation.ToString() + appendix;
 	
 						::Ogre::String& ostr_newmatname = StringConvert::CLRToOgre(newMaterialName);

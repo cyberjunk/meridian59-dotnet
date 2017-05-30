@@ -176,7 +176,7 @@ namespace Meridian59 { namespace Ogre
          return StringConvert::CLRToCEGUI(ChatMessage->FullString + ::System::Environment::NewLine);
 
       // text with CEGUI markup and escapes
-      ::System::String^ text = ::System::String::Empty;
+      CLRString^ text = CLRString::Empty;
 
       // walk style definitions
       for each (ChatStyle^ style in ChatMessage->Styles)
@@ -223,7 +223,7 @@ namespace Meridian59 { namespace Ogre
          }
 
          // get substring for this style
-         ::System::String^ str = ChatMessage->FullString->Substring(style->StartIndex, style->Length);
+         CLRString^ str = ChatMessage->FullString->Substring(style->StartIndex, style->Length);
 
          // replace "\" with "\\"
          // and "[" with "\["
@@ -265,16 +265,16 @@ namespace Meridian59 { namespace Ogre
       CEGUI::KeyEventArgs& args     = const_cast<CEGUI::KeyEventArgs&>(e2);
       CEGUI::Editbox* chatInput     = ControllerUI::Chat::Input;
       //const CEGUI::String& text     = chatInput->getText();
-      //::System::String^ textCLR     = StringConvert::CEGUIToCLR(text);
+      //CLRString^ textCLR     = StringConvert::CEGUIToCLR(text);
 
-      ::System::Collections::Generic::List<::System::String^>^ chatCommandHistory =
+      ::System::Collections::Generic::List<CLRString^>^ chatCommandHistory =
          OgreClient::Singleton->Data->ChatCommandHistory;
 
       // base handler for copy&paste clipboard
       bool handled = UICallbacks::OnCopyPasteKeyDown(e);
 
       // used in some cases
-      ::System::String^ str;
+      CLRString^ str;
 
       switch(args.scancode)
       {
@@ -327,14 +327,14 @@ namespace Meridian59 { namespace Ogre
       CEGUI::Editbox* chatInput = ControllerUI::Chat::Input;
       const CEGUI::String& text = chatInput->getText();
 
-      ::System::Collections::Generic::List<::System::String^>^ chatCommandHistory =
+      ::System::Collections::Generic::List<CLRString^>^ chatCommandHistory =
          OgreClient::Singleton->Data->ChatCommandHistory;
 
       // base handler for copy&paste clipboard
       bool handled = UICallbacks::OnCopyPasteKeyDown(e);
 
       // used in some cases
-      ::System::String^ str;
+      CLRString^ str;
 
       switch (args.scancode)
       {

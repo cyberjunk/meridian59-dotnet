@@ -51,7 +51,7 @@ namespace Meridian59 { namespace Ogre
 		Data::Models::NewsGroup^ obj = OgreClient::Singleton->Data->NewsGroup;
 		
 		// visible
-		if (::System::String::Equals(e->PropertyName, Data::Models::NewsGroup::PROPNAME_ISVISIBLE))
+		if (CLRString::Equals(e->PropertyName, Data::Models::NewsGroup::PROPNAME_ISVISIBLE))
 		{
 			// close also with newsgroup window, but don't open together
 			if (!obj->IsVisible)
@@ -65,7 +65,7 @@ namespace Meridian59 { namespace Ogre
 		}
 
 		// globeobject
-		else if (::System::String::Equals(e->PropertyName, Data::Models::NewsGroup::PROPNAME_NEWSGLOBEOBJECT))
+		else if (CLRString::Equals(e->PropertyName, Data::Models::NewsGroup::PROPNAME_NEWSGLOBEOBJECT))
 		{
 			if (obj->NewsGlobeObject != nullptr)
 				Group->setText(StringConvert::CLRToCEGUI(obj->NewsGlobeObject->Name));
@@ -80,8 +80,8 @@ namespace Meridian59 { namespace Ogre
 		unsigned short id = OgreClient::Singleton->Data->NewsGroup->NewsGlobeID;
 
 		// convert userinput to managed strings
-		System::String^ title = StringConvert::CEGUIToCLR(ControllerUI::NewsGroupCompose::HeadLine->getText());
-		System::String^ text = StringConvert::CEGUIToCLR(ControllerUI::NewsGroupCompose::Text->getText());
+		CLRString^ title = StringConvert::CEGUIToCLR(ControllerUI::NewsGroupCompose::HeadLine->getText());
+		CLRString^ text = StringConvert::CEGUIToCLR(ControllerUI::NewsGroupCompose::Text->getText());
 				
 		// send to server
 		OgreClient::Singleton->SendPostArticle(id, title, text);

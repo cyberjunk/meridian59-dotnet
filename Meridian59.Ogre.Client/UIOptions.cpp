@@ -895,7 +895,7 @@ namespace Meridian59 { namespace Ogre
 
 	void ControllerUI::Options::OnDataPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{
-		if (::System::String::Equals(e->PropertyName, DataController::PROPNAME_UIMODE))
+		if (CLRString::Equals(e->PropertyName, DataController::PROPNAME_UIMODE))
 		{
 			UIMode mode = OgreClient::Singleton->Data->UIMode;
 
@@ -916,7 +916,7 @@ namespace Meridian59 { namespace Ogre
 
 	void ControllerUI::Options::OnClientPreferencesPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{
-		if (::System::String::Equals(e->PropertyName, PreferencesFlags::PROPNAME_ENABLED))
+		if (CLRString::Equals(e->PropertyName, PreferencesFlags::PROPNAME_ENABLED))
 		{
 			Safety->setEnabled(OgreClient::Singleton->Data->ClientPreferences->Enabled);
 #if !VANILLA
@@ -1840,8 +1840,8 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
 		const CEGUI::Combobox* combobox		= (const CEGUI::Combobox*)args.window;
 
-		::System::String^ newval = StringConvert::CEGUIToCLR(combobox->getText());
-		::System::String^ oldval = OgreClient::Singleton->Config->Resolution;
+		CLRString^ newval = StringConvert::CEGUIToCLR(combobox->getText());
+		CLRString^ oldval = OgreClient::Singleton->Config->Resolution;
 
 		if (!newval || newval == STRINGEMPTY || oldval == newval)
 			return true;
@@ -1908,8 +1908,8 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
 		const CEGUI::Combobox* combobox		= (const CEGUI::Combobox*)args.window;
 
-		::System::String^ newval = StringConvert::CEGUIToCLR(combobox->getText());
-		::System::String^ oldval = OgreClient::Singleton->Config->FSAA;
+		CLRString^ newval = StringConvert::CEGUIToCLR(combobox->getText());
+		CLRString^ oldval = OgreClient::Singleton->Config->FSAA;
 
 		if (oldval == newval)
 			return true;
@@ -1926,8 +1926,8 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::Combobox* combobox		= (const CEGUI::Combobox*)args.window;
 		::Ogre::MaterialManager* matMan		= ::Ogre::MaterialManager::getSingletonPtr();
 
-		::System::String^ newval = StringConvert::CEGUIToCLR(combobox->getText());
-		::System::String^ oldval = OgreClient::Singleton->Config->TextureFiltering;
+		CLRString^ newval = StringConvert::CEGUIToCLR(combobox->getText());
+		CLRString^ oldval = OgreClient::Singleton->Config->TextureFiltering;
 
 		if (oldval == newval)
 			return true;
@@ -1936,21 +1936,21 @@ namespace Meridian59 { namespace Ogre
 		OgreClient::Singleton->Config->TextureFiltering = newval;
 		
 		// apply
-		if (::System::String::Equals(newval, "Off"))
+		if (CLRString::Equals(newval, "Off"))
 			matMan->setDefaultTextureFiltering(TextureFilterOptions::TFO_NONE);
 
-		else if (::System::String::Equals(newval, "Bilinear"))
+		else if (CLRString::Equals(newval, "Bilinear"))
 			matMan->setDefaultTextureFiltering(TextureFilterOptions::TFO_BILINEAR);
 
-		else if (::System::String::Equals(newval, "Trilinear"))
+		else if (CLRString::Equals(newval, "Trilinear"))
 			matMan->setDefaultTextureFiltering(TextureFilterOptions::TFO_TRILINEAR);
 
-		else if (::System::String::Equals(newval, "Anisotropic x4"))
+		else if (CLRString::Equals(newval, "Anisotropic x4"))
 		{
 			matMan->setDefaultTextureFiltering(TextureFilterOptions::TFO_ANISOTROPIC);
 			matMan->setDefaultAnisotropy(4);
 		}
-		else if (::System::String::Equals(newval, "Anisotropic x16"))
+		else if (CLRString::Equals(newval, "Anisotropic x16"))
 		{
 			matMan->setDefaultTextureFiltering(TextureFilterOptions::TFO_ANISOTROPIC);
 			matMan->setDefaultAnisotropy(16);
@@ -1964,8 +1964,8 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
 		const CEGUI::Combobox* combobox		= (const CEGUI::Combobox*)args.window;
 
-		::System::String^ newval = StringConvert::CEGUIToCLR(combobox->getText());
-		::System::String^ oldval = OgreClient::Singleton->Config->ImageBuilder;
+		CLRString^ newval = StringConvert::CEGUIToCLR(combobox->getText());
+		CLRString^ oldval = OgreClient::Singleton->Config->ImageBuilder;
 
 		if (oldval == newval)
 			return true;
@@ -1981,8 +1981,8 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
 		const CEGUI::Combobox* combobox		= (const CEGUI::Combobox*)args.window;
 
-		::System::String^ newval = StringConvert::CEGUIToCLR(combobox->getText());
-		::System::String^ oldval = OgreClient::Singleton->Config->BitmapScaling;
+		CLRString^ newval = StringConvert::CEGUIToCLR(combobox->getText());
+		CLRString^ oldval = OgreClient::Singleton->Config->BitmapScaling;
 
 		if (oldval == newval)
 			return true;
@@ -2008,8 +2008,8 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
 		const CEGUI::Combobox* combobox		= (const CEGUI::Combobox*)args.window;
 
-		::System::String^ newval = StringConvert::CEGUIToCLR(combobox->getText());
-		::System::String^ oldval = OgreClient::Singleton->Config->TextureQuality;
+		CLRString^ newval = StringConvert::CEGUIToCLR(combobox->getText());
+		CLRString^ oldval = OgreClient::Singleton->Config->TextureQuality;
 
 		if (oldval == newval)
 			return true;
@@ -2260,8 +2260,8 @@ namespace Meridian59 { namespace Ogre
 		::CEGUI::String key = ControllerUI::Options::AliasKey->getText();
 		::CEGUI::String val = ControllerUI::Options::AliasValue->getText();
 	
-		::System::String^ keyclr = StringConvert::CEGUIToCLR(key);
-		::System::String^ valclr = StringConvert::CEGUIToCLR(val);
+		CLRString^ keyclr = StringConvert::CEGUIToCLR(key);
+		CLRString^ valclr = StringConvert::CEGUIToCLR(val);
 
 		keyclr = keyclr->Trim();
 		valclr = valclr->Trim();
@@ -2333,7 +2333,7 @@ namespace Meridian59 { namespace Ogre
 
 		// get groupname from ui-element and convert to clr
 		::CEGUI::String grpname		= ControllerUI::Options::GroupName->getText();
-		::System::String^ nameclr	= StringConvert::CEGUIToCLR(grpname);
+		CLRString^ nameclr	= StringConvert::CEGUIToCLR(grpname);
 
 		// remove whitespaces
 		nameclr = nameclr->Trim();
@@ -2384,7 +2384,7 @@ namespace Meridian59 { namespace Ogre
 
 		// get membername from ui-element and conver to clr
 		::CEGUI::String membername	= ControllerUI::Options::MemberName->getText();
-		::System::String^ nameclr	= StringConvert::CEGUIToCLR(membername);
+		CLRString^ nameclr	= StringConvert::CEGUIToCLR(membername);
 
 		// remove whitespaces
 		nameclr = nameclr->Trim();
@@ -2532,7 +2532,7 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::WindowEventArgs& args = (const CEGUI::WindowEventArgs&)e;
 		const CEGUI::Combobox* combobox = (const CEGUI::Combobox*)args.window;
 
-		::System::String^ strval = StringConvert::CEGUIToCLR(combobox->getText());	
+		CLRString^ strval = StringConvert::CEGUIToCLR(combobox->getText());	
 		LanguageCode newval;
 		
 		// something wrong

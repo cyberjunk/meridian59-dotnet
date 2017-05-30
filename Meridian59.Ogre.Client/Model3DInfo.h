@@ -49,7 +49,7 @@ namespace Meridian59 { namespace Ogre
 		void ProcessMesh(XmlReader^ XmlReader)
         {
             XmlReader->ReadToFollowing(TAG_MESH);
-            System::String^ meshfile = XmlReader["file"];
+            CLRString^ meshfile = XmlReader["file"];
 			::Ogre::String* ostr_meshfile = StringConvert::CLRToOgrePtr(meshfile);
 
             bool castshadows = System::Convert::ToBoolean(XmlReader["castshadows"]);
@@ -122,13 +122,13 @@ namespace Meridian59 { namespace Ogre
         };
 
 	public:
-		literal System::String^ TAG_MODEL = "model";
-        literal System::String^ TAG_MESH = "mesh";
-        literal System::String^ TAG_HOTSPOTS = "hotspots";
-        literal System::String^ TAG_HOTSPOT = "hotspot";
-        literal System::String^ TAG_PARTICLES = "particles";
-        literal System::String^ TAG_PARTICLE = "particle";
-        literal System::String^ ATTRIB_INDEX = "index";
+		literal CLRString^ TAG_MODEL = "model";
+        literal CLRString^ TAG_MESH = "mesh";
+        literal CLRString^ TAG_HOTSPOTS = "hotspots";
+        literal CLRString^ TAG_HOTSPOT = "hotspot";
+        literal CLRString^ TAG_PARTICLES = "particles";
+        literal CLRString^ TAG_PARTICLE = "particle";
+        literal CLRString^ ATTRIB_INDEX = "index";
 
 		property ::Meridian59::Ogre::MeshInfo^ MeshInfo 
 		{ 

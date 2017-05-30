@@ -83,11 +83,11 @@ namespace Meridian59 { namespace Ogre
 	void RemoteNode::OnRoomObjectPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
     {
 		// update scenenode orientation based on datalayer model     
-		if (System::String::Equals(e->PropertyName, Data::Models::RoomObject::PROPNAME_ANGLE))
+		if (CLRString::Equals(e->PropertyName, Data::Models::RoomObject::PROPNAME_ANGLE))
 			RefreshOrientation();
 		
       // Update light if changed
-		else if (System::String::Equals(e->PropertyName, Data::Models::RoomObject::PROPNAME_LIGHTINGINFO))
+		else if (CLRString::Equals(e->PropertyName, Data::Models::RoomObject::PROPNAME_LIGHTINGINFO))
 		{
             if (RoomObject->LightingInfo->IsLightOn)
             {
@@ -99,28 +99,28 @@ namespace Meridian59 { namespace Ogre
 
 		}
 
-		else if (System::String::Equals(e->PropertyName, Data::Models::RoomObject::PROPNAME_POSITION3D))
+		else if (CLRString::Equals(e->PropertyName, Data::Models::RoomObject::PROPNAME_POSITION3D))
 		{
             RefreshPosition();                   
 		}       
 
-		else if (System::String::Equals(e->PropertyName, Data::Models::RoomObject::PROPNAME_NAME))
+		else if (CLRString::Equals(e->PropertyName, Data::Models::RoomObject::PROPNAME_NAME))
 		{
             UpdateName();           
         }
 
-		else if (System::String::Equals(e->PropertyName, Data::Models::RoomObject::PROPNAME_FLAGS))
+		else if (CLRString::Equals(e->PropertyName, Data::Models::RoomObject::PROPNAME_FLAGS))
 		{
 			UpdateName();
 			UpdateMaterial();
 		}
 
-		else if (System::String::Equals(e->PropertyName, Data::Models::RoomObject::PROPNAME_ISTARGET))
+		else if (CLRString::Equals(e->PropertyName, Data::Models::RoomObject::PROPNAME_ISTARGET))
 		{
 			UpdateMaterial();
 		}
 
-		else if (System::String::Equals(e->PropertyName, Data::Models::RoomObject::PROPNAME_ISHIGHLIGHTED))
+		else if (CLRString::Equals(e->PropertyName, Data::Models::RoomObject::PROPNAME_ISHIGHLIGHTED))
 		{
 			UpdateMaterial();
 		}
@@ -195,7 +195,7 @@ namespace Meridian59 { namespace Ogre
       if (showName && 
          !(RoomObject->Flags->Drawing == ObjectFlags::DrawingType::Invisible) &&
          RoomObject->Name != nullptr &&
-         !System::String::Equals(RoomObject->Name, System::String::Empty) &&
+         !CLRString::Equals(RoomObject->Name, CLRString::Empty) &&
          !(RoomObject->IsAvatar && ControllerInput::IsCameraFirstPerson))
       {
          // create or reactivate name text
@@ -206,10 +206,10 @@ namespace Meridian59 { namespace Ogre
             billboardSetName->setVisible(true);
 
          // start update
-         System::String^ strTex = PREFIX_NAMETEXT_TEXTURE + RoomObject->Name + 
+         CLRString^ strTex = PREFIX_NAMETEXT_TEXTURE + RoomObject->Name + 
             "/" + NameColors::GetColorFor(RoomObject->Flags).ToString();
 
-         System::String^ strMat = PREFIX_NAMETEXT_MATERIAL + RoomObject->Name + 
+         CLRString^ strMat = PREFIX_NAMETEXT_MATERIAL + RoomObject->Name + 
             "/" + NameColors::GetColorFor(RoomObject->Flags).ToString();
 
          ::Ogre::String& texName = StringConvert::CLRToOgre(strTex);
@@ -286,7 +286,7 @@ namespace Meridian59 { namespace Ogre
       if (billboardSetName == nullptr || billboardName == nullptr || sceneNode == nullptr)
          return;
 
-      System::String^ strMat = PREFIX_NAMETEXT_MATERIAL + RoomObject->Name +
+      CLRString^ strMat = PREFIX_NAMETEXT_MATERIAL + RoomObject->Name +
          "/" + NameColors::GetColorFor(RoomObject->Flags).ToString();
 
       ::Ogre::String& matName = StringConvert::CLRToOgre(strMat);

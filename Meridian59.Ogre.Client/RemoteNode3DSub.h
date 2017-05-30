@@ -111,9 +111,9 @@ namespace Meridian59 { namespace Ogre
 			protected: void set(::System::Collections::Generic::List<RemoteNode3DSub^>^ value) { subNodes = value; } 
 		}
         
-		property System::String^ ID 
+		property CLRString^ ID 
 		{ 
-			System::String^ get(); 			
+			CLRString^ get(); 			
 		}
 		#pragma endregion
 

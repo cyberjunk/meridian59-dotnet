@@ -51,7 +51,7 @@ namespace Meridian59 { namespace Ogre
 	void ControllerUI::LootList::OnLootInfoPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{
 		// visible
-		if (::System::String::Equals(e->PropertyName, Data::Models::LootInfo::PROPNAME_ISVISIBLE))
+		if (CLRString::Equals(e->PropertyName, Data::Models::LootInfo::PROPNAME_ISVISIBLE))
 		{
 			// set window visibility
 			Window->setVisible(OgreClient::Singleton->Data->RoomObjectsLoot->IsVisible);
@@ -73,8 +73,8 @@ namespace Meridian59 { namespace Ogre
 
 		case ::System::ComponentModel::ListChangedType::ItemChanged:
 			// react only to changes which may affect the view				
-			if (::System::String::Equals(e->PropertyDescriptor->Name, RoomObject::PROPNAME_COUNT) ||
-				::System::String::Equals(e->PropertyDescriptor->Name, RoomObject::PROPNAME_NAME))
+			if (CLRString::Equals(e->PropertyDescriptor->Name, RoomObject::PROPNAME_COUNT) ||
+				CLRString::Equals(e->PropertyDescriptor->Name, RoomObject::PROPNAME_NAME))
 			{
 				ItemChange(e->NewIndex);
 			}

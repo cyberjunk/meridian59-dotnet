@@ -58,7 +58,7 @@ namespace Meridian59 {
 
       void ControllerUI::GuildHallBuy::OnGuildHallsInfoPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
       {
-         if (::System::String::Equals(e->PropertyName, BuyInfo::PROPNAME_ISVISIBLE))
+         if (CLRString::Equals(e->PropertyName, BuyInfo::PROPNAME_ISVISIBLE))
          {
             // Reset PW warning.
             PasswordInvalid->setVisible(false);
@@ -227,10 +227,10 @@ namespace Meridian59 {
          }
 
          // convert userinput to managed strings
-         System::String^ guildPW = StringConvert::CEGUIToCLR(ControllerUI::GuildHallBuy::GuildPassword->getText());
+         CLRString^ guildPW = StringConvert::CEGUIToCLR(ControllerUI::GuildHallBuy::GuildPassword->getText());
 
          // If no PW entered, make the error message visible and don't send.
-         if (::System::String::Equals(guildPW, ::System::String::Empty))
+         if (CLRString::Equals(guildPW, CLRString::Empty))
          {
             ControllerUI::GuildHallBuy::PasswordInvalid->setVisible(true);
 

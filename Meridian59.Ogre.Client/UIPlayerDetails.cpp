@@ -76,7 +76,7 @@ namespace Meridian59 { namespace Ogre
 	void ControllerUI::PlayerDetails::OnLookPlayerPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{
 		// objectbase
-		if (::System::String::Equals(e->PropertyName, PlayerInfo::PROPNAME_OBJECTBASE))
+		if (CLRString::Equals(e->PropertyName, PlayerInfo::PROPNAME_OBJECTBASE))
 		{
 			ObjectBase^ lookPlayer = OgreClient::Singleton->Data->LookPlayer->ObjectBase;
 			
@@ -100,12 +100,12 @@ namespace Meridian59 { namespace Ogre
 		}
 		
 		// titles
-		else if (::System::String::Equals(e->PropertyName, PlayerInfo::PROPNAME_TITLES))
+		else if (CLRString::Equals(e->PropertyName, PlayerInfo::PROPNAME_TITLES))
 		{
 #ifndef VANILLA
-			::System::String^ text = OgreClient::Singleton->Data->LookPlayer->Titles->FullString;
+			CLRString^ text = OgreClient::Singleton->Data->LookPlayer->Titles->FullString;
 #else
-			::System::String^ text = OgreClient::Singleton->Data->LookPlayer->Titles;
+			CLRString^ text = OgreClient::Singleton->Data->LookPlayer->Titles;
 #endif
 			if (text != nullptr)
 				Titles->setText(StringConvert::CLRToCEGUI(text));
@@ -132,7 +132,7 @@ namespace Meridian59 { namespace Ogre
 		}
 
 		// description
-		else if (::System::String::Equals(e->PropertyName, PlayerInfo::PROPNAME_MESSAGE))
+		else if (CLRString::Equals(e->PropertyName, PlayerInfo::PROPNAME_MESSAGE))
 		{
 			ServerString^ text = OgreClient::Singleton->Data->LookPlayer->Message;
 
@@ -141,16 +141,16 @@ namespace Meridian59 { namespace Ogre
 		}
 
 		// website
-		else if (::System::String::Equals(e->PropertyName, PlayerInfo::PROPNAME_WEBSITE))
+		else if (CLRString::Equals(e->PropertyName, PlayerInfo::PROPNAME_WEBSITE))
 		{
-			::System::String^ text = OgreClient::Singleton->Data->LookPlayer->Website;
+			CLRString^ text = OgreClient::Singleton->Data->LookPlayer->Website;
 
 			if (text != nullptr)
 				HomepageValue->setText(StringConvert::CLRToCEGUI(text));
 		}
 
 		// iseditable
-		else if (::System::String::Equals(e->PropertyName, PlayerInfo::PROPNAME_ISEDITABLE))
+		else if (CLRString::Equals(e->PropertyName, PlayerInfo::PROPNAME_ISEDITABLE))
 		{
 			// set readonly settings
 			Description->setReadOnly(!OgreClient::Singleton->Data->LookPlayer->IsEditable);
@@ -158,7 +158,7 @@ namespace Meridian59 { namespace Ogre
 		}
 
 		// isvisible
-		else if (::System::String::Equals(e->PropertyName, PlayerInfo::PROPNAME_ISVISIBLE))
+		else if (CLRString::Equals(e->PropertyName, PlayerInfo::PROPNAME_ISVISIBLE))
 		{
 			// set window visibility
 			Window->setVisible(OgreClient::Singleton->Data->LookPlayer->IsVisible);
@@ -211,10 +211,10 @@ namespace Meridian59 { namespace Ogre
 			::CEGUI::String description = ControllerUI::PlayerDetails::Description->getText();
 			
 			// convert to CLR
-			::System::String^ clrDesc = StringConvert::CEGUIToCLR(description);
+			CLRString^ clrDesc = StringConvert::CEGUIToCLR(description);
 
 			// if text differs, send update to server
-			if (!::System::String::Equals(lookInfo->Message->FullString, clrDesc))
+			if (!CLRString::Equals(lookInfo->Message->FullString, clrDesc))
 				OgreClient::Singleton->SendChangeDescription(clrDesc);
 
 
@@ -222,10 +222,10 @@ namespace Meridian59 { namespace Ogre
 			::CEGUI::String website = ControllerUI::PlayerDetails::HomepageValue->getText();
 			
 			// convert to CLR
-			::System::String^ clrWebsite = StringConvert::CEGUIToCLR(website);
+			CLRString^ clrWebsite = StringConvert::CEGUIToCLR(website);
 
 			// if website differs, send update to server
-			if (!::System::String::Equals(lookInfo->Website, clrWebsite))
+			if (!CLRString::Equals(lookInfo->Website, clrWebsite))
 				OgreClient::Singleton->SendUserCommandChangeURL(clrWebsite);
 		}
 

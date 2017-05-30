@@ -522,7 +522,7 @@ namespace Meridian59 { namespace Ogre
 		ref class SplashNotifier abstract sealed
 		{
 		protected:
-			static ::System::Collections::Generic::List<::System::String^>^ notifications;
+			static ::System::Collections::Generic::List<CLRString^>^ notifications;
 
 		public:
 			static ::CEGUI::Window* Window = nullptr;
@@ -531,8 +531,8 @@ namespace Meridian59 { namespace Ogre
 			static void Destroy();
 			static void ApplyLanguage();
 			static void UpdateNotification();
-			static void ShowNotification(::System::String^ Text);
-			static void HideNotification(::System::String^ Text);
+			static void ShowNotification(CLRString^ Text);
+			static void HideNotification(CLRString^ Text);
 			static void OnDataPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
 			static void OnParalyzePropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
 		};
@@ -904,7 +904,7 @@ namespace Meridian59 { namespace Ogre
 		ref class MailCompose abstract sealed
 		{
 		public:
-			static array<::System::String^>^ LastLookupNames = nullptr;
+			static array<CLRString^>^ LastLookupNames = nullptr;
 			
 			static ::CEGUI::FrameWindow* Window = nullptr;
 			static ::CEGUI::Window* Error = nullptr;

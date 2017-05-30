@@ -63,8 +63,8 @@ namespace Meridian59 { namespace Ogre
 		virtual void FinishDraw() override;
 
 	public:
-		literal System::String^ TEXTUREPREFIX	= "RemoteNode2D/Texture/";
-        literal System::String^ MATERIALPREFIX	= "RemoteNode2D/Material/"; 
+		literal CLRString^ TEXTUREPREFIX	= "RemoteNode2D/Texture/";
+        literal CLRString^ MATERIALPREFIX	= "RemoteNode2D/Material/"; 
 		literal unsigned int BYTESPERPIXEL = 4;
 
 		ImageComposerOgre(void);

@@ -138,7 +138,7 @@ namespace Meridian59 { namespace Ogre
 		Data::Models::GuildInfo^ obj = OgreClient::Singleton->Data->GuildInfo;
 		
 		// visible
-		if (::System::String::Equals(e->PropertyName, Data::Models::GuildInfo::PROPNAME_ISVISIBLE))
+		if (CLRString::Equals(e->PropertyName, Data::Models::GuildInfo::PROPNAME_ISVISIBLE))
 		{
 			// hide or show
 			Window->setVisible(obj->IsVisible);
@@ -149,19 +149,19 @@ namespace Meridian59 { namespace Ogre
 		}
 
 		// guildname
-		else if (::System::String::Equals(e->PropertyName, Data::Models::GuildInfo::PROPNAME_GUILDNAME))
+		else if (CLRString::Equals(e->PropertyName, Data::Models::GuildInfo::PROPNAME_GUILDNAME))
 		{
 			Window->setText(StringConvert::CLRToCEGUI(obj->GuildName));
 		}
 
 		// chestpassword
-		else if (::System::String::Equals(e->PropertyName, Data::Models::GuildInfo::PROPNAME_CHESTPASSWORD))
+		else if (CLRString::Equals(e->PropertyName, Data::Models::GuildInfo::PROPNAME_CHESTPASSWORD))
 		{
 			PasswordVal->setText(StringConvert::CLRToCEGUI(obj->ChestPassword));
 		}
 
 		// password flag (determines presense of guild hall info)
-		else if (::System::String::Equals(e->PropertyName, Data::Models::GuildInfo::PROPNAME_PASSWORDSETFLAG))
+		else if (CLRString::Equals(e->PropertyName, Data::Models::GuildInfo::PROPNAME_PASSWORDSETFLAG))
 		{
 			// Display the 'no guild' label if we have no hall info, otherwise
 			// display password set box and abandon hall button.
@@ -173,7 +173,7 @@ namespace Meridian59 { namespace Ogre
 		}
 
 		// flags
-		else if (::System::String::Equals(e->PropertyName, Data::Models::GuildInfo::PROPNAME_FLAGS))
+		else if (CLRString::Equals(e->PropertyName, Data::Models::GuildInfo::PROPNAME_FLAGS))
 		{
 			if (obj->Flags->IsRenounce)
 			{
@@ -219,36 +219,36 @@ namespace Meridian59 { namespace Ogre
 		GuildInfo^ guildInfo		= OgreClient::Singleton->Data->GuildInfo;
 
 		// Color1
-		if (::System::String::Equals(e->PropertyName, Data::Models::GuildShieldInfo::PROPNAME_COLOR1))
+		if (CLRString::Equals(e->PropertyName, Data::Models::GuildShieldInfo::PROPNAME_COLOR1))
 		{
 			ShieldColor1->setCurrentValue((float)shieldInfo->Color1);
 		}
 
 		// Color2
-		else if (::System::String::Equals(e->PropertyName, Data::Models::GuildShieldInfo::PROPNAME_COLOR2))
+		else if (CLRString::Equals(e->PropertyName, Data::Models::GuildShieldInfo::PROPNAME_COLOR2))
 		{
 			ShieldColor2->setCurrentValue((float)shieldInfo->Color2);
 		}
 
 		// Design
-		else if (::System::String::Equals(e->PropertyName, Data::Models::GuildShieldInfo::PROPNAME_DESIGN))
+		else if (CLRString::Equals(e->PropertyName, Data::Models::GuildShieldInfo::PROPNAME_DESIGN))
 		{
 			ShieldDesign->setCurrentValue((float)(shieldInfo->Design - 1));
 		}
 
 		// GuildName
-		else if (::System::String::Equals(e->PropertyName, Data::Models::GuildShieldInfo::PROPNAME_GUILDNAME))
+		else if (CLRString::Equals(e->PropertyName, Data::Models::GuildShieldInfo::PROPNAME_GUILDNAME))
 		{
 			ShieldClaimedBy->setText(StringConvert::CLRToCEGUI(shieldInfo->GuildName));
 		}
 		
 		// GuildID
-		else if (::System::String::Equals(e->PropertyName, Data::Models::GuildShieldInfo::PROPNAME_GUILDID))
+		else if (CLRString::Equals(e->PropertyName, Data::Models::GuildShieldInfo::PROPNAME_GUILDID))
 		{
 		}
 
 		// Shields
-		else if (::System::String::Equals(e->PropertyName, Data::Models::GuildShieldInfo::PROPNAME_SHIELDS))
+		else if (CLRString::Equals(e->PropertyName, Data::Models::GuildShieldInfo::PROPNAME_SHIELDS))
 		{
 			// designvalue is 1-based, slider is 0-based
 			ShieldDesign->setMaxValue((float)shieldInfo->Shields->Length - 1.0f);
@@ -758,7 +758,7 @@ namespace Meridian59 { namespace Ogre
 	bool UICallbacks::Guild::OnSetPasswordClicked(const CEGUI::EventArgs& e)
 	{
 		// get password input as clr string
-		::System::String^ password = StringConvert::CEGUIToCLR(
+		CLRString^ password = StringConvert::CEGUIToCLR(
 			ControllerUI::Guild::PasswordVal->getText());
 
 		// request to update password

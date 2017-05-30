@@ -54,12 +54,12 @@ namespace Meridian59 { namespace Ogre
 	void ControllerUI::Buy::OnBuyPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
 	{
 		// tradepartner
-		if (::System::String::Equals(e->PropertyName, BuyInfo::PROPNAME_TRADEPARTNER))
+		if (CLRString::Equals(e->PropertyName, BuyInfo::PROPNAME_TRADEPARTNER))
 		{
 		}
 
 		// visible
-		else if (::System::String::Equals(e->PropertyName, BuyInfo::PROPNAME_ISVISIBLE))
+		else if (CLRString::Equals(e->PropertyName, BuyInfo::PROPNAME_ISVISIBLE))
 		{
 			// set window visibility
 			Window->setVisible(OgreClient::Singleton->Data->Buy->IsVisible);

@@ -72,7 +72,7 @@ namespace Meridian59 { namespace Ogre
 		Data::Models::NewsGroup^ obj = OgreClient::Singleton->Data->NewsGroup;
 		
 		// visible
-		if (::System::String::Equals(e->PropertyName, Data::Models::NewsGroup::PROPNAME_ISVISIBLE))
+		if (CLRString::Equals(e->PropertyName, Data::Models::NewsGroup::PROPNAME_ISVISIBLE))
 		{
 			// hide or show
 			Window->setVisible(obj->IsVisible);
@@ -83,20 +83,20 @@ namespace Meridian59 { namespace Ogre
 		}
 
 		// headline
-		else if (::System::String::Equals(e->PropertyName, Data::Models::NewsGroup::PROPNAME_HEADLINE))
+		else if (CLRString::Equals(e->PropertyName, Data::Models::NewsGroup::PROPNAME_HEADLINE))
 		{
 			HeadLine->setText(StringConvert::CLRToCEGUI(obj->Headline));
 		}
 
 		// globeobject
-		else if (::System::String::Equals(e->PropertyName, Data::Models::NewsGroup::PROPNAME_NEWSGLOBEOBJECT))
+		else if (CLRString::Equals(e->PropertyName, Data::Models::NewsGroup::PROPNAME_NEWSGLOBEOBJECT))
 		{
 			if (obj->NewsGlobeObject != nullptr)
 				Window->setText(StringConvert::CLRToCEGUI(obj->NewsGlobeObject->Name));
 		}
 
 		// text
-		else if (::System::String::Equals(e->PropertyName, Data::Models::NewsGroup::PROPNAME_TEXT))
+		else if (CLRString::Equals(e->PropertyName, Data::Models::NewsGroup::PROPNAME_TEXT))
 		{
 			Text->setText(StringConvert::CLRToCEGUI(obj->Text));
 		}
@@ -210,7 +210,7 @@ namespace Meridian59 { namespace Ogre
 			{
 				ArticleHead^ article = articles[index];
 
-				::System::String^ newTitle = Common::Util::Truncate(
+				CLRString^ newTitle = Common::Util::Truncate(
 					"Re: " + article->Title, BlakservStringLengths::NEWS_POSTING_MAX_SUBJECT_LENGTH);
 				
 					// show prefilled compose window

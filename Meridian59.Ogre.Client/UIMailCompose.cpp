@@ -48,7 +48,7 @@ namespace Meridian59 { namespace Ogre
 			return;
 
 		// build not found string
-		::System::String^ notfound = ::System::String::Empty;
+		CLRString^ notfound = CLRString::Empty;
 
 		// look for not found name
 		for(int i = 0; i < Result->Length; i++)
@@ -57,7 +57,7 @@ namespace Meridian59 { namespace Ogre
 			if (Result[i]->ID == 0)
 			{
 				// add comma if not first
-				if (!::System::String::Equals(notfound, ::System::String::Empty))
+				if (!CLRString::Equals(notfound, CLRString::Empty))
 					notfound += ",";
 
 				notfound += LastLookupNames[i];
@@ -65,7 +65,7 @@ namespace Meridian59 { namespace Ogre
 		}
 
 		// all found?
-		if (::System::String::Equals(notfound, ::System::String::Empty))
+		if (CLRString::Equals(notfound, CLRString::Empty))
 		{
 			// hide error text
 			Error->setVisible(false);
@@ -99,14 +99,14 @@ namespace Meridian59 { namespace Ogre
 		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;		
 
 		// get recipients string
-		::System::String^ recipients = StringConvert::CEGUIToCLR(
+		CLRString^ recipients = StringConvert::CEGUIToCLR(
 			ControllerUI::MailCompose::Recipients->getText());
 
 		// check
-		if (recipients != nullptr && !::System::String::Equals(recipients, ::System::String::Empty))
+		if (recipients != nullptr && !CLRString::Equals(recipients, CLRString::Empty))
 		{			
 			// split up into single names by ','
-			array<::System::String^>^ splitted  = recipients->Split(',');
+			array<CLRString^>^ splitted  = recipients->Split(',');
 
 			// trim them
 			for (int i = 0; i < splitted->Length; i++)
