@@ -1275,8 +1275,10 @@ namespace Meridian59.Data.Models
         /// <param name="ViewerPosition"></param>
         public void UpdateViewerAngle(V2 ViewerPosition)
         {
+            V2 pos2D = Position2D;
+
             // update viewer angle
-            ViewerAngle = MathUtil.GetAngle(ViewerPosition, Position2D, AngleUnits);
+            ViewerAngle = MathUtil.GetAngle(ref ViewerPosition, ref pos2D, AngleUnits);
         }
 
         /// <summary>
@@ -1362,7 +1364,7 @@ namespace Meridian59.Data.Models
         public ushort GetAngleTo(RoomObject LookAt)
         {
             V2 dir = LookAt.Position2D - this.Position2D;
-            return MathUtil.GetAngleForDirection(dir);
+            return MathUtil.GetAngleForDirection(ref dir);
         }
 
         /// <summary>
@@ -1373,7 +1375,10 @@ namespace Meridian59.Data.Models
         /// <returns></returns>
         public ushort GetAngleBetween(RoomObject RoomObject)
         {
-            return MathUtil.GetAngle(RoomObject.Position2D, Position2D, AngleUnits, true);
+            V2 posSelf2D = Position2D;
+            V2 posOth2D = RoomObject.Position2D;
+
+            return MathUtil.GetAngle(ref posOth2D, ref posSelf2D, AngleUnits, true);
         }
 
         /// <summary>

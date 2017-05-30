@@ -698,13 +698,14 @@ namespace Meridian59.Data.Models
         /// <param name="ViewerPosition"></param>
         public void UpdateViewerAngle(V2 ViewerPosition)
         {
-            V2 direction = TargetObject.Position2D - Position2D;
+            V2 pos2D = Position2D;
+            V2 direction = TargetObject.Position2D - pos2D;
             direction.Normalize();
 
-            ushort angle = MathUtil.GetAngleForDirection(direction);
+            ushort angle = MathUtil.GetAngleForDirection(ref direction);
 
             // update viewer angle
-            ViewerAngle = MathUtil.GetAngle(ViewerPosition, Position2D, angle);
+            ViewerAngle = MathUtil.GetAngle(ref ViewerPosition, ref pos2D, angle);
 
             // mark for possible appearance change
             appearanceChanged = true;

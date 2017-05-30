@@ -2560,12 +2560,13 @@ namespace Meridian59.Client
                         if (diff.LengthSquared > GeometryConstants.MIN_NOMOVEON2)
                         {
                             V2 intersect;
+                            V2 oPos = obj.Position2D;
 
                             // if intersection exists
                             if (MathUtil.IntersectLineCircle(
-                                    start2D,
-                                    end,
-                                    obj.Position2D,
+                                    ref start2D,
+                                    ref end,
+                                    ref oPos,
                                     GeometryConstants.MIN_NOMOVEON, 
                                     out intersect))
                             {

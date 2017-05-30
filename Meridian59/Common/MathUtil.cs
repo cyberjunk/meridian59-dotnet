@@ -308,7 +308,7 @@ namespace Meridian59.Common
         /// <param name="B"></param>
         /// <param name="C"></param>
         /// <returns>Random point</returns>
-        public static V2 RandomPointInTriangle(V2 A, V2 B, V2 C)
+        public static V2 RandomPointInTriangle(ref V2 A, ref V2 B, ref V2 C)
         {
             // create two randoms within [0,1]
             Real rnd1 = (Real)Random.NextDouble();
@@ -335,7 +335,7 @@ namespace Meridian59.Common
         /// <param name="B"></param>
         /// <param name="C"></param>
         /// <returns></returns>
-        public static Real TriangleArea(V2 A, V2 B, V2 C)
+        public static Real TriangleArea(ref V2 A, ref V2 B, ref V2 C)
         {
             V2 AB = B - A;
             V2 AC = C - A;
@@ -573,7 +573,7 @@ namespace Meridian59.Common
         /// <param name="Radius"></param>
         /// <param name="Intersect"></param>
         /// <returns>True if interesction, false if none.</returns>
-        public static bool IntersectLineCircle(V2 LineStart, V2 LineEnd, V2 CircleCenter, Real Radius, out V2 Intersect)
+        public static bool IntersectLineCircle(ref V2 LineStart, ref V2 LineEnd, ref V2 CircleCenter, Real Radius, out V2 Intersect)
         {
             // default output param
             Intersect.X = 0;
@@ -633,7 +633,7 @@ namespace Meridian59.Common
         /// </summary>
         /// <param name="Direction">Direction vector</param>
         /// <returns>Value in [0..2PI]</returns>
-        public static Real GetRadianForDirection(V2 Direction)
+        public static Real GetRadianForDirection(ref V2 Direction)
         {
             // normalize
             Direction.Normalize();
@@ -668,10 +668,10 @@ namespace Meridian59.Common
         /// </example>
         /// <param name="Direction">Direction vector</param>        
         /// <returns>Value in [0..4096]</returns>
-        public static ushort GetAngleForDirection(V2 Direction)
+        public static ushort GetAngleForDirection(ref V2 Direction)
         {
             return RadianToBinaryAngle(
-                GetRadianForDirection(Direction));
+                GetRadianForDirection(ref Direction));
         }
 
         /// <summary>
@@ -699,13 +699,13 @@ namespace Meridian59.Common
         /// <param name="Angle">Angle</param>
         /// <param name="GetSmallOne">Returns 2PI-ANGLE for ANGLE>PI, if set to true.</param>
         /// <returns>Value in [0..4096] or [0..2048], if GetSmallOne is true</returns>
-        public static ushort GetAngle(V2 V, V2 T, ushort Angle, bool GetSmallOne = false)
+        public static ushort GetAngle(ref V2 V, ref V2 T, ushort Angle, bool GetSmallOne = false)
         {
             // get vector from T to V
             V2 TV = V - T;
 
             // get angle for this deltavector as direction
-            ushort objangle = GetAngleForDirection(TV);
+            ushort objangle = GetAngleForDirection(ref TV);
 
             // the difference in angles
             int deltaangle = Angle - objangle;
