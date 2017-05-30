@@ -40,316 +40,320 @@
 
 namespace Meridian59 { namespace Ogre 
 {
-	using namespace ::Ogre;
-	using namespace ::Caelum;
-	
-	using namespace System::IO;
-	using namespace System::Xml;
-	using namespace System::Xml::Schema;
-	using namespace System::Xml::Serialization;
-	using namespace System::Collections::Generic;
-	
-	using namespace Meridian59::Common;
-	using namespace Meridian59::Common::Enums;
-	using namespace Meridian59::Common::Constants;
-	using namespace Meridian59::Files::ROO;
-	using namespace Meridian59::Files::BGF;
-	using namespace Meridian59::Data;
-	using namespace Meridian59::Protocol::GameMessages;
-	using namespace Meridian59::Protocol::Enums;
+   using namespace ::Ogre;
+   using namespace ::Caelum;
 
-	/// <summary>
-    /// Loads a room to Ogre
-    /// </summary>
-	public ref class ControllerRoom abstract sealed
-	{
-	private:
-		literal CLRString^ SKY_DAY		= "skya.bgf";
-		literal CLRString^ SKY_EVENING	= "skyb.bgf";
-		literal CLRString^ SKY_MORNING	= "skyc.bgf";
-		literal CLRString^ SKY_NIGHT		= "skyd.bgf";
-		literal CLRString^ SKY_FRENZY	= "redsky.bgf";
-		literal CLRString^ MODULENAME	= "ControllerRoom";
-		literal float SCALE						= 0.0625f;
-		literal ::Ogre::Real PARTICLESYSCAMERAOFFSET = (::Ogre::Real)200.f;
+   using namespace System::IO;
+   using namespace System::Xml;
+   using namespace System::Xml::Schema;
+   using namespace System::Xml::Serialization;
+   using namespace System::Collections::Generic;
 
-		static ::Ogre::ManualObject*				roomDecoration;
-		static ::Ogre::SceneNode*					roomNode;
-		static ::Ogre::ManualObject*				roomManObj;
-		static ::Caelum::CaelumSystem*				caelumSystem;
-		static ::Meridian59::Ogre::RemoteNode^		avatarObject;		
-		static ::ParticleUniverse::ParticleSystem*	particleSysSnow;
+   using namespace Meridian59::Common;
+   using namespace Meridian59::Common::Enums;
+   using namespace Meridian59::Common::Constants;
+   using namespace Meridian59::Files::ROO;
+   using namespace Meridian59::Files::BGF;
+   using namespace Meridian59::Data;
+   using namespace Meridian59::Protocol::GameMessages;
+   using namespace Meridian59::Protocol::Enums;
 
-		static ::System::Collections::Generic::List<CLRString^>^ recreatequeue;
+   /// <summary>
+   /// Loads a room to Ogre
+   /// </summary>
+   public ref class ControllerRoom abstract sealed
+   {
+   private:
+      literal CLRString^ SKY_DAY       = "skya.bgf";
+      literal CLRString^ SKY_EVENING   = "skyb.bgf";
+      literal CLRString^ SKY_MORNING   = "skyc.bgf";
+      literal CLRString^ SKY_NIGHT     = "skyd.bgf";
+      literal CLRString^ SKY_FRENZY    = "redsky.bgf";
+      literal CLRString^ MODULENAME    = "ControllerRoom";
+      literal float SCALE              = 0.0625f;
 
-		static Dictionary<unsigned short, array<CLRString^>^>^ grassMaterials;
-		static Dictionary<CLRString^, ::System::Collections::Generic::List<V3>^>^ grassPoints;
-		static List<CLRString^>^ waterTextures;
-		static ::std::vector<::ParticleUniverse::ParticleEventHandler*>* customParticleHandlers;
+      literal ::Ogre::Real PARTICLESYSCAMERAOFFSET = (::Ogre::Real)200.f;
 
-        /// <summary>
-        /// Helper to store vertices processed of a sector
-        /// </summary>
-        static unsigned int verticesProcessed;
+      static ManualObject*                           roomDecoration;
+      static SceneNode*                              roomNode;
+      static ManualObject*                           roomManObj;
+      static CaelumSystem*                           caelumSystem;
+      static RemoteNode^                             avatarObject;
+      static List<CLRString^>^                       recreatequeue;
+      static Dictionary<ushort, array<CLRString^>^>^ grassMaterials;
+      static Dictionary<CLRString^, List<V3>^>^      grassPoints;
+      static List<CLRString^>^                       waterTextures;
+      
+      static ::ParticleUniverse::ParticleSystem*                       particleSysSnow;
+      static ::std::vector<::ParticleUniverse::ParticleEventHandler*>* customParticleHandlers;
 
-		static void HandlePlayerMessage(PlayerMessage^ Message);
-		static void HandleLightAmbient(LightAmbientMessage^ Message);
-		static void HandleLightPlayer(LightPlayerMessage^ Message);
-		static void HandleLightShading(LightShadingMessage^ Message);
-		static void HandleBackground(BackgroundMessage^ Message);
-		
-		static void AdjustOctree();
-		static void AdjustAmbientLight();
-		static int GetRoomSectionByMaterial(const ::Ogre::String& Name);
-		static int GetDecorationSectionByMaterial(const ::Ogre::String& Name);
+      /// <summary>
+      /// Helper to store vertices processed of a sector
+      /// </summary>
+      static unsigned int verticesProcessed;
 
-		/// <summary>
-        /// Static constructor
-        /// </summary>
-		static ControllerRoom();
+      static void HandlePlayerMessage(PlayerMessage^ Message);
+      static void HandleLightAmbient(LightAmbientMessage^ Message);
+      static void HandleLightPlayer(LightPlayerMessage^ Message);
+      static void HandleLightShading(LightShadingMessage^ Message);
+      static void HandleBackground(BackgroundMessage^ Message);
 
-		/// <summary>
-        /// Creates all walls belonging to a part of a side.
-		/// Called from CreateSide()
-        /// </summary>
-        /// <param name="Side"></param>
-		/// <param name="PartType"></param>
-		static void CreateSidePart(RooSideDef^ Side, WallPartType PartType);
+      static void AdjustOctree();
+      static void AdjustAmbientLight();
+      static int GetRoomSectionByMaterial(const ::Ogre::String& Name);
+      static int GetDecorationSectionByMaterial(const ::Ogre::String& Name);
 
-		/// <summary>
-        /// Creates a part of a wall.
-		/// Called from CreateSidePart()
-        /// </summary>
-        /// <param name="Wall">Which wall to create a part from</param>
-        /// <param name="PartType">Upper, Middle, Lower</param>
-		/// <param name="IsLeftSide">Whether to create left or right side</param>
-		/// <param name="TextureWidth">TextureWidth</param>
-		/// <param name="TextureHeight">TextureHeight</param>
-		/// <param name="TextureShrink">TextureShrink</param>
-		static void CreateWallPart(
-			RooWall^ Wall, 
-			WallPartType PartType, 
-			bool IsLeftSide, 
-			int TextureWidth,
-			int TextureHeight,
-			int TextureShrink);
+      /// <summary>
+      /// Static constructor
+      /// </summary>
+      static ControllerRoom();
 
-		/// <summary>
-		/// Creates a sector floor or ceiling material
-		/// Called from CreateSector()
-		/// </summary>
-		/// <param name="Sector"></param>
-		/// <param name="IsFloor"></param>
-		static void CreateSectorPart(RooSector^ Sector, bool IsFloor);
+      /// <summary>
+      /// Creates all walls belonging to a part of a side.
+      /// Called from CreateSide()
+      /// </summary>
+      /// <param name="Side"></param>
+      /// <param name="PartType"></param>
+      static void CreateSidePart(RooSideDef^ Side, WallPartType PartType);
 
-		/// <summary>
-        /// Creates a subsector of a floor or ceiling
-		/// Called from CreateSectorPart()
-        /// </summary>
-        /// <param name="SubSector"></param>
-        /// <param name="IsFloor"></param>
-        static void CreateSubSector(RooSubSector^ SubSector, bool IsFloor);
+      /// <summary>
+      /// Creates a part of a wall.
+      /// Called from CreateSidePart()
+      /// </summary>
+      /// <param name="Wall">Which wall to create a part from</param>
+      /// <param name="PartType">Upper, Middle, Lower</param>
+      /// <param name="IsLeftSide">Whether to create left or right side</param>
+      /// <param name="TextureWidth">TextureWidth</param>
+      /// <param name="TextureHeight">TextureHeight</param>
+      /// <param name="TextureShrink">TextureShrink</param>
+      static void CreateWallPart(
+         RooWall^     Wall, 
+         WallPartType PartType, 
+         bool         IsLeftSide, 
+         int          TextureWidth,
+         int          TextureHeight,
+         int          TextureShrink);
 
-		/// <summary>
-		/// Creates all floors and sides using specific materialname
-		/// </summary>
-		/// <param name="MaterialName"></param>
-		static void CreateGeometryChunk(CLRString^ MaterialName);
+      /// <summary>
+      /// Creates a sector floor or ceiling material
+      /// Called from CreateSector()
+      /// </summary>
+      /// <param name="Sector"></param>
+      /// <param name="IsFloor"></param>
+      static void CreateSectorPart(RooSector^ Sector, bool IsFloor);
 
-		/// <summary>
-		/// Creates decorations
-		/// </summary>
-		static void CreateDecoration();
+      /// <summary>
+      /// Creates a subsector of a floor or ceiling
+      /// Called from CreateSectorPart()
+      /// </summary>
+      /// <param name="SubSector"></param>
+      /// <param name="IsFloor"></param>
+      static void CreateSubSector(RooSubSector^ SubSector, bool IsFloor);
 
-		/// <summary>
-        /// Possibly creates a single texture and material based on required info.
-        /// </summary>
-        /// <param name="Texture"></param>
-		/// <param name="TextureName"></param>
-		/// <param name="MaterialName"></param>
-		/// <param name="ScrollSpeed"></param>
-		static void CreateTextureAndMaterial(BgfBitmap^ Texture, CLRString^ TextureName, CLRString^ MaterialName, V2 ScrollSpeed);
+      /// <summary>
+      /// Creates all floors and sides using specific materialname
+      /// </summary>
+      /// <param name="MaterialName"></param>
+      static void CreateGeometryChunk(CLRString^ MaterialName);
 
-		/// <summary>
-        /// Loads the room improvement data (grass, ...) from xml files
-        /// </summary>
-		static void LoadImproveData();
+      /// <summary>
+      /// Creates decorations
+      /// </summary>
+      static void CreateDecoration();
 
-		/// <summary>
-        /// Inits room based particle systems
-        /// </summary>
-		static void InitParticleSystems();
+      /// <summary>
+      /// Possibly creates a single texture and material based on required info.
+      /// </summary>
+      /// <param name="Texture"></param>
+      /// <param name="TextureName"></param>
+      /// <param name="MaterialName"></param>
+      /// <param name="ScrollSpeed"></param>
+      static void CreateTextureAndMaterial(
+         BgfBitmap^ Texture, 
+         CLRString^ TextureName, 
+         CLRString^ MaterialName, 
+         V2         ScrollSpeed);
 
-		/// <summary>
-        /// Destroys room based particle systems
-        /// </summary>
-		static void DestroyParticleSystems();
+      /// <summary>
+      /// Loads the room improvement data (grass, ...) from xml files
+      /// </summary>
+      static void LoadImproveData();
 
-		/// <summary>
-        /// Adds a projectile to the room
-        /// </summary>
-        /// <param name="Projectile">The RoomObject to add a SceneNode for</param>
-        static void ProjectileAdd(Projectile^ Projectile);
+      /// <summary>
+      /// Inits room based particle systems
+      /// </summary>
+      static void InitParticleSystems();
 
-		/// <summary>
-        /// Removes a projectile from the room
-        /// </summary>
-        /// <param name="Projectile"></param>
-        static void ProjectileRemove(Projectile^ Projectile);
-		
-		/// <summary>
-        /// Adds a RemoteNode for a RoomObject to the scene
-        /// </summary>
-        /// <param name="roomObject">The RoomObject to add a SceneNode for</param>
-        static void RoomObjectAdd(RoomObject^ roomObject);
+      /// <summary>
+      /// Destroys room based particle systems
+      /// </summary>
+      static void DestroyParticleSystems();
 
-		/// <summary>
-        /// Removes a remotenode from scene
-        /// </summary>
-        /// <param name="roomObject"></param>
-        static void RoomObjectRemove(RoomObject^ roomObject);
+      /// <summary>
+      /// Adds a projectile to the room
+      /// </summary>
+      /// <param name="Projectile">The RoomObject to add a SceneNode for</param>
+      static void ProjectileAdd(Projectile^ Projectile);
 
-		/// <summary>
-        /// Handles changes in the projectiles list
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        static void OnProjectilesListChanged(Object^ sender, ListChangedEventArgs^ e);
-		
-		/// <summary>
-        /// Handles RoomObject List changes, i.e. add new dynamic objects to scene
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        static void OnRoomObjectsListChanged(Object^ sender, ListChangedEventArgs^ e);
+      /// <summary>
+      /// Removes a projectile from the room
+      /// </summary>
+      /// <param name="Projectile"></param>
+      static void ProjectileRemove(Projectile^ Projectile);
 
-		/// <summary>
-        /// Handles WallTexturechanged events
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        static void OnRooFileWallTextureChanged(System::Object^ sender, WallTextureChangedEventArgs^ e);
-		
-		/// <summary>
-        /// Handles SectorTexturechanged events
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        static void OnRooFileSectorTextureChanged(System::Object^ sender, SectorTextureChangedEventArgs^ e);
+      /// <summary>
+      /// Adds a RemoteNode for a RoomObject to the scene
+      /// </summary>
+      /// <param name="roomObject">The RoomObject to add a SceneNode for</param>
+      static void RoomObjectAdd(RoomObject^ roomObject);
 
-		/// <summary>
-        /// Handles SectorMoved events
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        static void OnRooFileSectorMoved(System::Object^ sender, SectorMovedEventArgs^ e);
+      /// <summary>
+      /// Removes a remotenode from scene
+      /// </summary>
+      /// <param name="roomObject"></param>
+      static void RoomObjectRemove(RoomObject^ roomObject);
 
-		/// <summary>
-        /// Handles changes in the Data layer model
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-		static void OnDataPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
+      /// <summary>
+      /// Handles changes in the projectiles list
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
+      static void OnProjectilesListChanged(Object^ sender, ListChangedEventArgs^ e);
 
-		/// <summary>
-        /// Handles changes in the Snowing effect datamodel
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-		static void OnEffectSnowingPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
+      /// <summary>
+      /// Handles RoomObject List changes, i.e. add new dynamic objects to scene
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
+      static void OnRoomObjectsListChanged(Object^ sender, ListChangedEventArgs^ e);
 
-	public:				
-		/// <summary>
-		/// Caelum system handling sky
-		/// </summary>
-		static property ::Caelum::CaelumSystem* CaelumSystem
-		{
-			public: ::Caelum::CaelumSystem* get() { return caelumSystem; }
-			private: void set(::Caelum::CaelumSystem* value) { caelumSystem = value; }
-		}
+      /// <summary>
+      /// Handles WallTexturechanged events
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
+      static void OnRooFileWallTextureChanged(System::Object^ sender, WallTextureChangedEventArgs^ e);
+
+      /// <summary>
+      /// Handles SectorTexturechanged events
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
+      static void OnRooFileSectorTextureChanged(System::Object^ sender, SectorTextureChangedEventArgs^ e);
+
+      /// <summary>
+      /// Handles SectorMoved events
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
+      static void OnRooFileSectorMoved(System::Object^ sender, SectorMovedEventArgs^ e);
+
+      /// <summary>
+      /// Handles changes in the Data layer model
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
+      static void OnDataPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
+
+      /// <summary>
+      /// Handles changes in the Snowing effect datamodel
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
+      static void OnEffectSnowingPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
+
+   public:
+      /// <summary>
+      /// Caelum system handling sky
+      /// </summary>
+      static property ::Caelum::CaelumSystem* CaelumSystem
+      {
+         public: ::Caelum::CaelumSystem* get() { return caelumSystem; }
+         private: void set(::Caelum::CaelumSystem* value) { caelumSystem = value; }
+      }
 
       static property ::Ogre::ManualObject* RoomManualObject
       {
-      public: ::Ogre::ManualObject* get() { return roomManObj; }
-      private: void set(::Ogre::ManualObject* value) { roomManObj = value; }
+         public: ::Ogre::ManualObject* get() { return roomManObj; }
+         private: void set(::Ogre::ManualObject* value) { roomManObj = value; }
       }
 
-		/// <summary>
-        /// The node which is the avatar we're controlling
-        /// </summary>
-        static property RemoteNode^ AvatarObject 
-		{ 
-			public: RemoteNode^ get() { return avatarObject; }
-			private: void set(RemoteNode^ value) { avatarObject = value; }
-		}
+      /// <summary>
+      /// The node which is the avatar we're controlling
+      /// </summary>
+      static property RemoteNode^ AvatarObject 
+      { 
+         public: RemoteNode^ get() { return avatarObject; }
+         private: void set(RemoteNode^ value) { avatarObject = value; }
+      }
 
-		/// <summary>
-		/// Shortcut to currently loaded RooFile instance.
-		/// References OgreClient::Singleton->Data->RoomInformation->ResourceRoom
-		/// </summary>
-		static property RooFile^ Room
-		{
-			public: RooFile^ get();	
-		}
+      /// <summary>
+      /// Shortcut to currently loaded RooFile instance.
+      /// References OgreClient::Singleton->Data->RoomInformation->ResourceRoom
+      /// </summary>
+      static property RooFile^ Room
+      {
+         public: RooFile^ get();	
+      }
 
-		/// <summary>
-		/// Shortcut to SceneManager instance.
-		/// References OgreClient::Singleton->SceneManager
-		/// </summary>
-		static property ::Ogre::SceneManager* SceneManager
-		{
-			public: ::Ogre::SceneManager* get();
-		}
+      /// <summary>
+      /// Shortcut to SceneManager instance.
+      /// References OgreClient::Singleton->SceneManager
+      /// </summary>
+      static property ::Ogre::SceneManager* SceneManager
+      {
+         public: ::Ogre::SceneManager* get();
+      }
 
-		/// <summary>
-        /// Set required instance references
-        /// </summary>
-		static void Initialize();
-		
-		/// <summary>
-        /// Destroys the controller, automatically unloads room
-        /// </summary>
-		static void Destroy();
+      /// <summary>
+      /// Set required instance references
+      /// </summary>
+      static void Initialize();
 
-		/// <summary>
-        /// Initialization state
-        /// </summary>
-		static bool IsInitialized = false;
+      /// <summary>
+      /// Destroys the controller, automatically unloads room
+      /// </summary>
+      static void Destroy();
 
-		/// <summary>
-		/// Inits Caelum
-		/// </summary>
-		static void InitCaelum();
+      /// <summary>
+      /// Initialization state
+      /// </summary>
+      static bool IsInitialized = false;
 
-		/// <summary>
-		/// Destroys Caelum
-		/// </summary>
-		static void DestroyCaelum();
-		
-		/// <summary>
-		/// Refreshs the sky after a change between legacy/caelum
-		/// </summary>
-		static void UpdateSky();
+      /// <summary>
+      /// Inits Caelum
+      /// </summary>
+      static void InitCaelum();
 
-		/// <summary>
-        /// Loads the current room
-        /// </summary>
-        static void LoadRoom();
+      /// <summary>
+      /// Destroys Caelum
+      /// </summary>
+      static void DestroyCaelum();
 
-		/// <summary>
-        /// Unloads the current room
-        /// </summary>
-        static void UnloadRoom();
+      /// <summary>
+      /// Refreshs the sky after a change between legacy/caelum
+      /// </summary>
+      static void UpdateSky();
 
-		/// <summary>
-        /// 
-        /// </summary>
-		static void Tick(double Tick, double Span);
+      /// <summary>
+      /// Loads the current room
+      /// </summary>
+      static void LoadRoom();
 
-		/// <summary>
-        /// Handle a GameMode message
-        /// </summary>
-		static void HandleGameModeMessage(GameModeMessage^ Message);
-	};
+      /// <summary>
+      /// Unloads the current room
+      /// </summary>
+      static void UnloadRoom();
+
+      /// <summary>
+      /// 
+      /// </summary>
+      static void Tick(double Tick, double Span);
+
+      /// <summary>
+      /// Handle a GameMode message
+      /// </summary>
+      static void HandleGameModeMessage(GameModeMessage^ Message);
+   };
 };};
 
