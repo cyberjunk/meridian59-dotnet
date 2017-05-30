@@ -417,7 +417,7 @@ namespace Meridian59.Common
         /// <param name="P1"></param>
         /// <param name="P2"></param>
         /// <returns></returns>
-        public bool IsOnLineSegment(V2 P1, V2 P2)
+        public bool IsOnLineSegment(ref V2 P1, ref V2 P2)
         {
             // the point is not even on the infinite line given by P1P2
             if (GetSide(ref P1, ref P2) != 0)
@@ -433,6 +433,17 @@ namespace Meridian59.Common
             return
                 min.X <= X && X <= max.X &&
                 min.Y <= Y && Y <= max.Y;
+        }
+
+        /// <summary>
+        /// See and prefer variant with ref params!
+        /// </summary>
+        /// <param name="P1"></param>
+        /// <param name="P2"></param>
+        /// <returns></returns>
+        public bool IsOnLineSegment(V2 P1, V2 P2)
+        {
+            return IsOnLineSegment(ref P1, ref P2);
         }
 
         /// <summary>

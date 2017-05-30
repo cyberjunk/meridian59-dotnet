@@ -429,7 +429,7 @@ namespace Meridian59.Common
         /// <param name="Q2">Second point of second line segment</param>
         /// <param name="Intersect">Intersection point</param>
         /// <returns>LineLineIntersectionType</returns>
-        public static LineLineIntersectionType IntersectLineLine(V2 P1, V2 P2, V2 Q1, V2 Q2, out V2 Intersect)
+        public static LineLineIntersectionType IntersectLineLine(ref V2 P1, ref V2 P2, ref V2 Q1, ref V2 Q2, out V2 Intersect)
         {
             Intersect.X = 0.0f;
             Intersect.Y = 0.0f;
@@ -462,10 +462,10 @@ namespace Meridian59.Common
             // (c) touch each other at one endpoint
             if (bDotDPerp == 0.0f)
             {
-                bool isP1onQ1Q2 = P1.IsOnLineSegment(Q1, Q2);
-                bool isP2onQ1Q2 = P2.IsOnLineSegment(Q1, Q2);
-                bool isQ1onP1P2 = Q1.IsOnLineSegment(P1, P2);
-                bool isQ2onP1P2 = Q2.IsOnLineSegment(P1, P2);
+                bool isP1onQ1Q2 = P1.IsOnLineSegment(ref Q1, ref Q2);
+                bool isP2onQ1Q2 = P2.IsOnLineSegment(ref Q1, ref Q2);
+                bool isQ1onP1P2 = Q1.IsOnLineSegment(ref P1, ref P2);
+                bool isQ2onP1P2 = Q2.IsOnLineSegment(ref P1, ref P2);
 
                 // subcase (a): p1p2 and q1q2 don't share a point
                 if (!isP1onQ1Q2 && !isP2onQ1Q2 && !isQ1onP1P2 && !isQ2onP1P2)

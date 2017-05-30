@@ -962,7 +962,7 @@ namespace Meridian59.Files.ROO
                 // verify also the finite line segments cross
                 V2 intersect;
                 LineLineIntersectionType intersecttype = 
-                    MathUtil.IntersectLineLine(Start2D, End2D, P1, P2, out intersect);
+                    MathUtil.IntersectLineLine(ref Start2D, ref End2D, ref p1, ref p2, out intersect);
 
                 if (intersecttype == LineLineIntersectionType.OneIntersection ||
                     intersecttype == LineLineIntersectionType.OneBoundaryPoint ||
