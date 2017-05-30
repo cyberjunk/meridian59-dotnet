@@ -1668,8 +1668,8 @@ namespace Meridian59.Files.ROO
 
             /*************************************************************/
 
-            Real startDist  = line.GetDistance(start2D);
-            Real endDist    = line.GetDistance(end2D);
+            Real startDist  = line.GetDistance(ref start2D);
+            Real endDist    = line.GetDistance(ref end2D);
 
             /*************************************************************/
 

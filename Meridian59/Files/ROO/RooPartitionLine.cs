@@ -337,7 +337,7 @@ namespace Meridian59.Files.ROO
         /// </summary>
         /// <param name="P"></param>
         /// <returns></returns>
-        public Real GetDistance(V2 P)
+        public Real GetDistance(ref V2 P)
         {
             return A * P.X + B * P.Y + C;
         }
