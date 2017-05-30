@@ -859,7 +859,7 @@ namespace Meridian59.Files.ROO
         /// <param name="End">A 2D location</param>
         /// <param name="PlayerHeight">Height of the player for ceiling collisions</param>
         /// <returns></returns>
-        public bool IsBlockingMove(V3 Start, V2 End, Real PlayerHeight)
+        public bool IsBlockingMove(ref V3 Start, ref V2 End, Real PlayerHeight)
         {          
             // get distance of end to finite line segment
             Real distEnd = End.MinSquaredDistanceToLineSegment(ref p1, ref p2);

@@ -1561,7 +1561,7 @@ namespace Meridian59.Files.ROO
         protected RooWall VerifyMoveByList(ref V3 Start, ref V2 End, Real PlayerHeight)
         {
             foreach (RooWall wall in Walls)
-                if (wall.IsBlockingMove(Start, End, PlayerHeight))
+                if (wall.IsBlockingMove(ref Start, ref End, PlayerHeight))
                     return wall;
 
             return null;
@@ -1600,7 +1600,7 @@ namespace Meridian59.Files.ROO
             // test walls of splitter
             while (wall != null)
             {
-                if (wall != IgnoreWall && wall.IsBlockingMove(Start, End, PlayerHeight))
+                if (wall != IgnoreWall && wall.IsBlockingMove(ref Start, ref End, PlayerHeight))
                     return wall;
 
                 // loop over next wall in same plane
