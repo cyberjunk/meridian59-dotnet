@@ -2,322 +2,325 @@
 
 namespace Meridian59 { namespace Ogre
 {
-	void ControllerUI::Buy::Initialize()
-	{
-		// setup references to children from xml nodes
-		Window			= static_cast<CEGUI::FrameWindow*>(guiRoot->getChild(UI_NAME_BUY_WINDOW));
-		List			= static_cast<CEGUI::ItemListbox*>(Window->getChild(UI_NAME_BUY_LIST));
-		OK				= static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_BUY_OK));
-		SumDescription	= static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_BUY_SUMDESC));
-		SumValue		= static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_BUY_SUMVAL));
-		
-		// set multiselect
-		List->setMultiSelectEnabled(true);
+   void ControllerUI::Buy::Initialize()
+   {
+      // setup references to children from xml nodes
+      Window         = static_cast<CEGUI::FrameWindow*>(guiRoot->getChild(UI_NAME_BUY_WINDOW));
+      List           = static_cast<CEGUI::ItemListbox*>(Window->getChild(UI_NAME_BUY_LIST));
+      OK	            = static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_BUY_OK));
+      SumDescription = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_BUY_SUMDESC));
+      SumValue       = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_BUY_SUMVAL));
 
-		// init imagecomposers list
-		imageComposers = gcnew ::System::Collections::Generic::List<ImageComposerCEGUI<ObjectBase^>^>();
+      // set multiselect
+      List->setMultiSelectEnabled(true);
 
-		// attach listener to buyinfo
-		OgreClient::Singleton->Data->Buy->PropertyChanged += 
-			gcnew PropertyChangedEventHandler(OnBuyPropertyChanged);
+      // init imagecomposers list
+      imageComposers = gcnew ::System::Collections::Generic::List<ImageComposerCEGUI<ObjectBase^>^>();
+
+      // attach listener to buyinfo
+      OgreClient::Singleton->Data->Buy->PropertyChanged += 
+         gcnew PropertyChangedEventHandler(OnBuyPropertyChanged);
+
+      // attach listener to buyinfo items
+      OgreClient::Singleton->Data->Buy->Items->ListChanged += 
+         gcnew ListChangedEventHandler(OnBuyListChanged);
+
+      // subscribe selection change
+      List->subscribeEvent(CEGUI::ItemListbox::EventSelectionChanged, CEGUI::Event::Subscriber(UICallbacks::Buy::OnListSelectionChanged));
+
+      // subscribe OK buttno
+      OK->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Buy::OnOKClicked));
+
+      // subscribe close button
+      Window->subscribeEvent(CEGUI::FrameWindow::EventCloseClicked, CEGUI::Event::Subscriber(UICallbacks::Buy::OnWindowClosed));
+
+      // subscribe keyup
+      Window->subscribeEvent(CEGUI::FrameWindow::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Buy::OnWindowKeyUp));
+   };
+
+   void ControllerUI::Buy::Destroy()
+   {
+      OgreClient::Singleton->Data->Buy->PropertyChanged -= 
+         gcnew PropertyChangedEventHandler(OnBuyPropertyChanged);
         
-		// attach listener to buyinfo items
-		OgreClient::Singleton->Data->Buy->Items->ListChanged += 
-			gcnew ListChangedEventHandler(OnBuyListChanged);
+      OgreClient::Singleton->Data->Buy->Items->ListChanged -= 
+         gcnew ListChangedEventHandler(OnBuyListChanged);
+   };
 
-		// subscribe selection change
-		List->subscribeEvent(CEGUI::ItemListbox::EventSelectionChanged, CEGUI::Event::Subscriber(UICallbacks::Buy::OnListSelectionChanged));
+   void ControllerUI::Buy::ApplyLanguage()
+   {
+   };
 
-		// subscribe OK buttno
-		OK->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Buy::OnOKClicked));
+   void ControllerUI::Buy::OnBuyPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
+   {
+      // tradepartner
+      if (CLRString::Equals(e->PropertyName, BuyInfo::PROPNAME_TRADEPARTNER))
+      {
+      }
 
-		// subscribe close button
-		Window->subscribeEvent(CEGUI::FrameWindow::EventCloseClicked, CEGUI::Event::Subscriber(UICallbacks::Buy::OnWindowClosed));
+      // visible
+      else if (CLRString::Equals(e->PropertyName, BuyInfo::PROPNAME_ISVISIBLE))
+      {
+         // set window visibility
+         Window->setVisible(OgreClient::Singleton->Data->Buy->IsVisible);
+         Window->moveToFront();
+      }
+   };
 
-		// subscribe keyup
-		Window->subscribeEvent(CEGUI::FrameWindow::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Buy::OnWindowKeyUp));
-	};
+   void ControllerUI::Buy::OnBuyListChanged(Object^ sender, ListChangedEventArgs^ e)
+   {
+      switch(e->ListChangedType)
+      {
+      case ::System::ComponentModel::ListChangedType::ItemAdded:
+         BuyItemAdd(e->NewIndex);
+         break;
 
-	void ControllerUI::Buy::Destroy()
-	{	
-		OgreClient::Singleton->Data->Buy->PropertyChanged -= 
-			gcnew PropertyChangedEventHandler(OnBuyPropertyChanged);
-        
-		OgreClient::Singleton->Data->Buy->Items->ListChanged -= 
-			gcnew ListChangedEventHandler(OnBuyListChanged);			
-	};
+      case ::System::ComponentModel::ListChangedType::ItemDeleted:
+         BuyItemRemove(e->NewIndex);
+         break;
+      }
+   };
 
-	void ControllerUI::Buy::ApplyLanguage()
-	{
-	};
+   void ControllerUI::Buy::BuyItemAdd(int Index)
+   {
+      CEGUI::WindowManager& wndMgr = CEGUI::WindowManager::getSingleton();
+      TradeOfferObject^ obj = OgreClient::Singleton->Data->Buy->Items[Index];
 
-	void ControllerUI::Buy::OnBuyPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
-	{
-		// tradepartner
-		if (CLRString::Equals(e->PropertyName, BuyInfo::PROPNAME_TRADEPARTNER))
-		{
-		}
+      // create widget (item)
+      CEGUI::ItemEntry* widget = (CEGUI::ItemEntry*)wndMgr.createWindow(
+         UI_WINDOWTYPE_BUYLISTBOXITEM);
 
-		// visible
-		else if (CLRString::Equals(e->PropertyName, BuyInfo::PROPNAME_ISVISIBLE))
-		{
-			// set window visibility
-			Window->setVisible(OgreClient::Singleton->Data->Buy->IsVisible);
-			Window->moveToFront();
-		}
-	};
+      // set ID
+      widget->setID(obj->ID);
 
-	void ControllerUI::Buy::OnBuyListChanged(Object^ sender, ListChangedEventArgs^ e)
-	{
-		switch(e->ListChangedType)
-		{
-			case ::System::ComponentModel::ListChangedType::ItemAdded:
-				BuyItemAdd(e->NewIndex);			
-				break;
+      // subscribe click event
+      widget->subscribeEvent(
+         CEGUI::ItemEntry::EventMouseClick, 
+         CEGUI::Event::Subscriber(UICallbacks::Buy::OnItemClicked));
 
-			case ::System::ComponentModel::ListChangedType::ItemDeleted:
-				BuyItemRemove(e->NewIndex);
-				break;
-		}
-	};
+      // check
+      if (widget->getChildCount() > 3)
+      {
+         CEGUI::Window* price    = (CEGUI::Window*)widget->getChildAtIdx(UI_BUY_CHILDINDEX_PRICE);
+         CEGUI::Window* icon     = (CEGUI::Window*)widget->getChildAtIdx(UI_BUY_CHILDINDEX_ICON);
+         CEGUI::Window* name     = (CEGUI::Window*)widget->getChildAtIdx(UI_BUY_CHILDINDEX_NAME);
+         CEGUI::Editbox* amount  = (CEGUI::Editbox*)widget->getChildAtIdx(UI_BUY_CHILDINDEX_AMOUNT);
 
-	void ControllerUI::Buy::BuyItemAdd(int Index)
-	{
-		CEGUI::WindowManager* wndMgr = CEGUI::WindowManager::getSingletonPtr();
-		TradeOfferObject^ obj = OgreClient::Singleton->Data->Buy->Items[Index];
+         // subscribe event to focusleave on textbox
+         amount->subscribeEvent(CEGUI::Editbox::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Buy::OnItemAmountDeactivated));
+         amount->subscribeEvent(CEGUI::Editbox::EventTextAccepted, CEGUI::Event::Subscriber(UICallbacks::Buy::OnItemAmountDeactivated));
 
-		// create widget (item)
-		CEGUI::ItemEntry* widget = (CEGUI::ItemEntry*)wndMgr->createWindow(
-			UI_WINDOWTYPE_BUYLISTBOXITEM);
-		
-		// set ID
-		widget->setID(obj->ID);
+         // get color
+         ::CEGUI::Colour color = ::CEGUI::Colour(
+            NameColors::GetColorFor(obj->Flags));
 
-		// subscribe click event
-		widget->subscribeEvent(
-			CEGUI::ItemEntry::EventMouseClick, 
-			CEGUI::Event::Subscriber(UICallbacks::Buy::OnItemClicked));
-		
-		// check
-		if (widget->getChildCount() > 3)
-		{
-			CEGUI::Window* price	= (CEGUI::Window*)widget->getChildAtIdx(UI_BUY_CHILDINDEX_PRICE);
-			CEGUI::Window* icon		= (CEGUI::Window*)widget->getChildAtIdx(UI_BUY_CHILDINDEX_ICON);
-			CEGUI::Window* name		= (CEGUI::Window*)widget->getChildAtIdx(UI_BUY_CHILDINDEX_NAME);
-			CEGUI::Editbox* amount	= (CEGUI::Editbox*)widget->getChildAtIdx(UI_BUY_CHILDINDEX_AMOUNT);
+         // set color and name
+         name->setProperty(UI_PROPNAME_NORMALTEXTCOLOUR, ::CEGUI::PropertyHelper<::CEGUI::Colour>::toString(color));
+         name->setText(StringConvert::CLRToCEGUI(obj->Name));
 
-			// subscribe event to focusleave on textbox
-			amount->subscribeEvent(CEGUI::Editbox::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Buy::OnItemAmountDeactivated));
-			amount->subscribeEvent(CEGUI::Editbox::EventTextAccepted, CEGUI::Event::Subscriber(UICallbacks::Buy::OnItemAmountDeactivated));
+         // set price
+         price->setText(CEGUI::PropertyHelper<unsigned int>::toString(obj->Price));
 
-			// get color
-			::CEGUI::Colour color = ::CEGUI::Colour(
-				NameColors::GetColorFor(obj->Flags));
+         // set default amount
+         amount->setText(CEGUI::PropertyHelper<unsigned int>::toString(obj->Count));
+         amount->setVisible(obj->IsStackable);
+      }
 
-			// set color and name
-			name->setProperty(UI_PROPNAME_NORMALTEXTCOLOUR, ::CEGUI::PropertyHelper<::CEGUI::Colour>::toString(color));
-			name->setText(StringConvert::CLRToCEGUI(obj->Name));
+      // insert widget in ui-list
+      if ((int)List->getItemCount() > Index)
+         List->insertItem(widget, List->getItemFromIndex(Index));
 
-			// set price
-			price->setText(CEGUI::PropertyHelper<unsigned int>::toString(obj->Price));
+      // or add
+      else
+         List->addItem(widget);
 
-			// set default amount
-			amount->setText(CEGUI::PropertyHelper<unsigned int>::toString(obj->Count));
-			amount->setVisible(obj->IsStackable);
-		}
+      // fix a big with last item not highlighted
+      List->notifyScreenAreaChanged(true);
 
-		// insert widget in ui-list
-		if ((int)List->getItemCount() > Index)
-			List->insertItem(widget, List->getItemFromIndex(Index));
-		
-		// or add
-		else
-			List->addItem(widget);
-		
-		// fix a big with last item not highlighted
-		List->notifyScreenAreaChanged(true);
+      // create imagecomposer
+      ImageComposerCEGUI<ObjectBase^>^ imageComposer = gcnew ImageComposerCEGUI<ObjectBase^>();
+      imageComposer->ApplyYOffset = false;
+      imageComposer->HotspotIndex = 0;
+      imageComposer->IsScalePow2 = false;
+      imageComposer->UseViewerFrame = false;
+      imageComposer->Width = UI_BUFFICON_WIDTH;
+      imageComposer->Height = UI_BUFFICON_HEIGHT;
+      imageComposer->CenterHorizontal = true;
+      imageComposer->CenterVertical = true;
+      imageComposer->NewImageAvailable += gcnew ::System::EventHandler(OnNewBuyItemImageAvailable);
 
-		// create imagecomposer
-		ImageComposerCEGUI<ObjectBase^>^ imageComposer = gcnew ImageComposerCEGUI<ObjectBase^>();
-		imageComposer->ApplyYOffset = false;
-        imageComposer->HotspotIndex = 0;
-        imageComposer->IsScalePow2 = false;
-        imageComposer->UseViewerFrame = false;
-		imageComposer->Width = UI_BUFFICON_WIDTH;
-        imageComposer->Height = UI_BUFFICON_HEIGHT;
-        imageComposer->CenterHorizontal = true;
-        imageComposer->CenterVertical = true;
-		imageComposer->NewImageAvailable += gcnew ::System::EventHandler(OnNewBuyItemImageAvailable);
+      // insert composer into list at index
+      imageComposers->Insert(Index, imageComposer);
 
-		// insert composer into list at index
-		imageComposers->Insert(Index, imageComposer);
+      // set image
+      imageComposer->DataSource = obj;
+   };
 
-		// set image
-		imageComposer->DataSource = obj;
-	};
+   void ControllerUI::Buy::BuyItemRemove(int Index)
+   {
+      // check
+      if ((int)List->getItemCount() > Index)		
+         List->removeItem(List->getItemFromIndex(Index));
 
-	void ControllerUI::Buy::BuyItemRemove(int Index)
-	{
-		// check
-		if ((int)List->getItemCount() > Index)		
-			List->removeItem(List->getItemFromIndex(Index));
+      // remove imagecomposer
+      if (imageComposers->Count > Index)
+      {
+         // reset (detaches listeners!)
+         imageComposers[Index]->NewImageAvailable -= gcnew ::System::EventHandler(OnNewBuyItemImageAvailable);
+         imageComposers[Index]->DataSource = nullptr;
 
-		// remove imagecomposer
-		if (imageComposers->Count > Index)
-		{
-			// reset (detaches listeners!)
-			imageComposers[Index]->NewImageAvailable -= gcnew ::System::EventHandler(OnNewBuyItemImageAvailable);
-			imageComposers[Index]->DataSource = nullptr;
-			
-			// remove from list
-			imageComposers->RemoveAt(Index);
-		}
-	};
+         // remove from list
+         imageComposers->RemoveAt(Index);
+      }
+   };
 
-	void ControllerUI::Buy::OnNewBuyItemImageAvailable(Object^ sender, ::System::EventArgs^ e)
-	{
-		ImageComposerCEGUI<ObjectBase^>^ imageComposer = (ImageComposerCEGUI<ObjectBase^>^)sender;
-		int index = imageComposers->IndexOf(imageComposer);
+   void ControllerUI::Buy::OnNewBuyItemImageAvailable(Object^ sender, ::System::EventArgs^ e)
+   {
+      ImageComposerCEGUI<ObjectBase^>^ imageComposer = (ImageComposerCEGUI<ObjectBase^>^)sender;
+      int index = imageComposers->IndexOf(imageComposer);
 
-		if (index > -1 && (int)List->getItemCount() > index)
-		{
-			// get staticimage
-			CEGUI::ItemEntry* img	= List->getItemFromIndex(index);
-			CEGUI::Window* icon		= (CEGUI::Window*)img->getChildAtIdx(UI_BUY_CHILDINDEX_ICON);
-				
-			// set new image on ui widget
-			icon->setProperty(UI_PROPNAME_IMAGE, *imageComposer->Image->TextureName);
-		}
-	};
+      if (index > -1 && (int)List->getItemCount() > index)
+      {
+         // get staticimage
+         CEGUI::ItemEntry* img	= List->getItemFromIndex(index);
+         CEGUI::Window* icon		= (CEGUI::Window*)img->getChildAtIdx(UI_BUY_CHILDINDEX_ICON);
 
-	void ControllerUI::Buy::CalculateSum()
-	{
-		ObjectBaseList<TradeOfferObject^>^ dataItems = OgreClient::Singleton->Data->Buy->Items;
+         // set new image on ui widget
+         icon->setProperty(UI_PROPNAME_IMAGE, *imageComposer->Image->TextureName);
+      }
+   };
 
-		int sum = 0;
-		int itemcount = (int)List->getItemCount();
-		for(int i = 0; i < itemcount; i++)
-		{
-			if (List->isItemSelected(i) && dataItems->Count > i)
-			{
-				if (dataItems[i]->IsStackable)
-					sum += dataItems[i]->Count * dataItems[i]->Price;
+   void ControllerUI::Buy::CalculateSum()
+   {
+      ObjectBaseList<TradeOfferObject^>^ dataItems = OgreClient::Singleton->Data->Buy->Items;
 
-				else
-					sum += dataItems[i]->Price;
-			}
-		}
+      int sum = 0;
+      int itemcount = (int)List->getItemCount();
+      for(int i = 0; i < itemcount; i++)
+      {
+         if (List->isItemSelected(i) && dataItems->Count > i)
+         {
+            if (dataItems[i]->IsStackable)
+               sum += dataItems[i]->Count * dataItems[i]->Price;
 
-		SumValue->setText(CEGUI::PropertyHelper<int>::toString(sum));
-	};
+            else
+               sum += dataItems[i]->Price;
+         }
+      }
 
-	bool UICallbacks::Buy::OnItemClicked(const CEGUI::EventArgs& e)
-	{
-		const CEGUI::MouseEventArgs& args	= (const CEGUI::MouseEventArgs&)e;
-		const CEGUI::ItemEntry* itm			= (CEGUI::ItemEntry*)args.window;
+      SumValue->setText(CEGUI::PropertyHelper<int>::toString(sum));
+   };
 
-		// single rightclick requests object details
-		if (args.button == CEGUI::MouseButton::RightButton)		
-			OgreClient::Singleton->SendReqLookMessage(itm->getID());					
-		
-		return true;
-	};
+   //////////////////////////////////////////////////////////////////////////////////////////////////////////
+   //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	bool UICallbacks::Buy::OnItemAmountDeactivated(const CEGUI::EventArgs& e)
-	{
-		const CEGUI::WindowEventArgs& args	= (CEGUI::MouseEventArgs&)e;		
-		CEGUI::Editbox* box			= (CEGUI::Editbox*)args.window;
-		CEGUI::ItemEntry* itemEntry = (CEGUI::ItemEntry*)box->getParent();
-		CEGUI::ItemListbox* list	= ControllerUI::Buy::List;
-		
-		// get user value from box
-		CEGUI::String boxText = box->getText();
-				
-		// revert empty input to 1
-		if (boxText == STRINGEMPTY)
-		{
-			boxText = "1";
-			box->setText(boxText);
-		}
+   bool UICallbacks::Buy::OnItemClicked(const CEGUI::EventArgs& e)
+   {
+      const CEGUI::MouseEventArgs& args = (const CEGUI::MouseEventArgs&)e;
+      const CEGUI::ItemEntry* itm       = (CEGUI::ItemEntry*)args.window;
 
-		// data models
-		ObjectBaseList<TradeOfferObject^>^ dataItems = 
-			OgreClient::Singleton->Data->Buy->Items;
+      // single rightclick requests object details
+      if (args.button == CEGUI::MouseButton::RightButton)
+         OgreClient::Singleton->SendReqLookMessage(itm->getID());
 
-		// get index of clicked buff/widget in listbox
-		int index = (int)list->getItemIndex(itemEntry);
+      return true;
+   };
 
-		// found ?
-		if (dataItems->Count > index)
-			dataItems[index]->Count = ::CEGUI::PropertyHelper<unsigned int>::fromString(boxText);
-		
-		// refresh sum
-		ControllerUI::Buy::CalculateSum();
+   bool UICallbacks::Buy::OnItemAmountDeactivated(const CEGUI::EventArgs& e)
+   {
+      const CEGUI::WindowEventArgs& args = (CEGUI::MouseEventArgs&)e;
+      CEGUI::Editbox* box                = (CEGUI::Editbox*)args.window;
+      CEGUI::ItemEntry* itemEntry        = (CEGUI::ItemEntry*)box->getParent();
+      CEGUI::ItemListbox* list           = ControllerUI::Buy::List;
 
-		return true;
-	};
-	
-	bool UICallbacks::Buy::OnListSelectionChanged(const CEGUI::EventArgs& e)
-	{
-		// update sum
-		ControllerUI::Buy::CalculateSum();
+      // get user value from box
+      CEGUI::String boxText = box->getText();
 
-		return true;
-	};
+      // revert empty input to 1
+      if (boxText == STRINGEMPTY)
+      {
+         boxText = "1";
+         box->setText(boxText);
+      }
 
-	bool UICallbacks::Buy::OnOKClicked(const CEGUI::EventArgs& e)
-	{
-		const CEGUI::WindowEventArgs& args = static_cast<const CEGUI::WindowEventArgs&>(e);		
-		CEGUI::ItemListbox* list = ControllerUI::Buy::List;
-		ObjectBaseList<TradeOfferObject^>^ dataItems = OgreClient::Singleton->Data->Buy->Items;
-		
-		::System::Collections::Generic::List<ObjectID^>^ idList = 
-			gcnew ::System::Collections::Generic::List<ObjectID^>();
+      // data models
+      ObjectBaseList<TradeOfferObject^>^ dataItems = 
+         OgreClient::Singleton->Data->Buy->Items;
 
-		// build buy ids
-		for(size_t i = 0; i < list->getItemCount(); i++)	
-			if (list->isItemSelected(i) && dataItems->Count > (int)i)			
-				idList->Add(gcnew ObjectID(dataItems[(int)i]->ID, dataItems[(int)i]->Count));
-		
-		if (OgreClient::Singleton->Data->Buy->TradePartner != nullptr)
-		{
-			// send
-			OgreClient::Singleton->SendReqBuyItemsMessage(
-				OgreClient::Singleton->Data->Buy->TradePartner->ID,
-				idList->ToArray());
-		}
+      // get index of clicked buff/widget in listbox
+      int index = (int)list->getItemIndex(itemEntry);
 
-		// hide
-		OgreClient::Singleton->Data->Buy->IsVisible = false;
-		ControllerUI::ActivateRoot();
+      // found ?
+      if (dataItems->Count > index)
+         dataItems[index]->Count = ::CEGUI::PropertyHelper<unsigned int>::fromString(boxText);
 
-		return true;
-	};
+      // refresh sum
+      ControllerUI::Buy::CalculateSum();
 
-	bool UICallbacks::Buy::OnWindowKeyUp(const CEGUI::EventArgs& e)
-	{
-		const CEGUI::KeyEventArgs& args = static_cast<const CEGUI::KeyEventArgs&>(e);
+      return true;
+   };
 
-		// close window on ESC
-		if (args.scancode == CEGUI::Key::Escape)
-		{
-			// clear (view will react)
-			OgreClient::Singleton->Data->Buy->IsVisible = false;
-			OgreClient::Singleton->Data->Buy->Clear(true);
-		}
+   bool UICallbacks::Buy::OnListSelectionChanged(const CEGUI::EventArgs& e)
+   {
+      // update sum
+      ControllerUI::Buy::CalculateSum();
 
-		return UICallbacks::OnKeyUp(args);
-	};
+      return true;
+   };
 
-	bool UICallbacks::Buy::OnWindowClosed(const CEGUI::EventArgs& e)
-	{
-		// set not visible in datalayer (view will react)
-		OgreClient::Singleton->Data->Buy->IsVisible = false;
-		OgreClient::Singleton->Data->Buy->Clear(true);
+   bool UICallbacks::Buy::OnOKClicked(const CEGUI::EventArgs& e)
+   {
+      const CEGUI::WindowEventArgs& args = static_cast<const CEGUI::WindowEventArgs&>(e);		
+      CEGUI::ItemListbox* list = ControllerUI::Buy::List;
+      ObjectBaseList<TradeOfferObject^>^ dataItems = OgreClient::Singleton->Data->Buy->Items;
 
-		// mark GUIroot active
-		ControllerUI::ActivateRoot();
+      ::System::Collections::Generic::List<ObjectID^>^ idList = 
+         gcnew ::System::Collections::Generic::List<ObjectID^>();
 
-		return true;
-	}
+      // build buy ids
+      for(size_t i = 0; i < list->getItemCount(); i++)	
+         if (list->isItemSelected(i) && dataItems->Count > (int)i)			
+            idList->Add(gcnew ObjectID(dataItems[(int)i]->ID, dataItems[(int)i]->Count));
+
+      if (OgreClient::Singleton->Data->Buy->TradePartner != nullptr)
+      {
+         // send
+         OgreClient::Singleton->SendReqBuyItemsMessage(
+            OgreClient::Singleton->Data->Buy->TradePartner->ID,
+            idList->ToArray());
+      }
+
+      // hide
+      OgreClient::Singleton->Data->Buy->IsVisible = false;
+      ControllerUI::ActivateRoot();
+
+      return true;
+   };
+
+   bool UICallbacks::Buy::OnWindowKeyUp(const CEGUI::EventArgs& e)
+   {
+      const CEGUI::KeyEventArgs& args = static_cast<const CEGUI::KeyEventArgs&>(e);
+
+      // close window on ESC
+      if (args.scancode == CEGUI::Key::Escape)
+      {
+         // clear (view will react)
+         OgreClient::Singleton->Data->Buy->IsVisible = false;
+         OgreClient::Singleton->Data->Buy->Clear(true);
+      }
+
+      return UICallbacks::OnKeyUp(args);
+   };
+
+   bool UICallbacks::Buy::OnWindowClosed(const CEGUI::EventArgs& e)
+   {
+      // set not visible in datalayer (view will react)
+      OgreClient::Singleton->Data->Buy->IsVisible = false;
+      OgreClient::Singleton->Data->Buy->Clear(true);
+
+      // mark GUIroot active
+      ControllerUI::ActivateRoot();
+
+      return true;
+   }
 };};
