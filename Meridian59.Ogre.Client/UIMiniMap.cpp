@@ -105,10 +105,10 @@ namespace Meridian59 { namespace Ogre
          float zoom = ControllerUI::MiniMap::Zoom;
          
          zoom += args.wheelChange * -0.2f;
-         zoom = MathUtil::Bound(zoom, MINZOOM, MAXZOOM);
+         zoom = (float)MathUtil::Bound(zoom, MINZOOM, MAXZOOM);
 
          // update
-         ControllerUI::MiniMap::Zoom = (CLRReal)zoom;
+         ControllerUI::MiniMap::Zoom = zoom;
       }
 
       return true;

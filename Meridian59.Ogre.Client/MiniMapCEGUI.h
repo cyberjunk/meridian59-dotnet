@@ -287,10 +287,9 @@ namespace Meridian59 { namespace Ogre
 
    public:
       static bool IsRunning = false;
-      static float TPS = 0.0f;
-      static float TickWorst = 0.0f;
-      static float TickBest = 0.0f;
-      static float TickAvg = 0.0f;
+      static double TickWorst = 0.0f;
+      static double TickBest = 0.0f;
+      static double TickAvg = 0.0f;
 
       static void Initialize();
       static void Tick(::CEGUI::Window* Window, ::CEGUI::Window* Surface, CLRReal Zoom, IEnumerable<RoomObject^>^ Objects);
