@@ -569,11 +569,11 @@ namespace Meridian59 { namespace Ogre
 
    void ControllerRoom::CreateSidePart(RooSideDef^ Side, WallPartType PartType)
    {
-      BgfFile^ textureFile       = nullptr;
-      BgfBitmap^ texture         = nullptr;
-      V2 sp                      = V2::ZERO;
-      CLRString^ texname  = nullptr;
-      CLRString^ material = nullptr;
+      BgfFile^ textureFile = nullptr;
+      BgfBitmap^ texture   = nullptr;
+      V2 sp                = V2::ZERO;
+      CLRString^ texname   = nullptr;
+      CLRString^ material  = nullptr;
 
       /******************************************************************************/
 
@@ -678,11 +678,11 @@ namespace Meridian59 { namespace Ogre
 
    void ControllerRoom::CreateSectorPart(RooSector^ Sector, bool IsFloor)
    {
-      CLRString^ material = nullptr;
-      CLRString^ texname  = nullptr;
-      V2 sp                      = V2::ZERO;
-      BgfFile^ textureFile       = nullptr;
-      BgfBitmap^ texture         = nullptr;
+      CLRString^ material  = nullptr;
+      CLRString^ texname   = nullptr;
+      V2 sp                = V2::ZERO;
+      BgfFile^ textureFile = nullptr;
+      BgfBitmap^ texture   = nullptr;
 
       /******************************************************************************/
 
