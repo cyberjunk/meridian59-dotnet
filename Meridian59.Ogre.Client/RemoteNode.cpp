@@ -2,165 +2,162 @@
 
 namespace Meridian59 { namespace Ogre 
 {
-	static RemoteNode::RemoteNode()
-	{		
-	};
+   static RemoteNode::RemoteNode()
+   {
+   };
 
-	RemoteNode::RemoteNode(Data::Models::RoomObject^ RoomObject, ::Ogre::SceneManager* SceneManager)
-	{
-		roomObject = RoomObject;
-        sceneManager = SceneManager;
+   RemoteNode::RemoteNode(Data::Models::RoomObject^ RoomObject, ::Ogre::SceneManager* SceneManager)
+   {
+      roomObject = RoomObject;
+      sceneManager = SceneManager;
 
-		// create scenenode
-        ::Ogre::String& ostr_scenenodename = 
-			PREFIX_REMOTENODE_SCENENODE + ::Ogre::StringConverter::toString(roomObject->ID);
-		
-		SceneNode = SceneManager->getRootSceneNode()->createChildSceneNode(ostr_scenenodename);
-		SceneNode->setFixedYawAxis(true);
+      // create scenenode
+      ::Ogre::String& ostr_scenenodename = 
+         PREFIX_REMOTENODE_SCENENODE + ::Ogre::StringConverter::toString(roomObject->ID);
 
-		// show boundingbox in debug builds
+      SceneNode = SceneManager->getRootSceneNode()->createChildSceneNode(ostr_scenenodename);
+      SceneNode->setFixedYawAxis(true);
+
+      // show boundingbox in debug builds
 #if DEBUGBOUNDINGBOX
-        SceneNode->showBoundingBox(true);
+         SceneNode->showBoundingBox(true);
 #endif
-		// attach listener
-        RoomObject->PropertyChanged += 
-			gcnew PropertyChangedEventHandler(this, &RemoteNode::OnRoomObjectPropertyChanged);
+
+      // attach listener
+      RoomObject->PropertyChanged += 
+         gcnew PropertyChangedEventHandler(this, &RemoteNode::OnRoomObjectPropertyChanged);
             
-        // create sound holder list
-        sounds = new std::list<ISound*>();
+      // create sound holder list
+      sounds = new std::list<ISound*>();
 
-		// possibly create a name
-		UpdateName();
-	};
-	
-	RemoteNode::~RemoteNode()
-	{
-		// detach listener
-        RoomObject->PropertyChanged -= 
-			gcnew PropertyChangedEventHandler(this, &RemoteNode::OnRoomObjectPropertyChanged);
+      // possibly create a name
+      UpdateName();
+   };
 
-        // LIGHT FIRST! 
-        DestroyLight();
+   RemoteNode::~RemoteNode()
+   {
+      // detach listener
+      RoomObject->PropertyChanged -= 
+         gcnew PropertyChangedEventHandler(this, &RemoteNode::OnRoomObjectPropertyChanged);
 
-		::Ogre::String& ostr_nodeid = 
-			PREFIX_REMOTENODE_SCENENODE + ::Ogre::StringConverter::toString(roomObject->ID);
+      // LIGHT FIRST! 
+      DestroyLight();
 
-		// cleanup attached name
-		if (billboardSetName)
-        {
-			billboardSetName->clear();
-			billboardSetName->detachFromParent();
+      ::Ogre::String& ostr_nodeid = 
+         PREFIX_REMOTENODE_SCENENODE + ::Ogre::StringConverter::toString(roomObject->ID);
 
-			SceneManager->destroyBillboardSet(billboardSetName);
-        }
-		
-        // cleanup scenenode
-        if (SceneManager->hasSceneNode(ostr_nodeid))
-            SceneManager->destroySceneNode(ostr_nodeid);
+      // cleanup attached name
+      if (billboardSetName)
+      {
+         billboardSetName->clear();
+         billboardSetName->detachFromParent();
+         SceneManager->destroyBillboardSet(billboardSetName);
+      }
 
-        // cleanup attached sounds
-		if (sounds)
-        {
-			for(std::list<ISound*>::iterator it = sounds->begin(); it != sounds->end(); ++it)
-			{
-				ISound* sound = *it;
-				sound->stop();
-				sound->drop();
-			}
+      // cleanup scenenode
+      if (SceneManager->hasSceneNode(ostr_nodeid))
+         SceneManager->destroySceneNode(ostr_nodeid);
 
-			sounds->clear();
+      // cleanup attached sounds
+      if (sounds)
+      {
+         for(std::list<ISound*>::iterator it = sounds->begin(); it != sounds->end(); ++it)
+         {
+            ISound* sound = *it;
+            sound->stop();
+            sound->drop();
+         }
 
-			delete sounds;
-		}
+         sounds->clear();
+         delete sounds;
+	   }
 
-		sceneNode			= nullptr;
-		sounds				= nullptr;
-		billboardSetName	= nullptr;
-		billboardName		= nullptr;
-		sceneManager		= nullptr;
-	};
+      sceneNode         = nullptr;
+      sounds            = nullptr;
+      billboardSetName  = nullptr;
+      billboardName     = nullptr;
+      sceneManager      = nullptr;
+   };
 
-	void RemoteNode::OnRoomObjectPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
-    {
-		// update scenenode orientation based on datalayer model     
-		if (CLRString::Equals(e->PropertyName, Data::Models::RoomObject::PROPNAME_ANGLE))
-			RefreshOrientation();
-		
+   void RemoteNode::OnRoomObjectPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
+   {
+      // update scenenode orientation based on datalayer model     
+      if (CLRString::Equals(e->PropertyName, Data::Models::RoomObject::PROPNAME_ANGLE))
+         RefreshOrientation();
+
       // Update light if changed
-		else if (CLRString::Equals(e->PropertyName, Data::Models::RoomObject::PROPNAME_LIGHTINGINFO))
-		{
-            if (RoomObject->LightingInfo->IsLightOn)
-            {
-                DestroyLight();
-                CreateLight();
-            }
-            else
-                DestroyLight();
+      else if (CLRString::Equals(e->PropertyName, Data::Models::RoomObject::PROPNAME_LIGHTINGINFO))
+      {
+         if (RoomObject->LightingInfo->IsLightOn)
+         {
+            DestroyLight();
+            CreateLight();
+         }
+         else
+            DestroyLight();
+      }
 
-		}
+      else if (CLRString::Equals(e->PropertyName, Data::Models::RoomObject::PROPNAME_POSITION3D))
+      {
+         RefreshPosition();
+      }
 
-		else if (CLRString::Equals(e->PropertyName, Data::Models::RoomObject::PROPNAME_POSITION3D))
-		{
-            RefreshPosition();                   
-		}       
+      else if (CLRString::Equals(e->PropertyName, Data::Models::RoomObject::PROPNAME_NAME))
+      {
+         UpdateName();
+      }
 
-		else if (CLRString::Equals(e->PropertyName, Data::Models::RoomObject::PROPNAME_NAME))
-		{
-            UpdateName();           
-        }
+      else if (CLRString::Equals(e->PropertyName, Data::Models::RoomObject::PROPNAME_FLAGS))
+      {
+         UpdateName();
+         UpdateMaterial();
+      }
 
-		else if (CLRString::Equals(e->PropertyName, Data::Models::RoomObject::PROPNAME_FLAGS))
-		{
-			UpdateName();
-			UpdateMaterial();
-		}
+      else if (CLRString::Equals(e->PropertyName, Data::Models::RoomObject::PROPNAME_ISTARGET))
+      {
+         UpdateMaterial();
+      }
 
-		else if (CLRString::Equals(e->PropertyName, Data::Models::RoomObject::PROPNAME_ISTARGET))
-		{
-			UpdateMaterial();
-		}
-
-		else if (CLRString::Equals(e->PropertyName, Data::Models::RoomObject::PROPNAME_ISHIGHLIGHTED))
-		{
-			UpdateMaterial();
-		}
+      else if (CLRString::Equals(e->PropertyName, Data::Models::RoomObject::PROPNAME_ISHIGHLIGHTED))
+      {
+         UpdateMaterial();
+      }
     };
 
-    void RemoteNode::CreateLight()
-    {
-        ::Ogre::String& ostr_ligtname = 
-			PREFIX_REMOTENODE_LIGHT + ::Ogre::StringConverter::toString(roomObject->ID);
+   void RemoteNode::CreateLight()
+   {
+      ::Ogre::String& ostr_ligtname = 
+         PREFIX_REMOTENODE_LIGHT + ::Ogre::StringConverter::toString(roomObject->ID);
 
-		Light = Util::CreateLight(RoomObject, SceneManager, ostr_ligtname);
-            
-        if (Light != nullptr)
-        {
-            // maximum distance we render this light or skip it
-            Light->setRenderingDistance(MAXLIGHTRENDERDISTANCE);
+      Light = Util::CreateLight(RoomObject, SceneManager, ostr_ligtname);
 
-            SceneNode->attachObject(Light);
-        }
-    };
+      if (Light != nullptr)
+      {
+         // maximum distance we render this light or skip it
+         Light->setRenderingDistance(MAXLIGHTRENDERDISTANCE);
+         SceneNode->attachObject(Light);
+      }
+   };
 
-    void RemoteNode::UpdateLight()
-    {
-        if (Light != nullptr)
-        {			
-            // adjust the light from M59 values (light class extension)
-            Util::UpdateFromILightOwner(*Light, RoomObject);
-        }            
-    };
+   void RemoteNode::UpdateLight()
+   {
+      if (Light != nullptr)
+      {
+         // adjust the light from M59 values (light class extension)
+         Util::UpdateFromILightOwner(*Light, RoomObject);
+      }
+   };
 
-    void RemoteNode::DestroyLight()
-    {
-		::Ogre::String& ostr_ligtname = 
-			PREFIX_REMOTENODE_LIGHT + ::Ogre::StringConverter::toString(roomObject->ID);
+   void RemoteNode::DestroyLight()
+   {
+      ::Ogre::String& ostr_ligtname = 
+         PREFIX_REMOTENODE_LIGHT + ::Ogre::StringConverter::toString(roomObject->ID);
 
-        if (SceneManager->hasLight(ostr_ligtname))
-            SceneManager->destroyLight(ostr_ligtname);
-       
-        Light = nullptr;       
-    };
+      if (SceneManager->hasLight(ostr_ligtname))
+         SceneManager->destroyLight(ostr_ligtname);
+
+      Light = nullptr;
+   };
 
    void RemoteNode::CreateName()
    {
@@ -216,15 +213,14 @@ namespace Meridian59 { namespace Ogre
          ::Ogre::String& matName = StringConvert::CLRToOgre(strMat);
 
          // create Texture and material
-         TextureManager* texMan = TextureManager::getSingletonPtr();
-         MaterialManager* matMan = MaterialManager::getSingletonPtr();
+         TextureManager& texMan = TextureManager::getSingleton();
 
-         if (!texMan->resourceExists(texName))
-         {               
+         if (!texMan.resourceExists(texName))
+         {
             // create bitmap to draw on
             System::Drawing::Bitmap^ bitmap = 
                Meridian59::Drawing2D::ImageComposerGDI<Data::Models::ObjectBase^>::NameBitmap::Get(RoomObject);
-                			
+
             // create texture from bitmap
             Util::CreateTexture(bitmap, texName, TEXTUREGROUP_MOVABLETEXT);
             
@@ -238,7 +234,7 @@ namespace Meridian59 { namespace Ogre
          billboardSetName->setMaterialName(matName);
 
          // get size from texture
-         TexturePtr texPtr = TextureManager::getSingletonPtr()->createOrRetrieve(
+         TexturePtr texPtr = texMan.createOrRetrieve(
             texName, TEXTUREGROUP_MOVABLETEXT).first.staticCast<Texture>();
 
          nameTextureWidth = (float)texPtr->getWidth();
@@ -246,7 +242,7 @@ namespace Meridian59 { namespace Ogre
 
          billboardSetName->setDefaultDimensions(nameTextureWidth, nameTextureHeight);
          billboardSetName->setBounds(AxisAlignedBox::BOX_NULL, 0.0f);
-         
+
          // update position of name
          UpdateNamePosition();
 
@@ -256,7 +252,7 @@ namespace Meridian59 { namespace Ogre
       else if (billboardSetName != nullptr)
       {
          // hide it
-         billboardSetName->setVisible(false);			
+         billboardSetName->setVisible(false);
       }
    };
 
@@ -318,64 +314,63 @@ namespace Meridian59 { namespace Ogre
       }
    };
 
-    void RemoteNode::RefreshOrientation()
-    {
-		// reset scenenode orientation to M59 angle
-        Util::SetOrientationFromAngle(*SceneNode, (float)RoomObject->Angle);                
-    };
+   void RemoteNode::RefreshOrientation()
+   {
+      // reset scenenode orientation to M59 angle
+      Util::SetOrientationFromAngle(*SceneNode, (float)RoomObject->Angle);
+   };
 
-    void RemoteNode::RefreshPosition()
-    {
-		::Ogre::Vector3& pos = Util::ToOgre(RoomObject->Position3D);
+   void RemoteNode::RefreshPosition()
+   {
+      ::Ogre::Vector3& pos = Util::ToOgre(RoomObject->Position3D);
 
-        // update scenenode position from datamodel
-		SceneNode->setPosition(pos);
-		
-		// update sound if any
-		if (sounds->size() > 0)
-		{
-			vec3df irrpos;
-			irrpos.X = (ik_f32)pos.x;
-			irrpos.Y = (ik_f32)pos.y;
-			irrpos.Z = (ik_f32)-pos.z;
+      // update scenenode position from datamodel
+      SceneNode->setPosition(pos);
 
-			ISound* sound;
+      // update sound if any
+      if (sounds->size() > 0)
+      {
+         vec3df irrpos;
+         irrpos.X = (ik_f32)pos.x;
+         irrpos.Y = (ik_f32)pos.y;
+         irrpos.Z = (ik_f32)-pos.z;
 
-			// update position of attached playback sounds
-			for(std::list<ISound*>::iterator it=sounds->begin(); 
-				it !=sounds->end(); 
-				it++)
-			{		
-				sound = *it;
-				sound->setPosition(irrpos);
-			}
-		}
-	};
-	
-	void RemoteNode::UpdateMaterial()
-    {
-	};
+         ISound* sound;
 
-	void RemoteNode::SetVisible(bool Value)
-	{
-		if (SceneNode != nullptr)
-		{
-			// disable everything attached
-			SceneNode->setVisible(Value);
-			
-			// reenable light
-			if (light != nullptr)
-				light->setVisible(true);
+         // update position of attached playback sounds
+         for(std::list<ISound*>::iterator it=sounds->begin(); 
+            it !=sounds->end(); 
+            it++)
+         {
+            sound = *it;
+            sound->setPosition(irrpos);
+         }
+      }
+   };
 
-			// update name
-			UpdateName();
-		}
-		
-	}
+   void RemoteNode::UpdateMaterial()
+   {
+   };
 
-	void RemoteNode::AddSound(ISound* Sound)
-    {
-        // add sound to list
-		sounds->push_back(Sound);
-    };
+   void RemoteNode::SetVisible(bool Value)
+   {
+      if (SceneNode != nullptr)
+      {
+         // disable everything attached
+         SceneNode->setVisible(Value);
+
+         // reenable light
+         if (light != nullptr)
+            light->setVisible(true);
+
+         // update name
+         UpdateName();
+      }
+   }
+
+   void RemoteNode::AddSound(ISound* Sound)
+   {
+      // add sound to list
+      sounds->push_back(Sound);
+   };
 };};
