@@ -31,13 +31,13 @@ namespace Meridian59 { namespace Ogre
 		// try initialize DirectDraw7+
 		hr = DirectDrawCreateEx(NULL, (LPVOID*)dd7, IID_IDirectDraw7, NULL);
 		
-		if (!SUCCEEDED(hr))					
+		if (!SUCCEEDED(hr))
 			return false;
 		
 		// try set cooperative-level
 		hr = (**dd7).SetCooperativeLevel(NULL, DDSCL_NORMAL);
 		
-		if (!SUCCEEDED(hr))			
+		if (!SUCCEEDED(hr))
 			return false;
 
 		/*********************************************************************************************/
@@ -64,7 +64,7 @@ namespace Meridian59 { namespace Ogre
 		// create internal cache/source surface
 		hr = (**dd7).CreateSurface(surfaceSourceDesc, surfaceSource, NULL);
 		
-		if (!SUCCEEDED(hr))			
+		if (!SUCCEEDED(hr))
 			return false;
 
 		/*********************************************************************************************/
@@ -77,7 +77,7 @@ namespace Meridian59 { namespace Ogre
 		surfaceBGDesc->dwFlags = DDSD_CAPS | DDSD_WIDTH | DDSD_HEIGHT | DDSD_PIXELFORMAT | DDSD_CKSRCBLT;
 		surfaceBGDesc->ddsCaps.dwCaps =  DDSCAPS_OFFSCREENPLAIN | DDSCAPS_SYSTEMMEMORY;
 		surfaceBGDesc->dwWidth  = BGICONWIDTH;
-		surfaceBGDesc->dwHeight = BGICONHEIGHT;		
+		surfaceBGDesc->dwHeight = BGICONHEIGHT;
 		surfaceBGDesc->ddpfPixelFormat.dwSize = sizeof(DDPIXELFORMAT);
 		surfaceBGDesc->ddpfPixelFormat.dwFlags= DDPF_RGB | DDPF_ALPHAPIXELS;
 		surfaceBGDesc->ddpfPixelFormat.dwRGBBitCount		= 32;
@@ -91,7 +91,7 @@ namespace Meridian59 { namespace Ogre
 		// create background surface
 		hr = (**dd7).CreateSurface(surfaceBGDesc, surfaceBG, NULL);
 		
-		if (!SUCCEEDED(hr))			
+		if (!SUCCEEDED(hr))
 			return false;
 		
 		// load glow background resource
@@ -113,17 +113,17 @@ namespace Meridian59 { namespace Ogre
 
 		// lock
 		hr = (**surfaceBG).Lock(NULL, surfaceBGDesc, DDLOCK_WRITEONLY, NULL);
-		if (!SUCCEEDED(hr))			
+		if (!SUCCEEDED(hr))
 			return false;
 
 		// copy pixels
-		memcpy(surfaceBGDesc->lpSurface, data->Scan0.ToPointer(), BGICONWIDTH * BGICONHEIGHT * 4);			
+		memcpy(surfaceBGDesc->lpSurface, data->Scan0.ToPointer(), BGICONWIDTH * BGICONHEIGHT * 4);
 
 		// unlock
 		hr = (**surfaceBG).Unlock(NULL);
-		if (!SUCCEEDED(hr))			
+		if (!SUCCEEDED(hr))
 			return false;
-						
+
 		bg->UnlockBits(data);
 		delete bg;
 		
@@ -175,7 +175,7 @@ namespace Meridian59 { namespace Ogre
 		free(surfaceSource);
 		free(surfaceBG);
 		free(surfaceDest);
-		free(surfaceSourceDesc);		
+		free(surfaceSourceDesc);
 		free(surfaceBGDesc);
 		free(surfaceDestDesc);
 		
