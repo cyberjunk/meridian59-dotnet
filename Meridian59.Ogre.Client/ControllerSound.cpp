@@ -2,495 +2,497 @@
 
 namespace Meridian59 { namespace Ogre 
 {
-	static ControllerSound::ControllerSound()
-	{
-		soundEngine		= nullptr;
-        listenerNode	= nullptr;
-		sounds			= nullptr;
-		backgroundMusic = nullptr;
-	};
+   static ControllerSound::ControllerSound()
+   {
+      soundEngine     = nullptr;
+      listenerNode    = nullptr;
+      sounds          = nullptr;
+      backgroundMusic = nullptr;
+   };
 
-	void ControllerSound::Initialize()
-    {
-		if (IsInitialized)
-			return;
+   void ControllerSound::Initialize()
+   {
+      if (IsInitialized)
+         return;
 
-		// init sound list
-        sounds = new std::list<ISound*>();
+      // init sound list
+      sounds = new std::list<ISound*>();
 
-		ISoundDeviceList* deviceList = ::irrklang::createSoundDeviceList();
-		ik_s32 devicecount = deviceList->getDeviceCount();
+      ISoundDeviceList* deviceList = ::irrklang::createSoundDeviceList();
+      ik_s32 devicecount = deviceList->getDeviceCount();
 
-		// we need at least one outputdriver (this can be a NULL device!)
-		if (devicecount > 0)
-		{
-			// sound engine options, may be adjusted
-			E_SOUND_ENGINE_OPTIONS options = (E_SOUND_ENGINE_OPTIONS)
-				(E_SOUND_ENGINE_OPTIONS::ESEO_MULTI_THREADED |
-				E_SOUND_ENGINE_OPTIONS::ESEO_LOAD_PLUGINS |
-				E_SOUND_ENGINE_OPTIONS::ESEO_USE_3D_BUFFERS);
-			
-			E_SOUND_OUTPUT_DRIVER driver = E_SOUND_OUTPUT_DRIVER::ESOD_AUTO_DETECT;
-		
-			// try to initialize irrKlang
-			soundEngine = ::irrklang::createIrrKlangDevice(driver, options);
-            		
-			// if engine is initialized 
-			// this is not null, it's null if no sound device in device manager
-			if (soundEngine)
-			{
-				// sound engine properties
-				soundEngine->setDefault3DSoundMaxDistance(2000.0f);
-				soundEngine->setDefault3DSoundMinDistance(0.0f);
-				soundEngine->setRolloffFactor(0.005f);
-			}
-		}
-		else
-			Logger::Log("SoundController", LogType::Warning, "No sound device found!");
+      // we need at least one outputdriver (this can be a NULL device!)
+      if (devicecount > 0)
+      {
+         // sound engine options, may be adjusted
+         E_SOUND_ENGINE_OPTIONS options = (E_SOUND_ENGINE_OPTIONS)
+            (E_SOUND_ENGINE_OPTIONS::ESEO_MULTI_THREADED |
+            E_SOUND_ENGINE_OPTIONS::ESEO_LOAD_PLUGINS |
+            E_SOUND_ENGINE_OPTIONS::ESEO_USE_3D_BUFFERS);
 
-		// cleanup
-		deviceList->drop();
+         E_SOUND_OUTPUT_DRIVER driver = E_SOUND_OUTPUT_DRIVER::ESOD_AUTO_DETECT;
 
-		// mark initialized
-		IsInitialized = true;
-    };
+         // try to initialize irrKlang
+         soundEngine = ::irrklang::createIrrKlangDevice(driver, options);
 
-	void ControllerSound::Destroy()
-	{
-		if (!IsInitialized)
-			return;
-		
-		if (sounds)
-		{
-			sounds->clear();
-			delete sounds;
-		}
+         // if engine is initialized 
+         // this is not null, it's null if no sound device in device manager
+         if (soundEngine)
+         {
+            // sound engine properties
+            soundEngine->setDefault3DSoundMaxDistance(2000.0f);
+            soundEngine->setDefault3DSoundMinDistance(0.0f);
+            soundEngine->setRolloffFactor(0.005f);
+         }
+      }
+      else
+         Logger::Log("SoundController", LogType::Warning, "No sound device found!");
 
-		if (soundEngine)
-		{			
-			soundEngine->stopAllSounds();
-			soundEngine->drop();	
-		}
+      // cleanup
+      deviceList->drop();
 
-		if (listenerNode != nullptr)
-		{
-			listenerNode->RoomObject->PropertyChanged -= 
-				gcnew PropertyChangedEventHandler(&ControllerSound::OnRoomObjectPropertyChanged);
-		}
+      // mark initialized
+      IsInitialized = true;
+   };
 
-		soundEngine		= nullptr;
-        listenerNode	= nullptr;
-		sounds			= nullptr;
-		backgroundMusic = nullptr;
+   void ControllerSound::Destroy()
+   {
+      if (!IsInitialized)
+         return;
 
-		// mark not initialized
-		IsInitialized = false;
-	};
+      if (sounds)
+      {
+         sounds->clear();
+         delete sounds;
+      }
 
-	void ControllerSound::SetListenerNode(RemoteNode^ AvatarNode)
-    {
-		if (!IsInitialized || !soundEngine)
-			return;
-	
-		// possibly detach old listener
-		if (listenerNode)
-		{
-			listenerNode->RoomObject->PropertyChanged -= 
-				gcnew PropertyChangedEventHandler(&ControllerSound::OnRoomObjectPropertyChanged);
-		}
+      if (soundEngine)
+      {
+         soundEngine->stopAllSounds();
+         soundEngine->drop();	
+      }
 
-		// set new value
-		listenerNode = AvatarNode;
+      if (listenerNode != nullptr)
+      {
+         listenerNode->RoomObject->PropertyChanged -= 
+            gcnew PropertyChangedEventHandler(&OnRoomObjectPropertyChanged);
+      }
 
-		// if not null
-		if (listenerNode)
-		{
-			// hook up listener
-			listenerNode->RoomObject->PropertyChanged += 
-				gcnew PropertyChangedEventHandler(&ControllerSound::OnRoomObjectPropertyChanged);
+      soundEngine     = nullptr;
+      listenerNode    = nullptr;
+      sounds          = nullptr;
+      backgroundMusic = nullptr;
 
-			// initial set
-			UpdateListener(listenerNode);
-		}		
-    };
+      // mark not initialized
+      IsInitialized = false;
+   };
 
-	void ControllerSound::OnRoomObjectPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
-    {
-		if(CLRString::Equals(e->PropertyName, RoomObject::PROPNAME_ANGLE) ||
-		   CLRString::Equals(e->PropertyName, RoomObject::PROPNAME_POSITION3D))
-		{
-            // update listener if listener object changed position or orientation
-            UpdateListener(listenerNode);            
-		}
-    };
+   void ControllerSound::SetListenerNode(RemoteNode^ AvatarNode)
+   {
+      if (!IsInitialized || !soundEngine)
+         return;
 
-	void ControllerSound::UpdateListener(RemoteNode^ AvatarNode)
-	{
-		if (!IsInitialized || !soundEngine || !AvatarNode || !AvatarNode->SceneNode)
-			return;
-		
-		RoomObject^ avatar = OgreClient::Singleton->Data->AvatarObject;
+      // possibly detach old listener
+      if (listenerNode)
+      {
+         listenerNode->RoomObject->PropertyChanged -= 
+            gcnew PropertyChangedEventHandler(&OnRoomObjectPropertyChanged);
+      }
 
-		V3 pos = avatar->Position3D;
-		V2 dir = MathUtil::GetDirectionForRadian(avatar->Angle);
-	
-		vec3df irrpos;
-		irrpos.X = (ik_f32)pos.X;
-		irrpos.Y = (ik_f32)pos.Y;
-		irrpos.Z = (ik_f32)-pos.Z;
+      // set new value
+      listenerNode = AvatarNode;
 
-		vec3df irrlook;
-		irrlook.X = (ik_f32)dir.X;
-		irrlook.Y = 0.0f;
-		irrlook.Z = (ik_f32)-dir.Y;
-		
-		soundEngine->setListenerPosition(irrpos, irrlook);
-	};
+      // if not null
+      if (listenerNode)
+      {
+         // hook up listener
+         listenerNode->RoomObject->PropertyChanged += 
+            gcnew PropertyChangedEventHandler(&OnRoomObjectPropertyChanged);
 
-	void ControllerSound::AdjustMusicVolume()
-	{
-		if (!backgroundMusic)
-			return;
+         // initial set
+         UpdateListener(listenerNode);
+      }
+   };
 
-		backgroundMusic->setVolume(OgreClient::Singleton->Config->MusicVolume / 10.0f);
-	};
+   void ControllerSound::OnRoomObjectPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
+   {
+      if(CLRString::Equals(e->PropertyName, RoomObject::PROPNAME_ANGLE) ||
+         CLRString::Equals(e->PropertyName, RoomObject::PROPNAME_POSITION3D))
+      {
+         // update listener if listener object changed position or orientation
+         UpdateListener(listenerNode);
+      }
+   };
 
-	void ControllerSound::AdjustSoundVolume()
-	{
-		if (sounds)
-		{
-			for (std::list<ISound*>::iterator it = sounds->begin(); it != sounds->end(); it++)			
-				(*it)->setVolume(OgreClient::Singleton->Config->SoundVolume / 10.0f);			
-		}
+   void ControllerSound::UpdateListener(RemoteNode^ AvatarNode)
+   {
+      if (!IsInitialized || !soundEngine || !AvatarNode || !AvatarNode->SceneNode)
+         return;
 
-		for each(RoomObject^ obj in OgreClient::Singleton->Data->RoomObjects)
-		{
-			if (!obj->UserData)
-				continue;
+      RoomObject^ avatar = OgreClient::Singleton->Data->AvatarObject;
 
-			RemoteNode^ node = (RemoteNode^)obj->UserData;
+      V3 pos = avatar->Position3D;
+      V2 dir = MathUtil::GetDirectionForRadian(avatar->Angle);
 
-			if (!node || !node->Sounds)
-				return;
+      vec3df irrpos;
+      irrpos.X = (ik_f32)pos.X;
+      irrpos.Y = (ik_f32)pos.Y;
+      irrpos.Z = (ik_f32)-pos.Z;
 
-			for (std::list<ISound*>::iterator it = node->Sounds->begin(); it != node->Sounds->end(); it++)
-				(*it)->setVolume(OgreClient::Singleton->Config->SoundVolume / 10.0f);			
-		}		
-	};
+      vec3df irrlook;
+      irrlook.X = (ik_f32)dir.X;
+      irrlook.Y = 0.0f;
+      irrlook.Z = (ik_f32)-dir.Y;
 
-	void ControllerSound::HandleGameModeMessage(GameModeMessage^ Message)
-	{
-		if (!IsInitialized || !soundEngine)
-			return;
-	
-		switch ((MessageTypeGameMode)Message->PI)
-		{
-			case MessageTypeGameMode::Player:
-				HandlePlayerMessage((PlayerMessage^)Message);
-				break;
+      soundEngine->setListenerPosition(irrpos, irrlook);
+   };
 
-			case MessageTypeGameMode::PlayWave:
-				HandlePlayWaveMessage((PlayWaveMessage^)Message);
-				break;
+   void ControllerSound::AdjustMusicVolume()
+   {
+      if (!backgroundMusic)
+         return;
+
+      backgroundMusic->setVolume(OgreClient::Singleton->Config->MusicVolume / 10.0f);
+   };
+
+   void ControllerSound::AdjustSoundVolume()
+   {
+      if (sounds)
+      {
+         for (std::list<ISound*>::iterator it = sounds->begin(); it != sounds->end(); it++)
+            (*it)->setVolume(OgreClient::Singleton->Config->SoundVolume / 10.0f);
+      }
+
+      for each(RoomObject^ obj in OgreClient::Singleton->Data->RoomObjects)
+      {
+         if (!obj->UserData)
+            continue;
+
+         RemoteNode^ node = (RemoteNode^)obj->UserData;
+
+         if (!node || !node->Sounds)
+            return;
+
+         for (std::list<ISound*>::iterator it = node->Sounds->begin(); it != node->Sounds->end(); it++)
+            (*it)->setVolume(OgreClient::Singleton->Config->SoundVolume / 10.0f);
+      }
+   };
+
+   void ControllerSound::HandleGameModeMessage(GameModeMessage^ Message)
+   {
+      if (!IsInitialized || !soundEngine)
+         return;
+
+      switch ((MessageTypeGameMode)Message->PI)
+      {
+         case MessageTypeGameMode::Player:
+            HandlePlayerMessage((PlayerMessage^)Message);
+            break;
+
+         case MessageTypeGameMode::PlayWave:
+            HandlePlayWaveMessage((PlayWaveMessage^)Message);
+            break;
 #if !VANILLA
-			case MessageTypeGameMode::StopWave:
-				HandleStopWaveMessage((StopWaveMessage^)Message);
-				break;
+         case MessageTypeGameMode::StopWave:
+            HandleStopWaveMessage((StopWaveMessage^)Message);
+            break;
 #endif
-			case MessageTypeGameMode::PlayMusic:
-				HandlePlayMusicMessage((PlayMusicMessage^)Message);
-				break;
+         case MessageTypeGameMode::PlayMusic:
+            HandlePlayMusicMessage((PlayMusicMessage^)Message);
+            break;
 
-			case MessageTypeGameMode::PlayMidi:
-				HandlePlayMidiMessage((PlayMidiMessage^)Message);
-				break;
-		}
-	};
+         case MessageTypeGameMode::PlayMidi:
+            HandlePlayMidiMessage((PlayMidiMessage^)Message);
+            break;
+      }
+   };
+
 #if !VANILLA
-	void ControllerSound::HandleStopWaveMessage(StopWaveMessage^ Message)
-	{
-		if (!IsInitialized || !soundEngine || !Message->PlayInfo->Resource || !Message->PlayInfo->ResourceName)
-			return;
+   void ControllerSound::HandleStopWaveMessage(StopWaveMessage^ Message)
+   {
+      if (!IsInitialized || !soundEngine || !Message->PlayInfo->Resource || !Message->PlayInfo->ResourceName)
+         return;
 
-		// get resource name of wav file
-		CLRString^ sourcename = Message->PlayInfo->ResourceName->ToLower();
+      // get resource name of wav file
+      CLRString^ sourcename = Message->PlayInfo->ResourceName->ToLower();
 
-		// native string
-		::Ogre::String& o_str = StringConvert::CLRToOgre(sourcename);
-		const char* c_str = o_str.c_str();
+      // native string
+      ::Ogre::String& o_str = StringConvert::CLRToOgre(sourcename);
+      const char* c_str = o_str.c_str();
 
-		// check if sound is known to irrklang
-		ISoundSource* soundsrc = soundEngine->getSoundSource(c_str, false);
+      // check if sound is known to irrklang
+      ISoundSource* soundsrc = soundEngine->getSoundSource(c_str, false);
 
-		// Return if not found
-		if (!soundsrc)
-			return;
+      // Return if not found
+      if (!soundsrc)
+         return;
 
-		// Source given by object id
-		if (Message->PlayInfo->ID > 0)
-		{
-			// try get source object
-			RoomObject^ source = OgreClient::Singleton->Data->RoomObjects->GetItemByID(Message->PlayInfo->ID);
+      // Source given by object id
+      if (Message->PlayInfo->ID > 0)
+      {
+         // try get source object
+         RoomObject^ source = OgreClient::Singleton->Data->RoomObjects->GetItemByID(Message->PlayInfo->ID);
 
-			if (source && source->UserData)
-			{
-				// get attached remotenode
-				RemoteNode^ node = (RemoteNode^)source->UserData;
+         if (source && source->UserData)
+         {
+            // get attached remotenode
+            RemoteNode^ node = (RemoteNode^)source->UserData;
 
-				if (node && node->Sounds)
-				{
-					for (std::list<ISound*>::iterator it = node->Sounds->begin(); it != node->Sounds->end();++it)
-					{
-						if ((*it)->getSoundSource() == soundsrc)
-						{
-							(*it)->stop();
-							(*it)->drop();
-							it = node->Sounds->erase(it);
-							return;
-						}
-					}
-				}
-			}
-		}
+            if (node && node->Sounds)
+            {
+               for (std::list<ISound*>::iterator it = node->Sounds->begin(); it != node->Sounds->end();++it)
+               {
+                  if ((*it)->getSoundSource() == soundsrc)
+                  {
+                     (*it)->stop();
+                     (*it)->drop();
+                     it = node->Sounds->erase(it);
+                     return;
+                  }
+               }
+            }
+         }
+      }
 
-		// Check our avatar's sound list
-		if (OgreClient::Singleton->Data->AvatarObject &&
-			OgreClient::Singleton->Data->AvatarObject->UserData)
-		{
-			RemoteNode^ node = (RemoteNode^)OgreClient::Singleton->Data->AvatarObject->UserData;
+      // Check our avatar's sound list
+      if (OgreClient::Singleton->Data->AvatarObject &&
+          OgreClient::Singleton->Data->AvatarObject->UserData)
+      {
+         RemoteNode^ node = (RemoteNode^)OgreClient::Singleton->Data->AvatarObject->UserData;
 
-			if (node && node->Sounds)
-			{
-				for (std::list<ISound*>::iterator it = node->Sounds->begin(); it != node->Sounds->end(); ++it)
-				{
-					if ((*it)->getSoundSource() == soundsrc)
-					{
-						(*it)->stop();
-						(*it)->drop();
-						it = node->Sounds->erase(it);
-						return;
-					}
-				}
-			}
-		}
+         if (node && node->Sounds)
+         {
+            for (std::list<ISound*>::iterator it = node->Sounds->begin(); it != node->Sounds->end(); ++it)
+            {
+               if ((*it)->getSoundSource() == soundsrc)
+               {
+                  (*it)->stop();
+                  (*it)->drop();
+                  it = node->Sounds->erase(it);
+                  return;
+               }
+            }
+         }
+      }
 
-		// Check sounds list
-		for (std::list<ISound*>::iterator it = sounds->begin(); it != sounds->end();++it)
-		{
-			if ((*it)->getSoundSource() == soundsrc)
-			{
-				(*it)->stop();
-				(*it)->drop();
-				it = sounds->erase(it);
-				return;
-			}
-		}
-		return;
-	};
+      // Check sounds list
+      for (std::list<ISound*>::iterator it = sounds->begin(); it != sounds->end();++it)
+      {
+         if ((*it)->getSoundSource() == soundsrc)
+         {
+            (*it)->stop();
+            (*it)->drop();
+            it = sounds->erase(it);
+            return;
+         }
+      }
+      return;
+   };
 #endif
-	void ControllerSound::HandlePlayerMessage(PlayerMessage^ Message)
-	{
-		if (!IsInitialized || !soundEngine || !sounds)
-			return;
-		
-		// stop playback of all sounds
-		//soundEngine->stopAllSounds();
-		
-		for(std::list<ISound*>::iterator it=sounds->begin(); it !=sounds->end(); it++)
-		{
-			(*it)->stop();
-			(*it)->drop();
-		}
-		
-		// clear references
-		sounds->clear();
-	};
-	
-	void ControllerSound::HandlePlayMusicMessage(PlayMusicMessage^ Message)
-	{
-		StartMusic(Message->PlayInfo);
-	};
 
-	void ControllerSound::HandlePlayMidiMessage(PlayMidiMessage^ Message)
-	{
-		StartMusic(Message->PlayInfo);
-	};
+   void ControllerSound::HandlePlayerMessage(PlayerMessage^ Message)
+   {
+      if (!IsInitialized || !soundEngine || !sounds)
+         return;
 
-	void ControllerSound::HandlePlayWaveMessage(PlayWaveMessage^ Message)
-	{
-		if (!IsInitialized || !soundEngine || !Message->PlayInfo->Resource || !Message->PlayInfo->ResourceName)
-			return;
+      // stop playback of all sounds
+      //soundEngine->stopAllSounds();
 
-		if (Message->PlayInfo->PlayFlags->IsLoop && OgreClient::Singleton->Config->DisableLoopSounds)
-			return;
+      for(std::list<ISound*>::iterator it=sounds->begin(); it !=sounds->end(); it++)
+      {
+         (*it)->stop();
+         (*it)->drop();
+      }
 
-		// if source is a object, we save it here
-		RemoteNode^ attachNode = nullptr;
+      // clear references
+      sounds->clear();
+   };
 
-		// initial playback position
-		float x = 0;
-		float y = 0;
-		float z = 0;
+   void ControllerSound::HandlePlayMusicMessage(PlayMusicMessage^ Message)
+   {
+      StartMusic(Message->PlayInfo);
+   };
 
-		// source given by object id
-		if (Message->PlayInfo->ID > 0)
-		{
-			// try get source object
-			RoomObject^ source = OgreClient::Singleton->Data->RoomObjects->GetItemByID(Message->PlayInfo->ID);
+   void ControllerSound::HandlePlayMidiMessage(PlayMidiMessage^ Message)
+   {
+      StartMusic(Message->PlayInfo);
+   };
 
-			if (source && source->UserData)
-			{
-				// get attached remotenode
-				attachNode = (RemoteNode^)source->UserData;
+   void ControllerSound::HandlePlayWaveMessage(PlayWaveMessage^ Message)
+   {
+      if (!IsInitialized || !soundEngine || !Message->PlayInfo->Resource || !Message->PlayInfo->ResourceName)
+         return;
 
-				if (attachNode && attachNode->SceneNode)
-				{
-					::Ogre::Vector3 pos = attachNode->SceneNode->getPosition();
-					x = (float)pos.x;
-					y = (float)pos.y;
-					z = (float)-pos.z;
-				}
-			}
-		}
+      if (Message->PlayInfo->PlayFlags->IsLoop && OgreClient::Singleton->Config->DisableLoopSounds)
+         return;
 
-		// source given by row/col
-		else if (Message->PlayInfo->Row > 0 && Message->PlayInfo->Column > 0)
-		{
-			// convert the center of the server grid square to coords of roo file
-			x = (float)(Message->PlayInfo->Column - 1) * 1024.0f + 512.0f;
-			z = (float)(Message->PlayInfo->Row - 1) * 1024.0f + 512.0f;
+      // if source is a object, we save it here
+      RemoteNode^ attachNode = nullptr;
 
-			RooSubSector^ out;
-			
-			if (OgreClient::Singleton->CurrentRoom)
-				y = (float)OgreClient::Singleton->CurrentRoom->GetHeightAt(x, z, out, true, false);
+      // initial playback position
+      float x = 0;
+      float y = 0;
+      float z = 0;
 
-			// scale from roo to client and add 1 based num offset
-			x = (x * 0.0625f) + 64.0f;
-			y = (y * 0.0625f);
-			z = -((z * 0.0625f) + 64.0f);
-		}
+      // source given by object id
+      if (Message->PlayInfo->ID > 0)
+      {
+         // try get source object
+         RoomObject^ source = OgreClient::Singleton->Data->RoomObjects->GetItemByID(Message->PlayInfo->ID);
 
-		// source is own avatar
-		else
-		{
-			if (OgreClient::Singleton->Data->AvatarObject &&
-				OgreClient::Singleton->Data->AvatarObject->UserData)
-			{
-				attachNode = (RemoteNode^)OgreClient::Singleton->Data->AvatarObject->UserData;
+         if (source && source->UserData)
+         {
+            // get attached remotenode
+            attachNode = (RemoteNode^)source->UserData;
 
-				if (attachNode && attachNode->SceneNode)
-				{
-					::Ogre::Vector3 pos = attachNode->SceneNode->getPosition();
-					x = (float)pos.x;
-					y = (float)pos.y;
-					z = (float)-pos.z;
-				}
-			}
-		}
+            if (attachNode && attachNode->SceneNode)
+            {
+               ::Ogre::Vector3 pos = attachNode->SceneNode->getPosition();
+               x = (float)pos.x;
+               y = (float)pos.y;
+               z = (float)-pos.z;
+            }
+         }
+      }
 
-		// get resource name of wav file
-		CLRString^ sourcename = Message->PlayInfo->ResourceName->ToLower();
+      // source given by row/col
+      else if (Message->PlayInfo->Row > 0 && Message->PlayInfo->Column > 0)
+      {
+         // convert the center of the server grid square to coords of roo file
+         x = (float)(Message->PlayInfo->Column - 1) * 1024.0f + 512.0f;
+         z = (float)(Message->PlayInfo->Row - 1) * 1024.0f + 512.0f;
 
-		// native string
-		::Ogre::String& o_str = StringConvert::CLRToOgre(sourcename);
-		const char* c_str = o_str.c_str();
+         RooSubSector^ out;
 
-		// check if sound is known to irrklang
-		ISoundSource* soundsrc = soundEngine->getSoundSource(c_str, false);
+         if (OgreClient::Singleton->CurrentRoom)
+            y = (float)OgreClient::Singleton->CurrentRoom->GetHeightAt(x, z, out, true, false);
 
-		// add it if not
-		if (!soundsrc)
-		{
-			// memory info for wav data
-			System::IntPtr ptr = Message->PlayInfo->Resource->Item1;
-			unsigned int len = Message->PlayInfo->Resource->Item2;
+         // scale from roo to client and add 1 based num offset
+         x = (x * 0.0625f) + 64.0f;
+         y = (y * 0.0625f);
+         z = -((z * 0.0625f) + 64.0f);
+      }
 
-			// add as playback from raw ptr
-			if (len > 0 && ptr != ::System::IntPtr::Zero)
-				soundsrc = soundEngine->addSoundSourceFromMemory(ptr.ToPointer(), len, c_str, false);
-		}
+      // source is own avatar
+      else
+      {
+         if (OgreClient::Singleton->Data->AvatarObject &&
+             OgreClient::Singleton->Data->AvatarObject->UserData)
+         {
+            attachNode = (RemoteNode^)OgreClient::Singleton->Data->AvatarObject->UserData;
 
-		if (!soundsrc)
-			return;
+            if (attachNode && attachNode->SceneNode)
+            {
+               ::Ogre::Vector3 pos = attachNode->SceneNode->getPosition();
+               x = (float)pos.x;
+               y = (float)pos.y;
+               z = (float)-pos.z;
+            }
+         }
+      }
 
-		// try start 3D playback
-		ISound* sound = soundEngine->play3D(soundsrc,
-			vec3df(x, y, z), Message->PlayInfo->PlayFlags->IsLoop, true, true, false);
+      // get resource name of wav file
+      CLRString^ sourcename = Message->PlayInfo->ResourceName->ToLower();
 
-		if (sound)
-		{
-			// set volume
-			sound->setVolume(OgreClient::Singleton->Config->SoundVolume / 10.0f);
+      // native string
+      ::Ogre::String& o_str = StringConvert::CLRToOgre(sourcename);
+      const char* c_str = o_str.c_str();
 
-			// save reference to sound for adjusting (i.e. position)
-			if (attachNode)
-				attachNode->AddSound(sound);
+      // check if sound is known to irrklang
+      ISoundSource* soundsrc = soundEngine->getSoundSource(c_str, false);
 
-			// if no soundowner save it ourself
-			else
-				sounds->push_back(sound);
+      // add it if not
+      if (!soundsrc)
+      {
+         // memory info for wav data
+         System::IntPtr ptr = Message->PlayInfo->Resource->Item1;
+         unsigned int len = Message->PlayInfo->Resource->Item2;
 
-			// start playback
-			sound->setIsPaused(false);
-		}
-	};
+         // add as playback from raw ptr
+         if (len > 0 && ptr != ::System::IntPtr::Zero)
+            soundsrc = soundEngine->addSoundSourceFromMemory(ptr.ToPointer(), len, c_str, false);
+      }
 
-	void ControllerSound::StartMusic(PlayMusic^ Info)
-    {
-		if (!IsInitialized || !soundEngine || !Info || !Info->Resource || !Info->ResourceName)
-			return;
+      if (!soundsrc)
+         return;
 
-		if (OgreClient::Singleton->Config->MusicVolume > 0.0f)
-		{			
-			// native string
-			::Ogre::String& o_str = StringConvert::CLRToOgre(Info->ResourceName);
-			const char* c_str = o_str.c_str();
+      // try start 3D playback
+      ISound* sound = soundEngine->play3D(soundsrc,
+         vec3df(x, y, z), Message->PlayInfo->PlayFlags->IsLoop, true, true, false);
 
-			// check if sound is already known to irrklang
-			ISoundSource* soundsrc = soundEngine->getSoundSource(c_str, false);
+      if (sound)
+      {
+         // set volume
+         sound->setVolume(OgreClient::Singleton->Config->SoundVolume / 10.0f);
 
-			// try add it if not
-			if (!soundsrc)
-			{
-				// memory info for mp3 data
-				System::IntPtr ptr	= Info->Resource->Item1;
-				unsigned int len	= Info->Resource->Item2;
-			
-				// add as playback from raw ptr
-				if (len > 0 && ptr != ::System::IntPtr::Zero)				
-					soundsrc = soundEngine->addSoundSourceFromMemory(ptr.ToPointer(), len, c_str, false);
-			}
+         // save reference to sound for adjusting (i.e. position)
+         if (attachNode)
+            attachNode->AddSound(sound);
 
-			if (!soundsrc)
-				return;
+         // if no soundowner save it ourself
+         else
+            sounds->push_back(sound);
 
-			// no current background music
-			if (!backgroundMusic)
-			{
-				backgroundMusic = soundEngine->play2D(soundsrc, true, true, true, false);
+         // start playback
+         sound->setIsPaused(false);
+      }
+   };
 
-				if (backgroundMusic)
-				{
-					backgroundMusic->setVolume(OgreClient::Singleton->Config->MusicVolume / 10.0f);
-					backgroundMusic->setIsPaused(false);
-				}
-			}
-			
-			// stop old background music if another one is to be played
-			else if (soundsrc != backgroundMusic->getSoundSource())
-			{
-				backgroundMusic->stop();
-				backgroundMusic->drop();
+   void ControllerSound::StartMusic(PlayMusic^ Info)
+   {
+      if (!IsInitialized || !soundEngine || !Info || !Info->Resource || !Info->ResourceName)
+         return;
 
-				backgroundMusic = soundEngine->play2D(soundsrc, true, true, true, false);
+      if (OgreClient::Singleton->Config->MusicVolume > 0.0f)
+      {
+         // native string
+         ::Ogre::String& o_str = StringConvert::CLRToOgre(Info->ResourceName);
+         const char* c_str = o_str.c_str();
 
-				if (backgroundMusic)
-				{
-					backgroundMusic->setVolume(OgreClient::Singleton->Config->MusicVolume / 10.0f);
-					backgroundMusic->setIsPaused(false);
-				}
-			}
-		}
-	};
+         // check if sound is already known to irrklang
+         ISoundSource* soundsrc = soundEngine->getSoundSource(c_str, false);
+
+         // try add it if not
+         if (!soundsrc)
+         {
+            // memory info for mp3 data
+            System::IntPtr ptr	= Info->Resource->Item1;
+            unsigned int len	= Info->Resource->Item2;
+
+            // add as playback from raw ptr
+            if (len > 0 && ptr != ::System::IntPtr::Zero)				
+               soundsrc = soundEngine->addSoundSourceFromMemory(ptr.ToPointer(), len, c_str, false);
+         }
+
+         if (!soundsrc)
+            return;
+
+         // no current background music
+         if (!backgroundMusic)
+         {
+            backgroundMusic = soundEngine->play2D(soundsrc, true, true, true, false);
+
+            if (backgroundMusic)
+            {
+               backgroundMusic->setVolume(OgreClient::Singleton->Config->MusicVolume / 10.0f);
+               backgroundMusic->setIsPaused(false);
+            }
+         }
+
+         // stop old background music if another one is to be played
+         else if (soundsrc != backgroundMusic->getSoundSource())
+         {
+            backgroundMusic->stop();
+            backgroundMusic->drop();
+
+            backgroundMusic = soundEngine->play2D(soundsrc, true, true, true, false);
+
+            if (backgroundMusic)
+            {
+               backgroundMusic->setVolume(OgreClient::Singleton->Config->MusicVolume / 10.0f);
+               backgroundMusic->setIsPaused(false);
+            }
+         }
+      }
+   };
 };};
