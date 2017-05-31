@@ -2,55 +2,55 @@
 
 namespace Meridian59 { namespace Ogre
 {
-	OISKeyBinding::OISKeyBinding(void)
-	{
-	};
+   OISKeyBinding::OISKeyBinding(void)
+   {
+   };
 
-	bool OISKeyBinding::IsMovementKey(::OIS::KeyCode keyCode)
-    {
-        if ((keyCode == MoveForward) ||
-            (keyCode == MoveBackward) ||
-            (keyCode == MoveLeft) ||
-            (keyCode == MoveRight))
-            return true;
-        else return false;
-    };
+   bool OISKeyBinding::IsMovementKey(::OIS::KeyCode keyCode)
+   {
+      if ((keyCode == MoveForward) ||
+         (keyCode == MoveBackward) ||
+         (keyCode == MoveLeft) ||
+         (keyCode == MoveRight))
+         return true;
+      else return false;
+   };
 
-	bool OISKeyBinding::IsRotateKey(::OIS::KeyCode keyCode)
-    {
-        if ((keyCode == RotateLeft) ||
-            (keyCode == RotateRight))
-            return true;
-        else return false;
-    };
+   bool OISKeyBinding::IsRotateKey(::OIS::KeyCode keyCode)
+   {
+      if ((keyCode == RotateLeft) ||
+         (keyCode == RotateRight))
+         return true;
+      else return false;
+   };
 
-	OISKeyBinding^ OISKeyBinding::GetDefault()
-    {       
+   OISKeyBinding^ OISKeyBinding::GetDefault()
+   {
       OISKeyBinding^ defaultBinding = gcnew OISKeyBinding();
 
       defaultBinding->RightClickAction = 48;
 
       // Movement
-      defaultBinding->MoveForward		= ::OIS::KeyCode::KC_W;
-      defaultBinding->MoveBackward	= ::OIS::KeyCode::KC_S;
-      defaultBinding->MoveLeft		= ::OIS::KeyCode::KC_A;
-      defaultBinding->MoveRight		= ::OIS::KeyCode::KC_D;
+      defaultBinding->MoveForward   = ::OIS::KeyCode::KC_W;
+      defaultBinding->MoveBackward  = ::OIS::KeyCode::KC_S;
+      defaultBinding->MoveLeft      = ::OIS::KeyCode::KC_A;
+      defaultBinding->MoveRight     = ::OIS::KeyCode::KC_D;
 
       // Rotation
-      defaultBinding->RotateLeft		= ::OIS::KeyCode::KC_LEFT;
-      defaultBinding->RotateRight		= ::OIS::KeyCode::KC_RIGHT;
+      defaultBinding->RotateLeft    = ::OIS::KeyCode::KC_LEFT;
+      defaultBinding->RotateRight   = ::OIS::KeyCode::KC_RIGHT;
 
       // Modifiers
-      defaultBinding->Walk			= ::OIS::KeyCode::KC_LSHIFT;
-      defaultBinding->AutoMove		= ::OIS::KeyCode::KC_NUMLOCK;
+      defaultBinding->Walk          = ::OIS::KeyCode::KC_LSHIFT;
+      defaultBinding->AutoMove      = ::OIS::KeyCode::KC_NUMLOCK;
 
       // Targetting
-      defaultBinding->NextTarget		= ::OIS::KeyCode::KC_TAB;
-      defaultBinding->SelfTarget		= ::OIS::KeyCode::KC_LMENU;
+      defaultBinding->NextTarget    = ::OIS::KeyCode::KC_TAB;
+      defaultBinding->SelfTarget    = ::OIS::KeyCode::KC_LMENU;
 
       // Actions
-      defaultBinding->ReqGo			= ::OIS::KeyCode::KC_SPACE;
-      defaultBinding->Close			= ::OIS::KeyCode::KC_ESCAPE;
+      defaultBinding->ReqGo         = ::OIS::KeyCode::KC_SPACE;
+      defaultBinding->Close         = ::OIS::KeyCode::KC_ESCAPE;
 
       defaultBinding->ActionButton01 = ::OIS::KeyCode::KC_Q;
       defaultBinding->ActionButton02 = ::OIS::KeyCode::KC_E;
@@ -101,6 +101,6 @@ namespace Meridian59 { namespace Ogre
       defaultBinding->ActionButton47 = ::OIS::KeyCode::KC_GRAVE;
       defaultBinding->ActionButton48 = ::OIS::KeyCode::KC_UNASSIGNED;
 
-        return defaultBinding;      
-    };	
+      return defaultBinding;
+   };
 };};

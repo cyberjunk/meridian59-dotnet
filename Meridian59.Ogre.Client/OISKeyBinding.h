@@ -111,14 +111,14 @@ namespace Meridian59 { namespace Ogre
       /// </summary>
       /// <param name="keyCode"></param>
       /// <returns></returns>
-      bool IsMovementKey(::OIS::KeyCode keyCode);
+      inline bool IsMovementKey(::OIS::KeyCode keyCode);
 
       /// <summary>
       /// Whether a keycode is a rotate key in this binding.
       /// </summary>
       /// <param name="keyCode"></param>
       /// <returns></returns>
-      bool IsRotateKey(::OIS::KeyCode keyCode);
+      inline bool IsRotateKey(::OIS::KeyCode keyCode);
 
       /// <summary>
       /// A static default keybinding.

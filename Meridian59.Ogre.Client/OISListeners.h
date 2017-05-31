@@ -27,16 +27,16 @@ namespace Meridian59 { namespace Ogre
    {
    public:
       OISKeyListener(void);
-      virtual bool keyPressed(const OIS::KeyEvent &arg) override;
-      virtual bool keyReleased(const OIS::KeyEvent &arg) override;
+      inline virtual bool keyPressed(const OIS::KeyEvent &arg) override;
+      inline virtual bool keyReleased(const OIS::KeyEvent &arg) override;
    };
 
    public class OISMouseListener : public OIS::MouseListener
    {
    public:
       OISMouseListener(void);
-      virtual bool mouseMoved(const OIS::MouseEvent &arg) override;
-      virtual bool mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id) override;
-      virtual bool mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id) override;
+      inline virtual bool mouseMoved(const OIS::MouseEvent &arg) override;
+      inline virtual bool mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id) override;
+      inline virtual bool mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id) override;
    };
 };};
