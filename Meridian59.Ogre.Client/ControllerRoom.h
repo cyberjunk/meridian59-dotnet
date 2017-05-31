@@ -172,7 +172,7 @@ namespace Meridian59 { namespace Ogre
          BgfBitmap^ Texture, 
          CLRString^ TextureName, 
          CLRString^ MaterialName, 
-         V2         ScrollSpeed);
+         V2%        ScrollSpeed);
 
       /// <summary>
       /// Loads the room improvement data (grass, ...) from xml files

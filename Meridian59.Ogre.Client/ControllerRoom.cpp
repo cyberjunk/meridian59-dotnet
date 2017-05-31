@@ -920,7 +920,7 @@ namespace Meridian59 { namespace Ogre
       }
    };
 
-   void ControllerRoom::CreateTextureAndMaterial(BgfBitmap^ Texture, CLRString^ TextureName, CLRString^ MaterialName, V2 ScrollSpeed)
+   void ControllerRoom::CreateTextureAndMaterial(BgfBitmap^ Texture, CLRString^ TextureName, CLRString^ MaterialName, V2% ScrollSpeed)
    {
       if (!Texture || !TextureName || !MaterialName || TextureName == STRINGEMPTY || MaterialName == STRINGEMPTY)
          return;
@@ -932,7 +932,7 @@ namespace Meridian59 { namespace Ogre
          Util::CreateTextureA8R8G8B8(Texture, ostr_texname, TEXTUREGROUP_ROOLOADER, MIP_DEFAULT);
         
       // scrolling texture data
-         Vector2* scrollSpeed = nullptr;
+      Vector2* scrollSpeed = nullptr;
 
       //if (TextureInfo->ScrollSpeed != nullptr)
       scrollSpeed = &Util::ToOgre(ScrollSpeed);
