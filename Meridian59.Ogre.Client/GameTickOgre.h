@@ -21,142 +21,142 @@
 
 namespace Meridian59 { namespace Ogre
 {
-	/// <summary>
-    /// Extends the base GameTick class
-    /// </summary>
-	public ref class GameTickOgre : public ::Meridian59::Common::GameTick
-	{
-	protected:
-		double chatUpdate;
-		double keyRepeat;
-		double inventoryClick;
+   /// <summary>
+   /// Extends the base GameTick class
+   /// </summary>
+   public ref class GameTickOgre : public ::Meridian59::Common::GameTick
+   {
+   protected:
+      double chatUpdate;
+      double keyRepeat;
+      double inventoryClick;
 
-	public:
-		double INTERVALCHATUPDATE;
-		double INTERVALKEYREPEAT;
-		double INTERVALKEYREPEATSTART;
-		double INTERVALINVENTORYCLICK;
+   public:
+      double INTERVALCHATUPDATE;
+      double INTERVALKEYREPEAT;
+      double INTERVALKEYREPEATSTART;
+      double INTERVALINVENTORYCLICK;
 
-		GameTickOgre() : GameTick()
-		{
-			INTERVALCHATUPDATE		= 500.0;
-			INTERVALKEYREPEAT		= 25.0;
-			INTERVALKEYREPEATSTART	= 500.0;
-			INTERVALINVENTORYCLICK	= 250.0;
-		};
+      GameTickOgre() : GameTick()
+      {
+         INTERVALCHATUPDATE      = 500.0;
+         INTERVALKEYREPEAT       = 25.0;
+         INTERVALKEYREPEATSTART  = 500.0;
+         INTERVALINVENTORYCLICK  = 250.0;
+      };
 
-		/// <summary>
-        /// Tick we last did an update of the chat.
-        /// </summary>
-		property double ChatUpdate 
-		{ 
-			public: double get() { return chatUpdate; } 
-			protected: void set(double value) { chatUpdate = value; }
-		};
+      /// <summary>
+      /// Tick we last did an update of the chat.
+      /// </summary>
+      property double ChatUpdate 
+      { 
+         public: double get() { return chatUpdate; } 
+         protected: void set(double value) { chatUpdate = value; }
+      };
 
-		/// <summary>
-		/// Tick we last repeated a key hold down.
-		/// </summary>
-		property double KeyRepeat
-		{
-			public: double get() { return keyRepeat; }
-			protected: void set(double value) { keyRepeat = value; }
-		};
+      /// <summary>
+      /// Tick we last repeated a key hold down.
+      /// </summary>
+      property double KeyRepeat
+      {
+         public: double get() { return keyRepeat; }
+         protected: void set(double value) { keyRepeat = value; }
+      };
 
-		/// <summary>
-		/// Tick we last clicked an inventory item
-		/// </summary>
-		property double InventoryClick
-		{
-			public: double get() { return inventoryClick; }
-			protected: void set(double value) { inventoryClick = value; }
-		};
+      /// <summary>
+      /// Tick we last clicked an inventory item
+      /// </summary>
+      property double InventoryClick
+      {
+         public: double get() { return inventoryClick; }
+         protected: void set(double value) { inventoryClick = value; }
+      };
 
-		/// <summary>
-        /// Milliseconds elapsed since last chat update.
-        /// Calculated on-the-fly.
-        /// </summary>
-        property double SpanChatUpdate
-		{ 
-			public: double get() { return Current - ChatUpdate; } 
-		};
+      /// <summary>
+      /// Milliseconds elapsed since last chat update.
+      /// Calculated on-the-fly.
+      /// </summary>
+      property double SpanChatUpdate
+      { 
+         public: double get() { return Current - ChatUpdate; } 
+      };
 
-		/// <summary>
-		/// Milliseconds elapsed since last repeated a key hold down
-		/// Calculated on-the-fly.
-		/// </summary>
-		property double SpanKeyRepeat
-		{
-			public: double get() { return Current - KeyRepeat; }
-		};
+      /// <summary>
+      /// Milliseconds elapsed since last repeated a key hold down
+      /// Calculated on-the-fly.
+      /// </summary>
+      property double SpanKeyRepeat
+      {
+         public: double get() { return Current - KeyRepeat; }
+      };
 
-		/// <summary>
-		/// Milliseconds elapsed since we last clicked on inventory item
-		/// Calculated on-the-fly.
-		/// </summary>
-		property double SpanInventoryClick
-		{
-			public: double get() { return Current - InventoryClick; }
-		};
+      /// <summary>
+      /// Milliseconds elapsed since we last clicked on inventory item
+      /// Calculated on-the-fly.
+      /// </summary>
+      property double SpanInventoryClick
+      {
+         public: double get() { return Current - InventoryClick; }
+      };
 
-		/// <summary>
-        /// Call this to know if you can update the chatlog
-        /// </summary>
-        /// <returns></returns>
-        bool CanChatUpdate()
-        {
-            return SpanChatUpdate >= INTERVALCHATUPDATE;
-        }
+      /// <summary>
+      /// Call this to know if you can update the chatlog
+      /// </summary>
+      /// <returns></returns>
+      inline bool CanChatUpdate()
+      {
+         return SpanChatUpdate >= INTERVALCHATUPDATE;
+      }
 
-		/// <summary>
-		/// Call this to know if you can repeat a key hold down
-		/// </summary>
-		/// <returns></returns>
-		bool CanKeyRepeat()
-		{
-			return SpanKeyRepeat >= INTERVALKEYREPEAT;
-		}
+      /// <summary>
+      /// Call this to know if you can repeat a key hold down
+      /// </summary>
+      /// <returns></returns>
+      inline bool CanKeyRepeat()
+      {
+         return SpanKeyRepeat >= INTERVALKEYREPEAT;
+      }
 
-		/// <summary>
-		/// Call this to know if you can start repeating a key hold down
-		/// </summary>
-		/// <returns></returns>
-		bool CanKeyRepeatStart()
-		{
-			return SpanKeyRepeat >= INTERVALKEYREPEATSTART;
-		}
+      /// <summary>
+      /// Call this to know if you can start repeating a key hold down
+      /// </summary>
+      /// <returns></returns>
+      inline bool CanKeyRepeatStart()
+      {
+         return SpanKeyRepeat >= INTERVALKEYREPEATSTART;
+      }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <returns></returns>
-		bool CanInventoryClick()
-		{
-			return SpanInventoryClick >= INTERVALINVENTORYCLICK;
-		}
+      /// <summary>
+      /// 
+      /// </summary>
+      /// <returns></returns>
+      inline bool CanInventoryClick()
+      {
+         return SpanInventoryClick >= INTERVALINVENTORYCLICK;
+      }
 
-		/// <summary>
-        /// Call this when you did a Chat update
-        /// </summary>
-        void DidChatUpdate()
-        {
-            ChatUpdate = Current;
-        }
+      /// <summary>
+      /// Call this when you did a Chat update
+      /// </summary>
+      inline void DidChatUpdate()
+      {
+         ChatUpdate = Current;
+      }
 
-		/// <summary>
-		/// Call this when you did a keyrepeat
-		/// </summary>
-		void DidKeyRepeat()
-		{
-			KeyRepeat = Current;
-		}
+      /// <summary>
+      /// Call this when you did a keyrepeat
+      /// </summary>
+      inline void DidKeyRepeat()
+      {
+         KeyRepeat = Current;
+      }
 
-		/// <summary>
-		/// Call this when you did an inventoryclick
-		/// </summary>
-		void DidInventoryClick()
-		{
-			InventoryClick = Current;
-		}
-	};
+      /// <summary>
+      /// Call this when you did an inventoryclick
+      /// </summary>
+      inline void DidInventoryClick()
+      {
+         InventoryClick = Current;
+      }
+   };
 };};

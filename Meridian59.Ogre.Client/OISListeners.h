@@ -22,24 +22,21 @@
 #pragma managed(pop)
 
 namespace Meridian59 { namespace Ogre
-{	
+{
+   public class OISKeyListener : public OIS::KeyListener
+   {
+   public:
+      OISKeyListener(void);
+      virtual bool keyPressed(const OIS::KeyEvent &arg) override;
+      virtual bool keyReleased(const OIS::KeyEvent &arg) override;
+   };
 
-	public class OISKeyListener : public OIS::KeyListener
-	{
-	public:
-		OISKeyListener(void);
-		
-		virtual bool keyPressed(const OIS::KeyEvent &arg) override;
-		virtual bool keyReleased(const OIS::KeyEvent &arg) override;
-	};
-
-	public class OISMouseListener : public OIS::MouseListener
-	{
-	public:
-		OISMouseListener(void);
-		
-		virtual bool mouseMoved(const OIS::MouseEvent &arg) override;
-		virtual bool mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id) override;
-		virtual bool mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id) override;
-	};
+   public class OISMouseListener : public OIS::MouseListener
+   {
+   public:
+      OISMouseListener(void);
+      virtual bool mouseMoved(const OIS::MouseEvent &arg) override;
+      virtual bool mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id) override;
+      virtual bool mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id) override;
+   };
 };};

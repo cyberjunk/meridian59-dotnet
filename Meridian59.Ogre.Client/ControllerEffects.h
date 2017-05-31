@@ -27,44 +27,43 @@
 
 namespace Meridian59 { namespace Ogre 
 {
-	using namespace System::ComponentModel;
-	using namespace Meridian59::Data;
-	using namespace Meridian59::Data::Lists;
-	using namespace Meridian59::Data::Models;
+   using namespace System::ComponentModel;
+   using namespace Meridian59::Data;
+   using namespace Meridian59::Data::Lists;
+   using namespace Meridian59::Data::Models;
 
-	/// <summary>
-    /// Handles effects
-    /// </summary>
-	public ref class ControllerEffects abstract sealed
-	{
-	private:
-		static ::Ogre::CompositorInstance* compInvert;
-		static ::Ogre::CompositorInstance* compPain;
-		static ::Ogre::CompositorInstance* compBlack;
-		static ::Ogre::CompositorInstance* compWhiteout;
-		static ::Ogre::CompositorInstance* compBlur;
-		static ::Ogre::CompositorInstance* compBlend;
-		
-		static CompositorPainListener* listenerPain;
-		static CompositorWhiteoutListener* listenerWhiteout;
+   /// <summary>
+   /// Handles effects
+   /// </summary>
+   public ref class ControllerEffects abstract sealed
+   {
+   private:
+      static ::Ogre::CompositorInstance* compInvert;
+      static ::Ogre::CompositorInstance* compPain;
+      static ::Ogre::CompositorInstance* compBlack;
+      static ::Ogre::CompositorInstance* compWhiteout;
+      static ::Ogre::CompositorInstance* compBlur;
+      static ::Ogre::CompositorInstance* compBlend;
 
+      static CompositorPainListener* listenerPain;
+      static CompositorWhiteoutListener* listenerWhiteout;
 
-		static ControllerEffects(void);
+      static ControllerEffects(void);
 
-		static void EffectInvertPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
-		static void EffectBlindPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
-		static void EffectPainPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
-		static void EffectWhiteoutPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
-		static void EffectBlurPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
-		static void EffectFlashXLatPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
-	public:		
-		/// <summary>
-        /// Initialization state
-        /// </summary>
-		static bool IsInitialized;
+      static void EffectInvertPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
+      static void EffectBlindPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
+      static void EffectPainPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
+      static void EffectWhiteoutPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
+      static void EffectBlurPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
+      static void EffectFlashXLatPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
 
-		static void Initialize();
-		static void Destroy();
-	};
+   public:
+      /// <summary>
+      /// Initialization state
+      /// </summary>
+      static bool IsInitialized;
+
+      static void Initialize();
+      static void Destroy();
+   };
 };};
-

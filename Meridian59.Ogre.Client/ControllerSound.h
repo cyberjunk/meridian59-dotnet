@@ -24,89 +24,88 @@
 
 namespace Meridian59 { namespace Ogre 
 {
-	using namespace ::Ogre;
-	using namespace ::irrklang;
-	using namespace Meridian59::Data::Models;
-	using namespace Meridian59::Data;
-	using namespace Meridian59::Protocol::Enums;
-	using namespace Meridian59::Protocol::GameMessages;
+   using namespace ::Ogre;
+   using namespace ::irrklang;
+   using namespace Meridian59::Data::Models;
+   using namespace Meridian59::Data;
+   using namespace Meridian59::Protocol::Enums;
+   using namespace Meridian59::Protocol::GameMessages;
 
-	/// <summary>
-    /// Handles playback of sound resources
-    /// </summary>
-	public ref class ControllerSound abstract sealed
-	{
-	private:
-		static ControllerSound();
+   /// <summary>
+      /// Handles playback of sound resources
+      /// </summary>
+   public ref class ControllerSound abstract sealed
+   {
+   private:
+      static ControllerSound();
 
-		static ::irrklang::ISoundEngine*		soundEngine;
-        static ::irrklang::ISound*				backgroundMusic;
-		static std::list<::irrklang::ISound*>*	sounds;
-		static RemoteNode^						listenerNode;
-		
-		/// <summary>
-        /// Executed when listener object triggers changed event
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        static void OnRoomObjectPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
+      static ::irrklang::ISoundEngine*       soundEngine;
+      static ::irrklang::ISound*             backgroundMusic;
+      static std::list<::irrklang::ISound*>* sounds;
+      static RemoteNode^                     listenerNode;
 
-		/// <summary>
-        /// Sets the sound listener object position and orientation
-        /// from RemoteNode object.
-        /// </summary>
-        /// <param name="AvatarNode"></param>
-        static void UpdateListener(RemoteNode^ AvatarNode);
+      /// <summary>
+      /// Executed when listener object triggers changed event
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
+      static void OnRoomObjectPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
 
-		static void HandlePlayerMessage(PlayerMessage^ Message);
-		static void HandlePlayWaveMessage(PlayWaveMessage^ Message);
+      /// <summary>
+      /// Sets the sound listener object position and orientation
+      /// from RemoteNode object.
+      /// </summary>
+      /// <param name="AvatarNode"></param>
+      static void UpdateListener(RemoteNode^ AvatarNode);
+
+      static void HandlePlayerMessage(PlayerMessage^ Message);
+      static void HandlePlayWaveMessage(PlayWaveMessage^ Message);
 #if !VANILLA
-		static void HandleStopWaveMessage(StopWaveMessage^ Message);
+      static void HandleStopWaveMessage(StopWaveMessage^ Message);
 #endif
-		static void HandlePlayMusicMessage(PlayMusicMessage^ Message);
-		static void HandlePlayMidiMessage(PlayMidiMessage^ Message);
+      static void HandlePlayMusicMessage(PlayMusicMessage^ Message);
+      static void HandlePlayMidiMessage(PlayMidiMessage^ Message);
 
-	public:
-		/// <summary>
-        /// All sounds not attached to roomobject IDs (i.e. mapsounds)
-        /// </summary>
-        static property std::list<::irrklang::ISound*>* Sounds 
-		{ 
-			public: std::list<::irrklang::ISound*>* get() { return sounds; }
-			private: void set(std::list<::irrklang::ISound*>* value) { sounds = value; } 
-		}
+   public:
+      /// <summary>
+      /// All sounds not attached to roomobject IDs (i.e. mapsounds)
+      /// </summary>
+      static property std::list<::irrklang::ISound*>* Sounds 
+      { 
+         public: std::list<::irrklang::ISound*>* get() { return sounds; }
+         private: void set(std::list<::irrklang::ISound*>* value) { sounds = value; } 
+      }
 
-		/// <summary>
-        /// Initializes the sound engine
-        /// </summary>
-        static void Initialize();
+      /// <summary>
+      /// Initializes the sound engine
+      /// </summary>
+      static void Initialize();
 
-		/// <summary>
-        /// Shutdown the sound engine
-        /// </summary>
-		static void Destroy();
+      /// <summary>
+      /// Shutdown the sound engine
+      /// </summary>
+      static void Destroy();
 
-		/// <summary>
-        /// Initialization state
-        /// </summary>
-		static bool IsInitialized;
+      /// <summary>
+      /// Initialization state
+      /// </summary>
+      static bool IsInitialized;
 
-		/// <summary>
-		/// Manually starts to play given music data
-		/// </summary>
-		static void StartMusic(PlayMusic^ Info);
+      /// <summary>
+      /// Manually starts to play given music data
+      /// </summary>
+      static void StartMusic(PlayMusic^ Info);
 
-		/// <summary>
-        /// Sets the node which position and orientation is observed
-        /// for 3D sound.
-        /// </summary>
-        /// <param name="AvatarNode"></param>
-        static void SetListenerNode(RemoteNode^ AvatarNode);
+      /// <summary>
+      /// Sets the node which position and orientation is observed
+      /// for 3D sound.
+      /// </summary>
+      /// <param name="AvatarNode"></param>
+      static void SetListenerNode(RemoteNode^ AvatarNode);
 
-		static void AdjustMusicVolume();
-		static void AdjustSoundVolume();
+      static void AdjustMusicVolume();
+      static void AdjustSoundVolume();
 
-		static void HandleGameModeMessage(GameModeMessage^ Message);
-	};
+      static void HandleGameModeMessage(GameModeMessage^ Message);
+   };
 };};
-

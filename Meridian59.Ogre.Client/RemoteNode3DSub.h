@@ -28,98 +28,98 @@
 
 namespace Meridian59 { namespace Ogre 
 {
-	using namespace ::Ogre;
-	using namespace System::ComponentModel;
-	using namespace System::Collections::Generic;
-	using namespace Meridian59::Common::Constants;
-	using namespace Meridian59::Data::Models;
+   using namespace ::Ogre;
+   using namespace System::ComponentModel;
+   using namespace System::Collections::Generic;
+   using namespace Meridian59::Common::Constants;
+   using namespace Meridian59::Data::Models;
 
-	ref class RemoteNode3D;
+   ref class RemoteNode3D;
 
-	public ref class RemoteNode3DSub
-	{
-	protected:
-		::Ogre::Entity*		entity;
-		::Ogre::SceneNode*	sceneNode;
-		::Ogre::SceneNode*	parent;
-		std::vector<::ParticleUniverse::ParticleSystem*>* particleSystems;
+   public ref class RemoteNode3DSub
+   {
+   protected:
+      ::Ogre::Entity*		entity;
+      ::Ogre::SceneNode*	sceneNode;
+      ::Ogre::SceneNode*	parent;
+      std::vector<::ParticleUniverse::ParticleSystem*>* particleSystems;
 
-		Model3DInfo^	model3DInfo;
-		SubOverlay^		subOverlay;
-		RemoteNode3D^	rootNode;
-		MeshHotspot^	attachedHotspot;
-		::System::Collections::Generic::List<RemoteNode3DSub^>^ subNodes;
+      Model3DInfo^	model3DInfo;
+      SubOverlay^		subOverlay;
+      RemoteNode3D^	rootNode;
+      MeshHotspot^	attachedHotspot;
+      ::System::Collections::Generic::List<RemoteNode3DSub^>^ subNodes;
 
-		void CreateMesh();
-		void CreateSubNodes();
-		void CreateParticles();
+      void CreateMesh();
+      void CreateSubNodes();
+      void CreateParticles();
 
-	public:
+   public:
 
-		#pragma region Properties
-		property ::Ogre::Entity* Entity 
-		{ 
-			public: ::Ogre::Entity* get() { return entity; } 
-			protected: void set(::Ogre::Entity* value) { entity = value; }
-		}
+      #pragma region Properties
+      property ::Ogre::Entity* Entity 
+      { 
+         public: ::Ogre::Entity* get() { return entity; } 
+         protected: void set(::Ogre::Entity* value) { entity = value; }
+      }
         
-		property ::Ogre::SceneNode* SceneNode 
-		{ 
-			public: ::Ogre::SceneNode* get() { return sceneNode; } 
-			protected: void set(::Ogre::SceneNode* value) { sceneNode = value; } 
-		}
+      property ::Ogre::SceneNode* SceneNode 
+      { 
+         public: ::Ogre::SceneNode* get() { return sceneNode; } 
+         protected: void set(::Ogre::SceneNode* value) { sceneNode = value; } 
+      }
         
-		property std::vector<::ParticleUniverse::ParticleSystem*>* ParticleSystems 
-		{ 
-			public: std::vector<::ParticleUniverse::ParticleSystem*>* get() { return particleSystems; } 
-			protected: void set(std::vector<::ParticleUniverse::ParticleSystem*>* value) { particleSystems = value; } 
-		}
+      property std::vector<::ParticleUniverse::ParticleSystem*>* ParticleSystems 
+      { 
+         public: std::vector<::ParticleUniverse::ParticleSystem*>* get() { return particleSystems; } 
+         protected: void set(std::vector<::ParticleUniverse::ParticleSystem*>* value) { particleSystems = value; } 
+      }
 
-        property ::Meridian59::Ogre::Model3DInfo^ Model3DInfo 
-		{ 
-			public: ::Meridian59::Ogre::Model3DInfo^ get() { return model3DInfo; }
-			protected: void set(::Meridian59::Ogre::Model3DInfo^ value) { model3DInfo = value; } 
-		}
+         property ::Meridian59::Ogre::Model3DInfo^ Model3DInfo 
+      { 
+         public: ::Meridian59::Ogre::Model3DInfo^ get() { return model3DInfo; }
+         protected: void set(::Meridian59::Ogre::Model3DInfo^ value) { model3DInfo = value; }
+      }
         
-		property SubOverlay^ SubOverlay 
-		{ 
-			public: Data::Models::SubOverlay^ get() { return subOverlay; }
-			protected: void set(Data::Models::SubOverlay^ value) { subOverlay = value; } 
-		}
+      property SubOverlay^ SubOverlay 
+      { 
+         public: Data::Models::SubOverlay^ get() { return subOverlay; }
+         protected: void set(Data::Models::SubOverlay^ value) { subOverlay = value; }
+      }
 
-        property RemoteNode3D^ RootNode 
-		{ 
-			public: RemoteNode3D^ get() { return rootNode; } 
-			protected: void set(RemoteNode3D^ value) { rootNode = value; }
-		}
+         property RemoteNode3D^ RootNode 
+      { 
+         public: RemoteNode3D^ get() { return rootNode; } 
+         protected: void set(RemoteNode3D^ value) { rootNode = value; }
+      }
         
-		property ::Ogre::SceneNode* Parent 
-		{ 
-			public: ::Ogre::SceneNode* get() { return parent; }
-			protected: void set(::Ogre::SceneNode* value) { parent = value; }
-		}
+      property ::Ogre::SceneNode* Parent 
+      { 
+         public: ::Ogre::SceneNode* get() { return parent; }
+         protected: void set(::Ogre::SceneNode* value) { parent = value; }
+      }
         
-		property MeshHotspot^ AttachedHotspot 
-		{ 
-			public: MeshHotspot^ get() { return attachedHotspot; } 
-			protected: void set(MeshHotspot^ value) { attachedHotspot = value; }
-		}
+      property MeshHotspot^ AttachedHotspot 
+      { 
+         public: MeshHotspot^ get() { return attachedHotspot; } 
+         protected: void set(MeshHotspot^ value) { attachedHotspot = value; }
+      }
         
-		property ::System::Collections::Generic::List<RemoteNode3DSub^>^ SubNodes 
-		{ 
-			public: ::System::Collections::Generic::List<RemoteNode3DSub^>^ get() { return subNodes; } 
-			protected: void set(::System::Collections::Generic::List<RemoteNode3DSub^>^ value) { subNodes = value; } 
-		}
+      property ::System::Collections::Generic::List<RemoteNode3DSub^>^ SubNodes 
+      { 
+         public: ::System::Collections::Generic::List<RemoteNode3DSub^>^ get() { return subNodes; }
+         protected: void set(::System::Collections::Generic::List<RemoteNode3DSub^>^ value) { subNodes = value; }
+      }
         
-		property CLRString^ ID 
-		{ 
-			CLRString^ get(); 			
-		}
-		#pragma endregion
+      property CLRString^ ID 
+      { 
+         CLRString^ get(); 
+      }
+      #pragma endregion
 
-		RemoteNode3DSub(Data::Models::SubOverlay^ SubOverlay, ::Ogre::SceneNode* Parent, RemoteNode3D^ RootNode, MeshHotspot^ AttachedHotspot);
+      RemoteNode3DSub(Data::Models::SubOverlay^ SubOverlay, ::Ogre::SceneNode* Parent, RemoteNode3D^ RootNode, MeshHotspot^ AttachedHotspot);
 
-		void Destroy();
-	};
+      void Destroy();
+   };
 };};
 

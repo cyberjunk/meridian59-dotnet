@@ -24,110 +24,110 @@
 
 namespace Meridian59 { namespace Ogre 
 {
-	/// <summary>
-    /// Some xml parser functions
-    /// </summary>
-	public ref class XmlReaderExtensions abstract sealed
-    {
-	public:
-        literal CLRString^ ATTRIB_COUNT	= "count";
-        literal CLRString^ ATTRIB_ENABLED	= "enabled";
-        
-        /// <summary>
-        /// Number format used (e.g. ',' or '.')
-        /// </summary>
-		static ::System::Globalization::NumberFormatInfo^ NumberFormatInfo;
+   /// <summary>
+   /// Some xml parser functions
+   /// </summary>
+   public ref class XmlReaderExtensions abstract sealed
+   {
+   public:
+      literal CLRString^ ATTRIB_COUNT	= "count";
+      literal CLRString^ ATTRIB_ENABLED	= "enabled";
 
-		static XmlReaderExtensions()
-		{
-			// set separator for xml files
-			NumberFormatInfo = gcnew ::System::Globalization::NumberFormatInfo();
-			NumberFormatInfo->NumberDecimalSeparator = ".";
-		};
+      /// <summary>
+      /// Number format used (e.g. ',' or '.')
+      /// </summary>
+      static ::System::Globalization::NumberFormatInfo^ NumberFormatInfo;
 
-        /// <summary>
-        /// Extracts a ColourValue from a XmlReaders current position
-        /// </summary>
-        /// <param name="XmlReader"></param>
-        /// <returns></returns>
-        __forceinline static ::Ogre::ColourValue ReadColor(::System::Xml::XmlReader^ XmlReader)
-        {
-            float r = float::Parse(XmlReader["r"], NumberFormatInfo);
-            float g = float::Parse(XmlReader["g"], NumberFormatInfo);
-            float b = float::Parse(XmlReader["b"], NumberFormatInfo);
+      static XmlReaderExtensions()
+      {
+         // set separator for xml files
+         NumberFormatInfo = gcnew ::System::Globalization::NumberFormatInfo();
+         NumberFormatInfo->NumberDecimalSeparator = ".";
+      };
 
-            return ::Ogre::ColourValue(r, g, b);
-        };
+      /// <summary>
+      /// Extracts a ColourValue from a XmlReaders current position
+      /// </summary>
+      /// <param name="XmlReader"></param>
+      /// <returns></returns>
+      __forceinline static ::Ogre::ColourValue ReadColor(::System::Xml::XmlReader^ XmlReader)
+      {
+         float r = float::Parse(XmlReader["r"], NumberFormatInfo);
+         float g = float::Parse(XmlReader["g"], NumberFormatInfo);
+         float b = float::Parse(XmlReader["b"], NumberFormatInfo);
 
-        /// <summary>
-        /// Extracts a vector from a XmlReaders current position
-        /// </summary>
-        /// <param name="XmlReader"></param>
-        /// <returns></returns>
-        __forceinline static ::Ogre::Vector3 ReadVector3(::System::Xml::XmlReader^ XmlReader)
-        {
-            float x = float::Parse(XmlReader["x"], NumberFormatInfo);
-            float y = float::Parse(XmlReader["y"], NumberFormatInfo);
-            float z = float::Parse(XmlReader["z"], NumberFormatInfo);
+         return ::Ogre::ColourValue(r, g, b);
+      };
 
-            return ::Ogre::Vector3(x, y, z);
-        };
+      /// <summary>
+      /// Extracts a vector from a XmlReaders current position
+      /// </summary>
+      /// <param name="XmlReader"></param>
+      /// <returns></returns>
+      __forceinline static ::Ogre::Vector3 ReadVector3(::System::Xml::XmlReader^ XmlReader)
+      {
+         float x = float::Parse(XmlReader["x"], NumberFormatInfo);
+         float y = float::Parse(XmlReader["y"], NumberFormatInfo);
+         float z = float::Parse(XmlReader["z"], NumberFormatInfo);
 
-        /// <summary>
-        /// Extracts a quaternion from a XmlReaders current position
-        /// </summary>
-        /// <param name="XmlReader"></param>
-        /// <returns></returns>
-        __forceinline static ::Ogre::Quaternion ReadQuaternion(::System::Xml::XmlReader^ XmlReader)
-        {
-            float w = float::Parse(XmlReader["qw"], NumberFormatInfo);
-            float x = float::Parse(XmlReader["qx"], NumberFormatInfo);
-            float y = float::Parse(XmlReader["qy"], NumberFormatInfo);
-            float z = float::Parse(XmlReader["qz"], NumberFormatInfo);
+         return ::Ogre::Vector3(x, y, z);
+      };
 
-            return ::Ogre::Quaternion(w, x, y, z);
-        };
+      /// <summary>
+      /// Extracts a quaternion from a XmlReaders current position
+      /// </summary>
+      /// <param name="XmlReader"></param>
+      /// <returns></returns>
+      __forceinline static ::Ogre::Quaternion ReadQuaternion(::System::Xml::XmlReader^ XmlReader)
+      {
+         float w = float::Parse(XmlReader["qw"], NumberFormatInfo);
+         float x = float::Parse(XmlReader["qx"], NumberFormatInfo);
+         float y = float::Parse(XmlReader["qy"], NumberFormatInfo);
+         float z = float::Parse(XmlReader["qz"], NumberFormatInfo);
 
-        /// <summary>
-        /// Reads an integer value from current node's attribute named "count".
-        /// </summary>
-        /// <param name="XmlReader"></param>
-        /// <returns></returns>
-        __forceinline static int ReadCount(::System::Xml::XmlReader^ XmlReader)
-        {
-            return int::Parse(XmlReader[ATTRIB_COUNT]);
-        };
+         return ::Ogre::Quaternion(w, x, y, z);
+      };
 
-        /// <summary>
-        /// Reads a boolean value from current node's attribute named "enabled".
-        /// </summary>
-        /// <param name="XmlReader"></param>
-        /// <returns></returns>
-        __forceinline static bool ReadEnabled(::System::Xml::XmlReader^ XmlReader)
-        {
-            return bool::Parse(XmlReader[ATTRIB_ENABLED]);
-        };
+      /// <summary>
+      /// Reads an integer value from current node's attribute named "count".
+      /// </summary>
+      /// <param name="XmlReader"></param>
+      /// <returns></returns>
+      __forceinline static int ReadCount(::System::Xml::XmlReader^ XmlReader)
+      {
+         return int::Parse(XmlReader[ATTRIB_COUNT]);
+      };
 
-        /// <summary>
-        /// Reads a float from current node's attribute given by name AttributeName
-        /// </summary>
-        /// <param name="XmlReader"></param>
-        /// <param name="AttributeName"></param>
-        /// <returns></returns>
-        __forceinline static float ReadFloat(::System::Xml::XmlReader^ XmlReader, CLRString^ AttributeName)
-        {
-            return float::Parse(XmlReader[AttributeName], NumberFormatInfo);
-        };
+      /// <summary>
+      /// Reads a boolean value from current node's attribute named "enabled".
+      /// </summary>
+      /// <param name="XmlReader"></param>
+      /// <returns></returns>
+      __forceinline static bool ReadEnabled(::System::Xml::XmlReader^ XmlReader)
+      {
+         return bool::Parse(XmlReader[ATTRIB_ENABLED]);
+      };
 
-        /// <summary>
-        /// Reads a boolean from current node's attribute given by name AttributeName
-        /// </summary>
-        /// <param name="XmlReader"></param>
-        /// <param name="AttributeName"></param>
-        /// <returns></returns>
-        __forceinline static bool ReadBoolean(::System::Xml::XmlReader^ XmlReader, CLRString^ AttributeName)
-        {
-            return bool::Parse(XmlReader[AttributeName]);
-        };
-    };
+      /// <summary>
+      /// Reads a float from current node's attribute given by name AttributeName
+      /// </summary>
+      /// <param name="XmlReader"></param>
+      /// <param name="AttributeName"></param>
+      /// <returns></returns>
+      __forceinline static float ReadFloat(::System::Xml::XmlReader^ XmlReader, CLRString^ AttributeName)
+      {
+         return float::Parse(XmlReader[AttributeName], NumberFormatInfo);
+      };
+
+      /// <summary>
+      /// Reads a boolean from current node's attribute given by name AttributeName
+      /// </summary>
+      /// <param name="XmlReader"></param>
+      /// <param name="AttributeName"></param>
+      /// <returns></returns>
+      __forceinline static bool ReadBoolean(::System::Xml::XmlReader^ XmlReader, CLRString^ AttributeName)
+      {
+         return bool::Parse(XmlReader[AttributeName]);
+      };
+   };
 };};

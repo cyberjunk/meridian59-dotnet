@@ -22,69 +22,69 @@
 #pragma managed(pop)
 
 namespace Meridian59 { namespace Ogre
-{	
-    /// <summary>
-    /// A 3D variant of the BGF hotspot. 
-    /// Index means index in BGF, Position and Orientation are 3D.
-    /// </summary>
-    public ref class MeshHotspot
-    {
-	protected:
-		signed char index;
-		::Ogre::Vector3* position;
-		::Ogre::Quaternion* orientation;
+{
+   /// <summary>
+   /// A 3D variant of the BGF hotspot. 
+   /// Index means index in BGF, Position and Orientation are 3D.
+   /// </summary>
+   public ref class MeshHotspot
+   {
+   protected:
+      signed char         index;
+      ::Ogre::Vector3*    position;
+      ::Ogre::Quaternion* orientation;
 
-	public:
-		property signed char Index 
-		{ 
-			public: signed char get() { return index; }
-			protected: void set(signed char value) { index = value; }
-		};
-        
-		property ::Ogre::Vector3* Position 
-		{ 
-			public: ::Ogre::Vector3* get() { return position; }
-			protected: void set(::Ogre::Vector3* value) { position = value; } 
-		};
-        
-		property ::Ogre::Quaternion* Orientation 
-		{ 
-			public: ::Ogre::Quaternion* get() { return orientation; }
-			protected: void set(::Ogre::Quaternion* value) { orientation = value; } 
-		};
+   public:
+      property signed char Index 
+      { 
+         public: signed char get() { return index; }
+         protected: void set(signed char value) { index = value; }
+      };
 
-        MeshHotspot(signed char Index, ::Ogre::Vector3* Position, ::Ogre::Quaternion* Orientation)
-        {
-            index = Index;
-            position = Position;
-            orientation = Orientation;
-        };
+      property ::Ogre::Vector3* Position 
+      { 
+         public: ::Ogre::Vector3* get() { return position; }
+         protected: void set(::Ogre::Vector3* value) { position = value; } 
+      };
 
-		~MeshHotspot()
-		{
-			if (position)
-				delete position;
+      property ::Ogre::Quaternion* Orientation 
+      { 
+         public: ::Ogre::Quaternion* get() { return orientation; }
+         protected: void set(::Ogre::Quaternion* value) { orientation = value; } 
+      };
 
-			if (orientation)
-				delete orientation;
+      MeshHotspot(signed char Index, ::Ogre::Vector3* Position, ::Ogre::Quaternion* Orientation)
+      {
+         index       = Index;
+         position    = Position;
+         orientation = Orientation;
+      };
 
-			position	= nullptr;
-            orientation = nullptr;
-		};
+      ~MeshHotspot()
+      {
+         if (position)
+            delete position;
 
-        /// <summary>
-        /// Tries to find a given Hotspot index in an enumeration.
-        /// </summary>
-        /// <param name="Index"></param>
-        /// <param name="Hotspots"></param>
-        /// <returns>Hotspot with given Index or NULL</returns>
-        static MeshHotspot^ Find(signed char Index, IEnumerable<MeshHotspot^>^ Hotspots)
-        {
-            for each (MeshHotspot^ hotspot in Hotspots)
-                if (System::Math::Abs(hotspot->Index) == Index)
-                    return hotspot;
+         if (orientation)
+            delete orientation;
 
-            return nullptr;
-        };
-    };
+         position    = nullptr;
+         orientation = nullptr;
+      };
+
+      /// <summary>
+      /// Tries to find a given Hotspot index in an enumeration.
+      /// </summary>
+      /// <param name="Index"></param>
+      /// <param name="Hotspots"></param>
+      /// <returns>Hotspot with given Index or NULL</returns>
+      static MeshHotspot^ Find(signed char Index, IEnumerable<MeshHotspot^>^ Hotspots)
+      {
+         for each (MeshHotspot^ hotspot in Hotspots)
+               if (System::Math::Abs(hotspot->Index) == Index)
+                  return hotspot;
+
+         return nullptr;
+      };
+   };
 };};

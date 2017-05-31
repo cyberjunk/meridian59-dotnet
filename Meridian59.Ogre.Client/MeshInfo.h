@@ -24,81 +24,81 @@
 
 namespace Meridian59 { namespace Ogre
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public ref class MeshInfo
-    {
-	protected:
-		::Ogre::String* meshFile;
-        ::Ogre::Quaternion* orientation;
-        ::Ogre::Vector3* scale;
-        ::Ogre::Vector3* lightPosition;
-		bool castShadows;
+   /// <summary>
+   /// 
+   /// </summary>
+   public ref class MeshInfo
+   {
+   protected:
+      ::Ogre::String*     meshFile;
+      ::Ogre::Quaternion* orientation;
+      ::Ogre::Vector3*    scale;
+      ::Ogre::Vector3*    lightPosition;
+      bool                castShadows;
         
-	public:
-		property ::Ogre::String* MeshFile 
-		{ 
-			public: ::Ogre::String* get() { return meshFile; }
-			protected: void set(::Ogre::String* value) { meshFile = value; }
-		};
+   public:
+      property ::Ogre::String* MeshFile 
+      { 
+         public: ::Ogre::String* get() { return meshFile; }
+         protected: void set(::Ogre::String* value) { meshFile = value; }
+      };
 
-		property ::Ogre::Quaternion* Orientation 
-		{ 
-			public: ::Ogre::Quaternion* get() { return orientation; }
-			protected: void set(::Ogre::Quaternion* value) { orientation = value; } 
-		};
-	        
-		property ::Ogre::Vector3* Scale 
-		{ 
-			public: ::Ogre::Vector3* get() { return scale; }
-			protected: void set(::Ogre::Vector3* value) { scale = value; } 
-		};
+      property ::Ogre::Quaternion* Orientation 
+      { 
+         public: ::Ogre::Quaternion* get() { return orientation; }
+         protected: void set(::Ogre::Quaternion* value) { orientation = value; } 
+      };
 
-		property ::Ogre::Vector3* LightPosition 
-		{ 
-			public: ::Ogre::Vector3* get() { return lightPosition; }
-			protected: void set(::Ogre::Vector3* value) { lightPosition = value; } 
-		};
+      property ::Ogre::Vector3* Scale 
+      {
+         public: ::Ogre::Vector3* get() { return scale; }
+         protected: void set(::Ogre::Vector3* value) { scale = value; } 
+      };
 
-		property bool CastShadows 
-		{ 
-			public: bool get() { return castShadows; }
-			protected: void set(bool value) { castShadows = value; }
-		};
-       
-        MeshInfo(
-			::Ogre::String* MeshFile, 
-			bool CastShadows, 
-			::Ogre::Quaternion* Orientation, 
-			::Ogre::Vector3* Scale, 
-			::Ogre::Vector3* LightPosition)
-        {
-            meshFile		= MeshFile;
-            castShadows		= CastShadows;
-            orientation		= Orientation;
-            scale			= Scale;
-            lightPosition	= LightPosition;
-        };
+      property ::Ogre::Vector3* LightPosition 
+      { 
+         public: ::Ogre::Vector3* get() { return lightPosition; }
+         protected: void set(::Ogre::Vector3* value) { lightPosition = value; } 
+      };
 
-		~MeshInfo()
-		{
-			if (meshFile)
-				delete meshFile;
-		
-			if (orientation)
-				delete orientation;
+      property bool CastShadows 
+      {
+         public: bool get() { return castShadows; }
+         protected: void set(bool value) { castShadows = value; }
+      };
 
-			if (scale)
-				delete scale;
+      MeshInfo(
+         ::Ogre::String*     MeshFile, 
+         bool                CastShadows, 
+         ::Ogre::Quaternion* Orientation, 
+         ::Ogre::Vector3*    Scale, 
+         ::Ogre::Vector3*    LightPosition)
+      {
+         meshFile       = MeshFile;
+         castShadows    = CastShadows;
+         orientation    = Orientation;
+         scale          = Scale;
+         lightPosition  = LightPosition;
+      };
 
-			if (lightPosition)
-				delete lightPosition;
+      ~MeshInfo()
+      {
+         if (meshFile)
+            delete meshFile;
 
-			meshFile		= nullptr;
-            orientation		= nullptr;
-            scale			= nullptr;
-            lightPosition	= nullptr;
-		};
-    };
+         if (orientation)
+            delete orientation;
+
+         if (scale)
+            delete scale;
+
+         if (lightPosition)
+            delete lightPosition;
+
+         meshFile       = nullptr;
+         orientation    = nullptr;
+         scale          = nullptr;
+         lightPosition  = nullptr;
+      };
+   };
 };};

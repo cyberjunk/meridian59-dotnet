@@ -27,78 +27,76 @@
 
 namespace Meridian59 { namespace Ogre 
 {
-	using namespace ::Ogre;
-	using namespace System::ComponentModel;
-	using namespace System::Collections::Generic;
-	using namespace Meridian59::Common::Constants;
-	using namespace Meridian59::Data::Models;
+   using namespace ::Ogre;
+   using namespace System::ComponentModel;
+   using namespace System::Collections::Generic;
+   using namespace Meridian59::Common::Constants;
+   using namespace Meridian59::Data::Models;
 
-	/// <summary>
-    /// An engine object based on a RoomObject and new 3D meshes
-    /// </summary>
-	public ref class RemoteNode3D : public RemoteNode
-	{
-	protected:
-		::Ogre::Entity* entity;
-		std::vector<::ParticleUniverse::ParticleSystem*>* particleSystems;
-		::System::Collections::Generic::List<RemoteNode3DSub^>^ subNodes;
-		::Meridian59::Ogre::Model3DInfo^ model3DInfo;
-		
-		virtual void OnRoomObjectPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e) override;
-		virtual void CreateLight() override;
-		void ApplyColorTranslation();
-		void CreateMesh();
-		void CreateSubNodes();
-		void CreateParticles();
-		virtual void UpdateMaterial() override;
+   /// <summary>
+   /// An engine object based on a RoomObject and new 3D meshes
+   /// </summary>
+   public ref class RemoteNode3D : public RemoteNode
+   {
+   protected:
+      ::Ogre::Entity* entity;
+      std::vector<::ParticleUniverse::ParticleSystem*>* particleSystems;
+      ::System::Collections::Generic::List<RemoteNode3DSub^>^ subNodes;
+      ::Meridian59::Ogre::Model3DInfo^ model3DInfo;
 
-	public:
+      virtual void OnRoomObjectPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e) override;
+      virtual void CreateLight() override;
+      void ApplyColorTranslation();
+      void CreateMesh();
+      void CreateSubNodes();
+      void CreateParticles();
+      virtual void UpdateMaterial() override;
 
-		/// <summary>
-		/// OgreEntity used by this instance
-		/// </summary>
-        property ::Ogre::Entity* Entity 
-		{ 
-			public: ::Ogre::Entity* get() { return entity; } 
-			protected: void set(::Ogre::Entity* value) { entity = value; }
-		};
-        
-		/// <summary>
-		/// ParticleSystems attached to this instance
-		/// </summary>
-		property std::vector<::ParticleUniverse::ParticleSystem*>* ParticleSystems 
-		{ 
-			public: std::vector<::ParticleUniverse::ParticleSystem*>* get() { return particleSystems; } 
-			protected: void set(std::vector<::ParticleUniverse::ParticleSystem*>* value) { particleSystems = value; }
-		};
+   public:
+      /// <summary>
+      /// OgreEntity used by this instance
+      /// </summary>
+         property ::Ogre::Entity* Entity 
+      { 
+         public: ::Ogre::Entity* get() { return entity; } 
+         protected: void set(::Ogre::Entity* value) { entity = value; }
+      };
 
-		/// <summary>
-		/// 
-		/// </summary>
-        property ::Meridian59::Ogre::Model3DInfo^ Model3DInfo 
-		{ 
-			public: ::Meridian59::Ogre::Model3DInfo^ get() { return model3DInfo; } 
-			protected: void set(::Meridian59::Ogre::Model3DInfo^ value) { model3DInfo = value; }
-		};
+      /// <summary>
+      /// ParticleSystems attached to this instance
+      /// </summary>
+      property std::vector<::ParticleUniverse::ParticleSystem*>* ParticleSystems 
+      { 
+         public: std::vector<::ParticleUniverse::ParticleSystem*>* get() { return particleSystems; } 
+         protected: void set(std::vector<::ParticleUniverse::ParticleSystem*>* value) { particleSystems = value; }
+      };
 
-		/// <summary>
-		/// 
-		/// </summary>
-        property ::System::Collections::Generic::List<RemoteNode3DSub^>^ SubNodes 
-		{ 
-			public: ::System::Collections::Generic::List<RemoteNode3DSub^>^ get() { return subNodes; } 
-			protected: void set(::System::Collections::Generic::List<RemoteNode3DSub^>^ value) { subNodes = value; }
-		};
-       
-		/// <summary>
-        /// Constructor
-        /// </summary>
-		RemoteNode3D(Data::Models::RoomObject^ RoomObject, ::Ogre::SceneManager* SceneManager);
+      /// <summary>
+      /// 
+      /// </summary>
+      property ::Meridian59::Ogre::Model3DInfo^ Model3DInfo 
+      { 
+         public: ::Meridian59::Ogre::Model3DInfo^ get() { return model3DInfo; } 
+         protected: void set(::Meridian59::Ogre::Model3DInfo^ value) { model3DInfo = value; }
+      };
 
-		/// <summary>
-        /// Destructor
-        /// </summary>
-		~RemoteNode3D();
-	};
+      /// <summary>
+      /// 
+      /// </summary>
+      property ::System::Collections::Generic::List<RemoteNode3DSub^>^ SubNodes 
+      { 
+         public: ::System::Collections::Generic::List<RemoteNode3DSub^>^ get() { return subNodes; } 
+         protected: void set(::System::Collections::Generic::List<RemoteNode3DSub^>^ value) { subNodes = value; }
+      };
+
+      /// <summary>
+      /// Constructor
+      /// </summary>
+      RemoteNode3D(Data::Models::RoomObject^ RoomObject, ::Ogre::SceneManager* SceneManager);
+
+      /// <summary>
+      /// Destructor
+      /// </summary>
+      ~RemoteNode3D();
+   };
 };};
-

@@ -23,43 +23,43 @@
 
 namespace Meridian59 { namespace Ogre 
 {
-	using namespace ::Ogre;
-	using namespace Meridian59::Drawing2D;
-	using namespace Meridian59::Data::Models;
-	using namespace System::Drawing;
-	using namespace System::Drawing::Drawing2D;
-	using namespace System::Drawing::Imaging;
+   using namespace ::Ogre;
+   using namespace Meridian59::Drawing2D;
+   using namespace Meridian59::Data::Models;
+   using namespace System::Drawing;
+   using namespace System::Drawing::Drawing2D;
+   using namespace System::Drawing::Imaging;
 
-	public ref struct TextureInfoCEGUI
-	{
-	public:
-		::CEGUI::String* TextureName;
+   public ref struct TextureInfoCEGUI
+   {
+   public:
+      ::CEGUI::String* TextureName;
 
-		void Delete();
-	};
+      void Delete();
+   };
 
-	/// <summary>
-    /// Implements the ImageComposer generic from the core library.
-	/// Creates textures and materials for 2D objects for use in CEGUI.
-    /// </summary>
-	generic <typename T>
-	where T : ObjectBase
-	public ref class ImageComposerCEGUI : public ImageComposer<T, TextureInfoCEGUI^>
-	{
-	private:
-		static ImageComposerCEGUI();
+   /// <summary>
+   /// Implements the ImageComposer generic from the core library.
+   /// Creates textures and materials for 2D objects for use in CEGUI.
+   /// </summary>
+   generic <typename T>
+   where T : ObjectBase
+   public ref class ImageComposerCEGUI : public ImageComposer<T, TextureInfoCEGUI^>
+   {
+   private:
+      static ImageComposerCEGUI();
 
-	protected:				
-		virtual void PrepareDraw() override;
-		virtual void DrawBackground() override;
-		virtual void DrawMainOverlay() override;
-		virtual void DrawSubOverlay(SubOverlay::RenderInfo^ RenderInfo) override;
-		virtual void DrawPostEffects() override;
-		virtual void FinishDraw() override;
-		
-	public:
-		literal unsigned int BYTESPERPIXEL = 4;
+   protected:
+      virtual void PrepareDraw() override;
+      virtual void DrawBackground() override;
+      virtual void DrawMainOverlay() override;
+      virtual void DrawSubOverlay(SubOverlay::RenderInfo^ RenderInfo) override;
+      virtual void DrawPostEffects() override;
+      virtual void FinishDraw() override;
 
-		ImageComposerCEGUI(void);
-	};
+   public:
+      literal unsigned int BYTESPERPIXEL = 4;
+
+      ImageComposerCEGUI(void);
+   };
 };};

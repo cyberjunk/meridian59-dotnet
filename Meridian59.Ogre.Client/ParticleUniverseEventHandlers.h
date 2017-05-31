@@ -21,15 +21,15 @@
 #pragma managed(pop)
 
 namespace Meridian59 { namespace Ogre
-{	
-	public class WeatherParticleEventHandler : ::ParticleUniverse::DoExpireEventHandler
-	{
-	public:
-		WeatherParticleEventHandler(void) ;
+{
+   public class WeatherParticleEventHandler : ::ParticleUniverse::DoExpireEventHandler
+   {
+   public:
+      WeatherParticleEventHandler(void) ;
 
-		virtual void _handle(
-			::ParticleUniverse::ParticleTechnique* particleTechnique, 
-			::ParticleUniverse::Particle* particle, 
-			::Ogre::Real timeElapsed) override;
-	};
+      virtual void _handle(
+         ::ParticleUniverse::ParticleTechnique* particleTechnique, 
+         ::ParticleUniverse::Particle* particle, 
+         ::Ogre::Real timeElapsed) override;
+   };
 };};

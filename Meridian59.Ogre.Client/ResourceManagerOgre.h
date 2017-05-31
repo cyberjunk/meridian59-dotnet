@@ -21,10 +21,10 @@ If not, see http://www.gnu.org/licenses/.
 
 namespace Meridian59 { namespace Ogre
 {
-	/// <summary>
-	/// Extends the base ResourceManager class
-	/// </summary>
-	public ref class ResourceManagerOgre : public ::Meridian59::Files::ResourceManager
-	{
-	};
+   /// <summary>
+   /// Extends the base ResourceManager class
+   /// </summary>
+   public ref class ResourceManagerOgre : public ::Meridian59::Files::ResourceManager
+   {
+   };
 };};

@@ -23,51 +23,50 @@
 
 namespace Meridian59 { namespace Ogre 
 {
-	using namespace ::Ogre;
-	using namespace Meridian59::Drawing2D;
-	using namespace Meridian59::Data::Models;
+   using namespace ::Ogre;
+   using namespace Meridian59::Drawing2D;
+   using namespace Meridian59::Data::Models;
 
-	public ref struct TextureInfoOgre
-	{
-	public:
-		::Ogre::String* MaterialNameDefault;
-		::Ogre::String* MaterialNameBlack;
-		::Ogre::String* MaterialNameTarget;
-		::Ogre::String* MaterialNameMouseOver;
-		::Ogre::String* MaterialNameTranslucent25;
-		::Ogre::String* MaterialNameTranslucent50;
-		::Ogre::String* MaterialNameTranslucent75;
-		::Ogre::String* MaterialNameInvisible;
-		::Ogre::String* TextureName;
+   public ref struct TextureInfoOgre
+   {
+   public:
+      ::Ogre::String* MaterialNameDefault;
+      ::Ogre::String* MaterialNameBlack;
+      ::Ogre::String* MaterialNameTarget;
+      ::Ogre::String* MaterialNameMouseOver;
+      ::Ogre::String* MaterialNameTranslucent25;
+      ::Ogre::String* MaterialNameTranslucent50;
+      ::Ogre::String* MaterialNameTranslucent75;
+      ::Ogre::String* MaterialNameInvisible;
+      ::Ogre::String* TextureName;
 
-		void Delete();
-	};
+      void Delete();
+   };
 
-	/// <summary>
-    /// Implements the ImageComposer generic from the core library.
-	/// Creates textures and materials for 2D objects.
-    /// </summary>
-	generic <typename T>
-	where T : ObjectBase
-	public ref class ImageComposerOgre : public ImageComposer<T, TextureInfoOgre^>
-	{
-	private:
-		static ImageComposerOgre();
+   /// <summary>
+   /// Implements the ImageComposer generic from the core library.
+   /// Creates textures and materials for 2D objects.
+   /// </summary>
+   generic <typename T>
+   where T : ObjectBase
+   public ref class ImageComposerOgre : public ImageComposer<T, TextureInfoOgre^>
+   {
+   private:
+      static ImageComposerOgre();
 
-	protected:
-		virtual void PrepareDraw() override;
-		virtual void DrawBackground() override;
-		virtual void DrawMainOverlay() override;
-		virtual void DrawSubOverlay(SubOverlay::RenderInfo^ RenderInfo) override;
-		virtual void DrawPostEffects() override;
-		virtual void FinishDraw() override;
+   protected:
+      virtual void PrepareDraw() override;
+      virtual void DrawBackground() override;
+      virtual void DrawMainOverlay() override;
+      virtual void DrawSubOverlay(SubOverlay::RenderInfo^ RenderInfo) override;
+      virtual void DrawPostEffects() override;
+      virtual void FinishDraw() override;
 
-	public:
-		literal CLRString^ TEXTUREPREFIX	= "RemoteNode2D/Texture/";
-        literal CLRString^ MATERIALPREFIX	= "RemoteNode2D/Material/"; 
-		literal unsigned int BYTESPERPIXEL = 4;
+   public:
+      literal CLRString^ TEXTUREPREFIX	= "RemoteNode2D/Texture/";
+      literal CLRString^ MATERIALPREFIX	= "RemoteNode2D/Material/"; 
+      literal unsigned int BYTESPERPIXEL = 4;
 
-		ImageComposerOgre(void);
-	};
+      ImageComposerOgre(void);
+   };
 };};
-

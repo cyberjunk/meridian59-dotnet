@@ -22,70 +22,73 @@
 #pragma managed(pop)
 
 namespace Meridian59 { namespace Ogre
-{	
-    /// <summary>
-    /// 
-    /// </summary>
-    public ref class ParticleSystemInfo
-    {
-	protected:
-		::Ogre::String* name;
-        ::Ogre::String* templateValue;
-        ::Ogre::String* material;
-        ::Ogre::Vector3* position;
+{
+   /// <summary>
+   /// 
+   /// </summary>
+   public ref class ParticleSystemInfo
+   {
+   protected:
+      ::Ogre::String* name;
+      ::Ogre::String* templateValue;
+      ::Ogre::String* material;
+      ::Ogre::Vector3* position;
 
-	public:
+   public:
+      property ::Ogre::String* Name 
+      { 
+         public: ::Ogre::String* get() { return name; }
+         protected: void set(::Ogre::String* value) { name = value; }
+      };
 
-		property ::Ogre::String* Name 
-		{ 
-			public: ::Ogre::String* get() { return name; }
-			protected: void set(::Ogre::String* value) { name = value; }
-		};
-       
-		property ::Ogre::String* TemplateValue 
-		{ 
-			public: ::Ogre::String* get() { return templateValue; }
-			protected: void set(::Ogre::String* value) { templateValue = value; } 
-		};
-	        
-		property ::Ogre::String* Material 
-		{ 
-			public: ::Ogre::String* get() { return material; }
-			protected: void set(::Ogre::String* value) { material = value; } 
-		};
+      property ::Ogre::String* TemplateValue 
+      { 
+         public: ::Ogre::String* get() { return templateValue; }
+         protected: void set(::Ogre::String* value) { templateValue = value; } 
+      };
 
-		property ::Ogre::Vector3* Position 
-		{ 
-			public: ::Ogre::Vector3* get() { return position; }
-			protected: void set(::Ogre::Vector3* value) { position = value; } 
-		};
+      property ::Ogre::String* Material 
+      { 
+         public: ::Ogre::String* get() { return material; }
+         protected: void set(::Ogre::String* value) { material = value; } 
+      };
 
-        ParticleSystemInfo(::Ogre::String* Name, ::Ogre::String* Template, ::Ogre::String* Material, ::Ogre::Vector3* Position)
-        {
-            name = Name;
-            templateValue = Template;
-            material = Material;
-            position = Position;
-        };
+      property ::Ogre::Vector3* Position 
+      { 
+         public: ::Ogre::Vector3* get() { return position; }
+         protected: void set(::Ogre::Vector3* value) { position = value; } 
+      };
 
-		~ParticleSystemInfo()
-		{
-			if (name)
-				delete name;
+      inline ParticleSystemInfo(
+         ::Ogre::String*  Name, 
+         ::Ogre::String*  Template, 
+         ::Ogre::String*  Material, 
+         ::Ogre::Vector3* Position)
+      {
+         name          = Name;
+         templateValue = Template;
+         material      = Material;
+         position      = Position;
+      };
 
-			if (templateValue)
-				delete templateValue;
+      inline ~ParticleSystemInfo()
+      {
+         if (name)
+            delete name;
 
-			if (material)
-				delete material;
+         if (templateValue)
+            delete templateValue;
 
-			if (position)
-				delete position;
+         if (material)
+            delete material;
 
-			name			= nullptr;
-			templateValue	= nullptr;
-			material		= nullptr;
-			position		= nullptr;
-		};
+         if (position)
+            delete position;
+
+         name           = nullptr;
+         templateValue  = nullptr;
+         material       = nullptr;
+         position       = nullptr;
+      };
     };
 };};

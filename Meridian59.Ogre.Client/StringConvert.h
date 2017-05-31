@@ -28,135 +28,135 @@ typedef ::System::String CLRString;
 
 namespace Meridian59 { namespace Ogre 
 {
-	using namespace msclr::interop;
+   using namespace msclr::interop;
 
-	/// <summary>
-	/// Converts CLR strings to OGRE and vice versa.
-	/// </summary>
-	public ref class StringConvert abstract sealed
-	{
-	private:
-		static marshal_context^ context;
-		static System::Text::UTF8Encoding^ encoderUTF8;
+   /// <summary>
+   /// Converts CLR strings to OGRE and vice versa.
+   /// </summary>
+   public ref class StringConvert abstract sealed
+   {
+   private:
+      static marshal_context^ context;
+      static System::Text::UTF8Encoding^ encoderUTF8;
 
-		static StringConvert::StringConvert()
-		{
-			context = gcnew marshal_context();
-			encoderUTF8 = gcnew System::Text::UTF8Encoding();
-		};
+      static StringConvert::StringConvert()
+      {
+         context = gcnew marshal_context();
+         encoderUTF8 = gcnew System::Text::UTF8Encoding();
+      };
 
-	public:
-		/// <summary>
-		/// Converts CLRString to Ogre::String.
-		/// Turns NULL strings into empty "" strings.
-		/// </summary>
-		__inline static ::Ogre::String CLRToOgre(CLRString^ CLRString)
-		{
-			// handle null and empty string
-			if (CLRString == nullptr || CLRString->Length == 0)
-				return ::Ogre::String(STRINGEMPTY);
-			
-			else
-				return ::Ogre::String(context->marshal_as<const char*>(CLRString));
-		};
+   public:
+      /// <summary>
+      /// Converts CLRString to Ogre::String.
+      /// Turns NULL strings into empty "" strings.
+      /// </summary>
+      __inline static ::Ogre::String CLRToOgre(CLRString^ CLRString)
+      {
+         // handle null and empty string
+         if (CLRString == nullptr || CLRString->Length == 0)
+            return ::Ogre::String(STRINGEMPTY);
 
-		/// <summary>
-		/// Converts CLRString to Ogre::String*.
-		/// Turns NULL strings into empty "" strings.
-		/// </summary>
-		__inline static ::Ogre::String* CLRToOgrePtr(CLRString^ CLRString)
-		{
-			// handle null and empty string
-			if (CLRString == nullptr || CLRString->Length == 0)
-				return new ::Ogre::String(STRINGEMPTY);
-			
-			else
-				return new ::Ogre::String(context->marshal_as<const char*>(CLRString));
-		};
+         else
+            return ::Ogre::String(context->marshal_as<const char*>(CLRString));
+      };
 
-		/// <summary>
-		/// Converts const Ogre::String to CLRString 
-		/// </summary>
-		__inline static CLRString^ OgreToCLR(const ::Ogre::String& OgreString)
-		{
-			return gcnew CLRString(OgreString.c_str());
-		};
+      /// <summary>
+      /// Converts CLRString to Ogre::String*.
+      /// Turns NULL strings into empty "" strings.
+      /// </summary>
+      __inline static ::Ogre::String* CLRToOgrePtr(CLRString^ CLRString)
+      {
+         // handle null and empty string
+         if (CLRString == nullptr || CLRString->Length == 0)
+            return new ::Ogre::String(STRINGEMPTY);
 
-		/// <summary>
-		/// Converts CEGUI::String (native, UTF32) to CLRString (managed, UTF16)
-		/// </summary>
-		__inline static CLRString^ CEGUIToCLR(const ::CEGUI::String& CEGUIString)
-		{
-			// handle empty string
-			if (CEGUIString.length() == 0)
-				return CLRString::Empty;
+         else
+            return new ::Ogre::String(context->marshal_as<const char*>(CLRString));
+      };
 
-			// otherwise: get pointer to utf32 data
-			const CEGUI::utf32* strC = CEGUIString.ptr();
+      /// <summary>
+      /// Converts const Ogre::String to CLRString 
+      /// </summary>
+      __inline static CLRString^ OgreToCLR(const ::Ogre::String& OgreString)
+      {
+         return gcnew CLRString(OgreString.c_str());
+      };
 
-			// how much bytes represent the utf32 string (4 per codepoint)
-			const int bytelength = (int)CEGUIString.length() * 4;
+      /// <summary>
+      /// Converts CEGUI::String (native, UTF32) to CLRString (managed, UTF16)
+      /// </summary>
+      __inline static CLRString^ CEGUIToCLR(const ::CEGUI::String& CEGUIString)
+      {
+         // handle empty string
+         if (CEGUIString.length() == 0)
+            return CLRString::Empty;
 
-			// convert to CLR string
-			CLRString^ strCLR = gcnew CLRString(
-				(const char*)strC, 0, bytelength, System::Text::Encoding::UTF32);
+         // otherwise: get pointer to utf32 data
+         const CEGUI::utf32* strC = CEGUIString.ptr();
 
-			// return
-			return strCLR;
-		};
+         // how much bytes represent the utf32 string (4 per codepoint)
+         const int bytelength = (int)CEGUIString.length() * 4;
 
-		/// <summary>
-		/// Converts CLRString (managed, UTF16) to CEGUI::String (native, UTF32).
-		/// Turns NULL strings into empty "" strings.
-		/// </summary>
-		__inline static ::CEGUI::String CLRToCEGUI(CLRString^ CLRString)
-		{
-			// TODO: 
-			// Make this convert to UTF32 instead of UTF8
-			
-			// handle null and empty string
-			if (CLRString == nullptr || CLRString->Length == 0)
-				return ::CEGUI::String(STRINGEMPTY);
+         // convert to CLR string
+         CLRString^ strCLR = gcnew CLRString(
+            (const char*)strC, 0, bytelength, System::Text::Encoding::UTF32);
 
-			// otherwise: encode as UTF8 into managed byte[]
-			array<unsigned char>^ values = encoderUTF8->GetBytes(CLRString);
+         // return
+         return strCLR;
+      };
 
-			// get pointer to first byte by pinning it
-			pin_ptr<unsigned char> utf8Data = &values[0];
-			
-			// initiate CEGUI::String
-			::CEGUI::String guiStr = ::CEGUI::String(
-				(const CEGUI::utf8*)utf8Data, values->Length);
+      /// <summary>
+      /// Converts CLRString (managed, UTF16) to CEGUI::String (native, UTF32).
+      /// Turns NULL strings into empty "" strings.
+      /// </summary>
+      __inline static ::CEGUI::String CLRToCEGUI(CLRString^ CLRString)
+      {
+         // TODO: 
+         // Make this convert to UTF32 instead of UTF8
 
-			// return
-			return guiStr;
-		};
+         // handle null and empty string
+         if (CLRString == nullptr || CLRString->Length == 0)
+            return ::CEGUI::String(STRINGEMPTY);
 
-		/// <summary>
-		/// Converts CLRString (managed, UTF16) to CEGUI::String* (native, UTF32) 
-		/// Turns NULL strings into empty "" strings.
-		/// </summary>
-		__inline static ::CEGUI::String* CLRToCEGUIPtr(CLRString^ CLRString)
-		{
-			// TODO: 
-			// Make this convert to UTF32 instead of UTF8
-			
-			// handle null and empty string
-			if (CLRString == nullptr || CLRString->Length == 0)
-				return new ::CEGUI::String(STRINGEMPTY);
+         // otherwise: encode as UTF8 into managed byte[]
+         array<unsigned char>^ values = encoderUTF8->GetBytes(CLRString);
 
-			// otherwise: encode as UTF8 into managed byte[]
-			array<unsigned char>^ values = encoderUTF8->GetBytes(CLRString);
+         // get pointer to first byte by pinning it
+         pin_ptr<unsigned char> utf8Data = &values[0];
 
-			// get pointer to first byte by pinning it
-			pin_ptr<unsigned char> utf8Data = &values[0];
-			
-			// initiate CEGUI::String
-			::CEGUI::String* guiStr = new ::CEGUI::String(
-				(const CEGUI::utf8*)utf8Data, values->Length);
+         // initiate CEGUI::String
+         ::CEGUI::String guiStr = ::CEGUI::String(
+            (const CEGUI::utf8*)utf8Data, values->Length);
 
-			// return
-			return guiStr;
-		};
-	};
+         // return
+         return guiStr;
+      };
+
+      /// <summary>
+      /// Converts CLRString (managed, UTF16) to CEGUI::String* (native, UTF32) 
+      /// Turns NULL strings into empty "" strings.
+      /// </summary>
+      __inline static ::CEGUI::String* CLRToCEGUIPtr(CLRString^ CLRString)
+      {
+         // TODO: 
+         // Make this convert to UTF32 instead of UTF8
+
+         // handle null and empty string
+         if (CLRString == nullptr || CLRString->Length == 0)
+            return new ::CEGUI::String(STRINGEMPTY);
+
+         // otherwise: encode as UTF8 into managed byte[]
+         array<unsigned char>^ values = encoderUTF8->GetBytes(CLRString);
+
+         // get pointer to first byte by pinning it
+         pin_ptr<unsigned char> utf8Data = &values[0];
+
+         // initiate CEGUI::String
+         ::CEGUI::String* guiStr = new ::CEGUI::String(
+            (const CEGUI::utf8*)utf8Data, values->Length);
+
+         // return
+         return guiStr;
+      };
+   };
 };};

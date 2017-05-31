@@ -26,37 +26,37 @@
 
 namespace Meridian59 { namespace Ogre 
 {
-	using namespace ::Ogre;
-	using namespace Meridian59::Drawing2D;
-	using namespace Meridian59::Data::Models;
-	using namespace System::Drawing::Drawing2D;
+   using namespace ::Ogre;
+   using namespace Meridian59::Drawing2D;
+   using namespace Meridian59::Data::Models;
+   using namespace System::Drawing::Drawing2D;
 
-	/// <summary>
-    /// A visible object based on a RoomObject and legacy resources (2D).
-	/// This is a fake 3D object, implemented using Ogre's Billboards.
-    /// </summary>
-	public ref class RemoteNode2D : public RemoteNode
-	{
-	protected:
-		::Ogre::Billboard* billboard;
-        ::Ogre::BillboardSet* billboardSet;     
-		ImageComposerOgre<Data::Models::RoomObject^>^ imageComposer;
+   /// <summary>
+      /// A visible object based on a RoomObject and legacy resources (2D).
+   /// This is a fake 3D object, implemented using Ogre's Billboards.
+      /// </summary>
+   public ref class RemoteNode2D : public RemoteNode
+   {
+   protected:
+      ::Ogre::Billboard* billboard;
+      ::Ogre::BillboardSet* billboardSet;
+      ImageComposerOgre<Data::Models::RoomObject^>^ imageComposer;
 
-		void OnNewImageAvailable(Object^ sender, System::EventArgs^ e);
-		virtual void CreateLight() override;
-		virtual void UpdateMaterial() override;
+      void OnNewImageAvailable(Object^ sender, System::EventArgs^ e);
+      virtual void CreateLight() override;
+      virtual void UpdateMaterial() override;
 
-	public:		
-		/// <summary>
-        /// Constructor
-        /// </summary>
-		RemoteNode2D(Data::Models::RoomObject^ RoomObject, ::Ogre::SceneManager* SceneManager);
-		
-		/// <summary>
-        /// Destructor
-        /// </summary>
-		~RemoteNode2D();
+   public:
+      /// <summary>
+      /// Constructor
+      /// </summary>
+      RemoteNode2D(Data::Models::RoomObject^ RoomObject, ::Ogre::SceneManager* SceneManager);
 
-		virtual void RefreshPosition() override;
-	};
+      /// <summary>
+      /// Destructor
+      /// </summary>
+      ~RemoteNode2D();
+
+      virtual void RefreshPosition() override;
+   };
 };};

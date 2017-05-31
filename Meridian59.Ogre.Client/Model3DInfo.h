@@ -32,171 +32,171 @@
 
 namespace Meridian59 { namespace Ogre
 {
-	using namespace System::Xml;
-	using namespace System::Xml::Schema;
-	using namespace System::Xml::Serialization;
+   using namespace System::Xml;
+   using namespace System::Xml::Schema;
+   using namespace System::Xml::Serialization;
 
-    /// <summary>
-    /// 
-    /// </summary>
-	public ref class Model3DInfo : IXmlSerializable
-    {	
-	protected:
-		::Meridian59::Ogre::MeshInfo^ meshInfo;
-		array<MeshHotspot^>^ hotspots;
-		array<ParticleSystemInfo^>^ particleSystemsData;
+   /// <summary>
+   /// 
+   /// </summary>
+   public ref class Model3DInfo : IXmlSerializable
+   {
+   protected:
+      ::Meridian59::Ogre::MeshInfo^ meshInfo;
+      array<MeshHotspot^>^ hotspots;
+      array<ParticleSystemInfo^>^ particleSystemsData;
 
-		void ProcessMesh(XmlReader^ XmlReader)
-        {
-            XmlReader->ReadToFollowing(TAG_MESH);
-            CLRString^ meshfile = XmlReader["file"];
-			::Ogre::String* ostr_meshfile = StringConvert::CLRToOgrePtr(meshfile);
+      void ProcessMesh(XmlReader^ XmlReader)
+      {
+         XmlReader->ReadToFollowing(TAG_MESH);
+         CLRString^ meshfile = XmlReader["file"];
+         ::Ogre::String* ostr_meshfile = StringConvert::CLRToOgrePtr(meshfile);
 
-            bool castshadows = System::Convert::ToBoolean(XmlReader["castshadows"]);
+         bool castshadows = System::Convert::ToBoolean(XmlReader["castshadows"]);
 
-            XmlReader->ReadToFollowing("orientation");
-            Quaternion orientation = XmlReaderExtensions::ReadQuaternion(XmlReader);
+         XmlReader->ReadToFollowing("orientation");
+         Quaternion orientation = XmlReaderExtensions::ReadQuaternion(XmlReader);
 
-            XmlReader->ReadToFollowing("scale");
-            ::Ogre::Vector3 scale = XmlReaderExtensions::ReadVector3(XmlReader);
+         XmlReader->ReadToFollowing("scale");
+         ::Ogre::Vector3 scale = XmlReaderExtensions::ReadVector3(XmlReader);
 
-            XmlReader->ReadToFollowing("lightposition");
-            ::Ogre::Vector3 lightpos = XmlReaderExtensions::ReadVector3(XmlReader);
+         XmlReader->ReadToFollowing("lightposition");
+         ::Ogre::Vector3 lightpos = XmlReaderExtensions::ReadVector3(XmlReader);
 
-            meshInfo = gcnew ::Meridian59::Ogre::MeshInfo(ostr_meshfile, castshadows, 
-				new Quaternion(orientation), new ::Ogre::Vector3(scale), new ::Ogre::Vector3(lightpos));
-        };
+         meshInfo = gcnew ::Meridian59::Ogre::MeshInfo(ostr_meshfile, castshadows, 
+            new Quaternion(orientation), new ::Ogre::Vector3(scale), new ::Ogre::Vector3(lightpos));
+      };
 
-        void ProcessHotspots(XmlReader^ XmlReader)
-        {
-            // get count of hotspots
-            XmlReader->ReadToFollowing(TAG_HOTSPOTS);
-            int hotspotscount = XmlReaderExtensions::ReadCount(XmlReader);
+      void ProcessHotspots(XmlReader^ XmlReader)
+      {
+         // get count of hotspots
+         XmlReader->ReadToFollowing(TAG_HOTSPOTS);
+         int hotspotscount = XmlReaderExtensions::ReadCount(XmlReader);
 
-            Hotspots = gcnew array<MeshHotspot^>(hotspotscount);
+         Hotspots = gcnew array<MeshHotspot^>(hotspotscount);
 
-            // process each
-            for (int i = 0; i < hotspotscount; i++)
-                ProcessHotspot(XmlReader, i);
-        };
+         // process each
+         for (int i = 0; i < hotspotscount; i++)
+            ProcessHotspot(XmlReader, i);
+      };
 
-        void ProcessHotspot(XmlReader^ XmlReader, int ArrayPosition)
-        {
-            XmlReader->ReadToFollowing(TAG_HOTSPOT);
-            signed char index = System::Convert::ToSByte(XmlReader[ATTRIB_INDEX]);
+      void ProcessHotspot(XmlReader^ XmlReader, int ArrayPosition)
+      {
+         XmlReader->ReadToFollowing(TAG_HOTSPOT);
+         signed char index = System::Convert::ToSByte(XmlReader[ATTRIB_INDEX]);
 
-            XmlReader->ReadToFollowing("position");
-            ::Ogre::Vector3 position = XmlReaderExtensions::ReadVector3(XmlReader);
+         XmlReader->ReadToFollowing("position");
+         ::Ogre::Vector3 position = XmlReaderExtensions::ReadVector3(XmlReader);
 
-            XmlReader->ReadToFollowing("orientation");
-            ::Ogre::Quaternion orientation = XmlReaderExtensions::ReadQuaternion(XmlReader);
+         XmlReader->ReadToFollowing("orientation");
+         ::Ogre::Quaternion orientation = XmlReaderExtensions::ReadQuaternion(XmlReader);
 
-            Hotspots[ArrayPosition] = gcnew MeshHotspot(index, &position, &orientation);
-        };
+         Hotspots[ArrayPosition] = gcnew MeshHotspot(index, &position, &orientation);
+      };
 
-        void ProcessParticles(XmlReader^ XmlReader)
-        {
-            // get count of particles
-            XmlReader->ReadToFollowing(TAG_PARTICLES);
-            int particlescount = XmlReaderExtensions::ReadCount(XmlReader);
+      void ProcessParticles(XmlReader^ XmlReader)
+      {
+         // get count of particles
+         XmlReader->ReadToFollowing(TAG_PARTICLES);
+         int particlescount = XmlReaderExtensions::ReadCount(XmlReader);
 
-            ParticleSystemsData = gcnew array<ParticleSystemInfo^>(particlescount);
+         ParticleSystemsData = gcnew array<ParticleSystemInfo^>(particlescount);
 
-            // process each
-            for (int i = 0; i < particlescount; i++)
-                ProcessParticle(XmlReader, i);
-        };
+         // process each
+         for (int i = 0; i < particlescount; i++)
+            ProcessParticle(XmlReader, i);
+      };
 
-        void ProcessParticle(XmlReader^ XmlReader, int ArrayPosition)
-        {
-            XmlReader->ReadToFollowing(TAG_PARTICLE);
-            ::Ogre::String* name = StringConvert::CLRToOgrePtr(XmlReader["name"]);
-            ::Ogre::String* templateVal = StringConvert::CLRToOgrePtr(XmlReader["template"]);
-            ::Ogre::String* material = StringConvert::CLRToOgrePtr(XmlReader["material"]);
+      void ProcessParticle(XmlReader^ XmlReader, int ArrayPosition)
+      {
+         XmlReader->ReadToFollowing(TAG_PARTICLE);
+         ::Ogre::String* name = StringConvert::CLRToOgrePtr(XmlReader["name"]);
+         ::Ogre::String* templateVal = StringConvert::CLRToOgrePtr(XmlReader["template"]);
+         ::Ogre::String* material = StringConvert::CLRToOgrePtr(XmlReader["material"]);
 
-            XmlReader->ReadToFollowing("position");
-            ::Ogre::Vector3 position = XmlReaderExtensions::ReadVector3(XmlReader);
+         XmlReader->ReadToFollowing("position");
+         ::Ogre::Vector3 position = XmlReaderExtensions::ReadVector3(XmlReader);
 
-            ParticleSystemsData[ArrayPosition] = gcnew ParticleSystemInfo(
-                name, templateVal, material, new ::Ogre::Vector3(position));
-        };
+         ParticleSystemsData[ArrayPosition] = gcnew ParticleSystemInfo(
+            name, templateVal, material, new ::Ogre::Vector3(position));
+      };
 
-	public:
-		literal CLRString^ TAG_MODEL = "model";
-        literal CLRString^ TAG_MESH = "mesh";
-        literal CLRString^ TAG_HOTSPOTS = "hotspots";
-        literal CLRString^ TAG_HOTSPOT = "hotspot";
-        literal CLRString^ TAG_PARTICLES = "particles";
-        literal CLRString^ TAG_PARTICLE = "particle";
-        literal CLRString^ ATTRIB_INDEX = "index";
+   public:
+      literal CLRString^ TAG_MODEL = "model";
+      literal CLRString^ TAG_MESH = "mesh";
+      literal CLRString^ TAG_HOTSPOTS = "hotspots";
+      literal CLRString^ TAG_HOTSPOT = "hotspot";
+      literal CLRString^ TAG_PARTICLES = "particles";
+      literal CLRString^ TAG_PARTICLE = "particle";
+      literal CLRString^ ATTRIB_INDEX = "index";
 
-		property ::Meridian59::Ogre::MeshInfo^ MeshInfo 
-		{ 
-			public: ::Meridian59::Ogre::MeshInfo^ get() { return meshInfo; }
-			protected: void set(::Meridian59::Ogre::MeshInfo^ value) { meshInfo = value; } 
-		};
+      property ::Meridian59::Ogre::MeshInfo^ MeshInfo 
+      { 
+         public: ::Meridian59::Ogre::MeshInfo^ get() { return meshInfo; }
+         protected: void set(::Meridian59::Ogre::MeshInfo^ value) { meshInfo = value; } 
+      };
 
-		property array<MeshHotspot^>^ Hotspots 
-		{ 
-			public: array<MeshHotspot^>^ get() { return hotspots; }
-			protected: void set(array<MeshHotspot^>^ value) { hotspots = value; } 
-		};
+      property array<MeshHotspot^>^ Hotspots 
+      { 
+         public: array<MeshHotspot^>^ get() { return hotspots; }
+         protected: void set(array<MeshHotspot^>^ value) { hotspots = value; } 
+      };
 
-		property array<ParticleSystemInfo^>^ ParticleSystemsData 
-		{ 
-			public: array<ParticleSystemInfo^>^ get() { return particleSystemsData; }
-			protected: void set(array<ParticleSystemInfo^>^ value) { particleSystemsData = value; } 
-		};
+      property array<ParticleSystemInfo^>^ ParticleSystemsData 
+      { 
+         public: array<ParticleSystemInfo^>^ get() { return particleSystemsData; }
+         protected: void set(array<ParticleSystemInfo^>^ value) { particleSystemsData = value; } 
+      };
 
-		Model3DInfo(const ::Ogre::String& XmlModelResource, const ::Ogre::String& ResourceGroup)
-        {
-            // get xmlreader on mogre resource                   
-            DataStreamPtr streamPtr = 
-				ResourceGroupManager::getSingletonPtr()->openResource(XmlModelResource, ResourceGroup);
-            
-			XmlReader^ reader = XmlReader::Create(Util::DataPtrToStream(streamPtr));
+      Model3DInfo(const ::Ogre::String& XmlModelResource, const ::Ogre::String& ResourceGroup)
+      {
+         // get xmlreader on mogre resource
+         DataStreamPtr streamPtr = 
+         ResourceGroupManager::getSingletonPtr()->openResource(XmlModelResource, ResourceGroup);
 
-            ReadXml(reader);
+         XmlReader^ reader = XmlReader::Create(Util::DataPtrToStream(streamPtr));
 
-            // cleanup
-            reader->Close();
-            streamPtr->close();
-        };
+         ReadXml(reader);
 
-		~Model3DInfo()
-		{
-			for(int i=0; i < hotspots->Length; i++)
-				delete hotspots[i];
-			
-			for(int i=0; i < particleSystemsData->Length; i++)
-				delete particleSystemsData[i];
+         // cleanup
+         reader->Close();
+         streamPtr->close();
+      };
 
-			delete meshInfo;
-		};
+      ~Model3DInfo()
+      {
+         for(int i=0; i < hotspots->Length; i++)
+            delete hotspots[i];
 
-		virtual XmlSchema^ GetSchema()
-        {
-            return nullptr;
-        };
+         for(int i=0; i < particleSystemsData->Length; i++)
+            delete particleSystemsData[i];
 
-		virtual void ReadXml(XmlReader^ reader)
-        {           
-            // rootnode
-            reader->ReadToFollowing(TAG_MODEL);
+         delete meshInfo;
+      };
 
-            // read mesh
-            ProcessMesh(reader);
+      virtual XmlSchema^ GetSchema()
+      {
+         return nullptr;
+      };
 
-            // read hotspots
-            ProcessHotspots(reader);
+      virtual void ReadXml(XmlReader^ reader)
+      {
+         // rootnode
+         reader->ReadToFollowing(TAG_MODEL);
 
-            // read particles
-            ProcessParticles(reader);
-        };
+         // read mesh
+         ProcessMesh(reader);
 
-		virtual void WriteXml(XmlWriter^ writer)
-        {
-            throw gcnew System::NotImplementedException();
-        };
-	};
+         // read hotspots
+         ProcessHotspots(reader);
+
+         // read particles
+         ProcessParticles(reader);
+      };
+
+      virtual void WriteXml(XmlWriter^ writer)
+      {
+         throw gcnew System::NotImplementedException();
+      };
+   };
 };};
