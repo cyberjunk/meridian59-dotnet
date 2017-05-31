@@ -45,7 +45,7 @@ namespace Meridian59 { namespace Ogre
       static ::Ogre::CompositorInstance* compBlur;
       static ::Ogre::CompositorInstance* compBlend;
 
-      static CompositorPainListener* listenerPain;
+      static CompositorPainListener*     listenerPain;
       static CompositorWhiteoutListener* listenerWhiteout;
 
       static ControllerEffects(void);
