@@ -117,6 +117,9 @@
     <ClInclude Include="Language.h">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="TypeDefs.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="app.rc">

@@ -106,6 +106,7 @@
       <AdditionalIncludeDirectories>..\Engine\Include\DX9;..\Engine\include\OGRE;..\Engine\include\;..\Engine\include\OIS;..\Engine\include\irrKlang;..\Engine\include\CEGUI;..\Engine\include\caelum;..\Engine\include\particleuniverse;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalOptions>-Zm345</AdditionalOptions>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -131,6 +132,7 @@
       <AdditionalIncludeDirectories>..\Engine\Include\DX9;..\Engine\include\OGRE;..\Engine\include\;..\Engine\include\OIS;..\Engine\include\irrKlang;..\Engine\include\CEGUI;..\Engine\include\caelum;..\Engine\include\particleuniverse;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalOptions>-Zm312</AdditionalOptions>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -168,6 +170,7 @@
       <EnableParallelCodeGeneration>false</EnableParallelCodeGeneration>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -206,6 +209,7 @@
       <StringPooling>true</StringPooling>
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -265,6 +269,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="StringConvert.h" />
     <ClInclude Include="Constants.h" />
+    <ClInclude Include="TypeDefs.h" />
     <ClInclude Include="Util.h" />
     <ClInclude Include="XmlReaderExtensions.h" />
   </ItemGroup>

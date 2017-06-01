@@ -33,6 +33,7 @@
 
 #include "resource.h"
 #include "Constants.h"
+#include "TypeDefs.h"
 #include "StringConvert.h"
 #include "Language.h"
 #include "ControllerSound.h"

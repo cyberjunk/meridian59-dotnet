@@ -22,9 +22,9 @@
 #pragma managed(pop)
 
 #include "Constants.h"
+#include "TypeDefs.h"
 #include <msclr/marshal.h>
 
-typedef ::System::String CLRString;
 
 namespace Meridian59 { namespace Ogre 
 {

@@ -23,12 +23,5 @@
 #include "Caelum.h"
 #pragma managed(pop)
 
-#if _WIN32 || _WIN64
-#if _WIN64
-typedef ::System::Double CLRReal;
-#else
-typedef ::System::Single CLRReal;
-#endif
-#endif
-
+#include "TypeDefs.h"
 #include "OgreClient.h"
