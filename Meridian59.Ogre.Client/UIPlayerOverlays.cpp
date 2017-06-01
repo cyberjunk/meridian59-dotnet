@@ -2,269 +2,269 @@
 
 namespace Meridian59 { namespace Ogre
 {
-	void ControllerUI::PlayerOverlays::Initialize()
-	{	
-		// images are so small for big renderwindows... let's scale them all up a bit
-		scale = guiRoot->getPixelSize().d_width / 800.0f;
+   void ControllerUI::PlayerOverlays::Initialize()
+   {
+      // images are so small for big renderwindows... let's scale them all up a bit
+      scale = guiRoot->getPixelSize().d_width / 800.0f;
 
-		// init imagecomposers list
-		imageComposers = gcnew ::System::Collections::Generic::List<ImageComposerCEGUI<PlayerOverlay^>^>();
-		
-		// init list to store overlay window references
-		overlayWindows = new ::std::vector<::CEGUI::Window*>();
+      // init imagecomposers list
+      imageComposers = gcnew ::System::Collections::Generic::List<ImageComposerCEGUI<PlayerOverlay^>^>();
 
-		// attach listener to playeroverlays list
-		OgreClient::Singleton->Data->PlayerOverlays->ListChanged += 
-			gcnew ListChangedEventHandler(OnPlayerOverlaysListChanged);				
-	};
+      // init list to store overlay window references
+      overlayWindows = new ::std::vector<::CEGUI::Window*>();
 
-	void ControllerUI::PlayerOverlays::Destroy()
-	{
-		// detach listener
-		OgreClient::Singleton->Data->PlayerOverlays->ListChanged -= 
-			gcnew ListChangedEventHandler(OnPlayerOverlaysListChanged);
+      // attach listener to playeroverlays list
+      OgreClient::Singleton->Data->PlayerOverlays->ListChanged += 
+         gcnew ListChangedEventHandler(OnPlayerOverlaysListChanged);
+   };
 
-		delete overlayWindows;
-	};
+   void ControllerUI::PlayerOverlays::Destroy()
+   {
+      // detach listener
+      OgreClient::Singleton->Data->PlayerOverlays->ListChanged -= 
+         gcnew ListChangedEventHandler(OnPlayerOverlaysListChanged);
 
-	void ControllerUI::PlayerOverlays::ApplyLanguage()
-	{
-	};
+      delete overlayWindows;
+   };
 
-	bool ControllerUI::PlayerOverlays::IsOverlayWindow(::CEGUI::Window* Window)
-	{
-		if (!Window)
-			return false;
+   void ControllerUI::PlayerOverlays::ApplyLanguage()
+   {
+   };
 
-		for (size_t i = 0; i < overlayWindows->size(); i++)		
-			if (Window == overlayWindows->at(i))
-				return true;
+   bool ControllerUI::PlayerOverlays::IsOverlayWindow(::CEGUI::Window* Window)
+   {
+      if (!Window)
+         return false;
 
-		return false;
-	};
+      for (size_t i = 0; i < overlayWindows->size(); i++)
+         if (Window == overlayWindows->at(i))
+            return true;
 
-	void ControllerUI::PlayerOverlays::OnPlayerOverlaysListChanged(Object^ sender, ListChangedEventArgs^ e)
-	{
-		switch(e->ListChangedType)
-		{
-			case ::System::ComponentModel::ListChangedType::ItemAdded:
-				PlayerOverlayAdd(e->NewIndex);			
-				break;
+      return false;
+   };
 
-			case ::System::ComponentModel::ListChangedType::ItemDeleted:
-				PlayerOverlayRemove(e->NewIndex);
-				break;
+   void ControllerUI::PlayerOverlays::OnPlayerOverlaysListChanged(Object^ sender, ListChangedEventArgs^ e)
+   {
+      switch(e->ListChangedType)
+      {
+         case ::System::ComponentModel::ListChangedType::ItemAdded:
+            PlayerOverlayAdd(e->NewIndex);
+            break;
 
-			case ::System::ComponentModel::ListChangedType::ItemChanged:
-				PlayerOverlayChange(e->NewIndex);
-				break;
-		}
-	};
+         case ::System::ComponentModel::ListChangedType::ItemDeleted:
+            PlayerOverlayRemove(e->NewIndex);
+            break;
 
-	void ControllerUI::PlayerOverlays::PlayerOverlayAdd(int Index)
-	{
-		CEGUI::WindowManager* wndMgr = CEGUI::WindowManager::getSingletonPtr();
-		PlayerOverlay^ obj = OgreClient::Singleton->Data->PlayerOverlays[Index];
+         case ::System::ComponentModel::ListChangedType::ItemChanged:
+            PlayerOverlayChange(e->NewIndex);
+            break;
+      }
+   };
 
-		// create widget (item)
-		CEGUI::Window* widget = (CEGUI::Window*)wndMgr->createWindow(
-			UI_WINDOWTYPE_PLAYEROVERLAY);
-		
-		// set properties
-		//widget->setID(obj->ID);
-		widget->setProperty(UI_PROPNAME_FRAMEENABLED, "false");
-		widget->setProperty(UI_PROPNAME_BACKGROUNDENABLED, "false");
-		widget->setMousePassThroughEnabled(true);
-		widget->setMouseInputPropagationEnabled(true);
-		widget->setName(UI_PLAYEROVERLAY_WIDGETPREFIX + ::CEGUI::PropertyHelper<::CEGUI::uint32>::toString(obj->ID));
-		widget->releaseInput();
-		widget->setDisabled(true);
-		widget->setZOrderingEnabled(false);
+   void ControllerUI::PlayerOverlays::PlayerOverlayAdd(int Index)
+   {
+      CEGUI::WindowManager* wndMgr = CEGUI::WindowManager::getSingletonPtr();
+      PlayerOverlay^ obj = OgreClient::Singleton->Data->PlayerOverlays[Index];
 
-		// add window to own list
-		overlayWindows->push_back(widget);
+      // create widget (item)
+      CEGUI::Window* widget = (CEGUI::Window*)wndMgr->createWindow(
+         UI_WINDOWTYPE_PLAYEROVERLAY);
 
-		// save last active window
-		CEGUI::Window* lastActive = ControllerUI::GUIRoot->getActiveChild();
+      // set properties
+      //widget->setID(obj->ID);
+      widget->setProperty(UI_PROPNAME_FRAMEENABLED, "false");
+      widget->setProperty(UI_PROPNAME_BACKGROUNDENABLED, "false");
+      widget->setMousePassThroughEnabled(true);
+      widget->setMouseInputPropagationEnabled(true);
+      widget->setName(UI_PLAYEROVERLAY_WIDGETPREFIX + ::CEGUI::PropertyHelper<::CEGUI::uint32>::toString(obj->ID));
+      widget->releaseInput();
+      widget->setDisabled(true);
+      widget->setZOrderingEnabled(false);
 
-		// attach to guiroot
-		guiRoot->addChild(widget);
-		
-		// restore last active window
-		if (!lastActive)
-			ControllerUI::GUIRoot->activate();
-		
-		else		
-			lastActive->activate();
-					
-		// create imagecomposer
-		ImageComposerCEGUI<PlayerOverlay^>^ imageComposer = gcnew ImageComposerCEGUI<PlayerOverlay^>();
-		imageComposer->ApplyYOffset = false;
-        imageComposer->HotspotIndex = 0;
-        imageComposer->IsScalePow2 = false;
-        imageComposer->UseViewerFrame = false;
-        imageComposer->CenterHorizontal = false;
-        imageComposer->CenterVertical = false;
-		imageComposer->NewImageAvailable += gcnew ::System::EventHandler(OnImageAvailable);
+      // add window to own list
+      overlayWindows->push_back(widget);
 
-		// insert composer into list at index
-		imageComposers->Insert(Index, imageComposer);
+      // save last active window
+      CEGUI::Window* lastActive = ControllerUI::GUIRoot->getActiveChild();
 
-		// set datasource (triggers first image)
-		imageComposer->DataSource = obj;
+      // attach to guiroot
+      guiRoot->addChild(widget);
 
-		// don't show if we're not in 1. person
-		if (!ControllerInput::IsCameraFirstPerson)
-			widget->hide();
-	};
+      // restore last active window
+      if (!lastActive)
+         ControllerUI::GUIRoot->activate();
 
-	void ControllerUI::PlayerOverlays::PlayerOverlayRemove(int Index)
-	{	
-		// get window from own list
-		CEGUI::Window* window = overlayWindows->at(Index);
+      else
+         lastActive->activate();
 
-		// remove from own list
-		overlayWindows->erase(overlayWindows->begin() + Index);
+      // create imagecomposer
+      ImageComposerCEGUI<PlayerOverlay^>^ imageComposer = gcnew ImageComposerCEGUI<PlayerOverlay^>();
+      imageComposer->ApplyYOffset = false;
+         imageComposer->HotspotIndex = 0;
+         imageComposer->IsScalePow2 = false;
+         imageComposer->UseViewerFrame = false;
+         imageComposer->CenterHorizontal = false;
+         imageComposer->CenterVertical = false;
+      imageComposer->NewImageAvailable += gcnew ::System::EventHandler(OnImageAvailable);
 
-		// destroy window
-		guiRoot->destroyChild(window);
+      // insert composer into list at index
+      imageComposers->Insert(Index, imageComposer);
 
-		// remove imagecomposer
-		if (imageComposers->Count > Index)
-		{
-			// reset (detaches listeners!)
-			imageComposers[Index]->NewImageAvailable -= gcnew ::System::EventHandler(OnImageAvailable);
-			imageComposers[Index]->DataSource = nullptr;
-			
-			// remove from list
-			imageComposers->RemoveAt(Index);
-		}
-	};
+      // set datasource (triggers first image)
+      imageComposer->DataSource = obj;
 
-	void ControllerUI::PlayerOverlays::PlayerOverlayChange(int Index)
-	{		
-	};
+      // don't show if we're not in 1. person
+      if (!ControllerInput::IsCameraFirstPerson)
+         widget->hide();
+   };
 
-	void ControllerUI::PlayerOverlays::OnImageAvailable(Object^ sender, ::System::EventArgs^ e)
-	{
-		// imagecomposer which created event
-		ImageComposerCEGUI<PlayerOverlay^>^ imageComposer = (ImageComposerCEGUI<PlayerOverlay^>^)sender;
-		
-		// get index of this imagecomposer
-		int index = imageComposers->IndexOf(imageComposer);
+   void ControllerUI::PlayerOverlays::PlayerOverlayRemove(int Index)
+   {
+      // get window from own list
+      CEGUI::Window* window = overlayWindows->at(Index);
 
-		if ((int)overlayWindows->size() > index)
-		{
-			// get overlay window
-			CEGUI::Window* window = overlayWindows->at(index);
+      // remove from own list
+      overlayWindows->erase(overlayWindows->begin() + Index);
 
-			// set new image
-			window->setProperty(UI_PROPNAME_IMAGE, *imageComposer->Image->TextureName);
+      // destroy window
+      guiRoot->destroyChild(window);
 
-			// calc size with scale
-			float x = scale * (float)imageComposer->RenderInfo->Dimension.X;
-			float y = scale * (float)imageComposer->RenderInfo->Dimension.Y;
+      // remove imagecomposer
+      if (imageComposers->Count > Index)
+      {
+         // reset (detaches listeners!)
+         imageComposers[Index]->NewImageAvailable -= gcnew ::System::EventHandler(OnImageAvailable);
+         imageComposers[Index]->DataSource = nullptr;
 
-			// set size
-			window->setSize(CEGUI::USize(CEGUI::UDim(0, x), CEGUI::UDim(0, y)));
+         // remove from list
+         imageComposers->RemoveAt(Index);
+      }
+   };
 
-			// set position
-			window->setPosition(GetScreenPositionForHotspot(imageComposer));
-		}
-	};
+   void ControllerUI::PlayerOverlays::PlayerOverlayChange(int Index)
+   {
+   };
 
-	::CEGUI::UVector2 ControllerUI::PlayerOverlays::GetScreenPositionForHotspot(ImageComposerCEGUI<PlayerOverlay^>^ ImageComposer)
-	{
-		::CEGUI::UVector2 value = ::CEGUI::UVector2();
+   void ControllerUI::PlayerOverlays::OnImageAvailable(Object^ sender, ::System::EventArgs^ e)
+   {
+      // imagecomposer which created event
+      ImageComposerCEGUI<PlayerOverlay^>^ imageComposer = (ImageComposerCEGUI<PlayerOverlay^>^)sender;
 
-		// build x-offset
-		switch (ImageComposer->DataSource->RenderPosition)
-		{
-			case PlayerOverlayHotspot::HOTSPOT_NW:
-			case PlayerOverlayHotspot::HOTSPOT_W:
-			case PlayerOverlayHotspot::HOTSPOT_SW:
-				value.d_x.d_offset = 0.0f;
-				break;
+      // get index of this imagecomposer
+      int index = imageComposers->IndexOf(imageComposer);
 
-			case PlayerOverlayHotspot::HOTSPOT_SE:
-			case PlayerOverlayHotspot::HOTSPOT_E:
-			case PlayerOverlayHotspot::HOTSPOT_NE:
-				value.d_x.d_offset = guiRoot->getPixelSize().d_width - (scale * (float)ImageComposer->RenderInfo->Dimension.X);
-				break;
+      if ((int)overlayWindows->size() > index)
+      {
+         // get overlay window
+         CEGUI::Window* window = overlayWindows->at(index);
 
-			case PlayerOverlayHotspot::HOTSPOT_N:
-			case PlayerOverlayHotspot::HOTSPOT_S:
-			case PlayerOverlayHotspot::HOTSPOT_CENTER:
-				value.d_x.d_offset = 0.5f * (guiRoot->getPixelSize().d_width - (scale * (float)ImageComposer->RenderInfo->Dimension.X));
-				break;
-		}
+         // set new image
+         window->setProperty(UI_PROPNAME_IMAGE, *imageComposer->Image->TextureName);
 
-		// build y-offset
-		switch (ImageComposer->DataSource->RenderPosition)
-		{
-			case PlayerOverlayHotspot::HOTSPOT_NW:
-			case PlayerOverlayHotspot::HOTSPOT_N:
-			case PlayerOverlayHotspot::HOTSPOT_NE:
-				value.d_y.d_offset = 0.0f;
-				break;
+         // calc size with scale
+         float x = scale * (float)imageComposer->RenderInfo->Dimension.X;
+         float y = scale * (float)imageComposer->RenderInfo->Dimension.Y;
 
-			case PlayerOverlayHotspot::HOTSPOT_SW:
-			case PlayerOverlayHotspot::HOTSPOT_S:
-			case PlayerOverlayHotspot::HOTSPOT_SE:
-				value.d_y.d_offset = guiRoot->getPixelSize().d_height - (scale * (float)ImageComposer->RenderInfo->Dimension.Y);
-				break;
+         // set size
+         window->setSize(CEGUI::USize(CEGUI::UDim(0, x), CEGUI::UDim(0, y)));
 
-			case PlayerOverlayHotspot::HOTSPOT_W:
-			case PlayerOverlayHotspot::HOTSPOT_E:
-			case PlayerOverlayHotspot::HOTSPOT_CENTER:
-				value.d_y.d_offset = 0.5f * (guiRoot->getPixelSize().d_height - (scale * (float)ImageComposer->RenderInfo->Dimension.Y));
-				break;
-		}
+         // set position
+         window->setPosition(GetScreenPositionForHotspot(imageComposer));
+      }
+   };
 
-		// build relative from absolute
-		value.d_x.d_scale = value.d_x.d_offset / guiRoot->getPixelSize().d_width;
-		value.d_y.d_scale = value.d_y.d_offset / guiRoot->getPixelSize().d_height;
+   ::CEGUI::UVector2 ControllerUI::PlayerOverlays::GetScreenPositionForHotspot(ImageComposerCEGUI<PlayerOverlay^>^ ImageComposer)
+   {
+      ::CEGUI::UVector2 value = ::CEGUI::UVector2();
 
-		value.d_x.d_offset = 0;
-		value.d_y.d_offset = 0;
+      // build x-offset
+      switch (ImageComposer->DataSource->RenderPosition)
+      {
+         case PlayerOverlayHotspot::HOTSPOT_NW:
+         case PlayerOverlayHotspot::HOTSPOT_W:
+         case PlayerOverlayHotspot::HOTSPOT_SW:
+            value.d_x.d_offset = 0.0f;
+            break;
 
-		return value;
-	};
+         case PlayerOverlayHotspot::HOTSPOT_SE:
+         case PlayerOverlayHotspot::HOTSPOT_E:
+         case PlayerOverlayHotspot::HOTSPOT_NE:
+            value.d_x.d_offset = guiRoot->getPixelSize().d_width - (scale * (float)ImageComposer->RenderInfo->Dimension.X);
+            break;
 
-	void ControllerUI::PlayerOverlays::ShowOverlays()
-	{
-		for(int i = 0; i < (int)overlayWindows->size(); i++)		
-			overlayWindows->at(i)->show();		
-	};
+         case PlayerOverlayHotspot::HOTSPOT_N:
+         case PlayerOverlayHotspot::HOTSPOT_S:
+         case PlayerOverlayHotspot::HOTSPOT_CENTER:
+            value.d_x.d_offset = 0.5f * (guiRoot->getPixelSize().d_width - (scale * (float)ImageComposer->RenderInfo->Dimension.X));
+            break;
+      }
 
-	void ControllerUI::PlayerOverlays::HideOverlays()
-	{
-		for(int i = 0; i < (int)overlayWindows->size(); i++)		
-			overlayWindows->at(i)->hide();
-	};
+      // build y-offset
+      switch (ImageComposer->DataSource->RenderPosition)
+      {
+         case PlayerOverlayHotspot::HOTSPOT_NW:
+         case PlayerOverlayHotspot::HOTSPOT_N:
+         case PlayerOverlayHotspot::HOTSPOT_NE:
+            value.d_y.d_offset = 0.0f;
+            break;
 
-	void ControllerUI::PlayerOverlays::WindowResized(int Width, int Height)
-	{
-		if ((int)overlayWindows->size() != imageComposers->Count)
-			return;
+         case PlayerOverlayHotspot::HOTSPOT_SW:
+         case PlayerOverlayHotspot::HOTSPOT_S:
+         case PlayerOverlayHotspot::HOTSPOT_SE:
+            value.d_y.d_offset = guiRoot->getPixelSize().d_height - (scale * (float)ImageComposer->RenderInfo->Dimension.Y);
+            break;
 
-		scale = (float)Width / 800.0f;
+         case PlayerOverlayHotspot::HOTSPOT_W:
+         case PlayerOverlayHotspot::HOTSPOT_E:
+         case PlayerOverlayHotspot::HOTSPOT_CENTER:
+            value.d_y.d_offset = 0.5f * (guiRoot->getPixelSize().d_height - (scale * (float)ImageComposer->RenderInfo->Dimension.Y));
+            break;
+      }
 
-		for (int i = 0; i < (int)overlayWindows->size(); i++)
-		{
-			// get overlay window
-			CEGUI::Window* window = overlayWindows->at(i);
-			ImageComposerCEGUI<PlayerOverlay^>^ imageComposer = imageComposers[i];
+      // build relative from absolute
+      value.d_x.d_scale = value.d_x.d_offset / guiRoot->getPixelSize().d_width;
+      value.d_y.d_scale = value.d_y.d_offset / guiRoot->getPixelSize().d_height;
 
-			// calc size with scale
-			float x = scale * (float)imageComposer->RenderInfo->Dimension.X;
-			float y = scale * (float)imageComposer->RenderInfo->Dimension.Y;
+      value.d_x.d_offset = 0;
+      value.d_y.d_offset = 0;
 
-			// set size
-			window->setSize(CEGUI::USize(CEGUI::UDim(0, x), CEGUI::UDim(0, y)));
+      return value;
+   };
 
-			// set position
-			window->setPosition(GetScreenPositionForHotspot(imageComposer));
-		}
-	};
+   void ControllerUI::PlayerOverlays::ShowOverlays()
+   {
+      for(int i = 0; i < (int)overlayWindows->size(); i++)
+         overlayWindows->at(i)->show();
+   };
+
+   void ControllerUI::PlayerOverlays::HideOverlays()
+   {
+      for(int i = 0; i < (int)overlayWindows->size(); i++)
+         overlayWindows->at(i)->hide();
+   };
+
+   void ControllerUI::PlayerOverlays::WindowResized(int Width, int Height)
+   {
+      if ((int)overlayWindows->size() != imageComposers->Count)
+         return;
+
+      scale = (float)Width / 800.0f;
+
+      for (int i = 0; i < (int)overlayWindows->size(); i++)
+      {
+         // get overlay window
+         CEGUI::Window* window = overlayWindows->at(i);
+         ImageComposerCEGUI<PlayerOverlay^>^ imageComposer = imageComposers[i];
+
+         // calc size with scale
+         float x = scale * (float)imageComposer->RenderInfo->Dimension.X;
+         float y = scale * (float)imageComposer->RenderInfo->Dimension.Y;
+
+         // set size
+         window->setSize(CEGUI::USize(CEGUI::UDim(0, x), CEGUI::UDim(0, y)));
+
+         // set position
+         window->setPosition(GetScreenPositionForHotspot(imageComposer));
+      }
+   };
 };};
