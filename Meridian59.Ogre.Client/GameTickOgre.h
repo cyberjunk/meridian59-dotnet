@@ -30,12 +30,14 @@ namespace Meridian59 { namespace Ogre
       double chatUpdate;
       double keyRepeat;
       double inventoryClick;
+      double manualFrameRendered;
 
    public:
       double INTERVALCHATUPDATE;
       double INTERVALKEYREPEAT;
       double INTERVALKEYREPEATSTART;
       double INTERVALINVENTORYCLICK;
+      double INTERVALMANUALFRAMERENDERED;
 
       GameTickOgre() : GameTick()
       {
@@ -43,6 +45,7 @@ namespace Meridian59 { namespace Ogre
          INTERVALKEYREPEAT       = 25.0;
          INTERVALKEYREPEATSTART  = 500.0;
          INTERVALINVENTORYCLICK  = 250.0;
+         INTERVALMANUALFRAMERENDERED = 33.3;
       };
 
       /// <summary>
@@ -73,6 +76,15 @@ namespace Meridian59 { namespace Ogre
       };
 
       /// <summary>
+      /// Tick we last rendered a frame manually
+      /// </summary>
+      property double ManualFrameRendered
+      {
+         public: double get() { return manualFrameRendered; }
+         protected: void set(double value) { manualFrameRendered = value; }
+      };
+
+      /// <summary>
       /// Milliseconds elapsed since last chat update.
       /// Calculated on-the-fly.
       /// </summary>
@@ -97,6 +109,15 @@ namespace Meridian59 { namespace Ogre
       property double SpanInventoryClick
       {
          public: double get() { return Current - InventoryClick; }
+      };
+
+      /// <summary>
+      /// Milliseconds elapsed since we last rendered a frame manually
+      /// Calculated on-the-fly.
+      /// </summary>
+      property double SpanManualFrameRendered
+      {
+         public: double get() { return Current - ManualFrameRendered; }
       };
 
       /// <summary>
@@ -136,6 +157,15 @@ namespace Meridian59 { namespace Ogre
       }
 
       /// <summary>
+      /// 
+      /// </summary>
+      /// <returns></returns>
+      inline bool CanManualFrameRendered()
+      {
+         return SpanManualFrameRendered >= INTERVALMANUALFRAMERENDERED;
+      }
+
+      /// <summary>
       /// Call this when you did a Chat update
       /// </summary>
       inline void DidChatUpdate()
@@ -157,6 +187,14 @@ namespace Meridian59 { namespace Ogre
       inline void DidInventoryClick()
       {
          InventoryClick = Current;
+      }
+
+      /// <summary>
+      /// Call this when you rendered a frame manually
+      /// </summary>
+      inline void DidManualFrameRendered()
+      {
+         ManualFrameRendered = Current;
       }
    };
 };};

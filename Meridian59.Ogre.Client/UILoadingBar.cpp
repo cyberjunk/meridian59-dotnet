@@ -73,9 +73,7 @@ namespace Meridian59 { namespace Ogre
          float div = (float)::System::Math::Max((unsigned short)resourceCount, (unsigned short)1);
          stepSizeContent = 1.0f / div;
 
-         // render a frame to update (not yet in apploop)
-         OgreClient::Singleton->Root->renderOneFrame();
-         ::Ogre::WindowEventUtilities::messagePump();
+         OgreClient::Singleton->RenderManually();
       }
    };
 
@@ -93,10 +91,8 @@ namespace Meridian59 { namespace Ogre
       {
          Content->setText(*scriptName);
          Content->setProgress(Content->getProgress() + stepSizeContent);
-
-         // render a frame to update (not yet in apploop)
-         OgreClient::Singleton->Root->renderOneFrame();
-         ::Ogre::WindowEventUtilities::messagePump();
+         
+         OgreClient::Singleton->RenderManually();
       }
    };
 
@@ -111,9 +107,7 @@ namespace Meridian59 { namespace Ogre
          Content->setText(resource->getName());
          Content->setProgress(Content->getProgress() + stepSizeContent);
 
-         // render a frame to update (not yet in apploop)
-         OgreClient::Singleton->Root->renderOneFrame();
-         ::Ogre::WindowEventUtilities::messagePump();
+         OgreClient::Singleton->RenderManually();
       }
    };
 
@@ -154,11 +148,7 @@ namespace Meridian59 { namespace Ogre
          float div = (float)::System::Math::Max(items, 1);
          stepSizeContent = 1.0f / div;
 
-         skipCounter = 0;
-
-         // render a frame to update (not yet in apploop)
-         OgreClient::Singleton->Root->renderOneFrame();
-         ::Ogre::WindowEventUtilities::messagePump();
+         OgreClient::Singleton->RenderManually();
       }
    };
 
@@ -173,14 +163,7 @@ namespace Meridian59 { namespace Ogre
          Content->setText(StringConvert::CLRToCEGUI(e->Value));
          Content->setProgress(Content->getProgress() + stepSizeContent);
 
-         // render a frame to update (not yet in apploop), only every few resources
-         if (skipCounter % 15 == 0)
-         {
-            OgreClient::Singleton->Root->renderOneFrame();
-            ::Ogre::WindowEventUtilities::messagePump();
-         }
-
-         skipCounter++;
+         OgreClient::Singleton->RenderManually();
       }
    };
 };};

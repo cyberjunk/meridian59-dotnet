@@ -171,7 +171,6 @@ namespace Meridian59 { namespace Ogre
          static LoadingBarResourceGroupListener* groupListener = nullptr;
          static float stepSizeGroup;
          static float stepSizeContent;
-         static int skipCounter;
 
       public:
          static ::CEGUI::Window* Window = nullptr;

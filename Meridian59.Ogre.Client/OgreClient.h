@@ -349,6 +349,11 @@ namespace Meridian59 { namespace Ogre
       virtual void Disconnect() override;
 
       /// <summary>
+      /// Used to manually render a frame in loadingbar.
+      /// </summary>
+      void RenderManually();
+
+      /// <summary>
       /// Shows the admin form
       /// </summary>
       void ShowAdminForm();

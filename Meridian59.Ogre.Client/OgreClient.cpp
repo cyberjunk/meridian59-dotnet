@@ -1197,4 +1197,22 @@ namespace Meridian59 { namespace Ogre
       music->ResolveResources(OgreClient::Singleton->ResourceManager, false);
       ControllerSound::StartMusic(music);
    };
+
+   void OgreClient::RenderManually()
+   {
+      // update tick
+      GameTick->Tick();
+
+      if (GameTick->CanManualFrameRendered())
+      {
+         // render frame
+         Root->renderOneFrame();
+         
+         // messagepump
+         ::Ogre::WindowEventUtilities::messagePump();
+         
+         // save tick
+         OgreClient::Singleton->GameTick->DidManualFrameRendered();
+      }
+   };
 };};
