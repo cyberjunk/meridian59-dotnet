@@ -2,136 +2,140 @@
 
 namespace Meridian59 { namespace Ogre
 {
-	void ControllerUI::Login::Initialize()
-	{
-		// setup references to children from xml nodes
-		Window = static_cast<CEGUI::Window*>(guiRoot->getChild(UI_NAME_LOGIN_WINDOW));
-		Server = static_cast<CEGUI::Combobox*>(Window->getChild(UI_NAME_LOGIN_SERVER));
-		Username = static_cast<CEGUI::Editbox*>(Window->getChild(UI_NAME_LOGIN_USERNAME));
-		UsernameDesc = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_LOGIN_USERNAMEDESC));
-		Password = static_cast<CEGUI::Editbox*>(Window->getChild(UI_NAME_LOGIN_PASSWORD));
-		PasswordDesc = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_LOGIN_PASSWORDDESC));
+   void ControllerUI::Login::Initialize()
+   {
+      // setup references to children from xml nodes
+      Window = static_cast<CEGUI::Window*>(guiRoot->getChild(UI_NAME_LOGIN_WINDOW));
+      Server = static_cast<CEGUI::Combobox*>(Window->getChild(UI_NAME_LOGIN_SERVER));
+      Username = static_cast<CEGUI::Editbox*>(Window->getChild(UI_NAME_LOGIN_USERNAME));
+      UsernameDesc = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_LOGIN_USERNAMEDESC));
+      Password = static_cast<CEGUI::Editbox*>(Window->getChild(UI_NAME_LOGIN_PASSWORD));
+      PasswordDesc = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_LOGIN_PASSWORDDESC));
 
-		Connect = static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_LOGIN_CONNECT));
-		Options = static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_LOGIN_OPTIONS));
+      Connect = static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_LOGIN_CONNECT));
+      Options = static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_LOGIN_OPTIONS));
 
-		Window->setMousePassThroughEnabled(true);
-		Window->setMouseInputPropagationEnabled(true);
-		Window->setZOrderingEnabled(false);
+      Window->setMousePassThroughEnabled(true);
+      Window->setMouseInputPropagationEnabled(true);
+      Window->setZOrderingEnabled(false);
 
-		OgreClientConfig^ config = OgreClient::Singleton->Config;
+      OgreClientConfig^ config = OgreClient::Singleton->Config;
 
-		// fill server combobox values
-		for each(ConnectionInfo^ coninfo in config->Connections)
-			Server->addItem(new ::CEGUI::ListboxTextItem(StringConvert::CLRToCEGUI(coninfo->Name)));
+      // fill server combobox values
+      for each(ConnectionInfo^ coninfo in config->Connections)
+         Server->addItem(new ::CEGUI::ListboxTextItem(StringConvert::CLRToCEGUI(coninfo->Name)));
 
-		// subscribe server selection change
-		Server->subscribeEvent(CEGUI::Combobox::EventListSelectionAccepted, CEGUI::Event::Subscriber(UICallbacks::Login::OnServerChanged));
-		
-		// subscribe return on passwordbox
-		Username->subscribeEvent(CEGUI::Editbox::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Login::OnUsernameKeyUp));
-		Password->subscribeEvent(CEGUI::Editbox::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Login::OnPasswordKeyUp));
+      // subscribe server selection change
+      Server->subscribeEvent(CEGUI::Combobox::EventListSelectionAccepted, CEGUI::Event::Subscriber(UICallbacks::Login::OnServerChanged));
 
-		// subscribe buttons
-		Connect->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Login::OnConnectClicked));
-		Options->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Login::OnOptionsClicked));
+      // subscribe return on passwordbox
+      Username->subscribeEvent(CEGUI::Editbox::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Login::OnUsernameKeyUp));
+      Password->subscribeEvent(CEGUI::Editbox::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Login::OnPasswordKeyUp));
 
-		/**********************************************************************************************************/
-		// set values
+      // subscribe buttons
+      Connect->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Login::OnConnectClicked));
+      Options->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Login::OnOptionsClicked));
 
-		Server->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->SelectedConnectionInfo->Name));
-		Server->selectListItemWithEditboxText();
+      /**********************************************************************************************************/
+      // set values
 
-		Username->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->SelectedConnectionInfo->Username));
-		Password->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->SelectedConnectionInfo->Password));
-	};
+      Server->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->SelectedConnectionInfo->Name));
+      Server->selectListItemWithEditboxText();
 
-	void ControllerUI::Login::Destroy()
-	{
-	};
-	
-	void ControllerUI::Login::ApplyLanguage()
-	{
-		UsernameDesc->setText(GetLangLabel(LANGSTR::USERNAME));
-		PasswordDesc->setText(GetLangLabel(LANGSTR::PASSWORD));
-		Connect->setText(GetLangLabel(LANGSTR::CONNECT));
-		Options->setText(GetLangLabel(LANGSTR::OPTIONS));
-	};
+      Username->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->SelectedConnectionInfo->Username));
+      Password->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->SelectedConnectionInfo->Password));
+   };
 
-	bool UICallbacks::Login::OnServerChanged(const CEGUI::EventArgs& e)
-	{
-		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
-		const CEGUI::Combobox* combobox		= (const CEGUI::Combobox*)args.window;
+   void ControllerUI::Login::Destroy()
+   {
+   };
 
-		OgreClient::Singleton->Config->SelectedConnectionIndex = (int)combobox->getItemIndex(combobox->getSelectedItem());
+   void ControllerUI::Login::ApplyLanguage()
+   {
+      UsernameDesc->setText(GetLangLabel(LANGSTR::USERNAME));
+      PasswordDesc->setText(GetLangLabel(LANGSTR::PASSWORD));
+      Connect->setText(GetLangLabel(LANGSTR::CONNECT));
+      Options->setText(GetLangLabel(LANGSTR::OPTIONS));
+   };
 
-		ControllerUI::Login::Username->setText(
-			StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->SelectedConnectionInfo->Username));
+   //////////////////////////////////////////////////////////////////////////////////////////////////////////
+   //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		ControllerUI::Login::Password->setText(
-			StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->SelectedConnectionInfo->Password));
+   bool UICallbacks::Login::OnServerChanged(const CEGUI::EventArgs& e)
+   {
+      const CEGUI::WindowEventArgs& args  = (const CEGUI::WindowEventArgs&)e;
+      const CEGUI::Combobox* combobox     = (const CEGUI::Combobox*)args.window;
 
-		return true;
-	};
-	
-	bool UICallbacks::Login::OnUsernameKeyUp(const CEGUI::EventArgs& e)
-	{
-		const CEGUI::KeyEventArgs& args = (const CEGUI::KeyEventArgs&)e;
-		const CEGUI::Editbox* editbox	= (const CEGUI::Editbox*)args.window;
+      OgreClient::Singleton->Config->SelectedConnectionIndex = 
+         (int)combobox->getItemIndex(combobox->getSelectedItem());
 
-		if (args.scancode == ::CEGUI::Key::Scan::Tab)
-			ControllerUI::Login::Password->activate();
+      ControllerUI::Login::Username->setText(
+         StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->SelectedConnectionInfo->Username));
 
-		return true;
-	};
+      ControllerUI::Login::Password->setText(
+         StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->SelectedConnectionInfo->Password));
 
-	bool UICallbacks::Login::OnPasswordKeyUp(const CEGUI::EventArgs& e)
-	{
-		const CEGUI::KeyEventArgs& args		= (const CEGUI::KeyEventArgs&)e;
-		const CEGUI::Editbox* editbox		= (const CEGUI::Editbox*)args.window;
+      return true;
+   };
 
-		if (args.scancode == ::CEGUI::Key::Scan::Return &&
-			!ControllerUI::Login::Connect->isDisabled())
-		{
-			OgreClient::Singleton->Config->SelectedConnectionInfo->Username =
-				StringConvert::CEGUIToCLR(ControllerUI::Login::Username->getText());
+   bool UICallbacks::Login::OnUsernameKeyUp(const CEGUI::EventArgs& e)
+   {
+      const CEGUI::KeyEventArgs& args = (const CEGUI::KeyEventArgs&)e;
+      const CEGUI::Editbox* editbox   = (const CEGUI::Editbox*)args.window;
 
-			OgreClient::Singleton->Config->SelectedConnectionInfo->Password =
-				StringConvert::CEGUIToCLR(ControllerUI::Login::Password->getText());
+      if (args.scancode == ::CEGUI::Key::Scan::Tab)
+         ControllerUI::Login::Password->activate();
 
-			OgreClient::Singleton->Connect();
+      return true;
+   };
 
-			ControllerUI::Login::Window->setEnabled(false);
-		}
+   bool UICallbacks::Login::OnPasswordKeyUp(const CEGUI::EventArgs& e)
+   {
+      const CEGUI::KeyEventArgs& args		= (const CEGUI::KeyEventArgs&)e;
+      const CEGUI::Editbox* editbox		= (const CEGUI::Editbox*)args.window;
 
-		return true;
-	};
+      if (args.scancode == ::CEGUI::Key::Scan::Return &&
+         !ControllerUI::Login::Connect->isDisabled())
+      {
+         OgreClient::Singleton->Config->SelectedConnectionInfo->Username =
+            StringConvert::CEGUIToCLR(ControllerUI::Login::Username->getText());
 
-	bool UICallbacks::Login::OnConnectClicked(const CEGUI::EventArgs& e)
-	{
-		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
-		CEGUI::PushButton* btn				= (CEGUI::PushButton*)args.window;
+         OgreClient::Singleton->Config->SelectedConnectionInfo->Password =
+            StringConvert::CEGUIToCLR(ControllerUI::Login::Password->getText());
 
-		OgreClient::Singleton->Config->SelectedConnectionInfo->Username =
-			StringConvert::CEGUIToCLR(ControllerUI::Login::Username->getText());
+         OgreClient::Singleton->Connect();
 
-		OgreClient::Singleton->Config->SelectedConnectionInfo->Password =
-			StringConvert::CEGUIToCLR(ControllerUI::Login::Password->getText());
+         ControllerUI::Login::Window->setEnabled(false);
+      }
 
-		OgreClient::Singleton->Connect();
+      return true;
+   };
 
-		ControllerUI::Login::Window->setEnabled(false);
+   bool UICallbacks::Login::OnConnectClicked(const CEGUI::EventArgs& e)
+   {
+      const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
+      CEGUI::PushButton* btn				= (CEGUI::PushButton*)args.window;
 
-		return true;
-	};
+      OgreClient::Singleton->Config->SelectedConnectionInfo->Username =
+         StringConvert::CEGUIToCLR(ControllerUI::Login::Username->getText());
 
-	bool UICallbacks::Login::OnOptionsClicked(const CEGUI::EventArgs& e)
-	{
-		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
-		const CEGUI::PushButton* btn		= (const CEGUI::PushButton*)args.window;
+      OgreClient::Singleton->Config->SelectedConnectionInfo->Password =
+         StringConvert::CEGUIToCLR(ControllerUI::Login::Password->getText());
 
-		ControllerUI::ToggleVisibility(ControllerUI::Options::Window);
+      OgreClient::Singleton->Connect();
 
-		return true;
-	};
+      ControllerUI::Login::Window->setEnabled(false);
+
+      return true;
+   };
+
+   bool UICallbacks::Login::OnOptionsClicked(const CEGUI::EventArgs& e)
+   {
+      const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
+      const CEGUI::PushButton* btn		= (const CEGUI::PushButton*)args.window;
+
+      ControllerUI::ToggleVisibility(ControllerUI::Options::Window);
+
+      return true;
+   };
 };};
