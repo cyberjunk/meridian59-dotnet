@@ -211,7 +211,7 @@ namespace Meridian59 { namespace Ogre
          // Evolution
          if (aboutBgf->Frames->Count > 0)
          {
-            ::Ogre::String oStrName = "CEGUI/about.bgf/0";
+            const ::Ogre::String oStrName = "CEGUI/about.bgf/0";
 
             Util::CreateTextureA8R8G8B8(aboutBgf->Frames[0], oStrName, UI_RESGROUP_IMAGESETS, 0);
             TexturePtr texPtr = texMan.getByName(oStrName);
@@ -226,7 +226,7 @@ namespace Meridian59 { namespace Ogre
          // Resurrection
          if (aboutBgf->Frames->Count > 1)
          {
-            ::Ogre::String oStrName = "CEGUI/about.bgf/1";
+            const ::Ogre::String oStrName = "CEGUI/about.bgf/1";
 
             Util::CreateTextureA8R8G8B8(aboutBgf->Frames[1], oStrName, UI_RESGROUP_IMAGESETS, 0);
             TexturePtr texPtr = texMan.getByName(oStrName);
@@ -241,7 +241,7 @@ namespace Meridian59 { namespace Ogre
          // DarkAuspices
          if (aboutBgf->Frames->Count > 2)
          {
-            ::Ogre::String oStrName = "CEGUI/about.bgf/2";
+            const ::Ogre::String oStrName = "CEGUI/about.bgf/2";
 
             Util::CreateTextureA8R8G8B8(aboutBgf->Frames[2], oStrName, UI_RESGROUP_IMAGESETS, 0);
             TexturePtr texPtr = texMan.getByName(oStrName);
@@ -256,7 +256,7 @@ namespace Meridian59 { namespace Ogre
          // Insurrection
          if (aboutBgf->Frames->Count > 3)
          {
-            ::Ogre::String oStrName = "CEGUI/about.bgf/3";
+            const ::Ogre::String oStrName = "CEGUI/about.bgf/3";
 
             Util::CreateTextureA8R8G8B8(aboutBgf->Frames[3], oStrName, UI_RESGROUP_IMAGESETS, 0);
             TexturePtr texPtr = texMan.getByName(oStrName);
@@ -271,7 +271,7 @@ namespace Meridian59 { namespace Ogre
          // Renaissance
          if (aboutBgf->Frames->Count > 4)
          {
-            ::Ogre::String oStrName = "CEGUI/about.bgf/4";
+            const ::Ogre::String oStrName = "CEGUI/about.bgf/4";
 
             Util::CreateTextureA8R8G8B8(aboutBgf->Frames[4], oStrName, UI_RESGROUP_IMAGESETS, 0);
             TexturePtr texPtr = texMan.getByName(oStrName);
@@ -286,7 +286,7 @@ namespace Meridian59 { namespace Ogre
          // Revelation
          if (aboutBgf->Frames->Count > 5)
          {
-            ::Ogre::String oStrName = "CEGUI/about.bgf/5";
+            const ::Ogre::String oStrName = "CEGUI/about.bgf/5";
 
             Util::CreateTextureA8R8G8B8(aboutBgf->Frames[5], oStrName, UI_RESGROUP_IMAGESETS, 0);
             TexturePtr texPtr = texMan.getByName(oStrName);
@@ -301,7 +301,7 @@ namespace Meridian59 { namespace Ogre
          // ValeOfSorrow
          if (aboutBgf->Frames->Count > 6)
          {
-            ::Ogre::String oStrName = "CEGUI/about.bgf/6";
+            const ::Ogre::String oStrName = "CEGUI/about.bgf/6";
 
             Util::CreateTextureA8R8G8B8(aboutBgf->Frames[6], oStrName, UI_RESGROUP_IMAGESETS, 0);
             TexturePtr texPtr = texMan.getByName(oStrName);
@@ -316,7 +316,7 @@ namespace Meridian59 { namespace Ogre
          // TheInternetQuestBegins
          if (aboutBgf->Frames->Count > 7)
          {
-            ::Ogre::String oStrName = "CEGUI/about.bgf/7";
+            const ::Ogre::String oStrName = "CEGUI/about.bgf/7";
 
             Util::CreateTextureA8R8G8B8(aboutBgf->Frames[7], oStrName, UI_RESGROUP_IMAGESETS, 0);
             TexturePtr texPtr = texMan.getByName(oStrName);
@@ -1172,7 +1172,7 @@ namespace Meridian59 { namespace Ogre
       CEGUI::PushButton* btn          = (CEGUI::PushButton*)args.window;
       ::OIS::Keyboard* keyboard       = ControllerInput::OISKeyboard;
       OISKeyBinding^ keybinding       = OgreClient::Singleton->Config->KeyBinding;
-      const std::string keystr        = keyboard->getAsString((::OIS::KeyCode)args.scancode);
+      const std::string& keystr       = keyboard->getAsString((::OIS::KeyCode)args.scancode);
 
       // basic movement
       if (btn == ControllerUI::Options::LearnMoveForward)
@@ -2259,8 +2259,8 @@ namespace Meridian59 { namespace Ogre
       const CEGUI::WindowEventArgs& args = (const CEGUI::WindowEventArgs&)e;
       const CEGUI::PushButton* btn = (const CEGUI::PushButton*)args.window;
 
-      ::CEGUI::String key = ControllerUI::Options::AliasKey->getText();
-      ::CEGUI::String val = ControllerUI::Options::AliasValue->getText();
+      const ::CEGUI::String& key = ControllerUI::Options::AliasKey->getText();
+      const ::CEGUI::String& val = ControllerUI::Options::AliasValue->getText();
 
       CLRString^ keyclr = StringConvert::CEGUIToCLR(key);
       CLRString^ valclr = StringConvert::CEGUIToCLR(val);
@@ -2334,8 +2334,8 @@ namespace Meridian59 { namespace Ogre
       GroupList^ grplist                 = OgreClient::Singleton->Data->Groups;
 
       // get groupname from ui-element and convert to clr
-      ::CEGUI::String grpname		= ControllerUI::Options::GroupName->getText();
-      CLRString^ nameclr	= StringConvert::CEGUIToCLR(grpname);
+      const ::CEGUI::String& grpname = ControllerUI::Options::GroupName->getText();
+      CLRString^ nameclr             = StringConvert::CEGUIToCLR(grpname);
 
       // remove whitespaces
       nameclr = nameclr->Trim();

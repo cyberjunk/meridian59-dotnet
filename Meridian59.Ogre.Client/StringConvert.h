@@ -125,8 +125,7 @@ namespace Meridian59 { namespace Ogre
          pin_ptr<unsigned char> utf8Data = &values[0];
 
          // initiate CEGUI::String
-         ::CEGUI::String guiStr = ::CEGUI::String(
-            (const CEGUI::utf8*)utf8Data, values->Length);
+         ::CEGUI::String guiStr((const CEGUI::utf8*)utf8Data, values->Length);
 
          // return
          return guiStr;

@@ -697,7 +697,7 @@ namespace Meridian59 { namespace Ogre
       ::Ogre::ResourceGroupManager& resMan = ::Ogre::ResourceGroupManager::getSingleton();
 
       // ogrestring for plain name
-      ::Ogre::String& ostr_name = StringConvert::CLRToOgre(Name);
+      const ::Ogre::String& ostr_name = StringConvert::CLRToOgre(Name);
 
       // create ogre resource group if not exists yet
       if (!resMan.resourceGroupExists(ostr_name))
@@ -780,7 +780,7 @@ namespace Meridian59 { namespace Ogre
       ::Ogre::ResourceGroupManager& resMan = ResourceGroupManager::getSingleton();
 
       // ogre string for plain name
-      ::Ogre::String& ostr_name = StringConvert::CLRToOgre(Name);
+      const ::Ogre::String& ostr_name = StringConvert::CLRToOgre(Name);
       
       // create resource group if not exists
       if (!resMan.resourceGroupExists(ostr_name))
@@ -810,8 +810,8 @@ namespace Meridian59 { namespace Ogre
       resMan.addResourceLocation(ostr_path, ostr_restype, ostr_name);
 
       // ogre strings for file types and pattern
-      ::Ogre::String& ostr_type = StringConvert::CLRToOgre(Type);
-      ::Ogre::String& ostr_pattern = StringConvert::CLRToOgre(Pattern);
+      const ::Ogre::String& ostr_type = StringConvert::CLRToOgre(Type);
+      const ::Ogre::String& ostr_pattern = StringConvert::CLRToOgre(Pattern);
 
       // add files manually because not referenced in materials or other reasons
       ::Ogre::FileInfoListPtr fileList = resMan.findResourceFileInfo(ostr_name, ostr_pattern);

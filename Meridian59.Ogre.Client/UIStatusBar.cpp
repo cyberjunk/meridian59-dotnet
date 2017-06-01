@@ -169,8 +169,8 @@ namespace Meridian59 { namespace Ogre
       if (CLRString::Equals(e->PropertyName, PreferencesFlags::PROPNAME_FLAGS))
       {
          const bool isSafetyOff = OgreClient::Singleton->Data->ClientPreferences->IsSafetyOff;
-         const CEGUI::String color = (isSafetyOff ? UI_COLOR_DARKRED : UI_COLOR_PALEGREEN);
-         const CEGUI::String val = (isSafetyOff ? GetLangLabel(LANGSTR::OFF) : GetLangLabel(LANGSTR::ON));
+         const CEGUI::String& color = (isSafetyOff ? UI_COLOR_DARKRED : UI_COLOR_PALEGREEN);
+         const CEGUI::String& val = (isSafetyOff ? GetLangLabel(LANGSTR::OFF) : GetLangLabel(LANGSTR::ON));
          SafetyValue->setProperty(UI_PROPNAME_NORMALTEXTCOLOUR, color);
          SafetyValue->setProperty(UI_PROPNAME_HOVERTEXTCOLOUR, color);
          SafetyValue->setText(val);

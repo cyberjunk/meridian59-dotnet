@@ -211,7 +211,7 @@ namespace Meridian59 { namespace Ogre
           lookObj->ID == OgreClient::Singleton->Data->AvatarID)
       {
          // get text
-         ::CEGUI::String description = ControllerUI::PlayerDetails::Description->getText();
+         const ::CEGUI::String& description = ControllerUI::PlayerDetails::Description->getText();
 
          // convert to CLR
          CLRString^ clrDesc = StringConvert::CEGUIToCLR(description);
@@ -222,7 +222,7 @@ namespace Meridian59 { namespace Ogre
 
 
          // get website
-         ::CEGUI::String website = ControllerUI::PlayerDetails::HomepageValue->getText();
+         const ::CEGUI::String& website = ControllerUI::PlayerDetails::HomepageValue->getText();
 
          // convert to CLR
          CLRString^ clrWebsite = StringConvert::CEGUIToCLR(website);

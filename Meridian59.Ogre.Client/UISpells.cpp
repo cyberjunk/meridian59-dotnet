@@ -260,7 +260,7 @@ namespace Meridian59 { namespace Ogre
             return true;
 
          // convert keycode to char
-         const ::std::string cstr = ControllerInput::OISKeyboard->getAsString((::OIS::KeyCode)args.scancode);
+         const ::std::string& cstr = ControllerInput::OISKeyboard->getAsString((::OIS::KeyCode)args.scancode);
 
          // get spells with prefix
          SkillList^ items = spells->GetItemsByPrefix(StringConvert::OgreToCLR(cstr), false);

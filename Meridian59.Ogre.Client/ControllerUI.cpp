@@ -401,7 +401,7 @@ namespace Meridian59 { namespace Ogre
          // 3) Specifi UI elements always consume all input (like textboxes)
          else
          {
-            const CEGUI::String type = focusedControl->getType();
+            const CEGUI::String& type = focusedControl->getType();
 
             processingInput = 
                (type.compare(UI_WINDOWTYPE_EDITBOX) == 0) ||

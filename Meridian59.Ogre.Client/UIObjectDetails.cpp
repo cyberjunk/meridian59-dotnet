@@ -238,7 +238,7 @@ namespace Meridian59 { namespace Ogre
          return true;
 
       // get text
-      ::CEGUI::String inscription = ControllerUI::ObjectDetails::Inscription->getText();
+      const ::CEGUI::String& inscription = ControllerUI::ObjectDetails::Inscription->getText();
 
       // convert to CLR
       CLRString^ clrInsc = StringConvert::CEGUIToCLR(inscription);

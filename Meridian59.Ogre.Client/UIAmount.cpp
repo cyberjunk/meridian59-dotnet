@@ -55,7 +55,7 @@ namespace Meridian59 { namespace Ogre
    void ControllerUI::Amount::Drop()
    {
       // get user entered amount
-      CEGUI::String strVal = Value->getText();
+      const CEGUI::String& strVal = Value->getText();
 
       // check
       if (strVal != STRINGEMPTY && ObjectID::IsValid(ID))

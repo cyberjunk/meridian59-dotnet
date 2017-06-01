@@ -99,7 +99,7 @@ namespace Meridian59 { namespace Ogre
       CEGUI::Window* name = widget->getChildAtIdx(UI_WELCOME_CHILDINDEX_CHARACTERS_NAME);
 
       // determine avatarname
-      CEGUI::String avatarName = (info->Characters[Index]->IsEmptySlot) 
+      const CEGUI::String& avatarName = (info->Characters[Index]->IsEmptySlot) 
          ? UI_AVATARNAME_FOR_UNSET : StringConvert::CLRToCEGUI(info->Characters[Index]->Name);
 
       // set avatarname
@@ -242,7 +242,7 @@ namespace Meridian59 { namespace Ogre
          int index = (int)listBox->getItemIndex(selectedItem);
 
          // check if empty slot
-         CEGUI::String buttonText = (welcomeInfo->Characters[index]->IsEmptySlot)
+         const CEGUI::String& buttonText = (welcomeInfo->Characters[index]->IsEmptySlot)
             ? "Create" : "Select";
 
          selectButton->setEnabled(true);
