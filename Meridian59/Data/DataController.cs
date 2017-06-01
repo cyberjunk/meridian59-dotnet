@@ -489,7 +489,7 @@ namespace Meridian59.Data
                     RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_TARGETOBJECT));
 
                     // update tradepartner if visible but not yet pending
-                    if (Trade.IsVisible && !Trade.IsPending)
+                    if (Trade.IsVisible && !Trade.IsPending && targetObject != null && targetObject.Flags.IsOfferable)
                         Trade.TradePartner = targetObject;
                 }
             }
