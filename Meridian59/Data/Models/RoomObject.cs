@@ -1056,6 +1056,10 @@ namespace Meridian59.Data.Models
             {
                 positionChanged = true;
 
+                // reset possible stepup instantly
+                if (verticalSpeed >= 0.0f)
+                    verticalSpeed = 0.0f;
+
                 // gravity
                 position3D.Y += ((Real)TickSpan * verticalSpeed);
                 verticalSpeed += ((Real)TickSpan * GeometryConstants.GRAVITYACCELERATION);
@@ -1072,6 +1076,10 @@ namespace Meridian59.Data.Models
             else if (hDiff < -0.001f)
             {
                 positionChanged = true;
+
+                // reset possible falling instantly
+                if (verticalSpeed <= 0.0f)
+                    verticalSpeed = 0.0f;
 
                 // 4x faster, but not instant step up
                 position3D.Y += ((Real)TickSpan * verticalSpeed);
