@@ -2,343 +2,344 @@
 
 namespace Meridian59 { namespace Ogre
 {
-	void ControllerUI::NewsGroup::Initialize()
-	{
-		// setup references to children from xml nodes
-		Window		= static_cast<CEGUI::FrameWindow*>(guiRoot->getChild(UI_NAME_NEWSGROUP_WINDOW));
-		List		= static_cast<CEGUI::MultiColumnList*>(Window->getChild(UI_NAME_NEWSGROUP_LIST));
-		HeadLine	= static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_NEWSGROUP_HEADLINE));
-		Create		= static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_NEWSGROUP_CREATE));
-		Respond		= static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_NEWSGROUP_RESPOND));
-		MailAuthor	= static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_NEWSGROUP_MAILAUTHOR));
-		Refresh		= static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_NEWSGROUP_REFRESH));
-		Delete		= static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_NEWSGROUP_DELETE));
-		Text		= static_cast<CEGUI::MultiLineEditbox*>(Window->getChild(UI_NAME_NEWSGROUP_TEXT));
+   void ControllerUI::NewsGroup::Initialize()
+   {
+      // setup references to children from xml nodes
+      Window      = static_cast<CEGUI::FrameWindow*>(guiRoot->getChild(UI_NAME_NEWSGROUP_WINDOW));
+      List        = static_cast<CEGUI::MultiColumnList*>(Window->getChild(UI_NAME_NEWSGROUP_LIST));
+      HeadLine    = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_NEWSGROUP_HEADLINE));
+      Create      = static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_NEWSGROUP_CREATE));
+      Respond     = static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_NEWSGROUP_RESPOND));
+      MailAuthor  = static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_NEWSGROUP_MAILAUTHOR));
+      Refresh     = static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_NEWSGROUP_REFRESH));
+      Delete      = static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_NEWSGROUP_DELETE));
+      Text        = static_cast<CEGUI::MultiLineEditbox*>(Window->getChild(UI_NAME_NEWSGROUP_TEXT));
 
-		List->setShowVertScrollbar(true);
-		List->setSelectionMode(CEGUI::MultiColumnList::SelectionMode::RowSingle);
-		List->setUserSortControlEnabled(false);
+      List->setShowVertScrollbar(true);
+      List->setSelectionMode(CEGUI::MultiColumnList::SelectionMode::RowSingle);
+      List->setUserSortControlEnabled(false);
 
-		List->addColumn("Title", 0, CEGUI::UDim(0.6f, -60));
-		List->addColumn("Author", 1, CEGUI::UDim(0.4f, -60));
-		List->addColumn("Date", 2, CEGUI::UDim(0.0f, 105));
+      List->addColumn("Title", 0, CEGUI::UDim(0.6f, -60));
+      List->addColumn("Author", 1, CEGUI::UDim(0.4f, -60));
+      List->addColumn("Date", 2, CEGUI::UDim(0.0f, 105));
 
-		// attach listener to newsgroup data
-		OgreClient::Singleton->Data->NewsGroup->PropertyChanged += 
-			gcnew PropertyChangedEventHandler(OnNewsGroupPropertyChanged);
+      // attach listener to newsgroup data
+      OgreClient::Singleton->Data->NewsGroup->PropertyChanged += 
+         gcnew PropertyChangedEventHandler(OnNewsGroupPropertyChanged);
         
-		// attach listener to newsgroup articleheads
-		OgreClient::Singleton->Data->NewsGroup->Articles->ListChanged += 
-			gcnew ListChangedEventHandler(OnArticleHeadListChanged);
-		
-		// subscribe buttons
-		Create->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::NewsGroup::OnCreateClicked));
-		Respond->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::NewsGroup::OnRespondClicked));
-		MailAuthor->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::NewsGroup::OnMailAuthorClicked));
-		Refresh->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::NewsGroup::OnRefreshClicked));
-		Delete->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::NewsGroup::OnDeleteClicked));
+      // attach listener to newsgroup articleheads
+      OgreClient::Singleton->Data->NewsGroup->Articles->ListChanged += 
+         gcnew ListChangedEventHandler(OnArticleHeadListChanged);
 
-		// subscribe selection change
-		List->subscribeEvent(CEGUI::MultiColumnList::EventSelectionChanged, CEGUI::Event::Subscriber(UICallbacks::NewsGroup::OnSelectionChanged));
-		List->subscribeEvent(CEGUI::MultiColumnList::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::NewsGroup::OnKeyUp));
-		
-		// subscribe keydown on headline box and text
-		Text->subscribeEvent(CEGUI::MultiLineEditbox::EventKeyDown, CEGUI::Event::Subscriber(UICallbacks::OnCopyPasteKeyDown));
+      // subscribe buttons
+      Create->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::NewsGroup::OnCreateClicked));
+      Respond->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::NewsGroup::OnRespondClicked));
+      MailAuthor->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::NewsGroup::OnMailAuthorClicked));
+      Refresh->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::NewsGroup::OnRefreshClicked));
+      Delete->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::NewsGroup::OnDeleteClicked));
 
-		// subscribe close button
-		Window->subscribeEvent(CEGUI::FrameWindow::EventCloseClicked, CEGUI::Event::Subscriber(UICallbacks::NewsGroup::OnWindowClosed));
+      // subscribe selection change
+      List->subscribeEvent(CEGUI::MultiColumnList::EventSelectionChanged, CEGUI::Event::Subscriber(UICallbacks::NewsGroup::OnSelectionChanged));
+      List->subscribeEvent(CEGUI::MultiColumnList::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::NewsGroup::OnKeyUp));
 
-		// subscribe keyup
-		Window->subscribeEvent(CEGUI::FrameWindow::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::NewsGroup::OnWindowKeyUp));
-	};
+      // subscribe keydown on headline box and text
+      Text->subscribeEvent(CEGUI::MultiLineEditbox::EventKeyDown, CEGUI::Event::Subscriber(UICallbacks::OnCopyPasteKeyDown));
 
-	void ControllerUI::NewsGroup::Destroy()
-	{	 
-		// detach listener from newsgroup data
-		OgreClient::Singleton->Data->NewsGroup->PropertyChanged -= 
-			gcnew PropertyChangedEventHandler(OnNewsGroupPropertyChanged);
+      // subscribe close button
+      Window->subscribeEvent(CEGUI::FrameWindow::EventCloseClicked, CEGUI::Event::Subscriber(UICallbacks::NewsGroup::OnWindowClosed));
+
+      // subscribe keyup
+      Window->subscribeEvent(CEGUI::FrameWindow::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::NewsGroup::OnWindowKeyUp));
+   };
+
+   void ControllerUI::NewsGroup::Destroy()
+   {
+      // detach listener from newsgroup data
+      OgreClient::Singleton->Data->NewsGroup->PropertyChanged -= 
+         gcnew PropertyChangedEventHandler(OnNewsGroupPropertyChanged);
         
-		// detach listener from newsgroup articleheads
-		OgreClient::Singleton->Data->NewsGroup->Articles->ListChanged -= 
-			gcnew ListChangedEventHandler(OnArticleHeadListChanged);		
-	};
+      // detach listener from newsgroup articleheads
+      OgreClient::Singleton->Data->NewsGroup->Articles->ListChanged -= 
+         gcnew ListChangedEventHandler(OnArticleHeadListChanged);
+   };
 
-	void ControllerUI::NewsGroup::ApplyLanguage()
-	{
-	};
+   void ControllerUI::NewsGroup::ApplyLanguage()
+   {
+   };
 
-	void ControllerUI::NewsGroup::OnNewsGroupPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
-	{
-		Data::Models::NewsGroup^ obj = OgreClient::Singleton->Data->NewsGroup;
-		
-		// visible
-		if (CLRString::Equals(e->PropertyName, Data::Models::NewsGroup::PROPNAME_ISVISIBLE))
-		{
-			// hide or show
-			Window->setVisible(obj->IsVisible);
+   void ControllerUI::NewsGroup::OnNewsGroupPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
+   {
+      Data::Models::NewsGroup^ obj = OgreClient::Singleton->Data->NewsGroup;
 
-			// bring to front
-			if (obj->IsVisible)
-				Window->moveToFront();
-		}
+      // visible
+      if (CLRString::Equals(e->PropertyName, Data::Models::NewsGroup::PROPNAME_ISVISIBLE))
+      {
+         // hide or show
+         Window->setVisible(obj->IsVisible);
 
-		// headline
-		else if (CLRString::Equals(e->PropertyName, Data::Models::NewsGroup::PROPNAME_HEADLINE))
-		{
-			HeadLine->setText(StringConvert::CLRToCEGUI(obj->Headline));
-		}
+         // bring to front
+         if (obj->IsVisible)
+            Window->moveToFront();
+      }
 
-		// globeobject
-		else if (CLRString::Equals(e->PropertyName, Data::Models::NewsGroup::PROPNAME_NEWSGLOBEOBJECT))
-		{
-			if (obj->NewsGlobeObject != nullptr)
-				Window->setText(StringConvert::CLRToCEGUI(obj->NewsGlobeObject->Name));
-		}
+      // headline
+      else if (CLRString::Equals(e->PropertyName, Data::Models::NewsGroup::PROPNAME_HEADLINE))
+      {
+         HeadLine->setText(StringConvert::CLRToCEGUI(obj->Headline));
+      }
 
-		// text
-		else if (CLRString::Equals(e->PropertyName, Data::Models::NewsGroup::PROPNAME_TEXT))
-		{
-			Text->setText(StringConvert::CLRToCEGUI(obj->Text));
-		}
-	};
-	
-	void ControllerUI::NewsGroup::OnArticleHeadListChanged(Object^ sender, ListChangedEventArgs^ e)
-	{
-		switch(e->ListChangedType)
-		{
-			case ::System::ComponentModel::ListChangedType::ItemAdded:
-				ArticleHeadAdd(e->NewIndex);			
-				break;
+      // globeobject
+      else if (CLRString::Equals(e->PropertyName, Data::Models::NewsGroup::PROPNAME_NEWSGLOBEOBJECT))
+      {
+         if (obj->NewsGlobeObject != nullptr)
+            Window->setText(StringConvert::CLRToCEGUI(obj->NewsGlobeObject->Name));
+      }
 
-			case ::System::ComponentModel::ListChangedType::ItemDeleted:
-				ArticleHeadRemove(e->NewIndex);
-				break;
+      // text
+      else if (CLRString::Equals(e->PropertyName, Data::Models::NewsGroup::PROPNAME_TEXT))
+      {
+         Text->setText(StringConvert::CLRToCEGUI(obj->Text));
+      }
+   };
 
-			case ::System::ComponentModel::ListChangedType::ItemChanged:
-				ArticleHeadChange(e->NewIndex);
-				break;
-		}
-	};
+   void ControllerUI::NewsGroup::OnArticleHeadListChanged(Object^ sender, ListChangedEventArgs^ e)
+   {
+      switch(e->ListChangedType)
+      {
+         case ::System::ComponentModel::ListChangedType::ItemAdded:
+            ArticleHeadAdd(e->NewIndex);
+            break;
 
-	
-	void ControllerUI::NewsGroup::ArticleHeadAdd(int Index)
-	{
-		ArticleHead^ obj = OgreClient::Singleton->Data->NewsGroup->Articles[Index];
+         case ::System::ComponentModel::ListChangedType::ItemDeleted:
+            ArticleHeadRemove(e->NewIndex);
+            break;
 
-		CEGUI::ListboxTextItem* itmTitle = new CEGUI::ListboxTextItem(
-			StringConvert::CLRToCEGUI(obj->Title));
+         case ::System::ComponentModel::ListChangedType::ItemChanged:
+            ArticleHeadChange(e->NewIndex);
+            break;
+      }
+   };
 
-		CEGUI::ListboxTextItem* itmAuthor = new CEGUI::ListboxTextItem(
-			StringConvert::CLRToCEGUI(obj->Poster));
-		
-		CEGUI::ListboxTextItem* itmDate = new CEGUI::ListboxTextItem(
-			StringConvert::CLRToCEGUI(obj->Time.ToShortDateString() + " " + obj->Time.ToShortTimeString()));
+   void ControllerUI::NewsGroup::ArticleHeadAdd(int Index)
+   {
+      ArticleHead^ obj = OgreClient::Singleton->Data->NewsGroup->Articles[Index];
 
-		itmTitle->setSelectionBrushImage("TaharezLook/ListboxSelectionBrush");
-		itmAuthor->setSelectionBrushImage("TaharezLook/ListboxSelectionBrush");
-		itmDate->setSelectionBrushImage("TaharezLook/ListboxSelectionBrush");
-		
-		itmTitle->setSelectionColours(CEGUI::Colour(0xFF444444));
-		itmAuthor->setSelectionColours(CEGUI::Colour(0xFF444444));
-		itmDate->setSelectionColours(CEGUI::Colour(0xFF444444));
+      CEGUI::ListboxTextItem* itmTitle = new CEGUI::ListboxTextItem(
+         StringConvert::CLRToCEGUI(obj->Title));
 
-		// insert widget in ui-list
-		if ((int)List->getRowCount() > Index)
-			List->insertRow(Index);
-		
-		// or add
-		else
-			List->addRow();
+      CEGUI::ListboxTextItem* itmAuthor = new CEGUI::ListboxTextItem(
+         StringConvert::CLRToCEGUI(obj->Poster));
 
-		List->setItem(itmTitle, 0, Index); 
-		List->setItem(itmAuthor, 1, Index);
-		List->setItem(itmDate, 2, Index);
-	};
+      CEGUI::ListboxTextItem* itmDate = new CEGUI::ListboxTextItem(
+         StringConvert::CLRToCEGUI(obj->Time.ToShortDateString() + " " + obj->Time.ToShortTimeString()));
 
-	void ControllerUI::NewsGroup::ArticleHeadRemove(int Index)
-	{
-		// check
-		if ((int)List->getRowCount() > Index)		
-			List->removeRow(Index);
-	};
+      itmTitle->setSelectionBrushImage("TaharezLook/ListboxSelectionBrush");
+      itmAuthor->setSelectionBrushImage("TaharezLook/ListboxSelectionBrush");
+      itmDate->setSelectionBrushImage("TaharezLook/ListboxSelectionBrush");
 
-	void ControllerUI::NewsGroup::ArticleHeadChange(int Index)
-	{
-		ArticleHead^ obj = OgreClient::Singleton->Data->NewsGroup->Articles[Index];
-	};
+      itmTitle->setSelectionColours(CEGUI::Colour(0xFF444444));
+      itmAuthor->setSelectionColours(CEGUI::Colour(0xFF444444));
+      itmDate->setSelectionColours(CEGUI::Colour(0xFF444444));
 
-	bool UICallbacks::NewsGroup::OnSelectionChanged(const CEGUI::EventArgs& e)
-	{
-		const CEGUI::WindowEventArgs& args = static_cast<const CEGUI::WindowEventArgs&>(e);
-		CEGUI::MultiColumnList* list = ControllerUI::NewsGroup::List;
-		CEGUI::ListboxItem* itm = list->getFirstSelectedItem();
-		
-		if (itm != nullptr)
-		{
-			unsigned int index = list->getItemRowIndex(itm);
+      // insert widget in ui-list
+      if ((int)List->getRowCount() > Index)
+         List->insertRow(Index);
 
-			OgreClient::Singleton->SendReqArticle(
-				OgreClient::Singleton->Data->NewsGroup->Articles[index]->Number);		
-		}
+      // or add
+      else
+         List->addRow();
 
-		return true;
-	};
-	
-	bool UICallbacks::NewsGroup::OnCreateClicked(const CEGUI::EventArgs& e)
-	{		
-		// show compose window
-		ControllerUI::NewsGroupCompose::Window->setVisible(true);
-		ControllerUI::NewsGroupCompose::Window->moveToFront();
+      List->setItem(itmTitle, 0, Index); 
+      List->setItem(itmAuthor, 1, Index);
+      List->setItem(itmDate, 2, Index);
+   };
 
-		return true;
-	}
+   void ControllerUI::NewsGroup::ArticleHeadRemove(int Index)
+   {
+      // check
+      if ((int)List->getRowCount() > Index)
+         List->removeRow(Index);
+   };
 
-	bool UICallbacks::NewsGroup::OnRespondClicked(const CEGUI::EventArgs& e)
-	{
-		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
-		CEGUI::MultiColumnList* list = ControllerUI::NewsGroup::List;
-		ArticleHeadList^ articles = OgreClient::Singleton->Data->NewsGroup->Articles;
+   void ControllerUI::NewsGroup::ArticleHeadChange(int Index)
+   {
+   };
 
-		// need selection to be able to respond
-		if (list->getSelectedCount() > 0)
-		{
-			// get selection
-			CEGUI::ListboxItem* itm = list->getFirstSelectedItem();
-			unsigned int index = list->getItemRowIndex(itm);
+   //////////////////////////////////////////////////////////////////////////////////////////////////////////
+   //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-			if (articles->Count > (int)index)
-			{
-				ArticleHead^ article = articles[index];
+   bool UICallbacks::NewsGroup::OnSelectionChanged(const CEGUI::EventArgs& e)
+   {
+      const CEGUI::WindowEventArgs& args = static_cast<const CEGUI::WindowEventArgs&>(e);
+      CEGUI::MultiColumnList* list = ControllerUI::NewsGroup::List;
+      CEGUI::ListboxItem* itm = list->getFirstSelectedItem();
 
-				CLRString^ newTitle = Common::Util::Truncate(
-					"Re: " + article->Title, BlakservStringLengths::NEWS_POSTING_MAX_SUBJECT_LENGTH);
-				
-					// show prefilled compose window
-				ControllerUI::NewsGroupCompose::HeadLine->setText(
-					StringConvert::CLRToCEGUI(newTitle));
-				
-				//ControllerUI::NewsGroupCompose::Text->setText(STRINGEMPTY);
-				ControllerUI::NewsGroupCompose::Window->setVisible(true);
-				ControllerUI::NewsGroupCompose::Window->moveToFront();
-			}
-		}
+      if (itm != nullptr)
+      {
+         unsigned int index = list->getItemRowIndex(itm);
 
-		return true;
-	}
+         OgreClient::Singleton->SendReqArticle(
+         OgreClient::Singleton->Data->NewsGroup->Articles[index]->Number);		
+      }
 
-	bool UICallbacks::NewsGroup::OnMailAuthorClicked(const CEGUI::EventArgs& e)
-	{
-		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
-		CEGUI::MultiColumnList* list = ControllerUI::NewsGroup::List;
-		
-		return true;
-	}
+      return true;
+   };
 
-	bool UICallbacks::NewsGroup::OnRefreshClicked(const CEGUI::EventArgs& e)
-	{
-		// re-request articles
-		OgreClient::Singleton->SendReqArticles();
+   bool UICallbacks::NewsGroup::OnCreateClicked(const CEGUI::EventArgs& e)
+   {
+      // show compose window
+      ControllerUI::NewsGroupCompose::Window->setVisible(true);
+      ControllerUI::NewsGroupCompose::Window->moveToFront();
 
-		return true;
-	}
+      return true;
+   }
 
-	bool UICallbacks::NewsGroup::OnDeleteClicked(const CEGUI::EventArgs& e)
-	{
+   bool UICallbacks::NewsGroup::OnRespondClicked(const CEGUI::EventArgs& e)
+   {
+      const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
+      CEGUI::MultiColumnList* list = ControllerUI::NewsGroup::List;
+      ArticleHeadList^ articles = OgreClient::Singleton->Data->NewsGroup->Articles;
+
+      // need selection to be able to respond
+      if (list->getSelectedCount() > 0)
+      {
+         // get selection
+         CEGUI::ListboxItem* itm = list->getFirstSelectedItem();
+         unsigned int index = list->getItemRowIndex(itm);
+
+         if (articles->Count > (int)index)
+         {
+            ArticleHead^ article = articles[index];
+
+            CLRString^ newTitle = Common::Util::Truncate(
+               "Re: " + article->Title, BlakservStringLengths::NEWS_POSTING_MAX_SUBJECT_LENGTH);
+
+               // show prefilled compose window
+            ControllerUI::NewsGroupCompose::HeadLine->setText(
+               StringConvert::CLRToCEGUI(newTitle));
+
+            //ControllerUI::NewsGroupCompose::Text->setText(STRINGEMPTY);
+            ControllerUI::NewsGroupCompose::Window->setVisible(true);
+            ControllerUI::NewsGroupCompose::Window->moveToFront();
+         }
+      }
+
+      return true;
+   }
+
+   bool UICallbacks::NewsGroup::OnMailAuthorClicked(const CEGUI::EventArgs& e)
+   {
+      const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;
+      CEGUI::MultiColumnList* list = ControllerUI::NewsGroup::List;
+
+      return true;
+   }
+
+   bool UICallbacks::NewsGroup::OnRefreshClicked(const CEGUI::EventArgs& e)
+   {
+      // re-request articles
+      OgreClient::Singleton->SendReqArticles();
+
+      return true;
+   }
+
+   bool UICallbacks::NewsGroup::OnDeleteClicked(const CEGUI::EventArgs& e)
+   {
 #if !VANILLA
-		const CEGUI::WindowEventArgs& args = (const CEGUI::WindowEventArgs&)e;
-		CEGUI::MultiColumnList* list = ControllerUI::NewsGroup::List;
-		CEGUI::ListboxItem* itm = list->getFirstSelectedItem();
-		Models::NewsGroup^ news = OgreClient::Singleton->Data->NewsGroup;
+      const CEGUI::WindowEventArgs& args = (const CEGUI::WindowEventArgs&)e;
+      CEGUI::MultiColumnList* list = ControllerUI::NewsGroup::List;
+      CEGUI::ListboxItem* itm = list->getFirstSelectedItem();
+      Models::NewsGroup^ news = OgreClient::Singleton->Data->NewsGroup;
 
-		if (itm != nullptr && news != nullptr)
-		{
-			int index = (int)list->getItemRowIndex(itm);
+      if (itm != nullptr && news != nullptr)
+      {
+         int index = (int)list->getItemRowIndex(itm);
 
-			if (news->Articles->Count > index)
-			{
-				// num of the article and id of currently viewed newsgroup
-				unsigned int num = news->Articles[index]->Number;
-				unsigned short id = news->NewsGlobeID;
+         if (news->Articles->Count > index)
+         {
+            // num of the article and id of currently viewed newsgroup
+            unsigned int num = news->Articles[index]->Number;
+            unsigned short id = news->NewsGlobeID;
 
-				// try to delete
-				OgreClient::Singleton->SendDeleteNews(id, num);
+            // try to delete
+            OgreClient::Singleton->SendDeleteNews(id, num);
 
-				// re-request articles
-				OgreClient::Singleton->SendReqArticles();
-			}			
-		}	
+            // re-request articles
+            OgreClient::Singleton->SendReqArticles();
+         }
+      }
 #endif
-		return true;
-	}
+      return true;
+   }
 
-	bool UICallbacks::NewsGroup::OnKeyUp(const CEGUI::EventArgs& e)
-	{
-		const CEGUI::KeyEventArgs& args = static_cast<const CEGUI::KeyEventArgs&>(e);
-		CEGUI::MultiColumnList* list = ControllerUI::NewsGroup::List;		
-		CEGUI::ListboxItem* itm = list->getFirstSelectedItem();
-		int count = (int)list->getRowCount();
+   bool UICallbacks::NewsGroup::OnKeyUp(const CEGUI::EventArgs& e)
+   {
+      const CEGUI::KeyEventArgs& args = static_cast<const CEGUI::KeyEventArgs&>(e);
+      CEGUI::MultiColumnList* list = ControllerUI::NewsGroup::List;		
+      CEGUI::ListboxItem* itm = list->getFirstSelectedItem();
+      int count = (int)list->getRowCount();
 
-		if (itm != nullptr)
-		{
-			unsigned int index = list->getItemRowIndex(itm);
+      if (itm != nullptr)
+      {
+         unsigned int index = list->getItemRowIndex(itm);
 
-			if (args.scancode == CEGUI::Key::Scan::ArrowUp && index > 0)
-			{
-				// unselect
-				list->setItemSelectState(CEGUI::MCLGridRef(index, 0), false);
-				list->setItemSelectState(CEGUI::MCLGridRef(index, 1), false);
-				list->setItemSelectState(CEGUI::MCLGridRef(index, 2), false);
-				
-				// select
-				list->setItemSelectState(CEGUI::MCLGridRef(index-1, 0), true);
-				list->setItemSelectState(CEGUI::MCLGridRef(index-1, 1), true);
-				list->setItemSelectState(CEGUI::MCLGridRef(index-1, 2), true);
+         if (args.scancode == CEGUI::Key::Scan::ArrowUp && index > 0)
+         {
+            // unselect
+            list->setItemSelectState(CEGUI::MCLGridRef(index, 0), false);
+            list->setItemSelectState(CEGUI::MCLGridRef(index, 1), false);
+            list->setItemSelectState(CEGUI::MCLGridRef(index, 2), false);
 
-				// make sure new selected row is visible (scroll if necessary)
-				list->ensureRowIsVisible(index - 1);
-			}
-			else if (args.scancode == CEGUI::Key::Scan::ArrowDown && (int)index < count - 1)
-			{
-				// unselect
-				list->setItemSelectState(CEGUI::MCLGridRef(index, 0), false);
-				list->setItemSelectState(CEGUI::MCLGridRef(index, 1), false);
-				list->setItemSelectState(CEGUI::MCLGridRef(index, 2), false);
-				
-				// select
-				list->setItemSelectState(CEGUI::MCLGridRef(index+1, 0), true);
-				list->setItemSelectState(CEGUI::MCLGridRef(index+1, 1), true);
-				list->setItemSelectState(CEGUI::MCLGridRef(index+1, 2), true);
+            // select
+            list->setItemSelectState(CEGUI::MCLGridRef(index-1, 0), true);
+            list->setItemSelectState(CEGUI::MCLGridRef(index-1, 1), true);
+            list->setItemSelectState(CEGUI::MCLGridRef(index-1, 2), true);
 
-				// make sure new selected row is visible (scroll if necessary)
-				list->ensureRowIsVisible(index + 1);
-			}
-		}
+            // make sure new selected row is visible (scroll if necessary)
+            list->ensureRowIsVisible(index - 1);
+         }
+         else if (args.scancode == CEGUI::Key::Scan::ArrowDown && (int)index < count - 1)
+         {
+            // unselect
+            list->setItemSelectState(CEGUI::MCLGridRef(index, 0), false);
+            list->setItemSelectState(CEGUI::MCLGridRef(index, 1), false);
+            list->setItemSelectState(CEGUI::MCLGridRef(index, 2), false);
 
-		return true;
-	};
+            // select
+            list->setItemSelectState(CEGUI::MCLGridRef(index+1, 0), true);
+            list->setItemSelectState(CEGUI::MCLGridRef(index+1, 1), true);
+            list->setItemSelectState(CEGUI::MCLGridRef(index+1, 2), true);
 
-	bool UICallbacks::NewsGroup::OnWindowClosed(const CEGUI::EventArgs& e)
-	{
-		// clear (view will react)
-		OgreClient::Singleton->Data->NewsGroup->Clear(true);
-		
-		// mark GUIroot active
-		ControllerUI::ActivateRoot();
+            // make sure new selected row is visible (scroll if necessary)
+            list->ensureRowIsVisible(index + 1);
+         }
+      }
 
-		return true;
-	}
+      return true;
+   };
 
-	bool UICallbacks::NewsGroup::OnWindowKeyUp(const CEGUI::EventArgs& e)
-	{
-		const CEGUI::KeyEventArgs& args = static_cast<const CEGUI::KeyEventArgs&>(e);
+   bool UICallbacks::NewsGroup::OnWindowClosed(const CEGUI::EventArgs& e)
+   {
+      // clear (view will react)
+      OgreClient::Singleton->Data->NewsGroup->Clear(true);
 
-		// close window on ESC
-		if (args.scancode == CEGUI::Key::Escape)
-		{
-			// clear (view will react)
-			OgreClient::Singleton->Data->NewsGroup->Clear(true);
-		}
+      // mark GUIroot active
+      ControllerUI::ActivateRoot();
 
-		return UICallbacks::OnKeyUp(args);
-	}
+      return true;
+   }
+
+   bool UICallbacks::NewsGroup::OnWindowKeyUp(const CEGUI::EventArgs& e)
+   {
+      const CEGUI::KeyEventArgs& args = static_cast<const CEGUI::KeyEventArgs&>(e);
+
+      // close window on ESC
+      if (args.scancode == CEGUI::Key::Escape)
+      {
+         // clear (view will react)
+         OgreClient::Singleton->Data->NewsGroup->Clear(true);
+      }
+
+      return UICallbacks::OnKeyUp(args);
+   }
 };};

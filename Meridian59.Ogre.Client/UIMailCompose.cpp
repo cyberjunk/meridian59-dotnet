@@ -2,123 +2,126 @@
 
 namespace Meridian59 { namespace Ogre
 {
-	void ControllerUI::MailCompose::Initialize()
-	{
-		// setup references to children from xml nodes
-		Window			= static_cast<CEGUI::FrameWindow*>(guiRoot->getChild(UI_NAME_MAILCOMPOSE_WINDOW));
-		Error			= static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_MAILCOMPOSE_ERROR));
-		RecipientsDesc	= static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_MAILCOMPOSE_GROUPDESC));
-		Recipients		= static_cast<CEGUI::Editbox*>(Window->getChild(UI_NAME_MAILCOMPOSE_GROUP));
-		HeadLineDesc	= static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_MAILCOMPOSE_HEADLINEDESC));
-		HeadLine		= static_cast<CEGUI::Editbox*>(Window->getChild(UI_NAME_MAILCOMPOSE_HEADLINE));		
-		Text			= static_cast<CEGUI::MultiLineEditbox*>(Window->getChild(UI_NAME_MAILCOMPOSE_TEXT));
-		Send			= static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_MAILCOMPOSE_SEND));
-		
-		// set maximum length for title and body (check with server values...)
-		HeadLine->setMaxTextLength(BlakservStringLengths::MAIL_MESSAGE_MAX_SUBJECT_LENGTH);
-		Text->setMaxTextLength(BlakservStringLengths::MAIL_MESSAGE_MAX_LENGTH-1);
+   void ControllerUI::MailCompose::Initialize()
+   {
+      // setup references to children from xml nodes
+      Window         = static_cast<CEGUI::FrameWindow*>(guiRoot->getChild(UI_NAME_MAILCOMPOSE_WINDOW));
+      Error	         = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_MAILCOMPOSE_ERROR));
+      RecipientsDesc = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_MAILCOMPOSE_GROUPDESC));
+      Recipients     = static_cast<CEGUI::Editbox*>(Window->getChild(UI_NAME_MAILCOMPOSE_GROUP));
+      HeadLineDesc   = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_MAILCOMPOSE_HEADLINEDESC));
+      HeadLine       = static_cast<CEGUI::Editbox*>(Window->getChild(UI_NAME_MAILCOMPOSE_HEADLINE));		
+      Text           = static_cast<CEGUI::MultiLineEditbox*>(Window->getChild(UI_NAME_MAILCOMPOSE_TEXT));
+      Send           = static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_MAILCOMPOSE_SEND));
 
-		// subscribe send button
-		Send->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::MailCompose::OnSendClicked));
-		
-		// subscribe keydown on headline box, recipients and text
-		Recipients->subscribeEvent(CEGUI::Editbox::EventKeyDown, CEGUI::Event::Subscriber(UICallbacks::OnCopyPasteKeyDown));
-		HeadLine->subscribeEvent(CEGUI::Editbox::EventKeyDown, CEGUI::Event::Subscriber(UICallbacks::OnCopyPasteKeyDown));
-		Text->subscribeEvent(CEGUI::MultiLineEditbox::EventKeyDown, CEGUI::Event::Subscriber(UICallbacks::OnCopyPasteKeyDown));
-		
-		// subscribe close button
-		Window->subscribeEvent(CEGUI::FrameWindow::EventCloseClicked, CEGUI::Event::Subscriber(UICallbacks::OnWindowClosed));
+      // set maximum length for title and body (check with server values...)
+      HeadLine->setMaxTextLength(BlakservStringLengths::MAIL_MESSAGE_MAX_SUBJECT_LENGTH);
+      Text->setMaxTextLength(BlakservStringLengths::MAIL_MESSAGE_MAX_LENGTH-1);
 
-		// subscribe keyup
-		Window->subscribeEvent(CEGUI::FrameWindow::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::OnKeyUp));
-	};
+      // subscribe send button
+      Send->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::MailCompose::OnSendClicked));
 
-	void ControllerUI::MailCompose::Destroy()
-	{	 
-	};
-	
-	void ControllerUI::MailCompose::ApplyLanguage()
-	{
-	};
+      // subscribe keydown on headline box, recipients and text
+      Recipients->subscribeEvent(CEGUI::Editbox::EventKeyDown, CEGUI::Event::Subscriber(UICallbacks::OnCopyPasteKeyDown));
+      HeadLine->subscribeEvent(CEGUI::Editbox::EventKeyDown, CEGUI::Event::Subscriber(UICallbacks::OnCopyPasteKeyDown));
+      Text->subscribeEvent(CEGUI::MultiLineEditbox::EventKeyDown, CEGUI::Event::Subscriber(UICallbacks::OnCopyPasteKeyDown));
 
-	void ControllerUI::MailCompose::ProcessResult(array<ObjectID^>^ Result)
-	{
-		// check
-		if (LastLookupNames == nullptr || Result == nullptr || LastLookupNames->Length != Result->Length)
-			return;
+      // subscribe close button
+      Window->subscribeEvent(CEGUI::FrameWindow::EventCloseClicked, CEGUI::Event::Subscriber(UICallbacks::OnWindowClosed));
 
-		// build not found string
-		CLRString^ notfound = CLRString::Empty;
+      // subscribe keyup
+      Window->subscribeEvent(CEGUI::FrameWindow::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::OnKeyUp));
+   };
 
-		// look for not found name
-		for(int i = 0; i < Result->Length; i++)
-		{
-			// no id found for this one
-			if (Result[i]->ID == 0)
-			{
-				// add comma if not first
-				if (!CLRString::Equals(notfound, CLRString::Empty))
-					notfound += ",";
+   void ControllerUI::MailCompose::Destroy()
+   {
+   };
 
-				notfound += LastLookupNames[i];
-			}
-		}
+   void ControllerUI::MailCompose::ApplyLanguage()
+   {
+   };
 
-		// all found?
-		if (CLRString::Equals(notfound, CLRString::Empty))
-		{
-			// hide error text
-			Error->setVisible(false);
+   void ControllerUI::MailCompose::ProcessResult(array<ObjectID^>^ Result)
+   {
+      // check
+      if (LastLookupNames == nullptr || Result == nullptr || LastLookupNames->Length != Result->Length)
+         return;
 
-			// send mail
-			OgreClient::Singleton->SendSendMail(
-				Result,
-				StringConvert::CEGUIToCLR(HeadLine->getText()),
-				StringConvert::CEGUIToCLR(Text->getText()));
+      // build not found string
+      CLRString^ notfound = CLRString::Empty;
+
+      // look for not found name
+      for(int i = 0; i < Result->Length; i++)
+      {
+         // no id found for this one
+         if (Result[i]->ID == 0)
+         {
+            // add comma if not first
+            if (!CLRString::Equals(notfound, CLRString::Empty))
+               notfound += ",";
+
+            notfound += LastLookupNames[i];
+         }
+      }
+
+      // all found?
+      if (CLRString::Equals(notfound, CLRString::Empty))
+      {
+         // hide error text
+         Error->setVisible(false);
+
+         // send mail
+         OgreClient::Singleton->SendSendMail(
+            Result,
+            StringConvert::CEGUIToCLR(HeadLine->getText()),
+            StringConvert::CEGUIToCLR(Text->getText()));
 
          // clean text
          Recipients->setText(STRINGEMPTY);
          HeadLine->setText(STRINGEMPTY);
          Text->setText(STRINGEMPTY);
 
-			// hide window
-			Window->hide();
-		}
+         // hide window
+         Window->hide();
+      }
 
-		// not found?
-		else
-		{
-			// show error
-			Error->setText("Unknown recipients: " + StringConvert::CLRToCEGUI(notfound));
-			Error->setVisible(true);
-		}
-	};
+      // not found?
+      else
+      {
+         // show error
+         Error->setText("Unknown recipients: " + StringConvert::CLRToCEGUI(notfound));
+         Error->setVisible(true);
+      }
+   };
 
-	bool UICallbacks::MailCompose::OnSendClicked(const CEGUI::EventArgs& e)
-	{
-		const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;		
+   //////////////////////////////////////////////////////////////////////////////////////////////////////////
+   //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		// get recipients string
-		CLRString^ recipients = StringConvert::CEGUIToCLR(
-			ControllerUI::MailCompose::Recipients->getText());
+   bool UICallbacks::MailCompose::OnSendClicked(const CEGUI::EventArgs& e)
+   {
+      const CEGUI::WindowEventArgs& args	= (const CEGUI::WindowEventArgs&)e;		
 
-		// check
-		if (recipients != nullptr && !CLRString::Equals(recipients, CLRString::Empty))
-		{			
-			// split up into single names by ','
-			array<CLRString^>^ splitted  = recipients->Split(',');
+      // get recipients string
+      CLRString^ recipients = StringConvert::CEGUIToCLR(
+         ControllerUI::MailCompose::Recipients->getText());
 
-			// trim them
-			for (int i = 0; i < splitted->Length; i++)
-				splitted[i] = splitted[i]->Trim();
-			
-			// save it
-			ControllerUI::MailCompose::LastLookupNames = splitted;
+      // check
+      if (recipients != nullptr && !CLRString::Equals(recipients, CLRString::Empty))
+      {
+         // split up into single names by ','
+         array<CLRString^>^ splitted  = recipients->Split(',');
 
-			// request IDs of these names
-			OgreClient::Singleton->SendReqLookupNames(ControllerUI::MailCompose::LastLookupNames);
-		}
+         // trim them
+         for (int i = 0; i < splitted->Length; i++)
+            splitted[i] = splitted[i]->Trim();
 
-		return true;
-	};
+         // save it
+         ControllerUI::MailCompose::LastLookupNames = splitted;
+
+         // request IDs of these names
+         OgreClient::Singleton->SendReqLookupNames(ControllerUI::MailCompose::LastLookupNames);
+      }
+
+      return true;
+   };
 };};
