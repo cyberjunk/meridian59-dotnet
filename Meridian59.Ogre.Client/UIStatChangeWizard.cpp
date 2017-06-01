@@ -249,7 +249,6 @@ namespace Meridian59 { namespace Ogre
       }
    };
 
-   // Helper function to set progress bar for attributes.
    void ControllerUI::StatChangeWizard::SetAttributeProgressbar(CEGUI::ProgressBar* AttrBar, unsigned char Attr)
    {
       AttrBar->setProgress((float)Attr / (float)StatChangeInfo::ATTRIBUTE_MAXVALUE);
@@ -259,7 +258,6 @@ namespace Meridian59 { namespace Ogre
          CEGUI::PropertyHelper<unsigned int>::toString(StatChangeInfo::ATTRIBUTE_MAXVALUE));
    };
 
-   // Helper function to set progress bar for schools.
    void ControllerUI::StatChangeWizard::SetSchoolProgressbar(CEGUI::ProgressBar* SchoolBar, unsigned char OrigLevel, unsigned char Level)
    {
       if (OrigLevel)
@@ -275,6 +273,9 @@ namespace Meridian59 { namespace Ogre
          SchoolBar->setText("0");
       }
    };
+
+   //////////////////////////////////////////////////////////////////////////////////////////////////////////
+   //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
    bool UICallbacks::StatChangeWizard::OnAttributeMouseMoveClick(const CEGUI::EventArgs& e)
    {
