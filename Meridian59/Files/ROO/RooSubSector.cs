@@ -162,6 +162,11 @@ namespace Meridian59.Files.ROO
                 }
             }
 
+            FloorP = new V3[Vertices.Count];
+            FloorUV = new V2[Vertices.Count];
+            CeilingP = new V3[Vertices.Count];
+            CeilingUV = new V2[Vertices.Count];
+
             return cursor - StartIndex;
         }
 
@@ -203,6 +208,11 @@ namespace Meridian59.Files.ROO
                     Vertices.Add(new V2(x, y));
                 }
             }
+
+            FloorP = new V3[Vertices.Count];
+            FloorUV = new V2[Vertices.Count];
+            CeilingP = new V3[Vertices.Count];
+            CeilingUV = new V2[Vertices.Count];
         }
         #endregion
 
@@ -245,6 +255,10 @@ namespace Meridian59.Files.ROO
         {
             this.SectorNum = SectorNum; 
             this.Vertices = Vertices;
+            this.FloorP = new V3[0];
+            this.FloorUV = new V2[0];
+            this.CeilingP = new V3[0];
+            this.CeilingUV = new V2[0];
 
             if (Vertices != null && Vertices.Count > 0)            
                 boundingBox = Vertices.GetBoundingBox();
@@ -297,16 +311,27 @@ namespace Meridian59.Files.ROO
         {
             const Real INV64 = 1.0f / (Real)(64 << 4);  // from old code..
 
-            V3 normal;
-            V3[] p          = new V3[Vertices.Count];
-            V2[] uv         = new V2[Vertices.Count];
-            Real left        = 0;
-            Real top         = 0;
-            Real oneOverC   = 0.0f;
+            Real left     = 0;
+            Real top      = 0;
+            Real oneOverC = 0.0f;
 
-            RooSectorSlopeInfo slopeInfo = (IsFloor) ? 
-                Sector.SlopeInfoFloor : 
-                Sector.SlopeInfoCeiling;
+            V3   normal;
+            V3[] p;
+            V2[] uv;
+            RooSectorSlopeInfo slopeInfo;
+
+            if (IsFloor)
+            {
+                p = FloorP;
+                uv = FloorUV;
+                slopeInfo = Sector.SlopeInfoFloor;
+            }
+            else
+            {
+                p = CeilingP;
+                uv = CeilingUV;
+                slopeInfo = Sector.SlopeInfoCeiling;
+            }
 
             /*****************************************************************/
 
@@ -479,14 +504,10 @@ namespace Meridian59.Files.ROO
             // save in class properties depending on floor/ceiling
             if (IsFloor)
             {
-                FloorP = p;
-                FloorUV = uv;
                 FloorNormal = normal;
             }
             else
             {
-                CeilingP = p;
-                CeilingUV = uv;
                 CeilingNormal = normal;
             }
         }
