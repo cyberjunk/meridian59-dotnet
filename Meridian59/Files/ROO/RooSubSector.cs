@@ -315,7 +315,6 @@ namespace Meridian59.Files.ROO
             Real top      = 0;
             Real oneOverC = 0.0f;
 
-            V3   normal;
             V3[] p;
             V2[] uv;
             RooSectorSlopeInfo slopeInfo;
@@ -471,44 +470,44 @@ namespace Meridian59.Files.ROO
                 // apply additional userscale
                 p[count] *= Scale;
             }
+        }
 
-            /*****************************************************************/
+        /// <summary>
+        /// Updates FloorNormal and CeilingNormal properties.
+        /// </summary>
+        public void UpdateNormals()
+        {
+            if (Sector == null)
+                return;
 
-            // Calculate the normal
-            if (slopeInfo != null)
+            // floor
+            if (Sector.SlopeInfoFloor != null)
             {
-                // if the sector is sloped, we get the normal from slopeinfo
-                normal.X = slopeInfo.A;
-                normal.Y = slopeInfo.B;
-                normal.Z = slopeInfo.C;
-
-                normal.Normalize();
-            }
-            else if (IsFloor)
-            {
-                // default normal for non sloped floor
-                normal.X = 0.0f;
-                normal.Y = 0.0f;
-                normal.Z = 1.0f;
+                FloorNormal.X = Sector.SlopeInfoFloor.A;
+                FloorNormal.Y = Sector.SlopeInfoFloor.B;
+                FloorNormal.Z = Sector.SlopeInfoFloor.C;
+                FloorNormal.Normalize();
             }
             else
             {
-                // default normal for non sloped ceilings
-                normal.X = 0.0f;
-                normal.Y = 0.0f;
-                normal.Z = -1.0f;
+                FloorNormal.X = 0.0f;
+                FloorNormal.Y = 0.0f;
+                FloorNormal.Z = 1.0f;
             }
 
-            /*****************************************************************/
-
-            // save in class properties depending on floor/ceiling
-            if (IsFloor)
+            // ceiling
+            if (Sector.SlopeInfoCeiling != null)
             {
-                FloorNormal = normal;
+                CeilingNormal.X = Sector.SlopeInfoCeiling.A;
+                CeilingNormal.Y = Sector.SlopeInfoCeiling.B;
+                CeilingNormal.Z = Sector.SlopeInfoCeiling.C;
+                CeilingNormal.Normalize();
             }
             else
             {
-                CeilingNormal = normal;
+                CeilingNormal.X = 0.0f;
+                CeilingNormal.Y = 0.0f;
+                CeilingNormal.Z = -1.0f;
             }
         }
     }
