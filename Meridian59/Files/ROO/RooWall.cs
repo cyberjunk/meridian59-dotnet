@@ -948,8 +948,8 @@ namespace Meridian59.Files.ROO
         public bool IsBlockingSight(V3 Start, V3 End)
         {
             // 2D
-            V2 Start2D = new V2(Start.X, Start.Z);
-            V2 End2D = new V2(End.X, End.Z);
+            V2 Start2D = Start.XZ;
+            V2 End2D = End.XZ;
 
             // calculate the sides of the points (returns -1, 0 or 1)
             int startside = Start2D.GetSide(ref p1, ref p2);
