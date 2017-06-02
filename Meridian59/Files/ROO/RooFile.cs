@@ -1665,15 +1665,42 @@ namespace Meridian59.Files.ROO
         /// <returns>True if OK, false if collision.</returns>
         protected bool VerifySightByTree(RooBSPItem Node, ref V3 Start, ref V3 End)
         {
-            if (Node == null || Node.Type != RooBSPItem.NodeType.Node)
+            if (Node == null)
                 return true;
+
+            /*************************************************************/
+
+            if (Node.Type == RooBSPItem.NodeType.Leaf)
+            {
+                RooSubSector leaf = (RooSubSector)Node;
+                V3 intersection;
+                V3 s = Start.XZY;
+                V3 e = End.XZY;
+
+                // check floor
+                if (leaf.Sector.FloorTexture > 0 && 
+                    leaf.IsBlockingLine(true, ref s, ref e, out intersection))
+                {
+                    return false;
+                }
+
+                // check ceiling
+                if (leaf.Sector.CeilingTexture > 0 &&
+                    leaf.IsBlockingLine(false, ref s, ref e, out intersection))
+                {
+                    return false;
+                }
+
+                // not blocked by leaf
+                return true;
+            }
 
             /*************************************************************/
 
             RooPartitionLine line = (RooPartitionLine)Node;
             RooWall wall = line.Wall;
-            V2 start2D = new V2(Start.X, Start.Z);
-            V2 end2D = new V2(End.X, End.Z);
+            V2 start2D = Start.XZ;
+            V2 end2D = End.XZ;
 
             /*************************************************************/
 
