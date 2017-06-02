@@ -725,7 +725,7 @@ namespace Meridian59 { namespace Ogre
    void ControllerRoom::CreateSubSector(RooSubSector^ SubSector, bool IsFloor)
    {
       // update vertexdata for this subsector
-      SubSector->UpdateVertexData(IsFloor, SCALE);
+      SubSector->UpdateVertexData(IsFloor);
 
       // shortcuts to select basedon floor/ceiling
       array<V3>^ P;
