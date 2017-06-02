@@ -1185,7 +1185,11 @@ namespace Meridian59.Files.ROO
                 wall.CalculateWallSideHeights();
 
             foreach (RooSubSector leaf in BSPTreeLeaves)
+            {
+                leaf.UpdateVertexData(true);
+                leaf.UpdateVertexData(false);
                 leaf.UpdateNormals();
+            }
         }
 
         /// <summary>

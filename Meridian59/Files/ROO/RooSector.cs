@@ -769,6 +769,16 @@ namespace Meridian59.Files.ROO
             foreach (RooWall wall in walls)
                 wall.CalculateWallSideHeights();
 
+            /************************* LEAFS *************************/
+            foreach (RooSubSector leaf in leafs)
+            {
+                if (IsMovingFloor)
+                    leaf.UpdateVertexData(true);
+
+                if (IsMovingCeiling)
+                    leaf.UpdateVertexData(false);
+            }
+
             /************************* EVENT *************************/
             if (Moved != null)
                 Moved(this, new EventArgs());         
