@@ -304,9 +304,10 @@ namespace Meridian59.Files.ROO
             Real top         = 0;
             Real oneOverC   = 0.0f;
 
-            RooSectorSlopeInfo slopeInfo = 
-                (IsFloor) ? Sector.SlopeInfoFloor : Sector.SlopeInfoCeiling;
-            
+            RooSectorSlopeInfo slopeInfo = (IsFloor) ? 
+                Sector.SlopeInfoFloor : 
+                Sector.SlopeInfoCeiling;
+
             /*****************************************************************/
 
             // find most top left vertex and get its coordinates
@@ -343,112 +344,92 @@ namespace Meridian59.Files.ROO
                 {
                     p[count].X = Vertices[count].X;
                     p[count].Y = Vertices[count].Y;
-                    p[count].Z = (IsFloor) ? (Sector.FloorHeight * 16.0f) : (Sector.CeilingHeight * 16.0f);                   
+                    p[count].Z = (IsFloor) ? (Sector.FloorHeight * 16.0f) : (Sector.CeilingHeight * 16.0f);
                 }
               
                 // 2.1: UV with slope
                 if (slopeInfo != null)
                 {
                     V3 intersectTop;
-                    V3 intersectLeft;          
-                    V3 vectorU;
-                    V3 vectorV;
-                    V3 vector;
+                    V3 intersectLeft;
+                    V2 vectorU;
+                    V2 vectorV;
+                    V2 vector;
                     Real distance;
-                    Real U, temp;
-                    
-                    // calc distance from top line (vector u)
-                    U = ((p[count].X - slopeInfo.P0.X) * (slopeInfo.P1.X - slopeInfo.P0.X)) +
-                        ((p[count].Z - slopeInfo.P0.Z) * (slopeInfo.P1.Z - slopeInfo.P0.Z)) +
-                        ((p[count].Y - slopeInfo.P0.Y) * (slopeInfo.P1.Y - slopeInfo.P0.Y));
+                    Real u, temp;
 
-                    temp = ((slopeInfo.P1.X - slopeInfo.P0.X) * (slopeInfo.P1.X - slopeInfo.P0.X)) +
-                        ((slopeInfo.P1.Z - slopeInfo.P0.Z) * (slopeInfo.P1.Z - slopeInfo.P0.Z)) +
-                        ((slopeInfo.P1.Y - slopeInfo.P0.Y) * (slopeInfo.P1.Y - slopeInfo.P0.Y));
+                    ///////////////////////////////////////////////
+
+                    V3 d;
+                    V3 d1 = p[count]     - slopeInfo.P0;
+                    V3 d2 = slopeInfo.P1 - slopeInfo.P0;
+                    V3 d3 = slopeInfo.P2 - slopeInfo.P0;
+
+                    // calc distance from top line (vector u)
+                    u    = d1 * d2;
+                    temp = d2 * d2;
 
                     if (temp == 0.0f)
                         temp = 1.0f;
 
-                    U /= temp;
-
-                    intersectTop.X = slopeInfo.P0.X + U * (slopeInfo.P1.X - slopeInfo.P0.X);
-                    intersectTop.Z = slopeInfo.P0.Z + U * (slopeInfo.P1.Z - slopeInfo.P0.Z);
-                    intersectTop.Y = slopeInfo.P0.Y + U * (slopeInfo.P1.Y - slopeInfo.P0.Y);
-
-                    uv[count].X = (Real)System.Math.Sqrt(
-                                    (p[count].X - intersectTop.X) * (p[count].X - intersectTop.X) +
-                                    (p[count].Z - intersectTop.Z) * (p[count].Z - intersectTop.Z) +
-                                    (p[count].Y - intersectTop.Y) * (p[count].Y - intersectTop.Y));
+                    u /= temp;
+                    intersectTop = slopeInfo.P0 + u * d2;
+                    d = p[count] - intersectTop;
+                    uv[count].X = d.Length;
 
                     // calc distance from left line (vector v)
-                    U = ((p[count].X - slopeInfo.P0.X) * (slopeInfo.P2.X - slopeInfo.P0.X)) +
-                        ((p[count].Z - slopeInfo.P0.Z) * (slopeInfo.P2.Z - slopeInfo.P0.Z)) +
-                        ((p[count].Y - slopeInfo.P0.Y) * (slopeInfo.P2.Y - slopeInfo.P0.Y));
-
-                    temp = ((slopeInfo.P2.X - slopeInfo.P0.X) * (slopeInfo.P2.X - slopeInfo.P0.X)) +
-                        ((slopeInfo.P2.Z - slopeInfo.P0.Z) * (slopeInfo.P2.Z - slopeInfo.P0.Z)) +
-                        ((slopeInfo.P2.Y - slopeInfo.P0.Y) * (slopeInfo.P2.Y - slopeInfo.P0.Y));
+                    u    = d1 * d3;
+                    temp = d3 * d3;
 
                     if (temp == 0.0f)
                         temp = 1.0f;
 
-                    U /= temp;
+                    u /= temp;
+                    intersectLeft = slopeInfo.P0 + u * d3;
+                    d = p[count] - intersectLeft;
+                    uv[count].Y = d.Length;
 
-                    intersectLeft.X = slopeInfo.P0.X + U * (slopeInfo.P2.X - slopeInfo.P0.X);
-                    intersectLeft.Z = slopeInfo.P0.Z + U * (slopeInfo.P2.Z - slopeInfo.P0.Z);
-                    intersectLeft.Y = slopeInfo.P0.Y + U * (slopeInfo.P2.Y - slopeInfo.P0.Y);
+                    ///////////////////////////////////////////////
 
-                    uv[count].Y = (Real)System.Math.Sqrt(
-                                    (p[count].X - intersectLeft.X) * (p[count].X - intersectLeft.X) +
-                                    (p[count].Z - intersectLeft.Z) * (p[count].Z - intersectLeft.Z) +
-                                    (p[count].Y - intersectLeft.Y) * (p[count].Y - intersectLeft.Y));
-
+                    // add
                     uv[count].X += (Sector.TextureY << 4) / 2.0f;
                     uv[count].Y += (Sector.TextureX << 4) / 2.0f;
 
+                    // vectorU
                     vectorU.X = slopeInfo.P1.X - slopeInfo.P0.X;
-                    vectorU.Z = slopeInfo.P1.Z - slopeInfo.P0.Z;
                     vectorU.Y = slopeInfo.P1.Y - slopeInfo.P0.Y;
-
-                    distance = (Real)System.Math.Sqrt((vectorU.X * vectorU.X) + (vectorU.Y * vectorU.Y));
+                    distance  = vectorU.Length;
 
                     if (distance == 0.0f)
                         distance = 1.0f;
 
-                    vectorU.X /= distance;
-                    vectorU.Z /= distance;
-                    vectorU.Y /= distance;
+                    vectorU *= (1.0f / distance);
 
+                    // vectorV
                     vectorV.X = slopeInfo.P2.X - slopeInfo.P0.X;
-                    vectorV.Z = slopeInfo.P2.Z - slopeInfo.P0.Z;
                     vectorV.Y = slopeInfo.P2.Y - slopeInfo.P0.Y;
-
-                    distance = (Real)System.Math.Sqrt((vectorV.X * vectorV.X) + (vectorV.Y * vectorV.Y));
-
+                    distance  = vectorV.Length;
+                    
                     if (distance == 0.0f)
                         distance = 1.0f;
 
-                    vectorV.X /= distance;
-                    vectorV.Z /= distance;
-                    vectorV.Y /= distance;
+                    vectorV *= (1.0f / distance);
 
+                    // vector
                     vector.X = p[count].X - slopeInfo.P0.X;
                     vector.Y = p[count].Y - slopeInfo.P0.Y;
-
-                    distance = (Real)System.Math.Sqrt((vector.X * vector.X) + (vector.Y * vector.Y));
+                    distance = vector.Length;
 
                     if (distance == 0)
                         distance = 1.0f;
 
-                    vector.X /= distance;
-                    vector.Y /= distance;
+                    vector *= (1.0f / distance);
 
-                    if (((vector.X * vectorU.X) +
-                        (vector.Y * vectorU.Y)) <= 0)
+                    // apply on uv
+                    if ((vector * vectorU) <= 0)
                         uv[count].Y = -uv[count].Y;
 
-                    if (((vector.X * vectorV.X) +
-                        (vector.Y * vectorV.Y)) > 0)
+                    if ((vector * vectorV) > 0)
                         uv[count].X = -uv[count].X;
                 }
 
@@ -459,8 +440,8 @@ namespace Meridian59.Files.ROO
                     uv[count].Y = System.Math.Abs(Vertices[count].X - left) - (Sector.TextureX << 4);
                 }
 
-                uv[count].X *= INV64;
-                uv[count].Y *= INV64;
+                // scale uv
+                uv[count] *= INV64;
 
                 // apply additional userscale
                 p[count] *= Scale;
