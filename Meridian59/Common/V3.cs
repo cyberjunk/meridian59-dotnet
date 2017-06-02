@@ -91,6 +91,12 @@ namespace Meridian59.Common
         public V2 XZ { get { return new V2(X, Z); } set { X = value.X; Z = value.Y; } }
 
         /// <summary>
+        /// Returns a new V3 with Y and Z Components flipped or sets
+        /// the Y value from Z and Z from Y.
+        /// </summary>
+        public V3 XZY { get { return new V3(X, Z, Y); } set { X = value.X; Y = value.Z; Z = value.Y; } }
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="X"></param>
