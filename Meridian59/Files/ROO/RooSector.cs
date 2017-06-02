@@ -734,6 +734,9 @@ namespace Meridian59.Files.ROO
                     else
                         IsMovingFloor = false;
                 }
+
+                foreach (RooSubSector leaf in leafs)
+                    leaf.UpdateVertexPositions(true);
             }
 
             /************************* CEILING *************************/
@@ -763,21 +766,14 @@ namespace Meridian59.Files.ROO
                     else
                         IsMovingCeiling = false;
                 }
+
+                foreach (RooSubSector leaf in leafs)
+                    leaf.UpdateVertexPositions(false);
             }
 
             /************************* SIDES *************************/
             foreach (RooWall wall in walls)
                 wall.CalculateWallSideHeights();
-
-            /************************* LEAFS *************************/
-            foreach (RooSubSector leaf in leafs)
-            {
-                if (IsMovingFloor)
-                    leaf.UpdateVertexPositions(true);
-
-                if (IsMovingCeiling)
-                    leaf.UpdateVertexPositions(false);
-            }
 
             /************************* EVENT *************************/
             if (Moved != null)
