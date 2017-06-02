@@ -722,5 +722,67 @@ namespace Meridian59.Common
             // return
             return (ushort)deltaangle;
         }
+
+        /// <summary>
+        /// Checks for intersection of 3D line and 3D triangle.
+        /// </summary>
+        /// <remarks>
+        /// https://en.wikipedia.org/wiki/M%C3%B6ller%E2%80%93Trumbore_intersection_algorithm
+        /// </remarks>
+        /// <param name="S">Start</param>
+        /// <param name="E">End</param>
+        /// <param name="P1">Triangle P1</param>
+        /// <param name="P2">Triangle P2</param>
+        /// <param name="P3">Triangle P3</param>
+        /// <param name="I">Intersection Point</param>
+        /// <returns>True or False</returns>
+        public static bool IntersectLineTriangle(ref V3 S, ref V3 E, ref V3 P1, ref V3 P2, ref V3 P3, out V3 I)
+        {
+            const float EPS = 0.001f;
+
+            V3 e1, e2, p, q, t, d;
+            float u, v, f, inv_det, det;
+            I = new V3();
+
+            // vectors
+            d  = E - S;              // line vector    S->E
+            e1 = P2 - P1;            // triangle edge P1->P2
+            e2 = P3 - P1;            // triangle edge P1->P3
+            p  = d.CrossProduct(e2); // used to calculate determinant and u,v parms
+
+            // if determinant is near zero, ray lies in plane of triangle
+            det = e1 * p;
+            if (det < EPS && det > -EPS)
+                return false;
+
+            inv_det = 1.0f / det;
+
+            // calculate distance from P1 to line start
+            t = S - P1;
+
+            // calculate u parameter and test bound
+            u = (t * p) * inv_det;
+            if ((u < 0.0f) || (u > 1.0f))
+                return false;
+
+            // prepare to test v parameter
+            q = t.CrossProduct(e1);
+
+            // calculate v parameter and test bound
+            v = (d * q) * inv_det;
+            if ((v < 0.0f) || (u + v > 1.0f))
+                return false;
+
+            // note: we additionally check for < 1.0f
+            // = LINE intersection, not ray
+            f = (e2 * q) * inv_det;
+            if ((f >= 0.0f) && (f <= 1.0f))
+            {
+                I = d * f;
+                return true;
+            }
+
+            return false;
+        }
     }
 }
