@@ -301,13 +301,12 @@ namespace Meridian59.Files.ROO
         }
 
         /// <summary>
-        /// Updates the P, UV and Normal properties for either floor or ceiling.
+        /// Updates the P and UV properties for either floor or ceiling.
         /// Fills in current 3D data for the subsector vertices.
         /// Note: Z component is the height here.
         /// </summary>
         /// <param name="IsFloor">Whether to create for floor or ceiling</param>
-        /// <param name="Scale">Optional additional scale to apply.</param>
-        public void UpdateVertexData(bool IsFloor, Real Scale = 1.0f)
+        public void UpdateVertexData(bool IsFloor)
         {
             const Real INV64 = 1.0f / (Real)(64 << 4);  // from old code..
 
@@ -468,7 +467,7 @@ namespace Meridian59.Files.ROO
                 uv[count] *= INV64;
 
                 // apply additional userscale
-                p[count] *= Scale;
+                //p[count] *= Scale;
             }
         }
 

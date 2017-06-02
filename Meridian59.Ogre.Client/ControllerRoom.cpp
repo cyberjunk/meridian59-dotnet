@@ -748,7 +748,7 @@ namespace Meridian59 { namespace Ogre
       // add vertices from vertexdata
       for (int i = 0; i < P->Length; i++)
       {
-         roomManObj->position(P[i].X, P[i].Z, P[i].Y);
+         roomManObj->position(0.0625f * P[i].X, 0.0625f * P[i].Z, 0.0625f * P[i].Y);
          roomManObj->textureCoord(UV[i].Y, UV[i].X);
          roomManObj->normal(Normal.X, Normal.Z, Normal.Y);
       }
