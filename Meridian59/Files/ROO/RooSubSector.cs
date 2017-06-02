@@ -536,5 +536,36 @@ namespace Meridian59.Files.ROO
                 CeilingNormal.Z = -1.0f;
             }
         }
+
+        /// <summary>
+        /// Tests if the 3D line from S to E intersects this leaf.
+        /// </summary>
+        /// <param name="IsFloor">Check Floor or Ceiling</param>
+        /// <param name="S">Start</param>
+        /// <param name="E">End</param>
+        /// <param name="I">Intersection point</param>
+        /// <returns>True or False</returns>
+        public bool IsBlockingLine(bool IsFloor, ref V3 S, ref V3 E, out V3 I)
+        {
+            // select floor or ceiling points
+            V3[] p = (IsFloor) ? FloorP : CeilingP;
+
+            // validate by checking triangulation
+            for (int i = 0; i < p.Length - 2; i++)
+            {
+                if (MathUtil.IntersectLineTriangle(
+                    ref S, ref E,
+                    ref p[i + 2],
+                    ref p[i + 1],
+                    ref p[0],
+                    out I))
+                {
+                    return true;
+                }
+            }
+
+            I = new V3();
+            return false;
+        }
     }
 }
