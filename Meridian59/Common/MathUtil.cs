@@ -741,7 +741,7 @@ namespace Meridian59.Common
             const float EPS = 0.001f;
 
             V3 e1, e2, p, q, t, d;
-            float u, v, f, inv_det, det;
+            Real u, v, f, inv_det, det;
             I = new V3();
 
             // vectors
