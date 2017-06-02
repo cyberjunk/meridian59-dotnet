@@ -545,7 +545,7 @@ namespace Meridian59.Files.ROO
         /// <param name="E">End</param>
         /// <param name="I">Intersection point</param>
         /// <returns>True or False</returns>
-        public bool IsBlockingLine(bool IsFloor, ref V3 S, ref V3 E, out V3 I)
+        public bool IsBlockingLine(bool IsFloor, ref V3 S, ref V3 E, ref V3 I)
         {
             // select floor or ceiling points
             V3[] p = (IsFloor) ? FloorP : CeilingP;
@@ -558,13 +558,12 @@ namespace Meridian59.Files.ROO
                     ref p[i + 2],
                     ref p[i + 1],
                     ref p[0],
-                    out I))
+                    ref I))
                 {
                     return true;
                 }
             }
 
-            I = new V3();
             return false;
         }
     }

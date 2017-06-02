@@ -1424,6 +1424,7 @@ namespace Meridian59.Data.Models
                 // roo format variants
                 V3 rooStart = Position.Clone();
                 V3 rooEnd = Position3D.Clone();
+                V3 inter = new V3();
 
                 // add offset for playerheight to not use the groundheight
                 rooStart.Y += GeometryConstants.PLAYERHEIGHT;
@@ -1434,7 +1435,7 @@ namespace Meridian59.Data.Models
                 rooEnd.ConvertToROO();
 
                 // verify the object is visible
-                return Room.VerifySight(ref rooStart, ref rooEnd);
+                return Room.VerifySight(ref rooStart, ref rooEnd, ref inter);
             }
             else
                 return false;

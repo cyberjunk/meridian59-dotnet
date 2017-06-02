@@ -736,13 +736,12 @@ namespace Meridian59.Common
         /// <param name="P3">Triangle P3</param>
         /// <param name="I">Intersection Point</param>
         /// <returns>True or False</returns>
-        public static bool IntersectLineTriangle(ref V3 S, ref V3 E, ref V3 P1, ref V3 P2, ref V3 P3, out V3 I)
+        public static bool IntersectLineTriangle(ref V3 S, ref V3 E, ref V3 P1, ref V3 P2, ref V3 P3, ref V3 I)
         {
             const float EPS = 0.001f;
 
             V3 e1, e2, p, q, t, d;
             Real u, v, f, inv_det, det;
-            I = new V3();
 
             // vectors
             d  = E - S;              // line vector    S->E
@@ -778,7 +777,7 @@ namespace Meridian59.Common
             f = (e2 * q) * inv_det;
             if ((f >= 0.0f) && (f <= 1.0f))
             {
-                I = d * f;
+                I = S + d * f;
                 return true;
             }
 

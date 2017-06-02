@@ -1633,27 +1633,11 @@ namespace Meridian59.Files.ROO
         /// </summary>
         /// <param name="Start"></param>
         /// <param name="End"></param>
+        /// <param name="I">Intersection</param>
         /// <returns>True if OK, false if collision.</returns>
-        public bool VerifySight(ref V3 Start, ref V3 End)
+        public bool VerifySight(ref V3 Start, ref V3 End, ref V3 I)
         {
-            return VerifySightByTree(BSPTree[0], ref Start, ref End);
-            //return VerifySightByList(Start, End);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Start"></param>
-        /// <param name="End"></param>
-        /// <returns>True if OK, false if collision.</returns>
-        protected bool VerifySightByList(ref V3 Start, ref V3 End)
-        {
-            // look for blocking wall
-            foreach (RooWall wall in Walls)            
-                if (wall.IsBlockingSight(Start, End))                
-                    return false;
-                
-            return true;
+            return VerifySightByTree(BSPTree[0], ref Start, ref End, ref I);
         }
 
         /// <summary>
@@ -1662,8 +1646,9 @@ namespace Meridian59.Files.ROO
         /// <param name="Node"></param>
         /// <param name="Start"></param>
         /// <param name="End"></param>
+        /// <param name="I">Intersection Point</param>
         /// <returns>True if OK, false if collision.</returns>
-        protected bool VerifySightByTree(RooBSPItem Node, ref V3 Start, ref V3 End)
+        protected bool VerifySightByTree(RooBSPItem Node, ref V3 Start, ref V3 End, ref V3 I)
         {
             if (Node == null)
                 return true;
@@ -1673,20 +1658,19 @@ namespace Meridian59.Files.ROO
             if (Node.Type == RooBSPItem.NodeType.Leaf)
             {
                 RooSubSector leaf = (RooSubSector)Node;
-                V3 intersection;
                 V3 s = Start.XZY;
                 V3 e = End.XZY;
 
                 // check floor
                 if (leaf.Sector.FloorTexture > 0 && 
-                    leaf.IsBlockingLine(true, ref s, ref e, out intersection))
+                    leaf.IsBlockingLine(true, ref s, ref e, ref I))
                 {
                     return false;
                 }
 
                 // check ceiling
                 if (leaf.Sector.CeilingTexture > 0 &&
-                    leaf.IsBlockingLine(false, ref s, ref e, out intersection))
+                    leaf.IsBlockingLine(false, ref s, ref e, ref I))
                 {
                     return false;
                 }
@@ -1711,11 +1695,11 @@ namespace Meridian59.Files.ROO
 
             // both endpoints on negative side
             if (startDist < 0.0f && endDist < 0.0f)
-                return VerifySightByTree(line.LeftChild, ref Start, ref End);
+                return VerifySightByTree(line.LeftChild, ref Start, ref End, ref I);
 
             // both endpoints on positive side
             else if (startDist > 0.0f && endDist > 0.0f)
-                return VerifySightByTree(line.RightChild, ref Start, ref End);
+                return VerifySightByTree(line.RightChild, ref Start, ref End, ref I);
 
             // crosses infinite splitter or one or both points on splitter
             else
@@ -1723,7 +1707,7 @@ namespace Meridian59.Files.ROO
                 // test walls of splitter
                 while (wall != null)
                 {
-                    if (wall.IsBlockingSight(Start, End))
+                    if (wall.IsBlockingSight(ref Start, ref End, ref I))
                         return false;
 
                     // loop over next wall in same plane
@@ -1731,7 +1715,7 @@ namespace Meridian59.Files.ROO
                 }
 
                 // must climb down both subtrees, go left first
-                bool wl = VerifySightByTree(line.LeftChild, ref Start, ref End);
+                bool wl = VerifySightByTree(line.LeftChild, ref Start, ref End, ref I);
 
                 // return collision if already found
                 if (wl == false)
@@ -1739,7 +1723,7 @@ namespace Meridian59.Files.ROO
 
                 // try other subtree otherwise
                 else
-                    return VerifySightByTree(line.RightChild, ref Start, ref End);
+                    return VerifySightByTree(line.RightChild, ref Start, ref End, ref I);
             }
         }
 

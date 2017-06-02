@@ -944,8 +944,9 @@ namespace Meridian59.Files.ROO
         /// </summary>
         /// <param name="Start"></param>
         /// <param name="End"></param>
+        /// <param name="I">Possible Intersection point</param>
         /// <returns>True if blocked, false if OK</returns>
-        public bool IsBlockingSight(V3 Start, V3 End)
+        public bool IsBlockingSight(ref V3 Start, ref V3 End, ref V3 I)
         {
             // 2D
             V2 Start2D = Start.XZ;
@@ -960,9 +961,9 @@ namespace Meridian59.Files.ROO
             if (startside != endside)
             {
                 // verify also the finite line segments cross
-                V2 intersect;
+                V2 intersect2D;
                 LineLineIntersectionType intersecttype = 
-                    MathUtil.IntersectLineLine(ref Start2D, ref End2D, ref p1, ref p2, out intersect);
+                    MathUtil.IntersectLineLine(ref Start2D, ref End2D, ref p1, ref p2, out intersect2D);
 
                 if (intersecttype == LineLineIntersectionType.OneIntersection ||
                     intersecttype == LineLineIntersectionType.OneBoundaryPoint ||
@@ -987,13 +988,15 @@ namespace Meridian59.Files.ROO
                     // get lambda scale
                     Real lambda = 1.0f;
                     if (diff.X != 0)
-                        lambda = (intersect.X - Start.X) / diff.X;
+                        lambda = (intersect2D.X - Start.X) / diff.X;
 
                     else if (diff.Z != 0)
-                        lambda = (intersect.Y - Start.Z) / diff.Z;
+                        lambda = (intersect2D.Y - Start.Z) / diff.Z;
 
                     // calculate the rayheight based on linear 3d equation
-                    Real rayheight = Start.Y + lambda * diff.Y;
+                    // since start and diff use Y as height but intersection uses Z, flip
+                    I = Start + lambda * diff;
+                    I = I.XZY;
 
                     // compare height with wallheights
                     // use average of both endpoints (in case its sloped)
@@ -1008,24 +1011,24 @@ namespace Meridian59.Files.ROO
                     a = (startside <= 0 && LeftSide != null && LeftSide.UpperTexture > 0 && (LeftSide.Flags.IsNoLookThrough || !LeftSide.Flags.IsTransparent));
                     b = (startside >= 0 && RightSide != null && RightSide.UpperTexture > 0 && (RightSide.Flags.IsNoLookThrough || !RightSide.Flags.IsTransparent));
                     if ((a || b) &&
-                        rayheight < h3 &&
-                        rayheight > h2)
+                        I.Z < h3 &&
+                        I.Z > h2)
                         return true;
 
                     // test middle part
                     a = (startside <= 0 && LeftSide != null && LeftSide.MiddleTexture > 0 && (LeftSide.Flags.IsNoLookThrough || !LeftSide.Flags.IsTransparent));
                     b = (startside >= 0 && RightSide != null && RightSide.MiddleTexture > 0 && (RightSide.Flags.IsNoLookThrough || !RightSide.Flags.IsTransparent));
                     if ((a || b) &&
-                        rayheight < h2 &&
-                        rayheight > h1)
+                        I.Z < h2 &&
+                        I.Z > h1)
                         return true;
 
                     // test lower part (nolookthrough)
                     a = (startside <= 0 && LeftSide != null && LeftSide.LowerTexture > 0);
                     b = (startside >= 0 && RightSide != null && RightSide.LowerTexture > 0);
                     if ((a || b) &&
-                        rayheight < h1 &&
-                        rayheight > h0)
+                        I.Z < h1 &&
+                        I.Z > h0)
                         return true;
                 }
             }
