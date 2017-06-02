@@ -301,19 +301,64 @@ namespace Meridian59.Files.ROO
         }
 
         /// <summary>
-        /// Updates the P and UV properties for either floor or ceiling.
-        /// Fills in current 3D data for the subsector vertices.
+        /// Updates the FloorP or FloorUV properties.
         /// Note: Z component is the height here.
         /// </summary>
+        public void UpdateVertexPositions(bool IsFloor)
+        {
+            Real oneOverC = 0.0f;
+
+            V3[] p;
+            RooSectorSlopeInfo slopeInfo;
+
+            if (IsFloor)
+            {
+                p = FloorP;
+                slopeInfo = Sector.SlopeInfoFloor;
+            }
+            else
+            {
+                p = CeilingP;
+                slopeInfo = Sector.SlopeInfoCeiling;
+            }
+
+            /*****************************************************************/
+
+            // find most top left vertex and get its coordinates
+            if (slopeInfo != null)
+                oneOverC = 1.0f / slopeInfo.C;
+
+            /*****************************************************************/
+
+            for (int count = 0; count < Vertices.Count; count++)
+            {
+                // 1: Fill in vertex coordinates
+                if (slopeInfo != null)
+                {
+                    p[count].X = Vertices[count].X;
+                    p[count].Y = Vertices[count].Y;
+                    p[count].Z = (-slopeInfo.A * p[count].X - slopeInfo.B * p[count].Y - slopeInfo.D) * oneOverC;
+                }
+                else
+                {
+                    p[count].X = Vertices[count].X;
+                    p[count].Y = Vertices[count].Y;
+                    p[count].Z = (IsFloor) ? (Sector.FloorHeight * 16.0f) : (Sector.CeilingHeight * 16.0f);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Updates the FloorUV or CeilingUV properties.
+        /// Must have called UpdateVertexPositions() before.
+        /// </summary>
         /// <param name="IsFloor">Whether to create for floor or ceiling</param>
-        public void UpdateVertexData(bool IsFloor)
+        public void UpdateVertexUV(bool IsFloor)
         {
             const Real INV64 = 1.0f / (Real)(64 << 4);  // from old code..
 
-            Real left     = 0;
-            Real top      = 0;
-            Real oneOverC = 0.0f;
-
+            Real left = 0;
+            Real top  = 0;
             V3[] p;
             V2[] uv;
             RooSectorSlopeInfo slopeInfo;
@@ -338,7 +383,6 @@ namespace Meridian59.Files.ROO
             {
                 left = (int)slopeInfo.X0;
                 top = (int)slopeInfo.Y0;
-                oneOverC = 1.0f / slopeInfo.C;
             }
             else
             {
@@ -356,20 +400,6 @@ namespace Meridian59.Files.ROO
 
             for (int count = 0; count < Vertices.Count; count++)
             {
-                // 1: Fill in vertex coordinates
-                if (slopeInfo != null)
-                {
-                    p[count].X = Vertices[count].X;
-                    p[count].Y = Vertices[count].Y;
-                    p[count].Z = (-slopeInfo.A * p[count].X - slopeInfo.B * p[count].Y - slopeInfo.D) *oneOverC;
-                }
-                else
-                {
-                    p[count].X = Vertices[count].X;
-                    p[count].Y = Vertices[count].Y;
-                    p[count].Z = (IsFloor) ? (Sector.FloorHeight * 16.0f) : (Sector.CeilingHeight * 16.0f);
-                }
-              
                 // 2.1: UV with slope
                 if (slopeInfo != null)
                 {
@@ -465,9 +495,6 @@ namespace Meridian59.Files.ROO
 
                 // scale uv
                 uv[count] *= INV64;
-
-                // apply additional userscale
-                //p[count] *= Scale;
             }
         }
 

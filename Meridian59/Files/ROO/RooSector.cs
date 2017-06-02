@@ -773,10 +773,10 @@ namespace Meridian59.Files.ROO
             foreach (RooSubSector leaf in leafs)
             {
                 if (IsMovingFloor)
-                    leaf.UpdateVertexData(true);
+                    leaf.UpdateVertexPositions(true);
 
                 if (IsMovingCeiling)
-                    leaf.UpdateVertexData(false);
+                    leaf.UpdateVertexPositions(false);
             }
 
             /************************* EVENT *************************/

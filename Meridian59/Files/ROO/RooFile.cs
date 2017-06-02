@@ -1186,8 +1186,10 @@ namespace Meridian59.Files.ROO
 
             foreach (RooSubSector leaf in BSPTreeLeaves)
             {
-                leaf.UpdateVertexData(true);
-                leaf.UpdateVertexData(false);
+                leaf.UpdateVertexPositions(true);
+                leaf.UpdateVertexPositions(false);
+                leaf.UpdateVertexUV(true);
+                leaf.UpdateVertexUV(false);
                 leaf.UpdateNormals();
             }
         }
