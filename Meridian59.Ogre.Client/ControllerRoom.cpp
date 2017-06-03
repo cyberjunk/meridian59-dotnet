@@ -1111,7 +1111,22 @@ namespace Meridian59 { namespace Ogre
       if (!IsInitialized)
          return;
 
-      if (CLRString::Equals(e->PropertyName, DataController::PROPNAME_VIEWERPOSITION))
+      // it is very important to create the avatar here instead of ListChanged event add.
+      // That is because creating the avatar will set the camera and with it will update
+      // ViewerPosition in DataController, which then will update any instance in RoomObjects list
+      // If this was placed in the OnListChanged-Add handler here instead, then the adminui datagrid roomobjects
+      // crashes because it will receive a 'modified' event for an entry, which it has not added yet , because
+      // its add handler would occur after the addhandler here in this class and hence after the modify.
+      if (CLRString::Equals(e->PropertyName, DataController::PROPNAME_AVATAROBJECT))
+      {
+         RoomObject^ avatar = OgreClient::Singleton->Data->AvatarObject;
+
+         // set
+         if (avatar)
+            RoomObjectAdd(avatar);
+      }
+      
+      else if (CLRString::Equals(e->PropertyName, DataController::PROPNAME_VIEWERPOSITION))
       {
          // move particle systems with viewer position
          if (particleSysSnow &&
@@ -1460,10 +1475,14 @@ namespace Meridian59 { namespace Ogre
 
    void ControllerRoom::OnRoomObjectsListChanged(Object^ sender, ListChangedEventArgs^ e)
    {
+      RoomObject^ o;
       switch (e->ListChangedType)
       {
       case System::ComponentModel::ListChangedType::ItemAdded:
-         RoomObjectAdd(OgreClient::Singleton->Data->RoomObjects[e->NewIndex]);
+         o = OgreClient::Singleton->Data->RoomObjects[e->NewIndex];
+         // skip avatar, was already created
+         if (!o->IsAvatar)
+            RoomObjectAdd(o);
          break;
 
       case System::ComponentModel::ListChangedType::ItemDeleted:

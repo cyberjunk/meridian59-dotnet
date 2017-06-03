@@ -11,6 +11,9 @@ namespace Meridian59 { namespace Ogre
       roomObject = RoomObject;
       sceneManager = SceneManager;
 
+      // create sound holder list
+      sounds = new std::list<ISound*>();
+
       // create scenenode
       const ::Ogre::String& ostr_scenenodename = 
          PREFIX_REMOTENODE_SCENENODE + ::Ogre::StringConverter::toString(roomObject->ID);
@@ -18,27 +21,27 @@ namespace Meridian59 { namespace Ogre
       SceneNode = SceneManager->getRootSceneNode()->createChildSceneNode(ostr_scenenodename);
       SceneNode->setFixedYawAxis(true);
 
+      // initial position and orientation
+      RefreshPosition();
+      RefreshOrientation();
+
       // show boundingbox in debug builds
 #if DEBUGBOUNDINGBOX
-         SceneNode->showBoundingBox(true);
+      SceneNode->showBoundingBox(true);
 #endif
-
-      // attach listener
-      RoomObject->PropertyChanged += 
-         gcnew PropertyChangedEventHandler(this, &RemoteNode::OnRoomObjectPropertyChanged);
-            
-      // create sound holder list
-      sounds = new std::list<ISound*>();
 
       // special handling for avatar (attach camera)
       if (RoomObject->IsAvatar)
       {
+         ::Ogre::SceneNode* cameraNode = OgreClient::Singleton->CameraNode;
+
          // attach cameranode on avatarnode
-         SceneNode->addChild(OgreClient::Singleton->CameraNode);
+         SceneNode->addChild(cameraNode);
          SceneNode->setFixedYawAxis(true);
 
          // enable camera listener and trigger update
          OgreClient::Singleton->IsCameraListenerEnabled = true;
+         cameraNode->_update(true, true);
 
          // set this node as sound listener
          ControllerSound::SetListenerNode(this);
@@ -51,6 +54,10 @@ namespace Meridian59 { namespace Ogre
          if (Light)
             Light->setVisible(true);
       }
+
+      // attach listener
+      RoomObject->PropertyChanged +=
+         gcnew PropertyChangedEventHandler(this, &RemoteNode::OnRoomObjectPropertyChanged);
 
       // possibly create a name
       UpdateName();

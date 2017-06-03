@@ -1900,33 +1900,43 @@ namespace Meridian59.Data
             // clear all old ones
             RoomObjects.Clear();
 
-            // find our own avatar and add it first
+            // gets avatar ref
+            RoomObject avatar = null;
+
+            // find our own avatar
             // required to let renderer update camera (viewerPosition)
-            // and to calculate values in next loop
+            // and to calculate values in later loop
             foreach (RoomObject Model in Message.RoomObjects)
             {
-                // not our avatar
-                if (Model.ID != AvatarID)
-                    continue;
+                // our avatar
+                if (Model.ID == AvatarID)
+                {
+                    // mark it and save ref
+                    Model.IsAvatar = true;
+                    avatar = Model;
+                    break;
+                }
+            }
 
-                // mark it and save ref
-                AvatarObject = Model;
-                Model.IsAvatar = true;
-
+            // now add the avatar first
+            if (avatar != null)
+            {
                 // set initial height from mapdata
                 if (RoomInformation.ResourceRoom != null)
-                    Model.UpdateHeightPosition(RoomInformation);
-
-                // reassign target if same id
-                if (Model.ID == TargetID)
-                    TargetObject = Model;
+                    avatar.UpdateHeightPosition(RoomInformation);
 
                 // this will be 0
-                Model.UpdateDistanceToAvatarSquared(Model);
+                avatar.UpdateDistanceToAvatarSquared(avatar);
+
+                // assign it as avatarobject (triggers change)
+                AvatarObject = avatar;
 
                 // add it as first object
-                RoomObjects.Add(Model);
-                break;
+                RoomObjects.Add(AvatarObject);
+
+                // reassign target if same id
+                if (AvatarObject.ID == TargetID)
+                    TargetObject = AvatarObject;
             }
 
             // get possibly updated viewer (camera) location

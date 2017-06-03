@@ -488,7 +488,7 @@ namespace Meridian59 { namespace Ogre
             SetCursorPos(mouseDownWindowsPosition->x, mouseDownWindowsPosition->y);
       }
 
-      if (!isAiming && ControllerUI::IgnoreTopControlForMouseInput)
+      if (!isAiming && ControllerUI::IgnoreTopControlForMouseInput && OgreClient::Singleton->Data->AvatarObject != nullptr)
          PerformMouseOver(arg.state.X.abs, arg.state.Y.abs, false);
 
       return true;
