@@ -1417,25 +1417,6 @@ namespace Meridian59 { namespace Ogre
 
          // save a reference to the avatar object
          AvatarObject = newObject;
-
-         // attach cameranode on avatarnode
-         AvatarObject->SceneNode->addChild(OgreClient::Singleton->CameraNode);
-         AvatarObject->SceneNode->setFixedYawAxis(true);
-
-         // enable camera listener and trigger update
-         OgreClient::Singleton->IsCameraListenerEnabled = true;
-         OgreClient::Singleton->Camera->_notifyMoved();
-
-         // set this node as sound listener
-         ControllerSound::SetListenerNode(AvatarObject);
-
-         // set initial visibility
-         AvatarObject->SceneNode->setVisible(!ControllerInput::IsCameraFirstPerson);
-
-         // if we've hidden the avatar-scenenode due to 1.person above
-         // make sure a light attached is still visible!
-         if (AvatarObject->Light)
-            AvatarObject->Light->setVisible(true);
       }
    };
 
@@ -1453,15 +1434,6 @@ namespace Meridian59 { namespace Ogre
       {
          AvatarObject = nullptr;
 
-         // unset 3d sound listenernode
-         ControllerSound::SetListenerNode(nullptr);
-
-         // unset camera listener
-         OgreClient::Singleton->IsCameraListenerEnabled = false;
-         
-         // detach cameranode from avatar
-         if (engineObject)
-            engineObject->SceneNode->removeChild(OgreClient::Singleton->CameraNode);
       }
 
       // dispose

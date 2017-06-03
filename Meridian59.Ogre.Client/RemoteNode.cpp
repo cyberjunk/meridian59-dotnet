@@ -12,7 +12,7 @@ namespace Meridian59 { namespace Ogre
       sceneManager = SceneManager;
 
       // create scenenode
-      ::Ogre::String& ostr_scenenodename = 
+      const ::Ogre::String& ostr_scenenodename = 
          PREFIX_REMOTENODE_SCENENODE + ::Ogre::StringConverter::toString(roomObject->ID);
 
       SceneNode = SceneManager->getRootSceneNode()->createChildSceneNode(ostr_scenenodename);
@@ -30,12 +30,47 @@ namespace Meridian59 { namespace Ogre
       // create sound holder list
       sounds = new std::list<ISound*>();
 
+      // special handling for avatar (attach camera)
+      if (RoomObject->IsAvatar)
+      {
+         // attach cameranode on avatarnode
+         SceneNode->addChild(OgreClient::Singleton->CameraNode);
+         SceneNode->setFixedYawAxis(true);
+
+         // enable camera listener and trigger update
+         OgreClient::Singleton->IsCameraListenerEnabled = true;
+
+         // set this node as sound listener
+         ControllerSound::SetListenerNode(this);
+
+         // set initial visibility
+         SceneNode->setVisible(!ControllerInput::IsCameraFirstPerson);
+
+         // if we've hidden the avatar-scenenode due to 1.person above
+         // make sure a light attached is still visible!
+         if (Light)
+            Light->setVisible(true);
+      }
+
       // possibly create a name
       UpdateName();
    };
 
    RemoteNode::~RemoteNode()
    {
+      // special handling for avatar, detach camera
+      if (roomObject->IsAvatar)
+      {
+         // unset 3d sound listenernode
+         ControllerSound::SetListenerNode(nullptr);
+
+         // unset camera listener
+         OgreClient::Singleton->IsCameraListenerEnabled = false;
+
+         // detach cameranode from avatar
+         SceneNode->removeChild(OgreClient::Singleton->CameraNode);
+      }
+
       // detach listener
       RoomObject->PropertyChanged -= 
          gcnew PropertyChangedEventHandler(this, &RemoteNode::OnRoomObjectPropertyChanged);

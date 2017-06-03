@@ -92,6 +92,8 @@ namespace Meridian59 { namespace Ogre
       else
          newPos = Util::ToV3(posCam);
 
+      //::System::Console::WriteLine(newPos.X.ToString() + "  " + newPos.Y.ToString() + "  " + newPos.Z.ToString());
+
       // update viewer position in datalayer
       OgreClient::Singleton->Data->ViewerPosition = newPos;
 

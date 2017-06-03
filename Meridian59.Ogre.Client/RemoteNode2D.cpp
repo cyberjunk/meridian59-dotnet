@@ -47,11 +47,15 @@ namespace Meridian59 { namespace Ogre
       imageComposer->IsScalePow2 = true;
       imageComposer->UseViewerFrame = true;
       imageComposer->NewImageAvailable += gcnew System::EventHandler(this, &RemoteNode2D::OnNewImageAvailable);
-      imageComposer->DataSource = RoomObject;
 
-      // initial position
+      // initial position and orientation
       RefreshPosition();
       RefreshOrientation();
+
+      // set imagecomposer source, this will trigger image creation
+      imageComposer->DataSource = RoomObject;
+
+      // update name position, this needs created image!
       UpdateNamePosition();
    };
 
