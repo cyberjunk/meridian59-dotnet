@@ -144,9 +144,11 @@ namespace Meridian59 { namespace Ogre
    {
       RemoteNode::RefreshPosition();
 
+      if (!billboardSet)
+         return;
+
       // note: IsHanging overlaps with some playertypes
       // workaround: must not have set IsPlayer also
-
       billboardSet->setBillboardOrigin(
 #ifdef VANILLA
          roomObject->Flags->IsHanging && !roomObject->Flags->IsPlayer ?
