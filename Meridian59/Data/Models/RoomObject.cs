@@ -1165,7 +1165,13 @@ namespace Meridian59.Data.Models
         /// <param name="Destination"></param>
         /// <param name="Speed"></param>
         public void StartMoveTo(ref V2 Destination, byte Speed)
-        {           
+        {
+            V2 moveNew = Destination - Position2D;
+
+            // don't start a move to exactly old location
+            if (moveNew.LengthSquared == 0.0f)
+                return;
+
             // dynamic speed adjustment for objects not ourself             
             // kicks in if we receive a new move-destination before our
             // playback of the old one has finished
@@ -1173,9 +1179,7 @@ namespace Meridian59.Data.Models
             // subject to be improved.
             if (!IsAvatar)
             {
-                V2 moveNew = Destination - Position2D;
-
-                // don't start a move to the old location
+                // don't start a move to almost old location
                 if (moveNew.LengthSquared < 1.0f)
                     return;
 
