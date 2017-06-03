@@ -646,7 +646,7 @@ namespace Meridian59 { namespace Ogre
          return;
 
       // get vertexdata for this wallpart
-      RooWall::VertexData^ RI = Wall->GetVertexData(
+      const RooWall::VertexData% vd = Wall->GetVertexData(
          PartType, 
          IsLeftSide,
          TextureWidth,
@@ -655,24 +655,24 @@ namespace Meridian59 { namespace Ogre
          SCALE);
 
       // P0
-      roomManObj->position(RI->P0.X, RI->P0.Z, RI->P0.Y);
-      roomManObj->normal(RI->Normal.X, RI->Normal.Z, RI->Normal.Y);
-      roomManObj->textureCoord(RI->UV0.Y, RI->UV0.X);
+      roomManObj->position(vd.P0.X, vd.P0.Z, vd.P0.Y);
+      roomManObj->normal(vd.Normal.X, vd.Normal.Z, vd.Normal.Y);
+      roomManObj->textureCoord(vd.UV0.Y, vd.UV0.X);
 
       // P1
-      roomManObj->position(RI->P1.X, RI->P1.Z, RI->P1.Y);
-      roomManObj->normal(RI->Normal.X, RI->Normal.Z, RI->Normal.Y);
-      roomManObj->textureCoord(RI->UV1.Y, RI->UV1.X);
+      roomManObj->position(vd.P1.X, vd.P1.Z, vd.P1.Y);
+      roomManObj->normal(vd.Normal.X, vd.Normal.Z, vd.Normal.Y);
+      roomManObj->textureCoord(vd.UV1.Y, vd.UV1.X);
 
       // P2
-      roomManObj->position(RI->P2.X, RI->P2.Z, RI->P2.Y);
-      roomManObj->normal(RI->Normal.X, RI->Normal.Z, RI->Normal.Y);
-      roomManObj->textureCoord(RI->UV2.Y, RI->UV2.X);
+      roomManObj->position(vd.P2.X, vd.P2.Z, vd.P2.Y);
+      roomManObj->normal(vd.Normal.X, vd.Normal.Z, vd.Normal.Y);
+      roomManObj->textureCoord(vd.UV2.Y, vd.UV2.X);
 
       // P3
-      roomManObj->position(RI->P3.X, RI->P3.Z, RI->P3.Y);
-      roomManObj->normal(RI->Normal.X, RI->Normal.Z, RI->Normal.Y);
-      roomManObj->textureCoord(RI->UV3.Y, RI->UV3.X);
+      roomManObj->position(vd.P3.X, vd.P3.Z, vd.P3.Y);
+      roomManObj->normal(vd.Normal.X, vd.Normal.Z, vd.Normal.Y);
+      roomManObj->textureCoord(vd.UV3.Y, vd.UV3.X);
 
       // create the rectangle by 2 triangles
       roomManObj->triangle(verticesProcessed, verticesProcessed + 1, verticesProcessed + 2);
