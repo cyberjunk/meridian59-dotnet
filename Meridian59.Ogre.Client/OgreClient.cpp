@@ -1124,17 +1124,16 @@ namespace Meridian59 { namespace Ogre
    {
       DemoSceneDestroy();
 
-      IsCameraListenerEnabled = true;
-      CameraNode->setPosition(1266, 460, 1344);		
-      CameraNode->rotate(::Ogre::Vector3::UNIT_Y, ::Ogre::Radian(-0.55f));
-
       RoomInfo^ roomInfo = Data->RoomInformation;
-
       roomInfo->RoomFile = "necarea3.roo";
       roomInfo->AmbientLight = 40;
       roomInfo->ResolveResources(OgreClient::Singleton->ResourceManager, false);
 
       ControllerRoom::LoadRoom();
+
+      IsCameraListenerEnabled = true;
+      CameraNode->setPosition(1266, 460, 1344);
+      CameraNode->rotate(::Ogre::Vector3::UNIT_Y, ::Ogre::Radian(-0.55f));
 
       // tree1
       RoomObject^ tree1 = gcnew RoomObject();
