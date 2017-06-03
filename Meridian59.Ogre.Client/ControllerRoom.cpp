@@ -559,10 +559,17 @@ namespace Meridian59 { namespace Ogre
       // clear recreate queue
       recreatequeue->Clear();
 
-      if (caelumSystem && OgreClient::Singleton->Camera)
+      if (caelumSystem)
       {
+         // tick caleum
          caelumSystem->updateSubcomponents((CLRReal)Span * 0.001f);
-         caelumSystem->getMoon()->setPhase(0.0f); // overwrite moon
+
+         // get moon
+         Moon* moon = caelumSystem->getMoon();
+
+         // overwrite moon phase to full moon
+         if (moon)
+            moon->setPhase(0.0f); 
       }
    };
 
