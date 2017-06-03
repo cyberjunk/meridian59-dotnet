@@ -46,17 +46,20 @@ namespace Meridian59 { namespace Ogre
 
    void CameraListener::objectMoved(MovableObject* obj)
    {
-      MovableObject::Listener::objectMoved(obj);
+      Camera* camera = OgreClient::Singleton->Camera;
 
-      if (OgreClient::Singleton->Camera == nullptr)
+      if (!camera)
          return;
 
-      // get camera position
-      const ::Ogre::Vector3& pos = 
-         OgreClient::Singleton->Camera->getDerivedPosition();
+      // get camera position in world
+      const ::Ogre::Vector3& pos = camera->getDerivedPosition();
+
+      // sanity check, would kill
+      if (pos.isNaN())
+         return;
 
       // update viewer position in datalayer
-      OgreClient::Singleton->Data->ViewerPosition = Util::ToV3(pos); 
+      OgreClient::Singleton->Data->ViewerPosition = Util::ToV3(pos);
 
       // quit if controllers not initialized
       if (!ControllerUI::IsInitialized || !ControllerInput::IsInitialized)

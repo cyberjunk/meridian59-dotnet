@@ -328,6 +328,12 @@ namespace Meridian59 { namespace Ogre
          public: void set(bool value) { hasFocus = value; }
       };
 
+      property bool IsCameraListenerEnabled
+      {
+         public: bool get() { return camera->getListener() != nullptr; }
+         public: void set(bool value) { if (value) camera->setListener(cameraListener); else camera->setListener(nullptr); }
+      }
+
       /// <summary>
       /// Constructor
       /// </summary>

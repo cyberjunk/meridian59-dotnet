@@ -1412,10 +1412,14 @@ namespace Meridian59 { namespace Ogre
          // save a reference to the avatar object
          AvatarObject = newObject;
 
-         // Attach cameranode on avatarnode
-         AvatarObject->SceneNode->addChild(OgreClient::Singleton->CameraNode);               
+         // attach cameranode on avatarnode
+         AvatarObject->SceneNode->addChild(OgreClient::Singleton->CameraNode);
          AvatarObject->SceneNode->setFixedYawAxis(true);
-                
+
+         // enable camera listener and trigger update
+         OgreClient::Singleton->IsCameraListenerEnabled = true;
+         OgreClient::Singleton->Camera->_notifyMoved();
+
          // set this node as sound listener
          ControllerSound::SetListenerNode(AvatarObject);
 
@@ -1435,17 +1439,24 @@ namespace Meridian59 { namespace Ogre
       //Logger::Log(MODULENAME, LogType::Info,
       //    "Removing object " + roomObject->ID.ToString() + " (" + roomObject->Name + ")" + " from scene.");
 
+      // try to cast remotenode attached to userdata
+      RemoteNode^ engineObject = dynamic_cast<RemoteNode^>(roomObject->UserData);
+
          // reset avatar reference in case it was removed
       if (roomObject->IsAvatar)
       {
          AvatarObject = nullptr;
 
-         // unset listenernode
+         // unset 3d sound listenernode
          ControllerSound::SetListenerNode(nullptr);
-      }
 
-      // try to cast remotenode attached to userdata
-      RemoteNode^ engineObject = dynamic_cast<RemoteNode^>(roomObject->UserData);
+         // unset camera listener
+         OgreClient::Singleton->IsCameraListenerEnabled = false;
+         
+         // detach cameranode from avatar
+         if (engineObject)
+            engineObject->SceneNode->removeChild(OgreClient::Singleton->CameraNode);
+      }
 
       // dispose
       if (engineObject)

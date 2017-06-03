@@ -122,7 +122,6 @@ namespace Meridian59 { namespace Ogre
       camera = (OctreeCamera*)sceneManager->createCamera(CAMERANAME);
       camera->setPosition(::Ogre::Vector3(0, 0, 0));
       camera->setNearClipDistance(1.0f);
-      camera->setListener(cameraListener);
       camera->setUseRenderingDistance(false);
 
       // create camera node
@@ -1113,6 +1112,7 @@ namespace Meridian59 { namespace Ogre
 
    void OgreClient::DemoSceneDestroy()
    {
+      IsCameraListenerEnabled = false;
       ControllerRoom::UnloadRoom();
       Data->RoomObjects->Clear();
 
@@ -1124,6 +1124,7 @@ namespace Meridian59 { namespace Ogre
    {
       DemoSceneDestroy();
 
+      IsCameraListenerEnabled = true;
       CameraNode->setPosition(1266, 460, 1344);		
       CameraNode->rotate(::Ogre::Vector3::UNIT_Y, ::Ogre::Radian(-0.55f));
 
