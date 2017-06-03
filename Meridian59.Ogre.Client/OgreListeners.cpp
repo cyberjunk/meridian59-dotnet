@@ -46,7 +46,8 @@ namespace Meridian59 { namespace Ogre
 
    void CameraListener::objectMoved(MovableObject* obj)
    {
-      Camera* camera = OgreClient::Singleton->Camera;
+      Camera* camera       = OgreClient::Singleton->Camera;
+      CaelumSystem* caelum = ControllerRoom::CaelumSystem;
 
       if (!camera)
          return;
@@ -57,6 +58,9 @@ namespace Meridian59 { namespace Ogre
       // sanity check, would kill
       if (pos.isNaN())
          return;
+
+      if (caelum)
+         caelum->notifyCameraChanged(camera);
 
       // update viewer position in datalayer
       OgreClient::Singleton->Data->ViewerPosition = Util::ToV3(pos);
