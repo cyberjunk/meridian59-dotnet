@@ -55,19 +55,45 @@ namespace Meridian59 { namespace Ogre
          return;
 
       // get camera position in world
-      const ::Ogre::Vector3& pos     = camera->getDerivedPosition();
+      const ::Ogre::Vector3& posCam  = camera->getDerivedPosition();
       const ::Ogre::Vector3& posNode = cameraNode->_getDerivedPosition();
 
       // sanity check, would kill
-      if (pos.isNaN() || posNode.isNaN())
+      if (posCam.isNaN() || posNode.isNaN())
          return;
 
       // notify caelum about change
       if (caelum)
          caelum->notifyCameraChanged(camera);
 
+      // get start and end
+      V3% start = Util::ToV3(posNode);
+      V3% end   = Util::ToV3(posCam);
+      V3 newPos;
+
+      // convert to ROO format
+      start.ConvertToROO();
+      end.ConvertToROO();
+
+      // verify new camera location
+      if (false && !room->VerifySight(start, end, newPos))
+      {
+         // convert back to world (height in z)
+         newPos = newPos.XZY;
+         newPos.ConvertToWorld();
+
+         ::Ogre::Vector3& oInter = Util::ToOgre(newPos);
+         ::Ogre::Vector3& oDelta = (oInter - posNode);
+         ::Ogre::Real len = oDelta.length();
+
+         // set camera to intersection (internal space)
+         camera->setPosition(0.0f, 0.0f, len);
+      }
+      else
+         newPos = Util::ToV3(posCam);
+
       // update viewer position in datalayer
-      OgreClient::Singleton->Data->ViewerPosition = Util::ToV3(pos);
+      OgreClient::Singleton->Data->ViewerPosition = newPos;
 
       // quit if controllers not initialized
       if (!ControllerUI::IsInitialized || !ControllerInput::IsInitialized)
