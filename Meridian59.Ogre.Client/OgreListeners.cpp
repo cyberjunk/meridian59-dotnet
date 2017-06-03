@@ -46,19 +46,23 @@ namespace Meridian59 { namespace Ogre
 
    void CameraListener::objectMoved(MovableObject* obj)
    {
-      Camera* camera       = OgreClient::Singleton->Camera;
-      CaelumSystem* caelum = ControllerRoom::CaelumSystem;
+      Camera*       camera     = OgreClient::Singleton->Camera;
+      SceneNode*    cameraNode = OgreClient::Singleton->CameraNode;
+      RooFile^      room       = OgreClient::Singleton->CurrentRoom;
+      CaelumSystem* caelum     = ControllerRoom::CaelumSystem;
 
-      if (!camera)
+      if (!camera || !cameraNode || !room)
          return;
 
       // get camera position in world
-      const ::Ogre::Vector3& pos = camera->getDerivedPosition();
+      const ::Ogre::Vector3& pos     = camera->getDerivedPosition();
+      const ::Ogre::Vector3& posNode = cameraNode->_getDerivedPosition();
 
       // sanity check, would kill
-      if (pos.isNaN())
+      if (pos.isNaN() || posNode.isNaN())
          return;
 
+      // notify caelum about change
       if (caelum)
          caelum->notifyCameraChanged(camera);
 
