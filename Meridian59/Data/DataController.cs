@@ -1896,24 +1896,23 @@ namespace Meridian59.Data
         }
 
         protected virtual void HandleRoomContents(RoomContentsMessage Message)
-        {              
+        {
+            // clear all old ones
             RoomObjects.Clear();
 
-            // find our own avatar first (required in next loop)
+            // find our own avatar and add it first
+            // required to let renderer update camera (viewerPosition)
+            // and to calculate values in next loop
             foreach (RoomObject Model in Message.RoomObjects)
             {
-                // check if this is our avatar
-                if (Model.ID == AvatarID)
-                {
-                    AvatarObject = Model;
-                    Model.IsAvatar = true;
-                    break;
-                }            
-            }
+                // not our avatar
+                if (Model.ID != AvatarID)
+                    continue;
 
-            // now setup things
-            foreach (RoomObject Model in Message.RoomObjects)
-            {
+                // mark it and save ref
+                AvatarObject = Model;
+                Model.IsAvatar = true;
+
                 // set initial height from mapdata
                 if (RoomInformation.ResourceRoom != null)
                     Model.UpdateHeightPosition(RoomInformation);
@@ -1922,14 +1921,44 @@ namespace Meridian59.Data
                 if (Model.ID == TargetID)
                     TargetObject = Model;
 
-                V2 viewPos2D = viewerPosition.XZ;
+                // this will be 0
+                Model.UpdateDistanceToAvatarSquared(Model);
+
+                // add it as first object
+                RoomObjects.Add(Model);
+                break;
+            }
+
+            // get possibly updated viewer (camera) location
+            // after adding avatar
+            V2 viewPos2D = viewerPosition.XZ;
+
+            // update the viewer angle using possibly updated value
+            if (AvatarObject != null)
+                AvatarObject.UpdateViewerAngle(ref viewPos2D);
+
+            // now add the other objects
+            foreach (RoomObject Model in Message.RoomObjects)
+            {
+                // skip avatar, see above
+                if (Model.IsAvatar)
+                    continue;
+
+                // set initial height from mapdata
+                if (RoomInformation.ResourceRoom != null)
+                    Model.UpdateHeightPosition(RoomInformation);
+
+                // reassign target if same id
+                if (Model.ID == TargetID)
+                    TargetObject = Model;
 
                 // init some values which will be updated on triggers (e.g. moves)
                 Model.UpdateDistanceToAvatarSquared(avatarObject);
                 Model.UpdateViewerAngle(ref viewPos2D);
                 
-                // add to list
-                RoomObjects.Add(Model);
+                // add to list (Avatar is already added)
+                if (!Model.IsAvatar)
+                    RoomObjects.Add(Model);
             }
 
             // note: server will resend room enchantments because classic client
