@@ -314,7 +314,7 @@ namespace Meridian59 { namespace Ogre
          ControllerUI::ActivateRoot();
       }
 
-      return true;
+      return UICallbacks::OnKeyUp(args);;
    };
 
    bool UICallbacks::LootList::OnWindowClosed(const CEGUI::EventArgs& e)
