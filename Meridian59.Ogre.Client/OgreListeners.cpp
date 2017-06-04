@@ -46,10 +46,11 @@ namespace Meridian59 { namespace Ogre
 
    void CameraListener::objectMoved(MovableObject* obj)
    {
-      Camera*       camera     = OgreClient::Singleton->Camera;
-      SceneNode*    cameraNode = OgreClient::Singleton->CameraNode;
-      RooFile^      room       = OgreClient::Singleton->CurrentRoom;
-      CaelumSystem* caelum     = ControllerRoom::CaelumSystem;
+      Camera*           camera     = OgreClient::Singleton->Camera;
+      SceneNode*        cameraNode = OgreClient::Singleton->CameraNode;
+      RooFile^          room       = OgreClient::Singleton->CurrentRoom;
+      OgreClientConfig^ config     = OgreClient::Singleton->Config;
+      CaelumSystem*     caelum     = ControllerRoom::CaelumSystem;
 
       if (!camera || !cameraNode || !room)
          return;
@@ -76,7 +77,7 @@ namespace Meridian59 { namespace Ogre
       end.ConvertToROO();
 
       // verify new camera location
-      if (false && !room->VerifySight(start, end, newPos))
+      if (config->CameraCollisions && !room->VerifySight(start, end, newPos))
       {
          // convert back to world (height in z)
          newPos = newPos.XZY;

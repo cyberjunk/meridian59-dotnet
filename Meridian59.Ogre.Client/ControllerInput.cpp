@@ -810,48 +810,58 @@ namespace Meridian59 { namespace Ogre
          // 3. ZOOM
          if (cameraZDelta != 0.0f)
          {
+            // calculate possible new camera zoomout
             float destZ = (float)camera->getPosition().z - cameraZStep;
 
-            //
-            if (destZ > 0.0f)
+            // zooming out of limit
+            if (destZ > OgreClient::Singleton->Config->CameraDistanceMax && cameraZStep < 0.0f)
             {
-               // mark as 3. person camera mode
-               IsCameraFirstPerson = false;
-
-               // hide 1. person overlays
-               ControllerUI::PlayerOverlays::HideOverlays();
-
-               // apply the move
-               camera->moveRelative(::Ogre::Vector3(0.0f, 0.0f, -cameraZStep));
-               camera->_notifyMoved();
-
-               if (cameraZDelta > 0.0f)
-               {
-                  cameraZDelta -= cameraZStep;
-                  cameraZDelta = ::System::Math::Max(cameraZDelta, 0.0f);
-               }
-               else if (cameraZDelta < 0.0f)
-               {
-                  cameraZDelta -= cameraZStep;
-                  cameraZDelta = ::System::Math::Min(cameraZDelta, 0.0f);
-               }
+               cameraZStep = 0.0f;
+               cameraZDelta = 0.0f;
             }
             else
             {
-               // mark as 1. person camera mode
-               IsCameraFirstPerson = true;
+               //
+               if (destZ > 0.0f)
+               {
+                  // mark as 3. person camera mode
+                  IsCameraFirstPerson = false;
 
-               // show 1. person overlays
-               ControllerUI::PlayerOverlays::ShowOverlays();
+                  // hide 1. person overlays
+                  ControllerUI::PlayerOverlays::HideOverlays();
 
-               // apply the move to the 0.0f
-               camera->moveRelative(::Ogre::Vector3(0.0f, 0.0f, -cameraZStep - destZ));
-               camera->_notifyMoved();
- 
-               cameraZDelta = 0.0f;
+                  // apply the move
+                  camera->moveRelative(::Ogre::Vector3(0.0f, 0.0f, -cameraZStep));
+                  camera->_notifyMoved();
 
-               // rotate the avatar to match camera
-               SetAvatarOrientationFromCamera();
+                  if (cameraZDelta > 0.0f)
+                  {
+                     cameraZDelta -= cameraZStep;
+                     cameraZDelta = ::System::Math::Max(cameraZDelta, 0.0f);
+                  }
+                  else if (cameraZDelta < 0.0f)
+                  {
+                     cameraZDelta -= cameraZStep;
+                     cameraZDelta = ::System::Math::Min(cameraZDelta, 0.0f);
+                  }
+               }
+               else
+               {
+                  // mark as 1. person camera mode
+                  IsCameraFirstPerson = true;
+
+                  // show 1. person overlays
+                  ControllerUI::PlayerOverlays::ShowOverlays();
+
+                  // apply the move to the 0.0f
+                  camera->moveRelative(::Ogre::Vector3(0.0f, 0.0f, -cameraZStep - destZ));
+                  camera->_notifyMoved();
+
+                  cameraZDelta = 0.0f;
+
+                  // rotate the avatar to match camera
+                  SetAvatarOrientationFromCamera();
+               }
             }
          }
       }

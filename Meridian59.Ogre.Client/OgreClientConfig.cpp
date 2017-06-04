@@ -385,6 +385,14 @@ namespace Meridian59 { namespace Ogre
       node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_INVERTMOUSEY);
       InvertMouseY = (PARSE_BOOL_ATTRIB(node, XMLATTRIB_VALUE, val_bool)) ? val_bool : DEFAULTVAL_INPUT_INVERTMOUSEY;
 
+      // CameraCollisions
+      node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_CAMERACOLLISIONS);
+      CameraCollisions = (PARSE_BOOL_ATTRIB(node, XMLATTRIB_VALUE, val_bool)) ? val_bool : DEFAULTVAL_INPUT_CAMERACOLLISIONS;
+
+      // CameraDistanceMax
+      node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_CAMERADISTANCEMAX);
+      CameraDistanceMax = (PARSE_BOOL_ATTRIB(node, XMLATTRIB_VALUE, val_bool)) ? val_bool : DEFAULTVAL_INPUT_CAMERADISTANCEMAX;
+
       //
 
       KeyBinding = OISKeyBinding::GetDefault();
@@ -1021,6 +1029,16 @@ namespace Meridian59 { namespace Ogre
       // invertmousey
       Writer->WriteStartElement(TAG_INVERTMOUSEY);
       Writer->WriteAttributeString(XMLATTRIB_VALUE, InvertMouseY.ToString());
+      Writer->WriteEndElement();
+
+      // cameracollisions
+      Writer->WriteStartElement(TAG_CAMERACOLLISIONS);
+      Writer->WriteAttributeString(XMLATTRIB_VALUE, CameraCollisions.ToString());
+      Writer->WriteEndElement();
+
+      // cameradistancemax
+      Writer->WriteStartElement(TAG_CAMERADISTANCEMAX);
+      Writer->WriteAttributeString(XMLATTRIB_VALUE, CameraDistanceMax.ToString());
       Writer->WriteEndElement();
 
       // keybinding
