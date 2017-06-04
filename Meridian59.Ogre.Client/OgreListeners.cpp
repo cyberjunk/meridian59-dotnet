@@ -88,7 +88,7 @@ namespace Meridian59 { namespace Ogre
          ::Ogre::Real len = oDelta.length();
          
          // move camera a bit away from actual intersection closer to avatar
-         len = ::System::Math::Max(len - 1.0f, 0.0f);
+         len = (::Ogre::Real)::System::Math::Max((CLRReal)len - (CLRReal)1.0f, (CLRReal)0.0f);
 
          // set camera to intersection (internal space)
          camera->setPosition(0.0f, 0.0f, len);
