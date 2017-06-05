@@ -765,7 +765,7 @@ namespace Meridian59 { namespace Ogre
             const Quaternion& orientationNew = cameraNode->getOrientation();
 
             // don't allow overpitching, so pitch back possibly and reset
-            if (orientationNew.yAxis().y <= 0.0f)
+            if (orientationNew.yAxis().y <= (1.0f - OgreClient::Singleton->Config->CameraPitchMax))
             {
                cameraNode->pitch(Radian(cameraPitchStep));
                cameraPitchDelta = 0.0f;

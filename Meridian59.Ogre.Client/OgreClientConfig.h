@@ -60,6 +60,7 @@ namespace Meridian59 { namespace Ogre
       literal bool         DEFAULTVAL_INPUT_INVERTMOUSEY             = false;
       literal bool         DEFAULTVAL_INPUT_CAMERACOLLISIONS         = true;
       literal float        DEFAULTVAL_INPUT_CAMERADISTANCEMAX        = 1024.0f;
+      literal float        DEFAULTVAL_INPUT_CAMERAPITCHMAX           = 0.5f;
       literal bool         DEFAULTVAL_UI_LOCKED                      = false;
       literal bool         DEFAULTVAL_UI_VISIBILITYAVATAR            = true;
       literal bool         DEFAULTVAL_UI_VISIBILITYTARGET            = false;
@@ -142,6 +143,7 @@ namespace Meridian59 { namespace Ogre
       literal CLRString^ TAG_INVERTMOUSEY = "invertmousey";
       literal CLRString^ TAG_CAMERACOLLISIONS = "cameracollisions";
       literal CLRString^ TAG_CAMERADISTANCEMAX = "cameradistancemax";
+      literal CLRString^ TAG_CAMERAPITCHMAX = "camerapitchmax";
       literal CLRString^ TAG_KEYBINDING = "keybinding";
       literal CLRString^ TAG_MOVEFORWARD = "moveforward";
       literal CLRString^ TAG_MOVEBACKWARD = "movebackward";
@@ -256,6 +258,7 @@ namespace Meridian59 { namespace Ogre
       bool InvertMouseY;
       bool CameraCollisions;
       float CameraDistanceMax;
+      float CameraPitchMax;
 
       bool UILocked;
 

@@ -393,6 +393,11 @@ namespace Meridian59 { namespace Ogre
       node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_CAMERADISTANCEMAX);
       CameraDistanceMax = (PARSE_BOOL_ATTRIB(node, XMLATTRIB_VALUE, val_bool)) ? val_bool : DEFAULTVAL_INPUT_CAMERADISTANCEMAX;
 
+      // CameraPitchMax
+      node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_CAMERAPITCHMAX);
+      CameraPitchMax = (PARSE_BOOL_ATTRIB(node, XMLATTRIB_VALUE, val_bool)) ? val_bool : DEFAULTVAL_INPUT_CAMERAPITCHMAX;
+      CameraPitchMax = MathUtil::Bound(CameraPitchMax, 0.0f, 1.0f);
+
       //
 
       KeyBinding = OISKeyBinding::GetDefault();
@@ -1039,6 +1044,11 @@ namespace Meridian59 { namespace Ogre
       // cameradistancemax
       Writer->WriteStartElement(TAG_CAMERADISTANCEMAX);
       Writer->WriteAttributeString(XMLATTRIB_VALUE, CameraDistanceMax.ToString());
+      Writer->WriteEndElement();
+
+      // camerapitchmax
+      Writer->WriteStartElement(TAG_CAMERAPITCHMAX);
+      Writer->WriteAttributeString(XMLATTRIB_VALUE, CameraPitchMax.ToString());
       Writer->WriteEndElement();
 
       // keybinding
