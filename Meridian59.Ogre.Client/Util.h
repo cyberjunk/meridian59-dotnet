@@ -177,6 +177,20 @@ namespace Meridian59 { namespace Ogre
          SceneNode.resetOrientation();
          SceneNode.yaw(-rRadian);
       };
+
+      /// <summary>
+      /// Returns euler angles for quaternion.
+      /// </summary>
+      /// <param name="Orientation"></param>
+      __forceinline static bool ToEulerAngles(const Quaternion& Orientation, Radian& Yaw, Radian& Pitch, Radian& Roll)
+      {
+         // get rotation matrix
+         Ogre::Matrix3 mat;
+         Orientation.ToRotationMatrix(mat);
+
+         // extract euler angles
+         return mat.ToEulerAnglesYXZ(Yaw, Pitch, Roll);
+      }
       #pragma endregion
 
       #pragma region Light		
