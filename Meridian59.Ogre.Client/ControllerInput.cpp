@@ -749,7 +749,11 @@ namespace Meridian59 { namespace Ogre
       if (cameraNode && camera)
       {
          // get cameranode orientation
-         const Quaternion& orientation = cameraNode->_getDerivedOrientation();
+         const Quaternion& orientation = cameraNode->getOrientation();
+
+         // convert to euler angles
+         Ogre::Radian eYaw, ePitch, eRoll;
+         Util::ToEulerAngles(orientation, eYaw, ePitch, eRoll);
 
          // save/update current pitch and yaw values
          cameraPitchCurrent = (float)orientation.getPitch().valueRadians();
@@ -766,7 +770,9 @@ namespace Meridian59 { namespace Ogre
             cameraNode->pitch(Radian(-cameraPitchStep));
 
             // verify pitchover
-            const Quaternion& orientation = cameraNode->_getDerivedOrientation();
+            const Quaternion& orientation = cameraNode->getOrientation();
+            Util::ToEulerAngles(orientation, eYaw, ePitch, eRoll);
+
             float pitchOver = (float)orientation.getPitch().valueRadians();
 
             // don't allow overpitching, so pitch back possibly
