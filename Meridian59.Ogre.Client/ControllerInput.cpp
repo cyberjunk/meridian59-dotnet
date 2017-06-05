@@ -751,17 +751,9 @@ namespace Meridian59 { namespace Ogre
          // get cameranode orientation
          const Quaternion& orientation = cameraNode->getOrientation();
 
-         // convert to euler angles
-         Ogre::Radian eYaw, ePitch, eRoll;
-         Util::ToEulerAngles(orientation, eYaw, ePitch, eRoll);
-
          // save/update current pitch and yaw values
          cameraPitchCurrent = (float)orientation.getPitch().valueRadians();
          cameraYawCurrent = (float)orientation.getYaw().valueRadians();
-
-         // calculate new pitch and yaw values for this step/frame
-         float destPitch = cameraPitchCurrent + cameraPitchStep;
-         float destYaw = cameraYawCurrent + cameraYawStep;
 
          // 1. PITCH
          if (cameraPitchDelta != 0.0f)
@@ -769,20 +761,18 @@ namespace Meridian59 { namespace Ogre
             // apply pitchstep on camera
             cameraNode->pitch(Radian(-cameraPitchStep));
 
-            // verify pitchover
-            const Quaternion& orientation = cameraNode->getOrientation();
-            Util::ToEulerAngles(orientation, eYaw, ePitch, eRoll);
+            // get updated orientation
+            const Quaternion& orientationNew = cameraNode->getOrientation();
 
-            float pitchOver = (float)orientation.getPitch().valueRadians();
-
-            // don't allow overpitching, so pitch back possibly
-            if (pitchOver >= Math::HALF_PI ||
-                pitchOver <= -Math::HALF_PI)
+            // don't allow overpitching, so pitch back possibly and reset
+            if (orientationNew.yAxis().y <= 0.0f)
             {
                cameraNode->pitch(Radian(cameraPitchStep));
                cameraPitchDelta = 0.0f;
                cameraPitchStep = 0.0f;
             }
+
+            // subtract performed pitch from todo delta
             else if (cameraPitchDelta > 0.0f)
             {
                cameraPitchDelta -= cameraPitchStep;
