@@ -107,6 +107,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalOptions>-Zm345</AdditionalOptions>
       <CompileAs>CompileAsCpp</CompileAs>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -133,6 +134,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalOptions>-Zm312</AdditionalOptions>
       <CompileAs>CompileAsCpp</CompileAs>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -171,6 +173,7 @@
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <CompileAs>CompileAsCpp</CompileAs>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -210,6 +213,7 @@
       <DebugInformationFormat>None</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <CompileAs>CompileAsCpp</CompileAs>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>false</GenerateDebugInformation>
