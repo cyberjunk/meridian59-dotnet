@@ -409,6 +409,16 @@ namespace Meridian59.Drawing2D
             private static readonly Dictionary<uint, Item> cache = new Dictionary<uint, Item>();
 
             /// <summary>
+            /// List of candidates to removed in Prune()
+            /// </summary>
+            private static readonly List<Item> candidates = new List<Item>(8);
+
+            /// <summary>
+            /// Last tick Prune() tried to remove items
+            /// </summary>
+            private static long tickPrune = 0;
+
+            /// <summary>
             /// Whether to cache created images
             /// </summary>
             public static bool IsEnabled = true;
@@ -444,8 +454,8 @@ namespace Meridian59.Drawing2D
                 cache.Add(Key, Value);
                 CacheSize += Value.Size;
 
-                if (CacheSize > CacheSizeMax)
-                    Prune();
+                // possibly remove some unused ones
+                Prune();
             }
 
             /// <summary>
@@ -484,33 +494,57 @@ namespace Meridian59.Drawing2D
                 if (RemoveSuggested == null)
                     return;
 
-                // collect them first so we don't have to remove during iteration
-                List<Item> candidates = new List<Item>();
+                // true if above limits
+                bool exceeded = CacheSize > CacheSizeMax;
 
-                // get current tick
+                // get current tick and span since last prune
                 long tick = DateTime.Now.Ticks;
+                long span = tick - tickPrune;
 
-                // select ones to remove
-                foreach(KeyValuePair<uint, Item> item in cache)
+                // don't prune more often than once per second
+                // as long as size is not exceeded
+                const long ONESECOND = 1 * 1000 * 10000;
+                if (!exceeded && span <= ONESECOND)
+                    return;
+
+                // save prune tick
+                tickPrune = tick;
+
+                // timespans for thirty and sixty seconds
+                const long THIRTYSECONDS = 30 * 1000 * 10000;
+                const long SIXTYSECONDS  = 60 * 1000 * 10000;
+
+                // pick unused span based on exceeded state
+                long spanUnused = (exceeded) ? THIRTYSECONDS : SIXTYSECONDS;
+
+                // collect candidates first so we don't have to remove during iteration
+                foreach (KeyValuePair<uint, Item> item in cache)
                 {
                     // skip ones in use
                     if (item.Value.Refs > 0)
                         continue;
 
                     // get time delta
-                    long span = tick - item.Value.Tick;
+                    span = tick - item.Value.Tick;
 
-                    // skip ones accessed within last 60 seconds
-                    const long SIXTYSECONDS = 60 * 1000 * 10000;
-                    if (span <= SIXTYSECONDS)
+                    // skip ones accessed within last N seconds
+                    if (span <= spanUnused)
                         continue;
 
-                    candidates.Add(item.Value);  
+                    // add to ones to be removed
+                    candidates.Add(item.Value);
+
+                    // never remove more than several at once (lagspike..)
+                    if (candidates.Count >= 8)
+                        break;
                 }
 
                 // raise events
                 foreach (Item item in candidates)
                     RemoveSuggested(typeof(ImageComposer<T, U>.Cache), new ItemEventArgs(item));
+
+                // clear temporary candidates list
+                candidates.Clear();
             }
 
             /// <summary>
