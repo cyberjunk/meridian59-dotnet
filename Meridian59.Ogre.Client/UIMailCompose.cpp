@@ -26,6 +26,11 @@ namespace Meridian59 { namespace Ogre
       HeadLine->subscribeEvent(CEGUI::Editbox::EventKeyDown, CEGUI::Event::Subscriber(UICallbacks::OnCopyPasteKeyDown));
       Text->subscribeEvent(CEGUI::MultiLineEditbox::EventKeyDown, CEGUI::Event::Subscriber(UICallbacks::OnCopyPasteKeyDown));
 
+      // block chatpopup on return
+      Recipients->subscribeEvent(CEGUI::Editbox::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::OnKeyUpBlock));
+      HeadLine->subscribeEvent(CEGUI::Editbox::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::OnKeyUpBlock));
+      Text->subscribeEvent(CEGUI::MultiLineEditbox::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::OnKeyUpBlock));
+
       // subscribe close button
       Window->subscribeEvent(CEGUI::FrameWindow::EventCloseClicked, CEGUI::Event::Subscriber(UICallbacks::OnWindowClosed));
 

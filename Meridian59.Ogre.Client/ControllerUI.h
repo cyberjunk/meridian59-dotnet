@@ -1512,6 +1512,7 @@ namespace Meridian59 { namespace Ogre
    public:
       static bool OnWindowClosed(const CEGUI::EventArgs& e);
       static bool OnKeyUp(const CEGUI::EventArgs& e);
+      static bool OnKeyUpBlock(const CEGUI::EventArgs& e);
       static bool OnRootMouseDown(const CEGUI::EventArgs& e);
       static bool OnRootKeyUp(const CEGUI::EventArgs& e);
       static bool OnCopyPasteKeyDown(const CEGUI::EventArgs& e);
@@ -1870,7 +1871,7 @@ namespace Meridian59 { namespace Ogre
       class MailCompose
       {
       public:
-         static bool OnSendClicked(const CEGUI::EventArgs& e);	
+         static bool OnSendClicked(const CEGUI::EventArgs& e);
       };
 
       /// <summary>

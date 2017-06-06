@@ -969,6 +969,11 @@ namespace Meridian59 { namespace Ogre
 
       return OnRootKeyUp(args);
    };
+ 
+   bool UICallbacks::OnKeyUpBlock(const CEGUI::EventArgs& e)
+   {
+      return true;
+   };
 
    bool UICallbacks::OnRootMouseDown(const CEGUI::EventArgs& e)
    {
