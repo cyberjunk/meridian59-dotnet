@@ -579,7 +579,7 @@
 			<Property name="ReadOnly" value="True" />          		 
             <Property name="Visible" value="False" />
             <Property name="Area" value="{{0,0},{0,0},{1,0},{1,-28}}" />
-            <Property name="BackgroundColours" value="tl:FFFFFFFF tr:FFFFFFFF bl:FFFFFFFF br:FFFFFFFF" />			
+            
          </Window>
 		 
          <!-- Input -->
