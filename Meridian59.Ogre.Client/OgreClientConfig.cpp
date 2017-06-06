@@ -1043,12 +1043,12 @@ namespace Meridian59 { namespace Ogre
 
       // cameradistancemax
       Writer->WriteStartElement(TAG_CAMERADISTANCEMAX);
-      Writer->WriteAttributeString(XMLATTRIB_VALUE, CameraDistanceMax.ToString());
+      Writer->WriteAttributeString(XMLATTRIB_VALUE, CameraDistanceMax.ToString(Config::NumberFormatInfo));
       Writer->WriteEndElement();
 
       // camerapitchmax
       Writer->WriteStartElement(TAG_CAMERAPITCHMAX);
-      Writer->WriteAttributeString(XMLATTRIB_VALUE, CameraPitchMax.ToString());
+      Writer->WriteAttributeString(XMLATTRIB_VALUE, CameraPitchMax.ToString(Config::NumberFormatInfo));
       Writer->WriteEndElement();
 
       // keybinding
