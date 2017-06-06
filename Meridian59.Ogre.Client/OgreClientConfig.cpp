@@ -391,11 +391,11 @@ namespace Meridian59 { namespace Ogre
 
       // CameraDistanceMax
       node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_CAMERADISTANCEMAX);
-      CameraDistanceMax = (PARSE_BOOL_ATTRIB(node, XMLATTRIB_VALUE, val_bool)) ? val_bool : DEFAULTVAL_INPUT_CAMERADISTANCEMAX;
+      CameraDistanceMax = (PARSE_FLOAT_ATTRIB(node, XMLATTRIB_VALUE, val_float)) ? val_float : DEFAULTVAL_INPUT_CAMERADISTANCEMAX;
 
       // CameraPitchMax
       node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_CAMERAPITCHMAX);
-      CameraPitchMax = (PARSE_BOOL_ATTRIB(node, XMLATTRIB_VALUE, val_bool)) ? val_bool : DEFAULTVAL_INPUT_CAMERAPITCHMAX;
+      CameraPitchMax = (PARSE_FLOAT_ATTRIB(node, XMLATTRIB_VALUE, val_float)) ? val_float : DEFAULTVAL_INPUT_CAMERAPITCHMAX;
       CameraPitchMax = MathUtil::Bound(CameraPitchMax, 0.0f, 1.0f);
 
       //
