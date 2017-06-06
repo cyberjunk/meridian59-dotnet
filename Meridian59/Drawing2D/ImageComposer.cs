@@ -434,6 +434,11 @@ namespace Meridian59.Drawing2D
             public static uint CacheSizeMax = 32 * 1024 * 1024;
 
             /// <summary>
+            /// Count of currently stored items
+            /// </summary>
+            public static int Count { get { return cache.Count; } }
+
+            /// <summary>
             /// Tries to lookup an item from the cache
             /// </summary>
             /// <param name="Key"></param>
