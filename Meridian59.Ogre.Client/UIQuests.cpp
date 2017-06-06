@@ -16,9 +16,6 @@ namespace Meridian59 { namespace Ogre
       OgreClient::Singleton->Data->AvatarQuests->ListChanged +=
          gcnew ListChangedEventHandler(OnQuestsListChanged);
 
-      // subscribe end of sizing to force update
-      Window->subscribeEvent(CEGUI::FrameWindow::EventDragSizingEnded, CEGUI::Event::Subscriber(UICallbacks::Quests::OnDragSizingEnded));
-
       // subscribe close button
       Window->subscribeEvent(CEGUI::FrameWindow::EventCloseClicked, CEGUI::Event::Subscriber(UICallbacks::OnWindowClosed));
 
@@ -162,14 +159,6 @@ namespace Meridian59 { namespace Ogre
 
       // click requests quest object details
       OgreClient::Singleton->SendReqLookMessage(itm->getID());
-
-      return true;
-   };
-
-   bool UICallbacks::Quests::OnDragSizingEnded(const CEGUI::EventArgs& e)
-   {
-      ControllerUI::Quests::List->notifyScreenAreaChanged(true);
-      ControllerUI::Quests::List->invalidate(false);
 
       return true;
    };

@@ -16,9 +16,6 @@ namespace Meridian59 { namespace Ogre
       OgreClient::Singleton->Data->AvatarAttributes->ListChanged += 
          gcnew ListChangedEventHandler(OnAttributesListChanged);
 
-      // subscribe end of sizing to force update
-      Window->subscribeEvent(CEGUI::FrameWindow::EventDragSizingEnded, CEGUI::Event::Subscriber(UICallbacks::Attributes::OnDragSizingEnded));
-
       // subscribe close button
       Window->subscribeEvent(CEGUI::FrameWindow::EventCloseClicked, CEGUI::Event::Subscriber(UICallbacks::OnWindowClosed));
 
@@ -122,12 +119,4 @@ namespace Meridian59 { namespace Ogre
 
    //////////////////////////////////////////////////////////////////////////////////////////////////////////
    //////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-   bool UICallbacks::Attributes::OnDragSizingEnded(const CEGUI::EventArgs& e)
-   {
-      ControllerUI::Attributes::List->notifyScreenAreaChanged(true);
-      ControllerUI::Attributes::List->invalidate(false);
-
-      return true;
-   };
 };};

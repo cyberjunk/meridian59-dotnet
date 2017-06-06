@@ -64,9 +64,6 @@ namespace Meridian59 { namespace Ogre
       // subscribe selection change of list
       List->subscribeEvent(CEGUI::ItemListbox::EventSelectionChanged, CEGUI::Event::Subscriber(UICallbacks::RoomObjects::OnListSelectionChanged));
 
-      // subscribe end of sizing to force update
-      Window->subscribeEvent(CEGUI::FrameWindow::EventDragSizingEnded, CEGUI::Event::Subscriber(UICallbacks::RoomObjects::OnDragSizingEnded));
-
       // subscribe close button
       Window->subscribeEvent(CEGUI::FrameWindow::EventCloseClicked, CEGUI::Event::Subscriber(UICallbacks::OnWindowClosed));
 
@@ -453,14 +450,6 @@ namespace Meridian59 { namespace Ogre
       // set target
       if (item)
          OgreClient::Singleton->Data->TargetID = item->getID();
-
-      return true;
-   };
-
-   bool UICallbacks::RoomObjects::OnDragSizingEnded(const CEGUI::EventArgs& e)
-   {
-      ControllerUI::RoomObjects::List->notifyScreenAreaChanged(true);
-      ControllerUI::RoomObjects::List->invalidate(false);
 
       return true;
    };

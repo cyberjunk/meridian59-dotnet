@@ -16,9 +16,6 @@ namespace Meridian59 { namespace Ogre
       OgreClient::Singleton->Data->AvatarSpells->ListChanged += 
          gcnew ListChangedEventHandler(OnSpellsListChanged);
 
-      // subscribe end of sizing to force update
-      Window->subscribeEvent(CEGUI::FrameWindow::EventDragSizingEnded, CEGUI::Event::Subscriber(UICallbacks::Spells::OnDragSizingEnded));
-
       // subscribe close button
       Window->subscribeEvent(CEGUI::FrameWindow::EventCloseClicked, CEGUI::Event::Subscriber(UICallbacks::OnWindowClosed));
 
@@ -329,14 +326,6 @@ namespace Meridian59 { namespace Ogre
    {
       const CEGUI::WindowEventArgs& args = static_cast<const CEGUI::WindowEventArgs&>(e);
       ControllerUI::Spells::Window->setUsingAutoRenderingSurface(true);
-      return true;
-   };
-
-   bool UICallbacks::Spells::OnDragSizingEnded(const CEGUI::EventArgs& e)
-   {
-      ControllerUI::Spells::List->notifyScreenAreaChanged(true);
-      ControllerUI::Spells::List->invalidate(false);
-
       return true;
    };
 };};
