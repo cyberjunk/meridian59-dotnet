@@ -288,7 +288,8 @@ namespace Meridian59 { namespace Ogre
          OgreClient::Singleton->Data->ActionButtons[ActiveKeyBinding->RightClickAction - 1]->Activate();
       }
 
-      PerformMouseOver(arg.state.X.abs, arg.state.Y.abs, false);
+      if (ControllerUI::IgnoreTopControlForMouseInput)
+         PerformMouseOver(arg.state.X.abs, arg.state.Y.abs, false);
 
       isMouseWentDownOnUI = false;
 
