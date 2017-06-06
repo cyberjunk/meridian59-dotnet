@@ -253,10 +253,10 @@ namespace Meridian59 { namespace Ogre
       /*                                   Setup ImageComposer Caches                                         */
       /********************************************************************************************************/
 
-      ImageComposerOgre<RoomObject^>::Cache::CacheSizeMax			= 256 * 1024 * 1024;
-      ImageComposerCEGUI<ObjectBase^>::Cache::CacheSizeMax		= 16 * 1024 * 1024;
-      ImageComposerCEGUI<RoomObject^>::Cache::CacheSizeMax		= 16 * 1024 * 1024;
-      ImageComposerCEGUI<InventoryObject^>::Cache::CacheSizeMax	= 16 * 1024 * 1024;
+      ImageComposerOgre<RoomObject^>::Cache::CacheSizeMax         = 384 * 1024 * 1024;
+      ImageComposerCEGUI<ObjectBase^>::Cache::CacheSizeMax        = 16 * 1024 * 1024;
+      ImageComposerCEGUI<RoomObject^>::Cache::CacheSizeMax        = 16 * 1024 * 1024;
+      ImageComposerCEGUI<InventoryObject^>::Cache::CacheSizeMax   = 16 * 1024 * 1024;
 
       ImageComposerOgre<RoomObject^>::Cache::RemoveSuggested +=
          gcnew ::System::EventHandler<ImageComposerOgre<RoomObject^>::Cache::ItemEventArgs^>(this, &OgreClient::OnImageComposerOgreRoomObjectCacheRemove);
