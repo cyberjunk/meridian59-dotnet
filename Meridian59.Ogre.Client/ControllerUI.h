@@ -1482,6 +1482,13 @@ namespace Meridian59 { namespace Ogre
          static ::CEGUI::Window* RenderSystemFaces = nullptr;
          static ::CEGUI::Window* RenderSystemVertices = nullptr;
 
+         static ::CEGUI::Window* MainThreadBest = nullptr;
+         static ::CEGUI::Window* MainThreadAverage = nullptr;
+         static ::CEGUI::Window* MainThreadWorst = nullptr;
+         static ::CEGUI::Window* MiniMapThreadBest = nullptr;
+         static ::CEGUI::Window* MiniMapThreadAverage = nullptr;
+         static ::CEGUI::Window* MiniMapThreadWorst = nullptr;
+         
          static ::CEGUI::Window* OgreMemTextures = nullptr;
          static ::CEGUI::Window* OgreMemMaterials = nullptr;
          static ::CEGUI::Window* OgreMemMeshes = nullptr;

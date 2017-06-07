@@ -12,6 +12,13 @@ namespace Meridian59 { namespace Ogre
       RenderSystemFaces = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_STATS_RENDERSYSTEMFACES));
       RenderSystemVertices = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_STATS_RENDERSYSTEMVERTICES));
 
+      MainThreadBest = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_STATS_MAINTHREADBEST));
+      MainThreadAverage = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_STATS_MAINTHREADAVERAGE));
+      MainThreadWorst = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_STATS_MAINTHREADWORST));
+      MiniMapThreadBest = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_STATS_MINIMAPTHREADBEST));
+      MiniMapThreadAverage = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_STATS_MINIMAPTHREADAVERAGE));
+      MiniMapThreadWorst = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_STATS_MINIMAPTHREADWORST));
+
       OgreMemTextures = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_STATS_OGREMEMTEXTURES));
       OgreMemMaterials = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_STATS_OGREMEMMATERIALS));
       OgreMemMeshes = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_STATS_OGREMEMMESHES));
@@ -82,6 +89,18 @@ namespace Meridian59 { namespace Ogre
       RenderSystemBatches->setText(CEGUI::PropertyHelper<double>::toString(numRenderSystemBatches));
       RenderSystemFaces->setText(CEGUI::PropertyHelper<double>::toString(numRenderSystemFaces));
       RenderSystemVertices->setText(CEGUI::PropertyHelper<double>::toString(numRenderSystemVertices));
+      
+      //----------------------------------------------------------------------------------------------------------//
+      // MainThread
+      MainThreadBest->setText(CEGUI::PropertyHelper<double>::toString(client->Data->TickBest));
+      MainThreadAverage->setText(CEGUI::PropertyHelper<double>::toString(client->Data->TickAverage));
+      MainThreadWorst->setText(CEGUI::PropertyHelper<double>::toString(client->Data->TickWorst));
+
+      //----------------------------------------------------------------------------------------------------------//
+      // MiniMapThread
+      MiniMapThreadBest->setText(CEGUI::PropertyHelper<double>::toString(MiniMapCEGUI::TickBest));
+      MiniMapThreadAverage->setText(CEGUI::PropertyHelper<double>::toString(MiniMapCEGUI::TickAvg));
+      MiniMapThreadWorst->setText(CEGUI::PropertyHelper<double>::toString(MiniMapCEGUI::TickWorst));
 
       //----------------------------------------------------------------------------------------------------------//
       // OgreMem
