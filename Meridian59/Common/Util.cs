@@ -17,6 +17,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Runtime;
 using System.Text;
 using Meridian59.Native;
 
@@ -31,6 +32,19 @@ namespace Meridian59.Common
         /// Default binary string encoding used in Meridian 59 (codepage 1252).
         /// </summary>
         public static readonly Encoding Encoding = Encoding.GetEncoding(1252);
+
+        /// <summary>
+        /// Executes a maximum Garbage Collection
+        /// </summary>
+        public static void ForceMaximumGC()
+        {
+            // compact large object heap next run
+            GCSettings.LargeObjectHeapCompactionMode =
+                GCLargeObjectHeapCompactionMode.CompactOnce;
+
+            // maximum GC
+            GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true, true);
+        }
 
         /// <summary>
         /// Loads file content from filesystem to unmanaged memory.

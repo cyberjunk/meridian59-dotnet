@@ -508,7 +508,7 @@ namespace Meridian59.Files
             Mails.ListChanged += OnMailsListChanged;
 
             // forced GC collection
-            GC.Collect(2);
+            Util.ForceMaximumGC();
 
             // mark initialized
             Initialized = true;          

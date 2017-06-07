@@ -691,7 +691,7 @@ namespace Meridian59.Client
         /// <param name="Message"></param>
         protected virtual void HandleWaitMessage(WaitMessage Message)
         {
-            ForceMaximumGC();
+            Util.ForceMaximumGC();
         }
 
         /// <summary>
