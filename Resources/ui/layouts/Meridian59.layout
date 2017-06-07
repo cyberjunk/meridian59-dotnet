@@ -10,9 +10,9 @@
       <Window type="TaharezLook/FrameWindow" name="Stats" >
          <Property name="AutoRenderingSurface" value="True" />
          <Property name="Text" value="Stats" />
-		 <Property name="Size" value="{{0,512},{0,512}}" />       
+		 <Property name="Size" value="{{0,512},{0,620}}" />       
          <Property name="MaxSize" value="{{0,1024},{0,1024}}" />
-		 <Property name="Position" value="{{0.5,-256},{0.5,-256}}" />
+		 <Property name="Position" value="{{0.5,-256},{0.5,-360}}" />
          
 		 <!-- RenderWindow -->
 		 <Window type="TaharezLook/LabelWhite" name="Stats.EngineDesc" >
@@ -90,36 +90,123 @@
 			<Property name="HorzFormatting" value="LeftAligned" />
          </Window>
 		 
-		 <!-- Others -->
-		 <Window type="TaharezLook/LabelWhite" name="Stats.OthersDesc" >
-            <Property name="Text" value="Other" />
-            <Property name="Area" value="{{0,20},{0,230},{0,240},{0,250}}" />
+		 <!-- MainThread -->
+		 <Window type="TaharezLook/LabelWhite" name="Stats.MainThreadDesc" >
+            <Property name="Text" value="Main Thread" />
+            <Property name="Area" value="{{0,20},{0,240},{0,240},{0,260}}" />
 			<Property name="HorzFormatting" value="LeftAligned" />
 			<Property name="Font" value="Berenika-8-Bold" />
          </Window>
 		 
+		 <!-- Best -->
+         <Window type="TaharezLook/LabelWhite" name="Stats.MainThreadBestDesc" >
+            <Property name="Text" value="Best" />
+			<Property name="Area" value="{{0,20},{0,270},{0,100},{0,290}}" />
+            <Property name="HorzFormatting" value="LeftAligned" />	
+         </Window>
+         <Window type="TaharezLook/LabelWhite" name="Stats.MainThreadBest" >
+            <Property name="Text" value="0" />
+            <Property name="Area" value="{{0,120},{0,270},{0,240},{0,290}}" />
+			<Property name="HorzFormatting" value="LeftAligned" />
+         </Window>
 		 
+		 <!-- Average -->
+         <Window type="TaharezLook/LabelWhite" name="Stats.MainThreadAverageDesc" >
+            <Property name="Text" value="Average" />
+			<Property name="Area" value="{{0,20},{0,300},{0,100},{0,320}}" />
+            <Property name="HorzFormatting" value="LeftAligned" />	
+         </Window>
+         <Window type="TaharezLook/LabelWhite" name="Stats.MainThreadAverage" >
+            <Property name="Text" value="0" />
+            <Property name="Area" value="{{0,120},{0,300},{0,240},{0,320}}" />
+			<Property name="HorzFormatting" value="LeftAligned" />
+         </Window>
+		 
+		 <!-- Worst -->
+         <Window type="TaharezLook/LabelWhite" name="Stats.MainThreadWorstDesc" >
+            <Property name="Text" value="Worst" />
+			<Property name="Area" value="{{0,20},{0,330},{0,100},{0,350}}" />
+            <Property name="HorzFormatting" value="LeftAligned" />	
+         </Window>
+         <Window type="TaharezLook/LabelWhite" name="Stats.MainThreadWorst" >
+            <Property name="Text" value="0" />
+            <Property name="Area" value="{{0,120},{0,330},{0,240},{0,350}}" />
+			<Property name="HorzFormatting" value="LeftAligned" />
+         </Window>
+		 
+		 <!-- MiniMapThread -->
+		 <Window type="TaharezLook/LabelWhite" name="Stats.MiniMapThreadDesc" >
+            <Property name="Text" value="Minimap Thread" />
+            <Property name="Area" value="{{0,20},{0,370},{0,240},{0,390}}" />
+			<Property name="HorzFormatting" value="LeftAligned" />
+			<Property name="Font" value="Berenika-8-Bold" />
+         </Window>
+		 
+		 <!-- Best -->
+         <Window type="TaharezLook/LabelWhite" name="Stats.MiniMapThreadBestDesc" >
+            <Property name="Text" value="Best" />
+			<Property name="Area" value="{{0,20},{0,400},{0,100},{0,420}}" />
+            <Property name="HorzFormatting" value="LeftAligned" />	
+         </Window>
+         <Window type="TaharezLook/LabelWhite" name="Stats.MiniMapThreadBest" >
+            <Property name="Text" value="0" />
+            <Property name="Area" value="{{0,120},{0,400},{0,240},{0,420}}" />
+			<Property name="HorzFormatting" value="LeftAligned" />
+         </Window>
+		 
+		 <!-- Average -->
+         <Window type="TaharezLook/LabelWhite" name="Stats.MiniMapThreadAverageDesc" >
+            <Property name="Text" value="Average" />
+			<Property name="Area" value="{{0,20},{0,430},{0,100},{0,450}}" />
+            <Property name="HorzFormatting" value="LeftAligned" />	
+         </Window>
+         <Window type="TaharezLook/LabelWhite" name="Stats.MiniMapThreadAverage" >
+            <Property name="Text" value="0" />
+            <Property name="Area" value="{{0,120},{0,430},{0,240},{0,450}}" />
+			<Property name="HorzFormatting" value="LeftAligned" />
+         </Window>
+		 
+		 <!-- Worst -->
+         <Window type="TaharezLook/LabelWhite" name="Stats.MiniMapThreadWorstDesc" >
+            <Property name="Text" value="Worst" />
+			<Property name="Area" value="{{0,20},{0,460},{0,100},{0,480}}" />
+            <Property name="HorzFormatting" value="LeftAligned" />	
+         </Window>
+         <Window type="TaharezLook/LabelWhite" name="Stats.MiniMapThreadWorst" >
+            <Property name="Text" value="0" />
+            <Property name="Area" value="{{0,120},{0,460},{0,240},{0,480}}" />
+			<Property name="HorzFormatting" value="LeftAligned" />
+         </Window>
+		 
+		 <!-- Others -->
+		 <Window type="TaharezLook/LabelWhite" name="Stats.OthersDesc" >
+            <Property name="Text" value="Other" />
+            <Property name="Area" value="{{0,20},{0,500},{0,240},{0,520}}" />
+			<Property name="HorzFormatting" value="LeftAligned" />
+			<Property name="Font" value="Berenika-8-Bold" />
+         </Window>
+		 	 
 		 <!-- FrustumLights -->
          <Window type="TaharezLook/LabelWhite" name="Stats.OgreFrustumLightsDesc" >
             <Property name="Text" value="FrustumLights" />
-			<Property name="Area" value="{{0,20},{0,250},{0,100},{0,270}}" />
+			<Property name="Area" value="{{0,20},{0,530},{0,100},{0,550}}" />
             <Property name="HorzFormatting" value="LeftAligned" />	
          </Window>
          <Window type="TaharezLook/LabelWhite" name="Stats.OgreFrustumLights" >
             <Property name="Text" value="0" />
-            <Property name="Area" value="{{0,120},{0,250},{0,240},{0,270}}" />
+            <Property name="Area" value="{{0,120},{0,530},{0,240},{0,550}}" />
 			<Property name="HorzFormatting" value="LeftAligned" />
          </Window>
 		 
 		 <!-- RoomSections -->
          <Window type="TaharezLook/LabelWhite" name="Stats.OgreRoomSectionsDesc" >
             <Property name="Text" value="Sections" />
-			<Property name="Area" value="{{0,20},{0,280},{0,100},{0,300}}" />
+			<Property name="Area" value="{{0,20},{0,560},{0,100},{0,580}}" />
             <Property name="HorzFormatting" value="LeftAligned" />	
          </Window>
          <Window type="TaharezLook/LabelWhite" name="Stats.OgreRoomSections" >
             <Property name="Text" value="0" />
-            <Property name="Area" value="{{0,120},{0,280},{0,240},{0,300}}" />
+            <Property name="Area" value="{{0,120},{0,560},{0,240},{0,580}}" />
 			<Property name="HorzFormatting" value="LeftAligned" />
          </Window>
 		 
