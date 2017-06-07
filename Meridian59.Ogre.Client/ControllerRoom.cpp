@@ -1363,10 +1363,6 @@ namespace Meridian59 { namespace Ogre
 
    void ControllerRoom::ProjectileAdd(Projectile^ Projectile)
    {
-      // log
-      Logger::Log(MODULENAME, LogType::Info,
-         "Adding 2D projectile " + Projectile->ID.ToString() + " to scene.");
-
       // create 2d projectile
       ProjectileNode2D^ newObject = gcnew ProjectileNode2D(Projectile, SceneManager);
 
@@ -1376,10 +1372,6 @@ namespace Meridian59 { namespace Ogre
 
    void ControllerRoom::ProjectileRemove(Projectile^ Projectile)
    {
-      // log
-      Logger::Log(MODULENAME, LogType::Info,
-         "Removing projectile " + Projectile->ID.ToString() + " from scene.");
-
       // try to cast remotenode attached to userdata
       ProjectileNode2D^ engineObject = dynamic_cast<ProjectileNode2D^>(Projectile->UserData);
 
