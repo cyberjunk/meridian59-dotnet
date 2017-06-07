@@ -322,6 +322,26 @@
             <Property name="Area" value="{{0,340},{0,290},{0,460},{0,310}}" />
 			<Property name="HorzFormatting" value="LeftAligned" />
          </Window>
+		 
+		 <!-- Garbage Collection -->
+		 <Window type="TaharezLook/LabelWhite" name="Stats.GarbageCollectionDesc" >
+            <Property name="Text" value="Garbage Collector" />
+            <Property name="Area" value="{{0,240},{0,330},{0,460},{0,350}}" />
+			<Property name="HorzFormatting" value="LeftAligned" />
+			<Property name="Font" value="Berenika-8-Bold" />
+         </Window>
+		 
+		 <!-- Runs -->
+         <Window type="TaharezLook/LabelWhite" name="Stats.GarbageCollectionRunsDesc" >
+            <Property name="Text" value="Runs" />
+			<Property name="Area" value="{{0,240},{0,360},{0,320},{0,380}}" />
+            <Property name="HorzFormatting" value="LeftAligned" />	
+         </Window>
+         <Window type="TaharezLook/LabelWhite" name="Stats.GarbageCollectionRuns" >
+            <Property name="Text" value="0" />
+            <Property name="Area" value="{{0,340},{0,360},{0,460},{0,380}}" />
+			<Property name="HorzFormatting" value="LeftAligned" />
+         </Window>
       </Window>
 	  
       <!-- LoadingBar -->
