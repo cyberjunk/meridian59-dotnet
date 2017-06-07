@@ -17,6 +17,7 @@
 using System;
 using System.Threading;
 using System.Diagnostics;
+using System.Runtime;
 
 using Meridian59.Common;
 using Meridian59.Common.Enums;
@@ -278,5 +279,18 @@ namespace Meridian59.Client
         /// </summary>
         /// <param name="Message"></param>
         public abstract void SendGameMessage(GameMessage Message);
+
+        /// <summary>
+        /// Executes a maximum Garbage Collection
+        /// </summary>
+        public static void ForceMaximumGC()
+        {
+            // compact large object heap next run
+            GCSettings.LargeObjectHeapCompactionMode = 
+                GCLargeObjectHeapCompactionMode.CompactOnce;
+
+            // maximum GC
+            GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true, true);
+        }
     }
 }
