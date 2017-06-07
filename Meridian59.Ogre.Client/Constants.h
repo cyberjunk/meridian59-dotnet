@@ -747,6 +747,8 @@
 #define UI_NAME_STATS_RENDERSYSTEMVERTICES         "Stats.RenderSystemVertices"
 #define UI_NAME_STATS_OGREMEMTEXTURES              "Stats.OgreMemTextures"
 #define UI_NAME_STATS_OGREMEMMATERIALS             "Stats.OgreMemMaterials"
+#define UI_NAME_STATS_OGREMEMMESHES                "Stats.OgreMemMeshes"
+#define UI_NAME_STATS_OGREMEMCOMPOSITORS           "Stats.OgreMemCompositors"
 #define UI_NAME_STATS_OGREFRUSTUMLIGHTS            "Stats.OgreFrustumLights"
 #define UI_NAME_STATS_OGREROOMSECTIONS             "Stats.OgreRoomSections"
 #define UI_NAME_STATS_CEGUIOBJECTCACHEROOM         "Stats.CEGUIObjectCacheRoom"

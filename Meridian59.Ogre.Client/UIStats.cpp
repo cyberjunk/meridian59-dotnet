@@ -14,6 +14,8 @@ namespace Meridian59 { namespace Ogre
 
       OgreMemTextures = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_STATS_OGREMEMTEXTURES));
       OgreMemMaterials = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_STATS_OGREMEMMATERIALS));
+      OgreMemMeshes = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_STATS_OGREMEMMESHES));
+      OgreMemCompositors = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_STATS_OGREMEMCOMPOSITORS));
 
       CEGUIObjectCacheRoom = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_STATS_CEGUIOBJECTCACHEROOM));
       CEGUIObjectCacheObject = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_STATS_CEGUIOBJECTCACHEOBJECT));
@@ -47,8 +49,12 @@ namespace Meridian59 { namespace Ogre
       const size_t MB = 1024 * 1024;
 
       OgreClient^ client = OgreClient::Singleton;
-      MaterialManager& matMan = MaterialManager::getSingleton();
-      TextureManager& texMan = TextureManager::getSingleton();
+
+      MaterialManager&   matMan  = MaterialManager::getSingleton();
+      TextureManager&    texMan  = TextureManager::getSingleton();
+      MeshManager&       meshMan = MeshManager::getSingleton();
+      CompositorManager& compMan = CompositorManager::getSingleton();
+
       //ResourceGroupManager& resGrpMan = ResourceGroupManager::getSingleton();
 
       /*unsigned int numViewportBatches = client->Viewport->_getNumRenderedBatches();
@@ -79,11 +85,15 @@ namespace Meridian59 { namespace Ogre
 
       //----------------------------------------------------------------------------------------------------------//
       // OgreMem
-      size_t memTextures = texMan.getMemoryUsage() / MB;
-      size_t memMaterials = matMan.getMemoryUsage() / MB;
+      size_t memTextures    = texMan.getMemoryUsage() / MB;
+      size_t memMaterials   = matMan.getMemoryUsage() / MB;
+      size_t memMeshes      = meshMan.getMemoryUsage() / MB;
+      size_t memCompositors = compMan.getMemoryUsage() / MB;
 
       OgreMemTextures->setText(CEGUI::PropertyHelper<size_t>::toString(memTextures).append(" MB"));
       OgreMemMaterials->setText(CEGUI::PropertyHelper<size_t>::toString(memMaterials).append(" MB"));
+      OgreMemMeshes->setText(CEGUI::PropertyHelper<size_t>::toString(memMeshes).append(" MB"));
+      OgreMemCompositors->setText(CEGUI::PropertyHelper<size_t>::toString(memCompositors).append(" MB"));
 
       //----------------------------------------------------------------------------------------------------------//
       // Other
