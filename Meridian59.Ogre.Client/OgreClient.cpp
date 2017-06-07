@@ -669,19 +669,14 @@ namespace Meridian59 { namespace Ogre
       // build a texture-atlas for all the small 16x16 spell/skill icons which are not built from object
       ControllerUI::BuildIconAtlas();
 
-      // .NET 4.5
-      // next gc run, defragment the largeobjectheap
-      ::System::Runtime::GCSettings::LargeObjectHeapCompactionMode =
-         System::Runtime::GCLargeObjectHeapCompactionMode::CompactOnce;
-
-      // make maximum gc run
-      ::System::GC::Collect(::System::GC::MaxGeneration, ::System::GCCollectionMode::Forced, true);
-
       // 10. initialize general group
       resMan->initialiseResourceGroup(RESOURCEGROUPGENERAL);
 
       // remove loadingbar
       ControllerUI::LoadingBar::Finish();
+
+      // run maximum GC
+      Common::Util::ForceMaximumGC();
    };
 
    void OgreClient::InitResourceGroup(
