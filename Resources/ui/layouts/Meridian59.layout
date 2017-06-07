@@ -12,7 +12,7 @@
          <Property name="Text" value="Stats" />
 		 <Property name="Size" value="{{0,512},{0,620}}" />       
          <Property name="MaxSize" value="{{0,1024},{0,1024}}" />
-		 <Property name="Position" value="{{0.5,-256},{0.5,-360}}" />
+		 <Property name="Position" value="{{0.5,-256},{0.5,-310}}" />
          
 		 <!-- RenderWindow -->
 		 <Window type="TaharezLook/LabelWhite" name="Stats.EngineDesc" >
