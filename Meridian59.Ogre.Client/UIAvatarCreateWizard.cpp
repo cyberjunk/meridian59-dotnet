@@ -235,61 +235,61 @@ namespace Meridian59 { namespace Ogre
       // haircolors
       if (CLRString::Equals(e->PropertyName, CharCreationInfo::PROPNAME_HAIRCOLORS))
       {
-         HairColor->setMaxValue((float)::System::Math::Max(creationInfo->HairColors->Length - 1, 0));
+         HairColor->setMaxValue((float)CLRMath::Max(creationInfo->HairColors->Length - 1, 0));
       }
 
       // skincolors
       else if (CLRString::Equals(e->PropertyName, CharCreationInfo::PROPNAME_SKINCOLORS))
       {
-         SkinColor->setMaxValue((float)::System::Math::Max(creationInfo->SkinColors->Length - 1, 0));
+         SkinColor->setMaxValue((float)CLRMath::Max(creationInfo->SkinColors->Length - 1, 0));
       }
 
       // hairids (male/female)
       else if (CLRString::Equals(e->PropertyName, CharCreationInfo::PROPNAME_MALEHAIRIDS) &&
          GenderMale->isSelected())
       {
-         Hair->setMaxValue((float)::System::Math::Max(creationInfo->MaleHairIDs->Length - 1, 0));
+         Hair->setMaxValue((float)CLRMath::Max(creationInfo->MaleHairIDs->Length - 1, 0));
       }
       else if (CLRString::Equals(e->PropertyName, CharCreationInfo::PROPNAME_FEMALEHAIRIDS) &&
          !GenderMale->isSelected())
       {
-         Hair->setMaxValue((float)::System::Math::Max(creationInfo->FemaleHairIDs->Length - 1, 0));
+         Hair->setMaxValue((float)CLRMath::Max(creationInfo->FemaleHairIDs->Length - 1, 0));
       }
 
       // eyeids (male/female)
       else if (CLRString::Equals(e->PropertyName, CharCreationInfo::PROPNAME_MALEEYEIDS) &&
          GenderMale->isSelected())
       {
-         Eyes->setMaxValue((float)::System::Math::Max(creationInfo->MaleEyeIDs->Length - 1, 0));
+         Eyes->setMaxValue((float)CLRMath::Max(creationInfo->MaleEyeIDs->Length - 1, 0));
       }
       else if (CLRString::Equals(e->PropertyName, CharCreationInfo::PROPNAME_FEMALEEYEIDS) &&
          !GenderMale->isSelected())
       {
-         Eyes->setMaxValue((float)::System::Math::Max(creationInfo->FemaleEyeIDs->Length - 1, 0));
+         Eyes->setMaxValue((float)CLRMath::Max(creationInfo->FemaleEyeIDs->Length - 1, 0));
       }
 
       // noseids (male/female)
       else if (CLRString::Equals(e->PropertyName, CharCreationInfo::PROPNAME_MALENOSEIDS) &&
          GenderMale->isSelected())
       {
-         Nose->setMaxValue((float)::System::Math::Max(creationInfo->MaleNoseIDs->Length - 1, 0));
+         Nose->setMaxValue((float)CLRMath::Max(creationInfo->MaleNoseIDs->Length - 1, 0));
       }
       else if (CLRString::Equals(e->PropertyName, CharCreationInfo::PROPNAME_FEMALENOSEIDS) &&
          !GenderMale->isSelected())
       {
-         Nose->setMaxValue((float)::System::Math::Max(creationInfo->FemaleNoseIDs->Length - 1, 0));
+         Nose->setMaxValue((float)CLRMath::Max(creationInfo->FemaleNoseIDs->Length - 1, 0));
       }
 
       // mouthids (male/female)
       else if (CLRString::Equals(e->PropertyName, CharCreationInfo::PROPNAME_MALEMOUTHIDS) &&
          GenderMale->isSelected())
       {
-         Mouth->setMaxValue((float)::System::Math::Max(creationInfo->MaleMouthIDs->Length - 1, 0));
+         Mouth->setMaxValue((float)CLRMath::Max(creationInfo->MaleMouthIDs->Length - 1, 0));
       }
       else if (CLRString::Equals(e->PropertyName, CharCreationInfo::PROPNAME_FEMALEMOUTHIDS) &&
          !GenderMale->isSelected())
       {
-         Mouth->setMaxValue((float)::System::Math::Max(creationInfo->FemaleMouthIDs->Length - 1, 0));
+         Mouth->setMaxValue((float)CLRMath::Max(creationInfo->FemaleMouthIDs->Length - 1, 0));
       }
 
       // name
@@ -734,19 +734,19 @@ namespace Meridian59 { namespace Ogre
       // set controls to male
       if (ControllerUI::AvatarCreateWizard::GenderMale->isSelected())
       {
-         hair->setMaxValue((float)::System::Math::Max(creationInfo->MaleHairIDs->Length - 1, 0));
-         eyes->setMaxValue((float)::System::Math::Max(creationInfo->MaleEyeIDs->Length - 1, 0));
-         nose->setMaxValue((float)::System::Math::Max(creationInfo->MaleNoseIDs->Length - 1, 0));
-         mouth->setMaxValue((float)::System::Math::Max(creationInfo->MaleMouthIDs->Length - 1, 0));
+         hair->setMaxValue((float)CLRMath::Max(creationInfo->MaleHairIDs->Length - 1, 0));
+         eyes->setMaxValue((float)CLRMath::Max(creationInfo->MaleEyeIDs->Length - 1, 0));
+         nose->setMaxValue((float)CLRMath::Max(creationInfo->MaleNoseIDs->Length - 1, 0));
+         mouth->setMaxValue((float)CLRMath::Max(creationInfo->MaleMouthIDs->Length - 1, 0));
       }
 
       // or female
       else
       {
-         hair->setMaxValue((float)::System::Math::Max(creationInfo->FemaleHairIDs->Length - 1, 0));
-         eyes->setMaxValue((float)::System::Math::Max(creationInfo->FemaleEyeIDs->Length - 1, 0));
-         nose->setMaxValue((float)::System::Math::Max(creationInfo->FemaleNoseIDs->Length - 1, 0));
-         mouth->setMaxValue((float)::System::Math::Max(creationInfo->FemaleMouthIDs->Length - 1, 0));
+         hair->setMaxValue((float)CLRMath::Max(creationInfo->FemaleHairIDs->Length - 1, 0));
+         eyes->setMaxValue((float)CLRMath::Max(creationInfo->FemaleEyeIDs->Length - 1, 0));
+         nose->setMaxValue((float)CLRMath::Max(creationInfo->FemaleNoseIDs->Length - 1, 0));
+         mouth->setMaxValue((float)CLRMath::Max(creationInfo->FemaleMouthIDs->Length - 1, 0));
       }
 
       // finally reset the datamodel for image

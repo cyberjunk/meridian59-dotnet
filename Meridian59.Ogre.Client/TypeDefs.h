@@ -26,3 +26,4 @@ typedef ::System::Single CLRReal;
 
 // typedef for CLR classes to avoid ambigiousness
 typedef ::System::String CLRString;
+typedef ::System::Math   CLRMath;

@@ -405,13 +405,13 @@ namespace Meridian59 { namespace Ogre
             if (dx != 0)
             {
                // stop immediately if we switched directions
-               if (::System::Math::Sign(dx) != ::System::Math::Sign(avatarYawDelta))
+               if (CLRMath::Sign(dx) != CLRMath::Sign(avatarYawDelta))
                   avatarYawDelta = 0.0f;
 
                // set a new delta and stepsize
                // this will be processed tick based
                avatarYawDelta += MOUSELOOKSPEED * (float)OgreClient::Singleton->Config->MouseAimSpeed * (float)dx;
-               avatarYawStep = MOUSELOOKSTEPFACT * avatarYawDelta * ::System::Math::Max((float)OgreClient::Singleton->GameTick->Span, 1.0f);
+               avatarYawStep = MOUSELOOKSTEPFACT * avatarYawDelta * CLRMath::Max((float)OgreClient::Singleton->GameTick->Span, 1.0f);
 
                isAiming = true;
                ControllerUI::MouseCursor->hide();
@@ -424,13 +424,13 @@ namespace Meridian59 { namespace Ogre
                   dy = -dy;
 
                // stop immediately if we switched directions
-               if (::System::Math::Sign(dy) != ::System::Math::Sign(cameraPitchDelta))
+               if (CLRMath::Sign(dy) != CLRMath::Sign(cameraPitchDelta))
                   cameraPitchDelta = 0.0f;
 
                // set a new delta and stepsize
                // this will be processed tick based
                cameraPitchDelta += MOUSELOOKSPEED * (float)OgreClient::Singleton->Config->MouseAimSpeed * (float)dy;
-               cameraPitchStep = MOUSELOOKSTEPFACT * cameraPitchDelta * ::System::Math::Max((float)OgreClient::Singleton->GameTick->Span, 1.0f);
+               cameraPitchStep = MOUSELOOKSTEPFACT * cameraPitchDelta * CLRMath::Max((float)OgreClient::Singleton->GameTick->Span, 1.0f);
 
                isAiming = true;
                ControllerUI::MouseCursor->hide();
@@ -443,13 +443,13 @@ namespace Meridian59 { namespace Ogre
             if (dx != 0)
             {
                // stop immediately if we switched directions
-               if (::System::Math::Sign(dx) != ::System::Math::Sign(cameraYawDelta))
+               if (CLRMath::Sign(dx) != CLRMath::Sign(cameraYawDelta))
                   cameraYawDelta = 0.0f;
 
                // set a new delta and stepsize
                // this will be processed tick based
                cameraYawDelta += MOUSELOOKSPEED * (float)OgreClient::Singleton->Config->MouseAimSpeed * (float)dx;
-               cameraYawStep = MOUSELOOKSTEPFACT * cameraYawDelta * ::System::Math::Max((float)OgreClient::Singleton->GameTick->Span, 1.0f);
+               cameraYawStep = MOUSELOOKSTEPFACT * cameraYawDelta * CLRMath::Max((float)OgreClient::Singleton->GameTick->Span, 1.0f);
 
                isAiming = true;
                ControllerUI::MouseCursor->hide();
@@ -462,13 +462,13 @@ namespace Meridian59 { namespace Ogre
                   dy = -dy;
 
                // stop immediately if we switched directions
-               if (::System::Math::Sign(dy) != ::System::Math::Sign(cameraPitchDelta))
+               if (CLRMath::Sign(dy) != CLRMath::Sign(cameraPitchDelta))
                   cameraPitchDelta = 0.0f;
 
                // set a new delta and stepsize
                // this will be processed tick based
                cameraPitchDelta += MOUSELOOKSPEED * (float)OgreClient::Singleton->Config->MouseAimSpeed * (float)dy;
-               cameraPitchStep = MOUSELOOKSTEPFACT * cameraPitchDelta * ::System::Math::Max((float)OgreClient::Singleton->GameTick->Span, 1.0f);
+               cameraPitchStep = MOUSELOOKSTEPFACT * cameraPitchDelta * CLRMath::Max((float)OgreClient::Singleton->GameTick->Span, 1.0f);
 
                isAiming = true;
                ControllerUI::MouseCursor->hide();
@@ -481,7 +481,7 @@ namespace Meridian59 { namespace Ogre
             // set a new delta and stepsize
             // this will be processed tick based
             cameraZDelta += ZOOMSPEED * (float)dz;
-            cameraZStep = MOUSELOOKSTEPFACT * cameraZDelta * ::System::Math::Max((float)OgreClient::Singleton->GameTick->Span, 1.0f);
+            cameraZStep = MOUSELOOKSTEPFACT * cameraZDelta * CLRMath::Max((float)OgreClient::Singleton->GameTick->Span, 1.0f);
          }
 
          // restore/fixed windows cursor position on mouse look
@@ -777,12 +777,12 @@ namespace Meridian59 { namespace Ogre
             else if (cameraPitchDelta > 0.0f)
             {
                cameraPitchDelta -= cameraPitchStep;
-               cameraPitchDelta = ::System::Math::Max(cameraPitchDelta, 0.0f);
+               cameraPitchDelta = CLRMath::Max(cameraPitchDelta, 0.0f);
             }
             else if (cameraPitchDelta < 0.0f)
             {
                cameraPitchDelta -= cameraPitchStep;
-               cameraPitchDelta = ::System::Math::Min(cameraPitchDelta, 0.0f);
+               cameraPitchDelta = CLRMath::Min(cameraPitchDelta, 0.0f);
             }
          }
 
@@ -795,12 +795,12 @@ namespace Meridian59 { namespace Ogre
             if (cameraYawDelta > 0.0f)
             {
                cameraYawDelta -= cameraYawStep;
-               cameraYawDelta = ::System::Math::Max(cameraYawDelta, 0.0f);
+               cameraYawDelta = CLRMath::Max(cameraYawDelta, 0.0f);
             }
             else if (cameraYawDelta < 0.0f)
             {
                cameraYawDelta -= cameraYawStep;
-               cameraYawDelta = ::System::Math::Min(cameraYawDelta, 0.0f);
+               cameraYawDelta = CLRMath::Min(cameraYawDelta, 0.0f);
             }
          }
 
@@ -834,12 +834,12 @@ namespace Meridian59 { namespace Ogre
                   if (cameraZDelta > 0.0f)
                   {
                      cameraZDelta -= cameraZStep;
-                     cameraZDelta = ::System::Math::Max(cameraZDelta, 0.0f);
+                     cameraZDelta = CLRMath::Max(cameraZDelta, 0.0f);
                   }
                   else if (cameraZDelta < 0.0f)
                   {
                      cameraZDelta -= cameraZStep;
-                     cameraZDelta = ::System::Math::Min(cameraZDelta, 0.0f);
+                     cameraZDelta = CLRMath::Min(cameraZDelta, 0.0f);
                   }
                }
                else
@@ -876,12 +876,12 @@ namespace Meridian59 { namespace Ogre
          if (avatarYawDelta > 0.0f)
          {
             avatarYawDelta -= avatarYawStep;
-            avatarYawDelta = ::System::Math::Max(avatarYawDelta, 0.0f);
+            avatarYawDelta = CLRMath::Max(avatarYawDelta, 0.0f);
          }
          else if (avatarYawDelta < 0.0f)
          {
             avatarYawDelta -= avatarYawStep;
-            avatarYawDelta = ::System::Math::Min(avatarYawDelta, 0.0f);
+            avatarYawDelta = CLRMath::Min(avatarYawDelta, 0.0f);
          }
       }
 

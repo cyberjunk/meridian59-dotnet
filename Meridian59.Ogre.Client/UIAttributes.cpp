@@ -104,7 +104,7 @@ namespace Meridian59 { namespace Ogre
             // map to range 0 - 1
             int range   = obj->ValueRenderMax - obj->ValueRenderMin;
             int fill    = obj->ValueCurrent - obj->ValueRenderMin;
-            int range_b = ::System::Math::Max(range, 1);
+            int range_b = CLRMath::Max(range, 1);
             float step  = 1.0f / (float)range_b;
             float perc  = (float)fill * step;
 

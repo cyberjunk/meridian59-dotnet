@@ -49,7 +49,7 @@ namespace Meridian59 { namespace Ogre
       Group->setProgress(0.0f);
       Content->setProgress(0.0f);
 
-      float div = (float)::System::Math::Max(numGroupsInit, (unsigned short)1);
+      float div = (float)CLRMath::Max(numGroupsInit, (unsigned short)1);
       stepSizeGroup = 1.0f / div;
    };
 
@@ -70,7 +70,7 @@ namespace Meridian59 { namespace Ogre
 
          Content->setProgress(0.0f);
 
-         float div = (float)::System::Math::Max((unsigned short)resourceCount, (unsigned short)1);
+         float div = (float)CLRMath::Max((unsigned short)resourceCount, (unsigned short)1);
          stepSizeContent = 1.0f / div;
 
          OgreClient::Singleton->RenderManually();
@@ -145,7 +145,7 @@ namespace Meridian59 { namespace Ogre
          if (OgreClient::Singleton->Config->PreloadMusic)
             items += OgreClient::Singleton->ResourceManager->Music->Count;
 
-         float div = (float)::System::Math::Max(items, 1);
+         float div = (float)CLRMath::Max(items, 1);
          stepSizeContent = 1.0f / div;
 
          OgreClient::Singleton->RenderManually();
