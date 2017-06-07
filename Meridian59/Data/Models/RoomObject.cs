@@ -1275,6 +1275,13 @@ namespace Meridian59.Data.Models
             // appearancechanged will be triggered too early
             //base.Update(CurrentTick);
 
+            // apply next ObjectUpdate if there is one
+            if (NextUpdate != null)
+            {
+                UpdateFromModel(NextUpdate, true);
+                NextUpdate = null;
+            }
+
             // update animation
             animation.Tick(Tick, Span);
 

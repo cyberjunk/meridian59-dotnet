@@ -2022,18 +2022,24 @@ namespace Meridian59.Data
 
         protected virtual void HandleChange(ChangeMessage Message)
         {
+            // try to find in room first
             RoomObject roomObject = RoomObjects.GetItemByID(Message.UpdatedObject.ID);
+
+            // found
             if (roomObject != null)
             {
-                roomObject.UpdateFromModel(Message.UpdatedObject, true);               
+                // save this change as next update to process in Tick()
+                // server sends lots of BP_CHANGE, only the last one is relevant..
+                // so we discard all but the last
+                roomObject.NextUpdate = Message.UpdatedObject;
             }
             else
             {
+                // otherwise try to find in inventory
                 ObjectBase inventoryObject = InventoryObjects.GetItemByID(Message.UpdatedObject.ID);
+
                 if (inventoryObject != null)
-                {
-                    inventoryObject.UpdateFromModel(Message.UpdatedObject, true);
-                }
+                    inventoryObject.NextUpdate = Message.UpdatedObject;
             }
         }
 

@@ -571,6 +571,11 @@ namespace Meridian59.Data.Models
                 return len; 
             }
         }
+
+        /// <summary>
+        /// Can keep track of an update to be processed on this object
+        /// </summary>
+        public ObjectUpdate NextUpdate { get; set; }
         #endregion
 
         #region Constructors
@@ -1009,6 +1014,13 @@ namespace Meridian59.Data.Models
         /// <param name="Span"></param>
         public virtual void Tick(double Tick, double Span)
         {
+            // apply next ObjectUpdate if there is one
+            if (NextUpdate != null)
+            {
+                UpdateFromModel(NextUpdate, true);
+                NextUpdate = null;
+            }
+
             // update animation
             Animation.Tick(Tick, Span);
 
