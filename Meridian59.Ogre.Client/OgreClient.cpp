@@ -1076,38 +1076,50 @@ namespace Meridian59 { namespace Ogre
 
    void OgreClient::OnImageComposerOgreRoomObjectCacheRemove(Object^ sender, ImageComposerOgre<RoomObject^>::Cache::ItemEventArgs^ e)
    {
-      // delete materials and texture
-      e->Item->Image->Delete();
+      for each(ImageComposerOgre<RoomObject^>::Cache::Item^ item in e->Items)
+      {
+         // delete materials and texture
+         item->Image->Delete();
 
-      // remove from cache
-      ImageComposerOgre<RoomObject^>::Cache::Remove(e->Item);
+         // remove from cache
+         ImageComposerOgre<RoomObject^>::Cache::Remove(item);
+      }
    };
 
    void OgreClient::OnImageComposerCEGUIObjectBaseCacheRemove(Object^ sender, ImageComposerCEGUI<ObjectBase^>::Cache::ItemEventArgs^ e)
    {
-      // delete materials and texture
-      e->Item->Image->Delete();
+      for each(ImageComposerCEGUI<ObjectBase^>::Cache::Item^ item in e->Items)
+      {
+         // delete materials and texture
+         item->Image->Delete();
 
-      // remove from cache
-      ImageComposerCEGUI<ObjectBase^>::Cache::Remove(e->Item);
+         // remove from cache
+         ImageComposerCEGUI<ObjectBase^>::Cache::Remove(item);
+      }
    };
 
    void OgreClient::OnImageComposerCEGUIRoomObjectCacheRemove(Object^ sender, ImageComposerCEGUI<RoomObject^>::Cache::ItemEventArgs^ e)
    {
-      // delete materials and texture
-      e->Item->Image->Delete();
+      for each(ImageComposerCEGUI<RoomObject^>::Cache::Item^ item in e->Items)
+      {
+         // delete materials and texture
+         item->Image->Delete();
 
-      // remove from cache
-      ImageComposerCEGUI<RoomObject^>::Cache::Remove(e->Item);
+         // remove from cache
+         ImageComposerCEGUI<RoomObject^>::Cache::Remove(item);
+      }
    };
 
    void OgreClient::OnImageComposerCEGUIInventoryObjectCacheRemove(Object^ sender, ImageComposerCEGUI<InventoryObject^>::Cache::ItemEventArgs^ e)
    {
-      // delete materials and texture
-      e->Item->Image->Delete();
+      for each(ImageComposerCEGUI<InventoryObject^>::Cache::Item^ item in e->Items)
+      {
+         // delete materials and texture
+         item->Image->Delete();
 
-      // remove from cache
-      ImageComposerCEGUI<InventoryObject^>::Cache::Remove(e->Item);
+         // remove from cache
+         ImageComposerCEGUI<InventoryObject^>::Cache::Remove(item);
+      }
    };
 
    void OgreClient::DemoSceneDestroy()

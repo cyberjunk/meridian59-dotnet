@@ -386,15 +386,15 @@ namespace Meridian59.Drawing2D
             }
 
             /// <summary>
-            /// EventArgs carrying a cache item
+            /// EventArgs carrying an array of cache items
             /// </summary>
             public class ItemEventArgs : EventArgs
             {
-                public readonly Item Item;
+                public readonly Item[] Items;
                 
-                public ItemEventArgs(Item Item)
+                public ItemEventArgs(List<Item> Items)
                 {
-                    this.Item = Item;
+                    this.Items = Items.ToArray();
                 }
             }
 
@@ -544,9 +544,8 @@ namespace Meridian59.Drawing2D
                         break;
                 }
 
-                // raise events
-                foreach (Item item in candidates)
-                    RemoveSuggested(typeof(ImageComposer<T, U>.Cache), new ItemEventArgs(item));
+                // raise event
+                RemoveSuggested(typeof(ImageComposer<T, U>.Cache), new ItemEventArgs(candidates));
 
                 // clear temporary candidates list
                 candidates.Clear();
