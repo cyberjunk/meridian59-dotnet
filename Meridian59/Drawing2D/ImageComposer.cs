@@ -399,6 +399,11 @@ namespace Meridian59.Drawing2D
             }
 
             /// <summary>
+            /// Amount of items suggested for remove at once.
+            /// </summary>
+            private const int MAXSIMULREMOVE = 6;
+
+            /// <summary>
             /// Raised by 'Prune()' for entries without active references.
             /// </summary>
             public static event EventHandler<ItemEventArgs> RemoveSuggested;
@@ -411,12 +416,17 @@ namespace Meridian59.Drawing2D
             /// <summary>
             /// List of candidates to removed in Prune()
             /// </summary>
-            private static readonly List<Item> candidates = new List<Item>(8);
+            private static readonly List<Item> candidates = new List<Item>(MAXSIMULREMOVE);
 
             /// <summary>
             /// Last tick Prune() tried to remove items
             /// </summary>
             private static long tickPrune = 0;
+
+            /// <summary>
+            /// Keep track of once exceeded state to reduce further
+            /// </summary>
+            private static bool exceeded = false;
 
             /// <summary>
             /// Whether to cache created images
@@ -499,17 +509,22 @@ namespace Meridian59.Drawing2D
                 if (RemoveSuggested == null)
                     return;
 
-                // true if above limits
-                bool exceeded = CacheSize > CacheSizeMax;
+                // above limits right now
+                if (CacheSize > CacheSizeMax)
+                    exceeded = true;
+
+                // was above limits but is no more (wait until only half filled)
+                else if (exceeded && CacheSize < (CacheSizeMax / 2))
+                    exceeded = false;
 
                 // get current tick and span since last prune
                 long tick = DateTime.Now.Ticks;
                 long span = tick - tickPrune;
 
-                // don't prune more often than once per second
+                // don't prune more often than twice per second
                 // as long as size is not exceeded
-                const long ONESECOND = 1 * 1000 * 10000;
-                if (!exceeded && span <= ONESECOND)
+                const long HALFSECOND = 500 * 10000;
+                if (!exceeded && span <= HALFSECOND)
                     return;
 
                 // save prune tick
@@ -540,7 +555,7 @@ namespace Meridian59.Drawing2D
                     candidates.Add(item.Value);
 
                     // never remove more than several at once (lagspike..)
-                    if (candidates.Count >= 8)
+                    if (candidates.Count >= MAXSIMULREMOVE)
                         break;
                 }
 
