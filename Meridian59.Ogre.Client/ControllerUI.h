@@ -1501,6 +1501,8 @@ namespace Meridian59 { namespace Ogre
 
          static ::CEGUI::Window* OgreFrustumLights = nullptr;
          static ::CEGUI::Window* OgreRoomSections = nullptr;
+         
+         static ::CEGUI::Window* GarbageCollectionRuns = nullptr;
 
          static void Initialize();
          static void Destroy();

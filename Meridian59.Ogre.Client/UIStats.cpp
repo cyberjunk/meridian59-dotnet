@@ -32,6 +32,8 @@ namespace Meridian59 { namespace Ogre
       OgreFrustumLights = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_STATS_OGREFRUSTUMLIGHTS));
       OgreRoomSections = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_STATS_OGREROOMSECTIONS));
 
+      GarbageCollectionRuns = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_STATS_GARBAGECOLLECTIONRUNS));
+
       // subscribe close button
       Window->subscribeEvent(CEGUI::FrameWindow::EventCloseClicked, CEGUI::Event::Subscriber(UICallbacks::OnWindowClosed));
 
@@ -150,6 +152,13 @@ namespace Meridian59 { namespace Ogre
       OgreRoomObjectCache->setText(
          CEGUI::PropertyHelper<int>::toString(numOgreRoomObjectCache) + " (" +
          CEGUI::PropertyHelper<unsigned int>::toString(memOgreRoomObjectCache) + " MB)");
+      
+      //----------------------------------------------------------------------------------------------------------//
+      // OgreMem
+      GarbageCollectionRuns->setText(
+         CEGUI::PropertyHelper<int>::toString(::System::GC::CollectionCount(0)) + " / " +
+         CEGUI::PropertyHelper<int>::toString(::System::GC::CollectionCount(1)) + " / " +
+         CEGUI::PropertyHelper<int>::toString(::System::GC::CollectionCount(2)));
 
       //----------------------------------------------------------------------------------------------------------//
    };

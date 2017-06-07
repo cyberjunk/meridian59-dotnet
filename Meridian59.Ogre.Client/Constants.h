@@ -761,6 +761,7 @@
 #define UI_NAME_STATS_CEGUIOBJECTCACHEOBJECT       "Stats.CEGUIObjectCacheObject"
 #define UI_NAME_STATS_CEGUIOBJECTCACHEINVENTORY    "Stats.CEGUIObjectCacheInventory"
 #define UI_NAME_STATS_OGREROOMOBJECTCACHE          "Stats.OgreRoomObjectCache"
+#define UI_NAME_STATS_GARBAGECOLLECTIONRUNS        "Stats.GarbageCollectionRuns"
 
 #define UI_AVATARCREATEWIZARD_PROFILE_CUSTOM    "Custom"
 #define UI_AVATARCREATEWIZARD_PROFILE_WARRIOR   "Warrior"
