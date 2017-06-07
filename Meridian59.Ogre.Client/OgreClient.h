@@ -76,6 +76,11 @@ namespace Meridian59 { namespace Ogre
       ::Meridian59::Ogre::OgreClient^>
    {
    protected:
+      literal int CACHESIZEIMGECOMPOSEROGREROOMOBJ       = 256 * 1024 * 1024;
+      literal int CACHESIZEIMGECOMPOSERCEGUIROOMOBJ      =  16 * 1024 * 1024;
+      literal int CACHESIZEIMGECOMPOSERCEGUIINVENTORYOBJ =  16 * 1024 * 1024;
+      literal int CACHESIZEIMGECOMPOSERCEGUIOBJECT       =  16 * 1024 * 1024;
+
       ::Ogre::Root*                 root;
       ::Ogre::D3D9RenderWindow*     renderWindowDummy;
       ::Ogre::D3D9RenderWindow*     renderWindow;
