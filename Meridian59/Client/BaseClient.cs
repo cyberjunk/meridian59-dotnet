@@ -66,7 +66,11 @@ namespace Meridian59.Client
         #endregion
 
         #region Fields
-        protected uint tpsCounter;
+        protected uint tpsCounter    = 0;
+        protected double tpsSum      = 0.0f;
+        protected double tickWorst   = 0.0f;
+        protected double tickAverage = 0.0f;
+        protected double tickBest    = Single.MaxValue;
         #endregion
       
         #region Major components
@@ -201,14 +205,31 @@ namespace Meridian59.Client
         {
             // raise the tpsCounter for measuring
             tpsCounter++;
+            tpsSum += GameTick.Span;
+
+            // worse than worst
+            if (GameTick.Span > tickWorst)
+                tickWorst = GameTick.Span;
+
+            // better than best
+            else if (GameTick.Span < tickBest)
+                tickBest = GameTick.Span;
 
             if (GameTick.CanTPSMeasure())
             {
+                Data.TickWorst = tickWorst;
+                Data.TickBest = tickBest;
+                Data.TickAverage = tpsSum / (double)tpsCounter;
+
                 // calc tps based on processed ticks and span
                 Data.TPS = (uint)((Real)tpsCounter / ((Real)Math.Max(0.0001f, (Real)GameTick.SpanTPSMeasure) / (Real)Common.GameTick.MSINSECOND));
                 
                 // reset tps measure
                 tpsCounter = 0;
+                tpsSum = 0.0f;
+                tickBest = Single.MaxValue;
+                tickWorst = 0.0f;
+                tickAverage = 0.0f;
 
                 // save last tps measure tick
                 GameTick.DidTPSMeasure();

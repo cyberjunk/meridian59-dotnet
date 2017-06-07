@@ -52,6 +52,9 @@ namespace Meridian59.Data
         public const string PROPNAME_ISWAITING = "IsWaiting";
         public const string PROPNAME_MERIDIANTIME = "MeridianTime";
         public const string PROPNAME_TPS = "TPS";
+        public const string PROPNAME_TICKWORST = "TickWorst";
+        public const string PROPNAME_TICKAVERAGE = "TickAverage";
+        public const string PROPNAME_TICKBEST = "TickBest";
         public const string PROPNAME_RTT = "RTT";
         public const string PROPNAME_VIEWERPOSITION = "ViewerPosition";
         public const string PROPNAME_ACCOUNTTYPE = "AccountType";
@@ -76,6 +79,9 @@ namespace Meridian59.Data
 
         protected bool isWaiting;
         protected uint tps;
+        protected double tickBest;
+        protected double tickAverage;
+        protected double tickWorst;
         protected uint rtt;
         protected DateTime meridianTime;
         protected V3 viewerPosition;
@@ -592,6 +598,53 @@ namespace Meridian59.Data
             }
         }
 
+        /// <summary>
+        /// Worst tick duration
+        /// </summary>
+        public double TickWorst
+        {
+            get { return tickWorst; }
+            set
+            {
+                if (tickWorst != value)
+                {
+                    tickWorst = value;
+                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_TICKWORST));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Average tick duration
+        /// </summary>
+        public double TickAverage
+        {
+            get { return tickAverage; }
+            set
+            {
+                if (tickAverage != value)
+                {
+                    tickAverage = value;
+                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_TICKAVERAGE));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Best tick duration
+        /// </summary>
+        public double TickBest
+        {
+            get { return tickBest; }
+            set
+            {
+                if (tickBest != value)
+                {
+                    tickBest = value;
+                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_TICKBEST));
+                }
+            }
+        }
         /// <summary>
         /// Roundtrip time
         /// </summary>
