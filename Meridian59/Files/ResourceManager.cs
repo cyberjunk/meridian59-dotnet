@@ -60,6 +60,13 @@ namespace Meridian59.Files
         protected readonly MailList mails = new MailList(200);
 
         protected readonly LockingQueue<string> queueAsyncFilesLoaded = new LockingQueue<string>();
+
+        protected int numLoadedObjects;
+        protected int numLoadedRoomTextures;
+        protected int numLoadedRooms;
+        protected int numLoadedWavs;
+        protected int numLoadedMusic;
+
         #endregion
 
         #region Properties
@@ -149,6 +156,31 @@ namespace Meridian59.Files
         /// Folder containing mails
         /// </summary>
         public string MailFolder { get; set; }
+
+        /// <summary>
+        /// Amount of loaded BGF objects
+        /// </summary>
+        public int NumLoadedObjects {  get { return numLoadedObjects; } }
+
+        /// <summary>
+        /// Amount of loaded BGF room textures
+        /// </summary>
+        public int NumLoadedRoomTextures { get { return numLoadedRoomTextures; } }
+
+        /// <summary>
+        /// Amount of loaded ROO files
+        /// </summary>
+        public int NumLoadedRooms { get { return numLoadedRooms; } }
+
+        /// <summary>
+        /// Amount of loaded Wav/Sound files
+        /// </summary>
+        public int NumLoadedWavs { get { return numLoadedWavs; } }
+
+        /// <summary>
+        /// Amount of loaded Mp3/Music files
+        /// </summary>
+        public int NumLoadedMusic { get { return numLoadedMusic; } }
         #endregion
 
         public event EventHandler PreloadingStarted;
@@ -203,8 +235,9 @@ namespace Meridian59.Files
                     // load it
                     bgfFile = new BgfFile(ObjectsFolder + "/" + File);
 
-                    // update the registry                 
-                    Objects.TryUpdate(File, bgfFile, null);
+                    // update the registry
+                    if (Objects.TryUpdate(File, bgfFile, null))
+                        numLoadedObjects++;
                 }
             }
 
@@ -234,7 +267,8 @@ namespace Meridian59.Files
                     rooFile.ResolveResources(this);
 
                     // update the registry
-                    Rooms.TryUpdate(File, rooFile, null);                  
+                    if (Rooms.TryUpdate(File, rooFile, null))
+                        numLoadedRooms++;
                 }
             }
 
@@ -261,7 +295,8 @@ namespace Meridian59.Files
                     bgfFile = new BgfFile(RoomTexturesFolder + "/" + File);
 
                     // update the registry
-                    RoomTextures.TryUpdate(File, bgfFile, null);
+                    if (RoomTextures.TryUpdate(File, bgfFile, null))
+                        numLoadedRoomTextures++;
                 }
             }
 
@@ -298,9 +333,10 @@ namespace Meridian59.Files
                 {
                     // load it
                     wavData = Util.LoadFileToUnmanagedMem(WavFolder + "/" + File);
-                    
+
                     // update the registry
-                    Wavs.TryUpdate(File, wavData, null);
+                    if (Wavs.TryUpdate(File, wavData, null))
+                        numLoadedWavs++;
                 }
             }
 
@@ -327,7 +363,8 @@ namespace Meridian59.Files
                     musicData = Util.LoadFileToUnmanagedMem(MusicFolder + "/" + File);
 
                     // update the registry
-                    Music.TryUpdate(File, musicData, null);
+                    if (Music.TryUpdate(File, musicData, null))
+                        numLoadedMusic++;
                 }
             }
 
