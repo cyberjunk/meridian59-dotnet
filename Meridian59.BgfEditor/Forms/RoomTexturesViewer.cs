@@ -129,6 +129,9 @@ namespace Meridian59.BgfEditor.Forms
 
             Item item = (Item)gridTextures.SelectedRows[0].DataBoundItem;
 
+            if (picBGF.Image != null)
+                picBGF.Image.Dispose();
+
             picBGF.Image = item.Bgf.GetBitmapA8R8G8B8();
             picPNG.Image = item.Png;
             
