@@ -762,6 +762,11 @@
 #define UI_NAME_STATS_CEGUIOBJECTCACHEINVENTORY    "Stats.CEGUIObjectCacheInventory"
 #define UI_NAME_STATS_OGREROOMOBJECTCACHE          "Stats.OgreRoomObjectCache"
 #define UI_NAME_STATS_GARBAGECOLLECTIONRUNS        "Stats.GarbageCollectionRuns"
+#define UI_NAME_STATS_LEGACYRESOURCESOBJECTS       "Stats.LegacyResourcesObjects"
+#define UI_NAME_STATS_LEGACYRESOURCESTEXTURES      "Stats.LegacyResourcesTextures"
+#define UI_NAME_STATS_LEGACYRESOURCESROOMS         "Stats.LegacyResourcesRooms"
+#define UI_NAME_STATS_LEGACYRESOURCESSOUNDS        "Stats.LegacyResourcesSounds"
+#define UI_NAME_STATS_LEGACYRESOURCESMUSIC         "Stats.LegacyResourcesMusic"
 
 #define UI_AVATARCREATEWIZARD_PROFILE_CUSTOM    "Custom"
 #define UI_AVATARCREATEWIZARD_PROFILE_WARRIOR   "Warrior"

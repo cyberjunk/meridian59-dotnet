@@ -34,6 +34,12 @@ namespace Meridian59 { namespace Ogre
 
       GarbageCollectionRuns = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_STATS_GARBAGECOLLECTIONRUNS));
 
+      LegacyResourcesObjects = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_STATS_LEGACYRESOURCESOBJECTS));
+      LegacyResourcesTextures = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_STATS_LEGACYRESOURCESTEXTURES));
+      LegacyResourcesRooms = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_STATS_LEGACYRESOURCESROOMS));
+      LegacyResourcesSounds = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_STATS_LEGACYRESOURCESSOUNDS));
+      LegacyResourcesMusic = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_STATS_LEGACYRESOURCESMUSIC));
+
       // subscribe close button
       Window->subscribeEvent(CEGUI::FrameWindow::EventCloseClicked, CEGUI::Event::Subscriber(UICallbacks::OnWindowClosed));
 
@@ -154,11 +160,36 @@ namespace Meridian59 { namespace Ogre
          CEGUI::PropertyHelper<unsigned int>::toString(memOgreRoomObjectCache) + " MB)");
       
       //----------------------------------------------------------------------------------------------------------//
-      // OgreMem
+      // GarbageCollector
       GarbageCollectionRuns->setText(
          CEGUI::PropertyHelper<int>::toString(::System::GC::CollectionCount(0)) + " / " +
          CEGUI::PropertyHelper<int>::toString(::System::GC::CollectionCount(1)) + " / " +
          CEGUI::PropertyHelper<int>::toString(::System::GC::CollectionCount(2)));
+
+      //----------------------------------------------------------------------------------------------------------//
+      // LegacyResources
+      LegacyResourcesObjects->setText(
+         CEGUI::PropertyHelper<int>::toString(client->ResourceManager->NumLoadedObjects) + " / " +
+         CEGUI::PropertyHelper<int>::toString(client->ResourceManager->Objects->Count));
+
+      LegacyResourcesTextures->setText(
+         CEGUI::PropertyHelper<int>::toString(client->ResourceManager->NumLoadedRoomTextures) + " / " +
+         CEGUI::PropertyHelper<int>::toString(client->ResourceManager->RoomTextures->Count));
+
+      LegacyResourcesRooms->setText(
+         CEGUI::PropertyHelper<int>::toString(client->ResourceManager->NumLoadedRooms) + " / " +
+         CEGUI::PropertyHelper<int>::toString(client->ResourceManager->Rooms->Count));
+
+      LegacyResourcesSounds->setText(
+         CEGUI::PropertyHelper<int>::toString(client->ResourceManager->NumLoadedWavs) + " / " +
+         CEGUI::PropertyHelper<int>::toString(client->ResourceManager->Wavs->Count));
+
+      LegacyResourcesMusic->setText(
+         CEGUI::PropertyHelper<int>::toString(client->ResourceManager->NumLoadedMusic) + " / " +
+         CEGUI::PropertyHelper<int>::toString(client->ResourceManager->Music->Count));
+
+      //----------------------------------------------------------------------------------------------------------//
+
 
       //----------------------------------------------------------------------------------------------------------//
    };

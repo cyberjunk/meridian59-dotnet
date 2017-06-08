@@ -1504,6 +1504,12 @@ namespace Meridian59 { namespace Ogre
          
          static ::CEGUI::Window* GarbageCollectionRuns = nullptr;
 
+         static ::CEGUI::Window* LegacyResourcesObjects = nullptr;
+         static ::CEGUI::Window* LegacyResourcesTextures = nullptr;
+         static ::CEGUI::Window* LegacyResourcesRooms = nullptr;
+         static ::CEGUI::Window* LegacyResourcesSounds = nullptr;
+         static ::CEGUI::Window* LegacyResourcesMusic = nullptr;
+
          static void Initialize();
          static void Destroy();
          static void ApplyLanguage();
