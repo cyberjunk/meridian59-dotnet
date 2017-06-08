@@ -410,6 +410,10 @@ namespace Meridian59 { namespace Ogre
 
       /********************************************************************************************************/
 
+      ::Ogre::WindowEventUtilities::messagePump();
+
+      /********************************************************************************************************/
+
       if (RecreateWindow)
       {
          RenderWindowDestroy();
@@ -466,21 +470,8 @@ namespace Meridian59 { namespace Ogre
       }
 
       // render a frame
-      if (root && renderWindow && sceneManager)
-      {
-         root->_fireFrameStarted();
-         renderWindow->update(false);
-         root->_fireFrameRenderingQueued();
-         ::Ogre::WindowEventUtilities::messagePump();
-         renderWindow->swapBuffers();
-         sceneManager->_handleLodEvents();
-         root->_fireFrameEnded();
-      }
-
-      // at least process WM messages
-      //
-      else
-         ::Ogre::WindowEventUtilities::messagePump();
+      if (root)
+         root->renderOneFrame();
    };
 
    void OgreClient::Cleanup()
