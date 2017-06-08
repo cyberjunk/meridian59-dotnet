@@ -342,6 +342,74 @@
             <Property name="Area" value="{{0,340},{0,360},{0,460},{0,380}}" />
 			<Property name="HorzFormatting" value="LeftAligned" />
          </Window>
+		 
+		  <!-- Legacy Resources -->
+		 <Window type="TaharezLook/LabelWhite" name="Stats.LegacyResourcesDesc" >
+            <Property name="Text" value="Legacy Resources" />
+            <Property name="Area" value="{{0,240},{0,400},{0,460},{0,420}}" />
+			<Property name="HorzFormatting" value="LeftAligned" />
+			<Property name="Font" value="Berenika-8-Bold" />
+         </Window>
+		 
+		 <!-- Objects -->
+         <Window type="TaharezLook/LabelWhite" name="Stats.LegacyResourcesObjectsDesc" >
+            <Property name="Text" value="Objects" />
+			<Property name="Area" value="{{0,240},{0,430},{0,320},{0,450}}" />
+            <Property name="HorzFormatting" value="LeftAligned" />	
+         </Window>
+         <Window type="TaharezLook/LabelWhite" name="Stats.LegacyResourcesObjects" >
+            <Property name="Text" value="0" />
+            <Property name="Area" value="{{0,340},{0,430},{0,460},{0,450}}" />
+			<Property name="HorzFormatting" value="LeftAligned" />
+         </Window>
+		 
+		 <!-- RoomTextures -->
+         <Window type="TaharezLook/LabelWhite" name="Stats.LegacyResourcesTexturesDesc" >
+            <Property name="Text" value="Textures" />
+			<Property name="Area" value="{{0,240},{0,460},{0,320},{0,480}}" />
+            <Property name="HorzFormatting" value="LeftAligned" />	
+         </Window>
+         <Window type="TaharezLook/LabelWhite" name="Stats.LegacyResourcesTextures" >
+            <Property name="Text" value="0" />
+            <Property name="Area" value="{{0,340},{0,460},{0,460},{0,480}}" />
+			<Property name="HorzFormatting" value="LeftAligned" />
+         </Window>
+		 
+		 <!-- Rooms -->
+         <Window type="TaharezLook/LabelWhite" name="Stats.LegacyResourcesRoomsDesc" >
+            <Property name="Text" value="Rooms" />
+			<Property name="Area" value="{{0,240},{0,490},{0,320},{0,510}}" />
+            <Property name="HorzFormatting" value="LeftAligned" />	
+         </Window>
+         <Window type="TaharezLook/LabelWhite" name="Stats.LegacyResourcesRooms" >
+            <Property name="Text" value="0" />
+            <Property name="Area" value="{{0,340},{0,490},{0,460},{0,510}}" />
+			<Property name="HorzFormatting" value="LeftAligned" />
+         </Window>
+		 
+		 <!-- Sounds -->
+         <Window type="TaharezLook/LabelWhite" name="Stats.LegacyResourcesSoundsDesc" >
+            <Property name="Text" value="Sounds" />
+			<Property name="Area" value="{{0,240},{0,520},{0,320},{0,540}}" />
+            <Property name="HorzFormatting" value="LeftAligned" />	
+         </Window>
+         <Window type="TaharezLook/LabelWhite" name="Stats.LegacyResourcesSounds" >
+            <Property name="Text" value="0" />
+            <Property name="Area" value="{{0,340},{0,520},{0,460},{0,540}}" />
+			<Property name="HorzFormatting" value="LeftAligned" />
+         </Window>
+		 
+		 <!-- Music -->
+         <Window type="TaharezLook/LabelWhite" name="Stats.LegacyResourcesMusicDesc" >
+            <Property name="Text" value="Music" />
+			<Property name="Area" value="{{0,240},{0,550},{0,320},{0,570}}" />
+            <Property name="HorzFormatting" value="LeftAligned" />	
+         </Window>
+         <Window type="TaharezLook/LabelWhite" name="Stats.LegacyResourcesMusic" >
+            <Property name="Text" value="0" />
+            <Property name="Area" value="{{0,340},{0,550},{0,460},{0,570}}" />
+			<Property name="HorzFormatting" value="LeftAligned" />
+         </Window>
       </Window>
 	  
       <!-- LoadingBar -->
