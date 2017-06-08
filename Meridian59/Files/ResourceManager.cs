@@ -676,6 +676,7 @@ namespace Meridian59.Files
 
                 // update
                 Objects.TryUpdate(it.Current.Key, file, null);
+                numLoadedObjects++;
 
                 queueAsyncFilesLoaded.Enqueue(it.Current.Key);
             }
@@ -697,7 +698,8 @@ namespace Meridian59.Files
 
                 // update
                 RoomTextures.TryUpdate(it.Current.Key, file, null);
-                
+                numLoadedRoomTextures++;
+
                 queueAsyncFilesLoaded.Enqueue(it.Current.Key);
             }
         }
@@ -717,6 +719,7 @@ namespace Meridian59.Files
 
                 // update
                 Rooms.TryUpdate(it.Current.Key, file, null);
+                numLoadedRooms++;
 
                 queueAsyncFilesLoaded.Enqueue(it.Current.Key);
             }
@@ -738,6 +741,7 @@ namespace Meridian59.Files
 
                 // update
                 Wavs.TryUpdate(it.Current.Key, wavData, null);
+                numLoadedWavs++;
 
                 queueAsyncFilesLoaded.Enqueue(it.Current.Key);
             }
@@ -759,6 +763,7 @@ namespace Meridian59.Files
 
                 // update
                 Music.TryUpdate(it.Current.Key, mp3Data, null);
+                numLoadedMusic++;
 
                 queueAsyncFilesLoaded.Enqueue(it.Current.Key);
             }
