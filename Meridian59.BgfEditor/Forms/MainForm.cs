@@ -481,6 +481,12 @@ namespace Meridian59.BgfEditor
             frm.Show();
         }
 
+        private void OnMenuRoomTextureListClick(object sender, EventArgs e)
+        {
+            RoomTexturesViewer frm = new RoomTexturesViewer();
+            frm.Show();
+        }
+
         protected void OnFileDialogOpenFileOk(object sender, CancelEventArgs e)
         {
             // load from file

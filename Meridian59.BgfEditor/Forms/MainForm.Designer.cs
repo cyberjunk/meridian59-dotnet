@@ -100,6 +100,7 @@
             this.fdAddFrame = new System.Windows.Forms.OpenFileDialog();
             this.fdOpenFile = new System.Windows.Forms.OpenFileDialog();
             this.fdSaveFile = new System.Windows.Forms.SaveFileDialog();
+            this.openRoomTexturesListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tabFrames.SuspendLayout();
@@ -173,28 +174,28 @@
             // menuNew
             // 
             this.menuNew.Name = "menuNew";
-            this.menuNew.Size = new System.Drawing.Size(116, 22);
+            this.menuNew.Size = new System.Drawing.Size(152, 22);
             this.menuNew.Text = "New";
             this.menuNew.Click += new System.EventHandler(this.OnMenuNewClick);
             // 
             // menuOpen
             // 
             this.menuOpen.Name = "menuOpen";
-            this.menuOpen.Size = new System.Drawing.Size(116, 22);
+            this.menuOpen.Size = new System.Drawing.Size(152, 22);
             this.menuOpen.Text = "Open";
             this.menuOpen.Click += new System.EventHandler(this.OnMenuOpenClick);
             // 
             // menuSaveAs
             // 
             this.menuSaveAs.Name = "menuSaveAs";
-            this.menuSaveAs.Size = new System.Drawing.Size(116, 22);
+            this.menuSaveAs.Size = new System.Drawing.Size(152, 22);
             this.menuSaveAs.Text = "Save";
             this.menuSaveAs.Click += new System.EventHandler(this.OnMenuSaveAsClick);
             // 
             // menuSetShrink
             // 
             this.menuSetShrink.Name = "menuSetShrink";
-            this.menuSetShrink.Size = new System.Drawing.Size(116, 22);
+            this.menuSetShrink.Size = new System.Drawing.Size(152, 22);
             this.menuSetShrink.Text = "Settings";
             this.menuSetShrink.Click += new System.EventHandler(this.OnMenuSetShrinkClick);
             // 
@@ -209,7 +210,8 @@
             this.convertFromValeColorsToolStripMenuItem,
             this.menuComparePalettes,
             this.toolStripMenuItem2,
-            this.openAnimationViewerToolStripMenuItem});
+            this.openAnimationViewerToolStripMenuItem,
+            this.openRoomTexturesListToolStripMenuItem});
             this.menuTasks.Name = "menuTasks";
             this.menuTasks.Size = new System.Drawing.Size(47, 20);
             this.menuTasks.Text = "Tools";
@@ -872,6 +874,13 @@
             this.fdSaveFile.Filter = "BGF-File|*.bgf|XML-File|*.xml";
             this.fdSaveFile.FileOk += new System.ComponentModel.CancelEventHandler(this.OnFileDialogSaveFileOk);
             // 
+            // openRoomTexturesListToolStripMenuItem
+            // 
+            this.openRoomTexturesListToolStripMenuItem.Name = "openRoomTexturesListToolStripMenuItem";
+            this.openRoomTexturesListToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
+            this.openRoomTexturesListToolStripMenuItem.Text = "Open Room Textures List";
+            this.openRoomTexturesListToolStripMenuItem.Click += new System.EventHandler(this.OnMenuRoomTextureListClick);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1007,6 +1016,7 @@
         private System.Windows.Forms.ToolStripMenuItem cutTransparencyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem openAnimationViewerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openRoomTexturesListToolStripMenuItem;
     }
 }
 
