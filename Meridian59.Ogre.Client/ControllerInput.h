@@ -39,13 +39,13 @@ namespace Meridian59 { namespace Ogre
    public ref class ControllerInput abstract sealed
    {
    private:
-      literal float ZOOMSPEED          = 0.10f;
-      literal float MOUSELOOKSPEED     = 0.0004f;
-      literal float MOUSELOOKSTEPFACT  = 0.013f;
-      literal long MOUSECLICKMAXDELAY  = 350;
-      literal long MOUSELOOKMINDELAY   = 100;
-      literal long KEYDOWNINTERVAL     = 333;
-      literal float KEYROTATESPEED     = 0.00012f;
+      literal float   ZOOMSPEED          = 0.10f;
+      literal float   MOUSELOOKSPEED     = 0.0004f;
+      literal CLRReal MOUSELOOKSTEPFACT  = 0.013f;
+      literal long    MOUSECLICKMAXDELAY = 350;
+      literal long    MOUSELOOKMINDELAY  = 100;
+      literal long    KEYDOWNINTERVAL    = 333;
+      literal float   KEYROTATESPEED     = 0.00012f;
 
       static ControllerInput();
 
@@ -66,14 +66,10 @@ namespace Meridian59 { namespace Ogre
       static bool isAutoMove;
       static bool isAutoMoveOnMove;
       static bool isAiming;
-      static float cameraPitchDelta;
-      static float cameraPitchStep;
-      static float cameraYawDelta;
-      static float cameraYawStep;
-      static float cameraZDelta;
-      static float cameraZStep;
-      static float avatarYawDelta;
-      static float avatarYawStep;
+      static CLRReal cameraPitchDelta;
+      static CLRReal cameraYawDelta;
+      static CLRReal cameraZDelta;
+      static CLRReal avatarYawDelta;
 
       static property RemoteNode^ Avatar { RemoteNode^ get() { return ControllerRoom::AvatarObject; } };
 

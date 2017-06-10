@@ -23,14 +23,9 @@ namespace Meridian59 { namespace Ogre
       isAiming             = false;
 
       cameraPitchDelta     = 0.0f;
-      cameraPitchStep      = 0.0f;
       cameraYawDelta       = 0.0f;
-      cameraYawStep        = 0.0f;
       cameraZDelta         = 0.0f;
-      cameraZStep          = 0.0f;
-      
       avatarYawDelta       = 0.0f;
-      avatarYawStep        = 0.0f;
 
       mouseDownWindowsPosition    = new POINT();
       mouseDownWindowsPosition->x = 0;
@@ -120,13 +115,9 @@ namespace Meridian59 { namespace Ogre
       isAiming             = false;
 
       cameraPitchDelta     = 0.0f;
-      cameraPitchStep      = 0.0f;
       cameraYawDelta       = 0.0f;
-      cameraYawStep        = 0.0f;
       cameraZDelta         = 0.0f;
-      cameraZStep          = 0.0f;
       avatarYawDelta       = 0.0f;
-      avatarYawStep        = 0.0f;
 
       mouseDownWindowsPosition->x = 0;
       mouseDownWindowsPosition->y = 0;
@@ -407,7 +398,6 @@ namespace Meridian59 { namespace Ogre
                // set a new delta and stepsize
                // this will be processed tick based
                avatarYawDelta += MOUSELOOKSPEED * (float)OgreClient::Singleton->Config->MouseAimSpeed * (float)dx;
-               avatarYawStep = MOUSELOOKSTEPFACT * avatarYawDelta * CLRMath::Max((float)OgreClient::Singleton->GameTick->Span, 1.0f);
 
                isAiming = true;
                ControllerUI::MouseCursor->hide();
@@ -426,7 +416,6 @@ namespace Meridian59 { namespace Ogre
                // set a new delta and stepsize
                // this will be processed tick based
                cameraPitchDelta += MOUSELOOKSPEED * (float)OgreClient::Singleton->Config->MouseAimSpeed * (float)dy;
-               cameraPitchStep = MOUSELOOKSTEPFACT * cameraPitchDelta * CLRMath::Max((float)OgreClient::Singleton->GameTick->Span, 1.0f);
 
                isAiming = true;
                ControllerUI::MouseCursor->hide();
@@ -445,7 +434,6 @@ namespace Meridian59 { namespace Ogre
                // set a new delta and stepsize
                // this will be processed tick based
                cameraYawDelta += MOUSELOOKSPEED * (float)OgreClient::Singleton->Config->MouseAimSpeed * (float)dx;
-               cameraYawStep = MOUSELOOKSTEPFACT * cameraYawDelta * CLRMath::Max((float)OgreClient::Singleton->GameTick->Span, 1.0f);
 
                isAiming = true;
                ControllerUI::MouseCursor->hide();
@@ -464,7 +452,6 @@ namespace Meridian59 { namespace Ogre
                // set a new delta and stepsize
                // this will be processed tick based
                cameraPitchDelta += MOUSELOOKSPEED * (float)OgreClient::Singleton->Config->MouseAimSpeed * (float)dy;
-               cameraPitchStep = MOUSELOOKSTEPFACT * cameraPitchDelta * CLRMath::Max((float)OgreClient::Singleton->GameTick->Span, 1.0f);
 
                isAiming = true;
                ControllerUI::MouseCursor->hide();
@@ -477,7 +464,6 @@ namespace Meridian59 { namespace Ogre
             // set a new delta and stepsize
             // this will be processed tick based
             cameraZDelta += ZOOMSPEED * (float)dz;
-            cameraZStep = MOUSELOOKSTEPFACT * cameraZDelta * CLRMath::Max((float)OgreClient::Singleton->GameTick->Span, 1.0f);
          }
 
          // restore/fixed windows cursor position on mouse look
@@ -748,9 +734,28 @@ namespace Meridian59 { namespace Ogre
          // get cameranode orientation
          const Quaternion& orientation = cameraNode->getOrientation();
 
+         // reset deltas on aiming stop
+         // removing this removes instant stop on button release
+         if (!IsRightMouseDown)
+         {
+            // stop any avatar yaw instantly
+            avatarYawDelta = 0.0f;
+
+            // stop any cam pitch/yaw instantly
+            if ((!IsLeftMouseDown || isCameraFirstPerson))
+            {
+               cameraPitchDelta = 0.0f;
+               cameraYawDelta = 0.0f;
+            }
+         }
+
          // 1. PITCH
          if (cameraPitchDelta != 0.0f)
          {
+            // how much to pitch this tick
+            CLRReal cameraPitchStep = 
+               MOUSELOOKSTEPFACT * cameraPitchDelta * (CLRReal)OgreClient::Singleton->GameTick->Span;
+
             // apply pitchstep on camera
             cameraNode->pitch(Radian(-cameraPitchStep));
 
@@ -769,38 +774,46 @@ namespace Meridian59 { namespace Ogre
             else if (cameraPitchDelta > 0.0f)
             {
                cameraPitchDelta -= cameraPitchStep;
-               cameraPitchDelta = CLRMath::Max(cameraPitchDelta, 0.0f);
+               cameraPitchDelta = CLRMath::Max(cameraPitchDelta, (CLRReal)0.0f);
             }
             else if (cameraPitchDelta < 0.0f)
             {
                cameraPitchDelta -= cameraPitchStep;
-               cameraPitchDelta = CLRMath::Min(cameraPitchDelta, 0.0f);
+               cameraPitchDelta = CLRMath::Min(cameraPitchDelta, (CLRReal)0.0f);
             }
          }
 
          // 2. YAW
          if (cameraYawDelta != 0.0f)
          {
+            // how much to yaw this tick
+            CLRReal cameraYawStep = 
+               MOUSELOOKSTEPFACT * cameraYawDelta * (CLRReal)OgreClient::Singleton->GameTick->Span;
+
             // apply yawstep on camera
             cameraNode->yaw(Radian(-cameraYawStep), Node::TransformSpace::TS_WORLD);
 
             if (cameraYawDelta > 0.0f)
             {
                cameraYawDelta -= cameraYawStep;
-               cameraYawDelta = CLRMath::Max(cameraYawDelta, 0.0f);
+               cameraYawDelta = CLRMath::Max(cameraYawDelta, (CLRReal)0.0f);
             }
             else if (cameraYawDelta < 0.0f)
             {
                cameraYawDelta -= cameraYawStep;
-               cameraYawDelta = CLRMath::Min(cameraYawDelta, 0.0f);
+               cameraYawDelta = CLRMath::Min(cameraYawDelta, (CLRReal)0.0f);
             }
          }
 
          // 3. ZOOM
          if (cameraZDelta != 0.0f)
          {
+            // how much to zoom this tick
+            CLRReal cameraZStep = 
+               MOUSELOOKSTEPFACT * cameraZDelta * (CLRReal)OgreClient::Singleton->GameTick->Span;
+
             // calculate possible new camera zoomout
-            float destZ = (float)camera->getPosition().z - cameraZStep;
+            CLRReal destZ = camera->getPosition().z - cameraZStep;
 
             // zooming out of limit
             if (destZ > OgreClient::Singleton->Config->CameraDistanceMax && cameraZStep < 0.0f)
@@ -826,12 +839,12 @@ namespace Meridian59 { namespace Ogre
                   if (cameraZDelta > 0.0f)
                   {
                      cameraZDelta -= cameraZStep;
-                     cameraZDelta = CLRMath::Max(cameraZDelta, 0.0f);
+                     cameraZDelta = CLRMath::Max(cameraZDelta, (CLRReal)0.0f);
                   }
                   else if (cameraZDelta < 0.0f)
                   {
                      cameraZDelta -= cameraZStep;
-                     cameraZDelta = CLRMath::Min(cameraZDelta, 0.0f);
+                     cameraZDelta = CLRMath::Min(cameraZDelta, (CLRReal)0.0f);
                   }
                }
                else
@@ -862,18 +875,22 @@ namespace Meridian59 { namespace Ogre
       // YAW
       if (avatarYawDelta != 0.0f)
       {
+         // how much to yaw avatar this tick
+         CLRReal avatarYawStep = 
+            MOUSELOOKSTEPFACT * avatarYawDelta * (CLRReal)OgreClient::Singleton->GameTick->Span;
+
          // apply yawstep on avatar
          OgreClient::Singleton->TryYaw(avatarYawStep);
 
          if (avatarYawDelta > 0.0f)
          {
             avatarYawDelta -= avatarYawStep;
-            avatarYawDelta = CLRMath::Max(avatarYawDelta, 0.0f);
+            avatarYawDelta = CLRMath::Max(avatarYawDelta, (CLRReal)0.0f);
          }
          else if (avatarYawDelta < 0.0f)
          {
             avatarYawDelta -= avatarYawStep;
-            avatarYawDelta = CLRMath::Min(avatarYawDelta, 0.0f);
+            avatarYawDelta = CLRMath::Min(avatarYawDelta, (CLRReal)0.0f);
          }
       }
 
