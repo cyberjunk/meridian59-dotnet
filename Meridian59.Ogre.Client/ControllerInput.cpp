@@ -12,7 +12,7 @@ namespace Meridian59 { namespace Ogre
 
       tickMouseDownLeft    = 0;
       tickMouseDownRight   = 0;
-      
+
       isCameraFirstPerson  = true;
       isInitialized        = false;
       isMouseInWindow      = false;
@@ -21,11 +21,9 @@ namespace Meridian59 { namespace Ogre
       isAutoMove           = false;
       isAutoMoveOnMove     = false;
       isAiming             = false;
-      
-      cameraPitchCurrent   = 0.0f;
+
       cameraPitchDelta     = 0.0f;
       cameraPitchStep      = 0.0f;
-      cameraYawCurrent     = 0.0f;
       cameraYawDelta       = 0.0f;
       cameraYawStep        = 0.0f;
       cameraZDelta         = 0.0f;
@@ -121,10 +119,8 @@ namespace Meridian59 { namespace Ogre
       isAutoMoveOnMove     = false;
       isAiming             = false;
 
-      cameraPitchCurrent   = 0.0f;
       cameraPitchDelta     = 0.0f;
       cameraPitchStep      = 0.0f;
-      cameraYawCurrent     = 0.0f;
       cameraYawDelta       = 0.0f;
       cameraYawStep        = 0.0f;
       cameraZDelta         = 0.0f;
@@ -751,10 +747,6 @@ namespace Meridian59 { namespace Ogre
       {
          // get cameranode orientation
          const Quaternion& orientation = cameraNode->getOrientation();
-
-         // save/update current pitch and yaw values
-         cameraPitchCurrent = (float)orientation.getPitch().valueRadians();
-         cameraYawCurrent = (float)orientation.getYaw().valueRadians();
 
          // 1. PITCH
          if (cameraPitchDelta != 0.0f)

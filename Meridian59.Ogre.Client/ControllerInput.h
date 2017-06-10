@@ -66,10 +66,8 @@ namespace Meridian59 { namespace Ogre
       static bool isAutoMove;
       static bool isAutoMoveOnMove;
       static bool isAiming;
-      static float cameraPitchCurrent;
       static float cameraPitchDelta;
       static float cameraPitchStep;
-      static float cameraYawCurrent;
       static float cameraYawDelta;
       static float cameraYawStep;
       static float cameraZDelta;
