@@ -24,7 +24,7 @@ namespace Meridian59 { namespace Ogre
 
       cameraPitchDelta     = 0.0f;
       cameraYawDelta       = 0.0f;
-      cameraZDelta         = 0.0f;
+      cameraZoom           = 0.0f;
       avatarYawDelta       = 0.0f;
 
       mouseDownWindowsPosition    = new POINT();
@@ -116,7 +116,7 @@ namespace Meridian59 { namespace Ogre
 
       cameraPitchDelta     = 0.0f;
       cameraYawDelta       = 0.0f;
-      cameraZDelta         = 0.0f;
+      cameraZoom           = 0.0f;
       avatarYawDelta       = 0.0f;
 
       mouseDownWindowsPosition->x = 0;
@@ -461,9 +461,12 @@ namespace Meridian59 { namespace Ogre
          // mousewheel / zoom
          if (dz != 0 && ControllerUI::IgnoreTopControlForMouseInput)
          {
-            // set a new delta and stepsize
-            // this will be processed tick based
-            cameraZDelta += ZOOMSPEED * (float)dz;
+            // set a new zoomlevel, this will be processed tick based
+            cameraZoom += ZOOMSPEED * (float)-dz;
+
+            // bound
+            cameraZoom = CLRMath::Max(cameraZoom, (CLRReal)0.0f);
+            cameraZoom = CLRMath::Min(cameraZoom, (CLRReal)OgreClient::Singleton->Config->CameraDistanceMax);
          }
 
          // restore/fixed windows cursor position on mouse look
@@ -806,64 +809,36 @@ namespace Meridian59 { namespace Ogre
          }
 
          // 3. ZOOM
-         if (cameraZDelta != 0.0f)
+         CLRReal zDelta = cameraZoom - camera->getPosition().z;
+         if (zDelta != 0.0f)
          {
             // how much to zoom this tick
             CLRReal cameraZStep = 
-               MOUSELOOKSTEPFACT * cameraZDelta * (CLRReal)OgreClient::Singleton->GameTick->Span;
+               MOUSELOOKSTEPFACT * zDelta * (CLRReal)OgreClient::Singleton->GameTick->Span;
 
-            // calculate possible new camera zoomout
-            CLRReal destZ = camera->getPosition().z - cameraZStep;
+            // apply the move
+            camera->moveRelative(::Ogre::Vector3(0.0f, 0.0f, cameraZStep));
+            camera->_notifyMoved();
 
-            // zooming out of limit
-            if (destZ > OgreClient::Singleton->Config->CameraDistanceMax && cameraZStep < 0.0f)
+            // flip first person mode
+            if (camera->getPosition().z > 0.1f)
             {
-               cameraZStep = 0.0f;
-               cameraZDelta = 0.0f;
+               // mark as 3. person camera mode
+               IsCameraFirstPerson = false;
+
+               // hide 1. person overlays
+               ControllerUI::PlayerOverlays::HideOverlays();
             }
             else
             {
-               //
-               if (destZ > 0.0f)
-               {
-                  // mark as 3. person camera mode
-                  IsCameraFirstPerson = false;
+               // mark as 1. person camera mode
+               IsCameraFirstPerson = true;
 
-                  // hide 1. person overlays
-                  ControllerUI::PlayerOverlays::HideOverlays();
+               // show 1. person overlays
+               ControllerUI::PlayerOverlays::ShowOverlays();
 
-                  // apply the move
-                  camera->moveRelative(::Ogre::Vector3(0.0f, 0.0f, -cameraZStep));
-                  camera->_notifyMoved();
-
-                  if (cameraZDelta > 0.0f)
-                  {
-                     cameraZDelta -= cameraZStep;
-                     cameraZDelta = CLRMath::Max(cameraZDelta, (CLRReal)0.0f);
-                  }
-                  else if (cameraZDelta < 0.0f)
-                  {
-                     cameraZDelta -= cameraZStep;
-                     cameraZDelta = CLRMath::Min(cameraZDelta, (CLRReal)0.0f);
-                  }
-               }
-               else
-               {
-                  // mark as 1. person camera mode
-                  IsCameraFirstPerson = true;
-
-                  // show 1. person overlays
-                  ControllerUI::PlayerOverlays::ShowOverlays();
-
-                  // apply the move to the 0.0f
-                  camera->moveRelative(::Ogre::Vector3(0.0f, 0.0f, -cameraZStep - destZ));
-                  camera->_notifyMoved();
-
-                  cameraZDelta = 0.0f;
-
-                  // rotate the avatar to match camera
-                  SetAvatarOrientationFromCamera();
-               }
+               // rotate the avatar to match camera
+               SetAvatarOrientationFromCamera();
             }
          }
       }

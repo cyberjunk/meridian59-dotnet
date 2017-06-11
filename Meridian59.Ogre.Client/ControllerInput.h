@@ -68,7 +68,7 @@ namespace Meridian59 { namespace Ogre
       static bool isAiming;
       static CLRReal cameraPitchDelta;
       static CLRReal cameraYawDelta;
-      static CLRReal cameraZDelta;
+      static CLRReal cameraZoom;
       static CLRReal avatarYawDelta;
 
       static property RemoteNode^ Avatar { RemoteNode^ get() { return ControllerRoom::AvatarObject; } };
