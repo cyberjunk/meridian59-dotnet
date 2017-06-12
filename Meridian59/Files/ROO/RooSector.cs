@@ -1022,18 +1022,6 @@ namespace Meridian59.Files.ROO
             if (TextureChanged != null)
                 TextureChanged(this, new SectorTextureChangedEventArgs(this, false, oldmaterial));
         }
-
-        /// <summary>
-        /// Calls FillRandomPoints() on all leafs in 'Leafs'.
-        /// </summary>
-        /// <param name="Points"></param>
-        /// <param name="Intensity"></param>
-        public void FillRandomPoints(List<V3> Points, Real Intensity)
-        {
-            foreach (RooSubSector leaf in leafs)
-                leaf.FillRandomPoints(Points, Intensity);
-        }
-
         #endregion
     }
 }

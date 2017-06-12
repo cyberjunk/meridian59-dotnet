@@ -566,53 +566,5 @@ namespace Meridian59.Files.ROO
 
             return false;
         }
-
-        /// <summary>
-        /// Creates certain amount of random points on the leaf surface 
-        /// controlled by Intensity. Also adds them to the Points list.
-        /// Height is stored in Y. Scale is KOD/new client fineness.
-        /// </summary>
-        /// <param name="Points">Points will be added to this collection</param>
-        /// <param name="Intensity">How many points will be created</param>
-        public void FillRandomPoints(List<V3> Points, Real Intensity)
-        {
-            if (Sector == null)
-                return;
-
-            // process triangles of this subsector
-            for (int i = 0; i < Vertices.Count - 2; i++)
-            {
-                // pick a 2D triangle for this iteration
-                // of subsector by using next 3 points of it
-                V2 A = Vertices[0];
-                V2 B = Vertices[i + 1];
-                V2 C = Vertices[i + 2];
-                
-                // calc area
-                Real area = (float)MathUtil.TriangleArea(ref A, ref B, ref C);
-
-                // create an amount of grass to create for this triangle
-                // scaled by the area of the triangle and intensity
-                int num = (int)(0.0000001f * Intensity * area) + 1;
-
-                // create num random points in triangle
-                for (int k = 0; k < num; k++)
-                {
-                    // generate random 2D point in triangle
-                    V2 rnd2D = MathUtil.RandomPointInTriangle(ref A, ref B, ref C);
-
-                    // retrieve height for random coordinates
-                    // also flip y/z and scale to server/newclient
-                    V3 rnd3D;
-                    rnd3D.X = rnd2D.X;
-                    rnd3D.Y = Sector.CalculateFloorHeight(rnd2D.X, rnd2D.Y, false);
-                    rnd3D.Z = rnd2D.Y;
-                    rnd3D.Scale(GeometryConstants.CLIENTFINETOKODFINE);
-
-                    // add random point to according materiallist
-                    Points.Add(rnd3D);
-                }
-            }
-        }
     }
 }
