@@ -39,6 +39,7 @@ namespace Meridian59.Data.Models
         public const string PROPNAME_WHITEOUT   = "Whiteout";
         public const string PROPNAME_BLUR       = "Blur";
         public const string PROPNAME_FLASHXLAT  = "FlashXLat";
+        public const string PROPNAME_XLATOVERRIDE = "XLatOverride";
         #endregion
 
         #region INotifyPropertyChanged
@@ -62,6 +63,7 @@ namespace Meridian59.Data.Models
         protected EffectWhiteOut whiteout;
         protected EffectBlur blur;
         protected EffectFlashXLat flashxlat;
+        protected EffectXLatOverride xlatoverride;
         #endregion
 
         #region Properties
@@ -224,6 +226,22 @@ namespace Meridian59.Data.Models
                 }
             }
         }
+
+        /// <summary>
+        /// The xlat override effect
+        /// </summary>
+        public EffectXLatOverride XLatOverride
+        {
+            get { return xlatoverride; }
+            protected set
+            {
+                if (xlatoverride != value)
+                {
+                    xlatoverride = value;
+                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_XLATOVERRIDE));
+                }
+            }
+        }
         #endregion
 
         /// <summary>
@@ -242,6 +260,7 @@ namespace Meridian59.Data.Models
             whiteout = new EffectWhiteOut();
             blur = new EffectBlur();
             flashxlat = new EffectFlashXLat();
+            xlatoverride = new EffectXLatOverride();
 
             Clear(false);
         }
@@ -337,7 +356,8 @@ namespace Meridian59.Data.Models
                     break;
 
                 case EffectType.XLatOverride:   // 17
-                    // TODO?
+                    xlatoverride.XLat = ((EffectXLatOverride)Effect).XLat;
+                    xlatoverride.IsActive = (xlatoverride.XLat > 0);
                     break;
             }
         }
@@ -359,6 +379,7 @@ namespace Meridian59.Data.Models
             whiteout.Clear(RaiseChangedEvent);
             blur.Clear(RaiseChangedEvent);
             flashxlat.Clear(RaiseChangedEvent);
+            xlatoverride.Clear(RaiseChangedEvent);
         }
     }
 }
