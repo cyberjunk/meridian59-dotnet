@@ -812,9 +812,14 @@ namespace Meridian59 { namespace Ogre
          CLRReal zDelta = cameraZoom - camera->getPosition().z;
          if (zDelta != 0.0f)
          {
+            // limit stepsize
+            CLRReal zD = (zDelta > 0.0f) ?
+               CLRMath::Min((CLRReal) 128.0f, zDelta) :
+               CLRMath::Max((CLRReal)-128.0f, zDelta);
+
             // how much to zoom this tick
             CLRReal cameraZStep = 
-               MOUSELOOKSTEPFACT * zDelta * (CLRReal)OgreClient::Singleton->GameTick->Span;
+               CAMERAZOOMSTEPFACT * zD * (CLRReal)OgreClient::Singleton->GameTick->Span;
 
             // apply the move
             camera->moveRelative(::Ogre::Vector3(0.0f, 0.0f, cameraZStep));
