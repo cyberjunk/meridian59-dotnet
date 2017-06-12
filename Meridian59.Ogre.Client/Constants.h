@@ -39,6 +39,7 @@
 #define COMPOSITOR_WHITEOUT      "Whiteout"
 #define COMPOSITOR_BLUR          "Blur"
 #define COMPOSITOR_BLEND         "Blend"
+#define COMPOSITOR_XLATOVERRIDE  "XLatOverride"
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 // Texture Groups

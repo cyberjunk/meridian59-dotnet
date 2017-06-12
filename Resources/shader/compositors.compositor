@@ -53,19 +53,104 @@ compositor Blend
     }
 }
 
-// Black compositor for black blind (this is a copy&paste of Blend)
-compositor Black : Blend
+// Black compositor for black blind
+compositor Black
 {
+	technique
+    {
+        texture rt0 target_width target_height PF_A8R8G8B8
+
+        target rt0
+        {
+            input previous
+        }
+
+		target_output
+        {
+            input none
+            
+			pass render_quad
+            {
+                material Compositor/Black
+                input 0 rt0
+            }
+        }
+    }
 }
 
-// Pain compositor for EffectPain (this is a copy&paste of Blend)
-compositor Pain : Blend
+// Pain compositor for EffectPain
+compositor Pain
 {
+	technique
+    {
+        texture rt0 target_width target_height PF_A8R8G8B8
+
+        target rt0
+        {
+            input previous
+        }
+
+		target_output
+        {
+            input none
+            
+			pass render_quad
+            {
+                material Compositor/Pain
+                input 0 rt0
+            }
+        }
+    }
 }
 
-// Whiteout compositor for EffectWhiteout (this is a copy&paste of Blend)
-compositor Whiteout : Blend
+// Whiteout compositor for EffectWhiteout
+compositor Whiteout
 {
+	technique
+    {
+        texture rt0 target_width target_height PF_A8R8G8B8
+
+        target rt0
+        {
+            input previous
+        }
+
+		target_output
+        {
+            input none
+            
+			pass render_quad
+            {
+                material Compositor/Whiteout
+                input 0 rt0
+            }
+        }
+    }
+}
+
+// XLatOverride compositor for EffectXLatOverride
+compositor XLatOverride
+{
+	technique
+    {
+        texture rt0 target_width target_height PF_A8R8G8B8
+
+        target rt0
+        {
+            input previous
+        }
+
+		target_output
+        {
+            input none
+            
+			pass render_quad
+            {
+                material Compositor/XLatOverride
+                input 0 rt0
+            }
+        }
+    }
 }
 
 // Blur compositor used for EffectBlur

@@ -44,6 +44,7 @@ namespace Meridian59 { namespace Ogre
       static ::Ogre::CompositorInstance* compWhiteout;
       static ::Ogre::CompositorInstance* compBlur;
       static ::Ogre::CompositorInstance* compBlend;
+      static ::Ogre::CompositorInstance* compXLatOverride;
 
       static CompositorPainListener*     listenerPain;
       static CompositorWhiteoutListener* listenerWhiteout;
@@ -56,6 +57,9 @@ namespace Meridian59 { namespace Ogre
       static void EffectWhiteoutPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
       static void EffectBlurPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
       static void EffectFlashXLatPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
+      static void EffectXLatOverridePropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
+
+      static void GetBlendColorForXlat(unsigned int Xlat, float* Color);
 
    public:
       /// <summary>

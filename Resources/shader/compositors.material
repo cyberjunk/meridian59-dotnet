@@ -101,6 +101,11 @@ material Compositor/Blend
 	}
 }
 
+material Compositor/Black : Compositor/Blend { }
+material Compositor/Pain : Compositor/Blend { }
+material Compositor/Whiteout : Compositor/Blend { }
+material Compositor/XLatOverride : Compositor/Blend { }
+
 material Compositor/Blur
 {
 	technique

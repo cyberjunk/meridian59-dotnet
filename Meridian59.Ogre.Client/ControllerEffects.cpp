@@ -10,6 +10,7 @@ namespace Meridian59 { namespace Ogre
       compWhiteout      = nullptr;
       compBlur          = nullptr;
       compBlend         = nullptr;
+      compXLatOverride  = nullptr;
       listenerPain      = nullptr;
       listenerWhiteout  = nullptr;
    };
@@ -22,22 +23,24 @@ namespace Meridian59 { namespace Ogre
       Effects^ effects = OgreClient::Singleton->Data->Effects;
 
       // attach propertychanged event to effects in Data
-      effects->Blind->PropertyChanged     += gcnew PropertyChangedEventHandler(&EffectBlindPropertyChanged);
-      effects->Invert->PropertyChanged    += gcnew PropertyChangedEventHandler(&EffectInvertPropertyChanged);
-      effects->Pain->PropertyChanged      += gcnew PropertyChangedEventHandler(&EffectPainPropertyChanged);
-      effects->Whiteout->PropertyChanged  += gcnew PropertyChangedEventHandler(&EffectWhiteoutPropertyChanged);
-      effects->Blur->PropertyChanged      += gcnew PropertyChangedEventHandler(&EffectBlurPropertyChanged);
-      effects->FlashXLat->PropertyChanged += gcnew PropertyChangedEventHandler(&EffectFlashXLatPropertyChanged);
+      effects->Blind->PropertyChanged        += gcnew PropertyChangedEventHandler(&EffectBlindPropertyChanged);
+      effects->Invert->PropertyChanged       += gcnew PropertyChangedEventHandler(&EffectInvertPropertyChanged);
+      effects->Pain->PropertyChanged         += gcnew PropertyChangedEventHandler(&EffectPainPropertyChanged);
+      effects->Whiteout->PropertyChanged     += gcnew PropertyChangedEventHandler(&EffectWhiteoutPropertyChanged);
+      effects->Blur->PropertyChanged         += gcnew PropertyChangedEventHandler(&EffectBlurPropertyChanged);
+      effects->FlashXLat->PropertyChanged    += gcnew PropertyChangedEventHandler(&EffectFlashXLatPropertyChanged);
+      effects->XLatOverride->PropertyChanged += gcnew PropertyChangedEventHandler(&EffectXLatOverridePropertyChanged);
 
       // register compositors (order matters!)
       ::Ogre::CompositorManager& compMan  = ::Ogre::CompositorManager::getSingleton();
       ::Ogre::Viewport* viewport          = OgreClient::Singleton->Viewport;
 
       // compositors using blend mechanism
-      compBlack      = compMan.addCompositor(viewport, COMPOSITOR_BLACK);
-      compWhiteout   = compMan.addCompositor(viewport, COMPOSITOR_WHITEOUT);
-      compPain       = compMan.addCompositor(viewport, COMPOSITOR_PAIN);
-      compBlend      = compMan.addCompositor(viewport, COMPOSITOR_BLEND);
+      compBlack        = compMan.addCompositor(viewport, COMPOSITOR_BLACK);
+      compWhiteout     = compMan.addCompositor(viewport, COMPOSITOR_WHITEOUT);
+      compPain         = compMan.addCompositor(viewport, COMPOSITOR_PAIN);
+      compBlend        = compMan.addCompositor(viewport, COMPOSITOR_BLEND);
+      compXLatOverride = compMan.addCompositor(viewport, COMPOSITOR_XLATOVERRIDE);
 
       // other compositors
       compInvert  = compMan.addCompositor(viewport, COMPOSITOR_INVERT);
@@ -63,12 +66,13 @@ namespace Meridian59 { namespace Ogre
       Effects^ effects = OgreClient::Singleton->Data->Effects;
 
       // detach propertychanged event to effects in Data
-      effects->Blind->PropertyChanged     -= gcnew PropertyChangedEventHandler(&EffectBlindPropertyChanged);
-      effects->Invert->PropertyChanged    -= gcnew PropertyChangedEventHandler(&EffectInvertPropertyChanged);
-      effects->Pain->PropertyChanged      -= gcnew PropertyChangedEventHandler(&EffectPainPropertyChanged);
-      effects->Whiteout->PropertyChanged  -= gcnew PropertyChangedEventHandler(&EffectWhiteoutPropertyChanged);
-      effects->Blur->PropertyChanged      -= gcnew PropertyChangedEventHandler(&EffectBlurPropertyChanged);
-      effects->FlashXLat->PropertyChanged -= gcnew PropertyChangedEventHandler(&EffectFlashXLatPropertyChanged);
+      effects->Blind->PropertyChanged        -= gcnew PropertyChangedEventHandler(&EffectBlindPropertyChanged);
+      effects->Invert->PropertyChanged       -= gcnew PropertyChangedEventHandler(&EffectInvertPropertyChanged);
+      effects->Pain->PropertyChanged         -= gcnew PropertyChangedEventHandler(&EffectPainPropertyChanged);
+      effects->Whiteout->PropertyChanged     -= gcnew PropertyChangedEventHandler(&EffectWhiteoutPropertyChanged);
+      effects->Blur->PropertyChanged         -= gcnew PropertyChangedEventHandler(&EffectBlurPropertyChanged);
+      effects->FlashXLat->PropertyChanged    -= gcnew PropertyChangedEventHandler(&EffectFlashXLatPropertyChanged);
+      effects->XLatOverride->PropertyChanged -= gcnew PropertyChangedEventHandler(&EffectXLatOverridePropertyChanged);
 
       compPain->removeListener(listenerPain);
       compWhiteout->removeListener(listenerWhiteout);
@@ -86,6 +90,7 @@ namespace Meridian59 { namespace Ogre
       compMan.removeCompositor(viewport, COMPOSITOR_BLEND);
       compMan.removeCompositor(viewport, COMPOSITOR_INVERT);
       compMan.removeCompositor(viewport, COMPOSITOR_BLUR);
+      compMan.removeCompositor(viewport, COMPOSITOR_XLATOVERRIDE);
 
       compInvert        = nullptr;
       compPain          = nullptr;
@@ -93,11 +98,52 @@ namespace Meridian59 { namespace Ogre
       compWhiteout      = nullptr;
       compBlur          = nullptr;
       compBlend         = nullptr;
+      compXLatOverride  = nullptr;
       listenerPain      = nullptr;
       listenerWhiteout  = nullptr;
 
       // mark not initialized
       IsInitialized = false;
+   };
+
+   void ControllerEffects::GetBlendColorForXlat(unsigned int Xlat, float* Color)
+   {
+      switch (Xlat)
+      {
+      /////// RED 10-100% //////
+      case ColorTransformation::BLEND10RED:  Color[0] = 1.0f; Color[1] = 0.0f; Color[2] = 0.0f; Color[3] = 0.1f; break;
+      case ColorTransformation::BLEND20RED:  Color[0] = 1.0f; Color[1] = 0.0f; Color[2] = 0.0f; Color[3] = 0.2f; break;
+      case ColorTransformation::BLEND30RED:  Color[0] = 1.0f; Color[1] = 0.0f; Color[2] = 0.0f; Color[3] = 0.3f; break;
+      case ColorTransformation::BLEND40RED:  Color[0] = 1.0f; Color[1] = 0.0f; Color[2] = 0.0f; Color[3] = 0.4f; break;
+      case ColorTransformation::BLEND50RED:  Color[0] = 1.0f; Color[1] = 0.0f; Color[2] = 0.0f; Color[3] = 0.5f; break;
+      case ColorTransformation::BLEND60RED:  Color[0] = 1.0f; Color[1] = 0.0f; Color[2] = 0.0f; Color[3] = 0.6f; break;
+      case ColorTransformation::BLEND70RED:  Color[0] = 1.0f; Color[1] = 0.0f; Color[2] = 0.0f; Color[3] = 0.7f; break;
+      case ColorTransformation::BLEND80RED:  Color[0] = 1.0f; Color[1] = 0.0f; Color[2] = 0.0f; Color[3] = 0.8f; break;
+      case ColorTransformation::BLEND90RED:  Color[0] = 1.0f; Color[1] = 0.0f; Color[2] = 0.0f; Color[3] = 0.9f; break;
+      case ColorTransformation::BLEND100RED: Color[0] = 1.0f; Color[1] = 0.0f; Color[2] = 0.0f; Color[3] = 1.0f; break;
+
+      /////// WHITE 10-100% //////
+      case ColorTransformation::BLEND10WHITE:  Color[0] = 1.0f; Color[1] = 1.0f; Color[2] = 1.0f; Color[3] = 0.1f; break;
+      case ColorTransformation::BLEND20WHITE:  Color[0] = 1.0f; Color[1] = 1.0f; Color[2] = 1.0f; Color[3] = 0.2f; break;
+      case ColorTransformation::BLEND30WHITE:  Color[0] = 1.0f; Color[1] = 1.0f; Color[2] = 1.0f; Color[3] = 0.3f; break;
+      case ColorTransformation::BLEND40WHITE:  Color[0] = 1.0f; Color[1] = 1.0f; Color[2] = 1.0f; Color[3] = 0.4f; break;
+      case ColorTransformation::BLEND50WHITE:  Color[0] = 1.0f; Color[1] = 1.0f; Color[2] = 1.0f; Color[3] = 0.5f; break;
+      case ColorTransformation::BLEND60WHITE:  Color[0] = 1.0f; Color[1] = 1.0f; Color[2] = 1.0f; Color[3] = 0.6f; break;
+      case ColorTransformation::BLEND70WHITE:  Color[0] = 1.0f; Color[1] = 1.0f; Color[2] = 1.0f; Color[3] = 0.7f; break;
+      case ColorTransformation::BLEND80WHITE:  Color[0] = 1.0f; Color[1] = 1.0f; Color[2] = 1.0f; Color[3] = 0.8f; break;
+      case ColorTransformation::BLEND90WHITE:  Color[0] = 1.0f; Color[1] = 1.0f; Color[2] = 1.0f; Color[3] = 0.9f; break;
+      case ColorTransformation::BLEND100WHITE: Color[0] = 1.0f; Color[1] = 1.0f; Color[2] = 1.0f; Color[3] = 1.0f; break;
+
+      /////// OTHERS //////
+      case ColorTransformation::BLEND25RED:   Color[0] = 1.0f; Color[1] = 0.0f; Color[2] = 0.0f; Color[3] = 0.25f; break;
+      case ColorTransformation::BLEND25BLUE:  Color[0] = 0.0f; Color[1] = 0.0f; Color[2] = 1.0f; Color[3] = 0.25f; break;
+      case ColorTransformation::BLEND25GREEN: Color[0] = 0.0f; Color[1] = 1.0f; Color[2] = 0.0f; Color[3] = 0.25f; break;
+      case ColorTransformation::BLEND50BLUE:  Color[0] = 0.0f; Color[1] = 0.0f; Color[2] = 1.0f; Color[3] = 0.5f;  break;
+      case ColorTransformation::BLEND50GREEN: Color[0] = 0.0f; Color[1] = 1.0f; Color[2] = 0.0f; Color[3] = 0.5f;  break;
+      case ColorTransformation::BLEND75RED:   Color[0] = 1.0f; Color[1] = 0.0f; Color[2] = 0.0f; Color[3] = 0.75f; break;
+      case ColorTransformation::BLEND75BLUE:  Color[0] = 0.0f; Color[1] = 0.0f; Color[2] = 1.0f; Color[3] = 0.75f; break;
+      case ColorTransformation::BLEND75GREEN: Color[0] = 0.0f; Color[1] = 1.0f; Color[2] = 0.0f; Color[3] = 0.75f; break;
+      }
    };
 
    void ControllerEffects::EffectBlindPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
@@ -197,210 +243,7 @@ namespace Meridian59 { namespace Ogre
          {
             // used blendcolor
             float blendcolor[4];
-
-            switch (OgreClient::Singleton->Data->Effects->FlashXLat->XLat)
-            {
-            /////// RED 10-100% //////
-            case ColorTransformation::BLEND10RED:
-               blendcolor[0] = 1.0f;
-               blendcolor[1] = 0.0f;
-               blendcolor[2] = 0.0f;
-               blendcolor[3] = 0.1f;
-               break;
-
-            case ColorTransformation::BLEND20RED:
-               blendcolor[0] = 1.0f;
-               blendcolor[1] = 0.0f;
-               blendcolor[2] = 0.0f;
-               blendcolor[3] = 0.2f;
-               break;
-
-            case ColorTransformation::BLEND30RED:
-               blendcolor[0] = 1.0f;
-               blendcolor[1] = 0.0f;
-               blendcolor[2] = 0.0f;
-               blendcolor[3] = 0.3f;
-               break;
-
-            case ColorTransformation::BLEND40RED:
-               blendcolor[0] = 1.0f;
-               blendcolor[1] = 0.0f;
-               blendcolor[2] = 0.0f;
-               blendcolor[3] = 0.4f;
-               break;
-
-            case ColorTransformation::BLEND50RED:
-               blendcolor[0] = 1.0f;
-               blendcolor[1] = 0.0f;
-               blendcolor[2] = 0.0f;
-               blendcolor[3] = 0.5f;
-               break;
-
-            case ColorTransformation::BLEND60RED:
-               blendcolor[0] = 1.0f;
-               blendcolor[1] = 0.0f;
-               blendcolor[2] = 0.0f;
-               blendcolor[3] = 0.6f;
-               break;
-
-            case ColorTransformation::BLEND70RED:
-               blendcolor[0] = 1.0f;
-               blendcolor[1] = 0.0f;
-               blendcolor[2] = 0.0f;
-               blendcolor[3] = 0.7f;
-               break;
-
-            case ColorTransformation::BLEND80RED:
-               blendcolor[0] = 1.0f;
-               blendcolor[1] = 0.0f;
-               blendcolor[2] = 0.0f;
-               blendcolor[3] = 0.8f;
-               break;
-
-            case ColorTransformation::BLEND90RED:
-               blendcolor[0] = 1.0f;
-               blendcolor[1] = 0.0f;
-               blendcolor[2] = 0.0f;
-               blendcolor[3] = 0.9f;
-               break;
-
-            case ColorTransformation::BLEND100RED:
-               blendcolor[0] = 1.0f;
-               blendcolor[1] = 0.0f;
-               blendcolor[2] = 0.0f;
-               blendcolor[3] = 1.0f;
-               break;
-
-            /////// WHITE 10-100% //////
-
-            case ColorTransformation::BLEND10WHITE:
-               blendcolor[0] = 1.0f;
-               blendcolor[1] = 1.0f;
-               blendcolor[2] = 1.0f;
-               blendcolor[3] = 0.1f;
-               break;
-
-            case ColorTransformation::BLEND20WHITE:
-               blendcolor[0] = 1.0f;
-               blendcolor[1] = 1.0f;
-               blendcolor[2] = 1.0f;
-               blendcolor[3] = 0.2f;
-               break;
-
-            case ColorTransformation::BLEND30WHITE:
-               blendcolor[0] = 1.0f;
-               blendcolor[1] = 1.0f;
-               blendcolor[2] = 1.0f;
-               blendcolor[3] = 0.3f;
-               break;
-
-            case ColorTransformation::BLEND40WHITE:
-               blendcolor[0] = 1.0f;
-               blendcolor[1] = 1.0f;
-               blendcolor[2] = 1.0f;
-               blendcolor[3] = 0.4f;
-               break;
-
-            case ColorTransformation::BLEND50WHITE:
-               blendcolor[0] = 1.0f;
-               blendcolor[1] = 1.0f;
-               blendcolor[2] = 1.0f;
-               blendcolor[3] = 0.5f;
-               break;
-
-            case ColorTransformation::BLEND60WHITE:
-               blendcolor[0] = 1.0f;
-               blendcolor[1] = 1.0f;
-               blendcolor[2] = 1.0f;
-               blendcolor[3] = 0.6f;
-               break;
-
-            case ColorTransformation::BLEND70WHITE:
-               blendcolor[0] = 1.0f;
-               blendcolor[1] = 1.0f;
-               blendcolor[2] = 1.0f;
-               blendcolor[3] = 0.7f;
-               break;
-
-            case ColorTransformation::BLEND80WHITE:
-               blendcolor[0] = 1.0f;
-               blendcolor[1] = 1.0f;
-               blendcolor[2] = 1.0f;
-               blendcolor[3] = 0.8f;
-               break;
-
-            case ColorTransformation::BLEND90WHITE:
-               blendcolor[0] = 1.0f;
-               blendcolor[1] = 1.0f;
-               blendcolor[2] = 1.0f;
-               blendcolor[3] = 0.9f;
-               break;
-
-            case ColorTransformation::BLEND100WHITE:
-               blendcolor[0] = 1.0f;
-               blendcolor[1] = 1.0f;
-               blendcolor[2] = 1.0f;
-               blendcolor[3] = 1.0f;
-               break;
-
-            /////// OTHERS //////
-
-            case ColorTransformation::BLEND25RED:
-               blendcolor[0] = 1.0f;
-               blendcolor[1] = 0.0f;
-               blendcolor[2] = 0.0f;
-               blendcolor[3] = 0.25f;
-               break;
-
-            case ColorTransformation::BLEND25BLUE:
-               blendcolor[0] = 0.0f;
-               blendcolor[1] = 0.0f;
-               blendcolor[2] = 1.0f;
-               blendcolor[3] = 0.25f;
-               break;
-
-            case ColorTransformation::BLEND25GREEN:
-               blendcolor[0] = 0.0f;
-               blendcolor[1] = 1.0f;
-               blendcolor[2] = 0.0f;
-               blendcolor[3] = 0.25f;
-               break;
-
-            case ColorTransformation::BLEND50BLUE:
-               blendcolor[0] = 0.0f;
-               blendcolor[1] = 0.0f;
-               blendcolor[2] = 1.0f;
-               blendcolor[3] = 0.5f;
-               break;
-
-            case ColorTransformation::BLEND50GREEN:
-               blendcolor[0] = 0.0f;
-               blendcolor[1] = 1.0f;
-               blendcolor[2] = 0.0f;
-               blendcolor[3] = 0.5f;
-               break;
-
-            case ColorTransformation::BLEND75RED:
-               blendcolor[0] = 1.0f;
-               blendcolor[1] = 0.0f;
-               blendcolor[2] = 0.0f;
-               blendcolor[3] = 0.75f;
-               break;
-
-            case ColorTransformation::BLEND75BLUE:
-               blendcolor[0] = 0.0f;
-               blendcolor[1] = 0.0f;
-               blendcolor[2] = 1.0f;
-               blendcolor[3] = 0.75f;
-               break;
-
-            case ColorTransformation::BLEND75GREEN:
-               blendcolor[0] = 0.0f;
-               blendcolor[1] = 1.0f;
-               blendcolor[2] = 0.0f;
-               blendcolor[3] = 0.75f;
-               break;
-            }
+            GetBlendColorForXlat(OgreClient::Singleton->Data->Effects->FlashXLat->XLat, blendcolor);
 
             // get pass
             CompositionTargetPass* compPass = 
@@ -433,4 +276,49 @@ namespace Meridian59 { namespace Ogre
          }
       }
    };
+
+   void ControllerEffects::EffectXLatOverridePropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
+   {
+      CompositorManager& compMan = CompositorManager::getSingleton();
+
+      if (CLRString::Equals(e->PropertyName, EffectXLatOverride::PROPNAME_ISACTIVE))
+      {
+         if (OgreClient::Singleton->Data->Effects->XLatOverride->IsActive)
+         {
+            // used blendcolor
+            float blendcolor[4];
+            GetBlendColorForXlat(OgreClient::Singleton->Data->Effects->XLatOverride->XLat, blendcolor);
+
+            // get pass
+            CompositionTargetPass* compPass =
+               compXLatOverride->getTechnique()->getOutputTargetPass();
+
+            // get material
+            const MaterialPtr& matPtr =
+               compPass->getPass(0)->getMaterial();
+
+            // get shader parameters
+            const GpuProgramParametersSharedPtr& list =
+               matPtr->getTechnique(0)->getPass(0)->getFragmentProgramParameters();
+
+            // set blendcolor
+            list->setNamedConstant(SHADERBLENDCOLOR, blendcolor, 1);
+
+            // enable or disable
+            compMan.setCompositorEnabled(
+               OgreClient::Singleton->Viewport,
+               COMPOSITOR_XLATOVERRIDE,
+               true);
+         }
+         else
+         {
+            //  disable
+            compMan.setCompositorEnabled(
+               OgreClient::Singleton->Viewport,
+               COMPOSITOR_XLATOVERRIDE,
+               false);
+         }
+      }
+   };
+
 };};
