@@ -37,6 +37,9 @@ namespace Meridian59 { namespace Ogre
       renderSystem->setConfigOption("Resource Creation Policy", "Create on all devices");
       renderSystem->setConfigOption("Multi device memory hint", "Auto hardware buffers management");
       renderSystem->setConfigOption("Use Multihead", "Yes");
+      
+      // other options
+      //renderSystem->setConfigOption("Resource Creation Policy", "Create on active device");
       //renderSystem->setConfigOption("Fixed Pipeline Enabled", "No");
 
       // set rendersystem
@@ -747,7 +750,10 @@ namespace Meridian59 { namespace Ogre
 
       // possibly initialize the resource group
       if (Initialize)
+      {
          resMan.initialiseResourceGroup(ostr_name);
+         resMan.prepareResourceGroup(ostr_name);
+      }
 
       // possibly also load it
       if (Load)
@@ -806,7 +812,10 @@ namespace Meridian59 { namespace Ogre
 
       // possibly initialize it
       if (Initialize)
+      {
          resMan.initialiseResourceGroup(ostr_name);
+         resMan.prepareResourceGroup(ostr_name);
+      }
 
       // possibly also load it
       if (Load)
