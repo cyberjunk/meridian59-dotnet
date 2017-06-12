@@ -67,10 +67,20 @@ namespace Meridian59 { namespace Ogre
       if (caelum)
          caelum->notifyCameraChanged(camera);
 
+      // offset to stay away from possible room intersections
+      const CLRReal OFFSET = 8.0f;
+
       // get start and end
       V3% start = Util::ToV3(posNode);
       V3% end   = Util::ToV3(posCam);
       V3 newPos;
+
+      // create vector in same direction with length of offset
+      V3% dir = end + (-start);
+      dir.ScaleToLength(OFFSET);
+
+      // add this extension on end
+      end = end + dir;
 
       // convert to ROO format
       start.ConvertToROO();
@@ -88,7 +98,7 @@ namespace Meridian59 { namespace Ogre
          ::Ogre::Real len = oDelta.length();
          
          // move camera a bit away from actual intersection closer to avatar
-         len = (::Ogre::Real)CLRMath::Max((CLRReal)len - (CLRReal)8.0f, (CLRReal)0.0f);
+         len = (::Ogre::Real)CLRMath::Max((CLRReal)len - OFFSET, (CLRReal)0.0f);
 
          // set camera to intersection (internal space)
          camera->setPosition(0.0f, 0.0f, len);
