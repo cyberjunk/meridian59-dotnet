@@ -14,9 +14,16 @@ namespace Meridian59 { namespace Ogre
       Text           = static_cast<CEGUI::MultiLineEditbox*>(Window->getChild(UI_NAME_MAILCOMPOSE_TEXT));
       Send           = static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_MAILCOMPOSE_SEND));
 
-      // set maximum length for title and body (check with server values...)
-      HeadLine->setMaxTextLength(BlakservStringLengths::MAIL_MESSAGE_MAX_SUBJECT_LENGTH);
-      Text->setMaxTextLength(BlakservStringLengths::MAIL_MESSAGE_MAX_LENGTH-1);
+      // how much of maximum message length we use for title and body
+      // they get combined with an additional 'subject: ' string chunk when being sent in BaseClient.cs
+      // the max applies to the overall mail
+      const size_t OTHCHARS = 10;
+      const size_t MAXTITLE = 60;
+      const size_t MAXBODY  = BlakservStringLengths::MAIL_MESSAGE_MAX_LENGTH - MAXTITLE - OTHCHARS - 1;
+
+      // set maximum length for title and body
+      HeadLine->setMaxTextLength(MAXTITLE);
+      Text->setMaxTextLength(MAXBODY);
 
       // subscribe send button
       Send->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::MailCompose::OnSendClicked));

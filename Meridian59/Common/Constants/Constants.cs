@@ -147,6 +147,5 @@ namespace Meridian59.Common.Constants
         public const int NEWS_POSTING_MAX_LENGTH = 4096;
         public const int NEWS_POSTING_MAX_SUBJECT_LENGTH = 50;     
         public const int MAIL_MESSAGE_MAX_LENGTH = 4096;
-        public const int MAIL_MESSAGE_MAX_SUBJECT_LENGTH = 50;
     }
 }
