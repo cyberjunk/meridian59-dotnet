@@ -1168,12 +1168,60 @@ namespace Meridian59.Data
             AvatarSpells.SortByResourceName();
             SpellObjects.SortByName();
 
-            // single data models
+            // lookobject
+            if (LookObject.ObjectBase != null)
+                LookObject.ObjectBase.ResolveStrings(Strings, RaiseChangedEvent);
 
-            LookObject.ObjectBase.ResolveStrings(Strings, RaiseChangedEvent);
-            LookPlayer.ObjectBase.ResolveStrings(Strings, RaiseChangedEvent);
-            LookSpell.ObjectBase.ResolveStrings(Strings, RaiseChangedEvent);
-            LookSkill.ObjectBase.ResolveStrings(Strings, RaiseChangedEvent);
+            if (LookObject.Message != null)
+                LookObject.Message.BuildString(RaiseChangedEvent);
+
+            if (LookObject.Inscription != null)
+                LookObject.Inscription.BuildString(RaiseChangedEvent);
+
+            // lookplayer
+            if (LookPlayer.ObjectBase != null)
+                LookPlayer.ObjectBase.ResolveStrings(Strings, RaiseChangedEvent);
+
+            if (LookPlayer.Message != null)
+                LookPlayer.Message.BuildString(RaiseChangedEvent);
+
+            if (LookPlayer.Titles != null)
+                LookPlayer.Titles.BuildString(RaiseChangedEvent);
+
+            // lookspell
+            if (LookSpell.ObjectBase != null)
+                LookSpell.ObjectBase.ResolveStrings(Strings, RaiseChangedEvent);
+
+            if (LookSpell.Message != null)
+                LookSpell.Message.BuildString(RaiseChangedEvent);
+
+            if (LookSpell.SchoolName != null)
+                LookSpell.SchoolName.BuildString(RaiseChangedEvent);
+
+            if (LookSpell.SpellLevel != null)
+                LookSpell.SpellLevel.BuildString(RaiseChangedEvent);
+
+            if (LookSpell.VigorCost != null)
+                LookSpell.VigorCost.BuildString(RaiseChangedEvent);
+
+            if (LookSpell.ManaCost != null)
+                LookSpell.ManaCost.BuildString(RaiseChangedEvent);
+
+            // lookskill
+            if (LookSkill.ObjectBase != null)
+                LookSkill.ObjectBase.ResolveStrings(Strings, RaiseChangedEvent);
+
+            if (LookSkill.Message != null)
+                LookSkill.Message.BuildString(RaiseChangedEvent);
+
+            if (LookSkill.SchoolName != null)
+                LookSkill.SchoolName.BuildString(RaiseChangedEvent);
+
+            if (LookSkill.SkillLevel != null)
+                LookSkill.SkillLevel.BuildString(RaiseChangedEvent);
+
+            //
+
             RoomInformation.ResolveStrings(Strings, RaiseChangedEvent);
             BackgroundMusic.ResolveStrings(Strings, RaiseChangedEvent);
             NewsGroup.ResolveStrings(Strings, RaiseChangedEvent);

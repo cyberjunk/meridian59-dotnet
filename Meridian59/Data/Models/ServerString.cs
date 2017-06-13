@@ -572,6 +572,9 @@ namespace Meridian59.Data.Models
             List<int> q_indices = new List<int>();
             List<string> q_strings = new List<string>();
 
+            if (stringResources == null)
+                return;
+
             // In this iteration we will use the parsed 'Variables' to actually build
             // the string in the user-lanuage, honoring the $ordering.
 
