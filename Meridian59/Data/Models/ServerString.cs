@@ -673,7 +673,7 @@ namespace Meridian59.Data.Models
                             varindex++;
 
                             // use empty string for $0 or in case not found
-                            if (position == -1 || !stringResources.TryGetValue(uintval, out strval))
+                            if (position == -1 || !stringResources.TryGetValue(uintval, out strval) || strval == null)
                                 strval = String.Empty;
 
                             // remove the %s, and insert the string,
