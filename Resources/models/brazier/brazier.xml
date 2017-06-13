@@ -6,8 +6,9 @@
     <lightposition x="0" y="45.0" z="0" />
   </mesh>
   <hotspots count="0" />
-    <particles count="1">
+  <particles count="1">
     <particle name="mp_torch" template="mp_torch" material="mp_torch">
       <position x="0" y="33" z="0" />         
-    </particle> 
+    </particle>
+  </particles>
 </model>
