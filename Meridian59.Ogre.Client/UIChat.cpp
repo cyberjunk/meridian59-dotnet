@@ -72,6 +72,7 @@ namespace Meridian59 { namespace Ogre
 
    void ControllerUI::Chat::ApplyLanguage()
    {
+      ChatForceRenew = true;
    };
 
    void ControllerUI::Chat::Tick(double Tick, double Span)
