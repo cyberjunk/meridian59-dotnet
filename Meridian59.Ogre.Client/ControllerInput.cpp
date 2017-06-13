@@ -252,6 +252,10 @@ namespace Meridian59 { namespace Ogre
       if (OgreClient::Singleton->Data->UIMode != UIMode::Playing)
          return true;
 
+      // send final orientation on mouse aiming stop
+      if (isAiming && id == OIS::MouseButtonID::MB_Right)
+         OgreClient::Singleton->SendReqTurnMessage(true);
+
       // perform leftclick select
       if (id == OIS::MouseButtonID::MB_Left &&
          !isMouseWentDownOnUI && 
@@ -544,7 +548,7 @@ namespace Meridian59 { namespace Ogre
         
       // update orientation
       if (ActiveKeyBinding->IsRotateKey(arg.key))
-         OgreClient::Singleton->SendReqTurnMessage();  
+         OgreClient::Singleton->SendReqTurnMessage(true);  
 
       // send a forced final position update
       // if we released a movement key
@@ -616,7 +620,7 @@ namespace Meridian59 { namespace Ogre
          Avatar->RoomObject->Angle = Util::ToRadianAngle(avatarOrient);
 
          // update orientation on server
-         OgreClient::Singleton->SendReqTurnMessage();
+         OgreClient::Singleton->SendReqTurnMessage(true);
       }
    };
 

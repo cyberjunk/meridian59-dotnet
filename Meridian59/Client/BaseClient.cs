@@ -1478,9 +1478,10 @@ namespace Meridian59.Client
         /// </summary>
         /// <param name="Angle">New angle in binary-measurement value (0 = UNIT_X, 0 = 0°, 4096 = 0°, counterclockwise)</param>
         /// <param name="ID">An object ID to turn, usually your avatar ID</param>
-        public virtual void SendReqTurnMessage(ushort Angle, uint ID)
+        /// <param name="Forced">True ignores the delay checker</param>
+        public virtual void SendReqTurnMessage(ushort Angle, uint ID, bool Forced = false)
         {
-            if (GameTick.CanReqTurn())
+            if (Forced || GameTick.CanReqTurn())
             {
                 // create message instance
                 ReqTurnMessage message = new ReqTurnMessage(Angle, ID);
@@ -1497,10 +1498,11 @@ namespace Meridian59.Client
         /// Requests a turn of your avatar to current datamodels
         /// orientation (angle).
         /// </summary>
-        public virtual void SendReqTurnMessage()
+        /// <param name="Forced">True ignores the delay checker</param>
+        public virtual void SendReqTurnMessage(bool Forced = false)
         {
             if (Data.AvatarObject != null)
-                SendReqTurnMessage(Data.AvatarObject.AngleUnits, Data.AvatarID);
+                SendReqTurnMessage(Data.AvatarObject.AngleUnits, Data.AvatarID, Forced);
         }
 
         /// <summary>
@@ -2659,7 +2661,7 @@ namespace Meridian59.Client
                     avatar.Angle -= Math.Abs(Radian);
 
                 // possibly send update
-                SendReqTurnMessage();
+                SendReqTurnMessage(false);
 
                 return true;
             }
