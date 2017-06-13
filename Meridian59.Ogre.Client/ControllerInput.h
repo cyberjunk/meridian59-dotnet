@@ -40,7 +40,7 @@ namespace Meridian59 { namespace Ogre
    {
    private:
       literal float   ZOOMSPEED          = 0.10f;
-      literal float   MOUSELOOKSPEED     = 0.0004f;
+      literal float   MOUSELOOKSPEED     = 0.0002f;
       literal CLRReal MOUSELOOKSTEPFACT  = 0.013f;
       literal CLRReal CAMERAZOOMSTEPFACT = 0.0065f;
       literal long    MOUSECLICKMAXDELAY = 350;

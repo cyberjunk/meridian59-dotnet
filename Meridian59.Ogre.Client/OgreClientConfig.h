@@ -55,7 +55,7 @@ namespace Meridian59 { namespace Ogre
       literal int          DEFAULTVAL_ENGINE_MUSICVOLUME             = 4;
       literal int          DEFAULTVAL_ENGINE_SOUNDVOLUME             = 10;
       literal bool         DEFAULTVAL_ENGINE_DISABLELOOPSOUNDS       = false;
-      literal int          DEFAULTVAL_INPUT_MOUSEAIMSPEED            = 15;
+      literal int          DEFAULTVAL_INPUT_MOUSEAIMSPEED            = 25;
       literal int          DEFAULTVAL_INPUT_KEYROTATESPEED           = 25;
       literal bool         DEFAULTVAL_INPUT_INVERTMOUSEY             = false;
       literal bool         DEFAULTVAL_INPUT_CAMERACOLLISIONS         = true;
