@@ -60,7 +60,7 @@ namespace Meridian59 { namespace Ogre
       literal bool         DEFAULTVAL_INPUT_INVERTMOUSEY             = false;
       literal bool         DEFAULTVAL_INPUT_CAMERACOLLISIONS         = true;
       literal float        DEFAULTVAL_INPUT_CAMERADISTANCEMAX        = 1024.0f;
-      literal float        DEFAULTVAL_INPUT_CAMERAPITCHMAX           = 0.3f;
+      literal float        DEFAULTVAL_INPUT_CAMERAPITCHMAX           = 0.25f;
       literal bool         DEFAULTVAL_UI_LOCKED                      = false;
       literal bool         DEFAULTVAL_UI_VISIBILITYAVATAR            = true;
       literal bool         DEFAULTVAL_UI_VISIBILITYTARGET            = false;
