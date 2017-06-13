@@ -559,7 +559,8 @@ namespace Meridian59.Data.Models
         /// the available parameters in 'Variables',
         /// the root resource id and the user-language dependent strings.
         /// </summary>
-        protected void BuildString()
+        /// <param name="RaiseChangedEvent"></param>
+        public void BuildString(bool RaiseChangedEvent = false)
         {
             int index, varindex;
             int position = 0;
@@ -739,6 +740,13 @@ namespace Meridian59.Data.Models
             // extract and remove the inline styles (~B ...)
             Styles = ChatStyle.GetStyles(fullString, chatMessageType);
             fullString = ChatStyle.RemoveInlineStyles(fullString);
+
+            // possibly raise changed event
+            if (RaiseChangedEvent)
+            {
+                RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_RESOURCENAME));
+                RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FULLSTRING));
+            }
         }
 
         public override string ToString()

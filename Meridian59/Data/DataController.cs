@@ -1159,6 +1159,9 @@ namespace Meridian59.Data
             foreach (PlayerOverlay o in playerOverlays)
                 o.ResolveStrings(Strings, RaiseChangedEvent);
 
+            foreach (ServerString o in chatMessages)
+                o.BuildString(RaiseChangedEvent);
+
             // re-sort the sorted ones
             //OnlinePlayers.SortByName();
             AvatarSkills.SortByResourceName();
