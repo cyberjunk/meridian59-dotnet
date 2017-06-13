@@ -90,7 +90,7 @@ void room_ps(
    float angle = max(dot(lightPos[0].xyz, normal), 0);
 
    // combine ambient and directional light with weights
-   float3 light = (0.5 * angle * lightCol[0]) + (0.5 * ambient);
+   float3 light = (0.4 * angle * lightCol[0]) + (0.6 * ambient);
 
    [unroll(48)]
    for(uint i = 1; i < 48; i++)
