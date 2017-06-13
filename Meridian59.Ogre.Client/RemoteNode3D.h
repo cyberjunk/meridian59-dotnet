@@ -40,7 +40,6 @@ namespace Meridian59 { namespace Ogre
    {
    protected:
       ::Ogre::Entity* entity;
-      std::vector<::ParticleUniverse::ParticleSystem*>* particleSystems;
       ::System::Collections::Generic::List<RemoteNode3DSub^>^ subNodes;
       ::Meridian59::Ogre::Model3DInfo^ model3DInfo;
 
@@ -51,6 +50,7 @@ namespace Meridian59 { namespace Ogre
       void CreateSubNodes();
       void CreateParticles();
       virtual void UpdateMaterial() override;
+      void UpdateParticle(ParticleSystemInfo^ ParticleInfo);
 
    public:
       /// <summary>
@@ -60,15 +60,6 @@ namespace Meridian59 { namespace Ogre
       { 
          public: ::Ogre::Entity* get() { return entity; } 
          protected: void set(::Ogre::Entity* value) { entity = value; }
-      };
-
-      /// <summary>
-      /// ParticleSystems attached to this instance
-      /// </summary>
-      property std::vector<::ParticleUniverse::ParticleSystem*>* ParticleSystems 
-      { 
-         public: std::vector<::ParticleUniverse::ParticleSystem*>* get() { return particleSystems; } 
-         protected: void set(std::vector<::ParticleUniverse::ParticleSystem*>* value) { particleSystems = value; }
       };
 
       /// <summary>

@@ -29,12 +29,16 @@ namespace Meridian59 { namespace Ogre
    public ref class ParticleSystemInfo
    {
    protected:
-      ::Ogre::String* name;
-      ::Ogre::String* templateValue;
-      ::Ogre::String* material;
+      ::Ogre::String*  name;
+      ::Ogre::String*  templateValue;
+      ::Ogre::String*  material;
       ::Ogre::Vector3* position;
+      array<int>^      groups;
+
+      ::ParticleUniverse::ParticleSystem*  particleSystem;
 
    public:
+      
       property ::Ogre::String* Name 
       { 
          public: ::Ogre::String* get() { return name; }
@@ -59,16 +63,32 @@ namespace Meridian59 { namespace Ogre
          protected: void set(::Ogre::Vector3* value) { position = value; } 
       };
 
+      property array<int>^ Groups
+      {
+         public: array<int>^ get() { return groups; }
+         protected: void set(array<int>^ value) { groups = value; }
+      };
+
+      property ::ParticleUniverse::ParticleSystem* ParticleSystem
+      {
+      public: ::ParticleUniverse::ParticleSystem* get() { return particleSystem; }
+      public: void set(::ParticleUniverse::ParticleSystem* value) { particleSystem = value; }
+      };
+
       inline ParticleSystemInfo(
          ::Ogre::String*  Name, 
          ::Ogre::String*  Template, 
          ::Ogre::String*  Material, 
-         ::Ogre::Vector3* Position)
+         ::Ogre::Vector3* Position,
+         array<int>^      Groups)
       {
          name          = Name;
          templateValue = Template;
          material      = Material;
          position      = Position;
+         groups        = Groups;
+
+         particleSystem = nullptr;
       };
 
       inline ~ParticleSystemInfo()
@@ -89,6 +109,7 @@ namespace Meridian59 { namespace Ogre
          templateValue  = nullptr;
          material       = nullptr;
          position       = nullptr;
+         groups         = nullptr;
       };
     };
 };};

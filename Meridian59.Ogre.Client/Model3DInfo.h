@@ -116,9 +116,18 @@ namespace Meridian59 { namespace Ogre
 
          XmlReader->ReadToFollowing("position");
          ::Ogre::Vector3 position = XmlReaderExtensions::ReadVector3(XmlReader);
+         
+         XmlReader->ReadToFollowing("groups");
+         CLRString^ strGroups = XmlReader["value"];
+
+         // split up groups by ' ' and convert to int array
+         array<CLRString^>^ strArr = strGroups->Split(' ');
+         array<int>^ intArr = gcnew array<int>(strArr->Length);
+         for (int i = 0; i < strArr->Length; i++)
+            intArr[i] = ::System::Convert::ToInt32(strArr[i]);
 
          ParticleSystemsData[ArrayPosition] = gcnew ParticleSystemInfo(
-            name, templateVal, material, new ::Ogre::Vector3(position));
+            name, templateVal, material, new ::Ogre::Vector3(position), intArr);
       };
 
    public:

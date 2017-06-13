@@ -44,22 +44,6 @@ namespace Meridian59 { namespace Ogre
       if (SceneManager->hasEntity(ostr_entity))
          SceneManager->destroyEntity(ostr_entity);
 
-      // cleanup particle systems
-      if (ParticleSystems)
-      {
-         for(unsigned int i=0; i<ParticleSystems->size(); i++)
-         {
-            ::ParticleUniverse::ParticleSystem* particleSystem = ParticleSystems->at(i);
-
-            ::ParticleUniverse::ParticleSystemManager* particleMan = 
-               ::ParticleUniverse::ParticleSystemManager::getSingletonPtr();
-
-            particleMan->destroyParticleSystem(particleSystem, sceneManager);
-         }
-
-         delete ParticleSystems;
-      }
-
       // cleanup subnodes
       if (SubNodes)
       {
@@ -70,11 +54,27 @@ namespace Meridian59 { namespace Ogre
       }
 
       if (model3DInfo)
+      {
+         // cleanup particle systems
+         for (unsigned int i = 0; i<model3DInfo->ParticleSystemsData->Length; i++)
+         {
+            ::ParticleUniverse::ParticleSystem* particleSystem = 
+               model3DInfo->ParticleSystemsData[i]->ParticleSystem;
+
+            if (particleSystem)
+            {
+               ::ParticleUniverse::ParticleSystemManager* particleMan =
+                  ::ParticleUniverse::ParticleSystemManager::getSingletonPtr();
+
+               particleMan->destroyParticleSystem(particleSystem, sceneManager);
+            }
+         }
+
          delete model3DInfo;
+      }
 
       model3DInfo     = nullptr;
       entity          = nullptr;
-      particleSystems = nullptr;
       subNodes        = nullptr;
    };
 
@@ -84,6 +84,17 @@ namespace Meridian59 { namespace Ogre
 
       if (CLRString::Equals(e->PropertyName, ObjectBase::PROPNAME_COLORTRANSLATION))
          ApplyColorTranslation();
+
+      else if (CLRString::Equals(e->PropertyName, ObjectBase::PROPNAME_ANIMATION))
+      {
+         for each (ParticleSystemInfo^ p in model3DInfo->ParticleSystemsData)
+         {
+            if (!p->ParticleSystem)
+               continue;
+
+            UpdateParticle(p);
+         }
+      }
    };
 
    void RemoteNode3D::CreateLight()
@@ -182,10 +193,8 @@ namespace Meridian59 { namespace Ogre
 
    void RemoteNode3D::CreateParticles()
    {
-      ParticleSystems = new std::vector<ParticleUniverse::ParticleSystem*>(Model3DInfo->ParticleSystemsData->Length);
-
       // process each
-      for (unsigned int i = 0; i < ParticleSystems->size(); i++)
+      for (unsigned int i = 0; i < Model3DInfo->ParticleSystemsData->Length; i++)
       {
          // get info from datamodel
          ParticleSystemInfo^ info = (ParticleSystemInfo^)Model3DInfo->ParticleSystemsData[i];
@@ -211,11 +220,14 @@ namespace Meridian59 { namespace Ogre
          // attach particlesystem to parent scenenode
          SceneNode->attachObject(particleSystem);
 
-         // start particles
-         particleSystem->start();
-
          // save reference to this particle system
-         ParticleSystems->at(i) = particleSystem;
+         info->ParticleSystem = particleSystem;
+
+         // keep disabled by default, may be activated based on current group
+         particleSystem->setEnabled(false);
+
+         // update enabled state based on group
+         UpdateParticle(info);
       }
    };
 
@@ -305,4 +317,29 @@ namespace Meridian59 { namespace Ogre
          }
       }
    };
+
+   void RemoteNode3D::UpdateParticle(ParticleSystemInfo^ ParticleInfo)
+   {
+      // check if current group is listed for particle active
+      bool contains = false;
+      for each(int group in ParticleInfo->Groups)
+      {
+         if (group == roomObject->Animation->CurrentGroup)
+         {
+            contains = true;
+            break;
+         }
+      }
+
+      // current state
+      bool enabled = ParticleInfo->ParticleSystem->isEnabled();
+
+      // enable
+      if (contains && !enabled)
+         ParticleInfo->ParticleSystem->start();
+
+      // disable
+      else if (!contains && enabled)
+         ParticleInfo->ParticleSystem->stop();
+   }
 };};
