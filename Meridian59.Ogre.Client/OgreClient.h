@@ -95,6 +95,7 @@ namespace Meridian59 { namespace Ogre
       ::ParticleUniverse::ParticleUniversePlugin* pluginParticleUniverse;
 
       HWND                    renderWindowHandle;
+      HMONITOR                renderMonitorHandle;
       CameraListener*         cameraListener;
       MyWindowEventListener*  windowListener;
       AdminForm^              adminForm;

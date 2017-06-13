@@ -34,12 +34,13 @@ namespace Meridian59 { namespace Ogre
 
       // set basic config options on RenderSystem
       // some of these are required for multi monitor support
-      renderSystem->setConfigOption("Resource Creation Policy", "Create on all devices");
+      renderSystem->setConfigOption("Resource Creation Policy", "Create on active device");
       renderSystem->setConfigOption("Multi device memory hint", "Auto hardware buffers management");
-      renderSystem->setConfigOption("Use Multihead", "Yes");
+      renderSystem->setConfigOption("Use Multihead", "No");
       
       // other options
-      //renderSystem->setConfigOption("Resource Creation Policy", "Create on active device");
+      //renderSystem->setConfigOption("Resource Creation Policy", "Create on all devices");
+      //renderSystem->setConfigOption("Multi device memory hint", "Use minimum system memory");
       //renderSystem->setConfigOption("Fixed Pipeline Enabled", "No");
 
       // set rendersystem
@@ -56,15 +57,15 @@ namespace Meridian59 { namespace Ogre
       // allows us to destroy/recreate the actual renderwindow
       ::Ogre::NameValuePairList misc;
       misc["FSAA"]         = "0";
-      misc["monitorIndex"] = "0";
+      misc["monitorIndex"] = ::Ogre::StringConverter::toString(Config->Display);
       misc["vsync"]        = "false";
       misc["hidden"]       = "true";
       misc["depthBuffer"]  = "false";
       misc["border"]       = "none";
 
       // create the hidden, primary dummy renderwindow
-         renderWindowDummy = (D3D9RenderWindow*)root->createRenderWindow(
-            "PrimaryWindowDummy", 1, 1, false, &misc);
+      renderWindowDummy = (D3D9RenderWindow*)root->createRenderWindow(
+         "PrimaryWindowDummy", 1, 1, false, &misc);
 
       renderWindowDummy->setActive(false);
       renderWindowDummy->setAutoUpdated(false);
@@ -335,6 +336,7 @@ namespace Meridian59 { namespace Ogre
       size_t val = 0;
       renderWindow->getCustomAttribute("WINDOW", &val);
       renderWindowHandle = (HWND)val;
+      renderMonitorHandle = MonitorFromWindow(renderWindowHandle, MONITOR_DEFAULTTONEAREST);
 
       // keep rendering without focus
       renderWindow->setDeactivateOnFocusChange(false);
@@ -414,6 +416,25 @@ namespace Meridian59 { namespace Ogre
       /********************************************************************************************************/
 
       ::Ogre::WindowEventUtilities::messagePump();
+
+      /********************************************************************************************************/
+
+      // get monitor of window to check for change d3d9 device gets lost on monitor change
+      // causing lot of trouble, this allows handling before trouble starts..
+      HMONITOR mon = MonitorFromWindow(renderWindowHandle, MONITOR_DEFAULTTONEAREST);
+
+      // window was moved to different monitor
+      if (renderMonitorHandle != mon)
+      {
+         // save new one
+         renderMonitorHandle = mon;
+
+         // change config value
+         Config->Display = Config->Display == 0 ? 1 : 0;
+
+         // mark window for recreation below
+         RecreateWindow = true;
+      }
 
       /********************************************************************************************************/
 
