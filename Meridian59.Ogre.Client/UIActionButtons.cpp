@@ -176,9 +176,9 @@ namespace Meridian59 { namespace Ogre
 
          // set tooltip
          const char* KEY = GetLangLabel(LANGSTR::KEY);
-         const ::CEGUI::String& s = 
-            StringConvert::CLRToCEGUI(dataModel->Name) + "\n" +
-            KEY + ": " + StringConvert::CLRToCEGUI(dataModel->Label);
+         const ::CEGUI::String& label = ::CEGUI::String(KEY) + ": " + StringConvert::CLRToCEGUI(dataModel->Label);
+         const ::CEGUI::String& s = (!dataModel->Name || dataModel->Name == "") ? label :
+            StringConvert::CLRToCEGUI(dataModel->Name) + "\n" + label;
 
          dragger->setTooltipText(s);
 
