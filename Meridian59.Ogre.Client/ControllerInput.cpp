@@ -840,6 +840,10 @@ namespace Meridian59 { namespace Ogre
             }
             else
             {
+               // move fully to origin
+               camera->setPosition(0.0f, 0.0f, 0.0f);
+               camera->_notifyMoved();
+
                // mark as 1. person camera mode
                IsCameraFirstPerson = true;
 
