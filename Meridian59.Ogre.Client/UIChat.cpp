@@ -335,7 +335,7 @@ namespace Meridian59 { namespace Ogre
          OgreClient::Singleton->Data->ChatCommandHistory;
 
       // base handler for copy&paste clipboard
-      bool handled = UICallbacks::OnCopyPasteKeyDown(e);
+      bool handled = false;
 
       // used in some cases
       CLRString^ str;

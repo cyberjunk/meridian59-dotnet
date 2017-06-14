@@ -427,6 +427,8 @@ namespace Meridian59 { namespace Ogre
              keyDown != CEGUI::Key::Scan::RightShift &&
              keyDown != CEGUI::Key::Scan::LeftAlt &&
              keyDown != CEGUI::Key::Scan::RightAlt &&
+             keyDown != CEGUI::Key::Scan::LeftControl &&
+             keyDown != CEGUI::Key::Scan::RightControl &&
             ((!fastKeyRepeat && OgreClient::Singleton->GameTick->CanKeyRepeatStart()) ||
             (fastKeyRepeat && OgreClient::Singleton->GameTick->CanKeyRepeat())))
          {
