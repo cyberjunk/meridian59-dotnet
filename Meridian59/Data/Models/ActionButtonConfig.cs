@@ -185,36 +185,77 @@ namespace Meridian59.Data.Models
         }
         #endregion
 
+        protected void RemoveListener()
+        {
+            if (data == null)
+                return;
+
+            switch(buttonType)
+            {
+                case ActionButtonType.Item:
+                case ActionButtonType.Spell:
+                    ((ObjectBase)data).PropertyChanged -= OnObjectPropertyChanged;
+                    break;
+            }
+        }
+
         public void SetToUnset()
         {
+            RemoveListener();
             buttonType = ActionButtonType.Unset;
             name = String.Empty;
-            Data = null;
             numOfSameName = 0;
+            Data = null;
         }
 
         public void SetToAction(AvatarAction Action)
         {
+            RemoveListener();
             buttonType = ActionButtonType.Action;
             name = Action.ToString();
-            Data = Action;
             numOfSameName = 0;
+            Data = Action;
         }
 
         public void SetToSpell(SpellObject Spell)
         {
+            if (Spell == null)
+                return;
+
+            // remove attached listener
+            RemoveListener();
+
             buttonType = ActionButtonType.Spell;
             name = Spell.Name;
-            Data = Spell;
             numOfSameName = 0;
+
+            Data = Spell;
+            Spell.PropertyChanged += OnObjectPropertyChanged;
         }
 
         public void SetToItem(InventoryObject Item)
         {
+            if (Item == null)
+                return;
+
+            RemoveListener();
+
             buttonType = ActionButtonType.Item;
             name = Item.Name;
-            Data = Item;
             numOfSameName = Item.NumOfSameName;
+
+            Data = Item;
+            Item.PropertyChanged += OnObjectPropertyChanged;
+        }
+
+        private void OnObjectPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case ObjectBase.PROPNAME_NAME:
+                    Name = ((ObjectBase)sender).Name;
+                    break;
+            }
         }
 
         public void Activate()
