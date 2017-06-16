@@ -24,6 +24,9 @@ namespace Meridian59.Data.Models
     {
         public const string KEY1 = "broadcast";
         public const string KEY2 = "b";
+        public const string KEY3 = "mitteilen";
+        public const string KEY4 = "m";
+
 
         public override ChatCommandType CommandType { get { return ChatCommandType.Broadcast; } }
         public string Text { get; set; }

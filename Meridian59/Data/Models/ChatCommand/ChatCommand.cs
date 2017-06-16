@@ -132,6 +132,8 @@ namespace Meridian59.Data.Models
 
                 case ChatCommandBroadcast.KEY1:
                 case ChatCommandBroadcast.KEY2:
+                case ChatCommandBroadcast.KEY3:
+                case ChatCommandBroadcast.KEY4:
                     if (splitted.Length > 1)
                     {
                         text = String.Join(DELIMITER.ToString(), splitted, 1, splitted.Length - 1);
