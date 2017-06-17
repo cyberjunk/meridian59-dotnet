@@ -256,7 +256,7 @@ namespace Meridian59.Client
                 else
                 {
                     // just for logging purposes
-                    Data.HandleIncomingGameModeMessage(Message);
+                    Data.HandleIncomingGenericGameMessage(Message);
                 }
             }
         }

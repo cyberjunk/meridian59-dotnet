@@ -946,7 +946,7 @@ namespace Meridian59.Data
         {
             // clear non server-related lists
             //ChatMessages.Clear();
-            GameMessageLog.Clear();
+            //GameMessageLog.Clear();
             //ChatCommandHistory.Clear();
             
             // clear values
@@ -1963,6 +1963,12 @@ namespace Meridian59.Data
                     HandleInvalidateData((InvalidateDataMessage)Message);
                     break;
             }
+        }
+
+        public void HandleIncomingGenericGameMessage(GameMessage Message)
+        {
+            // just log it
+            LogIncomingGameModeMessage(Message);
         }
 
         protected virtual void HandleLoginOK(LoginOKMessage Message)
