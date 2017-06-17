@@ -395,6 +395,7 @@ namespace Meridian59 { namespace Ogre
       Resolution->setText(StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->Resolution));
 
       WindowMode->setSelected(OgreClient::Singleton->Config->WindowMode);
+      WindowMode->setEnabled(false); // disabled until fullscreen is supported
       WindowBorders->setSelected(OgreClient::Singleton->Config->WindowFrame);
       VSync->setSelected(OgreClient::Singleton->Config->VSync);
 

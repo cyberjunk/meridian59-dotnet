@@ -169,9 +169,10 @@ namespace Meridian59 { namespace Ogre
       node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_ENGINE + "/" + TAG_RESOLUTION);
       Resolution = (node && node->Attributes[XMLATTRIB_VALUE]) ? node->Attributes[XMLATTRIB_VALUE]->Value : DEFAULTVAL_ENGINE_RESOLUTION;
 
-      // WindowMode
-      node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_ENGINE + "/" + TAG_WINDOWMODE);		
-      WindowMode = (PARSE_BOOL_ATTRIB(node, ATTRIB_ENABLED, val_bool)) ? val_bool : DEFAULTVAL_ENGINE_WINDOWMODE;
+      // WindowMode (force windowmode until fullscreen works reliable)
+      //node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_ENGINE + "/" + TAG_WINDOWMODE);		
+      //WindowMode = (PARSE_BOOL_ATTRIB(node, ATTRIB_ENABLED, val_bool)) ? val_bool : DEFAULTVAL_ENGINE_WINDOWMODE;
+      WindowMode = true; 
 
       // WindowFrame
       node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_ENGINE + "/" + TAG_WINDOWFRAME);
