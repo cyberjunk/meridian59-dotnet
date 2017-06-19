@@ -281,7 +281,8 @@ namespace Meridian59 { namespace Ogre
    {
       CompositorManager& compMan = CompositorManager::getSingleton();
 
-      if (CLRString::Equals(e->PropertyName, EffectXLatOverride::PROPNAME_ISACTIVE))
+      if (CLRString::Equals(e->PropertyName, EffectXLatOverride::PROPNAME_ISACTIVE) ||
+          CLRString::Equals(e->PropertyName, EffectXLatOverride::PROPNAME_XLAT))
       {
          if (OgreClient::Singleton->Data->Effects->XLatOverride->IsActive)
          {
@@ -303,6 +304,9 @@ namespace Meridian59 { namespace Ogre
 
             // set blendcolor
             list->setNamedConstant(SHADERBLENDCOLOR, blendcolor, 1);
+            
+            // must flip to actually update
+            compXLatOverride->setEnabled(false);
 
             // enable or disable
             compMan.setCompositorEnabled(
