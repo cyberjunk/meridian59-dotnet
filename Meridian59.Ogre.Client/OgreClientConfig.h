@@ -55,7 +55,8 @@ namespace Meridian59 { namespace Ogre
       literal int          DEFAULTVAL_ENGINE_MUSICVOLUME             = 4;
       literal int          DEFAULTVAL_ENGINE_SOUNDVOLUME             = 10;
       literal bool         DEFAULTVAL_ENGINE_DISABLELOOPSOUNDS       = false;
-      literal int          DEFAULTVAL_INPUT_MOUSEAIMSPEED            = 25;
+      literal int          DEFAULTVAL_INPUT_MOUSEAIMSPEED            = 50;
+      literal int          DEFAULTVAL_INPUT_MOUSEAIMDISTANCE         = 50;
       literal int          DEFAULTVAL_INPUT_KEYROTATESPEED           = 25;
       literal bool         DEFAULTVAL_INPUT_INVERTMOUSEY             = false;
       literal bool         DEFAULTVAL_INPUT_CAMERACOLLISIONS         = true;
@@ -139,6 +140,7 @@ namespace Meridian59 { namespace Ogre
       literal CLRString^ TAG_ROOMOBJECTSVISIBILITY = "roomobjectsvisibility";
       literal CLRString^ TAG_INPUT = "input";
       literal CLRString^ TAG_MOUSEAIMSPEED = "mouseaimspeed";
+      literal CLRString^ TAG_MOUSEAIMDISTANCE = "mouseaimdistance";
       literal CLRString^ TAG_KEYROTATESPEED = "keyrotatespeed";
       literal CLRString^ TAG_INVERTMOUSEY = "invertmousey";
       literal CLRString^ TAG_CAMERACOLLISIONS = "cameracollisions";
@@ -254,6 +256,7 @@ namespace Meridian59 { namespace Ogre
       bool DisableLoopSounds;
       OISKeyBinding^ KeyBinding;
       int MouseAimSpeed;
+      int MouseAimDistance;
       int KeyRotateSpeed;
       bool InvertMouseY;
       bool CameraCollisions;

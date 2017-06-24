@@ -50,6 +50,7 @@ namespace Meridian59 { namespace Ogre
       LearnOpen         = static_cast<CEGUI::PushButton*>(TabInputTabGeneral->getChild(UI_NAME_OPTIONS_TABINPUT_TABGENERAL_OPEN));
       LearnClose        = static_cast<CEGUI::PushButton*>(TabInputTabGeneral->getChild(UI_NAME_OPTIONS_TABINPUT_TABGENERAL_CLOSE));
       MouseAimSpeed     = static_cast<CEGUI::Slider*>(TabInputTabGeneral->getChild(UI_NAME_OPTIONS_TABINPUT_TABGENERAL_MOUSEAIMSPEED));
+      MouseAimDistance  = static_cast<CEGUI::Slider*>(TabInputTabGeneral->getChild(UI_NAME_OPTIONS_TABINPUT_TABGENERAL_MOUSEAIMDISTANCE));
       KeyRotateSpeed    = static_cast<CEGUI::Slider*>(TabInputTabGeneral->getChild(UI_NAME_OPTIONS_TABINPUT_TABGENERAL_KEYROTATESPEED));
       RightClickAction  = static_cast<CEGUI::Combobox*>(TabInputTabGeneral->getChild(UI_NAME_OPTIONS_TABINPUT_TABGENERAL_RIGHTCLICKACTION));
       InvertMouseY      = static_cast<CEGUI::ToggleButton*>(TabInputTabGeneral->getChild(UI_NAME_OPTIONS_TABINPUT_TABGENERAL_INVERTMOUSEY));
@@ -471,6 +472,7 @@ namespace Meridian59 { namespace Ogre
       /******************************************************************************************************/
 
       MouseAimSpeed->setMaxValue(100.0f);
+      MouseAimDistance->setMaxValue(100.0f);
       KeyRotateSpeed->setMaxValue(100.0f);
 
       for (int i = 1; i < 10; i++)
@@ -547,6 +549,7 @@ namespace Meridian59 { namespace Ogre
       LearnAction48->setText(keybinding->ActionButton48 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton48));
 
       MouseAimSpeed->setCurrentValue((float)OgreClient::Singleton->Config->MouseAimSpeed);
+      MouseAimDistance->setCurrentValue((float)OgreClient::Singleton->Config->MouseAimDistance);
       KeyRotateSpeed->setCurrentValue((float)OgreClient::Singleton->Config->KeyRotateSpeed);
       InvertMouseY->setSelected(OgreClient::Singleton->Config->InvertMouseY);
 
@@ -825,6 +828,7 @@ namespace Meridian59 { namespace Ogre
       RightClickAction->subscribeEvent(CEGUI::Combobox::EventListSelectionAccepted, CEGUI::Event::Subscriber(UICallbacks::Options::OnRightClickActionChanged));
       InvertMouseY->subscribeEvent(CEGUI::ToggleButton::EventSelectStateChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnInvertMouseYChanged));
       MouseAimSpeed->subscribeEvent(CEGUI::Slider::EventValueChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnMouseAimSpeedChanged));
+      MouseAimDistance->subscribeEvent(CEGUI::Slider::EventValueChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnMouseAimDistanceChanged));
       KeyRotateSpeed->subscribeEvent(CEGUI::Slider::EventValueChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyRotateSpeedChanged));
       AliasAddBtn->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnAliasAddClicked));
 
@@ -2241,6 +2245,16 @@ namespace Meridian59 { namespace Ogre
       const CEGUI::Slider* slider         = (const CEGUI::Slider*)args.window;
 
       OgreClient::Singleton->Config->MouseAimSpeed = (int)slider->getCurrentValue();
+
+      return true;
+   };
+
+   bool UICallbacks::Options::OnMouseAimDistanceChanged(const CEGUI::EventArgs& e)
+   {
+      const CEGUI::WindowEventArgs& args = (const CEGUI::WindowEventArgs&)e;
+      const CEGUI::Slider* slider = (const CEGUI::Slider*)args.window;
+
+      OgreClient::Singleton->Config->MouseAimDistance = (int)slider->getCurrentValue();
 
       return true;
    };

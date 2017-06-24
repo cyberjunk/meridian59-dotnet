@@ -401,7 +401,7 @@ namespace Meridian59 { namespace Ogre
 
                // set a new delta and stepsize
                // this will be processed tick based
-               avatarYawDelta += MOUSELOOKSPEED * (float)OgreClient::Singleton->Config->MouseAimSpeed * (float)dx;
+               avatarYawDelta += MOUSELOOKDISTFACT * (CLRReal)OgreClient::Singleton->Config->MouseAimDistance * (CLRReal)dx;
 
                isAiming = true;
                ControllerUI::MouseCursor->hide();
@@ -419,7 +419,7 @@ namespace Meridian59 { namespace Ogre
 
                // set a new delta and stepsize
                // this will be processed tick based
-               cameraPitchDelta += MOUSELOOKSPEED * (float)OgreClient::Singleton->Config->MouseAimSpeed * (float)dy;
+               cameraPitchDelta += MOUSELOOKDISTFACT * (CLRReal)OgreClient::Singleton->Config->MouseAimDistance * (CLRReal)dy;
 
                isAiming = true;
                ControllerUI::MouseCursor->hide();
@@ -437,7 +437,7 @@ namespace Meridian59 { namespace Ogre
 
                // set a new delta and stepsize
                // this will be processed tick based
-               cameraYawDelta += MOUSELOOKSPEED * (float)OgreClient::Singleton->Config->MouseAimSpeed * (float)dx;
+               cameraYawDelta += MOUSELOOKDISTFACT * (CLRReal)OgreClient::Singleton->Config->MouseAimDistance * (CLRReal)dx;
 
                isAiming = true;
                ControllerUI::MouseCursor->hide();
@@ -455,7 +455,7 @@ namespace Meridian59 { namespace Ogre
 
                // set a new delta and stepsize
                // this will be processed tick based
-               cameraPitchDelta += MOUSELOOKSPEED * (float)OgreClient::Singleton->Config->MouseAimSpeed * (float)dy;
+               cameraPitchDelta += MOUSELOOKDISTFACT * (CLRReal)OgreClient::Singleton->Config->MouseAimDistance * (CLRReal)dy;
 
                isAiming = true;
                ControllerUI::MouseCursor->hide();
@@ -760,8 +760,8 @@ namespace Meridian59 { namespace Ogre
          if (cameraPitchDelta != 0.0f)
          {
             // how much to pitch this tick
-            CLRReal cameraPitchStep = 
-               MOUSELOOKSTEPFACT * cameraPitchDelta * (CLRReal)OgreClient::Singleton->GameTick->Span;
+            CLRReal cameraPitchStep = (CLRReal)OgreClient::Singleton->Config->MouseAimSpeed *
+               MOUSELOOKSPEEDFACT * cameraPitchDelta * (CLRReal)OgreClient::Singleton->GameTick->Span;
 
             // apply pitchstep on camera
             cameraNode->pitch(Radian(-cameraPitchStep));
@@ -794,8 +794,8 @@ namespace Meridian59 { namespace Ogre
          if (cameraYawDelta != 0.0f)
          {
             // how much to yaw this tick
-            CLRReal cameraYawStep = 
-               MOUSELOOKSTEPFACT * cameraYawDelta * (CLRReal)OgreClient::Singleton->GameTick->Span;
+            CLRReal cameraYawStep = (CLRReal)OgreClient::Singleton->Config->MouseAimSpeed *
+               MOUSELOOKSPEEDFACT * cameraYawDelta * (CLRReal)OgreClient::Singleton->GameTick->Span;
 
             // apply yawstep on camera
             cameraNode->yaw(Radian(-cameraYawStep), Node::TransformSpace::TS_WORLD);
@@ -864,8 +864,8 @@ namespace Meridian59 { namespace Ogre
       if (avatarYawDelta != 0.0f)
       {
          // how much to yaw avatar this tick
-         CLRReal avatarYawStep = 
-            MOUSELOOKSTEPFACT * avatarYawDelta * (CLRReal)OgreClient::Singleton->GameTick->Span;
+         CLRReal avatarYawStep = (CLRReal)OgreClient::Singleton->Config->MouseAimSpeed *
+            MOUSELOOKSPEEDFACT * avatarYawDelta * (CLRReal)OgreClient::Singleton->GameTick->Span;
 
          // apply yawstep on avatar
          OgreClient::Singleton->TryYaw(avatarYawStep);

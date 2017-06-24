@@ -377,6 +377,10 @@ namespace Meridian59 { namespace Ogre
       // MouseAimSpeed
       node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_MOUSEAIMSPEED);
       MouseAimSpeed = (PARSE_INT32_ATTRIB(node, XMLATTRIB_VALUE, val_int)) ? val_int : DEFAULTVAL_INPUT_MOUSEAIMSPEED;
+      
+      // MouseAimDistance
+      node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_MOUSEAIMDISTANCE);
+      MouseAimDistance = (PARSE_INT32_ATTRIB(node, XMLATTRIB_VALUE, val_int)) ? val_int : DEFAULTVAL_INPUT_MOUSEAIMDISTANCE;
 
       // KeyRotateSpeed
       node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYROTATESPEED);
@@ -1025,6 +1029,11 @@ namespace Meridian59 { namespace Ogre
       // mouseaimspeed
       Writer->WriteStartElement(TAG_MOUSEAIMSPEED);
       Writer->WriteAttributeString(XMLATTRIB_VALUE, MouseAimSpeed.ToString());
+      Writer->WriteEndElement();
+
+      // mouseaimdistance
+      Writer->WriteStartElement(TAG_MOUSEAIMDISTANCE);
+      Writer->WriteAttributeString(XMLATTRIB_VALUE, MouseAimDistance.ToString());
       Writer->WriteEndElement();
 
       // keyrotatespeed

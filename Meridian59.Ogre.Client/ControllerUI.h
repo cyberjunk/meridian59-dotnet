@@ -1356,6 +1356,7 @@ namespace Meridian59 { namespace Ogre
          static ::CEGUI::PushButton* LearnOpen = nullptr;
          static ::CEGUI::PushButton* LearnClose = nullptr;
          static ::CEGUI::Slider* MouseAimSpeed = nullptr;
+         static ::CEGUI::Slider* MouseAimDistance = nullptr;
          static ::CEGUI::Slider* KeyRotateSpeed = nullptr;
          static ::CEGUI::Combobox* RightClickAction = nullptr;
          static ::CEGUI::ToggleButton* InvertMouseY = nullptr;
@@ -2058,6 +2059,7 @@ namespace Meridian59 { namespace Ogre
          static bool OnRightClickActionChanged(const CEGUI::EventArgs& e);
          static bool OnInvertMouseYChanged(const CEGUI::EventArgs& e);
          static bool OnMouseAimSpeedChanged(const CEGUI::EventArgs& e);
+         static bool OnMouseAimDistanceChanged(const CEGUI::EventArgs& e);
          static bool OnKeyRotateSpeedChanged(const CEGUI::EventArgs& e);
          static bool OnAliasAddClicked(const CEGUI::EventArgs& e);
          static bool OnAliasDeleteClicked(const CEGUI::EventArgs& e);

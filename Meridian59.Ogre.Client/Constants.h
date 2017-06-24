@@ -620,6 +620,7 @@
 #define UI_NAME_OPTIONS_TABINPUT_TABGENERAL_OPEN         "Options.TabInput.TabGeneral.Open"
 #define UI_NAME_OPTIONS_TABINPUT_TABGENERAL_CLOSE        "Options.TabInput.TabGeneral.Close"
 #define UI_NAME_OPTIONS_TABINPUT_TABGENERAL_MOUSEAIMSPEED      "Options.TabInput.TabGeneral.MouseAimSpeed"
+#define UI_NAME_OPTIONS_TABINPUT_TABGENERAL_MOUSEAIMDISTANCE   "Options.TabInput.TabGeneral.MouseAimDistance"
 #define UI_NAME_OPTIONS_TABINPUT_TABGENERAL_KEYROTATESPEED     "Options.TabInput.TabGeneral.KeyRotateSpeed"
 #define UI_NAME_OPTIONS_TABINPUT_TABGENERAL_RIGHTCLICKACTION   "Options.TabInput.TabGeneral.RightClickAction"
 #define UI_NAME_OPTIONS_TABINPUT_TABGENERAL_INVERTMOUSEY       "Options.TabInput.TabGeneral.InvertMouseY"
