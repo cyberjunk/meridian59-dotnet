@@ -3369,14 +3369,24 @@
                         <Property name="Area" value="{{0,165},{0,220},{0,360},{0,230}}" />                        
                      </Window>
                
-                     <!-- Key rotate speed -->
-                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabGeneral.KeyRotateSpeedDescription" >
-                        <Property name="Text" value="Key rotate speed" />
+					 <!-- Mouse aim distance -->
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabGeneral.MouseAimDistanceDescription" >
+                        <Property name="Text" value="Mouse aim distance" />
                         <Property name="Area" value="{{0,30},{0,240},{0,160},{0,260}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
                      </Window>
-                     <Window type="TaharezLook/Slider" name="Options.TabInput.TabGeneral.KeyRotateSpeed" >
+                     <Window type="TaharezLook/Slider" name="Options.TabInput.TabGeneral.MouseAimDistance" >
                         <Property name="Area" value="{{0,165},{0,245},{0,360},{0,255}}" />                        
+                     </Window>
+					 
+                     <!-- Key rotate speed -->
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabGeneral.KeyRotateSpeedDescription" >
+                        <Property name="Text" value="Key rotate speed" />
+                        <Property name="Area" value="{{0,30},{0,265},{0,160},{0,285}}" />
+                        <Property name="HorzFormatting" value="LeftAligned" />
+                     </Window>
+                     <Window type="TaharezLook/Slider" name="Options.TabInput.TabGeneral.KeyRotateSpeed" >
+                        <Property name="Area" value="{{0,165},{0,270},{0,360},{0,280}}" />                        
                      </Window>
                      
                      <!---->
@@ -3384,11 +3394,11 @@
                      <!-- RightClickAction -->
                      <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabGeneral.RightClickActionDescription" >
                         <Property name="Text" value="Right Click" />
-                        <Property name="Area" value="{{0,30},{0,280},{0,120},{0,300}}" />
+                        <Property name="Area" value="{{0,30},{0,300},{0,120},{0,320}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
                      </Window>
                      <Window type="TaharezLook/Combobox" name="Options.TabInput.TabGeneral.RightClickAction" >
-                        <Property name="Area" value="{{0,105},{0,280},{0,200},{0,380}}" />
+                        <Property name="Area" value="{{0,105},{0,300},{0,200},{0,320}}" />
                         <Property name="ClippedByParent" value="False" />
                         <Property name="ReadOnly" value="True" />
                      </Window>
@@ -3396,7 +3406,7 @@
                      <!-- Invert Mouse Y -->
                      <Window type="TaharezLook/Checkbox" name="Options.TabInput.TabGeneral.InvertMouseY" >
                         <Property name="Text" value="Invert Mouse Y" />
-                        <Property name="Area" value="{{0,240},{0,280},{0,360},{0,300}}" />   
+                        <Property name="Area" value="{{0,240},{0,300},{0,360},{0,320}}" />   
                      </Window>
 
                   </Window>
