@@ -3359,9 +3359,17 @@
                      
                      <!-- -->
                      
+					 <!-- CameraDescription -->
+				     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabGeneral.CameraDesc" >
+						<Property name="Area" value="{{0,30},{0,190},{0,100},{0,210}}" />
+						<Property name="HorzFormatting" value="WordWrapLeftAligned" />
+						<Property name="Text" value="Camera" />
+						<Property name="Font" value="Berenika-8-Bold" />
+					 </Window>
+			   
                      <!-- Mouse aim speed -->
                      <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabGeneral.MouseAimSpeedDescription" >
-                        <Property name="Text" value="Mouse aim speed" />
+                        <Property name="Text" value="Rotate Speed" />
                         <Property name="Area" value="{{0,30},{0,215},{0,160},{0,235}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
                      </Window>
@@ -3371,42 +3379,76 @@
                
 					 <!-- Mouse aim distance -->
                      <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabGeneral.MouseAimDistanceDescription" >
-                        <Property name="Text" value="Mouse aim distance" />
+                        <Property name="Text" value="Rotate Distance" />
                         <Property name="Area" value="{{0,30},{0,240},{0,160},{0,260}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
                      </Window>
                      <Window type="TaharezLook/Slider" name="Options.TabInput.TabGeneral.MouseAimDistance" >
                         <Property name="Area" value="{{0,165},{0,245},{0,360},{0,255}}" />                        
                      </Window>
-					 
-                     <!-- Key rotate speed -->
-                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabGeneral.KeyRotateSpeedDescription" >
-                        <Property name="Text" value="Key rotate speed" />
+					 				 					 
+					 <!-- Camera Distance Max -->
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabGeneral.CameraDistanceMaxDesc" >
+                        <Property name="Text" value="Max. Zoom" />
                         <Property name="Area" value="{{0,30},{0,265},{0,160},{0,285}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
                      </Window>
-                     <Window type="TaharezLook/Slider" name="Options.TabInput.TabGeneral.KeyRotateSpeed" >
+                     <Window type="TaharezLook/Slider" name="Options.TabInput.TabGeneral.CameraDistanceMax" >
                         <Property name="Area" value="{{0,165},{0,270},{0,360},{0,280}}" />                        
                      </Window>
-                     
-                     <!---->
-                                          
-                     <!-- RightClickAction -->
-                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabGeneral.RightClickActionDescription" >
-                        <Property name="Text" value="Right Click" />
-                        <Property name="Area" value="{{0,30},{0,300},{0,120},{0,320}}" />
+					 
+					 <!-- Camera Pitch Max -->
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabGeneral.CameraPitchMaxDesc" >
+                        <Property name="Text" value="Max. Pitch" />
+                        <Property name="Area" value="{{0,30},{0,290},{0,160},{0,310}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
                      </Window>
-                     <Window type="TaharezLook/Combobox" name="Options.TabInput.TabGeneral.RightClickAction" >
-                        <Property name="Area" value="{{0,105},{0,300},{0,200},{0,320}}" />
-                        <Property name="ClippedByParent" value="False" />
-                        <Property name="ReadOnly" value="True" />
+                     <Window type="TaharezLook/Slider" name="Options.TabInput.TabGeneral.CameraPitchMax" >
+                        <Property name="Area" value="{{0,165},{0,295},{0,360},{0,305}}" />                        
                      </Window>
-                     
+						                     
                      <!-- Invert Mouse Y -->
                      <Window type="TaharezLook/Checkbox" name="Options.TabInput.TabGeneral.InvertMouseY" >
                         <Property name="Text" value="Invert Mouse Y" />
-                        <Property name="Area" value="{{0,240},{0,300},{0,360},{0,320}}" />   
+                        <Property name="Area" value="{{0,60},{0,315},{0,180},{0,335}}" />   
+                     </Window>
+					                      
+					 <!-- Camera Collisions -->
+                     <Window type="TaharezLook/Checkbox" name="Options.TabInput.TabGeneral.CameraCollisions" >
+                        <Property name="Text" value="Camera Collisions" />
+                        <Property name="Area" value="{{0,200},{0,315},{0,360},{0,335}}" />   
+                     </Window>
+				
+                     <!---->
+                     
+					 <!-- OthersDescription -->
+				     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabGeneral.OthersDesc" >
+						<Property name="Area" value="{{0,30},{0,345},{0,100},{0,365}}" />
+						<Property name="HorzFormatting" value="WordWrapLeftAligned" />
+						<Property name="Text" value="Other" />
+						<Property name="Font" value="Berenika-8-Bold" />
+					 </Window>
+			   		  
+                     <!-- Key rotate speed -->
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabGeneral.KeyRotateSpeedDescription" >
+                        <Property name="Text" value="Key rotate speed" />
+                        <Property name="Area" value="{{0,30},{0,370},{0,160},{0,390}}" />
+                        <Property name="HorzFormatting" value="LeftAligned" />
+                     </Window>
+                     <Window type="TaharezLook/Slider" name="Options.TabInput.TabGeneral.KeyRotateSpeed" >
+                        <Property name="Area" value="{{0,165},{0,375},{0,360},{0,385}}" />                        
+                     </Window>
+ 
+                     <!-- RightClickAction -->
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabGeneral.RightClickActionDescription" >
+                        <Property name="Text" value="Right Click" />
+                        <Property name="Area" value="{{0,30},{0,395},{0,120},{0,415}}" />
+                        <Property name="HorzFormatting" value="LeftAligned" />
+                     </Window>
+                     <Window type="TaharezLook/Combobox" name="Options.TabInput.TabGeneral.RightClickAction" >
+                        <Property name="Area" value="{{0,165},{0,395},{0,260},{0,415}}" />
+                        <Property name="ClippedByParent" value="False" />
+                        <Property name="ReadOnly" value="True" />
                      </Window>
 
                   </Window>
