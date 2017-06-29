@@ -51,10 +51,13 @@ namespace Meridian59 { namespace Ogre
       LearnClose        = static_cast<CEGUI::PushButton*>(TabInputTabGeneral->getChild(UI_NAME_OPTIONS_TABINPUT_TABGENERAL_CLOSE));
       MouseAimSpeed     = static_cast<CEGUI::Slider*>(TabInputTabGeneral->getChild(UI_NAME_OPTIONS_TABINPUT_TABGENERAL_MOUSEAIMSPEED));
       MouseAimDistance  = static_cast<CEGUI::Slider*>(TabInputTabGeneral->getChild(UI_NAME_OPTIONS_TABINPUT_TABGENERAL_MOUSEAIMDISTANCE));
+      CameraDistanceMax = static_cast<CEGUI::Slider*>(TabInputTabGeneral->getChild(UI_NAME_OPTIONS_TABINPUT_TABGENERAL_CAMERADISTANCEMAX));
+      CameraPitchMax    = static_cast<CEGUI::Slider*>(TabInputTabGeneral->getChild(UI_NAME_OPTIONS_TABINPUT_TABGENERAL_CAMERAPITCHMAX));
+      InvertMouseY      = static_cast<CEGUI::ToggleButton*>(TabInputTabGeneral->getChild(UI_NAME_OPTIONS_TABINPUT_TABGENERAL_INVERTMOUSEY));
+      CameraCollisions  = static_cast<CEGUI::ToggleButton*>(TabInputTabGeneral->getChild(UI_NAME_OPTIONS_TABINPUT_TABGENERAL_CAMERACOLLISIONS));
       KeyRotateSpeed    = static_cast<CEGUI::Slider*>(TabInputTabGeneral->getChild(UI_NAME_OPTIONS_TABINPUT_TABGENERAL_KEYROTATESPEED));
       RightClickAction  = static_cast<CEGUI::Combobox*>(TabInputTabGeneral->getChild(UI_NAME_OPTIONS_TABINPUT_TABGENERAL_RIGHTCLICKACTION));
-      InvertMouseY      = static_cast<CEGUI::ToggleButton*>(TabInputTabGeneral->getChild(UI_NAME_OPTIONS_TABINPUT_TABGENERAL_INVERTMOUSEY));
-
+      
       // tabinput - tabactionbuttons1
       LearnAction01 = static_cast<CEGUI::PushButton*>(TabInputTabActionButtons1->getChild(UI_NAME_OPTIONS_TABINPUT_TABACTIONBUTTONS1_BUTTON01));
       LearnAction02 = static_cast<CEGUI::PushButton*>(TabInputTabActionButtons1->getChild(UI_NAME_OPTIONS_TABINPUT_TABACTIONBUTTONS1_BUTTON02));
@@ -472,7 +475,13 @@ namespace Meridian59 { namespace Ogre
       /******************************************************************************************************/
 
       MouseAimSpeed->setMaxValue(100.0f);
+      MouseAimSpeed->setClickStep(5.0f);
       MouseAimDistance->setMaxValue(100.0f);
+      MouseAimDistance->setClickStep(5.0f);
+      CameraDistanceMax->setMaxValue(8.0f * (float)OgreClientConfig::DEFAULTVAL_INPUT_CAMERADISTANCEMAX);
+      CameraDistanceMax->setClickStep(128.0f);
+      CameraPitchMax->setMaxValue(1.0f);
+      CameraPitchMax->setClickStep(0.1f);
       KeyRotateSpeed->setMaxValue(100.0f);
 
       for (int i = 1; i < 10; i++)
@@ -550,8 +559,11 @@ namespace Meridian59 { namespace Ogre
 
       MouseAimSpeed->setCurrentValue((float)OgreClient::Singleton->Config->MouseAimSpeed);
       MouseAimDistance->setCurrentValue((float)OgreClient::Singleton->Config->MouseAimDistance);
-      KeyRotateSpeed->setCurrentValue((float)OgreClient::Singleton->Config->KeyRotateSpeed);
+      CameraDistanceMax->setCurrentValue((float)OgreClient::Singleton->Config->CameraDistanceMax);
+      CameraPitchMax->setCurrentValue((float)OgreClient::Singleton->Config->CameraPitchMax);
+      CameraCollisions->setSelected(OgreClient::Singleton->Config->CameraCollisions);
       InvertMouseY->setSelected(OgreClient::Singleton->Config->InvertMouseY);
+      KeyRotateSpeed->setCurrentValue((float)OgreClient::Singleton->Config->KeyRotateSpeed);
 
       int idx = OgreClient::Singleton->Config->KeyBinding->RightClickAction - 1;
       RightClickAction->getListboxItemFromIndex(idx)->setSelected(true);
@@ -827,8 +839,11 @@ namespace Meridian59 { namespace Ogre
       // subscribe other events
       RightClickAction->subscribeEvent(CEGUI::Combobox::EventListSelectionAccepted, CEGUI::Event::Subscriber(UICallbacks::Options::OnRightClickActionChanged));
       InvertMouseY->subscribeEvent(CEGUI::ToggleButton::EventSelectStateChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnInvertMouseYChanged));
+      CameraCollisions->subscribeEvent(CEGUI::ToggleButton::EventSelectStateChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnCameraCollisionsChanged));
       MouseAimSpeed->subscribeEvent(CEGUI::Slider::EventValueChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnMouseAimSpeedChanged));
       MouseAimDistance->subscribeEvent(CEGUI::Slider::EventValueChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnMouseAimDistanceChanged));
+      CameraDistanceMax->subscribeEvent(CEGUI::Slider::EventValueChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnCameraDistanceMaxChanged));
+      CameraPitchMax->subscribeEvent(CEGUI::Slider::EventValueChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnCameraPitchMaxChanged));
       KeyRotateSpeed->subscribeEvent(CEGUI::Slider::EventValueChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyRotateSpeedChanged));
       AliasAddBtn->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnAliasAddClicked));
 
@@ -2239,6 +2254,16 @@ namespace Meridian59 { namespace Ogre
       return true;
    };
 
+   bool UICallbacks::Options::OnCameraCollisionsChanged(const CEGUI::EventArgs& e)
+   {
+      const CEGUI::WindowEventArgs& args = (const CEGUI::WindowEventArgs&)e;
+      const CEGUI::ToggleButton* btn = (const CEGUI::ToggleButton*)args.window;
+
+      OgreClient::Singleton->Config->CameraCollisions = btn->isSelected();
+
+      return true;
+   };
+
    bool UICallbacks::Options::OnMouseAimSpeedChanged(const CEGUI::EventArgs& e)
    {
       const CEGUI::WindowEventArgs& args  = (const CEGUI::WindowEventArgs&)e;
@@ -2255,6 +2280,26 @@ namespace Meridian59 { namespace Ogre
       const CEGUI::Slider* slider = (const CEGUI::Slider*)args.window;
 
       OgreClient::Singleton->Config->MouseAimDistance = (int)slider->getCurrentValue();
+
+      return true;
+   };
+
+   bool UICallbacks::Options::OnCameraDistanceMaxChanged(const CEGUI::EventArgs& e)
+   {
+      const CEGUI::WindowEventArgs& args = (const CEGUI::WindowEventArgs&)e;
+      const CEGUI::Slider* slider = (const CEGUI::Slider*)args.window;
+
+      OgreClient::Singleton->Config->CameraDistanceMax = slider->getCurrentValue();
+
+      return true;
+   };
+
+   bool UICallbacks::Options::OnCameraPitchMaxChanged(const CEGUI::EventArgs& e)
+   {
+      const CEGUI::WindowEventArgs& args = (const CEGUI::WindowEventArgs&)e;
+      const CEGUI::Slider* slider = (const CEGUI::Slider*)args.window;
+
+      OgreClient::Singleton->Config->CameraPitchMax = slider->getCurrentValue();
 
       return true;
    };

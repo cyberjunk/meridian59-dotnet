@@ -1357,9 +1357,12 @@ namespace Meridian59 { namespace Ogre
          static ::CEGUI::PushButton* LearnClose = nullptr;
          static ::CEGUI::Slider* MouseAimSpeed = nullptr;
          static ::CEGUI::Slider* MouseAimDistance = nullptr;
+         static ::CEGUI::Slider* CameraDistanceMax = nullptr;
+         static ::CEGUI::Slider* CameraPitchMax = nullptr;
+         static ::CEGUI::ToggleButton* InvertMouseY = nullptr;
+         static ::CEGUI::ToggleButton* CameraCollisions = nullptr;
          static ::CEGUI::Slider* KeyRotateSpeed = nullptr;
          static ::CEGUI::Combobox* RightClickAction = nullptr;
-         static ::CEGUI::ToggleButton* InvertMouseY = nullptr;
          static ::CEGUI::PushButton* LearnAction01 = nullptr;
          static ::CEGUI::PushButton* LearnAction02 = nullptr;
          static ::CEGUI::PushButton* LearnAction03 = nullptr;
@@ -2057,9 +2060,12 @@ namespace Meridian59 { namespace Ogre
          static bool OnDisableLoopSoundsChanged(const CEGUI::EventArgs& e);
          static bool OnPreloadChanged(const CEGUI::EventArgs& e);
          static bool OnRightClickActionChanged(const CEGUI::EventArgs& e);
-         static bool OnInvertMouseYChanged(const CEGUI::EventArgs& e);
          static bool OnMouseAimSpeedChanged(const CEGUI::EventArgs& e);
          static bool OnMouseAimDistanceChanged(const CEGUI::EventArgs& e);
+         static bool OnCameraDistanceMaxChanged(const CEGUI::EventArgs& e);
+         static bool OnCameraPitchMaxChanged(const CEGUI::EventArgs& e);
+         static bool OnInvertMouseYChanged(const CEGUI::EventArgs& e);
+         static bool OnCameraCollisionsChanged(const CEGUI::EventArgs& e);
          static bool OnKeyRotateSpeedChanged(const CEGUI::EventArgs& e);
          static bool OnAliasAddClicked(const CEGUI::EventArgs& e);
          static bool OnAliasDeleteClicked(const CEGUI::EventArgs& e);
