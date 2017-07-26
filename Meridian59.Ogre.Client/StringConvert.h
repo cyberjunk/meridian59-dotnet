@@ -39,7 +39,7 @@ namespace Meridian59 { namespace Ogre
       static marshal_context^ context;
       static System::Text::UTF8Encoding^ encoderUTF8;
 
-      static StringConvert::StringConvert()
+      static StringConvert()
       {
          context = gcnew marshal_context();
          encoderUTF8 = gcnew System::Text::UTF8Encoding();
