@@ -38,6 +38,7 @@ namespace Meridian59.Common
         public const int COLSIZEMESSAGE = 50;
 
         private static volatile bool isRunning;
+        private static bool isChatLogEnabled;
         private static Thread workThread;
         private static StreamWriter logStream;
         private static StreamWriter logStreamChat;
@@ -48,12 +49,16 @@ namespace Meridian59.Common
         /// Starts the internal workthread for the logwriting.
         /// Does not do anything if already started.
         /// </summary>
-        public static void Start()
+        /// <param name="IsChatLogEnabled"></param>
+        public static void Start(bool IsChatLogEnabled = true)
         {
             if (!isRunning)
             {
                 // mark running
                 isRunning = true;
+
+                // set chatlog setting
+                isChatLogEnabled = IsChatLogEnabled;
 
                 // start workthread
                 workThread = new Thread(new ThreadStart(ThreadProc));
@@ -91,7 +96,7 @@ namespace Meridian59.Common
         /// <param name="Text"></param>
         public static void LogChat(string Text)
         {
-            if (isRunning && inputQueueChat != null)
+            if (isRunning && isChatLogEnabled && inputQueueChat != null)
                 inputQueueChat.Enqueue(String.Copy(Text));
         }
 
@@ -111,14 +116,19 @@ namespace Meridian59.Common
                 logStream.AutoFlush = true;
 
                 // create textlog stream for chat
-                logStreamChat = new StreamWriter(LOGFILECHAT, false, Encoding.Default);
-                logStreamChat.AutoFlush = true;
+                if (isChatLogEnabled)
+                {
+                    logStreamChat = new StreamWriter(LOGFILECHAT, false, Encoding.Default);
+                    logStreamChat.AutoFlush = true;
+                }
             }
             catch (Exception) { }
 
             // (possibly) write startup headers
             WriteHeader();
-            WriteHeaderChat();
+
+            if (isChatLogEnabled)
+                WriteHeaderChat();
 
             // (possibly) write logger start here
             Log(MODULENAME, LogType.Info, "Starting logger.");
@@ -133,9 +143,12 @@ namespace Meridian59.Common
                 while (inputQueue.TryDequeue(out item))
                     WriteLog(item);
 
-                // process all pending items for chat
-                while (inputQueueChat.TryDequeue(out text))
-                    WriteLogChat(text);
+                if (isChatLogEnabled)
+                {
+                    // process all pending items for chat
+                    while (inputQueueChat.TryDequeue(out text))
+                        WriteLogChat(text);
+                }
 
                 // sleep
                 Thread.Sleep(SLEEPTIME);
