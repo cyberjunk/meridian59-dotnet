@@ -31,7 +31,8 @@ using Meridian59.Data.Models;
 namespace Meridian59.Drawing2D
 {
     /// <summary>
-    /// Implements ImageComposer with .NET GDI (Bitmap class)
+    /// Implements ImageComposer with .NET GDI (Bitmap class) and
+    /// draws using GDI (Graphics class).
     /// </summary>
     /// <typeparam name="T">Classtype, ObjectBase or higher</typeparam>
     public class ImageComposerGDI<T> : ImageComposer<T, Bitmap> where T : ObjectBase
@@ -48,7 +49,8 @@ namespace Meridian59.Drawing2D
             // create bitmap to hold composed object
             Image = new Bitmap(
                 Convert.ToInt32(RenderInfo.Dimension.X), 
-                Convert.ToInt32(RenderInfo.Dimension.Y));
+                Convert.ToInt32(RenderInfo.Dimension.Y),
+                PixelFormat.Format32bppArgb);
             
             // initialize the drawing canvas
             drawTo = Graphics.FromImage(Image);

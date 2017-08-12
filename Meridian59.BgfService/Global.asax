@@ -9,7 +9,7 @@
         
         // interpolation mode for GDI+ alpha-blending/scaling
         Meridian59.Drawing2D.ImageComposerGDI<Meridian59.Data.Models.ObjectBase>.InterpolationMode = 
-            System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+            System.Drawing.Drawing2D.InterpolationMode.Default;
 
         // ----------------------------------------------------------------
 

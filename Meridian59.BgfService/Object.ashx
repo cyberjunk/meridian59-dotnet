@@ -1,4 +1,4 @@
-﻿<%@ WebHandler Language="C#" Class="Object" %>
+﻿<%@ WebHandler Language="C#" Class="BlakObj" %>
 
 using System;
 using System.Web;
@@ -15,25 +15,25 @@ using Meridian59.Data.Models;
 using Meridian59.Drawing2D;
 using Meridian59.Files.BGF;
 
-public class Object : IHttpHandler 
+public class BlakObj : IHttpHandler
 {
-    static Object()
-    {              
+    static BlakObj()
+    {
     }
-    
+
     public void ProcessRequest (HttpContext context)
     {
         // -------------------------------------------------------       
         // read basic and mainoverlay parameters from url-path (see Global.asax):
         //  object/{file}/{group}/{palette}/{angle}
-        
+
         RouteValueDictionary parms = context.Request.RequestContext.RouteData.Values;
 
         string parmFile = parms.ContainsKey("file") ? (string)parms["file"] : null;
         string parmGroup = parms.ContainsKey("group") ? (string)parms["group"] : null;
         string parmPalette = parms.ContainsKey("palette") ? (string)parms["palette"] : null;
         string parmAngle = parms.ContainsKey("angle") ? (string)parms["angle"] : null;
-        
+
         // -------------------------------------------------------
         // verify minimum parameters exist
 
@@ -53,16 +53,16 @@ public class Object : IHttpHandler
             context.Response.End();
             return;
         }
-       
+
         // --------------------------------------------------
         // try to parse other params
-        
+
         byte paletteidx = 0;
         ushort angle = 0;
-        
+
         Byte.TryParse(parmPalette, out paletteidx);
         UInt16.TryParse(parmAngle, out angle);
-        
+
         // remove full periods from angle
         angle %= GeometryConstants.MAXANGLE;
 
@@ -83,7 +83,7 @@ public class Object : IHttpHandler
         gameObject.ColorTranslation = paletteidx;
         gameObject.Animation = anim;
         gameObject.ViewerAngle = angle;
-        
+
         // -------------------------------------------------------       
         // read suboverlay array params from query parameters:
         //  object/..../?subov={file};{group};{palette};{hotspot}&subov=...
@@ -100,13 +100,13 @@ public class Object : IHttpHandler
                     continue;
 
                 BgfFile bgfSubOv;
-                string subOvFile = subOvParms[0];                
+                string subOvFile = subOvParms[0];
                 if (!Cache.GetBGF(subOvFile, out bgfSubOv))
                     continue;
-                              
+
                 byte subOvPalette;
                 byte subOvHotspot;
-                
+
                 if (String.IsNullOrEmpty(subOvParms[1]) ||
                     !byte.TryParse(subOvParms[2], out subOvPalette) ||
                     !byte.TryParse(subOvParms[3], out subOvHotspot))
@@ -118,33 +118,33 @@ public class Object : IHttpHandler
 
                 if (subOvAnim == null)
                     continue;
-                
+
                 // create suboverlay
                 SubOverlay subOv = new SubOverlay(0, subOvAnim, subOvHotspot, subOvPalette, 0);
 
                 // set bgf resource
                 subOv.Resource = bgfSubOv;
-                
+
                 // add to gameobject's suboverlays
-                gameObject.SubOverlays.Add(subOv);                
+                gameObject.SubOverlays.Add(subOv);
             }
         }
-            
+
+        // tick object
+        gameObject.Tick(0, 1);
+
         // --------------------------------------------------
         // create composed image
-     
-        ImageComposerGDI<ObjectBase> imageComposer = new ImageComposerGDI<ObjectBase>();
-
-        gameObject.Tick(0, 1);
+        ImageComposerNative<ObjectBase> imageComposer = new ImageComposerNative<ObjectBase>();
         imageComposer.DataSource = gameObject;
-        
+
         if (imageComposer.Image == null)
         {
             context.Response.StatusCode = 404;
             context.Response.End();
             return;
         }
-      
+
         // --------------------------------------------------
         // write the response (encode to png)
 
@@ -152,13 +152,13 @@ public class Object : IHttpHandler
         imageComposer.Image.Save(context.Response.OutputStream, ImageFormat.Png);
         context.Response.Flush();
         context.Response.End();
-        
+
         imageComposer.Image.Dispose();
     }
- 
-    public bool IsReusable 
+
+    public bool IsReusable
     {
-        get 
+        get
         {
             return true;
         }

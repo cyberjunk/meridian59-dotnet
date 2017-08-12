@@ -362,6 +362,7 @@
     <Compile Include="Data\Models\UserCommand\UserCommandStand.cs" />
     <Compile Include="Data\Models\StatNumeric.cs" />
     <Compile Include="Drawing2D\ImageComposer.cs" />
+    <Compile Include="Drawing2D\ImageComposerNative.cs" />
     <Compile Include="Drawing2D\ImageComposerGDI.cs" />
     <Compile Include="Drawing2D\MiniMap.cs" />
     <Compile Include="Drawing2D\NameColors.cs" />
