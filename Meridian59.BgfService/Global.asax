@@ -4,7 +4,11 @@
 
     void Application_Start(object sender, EventArgs e) 
     {
+        // preload all BGF from disk to RAM
+        BgfCache.Preload();
+
         // warning: don't use cache, it has no limits so far
+        Meridian59.Drawing2D.ImageComposerNative<Meridian59.Data.Models.ObjectBase>.Cache.IsEnabled = false;
         Meridian59.Drawing2D.ImageComposerGDI<Meridian59.Data.Models.ObjectBase>.Cache.IsEnabled = false;
         
         // interpolation mode for GDI+ alpha-blending/scaling
@@ -52,6 +56,9 @@
 
         System.Web.Routing.RouteTable.Routes.Add(new System.Web.Routing.Route(
             "render/{width}/{height}/{scale}/{file}", new HttpHandlerRoute("~/Render.ashx")));
+
+        // execute maximum GC run
+        GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true, true);
     }
     
     void Application_End(object sender, EventArgs e) 

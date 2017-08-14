@@ -1,15 +1,12 @@
 ﻿<%@ WebHandler Language="C#" Class="Frame" %>
 
 using System;
-using System.IO;
 using System.Web;
 using System.Web.Routing;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Collections.Concurrent;
 
 using Meridian59.Files.BGF;
-using Meridian59.Drawing2D;
 using Meridian59.Common.Constants;
 
 /// <summary>
@@ -26,7 +23,6 @@ public class Frame : IHttpHandler
         // read parameters from url-path (see Global.asax):
         //  frame/{format}/{file}/{group}/{angle}/{palette}
         //  group, angle and palette are optional
-        
         RouteValueDictionary parms = context.Request.RequestContext.RouteData.Values;
 
         string parmFormat   = parms.ContainsKey("format")   ? (string)parms["format"] : null;
@@ -36,48 +32,24 @@ public class Frame : IHttpHandler
         string parmAngle    = parms.ContainsKey("angle")    ? (string)parms["angle"] : null;
         
         // -------------------------------------------------------
-        // no format provided or empty
-
-        if (String.IsNullOrEmpty(parmFormat))
+        // no format or no filename
+        if (String.IsNullOrEmpty(parmFormat) ||
+            String.IsNullOrEmpty(parmFile))
         {
             context.Response.StatusCode = 404;
             context.Response.End();
             return;
         }
-              
-        // -------------------------------------------------------
-        // no filename provided or empty
-        
-        if (String.IsNullOrEmpty(parmFile))
-        {
-            context.Response.StatusCode = 404;
-            context.Response.End();
-            return;
-        }
-
         // --------------------------------------------------
-        // try to get the BGF from cache or load from disk
-        
-        if (!Cache.GetBGF(parmFile, out bgfFile))
-        {
-            context.Response.StatusCode = 404;
-            context.Response.End();
-            return;           
-        }
-
-        // --------------------------------------------------
-        // no bgf file found
-        
-        if (bgfFile == null)
+        // unknown bgf
+        if (!BgfCache.GetBGF(parmFile, out bgfFile))
         {
             context.Response.StatusCode = 404;
             context.Response.End();
             return;
         }
-
         // --------------------------------------------------
         // try to parse additional params
-        
         int group = 0;
         byte paletteidx = 0;
         ushort angle = 0;
@@ -90,23 +62,19 @@ public class Frame : IHttpHandler
         angle %= GeometryConstants.MAXANGLE;
 
         // map 0 and negative groups to first group
-        // group is 1-based ...
+        // group is 1-based
         if (group < 1)
             group = 1;
-        
         // --------------------------------------------------
         // requested group out of range
-        
         if (group > bgfFile.FrameSets.Count)
         {
             context.Response.StatusCode = 404;
             context.Response.End();
             return;
         }
-
         // --------------------------------------------------
         // try get the frame
-
         BgfBitmap bgfBmp = bgfFile.GetFrame(group, angle);
         if (bgfBmp == null)
         {
@@ -114,19 +82,26 @@ public class Frame : IHttpHandler
             context.Response.End();
             return;
         }
+        // -------------------------------------------------------
+        // set cache behaviour
+        TimeSpan freshness = new TimeSpan(0, 0, 0, 60);
+        context.Response.Cache.SetExpires(DateTime.Now.Add(freshness));
+        context.Response.Cache.SetMaxAge(freshness);
+        context.Response.Cache.SetCacheability(HttpCacheability.Public);
+        context.Response.Cache.SetValidUntilExpires(true);
+        context.Response.Cache.VaryByParams["*"] = true;
+        //context.Response.Cache.SetLastModified(DateTime.Today); //todo use file lastmodified
 
         // --------------------------------------------------
         // create the A8R8G8B8 bitmap
-
         Bitmap bmp;
         switch(parmFormat)
         {
             case "bmp":
                 context.Response.ContentType = "image/bmp";
-
+                context.Response.AddHeader("Content-Disposition", "inline; filename=" + bgfFile.Filename + ".bmp");
                 bmp = bgfBmp.GetBitmap(paletteidx);
                 bmp.Save(context.Response.OutputStream, ImageFormat.Bmp);
-                
                 context.Response.Flush();
                 context.Response.End();
                 bmp.Dispose(); 
@@ -134,10 +109,9 @@ public class Frame : IHttpHandler
                 
             case "png":
                 context.Response.ContentType = "image/png";
-
+                context.Response.AddHeader("Content-Disposition", "inline; filename=" + bgfFile.Filename + ".png");
                 bmp = bgfBmp.GetBitmapA8R8G8B8(paletteidx);
                 bmp.Save(context.Response.OutputStream, ImageFormat.Png);
-                
                 context.Response.Flush();
                 context.Response.End();
                 bmp.Dispose(); 

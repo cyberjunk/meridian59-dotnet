@@ -47,7 +47,7 @@ public class BlakObj : IHttpHandler
         // --------------------------------------------------
         // try to get the main BGF from cache or load from disk
         BgfFile bgfFile;
-        if (!Cache.GetBGF(parmFile, out bgfFile))
+        if (!BgfCache.GetBGF(parmFile, out bgfFile))
         {
             context.Response.StatusCode = 404;
             context.Response.End();
@@ -101,7 +101,7 @@ public class BlakObj : IHttpHandler
 
                 BgfFile bgfSubOv;
                 string subOvFile = subOvParms[0];
-                if (!Cache.GetBGF(subOvFile, out bgfSubOv))
+                if (!BgfCache.GetBGF(subOvFile, out bgfSubOv))
                     continue;
 
                 byte subOvPalette;
@@ -145,10 +145,20 @@ public class BlakObj : IHttpHandler
             return;
         }
 
+        // -------------------------------------------------------
+        // set cache behaviour
+        TimeSpan freshness = new TimeSpan(0, 0, 0, 60);
+        context.Response.Cache.SetExpires(DateTime.Now.Add(freshness));
+        context.Response.Cache.SetMaxAge(freshness);
+        context.Response.Cache.SetCacheability(HttpCacheability.Public);
+        context.Response.Cache.SetValidUntilExpires(true);
+        context.Response.Cache.VaryByParams["*"] = true;
+        //context.Response.Cache.SetLastModified(DateTime.Today); //todo use file lastmodified
+
         // --------------------------------------------------
         // write the response (encode to png)
-
         context.Response.ContentType = "image/png";
+        context.Response.AddHeader("Content-Disposition", "inline; filename=object.png");
         imageComposer.Image.Save(context.Response.OutputStream, ImageFormat.Png);
         context.Response.Flush();
         context.Response.End();
