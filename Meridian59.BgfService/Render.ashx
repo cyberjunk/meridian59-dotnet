@@ -16,7 +16,7 @@ using Meridian59.Data.Models;
 using Meridian59.Drawing2D;
 using Meridian59.Files.BGF;
 
-public class Render : IHttpHandler 
+public class Render : IHttpHandler
 {
     private const ushort MINWIDTH = 16;
     private const ushort MAXWIDTH = 512;
@@ -25,28 +25,29 @@ public class Render : IHttpHandler
     private const ushort MINSCALE = 10;
     private const ushort MAXSCALE = 1000;
 
-    private readonly ImageComposerGDI<ObjectBase> imageComposer;   
-    private readonly Gif gif;
-
+    private readonly ImageComposerNative<ObjectBase> imageComposer;
+    private Gif gif;
+    
     private ushort width;
     private ushort height;
     private ushort scale;
 
     private double tick;
     private double tickLastAdd;
- 
+
+    private HttpContext context;
+
     public Render()
     {
         // create imagecomposer to render objects
-        imageComposer = new ImageComposerGDI<ObjectBase>();
+        imageComposer = new ImageComposerNative<ObjectBase>();
         imageComposer.NewImageAvailable += OnImageComposerNewImageAvailable;
-
-        // create gif instance
-        gif = new Gif();
     }
-    
+
     public void ProcessRequest (HttpContext context)
-    {        
+    {
+        this.context = context;
+
         // -------------------------------------------------------       
         // read basic and mainoverlay parameters from url-path (see Global.asax):
         //  render/{width}/{height}/{scale}/{file}/{group}/{palette}/{angle}
@@ -78,7 +79,7 @@ public class Render : IHttpHandler
         width = MathUtil.Bound(width, MINWIDTH, MAXWIDTH);
         height = MathUtil.Bound(height, MINHEIGHT, MAXHEIGHT);
         scale = MathUtil.Bound(scale, MINSCALE, MAXSCALE);
-        
+
         // --------------------------------------------------
         // try to get the main BGF from cache or load from disk
         BgfFile bgfFile;
@@ -165,12 +166,18 @@ public class Render : IHttpHandler
 
         // tick to do some calcs on the object
         gameObject.Tick(0, 1);
-        
+
         // --------------------------------------------------
         // set game object on image composer (causes drawing)  
 
+        // create gif instance
+        gif = new Gif(width, height);
+
+        //imageComposer.ApplyYOffset = false;
+        //imageComposer.IsScalePow2 = true;
+        //imageComposer.CenterVertical = true;
         imageComposer.DataSource = gameObject;
-   
+
         if (imageComposer.Image == null)
         {
             context.Response.StatusCode = 404;
@@ -186,28 +193,29 @@ public class Render : IHttpHandler
         {
             tick += 1.0;
             gameObject.Tick(tick, 1.0);
-        }                   
-           
+        }
+
         // --------------------------------------------------
         // write the response (encode to gif)
-
         context.Response.ContentType = "image/gif";
-        gif.Save(context.Response.OutputStream);
+        gif.Write(context.Response.OutputStream);
         context.Response.Flush();
         context.Response.End();
 
+        this.context = null;
+
         // --------------------------------------------------
         // cleanup
-        
+
         tick        = 0;
         tickLastAdd = 0;
-        
-        // dispose the single frames ('surface' in new image event)
-        foreach (Gif.GifFrame f in gif.Frames)
-            if (f.Image != null) 
-                f.Image.Dispose();
 
-        gif.Clear(); 
+        // dispose the single frames ('surface' in new image event)
+        //foreach (Gif.GifFrame f in gif.Frames)
+        //    if (f.Image != null)
+        //        f.Image.Dispose();
+
+        //gif.Clear();
     }
 
     private void OnImageComposerNewImageAvailable(object sender, EventArgs e)
@@ -228,28 +236,35 @@ public class Render : IHttpHandler
         graphics.Clear(Color.Transparent);
         graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
 
+        //System.Diagnostics.Debug.WriteLine(((int)posx).ToString(), ((int)posy).ToString());
+
         // draw mainbmp into target bitmap
         graphics.DrawImage(imageComposer.Image,
             new Rectangle((int)posx, (int)posy, (int)scaledwidth, (int)scaledheight),
+            //new Rectangle(0, 0, 10, 10),
             new Rectangle(0, 0, imageComposer.Image.Width, imageComposer.Image.Height),
             GraphicsUnit.Pixel);
 
         // get timespan for gif
         double span = tick - tickLastAdd;
         tickLastAdd = tick;
-        
+
         // add it
-        gif.AddFrame(surface, span);
-        
+        gif.AddFrame(surface, (ushort)(span / 10.0));
+        //surface.Save(context.Response.OutputStream, ImageFormat.Gif);
+        //gif.WriteFrame(surface, (int)span);
+        //gif.WriteFrame(imageComposer.Image, (int)span);
+        //gif.WriteFrame(new Bitmap(128, 128, PixelFormat.Format32bppArgb), (int)span);
+
         // cleanup the imagecomposer image and the graphics
         // the 'surface' bitmap is required until stream is written and disposed later
         imageComposer.Image.Dispose();
-        graphics.Dispose();         
+        graphics.Dispose();
     }
- 
-    public bool IsReusable 
+
+    public bool IsReusable
     {
-        get 
+        get
         {
             return true;
         }
