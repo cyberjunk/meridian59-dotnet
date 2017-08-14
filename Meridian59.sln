@@ -28,7 +28,7 @@ EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Meridian59.BgfService", "http://localhost:21065", "{1E2F2286-81D7-4F6A-A4D1-E2843482C7F8}"
 	ProjectSection(WebsiteProperties) = preProject
 		UseIISExpress = "true"
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.6.1"
 		ProjectReferences = "{e8223f3f-3f18-4f4c-9a8f-d9102b067be3}|Meridian59.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_21065"
 		Debug.AspNetCompiler.PhysicalPath = "Meridian59.BgfService\"
