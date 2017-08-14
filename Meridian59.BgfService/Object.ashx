@@ -23,6 +23,8 @@ public class BlakObj : IHttpHandler
 
     public void ProcessRequest (HttpContext context)
     {
+        BgfCache.Entry entry;
+
         // -------------------------------------------------------       
         // read basic and mainoverlay parameters from url-path (see Global.asax):
         //  object/{file}/{group}/{palette}/{angle}
@@ -46,8 +48,8 @@ public class BlakObj : IHttpHandler
 
         // --------------------------------------------------
         // try to get the main BGF from cache or load from disk
-        BgfFile bgfFile;
-        if (!BgfCache.GetBGF(parmFile, out bgfFile))
+
+        if (!BgfCache.GetBGF(parmFile, out entry))
         {
             context.Response.StatusCode = 404;
             context.Response.End();
@@ -79,7 +81,7 @@ public class BlakObj : IHttpHandler
         // create gameobject
 
         ObjectBase gameObject = new ObjectBase();
-        gameObject.Resource = bgfFile;
+        gameObject.Resource = entry.Bgf;
         gameObject.ColorTranslation = paletteidx;
         gameObject.Animation = anim;
         gameObject.ViewerAngle = angle;
@@ -99,7 +101,7 @@ public class BlakObj : IHttpHandler
                 if (subOvParms == null || subOvParms.Length < 4)
                     continue;
 
-                BgfFile bgfSubOv;
+                BgfCache.Entry bgfSubOv;
                 string subOvFile = subOvParms[0];
                 if (!BgfCache.GetBGF(subOvFile, out bgfSubOv))
                     continue;
@@ -123,7 +125,7 @@ public class BlakObj : IHttpHandler
                 SubOverlay subOv = new SubOverlay(0, subOvAnim, subOvHotspot, subOvPalette, 0);
 
                 // set bgf resource
-                subOv.Resource = bgfSubOv;
+                subOv.Resource = bgfSubOv.Bgf;
 
                 // add to gameobject's suboverlays
                 gameObject.SubOverlays.Add(subOv);
@@ -148,12 +150,12 @@ public class BlakObj : IHttpHandler
         // -------------------------------------------------------
         // set cache behaviour
         TimeSpan freshness = new TimeSpan(0, 0, 0, 60);
-        context.Response.Cache.SetExpires(DateTime.Now.Add(freshness));
+        context.Response.Cache.SetExpires(DateTime.UtcNow.Add(freshness));
         context.Response.Cache.SetMaxAge(freshness);
         context.Response.Cache.SetCacheability(HttpCacheability.Public);
         context.Response.Cache.SetValidUntilExpires(true);
         context.Response.Cache.VaryByParams["*"] = true;
-        //context.Response.Cache.SetLastModified(DateTime.Today); //todo use file lastmodified
+        //context.Response.Cache.SetLastModified(entry.LastModified); // must check all
 
         // --------------------------------------------------
         // write the response (encode to png)

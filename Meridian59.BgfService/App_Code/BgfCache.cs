@@ -9,8 +9,14 @@ using Meridian59.Files.BGF;
 /// </summary>
 public static class BgfCache
 {
-    private static readonly ConcurrentDictionary<string, BgfFile> cache =
-        new ConcurrentDictionary<string, BgfFile>();
+    public class Entry
+    {
+        public BgfFile Bgf;
+        public DateTime LastModified;
+    }
+
+    private static readonly ConcurrentDictionary<string, Entry> cache =
+        new ConcurrentDictionary<string, Entry>();
 
     /// <summary>
     /// Loads all BGF from subfolder "bgf" in document root
@@ -24,9 +30,16 @@ public static class BgfCache
         {
             try
             {
-                BgfFile bgf = new BgfFile(s);    // read from disk
-                bgf.DecompressAll();             // must decompress all (important!)
-                cache.TryAdd(bgf.Filename, bgf); // add to cache
+                // read from disk and decompress all (important!)
+                BgfFile bgf = new BgfFile(s);
+                bgf.DecompressAll();
+
+                Entry entry = new Entry();
+                entry.Bgf = bgf;
+                entry.LastModified = File.GetLastWriteTimeUtc(s);
+
+                // add to cache
+                cache.TryAdd(bgf.Filename, entry);
             }
             catch (Exception) { }
         }
@@ -41,7 +54,7 @@ public static class BgfCache
     /// <param name="Key"></param>
     /// <param name="Value"></param>
     /// <returns></returns>
-    public static bool GetBGF(string Key, out BgfFile Value)
+    public static bool GetBGF(string Key, out Entry Value)
     {
         // not yet cached
         if (!cache.TryGetValue(Key, out Value))
@@ -58,15 +71,17 @@ public static class BgfCache
             {
                 try
                 {
-                    // read from disk
-                    Value = new BgfFile(filePath);
+                    // read from disk and decompress all (important!)
+                    BgfFile bgf = new BgfFile(filePath);
+                    bgf.DecompressAll();
 
-                    // must decompress all due to multithreading (important!)
-                    Value.DecompressAll();
+                    Entry entry = new Entry();
+                    entry.Bgf = bgf;
+                    entry.LastModified = File.GetLastWriteTimeUtc(filePath);
 
                     // add to cache
-                    cache.TryAdd(Key, Value);
-                    
+                    cache.TryAdd(bgf.Filename, entry);
+
                     return true;
                 }
                 catch (Exception) { return false; }

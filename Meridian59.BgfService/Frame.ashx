@@ -17,7 +17,7 @@ public class Frame : IHttpHandler
 {
     public void ProcessRequest (HttpContext context) 
     {
-        BgfFile bgfFile;
+        BgfCache.Entry entry;
 
         // -------------------------------------------------------       
         // read parameters from url-path (see Global.asax):
@@ -42,7 +42,7 @@ public class Frame : IHttpHandler
         }
         // --------------------------------------------------
         // unknown bgf
-        if (!BgfCache.GetBGF(parmFile, out bgfFile))
+        if (!BgfCache.GetBGF(parmFile, out entry))
         {
             context.Response.StatusCode = 404;
             context.Response.End();
@@ -67,7 +67,7 @@ public class Frame : IHttpHandler
             group = 1;
         // --------------------------------------------------
         // requested group out of range
-        if (group > bgfFile.FrameSets.Count)
+        if (group > entry.Bgf.FrameSets.Count)
         {
             context.Response.StatusCode = 404;
             context.Response.End();
@@ -75,7 +75,7 @@ public class Frame : IHttpHandler
         }
         // --------------------------------------------------
         // try get the frame
-        BgfBitmap bgfBmp = bgfFile.GetFrame(group, angle);
+        BgfBitmap bgfBmp = entry.Bgf.GetFrame(group, angle);
         if (bgfBmp == null)
         {
             context.Response.StatusCode = 404;
@@ -85,12 +85,12 @@ public class Frame : IHttpHandler
         // -------------------------------------------------------
         // set cache behaviour
         TimeSpan freshness = new TimeSpan(0, 0, 0, 60);
-        context.Response.Cache.SetExpires(DateTime.Now.Add(freshness));
+        context.Response.Cache.SetExpires(DateTime.UtcNow.Add(freshness));
         context.Response.Cache.SetMaxAge(freshness);
         context.Response.Cache.SetCacheability(HttpCacheability.Public);
         context.Response.Cache.SetValidUntilExpires(true);
         context.Response.Cache.VaryByParams["*"] = true;
-        //context.Response.Cache.SetLastModified(DateTime.Today); //todo use file lastmodified
+        context.Response.Cache.SetLastModified(entry.LastModified);
 
         // --------------------------------------------------
         // create the A8R8G8B8 bitmap
@@ -99,7 +99,7 @@ public class Frame : IHttpHandler
         {
             case "bmp":
                 context.Response.ContentType = "image/bmp";
-                context.Response.AddHeader("Content-Disposition", "inline; filename=" + bgfFile.Filename + ".bmp");
+                context.Response.AddHeader("Content-Disposition", "inline; filename=" + entry.Bgf.Filename + ".bmp");
                 bmp = bgfBmp.GetBitmap(paletteidx);
                 bmp.Save(context.Response.OutputStream, ImageFormat.Bmp);
                 context.Response.Flush();
@@ -109,7 +109,7 @@ public class Frame : IHttpHandler
                 
             case "png":
                 context.Response.ContentType = "image/png";
-                context.Response.AddHeader("Content-Disposition", "inline; filename=" + bgfFile.Filename + ".png");
+                context.Response.AddHeader("Content-Disposition", "inline; filename=" + entry.Bgf.Filename + ".png");
                 bmp = bgfBmp.GetBitmapA8R8G8B8(paletteidx);
                 bmp.Save(context.Response.OutputStream, ImageFormat.Png);
                 context.Response.Flush();
