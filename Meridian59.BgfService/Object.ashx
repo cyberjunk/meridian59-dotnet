@@ -149,7 +149,7 @@ public class BlakObj : IHttpHandler
 
         // -------------------------------------------------------
         // set cache behaviour
-        TimeSpan freshness = new TimeSpan(0, 0, 0, 60);
+        TimeSpan freshness = new TimeSpan(0, 0, 0, 120);
         context.Response.Cache.SetExpires(DateTime.UtcNow.Add(freshness));
         context.Response.Cache.SetMaxAge(freshness);
         context.Response.Cache.SetCacheability(HttpCacheability.Public);

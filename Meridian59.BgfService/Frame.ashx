@@ -84,12 +84,12 @@ public class Frame : IHttpHandler
         }
         // -------------------------------------------------------
         // set cache behaviour
-        TimeSpan freshness = new TimeSpan(0, 0, 0, 60);
+        TimeSpan freshness = new TimeSpan(0, 0, 0, 120);
         context.Response.Cache.SetExpires(DateTime.UtcNow.Add(freshness));
         context.Response.Cache.SetMaxAge(freshness);
         context.Response.Cache.SetCacheability(HttpCacheability.Public);
         context.Response.Cache.SetValidUntilExpires(true);
-        context.Response.Cache.VaryByParams["*"] = true;
+        context.Response.Cache.VaryByParams["*"] = false;
         context.Response.Cache.SetLastModified(entry.LastModified);
 
         // --------------------------------------------------

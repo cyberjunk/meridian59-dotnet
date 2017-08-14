@@ -27,7 +27,7 @@ public class Render : IHttpHandler
 
     private readonly ImageComposerNative<ObjectBase> imageComposer;
     private Gif gif;
-    
+
     private ushort width;
     private ushort height;
     private ushort scale;
@@ -197,7 +197,7 @@ public class Render : IHttpHandler
 
         // -------------------------------------------------------
         // set cache behaviour
-        TimeSpan freshness = new TimeSpan(0, 0, 0, 60);
+        TimeSpan freshness = new TimeSpan(0, 0, 0, 120);
         context.Response.Cache.SetExpires(DateTime.UtcNow.Add(freshness));
         context.Response.Cache.SetMaxAge(freshness);
         context.Response.Cache.SetCacheability(HttpCacheability.Public);
@@ -220,13 +220,6 @@ public class Render : IHttpHandler
 
         tick        = 0;
         tickLastAdd = 0;
-
-        // dispose the single frames ('surface' in new image event)
-        //foreach (Gif.GifFrame f in gif.Frames)
-        //    if (f.Image != null)
-        //        f.Image.Dispose();
-
-        //gif.Clear();
     }
 
     private void OnImageComposerNewImageAvailable(object sender, EventArgs e)
@@ -247,12 +240,9 @@ public class Render : IHttpHandler
         graphics.Clear(Color.Transparent);
         graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
 
-        //System.Diagnostics.Debug.WriteLine(((int)posx).ToString(), ((int)posy).ToString());
-
         // draw mainbmp into target bitmap
         graphics.DrawImage(imageComposer.Image,
             new Rectangle((int)posx, (int)posy, (int)scaledwidth, (int)scaledheight),
-            //new Rectangle(0, 0, 10, 10),
             new Rectangle(0, 0, imageComposer.Image.Width, imageComposer.Image.Height),
             GraphicsUnit.Pixel);
 
@@ -262,13 +252,9 @@ public class Render : IHttpHandler
 
         // add it
         gif.AddFrame(surface, (ushort)(span / 10.0));
-        //surface.Save(context.Response.OutputStream, ImageFormat.Gif);
-        //gif.WriteFrame(surface, (int)span);
-        //gif.WriteFrame(imageComposer.Image, (int)span);
-        //gif.WriteFrame(new Bitmap(128, 128, PixelFormat.Format32bppArgb), (int)span);
-
-        // cleanup the imagecomposer image and the graphics
-        // the 'surface' bitmap is required until stream is written and disposed later
+        
+        // cleanup
+        surface.Dispose();
         imageComposer.Image.Dispose();
         graphics.Dispose();
     }
