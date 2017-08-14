@@ -30,6 +30,9 @@ public static class BgfCache
             }
             catch (Exception) { }
         }
+
+        // execute maximum GC run
+        GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced);
     }
 
     /// <summary>

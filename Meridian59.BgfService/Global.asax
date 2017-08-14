@@ -56,9 +56,6 @@
 
         System.Web.Routing.RouteTable.Routes.Add(new System.Web.Routing.Route(
             "render/{width}/{height}/{scale}/{file}", new HttpHandlerRoute("~/Render.ashx")));
-
-        // execute maximum GC run
-        GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true, true);
     }
     
     void Application_End(object sender, EventArgs e) 
