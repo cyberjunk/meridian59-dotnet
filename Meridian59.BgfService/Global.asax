@@ -30,21 +30,7 @@
             "file/{file}/{req}", new HttpHandlerRoute("~/file.ashx")));
 
         // ----------------------------------------------------------------
-
-        System.Web.Routing.RouteTable.Routes.Add(new System.Web.Routing.Route(
-            "frame/{format}/{file}/{group}/{palette}/{angle}", new HttpHandlerRoute("~/Frame.ashx")));
-
-        System.Web.Routing.RouteTable.Routes.Add(new System.Web.Routing.Route(
-            "frame/{format}/{file}/{group}/{palette}", new HttpHandlerRoute("~/Frame.ashx")));
-
-        System.Web.Routing.RouteTable.Routes.Add(new System.Web.Routing.Route(
-            "frame/{format}/{file}/{group}", new HttpHandlerRoute("~/Frame.ashx")));
-
-        System.Web.Routing.RouteTable.Routes.Add(new System.Web.Routing.Route(
-            "frame/{format}/{file}", new HttpHandlerRoute("~/Frame.ashx")));
-
-        // ----------------------------------------------------------------
-
+        
         System.Web.Routing.RouteTable.Routes.Add(new System.Web.Routing.Route(
             "object/{file}/{group}/{palette}/{angle}", new HttpHandlerRoute("~/Object.ashx")));
 

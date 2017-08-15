@@ -9,47 +9,24 @@
     <h1>BGF Image Service</h1>
 
     <hr />
-    <h2>BGF Frame</h2>
-    <h3>Query-URL: /frame/{format}/{file}/{group}/{palette}/{angle}</h3>
-    <h3>Examples PNG</h3>
+    <h2>(1) Low-Level: BGF Frame/Info</h2>
+    <h3>Query-URL Frame: /file/{name}/frame/{format}/{index}/{palette}</h3>
+    <h3>Query-URL Info: /file/{name}/meta</h3>
+    <a href="file/avsham/meta">TEST INFO</a>
+    <h3>Examples PNG/BMP</h3>
     <table>
         <tbody>
             <tr>
-                <td>Name: avsham<br />Format: png<br />Group: 1<br />Palette: 0<br />Angle: 0</td>
-                <td>Name: avsham<br />Format: png<br />Group: 1<br />Palette: 0<br />Angle: 512</td>
-                <td>Name: avsham<br />Format: png<br />Group: 1<br />Palette: 0<br />Angle: 1024</td>
-                <td>Name: avsham<br />Format: png<br />Group: 1<br />Palette: 0<br />Angle: 2048</td>
-                <td>Name: avsham<br />Format: png<br />Group: 1<br />Palette: 0<br />Angle: 3072</td>
-                <td>Name: avsham<br />Format: png<br />Group: 1<br />Palette: 0<br />Angle: 3584</td>
+                <td>Name: avsham<br />Format: png<br />Index: 0<br />Palette: 0</td>
+                <td>Name: avsham<br />Format: png<br />Index: 1<br />Palette: 54</td>
+                <td>Name: avsham<br />Format: bmp<br />Index: 3<br />Palette: 78</td>
+                <td>Name: avsham<br />Format: bmp<br />Index: 4<br />Palette: 68</td>
             </tr>
             <tr>
-                <td><img src="frame/png/avsham/1/0/0" /></td>
-                <td><img src="frame/png/avsham/1/0/512" /></td>
-                <td><img src="frame/png/avsham/1/0/1024" /></td>
-                <td><img src="frame/png/avsham/1/0/2048" /></td>
-                <td><img src="frame/png/avsham/1/0/3072" /></td>
-                <td><img src="frame/png/avsham/1/0/3584" /></td>
-            </tr>
-        </tbody>
-    </table>
-    <h3>Examples BMP</h3>
-    <table>
-        <tbody>
-            <tr>
-                <td>Name: avsham<br />Format: bmp<br />Group: 11<br />Palette: 78<br />Angle: 0</td>
-                <td>Name: avsham<br />Format: bmp<br />Group: 11<br />Palette: 78<br />Angle: 512</td>
-                <td>Name: avsham<br />Format: bmp<br />Group: 11<br />Palette: 78<br />Angle: 1024</td>
-                <td>Name: avsham<br />Format: bmp<br />Group: 11<br />Palette: 78<br />Angle: 2048</td>
-                <td>Name: avsham<br />Format: bmp<br />Group: 11<br />Palette: 78<br />Angle: 3072</td>
-                <td>Name: avsham<br />Format: bmp<br />Group: 11<br />Palette: 78<br />Angle: 3584</td>
-            </tr>
-            <tr>
-                <td><img src="frame/bmp/avsham/11/78/0" /></td>
-                <td><img src="frame/bmp/avsham/11/78/512" /></td>
-                <td><img src="frame/bmp/avsham/11/78/1024" /></td>
-                <td><img src="frame/bmp/avsham/11/78/2048" /></td>
-                <td><img src="frame/bmp/avsham/11/78/3072" /></td>
-                <td><img src="frame/bmp/avsham/11/78/3584" /></td>
+                <td><img src="file/avsham/frame/png/0/0" /></td>
+                <td><img src="file/avsham/frame/png/1/54" /></td>
+                <td><img src="file/avsham/frame/bmp/3/78" /></td>
+                <td><img src="file/avsham/frame/bmp/4/68" /></td>
             </tr>
         </tbody>
     </table>
