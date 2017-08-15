@@ -48,6 +48,9 @@ public class BlakObj : IHttpHandler
             return;
         }
 
+        // convert to lowercase
+        parmFile = parmFile.ToLower();
+
         // --------------------------------------------------
         // try to get the main BGF from cache or load from disk
 
@@ -107,7 +110,7 @@ public class BlakObj : IHttpHandler
                     continue;
 
                 BgfCache.Entry bgfSubOv;
-                string subOvFile = subOvParms[0];
+                string subOvFile = subOvParms[0].ToLower();
                 if (!BgfCache.GetBGF(subOvFile, out bgfSubOv))
                     continue;
 

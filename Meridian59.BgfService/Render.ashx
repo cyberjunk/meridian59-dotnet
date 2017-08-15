@@ -74,6 +74,9 @@ public class Render : IHttpHandler
             return;
         }
 
+        // convert to lowercase
+        parmFile = parmFile.ToLower();
+
         UInt16.TryParse(parmWidth, out width);
         UInt16.TryParse(parmHeight, out height);
         UInt16.TryParse(parmScale, out scale);
@@ -138,7 +141,8 @@ public class Render : IHttpHandler
                     continue;
 
                 BgfCache.Entry bgfSubOv;
-                string subOvFile = subOvParms[0];
+                string subOvFile = subOvParms[0].ToLower();
+
                 if (!BgfCache.GetBGF(subOvFile, out bgfSubOv))
                     continue;
 

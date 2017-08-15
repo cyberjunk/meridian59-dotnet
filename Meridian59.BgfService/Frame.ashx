@@ -17,7 +17,7 @@ public class Frame : IHttpHandler
 {
     private static readonly TimeSpan freshness = new TimeSpan(0, 0, 0, 300);
 
-    public void ProcessRequest (HttpContext context) 
+    public void ProcessRequest (HttpContext context)
     {
         BgfCache.Entry entry;
 
@@ -32,7 +32,7 @@ public class Frame : IHttpHandler
         string parmGroup    = parms.ContainsKey("group")    ? (string)parms["group"] : null;
         string parmPalette  = parms.ContainsKey("palette")  ? (string)parms["palette"] : null;
         string parmAngle    = parms.ContainsKey("angle")    ? (string)parms["angle"] : null;
-        
+
         // -------------------------------------------------------
         // no format or no filename
         if (String.IsNullOrEmpty(parmFormat) ||
@@ -42,6 +42,11 @@ public class Frame : IHttpHandler
             context.Response.End();
             return;
         }
+
+        // convert to lowercase
+        parmFormat = parmFormat.ToLower();
+        parmFile = parmFile.ToLower();
+
         // --------------------------------------------------
         // unknown bgf
         if (!BgfCache.GetBGF(parmFile, out entry))
@@ -55,11 +60,11 @@ public class Frame : IHttpHandler
         int group = 0;
         byte paletteidx = 0;
         ushort angle = 0;
-        
+
         Int32.TryParse(parmGroup, out group);
         Byte.TryParse(parmPalette, out paletteidx);
         UInt16.TryParse(parmAngle, out angle);
-        
+
         // remove full periods from angle
         angle %= GeometryConstants.MAXANGLE;
 
@@ -105,9 +110,9 @@ public class Frame : IHttpHandler
                 bmp.Save(context.Response.OutputStream, ImageFormat.Bmp);
                 context.Response.Flush();
                 context.Response.End();
-                bmp.Dispose(); 
+                bmp.Dispose();
                 break;
-                
+
             case "png":
                 context.Response.ContentType = "image/png";
                 context.Response.AddHeader("Content-Disposition", "inline; filename=" + entry.Bgf.Filename + ".png");
@@ -115,20 +120,20 @@ public class Frame : IHttpHandler
                 bmp.Save(context.Response.OutputStream, ImageFormat.Png);
                 context.Response.Flush();
                 context.Response.End();
-                bmp.Dispose(); 
+                bmp.Dispose();
                 break;
-            
+
             // invalid format
             default:
                 context.Response.StatusCode = 404;
                 context.Response.End();
                 break;
-        }   
+        }
     }
- 
-    public bool IsReusable 
+
+    public bool IsReusable
     {
-        get 
+        get
         {
             return true;
         }
