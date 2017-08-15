@@ -36,7 +36,7 @@ public class Render : IHttpHandler
     private double tickLastAdd;
 
     private HttpContext context;
-    private static readonly TimeSpan freshness = new TimeSpan(0, 0, 0, 120);
+    private static readonly TimeSpan freshness = new TimeSpan(0, 0, 0, 300);
 
     public Render()
     {

@@ -21,7 +21,7 @@ public class BlakObj : IHttpHandler
     {
     }
 
-    private static readonly TimeSpan freshness = new TimeSpan(0, 0, 0, 120);
+    private static readonly TimeSpan freshness = new TimeSpan(0, 0, 0, 300);
 
     public void ProcessRequest (HttpContext context)
     {

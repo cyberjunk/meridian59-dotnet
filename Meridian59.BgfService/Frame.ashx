@@ -15,7 +15,7 @@ using Meridian59.Common.Constants;
 /// </summary>
 public class Frame : IHttpHandler
 {
-    private static readonly TimeSpan freshness = new TimeSpan(0, 0, 0, 120);
+    private static readonly TimeSpan freshness = new TimeSpan(0, 0, 0, 300);
 
     public void ProcessRequest (HttpContext context) 
     {
