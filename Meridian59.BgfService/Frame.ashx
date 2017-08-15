@@ -15,6 +15,8 @@ using Meridian59.Common.Constants;
 /// </summary>
 public class Frame : IHttpHandler
 {
+    private static readonly TimeSpan freshness = new TimeSpan(0, 0, 0, 120);
+
     public void ProcessRequest (HttpContext context) 
     {
         BgfCache.Entry entry;
@@ -84,7 +86,6 @@ public class Frame : IHttpHandler
         }
         // -------------------------------------------------------
         // set cache behaviour
-        TimeSpan freshness = new TimeSpan(0, 0, 0, 120);
         context.Response.Cache.SetExpires(DateTime.UtcNow.Add(freshness));
         context.Response.Cache.SetMaxAge(freshness);
         context.Response.Cache.SetCacheability(HttpCacheability.Public);

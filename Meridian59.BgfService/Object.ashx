@@ -21,6 +21,8 @@ public class BlakObj : IHttpHandler
     {
     }
 
+    private static readonly TimeSpan freshness = new TimeSpan(0, 0, 0, 120);
+
     public void ProcessRequest (HttpContext context)
     {
         BgfCache.Entry entry;
@@ -55,6 +57,9 @@ public class BlakObj : IHttpHandler
             context.Response.End();
             return;
         }
+
+        // stores the latest lastmodified of main and all subov
+        DateTime lastModified = entry.LastModified;
 
         // --------------------------------------------------
         // try to parse other params
@@ -127,6 +132,10 @@ public class BlakObj : IHttpHandler
                 // set bgf resource
                 subOv.Resource = bgfSubOv.Bgf;
 
+                // update lastModified if subov is newer
+                if (bgfSubOv.LastModified > lastModified)
+                    lastModified = bgfSubOv.LastModified;
+
                 // add to gameobject's suboverlays
                 gameObject.SubOverlays.Add(subOv);
             }
@@ -149,13 +158,12 @@ public class BlakObj : IHttpHandler
 
         // -------------------------------------------------------
         // set cache behaviour
-        TimeSpan freshness = new TimeSpan(0, 0, 0, 120);
         context.Response.Cache.SetExpires(DateTime.UtcNow.Add(freshness));
         context.Response.Cache.SetMaxAge(freshness);
         context.Response.Cache.SetCacheability(HttpCacheability.Public);
         context.Response.Cache.SetValidUntilExpires(true);
-        context.Response.Cache.VaryByParams["*"] = true;
-        //context.Response.Cache.SetLastModified(entry.LastModified); // must check all
+        context.Response.Cache.VaryByParams["*"] = false;
+        context.Response.Cache.SetLastModified(lastModified);
 
         // --------------------------------------------------
         // write the response (encode to png)
