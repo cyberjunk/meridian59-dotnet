@@ -185,11 +185,11 @@ public class Render : IHttpHandler
         // create gif instance
         gif = new Gif(width, height);
 
-        //imageComposer.ApplyYOffset = false;
-        //imageComposer.IsScalePow2 = true;
+        //imageComposer.ApplyYOffset = true;
         //imageComposer.CenterVertical = true;
-        //imageComposer.Width = width;
-        //imageComposer.Height = height;
+        imageComposer.CenterHorizontal = true;
+        imageComposer.Width = width;
+        imageComposer.Height = height;
         imageComposer.Quality = 16.0f;
         imageComposer.IsCustomShrink = true;
         imageComposer.CustomShrink = (float)scale / 100.0f;
@@ -241,7 +241,7 @@ public class Render : IHttpHandler
 
     private void OnImageComposerNewImageAvailable(object sender, EventArgs e)
     {
-        Bitmap surface = new Bitmap(width, height, PixelFormat.Format32bppArgb);
+        /*Bitmap surface = new Bitmap(width, height, PixelFormat.Format32bppArgb);
         Graphics graphics = Graphics.FromImage(surface);
 
         // get object size in world size
@@ -263,20 +263,20 @@ public class Render : IHttpHandler
         graphics.DrawImage(imageComposer.Image,
             new Rectangle((int)posx, (int)posy, (int)scaledwidth, (int)scaledheight),
             new Rectangle(0, 0, imageComposer.Image.Width, imageComposer.Image.Height),
-            GraphicsUnit.Pixel);
+            GraphicsUnit.Pixel);*/
 
         // get timespan for gif
         double span = tick - tickLastAdd;
         tickLastAdd = tick;
 
         // add it
-        gif.AddFrame(surface, (ushort)(span * 0.1));
-        //gif.AddFrame(imageComposer.Image, (ushort)(span * 0.1));
+        //gif.AddFrame(surface, (ushort)(span * 0.1));
+        gif.AddFrame(imageComposer.Image, (ushort)(span * 0.1));
 
         // cleanup
-        surface.Dispose();
+        //surface.Dispose();
         imageComposer.Image.Dispose();
-        graphics.Dispose();
+        //graphics.Dispose();
     }
 
     public bool IsReusable
