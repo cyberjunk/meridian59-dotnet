@@ -488,7 +488,7 @@ namespace Meridian59.Drawing2D
                     V2 userSize = new V2(Width, Height);
 
                     // scale so we use at least all pixels either from upscaled width or height
-                    ScaleToBox(userSize, CenterHorizontal, CenterVertical);
+                    ScaleToBox(userSize, CenterHorizontal, CenterVertical, !IsCustomShrink);
                 }
                 else
                 {
@@ -510,7 +510,7 @@ namespace Meridian59.Drawing2D
                             MathUtil.NextPowerOf2((uint)dimension.Y));
 
                         // scale so we use at least all pixels either from upscaled width or height
-                        ScaleToBox(pow2Size, CenterHorizontal, CenterVertical);
+                        ScaleToBox(pow2Size, CenterHorizontal, CenterVertical, !IsCustomShrink);
                     }
                 }
 
@@ -574,54 +574,72 @@ namespace Meridian59.Drawing2D
         /// <param name="Dimension"></param>
         /// <param name="CenterHorizontal"></param>
         /// <param name="CenterVertical"></param>
-        protected void ScaleToBox(V2 Dimension, bool CenterHorizontal = false, bool CenterVertical = false)
+        /// <param name="MakeFit"></param>
+        protected void ScaleToBox(V2 Dimension, bool CenterHorizontal = false, bool CenterVertical = false, bool MakeFit = true)
         {
             // get scales for both axis
             Real hScale = Dimension.X / this.Dimension.X;
             Real vScale = Dimension.Y / this.Dimension.Y;
 
-            // use the smaller factor so the other side "still fits"
-            // into given dimension
-            if (hScale >= vScale)
+            if (MakeFit)
             {
-                // apply scale from y-side
-                Scale(vScale);
-
-                if (CenterHorizontal)
+                // use the smaller factor so the other side "still fits"
+                // into given dimension
+                if (hScale >= vScale)
                 {
-                    Real stride = (Dimension.X - this.Dimension.X) / 2.0f;
-                    Real strideratio = stride / Dimension.X;
-
-                    Translate(new V2(stride, 0.0f));
-
-                    uvstart.X = 0.0f + strideratio;
-                    uvend.X = 1.0f - strideratio;
+                    // apply scale from y-side
+                    Scale(vScale);
                 }
                 else
                 {
-                    // adjust UVEnd on x-side                     
-                    uvend.X = 1.0f * (this.Dimension.X / Dimension.X);
+                    // apply scale from x-side
+                    Scale(hScale);
                 }
+            }
+
+            if (CenterHorizontal)
+            {
+                Real stride = (Dimension.X - this.Dimension.X) / 2.0f;
+                Real strideratio = stride / Dimension.X;
+
+                Translate(new V2(stride, 0.0f));
+
+                uvstart.X = 0.0f + strideratio;
+                uvend.X = 1.0f - strideratio;
             }
             else
             {
-                // apply scale from x-side
-                Scale(hScale);
+                // adjust UVEnd on x-side
+                uvend.X = 1.0f * (this.Dimension.X / Dimension.X);
+            }
 
-                if (CenterVertical)
-                {
-                    Real stride = (Dimension.Y - this.Dimension.Y) / 2.0f;
-                    Real strideratio = stride / Dimension.Y;
+            if (CenterVertical)
+            {
+                Real stride = (Dimension.Y - this.Dimension.Y) / 2.0f;
+                Real strideratio = stride / Dimension.Y;
 
-                    Translate(new V2(0.0f, stride));
+                Translate(new V2(0.0f, stride));
 
-                    uvstart.Y = 0.0f + strideratio;
-                    uvend.Y = 1.0f - strideratio;
-                }
-                else
+                uvstart.Y = 0.0f + strideratio;
+                uvend.Y = 1.0f - strideratio;
+            }
+            else
+            {
+                if (MakeFit)
                 {
                     // adjust UVEnd on y-side
                     uvend.Y = 1.0f * (this.Dimension.Y / Dimension.Y);
+                }
+                else
+                {
+                    // move to bottom instead drawing from top
+                    Real stride = Dimension.Y - this.Dimension.Y;
+
+                    Translate(new V2(0.0f, stride));
+
+                    // adjust UV coords
+                    uvstart.Y = stride / Dimension.Y;
+                    uvend.Y = 1.0f;
                 }
             }
 
