@@ -462,9 +462,17 @@ namespace Meridian59.Drawing2D
                 // scale so highest resolution resource has 1:1 ratio (no downscale)
                 // and apply custom quality level
                 Scale((Real)MaxShrink);
+                
+                // user defined sizes
+                if (Width > 0 && Height > 0)
+                {
+                    // use user given size
+                    V2 userSize = new V2(Width, Height);
 
-                // scale up to pow2 if set
-                if (ScalePow2)
+                    // scale so we use at least all pixels either from upscaled width or height
+                    ScaleToBox(userSize, CenterHorizontal, CenterVertical);
+                }
+                else
                 {
                     Real maxQuality = Quality * QUALITYBASE;
                     Real ratioX = maxQuality / dimension.X;
@@ -475,21 +483,17 @@ namespace Meridian59.Drawing2D
                     else if (ratioX > ratioY && ratioY < 1.0f)
                         Scale(ratioY);
 
-                    // get next power of 2 size
-                    V2 pow2Size = new V2(
-                        MathUtil.NextPowerOf2((uint)dimension.X),
-                        MathUtil.NextPowerOf2((uint)dimension.Y));
+                    // scale up to pow2 if set
+                    if (ScalePow2)
+                    {
+                        // get next power of 2 size
+                        V2 pow2Size = new V2(
+                            MathUtil.NextPowerOf2((uint)dimension.X),
+                            MathUtil.NextPowerOf2((uint)dimension.Y));
 
-                    // scale so we use at least all pixels either from upscaled width or height
-                    ScaleToBox(pow2Size, CenterHorizontal, CenterVertical);
-                }
-                else if (Width > 0 && Height > 0)
-                {
-                    // use user given size
-                    V2 userSize = new V2(Width, Height);
-
-                    // scale so we use at least all pixels either from upscaled width or height
-                    ScaleToBox(userSize, CenterHorizontal, CenterVertical);
+                        // scale so we use at least all pixels either from upscaled width or height
+                        ScaleToBox(pow2Size, CenterHorizontal, CenterVertical);
+                    }
                 }
 
                 // calculate the world-size (shrink=1) of the composed object from dimension, uv-coordinates and scaling
