@@ -55,6 +55,11 @@ namespace Meridian59.Drawing2D
 
         protected override unsafe void DrawMainOverlay()
         {
+            // todo: negative positions not supported by method below
+            if (RenderInfo.Origin.X < 0.0f ||
+                RenderInfo.Origin.Y < 0.0f)
+                return;
+
             RenderInfo.Bgf.FillPixelDataAsA8R8G8B8TransparencyBlackScaled(
                 (uint*)pixelData.Scan0.ToPointer(),
                 (uint)Image.Width, (uint)Image.Height,
@@ -67,6 +72,11 @@ namespace Meridian59.Drawing2D
 
         protected override unsafe void DrawSubOverlay(SubOverlay.RenderInfo RenderInfo)
         {
+            // todo: negative positions not supported by method below
+            if (RenderInfo.Origin.X < 0.0f ||
+                RenderInfo.Origin.Y < 0.0f)
+                return;
+
             RenderInfo.Bgf.FillPixelDataAsA8R8G8B8TransparencyBlackScaled(
                 (uint*)pixelData.Scan0.ToPointer(),
                 (uint)Image.Width, (uint)Image.Height,
