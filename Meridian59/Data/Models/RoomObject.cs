@@ -1727,9 +1727,11 @@ namespace Meridian59.Data.Models
             uint Width = 0,
             uint Height = 0,
             bool CenterVertical = false,
-            bool CenterHorizontal = false)
+            bool CenterHorizontal = false,
+            bool IsCustomShrink = false,
+            Real CustomShrink = 1.0f)
         {
-            return new RenderInfo(this, UseViewerFrame, ApplyYOffset, RootHotspotIndex, Quality, ScalePow2, Width, Height, CenterVertical, CenterHorizontal);
+            return new RenderInfo(this, UseViewerFrame, ApplyYOffset, RootHotspotIndex, Quality, ScalePow2, Width, Height, CenterVertical, CenterHorizontal, IsCustomShrink, CustomShrink);
         }
 
         #region Static

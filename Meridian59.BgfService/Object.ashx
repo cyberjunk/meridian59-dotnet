@@ -150,6 +150,10 @@ public class BlakObj : IHttpHandler
         // --------------------------------------------------
         // create composed image
         ImageComposerNative<ObjectBase> imageComposer = new ImageComposerNative<ObjectBase>();
+        imageComposer.Quality = 16.0f;
+        imageComposer.IsCustomShrink = true;
+        imageComposer.CustomShrink = 4.0f;
+
         imageComposer.DataSource = gameObject;
 
         if (imageComposer.Image == null)

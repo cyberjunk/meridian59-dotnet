@@ -134,6 +134,8 @@ namespace Meridian59.Drawing2D
         /// <param name="Height"></param>
         /// <param name="CenterVertical"></param>
         /// <param name="CenterHorizontal"></param>
+        /// <param name="IsCustomShrink"></param>
+        /// <param name="CustomShrink"></param>
         public RenderInfo(
             ObjectBase Data,
             bool ApplyYOffset = true,
@@ -143,10 +145,12 @@ namespace Meridian59.Drawing2D
             uint Width = 0,
             uint Height = 0,
             bool CenterVertical = false,
-            bool CenterHorizontal = false)
+            bool CenterHorizontal = false,
+            bool IsCustomShrink = false,
+            Real CustomShrink = 1.0f)
         {
             SubBgf = new List<SubOverlay.RenderInfo>();
-            Refresh(Data, ApplyYOffset, RootHotspotIndex, Quality, ScalePow2, Width, Height, CenterVertical, CenterHorizontal);
+            Refresh(Data, ApplyYOffset, RootHotspotIndex, Quality, ScalePow2, Width, Height, CenterVertical, CenterHorizontal, IsCustomShrink, CustomShrink);
         }
 
         /// <summary>
@@ -162,6 +166,8 @@ namespace Meridian59.Drawing2D
         /// <param name="Height"></param>
         /// <param name="CenterVertical"></param>
         /// <param name="CenterHorizontal"></param>
+        /// <param name="IsCustomShrink"></param>
+        /// <param name="CustomShrink"></param>
         public RenderInfo(
             RoomObject Data,
             bool UseViewerFrame = true,
@@ -172,10 +178,12 @@ namespace Meridian59.Drawing2D
             uint Width = 0,
             uint Height = 0,
             bool CenterVertical = false,
-            bool CenterHorizontal = false)
+            bool CenterHorizontal = false,
+            bool IsCustomShrink = false,
+            Real CustomShrink = 1.0f)
         {
             SubBgf = new List<SubOverlay.RenderInfo>();
-            Refresh(Data, UseViewerFrame, ApplyYOffset, RootHotspotIndex, Quality, ScalePow2, Width, Height, CenterVertical, CenterHorizontal);
+            Refresh(Data, UseViewerFrame, ApplyYOffset, RootHotspotIndex, Quality, ScalePow2, Width, Height, CenterVertical, CenterHorizontal, IsCustomShrink, CustomShrink);
         }
 
         /// <summary>
@@ -190,6 +198,8 @@ namespace Meridian59.Drawing2D
         /// <param name="Height"></param>
         /// <param name="CenterVertical"></param>
         /// <param name="CenterHorizontal"></param>
+        /// <param name="IsCustomShrink"></param>
+        /// <param name="CustomShrink"></param>
         public void Refresh(
             ObjectBase Data,
             bool ApplyYOffset = true,
@@ -199,10 +209,12 @@ namespace Meridian59.Drawing2D
             uint Width = 0,
             uint Height = 0,
             bool CenterVertical = false,
-            bool CenterHorizontal = false)
+            bool CenterHorizontal = false,
+            bool IsCustomShrink = false,
+            Real CustomShrink = 1.0f)
         {
             Clear();
-            Calculate(Data, Data.ViewerFrame, true, ApplyYOffset, RootHotspotIndex, Quality, ScalePow2, Width, Height, CenterVertical, CenterHorizontal);
+            Calculate(Data, Data.ViewerFrame, true, ApplyYOffset, RootHotspotIndex, Quality, ScalePow2, Width, Height, CenterVertical, CenterHorizontal, IsCustomShrink, CustomShrink);
         }
 
         /// <summary>
@@ -218,6 +230,8 @@ namespace Meridian59.Drawing2D
         /// <param name="Height"></param>
         /// <param name="CenterVertical"></param>
         /// <param name="CenterHorizontal"></param>
+        /// <param name="IsCustomShrink"></param>
+        /// <param name="CustomShrink"></param>
         public void Refresh(
             RoomObject Data,
             bool UseViewerFrame = true,
@@ -228,7 +242,9 @@ namespace Meridian59.Drawing2D
             uint Width = 0,
             uint Height = 0,
             bool CenterVertical = false,
-            bool CenterHorizontal = false)
+            bool CenterHorizontal = false,
+            bool IsCustomShrink = false,
+            Real CustomShrink = 1.0f)
         {
             Clear();
 
@@ -236,7 +252,7 @@ namespace Meridian59.Drawing2D
             if (!UseViewerFrame)
                 mainFrame = Data.FrontFrame;
 
-            Calculate(Data, mainFrame, UseViewerFrame, ApplyYOffset, RootHotspotIndex, Quality, ScalePow2, Width, Height, CenterVertical, CenterHorizontal);
+            Calculate(Data, mainFrame, UseViewerFrame, ApplyYOffset, RootHotspotIndex, Quality, ScalePow2, Width, Height, CenterVertical, CenterHorizontal, IsCustomShrink, CustomShrink);
         }
 
         protected void Calculate(
@@ -250,7 +266,9 @@ namespace Meridian59.Drawing2D
             uint Width = 0,
             uint Height = 0,
             bool CenterVertical = false,
-            bool CenterHorizontal = false)
+            bool CenterHorizontal = false,
+            bool IsCustomShrink = false,
+            Real CustomShrink = 1.0f)
         {
             BgfBitmap mainFrame = MainFrame;
             BgfFile mainResource = Data.Resource;
@@ -460,9 +478,9 @@ namespace Meridian59.Drawing2D
                 Translate(center);
 
                 // scale so highest resolution resource has 1:1 ratio (no downscale)
-                // and apply custom quality level
-                Scale((Real)MaxShrink);
-                
+                // or to user provided shrink value
+                Scale(IsCustomShrink ? CustomShrink : (Real)MaxShrink);
+
                 // user defined sizes
                 if (Width > 0 && Height > 0)
                 {

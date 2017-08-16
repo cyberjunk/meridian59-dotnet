@@ -188,6 +188,12 @@ public class Render : IHttpHandler
         //imageComposer.ApplyYOffset = false;
         //imageComposer.IsScalePow2 = true;
         //imageComposer.CenterVertical = true;
+        //imageComposer.Width = width;
+        //imageComposer.Height = height;
+        imageComposer.Quality = 16.0f;
+        imageComposer.IsCustomShrink = true;
+        imageComposer.CustomShrink = (float)scale / 100.0f;
+
         imageComposer.DataSource = gameObject;
 
         if (imageComposer.Image == null)
@@ -239,6 +245,8 @@ public class Render : IHttpHandler
         Graphics graphics = Graphics.FromImage(surface);
 
         // get object size in world size
+        //float scaledwidth = (float)imageComposer.RenderInfo.WorldSize.X * (float)scale * 0.01f;
+        //float scaledheight = (float)imageComposer.RenderInfo.WorldSize.Y * (float)scale * 0.01f;
         float scaledwidth = (float)imageComposer.RenderInfo.WorldSize.X * (float)scale * 0.01f;
         float scaledheight = (float)imageComposer.RenderInfo.WorldSize.Y * (float)scale * 0.01f;
 
@@ -262,8 +270,9 @@ public class Render : IHttpHandler
         tickLastAdd = tick;
 
         // add it
-        gif.AddFrame(surface, (ushort)(span / 10.0));
-        
+        gif.AddFrame(surface, (ushort)(span * 0.1));
+        //gif.AddFrame(imageComposer.Image, (ushort)(span * 0.1));
+
         // cleanup
         surface.Dispose();
         imageComposer.Image.Dispose();

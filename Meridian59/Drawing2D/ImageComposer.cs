@@ -64,6 +64,8 @@ namespace Meridian59.Drawing2D
         public bool CenterVertical { get; set; }
         public bool CenterHorizontal { get; set; }
         public bool UseViewerFrame { get; set; }
+        public bool IsCustomShrink { get; set; }
+        public Real CustomShrink { get; set; }
 
         /// <summary>
         /// The Data used to create.
@@ -100,6 +102,8 @@ namespace Meridian59.Drawing2D
             CenterVertical = false;
             CenterHorizontal = false;
             UseViewerFrame = true;
+            IsCustomShrink = false;
+            CustomShrink = 1.0f;
         }
 
         /// <summary>
@@ -229,7 +233,7 @@ namespace Meridian59.Drawing2D
             {
                 // get new renderinfo for RoomObject
                 RenderInfo = ((RoomObject)Data).GetRenderInfo(UseViewerFrame,
-                    Quality, ApplyYOffset, HotspotIndex, IsScalePow2, Width, Height, CenterVertical, CenterHorizontal);
+                    Quality, ApplyYOffset, HotspotIndex, IsScalePow2, Width, Height, CenterVertical, CenterHorizontal, IsCustomShrink, CustomShrink);
 
                 // use hashbase
                 apphash = UseViewerFrame ? ((RoomObject)Data).ViewerAppearanceHash : Data.AppearanceHash;
@@ -246,7 +250,7 @@ namespace Meridian59.Drawing2D
 
                 // get new renderinfo for ObjectBase
                 RenderInfo = Data.GetRenderInfo(
-                    Quality, ApplyYOffset, HotspotIndex, IsScalePow2, Width, Height, CenterVertical, CenterHorizontal);
+                    Quality, ApplyYOffset, HotspotIndex, IsScalePow2, Width, Height, CenterVertical, CenterHorizontal, IsCustomShrink, CustomShrink);
 
                 // use hashbase
                 apphash = Data.AppearanceHash;
