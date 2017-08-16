@@ -21,7 +21,11 @@ public class BlakObj : IHttpHandler
     {
     }
 
+    private const ushort MINSCALE = 100;
+    private const ushort MAXSCALE = 800;
+
     private static readonly TimeSpan freshness = new TimeSpan(0, 0, 0, 300);
+    private ushort scale;
 
     public void ProcessRequest (HttpContext context)
     {
@@ -29,10 +33,11 @@ public class BlakObj : IHttpHandler
 
         // -------------------------------------------------------       
         // read basic and mainoverlay parameters from url-path (see Global.asax):
-        //  object/{file}/{group}/{palette}/{angle}
+        //  object/{scale}/{file}/{group}/{palette}/{angle}
 
         RouteValueDictionary parms = context.Request.RequestContext.RouteData.Values;
 
+        string parmScale = parms.ContainsKey("scale") ? (string)parms["scale"] : null;
         string parmFile = parms.ContainsKey("file") ? (string)parms["file"] : null;
         string parmGroup = parms.ContainsKey("group") ? (string)parms["group"] : null;
         string parmPalette = parms.ContainsKey("palette") ? (string)parms["palette"] : null;
@@ -51,9 +56,11 @@ public class BlakObj : IHttpHandler
         // convert to lowercase
         parmFile = parmFile.ToLower();
 
+        UInt16.TryParse(parmScale, out scale);
+        scale = MathUtil.Bound(scale, MINSCALE, MAXSCALE);
+
         // --------------------------------------------------
         // try to get the main BGF from cache or load from disk
-
         if (!BgfCache.GetBGF(parmFile, out entry))
         {
             context.Response.StatusCode = 404;
@@ -66,7 +73,6 @@ public class BlakObj : IHttpHandler
 
         // --------------------------------------------------
         // try to parse other params
-
         byte paletteidx = 0;
         ushort angle = 0;
 
@@ -87,7 +93,6 @@ public class BlakObj : IHttpHandler
 
         // --------------------------------------------------
         // create gameobject
-
         ObjectBase gameObject = new ObjectBase();
         gameObject.Resource = entry.Bgf;
         gameObject.ColorTranslation = paletteidx;
@@ -97,7 +102,6 @@ public class BlakObj : IHttpHandler
         // -------------------------------------------------------       
         // read suboverlay array params from query parameters:
         //  object/..../?subov={file};{group};{palette};{hotspot}&subov=...
-
         string[] parmSubOverlays = context.Request.Params.GetValues("subov");
 
         if (parmSubOverlays != null)
@@ -150,10 +154,9 @@ public class BlakObj : IHttpHandler
         // --------------------------------------------------
         // create composed image
         ImageComposerNative<ObjectBase> imageComposer = new ImageComposerNative<ObjectBase>();
-        imageComposer.Quality = 16.0f;
+        imageComposer.Quality = 16.0f; // don't trigger limit, control by customshrink
         imageComposer.IsCustomShrink = true;
-        imageComposer.CustomShrink = 4.0f;
-
+        imageComposer.CustomShrink = (float)scale * 0.01f; // scale 100 = shrink 1
         imageComposer.DataSource = gameObject;
 
         if (imageComposer.Image == null)
@@ -171,16 +174,14 @@ public class BlakObj : IHttpHandler
         context.Response.Cache.SetValidUntilExpires(true);
         context.Response.Cache.VaryByParams["*"] = false;
         context.Response.Cache.SetLastModified(lastModified);
-
         // --------------------------------------------------
         // write the response (encode to png)
         context.Response.ContentType = "image/png";
         context.Response.AddHeader("Content-Disposition", "inline; filename=object.png");
         imageComposer.Image.Save(context.Response.OutputStream, ImageFormat.Png);
+        imageComposer.Image.Dispose();
         context.Response.Flush();
         context.Response.End();
-
-        imageComposer.Image.Dispose();
     }
 
     public bool IsReusable

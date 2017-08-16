@@ -32,16 +32,16 @@
         // ----------------------------------------------------------------
         
         System.Web.Routing.RouteTable.Routes.Add(new System.Web.Routing.Route(
-            "object/{file}/{group}/{palette}/{angle}", new HttpHandlerRoute("~/Object.ashx")));
+            "object/{scale}/{file}/{group}/{palette}/{angle}", new HttpHandlerRoute("~/Object.ashx")));
 
         System.Web.Routing.RouteTable.Routes.Add(new System.Web.Routing.Route(
-            "object/{file}/{group}/{palette}", new HttpHandlerRoute("~/Object.ashx")));
+            "object/{scale}/{file}/{group}/{palette}", new HttpHandlerRoute("~/Object.ashx")));
 
         System.Web.Routing.RouteTable.Routes.Add(new System.Web.Routing.Route(
-            "object/{file}/{group}", new HttpHandlerRoute("~/Object.ashx")));
+            "object/{scale}/{file}/{group}", new HttpHandlerRoute("~/Object.ashx")));
 
         System.Web.Routing.RouteTable.Routes.Add(new System.Web.Routing.Route(
-            "object/{file}", new HttpHandlerRoute("~/Object.ashx")));
+            "object/{scale}/{file}", new HttpHandlerRoute("~/Object.ashx")));
 
         // ----------------------------------------------------------------
 
