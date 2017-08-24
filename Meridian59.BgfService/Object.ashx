@@ -153,7 +153,7 @@ public class BlakObj : IHttpHandler
 
         // --------------------------------------------------
         // create composed image
-        ImageComposerNative<ObjectBase> imageComposer = new ImageComposerNative<ObjectBase>();
+        ImageComposerGDI<ObjectBase> imageComposer = new ImageComposerGDI<ObjectBase>();
         imageComposer.Quality = 16.0f; // don't trigger limit, control by customshrink
         imageComposer.IsCustomShrink = true;
         imageComposer.CustomShrink = (float)scale * 0.01f; // scale 100 = shrink 1

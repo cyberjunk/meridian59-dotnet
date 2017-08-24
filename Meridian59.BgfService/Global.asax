@@ -11,10 +11,6 @@
         Meridian59.Drawing2D.ImageComposerNative<Meridian59.Data.Models.ObjectBase>.Cache.IsEnabled = false;
         Meridian59.Drawing2D.ImageComposerGDI<Meridian59.Data.Models.ObjectBase>.Cache.IsEnabled = false;
 
-        // interpolation mode for GDI+ alpha-blending/scaling
-        Meridian59.Drawing2D.ImageComposerGDI<Meridian59.Data.Models.ObjectBase>.InterpolationMode =
-            System.Drawing.Drawing2D.InterpolationMode.Default;
-
         // ----------------------------------------------------------------
 
         System.Web.Routing.RouteTable.Routes.Add(new System.Web.Routing.Route(

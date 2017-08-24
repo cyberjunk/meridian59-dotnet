@@ -37,12 +37,23 @@ namespace Meridian59.Drawing2D
     /// <typeparam name="T">Classtype, ObjectBase or higher</typeparam>
     public class ImageComposerGDI<T> : ImageComposer<T, Bitmap> where T : ObjectBase
     {
-        /// <summary>
-        /// The interpolation quality used in upscaling
-        /// </summary>
-        public static InterpolationMode InterpolationMode = InterpolationMode.HighQualityBicubic;
-
         protected Graphics drawTo;
+
+        public CompositingMode CompositingMode { get; set; }
+        public CompositingQuality CompositingQuality { get; set; }
+        public InterpolationMode InterpolationMode { get; set; }
+        public SmoothingMode SmoothingMode { get; set; }
+        public PixelOffsetMode PixelOffsetMode { get; set; }
+
+        public ImageComposerGDI() : base()
+        {
+            // default settings max quality
+            CompositingMode = CompositingMode.SourceOver;
+            CompositingQuality = CompositingQuality.HighQuality;
+            InterpolationMode = InterpolationMode.HighQualityBicubic;
+            SmoothingMode = SmoothingMode.HighQuality;
+            PixelOffsetMode = PixelOffsetMode.HighQuality;
+        }
 
         protected override void PrepareDraw()
         {
@@ -54,8 +65,12 @@ namespace Meridian59.Drawing2D
             
             // initialize the drawing canvas
             drawTo = Graphics.FromImage(Image);
-            drawTo.InterpolationMode = InterpolationMode; 
-          
+            drawTo.CompositingMode = CompositingMode;
+            drawTo.CompositingQuality = CompositingQuality;
+            drawTo.InterpolationMode = InterpolationMode;
+            drawTo.SmoothingMode = SmoothingMode;
+            drawTo.PixelOffsetMode = PixelOffsetMode;
+
 #if DEBUG
             drawTo.Clear(Color.Black);
 #endif
@@ -93,7 +108,7 @@ namespace Meridian59.Drawing2D
                 Convert.ToInt32(RenderInfo.Size.Y));
 
             // get subimage to draw
-            Bitmap bmp = RenderInfo.Bgf.GetBitmap(RenderInfo.BgfColor);
+            Bitmap bmp = RenderInfo.Bgf.GetBitmapA8R8G8B8(RenderInfo.BgfColor, true);
 
             // draw from mainbitmap into DrawTo object using rectangles
             drawTo.DrawImage(bmp, toRectangle, fromRectangle, GraphicsUnit.Pixel);
@@ -115,7 +130,7 @@ namespace Meridian59.Drawing2D
                 Convert.ToInt32(RenderInfo.Size.Y));
 
             // get subimage to draw
-            Bitmap bmp = RenderInfo.Bgf.GetBitmap(RenderInfo.SubOverlay.ColorTranslation);
+            Bitmap bmp = RenderInfo.Bgf.GetBitmapA8R8G8B8(RenderInfo.SubOverlay.ColorTranslation, true);
 
             // draw
             drawTo.DrawImage(bmp, toRectangle, fromRectangle, GraphicsUnit.Pixel);

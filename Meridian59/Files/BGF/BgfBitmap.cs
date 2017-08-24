@@ -1108,6 +1108,54 @@ namespace Meridian59.Files.BGF
             }
         }
 
+        /// <summary>
+        /// Like FillPixelDataAsA8R8G8B8TransparencyBlack(), but slower allowing to use any palette.
+        /// </summary>
+        /// <param name="Buffer">A buffer with 32bit pixel-values</param>
+        /// <param name="RowWidth">
+        /// How many pixels a row in the targetbuffer has.
+        /// Must be bigger or equal the BgfBitmap Width
+        /// </param>
+        /// <param name="Palette"></param>
+        public unsafe void FillPixelDataAsA8R8G8B8TransparencyBlack(uint* Buffer, uint RowWidth, byte Palette)
+        {
+            // rowstride to skip
+            uint rightstride = RowWidth - Width;
+
+            // possibly decompress first
+            if (IsCompressed)
+                IsCompressed = false;
+
+            // select palette
+            uint[] colorPal = ColorTransformation.Palettes[Palette];
+
+            // walk rows
+            uint sourceindex = 0;
+            uint targetindex = 0;
+            for (uint i = 0; i < Height; i++)
+            {
+                // walk pixels of row
+                for (uint j = 0; j < Width; j++)
+                {
+                    uint srcIdx = PixelData[sourceindex];
+
+                    // get color from table for this pixel and write color to output
+                    if (srcIdx != ColorTransformation.TRANSPARENTCOLORINDEX)
+                        Buffer[targetindex] = colorPal[srcIdx];
+
+                    else
+                        Buffer[targetindex] = 0;
+
+                    // raise sourceindex and targetindex
+                    sourceindex++;
+                    targetindex++;
+                }
+
+                // skip empty part from pow2scale
+                targetindex += rightstride;
+            }
+        }
+
         public unsafe void FillPixelDataAsA8R8G8B8TransparencyBlackScaled(
             uint* Buffer, 
             uint UnderlayWidth, 
@@ -1156,7 +1204,7 @@ namespace Meridian59.Files.BGF
 
                     // get color from table for this pixel and write color to output
                     // but skip transparent pixels
-                    if (srcColorIdx != 254)
+                    if (srcColorIdx != ColorTransformation.TRANSPARENTCOLORINDEX)
                         Buffer[targetindex] = colorPal[srcColorIdx];
 
                     // raise targetindex
@@ -1494,8 +1542,9 @@ namespace Meridian59.Files.BGF
         /// Uses FillPixelDataAsA8R8G8B8() to fill pixels.
         /// </summary>
         /// <param name="Palette"></param>
+        /// <param name="BlackTransparency">True for black instead of cyan RGB in transparency</param>
         /// <returns></returns>
-        public unsafe Bitmap GetBitmapA8R8G8B8(byte Palette = 0)
+        public unsafe Bitmap GetBitmapA8R8G8B8(byte Palette = 0, bool BlackTransparency = true)
         {
             // make sure to uncompress
             IsCompressed = false;
@@ -1507,7 +1556,11 @@ namespace Meridian59.Files.BGF
             BitmapData data = bitmap.LockBits(rect, ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
 
             // fill with pixels
-            FillPixelDataAsA8R8G8B8((uint*)data.Scan0.ToPointer(), Palette, Width);
+            if (BlackTransparency)
+                FillPixelDataAsA8R8G8B8TransparencyBlack((uint*)data.Scan0.ToPointer(), Width, Palette);
+
+            else
+                FillPixelDataAsA8R8G8B8((uint*)data.Scan0.ToPointer(), Palette, Width);
 
             // unlock
             bitmap.UnlockBits(data);
