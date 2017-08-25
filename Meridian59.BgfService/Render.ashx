@@ -25,23 +25,19 @@ public class Render : IHttpHandler
     private const ushort MINSCALE = 10;
     private const ushort MAXSCALE = 1000;
 
-    private readonly ImageComposerNative<ObjectBase> imageComposer;
+    private readonly ImageComposerGDI<ObjectBase> imageComposer = new ImageComposerGDI<ObjectBase>();
     private Gif gif;
-
     private ushort width;
     private ushort height;
     private ushort scale;
-
     private double tick;
     private double tickLastAdd;
-
     private HttpContext context;
     private static readonly TimeSpan freshness = new TimeSpan(0, 0, 0, 300);
 
     public Render()
     {
         // create imagecomposer to render objects
-        imageComposer = new ImageComposerNative<ObjectBase>();
         imageComposer.NewImageAvailable += OnImageComposerNewImageAvailable;
     }
 

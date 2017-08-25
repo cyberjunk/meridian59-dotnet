@@ -500,11 +500,11 @@ public class Gif
     /// <summary>
     /// Constructor
     /// </summary>
-    public Gif(ushort Width, ushort Height, ushort Repeat = 0, byte ColorResolution = 7)
+    public Gif(ushort Width, ushort Height, ushort Repeat = 0)
     {
         CanvasWidth = Width;
         CanvasHeight = Height;
-        Packed.ColorResolution = ColorResolution;
+        Packed.Value = 0;
         GlobalColorTable = new byte[0];
         ApplicationExtension = new ExtensionNetscape(Repeat);
     }
@@ -750,15 +750,27 @@ public class Gif
         stream.Dispose();
     }
 
-    public void AddFrame(Image Image, ushort Delay)
+    public void AddFrame(Bitmap Image, ushort Delay)
     {
         // create memorystream to hold temporary gif
         MemoryStream memStream = new MemoryStream();
 
-        // use .NET GIF encoder to create a compatible frame
-        Image.Save(memStream, ImageFormat.Gif);
-        //Image.Save("test2.gif", ImageFormat.Gif);
+        nQuant.WuQuantizer quant = new nQuant.WuQuantizer();
+        Image reduced = quant.QuantizeImage(Image, 0, 255);
 
+        ColorPalette pal = reduced.Palette;
+        for (int i = 0; i < reduced.Palette.Entries.Length; i++)
+        {
+            if (pal.Entries[i].A == 0)
+                pal.Entries[i] = Color.FromArgb(0, Color.Cyan);
+        }
+        reduced.Palette = pal;
+
+        // use .NET GIF encoder to create a compatible frame
+        reduced.Save(memStream, ImageFormat.Gif);
+        reduced.Dispose();
+        //Image.Save("test2.gif", ImageFormat.Gif);
+        
         // reset streamposition for reading
         memStream.Position = 0;
 
@@ -791,7 +803,23 @@ public class Gif
             frame.Packed.IsLocalColorTable = true;
             frame.GraphicsControl.DelayTime = Delay;
 
+            // find index of cyan, mono has issues setting 'TransparentColorIndex'
+            // this also needs the last of all found cyan, can be several
+            byte idx = 0;
+            for (int i = 0; i < frame.ColorTable.Length; i+=3)
+            {
+                // cyan
+                if (frame.ColorTable[i] == 0 && 
+                    frame.ColorTable[i + 1] == 255 && 
+                    frame.ColorTable[i + 2] == 255)
+                {
+                    idx = (byte)(i / 3);
+                    //break;
+                }
+            }
+
             // set flags
+            frame.GraphicsControl.TransparentColorIndex = idx;
             frame.GraphicsControl.Packed.IsTransparentColor = true;
             frame.GraphicsControl.Packed.IsUserInput = false;
             frame.GraphicsControl.Packed.DisposalMethod =
