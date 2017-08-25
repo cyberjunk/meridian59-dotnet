@@ -23,7 +23,7 @@ public class Render : IHttpHandler
     private const ushort MINHEIGHT = 16;
     private const ushort MAXHEIGHT = 512;
     private const ushort MINSCALE = 10;
-    private const ushort MAXSCALE = 1000;
+    private const ushort MAXSCALE = 80;
 
     private readonly ImageComposerGDI<ObjectBase> imageComposer = new ImageComposerGDI<ObjectBase>();
     private Gif gif;
@@ -188,7 +188,7 @@ public class Render : IHttpHandler
         imageComposer.Height = height;
         imageComposer.Quality = 16.0f;
         imageComposer.IsCustomShrink = true;
-        imageComposer.CustomShrink = (float)scale / 100.0f;
+        imageComposer.CustomShrink = (float)scale * 0.1f;
 
         imageComposer.DataSource = gameObject;
 

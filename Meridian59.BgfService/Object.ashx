@@ -21,8 +21,8 @@ public class BlakObj : IHttpHandler
     {
     }
 
-    private const ushort MINSCALE = 100;
-    private const ushort MAXSCALE = 800;
+    private const ushort MINSCALE = 10;
+    private const ushort MAXSCALE = 80;
 
     private static readonly TimeSpan freshness = new TimeSpan(0, 0, 0, 300);
     private ushort scale;
@@ -156,7 +156,7 @@ public class BlakObj : IHttpHandler
         ImageComposerGDI<ObjectBase> imageComposer = new ImageComposerGDI<ObjectBase>();
         imageComposer.Quality = 16.0f; // don't trigger limit, control by customshrink
         imageComposer.IsCustomShrink = true;
-        imageComposer.CustomShrink = (float)scale * 0.01f; // scale 100 = shrink 1
+        imageComposer.CustomShrink = (float)scale * 0.1f; // scale 10 = shrink 1
         imageComposer.DataSource = gameObject;
 
         if (imageComposer.Image == null)
