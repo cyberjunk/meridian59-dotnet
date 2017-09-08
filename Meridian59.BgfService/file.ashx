@@ -15,7 +15,7 @@ using System.IO;
 public class File : IHttpHandler
 {
     private static readonly TimeSpan freshness = new TimeSpan(0, 0, 0, 300);
-    
+
     /// <summary>
     /// Handles the HTTP request
     /// </summary>
@@ -68,7 +68,7 @@ public class File : IHttpHandler
                 parm1 = parm1.ToLower();
 
             // invalid format
-            if (parm1 != "png" && parm1 != "bmp")
+            if (parm1 != "png" && parm1 != "bmp" && parm1 != "raw")
             {
                 context.Response.StatusCode = 404;
                 context.Response.End();
@@ -87,13 +87,13 @@ public class File : IHttpHandler
                 return;
             }
             // --------------------------------------------------
-            // create BMP or PNG
+            // create BMP (256 col) or PNG (32-bit) or return raw pixels (8bit indices)
             if (parm1 == "bmp")
             {
                 context.Response.ContentType = "image/bmp";
                 context.Response.AddHeader(
                     "Content-Disposition",
-                    "inline; filename=" + entry.Bgf.Filename + ".bmp");
+                    "inline; filename=" + entry.Bgf.Filename + "-" + index.ToString() + ".bmp");
 
                 Bitmap bmp = entry.Bgf.Frames[index].GetBitmap(palette);
                 bmp.Save(context.Response.OutputStream, ImageFormat.Bmp);
@@ -104,11 +104,21 @@ public class File : IHttpHandler
                 context.Response.ContentType = "image/png";
                 context.Response.AddHeader(
                     "Content-Disposition",
-                    "inline; filename=" + entry.Bgf.Filename + ".png");
+                    "inline; filename=" + entry.Bgf.Filename + "-" + index.ToString() + ".png");
 
                 Bitmap bmp = entry.Bgf.Frames[index].GetBitmapA8R8G8B8(palette);
                 bmp.Save(context.Response.OutputStream, ImageFormat.Png);
                 bmp.Dispose();
+            }
+            else if (parm1 == "raw")
+            {
+                context.Response.ContentType = "application/octet-stream";
+                context.Response.AddHeader(
+                    "Content-Disposition",
+                    "inline; filename=" + entry.Bgf.Filename  + "-" + index.ToString() + ".bin");
+
+                byte[] pixels = entry.Bgf.Frames[index].PixelData;
+                context.Response.OutputStream.Write(pixels, 0, pixels.Length);
             }
             else
                 context.Response.StatusCode = 404;
