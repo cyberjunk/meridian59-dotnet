@@ -130,15 +130,14 @@ public class File : IHttpHandler
         // JSON META DATA
         else if (parmReq == "meta")
         {
-            context.Response.ContentType = "application/json";
+            context.Response.ContentType = "application/json; charset=utf-8";
             context.Response.ContentEncoding = System.Text.Encoding.UTF8;
             context.Response.AddHeader(
                 "Content-Disposition",
                 "inline; filename=" + entry.Bgf.Filename + ".json");
 
-            StreamWriter writer = new StreamWriter(
-                context.Response.OutputStream,
-                System.Text.Encoding.UTF8, 4096, true);
+            TextWriter writer = context.Response.Output;
+
             /////////////////////////////////////////////////////////////
             writer.Write("{\"shrink\":"+ entry.Bgf.ShrinkFactor + ',');
             /////////////////////////////////////////////////////////////
