@@ -1,0 +1,534 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JeremyAnsel.ColorQuant</name>
+    </assembly>
+    <members>
+        <member name="T:JeremyAnsel.ColorQuant.Box">
+            <summary>
+            A box color cube.
+            </summary>
+        </member>
+        <member name="P:JeremyAnsel.ColorQuant.Box.R0">
+            <summary>
+            Gets or sets the min red value, exclusive.
+            </summary>
+        </member>
+        <member name="P:JeremyAnsel.ColorQuant.Box.R1">
+            <summary>
+            Gets or sets the max red value, inclusive.
+            </summary>
+        </member>
+        <member name="P:JeremyAnsel.ColorQuant.Box.G0">
+            <summary>
+            Gets or sets the min green value, exclusive.
+            </summary>
+        </member>
+        <member name="P:JeremyAnsel.ColorQuant.Box.G1">
+            <summary>
+            Gets or sets the max green value, inclusive.
+            </summary>
+        </member>
+        <member name="P:JeremyAnsel.ColorQuant.Box.B0">
+            <summary>
+            Gets or sets the min blue value, exclusive.
+            </summary>
+        </member>
+        <member name="P:JeremyAnsel.ColorQuant.Box.B1">
+            <summary>
+            Gets or sets the max blue value, inclusive.
+            </summary>
+        </member>
+        <member name="P:JeremyAnsel.ColorQuant.Box.A0">
+            <summary>
+            Gets or sets the min alpha value, exclusive.
+            </summary>
+        </member>
+        <member name="P:JeremyAnsel.ColorQuant.Box.A1">
+            <summary>
+            Gets or sets the max alpha value, inclusive.
+            </summary>
+        </member>
+        <member name="P:JeremyAnsel.ColorQuant.Box.Volume">
+            <summary>
+            Gets or sets the volume.
+            </summary>
+        </member>
+        <member name="T:JeremyAnsel.ColorQuant.IColorQuantizer">
+            <summary>
+            Defines a color quantizer.
+            </summary>
+        </member>
+        <member name="M:JeremyAnsel.ColorQuant.IColorQuantizer.Quantize(System.Byte[])">
+            <summary>
+            Quantizes an image.
+            </summary>
+            <param name="image">The image (XRGB or ARGB).</param>
+            <returns>The result.</returns>
+        </member>
+        <member name="M:JeremyAnsel.ColorQuant.IColorQuantizer.Quantize(System.Byte[],System.Int32)">
+            <summary>
+            Quantizes an image.
+            </summary>
+            <param name="image">The image (XRGB or ARGB).</param>
+            <param name="colorCount">The color count.</param>
+            <returns>The result.</returns>
+        </member>
+        <member name="T:JeremyAnsel.ColorQuant.ColorQuantizerResult">
+            <summary>
+            A result of color quantization.
+            </summary>
+        </member>
+        <member name="M:JeremyAnsel.ColorQuant.ColorQuantizerResult.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JeremyAnsel.ColorQuant.ColorQuantizerResult"/> class.
+            </summary>
+            <param name="size">The size of the result.</param>
+            <param name="colorCount">The color count.</param>
+        </member>
+        <member name="P:JeremyAnsel.ColorQuant.ColorQuantizerResult.Palette">
+            <summary>
+            Gets the palette (XRGB or ARGB).
+            </summary>
+        </member>
+        <member name="P:JeremyAnsel.ColorQuant.ColorQuantizerResult.Bytes">
+            <summary>
+            Gets the bytes.
+            </summary>
+        </member>
+        <member name="T:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer">
+            <summary>
+            A Wu's color quantizer with alpha channel.
+            </summary>
+            <remarks>
+            <para>
+            Based on C Implementation of Xiaolin Wu's Color Quantizer (v. 2)
+            (see Graphics Gems volume II, pages 126-133)
+            (<see href="http://www.ece.mcmaster.ca/~xwu/cq.c"/>).
+            </para>
+            <para>
+            Algorithm: Greedy orthogonal bipartition of RGB space for variance
+            minimization aided by inclusion-exclusion tricks.
+            For speed no nearest neighbor search is done. Slightly
+            better performance can be expected by more sophisticated
+            but more expensive versions.
+            </para>
+            </remarks>
+        </member>
+        <member name="F:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.IndexBits">
+            <summary>
+            The index bits.
+            </summary>
+        </member>
+        <member name="F:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.IndexAlphaBits">
+            <summary>
+            The index alpha bits.
+            </summary>
+        </member>
+        <member name="F:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.IndexCount">
+            <summary>
+            The index count.
+            </summary>
+        </member>
+        <member name="F:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.IndexAlphaCount">
+            <summary>
+            The index alpha count.
+            </summary>
+        </member>
+        <member name="F:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.TableLength">
+            <summary>
+            The table length.
+            </summary>
+        </member>
+        <member name="F:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.vwt">
+            <summary>
+            Moment of <c>P(c)</c>.
+            </summary>
+        </member>
+        <member name="F:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.vmr">
+            <summary>
+            Moment of <c>r*P(c)</c>.
+            </summary>
+        </member>
+        <member name="F:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.vmg">
+            <summary>
+            Moment of <c>g*P(c)</c>.
+            </summary>
+        </member>
+        <member name="F:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.vmb">
+            <summary>
+            Moment of <c>b*P(c)</c>.
+            </summary>
+        </member>
+        <member name="F:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.vma">
+            <summary>
+            Moment of <c>a*P(c)</c>.
+            </summary>
+        </member>
+        <member name="F:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.m2">
+            <summary>
+            Moment of <c>c^2*P(c)</c>.
+            </summary>
+        </member>
+        <member name="F:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.tag">
+            <summary>
+            Color space tag.
+            </summary>
+        </member>
+        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.Quantize(System.Byte[])">
+            <summary>
+            Quantizes an image.
+            </summary>
+            <param name="image">The image (ARGB).</param>
+            <returns>The result.</returns>
+        </member>
+        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.Quantize(System.Byte[],System.Int32)">
+            <summary>
+            Quantizes an image.
+            </summary>
+            <param name="image">The image (ARGB).</param>
+            <param name="colorCount">The color count.</param>
+            <returns>The result.</returns>
+        </member>
+        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.Quantize(System.UInt32*,System.Int32,System.Int32,System.Int32,System.Byte*)">
+            <summary>
+            Quantizes an image.
+            </summary>
+            <param name="image">The image (ARGB).</param>
+            <param name="colorCount">The color count.</param>
+            <param name="width">Width of image</param>
+            <param name="height">Height of image</param>
+            <param name="destPixels">Indexed pixelData will be written there</param>
+            <returns>Palette with ARGB colors</returns>
+        </member>
+        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.Quantize(System.Drawing.Bitmap,System.Int32)">
+            <summary>
+            Quantizes an image.
+            </summary>
+            <param name="image">The image (ARGB).</param>
+            <param name="colorCount">The color count.</param>
+            <returns>Bitmap with indexed colors</returns>
+        </member>
+        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.GetIndex(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Gets an index.
+            </summary>
+            <param name="r">The red value.</param>
+            <param name="g">The green value.</param>
+            <param name="b">The blue value.</param>
+            <param name="a">The alpha value.</param>
+            <returns>The index.</returns>
+        </member>
+        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.Volume(JeremyAnsel.ColorQuant.Box,System.Int64[])">
+            <summary>
+            Computes sum over a box of any given statistic.
+            </summary>
+            <param name="cube">The cube.</param>
+            <param name="moment">The moment.</param>
+            <returns>The result.</returns>
+        </member>
+        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.Bottom(JeremyAnsel.ColorQuant.Box,System.Int32,System.Int64[])">
+            <summary>
+            Computes part of Volume(cube, moment) that doesn't depend on r1, g1, or b1 (depending on direction).
+            </summary>
+            <param name="cube">The cube.</param>
+            <param name="direction">The direction.</param>
+            <param name="moment">The moment.</param>
+            <returns>The result.</returns>
+        </member>
+        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.Top(JeremyAnsel.ColorQuant.Box,System.Int32,System.Int32,System.Int64[])">
+            <summary>
+            Computes remainder of Volume(cube, moment), substituting position for r1, g1, or b1 (depending on direction).
+            </summary>
+            <param name="cube">The cube.</param>
+            <param name="direction">The direction.</param>
+            <param name="position">The position.</param>
+            <param name="moment">The moment.</param>
+            <returns>The result.</returns>
+        </member>
+        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.Clear">
+            <summary>
+            Clears the tables.
+            </summary>
+        </member>
+        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.Build3DHistogram(System.Byte[])">
+            <summary>
+            Builds a 3-D color histogram of <c>counts, r/g/b, c^2</c>.
+            </summary>
+            <param name="image">The image.</param>
+        </member>
+        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.Build3DHistogram(System.UInt32*,System.Int32,System.Int32)">
+            <summary>
+            Builds a 3-D color histogram of <c>counts, r/g/b, c^2</c>.
+            </summary>
+            <param name="image">The image.</param>
+            <param name="width">Width of image</param>
+            <param name="height">Height of image</param>
+        </member>
+        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.Get3DMoments">
+            <summary>
+            Converts the histogram into moments so that we can rapidly calculate
+            the sums of the above quantities over any desired box.
+            </summary>
+        </member>
+        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.Variance(JeremyAnsel.ColorQuant.Box)">
+            <summary>
+            Computes the weighted variance of a box.
+            </summary>
+            <param name="cube">The cube.</param>
+            <returns>The result.</returns>
+        </member>
+        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.Maximize(JeremyAnsel.ColorQuant.Box,System.Int32,System.Int32,System.Int32,System.Int32@,System.Double,System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            We want to minimize the sum of the variances of two sub-boxes.
+            The sum(c^2) terms can be ignored since their sum over both sub-boxes
+            is the same (the sum for the whole box) no matter where we split.
+            The remaining terms have a minus sign in the variance formula,
+            so we drop the minus sign and maximize the sum of the two terms.
+            </summary>
+            <param name="cube">The cube.</param>
+            <param name="direction">The direction.</param>
+            <param name="first">The first position.</param>
+            <param name="last">The last position.</param>
+            <param name="cut">The cutting point.</param>
+            <param name="wholeR">The whole red.</param>
+            <param name="wholeG">The whole green.</param>
+            <param name="wholeB">The whole blue.</param>
+            <param name="wholeA">The whole alpha.</param>
+            <param name="wholeW">The whole weight.</param>
+            <returns>The result.</returns>
+        </member>
+        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.Cut(JeremyAnsel.ColorQuant.Box,JeremyAnsel.ColorQuant.Box)">
+            <summary>
+            Cuts a box.
+            </summary>
+            <param name="set1">The first set.</param>
+            <param name="set2">The second set.</param>
+            <returns>Returns a value indicating whether the box has been split.</returns>
+        </member>
+        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.Mark(JeremyAnsel.ColorQuant.Box,System.Byte)">
+            <summary>
+            Marks a color space tag.
+            </summary>
+            <param name="cube">The cube.</param>
+            <param name="label">A label.</param>
+        </member>
+        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.BuildCube(JeremyAnsel.ColorQuant.Box[]@,System.Int32@)">
+            <summary>
+            Builds the cube.
+            </summary>
+            <param name="cube">The cube.</param>
+            <param name="colorCount">The color count.</param>
+        </member>
+        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.GenerateResult(System.Byte[],System.Int32,JeremyAnsel.ColorQuant.Box[])">
+            <summary>
+            Generates the quantized result.
+            </summary>
+            <param name="image">The image.</param>
+            <param name="colorCount">The color count.</param>
+            <param name="cube">The cube.</param>
+            <returns>The result.</returns>
+        </member>
+        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.GenerateResult(System.UInt32*,System.Int32,JeremyAnsel.ColorQuant.Box[],System.Int32,System.Int32,System.Byte*)">
+            <summary>
+            Generates the quantized result.
+            </summary>
+            <param name="image">The image.</param>
+            <param name="colorCount">The color count.</param>
+            <param name="cube">The cube.</param>
+            <param name="width">Width of image</param>
+            <param name="height">Height of image</param>
+            <param name="destPixels">Pixel values are written here. Must provide width*height memory. Warning: Rows are padded to multiple of 4</param>
+            <returns>Receives colors</returns>
+        </member>
+        <member name="T:JeremyAnsel.ColorQuant.WuColorQuantizer">
+            <summary>
+            A Wu's color quantizer.
+            </summary>
+            <remarks>
+            <para>
+            Based on C Implementation of Xiaolin Wu's Color Quantizer (v. 2)
+            (see Graphics Gems volume II, pages 126-133)
+            (<see href="http://www.ece.mcmaster.ca/~xwu/cq.c"/>).
+            </para>
+            <para>
+            Algorithm: Greedy orthogonal bipartition of RGB space for variance
+            minimization aided by inclusion-exclusion tricks.
+            For speed no nearest neighbor search is done. Slightly
+            better performance can be expected by more sophisticated
+            but more expensive versions.
+            </para>
+            </remarks>
+        </member>
+        <member name="F:JeremyAnsel.ColorQuant.WuColorQuantizer.IndexBits">
+            <summary>
+            The index bits.
+            </summary>
+        </member>
+        <member name="F:JeremyAnsel.ColorQuant.WuColorQuantizer.IndexCount">
+            <summary>
+            The index count.
+            </summary>
+        </member>
+        <member name="F:JeremyAnsel.ColorQuant.WuColorQuantizer.TableLength">
+            <summary>
+            The table length.
+            </summary>
+        </member>
+        <member name="F:JeremyAnsel.ColorQuant.WuColorQuantizer.vwt">
+            <summary>
+            Moment of <c>P(c)</c>.
+            </summary>
+        </member>
+        <member name="F:JeremyAnsel.ColorQuant.WuColorQuantizer.vmr">
+            <summary>
+            Moment of <c>r*P(c)</c>.
+            </summary>
+        </member>
+        <member name="F:JeremyAnsel.ColorQuant.WuColorQuantizer.vmg">
+            <summary>
+            Moment of <c>g*P(c)</c>.
+            </summary>
+        </member>
+        <member name="F:JeremyAnsel.ColorQuant.WuColorQuantizer.vmb">
+            <summary>
+            Moment of <c>b*P(c)</c>.
+            </summary>
+        </member>
+        <member name="F:JeremyAnsel.ColorQuant.WuColorQuantizer.m2">
+            <summary>
+            Moment of <c>c^2*P(c)</c>.
+            </summary>
+        </member>
+        <member name="F:JeremyAnsel.ColorQuant.WuColorQuantizer.tag">
+            <summary>
+            Color space tag.
+            </summary>
+        </member>
+        <member name="M:JeremyAnsel.ColorQuant.WuColorQuantizer.Quantize(System.Byte[])">
+            <summary>
+            Quantizes an image.
+            </summary>
+            <param name="image">The image (XRGB).</param>
+            <returns>The result.</returns>
+        </member>
+        <member name="M:JeremyAnsel.ColorQuant.WuColorQuantizer.Quantize(System.Byte[],System.Int32)">
+            <summary>
+            Quantizes an image.
+            </summary>
+            <param name="image">The image (XRGB).</param>
+            <param name="colorCount">The color count.</param>
+            <returns>The result.</returns>
+        </member>
+        <member name="M:JeremyAnsel.ColorQuant.WuColorQuantizer.GetIndex(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Gets an index.
+            </summary>
+            <param name="r">The red value.</param>
+            <param name="g">The green value.</param>
+            <param name="b">The blue value.</param>
+            <returns>The index.</returns>
+        </member>
+        <member name="M:JeremyAnsel.ColorQuant.WuColorQuantizer.Volume(JeremyAnsel.ColorQuant.Box,System.Int64[])">
+            <summary>
+            Computes sum over a box of any given statistic.
+            </summary>
+            <param name="cube">The cube.</param>
+            <param name="moment">The moment.</param>
+            <returns>The result.</returns>
+        </member>
+        <member name="M:JeremyAnsel.ColorQuant.WuColorQuantizer.Bottom(JeremyAnsel.ColorQuant.Box,System.Int32,System.Int64[])">
+            <summary>
+            Computes part of Volume(cube, moment) that doesn't depend on r1, g1, or b1 (depending on direction).
+            </summary>
+            <param name="cube">The cube.</param>
+            <param name="direction">The direction.</param>
+            <param name="moment">The moment.</param>
+            <returns>The result.</returns>
+        </member>
+        <member name="M:JeremyAnsel.ColorQuant.WuColorQuantizer.Top(JeremyAnsel.ColorQuant.Box,System.Int32,System.Int32,System.Int64[])">
+            <summary>
+            Computes remainder of Volume(cube, moment), substituting position for r1, g1, or b1 (depending on direction).
+            </summary>
+            <param name="cube">The cube.</param>
+            <param name="direction">The direction.</param>
+            <param name="position">The position.</param>
+            <param name="moment">The moment.</param>
+            <returns>The result.</returns>
+        </member>
+        <member name="M:JeremyAnsel.ColorQuant.WuColorQuantizer.Clear">
+            <summary>
+            Clears the tables.
+            </summary>
+        </member>
+        <member name="M:JeremyAnsel.ColorQuant.WuColorQuantizer.Build3DHistogram(System.Byte[])">
+            <summary>
+            Builds a 3-D color histogram of <c>counts, r/g/b, c^2</c>.
+            </summary>
+            <param name="image">The image.</param>
+        </member>
+        <member name="M:JeremyAnsel.ColorQuant.WuColorQuantizer.Get3DMoments">
+            <summary>
+            Converts the histogram into moments so that we can rapidly calculate
+            the sums of the above quantities over any desired box.
+            </summary>
+        </member>
+        <member name="M:JeremyAnsel.ColorQuant.WuColorQuantizer.Variance(JeremyAnsel.ColorQuant.Box)">
+            <summary>
+            Computes the weighted variance of a box.
+            </summary>
+            <param name="cube">The cube.</param>
+            <returns>The result.</returns>
+        </member>
+        <member name="M:JeremyAnsel.ColorQuant.WuColorQuantizer.Maximize(JeremyAnsel.ColorQuant.Box,System.Int32,System.Int32,System.Int32,System.Int32@,System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            We want to minimize the sum of the variances of two sub-boxes.
+            The sum(c^2) terms can be ignored since their sum over both sub-boxes
+            is the same (the sum for the whole box) no matter where we split.
+            The remaining terms have a minus sign in the variance formula,
+            so we drop the minus sign and maximize the sum of the two terms.
+            </summary>
+            <param name="cube">The cube.</param>
+            <param name="direction">The direction.</param>
+            <param name="first">The first position.</param>
+            <param name="last">The last position.</param>
+            <param name="cut">The cutting point.</param>
+            <param name="wholeR">The whole red.</param>
+            <param name="wholeG">The whole green.</param>
+            <param name="wholeB">The whole blue.</param>
+            <param name="wholeW">The whole weight.</param>
+            <returns>The result.</returns>
+        </member>
+        <member name="M:JeremyAnsel.ColorQuant.WuColorQuantizer.Cut(JeremyAnsel.ColorQuant.Box,JeremyAnsel.ColorQuant.Box)">
+            <summary>
+            Cuts a box.
+            </summary>
+            <param name="set1">The first set.</param>
+            <param name="set2">The second set.</param>
+            <returns>Returns a value indicating whether the box has been split.</returns>
+        </member>
+        <member name="M:JeremyAnsel.ColorQuant.WuColorQuantizer.Mark(JeremyAnsel.ColorQuant.Box,System.Byte)">
+            <summary>
+            Marks a color space tag.
+            </summary>
+            <param name="cube">The cube.</param>
+            <param name="label">A label.</param>
+        </member>
+        <member name="M:JeremyAnsel.ColorQuant.WuColorQuantizer.BuildCube(JeremyAnsel.ColorQuant.Box[]@,System.Int32@)">
+            <summary>
+            Builds the cube.
+            </summary>
+            <param name="cube">The cube.</param>
+            <param name="colorCount">The color count.</param>
+        </member>
+        <member name="M:JeremyAnsel.ColorQuant.WuColorQuantizer.GenerateResult(System.Byte[],System.Int32,JeremyAnsel.ColorQuant.Box[])">
+            <summary>
+            Generates the quantized result.
+            </summary>
+            <param name="image">The image.</param>
+            <param name="colorCount">The color count.</param>
+            <param name="cube">The cube.</param>
+            <returns>The result.</returns>
+        </member>
+    </members>
+</doc>
