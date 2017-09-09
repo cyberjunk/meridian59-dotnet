@@ -496,7 +496,6 @@ public class Gif
     public ExtensionApplication ApplicationExtension;
     public readonly List<Frame> Frames = new List<Frame>();
     public readonly List<Extension> Extensions = new List<Extension>();
-    private readonly JeremyAnsel.ColorQuant.WuAlphaColorQuantizer quant = new JeremyAnsel.ColorQuant.WuAlphaColorQuantizer();
 
     /// <summary>
     /// Constructor
@@ -756,21 +755,8 @@ public class Gif
         // create memorystream to hold temporary gif
         MemoryStream memStream = new MemoryStream();
 
-        // reduce to 8bit using custom lib
-        Bitmap reduced = quant.Quantize(Image, 256);
-
-        // alpha/transparency hacking
-        /*ColorPalette pal = reduced.Palette;
-        for (int i = 0; i < reduced.Palette.Entries.Length; i++)
-        {
-            if (pal.Entries[i].A == 0)
-                pal.Entries[i] = Color.FromArgb(0, Color.Cyan);
-        }
-        reduced.Palette = pal;*/
-
         // use .NET GIF encoder to create a compatible frame
-        reduced.Save(memStream, ImageFormat.Gif);
-        reduced.Dispose();
+        Image.Save(memStream, ImageFormat.Gif);
         //Image.Save("test2.gif", ImageFormat.Gif);
         
         // reset streamposition for reading

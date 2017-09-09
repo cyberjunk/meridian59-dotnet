@@ -26,6 +26,8 @@ public class Render : IHttpHandler
     private const ushort MAXSCALE = 80;
 
     private readonly ImageComposerGDI<ObjectBase> imageComposer = new ImageComposerGDI<ObjectBase>();
+    private readonly JeremyAnsel.ColorQuant.WuAlphaColorQuantizer quant = new JeremyAnsel.ColorQuant.WuAlphaColorQuantizer();
+
     private Gif gif;
     private ushort width;
     private ushort height;
@@ -237,42 +239,29 @@ public class Render : IHttpHandler
 
     private void OnImageComposerNewImageAvailable(object sender, EventArgs e)
     {
-        /*Bitmap surface = new Bitmap(width, height, PixelFormat.Format32bppArgb);
-        Graphics graphics = Graphics.FromImage(surface);
+        // reduce to 8bit using custom lib
+        Bitmap reduced = quant.Quantize(imageComposer.Image, 256);
 
-        // get object size in world size
-        //float scaledwidth = (float)imageComposer.RenderInfo.WorldSize.X * (float)scale * 0.01f;
-        //float scaledheight = (float)imageComposer.RenderInfo.WorldSize.Y * (float)scale * 0.01f;
-        float scaledwidth = (float)imageComposer.RenderInfo.WorldSize.X * (float)scale * 0.01f;
-        float scaledheight = (float)imageComposer.RenderInfo.WorldSize.Y * (float)scale * 0.01f;
-
-        // important:
-        // center x (extends x, -x -> right, left)
-        // fix y to bottom (extends y -> up)
-        float posx = ((float)width * 0.5f) - (scaledwidth * 0.5f);
-        float posy = (float)height - scaledheight;
-
-        graphics.Clear(Color.Transparent);
-        graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-
-        // draw mainbmp into target bitmap
-        graphics.DrawImage(imageComposer.Image,
-            new Rectangle((int)posx, (int)posy, (int)scaledwidth, (int)scaledheight),
-            new Rectangle(0, 0, imageComposer.Image.Width, imageComposer.Image.Height),
-            GraphicsUnit.Pixel);*/
+        // alpha/transparency hacking
+        /*ColorPalette pal = reduced.Palette;
+        for (int i = 0; i < reduced.Palette.Entries.Length; i++)
+        {
+            if (pal.Entries[i].A == 0)
+                pal.Entries[i] = Color.FromArgb(0, Color.Cyan);
+        }
+        reduced.Palette = pal;*/
 
         // get timespan for gif
         double span = tick - tickLastAdd;
         tickLastAdd = tick;
-
+        
         // add it
-        //gif.AddFrame(surface, (ushort)(span * 0.1));
-        gif.AddFrame(imageComposer.Image, (ushort)(span * 0.1));
+        gif.AddFrame(reduced, (ushort)(span * 0.1));
 
         // cleanup
         //surface.Dispose();
         imageComposer.Image.Dispose();
-        //graphics.Dispose();
+        reduced.Dispose();
     }
 
     public bool IsReusable
