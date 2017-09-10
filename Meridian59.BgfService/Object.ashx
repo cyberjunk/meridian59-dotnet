@@ -168,10 +168,10 @@ public class BlakObj : IHttpHandler
 
         // -------------------------------------------------------
         // set cache behaviour
-        context.Response.Cache.SetExpires(DateTime.UtcNow.Add(freshness));
-        context.Response.Cache.SetMaxAge(freshness);
+        //context.Response.Cache.SetExpires(DateTime.UtcNow.Add(freshness));
+        //context.Response.Cache.SetMaxAge(freshness);
         context.Response.Cache.SetCacheability(HttpCacheability.Public);
-        context.Response.Cache.SetValidUntilExpires(true);
+        //context.Response.Cache.SetValidUntilExpires(true);
         context.Response.Cache.VaryByParams["*"] = false;
         context.Response.Cache.SetLastModified(lastModified);
         // --------------------------------------------------

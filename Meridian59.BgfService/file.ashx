@@ -14,7 +14,7 @@ using System.IO;
 /// </summary>
 public class File : IHttpHandler
 {
-    private static readonly TimeSpan freshness = new TimeSpan(0, 0, 0, 300);
+    private static readonly TimeSpan freshness = new TimeSpan(365, 0, 0, 0);
 
     /// <summary>
     /// Handles the HTTP request
@@ -53,10 +53,10 @@ public class File : IHttpHandler
         }
         // -------------------------------------------------------
         // set cache behaviour
-        context.Response.Cache.SetExpires(DateTime.UtcNow.Add(freshness));
-        context.Response.Cache.SetMaxAge(freshness);
+        //context.Response.Cache.SetExpires(DateTime.UtcNow.Add(freshness));
+        //context.Response.Cache.SetMaxAge(freshness);
         context.Response.Cache.SetCacheability(HttpCacheability.Public);
-        context.Response.Cache.SetValidUntilExpires(true);
+        //context.Response.Cache.SetValidUntilExpires(true);
         context.Response.Cache.VaryByParams["*"] = false;
         context.Response.Cache.SetLastModified(entry.LastModified);
         // -------------------------------------------------------
@@ -130,13 +130,15 @@ public class File : IHttpHandler
         // JSON META DATA
         else if (parmReq == "meta")
         {
-            context.Response.ContentType = "application/json; charset=utf-8";
-            context.Response.ContentEncoding = System.Text.Encoding.UTF8;
+            context.Response.ContentType = "application/json";
+            context.Response.ContentEncoding = new System.Text.UTF8Encoding(false);
             context.Response.AddHeader(
                 "Content-Disposition",
                 "inline; filename=" + entry.Bgf.Filename + ".json");
 
-            TextWriter writer = context.Response.Output;
+            StreamWriter writer = new StreamWriter(
+                context.Response.OutputStream,
+                new System.Text.UTF8Encoding(false), 4096, true);
 
             /////////////////////////////////////////////////////////////
             writer.Write("{\"shrink\":"+ entry.Bgf.ShrinkFactor + ',');
