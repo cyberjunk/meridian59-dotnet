@@ -2,41 +2,43 @@
 
 using System;
 using System.Web;
-using System.Collections.Specialized;
 using System.Web.Routing;
 
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Drawing.Drawing2D;
 
 using Meridian59.Common;
 using Meridian59.Common.Constants;
 using Meridian59.Data.Models;
 using Meridian59.Drawing2D;
-using Meridian59.Files.BGF;
 
 public class BlakObj : IHttpHandler
 {
-    static BlakObj()
-    {
-    }
-
     private const ushort MINSCALE = 10;
     private const ushort MAXSCALE = 80;
+    private readonly ImageComposerGDI<ObjectBase> imageComposer = new ImageComposerGDI<ObjectBase>();
 
-    private static readonly TimeSpan freshness = new TimeSpan(0, 0, 0, 300);
-    private ushort scale;
+    public BlakObj()
+    {
+        // don't use quality, apply custom scale
+        imageComposer.Quality = 16.0f; 
+        imageComposer.IsCustomShrink = true;
+    }
+
+    public bool IsReusable
+    {
+        get
+        {
+            return true;
+        }
+    }
 
     public void ProcessRequest (HttpContext context)
     {
-        BgfCache.Entry entry;
-
         // -------------------------------------------------------       
         // read basic and mainoverlay parameters from url-path (see Global.asax):
         //  object/{scale}/{file}/{group}/{palette}/{angle}
-
         RouteValueDictionary parms = context.Request.RequestContext.RouteData.Values;
-
         string parmScale = parms.ContainsKey("scale") ? (string)parms["scale"] : null;
         string parmFile = parms.ContainsKey("file") ? (string)parms["file"] : null;
         string parmGroup = parms.ContainsKey("group") ? (string)parms["group"] : null;
@@ -45,26 +47,26 @@ public class BlakObj : IHttpHandler
 
         // -------------------------------------------------------
         // verify minimum parameters exist
-
-        if (String.IsNullOrEmpty(parmFile))
+        if (String.IsNullOrEmpty(parmScale) ||
+            String.IsNullOrEmpty(parmFile))
         {
             context.Response.StatusCode = 404;
-            context.Response.End();
             return;
         }
 
         // convert to lowercase
         parmFile = parmFile.ToLower();
 
+        ushort scale;
         UInt16.TryParse(parmScale, out scale);
         scale = MathUtil.Bound(scale, MINSCALE, MAXSCALE);
 
         // --------------------------------------------------
         // try to get the main BGF from cache or load from disk
+        BgfCache.Entry entry;
         if (!BgfCache.GetBGF(parmFile, out entry))
         {
             context.Response.StatusCode = 404;
-            context.Response.End();
             return;
         }
 
@@ -87,7 +89,6 @@ public class BlakObj : IHttpHandler
         if (anim == null)
         {
             context.Response.StatusCode = 404;
-            context.Response.End();
             return;
         }
 
@@ -153,25 +154,18 @@ public class BlakObj : IHttpHandler
 
         // --------------------------------------------------
         // create composed image
-        ImageComposerGDI<ObjectBase> imageComposer = new ImageComposerGDI<ObjectBase>();
-        imageComposer.Quality = 16.0f; // don't trigger limit, control by customshrink
-        imageComposer.IsCustomShrink = true;
-        imageComposer.CustomShrink = (float)scale * 0.1f; // scale 10 = shrink 1
+        imageComposer.CustomShrink = (float)scale * 0.1f;
         imageComposer.DataSource = gameObject;
 
         if (imageComposer.Image == null)
         {
             context.Response.StatusCode = 404;
-            context.Response.End();
             return;
         }
 
         // -------------------------------------------------------
         // set cache behaviour
-        //context.Response.Cache.SetExpires(DateTime.UtcNow.Add(freshness));
-        //context.Response.Cache.SetMaxAge(freshness);
         context.Response.Cache.SetCacheability(HttpCacheability.Public);
-        //context.Response.Cache.SetValidUntilExpires(true);
         context.Response.Cache.VaryByParams["*"] = false;
         context.Response.Cache.SetLastModified(lastModified);
         // --------------------------------------------------
@@ -180,15 +174,5 @@ public class BlakObj : IHttpHandler
         context.Response.AddHeader("Content-Disposition", "inline; filename=object.png");
         imageComposer.Image.Save(context.Response.OutputStream, ImageFormat.Png);
         imageComposer.Image.Dispose();
-        context.Response.Flush();
-        context.Response.End();
-    }
-
-    public bool IsReusable
-    {
-        get
-        {
-            return true;
-        }
     }
 }

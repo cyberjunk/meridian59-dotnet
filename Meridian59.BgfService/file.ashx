@@ -14,7 +14,10 @@ using System.IO;
 /// </summary>
 public class File : IHttpHandler
 {
-    private static readonly TimeSpan freshness = new TimeSpan(365, 0, 0, 0);
+    public bool IsReusable
+    {
+        get { return true; }
+    }
 
     /// <summary>
     /// Handles the HTTP request
@@ -37,7 +40,6 @@ public class File : IHttpHandler
             String.IsNullOrEmpty(parmReq))
         {
             context.Response.StatusCode = 404;
-            context.Response.End();
             return;
         }
         // convert to lowercase
@@ -48,15 +50,11 @@ public class File : IHttpHandler
         if (!BgfCache.GetBGF(parmFile, out entry))
         {
             context.Response.StatusCode = 404;
-            context.Response.End();
             return;
         }
         // -------------------------------------------------------
         // set cache behaviour
-        //context.Response.Cache.SetExpires(DateTime.UtcNow.Add(freshness));
-        //context.Response.Cache.SetMaxAge(freshness);
         context.Response.Cache.SetCacheability(HttpCacheability.Public);
-        //context.Response.Cache.SetValidUntilExpires(true);
         context.Response.Cache.VaryByParams["*"] = false;
         context.Response.Cache.SetLastModified(entry.LastModified);
         // -------------------------------------------------------
@@ -68,10 +66,9 @@ public class File : IHttpHandler
                 parm1 = parm1.ToLower();
 
             // invalid format
-            if (parm1 != "png" && parm1 != "bmp" && parm1 != "raw")
+            if (parm1 != "png" && parm1 != "bmp" && parm1 != "bin")
             {
                 context.Response.StatusCode = 404;
-                context.Response.End();
                 return;
             }
             ushort index = 0;
@@ -83,7 +80,6 @@ public class File : IHttpHandler
             if (index >= entry.Bgf.Frames.Count)
             {
                 context.Response.StatusCode = 404;
-                context.Response.End();
                 return;
             }
             // --------------------------------------------------
@@ -110,21 +106,18 @@ public class File : IHttpHandler
                 bmp.Save(context.Response.OutputStream, ImageFormat.Png);
                 bmp.Dispose();
             }
-            else if (parm1 == "raw")
+            else if (parm1 == "bin")
             {
                 context.Response.ContentType = "application/octet-stream";
                 context.Response.AddHeader(
                     "Content-Disposition",
-                    "inline; filename=" + entry.Bgf.Filename  + "-" + index.ToString() + ".bin");
+                    "attachment; filename=" + entry.Bgf.Filename  + "-" + index.ToString() + ".bin");
 
                 byte[] pixels = entry.Bgf.Frames[index].PixelData;
                 context.Response.OutputStream.Write(pixels, 0, pixels.Length);
             }
             else
                 context.Response.StatusCode = 404;
-
-            context.Response.Flush();
-            context.Response.End();
         }
         // -------------------------------------------------------
         // JSON META DATA
@@ -184,29 +177,17 @@ public class File : IHttpHandler
                 if (i < entry.Bgf.FrameSets.Count - 1)
                     writer.Write(',');
             }
-            writer.Write(']');
+            writer.Write("]}");
             /////////////////////////////////////////////////////////////
-            writer.Write("}");
             writer.Close();
             writer.Dispose();
-            context.Response.Flush();
-            context.Response.End();
         }
         // -------------------------------------------------------
         // INVALID
         else
         {
             context.Response.StatusCode = 404;
-            context.Response.End();
             return;
-        }
-    }
-
-    public bool IsReusable
-    {
-        get
-        {
-            return true;
         }
     }
 }

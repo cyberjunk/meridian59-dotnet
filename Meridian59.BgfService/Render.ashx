@@ -39,6 +39,12 @@ public class Render : IHttpHandler
 
     public Render()
     {
+        imageComposer.CenterHorizontal = true;
+        //imageComposer.ApplyYOffset = true;
+        //imageComposer.CenterVertical = true;
+        imageComposer.Quality = 16.0f;
+        imageComposer.IsCustomShrink = true;
+        
         // create imagecomposer to render objects
         imageComposer.NewImageAvailable += OnImageComposerNewImageAvailable;
     }
@@ -183,15 +189,9 @@ public class Render : IHttpHandler
         // create gif instance
         gif = new Gif(width, height);
 
-        //imageComposer.ApplyYOffset = true;
-        //imageComposer.CenterVertical = true;
-        imageComposer.CenterHorizontal = true;
         imageComposer.Width = width;
         imageComposer.Height = height;
-        imageComposer.Quality = 16.0f;
-        imageComposer.IsCustomShrink = true;
         imageComposer.CustomShrink = (float)scale * 0.1f;
-
         imageComposer.DataSource = gameObject;
 
         if (imageComposer.Image == null)
@@ -213,20 +213,14 @@ public class Render : IHttpHandler
 
         // -------------------------------------------------------
         // set cache behaviour
-        //context.Response.Cache.SetExpires(DateTime.UtcNow.Add(freshness));
-        //context.Response.Cache.SetMaxAge(freshness);
         context.Response.Cache.SetCacheability(HttpCacheability.Public);
-        //context.Response.Cache.SetValidUntilExpires(true);
         context.Response.Cache.VaryByParams["*"] = false;
         context.Response.Cache.SetLastModified(lastModified);
-
         // --------------------------------------------------
         // write the response (encode to gif)
         context.Response.ContentType = "image/gif";
         context.Response.AddHeader("Content-Disposition", "inline; filename=object.gif");
         gif.Write(context.Response.OutputStream);
-        context.Response.Flush();
-        context.Response.End();
 
         this.context = null;
 
