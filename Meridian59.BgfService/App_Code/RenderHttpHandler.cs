@@ -1,46 +1,81 @@
-﻿<%@ WebHandler Language="C#" Class="Meridian59.BgfService.ObjectHttpHandler" %>
-
+﻿
 using System;
 using System.Web;
 using System.Web.Routing;
-
 using System.Drawing;
 using System.Drawing.Imaging;
+using Meridian59.Files.BGF;
+using System.IO;
 
-using Meridian59.Common;
 using Meridian59.Common.Constants;
-using Meridian59.Data.Models;
+using Meridian59.Common;
 using Meridian59.Drawing2D;
+using Meridian59.Data.Models;
 
 namespace Meridian59.BgfService
 {
-    public class ObjectHttpHandler : IHttpHandler
+    /// <summary>
+    /// 
+    /// </summary>
+    public class RenderRouteHandler : IRouteHandler
     {
-        private const ushort MINSCALE = 10;
-        private const ushort MAXSCALE = 80;
-        private readonly ImageComposerGDI<ObjectBase> imageComposer = new ImageComposerGDI<ObjectBase>();
-
-        public ObjectHttpHandler()
+        public RenderRouteHandler()
         {
-            // don't use quality, apply custom scale
-            imageComposer.Quality = 16.0f;
-            imageComposer.IsCustomShrink = true;
         }
 
-        public bool IsReusable
+        public IHttpHandler GetHttpHandler(RequestContext requestContext)
         {
-            get
-            {
-                return true;
-            }
+            return new RenderHttpHandler();
+        }
+    }
+
+    public class RenderHttpHandler : IHttpHandler
+    {
+        private const ushort MINWIDTH = 16;
+        private const ushort MAXWIDTH = 512;
+        private const ushort MINHEIGHT = 16;
+        private const ushort MAXHEIGHT = 512;
+        private const ushort MINSCALE = 10;
+        private const ushort MAXSCALE = 80;
+
+        private readonly ImageComposerGDI<ObjectBase> imageComposer = new ImageComposerGDI<ObjectBase>();
+        private readonly JeremyAnsel.ColorQuant.WuAlphaColorQuantizer quant = new JeremyAnsel.ColorQuant.WuAlphaColorQuantizer();
+        private readonly byte[] pixels = new byte[MAXWIDTH * MAXHEIGHT];
+        private readonly Gif gif = new Gif(0, 0);
+        private readonly Gif.LZWEncoder encoder = new Gif.LZWEncoder();
+
+        private ushort width;
+        private ushort height;
+        private ushort scale;
+        private double tick;
+        private double tickLastAdd;
+        private HttpContext context;
+
+        public RenderHttpHandler()
+        {
+            imageComposer.CenterHorizontal = true;
+            //imageComposer.ApplyYOffset = true;
+            //imageComposer.CenterVertical = true;
+            imageComposer.Quality = 16.0f;
+            imageComposer.IsCustomShrink = true;
+
+            // create imagecomposer to render objects
+            imageComposer.NewImageAvailable += OnImageComposerNewImageAvailable;
         }
 
         public void ProcessRequest(HttpContext context)
         {
+            BgfCache.Entry entry;
+            this.context = context;
+
             // -------------------------------------------------------       
             // read basic and mainoverlay parameters from url-path (see Global.asax):
-            //  object/{scale}/{file}/{group}/{palette}/{angle}
+            //  render/{width}/{height}/{scale}/{file}/{group}/{palette}/{angle}
+
             RouteValueDictionary parms = context.Request.RequestContext.RouteData.Values;
+
+            string parmWidth = parms.ContainsKey("width") ? (string)parms["width"] : null;
+            string parmHeight = parms.ContainsKey("height") ? (string)parms["height"] : null;
             string parmScale = parms.ContainsKey("scale") ? (string)parms["scale"] : null;
             string parmFile = parms.ContainsKey("file") ? (string)parms["file"] : null;
             string parmGroup = parms.ContainsKey("group") ? (string)parms["group"] : null;
@@ -49,26 +84,31 @@ namespace Meridian59.BgfService
 
             // -------------------------------------------------------
             // verify minimum parameters exist
-            if (String.IsNullOrEmpty(parmScale) ||
-                String.IsNullOrEmpty(parmFile))
+
+            if (String.IsNullOrEmpty(parmFile))
             {
                 context.Response.StatusCode = 404;
+                context.Response.End();
                 return;
             }
 
             // convert to lowercase
             parmFile = parmFile.ToLower();
 
-            ushort scale;
+            UInt16.TryParse(parmWidth, out width);
+            UInt16.TryParse(parmHeight, out height);
             UInt16.TryParse(parmScale, out scale);
+
+            width = MathUtil.Bound(width, MINWIDTH, MAXWIDTH);
+            height = MathUtil.Bound(height, MINHEIGHT, MAXHEIGHT);
             scale = MathUtil.Bound(scale, MINSCALE, MAXSCALE);
 
             // --------------------------------------------------
             // try to get the main BGF from cache or load from disk
-            BgfCache.Entry entry;
             if (!BgfCache.GetBGF(parmFile, out entry))
             {
                 context.Response.StatusCode = 404;
+                context.Response.End();
                 return;
             }
 
@@ -77,6 +117,7 @@ namespace Meridian59.BgfService
 
             // --------------------------------------------------
             // try to parse other params
+
             byte paletteidx = 0;
             ushort angle = 0;
 
@@ -91,18 +132,19 @@ namespace Meridian59.BgfService
             if (anim == null)
             {
                 context.Response.StatusCode = 404;
+                context.Response.End();
                 return;
             }
 
             // --------------------------------------------------
             // create gameobject
+
             ObjectBase gameObject = new ObjectBase();
             gameObject.Resource = entry.Bgf;
             gameObject.ColorTranslation = paletteidx;
             gameObject.Animation = anim;
             gameObject.ViewerAngle = angle;
 
-            // -------------------------------------------------------       
             // read suboverlay array params from query parameters:
             //  object/..../?subov={file};{group};{palette};{hotspot}&subov=...
             string[] parmSubOverlays = context.Request.Params.GetValues("subov");
@@ -118,6 +160,7 @@ namespace Meridian59.BgfService
 
                     BgfCache.Entry bgfSubOv;
                     string subOvFile = subOvParms[0].ToLower();
+
                     if (!BgfCache.GetBGF(subOvFile, out bgfSubOv))
                         continue;
 
@@ -151,18 +194,36 @@ namespace Meridian59.BgfService
                 }
             }
 
-            // tick object
+            // tick to do some calcs on the object
             gameObject.Tick(0, 1);
 
             // --------------------------------------------------
-            // create composed image
+            // set game object on image composer (causes drawing)  
+
+            // set gif instance size
+            gif.CanvasWidth = width;
+            gif.CanvasHeight = height;
+
+            imageComposer.Width = width;
+            imageComposer.Height = height;
             imageComposer.CustomShrink = (float)scale * 0.1f;
             imageComposer.DataSource = gameObject;
 
             if (imageComposer.Image == null)
             {
                 context.Response.StatusCode = 404;
+                context.Response.End();
                 return;
+            }
+
+            // --------------------------------------------------
+            // run animationlength in 1 ms steps (causes new image events)
+
+            tick = 0.0;
+            for (int i = 0; i < gameObject.AnimationLength; i++)
+            {
+                tick += 1.0;
+                gameObject.Tick(tick, 1.0);
             }
 
             // -------------------------------------------------------
@@ -171,11 +232,56 @@ namespace Meridian59.BgfService
             context.Response.Cache.VaryByParams["*"] = false;
             context.Response.Cache.SetLastModified(lastModified);
             // --------------------------------------------------
-            // write the response (encode to png)
-            context.Response.ContentType = "image/png";
-            context.Response.AddHeader("Content-Disposition", "inline; filename=object.png");
-            imageComposer.Image.Save(context.Response.OutputStream, ImageFormat.Png);
+            // write the response (encode to gif)
+            context.Response.ContentType = "image/gif";
+            context.Response.AddHeader("Content-Disposition", "inline; filename=object.gif");
+            gif.Write(context.Response.OutputStream);
+            gif.Frames.Clear();
+
+            this.context = null;
+
+            // --------------------------------------------------
+            // cleanup
+
+            tick = 0;
+            tickLastAdd = 0;
+
+            // background gc
+            GC.Collect(GC.MaxGeneration, GCCollectionMode.Optimized, false);
+        }
+
+        private void OnImageComposerNewImageAvailable(object sender, EventArgs e)
+        {
+            // reduce to 8bit using custom lib, return palette, store indices in buffer pixels
+            uint[] pal = quant.Quantize((Bitmap)imageComposer.Image, 256, pixels, false);
+
+            // get timespan for gif
+            double span = tick - tickLastAdd;
+            tickLastAdd = tick;
+
+            // create gif frame
+            Gif.Frame frame = new Gif.Frame(
+                pixels,
+                imageComposer.Image.Width,
+                imageComposer.Image.Height,
+                pal,
+                encoder,
+                (ushort)(span * 0.1),
+                0);
+
+            // add it
+            gif.Frames.Add(frame);
+
+            // cleanup
             imageComposer.Image.Dispose();
+        }
+
+        public bool IsReusable
+        {
+            get
+            {
+                return true;
+            }
         }
     }
 }

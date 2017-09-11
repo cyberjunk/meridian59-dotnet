@@ -1,5 +1,4 @@
-﻿<%@ WebHandler Language="C#" Class="Meridian59.BgfService.FileHttpHandler" %>
-
+﻿
 using System;
 using System.Web;
 using System.Web.Routing;
@@ -10,6 +9,21 @@ using System.IO;
 
 namespace Meridian59.BgfService
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    public class FileRouteHandler : IRouteHandler
+    {
+        public FileRouteHandler()
+        {
+        }
+
+        public IHttpHandler GetHttpHandler(RequestContext requestContext)
+        {
+            return new FileHttpHandler();
+        }
+    }
+
     /// <summary>
     /// Provides contents from BGF file. This includes meta data
     /// like offsets and hotspots as well as frame images as PNG or BMP.

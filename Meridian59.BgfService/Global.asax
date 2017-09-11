@@ -15,7 +15,7 @@
         ImageComposerGDI<ObjectBase>.Cache.IsEnabled = false;
 
         // ----------------------------------------------------------------
-        HttpHandlerRoute routeFile = new HttpHandlerRoute("~/File.ashx");
+        FileRouteHandler routeFile = new FileRouteHandler();
 
         RouteTable.Routes.Add(new Route("file/{file}/{req}/{parm1}/{parm2}/{parm3}", routeFile));
         RouteTable.Routes.Add(new Route("file/{file}/{req}/{parm1}/{parm2}", routeFile));
@@ -23,7 +23,7 @@
         RouteTable.Routes.Add(new Route("file/{file}/{req}", routeFile));
 
         // ----------------------------------------------------------------
-        HttpHandlerRoute routeObject = new HttpHandlerRoute("~/Object.ashx");
+        ObjectRouteHandler routeObject = new ObjectRouteHandler();
 
         RouteTable.Routes.Add(new Route("object/{scale}/{file}/{group}/{palette}/{angle}", routeObject));
         RouteTable.Routes.Add(new Route("object/{scale}/{file}/{group}/{palette}", routeObject));
@@ -31,7 +31,7 @@
         RouteTable.Routes.Add(new Route("object/{scale}/{file}", routeObject));
 
         // ----------------------------------------------------------------
-        HttpHandlerRoute routeRender = new HttpHandlerRoute("~/Render.ashx");
+        RenderRouteHandler routeRender = new RenderRouteHandler();
 
         RouteTable.Routes.Add(new Route("render/{width}/{height}/{scale}/{file}/{group}/{palette}/{angle}", routeRender));
         RouteTable.Routes.Add(new Route("render/{width}/{height}/{scale}/{file}/{group}/{palette}", routeRender));
