@@ -135,6 +135,11 @@
             The index alpha count.
             </summary>
         </member>
+        <member name="F:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.WorkArraySize">
+            <summary>
+            IndexCount * IndexAlphaCount
+            </summary>
+        </member>
         <member name="F:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.TableLength">
             <summary>
             The table length.
@@ -173,6 +178,66 @@
         <member name="F:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.tag">
             <summary>
             Color space tag.
+            </summary>
+        </member>
+        <member name="F:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.volume">
+            <summary>
+            Temporary Array Data used in Get3DMoments()
+            </summary>
+        </member>
+        <member name="F:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.volumeR">
+            <summary>
+            Temporary Array Data used in Get3DMoments()
+            </summary>
+        </member>
+        <member name="F:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.volumeG">
+            <summary>
+            Temporary Array Data used in Get3DMoments()
+            </summary>
+        </member>
+        <member name="F:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.volumeB">
+            <summary>
+            Temporary Array Data used in Get3DMoments()
+            </summary>
+        </member>
+        <member name="F:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.volumeA">
+            <summary>
+            Temporary Array Data used in Get3DMoments()
+            </summary>
+        </member>
+        <member name="F:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.volume2">
+            <summary>
+            Temporary Array Data used in Get3DMoments()
+            </summary>
+        </member>
+        <member name="F:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.area">
+            <summary>
+            Temporary Array Data used in Get3DMoments()
+            </summary>
+        </member>
+        <member name="F:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.areaR">
+            <summary>
+            Temporary Array Data used in Get3DMoments()
+            </summary>
+        </member>
+        <member name="F:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.areaG">
+            <summary>
+            Temporary Array Data used in Get3DMoments()
+            </summary>
+        </member>
+        <member name="F:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.areaB">
+            <summary>
+            Temporary Array Data used in Get3DMoments()
+            </summary>
+        </member>
+        <member name="F:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.areaA">
+            <summary>
+            Temporary Array Data used in Get3DMoments()
+            </summary>
+        </member>
+        <member name="F:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.area2">
+            <summary>
+            Temporary Array Data used in Get3DMoments()
             </summary>
         </member>
         <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.Quantize(System.Byte[])">
