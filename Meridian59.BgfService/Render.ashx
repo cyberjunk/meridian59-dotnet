@@ -27,9 +27,9 @@ public class Render : IHttpHandler
 
     private readonly ImageComposerGDI<ObjectBase> imageComposer = new ImageComposerGDI<ObjectBase>();
     private readonly JeremyAnsel.ColorQuant.WuAlphaColorQuantizer quant = new JeremyAnsel.ColorQuant.WuAlphaColorQuantizer();
-    private byte[] pixels = new byte[MAXWIDTH * MAXHEIGHT];
+    private readonly byte[] pixels = new byte[MAXWIDTH * MAXHEIGHT];
+    private readonly Gif gif = new Gif(0, 0);
 
-    private Gif gif;
     private ushort width;
     private ushort height;
     private ushort scale;
@@ -186,8 +186,9 @@ public class Render : IHttpHandler
         // --------------------------------------------------
         // set game object on image composer (causes drawing)  
 
-        // create gif instance
-        gif = new Gif(width, height);
+        // set gif instance size
+        gif.CanvasWidth = width;
+        gif.CanvasHeight = height;
 
         imageComposer.Width = width;
         imageComposer.Height = height;
@@ -221,6 +222,7 @@ public class Render : IHttpHandler
         context.Response.ContentType = "image/gif";
         context.Response.AddHeader("Content-Disposition", "inline; filename=object.gif");
         gif.Write(context.Response.OutputStream);
+        gif.Frames.Clear();
 
         this.context = null;
 
