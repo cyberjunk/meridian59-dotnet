@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
 
+using System.Linq;
+using System.Runtime.InteropServices;
 
 /// <summary>
 /// GIF File Format implementation. Reads and writes data in a GIF.
@@ -19,6 +20,24 @@ using System.Drawing.Imaging;
 /// </remarks>
 public class Gif
 {
+    /// <summary>
+    /// Returns next greater power of 2
+    /// </summary>
+    /// <param name="n"></param>
+    /// <returns></returns>
+    public static uint NextPowerOf2(uint n)
+    {
+        n--;
+        n |= n >> 1;
+        n |= n >> 2;
+        n |= n >> 4;
+        n |= n >> 8;
+        n |= n >> 16;
+        n++;
+
+        return n;
+    }
+
     /// <summary>
     /// GIF Extension Base Class
     /// </summary>
@@ -364,6 +383,53 @@ public class Gif
         {
             Read(Reader);
         }
+
+        public Frame(byte[] Pixels, int Width, int Height, uint[] Palette, ushort Delay, int TransparentColorIndex = -1)
+        {
+            if (Palette == null || Palette.Length > 256)
+                throw new ArgumentException("Palette null or more than 256 entries.");
+
+            this.Width = (ushort)Width;
+            this.Height = (ushort)Height;
+
+            // encode pixels
+            LZWEncoder encoder = new LZWEncoder();
+            encoder.Encode(Pixels, 8, Chunks, Width, Height);
+            MinLZWCodeSize = 8;
+
+            // determine size of colortable to use
+            // get next bigger power of 2 value of used colorcount
+            uint palSize2 = NextPowerOf2((uint)Palette.Length);
+
+            // use and create local color table with determined size
+            Packed.IsLocalColorTable = true;
+            Packed.SizeOfLocalColorTable = (uint)Math.Max((int)Math.Log(palSize2, 2.0) - 1, 0);
+            ColorTable = new byte[palSize2 * 3];
+
+            // fill color table
+            int i = 0;
+            foreach(uint c in Palette)
+            {
+                ColorTable[i] = (byte)((c & 0x00FF0000) >> 16); i++;
+                ColorTable[i] = (byte)((c & 0x0000FF00) >> 8); i++;
+                ColorTable[i] = (byte)(c & 0x000000FF); i++;
+            }
+
+            // set graphics control extension
+            GraphicsControl = new ExtensionGraphicsControl();
+            GraphicsControl.DelayTime = Delay;
+            GraphicsControl.Packed.IsUserInput = false;
+            GraphicsControl.Packed.DisposalMethod =
+                ExtensionGraphicsControl.Flags.DisposalMethods.RestoreToBackground;
+
+            // possibly set transparent color index and enable transparency
+            if (TransparentColorIndex > -1 && TransparentColorIndex < 256)
+            {
+                GraphicsControl.Packed.IsTransparentColor = true;
+                GraphicsControl.TransparentColorIndex = (byte)TransparentColorIndex;
+            }
+        }
+
         public void Read(BinaryReader Reader)
         {
             Left   = Reader.ReadUInt16();
@@ -750,76 +816,253 @@ public class Gif
         stream.Dispose();
     }
 
-    public void AddFrame(Bitmap Image, ushort Delay)
+    /// <summary>
+    /// Converted from:
+    /// GIFCOMPR.C       - GIF Image compression routines
+    /// David Rowley (mgardi@watdcsu.waterloo.edu)
+    /// </summary>
+    /// <remarks>
+    /// Based on: compress.c - File compression ala IEEE Computer, June 1984.
+    /// By Authors:  Spencer W. Thomas      (decvax!harpo!utah-cs!utah-gr!thomas)
+    ///              James A. Woods         (decvax!ihnp4!ames!jaw)
+    ///              Joe Orost              (decvax!vax135!petsd!joe)
+    /// </remarks>
+    public class LZWEncoder
     {
-        // create memorystream to hold temporary gif
-        MemoryStream memStream = new MemoryStream();
+        private const int BITS = 12;
+        private const int HSIZE = 5003; // 80% occupancy
+        private const int EOF = -1;
+        private const int MAXBITS = BITS;         // user settable max # bits/code
+        private const int MAXMAXCODE = 1 << BITS; // should NEVER generate this code
 
-        // use .NET GIF encoder to create a compatible frame
-        Image.Save(memStream, ImageFormat.Gif);
-        //Image.Save("test2.gif", ImageFormat.Gif);
-        
-        // reset streamposition for reading
-        memStream.Position = 0;
-
-        // parse the generated gif
-        Gif gif = new Gif(memStream);
-
-        // must have at least one frame in there
-        if (gif.Frames.Count > 0)
+        private static readonly int[] masks =
         {
-            Frame frame = gif.Frames[0];
+            0x0000, 0x0001, 0x0003, 0x0007, 0x000F,
+            0x001F, 0x003F, 0x007F, 0x00FF, 0x01FF,
+            0x03FF, 0x07FF, 0x0FFF, 0x1FFF, 0x3FFF,
+            0x7FFF, 0xFFFF
+        };
 
-            // possibly create a GraphicsControl extension for this frame
-            if (frame.GraphicsControl == null)
-                frame.GraphicsControl = new ExtensionGraphicsControl();
+        private int remaining;
+        private int curPixel;
+        private int n_bits;                 // number of bits/code
+        private int maxcode;                // maximum code, given n_bits
+        private int hsize = HSIZE; // for dynamic table sizing
+        private int free_ent = 0;  // first unused entry
+        private bool clear_flg = false;
+        private int g_init_bits;
+        private int ClearCode;
+        private int EOFCode;
+        private int cur_accum = 0;
+        private int cur_bits = 0;
+        private int a_count;
+        private readonly int[] htab = new int[HSIZE];
+        private readonly int[] codetab = new int[HSIZE];
+        private readonly byte[] accum = new byte[256];
 
-            // attach global color palette as local
-            if (!frame.Packed.IsLocalColorTable)
+        private static int MaxCode(int n_bits) { return (1 << n_bits) - 1; }
+
+        public LZWEncoder()
+        {
+        }
+
+        public void Encode(byte[] pixels, int color_depth, List<byte[]> chunks, int imgW, int imgH)
+        {
+            // reset navigation variables
+            remaining = imgW * imgH;
+            curPixel = 0;
+
+            // compress and write the pixel data
+            Compress(color_depth + 1, pixels, chunks);
+        }
+
+        private void Add(byte c, List<byte[]> chunks)
+        {
+            accum[a_count++] = c;
+            if (a_count >= 254)
+                Flush(chunks);
+        }
+
+        private void ClearTable(List<byte[]> chunks)
+        {
+            ResetCodeTable(hsize);
+            free_ent = ClearCode + 2;
+            clear_flg = true;
+            Output(ClearCode, chunks);
+        }
+
+        private void ResetCodeTable(int hsize)
+        {
+            for (int i = 0; i < hsize; ++i)
+                htab[i] = -1;
+        }
+
+        private void Compress(int init_bits, byte[] pixels, List<byte[]> chunks)
+        {
+            int fcode;
+            int i /* = 0 */;
+            int c;
+            int ent;
+            int disp;
+            int hsize_reg;
+            int hshift;
+
+            // Set up the globals:  g_init_bits - initial number of bits
+            g_init_bits = init_bits;
+
+            // Set up the necessary values
+            clear_flg = false;
+            n_bits = g_init_bits;
+            maxcode = MaxCode(n_bits);
+
+            ClearCode = 1 << (init_bits - 1);
+            EOFCode = ClearCode + 1;
+            free_ent = ClearCode + 2;
+
+            // clear packet
+            a_count = 0;
+
+            ent = NextPixel(pixels);
+
+            hshift = 0;
+            for (fcode = hsize; fcode < 65536; fcode *= 2)
+                ++hshift;
+            hshift = 8 - hshift; // set hash code range bound
+
+            hsize_reg = hsize;
+            ResetCodeTable(hsize_reg); // clear hash table
+
+            Output(ClearCode, chunks);
+
+          outer_loop:
+            while ((c = NextPixel(pixels)) != EOF)
             {
-                if (gif.Packed.IsGlobalColorTable)
+                fcode = (c << MAXBITS) + ent;
+                i = (c << hshift) ^ ent; // xor hashing
+
+                if (htab[i] == fcode)
                 {
-                    frame.ColorTable = gif.GlobalColorTable;
-                    frame.Packed.SizeOfLocalColorTable = gif.Packed.SizeOfColorTable;
-                    //frame.GraphicsControl.TransparentColorIndex = gif.BackgroundColorIndex;
+                    ent = codetab[i];
+                    continue;
+                }
+                else if (htab[i] >= 0) // non-empty slot
+                {
+                    // secondary hash (after G. Knott)
+                    disp = hsize_reg - i; 
+
+                    if (i == 0)
+                        disp = 1;
+
+                    do
+                    {
+                        if ((i -= disp) < 0)
+                            i += hsize_reg;
+
+                        if (htab[i] == fcode)
+                        {
+                            ent = codetab[i];
+                            goto outer_loop;
+                        }
+                    }
+                    while (htab[i] >= 0);
+                }
+
+                Output(ent, chunks);
+                ent = c;
+
+                if (free_ent < MAXMAXCODE)
+                {
+                    // code -> hashtable
+                    codetab[i] = free_ent++; 
+                    htab[i] = fcode;
                 }
                 else
-                    throw new Exception("No ColorTable in .NET encoded GIF");
+                    ClearTable(chunks);
             }
 
-            // enable local colortable and set delay
-            frame.Packed.IsLocalColorTable = true;
-            frame.GraphicsControl.DelayTime = Delay;
+            // Put out the final code.
+            Output(ent, chunks);
+            Output(EOFCode, chunks);
+        }
 
-            // find index of cyan, mono has issues setting 'TransparentColorIndex'
-            // this also needs the last of all found cyan, can be several
-            byte idx = 0;
-            for (int i = 0; i < frame.ColorTable.Length; i+=3)
+        private void Flush(List<byte[]> Chunks)
+        {
+            if (a_count > 0)
             {
-                // cyan
-                if (frame.ColorTable[i] == 0 && 
-                    frame.ColorTable[i + 1] == 255 && 
-                    frame.ColorTable[i + 2] == 255)
+                byte[] chunk = new byte[a_count];
+                Array.Copy(accum, chunk, a_count);
+                Chunks.Add(chunk);
+
+                a_count = 0;
+            }
+        }
+
+        private int NextPixel(byte[] pixAry)
+        {
+            if (remaining == 0)
+                return EOF;
+
+            --remaining;
+
+            int temp = curPixel + 1;
+            if (temp < pixAry.GetUpperBound(0))
+            {
+                byte pix = pixAry[curPixel++];
+
+                return pix & 0xff;
+            }
+            return 0xff;
+        }
+
+        private void Output(int code, List<byte[]> chunks)
+        {
+            cur_accum &= masks[cur_bits];
+
+            if (cur_bits > 0)
+                cur_accum |= (code << cur_bits);
+            else
+                cur_accum = code;
+
+            cur_bits += n_bits;
+
+            while (cur_bits >= 8)
+            {
+                Add((byte)(cur_accum & 0xff), chunks);
+                cur_accum >>= 8;
+                cur_bits -= 8;
+            }
+
+            // If the next entry is going to be too big for the code size,
+            // then increase it, if possible.
+            if (free_ent > maxcode || clear_flg)
+            {
+                if (clear_flg)
                 {
-                    idx = (byte)(i / 3);
-                    //break;
+                    maxcode = MaxCode(n_bits = g_init_bits);
+                    clear_flg = false;
+                }
+                else
+                {
+                    ++n_bits;
+                    if (n_bits == MAXBITS)
+                        maxcode = MAXMAXCODE;
+                    else
+                        maxcode = MaxCode(n_bits);
                 }
             }
 
-            // set flags
-            frame.GraphicsControl.TransparentColorIndex = idx;
-            frame.GraphicsControl.Packed.IsTransparentColor = true;
-            frame.GraphicsControl.Packed.IsUserInput = false;
-            frame.GraphicsControl.Packed.DisposalMethod =
-                ExtensionGraphicsControl.Flags.DisposalMethods.RestoreToBackground;
+            if (code == EOFCode)
+            {
+                // At EOF, write the rest of the buffer.
+                while (cur_bits > 0)
+                {
+                    Add((byte)(cur_accum & 0xff), chunks);
+                    cur_accum >>= 8;
+                    cur_bits -= 8;
+                }
 
-            // add the frame to our gif
-            Frames.Add(frame);
+                Flush(chunks);
+            }
         }
-        else
-            throw new Exception("No Frame in .NET encoded GIF");
-
-        memStream.Close();
-        memStream.Dispose();
     }
 }

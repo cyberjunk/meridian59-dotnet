@@ -44,7 +44,7 @@ public class Render : IHttpHandler
         //imageComposer.CenterVertical = true;
         imageComposer.Quality = 16.0f;
         imageComposer.IsCustomShrink = true;
-        
+
         // create imagecomposer to render objects
         imageComposer.NewImageAvailable += OnImageComposerNewImageAvailable;
     }
@@ -234,28 +234,26 @@ public class Render : IHttpHandler
     private void OnImageComposerNewImageAvailable(object sender, EventArgs e)
     {
         // reduce to 8bit using custom lib
-        Bitmap reduced = quant.Quantize(imageComposer.Image, 256);
-
-        // alpha/transparency hacking
-        /*ColorPalette pal = reduced.Palette;
-        for (int i = 0; i < reduced.Palette.Entries.Length; i++)
-        {
-            if (pal.Entries[i].A == 0)
-                pal.Entries[i] = Color.FromArgb(0, Color.Cyan);
-        }
-        reduced.Palette = pal;*/
+        byte[] pixels = new byte[imageComposer.Image.Width * imageComposer.Image.Height];
+        uint[] pal = quant.Quantize((Bitmap)imageComposer.Image, 256, pixels, false);
 
         // get timespan for gif
         double span = tick - tickLastAdd;
         tickLastAdd = tick;
-        
-        // add it
-        gif.AddFrame(reduced, (ushort)(span * 0.1));
 
+        Gif.Frame frame = new Gif.Frame(
+            pixels,
+            imageComposer.Image.Width,
+            imageComposer.Image.Height,
+            pal,  
+            (ushort)(span * 0.1), 
+            0);
+
+        // add it
+        gif.Frames.Add(frame);
+        
         // cleanup
-        //surface.Dispose();
         imageComposer.Image.Dispose();
-        reduced.Dispose();
     }
 
     public bool IsReusable

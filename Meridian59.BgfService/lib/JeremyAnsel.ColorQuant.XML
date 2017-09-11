@@ -190,7 +190,7 @@
             <param name="colorCount">The color count.</param>
             <returns>The result.</returns>
         </member>
-        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.Quantize(System.UInt32*,System.Int32,System.Int32,System.Int32,System.Byte*)">
+        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.Quantize(System.UInt32*,System.Int32,System.Int32,System.Int32,System.Byte*,System.Boolean)">
             <summary>
             Quantizes an image.
             </summary>
@@ -199,6 +199,7 @@
             <param name="width">Width of image</param>
             <param name="height">Height of image</param>
             <param name="destPixels">Indexed pixelData will be written there</param>
+            <param name="padMultiple4">True to pad rows to multiple of 4</param>
             <returns>Palette with ARGB colors</returns>
         </member>
         <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.Quantize(System.Drawing.Bitmap,System.Int32)">
@@ -207,6 +208,16 @@
             </summary>
             <param name="image">The image (ARGB).</param>
             <param name="colorCount">The color count.</param>
+            <returns>Bitmap with indexed colors</returns>
+        </member>
+        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.Quantize(System.Drawing.Bitmap,System.Int32,System.Byte[],System.Boolean)">
+            <summary>
+            Quantizes an image.
+            </summary>
+            <param name="image">The image (ARGB).</param>
+            <param name="colorCount">The color count.</param>
+            <param name="destPixels">Indexed pixelData will be written there</param>
+            <param name="padMultiple4">True to pad rows to multiple of 4</param>
             <returns>Bitmap with indexed colors</returns>
         </member>
         <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.GetIndex(System.Int32,System.Int32,System.Int32,System.Int32)">
@@ -329,7 +340,7 @@
             <param name="cube">The cube.</param>
             <returns>The result.</returns>
         </member>
-        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.GenerateResult(System.UInt32*,System.Int32,JeremyAnsel.ColorQuant.Box[],System.Int32,System.Int32,System.Byte*)">
+        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.GenerateResult(System.UInt32*,System.Int32,JeremyAnsel.ColorQuant.Box[],System.Int32,System.Int32,System.Byte*,System.Boolean)">
             <summary>
             Generates the quantized result.
             </summary>
@@ -338,7 +349,8 @@
             <param name="cube">The cube.</param>
             <param name="width">Width of image</param>
             <param name="height">Height of image</param>
-            <param name="destPixels">Pixel values are written here. Must provide width*height memory. Warning: Rows are padded to multiple of 4</param>
+            <param name="destPixels">Pixel values are written here. Must provide width*height memory.</param>
+            <param name="padMultiple4">True to write zero padding to make row bytes multiple of 4</param>
             <returns>Receives colors</returns>
         </member>
         <member name="T:JeremyAnsel.ColorQuant.WuColorQuantizer">
