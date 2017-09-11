@@ -15,11 +15,11 @@ public class HttpHandlerRoute : IRouteHandler
         _VirtualPath = virtualPath;
     }
 
-    public IHttpHandler GetHttpHandler(System.Web.Routing.RequestContext requestContext)
+    public IHttpHandler GetHttpHandler(RequestContext requestContext)
     {
         IHttpHandler httpHandler = (IHttpHandler)
             BuildManager.CreateInstanceFromVirtualPath(_VirtualPath, typeof(IHttpHandler));
-        
+
         return httpHandler;
     }
 }
