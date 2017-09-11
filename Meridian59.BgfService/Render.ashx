@@ -27,6 +27,7 @@ public class Render : IHttpHandler
 
     private readonly ImageComposerGDI<ObjectBase> imageComposer = new ImageComposerGDI<ObjectBase>();
     private readonly JeremyAnsel.ColorQuant.WuAlphaColorQuantizer quant = new JeremyAnsel.ColorQuant.WuAlphaColorQuantizer();
+    private byte[] pixels = new byte[MAXWIDTH * MAXHEIGHT];
 
     private Gif gif;
     private ushort width;
@@ -35,7 +36,6 @@ public class Render : IHttpHandler
     private double tick;
     private double tickLastAdd;
     private HttpContext context;
-    private static readonly TimeSpan freshness = new TimeSpan(0, 0, 0, 300);
 
     public Render()
     {
@@ -229,12 +229,14 @@ public class Render : IHttpHandler
 
         tick        = 0;
         tickLastAdd = 0;
+
+        // background gc
+        GC.Collect(GC.MaxGeneration, GCCollectionMode.Optimized, false);
     }
 
     private void OnImageComposerNewImageAvailable(object sender, EventArgs e)
     {
-        // reduce to 8bit using custom lib
-        byte[] pixels = new byte[imageComposer.Image.Width * imageComposer.Image.Height];
+        // reduce to 8bit using custom lib, return palette, store indices in buffer pixels
         uint[] pal = quant.Quantize((Bitmap)imageComposer.Image, 256, pixels, false);
 
         // get timespan for gif
@@ -245,13 +247,13 @@ public class Render : IHttpHandler
             pixels,
             imageComposer.Image.Width,
             imageComposer.Image.Height,
-            pal,  
-            (ushort)(span * 0.1), 
+            pal,
+            (ushort)(span * 0.1),
             0);
 
         // add it
         gif.Frames.Add(frame);
-        
+
         // cleanup
         imageComposer.Image.Dispose();
     }
@@ -263,5 +265,4 @@ public class Render : IHttpHandler
             return true;
         }
     }
-
 }
