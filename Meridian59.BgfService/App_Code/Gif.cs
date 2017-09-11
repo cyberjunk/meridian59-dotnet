@@ -384,17 +384,26 @@ public class Gif
             Read(Reader);
         }
 
-        public Frame(byte[] Pixels, int Width, int Height, uint[] Palette, ushort Delay, int TransparentColorIndex = -1)
+        public Frame(byte[] Pixels, int Width, int Height, uint[] Palette, LZWEncoder Encoder, ushort Delay, int TransparentColorIndex = -1)
         {
+            if (Pixels == null)
+                throw new ArgumentException("Pixels can't be null.");
+
+            if (Width <= 0 || Height <= 0)
+                throw new ArgumentException("Width and Height must be greater 0.");
+
             if (Palette == null || Palette.Length > 256)
                 throw new ArgumentException("Palette null or more than 256 entries.");
 
+            if (Encoder == null)
+                throw new ArgumentException("Encoder can't be null.");
+
+            // save provided dimension
             this.Width = (ushort)Width;
             this.Height = (ushort)Height;
 
-            // encode pixels
-            LZWEncoder encoder = new LZWEncoder();
-            encoder.Encode(Pixels, 8, Chunks, Width, Height);
+            // encode pixels using argument encoder instance
+            Encoder.Encode(Pixels, 8, Chunks, Width, Height);
             MinLZWCodeSize = 8;
 
             // determine size of colortable to use
@@ -817,11 +826,12 @@ public class Gif
     }
 
     /// <summary>
-    /// Converted from:
-    /// GIFCOMPR.C       - GIF Image compression routines
-    /// David Rowley (mgardi@watdcsu.waterloo.edu)
+    /// LZW Compression for GIF
     /// </summary>
     /// <remarks>
+    /// Created from misc. sources on the internet
+    /// GIFCOMPR.C GIF Image compression routines
+    /// David Rowley (mgardi@watdcsu.waterloo.edu)
     /// Based on: compress.c - File compression ala IEEE Computer, June 1984.
     /// By Authors:  Spencer W. Thomas      (decvax!harpo!utah-cs!utah-gr!thomas)
     ///              James A. Woods         (decvax!ihnp4!ames!jaw)
@@ -868,9 +878,11 @@ public class Gif
 
         public void Encode(byte[] pixels, int color_depth, List<byte[]> chunks, int imgW, int imgH)
         {
-            // reset navigation variables
+            // save/reset some values
             remaining = imgW * imgH;
             curPixel = 0;
+            cur_bits = 0;
+            cur_accum = 0;
 
             // compress and write the pixel data
             Compress(color_depth + 1, pixels, chunks);

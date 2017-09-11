@@ -29,6 +29,7 @@ public class Render : IHttpHandler
     private readonly JeremyAnsel.ColorQuant.WuAlphaColorQuantizer quant = new JeremyAnsel.ColorQuant.WuAlphaColorQuantizer();
     private readonly byte[] pixels = new byte[MAXWIDTH * MAXHEIGHT];
     private readonly Gif gif = new Gif(0, 0);
+    private readonly Gif.LZWEncoder encoder = new Gif.LZWEncoder();
 
     private ushort width;
     private ushort height;
@@ -245,11 +246,13 @@ public class Render : IHttpHandler
         double span = tick - tickLastAdd;
         tickLastAdd = tick;
 
+        // create gif frame
         Gif.Frame frame = new Gif.Frame(
             pixels,
             imageComposer.Image.Width,
             imageComposer.Image.Height,
             pal,
+            encoder,
             (ushort)(span * 0.1),
             0);
 
