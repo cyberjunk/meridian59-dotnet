@@ -3,23 +3,26 @@ using System.Web;
 using System.Web.Routing;
 using System.Web.Compilation;
 
-/// <summary>
-/// 
-/// </summary>
-public class HttpHandlerRoute : IRouteHandler
+namespace Meridian59.BgfService
 {
-    private String _VirtualPath = null;
-
-    public HttpHandlerRoute(String virtualPath)
+    /// <summary>
+    /// 
+    /// </summary>
+    public class HttpHandlerRoute : IRouteHandler
     {
-        _VirtualPath = virtualPath;
-    }
+        private String _VirtualPath = null;
 
-    public IHttpHandler GetHttpHandler(RequestContext requestContext)
-    {
-        IHttpHandler httpHandler = (IHttpHandler)
-            BuildManager.CreateInstanceFromVirtualPath(_VirtualPath, typeof(IHttpHandler));
+        public HttpHandlerRoute(String virtualPath)
+        {
+            _VirtualPath = virtualPath;
+        }
 
-        return httpHandler;
+        public IHttpHandler GetHttpHandler(RequestContext requestContext)
+        {
+            IHttpHandler httpHandler = (IHttpHandler)
+                BuildManager.CreateInstanceFromVirtualPath(_VirtualPath, typeof(IHttpHandler));
+
+            return httpHandler;
+        }
     }
 }

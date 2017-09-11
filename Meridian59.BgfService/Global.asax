@@ -2,6 +2,7 @@
 <%@ Import Namespace="System.Web.Routing" %>
 <%@ Import Namespace="Meridian59.Drawing2D" %>
 <%@ Import Namespace="Meridian59.Data.Models" %>
+<%@ Import Namespace="Meridian59.BgfService" %>
 
 <script runat="server">
     void Application_Start(object sender, EventArgs e)
@@ -14,7 +15,7 @@
         ImageComposerGDI<ObjectBase>.Cache.IsEnabled = false;
 
         // ----------------------------------------------------------------
-        HttpHandlerRoute routeFile = new HttpHandlerRoute("~/file.ashx");
+        HttpHandlerRoute routeFile = new HttpHandlerRoute("~/File.ashx");
 
         RouteTable.Routes.Add(new Route("file/{file}/{req}/{parm1}/{parm2}/{parm3}", routeFile));
         RouteTable.Routes.Add(new Route("file/{file}/{req}/{parm1}/{parm2}", routeFile));
