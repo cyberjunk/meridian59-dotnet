@@ -11,6 +11,7 @@ using Meridian59.Common.Constants;
 using Meridian59.Common;
 using Meridian59.Drawing2D;
 using Meridian59.Data.Models;
+using System.Collections.Concurrent;
 
 namespace Meridian59.BgfService
 {
@@ -19,13 +20,36 @@ namespace Meridian59.BgfService
     /// </summary>
     public class RenderRouteHandler : IRouteHandler
     {
+        public const int NUMHANDLERS = 6;
+
+        public static readonly ConcurrentQueue<RenderHttpHandler> Handlers =
+            new ConcurrentQueue<RenderHttpHandler>();
+
+        private static readonly RenderHttpHandler[] Instances = 
+            new RenderHttpHandler[NUMHANDLERS];
+
+        static RenderRouteHandler()
+        {
+            for (int i = 0; i < Instances.Length; i++)
+            {
+                Instances[i] = new RenderHttpHandler();
+                Handlers.Enqueue(Instances[i]);
+            }
+        }
+
         public RenderRouteHandler()
         {
         }
 
         public IHttpHandler GetHttpHandler(RequestContext requestContext)
         {
-            return new RenderHttpHandler();
+            RenderHttpHandler handler;
+
+            if (Handlers.TryDequeue(out handler))
+                return handler;
+
+            else
+                return new BusyErrorHttpHandler();
         }
     }
 
@@ -54,7 +78,7 @@ namespace Meridian59.BgfService
         public RenderHttpHandler()
         {
             imageComposer.CenterHorizontal = true;
-            //imageComposer.ApplyYOffset = true;
+            imageComposer.ApplyYOffset = true;
             //imageComposer.CenterVertical = true;
             imageComposer.Quality = 16.0f;
             imageComposer.IsCustomShrink = true;
@@ -81,14 +105,14 @@ namespace Meridian59.BgfService
             string parmGroup = parms.ContainsKey("group") ? (string)parms["group"] : null;
             string parmPalette = parms.ContainsKey("palette") ? (string)parms["palette"] : null;
             string parmAngle = parms.ContainsKey("angle") ? (string)parms["angle"] : null;
-
+            
             // -------------------------------------------------------
             // verify minimum parameters exist
 
             if (String.IsNullOrEmpty(parmFile))
             {
                 context.Response.StatusCode = 404;
-                context.Response.End();
+                Finish();
                 return;
             }
 
@@ -108,7 +132,7 @@ namespace Meridian59.BgfService
             if (!BgfCache.GetBGF(parmFile, out entry))
             {
                 context.Response.StatusCode = 404;
-                context.Response.End();
+                Finish();
                 return;
             }
 
@@ -132,7 +156,7 @@ namespace Meridian59.BgfService
             if (anim == null)
             {
                 context.Response.StatusCode = 404;
-                context.Response.End();
+                Finish();
                 return;
             }
 
@@ -212,7 +236,7 @@ namespace Meridian59.BgfService
             if (imageComposer.Image == null)
             {
                 context.Response.StatusCode = 404;
-                context.Response.End();
+                Finish();
                 return;
             }
 
@@ -238,16 +262,16 @@ namespace Meridian59.BgfService
             gif.Write(context.Response.OutputStream);
             gif.Frames.Clear();
 
-            this.context = null;
-
+            
             // --------------------------------------------------
             // cleanup
-
             tick = 0;
             tickLastAdd = 0;
 
             // background gc
             GC.Collect(GC.MaxGeneration, GCCollectionMode.Optimized, false);
+
+            Finish();
         }
 
         private void OnImageComposerNewImageAvailable(object sender, EventArgs e)
@@ -282,6 +306,22 @@ namespace Meridian59.BgfService
             {
                 return true;
             }
+        }
+
+        private void Finish()
+        {
+            // remember locally
+            HttpContext con = this.context;
+
+            // reset reference
+            this.context = null;
+
+            // end response
+            try { con.ApplicationInstance.CompleteRequest(); }
+            finally { }
+
+            // reuse the handler
+            RenderRouteHandler.Handlers.Enqueue(this);
         }
     }
 }
