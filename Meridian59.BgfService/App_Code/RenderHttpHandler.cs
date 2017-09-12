@@ -12,6 +12,7 @@ using Meridian59.Common;
 using Meridian59.Drawing2D;
 using Meridian59.Data.Models;
 using System.Collections.Concurrent;
+using Meridian59.Common.Enums;
 
 namespace Meridian59.BgfService
 {
@@ -67,6 +68,8 @@ namespace Meridian59.BgfService
         private readonly byte[] pixels = new byte[MAXWIDTH * MAXHEIGHT];
         private readonly Gif gif = new Gif(0, 0);
         private readonly Gif.LZWEncoder encoder = new Gif.LZWEncoder();
+
+        private Gif.Frame frame;
 
         private ushort width;
         private ushort height;
@@ -160,6 +163,12 @@ namespace Meridian59.BgfService
                 return;
             }
 
+            if (anim.AnimationType == AnimationType.CYCLE)
+            {
+                AnimationCycle cycl = (AnimationCycle)anim;
+                cycl.GroupHigh = Math.Min(cycl.GroupHigh, (ushort)(entry.Bgf.FrameSets.Count));
+            }
+
             // --------------------------------------------------
             // create gameobject
 
@@ -199,9 +208,15 @@ namespace Meridian59.BgfService
                     }
 
                     Animation subOvAnim = Animation.ExtractAnimation(subOvParms[1], '-');
-
+                    
                     if (subOvAnim == null)
                         continue;
+
+                    if (subOvAnim.AnimationType == AnimationType.CYCLE)
+                    {
+                        AnimationCycle cycl = (AnimationCycle)subOvAnim;
+                        cycl.GroupHigh = Math.Min(cycl.GroupHigh, (ushort)(bgfSubOv.Bgf.FrameSets.Count));
+                    }
 
                     // create suboverlay
                     SubOverlay subOv = new SubOverlay(0, subOvAnim, subOvHotspot, subOvPalette, 0);
@@ -209,6 +224,7 @@ namespace Meridian59.BgfService
                     // set bgf resource
                     subOv.Resource = bgfSubOv.Bgf;
 
+                    
                     // update lastModified if subov is newer
                     if (bgfSubOv.LastModified > lastModified)
                         lastModified = bgfSubOv.LastModified;
@@ -222,34 +238,30 @@ namespace Meridian59.BgfService
             gameObject.Tick(0, 1);
 
             // --------------------------------------------------
-            // set game object on image composer (causes drawing)  
-
             // set gif instance size
             gif.CanvasWidth = width;
             gif.CanvasHeight = height;
 
+            // set imagecomposer size and shrink
             imageComposer.Width = width;
             imageComposer.Height = height;
             imageComposer.CustomShrink = (float)scale * 0.1f;
-            imageComposer.DataSource = gameObject;
 
-            if (imageComposer.Image == null)
-            {
-                context.Response.StatusCode = 404;
-                Finish();
-                return;
-            }
+            // reset
+            tick = 0.0;
+            tickLastAdd = 0.0;
+            frame = null;
+
+            // set object (triggers first event!)
+            imageComposer.DataSource = gameObject;
 
             // --------------------------------------------------
             // run animationlength in 1 ms steps (causes new image events)
-
-            tick = 0.0;
-            for (int i = 0; i < gameObject.AnimationLength; i++)
+            for (int i = 0; i < gameObject.AnimationLength + 1; i++)
             {
                 tick += 1.0;
                 gameObject.Tick(tick, 1.0);
             }
-
             // -------------------------------------------------------
             // set cache behaviour
             context.Response.Cache.SetCacheability(HttpCacheability.Public);
@@ -262,12 +274,7 @@ namespace Meridian59.BgfService
             gif.Write(context.Response.OutputStream);
             gif.Frames.Clear();
 
-            
             // --------------------------------------------------
-            // cleanup
-            tick = 0;
-            tickLastAdd = 0;
-
             // background gc
             GC.Collect(GC.MaxGeneration, GCCollectionMode.Optimized, false);
 
@@ -283,18 +290,24 @@ namespace Meridian59.BgfService
             double span = tick - tickLastAdd;
             tickLastAdd = tick;
 
-            // create gif frame
-            Gif.Frame frame = new Gif.Frame(
+            if (frame != null)
+            {
+                // set delay on last frame
+                frame.GraphicsControl.DelayTime = (ushort)(span * 0.1);
+
+                // add last frame
+                gif.Frames.Add(frame);
+            }
+
+            // create new gif frame
+            frame = new Gif.Frame(
                 pixels,
                 imageComposer.Image.Width,
                 imageComposer.Image.Height,
                 pal,
                 encoder,
-                (ushort)(span * 0.1),
+                0,
                 0);
-
-            // add it
-            gif.Frames.Add(frame);
 
             // cleanup
             imageComposer.Image.Dispose();
