@@ -3,16 +3,11 @@ using System;
 using System.Web;
 using System.Web.Routing;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.Threading;
-using Meridian59.Files.BGF;
-using System.IO;
 using Meridian59.Common.Constants;
-using Meridian59.Common;
 using Meridian59.Drawing2D;
 using Meridian59.Data.Models;
 using System.Collections.Concurrent;
-using Meridian59.Common.Enums;
 using JeremyAnsel.ColorQuant;
 
 namespace Meridian59.BgfService
@@ -64,6 +59,7 @@ namespace Meridian59.BgfService
 
     /// <summary>
     /// Creates animated GIF from Meridian 59 object
+    /// Very CPU and RAM intense!
     /// </summary>
     public class RenderHttpHandler : IHttpHandler
     {
@@ -104,9 +100,8 @@ namespace Meridian59.BgfService
             this.context = context;
 
             // -------------------------------------------------------       
-            // read basic and mainoverlay parameters from url-path (see Global.asax):
-            //  render/{width}/{height}/{scale}/{file}/{group}/{palette}/{angle}
-
+            // Read URL routed parameters (see Global.asax):
+            //  render/{width}/{height}/{scale}/{file}/{anim}/{palette}/{angle}
             RouteValueDictionary parms = context.Request.RequestContext.RouteData.Values;
             string parmWidth   = parms.ContainsKey("width")   ? (string)parms["width"]   : null;
             string parmHeight  = parms.ContainsKey("height")  ? (string)parms["height"]  : null;
@@ -117,32 +112,22 @@ namespace Meridian59.BgfService
             string parmAngle   = parms.ContainsKey("angle")   ? (string)parms["angle"]   : null;
             
             // -------------------------------------------------------
-            // verify minimum parameters exist
-            if (String.IsNullOrEmpty(parmFile))
+            // verify that minimum parameters are valid/in range and bgf exists
+            if (String.IsNullOrEmpty(parmFile)           ||
+                !UInt16.TryParse(parmWidth, out width)   || width  < MINWIDTH  || width  > MAXWIDTH  ||
+                !UInt16.TryParse(parmHeight, out height) || height < MINHEIGHT || height > MAXHEIGHT ||
+                !UInt16.TryParse(parmScale, out scale)   || scale  < MINSCALE  || scale  > MAXSCALE)
             {
-                context.Response.StatusCode = 404;
-                Finish();
+                Finish(404);
                 return;
             }
 
-            // convert to lowercase
-            parmFile = parmFile.ToLower();
-
-            // try to parse width, heigh tand scale integers
-            UInt16.TryParse(parmWidth, out width);
-            UInt16.TryParse(parmHeight, out height);
-            UInt16.TryParse(parmScale, out scale);
-
-            width = MathUtil.Bound(width, MINWIDTH, MAXWIDTH);
-            height = MathUtil.Bound(height, MINHEIGHT, MAXHEIGHT);
-            scale = MathUtil.Bound(scale, MINSCALE, MAXSCALE);
-
             // --------------------------------------------------
             // try to get the main BGF from cache or load from disk
+            parmFile = parmFile.ToLower();
             if (!BgfCache.GetBGF(parmFile, out entry))
             {
-                context.Response.StatusCode = 404;
-                Finish();
+                Finish(404);
                 return;
             }
 
@@ -150,11 +135,9 @@ namespace Meridian59.BgfService
             DateTime lastModified = entry.LastModified;
 
             // --------------------------------------------------
-            // try to parse other params
-
+            // try to parse palette, angle and animation
             byte paletteidx = 0;
             ushort angle = 0;
-
             Byte.TryParse(parmPalette, out paletteidx);
             UInt16.TryParse(parmAngle, out angle);
 
@@ -162,8 +145,7 @@ namespace Meridian59.BgfService
             // first is 0 (0units), maximum is 7 (3584units)
             if (angle > 7)
             {
-                context.Response.StatusCode = 404;
-                Finish();
+                Finish(404);
                 return;
             }
 
@@ -174,7 +156,7 @@ namespace Meridian59.BgfService
             Animation anim = Animation.ExtractAnimation(parmAnim, '-');
             if (anim == null || !anim.IsValid(entry.Bgf.FrameSets.Count))
             {
-                context.Response.StatusCode = 404;
+                Finish(404);
                 return;
             }
 
@@ -188,9 +170,8 @@ namespace Meridian59.BgfService
             gameObject.ViewerAngle = angle;
 
             // read suboverlay array params from query parameters:
-            //  object/..../?subov={file};{group};{palette};{hotspot}&subov=...
+            //  object/..../?subov={file};{anim};{palette};{hotspot}&subov=...
             string[] parmSubOverlays = context.Request.Params.GetValues("subov");
-
             if (parmSubOverlays != null)
             {
                 foreach (string s in parmSubOverlays)
@@ -198,13 +179,19 @@ namespace Meridian59.BgfService
                     string[] subOvParms = s.Split(';');
 
                     if (subOvParms == null || subOvParms.Length < 4)
-                        continue;
+                    {
+                        Finish(404);
+                        return;
+                    }
 
                     BgfCache.Entry bgfSubOv;
                     string subOvFile = subOvParms[0].ToLower();
 
                     if (!BgfCache.GetBGF(subOvFile, out bgfSubOv))
-                        continue;
+                    {
+                        Finish(404);
+                        return;
+                    }
 
                     byte subOvPalette;
                     byte subOvHotspot;
@@ -213,18 +200,16 @@ namespace Meridian59.BgfService
                         !byte.TryParse(subOvParms[2], out subOvPalette) ||
                         !byte.TryParse(subOvParms[3], out subOvHotspot))
                     {
-                        continue;
+                        Finish(404);
+                        return;
                     }
 
+                    // get suboverlay animation
                     Animation subOvAnim = Animation.ExtractAnimation(subOvParms[1], '-');
-
-                    if (subOvAnim == null)
-                        continue;
-
-                    if (subOvAnim.AnimationType == AnimationType.CYCLE)
+                    if (subOvAnim == null || !subOvAnim.IsValid(bgfSubOv.Bgf.FrameSets.Count))
                     {
-                        AnimationCycle cycl = (AnimationCycle)subOvAnim;
-                        cycl.GroupHigh = Math.Min(cycl.GroupHigh, (ushort)(bgfSubOv.Bgf.FrameSets.Count));
+                        Finish(404);
+                        return;
                     }
 
                     // create suboverlay
@@ -327,8 +312,11 @@ namespace Meridian59.BgfService
             }
         }
 
-        private void Finish()
+        private void Finish(int StatusCode = 200)
         {
+            // set statuscode
+            context.Response.StatusCode = StatusCode;
+
             // remember locally
             HttpContext con = this.context;
 
