@@ -77,12 +77,8 @@ namespace Meridian59.BgfService
         private readonly Gif.LZWEncoder encoder = new Gif.LZWEncoder();
         private readonly ObjectBase gameObject = new ObjectBase();
 
-        private ushort width;
-        private ushort height;
-        private ushort scale;
         private double tick;
         private double tickLastAdd;
-        private HttpContext context;
         private Gif.Frame frame;
 
         public RenderHttpHandler()
@@ -97,12 +93,6 @@ namespace Meridian59.BgfService
 
         public void ProcessRequest(HttpContext context)
         {
-            BgfCache.Entry entry;
-            this.context = context;
-
-            context.Response.Buffer = true;
-            context.Response.BufferOutput = true;
-
             // --------------------------------------------------------------------------------------------
             // 1) PARSE URL PARAMETERS
             // --------------------------------------------------------------------------------------------
@@ -118,35 +108,23 @@ namespace Meridian59.BgfService
             string parmPalette = parms.ContainsKey("palette") ? (string)parms["palette"] : null;
             string parmAngle   = parms.ContainsKey("angle")   ? (string)parms["angle"]   : null;
 
+            BgfCache.Entry entry;
+            byte paletteidx;
+            ushort angle;
+            ushort width;
+            ushort height;
+            ushort scale;
+
             // verify that minimum parameters are valid/in range and bgf exists
-            if (String.IsNullOrEmpty(parmFile)           ||
-                !UInt16.TryParse(parmWidth, out width)   || width  < MINWIDTH  || width  > MAXWIDTH  ||
-                !UInt16.TryParse(parmHeight, out height) || height < MINHEIGHT || height > MAXHEIGHT ||
-                !UInt16.TryParse(parmScale, out scale)   || scale  < MINSCALE  || scale  > MAXSCALE)
+            // angle ranges from [0-7] and are multiples of 512
+            if (!UInt16.TryParse(parmWidth, out width)      || width  < MINWIDTH  || width  > MAXWIDTH  ||
+                !UInt16.TryParse(parmHeight, out height)    || height < MINHEIGHT || height > MAXHEIGHT ||
+                !UInt16.TryParse(parmScale, out scale)      || scale  < MINSCALE  || scale  > MAXSCALE  ||
+                !Byte.TryParse(parmPalette, out paletteidx) ||
+                !UInt16.TryParse(parmAngle, out angle)      || angle > 7 ||
+                String.IsNullOrEmpty(parmFile)              || !BgfCache.GetBGF(parmFile, out entry))
             {
-                Finish(404);
-                return;
-            }
-
-            // try to get the main BGF from cache
-            parmFile = parmFile.ToLower();
-            if (!BgfCache.GetBGF(parmFile, out entry))
-            {
-                Finish(404);
-                return;
-            }
-
-            // try to parse palette, angle and animation
-            byte paletteidx = 0;
-            ushort angle = 0;
-            Byte.TryParse(parmPalette, out paletteidx);
-            UInt16.TryParse(parmAngle, out angle);
-
-            // angle is in multiples of 512
-            // first is 0 (0units), maximum is 7 (3584units)
-            if (angle > 7)
-            {
-                Finish(404);
+                Finish(context, 404);
                 return;
             }
 
@@ -157,7 +135,7 @@ namespace Meridian59.BgfService
             Animation anim = Animation.ExtractAnimation(parmAnim, '-');
             if (anim == null || !anim.IsValid(entry.Bgf.FrameSets.Count))
             {
-                Finish(404);
+                Finish(context, 404);
                 return;
             }
 
@@ -166,36 +144,25 @@ namespace Meridian59.BgfService
 
             // read suboverlay array params from query parameters:
             //  object/..../?subov={file};{anim};{palette};{hotspot}&subov=...
-            gameObject.SubOverlays.Clear();
             string[] parmSubOverlays = context.Request.Params.GetValues("subov");
             if (parmSubOverlays != null)
             {
                 foreach (string s in parmSubOverlays)
                 {
                     string[] subOvParms = s.Split(';');
-                    if (subOvParms == null || subOvParms.Length < 4)
-                    {
-                        Finish(404);
-                        return;
-                    }
 
                     BgfCache.Entry bgfSubOv;
-                    string subOvFile = subOvParms[0].ToLower();
-
-                    if (!BgfCache.GetBGF(subOvFile, out bgfSubOv))
-                    {
-                        Finish(404);
-                        return;
-                    }
-
                     byte subOvPalette;
                     byte subOvHotspot;
 
-                    if (String.IsNullOrEmpty(subOvParms[1]) ||
+                    if (subOvParms == null || subOvParms.Length < 4 ||
+                        String.IsNullOrEmpty(subOvParms[0]) || 
+                        String.IsNullOrEmpty(subOvParms[1]) ||
                         !byte.TryParse(subOvParms[2], out subOvPalette) ||
-                        !byte.TryParse(subOvParms[3], out subOvHotspot))
+                        !byte.TryParse(subOvParms[3], out subOvHotspot) ||
+                        !BgfCache.GetBGF(subOvParms[0], out bgfSubOv))
                     {
-                        Finish(404);
+                        Finish(context, 404);
                         return;
                     }
 
@@ -203,7 +170,7 @@ namespace Meridian59.BgfService
                     Animation subOvAnim = Animation.ExtractAnimation(subOvParms[1], '-');
                     if (subOvAnim == null || !subOvAnim.IsValid(bgfSubOv.Bgf.FrameSets.Count))
                     {
-                        Finish(404);
+                        Finish(context, 404);
                         return;
                     }
 
@@ -271,9 +238,16 @@ namespace Meridian59.BgfService
 
             // write the gif to output stream
             gif.Write(context.Response.OutputStream);
-            gif.Frames.Clear();
 
-            Finish();
+            // --------------------------------------------------------------------------------------------
+            // 4) CLEANUP / FINISH
+            // --------------------------------------------------------------------------------------------
+
+            // clean up reusable member instances
+            gif.Frames.Clear();
+            gameObject.SubOverlays.Clear();
+
+            Finish(context);
         }
 
         private void OnImageComposerNewImageAvailable(object sender, EventArgs e)
@@ -316,27 +290,17 @@ namespace Meridian59.BgfService
             }
         }
 
-        private void Finish(int StatusCode = 200)
+        private void Finish(HttpContext context, int StatusCode = 200)
         {
             // set statuscode
             context.Response.StatusCode = StatusCode;
 
-            // remember locally
-            HttpContext con = this.context;
-
-            // reset reference
-            this.context = null;
-
             // end response
-            try { con.ApplicationInstance.CompleteRequest(); }
+            try { context.ApplicationInstance.CompleteRequest(); }
             finally { }
 
             // reuse the handler
             RenderRouteHandler.Handlers.Enqueue(this);
-
-            // --------------------------------------------------
-            // background gc
-            //GC.Collect(GC.MaxGeneration, GCCollectionMode.Optimized, false);
         }
     }
 }

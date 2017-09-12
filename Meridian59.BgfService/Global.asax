@@ -33,8 +33,6 @@
         RenderRouteHandler routeRender = new RenderRouteHandler();
 
         RouteTable.Routes.Add(new Route("render/{width}/{height}/{scale}/{file}/{anim}/{palette}/{angle}", routeRender));
-        RouteTable.Routes.Add(new Route("render/{width}/{height}/{scale}/{file}/{anim}/{palette}", routeRender));
-        RouteTable.Routes.Add(new Route("render/{width}/{height}/{scale}/{file}/{anim}", routeRender));
     }
 
     void Application_End(object sender, EventArgs e)

@@ -54,7 +54,36 @@
 
     <hr />
     <h2>Animated Object</h2>
-    <h3>Query-URL: /render/{width}/{height}/{scale}/{file}/{anim}/{palette}/{angle}/?subov={file};{anim};{palette};{hotspot}&subov={file};{anim};{palette};{hotspot}&...</h3>
+    <h3>Query-URL</h3>
+    
+    <p>
+        <span>http://bgf.meridian59.de/render/{width}/{height}/{scale}/{file}/{anim}/{palette}/{angle}/?subov={file};{anim};{palette};{hotspot}&subov=...</span>
+    </p>
+
+    <table border="1">
+        <tbody>
+            <tr>
+                <td></td>
+                <td>{width}</td>
+                <td>{height}</td>
+                <td>{scale}</td>
+                <td>{file}</td>
+                <td>{anim}</td>
+                <td>{palette}</td>
+                <td>{angle}</td>
+            </tr>
+            <tr>
+                <td>Range/Syntax</td>
+                <td>16-256</td>
+                <td>16-256</td>
+                <td>1-80</td>
+                <td>filename</td>
+                <td>LO-HI-T</td>
+                <td>0-255</td>
+                <td>0-7</td>
+            </tr>
+        </tbody>
+    </table>
     <h3>Examples</h3>
     <table border="1">
         <tbody>
@@ -87,17 +116,17 @@
             </tr>
             <tr>
                 <td>MainOv</td>
-                <td>avsham A:2-6@300 P:0</td>
-                <td>skelbody A:2-7@100 P:69</td>
-                <td>orc A:2-6@100 P:0</td>
-                <td>minotaur A:1-32@100 P:0</td>
-                <td>troll A:1-7@200 P:0</td>
-                <td>rat A:7-11@150 P:0</td>
+                <td>avsham A:2-6-300 P:0</td>
+                <td>skelbody A:2-7-100 P:69</td>
+                <td>orc A:2-6-100 P:0</td>
+                <td>minotaur A:1-32-100 P:0</td>
+                <td>troll A:1-7-200 P:0</td>
+                <td>rat A:7-11-150 P:0</td>
             </tr>
             <tr>
                 <td>SubOvs</td>
                 <td></td>
-                <td>skelhed2 A:2-7@100 P:69 HS:1</td>
+                <td>skelhed2 A:2-7-100 P:69 HS:1</td>
                 <td></td>
                 <td></td>
                 <td></td>
