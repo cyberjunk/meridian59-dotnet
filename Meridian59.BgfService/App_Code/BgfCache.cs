@@ -39,7 +39,12 @@ namespace Meridian59.BgfService
 
                     Entry entry = new Entry();
                     entry.Bgf = bgf;
-                    entry.LastModified = File.GetLastWriteTimeUtc(s);
+
+                    // get filesystem lastwrite date
+                    DateTime fileDate = File.GetLastWriteTimeUtc(s);
+
+                    // store truncated to seconds
+                    entry.LastModified = fileDate.AddTicks(-(fileDate.Ticks % TimeSpan.TicksPerSecond));
 
                     // add to cache
                     cache.TryAdd(bgf.Filename, entry);

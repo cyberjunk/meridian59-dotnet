@@ -9,6 +9,7 @@ using Meridian59.Drawing2D;
 using Meridian59.Data.Models;
 using System.Collections.Concurrent;
 using JeremyAnsel.ColorQuant;
+using System.Globalization;
 
 namespace Meridian59.BgfService
 {
@@ -190,7 +191,37 @@ namespace Meridian59.BgfService
             }
 
             // --------------------------------------------------------------------------------------------
-            // 2) PREPARE RESPONSE
+            // 2) SET CACHE HEADERS AND COMPARE FOR 304 RETURN
+            // --------------------------------------------------------------------------------------------
+
+            // set cache behaviour
+            context.Response.Cache.SetCacheability(HttpCacheability.Public);
+            context.Response.Cache.VaryByParams["*"] = false;
+            context.Response.Cache.SetLastModified(lastModified);
+
+            // set return type
+            context.Response.ContentType = "image/gif";
+            context.Response.AddHeader("Content-Disposition", "inline; filename=object.gif");
+
+            // check if client has valid cached version (returns 304)
+            DateTime dateIfModifiedSince;
+            string modSince = context.Request.Headers["If-Modified-Since"];
+
+            // try to parse received client header
+            bool parseOk = DateTime.TryParse(
+                modSince, CultureInfo.CurrentCulture, 
+                DateTimeStyles.AdjustToUniversal, out dateIfModifiedSince);
+
+            // send 304 and stop if last file write equals client's cache timestamp
+            if (parseOk && dateIfModifiedSince == lastModified)
+            {
+                context.Response.SuppressContent = true;
+                Finish(context, 304);
+                return;
+            }
+
+            // --------------------------------------------------------------------------------------------
+            // 3) PREPARE RESPONSE
             // --------------------------------------------------------------------------------------------
 
             // set gif instance size
@@ -208,11 +239,6 @@ namespace Meridian59.BgfService
             imageComposer.Height = height;
             imageComposer.CustomShrink = (float)scale * 0.1f;
 
-            // reset
-            tick = 0.0;
-            tickLastAdd = 0.0;
-            frame = null;
-
             // set object (triggers first event!)
             imageComposer.DataSource = gameObject;
 
@@ -224,29 +250,13 @@ namespace Meridian59.BgfService
             }
 
             // --------------------------------------------------------------------------------------------
-            // 3) CREATE RESPONSE
+            // 4) CREATE RESPONSE AND FINISH
             // --------------------------------------------------------------------------------------------
-
-            // set cache behaviour
-            context.Response.Cache.SetCacheability(HttpCacheability.Public);
-            context.Response.Cache.VaryByParams["*"] = false;
-            context.Response.Cache.SetLastModified(lastModified);
-
-            // set the response type
-            context.Response.ContentType = "image/gif";
-            context.Response.AddHeader("Content-Disposition", "inline; filename=object.gif");
 
             // write the gif to output stream
             gif.Write(context.Response.OutputStream);
 
-            // --------------------------------------------------------------------------------------------
-            // 4) CLEANUP / FINISH
-            // --------------------------------------------------------------------------------------------
-
-            // clean up reusable member instances
-            gif.Frames.Clear();
-            gameObject.SubOverlays.Clear();
-
+            // cleanup
             Finish(context);
         }
 
@@ -292,6 +302,15 @@ namespace Meridian59.BgfService
 
         private void Finish(HttpContext context, int StatusCode = 200)
         {
+            // reset
+            tick = 0.0;
+            tickLastAdd = 0.0;
+            frame = null;
+
+            // clean up reusable member instances
+            gif.Frames.Clear();
+            gameObject.SubOverlays.Clear();
+
             // set statuscode
             context.Response.StatusCode = StatusCode;
 
