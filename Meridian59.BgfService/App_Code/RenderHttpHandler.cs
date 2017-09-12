@@ -145,7 +145,7 @@ namespace Meridian59.BgfService
 
             // read suboverlay array params from query parameters:
             //  object/..../?subov={file};{anim};{palette};{hotspot}&subov=...
-            string[] parmSubOverlays = context.Request.Params.GetValues("subov");
+            string[] parmSubOverlays = context.Request.Params.GetValues("s");
             if (parmSubOverlays != null)
             {
                 foreach (string s in parmSubOverlays)
@@ -204,7 +204,7 @@ namespace Meridian59.BgfService
             context.Response.AddHeader("Content-Disposition", "inline; filename=object.gif");
 
             // check if client has valid cached version (returns 304)
-            DateTime dateIfModifiedSince;
+            /*DateTime dateIfModifiedSince;
             string modSince = context.Request.Headers["If-Modified-Since"];
 
             // try to parse received client header
@@ -218,7 +218,7 @@ namespace Meridian59.BgfService
                 context.Response.SuppressContent = true;
                 Finish(context, 304);
                 return;
-            }
+            }*/
 
             // --------------------------------------------------------------------------------------------
             // 3) PREPARE RESPONSE
