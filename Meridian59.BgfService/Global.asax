@@ -28,7 +28,6 @@
         RouteTable.Routes.Add(new Route("object/{scale}/{file}/{group}/{palette}/{angle}", routeObject));
         RouteTable.Routes.Add(new Route("object/{scale}/{file}/{group}/{palette}", routeObject));
         RouteTable.Routes.Add(new Route("object/{scale}/{file}/{group}", routeObject));
-        RouteTable.Routes.Add(new Route("object/{scale}/{file}", routeObject));
 
         // ----------------------------------------------------------------
         RenderRouteHandler routeRender = new RenderRouteHandler();
@@ -36,7 +35,6 @@
         RouteTable.Routes.Add(new Route("render/{width}/{height}/{scale}/{file}/{anim}/{palette}/{angle}", routeRender));
         RouteTable.Routes.Add(new Route("render/{width}/{height}/{scale}/{file}/{anim}/{palette}", routeRender));
         RouteTable.Routes.Add(new Route("render/{width}/{height}/{scale}/{file}/{anim}", routeRender));
-        RouteTable.Routes.Add(new Route("render/{width}/{height}/{scale}/{file}", routeRender));
     }
 
     void Application_End(object sender, EventArgs e)

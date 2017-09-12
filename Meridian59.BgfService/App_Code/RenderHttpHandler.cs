@@ -75,6 +75,7 @@ namespace Meridian59.BgfService
         private readonly byte[] pixels = new byte[MAXWIDTH * MAXHEIGHT];
         private readonly Gif gif = new Gif(0, 0);
         private readonly Gif.LZWEncoder encoder = new Gif.LZWEncoder();
+        private readonly ObjectBase gameObject = new ObjectBase();
 
         private ushort width;
         private ushort height;
@@ -99,8 +100,14 @@ namespace Meridian59.BgfService
             BgfCache.Entry entry;
             this.context = context;
 
-            // -------------------------------------------------------       
-            // Read URL routed parameters (see Global.asax):
+            context.Response.Buffer = true;
+            context.Response.BufferOutput = true;
+
+            // --------------------------------------------------------------------------------------------
+            // 1) PARSE URL PARAMETERS
+            // --------------------------------------------------------------------------------------------
+
+            // See Global.asax:
             //  render/{width}/{height}/{scale}/{file}/{anim}/{palette}/{angle}
             RouteValueDictionary parms = context.Request.RequestContext.RouteData.Values;
             string parmWidth   = parms.ContainsKey("width")   ? (string)parms["width"]   : null;
@@ -110,8 +117,7 @@ namespace Meridian59.BgfService
             string parmAnim    = parms.ContainsKey("anim")    ? (string)parms["anim"]    : null;
             string parmPalette = parms.ContainsKey("palette") ? (string)parms["palette"] : null;
             string parmAngle   = parms.ContainsKey("angle")   ? (string)parms["angle"]   : null;
-            
-            // -------------------------------------------------------
+
             // verify that minimum parameters are valid/in range and bgf exists
             if (String.IsNullOrEmpty(parmFile)           ||
                 !UInt16.TryParse(parmWidth, out width)   || width  < MINWIDTH  || width  > MAXWIDTH  ||
@@ -122,8 +128,7 @@ namespace Meridian59.BgfService
                 return;
             }
 
-            // --------------------------------------------------
-            // try to get the main BGF from cache or load from disk
+            // try to get the main BGF from cache
             parmFile = parmFile.ToLower();
             if (!BgfCache.GetBGF(parmFile, out entry))
             {
@@ -131,10 +136,6 @@ namespace Meridian59.BgfService
                 return;
             }
 
-            // stores the latest lastmodified of main and all subov
-            DateTime lastModified = entry.LastModified;
-
-            // --------------------------------------------------
             // try to parse palette, angle and animation
             byte paletteidx = 0;
             ushort angle = 0;
@@ -160,24 +161,18 @@ namespace Meridian59.BgfService
                 return;
             }
 
-            // --------------------------------------------------
-            // create gameobject
-
-            ObjectBase gameObject = new ObjectBase();
-            gameObject.Resource = entry.Bgf;
-            gameObject.ColorTranslation = paletteidx;
-            gameObject.Animation = anim;
-            gameObject.ViewerAngle = angle;
+            // stores the latest lastmodified of main and all subov
+            DateTime lastModified = entry.LastModified;
 
             // read suboverlay array params from query parameters:
             //  object/..../?subov={file};{anim};{palette};{hotspot}&subov=...
+            gameObject.SubOverlays.Clear();
             string[] parmSubOverlays = context.Request.Params.GetValues("subov");
             if (parmSubOverlays != null)
             {
                 foreach (string s in parmSubOverlays)
                 {
                     string[] subOvParms = s.Split(';');
-
                     if (subOvParms == null || subOvParms.Length < 4)
                     {
                         Finish(404);
@@ -218,7 +213,6 @@ namespace Meridian59.BgfService
                     // set bgf resource
                     subOv.Resource = bgfSubOv.Bgf;
 
-                    
                     // update lastModified if subov is newer
                     if (bgfSubOv.LastModified > lastModified)
                         lastModified = bgfSubOv.LastModified;
@@ -228,13 +222,19 @@ namespace Meridian59.BgfService
                 }
             }
 
-            // tick to do some calcs on the object
-            gameObject.Tick(0, 1);
+            // --------------------------------------------------------------------------------------------
+            // 2) PREPARE RESPONSE
+            // --------------------------------------------------------------------------------------------
 
-            // --------------------------------------------------
             // set gif instance size
             gif.CanvasWidth = width;
             gif.CanvasHeight = height;
+
+            // set parsed/created values on game-object
+            gameObject.Resource = entry.Bgf;
+            gameObject.ColorTranslation = paletteidx;
+            gameObject.Animation = anim;
+            gameObject.ViewerAngle = angle;
 
             // set imagecomposer size and shrink
             imageComposer.Width = width;
@@ -249,23 +249,27 @@ namespace Meridian59.BgfService
             // set object (triggers first event!)
             imageComposer.DataSource = gameObject;
 
-            // --------------------------------------------------
             // run animationlength in 1 ms steps (causes new image events)
-            for (int i = 0; i < gameObject.AnimationLength + 1; i++)
+            for (int i = 0; i < gameObject.AnimationLength + 10; i++)
             {
                 tick += 1.0;
                 gameObject.Tick(tick, 1.0);
             }
-            // -------------------------------------------------------
+
+            // --------------------------------------------------------------------------------------------
+            // 3) CREATE RESPONSE
+            // --------------------------------------------------------------------------------------------
+
             // set cache behaviour
             context.Response.Cache.SetCacheability(HttpCacheability.Public);
             context.Response.Cache.VaryByParams["*"] = false;
             context.Response.Cache.SetLastModified(lastModified);
-            // --------------------------------------------------
-            // write the response (encode to gif)
+
+            // set the response type
             context.Response.ContentType = "image/gif";
             context.Response.AddHeader("Content-Disposition", "inline; filename=object.gif");
 
+            // write the gif to output stream
             gif.Write(context.Response.OutputStream);
             gif.Frames.Clear();
 

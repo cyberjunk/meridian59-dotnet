@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Web;
 using System.IO;
 using Meridian59.Files.BGF;
+using System.Runtime;
 
 namespace Meridian59.BgfService
 {
@@ -45,6 +46,10 @@ namespace Meridian59.BgfService
                 }
                 catch (Exception) { }
             }
+
+            // compact large object heap next run
+            GCSettings.LargeObjectHeapCompactionMode =
+                GCLargeObjectHeapCompactionMode.CompactOnce;
 
             // execute maximum GC run
             GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced);
