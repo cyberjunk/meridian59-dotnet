@@ -304,6 +304,14 @@ namespace Meridian59.Data.Models
                 lastAnimationTick = Tick;
             }
         }
+
+        public override bool IsValid(int NumGroupsInBgf)
+        {
+            return
+                GroupLow > 0 && GroupLow <= NumGroupsInBgf &&
+                GroupHigh > 0 && GroupHigh <= NumGroupsInBgf;
+        }
+
         #endregion
     }
 }

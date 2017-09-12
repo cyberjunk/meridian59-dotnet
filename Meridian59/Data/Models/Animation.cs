@@ -104,6 +104,14 @@ namespace Meridian59.Data.Models
             get;
         }
 
+        /// <summary>
+        /// True if Group values set on in this instance
+        /// are valid for Num of Groups in Bgf (e.g. in range)
+        /// </summary>
+        /// <param name="GroupsInBgf"></param>
+        /// <returns></returns>
+        public abstract bool IsValid(int GroupsInBgf);
+
         #endregion
 
         #region Methods

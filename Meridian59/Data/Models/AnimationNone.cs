@@ -181,7 +181,12 @@ namespace Meridian59.Data.Models
                 group = 1;              
             }
         }
-        
+
         #endregion
+
+        public override bool IsValid(int NumGroupsInBgf)
+        {
+            return Group > 0 && Group <= NumGroupsInBgf;
+        }
     }
 }
