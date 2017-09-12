@@ -33,9 +33,9 @@
         // ----------------------------------------------------------------
         RenderRouteHandler routeRender = new RenderRouteHandler();
 
-        RouteTable.Routes.Add(new Route("render/{width}/{height}/{scale}/{file}/{group}/{palette}/{angle}", routeRender));
-        RouteTable.Routes.Add(new Route("render/{width}/{height}/{scale}/{file}/{group}/{palette}", routeRender));
-        RouteTable.Routes.Add(new Route("render/{width}/{height}/{scale}/{file}/{group}", routeRender));
+        RouteTable.Routes.Add(new Route("render/{width}/{height}/{scale}/{file}/{anim}/{palette}/{angle}", routeRender));
+        RouteTable.Routes.Add(new Route("render/{width}/{height}/{scale}/{file}/{anim}/{palette}", routeRender));
+        RouteTable.Routes.Add(new Route("render/{width}/{height}/{scale}/{file}/{anim}", routeRender));
         RouteTable.Routes.Add(new Route("render/{width}/{height}/{scale}/{file}", routeRender));
     }
 

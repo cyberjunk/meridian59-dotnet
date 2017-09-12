@@ -19,6 +19,7 @@ namespace Meridian59.BgfService
         public void ProcessRequest(HttpContext context)
         {
             context.Response.StatusCode = 503;
+            context.Response.Headers.Add("Retry-After", "30");
         }
     }
 }

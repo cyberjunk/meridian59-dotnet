@@ -4,15 +4,16 @@ using System.Web;
 using System.Web.Routing;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Threading;
 using Meridian59.Files.BGF;
 using System.IO;
-
 using Meridian59.Common.Constants;
 using Meridian59.Common;
 using Meridian59.Drawing2D;
 using Meridian59.Data.Models;
 using System.Collections.Concurrent;
 using Meridian59.Common.Enums;
+using JeremyAnsel.ColorQuant;
 
 namespace Meridian59.BgfService
 {
@@ -21,8 +22,10 @@ namespace Meridian59.BgfService
     /// </summary>
     public class RenderRouteHandler : IRouteHandler
     {
-        public const int NUMHANDLERS = 6;
-
+        public const int NUMHANDLERS = 4;
+        public const int NUMATTEMPTS = 40;
+        public const int NUMDELAY = 250;
+        
         public static readonly ConcurrentQueue<RenderHttpHandler> Handlers =
             new ConcurrentQueue<RenderHttpHandler>();
 
@@ -46,30 +49,36 @@ namespace Meridian59.BgfService
         {
             RenderHttpHandler handler;
 
-            if (Handlers.TryDequeue(out handler))
-                return handler;
+            for(int i = 0; i < NUMATTEMPTS; i++)
+            {
+                if (Handlers.TryDequeue(out handler))
+                    return handler;
 
-            else
-                return new BusyErrorHttpHandler();
+                else
+                    Thread.Sleep(NUMDELAY);
+            }
+
+            return new BusyErrorHttpHandler();
         }
     }
 
+    /// <summary>
+    /// Creates animated GIF from Meridian 59 object
+    /// </summary>
     public class RenderHttpHandler : IHttpHandler
     {
         private const ushort MINWIDTH = 16;
-        private const ushort MAXWIDTH = 512;
+        private const ushort MAXWIDTH = 256;
         private const ushort MINHEIGHT = 16;
-        private const ushort MAXHEIGHT = 512;
-        private const ushort MINSCALE = 10;
+        private const ushort MAXHEIGHT = 256;
+        private const ushort MINSCALE = 1;
         private const ushort MAXSCALE = 80;
 
         private readonly ImageComposerGDI<ObjectBase> imageComposer = new ImageComposerGDI<ObjectBase>();
-        private readonly JeremyAnsel.ColorQuant.WuAlphaColorQuantizer quant = new JeremyAnsel.ColorQuant.WuAlphaColorQuantizer();
+        private readonly WuAlphaColorQuantizer quant = new WuAlphaColorQuantizer();
         private readonly byte[] pixels = new byte[MAXWIDTH * MAXHEIGHT];
         private readonly Gif gif = new Gif(0, 0);
         private readonly Gif.LZWEncoder encoder = new Gif.LZWEncoder();
-
-        private Gif.Frame frame;
 
         private ushort width;
         private ushort height;
@@ -77,16 +86,15 @@ namespace Meridian59.BgfService
         private double tick;
         private double tickLastAdd;
         private HttpContext context;
+        private Gif.Frame frame;
 
         public RenderHttpHandler()
         {
             imageComposer.CenterHorizontal = true;
-            imageComposer.ApplyYOffset = true;
             //imageComposer.CenterVertical = true;
+            imageComposer.ApplyYOffset = true;
             imageComposer.Quality = 16.0f;
             imageComposer.IsCustomShrink = true;
-
-            // create imagecomposer to render objects
             imageComposer.NewImageAvailable += OnImageComposerNewImageAvailable;
         }
 
@@ -100,18 +108,16 @@ namespace Meridian59.BgfService
             //  render/{width}/{height}/{scale}/{file}/{group}/{palette}/{angle}
 
             RouteValueDictionary parms = context.Request.RequestContext.RouteData.Values;
-
-            string parmWidth = parms.ContainsKey("width") ? (string)parms["width"] : null;
-            string parmHeight = parms.ContainsKey("height") ? (string)parms["height"] : null;
-            string parmScale = parms.ContainsKey("scale") ? (string)parms["scale"] : null;
-            string parmFile = parms.ContainsKey("file") ? (string)parms["file"] : null;
-            string parmGroup = parms.ContainsKey("group") ? (string)parms["group"] : null;
+            string parmWidth   = parms.ContainsKey("width")   ? (string)parms["width"]   : null;
+            string parmHeight  = parms.ContainsKey("height")  ? (string)parms["height"]  : null;
+            string parmScale   = parms.ContainsKey("scale")   ? (string)parms["scale"]   : null;
+            string parmFile    = parms.ContainsKey("file")    ? (string)parms["file"]    : null;
+            string parmAnim    = parms.ContainsKey("anim")    ? (string)parms["anim"]    : null;
             string parmPalette = parms.ContainsKey("palette") ? (string)parms["palette"] : null;
-            string parmAngle = parms.ContainsKey("angle") ? (string)parms["angle"] : null;
+            string parmAngle   = parms.ContainsKey("angle")   ? (string)parms["angle"]   : null;
             
             // -------------------------------------------------------
             // verify minimum parameters exist
-
             if (String.IsNullOrEmpty(parmFile))
             {
                 context.Response.StatusCode = 404;
@@ -122,6 +128,7 @@ namespace Meridian59.BgfService
             // convert to lowercase
             parmFile = parmFile.ToLower();
 
+            // try to parse width, heigh tand scale integers
             UInt16.TryParse(parmWidth, out width);
             UInt16.TryParse(parmHeight, out height);
             UInt16.TryParse(parmScale, out scale);
@@ -155,7 +162,7 @@ namespace Meridian59.BgfService
             angle %= GeometryConstants.MAXANGLE;
 
             // parse animation
-            Animation anim = Animation.ExtractAnimation(parmGroup, '-');
+            Animation anim = Animation.ExtractAnimation(parmAnim, '-');
             if (anim == null)
             {
                 context.Response.StatusCode = 404;
@@ -271,12 +278,9 @@ namespace Meridian59.BgfService
             // write the response (encode to gif)
             context.Response.ContentType = "image/gif";
             context.Response.AddHeader("Content-Disposition", "inline; filename=object.gif");
+
             gif.Write(context.Response.OutputStream);
             gif.Frames.Clear();
-
-            // --------------------------------------------------
-            // background gc
-            GC.Collect(GC.MaxGeneration, GCCollectionMode.Optimized, false);
 
             Finish();
         }
@@ -335,6 +339,10 @@ namespace Meridian59.BgfService
 
             // reuse the handler
             RenderRouteHandler.Handlers.Enqueue(this);
+
+            // --------------------------------------------------
+            // background gc
+            //GC.Collect(GC.MaxGeneration, GCCollectionMode.Optimized, false);
         }
     }
 }
