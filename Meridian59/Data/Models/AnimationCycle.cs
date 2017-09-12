@@ -308,6 +308,7 @@ namespace Meridian59.Data.Models
         public override bool IsValid(int NumGroupsInBgf)
         {
             return
+                Period > 0 &&
                 GroupLow > 0 && GroupLow <= NumGroupsInBgf &&
                 GroupHigh > 0 && GroupHigh <= NumGroupsInBgf;
         }
