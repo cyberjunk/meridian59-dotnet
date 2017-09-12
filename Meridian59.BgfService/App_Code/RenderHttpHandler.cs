@@ -158,22 +158,24 @@ namespace Meridian59.BgfService
             Byte.TryParse(parmPalette, out paletteidx);
             UInt16.TryParse(parmAngle, out angle);
 
-            // remove full periods from angle
-            angle %= GeometryConstants.MAXANGLE;
-
-            // parse animation
-            Animation anim = Animation.ExtractAnimation(parmAnim, '-');
-            if (anim == null)
+            // angle is in multiples of 512
+            // first is 0 (0units), maximum is 7 (3584units)
+            if (angle > 7)
             {
                 context.Response.StatusCode = 404;
                 Finish();
                 return;
             }
 
-            if (anim.AnimationType == AnimationType.CYCLE)
+            // multiply by 512 and remove full periods from angle
+            angle = (ushort)((angle << 9) % GeometryConstants.MAXANGLE);
+
+            // parse animation
+            Animation anim = Animation.ExtractAnimation(parmAnim, '-');
+            if (anim == null || !anim.IsValid(entry.Bgf.FrameSets.Count))
             {
-                AnimationCycle cycl = (AnimationCycle)anim;
-                cycl.GroupHigh = Math.Min(cycl.GroupHigh, (ushort)(entry.Bgf.FrameSets.Count));
+                context.Response.StatusCode = 404;
+                return;
             }
 
             // --------------------------------------------------
@@ -215,7 +217,7 @@ namespace Meridian59.BgfService
                     }
 
                     Animation subOvAnim = Animation.ExtractAnimation(subOvParms[1], '-');
-                    
+
                     if (subOvAnim == null)
                         continue;
 

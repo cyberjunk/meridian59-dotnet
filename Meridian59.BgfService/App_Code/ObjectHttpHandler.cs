@@ -11,6 +11,7 @@ using Meridian59.Common.Constants;
 using Meridian59.Common;
 using Meridian59.Drawing2D;
 using Meridian59.Data.Models;
+using Meridian59.Common.Enums;
 
 namespace Meridian59.BgfService
 {
@@ -98,12 +99,20 @@ namespace Meridian59.BgfService
             Byte.TryParse(parmPalette, out paletteidx);
             UInt16.TryParse(parmAngle, out angle);
 
-            // remove full periods from angle
-            angle %= GeometryConstants.MAXANGLE;
+            // angle is in multiples of 512
+            // first is 0 (0units), maximum is 7 (3584units)
+            if (angle > 7)
+            {
+                context.Response.StatusCode = 404;
+                return;
+            }
+
+            // multiply by 512 and remove full periods from angle
+            angle = (ushort)((angle << 9) % GeometryConstants.MAXANGLE);
 
             // parse animation
             Animation anim = Animation.ExtractAnimation(parmGroup, '-');
-            if (anim == null)
+            if (anim == null || !anim.IsValid(entry.Bgf.FrameSets.Count))
             {
                 context.Response.StatusCode = 404;
                 return;
