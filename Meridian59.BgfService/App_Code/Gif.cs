@@ -849,7 +849,7 @@ public class Gif
         private const int EOFCODE = CLEARCODE + 1;
         private const int HSHIFT = 4;
 
-        private static readonly int[] masks =
+        private static readonly int[] MASKS =
         {
             0x0000, 0x0001, 0x0003, 0x0007, 0x000F,
             0x001F, 0x003F, 0x007F, 0x00FF, 0x01FF,
@@ -857,21 +857,20 @@ public class Gif
             0x7FFF, 0xFFFF
         };
 
-        private int remaining;
+        private static int MaxCode(int n_bits) { return (1 << n_bits) - 1; }
+
+        private readonly int[] htab = new int[HSIZE];
+        private readonly int[] codetab = new int[HSIZE];
+        private readonly byte[] accum = new byte[256];
+
         private int curPixel;
         private int n_bits;    // number of bits/code
         private int maxcode;   // maximum code, given n_bits
         private int free_ent;  // first unused entry
         private bool clear_flg;
-        private int g_init_bits;
         private int cur_accum;
         private int cur_bits;
         private int a_count;
-        private readonly int[] htab = new int[HSIZE];
-        private readonly int[] codetab = new int[HSIZE];
-        private readonly byte[] accum = new byte[256];
-
-        private static int MaxCode(int n_bits) { return (1 << n_bits) - 1; }
 
         public LZWEncoder()
         {
@@ -880,25 +879,82 @@ public class Gif
         public void Encode(byte[] pixels, List<byte[]> chunks, int imgW, int imgH)
         {
             // save/reset some values
-            remaining = imgW * imgH;
             curPixel = 0;
             cur_bits = 0;
             cur_accum = 0;
 
-            // Set up the globals:  g_init_bits - initial number of bits
-            g_init_bits = COLORDEPTH + 1;
-
             // Set up the necessary values
             clear_flg = false;
-            n_bits = g_init_bits;
+            n_bits = COLORDEPTH + 1;
             maxcode = MaxCode(n_bits);
             free_ent = CLEARCODE + 2;
 
             // clear packet
             a_count = 0;
 
-            // compress and write the pixel data
-            Compress(pixels, chunks);
+            //////////////////////////////////
+
+            int fcode;
+            int i;
+            int c;
+            int ent;
+            int disp;
+
+            ent = NextPixel(pixels);
+            ResetCodeTable();
+            Output(CLEARCODE, chunks);
+
+           outer_loop:
+            while ((c = NextPixel(pixels)) != EOF)
+            {
+                fcode = (c << MAXBITS) + ent;
+
+                // xor hashing
+                i = (c << HSHIFT) ^ ent;
+
+                if (htab[i] == fcode)
+                {
+                    ent = codetab[i];
+                    continue;
+                }
+                else if (htab[i] >= 0) // non-empty slot
+                {
+                    // secondary hash (after G. Knott)
+                    disp = HSIZE - i;
+
+                    if (i == 0)
+                        disp = 1;
+
+                    do
+                    {
+                        if ((i -= disp) < 0)
+                            i += HSIZE;
+
+                        if (htab[i] == fcode)
+                        {
+                            ent = codetab[i];
+                            goto outer_loop;
+                        }
+                    }
+                    while (htab[i] >= 0);
+                }
+
+                Output(ent, chunks);
+                ent = c;
+
+                if (free_ent < MAXMAXCODE)
+                {
+                    // code -> hashtable
+                    codetab[i] = free_ent++;
+                    htab[i] = fcode;
+                }
+                else
+                    ClearTable(chunks);
+            }
+
+            // Put out the final code.
+            Output(ent, chunks);
+            Output(EOFCODE, chunks);
         }
 
         private void Add(byte c, List<byte[]> chunks)
@@ -926,74 +982,6 @@ public class Gif
                 htab[i] = -1;
         }
 
-        private void Compress(byte[] pixels, List<byte[]> chunks)
-        {
-            int fcode;
-            int i;
-            int c;
-            int ent;
-            int disp;
-
-            ent = NextPixel(pixels);
-
-            // clear hash table
-            ResetCodeTable();
-
-            Output(CLEARCODE, chunks);
-
-          outer_loop:
-            while ((c = NextPixel(pixels)) != EOF)
-            {
-                fcode = (c << MAXBITS) + ent;
-
-                // xor hashing
-                i = (c << HSHIFT) ^ ent;
-
-                if (htab[i] == fcode)
-                {
-                    ent = codetab[i];
-                    continue;
-                }
-                else if (htab[i] >= 0) // non-empty slot
-                {
-                    // secondary hash (after G. Knott)
-                    disp = HSIZE - i; 
-
-                    if (i == 0)
-                        disp = 1;
-
-                    do
-                    {
-                        if ((i -= disp) < 0)
-                            i += HSIZE;
-
-                        if (htab[i] == fcode)
-                        {
-                            ent = codetab[i];
-                            goto outer_loop;
-                        }
-                    }
-                    while (htab[i] >= 0);
-                }
-
-                Output(ent, chunks);
-                ent = c;
-
-                if (free_ent < MAXMAXCODE)
-                {
-                    // code -> hashtable
-                    codetab[i] = free_ent++; 
-                    htab[i] = fcode;
-                }
-                else
-                    ClearTable(chunks);
-            }
-
-            // Put out the final code.
-            Output(ent, chunks);
-            Output(EOFCODE, chunks);
-        }
-
         private void Flush(List<byte[]> Chunks)
         {
             if (a_count > 0)
@@ -1001,27 +989,24 @@ public class Gif
                 byte[] chunk = new byte[a_count];
                 Array.Copy(accum, chunk, a_count);
                 Chunks.Add(chunk);
-
                 a_count = 0;
             }
         }
 
         private int NextPixel(byte[] pixAry)
         {
-            if (remaining == 0)
+            if (curPixel >= pixAry.Length)
                 return EOF;
 
-            --remaining;
+            byte pixel = pixAry[curPixel];
+            curPixel++;
 
-            if (curPixel + 1 < pixAry.GetUpperBound(0))
-                return pixAry[curPixel++];
-
-            return 0xff;
+            return pixel;
         }
 
         private void Output(int code, List<byte[]> chunks)
         {
-            cur_accum &= masks[cur_bits];
+            cur_accum &= MASKS[cur_bits];
 
             if (cur_bits > 0)
                 cur_accum |= (code << cur_bits);
@@ -1043,7 +1028,7 @@ public class Gif
             {
                 if (clear_flg)
                 {
-                    maxcode = MaxCode(n_bits = g_init_bits);
+                    maxcode = MaxCode(n_bits = COLORDEPTH + 1);
                     clear_flg = false;
                 }
                 else
