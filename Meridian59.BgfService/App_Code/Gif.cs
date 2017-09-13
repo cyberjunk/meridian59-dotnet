@@ -403,7 +403,7 @@ public class Gif
             this.Height = (ushort)Height;
 
             // encode pixels using argument encoder instance
-            Encoder.Encode(Pixels, 8, Chunks, Width, Height);
+            Encoder.Encode(Pixels, Chunks, Width, Height);
             MinLZWCodeSize = 8;
 
             // determine size of colortable to use
@@ -844,6 +844,10 @@ public class Gif
         private const int EOF = -1;
         private const int MAXBITS = BITS;         // user settable max # bits/code
         private const int MAXMAXCODE = 1 << BITS; // should NEVER generate this code
+        private const int COLORDEPTH = 8;
+        private const int CLEARCODE = 1 << COLORDEPTH;
+        private const int EOFCODE = CLEARCODE + 1;
+        private const int HSHIFT = 4;
 
         private static readonly int[] masks =
         {
@@ -855,16 +859,13 @@ public class Gif
 
         private int remaining;
         private int curPixel;
-        private int n_bits;                 // number of bits/code
-        private int maxcode;                // maximum code, given n_bits
-        private int hsize = HSIZE; // for dynamic table sizing
-        private int free_ent = 0;  // first unused entry
-        private bool clear_flg = false;
+        private int n_bits;    // number of bits/code
+        private int maxcode;   // maximum code, given n_bits
+        private int free_ent;  // first unused entry
+        private bool clear_flg;
         private int g_init_bits;
-        private int ClearCode;
-        private int EOFCode;
-        private int cur_accum = 0;
-        private int cur_bits = 0;
+        private int cur_accum;
+        private int cur_bits;
         private int a_count;
         private readonly int[] htab = new int[HSIZE];
         private readonly int[] codetab = new int[HSIZE];
@@ -876,7 +877,7 @@ public class Gif
         {
         }
 
-        public void Encode(byte[] pixels, int color_depth, List<byte[]> chunks, int imgW, int imgH)
+        public void Encode(byte[] pixels, List<byte[]> chunks, int imgW, int imgH)
         {
             // save/reset some values
             remaining = imgW * imgH;
@@ -884,73 +885,69 @@ public class Gif
             cur_bits = 0;
             cur_accum = 0;
 
-            // compress and write the pixel data
-            Compress(color_depth + 1, pixels, chunks);
-        }
-
-        private void Add(byte c, List<byte[]> chunks)
-        {
-            accum[a_count++] = c;
-            if (a_count >= 254)
-                Flush(chunks);
-        }
-
-        private void ClearTable(List<byte[]> chunks)
-        {
-            ResetCodeTable(hsize);
-            free_ent = ClearCode + 2;
-            clear_flg = true;
-            Output(ClearCode, chunks);
-        }
-
-        private void ResetCodeTable(int hsize)
-        {
-            for (int i = 0; i < hsize; ++i)
-                htab[i] = -1;
-        }
-
-        private void Compress(int init_bits, byte[] pixels, List<byte[]> chunks)
-        {
-            int fcode;
-            int i /* = 0 */;
-            int c;
-            int ent;
-            int disp;
-            int hsize_reg;
-            int hshift;
-
             // Set up the globals:  g_init_bits - initial number of bits
-            g_init_bits = init_bits;
+            g_init_bits = COLORDEPTH + 1;
 
             // Set up the necessary values
             clear_flg = false;
             n_bits = g_init_bits;
             maxcode = MaxCode(n_bits);
-
-            ClearCode = 1 << (init_bits - 1);
-            EOFCode = ClearCode + 1;
-            free_ent = ClearCode + 2;
+            free_ent = CLEARCODE + 2;
 
             // clear packet
             a_count = 0;
 
+            // compress and write the pixel data
+            Compress(pixels, chunks);
+        }
+
+        private void Add(byte c, List<byte[]> chunks)
+        {
+            accum[a_count++] = c;
+
+            // buffer full, flush it
+            if (a_count >= 255)
+                Flush(chunks);
+        }
+
+        private void ClearTable(List<byte[]> chunks)
+        {
+            ResetCodeTable();
+
+            free_ent = CLEARCODE + 2;
+            clear_flg = true;
+
+            Output(CLEARCODE, chunks);
+        }
+
+        private void ResetCodeTable()
+        {
+            for (int i = 0; i < HSIZE; ++i)
+                htab[i] = -1;
+        }
+
+        private void Compress(byte[] pixels, List<byte[]> chunks)
+        {
+            int fcode;
+            int i;
+            int c;
+            int ent;
+            int disp;
+
             ent = NextPixel(pixels);
 
-            hshift = 0;
-            for (fcode = hsize; fcode < 65536; fcode *= 2)
-                ++hshift;
-            hshift = 8 - hshift; // set hash code range bound
+            // clear hash table
+            ResetCodeTable();
 
-            hsize_reg = hsize;
-            ResetCodeTable(hsize_reg); // clear hash table
-
-            Output(ClearCode, chunks);
+            Output(CLEARCODE, chunks);
 
           outer_loop:
             while ((c = NextPixel(pixels)) != EOF)
             {
                 fcode = (c << MAXBITS) + ent;
-                i = (c << hshift) ^ ent; // xor hashing
+
+                // xor hashing
+                i = (c << HSHIFT) ^ ent;
 
                 if (htab[i] == fcode)
                 {
@@ -960,7 +957,7 @@ public class Gif
                 else if (htab[i] >= 0) // non-empty slot
                 {
                     // secondary hash (after G. Knott)
-                    disp = hsize_reg - i; 
+                    disp = HSIZE - i; 
 
                     if (i == 0)
                         disp = 1;
@@ -968,7 +965,7 @@ public class Gif
                     do
                     {
                         if ((i -= disp) < 0)
-                            i += hsize_reg;
+                            i += HSIZE;
 
                         if (htab[i] == fcode)
                         {
@@ -994,7 +991,7 @@ public class Gif
 
             // Put out the final code.
             Output(ent, chunks);
-            Output(EOFCode, chunks);
+            Output(EOFCODE, chunks);
         }
 
         private void Flush(List<byte[]> Chunks)
@@ -1016,13 +1013,9 @@ public class Gif
 
             --remaining;
 
-            int temp = curPixel + 1;
-            if (temp < pixAry.GetUpperBound(0))
-            {
-                byte pix = pixAry[curPixel++];
+            if (curPixel + 1 < pixAry.GetUpperBound(0))
+                return pixAry[curPixel++];
 
-                return pix & 0xff;
-            }
             return 0xff;
         }
 
@@ -1063,7 +1056,7 @@ public class Gif
                 }
             }
 
-            if (code == EOFCode)
+            if (code == EOFCODE)
             {
                 // At EOF, write the rest of the buffer.
                 while (cur_bits > 0)
