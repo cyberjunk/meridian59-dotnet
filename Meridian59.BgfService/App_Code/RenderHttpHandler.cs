@@ -90,6 +90,9 @@ namespace Meridian59.BgfService
             imageComposer.Quality = 16.0f;
             imageComposer.IsCustomShrink = true;
             imageComposer.NewImageAvailable += OnImageComposerNewImageAvailable;
+
+            // set object
+            imageComposer.DataSource = gameObject;
         }
 
         public void ProcessRequest(HttpContext context)
@@ -238,9 +241,6 @@ namespace Meridian59.BgfService
             imageComposer.Width = width;
             imageComposer.Height = height;
             imageComposer.CustomShrink = (float)scale * 0.1f;
-
-            // set object (triggers first event!)
-            imageComposer.DataSource = gameObject;
 
             // run animationlength in 1 ms steps (causes new image events)
             for (int i = 0; i < gameObject.AnimationLength + 10; i++)

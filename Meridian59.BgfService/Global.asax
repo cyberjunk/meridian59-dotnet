@@ -21,19 +21,22 @@
         RenderRouteHandler routeRender = new RenderRouteHandler();
 
         // create routes
-        // ----------------------------------------------------------------
-        RouteTable.Routes.Add(new Route("list", routeList));
-        // ----------------------------------------------------------------
-        RouteTable.Routes.Add(new Route("file/{file}/{req}/{parm1}/{parm2}/{parm3}", routeFile));
-        RouteTable.Routes.Add(new Route("file/{file}/{req}/{parm1}/{parm2}", routeFile));
-        RouteTable.Routes.Add(new Route("file/{file}/{req}/{parm1}", routeFile));
-        RouteTable.Routes.Add(new Route("file/{file}/{req}", routeFile));
-        // ----------------------------------------------------------------
-        RouteTable.Routes.Add(new Route("object/{scale}/{file}/{group}/{palette}/{angle}", routeObject));
-        RouteTable.Routes.Add(new Route("object/{scale}/{file}/{group}/{palette}", routeObject));
-        RouteTable.Routes.Add(new Route("object/{scale}/{file}/{group}", routeObject));
-        // ----------------------------------------------------------------
-        RouteTable.Routes.Add(new Route("render/{width}/{height}/{scale}/{file}/{anim}/{palette}/{angle}", routeRender));
+        Route rList = new Route("list", routeList);
+        Route rFile1 = new Route("file/{file}/{req}/{parm1}/{parm2}/{parm3}", routeFile);
+        Route rFile2 = new Route("file/{file}/{req}/{parm1}/{parm2}", routeFile);
+        Route rFile3 = new Route("file/{file}/{req}/{parm1}", routeFile);
+        Route rFile4 = new Route("file/{file}/{req}", routeFile);
+        Route rObject = new Route("object/{scale}/{file}/{group}/{palette}/{angle}", routeObject);
+        Route rRender = new Route("render/{width}/{height}/{scale}/{file}/{anim}/{palette}/{angle}", routeRender);
+
+        // add routes
+        RouteTable.Routes.Add(rList);
+        RouteTable.Routes.Add(rFile1);
+        RouteTable.Routes.Add(rFile2);
+        RouteTable.Routes.Add(rFile3);
+        RouteTable.Routes.Add(rFile4);
+        RouteTable.Routes.Add(rObject);
+        RouteTable.Routes.Add(rRender);
     }
 
     void Application_End(object sender, EventArgs e)
