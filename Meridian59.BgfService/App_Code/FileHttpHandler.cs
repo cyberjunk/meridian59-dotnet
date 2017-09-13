@@ -5,8 +5,6 @@ using System.Web.Routing;
 using System.Drawing;
 using System.Drawing.Imaging;
 using Meridian59.Files.BGF;
-using System.IO;
-using System.Collections.Generic;
 
 namespace Meridian59.BgfService
 {
@@ -37,6 +35,7 @@ namespace Meridian59.BgfService
         /// <param name="context"></param>
         public void ProcessRequest(HttpContext context)
         {
+            HttpResponse response = context.Response;
             // --------------------------------------------------------------------------------------------
             // 1) PARSE URL PARAMETERS
             // --------------------------------------------------------------------------------------------
@@ -64,35 +63,27 @@ namespace Meridian59.BgfService
             context.Response.Cache.VaryByParams["*"] = false;
             context.Response.Cache.SetLastModified(entry.LastModified);
 
+            // --------------------------------------------------------------------------------------------
             // FRAME IMAGE
+            // --------------------------------------------------------------------------------------------
             if (parmReq == "frame")
             {
-                if (parm1 != null)
-                    parm1 = parm1.ToLower();
-
-                // invalid format
-                if (parm1 != "png" && parm1 != "bmp" && parm1 != "bin")
-                {
-                    context.Response.StatusCode = 404;
-                    return;
-                }
-                ushort index = 0;
+                ushort index;
                 byte palette = 0;
-                UInt16.TryParse(parm2, out index);
                 Byte.TryParse(parm3, out palette);
-                // --------------------------------------------------
-                // requested frame index out of range
-                if (index >= entry.Bgf.Frames.Count)
+
+                // try to parse index and palette and validate range
+                if (!UInt16.TryParse(parm2, out index) || index >= entry.Bgf.Frames.Count)
                 {
                     context.Response.StatusCode = 404;
                     return;
                 }
-                // --------------------------------------------------
+
                 // create BMP (256 col) or PNG (32-bit) or return raw pixels (8bit indices)
                 if (parm1 == "bmp")
                 {
-                    context.Response.ContentType = "image/bmp";
-                    context.Response.AddHeader(
+                    response.ContentType = "image/bmp";
+                    response.AddHeader(
                         "Content-Disposition",
                         "inline; filename=" + entry.Bgf.Filename + "-" + index.ToString() + ".bmp");
 
@@ -102,8 +93,8 @@ namespace Meridian59.BgfService
                 }
                 else if (parm1 == "png")
                 {
-                    context.Response.ContentType = "image/png";
-                    context.Response.AddHeader(
+                    response.ContentType = "image/png";
+                    response.AddHeader(
                         "Content-Disposition",
                         "inline; filename=" + entry.Bgf.Filename + "-" + index.ToString() + ".png");
 
@@ -113,9 +104,9 @@ namespace Meridian59.BgfService
                 }
                 else if (parm1 == "bin")
                 {
-                    context.Response.ContentType = "application/octet-stream";
-                    context.Response.AddHeader(
-                        "Content-Disposition",
+                    response.ContentType = "application/octet-stream";
+                    response.AddHeader(
+                        "Content-Disposition", 
                         "attachment; filename=" + entry.Bgf.Filename + "-" + index.ToString() + ".bin");
 
                     byte[] pixels = entry.Bgf.Frames[index].PixelData;
@@ -124,14 +115,87 @@ namespace Meridian59.BgfService
                 else
                     context.Response.StatusCode = 404;
             }
-            // -------------------------------------------------------
+
+            // --------------------------------------------------------------------------------------------
             // JSON META DATA
+            // --------------------------------------------------------------------------------------------
             else if (parmReq == "meta")
             {
-                WriteFileMeta(context, entry);
+                // set response type
+                response.ContentType = "application/json";
+                response.ContentEncoding = new System.Text.UTF8Encoding(false);
+                response.AddHeader("Content-Disposition", "inline; filename=" + entry.Bgf.Filename + ".json");
+
+                // unix timestamp
+                long stamp = (entry.LastModified.Ticks - 621355968000000000) / 10000000;
+
+                /////////////////////////////////////////////////////////////
+                response.Write("{\"file\":\"");
+                response.Write(entry.Bgf.Filename);
+                response.Write("\",\"size\":");
+                response.Write(entry.Size.ToString());
+                response.Write(",\"modified\":");
+                response.Write(stamp.ToString());
+                response.Write(",\"shrink\":");
+                response.Write(entry.Bgf.ShrinkFactor.ToString());
+                response.Write(",\"frames\":[");
+                for (int i = 0; i < entry.Bgf.Frames.Count; i++)
+                {
+                    BgfBitmap frame = entry.Bgf.Frames[i];
+
+                    if (i > 0)
+                        response.Write(',');
+
+                    response.Write("{\"w\":");
+                    response.Write(frame.Width.ToString());
+                    response.Write(",\"h\":");
+                    response.Write(frame.Height.ToString());
+                    response.Write(",\"x\":");
+                    response.Write(frame.XOffset.ToString());
+                    response.Write(",\"y\":");
+                    response.Write(frame.YOffset.ToString());
+                    response.Write(",\"hs\":[");
+                    for (int j = 0; j < frame.HotSpots.Count; j++)
+                    {
+                        BgfBitmapHotspot hs = frame.HotSpots[j];
+
+                        if (j > 0)
+                            response.Write(',');
+
+                        response.Write("{\"i\":");
+                        response.Write(hs.Index.ToString());
+                        response.Write(",\"x\":");
+                        response.Write(hs.X.ToString());
+                        response.Write(",\"y\":");
+                        response.Write(hs.Y.ToString());
+                        response.Write('}');
+                    }
+                    response.Write("]}");
+                }
+                response.Write("],\"groups\":[");
+                for (int i = 0; i < entry.Bgf.FrameSets.Count; i++)
+                {
+                    BgfFrameSet group = entry.Bgf.FrameSets[i];
+
+                    if (i > 0)
+                        response.Write(',');
+
+                    response.Write('[');
+                    for (int j = 0; j < group.FrameIndices.Count; j++)
+                    {
+                        if (j > 0)
+                            response.Write(',');
+
+                        response.Write(group.FrameIndices[j].ToString());
+                    }
+                    response.Write(']');
+                }
+                response.Write("]}");
             }
-            // -------------------------------------------------------
+
+            // --------------------------------------------------------------------------------------------
             // INVALID
+            // --------------------------------------------------------------------------------------------
             else
             {
                 context.Response.StatusCode = 404;
@@ -139,84 +203,6 @@ namespace Meridian59.BgfService
             }
         }
 
-        private void WriteFileMeta(HttpContext context, BgfCache.Entry entry)
-        {
-            HttpResponse response = context.Response;
-
-            response.ContentType = "application/json";
-            response.ContentEncoding = new System.Text.UTF8Encoding(false);
-
-            context.Response.AddHeader(
-                "Content-Disposition", 
-                "inline; filename=" + entry.Bgf.Filename + ".json");
-
-            // unix timestamp
-            long stamp = (entry.LastModified.Ticks - 621355968000000000) / 10000000;
-
-            /////////////////////////////////////////////////////////////
-            response.Write("{\"file\":\"");
-            response.Write(entry.Bgf.Filename);
-            response.Write("\",\"size\":");
-            response.Write(entry.Size.ToString());
-            response.Write(",\"modified\":");
-            response.Write(stamp.ToString());
-            response.Write(",\"shrink\":");
-            response.Write(entry.Bgf.ShrinkFactor.ToString());
-            response.Write(",\"frames\":[");
-            for (int i = 0; i < entry.Bgf.Frames.Count; i++)
-            {
-                BgfBitmap frame = entry.Bgf.Frames[i];
-
-                if (i > 0)
-                    response.Write(',');
-
-                response.Write("{\"w\":");
-                response.Write(frame.Width.ToString());
-                response.Write(",\"h\":");
-                response.Write(frame.Height.ToString());
-                response.Write(",\"x\":");
-                response.Write(frame.XOffset.ToString());
-                response.Write(",\"y\":");
-                response.Write(frame.YOffset.ToString());
-                response.Write(",\"hs\":[");
-                for (int j = 0; j < frame.HotSpots.Count; j++)
-                {
-                    BgfBitmapHotspot hs = frame.HotSpots[j];
-
-                    if (j > 0)
-                        response.Write(',');
-
-                    response.Write("{\"i\":");
-                    response.Write(hs.Index.ToString());
-                    response.Write(",\"x\":");
-                    response.Write(hs.X.ToString());
-                    response.Write(",\"y\":");
-                    response.Write(hs.Y.ToString());
-                    response.Write('}');
-                }
-                response.Write("]}");
-            }
-            response.Write("],\"groups\":[");
-            for (int i = 0; i < entry.Bgf.FrameSets.Count; i++)
-            {
-                BgfFrameSet group = entry.Bgf.FrameSets[i];
-
-                if (i > 0)
-                    response.Write(',');
-
-                response.Write('[');
-                for (int j = 0; j < group.FrameIndices.Count; j++)
-                {
-                    if (j > 0)
-                        response.Write(',');
-
-                    response.Write(group.FrameIndices[j].ToString());
-                }
-                response.Write(']');
-            }
-            response.Write("]}");
-        }
-        
         public bool IsReusable
         {
             get { return true; }

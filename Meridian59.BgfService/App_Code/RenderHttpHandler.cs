@@ -160,7 +160,7 @@ namespace Meridian59.BgfService
                         String.IsNullOrEmpty(subOvParms[0]) || 
                         String.IsNullOrEmpty(subOvParms[1]) ||
                         !byte.TryParse(subOvParms[2], out subOvPalette) ||
-                        !byte.TryParse(subOvParms[3], out subOvHotspot) ||
+                        !byte.TryParse(subOvParms[3], out subOvHotspot) || subOvHotspot > 127 ||
                         !BgfCache.GetBGF(subOvParms[0], out bgfSubOv))
                     {
                         Finish(context, 404);

@@ -14,28 +14,25 @@
         ImageComposerNative<ObjectBase>.Cache.IsEnabled = false;
         ImageComposerGDI<ObjectBase>.Cache.IsEnabled = false;
 
-        // ----------------------------------------------------------------
+        // create route handlers
         ListRouteHandler routeList = new ListRouteHandler();
-        RouteTable.Routes.Add(new Route("list", routeList));
-
-        // ----------------------------------------------------------------
         FileRouteHandler routeFile = new FileRouteHandler();
+        ObjectRouteHandler routeObject = new ObjectRouteHandler();
+        RenderRouteHandler routeRender = new RenderRouteHandler();
 
+        // create routes
+        // ----------------------------------------------------------------
+        RouteTable.Routes.Add(new Route("list", routeList));
+        // ----------------------------------------------------------------
         RouteTable.Routes.Add(new Route("file/{file}/{req}/{parm1}/{parm2}/{parm3}", routeFile));
         RouteTable.Routes.Add(new Route("file/{file}/{req}/{parm1}/{parm2}", routeFile));
         RouteTable.Routes.Add(new Route("file/{file}/{req}/{parm1}", routeFile));
         RouteTable.Routes.Add(new Route("file/{file}/{req}", routeFile));
-
         // ----------------------------------------------------------------
-        ObjectRouteHandler routeObject = new ObjectRouteHandler();
-
         RouteTable.Routes.Add(new Route("object/{scale}/{file}/{group}/{palette}/{angle}", routeObject));
         RouteTable.Routes.Add(new Route("object/{scale}/{file}/{group}/{palette}", routeObject));
         RouteTable.Routes.Add(new Route("object/{scale}/{file}/{group}", routeObject));
-
         // ----------------------------------------------------------------
-        RenderRouteHandler routeRender = new RenderRouteHandler();
-
         RouteTable.Routes.Add(new Route("render/{width}/{height}/{scale}/{file}/{anim}/{palette}/{angle}", routeRender));
     }
 

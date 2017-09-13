@@ -55,11 +55,10 @@
     <hr />
     <h2>Animated Object</h2>
     <h3>Query-URL</h3>
-    
     <p>
         <span>http://bgf.meridian59.de/render/{width}/{height}/{scale}/{file}/{anim}/{palette}/{angle}/?s={file};{anim};{palette};{hotspot}&s=...</span>
     </p>
-
+    <h3>Parameters</h3>
     <table border="1">
         <tbody>
             <tr>
@@ -71,16 +70,18 @@
                 <td>{anim}</td>
                 <td>{palette}</td>
                 <td>{angle}</td>
+                <td>{hotspot}</td>
             </tr>
             <tr>
                 <td>Range/Syntax</td>
-                <td>16-256</td>
-                <td>16-256</td>
-                <td>1-80</td>
+                <td>[16, 256]</td>
+                <td>[16, 256]</td>
+                <td>[1, 80]</td>
                 <td>filename</td>
-                <td>LO-HI-T</td>
-                <td>0-255</td>
-                <td>0-7</td>
+                <td>Cycle: Lo-Hi-T<br/>None: Group</td>
+                <td>[0, 255]</td>
+                <td>[0, 7]</td>
+                <td>[0,127]</td>
             </tr>
         </tbody>
     </table>
