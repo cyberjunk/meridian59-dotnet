@@ -115,6 +115,11 @@
             </para>
             </remarks>
         </member>
+        <member name="F:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.MaxColors">
+            <summary>
+            Maximum supported colors
+            </summary>
+        </member>
         <member name="F:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.IndexBits">
             <summary>
             The index bits.
