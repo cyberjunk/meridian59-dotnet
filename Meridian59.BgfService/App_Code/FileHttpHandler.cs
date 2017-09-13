@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using Meridian59.Files.BGF;
 using System.IO;
+using System.Collections.Generic;
 
 namespace Meridian59.BgfService
 {
@@ -30,19 +31,16 @@ namespace Meridian59.BgfService
     /// </summary>
     public class FileHttpHandler : IHttpHandler
     {
-        public bool IsReusable
-        {
-            get { return true; }
-        }
-
         /// <summary>
         /// Handles the HTTP request
         /// </summary>
         /// <param name="context"></param>
         public void ProcessRequest(HttpContext context)
         {
-            BgfCache.Entry entry;
-            // -------------------------------------------------------
+            // --------------------------------------------------------------------------------------------
+            // 1) PARSE URL PARAMETERS
+            // --------------------------------------------------------------------------------------------
+
             // read parameters from url-path (see Global.asax):
             RouteValueDictionary parms = context.Request.RequestContext.RouteData.Values;
             string parmFile = parms.ContainsKey("file") ? (string)parms["file"] : null;
@@ -50,31 +48,22 @@ namespace Meridian59.BgfService
             string parm1 = parms.ContainsKey("parm1") ? (string)parms["parm1"] : null;
             string parm2 = parms.ContainsKey("parm2") ? (string)parms["parm2"] : null;
             string parm3 = parms.ContainsKey("parm3") ? (string)parms["parm3"] : null;
-            // -------------------------------------------------------
+
+            BgfCache.Entry entry;
+
             // no filename or request type
-            if (String.IsNullOrEmpty(parmFile) ||
+            if (String.IsNullOrEmpty(parmFile) || !BgfCache.GetBGF(parmFile, out entry) ||
                 String.IsNullOrEmpty(parmReq))
             {
                 context.Response.StatusCode = 404;
                 return;
             }
-            // convert to lowercase
-            parmFile = parmFile.ToLower();
-            parmReq = parmReq.ToLower();
-            // --------------------------------------------------
-            // unknown bgf
-            if (!BgfCache.GetBGF(parmFile, out entry))
-            {
-                context.Response.StatusCode = 404;
-                return;
-            }
-            // -------------------------------------------------------
+
             // set cache behaviour
             context.Response.Cache.SetCacheability(HttpCacheability.Public);
             context.Response.Cache.VaryByParams["*"] = false;
             context.Response.Cache.SetLastModified(entry.LastModified);
-            // -------------------------------------------------------
-            // -------------------------------------------------------
+
             // FRAME IMAGE
             if (parmReq == "frame")
             {
@@ -139,64 +128,7 @@ namespace Meridian59.BgfService
             // JSON META DATA
             else if (parmReq == "meta")
             {
-                context.Response.ContentType = "application/json";
-                context.Response.ContentEncoding = new System.Text.UTF8Encoding(false);
-                context.Response.AddHeader(
-                    "Content-Disposition",
-                    "inline; filename=" + entry.Bgf.Filename + ".json");
-
-                StreamWriter writer = new StreamWriter(
-                    context.Response.OutputStream,
-                    new System.Text.UTF8Encoding(false), 4096, true);
-
-                /////////////////////////////////////////////////////////////
-                writer.Write("{\"shrink\":" + entry.Bgf.ShrinkFactor + ',');
-                /////////////////////////////////////////////////////////////
-                writer.Write("\"frames\":[");
-                for (int i = 0; i < entry.Bgf.Frames.Count; i++)
-                {
-                    BgfBitmap frame = entry.Bgf.Frames[i];
-                    writer.Write("{" +
-                        "\"w\":" + frame.Width + ',' +
-                        "\"h\":" + frame.Height + ',' +
-                        "\"x\":" + frame.XOffset + ',' +
-                        "\"y\":" + frame.YOffset + ",");
-                    writer.Write("\"hs\":[");
-                    for (int j = 0; j < frame.HotSpots.Count; j++)
-                    {
-                        BgfBitmapHotspot hs = frame.HotSpots[j];
-                        writer.Write("{" +
-                            "\"i\":" + hs.Index + ',' +
-                            "\"x\":" + hs.X + ',' +
-                            "\"y\":" + hs.Y + '}');
-                        if (j < frame.HotSpots.Count - 1)
-                            writer.Write(',');
-                    }
-                    writer.Write("]}");
-                    if (i < entry.Bgf.Frames.Count - 1)
-                        writer.Write(',');
-                }
-                writer.Write("],");
-                /////////////////////////////////////////////////////////////
-                writer.Write("\"groups\":[");
-                for (int i = 0; i < entry.Bgf.FrameSets.Count; i++)
-                {
-                    BgfFrameSet group = entry.Bgf.FrameSets[i];
-                    writer.Write('[');
-                    for (int j = 0; j < group.FrameIndices.Count; j++)
-                    {
-                        writer.Write(group.FrameIndices[j].ToString());
-                        if (j < group.FrameIndices.Count - 1)
-                            writer.Write(',');
-                    }
-                    writer.Write(']');
-                    if (i < entry.Bgf.FrameSets.Count - 1)
-                        writer.Write(',');
-                }
-                writer.Write("]}");
-                /////////////////////////////////////////////////////////////
-                writer.Close();
-                writer.Dispose();
+                WriteFileMeta(context, entry);
             }
             // -------------------------------------------------------
             // INVALID
@@ -205,6 +137,73 @@ namespace Meridian59.BgfService
                 context.Response.StatusCode = 404;
                 return;
             }
+        }
+
+        private void WriteFileMeta(HttpContext context, BgfCache.Entry entry)
+        {
+            context.Response.ContentType = "application/json";
+            context.Response.ContentEncoding = new System.Text.UTF8Encoding(false);
+
+            context.Response.AddHeader(
+                "Content-Disposition", 
+                "inline; filename=" + entry.Bgf.Filename + ".json");
+
+            StreamWriter writer = new StreamWriter(
+                context.Response.OutputStream,
+                new System.Text.UTF8Encoding(false), 4096, true);
+
+            writer.Write("{\"shrink\":" + entry.Bgf.ShrinkFactor + ',');
+            /////////////////////////////////////////////////////////////
+            writer.Write("\"frames\":[");
+            for (int i = 0; i < entry.Bgf.Frames.Count; i++)
+            {
+                BgfBitmap frame = entry.Bgf.Frames[i];
+                writer.Write("{" +
+                    "\"w\":" + frame.Width + ',' +
+                    "\"h\":" + frame.Height + ',' +
+                    "\"x\":" + frame.XOffset + ',' +
+                    "\"y\":" + frame.YOffset + ",");
+                writer.Write("\"hs\":[");
+                for (int j = 0; j < frame.HotSpots.Count; j++)
+                {
+                    BgfBitmapHotspot hs = frame.HotSpots[j];
+                    writer.Write("{" +
+                        "\"i\":" + hs.Index + ',' +
+                        "\"x\":" + hs.X + ',' +
+                        "\"y\":" + hs.Y + '}');
+                    if (j < frame.HotSpots.Count - 1)
+                        writer.Write(',');
+                }
+                writer.Write("]}");
+                if (i < entry.Bgf.Frames.Count - 1)
+                    writer.Write(',');
+            }
+            writer.Write("],");
+            /////////////////////////////////////////////////////////////
+            writer.Write("\"groups\":[");
+            for (int i = 0; i < entry.Bgf.FrameSets.Count; i++)
+            {
+                BgfFrameSet group = entry.Bgf.FrameSets[i];
+                writer.Write('[');
+                for (int j = 0; j < group.FrameIndices.Count; j++)
+                {
+                    writer.Write(group.FrameIndices[j].ToString());
+                    if (j < group.FrameIndices.Count - 1)
+                        writer.Write(',');
+                }
+                writer.Write(']');
+                if (i < entry.Bgf.FrameSets.Count - 1)
+                    writer.Write(',');
+            }
+            writer.Write("]}");
+            /////////////////////////////////////////////////////////////
+            writer.Close();
+            writer.Dispose();
+        }
+        
+        public bool IsReusable
+        {
+            get { return true; }
         }
     }
 }

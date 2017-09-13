@@ -8,11 +8,15 @@
     void Application_Start(object sender, EventArgs e)
     {
         // preload all BGF from disk to RAM
-        BgfCache.Preload();
+        BgfCache.Load();
 
         // don't use imagecomposer cache for images (nginx has caching enabled!)
         ImageComposerNative<ObjectBase>.Cache.IsEnabled = false;
         ImageComposerGDI<ObjectBase>.Cache.IsEnabled = false;
+
+        // ----------------------------------------------------------------
+        ListRouteHandler routeList = new ListRouteHandler();
+        RouteTable.Routes.Add(new Route("list", routeList));
 
         // ----------------------------------------------------------------
         FileRouteHandler routeFile = new FileRouteHandler();
