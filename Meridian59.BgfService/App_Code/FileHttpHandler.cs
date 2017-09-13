@@ -141,64 +141,80 @@ namespace Meridian59.BgfService
 
         private void WriteFileMeta(HttpContext context, BgfCache.Entry entry)
         {
-            context.Response.ContentType = "application/json";
-            context.Response.ContentEncoding = new System.Text.UTF8Encoding(false);
+            HttpResponse response = context.Response;
+
+            response.ContentType = "application/json";
+            response.ContentEncoding = new System.Text.UTF8Encoding(false);
 
             context.Response.AddHeader(
                 "Content-Disposition", 
                 "inline; filename=" + entry.Bgf.Filename + ".json");
 
-            StreamWriter writer = new StreamWriter(
-                context.Response.OutputStream,
-                new System.Text.UTF8Encoding(false), 4096, true);
+            // unix timestamp
+            long stamp = (entry.LastModified.Ticks - 621355968000000000) / 10000000;
 
-            writer.Write("{\"shrink\":" + entry.Bgf.ShrinkFactor + ',');
             /////////////////////////////////////////////////////////////
-            writer.Write("\"frames\":[");
+            response.Write("{\"file\":\"");
+            response.Write(entry.Bgf.Filename);
+            response.Write("\",\"size\":");
+            response.Write(entry.Size.ToString());
+            response.Write(",\"modified\":");
+            response.Write(stamp.ToString());
+            response.Write(",\"shrink\":");
+            response.Write(entry.Bgf.ShrinkFactor.ToString());
+            response.Write(",\"frames\":[");
             for (int i = 0; i < entry.Bgf.Frames.Count; i++)
             {
                 BgfBitmap frame = entry.Bgf.Frames[i];
-                writer.Write("{" +
-                    "\"w\":" + frame.Width + ',' +
-                    "\"h\":" + frame.Height + ',' +
-                    "\"x\":" + frame.XOffset + ',' +
-                    "\"y\":" + frame.YOffset + ",");
-                writer.Write("\"hs\":[");
+
+                if (i > 0)
+                    response.Write(',');
+
+                response.Write("{\"w\":");
+                response.Write(frame.Width.ToString());
+                response.Write(",\"h\":");
+                response.Write(frame.Height.ToString());
+                response.Write(",\"x\":");
+                response.Write(frame.XOffset.ToString());
+                response.Write(",\"y\":");
+                response.Write(frame.YOffset.ToString());
+                response.Write(",\"hs\":[");
                 for (int j = 0; j < frame.HotSpots.Count; j++)
                 {
                     BgfBitmapHotspot hs = frame.HotSpots[j];
-                    writer.Write("{" +
-                        "\"i\":" + hs.Index + ',' +
-                        "\"x\":" + hs.X + ',' +
-                        "\"y\":" + hs.Y + '}');
-                    if (j < frame.HotSpots.Count - 1)
-                        writer.Write(',');
+
+                    if (j > 0)
+                        response.Write(',');
+
+                    response.Write("{\"i\":");
+                    response.Write(hs.Index.ToString());
+                    response.Write(",\"x\":");
+                    response.Write(hs.X.ToString());
+                    response.Write(",\"y\":");
+                    response.Write(hs.Y.ToString());
+                    response.Write('}');
                 }
-                writer.Write("]}");
-                if (i < entry.Bgf.Frames.Count - 1)
-                    writer.Write(',');
+                response.Write("]}");
             }
-            writer.Write("],");
-            /////////////////////////////////////////////////////////////
-            writer.Write("\"groups\":[");
+            response.Write("],\"groups\":[");
             for (int i = 0; i < entry.Bgf.FrameSets.Count; i++)
             {
                 BgfFrameSet group = entry.Bgf.FrameSets[i];
-                writer.Write('[');
+
+                if (i > 0)
+                    response.Write(',');
+
+                response.Write('[');
                 for (int j = 0; j < group.FrameIndices.Count; j++)
                 {
-                    writer.Write(group.FrameIndices[j].ToString());
-                    if (j < group.FrameIndices.Count - 1)
-                        writer.Write(',');
+                    if (j > 0)
+                        response.Write(',');
+
+                    response.Write(group.FrameIndices[j].ToString());
                 }
-                writer.Write(']');
-                if (i < entry.Bgf.FrameSets.Count - 1)
-                    writer.Write(',');
+                response.Write(']');
             }
-            writer.Write("]}");
-            /////////////////////////////////////////////////////////////
-            writer.Close();
-            writer.Dispose();
+            response.Write("]}");
         }
         
         public bool IsReusable
