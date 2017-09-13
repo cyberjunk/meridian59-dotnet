@@ -1,8 +1,6 @@
 ﻿
-using System;
 using System.Web;
 using System.Web.Routing;
-using System.IO;
 using System.Collections.Generic;
 using System.Text;
 
@@ -24,7 +22,7 @@ namespace Meridian59.BgfService
     }
 
     /// <summary>
-    ///
+    /// Creates a JSON list with all BGF names and basic info
     /// </summary>
     public class ListHttpHandler : IHttpHandler
     {
@@ -34,57 +32,54 @@ namespace Meridian59.BgfService
         /// <param name="context"></param>
         public void ProcessRequest(HttpContext context)
         {
-            UTF8Encoding utf8 = new UTF8Encoding(false);
+            HttpResponse response = context.Response;
 
-            context.Response.Cache.SetCacheability(HttpCacheability.Public);
-            context.Response.Cache.VaryByParams["*"] = false;
-            context.Response.Cache.SetLastModified(BgfCache.LastModified);
-            context.Response.ContentType = "application/json";
-            context.Response.ContentEncoding = utf8;
-            context.Response.AddHeader("Content-Disposition", "inline; filename=list.json");
+            // set cache behaviour
+            response.Cache.SetCacheability(HttpCacheability.Public);
+            response.Cache.VaryByParams["*"] = false;
+            response.Cache.SetLastModified(BgfCache.LastModified);
 
-            StreamWriter writer = new StreamWriter(
-                context.Response.OutputStream, utf8, 4096, true);
+            // set response type
+            response.ContentType = "application/json";
+            response.ContentEncoding = new UTF8Encoding(false);
+            response.AddHeader("Content-Disposition", "inline; filename=list.json");
 
-            IEnumerator<KeyValuePair<string, BgfCache.Entry>> enumerator = 
+            // get enumerator on all bgf in cache
+            IEnumerator<KeyValuePair<string, BgfCache.Entry>> enumerator =
                 BgfCache.GetEnumerator();
 
-            /////////////////////////////////////////////////////////////
+            // start output
             bool isComma = false;
-            writer.Write("[");
+            response.Write('[');
             while(enumerator.MoveNext())
             {
+                BgfCache.Entry entry = enumerator.Current.Value;
+
+                // write comma for previous entry
                 if (isComma)
-                    writer.Write(',');
+                    response.Write(',');
                 else
                     isComma = true;
-
-                BgfCache.Entry entry = enumerator.Current.Value;
 
                 // unix timestamp
                 long stamp = (entry.LastModified.Ticks - 621355968000000000) / 10000000;
 
-                writer.Write('{' +
-                    "\"file\":" + "\"" + entry.Bgf.Filename + "\"" + ',' +
-                    "\"size\":" + entry.Size + ',' +
-                    "\"modified\":" + stamp + ',' +
-                    "\"shrink\":" + entry.Bgf.ShrinkFactor + ',' +
-                    "\"frames\":" + entry.Bgf.Frames.Count + ',' +
-                    "\"groups\":" + entry.Bgf.FrameSets.Count + '}');
-
-                /*writer.Write('[' +
-                    "\"" + entry.Bgf.Filename + "\"" + ',' +
-                    entry.Size + ',' +
-                    stamp + ',' +
-                    entry.Bgf.ShrinkFactor + ',' +
-                    entry.Bgf.Frames.Count + ',' +
-                    entry.Bgf.FrameSets.Count + ']');*/
+                // write json object
+                response.Write("{\"file\":\"");
+                response.Write(entry.Bgf.Filename);
+                response.Write("\",\"size\":");
+                response.Write(entry.Size.ToString());
+                response.Write(",\"modified\":");
+                response.Write(stamp.ToString());
+                response.Write(",\"shrink\":");
+                response.Write(entry.Bgf.ShrinkFactor.ToString());
+                response.Write(",\"frames\":");
+                response.Write(entry.Bgf.Frames.Count.ToString());
+                response.Write(",\"groups\":");
+                response.Write(entry.Bgf.FrameSets.Count.ToString());
+                response.Write('}');
             }
-
-            writer.Write(']');
-            /////////////////////////////////////////////////////////////
-            writer.Close();
-            writer.Dispose();
+            response.Write(']');
         }
 
         public bool IsReusable
