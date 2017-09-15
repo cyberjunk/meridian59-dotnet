@@ -1514,15 +1514,6 @@ namespace Meridian59.Data.Models
         public event EventHandler ViewerAppearanceChanged;
 
         /// <summary>
-        /// Mark the object to have changed appearance,
-        /// forces a redraw.
-        /// </summary>
-        public void MarkForAppearanceChange()
-        {
-            appearanceChangeFlag = true;
-        }
-
-        /// <summary>
         /// A unique hash of the viewer's appearance of the object
         /// </summary>
         public uint ViewerAppearanceHash

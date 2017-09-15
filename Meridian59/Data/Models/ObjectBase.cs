@@ -1229,6 +1229,16 @@ namespace Meridian59.Data.Models
             if (AppearanceChanged != null)          
                 AppearanceChanged(this, new EventArgs());           
         }
+
+        /// <summary>
+        /// Mark the object to have changed appearance,
+        /// forces a redraw.
+        /// </summary>
+        public void MarkForAppearanceChange()
+        {
+            appearanceChangeFlag = true;
+        }
+
         #endregion
     }
 }
