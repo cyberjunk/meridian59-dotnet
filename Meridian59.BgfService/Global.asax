@@ -16,12 +16,14 @@
 
         // create route handlers
         ListRouteHandler routeList = new ListRouteHandler();
+        PaletteRouteHandler routePalette = new PaletteRouteHandler();
         FileRouteHandler routeFile = new FileRouteHandler();
         ObjectRouteHandler routeObject = new ObjectRouteHandler();
         RenderRouteHandler routeRender = new RenderRouteHandler();
 
         // create routes
         Route rList = new Route("list", routeList);
+        Route rPalette = new Route("palette/{num}/{format}", routePalette);
         Route rFile1 = new Route("file/{file}/{req}/{parm1}/{parm2}/{parm3}", routeFile);
         Route rFile2 = new Route("file/{file}/{req}/{parm1}/{parm2}", routeFile);
         Route rFile3 = new Route("file/{file}/{req}/{parm1}", routeFile);
@@ -31,6 +33,7 @@
 
         // add routes
         RouteTable.Routes.Add(rList);
+        RouteTable.Routes.Add(rPalette);
         RouteTable.Routes.Add(rFile1);
         RouteTable.Routes.Add(rFile2);
         RouteTable.Routes.Add(rFile3);
