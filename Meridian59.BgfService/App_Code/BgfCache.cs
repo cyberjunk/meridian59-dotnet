@@ -18,6 +18,7 @@ namespace Meridian59.BgfService
             public BgfFile Bgf;
             public DateTime LastModified;
             public long Size;
+            public uint Num;
         }
 
         private static readonly ConcurrentDictionary<string, Entry> cache =
@@ -36,6 +37,7 @@ namespace Meridian59.BgfService
             string filePath = HttpRuntime.AppDomainAppPath + "bgf/";
             string[] files = Directory.GetFiles(filePath, "*.bgf");
 
+            uint num = 1;
             foreach (string s in files)
             {
                 try
@@ -56,6 +58,10 @@ namespace Meridian59.BgfService
                     // store truncated to seconds
                     entry.LastModified = fileDate.AddTicks(-(fileDate.Ticks % TimeSpan.TicksPerSecond));
                     entry.Size = info.Length;
+
+                    // set pseudo id (for appearance hashing)
+                    entry.Num = num;
+                    num++;
 
                     // add to cache
                     cache.TryAdd(bgf.Filename, entry);
