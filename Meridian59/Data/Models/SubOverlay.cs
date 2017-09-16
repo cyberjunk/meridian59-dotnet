@@ -261,7 +261,17 @@ namespace Meridian59.Data.Models
             {
                 if (animation != value)
                 {
+                    // remove old listener
+                    if (animation != null)
+                        animation.PropertyChanged -= OnAnimationPropertyChanged;
+
+                    // update value
                     animation = value;
+
+                    // set new listener
+                    if (animation != null)
+                        animation.PropertyChanged += OnAnimationPropertyChanged;
+
                     RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_ANIMATION));
                 }
             }
@@ -420,6 +430,9 @@ namespace Meridian59.Data.Models
             this.resourceID = ResourceID;
             this.animation = LinkedAnimation;
             this.hotSpot = HotSpotIndex;
+
+            if (animation != null)
+                animation.PropertyChanged += OnAnimationPropertyChanged;
 
             if ((ColorTranslation != 0x00) && (Effect == 0x00))
             {
