@@ -76,7 +76,6 @@ namespace Meridian59.BgfService
         private readonly byte[] pixels = new byte[MAXWIDTH * MAXHEIGHT];
         private readonly Gif gif = new Gif(0, 0);
         private readonly Gif.LZWEncoder encoder = new Gif.LZWEncoder();
-        private readonly ObjectBase gameObject = new ObjectBase();
 
         private double tick;
         private double tickLastAdd;
@@ -90,9 +89,6 @@ namespace Meridian59.BgfService
             imageComposer.Quality = 16.0f;
             imageComposer.IsCustomShrink = true;
             imageComposer.NewImageAvailable += OnImageComposerNewImageAvailable;
-
-            // set object
-            imageComposer.DataSource = gameObject;
         }
 
         public void ProcessRequest(HttpContext context)
@@ -146,6 +142,14 @@ namespace Meridian59.BgfService
             // stores the latest lastmodified of main and all subov
             DateTime lastModified = entry.LastModified;
 
+            // set parsed/created values on game-object
+            ObjectBase gameObject = new ObjectBase();
+            gameObject.OverlayFileRID = entry.Num;
+            gameObject.Resource = entry.Bgf;
+            gameObject.ColorTranslation = paletteidx;
+            gameObject.Animation = anim;
+            gameObject.ViewerAngle = angle;
+
             // read suboverlay array params from query parameters:
             //  object/..../?subov={file};{anim};{palette};{hotspot}&subov=...
             string[] parmSubOverlays = context.Request.Params.GetValues("s");
@@ -182,6 +186,7 @@ namespace Meridian59.BgfService
                     SubOverlay subOv = new SubOverlay(0, subOvAnim, subOvHotspot, subOvPalette, 0);
 
                     // set bgf resource
+                    subOv.ResourceID = entry.Num;
                     subOv.Resource = bgfSubOv.Bgf;
 
                     // update lastModified if subov is newer
@@ -231,16 +236,13 @@ namespace Meridian59.BgfService
             gif.CanvasWidth = width;
             gif.CanvasHeight = height;
 
-            // set parsed/created values on game-object
-            gameObject.Resource = entry.Bgf;
-            gameObject.ColorTranslation = paletteidx;
-            gameObject.Animation = anim;
-            gameObject.ViewerAngle = angle;
-
             // set imagecomposer size and shrink
             imageComposer.Width = width;
             imageComposer.Height = height;
             imageComposer.CustomShrink = (float)scale * 0.1f;
+
+            // set gameobject (causes initial frame)
+            imageComposer.DataSource = gameObject;
 
             // run animationlength in 1 ms steps (causes new image events)
             for (int i = 0; i < gameObject.AnimationLength + 10; i++)
@@ -248,6 +250,10 @@ namespace Meridian59.BgfService
                 tick += 1.0;
                 gameObject.Tick(tick, 1.0);
             }
+
+            // handle single frame case
+            if (gif.Frames.Count == 0 && frame != null)
+                gif.Frames.Add(frame);
 
             // --------------------------------------------------------------------------------------------
             // 4) CREATE RESPONSE AND FINISH
@@ -308,8 +314,10 @@ namespace Meridian59.BgfService
             frame = null;
 
             // clean up reusable member instances
+            imageComposer.DataSource = null;
             gif.Frames.Clear();
-            gameObject.SubOverlays.Clear();
+            //gameObject.SubOverlays.Clear();
+            //gameObject.Clear(true);
 
             // set statuscode
             context.Response.StatusCode = StatusCode;
