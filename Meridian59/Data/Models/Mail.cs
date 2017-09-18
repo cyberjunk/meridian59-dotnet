@@ -443,6 +443,7 @@ namespace Meridian59.Data.Models
                     reader.Close();
                     returnValue = true;
 
+#if !VANILLA && !OPENMERIDIAN
                     // Fix timestamp if necessary and write out mail.
                     if (!IsTimestampUpdated)
                     {
@@ -450,6 +451,7 @@ namespace Meridian59.Data.Models
                         IsTimestampUpdated = true;
                         Save(File);
                     }
+#endif
                 }              
             }
             catch (Exception) { }

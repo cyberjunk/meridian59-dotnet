@@ -592,6 +592,10 @@ namespace Meridian59.Client
             // update the num to our local next one
             Message.Mail.Num = ResourceManager.Mails.GetMaximumNum() + 1;
 
+#if !VANILLA && !OPENMERIDIAN
+            // already unix timestamps in MeridianNext protocol
+            Message.Mail.IsTimestampUpdated = true;
+#endif
             // add it to our list (will trigger a save to disk)
             ResourceManager.Mails.Add(Message.Mail);
         }
