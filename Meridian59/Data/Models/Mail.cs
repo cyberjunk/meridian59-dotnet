@@ -47,11 +47,13 @@ namespace Meridian59.Data.Models
         public const string TAG_MAIL        = "mail";
         public const string TAG_RECIPIENTS  = "recipients";
         public const string TAG_RECIPIENT   = "recipient";
-        public const string TAG_TEXT        = "text";       
+        public const string TAG_TEXT        = "text";
         public const string ATTRIB_SENDER   = "sender";
         public const string ATTRIB_TIMESTAMP= "timestamp";
         public const string ATTRIB_NAME     = "name";
         public const string ATTRIB_TITLE    = "title";
+        public const string ATTRIB_ISTIMESTAMPUPDATED = "istimestampupdated";
+
         #endregion
 
         #region INotifyPropertyChanged
@@ -181,6 +183,7 @@ namespace Meridian59.Data.Models
         protected readonly List<string> recipients = new List<string>();
         protected ServerString message;
         protected string title;
+        protected bool isTimeStampUpdated;
 
 		protected StringDictionary stringResources;
         #endregion
@@ -273,6 +276,22 @@ namespace Meridian59.Data.Models
                 }
             }
         }
+
+        public bool IsTimestampUpdated
+        {
+            get
+            {
+                return isTimeStampUpdated;
+            }
+            set
+            {
+                if (isTimeStampUpdated != value)
+                {
+					isTimeStampUpdated = value;
+                }
+            }
+        }
+
         #endregion
 
         #region Constructors
@@ -281,7 +300,7 @@ namespace Meridian59.Data.Models
             Clear(false);
         }
 
-        public Mail(uint Num, string Sender, uint TimeStamp, List<string> Recipients, ServerString Message, string Title)
+        public Mail(uint Num, string Sender, uint TimeStamp, List<string> Recipients, ServerString Message, string Title, bool IsTimestampUpdated)
         {
             num = Num;
             sender = Sender;
@@ -289,9 +308,10 @@ namespace Meridian59.Data.Models
             recipients = Recipients;
             message = Message;
             title = Title;
+			isTimeStampUpdated = IsTimestampUpdated;
         }
 
-		public Mail(StringDictionary StringResources, byte[] Buffer, int StartIndex = 0) 
+        public Mail(StringDictionary StringResources, byte[] Buffer, int StartIndex = 0) 
         {
             stringResources = StringResources;
 
@@ -310,6 +330,7 @@ namespace Meridian59.Data.Models
                 Recipients.Clear();
                 Message = new ServerString();
                 Title = String.Empty;
+                IsTimestampUpdated = false;
             }
             else
             {
@@ -319,6 +340,7 @@ namespace Meridian59.Data.Models
                 recipients.Clear();
                 message = new ServerString();
                 title = String.Empty;
+                isTimeStampUpdated = false;
             }
         }
         #endregion
@@ -337,6 +359,7 @@ namespace Meridian59.Data.Models
             // read attributes
             Sender = Reader[ATTRIB_SENDER];
             Timestamp = Convert.ToUInt32(Reader[ATTRIB_TIMESTAMP]);
+            IsTimestampUpdated = Convert.ToBoolean(Reader[ATTRIB_ISTIMESTAMPUPDATED]);
             Title = Reader[ATTRIB_TITLE];
 
             // recipients
@@ -367,6 +390,8 @@ namespace Meridian59.Data.Models
             // write properties as attributes
             Writer.WriteAttributeString(ATTRIB_SENDER, Sender);
             Writer.WriteAttributeString(ATTRIB_TIMESTAMP, Timestamp.ToString());
+            // Timestamp update status (converted to full unix timestamp or not.
+            Writer.WriteAttributeString(ATTRIB_ISTIMESTAMPUPDATED, IsTimestampUpdated.ToString());
             Writer.WriteAttributeString(ATTRIB_TITLE, Title);
            
             // write recipients start
@@ -417,6 +442,14 @@ namespace Meridian59.Data.Models
 
                     reader.Close();
                     returnValue = true;
+
+                    // Fix timestamp if necessary and write out mail.
+                    if (!IsTimestampUpdated)
+                    {
+                        Timestamp += MeridianDate.CONVERTOFFSET;
+                        IsTimestampUpdated = true;
+                        Save(File);
+                    }
                 }              
             }
             catch (Exception) { }
