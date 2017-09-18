@@ -534,6 +534,15 @@ namespace Meridian59.Files
                     // load values from xml
                     mail.Load(s);
 
+#if !VANILLA && !OPENMERIDIAN
+                    // Fix timestamp if necessary and write out mail.
+                    if (!mail.IsTimestampUpdated)
+                    {
+                        mail.Timestamp += MeridianDate.CONVERTOFFSET;
+                        mail.IsTimestampUpdated = true;
+                        mail.Save(s);
+                    }
+#endif
                     // add to list
                     Mails.Add(mail);
                 }

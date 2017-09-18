@@ -442,17 +442,7 @@ namespace Meridian59.Data.Models
 
                     reader.Close();
                     returnValue = true;
-
-#if !VANILLA && !OPENMERIDIAN
-                    // Fix timestamp if necessary and write out mail.
-                    if (!IsTimestampUpdated)
-                    {
-                        Timestamp += MeridianDate.CONVERTOFFSET;
-                        IsTimestampUpdated = true;
-                        Save(File);
-                    }
-#endif
-                }              
+                }
             }
             catch (Exception) { }
 
