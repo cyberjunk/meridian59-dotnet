@@ -29,10 +29,22 @@
     <h1>BGF Image Service</h1>
 
     <hr />
-    <h2>(1) Low-Level: BGF Frame/Info</h2>
-    <h3>Query-URL Frame: /file/{name}/frame/{format}/{index}/{palette}</h3>
-    <h3>Query-URL Info: /file/{name}/meta</h3>
-    <a href="file/avsham/meta">Meta-Info avsham.bgf</a> | <a href="file/avsham/frame/bin/0">avsham.bgf Frame #0 (BIN)</a> | <a href="list">Meta-Info List</a>
+    <h2>(1) BGF List/Frame/Info</h2>
+    <h3>Query-URL BGF List:</h3>
+    <p>
+        <span>http://bgf.meridian59.de/list</span><br />
+        <a href="list">Test BGF List (JSON)</a>
+    </p>
+    <h3>Query-URL BGF Info:</h3>
+    <p>
+        <span>http://bgf.meridian59.de/file/{name}/meta</span><br />
+        <a href="file/avsham/meta">Test avsham.bgf Info (JSON)</a>
+    </p>
+    <h3>Query-URL BGF Frame:</h3>
+    <p>
+        <span>http://bgf.meridian59.de/file/{name}/frame/{format}/{index}/{palette}</span>
+    </p>
+    <a href="file/avsham/frame/bin/0">avsham.bgf Frame #0 (BIN)</a>
     <h3>Examples PNG/BMP</h3>
     <table>
         <tbody>
@@ -52,10 +64,14 @@
     </table>
 
     <hr />
-    <h2>(2) High-Level: Object Image</h2>
+    <h2>(2) Single Object Image</h2>
     <h3>Query-URL</h3>
     <p>
         <span>http://bgf.meridian59.de/object/{scale}{file}/{group}/{palette}/{angle}/?s={file};{group};{palette};{hotspot}&s=...</span>
+    </p>
+    <h3>Return</h3>
+    <p>
+        <span>PNG Image with dynamic size (shows all object parts) and 32-Bit ARGB colors.</span>
     </p>
     <h3>Examples</h3>
     <table border="1">
@@ -119,10 +135,14 @@
 
 
     <hr />
-    <h2>(3) High-Level: Animated GIF</h2>
+    <h2>(3) Animated GIF</h2>
     <h3>Query-URL</h3>
     <p>
         <span>http://bgf.meridian59.de/render/{width}/{height}/{scale}/{file}/{anim}/{palette}/{angle}/?s={file};{anim};{palette};{hotspot}&s=...</span>
+    </p>
+    <h3>Return</h3>
+    <p>
+        <span>GIF File with Indexed Colors (up to 256 per frame). Image-Size is fixed, object might be only partially visible.</span>
     </p>
     <h3>Parameters</h3>
     <table border="1">
@@ -215,6 +235,13 @@
     <h3>Query-URL</h3>
     <p>
         <span>http://bgf.meridian59.de/palette/{index}/{format}</span>
+    </p>
+    <h3>Return</h3>
+    <p>
+        <ul>
+            <li><span>BMP: Image with 16x16 pixels and 256 Colors/Palette. Each palette entry appears once.</span></li>
+            <li><span>JSON: Array with 256 Integers (32-Bit ARGB colors with alpha set)</span></li>
+        </ul>
     </p>
     <h3>Parameters</h3>
     <table border="1">

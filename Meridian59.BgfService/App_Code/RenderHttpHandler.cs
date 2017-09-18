@@ -139,6 +139,9 @@ namespace Meridian59.BgfService
                 return;
             }
 
+            // set groupmax
+            anim.GroupMax = entry.Bgf.FrameSets.Count;
+
             // stores the latest lastmodified of main and all subov
             DateTime lastModified = entry.LastModified;
 
@@ -181,6 +184,9 @@ namespace Meridian59.BgfService
                         Finish(context, 404);
                         return;
                     }
+
+                    // set group max
+                    subOvAnim.GroupMax = bgfSubOv.Bgf.FrameSets.Count;
 
                     // create suboverlay
                     SubOverlay subOv = new SubOverlay(0, subOvAnim, subOvHotspot, subOvPalette, 0);
