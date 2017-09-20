@@ -54,6 +54,11 @@
             Gets or sets the volume.
             </summary>
         </member>
+        <member name="M:JeremyAnsel.ColorQuant.Box.Clear">
+            <summary>
+            Resets all values to zero.
+            </summary>
+        </member>
         <member name="T:JeremyAnsel.ColorQuant.IColorQuantizer">
             <summary>
             Defines a color quantizer.
@@ -245,6 +250,16 @@
             Temporary Array Data used in Get3DMoments()
             </summary>
         </member>
+        <member name="F:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.vv">
+            <summary>
+            Temporary Data in BuildCube()
+            </summary>
+        </member>
+        <member name="F:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.cube">
+            <summary>
+            Temporary Data
+            </summary>
+        </member>
         <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.Quantize(System.Byte[])">
             <summary>
             Quantizes an image.
@@ -300,7 +315,7 @@
             <param name="a">The alpha value.</param>
             <returns>The index.</returns>
         </member>
-        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.Volume(JeremyAnsel.ColorQuant.Box,System.Int64[])">
+        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.Volume(JeremyAnsel.ColorQuant.Box@,System.Int64[])">
             <summary>
             Computes sum over a box of any given statistic.
             </summary>
@@ -308,7 +323,7 @@
             <param name="moment">The moment.</param>
             <returns>The result.</returns>
         </member>
-        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.Bottom(JeremyAnsel.ColorQuant.Box,System.Int32,System.Int64[])">
+        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.Bottom(JeremyAnsel.ColorQuant.Box@,System.Int32,System.Int64[])">
             <summary>
             Computes part of Volume(cube, moment) that doesn't depend on r1, g1, or b1 (depending on direction).
             </summary>
@@ -317,7 +332,7 @@
             <param name="moment">The moment.</param>
             <returns>The result.</returns>
         </member>
-        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.Top(JeremyAnsel.ColorQuant.Box,System.Int32,System.Int32,System.Int64[])">
+        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.Top(JeremyAnsel.ColorQuant.Box@,System.Int32,System.Int32,System.Int64[])">
             <summary>
             Computes remainder of Volume(cube, moment), substituting position for r1, g1, or b1 (depending on direction).
             </summary>
@@ -352,14 +367,14 @@
             the sums of the above quantities over any desired box.
             </summary>
         </member>
-        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.Variance(JeremyAnsel.ColorQuant.Box)">
+        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.Variance(JeremyAnsel.ColorQuant.Box@)">
             <summary>
             Computes the weighted variance of a box.
             </summary>
-            <param name="cube">The cube.</param>
+            <param name="c">The cube.</param>
             <returns>The result.</returns>
         </member>
-        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.Maximize(JeremyAnsel.ColorQuant.Box,System.Int32,System.Int32,System.Int32,System.Int32@,System.Double,System.Double,System.Double,System.Double,System.Double)">
+        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.Maximize(JeremyAnsel.ColorQuant.Box@,System.Int32,System.Int32,System.Int32,System.Int32@,System.Double,System.Double,System.Double,System.Double,System.Double)">
             <summary>
             We want to minimize the sum of the variances of two sub-boxes.
             The sum(c^2) terms can be ignored since their sum over both sub-boxes
@@ -367,7 +382,7 @@
             The remaining terms have a minus sign in the variance formula,
             so we drop the minus sign and maximize the sum of the two terms.
             </summary>
-            <param name="cube">The cube.</param>
+            <param name="c">The cube.</param>
             <param name="direction">The direction.</param>
             <param name="first">The first position.</param>
             <param name="last">The last position.</param>
@@ -379,7 +394,7 @@
             <param name="wholeW">The whole weight.</param>
             <returns>The result.</returns>
         </member>
-        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.Cut(JeremyAnsel.ColorQuant.Box,JeremyAnsel.ColorQuant.Box)">
+        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.Cut(JeremyAnsel.ColorQuant.Box@,JeremyAnsel.ColorQuant.Box@)">
             <summary>
             Cuts a box.
             </summary>
@@ -387,36 +402,33 @@
             <param name="set2">The second set.</param>
             <returns>Returns a value indicating whether the box has been split.</returns>
         </member>
-        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.Mark(JeremyAnsel.ColorQuant.Box,System.Byte)">
+        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.Mark(JeremyAnsel.ColorQuant.Box@,System.Byte)">
             <summary>
             Marks a color space tag.
             </summary>
-            <param name="cube">The cube.</param>
+            <param name="c">The cube.</param>
             <param name="label">A label.</param>
         </member>
-        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.BuildCube(JeremyAnsel.ColorQuant.Box[]@,System.Int32@)">
+        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.BuildCube(System.Int32@)">
             <summary>
             Builds the cube.
             </summary>
-            <param name="cube">The cube.</param>
             <param name="colorCount">The color count.</param>
         </member>
-        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.GenerateResult(System.Byte[],System.Int32,JeremyAnsel.ColorQuant.Box[])">
+        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.GenerateResult(System.Byte[],System.Int32)">
             <summary>
             Generates the quantized result.
             </summary>
             <param name="image">The image.</param>
             <param name="colorCount">The color count.</param>
-            <param name="cube">The cube.</param>
             <returns>The result.</returns>
         </member>
-        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.GenerateResult(System.UInt32*,System.Int32,JeremyAnsel.ColorQuant.Box[],System.Int32,System.Int32,System.Byte*,System.Boolean)">
+        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.GenerateResult(System.UInt32*,System.Int32,System.Int32,System.Int32,System.Byte*,System.Boolean)">
             <summary>
             Generates the quantized result.
             </summary>
             <param name="image">The image.</param>
             <param name="colorCount">The color count.</param>
-            <param name="cube">The cube.</param>
             <param name="width">Width of image</param>
             <param name="height">Height of image</param>
             <param name="destPixels">Pixel values are written here. Must provide width*height memory.</param>
