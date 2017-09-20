@@ -384,7 +384,7 @@ public class Gif
             Read(Reader);
         }
 
-        public Frame(byte[] Pixels, int Width, int Height, uint[] Palette, LZWEncoder Encoder, ushort Delay, int TransparentColorIndex = -1)
+        public Frame(byte[] Pixels, int Width, int Height, uint[] Palette, uint ColorCount, LZWEncoder Encoder, ushort Delay, int TransparentColorIndex = -1)
         {
             if (Pixels == null)
                 throw new ArgumentException("Pixels can't be null.");
@@ -394,6 +394,9 @@ public class Gif
 
             if (Palette == null || Palette.Length > 256)
                 throw new ArgumentException("Palette null or more than 256 entries.");
+
+            if (ColorCount > Palette.Length)
+                throw new ArgumentException("ColorCount bigger than Palette size.");
 
             if (Encoder == null)
                 throw new ArgumentException("Encoder can't be null.");
@@ -408,7 +411,7 @@ public class Gif
 
             // determine size of colortable to use
             // get next bigger power of 2 value of used colorcount
-            uint palSize2 = NextPowerOf2((uint)Palette.Length);
+            uint palSize2 = NextPowerOf2(ColorCount);
 
             // use and create local color table with determined size
             Packed.IsLocalColorTable = true;
@@ -417,8 +420,9 @@ public class Gif
 
             // fill color table
             int i = 0;
-            foreach(uint c in Palette)
+            for(uint j = 0; j < ColorCount; j++)
             {
+                uint c = Palette[j];
                 ColorTable[i] = (byte)((c & 0x00FF0000) >> 16); i++;
                 ColorTable[i] = (byte)((c & 0x0000FF00) >> 8); i++;
                 ColorTable[i] = (byte)(c & 0x000000FF); i++;

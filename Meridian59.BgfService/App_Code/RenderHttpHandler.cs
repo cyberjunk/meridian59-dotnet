@@ -8,8 +8,6 @@ using Meridian59.Common.Constants;
 using Meridian59.Drawing2D;
 using Meridian59.Data.Models;
 using System.Collections.Concurrent;
-using JeremyAnsel.ColorQuant;
-using System.Globalization;
 
 namespace Meridian59.BgfService
 {
@@ -72,7 +70,8 @@ namespace Meridian59.BgfService
         private const ushort MAXSCALE = 80;
 
         private readonly ImageComposerGDI<ObjectBase> imageComposer = new ImageComposerGDI<ObjectBase>();
-        private readonly WuAlphaColorQuantizer quant = new WuAlphaColorQuantizer();
+        private readonly WuQuantNet.WuQuant quant = new WuQuantNet.WuQuant();
+        //private readonly IntPtr quant = WuQuant.Create();
         private readonly byte[] pixels = new byte[MAXWIDTH * MAXHEIGHT];
         private readonly Gif gif = new Gif(0, 0);
         private readonly Gif.LZWEncoder encoder = new Gif.LZWEncoder();
@@ -274,8 +273,11 @@ namespace Meridian59.BgfService
 
         private void OnImageComposerNewImageAvailable(object sender, EventArgs e)
         {
+            //int colors = 256;
+
             // reduce to 8bit using custom lib, return palette, store indices in buffer pixels
             uint[] pal = quant.Quantize((Bitmap)imageComposer.Image, 256, pixels, false);
+            //uint[] pal = WuQuant.Quantize(quant, imageComposer.Image, ref colors, pixels, 0);
 
             // get timespan for gif
             double span = tick - tickLastAdd;
@@ -296,6 +298,8 @@ namespace Meridian59.BgfService
                 imageComposer.Image.Width,
                 imageComposer.Image.Height,
                 pal,
+                //(uint)colors,
+                (uint)pal.Length,
                 encoder,
                 0,
                 0);
