@@ -7,6 +7,9 @@
 <script runat="server">
     void Application_Start(object sender, EventArgs e)
     {
+        String _path = String.Concat(System.Environment.GetEnvironmentVariable("PATH"), ";", System.AppDomain.CurrentDomain.RelativeSearchPath);
+        System.Environment.SetEnvironmentVariable("PATH", _path, EnvironmentVariableTarget.Process);
+
         // preload all BGF from disk to RAM
         BgfCache.Load();
 
