@@ -315,7 +315,7 @@
             <param name="a">The alpha value.</param>
             <returns>The index.</returns>
         </member>
-        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.Volume(JeremyAnsel.ColorQuant.Box@,System.Int64[])">
+        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.Volume(JeremyAnsel.ColorQuant.Box@,System.Int32[])">
             <summary>
             Computes sum over a box of any given statistic.
             </summary>
@@ -323,7 +323,7 @@
             <param name="moment">The moment.</param>
             <returns>The result.</returns>
         </member>
-        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.Bottom(JeremyAnsel.ColorQuant.Box@,System.Int32,System.Int64[])">
+        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.Bottom(JeremyAnsel.ColorQuant.Box@,System.Int32,System.Int32[])">
             <summary>
             Computes part of Volume(cube, moment) that doesn't depend on r1, g1, or b1 (depending on direction).
             </summary>
@@ -332,7 +332,7 @@
             <param name="moment">The moment.</param>
             <returns>The result.</returns>
         </member>
-        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.Top(JeremyAnsel.ColorQuant.Box@,System.Int32,System.Int32,System.Int64[])">
+        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.Top(JeremyAnsel.ColorQuant.Box@,System.Int32,System.Int32,System.Int32[])">
             <summary>
             Computes remainder of Volume(cube, moment), substituting position for r1, g1, or b1 (depending on direction).
             </summary>
@@ -374,7 +374,7 @@
             <param name="c">The cube.</param>
             <returns>The result.</returns>
         </member>
-        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.Maximize(JeremyAnsel.ColorQuant.Box@,System.Int32,System.Int32,System.Int32,System.Int32@,System.Double,System.Double,System.Double,System.Double,System.Double)">
+        <member name="M:JeremyAnsel.ColorQuant.WuAlphaColorQuantizer.Maximize(JeremyAnsel.ColorQuant.Box@,System.Int32,System.Int32,System.Int32,System.Int32@,System.Single,System.Single,System.Single,System.Single,System.Single)">
             <summary>
             We want to minimize the sum of the variances of two sub-boxes.
             The sum(c^2) terms can be ignored since their sum over both sub-boxes
