@@ -1,4 +1,6 @@
 ﻿
+#define NATIVE
+
 using System;
 using System.Web;
 using System.Web.Routing;
@@ -70,11 +72,15 @@ namespace Meridian59.BgfService
         private const ushort MAXSCALE = 80;
 
         private readonly ImageComposerGDI<ObjectBase> imageComposer = new ImageComposerGDI<ObjectBase>();
-        private readonly WuQuantNet.WuQuant quant = new WuQuantNet.WuQuant();
-        //private readonly IntPtr quant = WuQuant.Create();
         private readonly byte[] pixels = new byte[MAXWIDTH * MAXHEIGHT];
         private readonly Gif gif = new Gif(0, 0);
         private readonly Gif.LZWEncoder encoder = new Gif.LZWEncoder();
+
+#if !NATIVE
+        private readonly WuQuantNet.WuQuant quant = new WuQuantNet.WuQuant();
+#else
+        private readonly IntPtr quant = WuQuantWrap.WuQuant.Create();
+#endif
 
         private double tick;
         private double tickLastAdd;
@@ -273,11 +279,14 @@ namespace Meridian59.BgfService
 
         private void OnImageComposerNewImageAvailable(object sender, EventArgs e)
         {
-            //int colors = 256;
-
+#if !NATIVE
             // reduce to 8bit using custom lib, return palette, store indices in buffer pixels
             uint[] pal = quant.Quantize((Bitmap)imageComposer.Image, 256, pixels, false);
-            //uint[] pal = WuQuant.Quantize(quant, imageComposer.Image, ref colors, pixels, 0);
+            int colors = pal.Length;
+#else
+            int colors = 256;
+            uint[] pal = WuQuantWrap.WuQuant.Quantize(quant, imageComposer.Image, ref colors, pixels, 0);
+#endif
 
             // get timespan for gif
             double span = tick - tickLastAdd;
@@ -298,8 +307,7 @@ namespace Meridian59.BgfService
                 imageComposer.Image.Width,
                 imageComposer.Image.Height,
                 pal,
-                //(uint)colors,
-                (uint)pal.Length,
+                (uint)colors,
                 encoder,
                 0,
                 0);
