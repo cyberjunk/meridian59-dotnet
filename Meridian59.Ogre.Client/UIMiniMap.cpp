@@ -103,7 +103,7 @@ namespace Meridian59 { namespace Ogre
       else
       {
          const float MINZOOM = 1.0f;
-         const float MAXZOOM = 20.0f;
+         const float MAXZOOM = 32.0f;
          
          float zoom = ControllerUI::MiniMap::Zoom;
          
