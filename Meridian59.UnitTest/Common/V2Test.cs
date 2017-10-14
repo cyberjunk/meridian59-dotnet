@@ -292,7 +292,7 @@ namespace Meridian59.UnitTest
             p1 = new V2(0.0f, 0.0f);
             p2 = new V2(0.0f, 0.0f);
             expected = 0.0f;
-            returned = s.MinDistanceToLineSegment(p1, p2);
+            returned = s.MinDistanceToLineSegment(ref p1, ref p2);
 
             Assert.AreEqual(expected, returned, EPSILON);
 
@@ -303,7 +303,7 @@ namespace Meridian59.UnitTest
             p1 = new V2(0.0f, 0.0f);
             p2 = new V2(1.0f, 0.0f);
             expected = 0.0f;
-            returned = s.MinDistanceToLineSegment(p1, p2);
+            returned = s.MinDistanceToLineSegment(ref p1, ref p2);
 
             Assert.AreEqual(expected, returned, EPSILON);
 
@@ -314,7 +314,7 @@ namespace Meridian59.UnitTest
             p1 = new V2(0.0f, 0.0f);
             p2 = new V2(1.0f, 0.0f);
             expected = 0.0f;
-            returned = s.MinDistanceToLineSegment(p1, p2);
+            returned = s.MinDistanceToLineSegment(ref p1, ref p2);
 
             Assert.AreEqual(expected, returned, EPSILON);
 
@@ -325,7 +325,7 @@ namespace Meridian59.UnitTest
             p1 = new V2(0.0f, 0.0f);
             p2 = new V2(1.0f, 0.0f);
             expected = 0.5f;
-            returned = s.MinDistanceToLineSegment(p1, p2);
+            returned = s.MinDistanceToLineSegment(ref p1, ref p2);
 
             Assert.AreEqual(expected, returned, EPSILON);
 
@@ -336,7 +336,7 @@ namespace Meridian59.UnitTest
             p1 = new V2(1.0f, 0.0f);
             p2 = new V2(1.0f, 0.0f);
             expected = 1.0f;
-            returned = s.MinDistanceToLineSegment(p1, p2);
+            returned = s.MinDistanceToLineSegment(ref p1, ref p2);
 
             Assert.AreEqual(expected, returned, EPSILON);
 
@@ -347,7 +347,7 @@ namespace Meridian59.UnitTest
             p1 = new V2(0.0f, 0.0f);
             p2 = new V2(1.0f, 0.0f);
             expected = 1.0f;
-            returned = s.MinDistanceToLineSegment(p1, p2);
+            returned = s.MinDistanceToLineSegment(ref p1, ref p2);
 
             Assert.AreEqual(expected, returned, EPSILON);
 
@@ -358,7 +358,7 @@ namespace Meridian59.UnitTest
             p1 = new V2(0.0f, 0.0f);
             p2 = new V2(1.0f, 0.0f);
             expected = 1.0f;
-            returned = s.MinDistanceToLineSegment(p1, p2);
+            returned = s.MinDistanceToLineSegment(ref p1, ref p2);
 
             Assert.AreEqual(expected, returned, EPSILON);
 
@@ -369,7 +369,7 @@ namespace Meridian59.UnitTest
             p1 = new V2(0.0f, 0.0f);
             p2 = new V2(1.0f, 0.0f);
             expected = 0.5f;
-            returned = s.MinDistanceToLineSegment(p1, p2);
+            returned = s.MinDistanceToLineSegment(ref p1, ref p2);
 
             Assert.AreEqual(expected, returned, EPSILON);
 
@@ -380,7 +380,7 @@ namespace Meridian59.UnitTest
             p1 = new V2(0.0f, 0.0f);
             p2 = new V2(1.0f, 0.0f);
             expected = 1.0f;
-            returned = s.MinDistanceToLineSegment(p1, p2);
+            returned = s.MinDistanceToLineSegment(ref p1, ref p2);
 
             Assert.AreEqual(expected, returned, EPSILON);
 
@@ -391,7 +391,7 @@ namespace Meridian59.UnitTest
             p1 = new V2(0.0f, 0.0f);
             p2 = new V2(1.0f, 0.0f);
             expected = 1.0f;
-            returned = s.MinDistanceToLineSegment(p1, p2);
+            returned = s.MinDistanceToLineSegment(ref p1, ref p2);
 
             Assert.AreEqual(expected, returned, EPSILON);
 
@@ -402,7 +402,7 @@ namespace Meridian59.UnitTest
             p1 = new V2(0.0f, 0.0f);
             p2 = new V2(1.0f, 0.0f);
             expected = 1.0f;
-            returned = s.MinDistanceToLineSegment(p1, p2);
+            returned = s.MinDistanceToLineSegment(ref p1, ref p2);
 
             Assert.AreEqual(expected, returned, EPSILON);
 
@@ -413,7 +413,7 @@ namespace Meridian59.UnitTest
             p1 = new V2(0.0f, 0.0f);
             p2 = new V2(1.0f, 0.0f);
             expected = 1.0f;
-            returned = s.MinDistanceToLineSegment(p1, p2);
+            returned = s.MinDistanceToLineSegment(ref p1, ref p2);
 
             Assert.AreEqual(expected, returned, EPSILON);
 
@@ -424,7 +424,7 @@ namespace Meridian59.UnitTest
             p1 = new V2(0.0f, 0.0f);
             p2 = new V2(1.0f, 0.0f);
             expected = (Real)Math.Sqrt(2.0f);
-            returned = s.MinDistanceToLineSegment(p1, p2);
+            returned = s.MinDistanceToLineSegment(ref p1, ref p2);
 
             Assert.AreEqual(expected, returned, EPSILON);
 
@@ -435,7 +435,7 @@ namespace Meridian59.UnitTest
             p1 = new V2(0.0f, 0.0f);
             p2 = new V2(1.0f, 0.0f);
             expected = (Real)Math.Sqrt(2.0f);
-            returned = s.MinDistanceToLineSegment(p1, p2);
+            returned = s.MinDistanceToLineSegment(ref p1, ref p2);
 
             Assert.AreEqual(expected, returned, EPSILON);
         }
