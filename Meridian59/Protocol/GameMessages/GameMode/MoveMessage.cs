@@ -36,7 +36,11 @@ namespace Meridian59.Protocol.GameMessages
         {
             get
             {
+#if !VANILLA && !OPENMERIDIAN
+                return base.ByteLength + TypeSizes.INT + TypeSizes.SHORT + TypeSizes.SHORT + TypeSizes.BYTE + TypeSizes.SHORT;
+#else
                 return base.ByteLength + TypeSizes.INT + TypeSizes.SHORT + TypeSizes.SHORT + TypeSizes.BYTE;
+#endif
             }
         }
 
@@ -57,7 +61,11 @@ namespace Meridian59.Protocol.GameMessages
 
             Buffer[cursor] = (byte)(ROTATETODEST | (byte)MovementSpeed);
             cursor++;
-            
+
+#if !VANILLA && !OPENMERIDIAN
+            Array.Copy(BitConverter.GetBytes(Angle), 0, Buffer, cursor, TypeSizes.SHORT);
+            cursor += TypeSizes.SHORT;
+#endif
             return cursor - StartIndex;
         }
 
@@ -80,6 +88,10 @@ namespace Meridian59.Protocol.GameMessages
             RotateToDestination = ((Buffer[cursor] & ROTATETODEST) == ROTATETODEST);
             cursor++;
 
+#if !VANILLA && !OPENMERIDIAN
+            Angle = BitConverter.ToUInt16(Buffer, cursor);
+            cursor += TypeSizes.SHORT;
+#endif
             return cursor - StartIndex;
         }
 
@@ -98,6 +110,11 @@ namespace Meridian59.Protocol.GameMessages
 
             Buffer[0] = (byte)(ROTATETODEST | (byte)MovementSpeed);
             Buffer++;
+
+#if !VANILLA && !OPENMERIDIAN
+            *((ushort*)Buffer) = Angle;
+            Buffer += TypeSizes.SHORT;
+#endif
         }
 
         public override unsafe void ReadFrom(ref byte* Buffer)
@@ -116,22 +133,28 @@ namespace Meridian59.Protocol.GameMessages
             MovementSpeed = (MovementSpeed)(Buffer[0] & ~ROTATETODEST);
             RotateToDestination = ((Buffer[0] & ROTATETODEST) == ROTATETODEST);
             Buffer++;
+
+#if !VANILLA && !OPENMERIDIAN
+            Angle = *((ushort*)Buffer);
+            Buffer += TypeSizes.SHORT;
+#endif
         }
 
         #endregion
-        
+
         public uint ObjectID { get; set; }
         public ushort NewCoordinateY { get; set; }
         public ushort NewCoordinateX { get; set; }
         public MovementSpeed MovementSpeed { get; set; }
-        
+        public ushort Angle { get; set; }
+
         /// <summary>
         /// Tells whether the object should also be rotated
         /// to face the destination of the move.
         /// </summary>
         public bool RotateToDestination { get; set; }
 
-        public MoveMessage(uint ObjectID, ushort NewCoordinateX, ushort NewCoordinateY, MovementSpeed MovementSpeed, bool RotateToDestination = false) 
+        public MoveMessage(uint ObjectID, ushort NewCoordinateX, ushort NewCoordinateY, MovementSpeed MovementSpeed, ushort Angle, bool RotateToDestination = false) 
             : base(MessageTypeGameMode.Move)
         {
             this.ObjectID = ObjectID;
@@ -139,6 +162,7 @@ namespace Meridian59.Protocol.GameMessages
             this.NewCoordinateX = NewCoordinateX;
             this.MovementSpeed = MovementSpeed;
             this.RotateToDestination = RotateToDestination;
+            this.Angle = Angle;
         }
 
         public MoveMessage(byte[] Buffer, int StartIndex = 0) 

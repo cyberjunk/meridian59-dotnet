@@ -1515,8 +1515,9 @@ namespace Meridian59.Client
         /// <param name="X"></param>
         /// <param name="Y"></param>
         /// <param name="Speed"></param>
+        /// <param name="Angle"></param>
         /// <param name="ForceSend"></param>
-        public virtual void SendReqMoveMessage(ushort X, ushort Y, byte Speed, bool ForceSend = false)
+        public virtual void SendReqMoveMessage(ushort X, ushort Y, byte Speed, ushort Angle, bool ForceSend = false)
         {
             if (Data.Effects.Paralyze.IsActive ||
                 Data.IsResting ||
@@ -1528,7 +1529,7 @@ namespace Meridian59.Client
             {
                 // create message instance
                 ReqMoveMessage message = new ReqMoveMessage(
-                    X, Y, (MovementSpeed)Speed, Data.RoomInformation.RoomID);
+                    X, Y, (MovementSpeed)Speed, Data.RoomInformation.RoomID, Angle);
 
                 // send/enqueue it (async)
                 ServerConnection.SendQueue.Enqueue(message);
@@ -1558,6 +1559,7 @@ namespace Meridian59.Client
                 Data.AvatarObject.CoordinateX,
                 Data.AvatarObject.CoordinateY,
                 speed,
+                Data.AvatarObject.AngleUnits,
                 ForceSend);           
         }
 

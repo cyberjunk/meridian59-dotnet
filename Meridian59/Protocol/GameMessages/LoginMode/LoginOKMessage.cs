@@ -32,7 +32,11 @@ namespace Meridian59.Protocol.GameMessages
         {
             get
             {
+#if !VANILLA && !OPENMERIDIAN
+                return base.ByteLength + TypeSizes.BYTE + TypeSizes.INT;
+#else
                 return base.ByteLength + TypeSizes.BYTE;
+#endif
             }
         }
 
@@ -45,6 +49,10 @@ namespace Meridian59.Protocol.GameMessages
             Buffer[cursor] = (byte)AccountType;
             cursor++;
 
+#if !VANILLA && !OPENMERIDIAN
+            Array.Copy(BitConverter.GetBytes(SessionID), 0, Buffer, cursor, TypeSizes.INT);
+            cursor += TypeSizes.INT;
+#endif
             return cursor - StartIndex;
         }
 
@@ -57,19 +65,30 @@ namespace Meridian59.Protocol.GameMessages
             AccountType = (AccountType)Buffer[cursor];
             cursor++;
 
+#if !VANILLA && !OPENMERIDIAN
+            SessionID = BitConverter.ToUInt32(Buffer, cursor);
+            cursor += TypeSizes.INT;
+#endif
             return cursor - StartIndex;
         }
-        #endregion
+#endregion
        
         /// <summary>
         /// Account type of this user.
         /// </summary>
         public AccountType AccountType { get; set; }
 
-        public LoginOKMessage(AccountType AccountType)
+        /// <summary>
+        /// Blakserv session ID.
+        /// NOT available in VANILLA and OPENMERIDIAN
+        /// </summary>
+        public uint SessionID { get; set; }
+
+        public LoginOKMessage(AccountType AccountType, uint SessionID)
             : base(MessageTypeLoginMode.LoginOK)
         {           
-            this.AccountType = AccountType;                        
+            this.AccountType = AccountType;
+            this.SessionID = SessionID;
         }
 
         public LoginOKMessage(byte[] Buffer, int StartIndex = 0) 

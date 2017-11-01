@@ -2158,6 +2158,10 @@ namespace Meridian59.Data
             RoomObject roomObject = RoomObjects.GetItemByID(Message.ObjectID);
             if (roomObject != null)
             {
+#if !VANILLA && !OPENMERIDIAN
+                // set new angle from message
+                roomObject.AngleUnits = Message.Angle;
+#endif
                 // create destination from values
                 V2 destination = new V2(Message.NewCoordinateX, Message.NewCoordinateY);
 

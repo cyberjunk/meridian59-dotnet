@@ -29,7 +29,11 @@ namespace Meridian59.Protocol.GameMessages
         {
             get
             {
+#if !VANILLA && !OPENMERIDIAN
+                return base.ByteLength + TypeSizes.SHORT + TypeSizes.SHORT + TypeSizes.BYTE + TypeSizes.INT + TypeSizes.SHORT;
+#else
                 return base.ByteLength + TypeSizes.SHORT + TypeSizes.SHORT + TypeSizes.BYTE + TypeSizes.INT;
+#endif
             }
         }
 
@@ -51,6 +55,10 @@ namespace Meridian59.Protocol.GameMessages
             Array.Copy(BitConverter.GetBytes(CurrentMapID), 0, Buffer, cursor, TypeSizes.INT);
             cursor += TypeSizes.INT;
 
+#if !VANILLA && !OPENMERIDIAN
+            Array.Copy(BitConverter.GetBytes(Angle), 0, Buffer, cursor, TypeSizes.SHORT);
+            cursor += TypeSizes.SHORT;
+#endif
             return cursor - StartIndex;
         }
 
@@ -72,22 +80,28 @@ namespace Meridian59.Protocol.GameMessages
             CurrentMapID = BitConverter.ToUInt32(Buffer, cursor);
             cursor += TypeSizes.INT;
 
+#if !VANILLA && !OPENMERIDIAN
+            Angle = BitConverter.ToUInt16(Buffer, cursor);
+            cursor += TypeSizes.SHORT;
+#endif
             return cursor - StartIndex;
         }
-        #endregion
+#endregion
 
         public ushort Y { get; set; }
         public ushort X { get; set; }
         public MovementSpeed MoveMode { get; set; }
         public uint CurrentMapID { get; set; }
+        public ushort Angle { get; set; }
 
-        public ReqMoveMessage(ushort X = 0, ushort Y = 0, MovementSpeed MoveMode = 0, uint CurrentMapID = 0) 
+        public ReqMoveMessage(ushort X, ushort Y, MovementSpeed MoveMode, uint CurrentMapID, ushort Angle) 
             : base(MessageTypeGameMode.ReqMove)
         {
             this.Y = Y;
             this.X = X;
             this.MoveMode = MoveMode;
             this.CurrentMapID = CurrentMapID;
+            this.Angle = Angle;
         }
 
         public ReqMoveMessage(byte[] Buffer, int StartIndex = 0) 
