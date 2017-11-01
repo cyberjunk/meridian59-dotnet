@@ -32,9 +32,18 @@ namespace Meridian59.Protocol.GameMessages
         public class Tcp : MessageHeader
         {
             /// <summary>
-            /// The headerlength (7)
+            /// The TCP headerlength (7)
             /// </summary>
             public const ushort HEADERLENGTH = TypeSizes.SHORT + TypeSizes.SHORT + TypeSizes.SHORT + TypeSizes.BYTE;
+
+            public Tcp(ushort Length = 0, ushort CRC = 0, byte ServerSave = 0)
+                : base(Length, CRC, ServerSave) { }
+
+            public Tcp(byte[] Buffer, int StartIndex = 0, MessageDirection Direction = MessageDirection.ServerToClient)
+                : base(Buffer, StartIndex, Direction) { }
+
+            public unsafe Tcp(ref byte* Buffer, MessageDirection Direction = MessageDirection.ServerToClient)
+                : base(ref Buffer, Direction) { }
 
             public override int ByteLength { get { return HEADERLENGTH; } }
 
@@ -153,8 +162,6 @@ namespace Meridian59.Protocol.GameMessages
             if (PropertyChanged != null) PropertyChanged(this, e);
         }
         #endregion
-
-        //public virtual ushort HeaderLength { get; }
 
         /// <summary>
         /// Length of body
