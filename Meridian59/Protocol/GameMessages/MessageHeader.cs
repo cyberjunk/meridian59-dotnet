@@ -36,6 +36,8 @@ namespace Meridian59.Protocol.GameMessages
             /// </summary>
             public const ushort HEADERLENGTH = TypeSizes.SHORT + TypeSizes.SHORT + TypeSizes.SHORT + TypeSizes.BYTE;
 
+            public override bool IsTCP { get { return true; } }
+
             public Tcp(ushort Length = 0, ushort CRC = 0, byte ServerSave = 0)
                 : base(Length, CRC, ServerSave) { }
 
@@ -151,6 +153,8 @@ namespace Meridian59.Protocol.GameMessages
             /// The UDP headerlength (11)
             /// </summary>
             public const ushort HEADERLENGTH = TypeSizes.INT + TypeSizes.INT + TypeSizes.SHORT + TypeSizes.BYTE;
+
+            public override bool IsTCP { get { return false; } }
 
             public int SessionID { get; set; }
             public uint SequenceNumber { get; set; }
@@ -342,6 +346,11 @@ namespace Meridian59.Protocol.GameMessages
         /// True if body has length of zero.
         /// </summary>
         public bool HasEmptyBody { get { return (BodyLength == 0); } }
+
+        /// <summary>
+        /// True for TCP instances
+        /// </summary>
+        public abstract bool IsTCP { get; }
 
         /// <summary>
         /// Creates a byte[] with all header values serialized.

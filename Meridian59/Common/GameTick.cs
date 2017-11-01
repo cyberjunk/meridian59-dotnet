@@ -38,10 +38,15 @@ namespace Meridian59.Common
         public double INTERVALREQTURN   = 1000.0;
         public double INTERVALREQATTACK = 1000.0;
         public double INTERVALREQCAST   = 1000.0;
-#else
+#elif OPENMERIDIAN
         public double INTERVALREQMOVE   = 250.0;
         public double INTERVALREQTURN   = 250.0;
         public double INTERVALREQATTACK = 250.0;
+        public double INTERVALREQCAST   = 250.0;
+#else
+        public double INTERVALREQMOVE   = 100.0;
+        public double INTERVALREQTURN   = 100.0;
+        public double INTERVALREQATTACK = 200.0;
         public double INTERVALREQCAST   = 250.0;
 #endif
         #endregion

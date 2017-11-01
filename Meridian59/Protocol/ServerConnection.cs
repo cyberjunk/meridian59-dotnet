@@ -270,19 +270,50 @@ namespace Meridian59.Protocol
             // after BP_REQ_QUIT and while we're waiting for BP_QUIT (server won't understand)
             if (isQuitting)
                 return;
-            
-            // use MessageController to sign the message with valid CRC and SS
-            messageController.SignMessage(Message);
-            
-            // serialize message to bytes
-            byte[] MessageBytes = Message.Bytes;
-            
-            // write the message bytes to stream
-            tcpStream.Write(MessageBytes, 0, MessageBytes.Length);
-            
-            // only flush if we should do so
-            if (Flush)
-                tcpStream.Flush();
+
+            // enable UDP for MeridianNext
+#if !VANILLA && !OPENMERIDIAN
+            const bool USE_UDP = true;
+#else
+            const bool USE_UDP = false;
+#endif
+
+            // send some by UDP
+            if (USE_UDP && Message is GameModeMessage && (
+                Message.PI == (byte)MessageTypeGameMode.ReqMove ||
+                Message.PI == (byte)MessageTypeGameMode.ReqTurn ||
+                Message.PI == (byte)MessageTypeGameMode.ReqAttack))
+            {
+                // create UDP header (don't care about existing)
+                Message.Header = new MessageHeader.Udp();
+
+                // use MessageController to sign the message with valid CRC and SS
+                messageController.SignMessage(Message);
+
+                // serialize message to bytes
+                byte[] MessageBytes = Message.Bytes;
+
+                // write the message bytes to stream
+                socketUDP.SendTo(MessageBytes, socket.RemoteEndPoint);
+            }
+            else
+            {
+                // create TCP header (don't care about existing)
+                Message.Header = new MessageHeader.Tcp();
+
+                // use MessageController to sign the message with valid CRC and SS
+                messageController.SignMessage(Message);
+
+                // serialize message to bytes
+                byte[] MessageBytes = Message.Bytes;
+
+                // write the message bytes to stream
+                tcpStream.Write(MessageBytes, 0, MessageBytes.Length);
+
+                // only flush if we should do so
+                if (Flush)
+                    tcpStream.Flush();
+            }
 
             // track sending of UseCharacter message
             if (Message is UseCharacterMessage)
@@ -412,9 +443,13 @@ namespace Meridian59.Protocol
             // cleanup
             if (socket != null)
                 socket.Close();
-            
+
+            if (socketUDP != null)
+                socketUDP.Close();
+
             // reset references
             socket = null;
+            socketUDP = null;
             tcpStream = null;
             workThread = null;
         }

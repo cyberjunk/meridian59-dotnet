@@ -127,5 +127,23 @@ namespace Meridian59.Protocol
 
             return Message.Header.HeaderCRC;
         }
+
+        /// <summary>
+        /// Sets (and returns) a valid CRC on a GameMessage for UDP
+        /// </summary>
+        /// <param name="Message"></param>
+        /// <returns></returns>
+        public ushort CreatePacketCRCUDP(GameMessage Message)
+        {
+            // create a generic CRC32 of message body
+            uint crc32 = Crc32.Compute(Message.BodyBytes);
+
+            // no scrambling on UDP
+
+            // set encoded and shortened CRC on message
+            Message.Header.HeaderCRC = (ushort)crc32;
+
+            return Message.Header.HeaderCRC;
+        }
     }
 }

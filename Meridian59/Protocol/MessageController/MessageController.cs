@@ -118,6 +118,16 @@ namespace Meridian59.Protocol
         { 
             get { return CRCCreator.CurrentHashTable; } 
         }
+
+        /// <summary>
+        /// Session-ID received in AP_LOGINOK (not available in VANILLA/OPENMERIDIAN)
+        /// </summary>
+        public int SessionID { get; protected set; }
+
+        /// <summary>
+        /// Last SequenceNumber used when sending UDP
+        /// </summary>
+        public uint SequenceNumber { get; protected set; }
         #endregion
 
         #region Constructors
@@ -147,6 +157,8 @@ namespace Meridian59.Protocol
             CRCCreator = new CRCCreator();
             CRCCreatorEnabled = false;            
             Mode = ProtocolMode.Login;
+            SessionID = 0;
+            SequenceNumber = 0;
         }
         
         /// <summary>
@@ -164,9 +176,23 @@ namespace Meridian59.Protocol
             // update headerlength
             Message.Header.BodyLength = Convert.ToUInt16(Message.ByteLength - Message.Header.ByteLength);
 
-            // add a valid CRC if enabled
-            if (CRCCreatorEnabled)           
-                CRCCreator.CreatePacketCRC(Message, out dummy);            
+            // add CRC for either TCP or UDP 
+            if (Message.Header.IsTCP)
+            {
+                if (CRCCreatorEnabled)
+                    CRCCreator.CreatePacketCRC(Message, out dummy);
+            }
+            else
+            {
+                MessageHeader.Udp udpHeader = (MessageHeader.Udp)Message.Header;
+
+                // set sesionid, sequencenum
+                udpHeader.SessionID = SessionID;
+                udpHeader.SequenceNumber = SequenceNumber++;
+
+                // unscrambled crc
+                CRCCreator.CreatePacketCRCUDP(Message);
+            }
         }
        
         /// <summary>
@@ -175,8 +201,8 @@ namespace Meridian59.Protocol
         /// <param name="Packet"></param>
         protected void CheckServerSave(GameMessage Packet)
         {
-            // check if the serversave has changed
-            if (Packet.Header.HeaderSS != CurrentServerSave)
+            // check if the serversave has changed (ignore for UDP)
+            if (Packet.Header.IsTCP && Packet.Header.HeaderSS != CurrentServerSave)
             {
                 LastServerSave = CurrentServerSave;
                 CurrentServerSave = Packet.Header.HeaderSS;
@@ -265,6 +291,7 @@ namespace Meridian59.Protocol
 
                     case MessageTypeLoginMode.LoginOK:                // PI: 23
                         TypedMessage = new LoginOKMessage(e.MessageBuffer);
+                        SessionID = ((LoginOKMessage)TypedMessage).SessionID;
                         break;
 
                     case MessageTypeLoginMode.LoginFailed:            // PI: 24

@@ -66,7 +66,7 @@ namespace Meridian59.Protocol.GameMessages
             cursor++;
 
 #if !VANILLA && !OPENMERIDIAN
-            SessionID = BitConverter.ToUInt32(Buffer, cursor);
+            SessionID = BitConverter.ToInt32(Buffer, cursor);
             cursor += TypeSizes.INT;
 #endif
             return cursor - StartIndex;
@@ -82,9 +82,9 @@ namespace Meridian59.Protocol.GameMessages
         /// Blakserv session ID.
         /// NOT available in VANILLA and OPENMERIDIAN
         /// </summary>
-        public uint SessionID { get; set; }
+        public int SessionID { get; set; }
 
-        public LoginOKMessage(AccountType AccountType, uint SessionID)
+        public LoginOKMessage(AccountType AccountType, int SessionID)
             : base(MessageTypeLoginMode.LoginOK)
         {           
             this.AccountType = AccountType;
