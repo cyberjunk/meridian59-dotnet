@@ -81,13 +81,13 @@ namespace Meridian59.Protocol
         /// <param name="e"></param>
         protected void OnRecvReaderProcessMessage(object sender, MessageBufferEventArgs e)
         {
-            if (e.Length > MessageHeader.HEADERLENGTH)
+            if (e.Length > MessageHeader.Tcp.HEADERLENGTH)
             {
                 // save encoded type
-                byte encodedType = e.MessageBuffer[MessageHeader.HEADERLENGTH];
+                byte encodedType = e.MessageBuffer[MessageHeader.Tcp.HEADERLENGTH];
 
                 // decode type
-                e.MessageBuffer[MessageHeader.HEADERLENGTH] = PIDecoder.Decode(encodedType);
+                e.MessageBuffer[MessageHeader.Tcp.HEADERLENGTH] = PIDecoder.Decode(encodedType);
 
                 try
                 {

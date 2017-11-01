@@ -162,7 +162,7 @@ namespace Meridian59.Protocol
             Message.Header.HeaderSS = CurrentServerSave;
             
             // update headerlength
-            Message.Header.BodyLength = Convert.ToUInt16(Message.ByteLength - MessageHeader.HEADERLENGTH);
+            Message.Header.BodyLength = Convert.ToUInt16(Message.ByteLength - Message.Header.ByteLength);
 
             // add a valid CRC if enabled
             if (CRCCreatorEnabled)           
@@ -195,7 +195,7 @@ namespace Meridian59.Protocol
         protected GameMessage ExtractMessage(MessageBufferEventArgs e)
         {
             GameMessage TypedMessage = null;
-            byte PI = e.MessageBuffer[MessageHeader.HEADERLENGTH];
+            byte PI = e.MessageBuffer[MessageHeader.Tcp.HEADERLENGTH];
 
             // parse packet based on current protocol mode
             switch (Mode)

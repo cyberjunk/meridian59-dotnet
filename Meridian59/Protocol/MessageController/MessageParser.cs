@@ -100,7 +100,7 @@ namespace Meridian59.Protocol
         public void Reset()
         {
             // initalize a buffer for a message with maximum size
-            messageBuffer = new byte[ushort.MaxValue + MessageHeader.HEADERLENGTH];
+            messageBuffer = new byte[ushort.MaxValue + MessageHeader.Tcp.HEADERLENGTH];
             
             // initial parsermode
             readingHeader = true;
@@ -136,6 +136,7 @@ namespace Meridian59.Protocol
 
         /// <summary>
         /// Process available bytes on a Stream object.
+        /// Only works with the TCP header!
         /// </summary>
         /// <param name="Stream"></param>
         /// <param name="Available"></param>
@@ -144,7 +145,7 @@ namespace Meridian59.Protocol
             if (readingHeader)
             {
                 // How much till we have complete header?
-                int missingheader = MessageHeader.HEADERLENGTH - cursor;
+                int missingheader = MessageHeader.Tcp.HEADERLENGTH - cursor;
                 if (Available < missingheader)
                 {
                     // Read header chunk only
@@ -178,7 +179,7 @@ namespace Meridian59.Protocol
                             // so it's memory addr gets increased
                             IntPtr MemoryAddress = baseMemoryAddress;
                             if (cursor < processed)
-                                MemoryAddress += processed - MessageHeader.HEADERLENGTH;
+                                MemoryAddress += processed - MessageHeader.Tcp.HEADERLENGTH;
 
                             // copy body to messagebuffer
                             Stream.Read(messageBuffer, cursor, nextBodyLength);
@@ -226,10 +227,10 @@ namespace Meridian59.Protocol
                 MemoryAddress -= cursor; 
                 
                 OnCompletingSplittedPacket(new CompletingSplittedMessageEventArgs(
-                    (int)baseMemoryAddress, processed + Available, processed, (int)MemoryAddress, MessageHeader.HEADERLENGTH + nextBodyLength));
+                    (int)baseMemoryAddress, processed + Available, processed, (int)MemoryAddress, MessageHeader.Tcp.HEADERLENGTH + nextBodyLength));
 
                 // rest of body this time ?
-                int MessageLength = MessageHeader.HEADERLENGTH + nextBodyLength;
+                int MessageLength = MessageHeader.Tcp.HEADERLENGTH + nextBodyLength;
                 if (cursor + Available >= MessageLength)
                 {                                     
                     // copy rest of body to messagebuffer

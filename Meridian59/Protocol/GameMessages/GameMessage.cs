@@ -45,25 +45,25 @@ namespace Meridian59.Protocol.GameMessages
         #region Constructors
         public GameMessage(byte[] Buffer, int StartIndex = 0)
         {
-            this.Header = new MessageHeader();
+            this.Header = new MessageHeader.Tcp();
             ReadFrom(Buffer, StartIndex);
         }
 
         public unsafe GameMessage(ref byte* Buffer)
         {
-            this.Header = new MessageHeader();
+            this.Header = new MessageHeader.Tcp();
             ReadFrom(ref Buffer);
         }
 
         public GameMessage(byte PI)
         {
-            this.Header = new MessageHeader();
+            this.Header = new MessageHeader.Tcp();
             this.PI = PI;
         }
 
         public GameMessage()
         {
-            this.Header = new MessageHeader();
+            this.Header = new MessageHeader.Tcp();
         }
         #endregion
 
@@ -116,7 +116,7 @@ namespace Meridian59.Protocol.GameMessages
                 byte[] data = new byte[DataLength];
 
                 // copy data block from fully serializes 'Bytes'
-                Array.Copy(Bytes, MessageHeader.HEADERLENGTH + TypeSizes.BYTE, data, 0, DataLength);
+                Array.Copy(Bytes, Header.ByteLength + TypeSizes.BYTE, data, 0, DataLength);
                 
                 return data;
             }
@@ -134,7 +134,7 @@ namespace Meridian59.Protocol.GameMessages
                 byte[] body = new byte[Header.BodyLength];
 
                 // copy body block from fully serializes 'Bytes'
-                Array.Copy(Bytes, MessageHeader.HEADERLENGTH, body, 0, Header.BodyLength);
+                Array.Copy(Bytes, Header.ByteLength, body, 0, Header.BodyLength);
 
                 return body;
             }

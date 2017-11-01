@@ -112,7 +112,7 @@ namespace Meridian59.Protocol
         /// <param name="e"></param>
         protected void OnSendReaderProcessMessage(object sender, MessageBufferEventArgs e)
         {
-            if (e.Length > MessageHeader.HEADERLENGTH)
+            if (e.Length > MessageHeader.Tcp.HEADERLENGTH)
             {
                 try
                 {

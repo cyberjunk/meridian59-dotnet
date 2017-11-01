@@ -153,10 +153,10 @@ namespace Meridian59.AdminUI.Viewers
         {
             // build a gamemessage from the provided messagetype and body
             byte[] body = txtMessageBody.GetBinaryValue();
-            byte[] msgbytes = new byte[MessageHeader.HEADERLENGTH + body.Length];
+            byte[] msgbytes = new byte[MessageHeader.Tcp.HEADERLENGTH + body.Length];
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(body.Length)), 0, msgbytes, 0, 2);
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(body.Length)), 0, msgbytes, 4, 2);
-            Array.Copy(body, 0, msgbytes, MessageHeader.HEADERLENGTH, body.Length);
+            Array.Copy(body, 0, msgbytes, MessageHeader.Tcp.HEADERLENGTH, body.Length);
 
             // create generic instance from raw bytes
             GenericGameMessage message = new GenericGameMessage(msgbytes);

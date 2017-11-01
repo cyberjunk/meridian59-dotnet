@@ -27,8 +27,120 @@ namespace Meridian59.Protocol.GameMessages
     /// The header implementation of a GameMessage.
     /// </summary>
     [Serializable]
-    public class MessageHeader
+    public abstract class MessageHeader : IByteSerializableFast
     {
+        public class Tcp : MessageHeader
+        {
+            /// <summary>
+            /// The headerlength (7)
+            /// </summary>
+            public const ushort HEADERLENGTH = TypeSizes.SHORT + TypeSizes.SHORT + TypeSizes.SHORT + TypeSizes.BYTE;
+
+            public override int ByteLength { get { return HEADERLENGTH; } }
+
+            public override int WriteTo(byte[] Buffer, int StartIndex = 0)
+            {
+                int cursor = StartIndex;
+
+                Array.Copy(BitConverter.GetBytes(BodyLength), 0, Buffer, cursor, TypeSizes.SHORT);
+                cursor += TypeSizes.SHORT;
+
+                Array.Copy(BitConverter.GetBytes(HeaderCRC), 0, Buffer, cursor, TypeSizes.SHORT);
+                cursor += TypeSizes.SHORT;
+
+                Array.Copy(BitConverter.GetBytes(BodyLength), 0, Buffer, cursor, TypeSizes.SHORT);
+                cursor += TypeSizes.SHORT;
+
+                Buffer[cursor] = HeaderSS;
+                cursor++;
+
+                return cursor - StartIndex;
+            }
+
+            public override int ReadFrom(byte[] Buffer, int StartIndex = 0)
+            {
+                int cursor = StartIndex;
+
+                ushort len1 = BitConverter.ToUInt16(Buffer, cursor);
+                cursor += TypeSizes.SHORT;
+
+                HeaderCRC = BitConverter.ToUInt16(Buffer, cursor);
+                cursor += TypeSizes.SHORT;
+
+                ushort len2 = BitConverter.ToUInt16(Buffer, cursor);
+                cursor += TypeSizes.SHORT;
+
+                if (len1 == len2)
+                {
+                    BodyLength = len1;
+
+                    HeaderSS = Buffer[cursor];
+                    cursor++;
+                }
+                else
+                    throw new MismatchLENException(len2, len1);
+
+                return cursor - StartIndex;
+            }
+
+            public override unsafe void WriteTo(ref byte* Buffer)
+            {
+                *((ushort*)Buffer) = BodyLength;
+                Buffer += TypeSizes.SHORT;
+
+                *((ushort*)Buffer) = HeaderCRC;
+                Buffer += TypeSizes.SHORT;
+
+                *((ushort*)Buffer) = BodyLength;
+                Buffer += TypeSizes.SHORT;
+
+                Buffer[0] = HeaderSS;
+                Buffer++;
+            }
+
+            public override unsafe void ReadFrom(ref byte* Buffer)
+            {
+                ushort len1 = *((ushort*)Buffer);
+                Buffer += TypeSizes.SHORT;
+
+                HeaderCRC = *((ushort*)Buffer);
+                Buffer += TypeSizes.SHORT;
+
+                ushort len2 = *((ushort*)Buffer);
+                Buffer += TypeSizes.SHORT;
+
+                if (len1 == len2)
+                {
+                    BodyLength = len1;
+
+                    HeaderSS = Buffer[0];
+                    Buffer++;
+                }
+                else
+                    throw new MismatchLENException(len2, len1);
+            }
+
+            public override byte[] HeaderBytes
+            {
+                get
+                {
+                    byte[] header = new byte[HEADERLENGTH];
+
+                    Array.Copy(BitConverter.GetBytes(BodyLength), 0, header, 0, TypeSizes.SHORT);     // LEN1 (2 bytes)
+                    Array.Copy(BitConverter.GetBytes(HeaderCRC), 0, header, 2, TypeSizes.SHORT);      // CRC  (2 bytes)
+                    Array.Copy(BitConverter.GetBytes(BodyLength), 0, header, 4, TypeSizes.SHORT);     // LEN2 (2 bytes)
+                    header[6] = HeaderSS;                                                             // SS   (1 byte)
+
+                    return header;
+                }
+            }
+        }
+
+        /*public class Udp : MessageHeader
+        {
+
+        }*/
+
         #region INotifyPropertyChanged
         /// <summary>
         /// Not really used in Message classes.
@@ -42,10 +154,7 @@ namespace Meridian59.Protocol.GameMessages
         }
         #endregion
 
-        /// <summary>
-        /// The headerlength (7)
-        /// </summary>
-        public const ushort HEADERLENGTH = TypeSizes.SHORT + TypeSizes.SHORT + TypeSizes.SHORT + TypeSizes.BYTE;
+        //public virtual ushort HeaderLength { get; }
 
         /// <summary>
         /// Length of body
@@ -68,92 +177,11 @@ namespace Meridian59.Protocol.GameMessages
         public IntPtr MemoryStartAddress { get; set; }
             
         #region IByteSerializable
-        public virtual int ByteLength
-        {
-            get { return HEADERLENGTH; }
-        }
-       
-        public virtual int WriteTo(byte[] Buffer, int StartIndex = 0)
-        {
-            int cursor = StartIndex;
-
-            Array.Copy(BitConverter.GetBytes(BodyLength), 0, Buffer, cursor, TypeSizes.SHORT);      // LEN1 (2 bytes)
-            cursor += TypeSizes.SHORT;
-
-            Array.Copy(BitConverter.GetBytes(HeaderCRC), 0, Buffer, cursor, TypeSizes.SHORT);         // CRC (2 bytes)
-            cursor += TypeSizes.SHORT;
-
-            Array.Copy(BitConverter.GetBytes(BodyLength), 0, Buffer, cursor, TypeSizes.SHORT);      // LEN2 (2 bytes)
-            cursor += TypeSizes.SHORT;
-
-            Buffer[cursor] = HeaderSS;
-            cursor++;
-
-            return cursor - StartIndex;
-        }
-
-        public virtual int ReadFrom(byte[] Buffer, int StartIndex = 0)
-        {
-            int cursor = StartIndex;
-
-            ushort len1 = BitConverter.ToUInt16(Buffer, cursor);        // LEN1 (2 bytes)
-            cursor += TypeSizes.SHORT;
-
-            HeaderCRC = BitConverter.ToUInt16(Buffer, cursor);                // CRC (2 bytes)
-            cursor += TypeSizes.SHORT;
-
-            ushort len2 = BitConverter.ToUInt16(Buffer, cursor);        // LEN2 (2 bytes)
-            cursor += TypeSizes.SHORT;
-
-            if (len1 == len2)
-            {
-                BodyLength = len1;
-
-                HeaderSS = Buffer[cursor];
-                cursor++;
-            }
-            else
-                throw new MismatchLENException(len2, len1);
-
-            return cursor - StartIndex;
-        }
-
-        public virtual unsafe void WriteTo(ref byte* Buffer)
-        {
-            *((ushort*)Buffer) = BodyLength;
-            Buffer += TypeSizes.SHORT;
-
-            *((ushort*)Buffer) = HeaderCRC;
-            Buffer += TypeSizes.SHORT;
-
-            *((ushort*)Buffer) = BodyLength;
-            Buffer += TypeSizes.SHORT;
-
-            Buffer[0] = HeaderSS;
-            Buffer++;
-        }
-
-        public virtual unsafe void ReadFrom(ref byte* Buffer)
-        {
-            ushort len1 = *((ushort*)Buffer);
-            Buffer += TypeSizes.SHORT;
-
-            HeaderCRC = *((ushort*)Buffer);
-            Buffer += TypeSizes.SHORT;
-
-            ushort len2 = *((ushort*)Buffer);
-            Buffer += TypeSizes.SHORT;
-
-            if (len1 == len2)
-            {
-                BodyLength = len1;
-
-                HeaderSS = Buffer[0];
-                Buffer++;
-            }
-            else
-                throw new MismatchLENException(len2, len1);            
-        }
+        public abstract int ByteLength { get; }
+        public abstract int WriteTo(byte[] Buffer, int StartIndex = 0);
+        public abstract int ReadFrom(byte[] Buffer, int StartIndex = 0);
+        public abstract unsafe void WriteTo(ref byte* Buffer);
+        public abstract unsafe void ReadFrom(ref byte* Buffer);
         public byte[] Bytes
         {
             get
@@ -223,19 +251,6 @@ namespace Meridian59.Protocol.GameMessages
         /// Creates a byte[] of length HEADERLENGTH with all header values serialized.
         /// </summary>
         /// <returns></returns>
-        public byte[] HeaderBytes
-        {
-            get
-            {
-                byte[] header = new byte[HEADERLENGTH];
-
-                Array.Copy(BitConverter.GetBytes(BodyLength), 0, header, 0, TypeSizes.SHORT);     // LEN1 (2 bytes)
-                Array.Copy(BitConverter.GetBytes(HeaderCRC), 0, header, 2, TypeSizes.SHORT);      // CRC  (2 bytes)
-                Array.Copy(BitConverter.GetBytes(BodyLength), 0, header, 4, TypeSizes.SHORT);     // LEN2 (2 bytes)
-                header[6] = HeaderSS;                                                             // SS   (1 byte)
-
-                return header;
-            }   
-        }
+        public abstract byte[] HeaderBytes { get; }
     }
 }
