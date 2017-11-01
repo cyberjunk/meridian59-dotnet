@@ -1485,7 +1485,11 @@ namespace Meridian59.Client
         /// <param name="Forced">True ignores the delay checker</param>
         public virtual void SendReqTurnMessage(ushort Angle, uint ID, bool Forced = false)
         {
+#if !VANILLA && !OPENMERIDIAN
+            if (Forced || (GameTick.CanReqTurn() && GameTick.CanReqMove()))
+#else
             if (Forced || GameTick.CanReqTurn())
+#endif
             {
                 // create message instance
                 ReqTurnMessage message = new ReqTurnMessage(Angle, ID);
