@@ -145,10 +145,114 @@ namespace Meridian59.Protocol.GameMessages
             }
         }
 
-        /*public class Udp : MessageHeader
+        public class Udp : MessageHeader
         {
+            /// <summary>
+            /// The UDP headerlength (11)
+            /// </summary>
+            public const ushort HEADERLENGTH = TypeSizes.INT + TypeSizes.INT + TypeSizes.SHORT + TypeSizes.BYTE;
 
-        }*/
+            public int SessionID { get; set; }
+            public uint SequenceNumber { get; set; }
+
+            public Udp(int SessionID = 0, uint SeqNo = 0, ushort CRC = 0, byte ServerSave = 0)
+                : base(0, CRC, ServerSave) { }
+
+            public Udp(byte[] Buffer, int StartIndex = 0, MessageDirection Direction = MessageDirection.ServerToClient)
+                : base(Buffer, StartIndex, Direction) { }
+
+            public unsafe Udp(ref byte* Buffer, MessageDirection Direction = MessageDirection.ServerToClient)
+                : base(ref Buffer, Direction) { }
+
+            public override int ByteLength { get { return HEADERLENGTH; } }
+
+            public override int WriteTo(byte[] Buffer, int StartIndex = 0)
+            {
+                int cursor = StartIndex;
+
+                Array.Copy(BitConverter.GetBytes(SessionID), 0, Buffer, cursor, TypeSizes.INT);
+                cursor += TypeSizes.INT;
+
+                Array.Copy(BitConverter.GetBytes(SequenceNumber), 0, Buffer, cursor, TypeSizes.INT);
+                cursor += TypeSizes.INT;
+
+                Array.Copy(BitConverter.GetBytes(HeaderCRC), 0, Buffer, cursor, TypeSizes.SHORT);
+                cursor += TypeSizes.SHORT;
+
+                Buffer[cursor] = HeaderSS;
+                cursor++;
+
+                return cursor - StartIndex;
+            }
+
+            public override int ReadFrom(byte[] Buffer, int StartIndex = 0)
+            {
+                int cursor = StartIndex;
+
+                SessionID = BitConverter.ToInt32(Buffer, cursor);
+                cursor += TypeSizes.INT;
+
+                SequenceNumber = BitConverter.ToUInt32(Buffer, cursor);
+                cursor += TypeSizes.INT;
+
+                //BodyLength = len1;
+
+                HeaderCRC = BitConverter.ToUInt16(Buffer, cursor);
+                cursor += TypeSizes.SHORT;
+
+                HeaderSS = Buffer[cursor];
+                cursor++;
+
+                return cursor - StartIndex;
+            }
+
+            public override unsafe void WriteTo(ref byte* Buffer)
+            {
+                *((int*)Buffer) = SessionID;
+                Buffer += TypeSizes.INT;
+
+                *((uint*)Buffer) = SequenceNumber;
+                Buffer += TypeSizes.INT;
+
+                *((ushort*)Buffer) = HeaderCRC;
+                Buffer += TypeSizes.SHORT;
+
+                Buffer[0] = HeaderSS;
+                Buffer++;
+            }
+
+            public override unsafe void ReadFrom(ref byte* Buffer)
+            {
+                SessionID = *((int*)Buffer);
+                Buffer += TypeSizes.INT;
+
+                SequenceNumber = *((uint*)Buffer);
+                Buffer += TypeSizes.INT;
+
+                //BodyLength = len1;
+
+                HeaderCRC = *((ushort*)Buffer);
+                Buffer += TypeSizes.SHORT;
+
+                HeaderSS = Buffer[0];
+                Buffer++;
+            }
+
+            public override byte[] HeaderBytes
+            {
+                get
+                {
+                    byte[] header = new byte[HEADERLENGTH];
+
+                    Array.Copy(BitConverter.GetBytes(SessionID), 0, header, 0, TypeSizes.INT);        // SessionID (4 bytes)
+                    Array.Copy(BitConverter.GetBytes(SequenceNumber), 0, header, 4, TypeSizes.INT);   // SequenceNum (4 bytes)
+                    Array.Copy(BitConverter.GetBytes(HeaderCRC), 0, header, 8, TypeSizes.SHORT);      // CRC  (2 bytes)
+                    header[10] = HeaderSS;                                                            // SS   (1 byte)
+
+                    return header;
+                }
+            }
+        }
 
         #region INotifyPropertyChanged
         /// <summary>
@@ -238,24 +342,9 @@ namespace Meridian59.Protocol.GameMessages
         /// True if body has length of zero.
         /// </summary>
         public bool HasEmptyBody { get { return (BodyLength == 0); } }
-        
-        /// <summary>
-        /// Serialized bytes of BodyLength property
-        /// </summary>
-        public byte[] LEN1Bytes { get { return BitConverter.GetBytes(BodyLength); } }
-        
-        /// <summary>
-        /// Serialized bytes of HeaderCRC value
-        /// </summary>
-        public byte[] CRCBytes { get { return BitConverter.GetBytes(HeaderCRC); } }
-        
-        /// <summary>
-        /// Serialized bytes of BodyLEngth property
-        /// </summary>
-        public byte[] LEN2Bytes { get { return BitConverter.GetBytes(BodyLength); } }
 
         /// <summary>
-        /// Creates a byte[] of length HEADERLENGTH with all header values serialized.
+        /// Creates a byte[] with all header values serialized.
         /// </summary>
         /// <returns></returns>
         public abstract byte[] HeaderBytes { get; }
