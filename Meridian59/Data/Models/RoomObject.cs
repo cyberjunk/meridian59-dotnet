@@ -960,6 +960,21 @@ namespace Meridian59.Data.Models
         public V2 MoveStart { get; protected set; }
 
         /// <summary>
+        /// Used for dynamic move interpolation adjust (speed-up)
+        /// </summary>
+        public Real MoveSpeedFactor { get; protected set; }
+
+        /// <summary>
+        /// Used for dynamic move interpolation adjust (slow-down)
+        /// </summary>
+        public Real MoveSpeedStart { get; protected set; }
+
+        /// <summary>
+        /// Length from MoveStart to MoveDestination
+        /// </summary>
+        public Real MoveLength { get; protected set; }
+
+        /// <summary>
         /// Updates the position (including height) of the RoomObject in a timedelta based step
         /// closer to the Destination.
         /// </summary>
@@ -992,6 +1007,14 @@ namespace Meridian59.Data.Models
                 {
                     // normalise
                     SD.Normalize();
+
+                    // how much we've done (=progress)
+                    if (!IsAvatar)
+                    {
+                        float wayDone = (Position2D - MoveStart).Length;
+                        float progress = wayDone / MoveLength;
+                        horizontalSpeed = MoveSpeedStart * (1.0f - progress * 0.2f);
+                    }
 
                     // the step-vector to do this frame
                     V2 step = SD * horizontalSpeed * (Real)TickSpan * GeometryConstants.MOVEBASECOEFF;
@@ -1166,48 +1189,56 @@ namespace Meridian59.Data.Models
         /// <param name="Speed"></param>
         public void StartMoveTo(ref V2 Destination, byte Speed)
         {
+            // lenMove: distance from supposed position to new destination (in server big rows/cols)
+            // this is the distance we would have to travel, if we had been at supposed dest already
+            V2 moveShould = Destination - MoveDestination;
+            float lenMove = moveShould.Length;
+
+            // lenMoveReal: distance from current position to new destination (in server big rows/cols)
+            //  this is the distance we actually have to travel next
             V2 moveNew = Destination - Position2D;
+            float lenMoveReal = moveNew.Length;
 
-            // don't start a move to exactly old location
-            if (moveNew.LengthSquared == 0.0f)
-                return;
-
-            // dynamic speed adjustment for objects not ourself             
-            // kicks in if we receive a new move-destination before our
-            // playback of the old one has finished
-            // currently just 1:1 ported from the old client
-            // subject to be improved.
-            if (!IsAvatar)
+            // teleport (super high speed so that next tick moves there)
+            // anything for speed 0 or steps bigger 2.5 big rows/cols
+            if (Speed == 0 || lenMoveReal > (2.5f * 64.0f))
             {
-                // don't start a move to almost old location
-                if (moveNew.LengthSquared < 1.0f)
-                    return;
-
-                if (isMoving)
-                {
-                    if (horizontalSpeed < (Real)Speed)
-                        horizontalSpeed = Speed;
-
-                    Real moveNewLen = moveNew.Length;
-                                   
-                    // too far away from last destination, increase speed
-                    if (moveNewLen > (1.0f / (Real)GeometryConstants.FINENESS))
-                    {
-                        V2   moveOld    = MoveDestination - MoveStart;
-                        Real moveOldLen = (Real)Math.Max(moveOld.Length, 0.00001f);
-
-                        Real ratio = moveNewLen / moveOldLen;
-
-                        if (ratio > 1.0f)
-                            HorizontalSpeed *= ratio;
-                    }                 
-                }             
+                horizontalSpeed = 99999f;
+                MoveSpeedFactor = 1.0f;
             }
+
+            // handle other objects than the own (dynamic)
+            else if (!IsAvatar)
+            {
+                if (isMoving && lenMove > 0.01f)
+                {
+                    // If already in motion, set things up so that combined motions will end at the same
+                    // time that new motion would end if existing motion were not present.
+                    float ratio = lenMoveReal / lenMove;
+
+                    // ratio > 1.0f: speed up (farer than supposed)
+                    // ratio < 1.0f: slow down (closer than supposed)
+                    // reduce speedups by 50% (e.g. 1.5 -> 1.25)
+                    if (ratio > 1.0f)
+                        ratio = 1.0f + ((ratio - 1.0f) * 0.5f);
+
+                    // use weighted sum of existing speedfactor and suggested speedfactor
+                    MoveSpeedFactor = 0.75f * MoveSpeedFactor + 0.25f * ratio;
+                }
+                else
+                    MoveSpeedFactor = 1.0f;
+            }
+
+            // no adjust for own avatar
+            else
+                MoveSpeedFactor = 1.0f;
 
             MoveStart = Position2D;
             MoveDestination = Destination;
-            HorizontalSpeed = Speed;
-            IsMoving = true;           
+            MoveLength = lenMoveReal;
+            HorizontalSpeed = (Real)Speed * MoveSpeedFactor;
+            MoveSpeedStart = Speed;
+            IsMoving = true;
         }
 
         #endregion
