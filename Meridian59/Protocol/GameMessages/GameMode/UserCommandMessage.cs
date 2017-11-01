@@ -51,7 +51,7 @@ namespace Meridian59.Protocol.GameMessages
             cursor += base.ReadFrom(Buffer, cursor);
 
             bool IsSendPacket = (TransferDirection == MessageDirection.ClientToServer);
-            Command = UserCommand.ExtractCommand(IsSendPacket, StringResources, Buffer, cursor, BodyLength - TypeSizes.BYTE);   
+            Command = UserCommand.ExtractCommand(IsSendPacket, StringResources, Buffer, cursor, Header.BodyLength - TypeSizes.BYTE);   
             cursor += Command.ByteLength;
 
             return cursor - StartIndex;

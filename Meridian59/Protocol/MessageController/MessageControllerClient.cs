@@ -81,13 +81,13 @@ namespace Meridian59.Protocol
         /// <param name="e"></param>
         protected void OnRecvReaderProcessMessage(object sender, MessageBufferEventArgs e)
         {
-            if (e.Length > GameMessage.HEADERLENGTH)
+            if (e.Length > MessageHeader.HEADERLENGTH)
             {
                 // save encoded type
-                byte encodedType = e.MessageBuffer[GameMessage.HEADERLENGTH];
+                byte encodedType = e.MessageBuffer[MessageHeader.HEADERLENGTH];
 
                 // decode type
-                e.MessageBuffer[GameMessage.HEADERLENGTH] = PIDecoder.Decode(encodedType);
+                e.MessageBuffer[MessageHeader.HEADERLENGTH] = PIDecoder.Decode(encodedType);
 
                 try
                 {
@@ -99,7 +99,7 @@ namespace Meridian59.Protocol
                     
                     // set encoded pi and memoryaddres
                     typedMessage.EncryptedPI = encodedType;
-                    typedMessage.MemoryStartAddress = e.MemoryAddress;
+                    typedMessage.Header.MemoryStartAddress = e.MemoryAddress;
 
                     // examine serversave value
                     CheckServerSave(typedMessage);

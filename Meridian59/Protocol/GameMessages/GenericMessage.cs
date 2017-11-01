@@ -55,7 +55,7 @@ namespace Meridian59.Protocol.GameMessages
 
             cursor += base.ReadFrom(Buffer, StartIndex);
 
-            int toread = (StartIndex + HEADERLENGTH + BodyLength) - (StartIndex + cursor);
+            int toread = (StartIndex + MessageHeader.HEADERLENGTH + Header.BodyLength) - (StartIndex + cursor);
 
             Data = new byte[toread];   
             Array.Copy(Buffer, cursor, Data, 0, toread);
@@ -74,7 +74,7 @@ namespace Meridian59.Protocol.GameMessages
             : base(PI)
         {
             this.Data = Data;
-            this.BodyLength = Convert.ToUInt16(TypeSizes.BYTE + Data.Length);
+            this.Header.BodyLength = Convert.ToUInt16(TypeSizes.BYTE + Data.Length);
         }
 
         /// <summary>

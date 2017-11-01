@@ -159,10 +159,10 @@ namespace Meridian59.Protocol
             ushort dummy;
                 
             // set SS
-            Message.HeaderSS = CurrentServerSave;
+            Message.Header.HeaderSS = CurrentServerSave;
             
             // update headerlength
-            Message.BodyLength = Convert.ToUInt16(Message.ByteLength - GameMessage.HEADERLENGTH);
+            Message.Header.BodyLength = Convert.ToUInt16(Message.ByteLength - MessageHeader.HEADERLENGTH);
 
             // add a valid CRC if enabled
             if (CRCCreatorEnabled)           
@@ -176,10 +176,10 @@ namespace Meridian59.Protocol
         protected void CheckServerSave(GameMessage Packet)
         {
             // check if the serversave has changed
-            if (Packet.HeaderSS != CurrentServerSave)
+            if (Packet.Header.HeaderSS != CurrentServerSave)
             {
                 LastServerSave = CurrentServerSave;
-                CurrentServerSave = Packet.HeaderSS;
+                CurrentServerSave = Packet.Header.HeaderSS;
 
                 OnNewServerSave(new ServerSaveChangedEventArgs(LastServerSave, CurrentServerSave));
             }
@@ -195,7 +195,7 @@ namespace Meridian59.Protocol
         protected GameMessage ExtractMessage(MessageBufferEventArgs e)
         {
             GameMessage TypedMessage = null;
-            byte PI = e.MessageBuffer[GameMessage.HEADERLENGTH];
+            byte PI = e.MessageBuffer[MessageHeader.HEADERLENGTH];
 
             // parse packet based on current protocol mode
             switch (Mode)

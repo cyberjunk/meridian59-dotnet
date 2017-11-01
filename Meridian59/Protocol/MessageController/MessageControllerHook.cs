@@ -112,7 +112,7 @@ namespace Meridian59.Protocol
         /// <param name="e"></param>
         protected void OnSendReaderProcessMessage(object sender, MessageBufferEventArgs e)
         {
-            if (e.Length > GameMessage.HEADERLENGTH)
+            if (e.Length > MessageHeader.HEADERLENGTH)
             {
                 try
                 {
@@ -122,7 +122,7 @@ namespace Meridian59.Protocol
                     // parse the message
                     GameMessage typedMessage = ExtractMessage(e);                   
                     typedMessage.EncryptedPI = typedMessage.PI;
-                    typedMessage.MemoryStartAddress = e.MemoryAddress;
+                    typedMessage.Header.MemoryStartAddress = e.MemoryAddress;
 
                     //CheckServerSave(typedMessage);
 

@@ -100,7 +100,7 @@ namespace Meridian59.Protocol
         public void Reset()
         {
             // initalize a buffer for a message with maximum size
-            messageBuffer = new byte[ushort.MaxValue + GameMessage.HEADERLENGTH];
+            messageBuffer = new byte[ushort.MaxValue + MessageHeader.HEADERLENGTH];
             
             // initial parsermode
             readingHeader = true;
@@ -144,7 +144,7 @@ namespace Meridian59.Protocol
             if (readingHeader)
             {
                 // How much till we have complete header?
-                int missingheader = GameMessage.HEADERLENGTH - cursor;
+                int missingheader = MessageHeader.HEADERLENGTH - cursor;
                 if (Available < missingheader)
                 {
                     // Read header chunk only
@@ -178,7 +178,7 @@ namespace Meridian59.Protocol
                             // so it's memory addr gets increased
                             IntPtr MemoryAddress = baseMemoryAddress;
                             if (cursor < processed)
-                                MemoryAddress += processed - GameMessage.HEADERLENGTH;
+                                MemoryAddress += processed - MessageHeader.HEADERLENGTH;
 
                             // copy body to messagebuffer
                             Stream.Read(messageBuffer, cursor, nextBodyLength);
@@ -226,10 +226,10 @@ namespace Meridian59.Protocol
                 MemoryAddress -= cursor; 
                 
                 OnCompletingSplittedPacket(new CompletingSplittedMessageEventArgs(
-                    (int)baseMemoryAddress, processed + Available, processed, (int)MemoryAddress, GameMessage.HEADERLENGTH + nextBodyLength));
+                    (int)baseMemoryAddress, processed + Available, processed, (int)MemoryAddress, MessageHeader.HEADERLENGTH + nextBodyLength));
 
                 // rest of body this time ?
-                int MessageLength = GameMessage.HEADERLENGTH + nextBodyLength;
+                int MessageLength = MessageHeader.HEADERLENGTH + nextBodyLength;
                 if (cursor + Available >= MessageLength)
                 {                                     
                     // copy rest of body to messagebuffer

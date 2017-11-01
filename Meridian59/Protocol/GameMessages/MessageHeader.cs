@@ -27,7 +27,7 @@ namespace Meridian59.Protocol.GameMessages
     /// The header implementation of a GameMessage.
     /// </summary>
     [Serializable]
-    public abstract class MessageHeader : IByteSerializableFast, INotifyPropertyChanged
+    public class MessageHeader
     {
         #region INotifyPropertyChanged
         /// <summary>
@@ -61,11 +61,6 @@ namespace Meridian59.Protocol.GameMessages
         /// The serversave cycle value from header
         /// </summary>
         public byte HeaderSS { get; set; }
-
-        /// <summary>
-        /// Transferdirection of the message
-        /// </summary>
-        public MessageDirection TransferDirection { get; set; }
 
         /// <summary>
         /// Can store a memory pointer to the message
@@ -232,7 +227,7 @@ namespace Meridian59.Protocol.GameMessages
         {
             get
             {
-                byte[] header = new byte[GameMessage.HEADERLENGTH];
+                byte[] header = new byte[HEADERLENGTH];
 
                 Array.Copy(BitConverter.GetBytes(BodyLength), 0, header, 0, TypeSizes.SHORT);     // LEN1 (2 bytes)
                 Array.Copy(BitConverter.GetBytes(HeaderCRC), 0, header, 2, TypeSizes.SHORT);      // CRC  (2 bytes)

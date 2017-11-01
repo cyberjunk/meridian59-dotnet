@@ -229,7 +229,7 @@ namespace Meridian59.Client
              * so they appear as GenericGameMessage
              */
 
-            if (!Message.HasEmptyBody)
+            if (!Message.Header.HasEmptyBody)
             {
                 if (Message is LoginModeMessage)
                 {

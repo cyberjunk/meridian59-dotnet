@@ -128,19 +128,11 @@ namespace Meridian59.AdminUI.Viewers
         {
             bool ischecked = ((CheckBox)sender).Checked;
 
-            if (sender == chkLength)
+            if (sender == chkHeader)
             {
-                colLEN1.Visible = ischecked;
-                colLEN2.Visible = ischecked;
+                colHeaderBytes.Visible = ischecked;
             }
-            else if (sender == chkCRC)
-            {
-                colCRC.Visible = ischecked;
-            }
-            else if (sender == chkServerSave)
-            {
-                colSS.Visible = ischecked;
-            }
+            
             else if (sender == chkPI)
             {
                 colPI.Visible = ischecked;
@@ -161,10 +153,10 @@ namespace Meridian59.AdminUI.Viewers
         {
             // build a gamemessage from the provided messagetype and body
             byte[] body = txtMessageBody.GetBinaryValue();
-            byte[] msgbytes = new byte[GameMessage.HEADERLENGTH + body.Length];
+            byte[] msgbytes = new byte[MessageHeader.HEADERLENGTH + body.Length];
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(body.Length)), 0, msgbytes, 0, 2);
             Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(body.Length)), 0, msgbytes, 4, 2);
-            Array.Copy(body, 0, msgbytes, GameMessage.HEADERLENGTH, body.Length);
+            Array.Copy(body, 0, msgbytes, MessageHeader.HEADERLENGTH, body.Length);
 
             // create generic instance from raw bytes
             GenericGameMessage message = new GenericGameMessage(msgbytes);

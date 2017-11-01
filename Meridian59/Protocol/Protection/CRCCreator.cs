@@ -113,10 +113,10 @@ namespace Meridian59.Protocol
            
             // do encryption of plain CRC32
             ushort shiftedPI = (ushort)((sbyte)Message.PI << 4);
-            uint packetCRC = HashToUse ^ shiftedPI ^ Message.BodyLength ^ BodyCRC;
+            uint packetCRC = HashToUse ^ shiftedPI ^ Message.Header.BodyLength ^ BodyCRC;
             
             // set encoded and shortened CRC on message
-            Message.HeaderCRC = (ushort)packetCRC;
+            Message.Header.HeaderCRC = (ushort)packetCRC;
 
             // write back new Hashtable if not testMode
             if (!TestMode)
@@ -125,7 +125,7 @@ namespace Meridian59.Protocol
                 CurrentHashTable = newHashTable;  
             }
 
-            return Message.HeaderCRC;
+            return Message.Header.HeaderCRC;
         }
     }
 }

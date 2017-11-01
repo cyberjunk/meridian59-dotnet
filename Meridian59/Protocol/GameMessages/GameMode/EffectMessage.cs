@@ -49,7 +49,7 @@ namespace Meridian59.Protocol.GameMessages
 
             cursor += base.ReadFrom(Buffer, cursor);
 
-            Effect = Effect.ExtractEffect(Buffer, cursor, BodyLength - TypeSizes.BYTE);   
+            Effect = Effect.ExtractEffect(Buffer, cursor, Header.BodyLength - TypeSizes.BYTE);   
             cursor += Effect.ByteLength;
 
             return cursor - StartIndex;

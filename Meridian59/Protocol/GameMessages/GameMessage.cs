@@ -16,6 +16,9 @@
 
 using System;
 using Meridian59.Common.Constants;
+using Meridian59.Common.Interfaces;
+using System.ComponentModel;
+using Meridian59.Protocol.Enums;
 
 namespace Meridian59.Protocol.GameMessages
 {
@@ -24,27 +27,57 @@ namespace Meridian59.Protocol.GameMessages
     /// between server and client.
     /// </summary>
     [Serializable]
-    public class GameMessage : MessageHeader
+    public class GameMessage : IByteSerializableFast, INotifyPropertyChanged
     {
+        #region INotifyPropertyChanged
+        /// <summary>
+        /// Not really used in Message classes.
+        /// Most Properties will NOT raise changed events.
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void RaisePropertyChanged(PropertyChangedEventArgs e)
+        {
+            if (PropertyChanged != null) PropertyChanged(this, e);
+        }
+        #endregion
+
         #region Constructors
         public GameMessage(byte[] Buffer, int StartIndex = 0)
-            : base(Buffer, StartIndex = 0) { }
+        {
+            this.Header = new MessageHeader();
+            ReadFrom(Buffer, StartIndex);
+        }
 
         public unsafe GameMessage(ref byte* Buffer)
-            : base(ref Buffer) { }
+        {
+            this.Header = new MessageHeader();
+            ReadFrom(ref Buffer);
+        }
 
         public GameMessage(byte PI)
-            : base() 
         {
+            this.Header = new MessageHeader();
             this.PI = PI;
         }
 
         public GameMessage()
         {
+            this.Header = new MessageHeader();
         }
         #endregion
 
         #region Properties
+        /// <summary>
+        /// Transferdirection of the message
+        /// </summary>
+        public MessageDirection TransferDirection { get; set; }
+
+        /// <summary>
+        /// TCP (or UDP) header used for this GameMessage
+        /// </summary>
+        public MessageHeader Header { get; set; }
+
         /// <summary>
         /// The unique identifier for the type of the GameMessage.
         /// Interpretation depends on type of message (Login/Game)
@@ -64,7 +97,12 @@ namespace Meridian59.Protocol.GameMessages
         /// <summary>
         /// Length of the data in bytes.
         /// </summary>
-        public int DataLength { get { return BodyLength - TypeSizes.BYTE; } }
+        public int DataLength { get { return Header.BodyLength - TypeSizes.BYTE; } }
+
+        /// <summary>
+        /// Returns Header.Bytes
+        /// </summary>
+        public byte[] HeaderBytes { get { return Header.Bytes; } }
 
         /// <summary>
         /// Creates a byte[] of length 'DataLength' with all data values serialized.
@@ -78,7 +116,7 @@ namespace Meridian59.Protocol.GameMessages
                 byte[] data = new byte[DataLength];
 
                 // copy data block from fully serializes 'Bytes'
-                Array.Copy(Bytes, GameMessage.HEADERLENGTH + TypeSizes.BYTE, data, 0, DataLength);
+                Array.Copy(Bytes, MessageHeader.HEADERLENGTH + TypeSizes.BYTE, data, 0, DataLength);
                 
                 return data;
             }
@@ -93,10 +131,10 @@ namespace Meridian59.Protocol.GameMessages
         {
             get
             {
-                byte[] body = new byte[BodyLength];
+                byte[] body = new byte[Header.BodyLength];
 
                 // copy body block from fully serializes 'Bytes'
-                Array.Copy(Bytes, GameMessage.HEADERLENGTH, body, 0, BodyLength);
+                Array.Copy(Bytes, MessageHeader.HEADERLENGTH, body, 0, Header.BodyLength);
 
                 return body;
             }
@@ -113,26 +151,26 @@ namespace Meridian59.Protocol.GameMessages
 
             // clone values not read from bytes
             genMsg.TransferDirection = TransferDirection;
-            genMsg.MemoryStartAddress = MemoryStartAddress;
+            genMsg.Header.MemoryStartAddress = Header.MemoryStartAddress;
             genMsg.EncryptedPI = EncryptedPI;
 
             return genMsg;
         }
 
         #region IByteSerializable implementation
-        public override int ByteLength
+        public virtual int ByteLength
         {
             get
             {
-                return base.ByteLength + TypeSizes.BYTE;
+                return Header.ByteLength + TypeSizes.BYTE;
             }
         }
 
-        public override int WriteTo(byte[] Buffer, int StartIndex = 0)
+        public virtual int WriteTo(byte[] Buffer, int StartIndex = 0)
         {
             int cursor = StartIndex;
 
-            cursor += base.WriteTo(Buffer, StartIndex);
+            cursor += Header.WriteTo(Buffer, StartIndex);
 
             Buffer[cursor] = PI;
             cursor++;
@@ -140,11 +178,11 @@ namespace Meridian59.Protocol.GameMessages
             return cursor - StartIndex;
         }
 
-        public override int ReadFrom(byte[] Buffer, int StartIndex = 0)
+        public virtual int ReadFrom(byte[] Buffer, int StartIndex = 0)
         {
             int cursor = StartIndex;
 
-            cursor += base.ReadFrom(Buffer, StartIndex);
+            cursor += Header.ReadFrom(Buffer, StartIndex);
             
             PI = Buffer[cursor];
             cursor++;
@@ -152,20 +190,30 @@ namespace Meridian59.Protocol.GameMessages
             return cursor - StartIndex;
         }
 
-        public override unsafe void ReadFrom(ref byte* Buffer)
+        public virtual unsafe void ReadFrom(ref byte* Buffer)
         {
-            base.ReadFrom(ref Buffer);
+            Header.ReadFrom(ref Buffer);
 
             PI = Buffer[0];
             Buffer++;
         }
 
-        public override unsafe void WriteTo(ref byte* Buffer)
+        public virtual unsafe void WriteTo(ref byte* Buffer)
         {
-            base.WriteTo(ref Buffer);
+            Header.WriteTo(ref Buffer);
 
             Buffer[0] = PI;
             Buffer++;
+        }
+
+        public byte[] Bytes
+        {
+            get
+            {
+                byte[] returnValue = new byte[ByteLength];
+                WriteTo(returnValue);
+                return returnValue;
+            }
         }
         #endregion      
     }
