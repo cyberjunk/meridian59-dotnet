@@ -69,7 +69,12 @@ namespace Meridian59.Protocol
         /// Handles the TCP connection
         /// </summary>
         protected Socket socket;
-        
+
+        /// <summary>
+        /// Used for sending UDP datagrams
+        /// </summary>
+        protected Socket socketUDP;
+
         /// <summary>
         /// TCP stream between client and server
         /// </summary>
@@ -342,6 +347,10 @@ namespace Meridian59.Protocol
                 // and enable no-delay on send
                 socket.SetSocketOption(SocketOptionLevel.IPv6, SocketOptionName.IPv6Only, false);
                 socket.NoDelay = true;
+
+                // init a new UDP ipv6 dualstack socket for sending
+                socketUDP = new Socket(AddressFamily.InterNetworkV6, SocketType.Dgram, ProtocolType.Udp);
+                socketUDP.SetSocketOption(SocketOptionLevel.IPv6, SocketOptionName.IPv6Only, false);
 
                 // try connect to server
                 socket.Connect(serverAddress, serverPort);
