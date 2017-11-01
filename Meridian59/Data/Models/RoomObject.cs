@@ -1011,8 +1011,8 @@ namespace Meridian59.Data.Models
                     // how much we've done (=progress)
                     if (!IsAvatar)
                     {
-                        float wayDone = (Position2D - MoveStart).Length;
-                        float progress = wayDone / MoveLength;
+                        Real wayDone = (Position2D - MoveStart).Length;
+                        Real progress = wayDone / MoveLength;
                         horizontalSpeed = MoveSpeedStart * (1.0f - progress * 0.2f);
                     }
 
@@ -1192,12 +1192,12 @@ namespace Meridian59.Data.Models
             // lenMove: distance from supposed position to new destination (in server big rows/cols)
             // this is the distance we would have to travel, if we had been at supposed dest already
             V2 moveShould = Destination - MoveDestination;
-            float lenMove = moveShould.Length;
+            Real lenMove = moveShould.Length;
 
             // lenMoveReal: distance from current position to new destination (in server big rows/cols)
             //  this is the distance we actually have to travel next
             V2 moveNew = Destination - Position2D;
-            float lenMoveReal = moveNew.Length;
+            Real lenMoveReal = moveNew.Length;
 
             // teleport (super high speed so that next tick moves there)
             // anything for speed 0 or steps bigger 2.5 big rows/cols
@@ -1214,7 +1214,7 @@ namespace Meridian59.Data.Models
                 {
                     // If already in motion, set things up so that combined motions will end at the same
                     // time that new motion would end if existing motion were not present.
-                    float ratio = lenMoveReal / lenMove;
+                    Real ratio = lenMoveReal / lenMove;
 
                     // ratio > 1.0f: speed up (farer than supposed)
                     // ratio < 1.0f: slow down (closer than supposed)
