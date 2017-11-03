@@ -43,21 +43,27 @@ namespace Meridian59.Protocol.GameMessages
         #endregion
 
         #region Constructors
-        public GameMessage(byte[] Buffer, int StartIndex = 0)
+        public GameMessage(byte[] Buffer, int StartIndex = 0, bool IsTCP = true)
         {
-            this.Header = new MessageHeader.Tcp();
+            if (IsTCP) this.Header = new MessageHeader.Tcp();
+            else       this.Header = new MessageHeader.Udp();
+
             ReadFrom(Buffer, StartIndex);
         }
 
-        public unsafe GameMessage(ref byte* Buffer)
+        public unsafe GameMessage(ref byte* Buffer, bool IsTCP = true)
         {
-            this.Header = new MessageHeader.Tcp();
+            if (IsTCP) this.Header = new MessageHeader.Tcp();
+            else       this.Header = new MessageHeader.Udp();
+
             ReadFrom(ref Buffer);
         }
 
-        public GameMessage(byte PI)
+        public GameMessage(byte PI, bool IsTCP = true)
         {
-            this.Header = new MessageHeader.Tcp();
+            if (IsTCP) this.Header = new MessageHeader.Tcp();
+            else       this.Header = new MessageHeader.Udp();
+
             this.PI = PI;
         }
 
