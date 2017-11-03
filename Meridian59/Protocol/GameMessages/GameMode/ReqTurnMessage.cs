@@ -73,7 +73,7 @@ namespace Meridian59.Protocol.GameMessages
             this.AvatarID = AvatarID;
         }
 
-        public ReqTurnMessage(byte[] Buffer, int StartIndex = 0) 
-            : base (Buffer, StartIndex = 0) { }
+        public ReqTurnMessage(byte[] Buffer, int StartIndex = 0, bool IsTCP = true) 
+            : base (Buffer, StartIndex = 0, IsTCP) { }
     }
 }

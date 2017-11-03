@@ -104,7 +104,7 @@ namespace Meridian59.Protocol.GameMessages
             this.Angle = Angle;
         }
 
-        public ReqMoveMessage(byte[] Buffer, int StartIndex = 0) 
-            : base (Buffer, StartIndex = 0) { }        
+        public ReqMoveMessage(byte[] Buffer, int StartIndex = 0, bool IsTCP = true) 
+            : base (Buffer, StartIndex, IsTCP) { }        
     }
 }

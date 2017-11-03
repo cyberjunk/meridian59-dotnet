@@ -33,10 +33,10 @@ namespace Meridian59.Protocol.GameMessages
         public GameModeMessage(MessageTypeGameMode MessageType)
             : base((byte)MessageType) { }
 
-        public GameModeMessage(byte[] Buffer, int StartIndex = 0)
-            : base(Buffer, StartIndex = 0) { }
+        public GameModeMessage(byte[] Buffer, int StartIndex = 0, bool IsTCP = true)
+            : base(Buffer, StartIndex, IsTCP) { }
 
-        public unsafe GameModeMessage(ref byte* Buffer)
-            : base(ref Buffer) { }
+        public unsafe GameModeMessage(ref byte* Buffer, bool IsTCP = true)
+            : base(ref Buffer, IsTCP) { }
     }
 }
