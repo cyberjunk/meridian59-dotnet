@@ -52,10 +52,12 @@ namespace Meridian59.Protocol
         {
             // create listener
             listener = new TcpListener(IPAddress.IPv6Any, Port);
-            
-            // set ipv6 socket to dualstack so it can handle our IPv4 connections too
-            //listener.Server.SetSocketOption(SocketOptionLevel.IPv6, SocketOptionName.IPv6Only, false);
 
+            // set ipv6 socket to dualstack so it can handle our IPv4 connections too
+            // mono does not seem to like this (exception?) and sets ipv6 dualstack by default
+#if !__MonoCS__
+            listener.Server.SetSocketOption(SocketOptionLevel.IPv6, SocketOptionName.IPv6Only, false);
+#endif
             // mark running
             isRunning = true;
 
