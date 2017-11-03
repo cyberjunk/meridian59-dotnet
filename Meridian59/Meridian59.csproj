@@ -407,6 +407,7 @@
     <Compile Include="Protocol\GameMessages\LoginMode\NoCharactersMessage.cs" />
     <Compile Include="Protocol\GameMessages\LoginMode\LoginModeMessageMessage.cs" />
     <Compile Include="Protocol\GameMessages\LoginMode\ReqAdminMessageLoginMode.cs" />
+    <Compile Include="Protocol\MessageController\MessageParserUDP.cs" />
     <Compile Include="Protocol\MessageEnrichment.cs" />
     <Compile Include="Files\ROO\BowtieFlags.cs" />
     <Compile Include="Files\ROO\RooSectorFlags.cs" />

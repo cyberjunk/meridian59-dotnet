@@ -34,6 +34,11 @@ namespace Meridian59.Protocol
         protected MessageParser sendReader;
 
         /// <summary>
+        /// Reader for outgoing UDP traffic
+        /// </summary>
+        protected MessageParserUDP sendReaderUDP;
+
+        /// <summary>
         /// Whether or not to advance hashtable when processing outgoing message
         /// </summary>
         protected bool advanceHashTable;
@@ -63,6 +68,7 @@ namespace Meridian59.Protocol
                 sendReader.MismatchMessageLengthFound -= new MismatchMessageLengthFoundEventHandler(OnSendReaderMismatchMessageLengthFound);
                 sendReader.SplittedMessageFound -= new SplittedMessageFoundEventHandler(OnSendReaderSplittedMessageFound);
                 sendReader.CompletingSplittedMessage -= new CompletingSplittedMessageEventHandler(OnSendReaderCompletingSplittedMessage);
+                sendReaderUDP.MessageAvailable -= new MessageBufferEventHandler(OnSendReaderProcessMessage);
             }
 
             // initialize a reader for outgoing traffic
@@ -70,7 +76,11 @@ namespace Meridian59.Protocol
             sendReader.MessageAvailable += new MessageBufferEventHandler(OnSendReaderProcessMessage);
             sendReader.MismatchMessageLengthFound += new MismatchMessageLengthFoundEventHandler(OnSendReaderMismatchMessageLengthFound);           
             sendReader.SplittedMessageFound += new SplittedMessageFoundEventHandler(OnSendReaderSplittedMessageFound);
-            sendReader.CompletingSplittedMessage += new CompletingSplittedMessageEventHandler(OnSendReaderCompletingSplittedMessage);           
+            sendReader.CompletingSplittedMessage += new CompletingSplittedMessageEventHandler(OnSendReaderCompletingSplittedMessage);
+
+            // for UDP
+            sendReaderUDP = new MessageParserUDP();
+            sendReaderUDP.MessageAvailable += new MessageBufferEventHandler(OnSendReaderProcessMessage);
         }
 
         /// <summary>
@@ -106,45 +116,83 @@ namespace Meridian59.Protocol
         }
 
         /// <summary>
+        /// Reads a sent traffic chunk from byte[]
+        /// </summary>
+        /// <param name="Buffer"></param>
+        /// <param name="MemoryAddress"></param>
+        /// <param name="Available"></param>
+        public void ReadSendUDP(byte[] Buffer, IntPtr MemoryAddress, int Available)
+        {
+            sendReaderUDP.Read(Buffer, MemoryAddress, Available);
+        }
+
+        /// <summary>
         /// Handle a message from the recv messagebuffer
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         protected void OnSendReaderProcessMessage(object sender, MessageBufferEventArgs e)
         {
-            if (e.Length > MessageHeader.Tcp.HEADERLENGTH)
+            // set the direction as outgoing
+            e.Direction = MessageDirection.ClientToServer;
+
+            // TCP handling
+            if (e.IsTCP)
             {
-                try
+                if (e.Length > MessageHeader.Tcp.HEADERLENGTH)
                 {
-                    // set the direction as outgoing
-                    e.Direction = MessageDirection.ClientToServer;
+                    try
+                    {
+                        // parse the message
+                        GameMessage typedMessage = ExtractMessage(e);
+                        typedMessage.EncryptedPI = typedMessage.PI;
+                        typedMessage.Header.MemoryStartAddress = e.MemoryAddress;
 
-                    // parse the message
-                    GameMessage typedMessage = ExtractMessage(e);                   
-                    typedMessage.EncryptedPI = typedMessage.PI;
-                    typedMessage.Header.MemoryStartAddress = e.MemoryAddress;
+                        //CheckServerSave(typedMessage);
 
-                    //CheckServerSave(typedMessage);
+                        // Advance the hashtable if encryption is enabled (3. TX packet) and if it's not a blacklisted packet
+                        if (CRCCreatorEnabled &&
+                            advanceHashTable &&
+                            ((MessageTypeGameMode)typedMessage.PI != MessageTypeGameMode.Blacklisted))
 
-                    // Advance the hashtable if encryption is enabled (3. TX packet) and if it's not a blacklisted packet
-                    if (CRCCreatorEnabled && 
-                        advanceHashTable && 
-                        ((MessageTypeGameMode)typedMessage.PI != MessageTypeGameMode.Blacklisted))
-                        
-                        CRCCreator.AdvanceHashTable();
+                            CRCCreator.AdvanceHashTable();
 
-                    OnNewMessageAvailable(new GameMessageEventArgs(typedMessage));
+                        OnNewMessageAvailable(new GameMessageEventArgs(typedMessage));
+                    }
+                    catch (Exception Error)
+                    {
+                        byte[] dump = new byte[e.Length];
+                        Array.Copy(e.MessageBuffer, 0, dump, 0, e.Length);
+                        OnHandlerError(new HandlerErrorEventArgs(dump, Error.Message));
+                    }
                 }
-                catch (Exception Error)
+                else
                 {
-                    byte[] dump = new byte[e.Length];
-                    Array.Copy(e.MessageBuffer, 0, dump, 0, e.Length);
-                    OnHandlerError(new HandlerErrorEventArgs(dump, Error.Message));
+                    OnEmptyPacketFound(new EmptyMessageFoundEventArgs());
                 }
             }
+
+            // UDP
             else
             {
-                OnEmptyPacketFound(new EmptyMessageFoundEventArgs());
+                if (e.Length > MessageHeader.Udp.HEADERLENGTH)
+                {
+                    try
+                    {
+                        // parse the message
+                        GameMessage typedMessage = ExtractMessage(e);
+                        typedMessage.EncryptedPI = typedMessage.PI;
+                        typedMessage.Header.MemoryStartAddress = e.MemoryAddress;
+
+                        OnNewMessageAvailable(new GameMessageEventArgs(typedMessage));
+                    }
+                    catch (Exception Error)
+                    {
+                        byte[] dump = new byte[e.Length];
+                        Array.Copy(e.MessageBuffer, 0, dump, 0, e.Length);
+                        OnHandlerError(new HandlerErrorEventArgs(dump, Error.Message));
+                    }
+                }
             }
         }
 

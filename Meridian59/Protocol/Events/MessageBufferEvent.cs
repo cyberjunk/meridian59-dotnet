@@ -36,13 +36,15 @@ namespace Meridian59.Protocol.Events
         public int Length;
         public IntPtr MemoryAddress;
         public MessageDirection Direction;
+        public bool IsTCP;
 
-        public MessageBufferEventArgs(byte[] MessageBuffer, int Length, IntPtr MemoryAddress, MessageDirection Direction = MessageDirection.ServerToClient)
+        public MessageBufferEventArgs(byte[] MessageBuffer, int Length, IntPtr MemoryAddress, MessageDirection Direction = MessageDirection.ServerToClient, bool IsTCP = true)
         {
             this.MessageBuffer = MessageBuffer;
             this.Length = Length;
             this.MemoryAddress = MemoryAddress;
             this.Direction = Direction;
+            this.IsTCP = IsTCP;
         }
     }
 }

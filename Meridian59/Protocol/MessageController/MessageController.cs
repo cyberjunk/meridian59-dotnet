@@ -221,7 +221,9 @@ namespace Meridian59.Protocol
         protected GameMessage ExtractMessage(MessageBufferEventArgs e)
         {
             GameMessage TypedMessage = null;
-            byte PI = e.MessageBuffer[MessageHeader.Tcp.HEADERLENGTH];
+            byte PI = (e.IsTCP) ?
+                e.MessageBuffer[MessageHeader.Tcp.HEADERLENGTH] :
+                e.MessageBuffer[MessageHeader.Udp.HEADERLENGTH];
 
             // parse packet based on current protocol mode
             switch (Mode)
@@ -500,11 +502,11 @@ namespace Meridian59.Protocol
                         break;
 
                     case MessageTypeGameMode.ReqMove:                                         // PI: 100
-                        TypedMessage = new ReqMoveMessage(e.MessageBuffer);
+                        TypedMessage = new ReqMoveMessage(e.MessageBuffer, 0, e.IsTCP);
                         break;
 
                     case MessageTypeGameMode.ReqTurn:                                         // PI: 101
-                        TypedMessage = new ReqTurnMessage(e.MessageBuffer);
+                        TypedMessage = new ReqTurnMessage(e.MessageBuffer, 0, e.IsTCP);
                         break;
 
                     case MessageTypeGameMode.ReqGo:                                           // PI: 102
@@ -512,7 +514,7 @@ namespace Meridian59.Protocol
                         break;
 
                     case MessageTypeGameMode.ReqAttack:                                       // PI: 103
-                        TypedMessage = new ReqAttackMessage(e.MessageBuffer);
+                        TypedMessage = new ReqAttackMessage(e.MessageBuffer, 0, e.IsTCP);
                         break;
 
                     case MessageTypeGameMode.ReqCast:                                         // PI: 105
