@@ -188,7 +188,7 @@ namespace Meridian59.Protocol
 
                 // set sesionid, sequencenum
                 udpHeader.SessionID = SessionID;
-                udpHeader.SequenceNumber = SequenceNumber++;
+                udpHeader.SequenceNumber = ++SequenceNumber;
 
                 // unscrambled crc
                 CRCCreator.CreatePacketCRCUDP(Message);
