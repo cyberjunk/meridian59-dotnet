@@ -765,6 +765,8 @@ namespace Meridian59.Data.Models
         /// <param name="IsBold"></param>
         /// <param name="IsCursive"></param>
         /// <param name="IsUnderline"></param>
+        /// <param name="IsStrikeout"></param>
+        /// <param name="IsLink"></param>
         /// <param name="Color"></param>
         /// <returns></returns>
         public static ServerString GetServerStringForString(
@@ -772,10 +774,12 @@ namespace Meridian59.Data.Models
             bool IsBold = false, 
             bool IsCursive = false, 
             bool IsUnderline = false,
+            bool IsStrikeout = false,
+            bool IsLink = false,
             ChatColor Color = ChatColor.Red)
         {         
             ChatStyle style = new ChatStyle(
-                0, Text.Length, IsBold, IsCursive, IsUnderline, Color);
+                0, Text.Length, IsBold, IsCursive, IsUnderline, IsStrikeout, IsLink, Color);
             
             ServerString message = new ServerString();
             message.FullString = Text;

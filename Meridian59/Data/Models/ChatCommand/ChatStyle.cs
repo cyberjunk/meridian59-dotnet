@@ -49,6 +49,10 @@ namespace Meridian59.Data.Models
         public const char STYLEDARKGREY     = 's';
         public const char STYLEVIOLET       = 'v';
         public const char STYLEMAGENTA      = 'm';
+#if !OPENMERIDIAN
+        public const char STYLESTRIKEOUT    = 'S';
+        public const char STYLELINK         = 'L';
+#endif
 #endif
 
         public int StartIndex { get; set; }
@@ -56,6 +60,8 @@ namespace Meridian59.Data.Models
         public bool IsBold { get; set; }
         public bool IsCursive { get; set; }
         public bool IsUnderline { get; set; }
+        public bool IsStrikeout { get; set; }
+        public bool IsLink { get; set; }
         public ChatColor Color { get; set; }
 
         public ChatStyle()
@@ -65,16 +71,21 @@ namespace Meridian59.Data.Models
             IsBold = false;
             IsCursive = false;
             IsUnderline = false;
+            IsStrikeout = false;
+            IsLink = false;
             Color = ChatColor.Black;
         }
 
-        public ChatStyle(int StartIndex, int Length, bool IsBold, bool IsCursive, bool IsUnderline, ChatColor Color)
+        public ChatStyle(int StartIndex, int Length, bool IsBold, bool IsCursive,
+            bool IsUnderline, bool IsStrikeout, bool IsLink, ChatColor Color)
         {
             this.StartIndex = StartIndex;
             this.Length = Length;
             this.IsBold = IsBold;
             this.IsCursive = IsCursive;
             this.IsUnderline = IsUnderline;
+            this.IsStrikeout = IsStrikeout;
+            this.IsLink = IsLink;
             this.Color = Color;
         }
 
@@ -171,6 +182,16 @@ namespace Meridian59.Data.Models
                     IsUnderline = !IsUnderline;
                     break;
 
+#if !VANILLA && !OPENMERIDIAN
+                case STYLESTRIKEOUT:
+                    IsStrikeout = !IsStrikeout;
+                    break;
+
+                case STYLELINK:
+                    IsLink = !IsLink;
+                    break;
+#endif
+
                 case STYLENORMAL:
                     switch (MessageType)
                     {
@@ -194,6 +215,8 @@ namespace Meridian59.Data.Models
                     IsBold = false;
                     IsCursive = false;
                     IsUnderline = false;
+                    IsStrikeout = false;
+                    IsLink = false;
                     break;
             }
         }
@@ -262,7 +285,14 @@ namespace Meridian59.Data.Models
                 Character == STYLETEAL ||
                 Character == STYLEDARKGREY ||
                 Character == STYLEVIOLET ||
-                Character == STYLEMAGENTA)
+                Character == STYLEMAGENTA
+#if OPENMERIDIAN
+                )
+#else
+                ||
+                Character == STYLESTRIKEOUT ||
+                Character == STYLELINK)
+#endif
 #endif
 
                 return true;
@@ -329,10 +359,13 @@ namespace Meridian59.Data.Models
             s = s.Replace(new string(new char[] { MARKER1, STYLEDARKGREY }), String.Empty);
             s = s.Replace(new string(new char[] { MARKER1, STYLEVIOLET }), String.Empty);
             s = s.Replace(new string(new char[] { MARKER1, STYLEMAGENTA }), String.Empty);
+#if !OPENMERIDIAN
+            s = s.Replace(new string(new char[] { MARKER1, STYLESTRIKEOUT }), String.Empty);
+            s = s.Replace(new string(new char[] { MARKER1, STYLELINK }), String.Empty);
 #endif
-
+#endif
             // replace marker2 + style
-            
+
             s = s.Replace(new string(new char[] { MARKER2, STYLEBOLD }), String.Empty);
             s = s.Replace(new string(new char[] { MARKER2, STYLECURSIVE }), String.Empty);
             s = s.Replace(new string(new char[] { MARKER2, STYLEUNDERLINE }), String.Empty);
@@ -355,6 +388,10 @@ namespace Meridian59.Data.Models
             s = s.Replace(new string(new char[] { MARKER2, STYLEDARKGREY }), String.Empty);
             s = s.Replace(new string(new char[] { MARKER2, STYLEVIOLET }), String.Empty);
             s = s.Replace(new string(new char[] { MARKER2, STYLEMAGENTA }), String.Empty);
+#if !OPENMERIDIAN
+            s = s.Replace(new string(new char[] { MARKER2, STYLESTRIKEOUT }), String.Empty);
+            s = s.Replace(new string(new char[] { MARKER2, STYLELINK }), String.Empty);
+#endif
 #endif
 
             return s;
@@ -394,7 +431,7 @@ namespace Meridian59.Data.Models
             }
 
             // first/default style
-            ChatStyle style = new ChatStyle(0, 0, false, false, false, startColor);
+            ChatStyle style = new ChatStyle(0, 0, false, false, false, false, false, startColor);
             list.Add(style);
            
             // walk the characters up to the lastone-1
@@ -415,7 +452,8 @@ namespace Meridian59.Data.Models
                         
                         // create a new style definition
                         // use the existing one to start from
-                        style = new ChatStyle(index, 0, style.IsBold, style.IsCursive, style.IsUnderline, style.Color);
+                        style = new ChatStyle(index, 0, style.IsBold, style.IsCursive, style.IsUnderline,
+                            style.IsStrikeout, style.IsLink, style.Color);
 
                         // process this stylechar
                         style.ProcessStyleCharacter(Text[i + 1], MessageType);
