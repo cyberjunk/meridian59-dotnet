@@ -1103,6 +1103,19 @@ namespace Meridian59.Client
         }
 
         /// <summary>
+        /// Tries to invite the specified player (by object ID) into your guild
+        /// </summary>
+        public virtual void SendUserCommandGuildInvite(uint Member)
+        {
+            // create message instance
+            UserCommand command = new UserCommandGuildInvite(new ObjectID(Member));
+            UserCommandMessage message = new UserCommandMessage(command, null);
+
+            // send/enqueue it (async)
+            ServerConnection.SendQueue.Enqueue(message);
+        }
+
+        /// <summary>
         /// Requests to set the guild password
         /// </summary>
         /// <param name="Password"></param>
@@ -2890,6 +2903,13 @@ namespace Meridian59.Client
                     case ChatCommandType.Time:
                         SendUserCommandTime();
                         break;
+
+#if !OPENMERIDIAN
+                    case ChatCommandType.Invite:
+                        ChatCommandInvite chatCommandInvite = (ChatCommandInvite)chatCommand;
+                        SendUserCommandGuildInvite(chatCommandInvite.TargetID);
+                        break;
+#endif
 #endif
                 }
             }    
