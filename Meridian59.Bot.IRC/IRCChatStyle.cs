@@ -30,6 +30,7 @@ namespace Meridian59.Bot.IRC
         public const string IRCCOLOR_UNDERLINE  = "\u001F";
         public const string IRCCOLOR_BOLD       = "\u0002";
         public const string IRCCOLOR_ITALIC     = "\u001D";
+        public const string IRCCOLOR_STRIKEOUT  = "\u001E";
         public const string IRCCOLOR_START      = "\u0003";
         public const string IRCCOLOR_TERM       = "\u000F";
         public const string IRCCOLOR_WHITE      = "00";
@@ -53,6 +54,8 @@ namespace Meridian59.Bot.IRC
         public const string SERVER_UNDERLINE = "~U";
         public const string SERVER_BOLD = "~B";
         public const string SERVER_ITALIC = "~I";
+        public const string SERVER_STRIKEOUT = "~S";
+        public const string SERVER_LINK = "~L";
         public const string SERVER_CANCEL = "~n";
         public const string SERVER_WHITE = "~w";
         public const string SERVER_BLACK = "~k";
@@ -96,7 +99,11 @@ namespace Meridian59.Bot.IRC
                 Text = Text.ReplaceFirst(IRCCOLOR_ITALIC, SERVER_ITALIC);
                 Text = Text.ReplaceFirst(IRCCOLOR_TERM, SERVER_ITALIC, index);
             }
-
+            while ((index = Text.IndexOf(IRCCOLOR_STRIKEOUT, 0)) > -1)
+            {
+                Text = Text.ReplaceFirst(IRCCOLOR_STRIKEOUT, SERVER_STRIKEOUT);
+                Text = Text.ReplaceFirst(IRCCOLOR_TERM, SERVER_STRIKEOUT, index);
+            }
             Text = Text.Replace(IRCCOLOR_START + IRCCOLOR_WHITE + "," + IRCCOLOR_GREY, SERVER_WHITE);
             Text = Text.Replace(IRCCOLOR_START + IRCCOLOR_BLACK + "," + IRCCOLOR_GREY, SERVER_BLACK);
             Text = Text.Replace(IRCCOLOR_START + IRCCOLOR_BLUE + "," + IRCCOLOR_GREY, SERVER_BLUE);
@@ -139,6 +146,10 @@ namespace Meridian59.Bot.IRC
                 // underline
                 if (style.IsUnderline)
                     s += IRCCOLOR_UNDERLINE;
+                
+                // strikeout
+                if (style.IsStrikeout)
+                    s += IRCCOLOR_STRIKEOUT;
 
                 // init IRC color
                 s += IRCCOLOR_START;
