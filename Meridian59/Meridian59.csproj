@@ -132,6 +132,7 @@
     <Compile Include="Data\Models\AdminInfoProperty.cs" />
     <Compile Include="Data\Models\AdminInfoObject.cs" />
     <Compile Include="Data\Models\AdminInfo.cs" />
+    <Compile Include="Data\Models\ChatCommand\ChatCommandInvite.cs" />
     <Compile Include="Data\Models\GuildHallsInfo.cs" />
     <Compile Include="Data\Models\ChatCommand\ChatCommandBalance.cs" />
     <Compile Include="Data\Models\ChatCommand\ChatCommandAppeal.cs" />

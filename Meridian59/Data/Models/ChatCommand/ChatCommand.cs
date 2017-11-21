@@ -296,6 +296,13 @@ namespace Meridian59.Data.Models
                         returnValue = new ChatCommandTime();
                     }
                     break;
+#if !OPENMERIDIAN
+                case ChatCommandInvite.KEY1:
+                case ChatCommandInvite.KEY2:
+                case ChatCommandInvite.KEY3:
+                    returnValue = ParseInvite(splitted, lower, DataController);
+                    break;
+#endif
 #endif
             }
             
@@ -925,6 +932,88 @@ namespace Meridian59.Data.Models
 
            return command;
         }
+
+#if !OPENMERIDIAN
+        /// <summary>
+        /// Very much like ParseGoPlayer (copy'n'paste)!
+        /// </summary>
+        /// <param name="Words"></param>
+        /// <param name="Text"></param>
+        /// <param name="Data"></param>
+        /// <returns></returns>
+        protected static ChatCommandInvite ParseInvite(string[] Words, string Text, DataController Data)
+        {
+            Tuple<int, int, string> quote = null;
+            ChatCommandInvite command = null;
+            OnlinePlayer player = null;
+            string prefix = null;
+            List<OnlinePlayer> list = null;
+            int num = 0;
+
+            if (Words == null || Words.Length < 2)
+                return null;
+
+            // extract quoted name if second word starts with "          
+            // this is necessary to not care about quoted text (t someone "yes yes")
+            // but only for quoted names (t "mister x" hello!)
+            if (Words[1].Length > 0 && Words[1][0] == QUOTECHAR)
+                quote = Text.GetQuote();
+
+            /********* QUOTED NAME *********/
+            if (quote != null)
+            {
+                // try get exact match for quoted name
+                player = Data.OnlinePlayers.GetItemByName(quote.Item3);
+
+                if (player != null)
+                    command = new ChatCommandInvite(player.ID);
+
+                // no player with that name
+                else
+                {
+                    Data.ChatMessages.Add(ServerString.GetServerStringForString(
+                        "No player with name: " + quote.Item3));
+                }
+            }
+
+            /********* UNQUOTED NAME *********/
+            else
+            {
+                prefix = Words[1];
+                list = Data.OnlinePlayers.GetItemsByNamePrefix(prefix);
+
+                // extend prefix with more words
+                // until there is only one or zero matches found
+                // or until there is only one more word left (supposed minimal text)
+                num = 2;
+                while (list.Count > 1 && num < Words.Length)
+                {
+                    prefix += DELIMITER + Words[num];
+                    list = Data.OnlinePlayers.GetItemsByNamePrefix(prefix);
+                    num++;
+                }
+
+                if (list.Count == 1)
+                    command = new ChatCommandInvite(list[0].ID);
+
+                // still more than one player with max. prefix
+                else if (list.Count > 1)
+                {
+                    Data.ChatMessages.Add(ServerString.GetServerStringForString(
+                        "More than one player with prefix: " + prefix));
+                }
+
+                // no player with that prefix
+                else
+                {
+                    Data.ChatMessages.Add(ServerString.GetServerStringForString(
+                        "No player with prefix: " + prefix));
+                }
+            }
+
+            return command;
+        }
+#endif
 #endif
     }
 }
