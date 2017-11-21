@@ -389,17 +389,84 @@ namespace Meridian59 { namespace Ogre
       }
 
       /// NOT OK FLAG
-      else if (CLRString::Equals(e->PropertyName, CharCreationInfo::PROPNAME_ISDATAOK))
+      else if (CLRString::Equals(e->PropertyName, CharCreationInfo::PROPNAME_CHARINFONOTOKERROR))
       {
-         if (creationInfo->IsDataOK)
+         if (creationInfo->CharInfoNotOkError == CharInfoNotOkError::NoError)
          {
-            DataOK->setVisible(false);
+            // Don't show a box for this, this is the default that gets set after OK is clicked.
+            return;
          }
-         else
+
+         // attach OK listener to confirm popup
+         ControllerUI::ConfirmPopup::Confirmed +=
+            gcnew ::System::EventHandler(&ControllerUI::AvatarCreateWizard::OnOKClicked);
+
+         LANGSTR_CHARINFONOTOKERROR_OKDIALOG::Enum err;
+
+         switch (creationInfo->CharInfoNotOkError)
          {
-            DataOK->setVisible(true);
+         case CharInfoNotOkError::GenericError:
+            err = LANGSTR_CHARINFONOTOKERROR_OKDIALOG::GENERICERROR;
+            break;
+
+         case CharInfoNotOkError::NotFirstTime:
+            err = LANGSTR_CHARINFONOTOKERROR_OKDIALOG::NOTFIRSTTIME;
+            break;
+
+         case CharInfoNotOkError::NameTooLong:
+            err = LANGSTR_CHARINFONOTOKERROR_OKDIALOG::NAMETOOLONG;
+            break;
+
+         case CharInfoNotOkError::NameBadCharacters:
+            err = LANGSTR_CHARINFONOTOKERROR_OKDIALOG::NAMEBADCHARACTERS;
+            break;
+
+         case CharInfoNotOkError::NameInUse:
+            err = LANGSTR_CHARINFONOTOKERROR_OKDIALOG::NAMEINUSE;
+            break;
+
+         case CharInfoNotOkError::NoMobName:
+            err = LANGSTR_CHARINFONOTOKERROR_OKDIALOG::NOMOBNAME;
+            break;
+
+         case CharInfoNotOkError::NoNPCName:
+            err = LANGSTR_CHARINFONOTOKERROR_OKDIALOG::NONPCNAME;
+            break;
+
+         case CharInfoNotOkError::NoGuildName:
+            err = LANGSTR_CHARINFONOTOKERROR_OKDIALOG::NOGUILDNAME;
+            break;
+
+         case CharInfoNotOkError::NoBadWords:
+            err = LANGSTR_CHARINFONOTOKERROR_OKDIALOG::NOBADWORDS;
+            break;
+
+         case CharInfoNotOkError::NoConfusingName:
+            err = LANGSTR_CHARINFONOTOKERROR_OKDIALOG::NOCONFUSINGNAME;
+            break;
+
+         case CharInfoNotOkError::NoRetiredName:
+            err = LANGSTR_CHARINFONOTOKERROR_OKDIALOG::NORETIREDNAME;
+            break;
+
+         case CharInfoNotOkError::DescriptionTooLong:
+            err = LANGSTR_CHARINFONOTOKERROR_OKDIALOG::DESCRIPTIONTOOLONG;
+            break;
+
+         case CharInfoNotOkError::InvalidGender:
+            err = LANGSTR_CHARINFONOTOKERROR_OKDIALOG::INVALIDGENDER;
+            break;
          }
+
+         ControllerUI::ConfirmPopup::ShowOK(GetCharInfoNotOKErrorOkDialog(err) , 0);
       }
+   };
+
+   void ControllerUI::AvatarCreateWizard::OnOKClicked(Object ^sender, ::System::EventArgs ^e)
+   {
+      CharCreationInfo^ creationInfo = OgreClient::Singleton->Data->CharCreationInfo;
+      // Reset error.
+      creationInfo->CharInfoNotOkError = CharInfoNotOkError::NoError;
    };
 
    void ControllerUI::AvatarCreateWizard::OnNewHeadImageAvailable(Object^ sender, ::System::EventArgs^ e)

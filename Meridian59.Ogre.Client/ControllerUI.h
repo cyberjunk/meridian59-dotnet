@@ -1086,6 +1086,7 @@ namespace Meridian59 { namespace Ogre
          static void Destroy();
          static void ApplyLanguage();
          static void OnCharCreationInfoPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
+         static void OnOKClicked(Object ^ sender, ::System::EventArgs ^ e);
          static void OnNewHeadImageAvailable(Object^ sender, ::System::EventArgs^ e);
          static void OnSpellsListChanged(Object^ sender, ListChangedEventArgs^ e);
          static void OnSkillsListChanged(Object^ sender, ListChangedEventArgs^ e);

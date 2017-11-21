@@ -99,9 +99,31 @@ namespace LANGSTR_DESCRIPTION_STATUSBAR
    };
 }
 
+namespace LANGSTR_CHARINFONOTOKERROR_OKDIALOG
+{
+   enum Enum
+   {
+      NOCHARINFOERROR = 0, // NOERROR and NO_ERROR are Windows constants
+      GENERICERROR = 1,
+      NOTFIRSTTIME = 2,
+      NAMETOOLONG = 3,
+      NAMEBADCHARACTERS = 4,
+      NAMEINUSE = 5,
+      NOMOBNAME = 6,
+      NONPCNAME = 7,
+      NOGUILDNAME = 8,
+      NOBADWORDS = 9,
+      NOCONFUSINGNAME = 10,
+      NORETIREDNAME = 11,
+      DESCRIPTIONTOOLONG = 12,
+      INVALIDGENDER = 13
+   };
+}
+
 const char* GetLangLabel(const LANGSTR::Enum ID);
 const char* GetLangWindowTitle(const LANGSTR_WINDOW_TITLE::Enum ID);
 const char* GetLangTooltipMood(const LANGSTR_TOOLTIP_MOOD::Enum ID);
 const char* GetLangTooltipOnlinePlayer(const LANGSTR_TOOLTIP_ONLINEPLAYER::Enum ID);
 const char* GetLangTooltipStatusBar(const LANGSTR_TOOLTIP_STATUSBAR::Enum ID);
 const char* GetLangDescriptionStatusBar(const LANGSTR_DESCRIPTION_STATUSBAR::Enum ID);
+const char* GetCharInfoNotOKErrorOkDialog(const LANGSTR_CHARINFONOTOKERROR_OKDIALOG::Enum ID);

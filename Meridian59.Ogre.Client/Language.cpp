@@ -71,6 +71,24 @@ const char* EN_DESCRIPTIONS_STATUSBAR[] =
    "Room / Area"        // 6
 };
 
+const char* EN_CHARINFONOTOKERROR_OKDIALOG[] =
+{
+   "No error.",                                                                                                                                                                   // 0
+   "Character creation failed due to an unspecified error, please try again and contact an admin in-game or at meridiannext.com/phpbb3 if you are unable to create a character.", // 1
+   "Character slot already in use! Please try a different character slot, and contact an admin in-game or at meridiannext.com/phpbb3.",                                           // 2
+   "Character names must be between 3 and 30 characters long.",                                                                                                                   // 3
+   "Invalid character used in name.",                                                                                                                                             // 4
+   "Your character name is already taken by someone else.",                                                                                                                       // 5
+   "You may not pick the name of a Meridian 59 monster.",                                                                                                                         // 6
+   "You may not pick the name of a Meridian 59 NPC.",                                                                                                                             // 7
+   "You may not name your character after an existing Meridian 59 Guild.",                                                                                                        // 8
+   "You may not use offensive language in your character name.",                                                                                                                  // 9
+   "Please pick another name - this one could cause confusion in-game.",                                                                                                          // 10
+   "Please pick another name, this one belongs to a former Meridian 59 developer or staff member and is reserved for their future use.",                                          // 11
+   "Player descriptions cannot be more than 1000 characters.",                                                                                                                    // 12
+   "You must select either male or female when creating your character."                                                                                                          // 13
+};
+
 /**************************************************************************************/
 /***************************      GERMAN      *****************************************/
 /**************************************************************************************/
@@ -153,6 +171,24 @@ const char* DE_DESCRIPTIONS_STATUSBAR[] =
    "Raum / Gebiet"         // 6
 };
 
+const char* DE_CHARINFONOTOKERROR_OKDIALOG[] =
+{
+   "Kein Fehler.",                                                                                                                                                                                                                                     // 0
+   "Charaktererstellung aufgrund eines unspezifizierten Fehlers fehlgeschlagen, bitte versuche es erneut und kontaktiere einen Administrator im Spiel oder auf meridiannext.com/phpbb3 wenn Du nicht in der Lage bist, einen Charakter zu erstellen.", // 1
+   "Charakterplatz bereits belegt! Bitte versuche einen anderen Charakterplatz und kontaktiere einen Administrator im Spiel oder auf meridiannext.com/phpbb3.",                                                                                        // 2
+   "Charakternamen müssen zwischen 3 und 30 Zeichen lang sein.",                                                                                                                                                                                       // 3
+   "Ungültiges Symbol im Namen verwendet.",                                                                                                                                                                                                            // 4
+   "Dieser Name ist bereits vergeben.",                                                                                                                                                                                                                // 5
+   "Namen von Monstern aus Meridian 59 sind nicht erlaubt." ,                                                                                                                                                                                          // 6
+   "Namen von NPCs aus Meridian 59 sind nicht erlaubt.",                                                                                                                                                                                               // 7
+   "Charaktere dürfen nicht nach bestehenden Gilden benannt werden.",                                                                                                                                                                                  // 8
+   "Beleidigende oder anstößige Sprache ist in Charakternamen nicht erlaubt.",                                                                                                                                                                         // 9
+   "Bitte wähle einen anderen Namen - dieser könnte im Spiel für Verwirrung sorgen.",                                                                                                                                                                  // 10
+   "Bitte wähle einen anderen Namen - dieser gehört einem ehemaligen Entwickler oder Mitglied des Meridian 59 Teams und ist für sie für die Zukunft reserviert.",                                                                                      // 11
+   "Charakterbeschreibungen dürfen nicht mehr als 1000 Zeichen enthalten.",                                                                                                                                                                            // 12
+   "Du musst ein Geschlecht für deinen Charakter wählen."                                                                                                                                                                                              // 13
+};
+
 /**************************************************************************************/
 /**************************************************************************************/
 
@@ -225,5 +261,17 @@ const char* GetLangDescriptionStatusBar(const LANGSTR_DESCRIPTION_STATUSBAR::Enu
    {
    case LanguageCode::German: return DE_DESCRIPTIONS_STATUSBAR[ID];
    default:                   return EN_DESCRIPTIONS_STATUSBAR[ID];
+   }
+};
+
+const char* GetCharInfoNotOKErrorOkDialog(const LANGSTR_CHARINFONOTOKERROR_OKDIALOG::Enum ID)
+{
+   using ::Meridian59::Ogre::OgreClient;
+   using ::Meridian59::Common::Enums::LanguageCode;
+
+   switch (OgreClient::Singleton->Config->Language)
+   {
+   case LanguageCode::German: return DE_CHARINFONOTOKERROR_OKDIALOG[ID];
+   default:                   return EN_CHARINFONOTOKERROR_OKDIALOG[ID];
    }
 };

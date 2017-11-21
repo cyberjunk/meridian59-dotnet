@@ -46,7 +46,7 @@ namespace Meridian59.Data.Models
         public const string AVATARNAME_DEFAULT              = "";
         public const string AVATARDESCRIPTION_DEFAULT       = "";
         public const Gender GENDER_DEFAULT                  = Gender.Male;
-        public const bool ISDATAOK_DEFAULT                  = true;
+        public const CharInfoNotOkError CHARINFOERROR_DEFAULT = CharInfoNotOkError.NoError;
         public const string PROPNAME_HAIRCOLORS             = "HairColors";
         public const string PROPNAME_SKINCOLORS             = "SkinColors";
         public const string PROPNAME_MALEHAIRIDS            = "MaleHairIDs";
@@ -80,7 +80,7 @@ namespace Meridian59.Data.Models
         public const string PROPNAME_SKINCOLOR              = "SkinColor";
         public const string PROPNAME_AVATARNAME             = "AvatarName";
         public const string PROPNAME_AVATARDESCRIPTION      = "AvatarDescription";
-        public const string PROPNAME_ISDATAOK               = "IsDataOK";
+        public const string PROPNAME_CHARINFONOTOKERROR     = "CharInfoNotOkError";
         #endregion
 
         #region INotifyPropertyChanged
@@ -401,7 +401,7 @@ namespace Meridian59.Data.Models
         protected byte skinColor = SKINCOLOR_DEFAULT;
         protected string avatarName = AVATARNAME_DEFAULT;
         protected string avatarDescription = AVATARDESCRIPTION_DEFAULT;
-        protected bool isDataOK = ISDATAOK_DEFAULT;
+        protected CharInfoNotOkError charInfoNotOkError = CHARINFOERROR_DEFAULT;
         #endregion
 
         #region Properties
@@ -802,15 +802,15 @@ namespace Meridian59.Data.Models
         /// <summary>
         /// 
         /// </summary>
-        public bool IsDataOK
+        public CharInfoNotOkError CharInfoNotOkError
         {
-            get { return isDataOK; }
+            get { return charInfoNotOkError; }
             set
             {
-                if (isDataOK != value)
+                if (charInfoNotOkError != value)
                 {
-                    isDataOK = value;
-                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_ISDATAOK));
+                    charInfoNotOkError = value;
+                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_CHARINFONOTOKERROR));
                 }
             }
         }

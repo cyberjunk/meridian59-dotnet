@@ -16,14 +16,66 @@
 
 using System;
 using Meridian59.Protocol.Enums;
+using Meridian59.Common.Constants;
+using Meridian59.Common.Enums;
 
 namespace Meridian59.Protocol.GameMessages
 {
+    /// <summary>
+    /// Tells the client about errors during character creation.
+    /// </summary>
     [Serializable]
     public class CharInfoNotOkMessage : GameModeMessage
-    {        
-        public CharInfoNotOkMessage()
-            : base(MessageTypeGameMode.CharInfoNotOk) { }
+    {
+        #region IByteSerializable implementation
+        public override int ByteLength
+        {
+            get
+            {
+#if VANILLA || OPENMERIDIAN
+                return base.ByteLength;
+#else
+                return base.ByteLength + TypeSizes.BYTE;
+#endif
+            }
+        }
+
+        public override int WriteTo(byte[] Buffer, int StartIndex = 0)
+        {
+            int cursor = StartIndex;
+
+            cursor += base.WriteTo(Buffer, StartIndex);
+#if !VANILLA && !OPENMERIDIAN
+            Buffer[cursor] = (byte)CharInfoNotOkError;
+            cursor++;
+#endif
+            return cursor - StartIndex;
+        }
+
+        public override int ReadFrom(byte[] Buffer, int StartIndex = 0)
+        {
+            int cursor = StartIndex;
+
+            cursor += base.ReadFrom(Buffer, StartIndex);
+#if VANILLA || OPENMERIDIAN
+            CharInfoNotOkError = CharInfoNotOkError.NameInUse;
+#else
+            CharInfoNotOkError = (CharInfoNotOkError)Buffer[cursor];
+            cursor++;
+#endif
+
+
+            return cursor - StartIndex;
+        }
+        #endregion
+
+        public CharInfoNotOkError CharInfoNotOkError { get; set; }
+
+        public CharInfoNotOkMessage(CharInfoNotOkError CharInfoNotOkError)
+            : base(MessageTypeGameMode.CharInfoNotOk)
+        {
+            this.CharInfoNotOkError = CharInfoNotOkError;
+        }
 
         public CharInfoNotOkMessage(byte[] Buffer, int StartIndex = 0)
             : base(Buffer, StartIndex = 0) { }

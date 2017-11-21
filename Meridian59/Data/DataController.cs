@@ -2531,7 +2531,7 @@ namespace Meridian59.Data
         protected virtual void HandleCharInfoNotOKMessage(CharInfoNotOkMessage Message)
         {
             // mark as not OK
-            CharCreationInfo.IsDataOK = false;
+            CharCreationInfo.CharInfoNotOkError = Message.CharInfoNotOkError;
         }
 
         protected virtual void HandleSaid(SaidMessage Message)
