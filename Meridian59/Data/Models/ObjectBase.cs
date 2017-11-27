@@ -869,10 +869,22 @@ namespace Meridian59.Data.Models
             // appearance update
             ProcessAppearance(true);
         }
+
+        /// <summary>
+        /// Updates values of this instance to values taken from parameter instance.
+        /// </summary>
+        /// <param name="Model"></param>
+        /// <param name="RaiseChangedEvent"></param>
+        public void UpdateFromModel(ObjectFlagsUpdate Model, bool RaiseChangedEvent)
+        {
+            // Don't need to update base - ID doesn't change and
+            // ObjectFlagsUpdate doesn't contain Count data.
+            Flags.UpdateFromModel(Model.Flags, RaiseChangedEvent);
+        }
         #endregion
 
         #region IStringResolvable
-		public virtual void ResolveStrings(StringDictionary StringResources, bool RaiseChangedEvent)
+        public virtual void ResolveStrings(StringDictionary StringResources, bool RaiseChangedEvent)
         {
             string res_name;
             string res_mainoverlayname;
