@@ -600,6 +600,10 @@ namespace Meridian59.Protocol
                     case MessageTypeGameMode.RoomContentsFlags:                               // PI: 128
                         TypedMessage = new RoomContentsFlagsMessage(ref pMessage);
                         break;
+
+                    case MessageTypeGameMode.ChangeObjectFlags:                               // PI: 129
+                        TypedMessage = new ChangeObjectFlagsMessage(ref pMessage);
+                        break;
 #endif
 #endif
                     case MessageTypeGameMode.Player:                                          // PI: 130

@@ -111,6 +111,7 @@ namespace Meridian59.Protocol.Enums
         ReqInventoryMove    = 127,
 #if !OPENMERIDIAN
         RoomContentsFlags   = 128,
+        ChangeObjectFlags   = 129,
 #endif
 #endif
         Player              = 130,

@@ -1755,6 +1755,10 @@ namespace Meridian59.Data
                 case MessageTypeGameMode.RoomContentsFlags:         // 128
                     HandleRoomContentsFlags((RoomContentsFlagsMessage)Message);
                     break;
+
+                case MessageTypeGameMode.ChangeObjectFlags:         // 129
+                    HandleChangeObjectFlags((ChangeObjectFlagsMessage)Message);
+                    break;
 #endif
 
                 case MessageTypeGameMode.Player:                    // 130
@@ -2027,6 +2031,26 @@ namespace Meridian59.Data
                 {
                     roomObject.UpdateFromModel(obj, true);
                 }
+            }
+        }
+
+        protected virtual void HandleChangeObjectFlags(ChangeObjectFlagsMessage Message)
+        {
+            // try to find in room first
+            RoomObject roomObject = RoomObjects.GetItemByID(Message.UpdatedObjectFlags.ID);
+
+            // found
+            if (roomObject != null)
+            {
+                roomObject.UpdateFromModel(Message.UpdatedObjectFlags, true);
+            }
+            else
+            {
+                // otherwise try to find in inventory
+                ObjectBase inventoryObject = InventoryObjects.GetItemByID(Message.UpdatedObjectFlags.ID);
+
+                if (inventoryObject != null)
+                    inventoryObject.UpdateFromModel(Message.UpdatedObjectFlags, true);
             }
         }
 #endif
