@@ -1751,6 +1751,16 @@ namespace Meridian59.Data
                     HandleEffect((EffectMessage)Message);
                     break;
 
+#if !VANILLA && !OPENMERIDIAN
+                case MessageTypeGameMode.RoomContentsFlags:         // 128
+                    HandleRoomContentsFlags((RoomContentsFlagsMessage)Message);
+                    break;
+
+                case MessageTypeGameMode.ChangeObjectFlags:         // 129
+                    HandleChangeObjectFlags((ChangeObjectFlagsMessage)Message);
+                    break;
+#endif
+
                 case MessageTypeGameMode.Player:                    // 130
                     HandlePlayer((PlayerMessage)Message);
                     break;
@@ -2004,6 +2014,46 @@ namespace Meridian59.Data
             // set example datamodel to default
             CharCreationInfo.SetExampleModel();
         }
+
+#if !VANILLA && !OPENMERIDIAN
+        protected virtual void HandleRoomContentsFlags(RoomContentsFlagsMessage Message)
+        {
+            if (RoomObjects == null)
+                return;
+
+            foreach (ObjectFlagsUpdate obj in Message.ObjectsToUpdate)
+            {
+                // try to find in room first
+                RoomObject roomObject = RoomObjects.GetItemByID(obj.ID);
+
+                // found
+                if (roomObject != null)
+                {
+                    roomObject.UpdateFromModel(obj, true);
+                }
+            }
+        }
+
+        protected virtual void HandleChangeObjectFlags(ChangeObjectFlagsMessage Message)
+        {
+            // try to find in room first
+            RoomObject roomObject = RoomObjects.GetItemByID(Message.UpdatedObjectFlags.ID);
+
+            // found
+            if (roomObject != null)
+            {
+                roomObject.UpdateFromModel(Message.UpdatedObjectFlags, true);
+            }
+            else
+            {
+                // otherwise try to find in inventory
+                ObjectBase inventoryObject = InventoryObjects.GetItemByID(Message.UpdatedObjectFlags.ID);
+
+                if (inventoryObject != null)
+                    inventoryObject.UpdateFromModel(Message.UpdatedObjectFlags, true);
+            }
+        }
+#endif
 
         protected virtual void HandleRoomContents(RoomContentsMessage Message)
         {

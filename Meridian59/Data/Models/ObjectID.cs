@@ -272,6 +272,7 @@ namespace Meridian59.Data.Models
                 count = Model.Count;
             }
         }
+
         #endregion
 
         #region Methods

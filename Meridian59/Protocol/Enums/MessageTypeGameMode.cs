@@ -109,6 +109,10 @@ namespace Meridian59.Protocol.Enums
         ChangeDescription   = 126,
 #if !VANILLA
         ReqInventoryMove    = 127,
+#if !OPENMERIDIAN
+        RoomContentsFlags   = 128,
+        ChangeObjectFlags   = 129,
+#endif
 #endif
         Player              = 130,
         Stat                = 131,
