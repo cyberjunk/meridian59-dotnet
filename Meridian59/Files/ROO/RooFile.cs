@@ -1842,6 +1842,12 @@ namespace Meridian59.Files.ROO
             }
         }
 
+        public void Reset()
+        {
+            foreach (RooSector s in Sectors)
+                s.Reset();
+        }
+
         /// <summary>
         /// Handle ChangeTextureMessage
         /// </summary>
@@ -1913,21 +1919,8 @@ namespace Meridian59.Files.ROO
             SectorChange info = Message.SectorChange;
 
             foreach (RooSector sector in Sectors)
-            {
-                // start / adjust movement on matching sectors
                 if (sector.ServerID == info.SectorNr)
-                {
-                    if (info.Depth != RooSectorFlags.DepthType.ChangeOverride)
-                        sector.Flags.SectorDepth = info.Depth;
-                    if (info.ScrollSpeed != TextureScrollSpeed.CHANGE_OVERRIDE)
-                    {
-                        if (info.ScrollSpeed == TextureScrollSpeed.NONE)
-                        {
-                            sector.Flags.ScrollSpeed = info.ScrollSpeed;
-                        }
-                    }
-                }
-            }
+                    sector.ApplyChange(info);
         }
 
         /// <summary>

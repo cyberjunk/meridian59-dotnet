@@ -182,6 +182,7 @@ namespace Meridian59.Files.ROO
             cursor++ ;
 
             Flags = new RooSectorFlags(BitConverter.ToUInt32(Buffer, cursor));
+            OriginalFlags = new RooSectorFlags(Flags.Value);
             cursor += TypeSizes.INT;
 
             if (HasSpeed)
@@ -232,6 +233,7 @@ namespace Meridian59.Files.ROO
             Buffer++;
 
             Flags = new RooSectorFlags(*((uint*)Buffer));
+            OriginalFlags = new RooSectorFlags(Flags.Value);
             Buffer += TypeSizes.INT;
 
             if (HasSpeed)
@@ -343,6 +345,8 @@ namespace Meridian59.Files.ROO
         /// Light value
         /// </summary>
         public byte Light1 { get; set; }
+
+        public RooSectorFlags OriginalFlags { get; set; }
 
         /// <summary>
         /// Additional flags
@@ -554,6 +558,7 @@ namespace Meridian59.Files.ROO
             this.CeilingHeight = CeilingHeight;
             this.Light1 = Light1;
             this.Flags = new RooSectorFlags(Flags);
+            this.OriginalFlags = new RooSectorFlags(Flags);
             this.Speed = Unknown4;
 
             this.HasSpeed = HasSpeed;
@@ -1021,6 +1026,20 @@ namespace Meridian59.Files.ROO
 
             if (TextureChanged != null)
                 TextureChanged(this, new SectorTextureChangedEventArgs(this, false, oldmaterial));
+        }
+
+        public void ApplyChange(SectorChange SectorChange)
+        {
+            if (SectorChange.Depth != RooSectorFlags.DepthType.ChangeOverride)
+                Flags.SectorDepth = SectorChange.Depth;
+            if (SectorChange.ScrollSpeed != TextureScrollSpeed.CHANGE_OVERRIDE)
+                Flags.ScrollSpeed = SectorChange.ScrollSpeed;
+        }
+
+        public void Reset()
+        {
+            // Resets Flags to original value.
+            Flags.Value = OriginalFlags.Value;
         }
         #endregion
     }
