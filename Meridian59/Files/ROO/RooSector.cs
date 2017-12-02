@@ -181,8 +181,7 @@ namespace Meridian59.Files.ROO
             Light1 = Buffer[cursor];
             cursor++ ;
 
-            Flags = new RooSectorFlags(BitConverter.ToUInt32(Buffer, cursor));
-            OriginalFlags = new RooSectorFlags(Flags.Value);
+            Flags.Value = OriginalFlags.Value = BitConverter.ToUInt32(Buffer, cursor);
             cursor += TypeSizes.INT;
 
             if (HasSpeed)
@@ -232,8 +231,7 @@ namespace Meridian59.Files.ROO
             Light1 = Buffer[0];
             Buffer++;
 
-            Flags = new RooSectorFlags(*((uint*)Buffer));
-            OriginalFlags = new RooSectorFlags(Flags.Value);
+            Flags.Value = OriginalFlags.Value = *((uint*)Buffer);
             Buffer += TypeSizes.INT;
 
             if (HasSpeed)
@@ -290,6 +288,16 @@ namespace Meridian59.Files.ROO
         /// </summary>
         protected readonly List<RooSubSector> leafs = new List<RooSubSector>();
 
+        /// <summary>
+        /// Original flags for this sector.
+        /// </summary>
+        protected readonly RooSectorFlags originalFlags = new RooSectorFlags();
+
+        /// <summary>
+        /// Original flags for this sector.
+        /// </summary>
+        protected readonly RooSectorFlags flags = new RooSectorFlags();
+
         #region Properties
         /// <summary>
         /// 
@@ -320,12 +328,12 @@ namespace Meridian59.Files.ROO
         /// grdXXXXX number of ceiling texture
         /// </summary>
         public ushort CeilingTexture { get; set; }
-        
+
         /// <summary>
         /// Texture offset X
         /// </summary>
         public short TextureX { get; set; }
-        
+
         /// <summary>
         /// Texture offset Y
         /// </summary>
@@ -346,12 +354,12 @@ namespace Meridian59.Files.ROO
         /// </summary>
         public byte Light1 { get; set; }
 
-        public RooSectorFlags OriginalFlags { get; set; }
+        public RooSectorFlags OriginalFlags { get { return originalFlags; } }
 
         /// <summary>
         /// Additional flags
         /// </summary>
-        public RooSectorFlags Flags { get; set; }
+        public RooSectorFlags Flags { get { return flags; } }
 
         /// <summary>
         /// Scrollspeed
@@ -557,8 +565,7 @@ namespace Meridian59.Files.ROO
             this.FloorHeight = FloorHeight;
             this.CeilingHeight = CeilingHeight;
             this.Light1 = Light1;
-            this.Flags = new RooSectorFlags(Flags);
-            this.OriginalFlags = new RooSectorFlags(Flags);
+            this.Flags.Value = this.OriginalFlags.Value = Flags;
             this.Speed = Unknown4;
 
             this.HasSpeed = HasSpeed;
