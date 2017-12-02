@@ -1842,10 +1842,23 @@ namespace Meridian59.Files.ROO
             }
         }
 
+        /// <summary>
+        /// Reset all properties to values from original ROO file
+        /// </summary>
         public void Reset()
         {
+            // reset sectors
             foreach (RooSector s in Sectors)
                 s.Reset();
+
+            // reset sides
+            foreach (RooSideDef s in SideDefs)
+                s.Reset();
+
+            // todo: reset walls
+
+            // recalculate some stuff for initial state
+            DoCalculations();
         }
 
         /// <summary>

@@ -117,13 +117,13 @@ namespace Meridian59.Files.ROO
             ServerID = BitConverter.ToInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            MiddleTexture = BitConverter.ToUInt16(Buffer, cursor);
+            MiddleTexture = MiddleTextureOrig = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            UpperTexture = BitConverter.ToUInt16(Buffer, cursor);
+            UpperTexture = UpperTextureOrig = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            LowerTexture = BitConverter.ToUInt16(Buffer, cursor);
+            LowerTexture = LowerTextureOrig = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
             Flags = new RooSideDefFlags(BitConverter.ToUInt32(Buffer, cursor));
@@ -143,13 +143,13 @@ namespace Meridian59.Files.ROO
             ServerID = *((short*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            MiddleTexture = *((ushort*)Buffer);
+            MiddleTexture = MiddleTextureOrig = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            UpperTexture = *((ushort*)Buffer);
+            UpperTexture = UpperTextureOrig = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            LowerTexture = *((ushort*)Buffer);
+            LowerTexture = LowerTextureOrig = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
             Flags = new RooSideDefFlags(*((uint*)Buffer));
@@ -187,6 +187,10 @@ namespace Meridian59.Files.ROO
         public ushort LowerTexture { get; set; }
         public RooSideDefFlags Flags { get; set; }
         public byte Speed { get; set; }
+
+        public ushort MiddleTextureOrig { get; protected set; }
+        public ushort UpperTextureOrig { get; protected set; }
+        public ushort LowerTextureOrig { get; protected set; }
 
         public BgfFile ResourceUpper { get; protected set; }
         public BgfFile ResourceMiddle { get; protected set; }
@@ -711,5 +715,15 @@ namespace Meridian59.Files.ROO
             
             return sp;
         }        
+
+        /// <summary>
+        /// Resets this side to original values from ROO file
+        /// </summary>
+        public void Reset()
+        {
+            LowerTexture  = LowerTextureOrig;
+            MiddleTexture = MiddleTextureOrig;
+            UpperTexture  = UpperTextureOrig;
+        }
     }
 }

@@ -29,7 +29,7 @@ namespace Meridian59.Data.Models
     /// Roominformation (MapID, Brigthness, ...)
     /// </summary>
     [Serializable]
-    public class RoomInfo : IByteSerializableFast, INotifyPropertyChanged, IClearable, IUpdatable<RoomInfo>, IStringResolvable, IResourceResolvable
+    public class RoomInfo : IByteSerializableFast, INotifyPropertyChanged, IClearable, IUpdatable<RoomInfo>, IStringResolvable
     {
         #region Constants
         
@@ -813,26 +813,6 @@ namespace Meridian59.Data.Models
                 if (wading_file != null) wadingSoundFile = wading_file;
                 else wadingSoundFile = String.Empty;
             }
-        }
-        #endregion
-
-        #region IResourceResolvable
-        public void ResolveResources(ResourceManager M59ResourceManager, bool RaiseChangedEvent)
-        {
-            if (RoomFile != String.Empty)
-            {
-                if (RaiseChangedEvent)
-                {
-                    ResourceRoom = M59ResourceManager.GetRoom(RoomFile);
-                }
-                else
-                {
-                    resourceRoom = M59ResourceManager.GetRoom(RoomFile);
-                }
-
-                if (resourceRoom != null)
-                    resourceRoom.ResolveResources(M59ResourceManager);
-            }           
         }
         #endregion
     }

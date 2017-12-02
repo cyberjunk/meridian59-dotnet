@@ -1155,7 +1155,9 @@ namespace Meridian59 { namespace Ogre
       RoomInfo^ roomInfo = Data->RoomInformation;
       roomInfo->RoomFile = "necarea3.roo";
       roomInfo->AmbientLight = 40;
-      roomInfo->ResolveResources(OgreClient::Singleton->ResourceManager, false);
+      roomInfo->ResourceRoom = OgreClient::Singleton->ResourceManager->GetRoom(roomInfo->RoomFile);
+      if (roomInfo->ResourceRoom)
+         roomInfo->ResourceRoom->ResolveResources(OgreClient::Singleton->ResourceManager);
 
       ControllerRoom::LoadRoom();
 

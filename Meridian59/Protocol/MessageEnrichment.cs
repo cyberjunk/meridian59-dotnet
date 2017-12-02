@@ -22,6 +22,7 @@ using Meridian59.Data.Models;
 using Meridian59.Protocol.Enums;
 using Meridian59.Protocol.GameMessages;
 using Meridian59.Files;
+using Meridian59.Files.ROO;
 
 namespace Meridian59.Protocol
 {
@@ -294,10 +295,21 @@ namespace Meridian59.Protocol
         {
             double tick = GameTick.GetUpdatedTick();
 
-            Message.RoomInfo.ResolveResources(resourceManager, false);
- 
-            if (Message.RoomInfo.ResourceRoom != null)                             
-                Message.RoomInfo.ResourceRoom.UncompressAll();
+            RoomInfo roomInfo = Message.RoomInfo;
+            if (roomInfo.RoomFile != String.Empty)
+            {
+                // try find the roofile instance
+                RooFile rooFile = resourceManager.GetRoom(roomInfo.RoomFile);
+                roomInfo.ResourceRoom = rooFile;
+
+                // found and never "loaded" before, resolve and uncompress
+                // otherwise don't touch it in this thread
+                if (rooFile != null && !rooFile.IsResourcesResolved)
+                {
+                   rooFile.ResolveResources(resourceManager);
+                   rooFile.UncompressAll();
+                }
+            }
 
             double span = GameTick.GetUpdatedTick() - tick;
             Logger.Log(MODULENAME, LogType.Info, "Loaded BP_PLAYER: " + span.ToString() + " ms");

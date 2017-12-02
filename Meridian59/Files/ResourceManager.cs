@@ -270,10 +270,6 @@ namespace Meridian59.Files
                     if (Rooms.TryUpdate(File, rooFile, null))
                         numLoadedRooms++;
                 }
-                else
-                {
-                    rooFile.Reset();
-                }
             }
 
             return rooFile;            

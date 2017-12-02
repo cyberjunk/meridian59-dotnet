@@ -605,7 +605,16 @@ namespace Meridian59.Client
         /// </summary>
         /// <param name="Message"></param>
         protected virtual void HandlePlayerMessage(PlayerMessage Message)
-        {                      
+        {
+            // see if this is a reuse of once loaded room, if so reset it to inital values
+            // and resolve again in mainthread, message-enrichment couldn't touch it due to possible in-use
+            RooFile rooFile = Message.RoomInfo.ResourceRoom;
+            if (rooFile != null && rooFile.IsResourcesResolved)
+            {
+               rooFile.Reset();
+               rooFile.ResolveResources(ResourceManager);
+               rooFile.UncompressAll();
+            }
         }
 
         /// <summary>

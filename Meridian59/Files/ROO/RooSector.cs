@@ -160,10 +160,10 @@ namespace Meridian59.Files.ROO
             ServerID = BitConverter.ToInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            FloorTexture = BitConverter.ToUInt16(Buffer, cursor);
+            FloorTexture = OriginalFloorTexture = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            CeilingTexture = BitConverter.ToUInt16(Buffer, cursor);
+            CeilingTexture = OriginalCeilingTexture = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
             TextureX = BitConverter.ToInt16(Buffer, cursor);
@@ -210,10 +210,10 @@ namespace Meridian59.Files.ROO
             ServerID = *((short*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            FloorTexture = *((ushort*)Buffer);
+            FloorTexture = OriginalFloorTexture = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            CeilingTexture = *((ushort*)Buffer);
+            CeilingTexture = OriginalCeilingTexture = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
             TextureX = *((short*)Buffer);
@@ -325,9 +325,19 @@ namespace Meridian59.Files.ROO
         public ushort FloorTexture { get; set; }
 
         /// <summary>
+        /// Original grdXXXXX number of floor texture (from ROO file)
+        /// </summary>
+        public ushort OriginalFloorTexture { get; protected set; }
+
+        /// <summary>
         /// grdXXXXX number of ceiling texture
         /// </summary>
         public ushort CeilingTexture { get; set; }
+
+        /// <summary>
+        /// Original grdXXXXX number of ceiling texture (from ROO file)
+        /// </summary>
+        public ushort OriginalCeilingTexture { get; protected set; }
 
         /// <summary>
         /// Texture offset X
@@ -1035,18 +1045,33 @@ namespace Meridian59.Files.ROO
                 TextureChanged(this, new SectorTextureChangedEventArgs(this, false, oldmaterial));
         }
 
+         /// <summary>
+         /// Applies SectorChange information on this sector
+         /// </summary>
+         /// <param name="SectorChange"></param>
         public void ApplyChange(SectorChange SectorChange)
         {
+            // update depth
             if (SectorChange.Depth != RooSectorFlags.DepthType.ChangeOverride)
                 Flags.SectorDepth = SectorChange.Depth;
+
+            // update scrollspeed
             if (SectorChange.ScrollSpeed != TextureScrollSpeed.CHANGE_OVERRIDE)
                 Flags.ScrollSpeed = SectorChange.ScrollSpeed;
+
+            // update additional values based on scrollspeed and raise TextureChanged
+            SetFloorTexture(FloorTexture, ResourceFloor);
+            SetCeilingTexture(CeilingTexture, ResourceCeiling);
         }
 
+        /// <summary>
+        /// Reset all values to original values as stored in ROO
+        /// </summary>
         public void Reset()
         {
-            // Resets Flags to original value.
-            Flags.Value = OriginalFlags.Value;
+            Flags.Value    = OriginalFlags.Value;
+            FloorTexture   = OriginalFloorTexture;
+            CeilingTexture = OriginalCeilingTexture;
         }
         #endregion
     }
