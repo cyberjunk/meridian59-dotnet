@@ -1835,6 +1835,10 @@ namespace Meridian59.Files.ROO
                 case MessageTypeGameMode.WallAnimate:
                     HandleWallAnimateMessage((WallAnimateMessage)Message);
                     break;
+
+                case MessageTypeGameMode.SectorChange:
+                    HandleSectorChange((SectorChangeMessage)Message);
+                    break;
             }
         }
 
@@ -1897,6 +1901,32 @@ namespace Meridian59.Files.ROO
                 // start / adjust movement on matching sectors
                 if (sector.ServerID == info.SectorNr)
                     sector.StartMove(info);
+            }
+        }
+
+        /// <summary>
+        /// Handle SectorChangeMessage
+        /// </summary>
+        /// <param name="Message"></param>
+        protected void HandleSectorChange(SectorChangeMessage Message)
+        {
+            SectorChange info = Message.SectorChange;
+
+            foreach (RooSector sector in Sectors)
+            {
+                // start / adjust movement on matching sectors
+                if (sector.ServerID == info.SectorNr)
+                {
+                    if (info.Depth != RooSectorFlags.DepthType.ChangeOverride)
+                        sector.Flags.SectorDepth = info.Depth;
+                    if (info.ScrollSpeed != TextureScrollSpeed.CHANGE_OVERRIDE)
+                    {
+                        if (info.ScrollSpeed == TextureScrollSpeed.NONE)
+                        {
+                            sector.Flags.ScrollSpeed = info.ScrollSpeed;
+                        }
+                    }
+                }
             }
         }
 

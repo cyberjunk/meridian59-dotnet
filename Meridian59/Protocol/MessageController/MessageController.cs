@@ -930,7 +930,11 @@ namespace Meridian59.Protocol
                     case MessageTypeGameMode.ReqWithdrawAlItems:                              // PI: 233
                         TypedMessage = new ReqWithDrawAlItemsMessage(e.MessageBuffer);
                         break;
-
+#if !VANILLA
+                    case MessageTypeGameMode.SectorChange:                                      // PI: 239
+                        TypedMessage = new SectorChangeMessage(e.MessageBuffer);
+                        break;
+#endif
                     default:
                         TypedMessage = new GenericGameMessage(e.MessageBuffer);              // All unknown ones
                         break;

@@ -37,6 +37,7 @@ namespace Meridian59.Files.ROO
         private const uint SF_DEPTH2            = 0x00000002;      // Sector has deep depth
         private const uint SF_DEPTH3            = 0x00000003;      // Sector has very deep depth
         private const uint SF_MASK_DEPTH        = 0x00000003;
+        private const uint SF_CHANGE_OVERRIDE   = 0x00000004;      // Server sends this in SectorChange when depth does not change
 
         // BITS: 2-3       ENUM (ScrollSpeed Type) (see Common/Enum/TextureScrollSpeed.cs)
         private const uint SF_MASK_SCROLLSPEED  = 0x0000000C;
@@ -61,7 +62,8 @@ namespace Meridian59.Files.ROO
             Depth0  = SF_DEPTH0,
             Depth1  = SF_DEPTH1,
             Depth2  = SF_DEPTH2,
-            Depth3  = SF_DEPTH3
+            Depth3  = SF_DEPTH3,
+            ChangeOverride = SF_CHANGE_OVERRIDE
         }
 
         /// <summary>
