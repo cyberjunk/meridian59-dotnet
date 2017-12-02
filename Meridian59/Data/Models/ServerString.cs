@@ -31,7 +31,7 @@ namespace Meridian59.Data.Models
     {
         #region Constants
         public const char VARIABLEFLAG                  = '%';
-		public const char ORDERFLAG						= '$';
+        public const char ORDERFLAG                     = '$';
         public const char INTEGERFLAG                   = 'i';
         public const char INTEGERFLAG2                  = 'd';
         public const char STRINGRESOURCELITERALFLAG     = 's';
@@ -61,7 +61,7 @@ namespace Meridian59.Data.Models
         protected string resourceName;
         protected string fullString;
 
-		protected StringDictionary stringResources;      
+        protected StringDictionary stringResources;
         #endregion
 
         #region Properties
@@ -193,6 +193,11 @@ namespace Meridian59.Data.Models
 					// which type of inline var
 					switch (tempstr[index + 1])
 					{
+                        // %% in string is literal %, remove one.
+                        case VARIABLEFLAG:
+                            tempstr = tempstr.Remove(index, 1);
+                            break;
+
 						case INTEGERFLAG:
 						case INTEGERFLAG2:
 							var = new InlineVariable(InlineVariableType.Integer, Buffer, cursor);
@@ -308,6 +313,10 @@ namespace Meridian59.Data.Models
 					// which type of inline var
 					switch (tempstr[index + 1])
 					{
+                        // %% in string is literal %, remove one.
+                        case VARIABLEFLAG:
+                            tempstr = tempstr.Remove(index, 1);
+                            break;
 						case INTEGERFLAG:
 						case INTEGERFLAG2:
 							var = new InlineVariable(InlineVariableType.Integer, ref Buffer);
@@ -471,7 +480,8 @@ namespace Meridian59.Data.Models
                     String[i + 1] == INTEGERFLAG ||
                     String[i + 1] == INTEGERFLAG2 || 
                     String[i + 1] == EMBEDDEDSTRINGLITERALFLAG || 
-                    String[i + 1] == STRINGRESOURCELITERALFLAG
+                    String[i + 1] == STRINGRESOURCELITERALFLAG ||
+                    String[i + 1] == VARIABLEFLAG
 #if !VANILLA
                     || String[i + 1] == STRINGRESOURCERECURSIVEFLAG
 #endif
@@ -597,6 +607,14 @@ namespace Meridian59.Data.Models
                     // which type of inline var
                     switch (fullString[index + 1])
                     {
+                        // %% in string is literal %, remove one.
+                        case VARIABLEFLAG:
+                            fullString = fullString.Remove(index, 1);
+                            // adjust stringliteral indices right to this index
+                            for (int i = 0; i < q_indices.Count; i++)
+                                if (q_indices[i] > index)
+                                    q_indices[i] = q_indices[i] - 1;
+                            break;
                         // %i or %d are 4 byte integers. Their value should be inserted as a string.
                         case INTEGERFLAG:
                         case INTEGERFLAG2:
