@@ -24,6 +24,7 @@ namespace Meridian59.Common.Enums
         NONE    = 0x00,
         SLOW    = 0x01,
         MEDIUM  = 0x02,
-        FAST    = 0x03
+        FAST    = 0x03,
+        CHANGE_OVERRIDE = 0x04 // SectorChange sends this when not changing speed.
     }
 }

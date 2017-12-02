@@ -204,6 +204,7 @@ namespace Meridian59.Protocol.Enums
         SectorScroll        = 236,
         SetView             = 237,
         ResetView           = 238,
+        SectorChange        = 239,
 
         Blacklisted         = 0xFF  // NOTE: THIS DOES NOT REALLY EXIST, DEBUG PURPOSE
     }

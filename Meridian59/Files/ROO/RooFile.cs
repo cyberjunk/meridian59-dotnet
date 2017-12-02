@@ -1835,7 +1835,17 @@ namespace Meridian59.Files.ROO
                 case MessageTypeGameMode.WallAnimate:
                     HandleWallAnimateMessage((WallAnimateMessage)Message);
                     break;
+
+                case MessageTypeGameMode.SectorChange:
+                    HandleSectorChange((SectorChangeMessage)Message);
+                    break;
             }
+        }
+
+        public void Reset()
+        {
+            foreach (RooSector s in Sectors)
+                s.Reset();
         }
 
         /// <summary>
@@ -1898,6 +1908,19 @@ namespace Meridian59.Files.ROO
                 if (sector.ServerID == info.SectorNr)
                     sector.StartMove(info);
             }
+        }
+
+        /// <summary>
+        /// Handle SectorChangeMessage
+        /// </summary>
+        /// <param name="Message"></param>
+        protected void HandleSectorChange(SectorChangeMessage Message)
+        {
+            SectorChange info = Message.SectorChange;
+
+            foreach (RooSector sector in Sectors)
+                if (sector.ServerID == info.SectorNr)
+                    sector.ApplyChange(info);
         }
 
         /// <summary>
