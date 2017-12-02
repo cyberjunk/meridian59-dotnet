@@ -54,6 +54,9 @@ namespace Meridian59.Files.ROO
         /// </summary>
         protected readonly List<RooWall> wallsRight = new List<RooWall>();
 
+        protected readonly RooSideDefFlags flags = new RooSideDefFlags();
+        protected readonly RooSideDefFlags flagsOrig = new RooSideDefFlags();
+
         #region IByteSerializable
         public int ByteLength 
         {
@@ -126,7 +129,7 @@ namespace Meridian59.Files.ROO
             LowerTexture = LowerTextureOrig = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            Flags = new RooSideDefFlags(BitConverter.ToUInt32(Buffer, cursor));
+            Flags.Value = FlagsOrig.Value = BitConverter.ToUInt32(Buffer, cursor);
             cursor += TypeSizes.INT;
 
             Speed = Buffer[cursor];
@@ -152,7 +155,7 @@ namespace Meridian59.Files.ROO
             LowerTexture = LowerTextureOrig = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            Flags = new RooSideDefFlags(*((uint*)Buffer));
+            Flags.Value = FlagsOrig.Value = *((uint*)Buffer);
             Buffer += TypeSizes.INT;
 
             Speed = Buffer[0];
@@ -185,12 +188,13 @@ namespace Meridian59.Files.ROO
         public ushort MiddleTexture { get; set; }
         public ushort UpperTexture { get; set; }
         public ushort LowerTexture { get; set; }
-        public RooSideDefFlags Flags { get; set; }
+        public RooSideDefFlags Flags { get { return flags; } }
         public byte Speed { get; set; }
 
         public ushort MiddleTextureOrig { get; protected set; }
         public ushort UpperTextureOrig { get; protected set; }
         public ushort LowerTextureOrig { get; protected set; }
+        public RooSideDefFlags FlagsOrig { get { return flagsOrig; } }
 
         public BgfFile ResourceUpper { get; protected set; }
         public BgfFile ResourceMiddle { get; protected set; }
@@ -287,7 +291,6 @@ namespace Meridian59.Files.ROO
         #region Constructors
         public RooSideDef()
         {
-            this.Flags = new RooSideDefFlags();
         }
 
         public RooSideDef(
@@ -302,7 +305,7 @@ namespace Meridian59.Files.ROO
             this.MiddleTexture = MiddleTexture;
             this.UpperTexture = UpperTexture;
             this.LowerTexture = LowerTexture;
-            this.Flags = new RooSideDefFlags(Flags);
+            this.Flags.Value = this.FlagsOrig.Value = Flags;
             this.Speed = Speed;
 
             SpeedUpper = V2.ZERO;
@@ -721,6 +724,7 @@ namespace Meridian59.Files.ROO
         /// </summary>
         public void Reset()
         {
+            Flags.Value   = FlagsOrig.Value;
             LowerTexture  = LowerTextureOrig;
             MiddleTexture = MiddleTextureOrig;
             UpperTexture  = UpperTextureOrig;
