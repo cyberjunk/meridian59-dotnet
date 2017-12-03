@@ -1942,32 +1942,12 @@ namespace Meridian59.Files.ROO
         /// <param name="Message"></param>
         protected void HandleWallAnimateMessage(WallAnimateMessage Message)
         {
+            WallAnimationChange info = Message.WallAnimationChange;
+
             foreach (RooSideDef wallSide in SideDefs)
             {
-                if (wallSide.ServerID != Message.SideDefServerID)
-                    continue;
-            
-                // set animation
-                wallSide.Animation = Message.Animation;
-
-                switch (Message.Action)
-                {
-                    case RoomAnimationAction.RA_NONE:
-                        break;
-
-                    case RoomAnimationAction.RA_PASSABLE_END:
-                        wallSide.Flags.IsPassable = true;
-                        break;
-
-                    case RoomAnimationAction.RA_IMPASSABLE_END:
-                        wallSide.Flags.IsPassable = false;
-                        break;
-
-                    case RoomAnimationAction.RA_INVISIBLE_END:
-                        wallSide.Flags.IsPassable = true;
-                        //todo: hide normal walltexture
-                        break;
-                }           
+                if (wallSide.ServerID == info.SideDefServerID)
+                    wallSide.ApplyChange(info);
             }
         }
         #endregion
