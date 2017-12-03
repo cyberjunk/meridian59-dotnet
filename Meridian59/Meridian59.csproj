@@ -148,6 +148,7 @@
     <Compile Include="Data\Models\LootInfo.cs" />
     <Compile Include="Data\Models\Group.cs" />
     <Compile Include="Data\Models\ObjectFlagsUpdate.cs" />
+    <Compile Include="Data\Models\WallAnimationChange.cs" />
     <Compile Include="Data\Models\SectorChange.cs" />
     <Compile Include="Data\Models\SkillInfo.cs" />
     <Compile Include="Data\Models\SpellInfo.cs" />

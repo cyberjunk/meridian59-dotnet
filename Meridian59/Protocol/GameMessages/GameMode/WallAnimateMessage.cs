@@ -32,7 +32,7 @@ namespace Meridian59.Protocol.GameMessages
         {
             get
             {
-                return base.ByteLength + TypeSizes.SHORT + Animation.ByteLength + TypeSizes.BYTE;
+                return base.ByteLength + WallAnimationChange.ByteLength;
             }
         }
 
@@ -41,15 +41,8 @@ namespace Meridian59.Protocol.GameMessages
             int cursor = StartIndex;
 
             cursor += base.WriteTo(Buffer, cursor);
-                
-            Array.Copy(BitConverter.GetBytes(SideDefServerID), 0, Buffer, cursor, TypeSizes.SHORT);
-            cursor += TypeSizes.SHORT;
+            cursor += WallAnimationChange.WriteTo(Buffer, cursor);
 
-            cursor += Animation.WriteTo(Buffer, cursor);
-
-            Buffer[cursor] = (byte)Action;
-            cursor++;
-                  
             return cursor - StartIndex;
         }
 
@@ -59,14 +52,8 @@ namespace Meridian59.Protocol.GameMessages
 
             cursor += base.ReadFrom(Buffer, cursor);
 
-            SideDefServerID = BitConverter.ToUInt16(Buffer, cursor);
-            cursor += TypeSizes.SHORT;
-
-            Animation = Animation.ExtractAnimation(Buffer, cursor);
-            cursor += Animation.ByteLength;
-
-            Action = (RoomAnimationAction)Buffer[cursor];
-            cursor++;
+            WallAnimationChange = new WallAnimationChange(Buffer, cursor);
+            cursor += WallAnimationChange.ByteLength;
 
             return cursor - StartIndex;
         }
@@ -74,40 +61,22 @@ namespace Meridian59.Protocol.GameMessages
         public override unsafe void WriteTo(ref byte* Buffer)
         {
             base.WriteTo(ref Buffer);
-            
-            *((ushort*)Buffer) = SideDefServerID;
-            Buffer += TypeSizes.SHORT;
-
-            Animation.WriteTo(ref Buffer);
-
-            Buffer[0] = (byte)Action;
-            Buffer++;
+            WallAnimationChange.WriteTo(ref Buffer);
         }
 
         public override unsafe void ReadFrom(ref byte* Buffer)
         {
             base.ReadFrom(ref Buffer);
-
-            SideDefServerID = *((ushort*)Buffer);
-            Buffer += TypeSizes.SHORT;
-
-            Animation = Animation.ExtractAnimation(ref Buffer);          
-
-            Action = (RoomAnimationAction)Buffer[0];
-            Buffer++;
+            WallAnimationChange = new WallAnimationChange(ref Buffer);
         }
         #endregion
 
-        public ushort SideDefServerID { get; set; }
-        public Animation Animation { get; set; }
-        public RoomAnimationAction Action { get; set; }
+        public WallAnimationChange WallAnimationChange { get; set; }
 
-        public WallAnimateMessage(ushort SideDefServerID, Animation Animation, RoomAnimationAction Action) 
+        public WallAnimateMessage(ushort SideDefServerID, WallAnimationChange WallAnimationChange)
             : base(MessageTypeGameMode.WallAnimate)
         {
-            this.SideDefServerID = SideDefServerID;
-            this.Animation = Animation;
-            this.Action = Action;                                          
+            this.WallAnimationChange = WallAnimationChange;
         }
 
         public WallAnimateMessage(byte[] Buffer, int StartIndex = 0) 

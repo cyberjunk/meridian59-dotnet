@@ -616,6 +616,49 @@ namespace Meridian59.Files.ROO
         }
 
         /// <summary>
+        /// Applies wall animation changes on this sidedef
+        /// </summary>
+        /// <param name="WallAnimationChange"></param>
+        public void ApplyChange(WallAnimationChange WallAnimationChange)
+        {
+            // Turn off scrolling for AnimationType.NONE. For other animation
+            // types, set ScrollSpeed to the original value since the server
+            // won't send a changed speed.
+            if (WallAnimationChange.Animation.AnimationType == AnimationType.NONE)
+                Flags.ScrollSpeed = TextureScrollSpeed.NONE;
+            else
+                Flags.ScrollSpeed = FlagsOrig.ScrollSpeed;
+
+            // set animation
+            Animation = WallAnimationChange.Animation;
+
+            switch (WallAnimationChange.Action)
+            {
+                case RoomAnimationAction.RA_NONE:
+                    break;
+
+                case RoomAnimationAction.RA_PASSABLE_END:
+                    Flags.IsPassable = true;
+                    break;
+
+                case RoomAnimationAction.RA_IMPASSABLE_END:
+                    Flags.IsPassable = false;
+                    break;
+
+                case RoomAnimationAction.RA_INVISIBLE_END:
+                    Flags.IsPassable = true;
+                    // todo: hide normal walltexture
+                    // Note: don't think server ever sends RA_INVISIBLE_END?
+                    break;
+            }
+
+            // update additional values based on scrollspeed and raise TextureChanged
+            SetLowerTexture(LowerTexture, ResourceLower);
+            SetMiddleTexture(MiddleTexture, ResourceMiddle);
+            SetUpperTexture(UpperTexture, ResourceUpper);
+        }
+
+        /// <summary>
         /// Returns ogre U, V scrollspeed for given SideFlags and bgf
         /// </summary>
         /// <param name="TextureWidth"></param>
