@@ -656,7 +656,10 @@ namespace Meridian59.Bot.IRC
             // Bot admin command?
             if (e.Text.StartsWith("@"))
             {
-                IRCAdminBotCommand.ParseAdminCommand(e.Source.Name, e.Text, this);
+                // Returns false if nothing handled the admin command.
+                if (!IRCAdminBotCommand.ParseAdminCommand(e.Source.Name, e.Text, this))
+                    IrcClient.LocalUser.SendMessage(e.Source.Name,
+                        "Couldn't find a handler for admin command " + e.Text);
 
                 return;
             }

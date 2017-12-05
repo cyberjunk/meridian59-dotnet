@@ -64,13 +64,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IRCAdminBotCommand\IRCAdminBotCommandType.cs" />
     <Compile Include="FloodPreventer.cs" />
+    <Compile Include="IRCAdminBotCommand\IRCAdminBotCommand.cs" />
+    <Compile Include="IRCAdminBotCommand\IRCAdminBotCommandEcho.cs" />
+    <Compile Include="IRCAdminBotCommand\IRCAdminBotCommandRemove.cs" />
+    <Compile Include="IRCAdminBotCommand\IRCAdminBotCommandCheckReg.cs" />
+    <Compile Include="IRCAdminBotCommand\IRCAdminBotCommandAdd.cs" />
+    <Compile Include="IRCAdminBotCommand\IRCAdminBotCommandList.cs" />
+    <Compile Include="IRCAdminBotCommand\IRCAdminBotCommandRegister.cs" />
+    <Compile Include="IRCAdminBotCommand\IRCAdminBotCommandHelp.cs" />
     <Compile Include="IRCChatStyle.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IRCBotClient.cs" />
     <Compile Include="IRCBotConfig.cs" />
     <Compile Include="RelayConfig.cs" />
+    <Compile Include="Util.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Meridian59\Meridian59.csproj">
