@@ -66,7 +66,7 @@ namespace Meridian59.Bot.IRC
         /// <summary>
         /// WhoX queries to be sent.
         /// </summary>
-        public LockingQueue<string> WhoXQueryQueue { get; protected set; }
+        public WhoXQueryQueue WhoXQueryQueue { get; protected set; }
 
         public Dictionary<string, bool> UserRegistration { get; protected set; }
 
@@ -96,7 +96,7 @@ namespace Meridian59.Bot.IRC
             // create IRC command queues
             ChatCommandQueue = new LockingQueue<string>();
             AdminCommandQueue = new LockingQueue<string>();
-            WhoXQueryQueue = new LockingQueue<string>();
+            WhoXQueryQueue = new WhoXQueryQueue();
 
             // Whether bot echoes to IRC or not.
             DisplayMessages = true;
@@ -300,16 +300,14 @@ namespace Meridian59.Bot.IRC
         {
             base.Update();
 
-            // Just send one at a time.
+            // Try send an available WhoXQuery.
             if (WhoXQueryQueue.TryDequeue(out string command))
-            {
                 SendWhoXQuery(command);
-                Thread.Sleep(1500);
-            }
+
 
             // execute the chatcommands - this is all which work in the 3d client also
             // like tell, say, broadcast - but also "dm", "getplayer" etc.
-            while(ChatCommandQueue.TryDequeue(out command))            
+            while (ChatCommandQueue.TryDequeue(out command))            
                 ExecChatCommand(command);
 
             // these are admin textcommands without a prefix, just plain was written in adminconsole

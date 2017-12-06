@@ -81,6 +81,7 @@
     <Compile Include="IRCBotConfig.cs" />
     <Compile Include="RelayConfig.cs" />
     <Compile Include="Util.cs" />
+    <Compile Include="WhoXQueryQueue.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Meridian59\Meridian59.csproj">
