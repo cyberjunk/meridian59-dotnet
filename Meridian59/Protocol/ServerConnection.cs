@@ -41,7 +41,7 @@ namespace Meridian59.Protocol
         /// <summary>
         /// Ping interval in milliseconds.
         /// </summary>
-        protected const int PINGINTERVAL = 5000;
+        protected const int PINGINTERVAL = 2000;
 
         /// <summary>
         /// Time in ms for listenthread to sleep
