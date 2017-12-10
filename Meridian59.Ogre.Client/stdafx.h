@@ -16,12 +16,15 @@
 
 #pragma once
 
-#pragma managed(push, off)
+// Fix VS 2017 15.5.0 bug 
+// It can't handle pragma managed push/pop here
+
+//#pragma managed(push, off)
 #include "Ogre.h"
 #include "CEGUI/CEGUI.h"
 #include "OIS.h"
 #include "Caelum.h"
-#pragma managed(pop)
+//#pragma managed(pop)
 
 #include "TypeDefs.h"
 #include "OgreClient.h"
