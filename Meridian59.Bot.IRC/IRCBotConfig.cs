@@ -27,6 +27,7 @@ namespace Meridian59.Bot.IRC
     {
         #region Constants
         protected const string XMLTAG_ADMINCOMMANDS     = "admincommands";
+        protected const string XMLTAG_ALLOWEDUSERS      = "allowedusers";
         protected const string XMLTAG_RELAYBOTS         = "relaybots";
         protected const string XMLATTRIB_IRCSERVER      = "ircserver";
         protected const string XMLATTRIB_IRCPORT        = "ircport";
@@ -59,6 +60,7 @@ namespace Meridian59.Bot.IRC
         public string IRCPassword { get; protected set; }
         public string ChatPrefix { get; protected set; }
         public List<string> AdminCommands { get; protected set; }
+        public List<string> AllowedUsers { get; protected set; }
         public List<RelayConfig> RelayBots { get; protected set; }
         public uint MaxBurst { get; protected set; }
         public uint Refill { get; protected set; }
@@ -79,6 +81,7 @@ namespace Meridian59.Bot.IRC
             base.InitPreConfig();
 
             AdminCommands = new List<string>();
+            AllowedUsers = new List<string>();
             RelayBots = new List<RelayConfig>();
         }
 
@@ -104,6 +107,7 @@ namespace Meridian59.Bot.IRC
             XmlNode node;
 
             AdminCommands.Clear();
+            AllowedUsers.Clear();
             RelayBots.Clear();
 
             // bot
@@ -170,6 +174,26 @@ namespace Meridian59.Bot.IRC
 
                     if (name != null)
                         AdminCommands.Add(name);
+                }
+            }
+
+            // Allowed users (can broadcast)
+
+            node = Document.DocumentElement.SelectSingleNode(
+                '/' + XMLTAG_CONFIGURATION + '/' + XMLTAG_BOT + '/' + XMLTAG_ALLOWEDUSERS);
+
+            if (node != null)
+            {
+                foreach (XmlNode child in node.ChildNodes)
+                {
+                    if (child.Name != XMLTAG_ITEM)
+                        continue;
+
+                    string name = (child.Attributes[XMLATTRIB_NAME] != null) ?
+                        child.Attributes[XMLATTRIB_NAME].Value : null;
+
+                    if (name != null)
+                        AllowedUsers.Add(name);
                 }
             }
 
