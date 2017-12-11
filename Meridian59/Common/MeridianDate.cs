@@ -88,10 +88,6 @@ namespace Meridian59.Common
             // the current global time
             DateTime now = DateTime.UtcNow;
 
-            // work around daylight saving time +-1
-            if (!now.IsDaylightSavingTime())
-                now = now.AddHours(1.0);
-
             // sum up real seconds elapsed since last m59 midnight
             // which happens every 2 hours
             int secs = (now.Hour % 2) * 60 * 60;
