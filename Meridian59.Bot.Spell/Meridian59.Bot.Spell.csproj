@@ -76,7 +76,7 @@
     <Compile Include="Tasks\Template.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="configuration.xml">
+    <Content Include="configuration.spellbot.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="icon.ico" />
