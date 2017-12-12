@@ -20,7 +20,7 @@
 
 namespace Meridian59 { namespace Ogre
 {
-   OgreClientConfig::OgreClientConfig() : Config(OgreClientConfig::CONFIGFILE, OgreClientConfig::CONFIGFILE_ALT)
+   OgreClientConfig::OgreClientConfig() : Config()
    {
       // be warned:
       // base constructor will already start reading, use InitPreConfig() instead

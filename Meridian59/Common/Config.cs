@@ -104,8 +104,6 @@ namespace Meridian59.Common
         public static readonly NumberFormatInfo NumberFormatInfo = new NumberFormatInfo();
         
         #region Fields
-        protected readonly string configFile;
-        protected readonly string configFileAlt;
         protected uint resourcesversion;
         protected string resourcespath;
         protected bool preloadrooms;
@@ -121,14 +119,14 @@ namespace Meridian59.Common
 
         #region Properties
         /// <summary>
-        /// Returns the path/filename of the config file (set in constructor)
+        /// Returns the path/filename of the config file
         /// </summary>
-        public string ConfigFile { get { return configFile; } }
+        public virtual string ConfigFile { get { return CONFIGFILE; } }
 
         /// <summary>
-        /// Returns the path/filename of the alternative config file (set in constructor)
+        /// Returns the path/filename of the alternative config file
         /// </summary>
-        public string ConfigFileAlt { get { return configFileAlt; } }
+        public virtual string ConfigFileAlt { get { return CONFIGFILE_ALT; } }
 
         /// <summary>
         /// Version of Resources
@@ -337,14 +335,8 @@ namespace Meridian59.Common
         /// <summary>
         /// Constructor. Will load configuration file directly.
         /// </summary>
-        /// <param name="configFile"></param>
-        /// <param name="configFileAlt"></param>
-        public Config(string configFile = CONFIGFILE, string configFileAlt = CONFIGFILE_ALT)
+        public Config()
         {
-            // save configfiles to use
-            this.configFile = configFile;
-            this.configFileAlt = configFileAlt;
-
             // keep aliases sorted by key
             aliases.SortByKey();
 
@@ -384,10 +376,10 @@ namespace Meridian59.Common
             LanguageCode val_language;
 
             // check for ../configuration.xml existance
-            if (File.Exists(configFile))
+            if (File.Exists(ConfigFile))
             {
                 // create xml reader
-                XmlReader reader = XmlReader.Create(configFile);
+                XmlReader reader = XmlReader.Create(ConfigFile);
 
                 // try parse file
                 doc.Load(reader);
@@ -395,10 +387,10 @@ namespace Meridian59.Common
             }
 
             // try find configuration.xml at alternative location
-            else if (File.Exists(configFileAlt))
+            else if (File.Exists(ConfigFileAlt))
             {
                 // create xml reader
-                XmlReader reader = XmlReader.Create(configFileAlt);
+                XmlReader reader = XmlReader.Create(ConfigFileAlt);
 
                 // try parse file
                 doc.Load(reader);
@@ -410,7 +402,7 @@ namespace Meridian59.Common
             {
                 // create empty rootnode
                 doc.InsertBefore(doc.CreateElement(XMLTAG_CONFIGURATION), null);
-                Logger.Log("Config", LogType.Info, "File '" + configFile + "' and '" + configFileAlt + "' not found. Using defaults.");
+                Logger.Log("Config", LogType.Info, "File '" + ConfigFile + "' and '" + ConfigFileAlt + "' not found. Using defaults.");
             }
             
             // clear some old
@@ -665,7 +657,7 @@ namespace Meridian59.Common
             settings.IndentChars = "  ";
 
             // init writer
-            XmlWriter writer = XmlWriter.Create(configFile, settings);
+            XmlWriter writer = XmlWriter.Create(ConfigFile, settings);
 
             // begin
             writer.WriteStartDocument();
