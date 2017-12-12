@@ -28,8 +28,8 @@ namespace Meridian59.Bot.Spell
     public class SpellBotConfig : BotConfig
     {
         #region Constants
-        public new const string CONFIGFILE      = "../configuration.spellbot.xml";
-        public new const string CONFIGFILE_ALT  = "configuration.spellbot.xml";
+        public const string CONFIGFILE_SPELLBOT     = "../configuration.spellbot.xml";
+        public const string CONFIGFILE_SPELLBOT_ALT = "configuration.spellbot.xml";
 
         public const string XMLTAG_TEMPLATES    = "templates";
         public const string XMLTAG_TEMPLATE     = "template";
@@ -70,8 +70,8 @@ namespace Meridian59.Bot.Spell
         protected int currentTask = 0;
 
         #region Properties
-        public override string ConfigFile { get { return SpellBotConfig.CONFIGFILE; } }
-        public override string ConfigFileAlt { get { return SpellBotConfig.CONFIGFILE_ALT; } }
+        public override string ConfigFile { get { return CONFIGFILE_SPELLBOT; } }
+        public override string ConfigFileAlt { get { return CONFIGFILE_SPELLBOT_ALT; } }
         public Template ActiveTemplate { get; protected set; }
         public List<Template> Templates { get; protected set; }
         #endregion

@@ -121,12 +121,12 @@ namespace Meridian59.Common
         /// <summary>
         /// Returns the path/filename of the config file
         /// </summary>
-        public virtual string ConfigFile { get { return Config.CONFIGFILE; } }
+        public virtual string ConfigFile { get { return CONFIGFILE; } }
 
         /// <summary>
         /// Returns the path/filename of the alternative config file
         /// </summary>
-        public virtual string ConfigFileAlt { get { return Config.CONFIGFILE_ALT; } }
+        public virtual string ConfigFileAlt { get { return CONFIGFILE_ALT; } }
 
         /// <summary>
         /// Version of Resources
