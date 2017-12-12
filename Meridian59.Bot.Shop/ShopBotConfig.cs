@@ -27,6 +27,9 @@ namespace Meridian59.Bot.Shop
     public class ShopBotConfig : BotConfig
     {
         #region Constants
+        public const string CONFIGFILE_SHOPBOT     = "../configuration.shopbot.xml";
+        public const string CONFIGFILE_SHOPBOT_ALT = "configuration.shopbot.xml";
+
         protected const string XMLTAG_OFFERLIST             = "offerlist";
         protected const string XMLTAG_BUYLIST               = "buylist";
         protected const string XMLATTRIB_COUNT              = "count";        
@@ -49,6 +52,8 @@ namespace Meridian59.Bot.Shop
         #endregion
 
         #region Properties
+        public override string ConfigFile { get { return CONFIGFILE_SHOPBOT; } }
+        public override string ConfigFileAlt { get { return CONFIGFILE_SHOPBOT_ALT; } }
         public uint IntervalBroadcast { get; protected set; }
         public uint IntervalSay { get; protected set; }
         public bool TellOnEnter { get; protected set; }
