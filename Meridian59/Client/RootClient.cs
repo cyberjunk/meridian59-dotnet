@@ -149,11 +149,16 @@ namespace Meridian59.Client
         /// <summary>
         /// Starts the application.
         /// </summary>
+        /// <param name="ConfigFile"></param>
+        /// <param name="ConfigFileAlt"></param>
         /// <param name="AutoTick">Set this to false to call Tick() manually and not lock the thread.</param>
-        public void Start(bool AutoTick = true)
+        public void Start(bool AutoTick = true, string ConfigFile = Common.Config.CONFIGFILE, string ConfigFileAlt = Common.Config.CONFIGFILE_ALT)
         {
             // log client startup
             Logger.Log(MODULENAME, LogType.Info, "Starting client");
+
+            // load configuration file (or init defaults)
+            Config.Load(ConfigFile, ConfigFileAlt);
 
             // set running flag
             IsRunning = true;

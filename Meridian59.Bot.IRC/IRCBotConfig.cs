@@ -71,26 +71,11 @@ namespace Meridian59.Bot.IRC
         /// Constructor
         /// </summary>
         public IRCBotConfig()
-            : base() { }
-                        
-        /// <summary>
-        /// 
-        /// </summary>
-        protected override void InitPreConfig()
+            : base()
         {
-            base.InitPreConfig();
-
             AdminCommands = new List<string>();
             AllowedUsers = new List<string>();
             RelayBots = new List<RelayConfig>();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        protected override void InitPastConfig()
-        {
-            base.InitPastConfig();
         }
 
         /// <summary>

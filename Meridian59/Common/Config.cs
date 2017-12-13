@@ -102,8 +102,10 @@ namespace Meridian59.Common
         #endregion
         
         public static readonly NumberFormatInfo NumberFormatInfo = new NumberFormatInfo();
-        
+
         #region Fields
+        protected string configFile;
+        protected string configFileAlt;
         protected uint resourcesversion;
         protected string resourcespath;
         protected bool preloadrooms;
@@ -121,12 +123,12 @@ namespace Meridian59.Common
         /// <summary>
         /// Returns the path/filename of the config file
         /// </summary>
-        public virtual string ConfigFile { get { return CONFIGFILE; } }
+        public string ConfigFile { get { return configFile; } }
 
         /// <summary>
         /// Returns the path/filename of the alternative config file
         /// </summary>
-        public virtual string ConfigFileAlt { get { return CONFIGFILE_ALT; } }
+        public string ConfigFileAlt { get { return configFileAlt; } }
 
         /// <summary>
         /// Version of Resources
@@ -337,35 +339,41 @@ namespace Meridian59.Common
         /// </summary>
         public Config()
         {
+            this.configFile = String.Empty;
+            this.configFileAlt = String.Empty;
+
             // keep aliases sorted by key
             aliases.SortByKey();
+        }
 
-            // allow subclasses to init stuff before loading config file
-            InitPreConfig();
+        public static string GetFilenameFromCmdArgs(string[] args)
+        {
+            if (args == null)
+                return null;
 
-            // load config file
-            Load();
+            for (int i = 0; i < args.Length - 1; i++)
+            {
+                if (args[i] != "-c")
+                   continue;
 
-            // past load init
-            InitPastConfig();
+                if (args[i + 1] != null &&
+                    args[i + 1] != String.Empty)
+                {
+                    return args[i + 1];
+                }
+            }
+            return null;
         }
 
         /// <summary>
-        /// Overwrite with initialisation code supposed to run BEFORE Load()
+        /// Loads the configuration using XmlReader.
+        /// Tries ConfigFile first, then ConfiglFileAlt, otherwise uses defaults.
         /// </summary>
-        protected virtual void InitPreConfig() { }
-
-        /// <summary>
-        /// Overwrite with initialisation code supposed to run RIGHT AFTER Load()
-        /// </summary>
-        protected virtual void InitPastConfig() { }
-
-        /// <summary>
-        /// Loads the CONFIGFILE using XmlReader.
-        /// Does nothing if the files does not exist.
-        /// </summary>
-        public virtual void Load()
+        public virtual void Load(string ConfigFile, string ConfigFileAlt)
         {
+            this.configFile = ConfigFile;
+            this.configFileAlt = ConfigFileAlt;
+
             XmlDocument doc = new XmlDocument();
             XmlNode node, node2;
 

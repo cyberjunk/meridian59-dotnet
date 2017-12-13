@@ -302,8 +302,6 @@ namespace Meridian59 { namespace Ogre
 
       OgreClientConfig();
 
-      virtual void InitPreConfig() override;
-      virtual void InitPastConfig() override;
       virtual void ReadXml(::System::Xml::XmlDocument^ Document) override;
       virtual void WriteXml(::System::Xml::XmlWriter^ Writer) override;
 

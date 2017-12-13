@@ -52,8 +52,6 @@ namespace Meridian59.Bot.Shop
         #endregion
 
         #region Properties
-        public override string ConfigFile { get { return CONFIGFILE_SHOPBOT; } }
-        public override string ConfigFileAlt { get { return CONFIGFILE_SHOPBOT_ALT; } }
         public uint IntervalBroadcast { get; protected set; }
         public uint IntervalSay { get; protected set; }
         public bool TellOnEnter { get; protected set; }
@@ -67,25 +65,10 @@ namespace Meridian59.Bot.Shop
         /// Constructor
         /// </summary>
         public ShopBotConfig()
-            : base() { }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        protected override void InitPreConfig()
+            : base()
         {
-            base.InitPreConfig();
-
             OfferList = new List<ShopItem>();
             BuyList = new List<ShopItem>();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        protected override void InitPastConfig()
-        {
-            base.InitPastConfig();
         }
 
         /// <summary>

@@ -28,13 +28,23 @@ namespace Meridian59.Bot.IRC
     {
         static void Main(string[] args)
         {
+            string configFile = Config.CONFIGFILE;
+            string configFileAlt = Config.CONFIGFILE_ALT;
+
+            // try parse config parameter
+            string cmdConfig = Config.GetFilenameFromCmdArgs(args);
+
+            // overwrite with user specified config
+            if (cmdConfig != null)
+                configFile = configFileAlt = cmdConfig;
+
             // run as console app
             if (Environment.UserInteractive)
             {
                 IRCBotClient ircBot = new IRCBotClient();
 
                 // start it
-                ircBot.Start(true);
+                ircBot.Start(true, configFile, configFileAlt);
             }
 
             // run as windows service
@@ -46,7 +56,8 @@ namespace Meridian59.Bot.IRC
 
                 // create bot-service wrapper
                 ServiceBase serviceWrap =
-                    new BotServiceWrapper<GameTick, ResourceManager, DataController, IRCBotConfig, IRCBotClient>();
+                    new BotServiceWrapper<GameTick, ResourceManager, DataController, IRCBotConfig, IRCBotClient>(
+                        configFile, configFileAlt);
 
                 // run service
                 ServiceBase.Run(serviceWrap);

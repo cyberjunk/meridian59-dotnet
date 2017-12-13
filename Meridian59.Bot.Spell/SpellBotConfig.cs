@@ -70,8 +70,6 @@ namespace Meridian59.Bot.Spell
         protected int currentTask = 0;
 
         #region Properties
-        public override string ConfigFile { get { return CONFIGFILE_SPELLBOT; } }
-        public override string ConfigFileAlt { get { return CONFIGFILE_SPELLBOT_ALT; } }
         public Template ActiveTemplate { get; protected set; }
         public List<Template> Templates { get; protected set; }
         #endregion
@@ -80,24 +78,9 @@ namespace Meridian59.Bot.Spell
         /// Constructor
         /// </summary>
         public SpellBotConfig()
-            : base() { }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        protected override void InitPreConfig()
+            : base()
         {
-            base.InitPreConfig();
-
-            Templates = new List<Template>();           
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        protected override void InitPastConfig()
-        {
-            base.InitPastConfig();
+            Templates = new List<Template>();
         }
 
         /// <summary>

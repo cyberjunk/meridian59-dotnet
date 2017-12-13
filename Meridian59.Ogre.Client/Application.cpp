@@ -88,7 +88,7 @@ int __stdcall WinMain(
    ::System::Threading::Thread::CurrentThread->Priority = ::System::Threading::ThreadPriority::Highest;
 
    // init client and start (locks thread)
-   OgreClient::Singleton->Start(true);
+   OgreClient::Singleton->Start(true, Config::CONFIGFILE, Config::CONFIGFILE_ALT);
 
 #if _DEBUG
    //FreeConsole();

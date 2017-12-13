@@ -663,7 +663,7 @@ namespace Meridian59.Bot
                     Log("SYS", LOG_RELOADCONFIG);
 
                     // reload
-                    Config.Load();
+                    Config.Load(Config.ConfigFile, Config.ConfigFileAlt);
                     break;
             }
         }

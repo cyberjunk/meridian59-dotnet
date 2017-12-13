@@ -28,13 +28,23 @@ namespace Meridian59.Bot.Spell
     {
         static void Main(string[] args)
         {
+            string configFile = SpellBotConfig.CONFIGFILE_SPELLBOT;
+            string configFileAlt = SpellBotConfig.CONFIGFILE_SPELLBOT_ALT;
+
+            // try parse config parameter
+            string cmdConfig = Config.GetFilenameFromCmdArgs(args);
+
+            // overwrite with user specified config
+            if (cmdConfig != null)
+                configFile = configFileAlt = cmdConfig;
+
             // run as console app
             if (Environment.UserInteractive)
             {
                 SpellBotClient spellBot = new SpellBotClient();
 
                 // start it
-                spellBot.Start(true);
+                spellBot.Start(true, configFile, configFileAlt);
             }
 
             // run as windows service
@@ -46,7 +56,8 @@ namespace Meridian59.Bot.Spell
 
                 // create bot-service wrapper
                 ServiceBase serviceWrap =
-                    new BotServiceWrapper<GameTick, ResourceManager, DataController, SpellBotConfig, SpellBotClient>();
+                    new BotServiceWrapper<GameTick, ResourceManager, DataController, SpellBotConfig, SpellBotClient>(
+                        configFile, configFileAlt);
 
                 // run service
                 ServiceBase.Run(serviceWrap);

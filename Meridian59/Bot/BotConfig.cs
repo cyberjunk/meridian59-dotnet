@@ -53,21 +53,7 @@ namespace Meridian59.Bot
         /// </summary>
         public BotConfig() : base()
         {
-        }
-
-        /// <summary>
-        /// Override with init code called before configload in parentconstructor
-        /// </summary>
-        protected override void InitPreConfig()
-        {
             Admins = new List<string>();
-        }
-
-        /// <summary>
-        /// Override with init code called after configload
-        /// </summary>
-        protected override void InitPastConfig()
-        {
         }
 
         /// <summary>

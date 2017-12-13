@@ -57,6 +57,25 @@ namespace Meridian59.Bot
         protected X client;
 
         /// <summary>
+        /// Stores config file to use
+        /// </summary>
+        protected readonly string configFile;
+
+        /// <summary>
+        /// Stores alternative config file to use
+        /// </summary>
+        protected readonly string configFileAlt;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public BotServiceWrapper(string ConfigFile = Config.CONFIGFILE, string ConfigFileAlt = Config.CONFIGFILE_ALT)
+        {
+            this.configFile = ConfigFile;
+            this.configFileAlt = ConfigFileAlt;
+        }
+
+        /// <summary>
         /// Executed when service starts.
         /// Do not lock here!
         /// </summary>
@@ -109,7 +128,7 @@ namespace Meridian59.Bot
                     client.IsService = true;
 
                     // start it (locks with a while loop)
-                    client.Start();
+                    client.Start(true, configFile, configFileAlt);
 
                     // sleep 30s before restart after "normal exit"
                     Thread.Sleep(30000);

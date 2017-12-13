@@ -28,13 +28,23 @@ namespace Meridian59.Bot.Shop
     {
         static void Main(string[] args)
         {
+            string configFile = ShopBotConfig.CONFIGFILE_SHOPBOT;
+            string configFileAlt = ShopBotConfig.CONFIGFILE_SHOPBOT_ALT;
+
+            // try parse config parameter
+            string cmdConfig = Config.GetFilenameFromCmdArgs(args);
+
+            // overwrite with user specified config
+            if (cmdConfig != null)
+                configFile = configFileAlt = cmdConfig;
+
             // run as console app
             if (Environment.UserInteractive)
             {
                 ShopBotClient shopBot = new ShopBotClient();
 
                 // start it
-                shopBot.Start(true);
+                shopBot.Start(true, configFile, configFileAlt);
             }
 
             // run as windows service
@@ -46,7 +56,8 @@ namespace Meridian59.Bot.Shop
 
                 // create bot-service wrapper
                 ServiceBase serviceWrap =
-                    new BotServiceWrapper<GameTick, ResourceManager, DataController, ShopBotConfig, ShopBotClient>();
+                    new BotServiceWrapper<GameTick, ResourceManager, DataController, ShopBotConfig, ShopBotClient>(
+                        configFile, configFileAlt);
 
                 // run service
                 ServiceBase.Run(serviceWrap);
