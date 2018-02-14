@@ -31,14 +31,14 @@
         password: your password
     -->
     <connection
-      name="103"
-      host="meridian103.openmeridian.org"
-      port="5903"
+      name="106"
+      host="meridian106.meridiannext.com"
+      port="5906"
       useipv6="false"
-      stringdictionary="rsc0000-103.rsb"
+      stringdictionary="rsc0000-106.rsb"
       username="user"
       password=""
-      character="charactername">
+      character="Help">
       <ignorelist />
     </connection>
     <connection
@@ -76,9 +76,7 @@
   <admins>
     <item name="ShaKrune" />
     <item name="Delerium" />
-    <item name="Gar" />
-    <item name="Daenks" />
-    <item name="Morbus" />
+    <item name="Arantis" />
   </admins>
   
   <!--
@@ -96,10 +94,10 @@
   <bot
     ircserver="irc.esper.net"
     ircport="7000"
-    channel="#Meridian59"
-    nickname="M59-Bot-103"
+    channel="#Meridian59de"
+    nickname="M59-Bot-106"
     ircpassword=""
-    chatprefix="103"
+    chatprefix="106"
     maxburst="10"
     refill="1000"
     banner="~B~g[~kIRC~g]~r ">
@@ -127,7 +125,7 @@
       to the IRC header which is simpler).
     -->
     <relaybots>
-      <item name="placeholder" banner="~g[~k~B103~g]~k:" ignoresystemregex="(Please welcome|Au revoir to|just logged on for the first time)" ignoreallregex=""/>
+      <item name="placeholder" banner="~g[~k~B106~g]~k:" ignoresystemregex="(Please welcome|Au revoir to|just logged on for the first time)" ignoreallregex=""/>
     </relaybots>
   </bot>
 </configuration>

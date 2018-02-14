@@ -243,5 +243,77 @@ namespace Meridian59.Bot.IRC
                 IRCChatStyle.IRCCOLOR_WHITE + "," + IRCChatStyle.IRCCOLOR_GREY + 
                 Prefix + ":" + IRCChatStyle.IRCCOLOR_TERM + " ";
         }
+
+        /// <summary>
+        /// Returns a string containing the last chat color and style used in Message.
+        /// </summary>
+        /// <param name="Message"></param>
+        /// <returns></returns>
+        public static string GetLastChatStyleString(string Message)
+        {
+            int lastColorIndex = Message.LastIndexOf(IRCCOLOR_START);
+
+            // Handle not finding anything, or truncated style.
+            if (lastColorIndex == -1 || Message.Length < lastColorIndex + 5)
+                return IRCCOLOR_START + IRCCOLOR_WHITE + "," + IRCCOLOR_GREY;
+
+            int chatStyleLen = (IRCCOLOR_GREY.Length * 2) + IRCCOLOR_START.Length + ",".Length;
+
+            int styleLen = IRCCOLOR_BOLD.Length;
+            // Check for styles.
+            if (lastColorIndex - Message.LastIndexOf(IRCCOLOR_BOLD) < styleLen * 4)
+            {
+                lastColorIndex -= styleLen;
+                chatStyleLen += styleLen;
+            }
+            if (lastColorIndex - Message.LastIndexOf(IRCCOLOR_ITALIC) < styleLen * 4)
+            {
+                lastColorIndex -= styleLen;
+                chatStyleLen += styleLen;
+            }
+            if (lastColorIndex - Message.LastIndexOf(IRCCOLOR_UNDERLINE) < styleLen * 4)
+            {
+                lastColorIndex -= styleLen;
+                chatStyleLen += styleLen;
+            }
+            if (lastColorIndex - Message.LastIndexOf(IRCCOLOR_STRIKEOUT) < styleLen * 4)
+            {
+                lastColorIndex -= styleLen;
+                chatStyleLen += styleLen;
+            }
+
+            return Message.Substring(lastColorIndex, chatStyleLen);
+        }
+
+        /// <summary>
+        /// Checks for a potentially better truncation index than StartIndex
+        /// in Message. Used so that a game chat message destined for IRC
+        /// does not get split in the middle of a color code or word.
+        /// </summary>
+        /// <param name="Message"></param>
+        /// <param name="StartIndex"></param>
+        /// <returns></returns>
+        public static int GetGoodTruncateIndex(string Message, int StartIndex)
+        {
+            // Length of Message must be larger than StartIndex, otherwise
+            // use the whole string.
+            if (Message.Length <= StartIndex)
+                return Message.Length;
+
+            // Ideally truncate on a space (only ' ').
+            int lastSpace = Message.LastIndexOf(" ", StartIndex);
+
+            // No space to truncate at? Use StartIndex.
+            if (lastSpace <= 0)
+                return StartIndex;
+
+            // Handle cases where the message might be a giant word. Just
+            // use StartIndex so as to not split into too many strings.
+            if (StartIndex - lastSpace > 50)
+                return StartIndex;
+
+            // Truncate on the space
+            return lastSpace;
+        }
     }
 }
