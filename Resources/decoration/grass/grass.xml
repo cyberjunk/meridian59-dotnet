@@ -30,7 +30,11 @@
   <mappings>
     <texture id="2301" set="0" />
     <texture id="2303" set="0" />
+    <texture id="2304" set="0" />
+    <texture id="2305" set="0" />
     <texture id="2306" set="0" />
     <texture id="11000" set="0" />
+    <texture id="20201" set="0" />
+    <texture id="20228" set="0" />
   </mappings>
 </grass>

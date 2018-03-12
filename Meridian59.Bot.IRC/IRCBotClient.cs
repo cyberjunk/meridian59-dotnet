@@ -178,6 +178,51 @@ namespace Meridian59.Bot.IRC
         }
 
         /// <summary>
+        /// Sends Message to IrcChannel, splitting if necessary to avoid
+        /// IRC character limit. Uses a conservative split limit (280)
+        /// due to color codes seeming to shorten the max length from 450
+        /// on EsperNet.
+        /// </summary>
+        /// <param name="Message"></param>
+        private void SendSplitIRCChannelServerString(ServerString Message)
+        {
+            // Must have somewhere to send.
+            if (!IrcClient.IsRegistered || IrcChannel == null)
+                return;
+
+            // build a str to log
+            // this has a prefix (e.g. "103: ") and a m59 message
+            string chatstr =
+                IRCChatStyle.GetPrefixString(Config.ChatPrefix) +
+                IRCChatStyle.CreateIRCMessageFromChatMessage(Message);
+
+            // try to log the chatmessage to IRC
+            // Short path
+            if (chatstr.Length < 280)
+            {
+                IrcClient.LocalUser.SendMessage(IrcChannel, chatstr);
+                return;
+            }
+
+            try
+            {
+                string lastStyle = string.Empty;
+                int count = 0;
+                while (chatstr.Length > 0 && count++ < 8)
+                {
+                    string substr = chatstr.Truncate(IRCChatStyle.GetGoodTruncateIndex(chatstr, 280));
+                    IrcClient.LocalUser.SendMessage(IrcChannel, lastStyle + substr);
+                    chatstr = chatstr.Substring(substr.Length);
+                    lastStyle = IRCChatStyle.GetLastChatStyleString(substr);
+                }
+            }
+            catch (Exception e)
+            {
+                Log("ERROR", "Failed string splitting: " + e.Message);
+            }
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="Message"></param>
@@ -186,17 +231,8 @@ namespace Meridian59.Bot.IRC
             base.HandleSaidMessage(Message);
 
             // log chat from players to IRC
-            if (DisplayMessages && IrcClient.IsRegistered && IrcChannel != null)
-            {
-                // build a str to log
-                // this has a prefix (e.g. "103: ") and a m59 message
-                string chatstr = 
-                    IRCChatStyle.GetPrefixString(Config.ChatPrefix) + 
-                    IRCChatStyle.CreateIRCMessageFromChatMessage(Message.Message);
-
-                // try to log the chatmessage to IRC
-                IrcClient.LocalUser.SendMessage(IrcChannel, chatstr);
-            }
+            if (DisplayMessages)
+                SendSplitIRCChannelServerString(Message.Message);
         }
 
         /// <summary>
@@ -214,18 +250,9 @@ namespace Meridian59.Bot.IRC
             // starts with prefix and does not contain ignores
             if (DisplayMessages &&
                 s.IndexOf(prefix) == 0 && 
-                s.IndexOf(ignore1) == -1 &&
-                IrcClient.IsRegistered && 
-                IrcChannel != null)
+                s.IndexOf(ignore1) == -1)
             {
-                // build a str to log
-                // this has a prefix (e.g. "103: ") and a m59 message
-                string chatstr =
-                    IRCChatStyle.GetPrefixString(Config.ChatPrefix) +
-                    IRCChatStyle.CreateIRCMessageFromChatMessage(Message.Message);
-
-                // try to log the chatmessage to IRC
-                IrcClient.LocalUser.SendMessage(IrcChannel, chatstr);             
+                SendSplitIRCChannelServerString(Message.Message);
             }
         }
 
