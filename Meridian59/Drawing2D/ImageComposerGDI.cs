@@ -321,8 +321,8 @@ namespace Meridian59.Drawing2D
                 SizeF textSize = MEASURE.MeasureString(Object.Name, FONT);
 
                 // get to next greater power of two
-                int width = (int)MathUtil.NextPowerOf2((uint)Math.Round(textSize.Width));
-                int height = (int)MathUtil.NextPowerOf2((uint)Math.Round(textSize.Height));
+                int width = (int)MathUtil.NextPowerOf2((uint)Math.Ceiling(textSize.Width));
+                int height = (int)MathUtil.NextPowerOf2((uint)Math.Ceiling(textSize.Height));
 
                 // get color to use for name based on objectflags
                 Color color = Color.FromArgb((int)NameColors.GetColorFor(Object.Flags));
