@@ -94,6 +94,11 @@ namespace Meridian59.Common
         public double ReqTurn { get; protected set; }
 
         /// <summary>
+        /// Tick we last sent BP_REQ_GO to the server
+        /// </summary>
+        public double ReqGo { get; protected set; }
+
+        /// <summary>
         /// Tick we last sent BP_REQ_ATTACK to the server
         /// </summary>
         public double ReqAttack { get; protected set; }
@@ -154,6 +159,12 @@ namespace Meridian59.Common
         /// Calculated on-the-fly.
         /// </summary>
         public double SpanReqTurn { get { return Current - ReqTurn; } }
+
+        /// <summary>
+        /// Milliseconds elapsed since last BP_REQ_GO.
+        /// Calculated on-the-fly.
+        /// </summary>
+        public double SpanReqGo { get { return Current - ReqGo; } }
 
         /// <summary>
         /// Milliseconds elapsed since last BP_REQ_ATTACK.
@@ -368,6 +379,14 @@ namespace Meridian59.Common
         public void DidReqTurn()
         {
             ReqTurn = Current;
+        }
+
+        /// <summary>
+        /// Call this when you sent a BP_REQ_GO
+        /// </summary>
+        public void DidReqGo()
+        {
+            ReqGo = Current;
         }
 
         /// <summary>

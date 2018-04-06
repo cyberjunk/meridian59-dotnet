@@ -1497,6 +1497,9 @@ namespace Meridian59.Client
 
             // send/enqueue it (async)
             ServerConnection.SendQueue.Enqueue(message);
+
+            // save tick we last sent an update
+            GameTick.DidReqGo();
         }
 
         /// <summary>
@@ -1548,6 +1551,14 @@ namespace Meridian59.Client
             if (Data.Effects.Paralyze.IsActive ||
                 Data.IsResting ||
                 Data.IsWaiting)
+                return;
+
+            // see if we recently sent a 'go' (teleport) and might be in process of a teleport
+            double expectedGoResultTime = GameTick.ReqGo + MathUtil.Bound(
+                (Real)ServerConnection.RTT * (Real)1.1, (Real)100.0, (Real)500.0);
+
+            // don't try to move then because it would rubberband (interpreted as teleport back)
+            if (GameTick.Current < expectedGoResultTime)
                 return;
 
             // check for updaterate limit or override flag
