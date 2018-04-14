@@ -502,7 +502,7 @@ namespace Meridian59 { namespace Ogre
          return true;
 
       if (arg.key == ActiveKeyBinding->ReqGo)
-         OgreClient::Singleton->SendReqGo(true);
+         OgreClient::Singleton->SendReqGo(false);
 
       else if (arg.key == ActiveKeyBinding->Close)
       {
