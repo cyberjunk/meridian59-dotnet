@@ -356,6 +356,8 @@ namespace Meridian59 { namespace Ogre
 
          if (wnd)
          {
+            CEGUI::Window* wndParent = wnd->getParent();
+
             // dropped on rootwindow?
             if (wnd == ControllerUI::GUIRoot)
             {
@@ -383,9 +385,34 @@ namespace Meridian59 { namespace Ogre
                }
             }
 
+            // dropped on objectscontents list or an entry of it
+            else if (wndParent == ControllerUI::ObjectContents::List ||
+                    (wndParent && wndParent->getParent() == ControllerUI::ObjectContents::List))
+            {
+               // datamodel
+               Meridian59::Data::Models::ObjectContents^ objContents = 
+                  OgreClient::Singleton->Data->ObjectContents;
+
+               // find according roomobject
+               RoomObject^ roomObj = OgreClient::Singleton->Data->RoomObjects->GetItemByID(
+                  objContents->ObjectID->ID);
+
+               // found and is a container
+               if (roomObj && roomObj->Flags->IsContainer)
+               {
+                  // put into container
+                  OgreClient::Singleton->SendReqPut(
+                     gcnew ObjectID(dataItem->ID, dataItem->Count),
+                     gcnew ObjectID(roomObj->ID, 0));
+
+                  // request contents again to receive update
+                  OgreClient::Singleton->SendSendObjectContents(roomObj->ID);
+               }
+            }
+
 #if !VANILLA
             // other inventory slot?
-            else if (wnd->getParent() == ControllerUI::Inventory::List)
+            else if (wndParent == ControllerUI::Inventory::List)
             {
                // try cast to other dragcontainer
                CEGUI::DragContainer* destDrag = (::CEGUI::DragContainer*)wnd;
