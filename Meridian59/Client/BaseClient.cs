@@ -2579,17 +2579,18 @@ namespace Meridian59.Client
         /// <param name="PlayerHeight">Height of the player for ceiling collisions (in ROO scale!)</param>
         public void TryMove(V2 Direction, byte Speed, Real PlayerHeight)
         {
+            // avatar we're controlling
+            RoomObject avatar = Data.AvatarObject;
+
             // no movements when resting or paralyzed
-            if (!Data.IsResting &&
+            if (avatar != null &&
+                !Data.IsResting &&
                 !Data.Effects.Paralyze.IsActive &&
                 CurrentRoom != null)
             {
                 // slow down movements to walkspeed if not enough vigor
                 if (Data.VigorPoints < StatNumsValues.LOWVIGOR && Speed > (byte)MovementSpeed.Walk)
                     Speed = (byte)MovementSpeed.Walk;
-                
-                // avatar we're controlling
-                RoomObject avatar = Data.AvatarObject;
 
                 // normalize direction
                 Direction.Normalize();
