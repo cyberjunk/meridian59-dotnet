@@ -1000,18 +1000,16 @@ namespace Meridian59.Data.Models
             // end not yet reached? process another step based on time delta
             if (!endReached)
             {
-                if (horizontalSpeed != (Real)MovementSpeed.Teleport)
+                // move interpolation for other objects with speed
+                if (!IsAvatar && horizontalSpeed != (Real)MovementSpeed.Teleport)
                 {
                     // normalise
                     SD.Normalize();
 
                     // how much we've done (=progress)
-                    if (!IsAvatar)
-                    {
-                        Real wayDone = (Position2D - MoveStart).Length;
-                        Real progress = wayDone / MoveLength;
-                        horizontalSpeed = MoveSpeedStart * (1.0f - progress * 0.2f);
-                    }
+                    Real wayDone = (Position2D - MoveStart).Length;
+                    Real progress = wayDone / MoveLength;
+                    horizontalSpeed = MoveSpeedStart * (1.0f - progress * 0.2f);
 
                     // the step-vector to do this frame
                     V2 step = SD * horizontalSpeed * (Real)TickSpan * GeometryConstants.MOVEBASECOEFF;
@@ -1031,6 +1029,7 @@ namespace Meridian59.Data.Models
                 else
                 {
                     // directly update for teleport (i.e. blink, hold-move setback)
+                    // or own avatar step per tick
                     position3D.X = MoveDestination.X;
                     position3D.Z = MoveDestination.Y;
                 }
@@ -1202,9 +1201,9 @@ namespace Meridian59.Data.Models
 
             // teleport (super high speed so that next tick moves there)
             // anything for speed 0 or steps bigger 2.5 big rows/cols
-            if (Speed == 0 || lenMoveReal > (2.5f * 64.0f))
+            if (lenMoveReal > (2.5f * 64.0f))
             {
-                horizontalSpeed = 99999f;
+                Speed = 0;
                 MoveSpeedFactor = 1.0f;
             }
 
