@@ -1550,7 +1550,8 @@ namespace Meridian59.Client
         {
             if (Data.Effects.Paralyze.IsActive ||
                 Data.IsResting ||
-                Data.IsWaiting)
+                Data.IsWaiting ||
+                Speed == 0)
                 return;
 
             // see if we recently sent a 'go' (teleport) and might be in process of a teleport
@@ -2616,7 +2617,7 @@ namespace Meridian59.Client
 
                 // apply step on start ("end candidate")
                 V2 end = start2D + step;
-                
+
                 //// 1. VERIFY OBJECT COLLISION
 
                 // check against roomnodes which have nomoveon set
