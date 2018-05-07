@@ -1566,7 +1566,7 @@ namespace Meridian59.Client
             {
                 // create message instance
                 ReqMoveMessage message = new ReqMoveMessage(
-                    X, Y, (MovementSpeed)Speed, Data.RoomInformation.RoomID, Angle);
+                    X, Y, Speed, Data.RoomInformation.RoomID, Angle);
 
                 // send/enqueue it (async)
                 ServerConnection.SendQueue.Enqueue(message);

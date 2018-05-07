@@ -49,7 +49,7 @@ namespace Meridian59.Protocol.GameMessages
             Array.Copy(BitConverter.GetBytes(X), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
-            Buffer[cursor] = (byte)MoveMode;
+            Buffer[cursor] = MoveMode;
             cursor++;
 
             Array.Copy(BitConverter.GetBytes(CurrentMapID), 0, Buffer, cursor, TypeSizes.INT);
@@ -74,7 +74,7 @@ namespace Meridian59.Protocol.GameMessages
             X = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            MoveMode = (MovementSpeed)Buffer[cursor];
+            MoveMode = Buffer[cursor];
             cursor++;
 
             CurrentMapID = BitConverter.ToUInt32(Buffer, cursor);
@@ -90,11 +90,11 @@ namespace Meridian59.Protocol.GameMessages
 
         public ushort Y { get; set; }
         public ushort X { get; set; }
-        public MovementSpeed MoveMode { get; set; }
+        public byte MoveMode { get; set; }
         public uint CurrentMapID { get; set; }
         public ushort Angle { get; set; }
 
-        public ReqMoveMessage(ushort X, ushort Y, MovementSpeed MoveMode, uint CurrentMapID, ushort Angle) 
+        public ReqMoveMessage(ushort X, ushort Y, byte MoveMode, uint CurrentMapID, ushort Angle) 
             : base(MessageTypeGameMode.ReqMove)
         {
             this.Y = Y;
