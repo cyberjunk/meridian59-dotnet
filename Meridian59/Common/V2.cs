@@ -295,6 +295,15 @@ namespace Meridian59.Common
         }
 
         /// <summary>
+        /// Rounds the vector components
+        /// </summary>
+        public void Round()
+        {
+           X = (Real)Math.Round(X);
+           Y = (Real)Math.Round(Y);
+        }
+
+        /// <summary>
         /// Returns the distance to another point
         /// </summary>
         /// <param name="Destination"></param>

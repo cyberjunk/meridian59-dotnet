@@ -321,6 +321,16 @@ namespace Meridian59.Common
         }
 
         /// <summary>
+        /// Rounds the vector components
+        /// </summary>
+        public void Round()
+        {
+           X = (Real)Math.Round(X);
+           Y = (Real)Math.Round(Y);
+           Z = (Real)Math.Round(Z);
+        }
+
+        /// <summary>
         /// Multiplies components by 16 and subtracts an 1024 offset
         /// </summary>
         public void ConvertToROO()
