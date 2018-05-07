@@ -995,14 +995,11 @@ namespace Meridian59.Data.Models
             const Real epsilon2 = 0.000001f;
 
             // whether we need an update in the end
-            bool positionChanged = false;
+            bool endReached = (distance2 < epsilon2);
 
             // end not yet reached? process another step based on time delta
-            bool endReached = (distance2 < epsilon2);
             if (!endReached)
             {
-                positionChanged = true;
-
                 if (horizontalSpeed != (Real)MovementSpeed.Teleport)
                 {
                     // normalise
@@ -1039,6 +1036,12 @@ namespace Meridian59.Data.Models
                 }
             }
 
+            // after step, re-evaluate if we have reached our destination
+            // so we don't have to wait until next threadloop to flip moving state
+            SD = MoveDestination - Position2D;
+            distance2 = SD.LengthSquared;
+            endReached = (distance2 < epsilon2);
+
             // convert to ROO coordinates
             Real xint = (Position3D.X - 64.0f) * 16.0f;
             Real yint = (Position3D.Z - 64.0f) * 16.0f;
@@ -1072,12 +1075,11 @@ namespace Meridian59.Data.Models
             // check delta
             Real oldheight = Position3D.Y;
             Real hDiff = oldheight - newheight;
-            //bool falling;
 
             // falling
             if (hDiff > 0.001f)
             {
-                positionChanged = true;
+                endReached = false;
 
                 // reset possible stepup instantly
                 if (verticalSpeed >= 0.0f)
@@ -1098,7 +1100,7 @@ namespace Meridian59.Data.Models
             // stepping up
             else if (hDiff < -0.001f)
             {
-                positionChanged = true;
+                endReached = false;
 
                 // reset possible falling instantly
                 if (verticalSpeed <= 0.0f)
@@ -1124,12 +1126,11 @@ namespace Meridian59.Data.Models
             }
 
             // no more processing of this node necessary
-            if (!positionChanged && endReached)
+            if (endReached)
                 IsMoving = false;
 
-            // if we moved somehow, trigger changed event
-            if (positionChanged)
-                RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_POSITION3D));
+            // trigger changed event
+            RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_POSITION3D));
         }
 
         /// <summary>

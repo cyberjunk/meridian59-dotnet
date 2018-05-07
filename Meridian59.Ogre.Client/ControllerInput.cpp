@@ -891,9 +891,6 @@ namespace Meridian59 { namespace Ogre
 
       if (isAutoMove || isMoveByMouseOrKeysNotUsedByUI)
       {
-         // get movespeed based on walk-modifier key
-         MovementSpeed speed = (IsWalkKeyDown) ? MovementSpeed::Walk : MovementSpeed::Run;
-
          // get movement direction vector
          V2 direction = GetMoveVector();
 
@@ -901,7 +898,7 @@ namespace Meridian59 { namespace Ogre
          float playerheight = 0.88f * 16.0f * (float)Avatar->SceneNode->_getWorldAABB().getSize().y;
 
          // try to do the move (might get blocked)				
-         OgreClient::Singleton->TryMove(direction, (unsigned char)speed, (CLRReal)playerheight);
+         OgreClient::Singleton->TryMove(direction, !IsWalkKeyDown, (CLRReal)playerheight);
       }
 
       /************** KEYBOARD ONLY FROM HERE ON ************/

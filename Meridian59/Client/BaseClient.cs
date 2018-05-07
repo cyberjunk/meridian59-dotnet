@@ -71,6 +71,8 @@ namespace Meridian59.Client
         protected double tickWorst   = 0.0f;
         protected double tickAverage = 0.0f;
         protected double tickBest    = Single.MaxValue;
+        protected ushort lastSentPositionX;
+        protected ushort lastSentPositionY;
         #endregion
       
         #region Major components
@@ -189,12 +191,8 @@ namespace Meridian59.Client
             // update RTT value
             Data.RTT = (uint)ServerConnection.RTT;
 
-            if (Data.AvatarObject != null &&
-                Data.AvatarObject.IsMoving)
-            {
-                // possibly send a position update            
-                SendReqMoveMessage();
-            }  
+            // possibly send a position update
+            SendReqMoveMessage();
         }
 
         /// <summary>
@@ -1548,7 +1546,9 @@ namespace Meridian59.Client
         /// <param name="ForceSend"></param>
         public virtual void SendReqMoveMessage(ushort X, ushort Y, byte Speed, ushort Angle, bool ForceSend = false)
         {
-            if (Data.Effects.Paralyze.IsActive ||
+            if ((X == lastSentPositionX && Y == lastSentPositionY) ||
+                Data.AvatarObject == null ||
+                Data.Effects.Paralyze.IsActive ||
                 Data.IsResting ||
                 Data.IsWaiting ||
                 Speed == 0)
@@ -1574,6 +1574,10 @@ namespace Meridian59.Client
 
                 // save tick we last sent an update
                 GameTick.DidReqMove();
+
+                // save the position we've sent
+                lastSentPositionX = X;
+                lastSentPositionY = Y;
             }
         }
 
@@ -1588,9 +1592,8 @@ namespace Meridian59.Client
             if (Data.AvatarObject == null)
                 return;
 
-            // use horizontalspeed or default to RUN for TELEPORT (0)
-            byte speed = ((byte)Data.AvatarObject.HorizontalSpeed == (byte)MovementSpeed.Teleport) ?
-                (byte)MovementSpeed.Run : (byte)Data.AvatarObject.HorizontalSpeed;
+            // use horizontalspeed
+            byte speed = (byte)Data.AvatarObject.HorizontalSpeed;
 
             // use the generic variant with our updated values in datalayer
             SendReqMoveMessage(
@@ -1598,7 +1601,7 @@ namespace Meridian59.Client
                 Data.AvatarObject.CoordinateY,
                 speed,
                 Data.AvatarObject.AngleUnits,
-                ForceSend);           
+                ForceSend);
         }
 
         /// <summary>
@@ -2576,9 +2579,9 @@ namespace Meridian59.Client
         /// This honors map collisions and object collisions.
         /// </summary>
         /// <param name="Direction">Direction vector, gets normalized</param>
-        /// <param name="Speed">The speed of the movement.</param>
+        /// <param name="Running">True if the user wants to run into the direction, false otherwise</param>
         /// <param name="PlayerHeight">Height of the player for ceiling collisions (in ROO scale!)</param>
-        public void TryMove(V2 Direction, byte Speed, Real PlayerHeight)
+        public void TryMove(V2 Direction, bool Running, Real PlayerHeight)
         {
             // avatar we're controlling
             RoomObject avatar = Data.AvatarObject;
@@ -2589,9 +2592,12 @@ namespace Meridian59.Client
                 !Data.Effects.Paralyze.IsActive &&
                 CurrentRoom != null)
             {
-                // slow down movements to walkspeed if not enough vigor
-                if (Data.VigorPoints < StatNumsValues.LOWVIGOR && Speed > (byte)MovementSpeed.Walk)
-                    Speed = (byte)MovementSpeed.Walk;
+                // deny Running request if the user can't afford it
+                if (Data.VigorPoints < StatNumsValues.LOWVIGOR)
+                    Running = false;
+
+                // pick base speed as requested
+                byte Speed = (Running) ? (byte)MovementSpeed.Run : (byte)MovementSpeed.Walk;
 
                 // normalize direction
                 Direction.Normalize();
