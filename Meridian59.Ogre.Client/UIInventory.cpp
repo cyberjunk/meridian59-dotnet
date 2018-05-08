@@ -386,8 +386,9 @@ namespace Meridian59 { namespace Ogre
             }
 
             // dropped on objectscontents list or an entry of it
-            else if (wndParent == ControllerUI::ObjectContents::List ||
-                    (wndParent && wndParent->getParent() == ControllerUI::ObjectContents::List))
+            else if (wnd == ControllerUI::ObjectContents::List ||
+                     wndParent == ControllerUI::ObjectContents::List ||
+                     (wndParent && wndParent->getParent() == ControllerUI::ObjectContents::List))
             {
                // datamodel
                Meridian59::Data::Models::ObjectContents^ objContents = 
