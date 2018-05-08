@@ -71,8 +71,9 @@ namespace Meridian59.Client
         protected double tickWorst   = 0.0f;
         protected double tickAverage = 0.0f;
         protected double tickBest    = Single.MaxValue;
-        protected ushort lastSentPositionX;
-        protected ushort lastSentPositionY;
+        protected ushort lastSentPositionX = 0;
+        protected ushort lastSentPositionY = 0;
+        protected RooSector lastSentSector = null;
         #endregion
       
         #region Major components
@@ -1538,16 +1539,24 @@ namespace Meridian59.Client
 
         /// <summary>
         /// Requests a move of your avatar
+        /// to current datamodels coordinates and speed.
         /// </summary>
-        /// <param name="X"></param>
-        /// <param name="Y"></param>
-        /// <param name="Speed"></param>
-        /// <param name="Angle"></param>
-        /// <param name="ForceSend"></param>
-        public virtual void SendReqMoveMessage(ushort X, ushort Y, byte Speed, ushort Angle, bool ForceSend = false)
+        /// <param name="ForceSend">Ignores the update-span, but no other conditions.</param>
+        public virtual void SendReqMoveMessage(bool ForceSend = false)
         {
+            RoomObject avatar = Data.AvatarObject;
+
+            // must have an avatar object
+            if (avatar == null)
+                return;
+
+            // get values from avatar object
+            byte Speed = (byte)avatar.HorizontalSpeed;
+            ushort X = avatar.CoordinateX;
+            ushort Y = avatar.CoordinateY;
+            ushort Angle = avatar.AngleUnits;
+
             if ((X == lastSentPositionX && Y == lastSentPositionY) ||
-                Data.AvatarObject == null ||
                 Data.Effects.Paralyze.IsActive ||
                 Data.IsResting ||
                 Data.IsWaiting ||
@@ -1562,6 +1571,13 @@ namespace Meridian59.Client
             if (GameTick.Current < expectedGoResultTime)
                 return;
 
+            // get current sector of avatar if any
+            RooSector currentSector = avatar.SubSector != null ? avatar.SubSector.Sector : null;
+
+            // override timer skip if we moved to another sector
+            if (currentSector != lastSentSector)
+                ForceSend = true;
+
             // check for updaterate limit or override flag
             if ((ForceSend && GameTick.SpanReqMove > 0) || GameTick.CanReqMove())
             {
@@ -1575,33 +1591,11 @@ namespace Meridian59.Client
                 // save tick we last sent an update
                 GameTick.DidReqMove();
 
-                // save the position we've sent
+                // save the position we've sent and the sector
                 lastSentPositionX = X;
                 lastSentPositionY = Y;
+                lastSentSector = currentSector;
             }
-        }
-
-        /// <summary>
-        /// Requests a move of your avatar
-        /// to current datamodels coordinates and speed.
-        /// </summary>
-        /// <param name="ForceSend">Ignores the update-span, but no other conditions.</param>
-        public virtual void SendReqMoveMessage(bool ForceSend = false)
-        {
-            // must have an avatar object
-            if (Data.AvatarObject == null)
-                return;
-
-            // use horizontalspeed
-            byte speed = (byte)Data.AvatarObject.HorizontalSpeed;
-
-            // use the generic variant with our updated values in datalayer
-            SendReqMoveMessage(
-                Data.AvatarObject.CoordinateX,
-                Data.AvatarObject.CoordinateY,
-                speed,
-                Data.AvatarObject.AngleUnits,
-                ForceSend);
         }
 
         /// <summary>
@@ -2597,7 +2591,21 @@ namespace Meridian59.Client
                     Running = false;
 
                 // pick base speed as requested
-                byte Speed = (Running) ? (byte)MovementSpeed.Run : (byte)MovementSpeed.Walk;
+                Real Speed = (Running) ? (Real)MovementSpeed.Run : (Real)MovementSpeed.Walk;
+
+                // slow down movements sectors with depth modifiers
+                if (avatar.SubSector != null && avatar.SubSector.Sector != null)
+                {
+                    switch(avatar.SubSector.Sector.Flags.SectorDepth)
+                    {
+                        case RooSectorFlags.DepthType.Depth1: Speed *= 0.75f; break;
+                        case RooSectorFlags.DepthType.Depth2: Speed *= 0.5f;  break;
+                        case RooSectorFlags.DepthType.Depth3: Speed *= 0.25f; break;
+                    }
+                }
+
+                // floor to what is sent to server
+                Speed = (byte)Speed;
 
                 // normalize direction
                 Direction.Normalize();
@@ -2607,19 +2615,7 @@ namespace Meridian59.Client
                 V2 start2D = avatar.Position2D;
 
                 // step based on direction and tick delta
-                V2 step = Direction * (Real)Speed * (Real)GameTick.Span * GeometryConstants.MOVEBASECOEFF;
-
-                // slow down movements sectors with depth modifiers
-                if (avatar.SubSector != null && avatar.SubSector.Sector != null)
-                {
-                    switch(avatar.SubSector.Sector.Flags.SectorDepth)
-                    {
-                        case RooSectorFlags.DepthType.Depth0: break;
-                        case RooSectorFlags.DepthType.Depth1: step.Scale(0.75f); break;
-                        case RooSectorFlags.DepthType.Depth2: step.Scale(0.5f);  break;
-                        case RooSectorFlags.DepthType.Depth3: step.Scale(0.25f); break;
-                    }
-                }
+                V2 step = Direction * Speed * (Real)GameTick.Span * GeometryConstants.MOVEBASECOEFF;
 
                 // apply step on start ("end candidate")
                 V2 end = start2D + step;
@@ -2689,7 +2685,7 @@ namespace Meridian59.Client
                 end = start2D + step;
 
                 // start movement
-                avatar.StartMoveTo(ref end, Speed);
+                avatar.StartMoveTo(ref end, (byte)Speed);
             }
         }
 
