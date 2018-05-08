@@ -1550,13 +1550,15 @@ namespace Meridian59.Client
             if (avatar == null)
                 return;
 
-            // get values from avatar object
+            // get values from avatar object (in format they would be sent)
             byte Speed = (byte)avatar.HorizontalSpeed;
             ushort X = avatar.CoordinateX;
             ushort Y = avatar.CoordinateY;
             ushort Angle = avatar.AngleUnits;
 
+            // abort if not moved by at least 1 kod fine unit or for other reasons
             if ((X == lastSentPositionX && Y == lastSentPositionY) ||
+                CurrentRoom == null ||
                 Data.Effects.Paralyze.IsActive ||
                 Data.IsResting ||
                 Data.IsWaiting ||
@@ -1571,10 +1573,13 @@ namespace Meridian59.Client
             if (GameTick.Current < expectedGoResultTime)
                 return;
 
-            // get current sector of avatar if any
-            RooSector currentSector = avatar.SubSector != null ? avatar.SubSector.Sector : null;
+            // lookup the sector this new kod position would mean on the server
+            // this can be different from the sector indicated by our float position
+            RooSubSector currentLeaf = null;
+            CurrentRoom.GetHeightAt(X * 16 - 1024, Y * 16 - 1024, out currentLeaf, true, false);
+            RooSector currentSector = (currentLeaf != null) ? currentLeaf.Sector : null;
 
-            // override timer skip if we moved to another sector
+            // override timer to make sure we immediately inform server when moved on another sector
             if (currentSector != lastSentSector)
                 ForceSend = true;
 
