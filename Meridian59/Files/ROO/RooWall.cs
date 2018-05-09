@@ -860,7 +860,7 @@ namespace Meridian59.Files.ROO
         /// <param name="PlayerHeight">Height of the player for ceiling collisions</param>
         /// <returns></returns>
         public bool IsBlockingMove(ref V3 Start, ref V2 End, Real PlayerHeight)
-        {          
+        {
             // get distance of end to finite line segment
             Real distEnd = End.MinSquaredDistanceToLineSegment(ref p1, ref p2);
 
@@ -893,7 +893,17 @@ namespace Meridian59.Files.ROO
 
             if ((startside < 0 && LeftSide != null && !LeftSide.Flags.IsPassable) ||
                 (startside > 0 && RightSide != null && !RightSide.Flags.IsPassable))
-                return true;         
+                return true;
+
+            // find intersection point of finite line (wall) and 
+            // infinitly extended move line
+            V2 intersect;
+            LineInfiniteLineIntersectionType inter = MathUtil.IntersectLineInfiniteLine(
+                p1, p2, start2D, End, out intersect);
+
+            if (inter != LineInfiniteLineIntersectionType.OneIntersection ||
+                inter != LineInfiniteLineIntersectionType.OneBoundaryPoint)
+                return false;
 
             /*************************************************************************/
             // check step-height
@@ -902,12 +912,12 @@ namespace Meridian59.Files.ROO
 
             if (startside >= 0)
             {
-                endheight = (LeftSector != null) ? LeftSector.CalculateFloorHeight(End.X, End.Y, true) : 0.0f;
+                endheight = (LeftSector != null) ? LeftSector.CalculateFloorHeight(intersect.X, intersect.Y, true) : 0.0f;
                 bgfbmp = (RightSide != null) ? RightSide.LowerTexture : (ushort)0;
             }
             else
             {
-                endheight = (RightSector != null) ? RightSector.CalculateFloorHeight(End.X, End.Y, true) : 0.0f;
+                endheight = (RightSector != null) ? RightSector.CalculateFloorHeight(intersect.X, intersect.Y, true) : 0.0f;
                 bgfbmp = (LeftSide != null) ? LeftSide.LowerTexture : (ushort)0;
             }
 
@@ -921,12 +931,12 @@ namespace Meridian59.Files.ROO
 
             if (startside >= 0)
             {
-                endheight = (LeftSector != null) ? LeftSector.CalculateCeilingHeight(End.X, End.Y) : 0.0f;
+                endheight = (LeftSector != null) ? LeftSector.CalculateCeilingHeight(intersect.X, intersect.Y) : 0.0f;
                 bgfbmp = (RightSide != null) ? RightSide.UpperTexture : (ushort)0;
             }
             else
             {
-                endheight = (RightSector != null) ? RightSector.CalculateCeilingHeight(End.X, End.Y) : 0.0f;
+                endheight = (RightSector != null) ? RightSector.CalculateCeilingHeight(intersect.X, intersect.Y) : 0.0f;
                 bgfbmp = (LeftSide != null) ? LeftSide.UpperTexture : (ushort)0;
             }
 
