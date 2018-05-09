@@ -562,6 +562,39 @@ namespace Meridian59.Common
         }
 
         /// <summary>
+        /// True if infinite lines represented by P1P2 and Q1Q2 intersect.
+        /// </summary>
+        /// <param name="P1"></param>
+        /// <param name="P2"></param>
+        /// <param name="Q1"></param>
+        /// <param name="Q2"></param>
+        /// <param name="Intersect"></param>
+        /// <returns></returns>
+        public static bool IntersectInfiniteLines(ref V2 P1, ref V2 P2, ref V2 Q1, ref V2 Q2, out V2 Intersect)
+        {
+            // variant 2
+            Real denom = (P1.X - P2.X) * (Q1.Y - Q2.Y) - (P1.Y - P2.Y) * (Q1.X - Q2.X);
+
+            // parallel
+            if (denom > -0.001f && denom < 0.001f)
+            {
+                Intersect.X = 0.0f;
+                Intersect.Y = 0.0f;
+                return false;
+            }
+
+            Real num;
+
+            num = (P1.X * P2.Y - P1.Y * P2.X) * (Q1.X - Q2.X) - (P1.X - P2.X) * (Q1.X * Q2.Y - Q1.Y * Q2.X);
+            Intersect.X = num / denom;
+
+            num = (P1.X * P2.Y - P1.Y * P2.X) * (Q1.Y - Q2.Y) - (P1.Y - P2.Y) * (Q1.X * Q2.Y - Q1.Y * Q2.X);
+            Intersect.Y = num / denom;
+
+            return true;
+        }
+
+        /// <summary>
         /// Calculates the FIRST (entry) intersection point of a line and a circle.
         /// </summary>
         /// <remarks>
