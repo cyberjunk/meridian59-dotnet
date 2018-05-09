@@ -839,6 +839,23 @@ namespace Meridian59.Files.ROO
                 }
             }
         }
+        
+        /// <summary>
+        /// Checks if a point lies inside the boundingbox of this wall
+        /// </summary>
+        /// <param name="q"></param>
+        /// <param name="eps"></param>
+        /// <returns></returns>
+        public bool IsInsideBoundingBox(ref V2 q, Real eps)
+        {
+            Real xMax = Math.Max(p1.X, p2.X);
+            Real yMax = Math.Max(p1.Y, p2.Y);
+            Real xMin = Math.Min(p1.X, p2.X);
+            Real yMin = Math.Min(p1.Y, p2.Y);
+
+            return q.X >= (xMin-eps) && q.X <= (xMax+eps) &&
+                   q.Y >= (yMin-eps) && q.Y <= (yMax+eps);
+        }
         #endregion
 
         #region V2 / Renderstuff       
@@ -861,32 +878,38 @@ namespace Meridian59.Files.ROO
         /// <returns></returns>
         public bool IsBlockingMove(ref V3 Start, ref V2 End, Real PlayerHeight)
         {
-            // get distance of end to finite line segment
-            Real distEnd = End.MinSquaredDistanceToLineSegment(ref p1, ref p2);
-
-            // end is far enough away, no block
-            if (distEnd >= GeometryConstants.WALLMINDISTANCE2)
-                return false;
-
-            /*************************************************************************/
-            // end is too 'too' close to wall
-            
+            // get sides of start and end
             V2 start2D      = new V2(Start.X, Start.Z);
             int startside   = start2D.GetSide(ref p1, ref p2);
             int endside     = End.GetSide(ref p1, ref p2);
-            Real endheight;
-            ushort bgfbmp;
+             
+            // get distances of start and end to finite line segment
+            Real distEnd = End.MinSquaredDistanceToLineSegment(ref p1, ref p2);
+            Real distStart = start2D.MinSquaredDistanceToLineSegment(ref p1, ref p2);
 
             /*************************************************************************/
-            // allow moving away from wall
+            // both points on same side
 
             if (startside == endside)
-            { 
-                Real distStart = start2D.MinSquaredDistanceToLineSegment(ref p1, ref p2);
+            {
+                // end is far enough away, no block
+                if (distEnd >= GeometryConstants.WALLMINDISTANCE2)
+                    return false;
 
+                // allow moving away from wall
                 if (distEnd > distStart)
                     return false;
             }
+
+            // find intersection point of infinite line of wall and 
+            // infinite line of move
+            V2 intersect;
+            if (!MathUtil.IntersectInfiniteLines(ref p1, ref p2, ref start2D, ref End, out intersect))
+                return false;
+
+            // intersection point must be in boundingbox of wall
+            if (!IsInsideBoundingBox(ref intersect, GeometryConstants.WALLMINDISTANCE))
+                return false;
 
             /*************************************************************************/
             // prevent moving through non-passable side
@@ -895,18 +918,10 @@ namespace Meridian59.Files.ROO
                 (startside > 0 && RightSide != null && !RightSide.Flags.IsPassable))
                 return true;
 
-            // find intersection point of finite line (wall) and 
-            // infinitly extended move line
-            V2 intersect;
-            LineInfiniteLineIntersectionType inter = MathUtil.IntersectLineInfiniteLine(
-                p1, p2, start2D, End, out intersect);
-
-            if (inter != LineInfiniteLineIntersectionType.OneIntersection ||
-                inter != LineInfiniteLineIntersectionType.OneBoundaryPoint)
-                return false;
-
             /*************************************************************************/
             // check step-height
+            Real endheight;
+            ushort bgfbmp;
 
             endheight = 0.0f;
 
