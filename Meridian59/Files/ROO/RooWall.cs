@@ -908,7 +908,7 @@ namespace Meridian59.Files.ROO
                 return false;
 
             // intersection point must be in boundingbox of wall
-            if (!IsInsideBoundingBox(ref intersect, GeometryConstants.WALLMINDISTANCE))
+            if (!IsInsideBoundingBox(ref intersect, GeometryConstants.WALLMINDISTANCE-64))
                 return false;
 
             /*************************************************************************/
@@ -938,7 +938,7 @@ namespace Meridian59.Files.ROO
 
             if (bgfbmp > 0 && (endheight - Start.Y > GeometryConstants.MAXSTEPHEIGHT))
                 return true;
-            
+
             /*************************************************************************/
             // check head collision with ceiling
 
