@@ -9,6 +9,7 @@ namespace Meridian59.Patcher
     {
         private readonly List<PatchFile> files;
         private readonly LanguageHandler languageHandler;
+        private string appendLog;
         private double lastTick;
         private long lastLengthDone;
 
@@ -26,22 +27,22 @@ namespace Meridian59.Patcher
 
         public void RetryingFile(string Filename)
         {
-            infoTextBox.AppendText(String.Format(languageHandler.RetryingFile, Filename));
+            appendLog += (String.Format(languageHandler.RetryingFile, Filename)) + Environment.NewLine;
         }
 
         public void UpdateTextBox(PatchFile File)
         {
-            infoTextBox.AppendText(String.Format(languageHandler.FileDownloaded, File.Filename));
+            appendLog += (String.Format(languageHandler.FileDownloaded, File.Filename)) + Environment.NewLine;
         }
 
         public void JsonDownloadStarted()
         {
-            infoTextBox.AppendText(languageHandler.DownloadingPatch);
+            appendLog += (languageHandler.DownloadingPatch) + Environment.NewLine;
         }
 
         public void JsonDownloadFailed()
         {
-            infoTextBox.AppendText(languageHandler.PatchDownloadFailed);
+            appendLog += (languageHandler.PatchDownloadFailed) + Environment.NewLine;
         }
 
         /// <summary>
@@ -81,9 +82,13 @@ namespace Meridian59.Patcher
             // update files-done counter
             lblFilesProcessed.Text = numdone + " / " + numfiles;
 
+            // update textLog with pending lines and reset
+            infoTextBox.AppendText(appendLog);
+            appendLog = "";
+
             // update update download speed and processed bytes not more than once per second
             double msinterval = Tick - lastTick;
-            if (msinterval > 1000.0)
+            if (msinterval > 500)
             {
                 // update speed for last interval
                 double bytes_in_interval = done - lastLengthDone;
