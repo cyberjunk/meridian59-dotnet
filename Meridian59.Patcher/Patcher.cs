@@ -43,6 +43,7 @@ namespace Meridian59.Patcher
         
         private static readonly WindowsIdentity identity   = WindowsIdentity.GetCurrent();
         private static readonly WindowsPrincipal principal = new WindowsPrincipal(identity);
+        private static readonly LanguageHandler languageHandler = new LanguageHandler();
         private static readonly PatchFileQueue queue       = new PatchFileQueue();
         private static readonly PatchFileQueue queueDone   = new PatchFileQueue();
         private static readonly PatchFileQueue queueErrors = new PatchFileQueue();
@@ -78,7 +79,7 @@ namespace Meridian59.Patcher
                 Application.SetCompatibleTextRenderingDefault(false);
 
                 // create ui
-                form = new DownloadForm(files);
+                form = new DownloadForm(files, languageHandler);
                 form.FormClosed += OnFormClosed;
                 form.Show();
             }
@@ -88,6 +89,8 @@ namespace Meridian59.Patcher
                 return;
 
             // start download of patchinfo.txt
+            if (!isHeadless)
+                form.JsonDownloadStarted();
             webClient.DownloadDataCompleted += OnWebClientDownloadDataCompleted;
             webClient.DownloadDataAsync(new Uri(jsonUrl));
            
@@ -197,13 +200,15 @@ namespace Meridian59.Patcher
                 {
                     file.LengthDone = 0;
                     queue.Enqueue(file);
+                    if (!isHeadless)
+                        form.RetryingFile(file.Filename);
                 }
                 else
                 {
                     if (!isHeadless)
                     {
-                        MessageBox.Show("Download of file " + file.Filename + " failed.",
-                            "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(String.Format(languageHandler.FileFailed + file.Filename),
+                            languageHandler.ErrorText, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
 
                     // make sure to quit loop
@@ -217,6 +222,8 @@ namespace Meridian59.Patcher
             {
                 // raise counter for finished files
                 filesDone++;
+                if (!isHeadless)
+                    form.UpdateTextBox(file);
 
                 // check for finish
                 if (filesDone >= files.Count)
@@ -263,8 +270,8 @@ namespace Meridian59.Patcher
             {
                 if (!isHeadless)
                 {
-                    MessageBox.Show("Required file " + URLDATAFILE + " is missing. Please reinstall the client.",
-                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(String.Format(languageHandler.UrlInfoMissing, URLDATAFILE),
+                        languageHandler.ErrorText, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
                 return false;
@@ -278,8 +285,8 @@ namespace Meridian59.Patcher
             {
                 if (!isHeadless)
                 {
-                    MessageBox.Show("File " + URLDATAFILE + " is corrupted. Please reinstall the client.",
-                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(String.Format(languageHandler.UrlInfoMissing + URLDATAFILE),
+                        languageHandler.ErrorText, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
                 return false;
@@ -366,8 +373,19 @@ namespace Meridian59.Patcher
             {
                 if (!isHeadless)
                 {
-                    MessageBox.Show("Download of JSON patch data failed. Please try again or reinstall client.",
-                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    form.JsonDownloadFailed();
+                    DialogResult result = MessageBox.Show(languageHandler.JsonDownloadFailed,
+                        languageHandler.ErrorText, MessageBoxButtons.RetryCancel);
+                    switch (result)
+                    {
+                        case DialogResult.Retry:
+                            form.JsonDownloadStarted();
+                            // OnWebClientDownloadDataCompleted event still fires at end.
+                            webClient.DownloadDataAsync(new Uri(jsonUrl));
+                            return;
+                        case DialogResult.Cancel:
+                            break;
+                    }
                 }
 
                 abort = true;

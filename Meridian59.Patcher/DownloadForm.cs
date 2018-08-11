@@ -8,6 +8,7 @@ namespace Meridian59.Patcher
     public partial class DownloadForm : Form
     {
         private readonly List<PatchFile> files;
+        private readonly LanguageHandler languageHandler;
         private double lastTick;
         private long lastLengthDone;
 
@@ -15,10 +16,32 @@ namespace Meridian59.Patcher
         /// Constructor
         /// </summary>
         /// <param name="files"></param>
-        public DownloadForm(List<PatchFile> files)
+        public DownloadForm(List<PatchFile> files, LanguageHandler languageHandler)
         {
+            this.languageHandler = languageHandler;
             this.files = files;
             InitializeComponent();
+            CenterToScreen();
+        }
+
+        public void RetryingFile(string Filename)
+        {
+            infoTextBox.AppendText(String.Format(languageHandler.RetryingFile, Filename));
+        }
+
+        public void UpdateTextBox(PatchFile File)
+        {
+            infoTextBox.AppendText(String.Format(languageHandler.FileDownloaded, File.Filename));
+        }
+
+        public void JsonDownloadStarted()
+        {
+            infoTextBox.AppendText(languageHandler.DownloadingPatch);
+        }
+
+        public void JsonDownloadFailed()
+        {
+            infoTextBox.AppendText(languageHandler.PatchDownloadFailed);
         }
 
         /// <summary>
@@ -59,7 +82,7 @@ namespace Meridian59.Patcher
             lblFilesProcessed.Text = numdone + " / " + numfiles;
 
             // update update download speed and processed bytes not more than once per second
-            double msinterval = Tick - lastTick;          
+            double msinterval = Tick - lastTick;
             if (msinterval > 1000.0)
             {
                 // update speed for last interval
@@ -81,14 +104,14 @@ namespace Meridian59.Patcher
                 // remember values for next execution
                 lastLengthDone = done;
                 lastTick = Tick;
-            }             
+            }
         }
 
         private void OnDownloadFormClosing(object sender, FormClosingEventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show(
-                "Are you sure?", "Abort", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            
+            DialogResult dialogResult = MessageBox.Show(languageHandler.ConfirmCancel,
+                languageHandler.AbortText, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
             if (dialogResult == DialogResult.Yes)
             {
                 e.Cancel = false;
@@ -96,7 +119,7 @@ namespace Meridian59.Patcher
             else if (dialogResult == DialogResult.No)
             {
                 e.Cancel = true;
-            }        
+            }
         }
     }
 }
