@@ -25,6 +25,9 @@ namespace Meridian59.Patcher
         private const string ABORT_EN = "Abort";
         private const string ABORT_DE = "Abbrechen";
 
+        private const string INFO_EN = "Info";
+        private const string INFO_DE = "Info";
+
         private const string CONFIRMCANCEL_EN = "Are you sure you want to cancel the client update?";
         private const string CONFIRMCANCEL_DE = "Möchtest du das Update wirklich abbrechen?";
 
@@ -66,6 +69,18 @@ namespace Meridian59.Patcher
 
         private const string PATCHDOWNLOADFAILED_EN = "Patch information download failed!\n";
         private const string PATCHDOWNLOADFAILED_DE = "Herunterladen der Patch-Informationen fehlgeschlagen!\n";
+
+        private const string DOWNLOADINIT_EN = "Initializing client file download...";
+        private const string DOWNLOADINIT_DE = "Initialisierung der Client-Dateien zum herunterladen...";
+
+        private const string SCANNINGFILES_EN = "Calculating client files to download...";
+        private const string SCANNINGFILES_DE = "Berechnen der Client-Dateien zum herunterladen...";
+
+        private const string CLIENTUPTODATE_EN = "Client is up to date, nothing to download. Click OK to launch the client.";
+        private const string CLIENTUPTODATE_DE = "Client ist auf dem neusten Stand. Klicke OK um das Spiel zu starten.";
+
+        private const string CLIENTWASUPDATED_EN = "Client updated. Click OK to launch the client.";
+        private const string CLIENTWASUPDATED_DE = "Client wurde aktualisiert. Klicke OK um das Spiel zu starten.";
 
         #endregion Constants
 
@@ -130,6 +145,20 @@ namespace Meridian59.Patcher
                         return ABORT_DE;
                     default:
                         return ABORT_EN;
+                }
+            }
+        }
+
+        public string InfoText
+        {
+            get
+            {
+                switch (languageIdentifier)
+                {
+                    case LanguageIdentifier.German:
+                        return INFO_DE;
+                    default:
+                        return INFO_EN;
                 }
             }
         }
@@ -256,6 +285,62 @@ namespace Meridian59.Patcher
                         return PATCHDOWNLOADFAILED_DE;
                     default:
                         return PATCHDOWNLOADFAILED_EN;
+                }
+            }
+        }
+
+        public string DownloadInit
+        {
+            get
+            {
+                switch (languageIdentifier)
+                {
+                    case LanguageIdentifier.German:
+                        return DOWNLOADINIT_DE;
+                    default:
+                        return DOWNLOADINIT_EN;
+                }
+            }
+        }
+
+        public string ScanningFiles
+        {
+            get
+            {
+                switch (languageIdentifier)
+                {
+                    case LanguageIdentifier.German:
+                        return SCANNINGFILES_DE;
+                    default:
+                        return SCANNINGFILES_EN;
+                }
+            }
+        }
+
+        public string ClientUpToDate
+        {
+            get
+            {
+                switch (languageIdentifier)
+                {
+                    case LanguageIdentifier.German:
+                        return CLIENTUPTODATE_DE;
+                    default:
+                        return CLIENTUPTODATE_EN;
+                }
+            }
+        }
+
+        public string ClientWasUpdated
+        {
+            get
+            {
+                switch (languageIdentifier)
+                {
+                    case LanguageIdentifier.German:
+                        return CLIENTWASUPDATED_DE;
+                    default:
+                        return CLIENTWASUPDATED_EN;
                 }
             }
         }
