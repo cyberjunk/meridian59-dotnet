@@ -22,6 +22,7 @@ namespace Meridian59.Patcher
         protected readonly Thread thread;
         protected readonly string baseFilePath;
         protected readonly string baseUrl;
+        protected readonly string[] exclusions;
         protected readonly WebClient webClient;
         protected readonly MD5 md5;
         protected readonly SynchronizationContext eventContext;
@@ -29,9 +30,12 @@ namespace Meridian59.Patcher
         protected volatile bool isDownloading;
         protected volatile bool IsRunning;
 
+        protected readonly PatchDownloadStats patchDownloadStats;
+
         /// <summary>
         /// Constructor
         /// </summary>
+        /// <param name="Exclusions"></param>
         /// <param name="BaseFilePath"></param>
         /// <param name="BaseUrl"></param>
         /// <param name="InputQueue"></param>
@@ -39,16 +43,20 @@ namespace Meridian59.Patcher
         /// <param name="FinishedQueue"></param>
         /// <param name="ErrorQueue"></param>
         public Worker(
-            string BaseFilePath, 
+            string[] Exclusions,
+            string BaseFilePath,
             string BaseUrl,
+            PatchDownloadStats PatchDownloadStats,
             ConcurrentQueue<PatchFile> InputQueue,
             ConcurrentQueue<PatchFile> HashedQueue,
             ConcurrentQueue<PatchFile> FinishedQueue,
             ConcurrentQueue<PatchFile> ErrorQueue)
         {
             // keep references
+            exclusions = Exclusions;
             baseFilePath = BaseFilePath;
             baseUrl = BaseUrl;
+            patchDownloadStats = PatchDownloadStats;
             queue = InputQueue;
             queueHashed = HashedQueue;
             queueFinished = FinishedQueue;
@@ -104,16 +112,17 @@ namespace Meridian59.Patcher
                 // try get next file to check/calculate hash for
                 else if (queue.TryDequeue(out file))
                 {
-                    // CASE 1: File on disk has equal hash, skip it
-                    if (IsDiskFileEqual(file))
-                    {
-                        file.LengthDone = file.Length;
-                        queueFinished.Enqueue(file);
-                    }
+                    patchDownloadStats.IncrementFilesChecked();
 
-                    // CASE 2: File must be downloaded
-                    else
+                    // Only add to queueHashed if not equal to disk file.
+                    if (!exclusions.Contains(file.Filename)
+                        && file.Download == true
+                        && !IsDiskFileEqual(file))
+                    {
                         queueHashed.Enqueue(file);
+                        patchDownloadStats.IncrementFilesToDownload();
+                        patchDownloadStats.AddBytesToDownload(file.Length);
+                    }
                 }
 
                 // otherwise try to get next file to download
@@ -188,6 +197,7 @@ namespace Meridian59.Patcher
             if (e.UserState is PatchFile)
             {
                 PatchFile f  = (PatchFile)e.UserState;
+                patchDownloadStats.AddDownloadedBytes(e.BytesReceived - f.LengthDone);
                 f.LengthDone = e.BytesReceived;
             }           
         }
@@ -209,7 +219,10 @@ namespace Meridian59.Patcher
                     queueErrors.Enqueue(f);
   
                 else
+                {
+                    patchDownloadStats.IncrementFilesDownloaded();
                     queueFinished.Enqueue(f);
+                }
             }            
         }
 
