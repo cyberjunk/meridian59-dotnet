@@ -1,4 +1,6 @@
-﻿/*
+﻿#if USING_IRCDOTNET
+
+/*
  Copyright (c) 2012-2013 Clint Banzhaf
  This file is part of "Meridian59 .NET".
 
@@ -73,7 +75,7 @@ namespace Meridian59.Bot.IRC
             watch.Start();
         }
 
-        #region IIrcFloodPreventer
+#region IIrcFloodPreventer
         /// <summary>
         /// 
         /// </summary>
@@ -115,6 +117,7 @@ namespace Meridian59.Bot.IRC
                 Available--; 
         }
 
-        #endregion
+#endregion
     }
 }
+#endif

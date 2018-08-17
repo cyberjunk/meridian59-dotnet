@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using IrcDotNet;
-
-namespace Meridian59.Bot.IRC
+﻿namespace Meridian59.Bot.IRC
 {
     public class IRCAdminBotCommandList : IRCAdminBotCommand
     {
@@ -27,15 +20,15 @@ namespace Meridian59.Bot.IRC
             switch (Command)
             {
                 case "admins":
-                    Bot.IrcClient.LocalUser.SendMessage(Admin,
+                    Bot.SendIRCMessage(Admin,
                         "Bot admins: " + string.Join(", ", Bot.Config.Admins));
                     return true;
                 case "users":
-                    Bot.IrcClient.LocalUser.SendMessage(Admin,
+                    Bot.SendIRCMessage(Admin,
                         "Bot users: " + string.Join(", ", Bot.Config.AllowedUsers));
                     return true;
                 case "registered":
-                    Bot.IrcClient.LocalUser.SendMessage(Admin,
+                    Bot.SendIRCMessage(Admin,
                         "Registered users: " + string.Join(", ", Bot.UserRegistration.Keys));
                     return true;
             }

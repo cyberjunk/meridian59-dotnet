@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using IrcDotNet;
-
-namespace Meridian59.Bot.IRC
+﻿namespace Meridian59.Bot.IRC
 {
     public class IRCAdminBotCommandRemove : IRCAdminBotCommand
     {
@@ -27,11 +20,11 @@ namespace Meridian59.Bot.IRC
             if (Bot.Config.AllowedUsers.Contains(Command))
             {
                 Bot.Config.AllowedUsers.Remove(Command);
-                Bot.IrcClient.LocalUser.SendMessage(Admin, "Removed " + Command + " as a bot user.");
+                Bot.SendIRCMessage(Admin, "Removed " + Command + " as a bot user.");
             }
             else
             {
-                Bot.IrcClient.LocalUser.SendMessage(Admin, "Could not find " + Command + " in bot user list.");
+                Bot.SendIRCMessage(Admin, "Could not find " + Command + " in bot user list.");
             }
 
             return true;

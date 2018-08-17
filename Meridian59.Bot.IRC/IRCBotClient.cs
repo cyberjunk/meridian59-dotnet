@@ -24,7 +24,8 @@ using Meridian59.Protocol.GameMessages;
 using Meridian59.Data;
 using Meridian59.Data.Models;
 using Meridian59.Files;
-using IrcDotNet;
+using ChatSharp;
+using ChatSharp.Events;
 using System.Text.RegularExpressions;
 
 namespace Meridian59.Bot.IRC
@@ -43,7 +44,7 @@ namespace Meridian59.Bot.IRC
         /// <summary>
         /// The IRC client from the lib
         /// </summary>
-        public StandardIrcClient IrcClient { get; protected set; }
+        public IrcClient IrcClient { get; protected set; }
         
         /// <summary>
         /// Once successfully connected and joined,
@@ -62,6 +63,11 @@ namespace Meridian59.Bot.IRC
         /// thread and read by the bot mainthread later.
         /// </summary>
         public LockingQueue<string> AdminCommandQueue { get; protected set; }
+
+        /// <summary>
+        /// Flood protection for sending IRC messages.
+        /// </summary>
+        public IRCQueryQueue IRCSendQueue { get; protected set; }
 
         /// <summary>
         /// WhoX queries to be sent.
@@ -96,6 +102,7 @@ namespace Meridian59.Bot.IRC
             // create IRC command queues
             ChatCommandQueue = new LockingQueue<string>();
             AdminCommandQueue = new LockingQueue<string>();
+            IRCSendQueue = new IRCQueryQueue();
             WhoXQueryQueue = new WhoXQueryQueue();
 
             // Whether bot echoes to IRC or not.
@@ -107,35 +114,30 @@ namespace Meridian59.Bot.IRC
             // Init list of recent admins to send a command.
             RecentAdmins = new List<string>();
 
-            // create an IRC client instance
-            IrcClient = new StandardIrcClient();
-            IrcClient.FloodPreventer = new FloodPreventer(Config.MaxBurst, Config.Refill);
+            // create an IRC client instance, with connection info
+            IrcClient = new IrcClient(Config.IRCServer,
+                new IrcUser(Config.NickName, Config.NickName, Config.IRCPassword, Config.NickName));
+
+            // TODO: does ChatSharp use something like this?
+            //IrcClient.FloodPreventer = new FloodPreventer(Config.MaxBurst, Config.Refill);
             
             // hook up IRC client event handlers
             // beware! these are executed by the internal workthread
             // of the library.          
-            IrcClient.Connected += OnIrcClientConnected;
-            IrcClient.ConnectFailed += OnIrcClientConnectFailed;
-            IrcClient.Disconnected += OnIrcClientDisconnected;
-            IrcClient.Registered += OnIrcClientRegistered;
-            IrcClient.ProtocolError += OnIrcClientProtocolError;
-            IrcClient.WhoXReplyReceived += OnWhoXReplyReceived;
+            IrcClient.ConnectionComplete += OnIrcClientConnected;
 
-            // build our IRC connection info
-            IrcUserRegistrationInfo regInfo = new IrcUserRegistrationInfo();
-            regInfo.UserName = Config.NickName;
-            regInfo.RealName = Config.NickName;
-            regInfo.NickName = Config.NickName;
-            
-            // if password is set
-            if (!String.Equals(Config.IRCPassword, String.Empty))
-                regInfo.Password = Config.IRCPassword;
+            // ChatSharp doesn't have fine-grained error handling
+            // to my knowledge, likely we have to disconnect on any
+            // network error.
+            IrcClient.NetworkError += OnIrcClientDisconnected;
+
+            IrcClient.WhoxReceived += OnWhoXReplyReceived;
 
             // log IRC connecting
             Log("SYS", "Connecting IRC to " + Config.IRCServer + ":" + Config.IRCPort);
 
             // connect the lib internally (this is async)
-            IrcClient.Connect(Config.IRCServer, Config.IRCPort, false, regInfo);
+            IrcClient.ConnectAsync();
         }
 
         /// <summary>
@@ -147,14 +149,16 @@ namespace Meridian59.Bot.IRC
             if (IrcClient != null)
             {
                 // detach event handlers
-                IrcClient.Connected -= OnIrcClientConnected;
-                IrcClient.ConnectFailed -= OnIrcClientConnectFailed;
-                IrcClient.Disconnected -= OnIrcClientDisconnected;
-                IrcClient.Registered -= OnIrcClientRegistered;
-                IrcClient.ProtocolError -= OnIrcClientProtocolError;
-                IrcClient.WhoXReplyReceived -= OnWhoXReplyReceived;
-                IrcClient.Disconnect();
-                IrcClient.Dispose();
+                IrcClient.ConnectionComplete -= OnIrcClientConnected;
+                IrcClient.NetworkError -= OnIrcClientDisconnected;
+                IrcClient.WhoxReceived -= OnWhoXReplyReceived;
+                IrcClient.UserJoinedChannel -= OnUserJoined;
+                IrcClient.UserPartedChannel -= OnUserLeft;
+                IrcClient.ChannelListRecieved -= OnUsersListReceived;
+                IrcClient.ChannelMessageRecieved -= OnMessageReceived;
+                IrcClient.UserMessageRecieved -= OnLocalUserMessageReceived;
+
+                IrcClient.Quit();
                 IrcClient = null;
 
                 IrcChannel = null;
@@ -187,7 +191,7 @@ namespace Meridian59.Bot.IRC
         private void SendSplitIRCChannelServerString(ServerString Message)
         {
             // Must have somewhere to send.
-            if (!IrcClient.IsRegistered || IrcChannel == null)
+            if (IrcChannel == null)
                 return;
 
             // build a str to log
@@ -200,7 +204,7 @@ namespace Meridian59.Bot.IRC
             // Short path
             if (chatstr.Length < 280)
             {
-                IrcClient.LocalUser.SendMessage(IrcChannel, chatstr);
+                SendIRCChannelMessage(chatstr);
                 return;
             }
 
@@ -211,7 +215,7 @@ namespace Meridian59.Bot.IRC
                 while (chatstr.Length > 0 && count++ < 8)
                 {
                     string substr = chatstr.Truncate(IRCChatStyle.GetGoodTruncateIndex(chatstr, 280));
-                    IrcClient.LocalUser.SendMessage(IrcChannel, lastStyle + substr);
+                    SendIRCChannelMessage(lastStyle + substr);
                     chatstr = chatstr.Substring(substr.Length);
                     lastStyle = IRCChatStyle.GetLastChatStyleString(substr);
                 }
@@ -269,7 +273,7 @@ namespace Meridian59.Bot.IRC
                 return;
 
             // check if irc is available
-            if (IrcClient.IsRegistered && IrcChannel != null)              
+            if (IrcChannel != null)
             {
                 // IRC does not allow \r \n \0 
                 // so we remove \0 and remove \r\n by splitting up into lines               
@@ -296,11 +300,11 @@ namespace Meridian59.Bot.IRC
                     foreach (string admin in recipients)
                     {
                         // try get channeluser by name
-                        IrcChannelUser usr = GetChannelUser(admin);
+                        IrcUser usr = GetChannelUser(admin);
 
                         // online? send!
                         if (usr != null)
-                            IrcClient.LocalUser.SendMessage(admin, line);
+                            SendIRCMessage(admin, line);
                     }
                 }
                 if (clearRecent)
@@ -331,6 +335,8 @@ namespace Meridian59.Bot.IRC
             if (WhoXQueryQueue.TryDequeue(out string command))
                 SendWhoXQuery(command);
 
+            if (IRCSendQueue.TryDequeue(out IrcMessage ircMessage))
+                IrcClient.SendMessage(ircMessage.Message, ircMessage.Name);
 
             // execute the chatcommands - this is all which work in the 3d client also
             // like tell, say, broadcast - but also "dm", "getplayer" etc.
@@ -347,15 +353,15 @@ namespace Meridian59.Bot.IRC
         /// </summary>
         /// <param name="Username"></param>
         /// <returns></returns>
-        protected IrcChannelUser GetChannelUser(string Username)
+        protected IrcUser GetChannelUser(string Username)
         {
             // check
             if (IrcChannel == null)
                 return null;
 
             // lookup sender from channel users
-            foreach (IrcChannelUser usr in IrcChannel.Users)
-                if (String.Equals(usr.User.NickName, Username))                
+            foreach (IrcUser usr in IrcChannel.Users)
+                if (String.Equals(usr.Nick, Username))
                     return usr;
             
             // default
@@ -382,6 +388,7 @@ namespace Meridian59.Bot.IRC
 
         /// <summary>
         /// Executed when IRC client got a new connection.
+        /// SASL registration - can join channel on connection.
         /// Beware: This is executed by a different thread.
         /// </summary>
         /// <param name="sender"></param>
@@ -389,19 +396,15 @@ namespace Meridian59.Bot.IRC
         protected void OnIrcClientConnected(object sender, EventArgs e)
         {
             Log("SYS", LOG_IRCCONNECTED);
-        }
 
-        /// <summary>
-        /// Executed when IRC client registered the nickname.
-        /// You can't do anything before this.
-        /// Beware: This is executed by a different thread.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void OnIrcClientRegistered(object sender, EventArgs e)
-        {
-            IrcClient.LocalUser.JoinedChannel += OnLocalUserJoinedChannel;
-            IrcClient.LocalUser.MessageReceived += OnLocalUserMessageReceived;
+            IrcClient.UserJoinedChannel += OnUserJoined;
+            IrcClient.UserPartedChannel += OnUserLeft;
+            IrcClient.ChannelListRecieved += OnUsersListReceived;
+            IrcClient.ChannelMessageRecieved += OnMessageReceived;
+
+            // TODO
+            // Should UserMessageRecieved be PrivateMessageRecieved?
+            IrcClient.UserMessageRecieved += OnLocalUserMessageReceived;
 
             // join the IRC channel
             IrcClient.Channels.Join(Config.Channel);
@@ -413,7 +416,7 @@ namespace Meridian59.Bot.IRC
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void OnIrcClientConnectFailed(object sender, IrcErrorEventArgs e)
+        protected void OnIrcClientConnectFailed(object sender, SocketErrorEventArgs e)
         {
             // close connection and exit         
             ServerConnection.Disconnect();
@@ -428,7 +431,7 @@ namespace Meridian59.Bot.IRC
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void OnIrcClientProtocolError(object sender, IrcProtocolErrorEventArgs e)
+        protected void OnIrcClientProtocolError(object sender, SocketErrorEventArgs e)
         {
         }
 
@@ -438,16 +441,10 @@ namespace Meridian59.Bot.IRC
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void OnLocalUserJoinedChannel(object sender, IrcChannelEventArgs e)
+        protected void OnLocalUserJoinedChannel(object sender, ChannelUserEventArgs e)
         {
             // save reference to channel
             IrcChannel = e.Channel;
-
-            // hook up new message listener
-            e.Channel.MessageReceived += OnMessageReceived;
-            e.Channel.UserJoined += OnUserJoined;
-            e.Channel.UserLeft += OnUserLeft;
-            e.Channel.UsersListReceived += OnUsersListReceived;
 
             string ver = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
@@ -459,7 +456,7 @@ namespace Meridian59.Bot.IRC
                     Config.SelectedConnectionInfo.Host + ":" + Config.SelectedConnectionInfo.Port;
 
                 // try to log the chatmessage to IRC
-                IrcClient.LocalUser.SendMessage(IrcChannel, welcomestr);
+                SendIRCChannelMessage(welcomestr);
             }
         }
 
@@ -468,14 +465,20 @@ namespace Meridian59.Bot.IRC
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void OnMessageReceived(object sender, IrcMessageEventArgs e)
+        protected void OnMessageReceived(object sender, PrivateMessageEventArgs e)
         {
+            if (e.PrivateMessage == null || e.PrivateMessage.Message == null)
+                return;
+
+            string message = e.PrivateMessage.Message;
+            string messageSource = e.PrivateMessage.User.Nick;
+
             // Ignore message whose length is just @prefix + @ + space length.
-            if (e.Text == null || e.Text.Length <= Config.ChatPrefix.Length + 1 + 1)
+            if (message.Length <= Config.ChatPrefix.Length + 1 + 1)
                 return;
 
             // try get channeluser by name
-            IrcChannelUser usr = GetChannelUser(e.Source.Name);
+            IrcUser usr = GetChannelUser(messageSource);
 
             if (usr == null)
                 return;
@@ -488,14 +491,14 @@ namespace Meridian59.Bot.IRC
             // Relay messages from allowed chatbots
             foreach (var relayBot in Config.RelayBots)
             {
-                if (relayBot.Name.Contains(e.Source.Name))
+                if (relayBot.Name.Contains(messageSource))
                 {
                     // Sanity check for our own name
-                    if (e.Source.Name.Equals(Config.NickName))
+                    if (messageSource.Equals(Config.NickName))
                         return;
 
                     // Convert the IRC colors back to server styles/colors.
-                    s = IRCChatStyle.CreateChatMessageFromIRCMessage(e.Text);
+                    s = IRCChatStyle.CreateChatMessageFromIRCMessage(message);
 
                     // Ignore any messages containing...
                     if (!String.IsNullOrEmpty(relayBot.IgnoreAllRegex) && (Regex.Match(s, relayBot.IgnoreAllRegex)).Success)
@@ -514,32 +517,29 @@ namespace Meridian59.Bot.IRC
             if (!relayMsg)
             {
                 // Ignore messages without @prefix start.
-                if (!relayMsg && e.Text.IndexOf("@" + Config.ChatPrefix) != 0)
+                if (!relayMsg && message.IndexOf("@" + Config.ChatPrefix) != 0)
                     return;
 
                 // only allowed users and admins can use the bot
-                if (!(Config.AllowedUsers.Contains(e.Source.Name)
-                        || Config.Admins.Contains(e.Source.Name)))
+                if (!(Config.AllowedUsers.Contains(messageSource)
+                        || Config.Admins.Contains(messageSource)))
                 {
                     // respond user he can't use this feature
-                    IrcClient.LocalUser.SendMessage(
-                        IrcChannel,
-                        e.Source.Name + " you can't use this feature.");
+                    SendIRCChannelMessage(messageSource + " you can't use this feature.");
 
                     return;
                 }
 
-                if (!IsUserRegistered(e.Source.Name))
+                if (!IsUserRegistered(messageSource))
                 {
                     // Must have registered nickname.
-                    IrcClient.LocalUser.SendMessage(IrcChannel,
-                        e.Source.Name + " you must register your nickname to use this feature.");
+                    SendIRCChannelMessage(messageSource + " you must register your nickname to use this feature.");
 
                     return;
                 }
 
                 // now remove the @103 start
-                s = e.Text.Substring(Config.ChatPrefix.Length + 1 + 1);
+                s = message.Substring(Config.ChatPrefix.Length + 1 + 1);
             }
 
             // used delimiter
@@ -551,9 +551,7 @@ namespace Meridian59.Bot.IRC
             {
                 if (Util.IsDisallowedDMCommand(words[0]))
                 {
-                    IrcClient.LocalUser.SendMessage(
-                        IrcChannel,
-                        e.Source.Name + " you can't use this feature. This incident has been logged.");
+                    SendIRCChannelMessage(messageSource + " you can't use this feature. This incident has been logged.");
                     foreach (string admin in Config.Admins)
                     {
                         // try get channeluser by name
@@ -561,7 +559,7 @@ namespace Meridian59.Bot.IRC
 
                         // online? send!
                         if (usr != null)
-                            IrcClient.LocalUser.SendMessage(admin, String.Format("IRC User {0} has attempted to use a DM command", e.Source.Name));
+                            SendIRCMessage(admin, String.Format("IRC User {0} has attempted to use a DM command", messageSource));
                     }
                     return;
                 }
@@ -611,7 +609,7 @@ namespace Meridian59.Bot.IRC
 
                             // insert banner + name
                             s += delimiter + Config.Banner;
-                            s += e.Source.Name + ": ~n";
+                            s += messageSource + ": ~n";
 
                             // add rest
                             s += String.Join(delimiter.ToString(), words, 1, words.Length - 1);
@@ -625,7 +623,7 @@ namespace Meridian59.Bot.IRC
 
                             // insert banner + name
                             s += delimiter + Config.Banner;
-                            s += e.Source.Name + ": ~n";
+                            s += messageSource + ": ~n";
 
                             // add rest
                             s += String.Join(delimiter.ToString(), words, 2, words.Length - 2);
@@ -644,73 +642,76 @@ namespace Meridian59.Bot.IRC
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void OnLocalUserMessageReceived(object sender, IrcMessageEventArgs e)
+        protected void OnLocalUserMessageReceived(object sender, PrivateMessageEventArgs e)
         {
+            if (e.PrivateMessage == null || e.PrivateMessage.Message == null)
+                return;
+
+            string message = e.PrivateMessage.Message;
+            string messageSender = e.PrivateMessage.Source;
+
             // try get channeluser by name
-            IrcChannelUser usr = GetChannelUser(e.Source.Name);
+            IrcUser usr = GetChannelUser(messageSender);
 
             if (usr == null)
                 return;
 
             // only allow ADMINS from config
-            if (!Config.Admins.Contains(e.Source.Name))
+            if (!Config.Admins.Contains(messageSender))
             {
                 // respond user he can't use this feature
-                IrcClient.LocalUser.SendMessage(
-                    e.Source.Name,
-                    e.Source.Name + " you can't use the admin console - Only admins allowed.");
+                SendIRCMessage(messageSender,
+                    messageSender + " you can't use the admin console - Only admins allowed.");
                 return;
             }
 
             // Must be registered.
-            if (!IsUserRegistered(e.Source.Name))
+            if (!IsUserRegistered(messageSender))
             {
                 // respond user he can't use this feature
-                IrcClient.LocalUser.SendMessage(
-                    e.Source.Name,
-                    e.Source.Name + " you can't use the admin console - nickname must be registered.");
+                SendIRCMessage(messageSender,
+                    messageSender + " you can't use the admin console - nickname must be registered.");
                 return;
             }
 
             // invalid
-            if (e.Text == null || e.Text == String.Empty)
+            if (message == null || message == String.Empty)
                 return;
 
-            Log("ADM", e.Source.Name + " used the command " + e.Text);
+            Log("ADM", messageSender + " used the command " + message);
 
             // Bot admin command?
-            if (e.Text.StartsWith("@"))
+            if (message.StartsWith("@"))
             {
                 // Returns false if nothing handled the admin command.
-                if (!IRCAdminBotCommand.ParseAdminCommand(e.Source.Name, e.Text, this))
-                    IrcClient.LocalUser.SendMessage(e.Source.Name,
-                        "Couldn't find a handler for admin command " + e.Text);
+                if (!IRCAdminBotCommand.ParseAdminCommand(messageSender, message, this))
+                    SendIRCMessage(messageSender,
+                        "Couldn't find a handler for admin command " + message);
 
                 return;
             }
 
             // get first space in text
-            int firstspace = e.Text.IndexOf(' ');
+            int firstspace = message.IndexOf(' ');
                     
             // either use first part up to first space or full text if no space
             string comtype = 
-                (firstspace > 0) ? e.Text.Substring(0, firstspace) : comtype = e.Text;
+                (firstspace > 0) ? message.Substring(0, firstspace) : comtype = message;
 
             // check if commandtype is allowed
             if (Config.AdminCommands.Contains(comtype))
             {
                 // Record this admin as recent.
-                if (!RecentAdmins.Contains(e.Source.Name))
-                    RecentAdmins.Add(e.Source.Name);
+                if (!RecentAdmins.Contains(messageSender))
+                    RecentAdmins.Add(messageSender);
                 // enqueue it for execution
-                AdminCommandQueue.Enqueue(e.Text);
+                AdminCommandQueue.Enqueue(message);
             }
             else
             {
                 // respond admin he can't use this admincommand
-                IrcClient.LocalUser.SendMessage(
-                    e.Source.Name,
-                    e.Source.Name + " you can't use the admin command '" + comtype + "'");
+                SendIRCMessage(messageSender,
+                    messageSender + " you can't use the admin command '" + comtype + "'");
             }
         }
 
@@ -720,10 +721,15 @@ namespace Meridian59.Bot.IRC
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void OnUserJoined(object sender, IrcChannelUserEventArgs e)
+        protected void OnUserJoined(object sender, ChannelUserEventArgs e)
         {
+            if (e.User.Nick == Config.NickName)
+            {
+                OnLocalUserJoinedChannel(sender, e);
+                return;
+            }
             // Perform WhoIs query to determine registration status on user.
-            UserRegCheck(e.ChannelUser.User.NickName);
+            UserRegCheck(e.User.Nick);
         }
 
         /// <summary>
@@ -732,14 +738,14 @@ namespace Meridian59.Bot.IRC
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void OnUserLeft(object sender, IrcChannelUserEventArgs e)
+        protected void OnUserLeft(object sender, ChannelUserEventArgs e)
         {
-            RemoveUserRegistration(e.ChannelUser.User.NickName);
+            RemoveUserRegistration(e.User.Nick);
         }
 
-        protected void OnUsersListReceived(object sender, EventArgs e)
+        protected void OnUsersListReceived(object sender, ChannelEventArgs e)
         {
-            IrcClient.QueryWhoX(IrcChannel.Name,"%a");
+            SendWhoXQuery(IrcChannel.Name);
         }
 
         /// <summary>
@@ -747,13 +753,22 @@ namespace Meridian59.Bot.IRC
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void OnWhoXReplyReceived(object sender, IrcRawMessageEventArgs e)
+        protected void OnWhoXReplyReceived(object sender, WhoxReceivedEventArgs e)
         {
-            if (e == null || e.RawContent == null)
+            if (e == null || e.WhoxResponse == null)
                 return;
-            if (!e.RawContent.Equals("0"))
-                AddUserRegistration(e.RawContent, true);
-            Log("IRC", "Received WhoX response for " + e.RawContent);
+
+            foreach (ExtendedWho extendedWho in e.WhoxResponse)
+            {
+                if (extendedWho.User != null
+                    && extendedWho.User.Account != null
+                    && extendedWho.User.Nick != null)
+                {
+
+                    Log("IRC", "Received WhoX response for " + extendedWho.User.Nick);
+                    AddUserRegistration(extendedWho.User.Nick, true);
+                }
+            }
         }
         #endregion
 
@@ -813,7 +828,27 @@ namespace Meridian59.Bot.IRC
         /// <param name="Message"></param>
         private void SendWhoXQuery(string Name)
         {
-            IrcClient.QueryWhoX(Name, "%a");
+            IrcClient.Who(Name, WhoxFlag.AccountName, WhoxField.QueryType, null);
+        }
+
+        /// <summary>
+        /// Sends a private message to a user.
+        /// </summary>
+        /// <param name="Username"></param>
+        /// <param name="Message"></param>
+        public void SendIRCMessage(string Username, string Message)
+        {
+            IRCSendQueue.Enqueue(Username, Message);
+            //IrcClient.SendMessage(Message, Username);
+        }
+
+        /// <summary>
+        /// Sends a message to the IRC channel.
+        /// </summary>
+        /// <param name="Message"></param>
+        public void SendIRCChannelMessage(string Message)
+        {
+            SendIRCMessage(IrcChannel.Name, Message);
         }
         #endregion
     }
