@@ -206,6 +206,8 @@ namespace Meridian59.Patcher
                 if (form != null)
                     form.Tick(mstick, true);
 
+                Application.DoEvents();
+
                 // Either client up to date (no files downloaded) or some files were downloaded.
                 if (filesDone == 0)
                 {
