@@ -150,7 +150,15 @@ namespace Meridian59.Patcher
             // create filestream
             FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
 
-            // compute and compare md5
+            // different length = not equal (no md5 needed)
+            if (file.Length != fs.Length)
+            {
+                fs.Close();
+                fs.Dispose();
+                return false;
+            }
+
+            // otherwise compute and compare md5
             byte[] md5Fil = md5.ComputeHash(fs);
             byte[] md5Onl = StringToByteArray(file.MyHash);
             bool areEqual = md5Fil.SequenceEqual<byte>(md5Onl);
