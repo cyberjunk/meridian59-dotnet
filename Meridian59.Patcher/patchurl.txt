@@ -1,2 +1,2 @@
 http://ww1.meridiannext.com/netclient/clientpatch/
-http://ww1.meridiannext.com/netclient/patchinfo.txt
+http://ww1.meridiannext.com/netclient/clientpatch.txt

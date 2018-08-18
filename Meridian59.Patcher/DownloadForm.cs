@@ -25,31 +25,20 @@ namespace Meridian59.Patcher
             CenterToScreen();
         }
 
-        public void RetryingFile(string Filename)
+        /// <summary>
+        /// Displays a string in the infobox.
+        /// </summary>
+        /// <param name="Info"></param>
+        public void DisplayInfo(string Info)
         {
-            appendLog += (String.Format(languageHandler.RetryingFile, Filename)) + Environment.NewLine;
-        }
-
-        public void UpdateTextBox(PatchFile File)
-        {
-            appendLog += (String.Format(languageHandler.FileDownloaded, File.Filename)) + Environment.NewLine;
-        }
-
-        public void JsonDownloadStarted()
-        {
-            appendLog += (languageHandler.DownloadingPatch) + Environment.NewLine;
-        }
-
-        public void JsonDownloadFailed()
-        {
-            appendLog += (languageHandler.PatchDownloadFailed) + Environment.NewLine;
+            appendLog += (Info) + Environment.NewLine;
         }
 
         /// <summary>
         /// Updates the UI based on gathered stats from the files.
         /// </summary>
         /// <param name="Tick"></param>
-        public void Tick(double Tick)
+        public void Tick(double Tick, bool force_update)
         {
             long todo = 0;
             long done = 0;
@@ -88,7 +77,7 @@ namespace Meridian59.Patcher
 
             // update update download speed and processed bytes not more than once per second
             double msinterval = Tick - lastTick;
-            if (msinterval > 500)
+            if (msinterval > 500 || force_update)
             {
                 // update speed for last interval
                 double bytes_in_interval = done - lastLengthDone;
