@@ -93,27 +93,34 @@ namespace Meridian59.Patcher
             // start ticker
             watch.Start();
 
+            ///////////////////////////////////////////////////////////////////////
             // parse commandline arguments and set UpdateFormat.
+
+            // CLASSIC CLIENT USING CMD ARGS
             if ((args.Length == 6 || args.Length == 7)
                 && args[1].Contains("UPDATE"))
             {
-                if (args.Length == 6)
-                    updateFormat = UpdateFormat.Classic6Arg;
-                else
-                    updateFormat = UpdateFormat.Classic7Arg;
+                updateFormat = (args.Length == 6) ? 
+                    UpdateFormat.Classic6Arg : 
+                    UpdateFormat.Classic7Arg;
+
                 ReadCommandLineArgumentsClassic(args);
             }
-            else if (args.Length > 0
-                || File.Exists(DOTNETURLDATAFILE))
+
+            // OGRE CLIENT
+            else if (args.Length > 0 || File.Exists(DOTNETURLDATAFILE))
             {
                 updateFormat = UpdateFormat.DotNet;
                 ReadCommandLineArguments(args);
             }
+
+            // CLASSIC CLIENT USING FILE
             else if (File.Exists(CLASSICURLDATAFILE))
             {
                 updateFormat = UpdateFormat.ClassicManual;
             }
 
+            ///////////////////////////////////////////////////////////////////////
             // create UI if not-headless
             if (!isHeadless)
             {
@@ -126,7 +133,9 @@ namespace Meridian59.Patcher
                 form.Show();
             }
 
+            ///////////////////////////////////////////////////////////////////////
             // read url data file if necessary
+
             switch (updateFormat)
             {
                 case UpdateFormat.DotNet:
@@ -151,15 +160,18 @@ namespace Meridian59.Patcher
                     break;
             }
 
+            ///////////////////////////////////////////////////////////////////////
             // start download of patchinfo.txt
+
             if (!isHeadless)
                 form.DisplayInfo(languageHandler.DownloadingPatch);
+
             webClient.DownloadDataCompleted += OnWebClientDownloadDataCompleted;
             webClient.DownloadDataAsync(new Uri(jsonUrl));
            
             ///////////////////////////////////////////////////////////////////////
-
             // mainthread loop
+
             while(isRunning)
             {
                 long   tick   = watch.ElapsedTicks;
@@ -183,11 +195,14 @@ namespace Meridian59.Patcher
                 Thread.Sleep(16);
             }
 
-            if (!isHeadless)
+            ///////////////////////////////////////////////////////////////////////
+
+            // Tick form once more to finalize download numbers.
+            if (!isHeadless && !abort)
             {
                 long tick = watch.ElapsedTicks;
                 double mstick = (double)tick / MSTICKDIVISOR;
-                // Tick form once more to finalize download numbers.
+
                 if (form != null)
                     form.Tick(mstick, true);
 
