@@ -65,6 +65,7 @@ namespace Meridian59.Patcher
         private static readonly WindowsPrincipal principal = new WindowsPrincipal(identity);
         private static readonly LanguageHandler languageHandler = new LanguageHandler();
         private static readonly PatchFileQueue queue       = new PatchFileQueue();
+        private static readonly PatchFileQueue queueHashed = new PatchFileQueue();
         private static readonly PatchFileQueue queueDone   = new PatchFileQueue();
         private static readonly PatchFileQueue queueErrors = new PatchFileQueue();
         private static readonly List<PatchFile> files      = new List<PatchFile>();
@@ -576,6 +577,7 @@ namespace Meridian59.Patcher
                         PATCHERPATH,
                         baseUrl,
                         queue,
+                        queueHashed,
                         queueDone,
                         queueErrors);
 

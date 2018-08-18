@@ -15,6 +15,7 @@ namespace Meridian59.Patcher
     public class Worker
     {      
         protected readonly ConcurrentQueue<PatchFile> queue;
+        protected readonly ConcurrentQueue<PatchFile> queueHashed;
         protected readonly ConcurrentQueue<PatchFile> queueFinished;
         protected readonly ConcurrentQueue<PatchFile> queueErrors;
 
@@ -34,12 +35,14 @@ namespace Meridian59.Patcher
         /// <param name="BaseFilePath"></param>
         /// <param name="BaseUrl"></param>
         /// <param name="InputQueue"></param>
+        /// <param name="HashedQueue"></param>
         /// <param name="FinishedQueue"></param>
         /// <param name="ErrorQueue"></param>
         public Worker(
             string BaseFilePath, 
             string BaseUrl,
             ConcurrentQueue<PatchFile> InputQueue,
+            ConcurrentQueue<PatchFile> HashedQueue,
             ConcurrentQueue<PatchFile> FinishedQueue,
             ConcurrentQueue<PatchFile> ErrorQueue)
         {
@@ -47,6 +50,7 @@ namespace Meridian59.Patcher
             baseFilePath = BaseFilePath;
             baseUrl = BaseUrl;
             queue = InputQueue;
+            queueHashed = HashedQueue;
             queueFinished = FinishedQueue;
             queueErrors = ErrorQueue;
 
@@ -97,7 +101,7 @@ namespace Meridian59.Patcher
                 if (isDownloading)          
                     Thread.Sleep(16);
                
-                // try get next task
+                // try get next file to check/calculate hash for
                 else if (queue.TryDequeue(out file))
                 {
                     // CASE 1: File on disk has equal hash, skip it
@@ -109,19 +113,23 @@ namespace Meridian59.Patcher
 
                     // CASE 2: File must be downloaded
                     else
-                    {
-                        // build full url and filepath
-                        string fullUrl = baseUrl + file.Basepath + file.Filename;
-                        string fullDir = baseFilePath + file.Basepath;
-                        string fullFile = fullDir + file.Filename;
+                        queueHashed.Enqueue(file);
+                }
 
-                        // possibly create directory structure
-                        Directory.CreateDirectory(fullDir);
+                // otherwise try to get next file to download
+                else if (queueHashed.TryDequeue(out file))
+                {
+                    // build full url and filepath
+                    string fullUrl = baseUrl + file.Basepath + file.Filename;
+                    string fullDir = baseFilePath + file.Basepath;
+                    string fullFile = fullDir + file.Filename;
 
-                        // start download it
-                        isDownloading = true;
-                        webClient.DownloadFileAsync(new Uri(fullUrl), fullFile, file);
-                    }
+                    // possibly create directory structure
+                    Directory.CreateDirectory(fullDir);
+
+                    // start download it
+                    isDownloading = true;
+                    webClient.DownloadFileAsync(new Uri(fullUrl), fullFile, file);
                 }
 
                 // not downloading and no tasks
