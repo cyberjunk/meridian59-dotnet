@@ -63,6 +63,7 @@
       <DependentUpon>DownloadForm.cs</DependentUpon>
     </Compile>
     <Compile Include="LanguageHandler.cs" />
+    <Compile Include="PatchDownloadStats.cs" />
     <Compile Include="PatchFile.cs" />
     <Compile Include="Patcher.cs" />
     <Compile Include="PatchFileQueue.cs" />

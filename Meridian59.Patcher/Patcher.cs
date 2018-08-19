@@ -68,13 +68,12 @@ namespace Meridian59.Patcher
         private static readonly PatchFileQueue queueHashed = new PatchFileQueue();
         private static readonly PatchFileQueue queueDone   = new PatchFileQueue();
         private static readonly PatchFileQueue queueErrors = new PatchFileQueue();
-        private static readonly List<PatchFile> files      = new List<PatchFile>();
         private static readonly Worker[] workers           = new Worker[NUMWORKERS];       
         private static readonly Stopwatch watch            = new Stopwatch();
         private static readonly WebClient webClient        = new WebClient();
 
+        private static readonly PatchDownloadStats patchDownloadStats = new PatchDownloadStats();
         private static DownloadForm form = null;
-        private static int filesDone     = 0;
         private static bool abort        = false;
         private static bool isRunning    = true;
         private static bool isHeadless   = false;
@@ -129,7 +128,7 @@ namespace Meridian59.Patcher
                 Application.SetCompatibleTextRenderingDefault(false);
 
                 // create ui
-                form = new DownloadForm(files, languageHandler);
+                form = new DownloadForm(languageHandler, patchDownloadStats);
                 form.FormClosed += OnFormClosed;
                 form.Show();
             }
@@ -210,7 +209,7 @@ namespace Meridian59.Patcher
                 Application.DoEvents();
 
                 // Either client up to date (no files downloaded) or some files were downloaded.
-                if (filesDone == 0)
+                if (patchDownloadStats.NumFilesDone == 0)
                 {
                     MessageBox.Show(languageHandler.ClientUpToDate, languageHandler.InfoText,
                         MessageBoxButtons.OK, MessageBoxIcon.None);
@@ -301,8 +300,9 @@ namespace Meridian59.Patcher
                 // try again by enqueueing again
                 if (file.ErrorCount < MAXRETRIES)
                 {
+                    patchDownloadStats.AddDownloadedBytes(-file.LengthDone);
                     file.LengthDone = 0;
-                    queue.Enqueue(file);
+                    queueHashed.Enqueue(file);
                     if (!isHeadless)
                         form.DisplayInfo(String.Format(languageHandler.RetryingFile, file.Filename));
                 }
@@ -323,14 +323,17 @@ namespace Meridian59.Patcher
             // handle finished files
             while (queueDone.TryDequeue(out file))
             {
-                // raise counter for finished files
-                filesDone++;
                 if (!isHeadless)
                     form.DisplayInfo(String.Format(languageHandler.FileDownloaded, file.Filename));
+            }
 
-                // check for finish
-                if (filesDone >= files.Count)
-                    isRunning = false;
+            // check for finish
+            // Must have already processed JSON file, must have already hashed all JSON files.
+            if (patchDownloadStats.totalFilesFromJson > 0
+                && patchDownloadStats.TotalFilesChecked >= patchDownloadStats.totalFilesFromJson
+                && patchDownloadStats.NumFilesDone >= patchDownloadStats.NumFilesToDownload)
+            {
+                isRunning = false;
             }
         }
         
@@ -470,9 +473,6 @@ namespace Meridian59.Patcher
         /// <returns></returns>
         private static void ReadJsonData(byte[] JsonData)
         {
-            // clear current instances if any
-            files.Clear();
-
             // filestream on file
             MemoryStream fs = new MemoryStream(JsonData);
 
@@ -487,31 +487,39 @@ namespace Meridian59.Patcher
             fs.Close();
             fs.Dispose();
 
-            // remove unwanted entries
-            for (int i = list.Count - 1; i >= 0; i--)
+            // Handle empty list.
+            if (list.Count == 0)
             {
-                PatchFile f = list[i];
-
-                // remove files marked to be not downloaded
-                if (!f.Download)
-                    list.RemoveAt(i);
-
-                // look for hardcoded exclusions
-                else 
-                {
-                    foreach (string s in EXCLUSIONS)
-                    {
-                        if (f.Filename.Equals(s))
-                        {
-                            list.RemoveAt(i);
-                            break;
-                        }
-                    }
-                }
+                isRunning = false;
+                return;
             }
 
-            // add them to the real list instance
-            files.AddRange(list);
+            patchDownloadStats.totalFilesFromJson = list.Count;
+
+            if (!isHeadless)
+            {
+                form.DisplayInfo(languageHandler.ScanningFiles);
+            }
+
+            // enqueue entries
+            foreach (PatchFile entry in list)
+                queue.Enqueue(entry);
+
+            // create worker-instances and start them
+            for (int i = 0; i < workers.Length; i++)
+            {
+                workers[i] = new Worker(
+                    EXCLUSIONS,
+                    PATCHERPATH,
+                    baseUrl,
+                    patchDownloadStats,
+                    queue,
+                    queueHashed,
+                    queueDone,
+                    queueErrors);
+
+                workers[i].Start();
+            }
         }
 
         /// <summary>
@@ -560,29 +568,6 @@ namespace Meridian59.Patcher
             {
                 // parse json patch data
                 ReadJsonData(e.Result);
-
-                // enqueue entries
-                foreach (PatchFile entry in files)
-                    queue.Enqueue(entry);
-
-                if (!isHeadless)
-                {
-                    form.DisplayInfo(languageHandler.ScanningFiles);
-                }
-
-                // create worker-instances and start them
-                for (int i = 0; i < workers.Length; i++)
-                {                   
-                    workers[i] = new Worker(
-                        PATCHERPATH,
-                        baseUrl,
-                        queue,
-                        queueHashed,
-                        queueDone,
-                        queueErrors);
-
-                    workers[i].Start();
-                }
             }
         }
     }
