@@ -73,10 +73,11 @@ namespace Meridian59.Patcher
         private static readonly Stopwatch watch            = new Stopwatch();
         private static readonly WebClient webClient        = new WebClient();
 
+        // Track progress on JSON file download in a threadsafe/clean way.
+        private static readonly JsonFileProgress jsonFileProgress = new JsonFileProgress();
+
         private static DownloadForm form = null;
         private static int filesDone     = 0;
-        private static bool abort        = false;
-        private static bool isRunning    = true;
         private static bool isHeadless   = false;
         private static string baseUrl    = "";
         private static string jsonUrl    = "";
@@ -84,6 +85,38 @@ namespace Meridian59.Patcher
         private static UpdateFormat updateFormat = UpdateFormat.None;
         private static string clientExecutable = "";
         private static string clientPath = "";
+
+        private static Process x86Process = null;
+        private static Process x64Process = null;
+        private static bool x86NgenDone = false;
+        private static bool x64NgenDone = false;
+
+        // Keep track of update stage.
+        private static UpdateStage updateStage = UpdateStage.None;
+        public static UpdateStage UpdateStage
+        {
+            get
+            {
+                return updateStage;
+            }
+            set
+            {
+                updateStage = value;
+                if (form != null)
+                    form.UpdateStage = value;
+            }
+        }
+
+        /// <summary>
+        /// Number of update stages in a given format. DotNet has 4, classic 3.
+        /// </summary>
+        public static int MaxStages
+        {
+            get
+            {
+                return (updateFormat == UpdateFormat.DotNet) ? 4 : 3;
+            }
+        }
 
         /// <summary>
         /// Main entry point
@@ -129,7 +162,7 @@ namespace Meridian59.Patcher
                 Application.SetCompatibleTextRenderingDefault(false);
 
                 // create ui
-                form = new DownloadForm(files, languageHandler);
+                form = new DownloadForm(files, languageHandler, jsonFileProgress);
                 form.FormClosed += OnFormClosed;
                 form.Show();
             }
@@ -165,28 +198,49 @@ namespace Meridian59.Patcher
             // start download of patchinfo.txt
 
             if (!isHeadless)
-                form.DisplayStatus(1, languageHandler.DownloadingPatch);
+                form.DisplayStatus(String.Format(languageHandler.DownloadingPatch, MaxStages));
+
+            UpdateStage = UpdateStage.DownloadingJson;
 
             webClient.DownloadDataCompleted += OnWebClientDownloadDataCompleted;
+            webClient.DownloadProgressChanged += OnWebClientDownloadProgressChanged;
             webClient.DownloadDataAsync(new Uri(jsonUrl));
            
             ///////////////////////////////////////////////////////////////////////
             // mainthread loop
 
-            while(isRunning)
+            while(updateStage != UpdateStage.Finished && updateStage != UpdateStage.Abort)
             {
                 long   tick   = watch.ElapsedTicks;
                 double mstick = (double)tick / MSTICKDIVISOR;
 
-                // handle PatchFile instances returned by workers
-                ProcessQueues();
+                switch (updateStage)
+                {
+                    case UpdateStage.HashingFiles:
+                        // handle transition from scanning to downloading
+                        if (files.Count > 0 && queue.Count == 0)
+                        {
+                            UpdateStage = UpdateStage.DownloadingFiles;
+                            form.DisplayStatus(String.Format(languageHandler.DownloadInit, MaxStages));
+                        }
+                        break;
+                    case UpdateStage.DownloadingFiles:
+                        // handle PatchFile instances returned by workers
+                        ProcessQueues();
+                        break;
+                    case UpdateStage.Ngen:
+                        ProcessNgen();
+                        break;
+                    default:
+                        break;
+                }
 
                 // update UI
                 if (!isHeadless)
                 {
                     // tick ui
                     if (form != null)
-                        form.Tick(mstick, false);
+                        form.Tick(mstick, MaxStages, x64NgenDone, x86NgenDone);
 
                     // process messages
                     Application.DoEvents();
@@ -198,68 +252,17 @@ namespace Meridian59.Patcher
 
             ///////////////////////////////////////////////////////////////////////
 
-            // Tick form once more to finalize download numbers.
-            if (!isHeadless)
-            {
-                long tick = watch.ElapsedTicks;
-                double mstick = (double)tick / MSTICKDIVISOR;
-
-                if (form != null)
-                    form.Tick(mstick, true);
-
-                Application.DoEvents();
-            }
-
-            ///////////////////////////////////////////////////////////////////////
-
             // also stop worker-instances
             foreach(Worker w in workers)
                 if (w != null)
                     w.Stop();
      
             // in case patching went well
-            if (!abort)
+            if (updateStage != UpdateStage.Abort)
             {
                 ProcessStartInfo pi;
                 Process process;
 
-                // if admin, try to 'ngen' the exe files
-                if (updateFormat == UpdateFormat.DotNet
-                    && principal.IsInRole(WindowsBuiltInRole.Administrator))
-                {
-                    if (File.Exists(NGENX64))
-                    {
-                        // start ngen
-                        pi                  = new ProcessStartInfo();
-                        pi.FileName         = NGENX64;
-                        pi.Arguments        = "install Meridian59.Ogre.Client.exe";
-                        pi.UseShellExecute  = true;
-                        pi.WorkingDirectory = CLIENTPATHX64;
-                        pi.WindowStyle      = ProcessWindowStyle.Hidden;
-
-                        process = new Process();
-                        process.StartInfo = pi;
-                        process.Start();
-                        process.WaitForExit();
-                    }                  
-                    
-                    if (File.Exists(NGENX86))
-                    {
-                        // start ngen
-                        pi                  = new ProcessStartInfo();
-                        pi.FileName         = NGENX86;
-                        pi.Arguments        = "install Meridian59.Ogre.Client.exe";
-                        pi.UseShellExecute  = true;
-                        pi.WorkingDirectory = CLIENTPATHX86;
-                        pi.WindowStyle      = ProcessWindowStyle.Hidden;
-
-                        process = new Process();
-                        process.StartInfo = pi;
-                        process.Start();
-                        process.WaitForExit();
-                    }
-                }
- 
                 // Show success feedback:
                 // Either client up to date (no files downloaded) or some files were downloaded.
                 if (filesDone == 0)
@@ -286,6 +289,60 @@ namespace Meridian59.Patcher
             }
         }
 
+        private static void ProcessNgen()
+        {
+            if (x64NgenDone && x86NgenDone)
+                UpdateStage = UpdateStage.Finished;
+
+            // x64 exe - process is null if not created yet.
+            if (x64Process == null)
+            {
+                ProcessStartInfo pi;
+                if (File.Exists(NGENX64))
+                {
+                    // start ngen
+                    pi = new ProcessStartInfo();
+                    pi.FileName = NGENX64;
+                    pi.Arguments = "install Meridian59.Ogre.Client.exe";
+                    pi.UseShellExecute = true;
+                    pi.WorkingDirectory = CLIENTPATHX64;
+                    pi.WindowStyle = ProcessWindowStyle.Hidden;
+
+                    x64Process = new Process();
+                    x64Process.StartInfo = pi;
+                    x64Process.Start();
+                }
+                else
+                    x64NgenDone = true;
+            }
+            else if (x64Process.HasExited == true)
+                x64NgenDone = true;
+
+            // x86 exe - process is null if not created yet.
+            if (x86Process == null)
+            {
+                ProcessStartInfo pi;
+                if (File.Exists(NGENX86))
+                {
+                    // start ngen
+                    pi = new ProcessStartInfo();
+                    pi.FileName = NGENX86;
+                    pi.Arguments = "install Meridian59.Ogre.Client.exe";
+                    pi.UseShellExecute = true;
+                    pi.WorkingDirectory = CLIENTPATHX86;
+                    pi.WindowStyle = ProcessWindowStyle.Hidden;
+
+                    x86Process = new Process();
+                    x86Process.StartInfo = pi;
+                    x86Process.Start();
+                }
+                else
+                    x86NgenDone = true;
+            }
+            else if (x86Process.HasExited == true)
+                x86NgenDone = true;
+        }
+
         /// <summary>
         /// Handles all returned PatchFile instances in the queues.
         /// </summary>
@@ -294,7 +351,7 @@ namespace Meridian59.Patcher
             PatchFile file;
 
             // handle error files
-            while (!abort && queueErrors.TryDequeue(out file))
+            while (updateStage != UpdateStage.Abort && queueErrors.TryDequeue(out file))
             {
                 // raise errorcounter for this file
                 file.ErrorCount++;
@@ -304,8 +361,6 @@ namespace Meridian59.Patcher
                 {
                     file.LengthDone = 0;
                     queue.Enqueue(file);
-                    //if (!isHeadless)
-                    //    form.DisplayInfo(String.Format(languageHandler.RetryingFile, file.Filename));
                 }
                 else
                 {
@@ -316,8 +371,7 @@ namespace Meridian59.Patcher
                     }
 
                     // make sure to quit loop
-                    abort = true;
-                    isRunning = false;
+                    UpdateStage = UpdateStage.Abort;
                 }
             }
 
@@ -326,15 +380,28 @@ namespace Meridian59.Patcher
             {
                 // raise counter for finished files
                 filesDone++;
-                //if (!isHeadless)
-                //    form.DisplayInfo(String.Format(languageHandler.FileDownloaded, file.Filename));
 
                 // check for finish
                 if (filesDone >= files.Count)
-                    isRunning = false;
+                {
+                    // if dotnet format and admin, try to 'ngen' the exe files
+                    if (updateStage != UpdateStage.Abort)
+                    {
+                        if (updateFormat == UpdateFormat.DotNet
+                            && principal.IsInRole(WindowsBuiltInRole.Administrator))
+                        {
+                            form.DisplayStatus(languageHandler.NgenInit);
+                            UpdateStage = UpdateStage.Ngen;
+                        }
+                        else
+                        {
+                            UpdateStage = UpdateStage.Finished;
+                        }
+                    }
+                }
             }
         }
-        
+
         /// <summary>
         /// Reads the command line arguments
         /// </summary>
@@ -427,9 +494,8 @@ namespace Meridian59.Patcher
         {
             string data = File.ReadAllText(CLASSICURLDATAFILE);
 
-            // Match quoted fields which contain any valid letters, slashes,
-            // colons, dots or numbers.
-            Regex rxg = new Regex("\\\"[\\p{L}\\d\\\\\\:\\.\\/\\ ]*\\\"");
+            // Match anything between quotes.
+            Regex rxg = new Regex("\\\"[^\"]*\\\"");
             MatchCollection mc = rxg.Matches(data);
 
             // show error in case content is invalid
@@ -523,8 +589,22 @@ namespace Meridian59.Patcher
         private static void OnFormClosed(object sender, FormClosedEventArgs e)
         {
             // make sure to quit loop
-            abort = true;
-            isRunning = false;
+            UpdateStage = UpdateStage.Abort;
+        }
+
+        /// <summary>
+        /// Raised by the WebClient object when the JSON patch data download progresses.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private static void OnWebClientDownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        {
+            if (!isHeadless && e != null)
+            {
+                // Probably only need to update total once?
+                jsonFileProgress.BytesTotal = e.TotalBytesToReceive;
+                jsonFileProgress.BytesReceived = e.BytesReceived;
+            }
         }
 
         /// <summary>
@@ -534,28 +614,31 @@ namespace Meridian59.Patcher
         /// <param name="e"></param>
         private static void OnWebClientDownloadDataCompleted(object sender, DownloadDataCompletedEventArgs e)
         {
+            // Could be in the process of aborting.
+            if (updateStage == UpdateStage.Abort)
+                return;
+
             // error downloading patchinfo.txt
             if (e.Error != null)
             {
                 if (!isHeadless)
                 {
-                    form.DisplayStatus(1, languageHandler.PatchDownloadFailed);
+                    form.DisplayStatus(languageHandler.PatchDownloadFailed);
                     DialogResult result = MessageBox.Show(languageHandler.JsonDownloadFailed,
                         languageHandler.ErrorText, MessageBoxButtons.RetryCancel);
                     switch (result)
                     {
                         case DialogResult.Retry:
-                            form.DisplayStatus(1, languageHandler.DownloadingPatch);
+                            form.DisplayStatus(String.Format(languageHandler.DownloadingPatch, MaxStages));
                             // OnWebClientDownloadDataCompleted event still fires at end.
+                            jsonFileProgress.BytesReceived = 0;
                             webClient.DownloadDataAsync(new Uri(jsonUrl));
                             return;
                         case DialogResult.Cancel:
                             break;
                     }
                 }
-
-                abort = true;
-                isRunning = false;
+                UpdateStage = UpdateStage.Abort;
             }
             else
             {
@@ -567,9 +650,8 @@ namespace Meridian59.Patcher
                     queue.Enqueue(entry);
 
                 if (!isHeadless)
-                {
-                    form.DisplayStatus(2, languageHandler.ScanningFiles);
-                }
+                    form.DisplayStatus(String.Format(languageHandler.ScanningInit, MaxStages));
+                UpdateStage = UpdateStage.HashingFiles;
 
                 // create worker-instances and start them
                 for (int i = 0; i < workers.Length; i++)

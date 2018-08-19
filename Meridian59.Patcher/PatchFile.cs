@@ -26,12 +26,22 @@ namespace Meridian59.Patcher
         /// <summary>
         /// Used for locking on access of LengthDone.
         /// </summary>
-        private object lockObject;
+        private object lengthDonelockObject;
 
         /// <summary>
         /// Provides value for the LengthDone property.
         /// </summary>
         private long lengthDone;
+
+        /// <summary>
+        /// Used for locking on access of HashedStatus.
+        /// </summary>
+        private object hashedStatuslockObject;
+
+        /// <summary>
+        /// Provides value for the LengthDone property.
+        /// </summary>
+        private PatchFileHashedStatus hashedStatus;
 
         /// <summary>
         /// Private constructor. Instances created by deserializer.
@@ -47,9 +57,11 @@ namespace Meridian59.Patcher
         [OnDeserialized]
         private void OnDeserialized(StreamingContext ctx)
         {
-            this.lockObject = new Object();
+            this.lengthDonelockObject = new Object();
+            this.hashedStatuslockObject = new Object();
             this.ErrorCount = 0;
             this.lengthDone = 0;
+            this.hashedStatus = PatchFileHashedStatus.NotHashed;
             this.Basepath = Basepath.Replace("\\\\", "/").Replace("\\", "/");         
         }
 
@@ -62,13 +74,28 @@ namespace Meridian59.Patcher
             get 
             {
                 long val = 0;
-                lock (lockObject) { val = lengthDone; }
+                lock (lengthDonelockObject) { val = lengthDone; }
                 return val; 
             }
             set 
             { 
                 long val = value;
-                lock (lockObject) { lengthDone = val; } 
+                lock (lengthDonelockObject) { lengthDone = val; } 
+            }
+        }
+
+        public PatchFileHashedStatus HashedStatus
+        {
+            get
+            {
+                PatchFileHashedStatus val = PatchFileHashedStatus.NotHashed;
+                lock (hashedStatuslockObject) { val = hashedStatus; }
+                return val;
+            }
+            set
+            {
+                PatchFileHashedStatus val = value;
+                lock (hashedStatuslockObject) { hashedStatus = val; }
             }
         }
 

@@ -107,13 +107,18 @@ namespace Meridian59.Patcher
                     // CASE 1: File on disk has equal hash, skip it
                     if (IsDiskFileEqual(file))
                     {
+                        Thread.Sleep(4);
                         file.LengthDone = file.Length;
+                        file.HashedStatus = PatchFileHashedStatus.DoNotDownload;
                         queueFinished.Enqueue(file);
                     }
 
                     // CASE 2: File must be downloaded
                     else
+                    {
+                        file.HashedStatus = PatchFileHashedStatus.Download;
                         queueHashed.Enqueue(file);
+                    }
                 }
 
                 // otherwise try to get next file to download

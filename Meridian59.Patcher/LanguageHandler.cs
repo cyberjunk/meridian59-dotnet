@@ -61,26 +61,32 @@ namespace Meridian59.Patcher
             "einem Problem mit deiner Internetverbindung oder dem Patch-Server zusammenhängen. " +
             "Bitte versuche es später erneut.";
 
-        private const string FILEDOWNLOADED_EN = "Downloaded file {0}\n";
-        private const string FILEDOWNLOADED_DE = "Datei {0} heruntergeladen\n";
-
-        private const string DOWNLOADINGPATCH_EN = "Downloading patch information...\n";
-        private const string DOWNLOADINGPATCH_DE = "Herunterladen der Patch-Informationen...\n";
-
         private const string PATCHDOWNLOADFAILED_EN = "Patch information download failed!\n";
         private const string PATCHDOWNLOADFAILED_DE = "Herunterladen der Patch-Informationen fehlgeschlagen!\n";
 
-        private const string DOWNLOADINIT_EN = "Initializing client file download...";
-        private const string DOWNLOADINIT_DE = "Initialisierung der Client-Dateien zum herunterladen...";
+        private const string FILEDOWNLOADED_EN = "Downloaded file {0}\n...";
+        private const string FILEDOWNLOADED_DE = "Datei {0} heruntergeladen\n...";
 
-        private const string SCANNINGFILES_EN = "Calculating client files to download...";
-        private const string SCANNINGFILES_DE = "Berechnen der Client-Dateien zum herunterladen...";
+        private const string DOWNLOADINGPATCH_EN = "Step 1/{0}: Downloading patch-info...";
+        private const string DOWNLOADINGPATCH_DE = "Schritt 1/{0}: Lade Patch-Info...";
+
+        private const string SCANNINGFILES_EN = "Step 2/{0}: Comparing files...";
+        private const string SCANNINGFILES_DE = "Schritt 2/{0}: Vergleiche Dateien...";
+
+        private const string DOWNLOADINIT_EN = "Step 3/{0}: Downloading update...";
+        private const string DOWNLOADINIT_DE = "Schritt 3/{0}: Lade Update...";
+
+        private const string NGENINIT_EN = "Step 4/4: Optimizing startup...";
+        private const string NGENINIT_DE = "Schritt 4/4: Optimiere Start...";
 
         private const string CLIENTUPTODATE_EN = "Client is up to date, nothing to download. Click OK to launch the client.";
         private const string CLIENTUPTODATE_DE = "Client ist auf dem neusten Stand. Klicke OK um das Spiel zu starten.";
 
         private const string CLIENTWASUPDATED_EN = "Client updated. Click OK to launch the client.";
         private const string CLIENTWASUPDATED_DE = "Client wurde aktualisiert. Klicke OK um das Spiel zu starten.";
+
+        private const string NUMFILES_EN = "{0}/{1} files";
+        private const string NUMFILES_DE = "{0}/{1} Dateien";
 
         #endregion Constants
 
@@ -247,6 +253,20 @@ namespace Meridian59.Patcher
             }
         }
 
+        public string PatchDownloadFailed
+        {
+            get
+            {
+                switch (languageIdentifier)
+                {
+                    case LanguageIdentifier.German:
+                        return PATCHDOWNLOADFAILED_DE;
+                    default:
+                        return PATCHDOWNLOADFAILED_EN;
+                }
+            }
+        }
+
         public string FileDownloaded
         {
             get
@@ -275,16 +295,16 @@ namespace Meridian59.Patcher
             }
         }
 
-        public string PatchDownloadFailed
+        public string ScanningInit
         {
             get
             {
                 switch (languageIdentifier)
                 {
                     case LanguageIdentifier.German:
-                        return PATCHDOWNLOADFAILED_DE;
+                        return SCANNINGFILES_DE;
                     default:
-                        return PATCHDOWNLOADFAILED_EN;
+                        return SCANNINGFILES_EN;
                 }
             }
         }
@@ -303,20 +323,20 @@ namespace Meridian59.Patcher
             }
         }
 
-        public string ScanningFiles
+        public string NgenInit
         {
             get
             {
                 switch (languageIdentifier)
                 {
                     case LanguageIdentifier.German:
-                        return SCANNINGFILES_DE;
+                        return NGENINIT_DE;
                     default:
-                        return SCANNINGFILES_EN;
+                        return NGENINIT_EN;
                 }
             }
         }
-
+  
         public string ClientUpToDate
         {
             get
@@ -341,6 +361,20 @@ namespace Meridian59.Patcher
                         return CLIENTWASUPDATED_DE;
                     default:
                         return CLIENTWASUPDATED_EN;
+                }
+            }
+        }
+
+        public string NumFiles
+        {
+            get
+            {
+                switch (languageIdentifier)
+                {
+                    case LanguageIdentifier.German:
+                        return NUMFILES_DE;
+                    default:
+                        return NUMFILES_EN;
                 }
             }
         }
