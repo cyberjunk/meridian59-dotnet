@@ -199,7 +199,7 @@ namespace Meridian59.Patcher
             ///////////////////////////////////////////////////////////////////////
 
             // Tick form once more to finalize download numbers.
-            if (!isHeadless && !abort)
+            if (!isHeadless)
             {
                 long tick = watch.ElapsedTicks;
                 double mstick = (double)tick / MSTICKDIVISOR;
@@ -208,18 +208,6 @@ namespace Meridian59.Patcher
                     form.Tick(mstick, true);
 
                 Application.DoEvents();
-
-                // Either client up to date (no files downloaded) or some files were downloaded.
-                if (filesDone == 0)
-                {
-                    MessageBox.Show(languageHandler.ClientUpToDate, languageHandler.InfoText,
-                        MessageBoxButtons.OK, MessageBoxIcon.None);
-                }
-                else
-                {
-                    MessageBox.Show(languageHandler.ClientWasUpdated, languageHandler.InfoText,
-                        MessageBoxButtons.OK, MessageBoxIcon.None);
-                }
             }
 
             ///////////////////////////////////////////////////////////////////////
@@ -270,6 +258,19 @@ namespace Meridian59.Patcher
                         process.Start();
                         process.WaitForExit();
                     }
+                }
+ 
+                // Show success feedback:
+                // Either client up to date (no files downloaded) or some files were downloaded.
+                if (filesDone == 0)
+                {
+                    MessageBox.Show(languageHandler.ClientUpToDate, languageHandler.InfoText,
+                        MessageBoxButtons.OK, MessageBoxIcon.None);
+                }
+                else
+                {
+                    MessageBox.Show(languageHandler.ClientWasUpdated, languageHandler.InfoText,
+                        MessageBoxButtons.OK, MessageBoxIcon.None);
                 }
 
                 // start client
