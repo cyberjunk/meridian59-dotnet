@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DownloadForm));
-            this.progressOverall = new System.Windows.Forms.ProgressBar();
+            this.progressOverall = new CustomProgress.CustomProgressBar();
             this.label1 = new System.Windows.Forms.Label();
             this.lblSpeed = new System.Windows.Forms.Label();
             this.lblFilesProcessed = new System.Windows.Forms.Label();
@@ -47,6 +47,8 @@
             this.progressOverall.Size = new System.Drawing.Size(708, 35);
             this.progressOverall.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.progressOverall.TabIndex = 1;
+            this.progressOverall.Fade = 0;
+            this.progressOverall.Text = "";
             // 
             // label1
             // 
@@ -134,7 +136,7 @@
 
         #endregion
 
-        private System.Windows.Forms.ProgressBar progressOverall;
+        private CustomProgress.CustomProgressBar progressOverall;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblFilesProcessed;
         private System.Windows.Forms.Label label3;
