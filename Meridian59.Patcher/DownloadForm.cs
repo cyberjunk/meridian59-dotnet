@@ -63,7 +63,7 @@ namespace Meridian59.Patcher
             }
 
             // update progress bar
-            double progress       = (todo == 0) ? 1.0 : (double)done / (double)todo;
+            double progress       = (todo == 0) ? 0.0 : (double)done / (double)todo;
             int progressint       = Convert.ToInt32(progress * (double)progressOverall.Maximum);
             progressOverall.Value = Math.Min(progressOverall.Maximum, progressint);
 
