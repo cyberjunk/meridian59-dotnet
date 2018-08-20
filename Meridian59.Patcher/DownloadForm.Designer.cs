@@ -29,21 +29,9 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DownloadForm));
-            this.progressOverall = new CustomProgress.CustomProgressBar();
             this.infoTextBox = new System.Windows.Forms.TextBox();
+            this.progressOverall = new CustomProgress.CustomProgressBar();
             this.SuspendLayout();
-            // 
-            // progressOverall
-            // 
-            this.progressOverall.Location = new System.Drawing.Point(18, 38);
-            this.progressOverall.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.progressOverall.Maximum = 10000;
-            this.progressOverall.Name = "progressOverall";
-            this.progressOverall.Size = new System.Drawing.Size(708, 35);
-            this.progressOverall.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-            this.progressOverall.TabIndex = 1;
-            this.progressOverall.Fade = 50;
-            this.progressOverall.Text = "";
             // 
             // infoTextBox
             // 
@@ -55,6 +43,18 @@
             this.infoTextBox.Size = new System.Drawing.Size(708, 331);
             this.infoTextBox.TabIndex = 9;
             // 
+            // progressOverall
+            // 
+            this.progressOverall.Fade = 50;
+            this.progressOverall.Location = new System.Drawing.Point(18, 38);
+            this.progressOverall.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.progressOverall.Maximum = 10000;
+            this.progressOverall.Name = "progressOverall";
+            this.progressOverall.Size = new System.Drawing.Size(708, 35);
+            this.progressOverall.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.progressOverall.TabIndex = 1;
+            this.progressOverall.Text = null;
+            // 
             // DownloadForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -62,10 +62,10 @@
             this.ClientSize = new System.Drawing.Size(746, 424);
             this.Controls.Add(this.infoTextBox);
             this.Controls.Add(this.progressOverall);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximumSize = new System.Drawing.Size(768, 480);
+            this.MinimumSize = new System.Drawing.Size(768, 480);
             this.Name = "DownloadForm";
             this.Text = "Meridian 59 Patcher";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnDownloadFormClosing);
