@@ -165,7 +165,7 @@ namespace Meridian59.Patcher
             // start download of patchinfo.txt
 
             if (!isHeadless)
-                form.DisplayStatus(languageHandler.DownloadingPatch);
+                form.DisplayStatus(1, languageHandler.DownloadingPatch);
 
             webClient.DownloadDataCompleted += OnWebClientDownloadDataCompleted;
             webClient.DownloadDataAsync(new Uri(jsonUrl));
@@ -539,13 +539,13 @@ namespace Meridian59.Patcher
             {
                 if (!isHeadless)
                 {
-                    form.DisplayStatus(languageHandler.PatchDownloadFailed);
+                    form.DisplayStatus(1, languageHandler.PatchDownloadFailed);
                     DialogResult result = MessageBox.Show(languageHandler.JsonDownloadFailed,
                         languageHandler.ErrorText, MessageBoxButtons.RetryCancel);
                     switch (result)
                     {
                         case DialogResult.Retry:
-                            form.DisplayStatus(languageHandler.DownloadingPatch);
+                            form.DisplayStatus(1, languageHandler.DownloadingPatch);
                             // OnWebClientDownloadDataCompleted event still fires at end.
                             webClient.DownloadDataAsync(new Uri(jsonUrl));
                             return;
@@ -568,7 +568,7 @@ namespace Meridian59.Patcher
 
                 if (!isHeadless)
                 {
-                    form.DisplayStatus(languageHandler.ScanningFiles);
+                    form.DisplayStatus(2, languageHandler.ScanningFiles);
                 }
 
                 // create worker-instances and start them

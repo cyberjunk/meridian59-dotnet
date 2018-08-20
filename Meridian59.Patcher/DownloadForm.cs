@@ -11,6 +11,7 @@ namespace Meridian59.Patcher
         private readonly LanguageHandler languageHandler;
         private double lastTick;
         private long lastLengthDone;
+        private const int STEPS = 4;
 
         /// <summary>
         /// Constructor
@@ -28,9 +29,9 @@ namespace Meridian59.Patcher
         /// Displays a string in the infobox.
         /// </summary>
         /// <param name="Info"></param>
-        public void DisplayStatus(string Status)
+        public void DisplayStatus(int Step, string Status)
         {
-            statusText.Text = Status;
+            statusText.Text = '(' + Step.ToString() + '/' + STEPS.ToString() + ')' + ' ' + Status;
         }
 
         /// <summary>
