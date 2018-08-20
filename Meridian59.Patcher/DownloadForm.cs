@@ -9,7 +9,6 @@ namespace Meridian59.Patcher
     {
         private readonly List<PatchFile> files;
         private readonly LanguageHandler languageHandler;
-        private string appendLog;
         private double lastTick;
         private long lastLengthDone;
 
@@ -29,9 +28,9 @@ namespace Meridian59.Patcher
         /// Displays a string in the infobox.
         /// </summary>
         /// <param name="Info"></param>
-        public void DisplayInfo(string Info)
+        public void DisplayStatus(string Status)
         {
-            appendLog += (Info) + Environment.NewLine;
+            statusText.Text = Status;
         }
 
         /// <summary>
@@ -67,10 +66,6 @@ namespace Meridian59.Patcher
             double progress       = (todo == 0) ? 1.0 : (double)done / (double)todo;
             int progressint       = Convert.ToInt32(progress * (double)progressOverall.Maximum);
             progressOverall.Value = Math.Min(progressOverall.Maximum, progressint);
-
-            // update textLog with pending lines and reset
-            infoTextBox.AppendText(appendLog);
-            appendLog = "";
 
             // update update download speed and processed bytes not more than once per second
             double msinterval = Tick - lastTick;
