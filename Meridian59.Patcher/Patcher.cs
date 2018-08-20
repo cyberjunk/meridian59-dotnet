@@ -165,7 +165,7 @@ namespace Meridian59.Patcher
             // start download of patchinfo.txt
 
             if (!isHeadless)
-                form.DisplayInfo(languageHandler.DownloadingPatch);
+                form.DisplayStatus(languageHandler.DownloadingPatch);
 
             webClient.DownloadDataCompleted += OnWebClientDownloadDataCompleted;
             webClient.DownloadDataAsync(new Uri(jsonUrl));
@@ -303,8 +303,8 @@ namespace Meridian59.Patcher
                 {
                     file.LengthDone = 0;
                     queue.Enqueue(file);
-                    if (!isHeadless)
-                        form.DisplayInfo(String.Format(languageHandler.RetryingFile, file.Filename));
+                    //if (!isHeadless)
+                    //    form.DisplayInfo(String.Format(languageHandler.RetryingFile, file.Filename));
                 }
                 else
                 {
@@ -325,8 +325,8 @@ namespace Meridian59.Patcher
             {
                 // raise counter for finished files
                 filesDone++;
-                if (!isHeadless)
-                    form.DisplayInfo(String.Format(languageHandler.FileDownloaded, file.Filename));
+                //if (!isHeadless)
+                //    form.DisplayInfo(String.Format(languageHandler.FileDownloaded, file.Filename));
 
                 // check for finish
                 if (filesDone >= files.Count)
@@ -538,13 +538,13 @@ namespace Meridian59.Patcher
             {
                 if (!isHeadless)
                 {
-                    form.DisplayInfo(languageHandler.PatchDownloadFailed);
+                    form.DisplayStatus(languageHandler.PatchDownloadFailed);
                     DialogResult result = MessageBox.Show(languageHandler.JsonDownloadFailed,
                         languageHandler.ErrorText, MessageBoxButtons.RetryCancel);
                     switch (result)
                     {
                         case DialogResult.Retry:
-                            form.DisplayInfo(languageHandler.DownloadingPatch);
+                            form.DisplayStatus(languageHandler.DownloadingPatch);
                             // OnWebClientDownloadDataCompleted event still fires at end.
                             webClient.DownloadDataAsync(new Uri(jsonUrl));
                             return;
@@ -560,14 +560,14 @@ namespace Meridian59.Patcher
             {
                 // parse json patch data
                 ReadJsonData(e.Result);
-
+                
                 // enqueue entries
                 foreach (PatchFile entry in files)
                     queue.Enqueue(entry);
 
                 if (!isHeadless)
                 {
-                    form.DisplayInfo(languageHandler.ScanningFiles);
+                    form.DisplayStatus(languageHandler.ScanningFiles);
                 }
 
                 // create worker-instances and start them
