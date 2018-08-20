@@ -68,9 +68,6 @@ namespace Meridian59.Patcher
             int progressint       = Convert.ToInt32(progress * (double)progressOverall.Maximum);
             progressOverall.Value = Math.Min(progressOverall.Maximum, progressint);
 
-            // update files-done counter
-            lblFilesProcessed.Text = numdone + " / " + numfiles;
-
             // update textLog with pending lines and reset
             infoTextBox.AppendText(appendLog);
             appendLog = "";
@@ -86,14 +83,13 @@ namespace Meridian59.Patcher
                 double kbps = (interval_in_s < 0.0001 && interval_in_s > -0.0001) ? 0.0 : 
                     0.001 * (bytes_in_interval / interval_in_s);
 
-                lblSpeed.Text = String.Format("{0:0.00} KB/s", kbps);
-
                 // update processed MB counter
                 double done_mb = (double)done / (1024.0 * 1024.0);
                 double todo_mb = (double)todo / (1024.0 * 1024.0);
-                lblDataProcessed.Text = 
-                    String.Format("{0:0.00} MB", done_mb) + " / " +
-                    String.Format("{0:0.00} MB", todo_mb);
+                progressOverall.Text = 
+                    String.Format("{0:0.00}", done_mb) + " / " +
+                    String.Format("{0:0.00} MB", todo_mb) + " @ " +
+                    String.Format("{0:0.00} KB/s", kbps);
 
                 // remember values for next execution
                 lastLengthDone = done;
