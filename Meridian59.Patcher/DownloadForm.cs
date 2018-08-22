@@ -25,16 +25,15 @@ namespace Meridian59.Patcher
                 // Reset lastLengthDone if switching out of DownloadingJson.
                 if (updateStage == UpdateStage.DownloadingJson && value != updateStage)
                     lastLengthDone = 0;
-                if (value == UpdateStage.Finished)
+                if (value == UpdateStage.FinishedTransition)
                 {
-                    statusText.Text = "Update complete";
-                    progressOverall.Text = "Complete";
+                    progressOverall.Text = languageHandler.ProgressFinished;
                     progressOverall.Value = progressOverall.Maximum;
                 }
                 else if (value == UpdateStage.Abort)
                 {
-                    statusText.Text = "Update aborted";
-                    progressOverall.Text = "Aborted";
+                    statusText.Text = languageHandler.UpdateAborted;
+                    progressOverall.Text = languageHandler.ProgressAborted;
                     progressOverall.Value = progressOverall.Maximum;
                 }
                 updateStage = value;
