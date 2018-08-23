@@ -23,7 +23,7 @@ namespace Meridian59.Patcher
         protected readonly string baseFilePath;
         protected readonly string baseUrl;
         protected readonly WebClient webClient;
-        protected readonly MD5 md5;
+        protected readonly SHA256CryptoServiceProvider sha256;
         protected readonly SynchronizationContext eventContext;
 
         protected volatile bool isDownloading;
@@ -54,9 +54,9 @@ namespace Meridian59.Patcher
             queueFinished = FinishedQueue;
             queueErrors = ErrorQueue;
 
-            // get MD5 creator for this worker
-            md5 = MD5.Create();
-            md5.Initialize();
+            // get sha256 creator for this worker
+            sha256 = new SHA256CryptoServiceProvider();
+            sha256.Initialize();
 
             // create webclient for downloads
             webClient = new WebClient();
@@ -107,7 +107,6 @@ namespace Meridian59.Patcher
                     // CASE 1: File on disk has equal hash, skip it
                     if (IsDiskFileEqual(file))
                     {
-                        Thread.Sleep(4);
                         file.LengthDone = file.Length;
                         file.HashedStatus = PatchFileHashedStatus.DoNotDownload;
                         queueFinished.Enqueue(file);
@@ -171,10 +170,10 @@ namespace Meridian59.Patcher
                 return false;
             }
 
-            // otherwise compute and compare md5
-            byte[] md5Fil = md5.ComputeHash(fs);
-            byte[] md5Onl = StringToByteArray(file.MyHash);
-            bool areEqual = md5Fil.SequenceEqual<byte>(md5Onl);
+            // otherwise compute and compare sha256
+            byte[] sha256Fil = sha256.ComputeHash(fs);
+            byte[] sha256Onl = StringToByteArray(file.MyHash);
+            bool areEqual = sha256Fil.SequenceEqual<byte>(sha256Onl);
 
             // close filestream
             fs.Close();

@@ -31,6 +31,13 @@ namespace Meridian59.Patcher
         private const string CONFIRMCANCEL_EN = "Are you sure you want to cancel the client update?";
         private const string CONFIRMCANCEL_DE = "Möchtest du das Update wirklich abbrechen?";
 
+        private const string HASHCREATEERROR_EN = "Fatal error creating file hash checker. Ensure you have the latest " + 
+            ".NET Framework available for your Operating System installed from Microsoft. If this issue persists please " +
+            "report it in the forums at meridiannext.com/phpbb3.";
+        private const string HASHCREATEERROR_DE = "Schwerer Fehler beim Erstellen des Dateien Hash Prüfers. Überprüfe ob " +
+            "Du das neuste .NET Framework von Microsoft für Dein Bestriebssystem installiert hast. Sollte dieser Fehler " +
+            "weiterhin bestehen dann melde dies bitte im Forum auf meridiannext.com/phpbb3.";
+
         private const string URLINFOMISSING_EN = "Patch information from file {0} is missing. You may be " +
             "able to obtain this file automatically by using the game client to connect to a valid server. " +
             "If you are unable to do this, you will need to run the client installer again.";
@@ -79,15 +86,23 @@ namespace Meridian59.Patcher
         private const string NGENINIT_EN = "Step 4/4: Optimizing startup...";
         private const string NGENINIT_DE = "Schritt 4/4: Optimiere Start...";
 
-        private const string CLIENTUPTODATE_EN = "Client is up to date, nothing to download. Click OK to launch the client.";
-        private const string CLIENTUPTODATE_DE = "Client ist auf dem neusten Stand. Klicke OK um das Spiel zu starten.";
+        private const string CLIENTUPTODATE_EN = "Client up to date, nothing to download";
+        private const string CLIENTUPTODATE_DE = "Client ist auf dem neusten Stand";
 
-        private const string CLIENTWASUPDATED_EN = "Client updated. Click OK to launch the client.";
-        private const string CLIENTWASUPDATED_DE = "Client wurde aktualisiert. Klicke OK um das Spiel zu starten.";
+        private const string CLIENTWASUPDATED_EN = "Client update complete";
+        private const string CLIENTWASUPDATED_DE = "Client wurde aktualisiert";
 
         private const string NUMFILES_EN = "{0}/{1} files";
         private const string NUMFILES_DE = "{0}/{1} Dateien";
 
+        private const string UPDATEABORTED_EN = "Update aborted";
+        private const string UPDATEABORTED_DE = "Update abgebrochen";
+
+        private const string PROGRESSFINISHED_EN = "Complete";
+        private const string PROGRESSFINISHED_DE = "Abgeschlossen";
+
+        private const string PROGRESSABORTED_EN = "Update aborted";
+        private const string PROGRESSABORTED_DE = "Abgebrochen";
         #endregion Constants
 
         private LanguageIdentifier languageIdentifier;
@@ -179,6 +194,20 @@ namespace Meridian59.Patcher
                         return CONFIRMCANCEL_DE;
                     default:
                         return CONFIRMCANCEL_EN;
+                }
+            }
+        }
+
+        public string HashCreateError
+        {
+            get
+            {
+                switch (languageIdentifier)
+                {
+                    case LanguageIdentifier.German:
+                        return HASHCREATEERROR_DE;
+                    default:
+                        return HASHCREATEERROR_EN;
                 }
             }
         }
@@ -375,6 +404,48 @@ namespace Meridian59.Patcher
                         return NUMFILES_DE;
                     default:
                         return NUMFILES_EN;
+                }
+            }
+        }
+
+        public string UpdateAborted
+        {
+            get
+            {
+                switch (languageIdentifier)
+                {
+                    case LanguageIdentifier.German:
+                        return UPDATEABORTED_DE;
+                    default:
+                        return UPDATEABORTED_EN;
+                }
+            }
+        }
+
+        public string ProgressFinished
+        {
+            get
+            {
+                switch (languageIdentifier)
+                {
+                    case LanguageIdentifier.German:
+                        return PROGRESSFINISHED_DE;
+                    default:
+                        return PROGRESSFINISHED_EN;
+                }
+            }
+        }
+
+        public string ProgressAborted
+        {
+            get
+            {
+                switch (languageIdentifier)
+                {
+                    case LanguageIdentifier.German:
+                        return PROGRESSABORTED_DE;
+                    default:
+                        return PROGRESSABORTED_EN;
                 }
             }
         }

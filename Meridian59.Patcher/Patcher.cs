@@ -32,6 +32,11 @@ namespace Meridian59.Patcher
         private const int NUMWORKERS        = 8;
         private const int MAXRETRIES        = 3;
 
+        // Minimum amount of time (ms) we display the hash stage.
+        private const int MINHASHTRANSITIONTIME = 1500;
+        // Minimum amount of time (ms) we wait transitioning from downloading to finished (i.e. start client).
+        private const int MINFINISHTRANSITIONTIME = 2000;
+
         private const string CLASSICURLDATAFILE = "dlinfo.txt";
         private const string CLASSICEXENAME     = "meridian.exe";
         private const string CLASSICPROCESS     = "meridian";
@@ -78,6 +83,8 @@ namespace Meridian59.Patcher
 
         private static DownloadForm form = null;
         private static int filesDone     = 0;
+        // True if at least one file gets updated.
+        private static bool clientFilesUpdated = false;
         private static bool isHeadless   = false;
         private static string baseUrl    = "";
         private static string jsonUrl    = "";
@@ -195,20 +202,55 @@ namespace Meridian59.Patcher
             }
 
             ///////////////////////////////////////////////////////////////////////
+            // create and start workers here
+            try
+            {
+                // create worker-instances and start them
+                for (int i = 0; i < workers.Length; i++)
+                {
+                    workers[i] = new Worker(
+                        PATCHERPATH,
+                        baseUrl,
+                        queue,
+                        queueHashed,
+                        queueDone,
+                        queueErrors);
+
+                    workers[i].Start();
+                }
+            }
+            catch (TargetInvocationException)
+            {
+                // Catch potential exception if the SHA256 hasher couldn't be created.
+                // Some installs of Win XP may have a bug in their .NET framework that
+                // will cause the hasher not to be found, unlikely we will hit this case
+                // but rather catch it than crash. On our single test XP SP3 system, we
+                // did not hit this exception.
+                UpdateStage = UpdateStage.Abort;
+                // Redraw status text because form will close immediately after messagebox closes.
+                form.Update();
+                MessageBox.Show(languageHandler.HashCreateError,
+                    languageHandler.ErrorText, MessageBoxButtons.OK);
+            }
+
+            ///////////////////////////////////////////////////////////////////////
             // start download of patchinfo.txt
 
-            if (!isHeadless)
-                form.DisplayStatus(String.Format(languageHandler.DownloadingPatch, MaxStages));
+            if (updateStage != UpdateStage.Abort)
+            {
+                if (!isHeadless)
+                    form.DisplayStatus(String.Format(languageHandler.DownloadingPatch, MaxStages));
 
-            UpdateStage = UpdateStage.DownloadingJson;
+                UpdateStage = UpdateStage.DownloadingJson;
 
-            webClient.DownloadDataCompleted += OnWebClientDownloadDataCompleted;
-            webClient.DownloadProgressChanged += OnWebClientDownloadProgressChanged;
-            webClient.DownloadDataAsync(new Uri(jsonUrl));
-           
+                webClient.DownloadDataCompleted += OnWebClientDownloadDataCompleted;
+                webClient.DownloadProgressChanged += OnWebClientDownloadProgressChanged;
+                webClient.DownloadDataAsync(new Uri(jsonUrl));
+            }
             ///////////////////////////////////////////////////////////////////////
             // mainthread loop
 
+            long transitionMsTick = 0;
             while(updateStage != UpdateStage.Finished && updateStage != UpdateStage.Abort)
             {
                 long   tick   = watch.ElapsedTicks;
@@ -217,11 +259,16 @@ namespace Meridian59.Patcher
                 switch (updateStage)
                 {
                     case UpdateStage.HashingFiles:
+                        if (transitionMsTick == 0)
+                            transitionMsTick = (long)mstick;
                         // handle transition from scanning to downloading
-                        if (files.Count > 0 && queue.Count == 0)
+                        if (files.Count > 0 && queue.Count == 0
+                            && mstick - transitionMsTick > MINHASHTRANSITIONTIME)
                         {
                             UpdateStage = UpdateStage.DownloadingFiles;
-                            form.DisplayStatus(String.Format(languageHandler.DownloadInit, MaxStages));
+                            if (!isHeadless)
+                                form.DisplayStatus(String.Format(languageHandler.DownloadInit, MaxStages));
+                            transitionMsTick = 0;
                         }
                         break;
                     case UpdateStage.DownloadingFiles:
@@ -230,6 +277,18 @@ namespace Meridian59.Patcher
                         break;
                     case UpdateStage.Ngen:
                         ProcessNgen();
+                        break;
+                    case UpdateStage.FinishedTransition:
+                        if (transitionMsTick == 0 && !isHeadless)
+                        {
+                            transitionMsTick = (long)mstick;
+                            if (clientFilesUpdated)
+                                form.DisplayStatus(languageHandler.ClientWasUpdated);
+                            else
+                                form.DisplayStatus(languageHandler.ClientUpToDate);
+                        }
+                        if (mstick - transitionMsTick > MINFINISHTRANSITIONTIME)
+                            UpdateStage = UpdateStage.Finished;
                         break;
                     default:
                         break;
@@ -263,19 +322,6 @@ namespace Meridian59.Patcher
                 ProcessStartInfo pi;
                 Process process;
 
-                // Show success feedback:
-                // Either client up to date (no files downloaded) or some files were downloaded.
-                if (filesDone == 0)
-                {
-                    MessageBox.Show(languageHandler.ClientUpToDate, languageHandler.InfoText,
-                        MessageBoxButtons.OK, MessageBoxIcon.None);
-                }
-                else
-                {
-                    MessageBox.Show(languageHandler.ClientWasUpdated, languageHandler.InfoText,
-                        MessageBoxButtons.OK, MessageBoxIcon.None);
-                }
-
                 // start client
                 pi                  = new ProcessStartInfo();
                 pi.FileName         = clientExecutable;
@@ -292,7 +338,7 @@ namespace Meridian59.Patcher
         private static void ProcessNgen()
         {
             if (x64NgenDone && x86NgenDone)
-                UpdateStage = UpdateStage.Finished;
+                UpdateStage = UpdateStage.FinishedTransition;
 
             // x64 exe - process is null if not created yet.
             if (x64Process == null)
@@ -381,6 +427,8 @@ namespace Meridian59.Patcher
                 // raise counter for finished files
                 filesDone++;
 
+                if (!clientFilesUpdated && file.HashedStatus == PatchFileHashedStatus.Download)
+                    clientFilesUpdated = true;
                 // check for finish
                 if (filesDone >= files.Count)
                 {
@@ -395,7 +443,7 @@ namespace Meridian59.Patcher
                         }
                         else
                         {
-                            UpdateStage = UpdateStage.Finished;
+                            UpdateStage = UpdateStage.FinishedTransition;
                         }
                     }
                 }
@@ -652,20 +700,6 @@ namespace Meridian59.Patcher
                 if (!isHeadless)
                     form.DisplayStatus(String.Format(languageHandler.ScanningInit, MaxStages));
                 UpdateStage = UpdateStage.HashingFiles;
-
-                // create worker-instances and start them
-                for (int i = 0; i < workers.Length; i++)
-                {                   
-                    workers[i] = new Worker(
-                        PATCHERPATH,
-                        baseUrl,
-                        queue,
-                        queueHashed,
-                        queueDone,
-                        queueErrors);
-
-                    workers[i].Start();
-                }
             }
         }
     }

@@ -12,6 +12,7 @@ namespace Meridian59.Patcher
         HashingFiles,
         DownloadingFiles,
         Ngen,
+        FinishedTransition,
         Finished,
         Abort
     }
