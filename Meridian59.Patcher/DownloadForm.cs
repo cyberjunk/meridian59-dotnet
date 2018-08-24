@@ -132,7 +132,7 @@ namespace Meridian59.Patcher
             // update progress bar
             double progress = (todo == 0) ? 0.0 : (double)done / (double)todo;
             int progressint = Convert.ToInt32(progress * (double)progressOverall.Maximum / 10.0); // 10% of total
-            progressOverall.Value = Math.Min(progressOverall.Maximum, progressint);
+            progressOverall.Value = Math.Max(progressOverall.Minimum, Math.Min(progressOverall.Maximum, progressint));
         }
 
         private void UpdateDownloadFormHashing(bool UpdateUIText)
@@ -157,7 +157,7 @@ namespace Meridian59.Patcher
             // update progress bar
             double progress = (numfiles == 0) ? 0.0 : (double)numdone / (double)numfiles;
             int progressint = Convert.ToInt32(((progress * (double)progressOverall.Maximum) * 0.4) + (double)progressOverall.Maximum * 0.1);
-            progressOverall.Value = Math.Min(progressOverall.Maximum, progressint);
+            progressOverall.Value = Math.Max(progressOverall.Minimum, Math.Min(progressOverall.Maximum, progressint));
 
             // update processed files not more than once per second
             if (UpdateUIText)
@@ -217,7 +217,7 @@ namespace Meridian59.Patcher
             double progress = (todo == 0) ? 0.0 : (double)done / (double)todo;
             double maxStageProgress = (MaxStages == 4 ? 0.4 : 0.5);
             int progressint = Convert.ToInt32(((progress * (double)progressOverall.Maximum) * maxStageProgress) + (double)progressOverall.Maximum * 0.5);
-            progressOverall.Value = Math.Min(progressOverall.Maximum, progressint);
+            progressOverall.Value = Math.Max(progressOverall.Minimum, Math.Min(progressOverall.Maximum, progressint));
         }
 
         private void UpdateDownloadFormNgen(double MsInterval, bool UpdateUIText, bool X64NgenDone, bool X86NgenDone)
@@ -235,7 +235,7 @@ namespace Meridian59.Patcher
                 progressOverall.Text = String.Format(languageHandler.NumFiles, done, todo);
             double progress = (done == 0) ? 0.0 : (double)done / (double)todo;
             int progressint = Convert.ToInt32(((progress * (double)progressOverall.Maximum) * 0.1) + (double)progressOverall.Maximum * 0.9);
-            progressOverall.Value = Math.Min(progressOverall.Maximum, progressint);
+            progressOverall.Value = Math.Max(progressOverall.Minimum, Math.Min(progressOverall.Maximum, progressint));
         }
 
         private void OnDownloadFormClosing(object sender, FormClosingEventArgs e)
