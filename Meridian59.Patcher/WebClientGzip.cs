@@ -10,7 +10,7 @@ namespace Meridian59.Patcher
    {
       public WebClientGzip() : base()
       {
-         this.Headers[HttpRequestHeader.AcceptEncoding] = "gzip";
+         this.Headers[HttpRequestHeader.AcceptEncoding] = "gzip, deflate";
       }
 
       protected override WebRequest GetWebRequest(Uri address)
