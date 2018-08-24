@@ -437,7 +437,7 @@ namespace Meridian59.Data.Models
         /// <returns></returns>
         public string GetUpdateBasePath()
         {
-            return "http://" + machine + patchPath;
+            return "https://" + machine + patchPath;
         }
 
         /// <summary>
@@ -447,7 +447,9 @@ namespace Meridian59.Data.Models
         /// <returns></returns>
         public string GetUpdaterURL()
         {
-            return "http://" + machine + patchPath + "/" + updaterFile;
+            if (patchPath.EndsWith("/"))
+                return "https://" + machine + patchPath + updaterFile;
+            return "https://" + machine + patchPath + "/" + updaterFile;
         }
 
         /// <summary>
@@ -457,7 +459,9 @@ namespace Meridian59.Data.Models
         /// <returns></returns>
         public string GetJsonDataURL()
         {
-            return "http://" + machine + patchCachePath + "/" + patchFile;
+            if (patchCachePath.EndsWith("/"))
+                return "https://" + machine + patchCachePath + patchFile;
+            return "https://" + machine + patchCachePath + "/" + patchFile;
         }
     }
 }
