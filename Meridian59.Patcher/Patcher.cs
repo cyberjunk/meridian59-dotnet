@@ -76,7 +76,7 @@ namespace Meridian59.Patcher
         private static readonly List<PatchFile> files      = new List<PatchFile>();
         private static readonly Worker[] workers           = new Worker[NUMWORKERS];       
         private static readonly Stopwatch watch            = new Stopwatch();
-        private static readonly WebClient webClient        = new WebClient();
+        private static readonly WebClientGzip webClient    = new WebClientGzip();
 
         // Track progress on JSON file download in a threadsafe/clean way.
         private static readonly JsonFileProgress jsonFileProgress = new JsonFileProgress();

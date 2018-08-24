@@ -22,7 +22,7 @@ namespace Meridian59.Patcher
         protected readonly Thread thread;
         protected readonly string baseFilePath;
         protected readonly string baseUrl;
-        protected readonly WebClient webClient;
+        protected readonly WebClientGzip webClient;
         protected readonly SHA256CryptoServiceProvider sha256;
         protected readonly SynchronizationContext eventContext;
 
@@ -59,7 +59,7 @@ namespace Meridian59.Patcher
             sha256.Initialize();
 
             // create webclient for downloads
-            webClient = new WebClient();
+            webClient = new WebClientGzip();
             webClient.DownloadProgressChanged += OnWebClientDownloadProgressChanged;
             webClient.DownloadFileCompleted += OnWebClientDownloadFileCompleted;
             
