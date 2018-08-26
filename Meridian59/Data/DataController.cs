@@ -49,6 +49,7 @@ namespace Meridian59.Data
         public const string PROPNAME_SELFTARGET = "SelfTarget";
         public const string PROPNAME_TARGETID = "TargetID";
         public const string PROPNAME_ISRESTING = "IsResting";
+        public const string PROPNAME_MOVEMENTSPEEDPERCENT = "MovementSpeedPercent";
         public const string PROPNAME_ISWAITING = "IsWaiting";
         public const string PROPNAME_MERIDIANTIME = "MeridianTime";
         public const string PROPNAME_TPS = "TPS";
@@ -76,6 +77,7 @@ namespace Meridian59.Data
         protected uint targetID = UInt32.MaxValue;
         protected bool selfTarget;
         protected bool isResting;
+        protected ushort movementSpeedPercent;
 
         protected bool isWaiting;
         protected uint tps;
@@ -541,6 +543,24 @@ namespace Meridian59.Data
         }
 
         /// <summary>
+        /// Movement speed percent modifications e.g. from spells/items.
+        /// Server updates this whenever some effect is applied to the player.
+        /// Takes effect before geometry slowdown (i.e. water).
+        /// </summary>
+        public ushort MovementSpeedPercent
+        {
+            get { return movementSpeedPercent; }
+            set
+            {
+                if (movementSpeedPercent != value)
+                {
+                    movementSpeedPercent = value;
+                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_MOVEMENTSPEEDPERCENT));
+                }
+            }
+        }
+
+        /// <summary>
         /// Whether server is saving right now or not
         /// </summary>
         public bool IsWaiting
@@ -929,6 +949,7 @@ namespace Meridian59.Data
             ChatCommandHistoryIndex = -1;
             AvatarObject = null;
             IsResting = false;
+            movementSpeedPercent = 100;
             SelfTarget = false;
             IsNextAttackApplyCastOnHighlightedObject = false;
             AvatarID = UInt32.MaxValue;
@@ -1015,6 +1036,7 @@ namespace Meridian59.Data
             // reset values/references
             AvatarObject = null;
             IsResting = false;
+            MovementSpeedPercent = 100;
             SelfTarget = false;
             IsNextAttackApplyCastOnHighlightedObject = false;
             AvatarID = UInt32.MaxValue;
@@ -1752,6 +1774,9 @@ namespace Meridian59.Data
                     break;
 
 #if !VANILLA && !OPENMERIDIAN
+                case MessageTypeGameMode.MovementSpeedPercent:      // 71
+                    HandleMovementSpeedPercent((MovementSpeedPercentMessage)Message);
+                    break;
                 case MessageTypeGameMode.RoomContentsFlags:         // 128
                     HandleRoomContentsFlags((RoomContentsFlagsMessage)Message);
                     break;
@@ -2201,6 +2226,11 @@ namespace Meridian59.Data
                 if (inventoryObject != null)
                     inventoryObject.NextUpdate = Message.UpdatedObject;
             }
+        }
+
+        protected virtual void HandleMovementSpeedPercent(MovementSpeedPercentMessage Message)
+        {
+            MovementSpeedPercent = Message.MovementSpeedPercent;
         }
 
         protected virtual void HandleMove(MoveMessage Message)
