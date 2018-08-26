@@ -2598,6 +2598,9 @@ namespace Meridian59.Client
                 // pick base speed as requested
                 Real Speed = (Running) ? (Real)MovementSpeed.Run : (Real)MovementSpeed.Walk;
 
+                // Modify by movementspeed percent.
+                Speed = Speed * Data.MovementSpeedPercent / 100;
+
                 // slow down movements sectors with depth modifiers
                 if (avatar.SubSector != null && avatar.SubSector.Sector != null)
                 {
