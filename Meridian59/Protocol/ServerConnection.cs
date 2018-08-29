@@ -125,6 +125,10 @@ namespace Meridian59.Protocol
         /// </summary>
         protected bool isQuitting;
 
+        /// <summary>
+        /// True if the client is using UDP for some transmissions.
+        /// </summary>
+        protected bool useUdp;
         #endregion
 
         #region Properties
@@ -165,6 +169,10 @@ namespace Meridian59.Protocol
         /// </summary>
         public LockingQueue<Exception> ExceptionQueue { get; protected set; }
 
+        /// <summary>
+        /// True if the client is using UDP for some transmissions.
+        /// </summary>
+        public bool UseUdp { get { return useUdp; } }
         #endregion
 
         #region Constructor/Destructor
@@ -199,6 +207,13 @@ namespace Meridian59.Protocol
             timPing.Enabled = false;
             timPing.Interval = PINGINTERVAL;
             timPing.Elapsed += new ElapsedEventHandler(OnPingTimerElapsed);
+
+            // enable UDP for 105/112 by default, keep disabled for others
+#if !VANILLA && !OPENMERIDIAN
+            useUdp = true;
+#else
+            useUdp = false;
+#endif
         }
 
         /// <summary>
@@ -271,15 +286,8 @@ namespace Meridian59.Protocol
             if (isQuitting)
                 return;
 
-            // enable UDP for MeridianNext
-#if !VANILLA && !OPENMERIDIAN
-            const bool USE_UDP = true;
-#else
-            const bool USE_UDP = false;
-#endif
-
             // send some by UDP
-            if (USE_UDP && Message is GameModeMessage && (
+            if (useUdp && Message is GameModeMessage && (
                 Message.PI == (byte)MessageTypeGameMode.ReqMove ||
                 Message.PI == (byte)MessageTypeGameMode.ReqTurn ||
                 Message.PI == (byte)MessageTypeGameMode.ReqAttack))
@@ -569,8 +577,8 @@ namespace Meridian59.Protocol
                 case MessageTypeLoginMode.Game:
                     HandleGameStateMessage((GameStateMessage)Message);
                     break;
-            }
-        }
+         }
+      }
 
         /// <summary>
         /// Internally handle some GameModeMessages
@@ -601,8 +609,14 @@ namespace Meridian59.Protocol
                 case MessageTypeGameMode.Quit:
                     isQuitting = false;
                     break;
-            }
-        }
+
+#if !VANILLA && !OPENMERIDIAN
+               case MessageTypeGameMode.SetClientUdpOff:
+                    useUdp = false;
+                    break;
+#endif
+         }
+      }
 
         /// <summary>
         /// 
