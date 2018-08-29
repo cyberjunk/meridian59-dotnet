@@ -35,5 +35,5 @@ You can build binaries compatible with different branches of the game by using p
 
 # Wiki
 
-Visit the <a href="https://github.com/cyberjunk/meridian59-dotnet/wiki">wiki</a> for more information about the different projects/tools.
+Visit the <a href="https://github.com/cyberjunk/meridian59-dotnet/wiki">wiki</a> for more information about the different projects/tools (including more details about OgreClient)
 
