@@ -500,7 +500,14 @@ namespace Meridian59.Protocol
                     case MessageTypeGameMode.Action:                                          // PI: 90
                         TypedMessage = new ActionMessage(e.MessageBuffer);
                         break;
-
+#if !VANILLA && !OPENMERIDIAN
+                    case MessageTypeGameMode.SetClientUdpOff:                                 // PI: 98
+                        TypedMessage = new SetClientUdpOffMessage(e.MessageBuffer);
+                        break;
+                    case MessageTypeGameMode.NewUdpTransmission:                              // PI: 99
+                        TypedMessage = new NewUdpTransmissionMessage(e.MessageBuffer);
+                         break;
+#endif
                     case MessageTypeGameMode.ReqMove:                                         // PI: 100
                         TypedMessage = new ReqMoveMessage(e.MessageBuffer, 0, e.IsTCP);
                         break;

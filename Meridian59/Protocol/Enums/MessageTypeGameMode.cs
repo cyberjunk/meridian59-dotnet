@@ -80,6 +80,12 @@ namespace Meridian59.Protocol.Enums
         ReqLookupNames      = 88,
         
         Action              = 90,
+
+#if !VANILLA && !OPENMERIDIAN
+        SetClientUdpOff     = 98,
+        NewUdpTransmission  = 99,
+#endif
+
         ReqMove             = 100,
         ReqTurn             = 101,
         ReqGo               = 102,
