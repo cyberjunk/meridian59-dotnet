@@ -65,7 +65,9 @@ namespace Meridian59.Protocol.Enums
         ReqAdminQuest       = 62,
 
         Effect              = 70,
-
+#if !VANILLA && !OPENMERIDIAN
+        MovementSpeedPercent = 71,
+#endif
         Mail                = 80,
         ReqGetMail          = 81,
         SendMail            = 82,

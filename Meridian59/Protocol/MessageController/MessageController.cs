@@ -461,6 +461,12 @@ namespace Meridian59.Protocol
                         TypedMessage = new EffectMessage(e.MessageBuffer);
                         break;
 
+#if !VANILLA && !OPENMERIDIAN
+                    case MessageTypeGameMode.MovementSpeedPercent:                            // PI: 71
+                        TypedMessage = new MovementSpeedPercentMessage(e.MessageBuffer);
+                        break;
+#endif
+
                     case MessageTypeGameMode.Mail:                                            // PI: 80
                         TypedMessage = new MailMessage(stringResources, e.MessageBuffer);
                         break;
