@@ -24,7 +24,7 @@ I also try to maintain basic compatibility with older/less technically advanced 
 
 ## Supported Versions of the Game
 
-You can build binaries compatible with different branches of the game by using preprocessor macros. See the table below for the options and the supported branches. Others might work if they build upon of these and haven't been technically changed too much.
+You can build binaries compatible with different branches of the game by using preprocessor macros. See the table below for the options and the supported branches. Others might work if they build on top of one of these and haven't technically changed too much.
 
 |  Server  | Macro            | Compatibility | Website             |
 |----------|------------------|---------------|---------------------|
