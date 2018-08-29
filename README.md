@@ -12,7 +12,7 @@ Check out the [news archive](https://github.com/cyberjunk/meridian59-dotnet/wiki
 <img src="https://raw.githubusercontent.com/wiki/cyberjunk/meridian59-dotnet/images/ogreclient1.png" />
 
 # Compatibility / Downloads
-I do not provide any binaries of OgreClient myself. Instead you can download it from various server operators that support it.
+I do not provide any binaries of OgreClient myself. Instead you can download it from various server that support it.
 
 By default, software included in this repository (e.g. [OgreClient](https://github.com/cyberjunk/meridian59-dotnet/wiki/Meridian59.Ogre.Client)) is only compatible with the technically most advanced servers/versions of the game. As of today these are:
 
@@ -31,7 +31,7 @@ You can build binaries compatible with different branches of the game by using p
 |   105    | -                |  **Full**     | [MeridianNext](https://meridiannext.com) |
 |   112    | -                |  **Full**     | [Meridian59de](https://meridian59.de)    |
 |   103    | OPENMERIDIAN     |  Low          | [OpenMeridian](http://openmeridian.org/) |
-| 101/102  | VANILLA          |  Minimal      | [Meridian59com](https://www.meridian59.com) |
+| 101/102  | VANILLA          |  Minimal      | [Meridian59com](http://www.meridian59.com) |
 
 # Wiki
 
