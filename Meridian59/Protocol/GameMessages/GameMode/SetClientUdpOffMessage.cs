@@ -21,35 +21,7 @@ using Meridian59.Common.Constants;
 namespace Meridian59.Protocol.GameMessages
 {
     public class SetClientUdpOffMessage : GameModeMessage
-    {        
-        #region IByteSerializable
-        public override int ByteLength
-        {
-            get
-            {
-                return base.ByteLength;
-            }
-        }
-
-        public override int WriteTo(byte[] Buffer, int StartIndex = 0)
-        {
-            int cursor = StartIndex;
-
-            cursor += base.WriteTo(Buffer, StartIndex);
-
-            return cursor - StartIndex;
-        }
-
-        public override int ReadFrom(byte[] Buffer, int StartIndex = 0)
-        {
-            int cursor = StartIndex;
-
-            cursor += base.ReadFrom(Buffer, StartIndex);
-
-            return cursor - StartIndex;
-        }
-        #endregion
-
+    {
         #region Constructors
         public SetClientUdpOffMessage() 
             : base(MessageTypeGameMode.SetClientUdpOff)
