@@ -1206,10 +1206,10 @@ namespace Meridian59.Data
 
             if (LookPlayer.Message != null)
                 LookPlayer.Message.BuildString(RaiseChangedEvent);
-
+#if !VANILLA
             if (LookPlayer.Titles != null)
                 LookPlayer.Titles.BuildString(RaiseChangedEvent);
-
+#endif
             // lookspell
             if (LookSpell.ObjectBase != null)
                 LookSpell.ObjectBase.ResolveStrings(Strings, RaiseChangedEvent);
