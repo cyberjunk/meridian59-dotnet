@@ -2227,12 +2227,12 @@ namespace Meridian59.Data
                     inventoryObject.NextUpdate = Message.UpdatedObject;
             }
         }
-
+#if !VANILLA && !OPENMERIDIAN
         protected virtual void HandleMovementSpeedPercent(MovementSpeedPercentMessage Message)
         {
             MovementSpeedPercent = Message.MovementSpeedPercent;
         }
-
+#endif
         protected virtual void HandleMove(MoveMessage Message)
         {
             RoomObject roomObject = RoomObjects.GetItemByID(Message.ObjectID);
