@@ -4210,7 +4210,7 @@
                      <Window type="TaharezLook/LabelWhite" name="Options.TabAbout.TabGeneral.Disclaimer1" >
                         <Property name="Area" value="{{0,10},{0,35},{1,-10},{0,55}}" />         
                         <Property name="HorzFormatting" value="WordWrapLeftAligned" />
-                        <Property name="Text" value="Copyright © 2012-2017 Clint Banzhaf." />                  
+                        <Property name="Text" value="Copyright © 2012-2018 Clint Banzhaf." />                  
                      </Window>
 
                      <!-- ImageLogoGPL3 -->
@@ -4284,7 +4284,7 @@
                      <Window type="TaharezLook/LabelWhite" name="Options.TabAbout.TabGeneral.Disclaimer2" >
                         <Property name="Area" value="{{0,10},{0,295},{1,-10},{0,340}}" />         
                         <Property name="HorzFormatting" value="WordWrapLeftAligned" />
-                        <Property name="Text" value="Copyright © 1994-2015 Andrew and Christopher Kirmse.
+                        <Property name="Text" value="Copyright © 1994-2018 Andrew and Christopher Kirmse.
 Meridian 59 is a registered trademark." />                  
                      </Window>
 
