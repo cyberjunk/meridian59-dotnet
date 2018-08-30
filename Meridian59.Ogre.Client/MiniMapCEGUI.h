@@ -101,8 +101,12 @@ namespace Meridian59 { namespace Ogre
             // must create class instances manually
             for (int i = 0; i < mapObjects->Length; i++)
             {
+#if !VANILLA
                mapObjects[i].Flags = gcnew ObjectFlags(0, ObjectFlags::DrawingType::Plain, 0, 0,
                   ObjectFlags::PlayerType::None, ObjectFlags::MoveOnType::Yes);
+#else
+               mapObjects[i].Flags = gcnew ObjectFlags(0);
+#endif
             }
 
             // update to values
