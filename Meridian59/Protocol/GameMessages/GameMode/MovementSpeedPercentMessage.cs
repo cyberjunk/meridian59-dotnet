@@ -20,6 +20,7 @@ using Meridian59.Common.Constants;
 
 namespace Meridian59.Protocol.GameMessages
 {
+#if !VANILLA && !OPENMERIDIAN
     [Serializable]
     public class MovementSpeedPercentMessage : GameModeMessage
     {       
@@ -72,4 +73,5 @@ namespace Meridian59.Protocol.GameMessages
             : base (Buffer, StartIndex) { }
         #endregion
     }
+#endif
 }

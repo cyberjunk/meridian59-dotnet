@@ -20,6 +20,7 @@ using Meridian59.Data.Models;
 
 namespace Meridian59.Protocol.GameMessages
 {
+#if !VANILLA && !OPENMERIDIAN
     /// <summary>
     /// An update for an object's ObjectFlags (mostly roomobjects, but can also be inventory)
     /// </summary>
@@ -84,4 +85,5 @@ namespace Meridian59.Protocol.GameMessages
         public unsafe ChangeObjectFlagsMessage(ref byte* Buffer)
             : base(ref Buffer) { }
     }
+#endif
 }

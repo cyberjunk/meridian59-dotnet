@@ -21,6 +21,7 @@ using Meridian59.Data.Models;
 
 namespace Meridian59.Protocol.GameMessages
 {
+#if !VANILLA && !OPENMERIDIAN
     [Serializable]
     public class RoomContentsFlagsMessage : GameModeMessage
     {        
@@ -121,4 +122,5 @@ namespace Meridian59.Protocol.GameMessages
         public unsafe RoomContentsFlagsMessage(ref byte* Buffer)
             : base(ref Buffer) { } 
     }
+#endif
 }

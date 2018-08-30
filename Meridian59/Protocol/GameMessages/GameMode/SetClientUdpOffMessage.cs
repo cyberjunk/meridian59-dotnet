@@ -20,6 +20,7 @@ using Meridian59.Common.Constants;
 
 namespace Meridian59.Protocol.GameMessages
 {
+#if !VANILLA && !OPENMERIDIAN
     public class SetClientUdpOffMessage : GameModeMessage
     {
         #region Constructors
@@ -32,4 +33,5 @@ namespace Meridian59.Protocol.GameMessages
             : base (Buffer, StartIndex = 0) { }
         #endregion
     }
+#endif
 }
