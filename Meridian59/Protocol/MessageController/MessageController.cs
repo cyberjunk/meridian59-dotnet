@@ -363,7 +363,14 @@ namespace Meridian59.Protocol
                     case MessageTypeGameMode.System:                                          // PI: 6
                         TypedMessage = new SystemMessage(e.MessageBuffer);
                         break;
-
+#if !VANILLA && !OPENMERIDIAN
+                    case MessageTypeGameMode.UdpPing:                                         // PI: 7
+                        TypedMessage = new UdpPingMessage(e.MessageBuffer);
+                        break;
+                    case MessageTypeGameMode.EchoUdpPing:                                     // PI: 8
+                        TypedMessage = new EchoUdpPingMessage(e.MessageBuffer);
+                        break;
+#endif
                     case MessageTypeGameMode.Wait:                                            // PI: 21
                         TypedMessage = new WaitMessage(ref pMessage);
                         break;
@@ -506,14 +513,7 @@ namespace Meridian59.Protocol
                     case MessageTypeGameMode.Action:                                          // PI: 90
                         TypedMessage = new ActionMessage(e.MessageBuffer);
                         break;
-#if !VANILLA && !OPENMERIDIAN
-                    case MessageTypeGameMode.SetClientUdpOff:                                 // PI: 98
-                        TypedMessage = new SetClientUdpOffMessage(e.MessageBuffer);
-                        break;
-                    case MessageTypeGameMode.NewUdpTransmission:                              // PI: 99
-                        TypedMessage = new NewUdpTransmissionMessage(e.MessageBuffer);
-                         break;
-#endif
+
                     case MessageTypeGameMode.ReqMove:                                         // PI: 100
                         TypedMessage = new ReqMoveMessage(e.MessageBuffer, 0, e.IsTCP);
                         break;

@@ -28,7 +28,10 @@ namespace Meridian59.Protocol.Enums
         RoundTrip1          = 4,
         RoundTrip2          = 5,
         System              = 6,
-        
+#if !VANILLA && !OPENMERIDIAN
+        UdpPing             = 7,
+        EchoUdpPing         = 8,
+#endif
         Logoff              = 20,
         Wait                = 21,
         Unwait              = 22,
@@ -78,15 +81,8 @@ namespace Meridian59.Protocol.Enums
         ReqArticles         = 85,
         ReqArticle          = 86,
         PostArticle         = 87,
-        
         ReqLookupNames      = 88,
-        
         Action              = 90,
-
-#if !VANILLA && !OPENMERIDIAN
-        SetClientUdpOff     = 98,
-        NewUdpTransmission  = 99,
-#endif
 
         ReqMove             = 100,
         ReqTurn             = 101,

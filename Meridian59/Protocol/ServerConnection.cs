@@ -41,7 +41,17 @@ namespace Meridian59.Protocol
         /// <summary>
         /// Ping interval in milliseconds.
         /// </summary>
+#if VANILLA
+        protected const int PINGINTERVAL = 5000;
+#elif OPENMERIDIAN
         protected const int PINGINTERVAL = 2000;
+#else
+        protected const int PINGINTERVAL = 1000;
+#endif
+        /// <summary>
+        /// Will disable UDP if no ECHO was received for pings after that delay.
+        /// </summary>
+        protected const int UDPTIMEOUT = 6000;
 
         /// <summary>
         /// Time in ms for listenthread to sleep
@@ -119,6 +129,11 @@ namespace Meridian59.Protocol
         /// Saves the time the last ping was sent (for delta calculation)
         /// </summary>
         protected DateTime lastPingSent;
+
+        /// <summary>
+        /// Saves the time the last udp echo was received (for dyanmic disabling)
+        /// </summary>
+        protected DateTime lastEchoUdpRecv;
 
         /// <summary>
         /// True after sending BP_REQ_QUIT and waiting for BP_QUIT.
@@ -286,11 +301,20 @@ namespace Meridian59.Protocol
             if (isQuitting)
                 return;
 
+#if !VANILLA && !OPENMERIDIAN
+            // true for UDP pings which should always be sent through UDP regardless 'useUdp'
+            bool isUdpPing = 
+               Message is GameModeMessage && 
+               Message.PI == (byte)MessageTypeGameMode.UdpPing;
+#else
+            bool isUdpPing = false;
+#endif
+
             // send some by UDP
-            if (useUdp && Message is GameModeMessage && (
+            if (isUdpPing || (useUdp && Message is GameModeMessage && (
                 Message.PI == (byte)MessageTypeGameMode.ReqMove ||
                 Message.PI == (byte)MessageTypeGameMode.ReqTurn ||
-                Message.PI == (byte)MessageTypeGameMode.ReqAttack))
+                Message.PI == (byte)MessageTypeGameMode.ReqAttack)))
             {
                 // create UDP header (don't care about existing)
                 Message.Header = new MessageHeader.Udp();
@@ -475,9 +499,13 @@ namespace Meridian59.Protocol
             // sanity check cause this is async
             if (isRunning)
             {
-                // enqueue a ping message for sending
+                // enqueue a tcp ping message for sending
                 SendQueue.Enqueue(new PingMessage());
 
+                // also send udp ping for 105/112
+#if !VANILLA && !OPENMERIDIAN
+                SendQueue.Enqueue(new UdpPingMessage());
+#endif
                 // save time ping was sent
                 lastPingSent = DateTime.Now;
 
@@ -529,6 +557,7 @@ namespace Meridian59.Protocol
                     break;
 
                 case ProtocolMode.Game:
+                    lastEchoUdpRecv = DateTime.Now;
                     timPing.Start();
                     break;
             }
@@ -589,7 +618,16 @@ namespace Meridian59.Protocol
             switch ((MessageTypeGameMode)Message.PI)
             {
                 case MessageTypeGameMode.EchoPing:
-                    rtt = (DateTime.Now - lastPingSent).Milliseconds;
+                    rtt = (int)(DateTime.Now - lastPingSent).TotalMilliseconds;
+#if !VANILLA && !OPENMERIDIAN
+                    // use this as trigger to see if UDP pings timed out
+                    double msSinceUdpEcho = (DateTime.Now - lastEchoUdpRecv).TotalMilliseconds;
+                    if (useUdp && msSinceUdpEcho > UDPTIMEOUT)
+                    {
+                        useUdp = false;
+                        Logger.Log(MODULENAME, LogType.Warning, "No UDP Ping echos received, disabling UDP transmission.");
+                    }
+#endif
                     break;
 
                 case MessageTypeGameMode.Wait:
@@ -600,6 +638,7 @@ namespace Meridian59.Protocol
                     break;
 
                 case MessageTypeGameMode.Unwait:
+                    lastEchoUdpRecv = DateTime.Now;
                     timPing.Start();
                     connectionState = ConnectionState.Playing;
 
@@ -611,8 +650,11 @@ namespace Meridian59.Protocol
                     break;
 
 #if !VANILLA && !OPENMERIDIAN
-               case MessageTypeGameMode.SetClientUdpOff:
-                    useUdp = false;
+                case MessageTypeGameMode.EchoUdpPing:
+                    if (!useUdp)
+                        Logger.Log(MODULENAME, LogType.Info, "Enabling UDP again after failed state.");
+                    useUdp = true;
+                    lastEchoUdpRecv = DateTime.Now;
                     break;
 #endif
          }

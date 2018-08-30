@@ -21,15 +21,15 @@ using Meridian59.Common.Constants;
 namespace Meridian59.Protocol.GameMessages
 {
 #if !VANILLA && !OPENMERIDIAN
-    public class NewUdpTransmissionMessage : GameModeMessage
+    public class EchoUdpPingMessage : GameModeMessage
     {
         #region Constructors
-        public NewUdpTransmissionMessage() 
-            : base(MessageTypeGameMode.NewUdpTransmission)
+        public EchoUdpPingMessage() 
+            : base(MessageTypeGameMode.EchoUdpPing)
         {
         }
 
-        public NewUdpTransmissionMessage(byte[] Buffer, int StartIndex = 0) 
+        public EchoUdpPingMessage(byte[] Buffer, int StartIndex = 0) 
             : base (Buffer, StartIndex = 0) { }
         #endregion
     }
