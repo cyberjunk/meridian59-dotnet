@@ -65,8 +65,8 @@ namespace Meridian59 { namespace Ogre
       else if (Player->Flags->Player == ObjectFlags::PlayerType::Creator)
          Window->setTooltipText(GetLangTooltipOnlinePlayer(LANGSTR_TOOLTIP_ONLINEPLAYER::ADMIN));
 #else
-      if (player->Flags->Player == ObjectFlags::PlayerType::Creator)
-         wndName->setTooltipText(GetLangTooltipOnlinePlayer(LANGSTR_TOOLTIP_ONLINEPLAYER::ADMIN));
+      if (Player->Flags->Player == ObjectFlags::PlayerType::Creator)
+         Window->setTooltipText(GetLangTooltipOnlinePlayer(LANGSTR_TOOLTIP_ONLINEPLAYER::ADMIN));
 #endif
       else if (Player->Flags->Player == ObjectFlags::PlayerType::SuperDM ||
          Player->Flags->Player == ObjectFlags::PlayerType::DM)
