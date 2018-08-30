@@ -488,13 +488,13 @@ namespace Meridian59.Common
 
                     string host = (child.Attributes[XMLATTRIB_HOST] != null) ?
                         child.Attributes[XMLATTRIB_HOST].Value : DEFAULTVAL_CONNECTIONS_HOST;
-
+#if !VANILLA && !OPENMERIDIAN
                     // Change old 112/200 host entry if present.
                     if (host.Equals("meridian112.arantis.eu"))
                         host = ConnectionInfo.CON112.Host;
                     else if (host.Equals("meridian200.arantis.eu"))
                         host = ConnectionInfo.CON200.Host;
-
+#endif
                     ushort port = (child.Attributes[XMLATTRIB_PORT] != null && UInt16.TryParse(child.Attributes[XMLATTRIB_PORT].Value, out val_ushort)) ?
                         val_ushort : DEFAULTVAL_CONNECTIONS_PORT;
 
