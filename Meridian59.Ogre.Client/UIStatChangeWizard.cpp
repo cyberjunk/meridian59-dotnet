@@ -434,9 +434,10 @@ namespace Meridian59 { namespace Ogre
 
    void ControllerUI::StatChangeWizard::OnStatChangeConfirmed(Object ^sender, ::System::EventArgs ^e)
    {
+#ifndef VANILLA
       // Send request to server.
       OgreClient::Singleton->SendChangedStatsMessage();
-
+#endif
       return;
    };
 
