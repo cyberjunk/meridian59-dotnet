@@ -2,6 +2,9 @@
 
 # Latest News
 
+## 31 August 2018
+New OgreClient version 1.0.5.5 has been released, visit the wiki [changelog](https://github.com/cyberjunk/meridian59-dotnet/wiki/Meridian59.Ogre.Client-ChangeLog) for more details.
+
 ## 29 August 2018
 New OgreClient version 1.0.5.4 has been released, visit the wiki [changelog](https://github.com/cyberjunk/meridian59-dotnet/wiki/Meridian59.Ogre.Client-ChangeLog) for more details.
 
