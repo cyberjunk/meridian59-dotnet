@@ -341,5 +341,46 @@ namespace Meridian59.Files.ROO
         {
             return A * P.X + B * P.Y + C;
         }
+
+        /// <summary>
+        /// True if finite line segment SE intersects this bsp splitter (=infinite line).
+        /// If true, P will hold intersection coordinates.
+        /// </summary>
+        /// <param name="S"></param>
+        /// <param name="E"></param>
+        /// <param name="P"></param>
+        /// <param name="Epsilon"></param>
+        /// <returns></returns>
+        public bool IntersectWithFiniteLine(ref V2 S, ref V2 E, out V2 P, Real Epsilon)
+        {
+            // get 2d line equation coefficients for infinite line through S and E
+            double a1, b1, c1;
+            a1 = E.Y - S.Y;
+            b1 = S.X - E.X;
+            c1 = a1 * S.X + b1 * S.Y;
+
+            // get 2d line equation coefficients of splitter
+            double a2, b2, c2;
+            a2 = -A;
+            b2 = -B;
+            c2 = C;
+
+            double det = a1*b2 - a2*b1;
+
+            // if zero, they're parallel and never intersect
+            if (det < 0.0001f && det > -0.0001f)
+            {
+               P.X = 0.0f;
+               P.Y = 0.0f;
+               return false;
+            }
+
+            // intersection point of infinite lines
+            P.X = (Real)((b2*c1 - b1*c2) / det);
+            P.Y = (Real)((a1*c2 - a2*c1) / det);
+
+            // must be in boundingbox of finite SE
+            return MathUtil.IsInBoundingBox(ref S, ref E, ref P, Epsilon);
+        }
     }
 }
