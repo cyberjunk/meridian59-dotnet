@@ -907,8 +907,8 @@ namespace Meridian59.Files.ROO
             if (!MathUtil.IntersectInfiniteLines(ref p1, ref p2, ref start2D, ref End, out intersect))
                 return false;
 
-            // intersection point must be in boundingbox of wall
-            if (!IsInsideBoundingBox(ref intersect, GeometryConstants.WALLMINDISTANCE-64))
+            // intersection point OR end point must be in boundingbox of wall
+            if (!IsInsideBoundingBox(ref End, GeometryConstants.WALLMINDISTANCE))
                 return false;
 
             /*************************************************************************/
