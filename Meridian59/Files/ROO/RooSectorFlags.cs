@@ -52,6 +52,9 @@ namespace Meridian59.Files.ROO
         private const uint SF_SLOPED_FLOOR      = 0x00000400;      // Sector has sloped floor
         private const uint SF_SLOPED_CEILING    = 0x00000800;      // Sector has sloped ceiling
         private const uint SF_HAS_ANIMATED      = 0x00001000;      // has animated once and hence is dynamic geometry, required for new client             
+#if !VANILLA && !OPENMERIDIAN
+        private const uint SF_NOMOVE            = 0x00002000;      // Sector can't be moved on by mobs or players
+#endif
         #endregion
 
         /// <summary>
@@ -213,7 +216,24 @@ namespace Meridian59.Files.ROO
 
                 RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
             }
-        }           
+        }
+
+#if !VANILLA && !OPENMERIDIAN
+        /// <summary>
+        /// Sector can't be moved on by mobs or players
+        /// </summary>
+        public bool IsNoMove
+        {
+            get { return (flags & SF_NOMOVE) == SF_NOMOVE; }
+            set
+            {
+                if (value) flags |= SF_NOMOVE;
+                else flags &= ~SF_NOMOVE;
+
+                RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
+            }
+        }
+#endif
         #endregion
-    }
+   }
 }
