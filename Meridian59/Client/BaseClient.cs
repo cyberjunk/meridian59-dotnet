@@ -2682,7 +2682,7 @@ namespace Meridian59.Client
                 rooEnd.ConvertToROO();
 
                 // check against roowalls (this can modify step)
-                step = CurrentRoom.VerifyMove(ref rooStart, ref rooEnd, PlayerHeight);
+                step = CurrentRoom.VerifyMove(ref rooStart, ref rooEnd, Speed);
 
                 // convert back to worldsize
                 step.Scale(0.0625f);

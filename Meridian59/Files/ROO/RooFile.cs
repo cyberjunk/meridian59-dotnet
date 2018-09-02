@@ -64,6 +64,39 @@ namespace Meridian59.Files.ROO
             }
         }
 
+        /// <summary>
+        /// Stores intermediate information about 2D intersections
+        /// wich must be evaluated later
+        /// </summary>
+        public class IntersectInfo
+        {
+            public RooSector  SectorS;
+            public RooSector  SectorE;
+            public RooSideDef SideS;
+            public RooSideDef SideE;
+            public RooWall    Wall;
+            public V2         Q;
+            public Real       Distance2;
+
+            public IntersectInfo(
+                RooSector SectorS,
+                RooSector SectorE,
+                RooSideDef SideS,
+                RooSideDef SideE,
+                RooWall Wall,
+                V2 Q,
+                Real Distance2)
+            {
+                this.SectorS = SectorS;
+                this.SectorE = SectorE;
+                this.SideS = SideS;
+                this.SideE = SideE;
+                this.Wall = Wall;
+                this.Q = Q;
+                this.Distance2 = Distance2;
+            }
+        }
+
         #region Constants
         public const uint SIGNATURE             = 0xB14F4F52;   // first expected bytes in file
         public const uint VERSION               = 13;           // current
@@ -892,6 +925,7 @@ namespace Meridian59.Files.ROO
         protected readonly List<RooSideDef> sideDefs = new List<RooSideDef>();
         protected readonly List<RooSector> sectors = new List<RooSector>();
         protected readonly List<RooThing> things = new List<RooThing>();
+        protected readonly List<IntersectInfo> intersections = new List<IntersectInfo>();
         #endregion
 
         #region Properties
@@ -1484,9 +1518,9 @@ namespace Meridian59.Files.ROO
         /// </summary>
         /// <param name="Start">Startpoint of movement. In FINENESS units (1:1024), Y is height.</param>
         /// <param name="End">Endpoint of movement. In FINENESS units (1:1024).</param>
-        /// <param name="PlayerHeight">Height of the player for ceiling collisions</param>
+        /// <param name="Speed">Speed the move is applied with</param>
         /// <returns>Same or adjusted delta vector between Start and end (in ROO coords)</returns>
-        public V2 VerifyMove(ref V3 Start, ref V2 End, Real PlayerHeight)
+        public V2 VerifyMove(ref V3 Start, ref V2 End, Real Speed)
         {                       
             V2 Start2D = new V2(Start.X, Start.Z);
             V2 newend = End;           
@@ -1498,38 +1532,18 @@ namespace Meridian59.Files.ROO
 
             /**************************************************************/
 
-            // first collision check
-            wall = VerifyMoveByTree(BSPTree[0], ref Start, ref End, PlayerHeight);
-            
             // no collision with untouched move
-            if (wall == null)
+            if (CanMoveInRoom(ref Start2D, ref End, Start.Y, Speed, out wall))
                 return End - Start2D;
 
             /**************************************************************/
 
             // try to slide along collision wall
             newend  = wall.SlideAlong(Start2D, End);
-            wall    = VerifyMoveByTree(BSPTree[0], ref Start, ref newend, PlayerHeight);
-            
+
             // no collision with 'slide along' move
-            if (wall == null)
+            if (CanMoveInRoom(ref Start2D, ref newend, Start.Y, Speed, out wall))
                 return newend - Start2D;
-           
-            /**************************************************************/
-
-            // try find another collision wall
-            wall = VerifyMoveByTree(BSPTree[0], ref Start, ref End, PlayerHeight, wall);
-
-            if (wall != null)
-            {
-                // try to slide along other collision wall
-                newend  = wall.SlideAlong(Start2D, End);
-                wall    = VerifyMoveByTree(BSPTree[0], ref Start, ref newend, PlayerHeight);
-
-                // slide along other collision wall was ok
-                if (wall == null)
-                    return newend - Start2D;          
-            }
 
             /**************************************************************/
 
@@ -1540,91 +1554,361 @@ namespace Meridian59.Files.ROO
                 rot.Rotate(-ANGLESTEP * (Real)i);
                 newend = Start2D + rot;
 
-                wall = VerifyMoveByTree(BSPTree[0], ref Start, ref newend, PlayerHeight);
-                
                 // no collision
-                if (wall == null)
+                if (CanMoveInRoom(ref Start2D, ref newend, Start.Y, Speed, out wall))
                     return newend - Start2D;
 
                 rot = End - Start2D;
                 rot.Rotate(ANGLESTEP * (Real)i);
                 newend = Start2D + rot;
 
-                wall = VerifyMoveByTree(BSPTree[0], ref Start, ref newend, PlayerHeight);
-
                 // no collision
-                if (wall == null)
+                if (CanMoveInRoom(ref Start2D, ref newend, Start.Y, Speed, out wall))
                     return newend - Start2D;
+
             }
 
             return new V2(0.0f, 0.0f);
         }
 
         /// <summary>
-        /// 
+        /// Swaps two entries in the intersections list
         /// </summary>
-        /// <param name="Start"></param>
-        /// <param name="End"></param>
-        /// <param name="PlayerHeight"></param>
-        /// <returns></returns>
-        protected RooWall VerifyMoveByList(ref V3 Start, ref V2 End, Real PlayerHeight)
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        protected void IntersectionsSwap(int a, int b)
         {
-            foreach (RooWall wall in Walls)
-                if (wall.IsBlockingMove(ref Start, ref End, PlayerHeight))
-                    return wall;
+            IntersectInfo temp = intersections[a];
+            intersections[a] = intersections[b];
+            intersections[b] = temp;
+        }
+        
+        /// <summary>
+        /// QuickSorts the intersections list based on Distance2
+        /// </summary>
+        /// <param name="arr"></param>
+        /// <param name="beg"></param>
+        /// <param name="end"></param>
+        protected void IntersectionsSort(List<IntersectInfo> arr, int beg, int end)
+        {
+            // Recursive QuickSort implementation
+            // sorting (potential) intersections by squared distance from start
 
-            return null;
+            if (end > beg + 1)
+            {
+               IntersectInfo piv = arr[beg];
+               int l = beg + 1, r = end;
+               while (l < r)
+               {
+                  if (arr[l].Distance2 <= piv.Distance2)
+                     l++;
+                  else
+                     IntersectionsSwap(l, --r);
+               }
+               IntersectionsSwap(--l, beg);
+               IntersectionsSort(arr, beg, l);
+               IntersectionsSort(arr, r, end);
+            }
         }
 
         /// <summary>
-        /// Collisions with wall segments for user movements using the BSP tree.
-        /// Therefore with logarithmic rather than linear costs.
+        /// Used in CanMoveInRoomTree
         /// </summary>
-        /// <param name="Node"></param>
-        /// <param name="Start"></param>
-        /// <param name="End"></param>
-        /// <param name="PlayerHeight"></param>
-        /// <param name="IgnoreWall"></param>
-        /// <returns></returns>
-        protected RooWall VerifyMoveByTree(RooBSPItem Node, ref V3 Start, ref V2 End, Real PlayerHeight, RooWall IgnoreWall = null)
+        protected bool CanMoveInRoomTree3DInternal(RooSector SectorS, RooSector SectorE, RooSideDef SideS, RooSideDef SideE, RooWall Wall, ref V2 Q)
         {
+            // block moves with end outside
+            if (SectorE == null || SideE == null)
+               return false;
+
+            // sides which have no passable flag set always block
+            if (SideS != null && !SideS.Flags.IsPassable)
+               return false;
+#if !VANILLA && !OPENMERIDIAN
+            // endsector must not be marked SF_NOMOVE
+            if (SectorE.Flags.IsNoMove)
+               return false;
+#endif
+            // get floor and ceiling height at end
+            Real hFloorE = SectorE.CalculateFloorHeight(Q.X, Q.Y, true);
+            Real hCeilingE = SectorE.CalculateCeilingHeight(Q.X, Q.Y);
+
+            // check endsector height
+            if (hCeilingE - hFloorE < GeometryConstants.OBJECTHEIGHTROO)
+               return false;
+
+            // must evaluate heights at transition later
+            intersections.Add(new IntersectInfo(
+               SectorS, SectorE, SideS, SideE, Wall, Q, 0.0f));
+
+            return true;
+        }
+
+        /// <summary>
+        /// Used in CanMoveInRoom
+        /// </summary>
+        protected bool CanMoveInRoomTree(RooBSPItem Node, ref V2 S, ref V2 E, out RooWall BlockWall)
+        {
+            // reached a leaf or nullchild, movements not blocked by leafs
             if (Node == null || Node.Type != RooBSPItem.NodeType.Node)
-                return null;
-
-            /*************************************************************/
-
-            RooPartitionLine line = (RooPartitionLine)Node;
-            RooWall wall = line.Wall;
-            V2 start2D = new V2(Start.X, Start.Z);
-
-            /*************************************************************/
-            
-            // check node boundingbox
-            if (!line.BoundingBox.IsInside(End, GeometryConstants.WALLMINDISTANCE) && 
-                !line.BoundingBox.IsInside(start2D, GeometryConstants.WALLMINDISTANCE))
-                return null;
-       
-            /*************************************************************/
-
-            // test walls of splitter
-            while (wall != null)
             {
-                if (wall != IgnoreWall && wall.IsBlockingMove(ref Start, ref End, PlayerHeight))
-                    return wall;
-
-                // loop over next wall in same plane
-                wall = wall.NextWallInPlane;
+               BlockWall = null;
+               return true;
             }
 
-            /*************************************************************/
+            /****************************************************************/
 
-            RooWall wl = VerifyMoveByTree(line.LeftChild, ref Start, ref End, PlayerHeight, IgnoreWall);
+            RooPartitionLine line = (RooPartitionLine)Node;
 
-            if (wl != null)
-                return wl;
+            // get signed distances from splitter to both endpoints of move
+            Real distS = line.GetDistance(ref S);
+            Real distE = line.GetDistance(ref E);
 
+            /****************************************************************/
+
+            // both endpoints far away enough on positive (right) side
+            // --> climb down only right subtree
+            if ((distS > GeometryConstants.WALLMINDISTANCE) && (distE > GeometryConstants.WALLMINDISTANCE))
+               return CanMoveInRoomTree(line.RightChild, ref S, ref E, out BlockWall);
+
+            // both endpoints far away enough on negative (left) side
+            // --> climb down only left subtree
+            else if ((distS < -GeometryConstants.WALLMINDISTANCE) && (distE < -GeometryConstants.WALLMINDISTANCE))
+               return CanMoveInRoomTree(line.LeftChild, ref S, ref E, out BlockWall);
+
+            // endpoints are on different sides, or one/both on infinite line or potentially too close
+            // --> check walls of splitter first and then possibly climb down both subtrees
             else
-                return VerifyMoveByTree(line.RightChild, ref Start, ref End, PlayerHeight, IgnoreWall);
+            {
+               RooSideDef sideS;
+               RooSector sectorS;
+               RooSideDef sideE;
+               RooSector sectorE;
+
+               // CASE 1) The move line actually crosses this infinite splitter.
+               // This case handles long movelines where S and E can be far away from each other and
+               // just checking the distance of E to the line would fail.
+               // q contains the intersection point
+               if (((distS > 0.0f) && (distE < 0.0f)) ||
+                   ((distS < 0.0f) && (distE > 0.0f)))
+               {
+                  // intersect finite move-line SE with infinite splitter line
+                  // q stores possible intersection point
+                  V2 q;
+                  if (line.IntersectWithFiniteLine(ref S, ref E, out q, 0.1f))
+                  {
+                     // iterate finite segments (walls) in this splitter
+                     RooWall wall = line.Wall;
+                     while (wall != null)
+                     {
+                        // infinite intersection point must also be in bbox of wall
+                        // otherwise no intersect
+                        if (!wall.IsInsideBoundingBox(ref q, 0.1f))
+                        {
+                           wall = wall.NextWallInPlane;
+                           continue;
+                        }
+
+                        // set from and to sector / side
+                        if (distS > 0.0f)
+                        {
+                           sideS = wall.RightSide;
+                           sectorS = wall.RightSector;
+                        }
+                        else
+                        {
+                           sideS = wall.LeftSide;
+                           sectorS = wall.LeftSector;
+                        }
+
+                        if (distE > 0.0f)
+                        {
+                           sideE = wall.RightSide;
+                           sectorE = wall.RightSector;
+                        }
+                        else
+                        {
+                           sideE = wall.LeftSide;
+                           sectorE = wall.LeftSector;
+                        }
+
+                        // check the transition data for this wall, use intersection point q
+                        bool ok = CanMoveInRoomTree3DInternal(sectorS, sectorE, sideS, sideE, wall, ref q);
+
+                        if (!ok)
+                        {
+                           BlockWall = wall;
+                           return false;
+                        }
+
+                        wall = wall.NextWallInPlane;
+                     }
+                  }
+               }
+
+               // CASE 2) The move line does not cross the infinite splitter, both move endpoints are on the same side.
+               // This handles short moves where walls are not intersected, but the endpoint may be too close
+               else
+               {
+                  // check only getting closer
+                  if (Math.Abs(distE) <= Math.Abs(distS))
+                  {
+                     // iterate finite segments (walls) in this splitter
+                     RooWall wall = line.Wall;
+                     while (wall != null)
+                     {
+                        V2 p1 = wall.P1;
+                        V2 p2 = wall.P2;
+
+                        // get min. squared distance from move endpoint to line segment
+                        Real dist2 = E.MinSquaredDistanceToLineSegment(ref p1, ref p2);
+
+                        // skip if far enough away
+                        if (dist2 > GeometryConstants.WALLMINDISTANCE2)
+                        {
+                           wall = wall.NextWallInPlane;
+                           continue;
+                        }
+
+                        // set from and to sector / side
+                        // for case 2 (too close) these are based on (S),
+                        // and (E) is assumed to be on the other side.
+                        if (distS >= 0.0f)
+                        {
+                           sideS = wall.RightSide;
+                           sectorS = wall.RightSector;
+                           sideE = wall.LeftSide;
+                           sectorE = wall.LeftSector;
+                        }
+                        else
+                        {
+                           sideS = wall.LeftSide;
+                           sectorS = wall.LeftSector;
+                           sideE = wall.RightSide;
+                           sectorE = wall.RightSector;
+                        }
+
+                        // check the transition data for this wall, use E for intersectpoint
+                        bool ok = CanMoveInRoomTree3DInternal(sectorS, sectorE, sideS, sideE, wall, ref E);
+
+                        if (!ok)
+                        {
+                           BlockWall = wall;
+                           return false;
+                        }
+
+                        wall = wall.NextWallInPlane;
+                     }
+                  }
+               }
+            }
+
+            /****************************************************************/
+
+            // try right subtree first
+            bool retval = CanMoveInRoomTree(line.RightChild, ref S, ref E, out BlockWall);
+
+            // found a collision there? return it
+            if (!retval)
+               return retval;
+
+            // otherwise try left subtree
+            return CanMoveInRoomTree(line.LeftChild, ref S, ref E, out BlockWall);
+        }
+
+        /// <summary>
+        /// Test if can move from S to E using Speed starting at Height
+        /// </summary>
+        public bool CanMoveInRoom(ref V2 S, ref V2 E, Real Height, Real Speed, out RooWall BlockWall)
+        {
+           // clear old intersections
+           intersections.Clear();
+
+           if (!CanMoveInRoomTree(BSPTreeNodes[0], ref S, ref E, out BlockWall))
+              return false;
+
+           // but still got to validate height transitions list
+           // calculate the squared distances
+           foreach (IntersectInfo info in intersections)
+              info.Distance2 = (info.Q - S).LengthSquared;
+
+           // sort the potential intersections by squared distance from start
+           IntersectionsSort(intersections, 0, intersections.Count);
+
+           // iterate from intersection to intersection, starting and start and ending at end
+           // check the transition data for each one, use intersection point q
+           Real distanceDone = 0.0f;
+           Real heightModified = Height;
+           V2 p = S;
+           for (int i = 0; i < intersections.Count; i++)
+           {
+              IntersectInfo transit = intersections[0];
+
+              // deal with null start sector/side
+              if (transit.SideS == null || transit.SectorS == null)
+              {
+                 if (i == 0) break; // allow if first segment (start outside)
+               
+                 // deny otherwise (segment on the line outside)
+                 else
+                 {
+                    BlockWall = transit.Wall;
+                    return false; 
+                 }
+              }
+
+              // get floor heights
+              Real hFloorSP = transit.SectorS.CalculateFloorHeight(p.X, p.Y, true);
+              Real hFloorSQ = transit.SectorS.CalculateFloorHeight(transit.Q.X, transit.Q.Y, true);
+              Real hFloorEQ = transit.SectorE.CalculateFloorHeight(transit.Q.X, transit.Q.Y, true);
+
+              // squared length of this segment
+              Real stepLen2 = transit.Distance2 - distanceDone;
+
+              // reduce height by what we lose across the SectorS from p to q
+              if (heightModified > hFloorSP)
+              {
+                 // workaround div by 0, todo? these are teleports
+                 if (Speed < 0.001f && Speed > -0.001f) Speed = 9999999;
+
+                 // S = 1/2*a*t² where t=dist/speed
+                 // S = 1/2*a*(dist²/speed²)
+                 // t² = (dist/speed)² = dist²/speed²
+                 Real stepDt2 = stepLen2 / (Speed*Speed);
+                 Real stepFall = 0.5f * GeometryConstants.GRAVITYACCELERATION * stepDt2;
+
+                 // apply fallheight
+                 heightModified += stepFall;
+              }
+
+              // make sure we're at least at startsector's groundheight at Q when we reach Q from P
+              // in case we stepped up or fell below it
+              heightModified = MathUtil.Max(hFloorSQ, heightModified);
+
+              // check stepheight (this also requires a lower texture set)
+              //if (transit->SideS->TextureLower > 0 && (hFloorE - hFloorQ > MAXSTEPHEIGHT))
+              if (transit.SideS.LowerTexture > 0 && (hFloorEQ - heightModified > GeometryConstants.MAXSTEPHEIGHT))
+              {
+                 BlockWall = transit.Wall;
+                 return false;
+              }
+
+              // get ceiling height
+              Real hCeilingEQ = transit.SectorE.CalculateCeilingHeight(transit.Q.X, transit.Q.Y);
+
+              // check ceilingheight (this also requires an upper texture set)
+              if (transit.SideS.UpperTexture > 0 && (hCeilingEQ - hFloorSQ < GeometryConstants.OBJECTHEIGHTROO))
+              {
+                 BlockWall = transit.Wall;
+                 return false;
+              }
+
+              // we actually made it across that intersection
+              heightModified = MathUtil.Max(hFloorEQ, heightModified); // keep our height or set it at least to sector
+              distanceDone += stepLen2;                                // add squared length of processed segment
+              p = transit.Q;                                           // set end to next start
+           }
+
+           return true;
         }
 
         /// <summary>
