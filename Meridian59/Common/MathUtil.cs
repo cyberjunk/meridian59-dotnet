@@ -816,5 +816,20 @@ namespace Meridian59.Common
 
             return false;
         }
-    }
+
+        /// <summary>
+        /// Returns true if P lies inside the boundingbox defines by S and E
+        /// </summary>
+        /// <param name="S"></param>
+        /// <param name="E"></param>
+        /// <param name="P"></param>
+        /// <param name="Epsilon"></param>
+        /// <returns></returns>
+        public static bool IsInBoundingBox(ref V2 S, ref V2 E, ref V2 P, Real Epsilon)
+        {
+            return 
+               (Min(S.X, E.X) - Epsilon <= P.X && P.X <= Max(S.X, E.X) + Epsilon && 
+                Min(S.Y, E.Y) - Epsilon <= P.Y && P.Y <= Max(S.Y, E.Y) + Epsilon);
+        }
+   }
 }
