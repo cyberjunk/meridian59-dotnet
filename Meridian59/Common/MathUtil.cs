@@ -831,5 +831,5 @@ namespace Meridian59.Common
                (Min(S.X, E.X) - Epsilon <= P.X && P.X <= Max(S.X, E.X) + Epsilon && 
                 Min(S.Y, E.Y) - Epsilon <= P.Y && P.Y <= Max(S.Y, E.Y) + Epsilon);
         }
-   }
+    }
 }
