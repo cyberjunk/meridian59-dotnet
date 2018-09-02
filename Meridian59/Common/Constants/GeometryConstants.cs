@@ -167,6 +167,11 @@ namespace Meridian59.Common.Constants
         public const Real PLAYERHEIGHT = 50.0f;
 
         /// <summary>
+        /// Object heights assumed on server side for collisions. In ROO Scale.
+        /// </summary>
+        public const Real OBJECTHEIGHTROO = 768;
+
+        /// <summary>
         /// Estimated player width in KOD (also new client float) scale.
         /// </summary>
         /// <remarks>
