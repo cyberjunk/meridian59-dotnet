@@ -1660,18 +1660,18 @@ namespace Meridian59.Files.ROO
             RooPartitionLine line = (RooPartitionLine)Node;
 
             // get signed distances from splitter to both endpoints of move
-            Real distS = line.GetDistanceSquared(ref S);
-            Real distE = line.GetDistanceSquared(ref E);
+            Real distS = line.GetDistance(ref S);
+            Real distE = line.GetDistance(ref E);
 
             /****************************************************************/
             // both endpoints far away enough on positive (right) side
             // --> climb down only right subtree
-            if ((distS > GeometryConstants.WALLMINDISTANCE2) && (distE > GeometryConstants.WALLMINDISTANCE2))
+            if ((distS > GeometryConstants.WALLMINDISTANCE) && (distE > GeometryConstants.WALLMINDISTANCE))
                return CanMoveInRoomTree(line.RightChild, ref S, ref E, out BlockWall);
 
             // both endpoints far away enough on negative (left) side
             // --> climb down only left subtree
-            else if ((distS < -GeometryConstants.WALLMINDISTANCE2) && (distE < -GeometryConstants.WALLMINDISTANCE2))
+            else if ((distS < -GeometryConstants.WALLMINDISTANCE) && (distE < -GeometryConstants.WALLMINDISTANCE))
                return CanMoveInRoomTree(line.LeftChild, ref S, ref E, out BlockWall);
 
             // endpoints are on different sides, or one/both on infinite line or potentially too close
