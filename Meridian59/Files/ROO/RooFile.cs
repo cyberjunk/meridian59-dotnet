@@ -1659,145 +1659,140 @@ namespace Meridian59.Files.ROO
 
             RooPartitionLine line = (RooPartitionLine)Node;
 
+            // check node boundingbox, if both points are outside,
+            // then there is no need to evaluate this subtree any further
+            // TODO: What about moves that have both points outside, but cross it?
+            if (!line.BoundingBox.IsInside(S, GeometryConstants.WALLMINDISTANCE) && 
+                !line.BoundingBox.IsInside(E, GeometryConstants.WALLMINDISTANCE))
+            {
+               BlockWall = null;
+               return true;
+            }
+
             // get signed distances from splitter to both endpoints of move
             Real distS = line.GetDistance(ref S);
             Real distE = line.GetDistance(ref E);
 
             /****************************************************************/
 
-            // both endpoints far away enough on positive (right) side
-            // --> climb down only right subtree
-            if ((distS > GeometryConstants.WALLMINDISTANCE) && (distE > GeometryConstants.WALLMINDISTANCE))
-               return CanMoveInRoomTree(line.RightChild, ref S, ref E, out BlockWall);
+            RooSideDef sideS;
+            RooSector sectorS;
+            RooSideDef sideE;
+            RooSector sectorE;
 
-            // both endpoints far away enough on negative (left) side
-            // --> climb down only left subtree
-            else if ((distS < -GeometryConstants.WALLMINDISTANCE) && (distE < -GeometryConstants.WALLMINDISTANCE))
-               return CanMoveInRoomTree(line.LeftChild, ref S, ref E, out BlockWall);
-
-            // endpoints are on different sides, or one/both on infinite line or potentially too close
-            // --> check walls of splitter first and then possibly climb down both subtrees
-            else
+            // CASE 1) The move line actually crosses this infinite splitter.
+            // This case handles long movelines where S and E can be far away from each other and
+            // just checking the distance of E to the line would fail.
+            // q contains the intersection point
+            if (((distS > 0.0f) && (distE < 0.0f)) ||
+                ((distS < 0.0f) && (distE > 0.0f)))
             {
-               RooSideDef sideS;
-               RooSector sectorS;
-               RooSideDef sideE;
-               RooSector sectorE;
-
-               // CASE 1) The move line actually crosses this infinite splitter.
-               // This case handles long movelines where S and E can be far away from each other and
-               // just checking the distance of E to the line would fail.
-               // q contains the intersection point
-               if (((distS > 0.0f) && (distE < 0.0f)) ||
-                   ((distS < 0.0f) && (distE > 0.0f)))
+               // intersect finite move-line SE with infinite splitter line
+               // q stores possible intersection point
+               V2 q;
+               if (line.IntersectWithFiniteLine(ref S, ref E, out q, 0.1f))
                {
-                  // intersect finite move-line SE with infinite splitter line
-                  // q stores possible intersection point
-                  V2 q;
-                  if (line.IntersectWithFiniteLine(ref S, ref E, out q, 0.1f))
+                  // iterate finite segments (walls) in this splitter
+                  RooWall wall = line.Wall;
+                  while (wall != null)
                   {
-                     // iterate finite segments (walls) in this splitter
-                     RooWall wall = line.Wall;
-                     while (wall != null)
+                     // infinite intersection point must also be in bbox of wall
+                     // otherwise no intersect
+                     if (!wall.IsInsideBoundingBox(ref q, 0.1f))
                      {
-                        // infinite intersection point must also be in bbox of wall
-                        // otherwise no intersect
-                        if (!wall.IsInsideBoundingBox(ref q, 0.1f))
-                        {
-                           wall = wall.NextWallInPlane;
-                           continue;
-                        }
-
-                        // set from and to sector / side
-                        if (distS > 0.0f)
-                        {
-                           sideS = wall.RightSide;
-                           sectorS = wall.RightSector;
-                        }
-                        else
-                        {
-                           sideS = wall.LeftSide;
-                           sectorS = wall.LeftSector;
-                        }
-
-                        if (distE > 0.0f)
-                        {
-                           sideE = wall.RightSide;
-                           sectorE = wall.RightSector;
-                        }
-                        else
-                        {
-                           sideE = wall.LeftSide;
-                           sectorE = wall.LeftSector;
-                        }
-
-                        // check the transition data for this wall, use intersection point q
-                        bool ok = CanMoveInRoomTree3DInternal(sectorS, sectorE, sideS, sideE, wall, ref q);
-
-                        if (!ok)
-                        {
-                           BlockWall = wall;
-                           return false;
-                        }
-
                         wall = wall.NextWallInPlane;
+                        continue;
                      }
+
+                     // set from and to sector / side
+                     if (distS > 0.0f)
+                     {
+                        sideS = wall.RightSide;
+                        sectorS = wall.RightSector;
+                     }
+                     else
+                     {
+                        sideS = wall.LeftSide;
+                        sectorS = wall.LeftSector;
+                     }
+
+                     if (distE > 0.0f)
+                     {
+                        sideE = wall.RightSide;
+                        sectorE = wall.RightSector;
+                     }
+                     else
+                     {
+                        sideE = wall.LeftSide;
+                        sectorE = wall.LeftSector;
+                     }
+
+                     // check the transition data for this wall, use intersection point q
+                     bool ok = CanMoveInRoomTree3DInternal(sectorS, sectorE, sideS, sideE, wall, ref q);
+
+                     if (!ok)
+                     {
+                        BlockWall = wall;
+                        return false;
+                     }
+
+                     wall = wall.NextWallInPlane;
                   }
                }
+            }
 
-               // CASE 2) The move line does not cross the infinite splitter, both move endpoints are on the same side.
-               // This handles short moves where walls are not intersected, but the endpoint may be too close
-               else
+            // CASE 2) The move line does not cross the infinite splitter, both move endpoints are on the same side.
+            // This handles short moves where walls are not intersected, but the endpoint may be too close
+            else
+            {
+               // check only getting closer
+               if (Math.Abs(distE) <= Math.Abs(distS))
                {
-                  // check only getting closer
-                  if (Math.Abs(distE) <= Math.Abs(distS))
+                  // iterate finite segments (walls) in this splitter
+                  RooWall wall = line.Wall;
+                  while (wall != null)
                   {
-                     // iterate finite segments (walls) in this splitter
-                     RooWall wall = line.Wall;
-                     while (wall != null)
+                     V2 p1 = wall.P1;
+                     V2 p2 = wall.P2;
+
+                     // get min. squared distance from move endpoint to line segment
+                     Real dist2 = E.MinSquaredDistanceToLineSegment(ref p1, ref p2);
+
+                     // skip if far enough away
+                     if (dist2 > GeometryConstants.WALLMINDISTANCE2)
                      {
-                        V2 p1 = wall.P1;
-                        V2 p2 = wall.P2;
-
-                        // get min. squared distance from move endpoint to line segment
-                        Real dist2 = E.MinSquaredDistanceToLineSegment(ref p1, ref p2);
-
-                        // skip if far enough away
-                        if (dist2 > GeometryConstants.WALLMINDISTANCE2)
-                        {
-                           wall = wall.NextWallInPlane;
-                           continue;
-                        }
-
-                        // set from and to sector / side
-                        // for case 2 (too close) these are based on (S),
-                        // and (E) is assumed to be on the other side.
-                        if (distS >= 0.0f)
-                        {
-                           sideS = wall.RightSide;
-                           sectorS = wall.RightSector;
-                           sideE = wall.LeftSide;
-                           sectorE = wall.LeftSector;
-                        }
-                        else
-                        {
-                           sideS = wall.LeftSide;
-                           sectorS = wall.LeftSector;
-                           sideE = wall.RightSide;
-                           sectorE = wall.RightSector;
-                        }
-
-                        // check the transition data for this wall, use E for intersectpoint
-                        bool ok = CanMoveInRoomTree3DInternal(sectorS, sectorE, sideS, sideE, wall, ref E);
-
-                        if (!ok)
-                        {
-                           BlockWall = wall;
-                           return false;
-                        }
-
                         wall = wall.NextWallInPlane;
+                        continue;
                      }
+
+                     // set from and to sector / side
+                     // for case 2 (too close) these are based on (S),
+                     // and (E) is assumed to be on the other side.
+                     if (distS >= 0.0f)
+                     {
+                        sideS = wall.RightSide;
+                        sectorS = wall.RightSector;
+                        sideE = wall.LeftSide;
+                        sectorE = wall.LeftSector;
+                     }
+                     else
+                     {
+                        sideS = wall.LeftSide;
+                        sectorS = wall.LeftSector;
+                        sideE = wall.RightSide;
+                        sectorE = wall.RightSector;
+                     }
+
+                     // check the transition data for this wall, use E for intersectpoint
+                     bool ok = CanMoveInRoomTree3DInternal(sectorS, sectorE, sideS, sideE, wall, ref E);
+
+                     if (!ok)
+                     {
+                        BlockWall = wall;
+                        return false;
+                     }
+
+                     wall = wall.NextWallInPlane;
                   }
                }
             }
