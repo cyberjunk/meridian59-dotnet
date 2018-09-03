@@ -339,7 +339,29 @@ namespace Meridian59.Files.ROO
         /// <returns></returns>
         public Real GetDistance(ref V2 P)
         {
-            return A * P.X + B * P.Y + C;
+            Real denom = (Real)Math.Sqrt(P.X * P.X + P.Y * P.Y);
+            if (denom < 0.0001f && denom > -0.0001f)
+               return 0.0f;
+
+            Real nom = (A * P.X + B * P.Y + C);
+            return nom / denom;
+        }
+
+        /// <summary>
+        /// Returns the squared distance of point P from this infinite splitter line.
+        /// Uses the line equation coefficients from properties (A,B,C).
+        /// Sign of value gives the side.
+        /// </summary>
+        /// <param name="P"></param>
+        /// <returns></returns>
+        public Real GetDistanceSquared(ref V2 P)
+        {
+            Real denom2 = P.X * P.X + P.Y * P.Y;
+            if (denom2 < 0.0001f && denom2 > -0.0001f)
+               return 0.0f;
+
+            Real nom = (A * P.X + B * P.Y + C);
+            return (nom*nom) / denom2;
         }
 
         /// <summary>
