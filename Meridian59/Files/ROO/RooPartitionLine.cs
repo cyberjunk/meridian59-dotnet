@@ -158,9 +158,6 @@ namespace Meridian59.Files.ROO
             WallReference = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            // calc coefficents length vector
-            LengthCoefficientsVector = (Real)Math.Sqrt(A * A + B * B);
-
             return cursor - StartIndex;
         }
 
@@ -199,9 +196,6 @@ namespace Meridian59.Files.ROO
 
             WallReference = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
-
-            // calc coefficents length vector
-            LengthCoefficientsVector = (Real)Math.Sqrt(A * A + B * B);
         }
 
         #endregion
@@ -259,11 +253,6 @@ namespace Meridian59.Files.ROO
         /// Will be filled in ResolveIndices().
         /// </summary>
         public RooBSPItem LeftChild { get; set; }
-
-        /// <summary>
-        /// Stores result of sqrt(A*A+B*B*).
-        /// </summary>
-        public Real LengthCoefficientsVector { get; set; }
         #endregion
 
         /// <summary>
@@ -291,8 +280,8 @@ namespace Meridian59.Files.ROO
             this.Left = Left;
             this.WallReference = LineDefReference;
             this.BoundingBox = BoundingBox;
-            this.LengthCoefficientsVector = (Real)Math.Sqrt(A * A + B * B);
-      }
+            this.NormalizeKoefficients();
+        }
 
         /// <summary>
         /// Constructor by managed parser
@@ -340,6 +329,22 @@ namespace Meridian59.Files.ROO
                 LeftChild = RooFile.BSPTree[Left - 1];
             }
         }
+        
+        /// <summary>
+        /// Normalizes the line equation koefficients so that:
+        /// sqrt(a*a+b*b) = 1
+        /// </summary>
+        public void NormalizeKoefficients()
+        {
+           Real len = (Real)Math.Sqrt(A * A + B * B);
+
+           if (len > 0.0f)
+           {
+              A /= len;
+              B /= len;
+              C /= len;
+           }
+        }
 
         /// <summary>
         /// Returns the distance of point P from this infinite splitter line.
@@ -350,12 +355,7 @@ namespace Meridian59.Files.ROO
         /// <returns></returns>
         public Real GetDistance(ref V2 P)
         {
-            if (LengthCoefficientsVector < 0.0001f && 
-                LengthCoefficientsVector > -0.0001f)
-                return 0.0f;
-
-            Real nom = (A * P.X + B * P.Y + C);
-            return nom / LengthCoefficientsVector;
+            return A * P.X + B * P.Y + C;
         }
 
         /// <summary>

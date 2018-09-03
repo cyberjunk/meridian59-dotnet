@@ -1226,6 +1226,11 @@ namespace Meridian59.Files.ROO
                 leaf.UpdateVertexUV(false);
                 leaf.UpdateNormals();
             }
+
+            foreach (RooPartitionLine line in BSPTreeNodes)
+            {
+                line.NormalizeKoefficients();
+            }
         }
 
         /// <summary>
