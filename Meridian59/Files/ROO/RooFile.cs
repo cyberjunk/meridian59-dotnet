@@ -1836,7 +1836,7 @@ namespace Meridian59.Files.ROO
            V2 p = S;
            for (int i = 0; i < intersections.Count; i++)
            {
-              IntersectInfo transit = intersections[0];
+              IntersectInfo transit = intersections[i];
 
               // deal with null start sector/side
               if (transit.SideS == null || transit.SectorS == null)
