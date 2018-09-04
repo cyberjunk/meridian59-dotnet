@@ -364,23 +364,34 @@ namespace Meridian59.Common
         /// </summary>
         /// <param name="P1"></param>
         /// <param name="P2"></param>
+        /// <param name="Case">1 if P1 is closest, 2 if P2 is closest, 3 if point on line is closest</param>
         /// <returns></returns>
-        public Real MinSquaredDistanceToLineSegment(ref V2 P1, ref V2 P2)
+        public Real MinSquaredDistanceToLineSegment(ref V2 P1, ref V2 P2, out int Case)
         {
             V2 diff = P2 - P1;
             Real l2 = diff.LengthSquared;
 
             if (l2 == 0.0f)
+            {
+                Case = 1;
                 return DistanceToSquared(ref P1);
+            }
 
             Real t = ((this - P1) * (P2 - P1)) / l2;
 
             if (t < 0.0f)
+            {
+                Case = 1;
                 return DistanceToSquared(ref P1);
+            }
 
             else if (t > 1.0f)
+            {
+                Case = 2;
                 return DistanceToSquared(ref P2);
+            }
 
+            Case = 3;
             diff.Scale(t);
             V2 projection = P1 + diff;
 

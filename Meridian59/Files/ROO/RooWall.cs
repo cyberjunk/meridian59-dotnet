@@ -882,10 +882,11 @@ namespace Meridian59.Files.ROO
             V2 start2D      = new V2(Start.X, Start.Z);
             int startside   = start2D.GetSide(ref p1, ref p2);
             int endside     = End.GetSide(ref p1, ref p2);
-             
+            int useCase;
+
             // get distances of start and end to finite line segment
-            Real distEnd = End.MinSquaredDistanceToLineSegment(ref p1, ref p2);
-            Real distStart = start2D.MinSquaredDistanceToLineSegment(ref p1, ref p2);
+            Real distEnd = End.MinSquaredDistanceToLineSegment(ref p1, ref p2, out useCase);
+            Real distStart = start2D.MinSquaredDistanceToLineSegment(ref p1, ref p2, out useCase);
 
             /*************************************************************************/
             // both points on same side

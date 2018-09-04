@@ -1770,15 +1770,27 @@ namespace Meridian59.Files.ROO
                      {
                         V2 p1 = wall.P1;
                         V2 p2 = wall.P2;
+                        int useCase;
 
                         // get min. squared distance from move endpoint to line segment
-                        Real dist2 = E.MinSquaredDistanceToLineSegment(ref p1, ref p2);
+                        Real dist2 = E.MinSquaredDistanceToLineSegment(ref p1, ref p2, out useCase);
 
                         // skip if far enough away
                         if (dist2 > GeometryConstants.WALLMINDISTANCE2)
                         {
                            wall = wall.NextWallInPlane;
                            continue;
+                        }
+
+                        // q stores closest point on line
+                        V2 q;
+                        if (useCase == 1)      q = p1; // p1 is closest
+                        else if (useCase == 2) q = p2; // p2 is closest
+                        else
+                        {
+                           float sign = (distE < 0.0f) ? 1.0f : -1.0f; // pick the correct sign (one the two possible normals)
+                           V2 normal = new V2(line.A, line.B) * sign;  // normal = normalized line eq. coefficients
+                           q = E + (normal * (Real)Math.Sqrt(dist2));  // q=E moved along the normal onto the line
                         }
 
                         // set from and to sector / side
@@ -1800,7 +1812,7 @@ namespace Meridian59.Files.ROO
                         }
 
                         // check the transition data for this wall, use E for intersectpoint
-                        bool ok = CanMoveInRoomTree3DInternal(sectorS, sectorE, sideS, sideE, wall, ref E);
+                        bool ok = CanMoveInRoomTree3DInternal(sectorS, sectorE, sideS, sideE, wall, ref q);
 
                         if (!ok)
                         {
@@ -1918,7 +1930,7 @@ namespace Meridian59.Files.ROO
               heightModified = MathUtil.Max(hFloorEQ, heightModified); // keep our height or set it at least to sector
               distanceDone += stepLen2;                                // add squared length of processed segment
               p = transit.Q;                                           // set end to next start
-           }
+         }
 
            return true;
         }
