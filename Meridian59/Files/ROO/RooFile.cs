@@ -76,6 +76,7 @@ namespace Meridian59.Files.ROO
             public RooSideDef SideE;
             public RooWall    Wall;
             public V2         Q;
+            public Real       FloorHeight;
             public Real       Distance2;
 
             public IntersectInfo(
@@ -85,6 +86,7 @@ namespace Meridian59.Files.ROO
                 RooSideDef SideE,
                 RooWall Wall,
                 V2 Q,
+                Real FloorHeight,
                 Real Distance2)
             {
                 this.SectorS = SectorS;
@@ -93,6 +95,7 @@ namespace Meridian59.Files.ROO
                 this.SideE = SideE;
                 this.Wall = Wall;
                 this.Q = Q;
+                this.FloorHeight = FloorHeight;
                 this.Distance2 = Distance2;
             }
         }
@@ -1605,7 +1608,9 @@ namespace Meridian59.Files.ROO
                int l = beg + 1, r = end;
                while (l < r)
                {
-                  if (arr[l].Distance2 <= piv.Distance2)
+                  if (arr[l].Distance2 < piv.Distance2
+                       || (arr[l].Distance2 == piv.Distance2
+                           && arr[l].FloorHeight < piv.FloorHeight))
                      l++;
                   else
                      IntersectionsSwap(l, --r);
@@ -1641,9 +1646,12 @@ namespace Meridian59.Files.ROO
             if (hCeilingE - hFloorE < GeometryConstants.OBJECTHEIGHTROO)
                return false;
 
+            // get floor height at start
+            Real hFloorS = (SectorS != null) ? SectorS.CalculateFloorHeight(Q.X, Q.Y, true) : 0.0f;
+
             // must evaluate heights at transition later
             intersections.Add(new IntersectInfo(
-               SectorS, SectorE, SideS, SideE, Wall, Q, 0.0f));
+               SectorS, SectorE, SideS, SideE, Wall, Q, hFloorS, 0.0f));
 
             return true;
         }
