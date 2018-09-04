@@ -296,21 +296,8 @@ namespace Meridian59.Protocol
             double tick = GameTick.GetUpdatedTick();
 
             RoomInfo roomInfo = Message.RoomInfo;
-            if (roomInfo.RoomFile != String.Empty)
-            {
-                // try find the roofile instance
-                RooFile rooFile = resourceManager.GetRoom(roomInfo.RoomFile);
-                roomInfo.ResourceRoom = rooFile;
-
-                // found and never "loaded" before, resolve and uncompress
-                // otherwise don't touch it in this thread
-                if (rooFile != null && !rooFile.IsResourcesResolved)
-                {
-                   rooFile.ResolveResources(resourceManager);
-                   rooFile.UncompressAll();
-                }
-            }
-
+            roomInfo.ResolveResources(resourceManager, false);
+            
             double span = GameTick.GetUpdatedTick() - tick;
             Logger.Log(MODULENAME, LogType.Info, "Loaded BP_PLAYER: " + span.ToString() + " ms");
         }

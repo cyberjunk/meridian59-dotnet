@@ -29,7 +29,7 @@ namespace Meridian59.Data.Models
     /// Roominformation (MapID, Brigthness, ...)
     /// </summary>
     [Serializable]
-    public class RoomInfo : IByteSerializableFast, INotifyPropertyChanged, IClearable, IUpdatable<RoomInfo>, IStringResolvable
+    public class RoomInfo : IByteSerializableFast, INotifyPropertyChanged, IClearable, IUpdatable<RoomInfo>, IStringResolvable, IResourceResolvable
     {
         #region Constants
         
@@ -60,6 +60,7 @@ namespace Meridian59.Data.Models
         public const string PROPNAME_BACKGROUNDFILE = "BackgroundFile";
         public const string PROPNAME_WADINGSOUNDFILE = "WadingSoundFile";
         public const string PROPNAME_RESOURCEROOM = "ResourceRoom";
+        public const string PROPNAME_RESOURCEWADINGSOUND = "ResourceWadingSound";
         #endregion
 
         #region INotifyPropertyChanged
@@ -320,6 +321,7 @@ namespace Meridian59.Data.Models
         protected string backgroundFile;
         protected string wadingSoundFile;
         protected RooFile resourceRoom;
+        protected Tuple<IntPtr, uint> resourceWadingSound;
         #endregion
 
         #region Properties
@@ -589,6 +591,18 @@ namespace Meridian59.Data.Models
                 }
             }
         }
+        public Tuple<IntPtr, uint> ResourceWadingSound
+        {
+            get { return resourceWadingSound; }
+            set
+            {
+                if (resourceWadingSound != value)
+                {
+                    resourceWadingSound = value;
+                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_RESOURCEWADINGSOUND));
+                }
+            }
+        }
         #endregion
 
         #region Constructors
@@ -813,6 +827,35 @@ namespace Meridian59.Data.Models
                 if (wading_file != null) wadingSoundFile = wading_file;
                 else wadingSoundFile = String.Empty;
             }
+        }
+        #endregion
+
+        #region IResourceResolvable
+        public void ResolveResources(ResourceManager M59ResourceManager, bool RaiseChangedEvent)
+        {
+           // try find the roofile instance
+           RooFile rooFile = M59ResourceManager.GetRoom(roomFile);
+           
+           // if found resolve room resources and uncompress all
+           if (rooFile != null && !rooFile.IsResourcesResolved)
+           {
+              rooFile.ResolveResources(M59ResourceManager);
+              rooFile.UncompressAll();
+           }
+
+           // try find the wading sound file and load it
+           Tuple<IntPtr, uint> sound = M59ResourceManager.GetWavFile(wadingSoundFile);
+
+           if (RaiseChangedEvent)
+           {
+              ResourceRoom = rooFile;
+              ResourceWadingSound = sound;
+           }
+           else
+           {
+              resourceRoom = rooFile;
+              resourceWadingSound = sound;
+           }
         }
         #endregion
     }
