@@ -1073,7 +1073,7 @@ namespace Meridian59.Data.Models
 
             // check delta
             Real oldheight = Position3D.Y;
-            Real hDiff = oldheight - newheight;
+            Real hDiff = (horizontalSpeed != (Real)MovementSpeed.Teleport) ? oldheight - newheight : 0.0f;
 
             // falling
             if (hDiff > 0.001f)
