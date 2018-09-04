@@ -739,6 +739,7 @@ namespace Meridian59.Data.Models
                 WadingSoundFile = Model.WadingSoundFile;
 
                 ResourceRoom = Model.ResourceRoom;
+                ResourceWadingSound = Model.ResourceWadingSound;
             }
             else
             {
@@ -766,6 +767,7 @@ namespace Meridian59.Data.Models
                 wadingSoundFile = Model.WadingSoundFile;
 
                 resourceRoom = Model.ResourceRoom;
+                resourceWadingSound = Model.ResourceWadingSound;
             }          
         }
         #endregion
