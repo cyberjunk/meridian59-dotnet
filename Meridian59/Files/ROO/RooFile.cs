@@ -1790,7 +1790,7 @@ namespace Meridian59.Files.ROO
                         {
                            float sign = (distE < 0.0f) ? 1.0f : -1.0f; // pick the correct sign (one the two possible normals)
                            V2 normal = new V2(line.A, line.B) * sign;  // normal = normalized line eq. coefficients
-                           q = E + (normal * (Real)Math.Sqrt(dist2));  // q=E moved along the normal onto the line
+                           q = E + (normal * (Real)Math.Abs(distE));   // q=E moved along the normal onto the line
                         }
 
                         // set from and to sector / side
@@ -1855,9 +1855,19 @@ namespace Meridian59.Files.ROO
            foreach (IntersectInfo info in intersections)
               info.Distance2 = (info.Q - S).LengthSquared;
 
+ Console.WriteLine("--------------------------------------------------------");
            // sort the potential intersections by squared distance from start
            IntersectionsSort(intersections, 0, intersections.Count);
+         for (int i = 0; i < intersections.Count; i++)
+         {
+            IntersectInfo transit = intersections[i];
 
+            Console.WriteLine("INTERSECT" + i.ToString() + " " + transit.Q.X.ToString() + "/" + transit.Q.Y.ToString()
+                 + " from " + (transit.SectorS != null ? transit.SectorS.Num.ToString() : "?") + " to " + (transit.SectorE != null ? transit.SectorE.Num.ToString() : "?")
+                 + " through " + (transit.Wall != null ? transit.Wall.Num.ToString() : "?")
+                 + " height " + transit.FloorHeight.ToString()
+                 + " dist2 " + transit.Distance2.ToString());
+         }
            // iterate from intersection to intersection, starting and start and ending at end
            // check the transition data for each one, use intersection point q
            Real distanceDone = 0.0f;
