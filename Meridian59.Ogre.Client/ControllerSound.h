@@ -43,6 +43,8 @@ namespace Meridian59 { namespace Ogre
       static ::irrklang::ISound*             backgroundMusic;
       static std::list<::irrklang::ISound*>* sounds;
       static RemoteNode^                     listenerNode;
+      static double                          tickWadingPlayed;
+      static Common::V3                      lastListenerPosition;
 
       /// <summary>
       /// Executed when listener object triggers changed event
@@ -90,6 +92,11 @@ namespace Meridian59 { namespace Ogre
       /// Initialization state
       /// </summary>
       static bool IsInitialized;
+
+      /// <summary>
+      /// Manually starts to play given sound data
+      /// </summary>
+      static void StartSound(PlaySound^ Info);
 
       /// <summary>
       /// Manually starts to play given music data

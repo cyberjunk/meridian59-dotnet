@@ -8,6 +8,8 @@ namespace Meridian59 { namespace Ogre
       listenerNode    = nullptr;
       sounds          = nullptr;
       backgroundMusic = nullptr;
+      tickWadingPlayed = 0;
+      lastListenerPosition = V3(0.0f, 0.0f, 0.0f);
    };
 
    void ControllerSound::Initialize()
@@ -145,6 +147,52 @@ namespace Meridian59 { namespace Ogre
       irrlook.Z = (ik_f32)-dir.Y;
 
       soundEngine->setListenerPosition(irrpos, irrlook);
+
+      // leaf avatar is in
+      RooSubSector^ leaf = avatar->SubSector;
+
+      // check for water sector wading sound
+      if (leaf != nullptr && leaf->Sector != nullptr && lastListenerPosition != pos)
+      {
+         V2 pos2D = avatar->Position2D; // get avatar position
+         pos2D.ConvertToROO();          // convert to ROO
+
+         // get floor texture height at avatar position and convert back to world
+         Real hFloor = 0.0625f * leaf->Sector->CalculateFloorHeight(pos2D.X, pos2D.Y, false);
+
+         // shortcuts
+         GameTickOgre^ tick = OgreClient::Singleton->GameTick;
+         RooSectorFlags^ flags = leaf->Sector->Flags;
+
+         // below floor, sector with depth and delay passed
+         if (pos.Y < hFloor && flags->SectorDepth != RooSectorFlags::DepthType::Depth0 &&
+             (tick->Current - tickWadingPlayed > 500*(unsigned int)flags->SectorDepth))
+         {
+            // get roominfo which stores wading info
+            RoomInfo^ roomInfo = OgreClient::Singleton->Data->RoomInformation;
+
+            // the soundinfo to play
+            PlaySound^ soundInfo  = gcnew PlaySound();
+            
+            // set so it's replayed as avatar attached sound
+            soundInfo->ID = 0;
+            soundInfo->Row = 0;
+            soundInfo->Column = 0;
+
+            // set filename and resource
+            soundInfo->ResourceName = roomInfo->WadingSoundFile;
+            soundInfo->Resource = roomInfo->ResourceWadingSound;
+
+            // play wading sound
+            StartSound(soundInfo);
+
+            // save tick we played it
+            tickWadingPlayed = tick->Current;
+         }
+      }
+
+      // save last listener position
+      lastListenerPosition = pos;
    };
 
    void ControllerSound::AdjustMusicVolume()
@@ -320,10 +368,15 @@ namespace Meridian59 { namespace Ogre
 
    void ControllerSound::HandlePlayWaveMessage(PlayWaveMessage^ Message)
    {
-      if (!IsInitialized || !soundEngine || !Message->PlayInfo->Resource || !Message->PlayInfo->ResourceName)
+      StartSound(Message->PlayInfo);
+   };
+
+   void ControllerSound::StartSound(PlaySound^ Info)
+   {
+      if (!IsInitialized || !soundEngine || !Info || !Info->Resource || !Info->ResourceName)
          return;
 
-      if (Message->PlayInfo->PlayFlags->IsLoop && OgreClient::Singleton->Config->DisableLoopSounds)
+      if (Info->PlayFlags->IsLoop && OgreClient::Singleton->Config->DisableLoopSounds)
          return;
 
       // if source is a object, we save it here
@@ -335,10 +388,10 @@ namespace Meridian59 { namespace Ogre
       float z = 0;
 
       // source given by object id
-      if (Message->PlayInfo->ID > 0)
+      if (Info->ID > 0)
       {
          // try get source object
-         RoomObject^ source = OgreClient::Singleton->Data->RoomObjects->GetItemByID(Message->PlayInfo->ID);
+         RoomObject^ source = OgreClient::Singleton->Data->RoomObjects->GetItemByID(Info->ID);
 
          if (source && source->UserData)
          {
@@ -356,11 +409,11 @@ namespace Meridian59 { namespace Ogre
       }
 
       // source given by row/col
-      else if (Message->PlayInfo->Row > 0 && Message->PlayInfo->Column > 0)
+      else if (Info->Row > 0 && Info->Column > 0)
       {
          // convert the center of the server grid square to coords of roo file
-         x = (float)(Message->PlayInfo->Column - 1) * 1024.0f + 512.0f;
-         z = (float)(Message->PlayInfo->Row - 1) * 1024.0f + 512.0f;
+         x = (float)(Info->Column - 1) * 1024.0f + 512.0f;
+         z = (float)(Info->Row - 1) * 1024.0f + 512.0f;
 
          RooSubSector^ out;
 
@@ -377,7 +430,7 @@ namespace Meridian59 { namespace Ogre
       else
       {
          if (OgreClient::Singleton->Data->AvatarObject &&
-             OgreClient::Singleton->Data->AvatarObject->UserData)
+            OgreClient::Singleton->Data->AvatarObject->UserData)
          {
             attachNode = (RemoteNode^)OgreClient::Singleton->Data->AvatarObject->UserData;
 
@@ -392,7 +445,7 @@ namespace Meridian59 { namespace Ogre
       }
 
       // get resource name of wav file
-      CLRString^ sourcename = Message->PlayInfo->ResourceName->ToLower();
+      CLRString^ sourcename = Info->ResourceName->ToLower();
 
       // native string
       ::Ogre::String& o_str = StringConvert::CLRToOgre(sourcename);
@@ -405,8 +458,8 @@ namespace Meridian59 { namespace Ogre
       if (!soundsrc)
       {
          // memory info for wav data
-         System::IntPtr ptr = Message->PlayInfo->Resource->Item1;
-         unsigned int len = Message->PlayInfo->Resource->Item2;
+         System::IntPtr ptr = Info->Resource->Item1;
+         unsigned int len = Info->Resource->Item2;
 
          // add as playback from raw ptr
          if (len > 0 && ptr != ::System::IntPtr::Zero)
@@ -418,7 +471,7 @@ namespace Meridian59 { namespace Ogre
 
       // try start 3D playback
       ISound* sound = soundEngine->play3D(soundsrc,
-         vec3df(x, y, z), Message->PlayInfo->PlayFlags->IsLoop, true, true, false);
+         vec3df(x, y, z), Info->PlayFlags->IsLoop, true, true, false);
 
       if (sound)
       {
@@ -436,7 +489,7 @@ namespace Meridian59 { namespace Ogre
          // start playback
          sound->setIsPaused(false);
       }
-   };
+   }
 
    void ControllerSound::StartMusic(PlayMusic^ Info)
    {
