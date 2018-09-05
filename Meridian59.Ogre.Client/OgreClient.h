@@ -226,6 +226,18 @@ namespace Meridian59 { namespace Ogre
       void OnSuicideConfirmed(Object ^sender, ::System::EventArgs ^e);
 
       /// <summary>
+      /// Handler for a successful password change.
+      /// </summary>
+      /// <param name="Message"></param>
+      virtual void HandlePasswordOKMessage(PasswordOKMessage^ Message) override;
+
+      /// <summary>
+      /// Handler for a failed password change.
+      /// </summary>
+      /// <param name="Message"></param>
+      virtual void HandlePasswordNotOKMessage(PasswordNotOKMessage^ Message) override;
+
+      /// <summary>
       /// Eventhandler when AdminForm changed logging settings for network connection
       /// </summary>
       void OnAdminFormPacketLogChanged(Object^ sender, PacketLogChangeEventArgs^ e);

@@ -4001,59 +4001,124 @@
             
             <!-- TabGamePlay -->
             <Window type="DefaultWindow" name="Options.TabGamePlay" >
-               <Property name="Text" value="Gameplay" />
-               <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />         
+               <Property name="Text" value="Game" />
+               <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+               
+               <!-- LanguageDescription -->
+               <Window type="TaharezLook/LabelWhite" name="Options.TabGamePlay.LanguageDescription" >
+                  <Property name="Area" value="{{0,30},{0,20},{0,100},{0,40}}" />
+                  <Property name="HorzFormatting" value="WordWrapLeftAligned" />
+                  <Property name="Text" value="Language" />
+                  <Property name="Font" value="Berenika-8-Bold" />
+               </Window>
                
                <!-- Language setting -->
-               <Window type="TaharezLook/LabelWhite" name="Options.TabGamePlay.LanguageDescription" >
-                  <Property name="Text" value="Language" />
-                  <Property name="Area" value="{{0.5,-110},{0,50},{0.5,-40},{0,70}}" />
+               <Window type="TaharezLook/LabelWhite" name="Options.TabGamePlay.LanguageLabel" >
+                  <Property name="Text" value="Selected Language" />
+                  <Property name="Area" value="{{0.5,-140},{0,50},{0.5,-20},{0,70}}" />
                   <Property name="HorzFormatting" value="LeftAligned" />
-               </Window>            
+               </Window>
                <Window type="TaharezLook/Combobox" name="Options.TabGamePlay.Language" >
-                  <Property name="Area" value="{{0.5,-30},{0,50},{0.5,110},{0,150}}" />
+                  <Property name="Area" value="{{0.5,0},{0,50},{0.5,130},{0,150}}" />
                   <Property name="ClippedByParent" value="False" />
                   <Property name="ReadOnly" value="True" />
+               </Window>
+               
+               <!-- SettingsDescription -->
+               <Window type="TaharezLook/LabelWhite" name="Options.TabGamePlay.SettingsDescription" >
+                  <Property name="Area" value="{{0,30},{0,100},{0,100},{0,120}}" />
+                  <Property name="HorzFormatting" value="WordWrapLeftAligned" />
+                  <Property name="Text" value="Settings" />
+                  <Property name="Font" value="Berenika-8-Bold" />
                </Window>
                
                <!-- Server saved settings -->
                <Window type="TaharezLook/Checkbox" name="Options.TabGamePlay.Safety" >
                   <Property name="Text" value="Safety" />
-                  <Property name="Area" value="{{0.5,-150},{0,100},{0.5,0},{0,120}}" />
+                  <Property name="Area" value="{{0.5,-150},{0,130},{0.5,0},{0,150}}" />
                   <Property name="TooltipText" value="Prevents you from attacking innocents." />
                </Window>
                <Window type="TaharezLook/Checkbox" name="Options.TabGamePlay.Grouping" >
                   <Property name="Text" value="Grouping" />
-                  <Property name="Area" value="{{0.5,-150},{0,125},{0.5,0},{0,145}}" />
+                  <Property name="Area" value="{{0.5,-150},{0,155},{0.5,0},{0,175}}" />
                   <Property name="TooltipText" value="You will form groups with other players in your room." />
                </Window>
                <Window type="TaharezLook/Checkbox" name="Options.TabGamePlay.SpellPower" >
                   <Property name="Text" value="Spell Power" />
-                  <Property name="Area" value="{{0.5,-150},{0,150},{0.5,0},{0,170}}" />
-                  <Property name="TooltipText" value="Will display your spellpower when you cast." />               
+                  <Property name="Area" value="{{0.5,-150},{0,180},{0.5,0},{0,200}}" />
+                  <Property name="TooltipText" value="Will display your spellpower when you cast." />
                </Window>
                <Window type="TaharezLook/Checkbox" name="Options.TabGamePlay.ReagentBag" >
                   <Property name="Text" value="Reagent Bag" />
-                  <Property name="Area" value="{{0.5,-150},{0,175},{0.5,0},{0,195}}" />
+                  <Property name="Area" value="{{0.5,-150},{0,205},{0.5,0},{0,225}}" />
                   <Property name="TooltipText" value="Reagents will automatically be put into your reagent bag." />
                </Window>
                
                <Window type="TaharezLook/Checkbox" name="Options.TabGamePlay.TempSafe" >
                   <Property name="Text" value="Temporary Angel" />
-                  <Property name="Area" value="{{0.5,0},{0,100},{0.5,150},{0,120}}" />
+                  <Property name="Area" value="{{0.5,0},{0,130},{0.5,150},{0,150}}" />
                   <Property name="TooltipText" value="Grants you a temporary guardian angel in case you get murdered." />
-               </Window>                  
+               </Window>
                <Window type="TaharezLook/Checkbox" name="Options.TabGamePlay.AutoLoot" >
                   <Property name="Text" value="Auto Loot" />
-                  <Property name="Area" value="{{0.5,0},{0,125},{0.5,150},{0,145}}" />
-                  <Property name="TooltipText" value="You will automatically loot stackable items." />               
+                  <Property name="Area" value="{{0.5,0},{0,155},{0.5,150},{0,175}}" />
+                  <Property name="TooltipText" value="You will automatically loot stackable items." />
                </Window>
                <Window type="TaharezLook/Checkbox" name="Options.TabGamePlay.AutoCombine" >
                   <Property name="Text" value="Auto Combine" />
-                  <Property name="Area" value="{{0.5,0},{0,150},{0.5,150},{0,170}}" />
-                  <Property name="TooltipText" value="You will automatically combine some items." />               
+                  <Property name="Area" value="{{0.5,0},{0,180},{0.5,150},{0,200}}" />
+                  <Property name="TooltipText" value="You will automatically combine some items." />
                </Window>
             
+               <!-- ChangePasswordDescription -->
+               <Window type="TaharezLook/LabelWhite" name="Options.TabGamePlay.ChangePasswordDescription" >
+                  <Property name="Area" value="{{0,30},{0,255},{0,150},{0,275}}" />
+                  <Property name="HorzFormatting" value="WordWrapLeftAligned" />
+                  <Property name="Text" value="Change Password" />
+                  <Property name="Font" value="Berenika-8-Bold" />
+               </Window>
+               
+               <!-- OldPassword -->
+               <Window type="TaharezLook/Label" name="Options.TabGamePlay.OldPasswordDescription" >
+                  <Property name="Text" value="Current Password" />
+                  <Property name="Area" value="{{0.5,-155},{0,285},{0.5,-35},{0,305}}" />
+                  <Property name="HorzFormatting" value="LeftAligned" />
+               </Window>
+               <Window type="TaharezLook/Editbox" name="Options.TabGamePlay.OldPassword" >
+                  <Property name="Area" value="{{0.5,-35},{0,285},{0.5,155},{0,305}}" />
+                  <Property name="TextParsingEnabled" value="False" />
+                  <Property name="MaskText" value="True" />
+               </Window>
+               
+               <!-- NewPassword -->
+               <Window type="TaharezLook/Label" name="Options.TabGamePlay.NewPasswordDescription" >
+                  <Property name="Text" value="New Password" />
+                  <Property name="Area" value="{{0.5,-155},{0,320},{0.5,-35},{0,340}}" />
+                  <Property name="HorzFormatting" value="LeftAligned" />
+               </Window>
+               <Window type="TaharezLook/Editbox" name="Options.TabGamePlay.NewPassword" >
+                  <Property name="Area" value="{{0.5,-35},{0,320},{0.5,155},{0,340}}" />
+                  <Property name="TextParsingEnabled" value="False" />
+                  <Property name="MaskText" value="True" />
+               </Window>
+               
+               <!-- ConfirmPassword -->
+               <Window type="TaharezLook/Label" name="Options.TabGamePlay.ConfirmPasswordDescription" >
+                  <Property name="Text" value="Confirm Password" />
+                  <Property name="Area" value="{{0.5,-155},{0,355},{0.5,-35},{0,375}}" />
+                  <Property name="HorzFormatting" value="LeftAligned" />
+               </Window>
+               <Window type="TaharezLook/Editbox" name="Options.TabGamePlay.ConfirmPassword" >
+                  <Property name="Area" value="{{0.5,-35},{0,355},{0.5,155},{0,375}}" />
+                  <Property name="TextParsingEnabled" value="False" />
+                  <Property name="MaskText" value="True" />
+               </Window>
+               
+               <!-- Change -->
+               <Window type="TaharezLook/Button" name="Options.TabGamePlay.Change" >
+                  <Property name="Text" value="Change Password" />
+                  <Property name="Area" value="{{0.5,-155},{0,400},{0.5,155},{0,420}}" />
+               </Window>
             </Window>
             
             <!-- TabAliases -->

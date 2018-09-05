@@ -1055,6 +1055,18 @@ namespace Meridian59 { namespace Ogre
       ControllerUI::ConfirmPopup::ShowChoice("Are you sure?", 0);
    };
 
+   void OgreClient::HandlePasswordOKMessage(PasswordOKMessage^ Message)
+   {
+      // tell user about the change and close the password window
+      ControllerUI::ConfirmPopup::ShowOK("Password changed successfully.", 0);
+   };
+
+   void OgreClient::HandlePasswordNotOKMessage(PasswordNotOKMessage^ Message)
+   {
+      // tell user about the change and close the password window
+      ControllerUI::ConfirmPopup::ShowOK("The server did not accept your new password.", 0);
+   };
+
    void OgreClient::ShowAdminForm()
    {
       if (!adminForm || adminForm->IsDisposed)

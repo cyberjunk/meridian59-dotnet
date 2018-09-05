@@ -429,6 +429,14 @@ namespace Meridian59.Client
                     HandleUserCommandMessage((UserCommandMessage)Message);
                     break;
 
+                case MessageTypeGameMode.PasswordOK:                        // 160
+                    HandlePasswordOKMessage((PasswordOKMessage)Message);
+                    break;
+
+                case MessageTypeGameMode.PasswordNotOK:                     // 161
+                    HandlePasswordNotOKMessage((PasswordNotOKMessage)Message);
+                    break;
+
                 case MessageTypeGameMode.Admin:                             // 162
                     HandleAdminMessage((AdminMessage)Message);
                     break;
@@ -679,6 +687,22 @@ namespace Meridian59.Client
         }
 
         /// <summary>
+        /// Successful password change
+        /// </summary>
+        /// <param name="Message"></param>
+        protected virtual void HandlePasswordOKMessage(PasswordOKMessage Message)
+        {
+        }
+
+        /// <summary>
+        /// Unsuccessful password change
+        /// </summary>
+        /// <param name="Message"></param>
+        protected virtual void HandlePasswordNotOKMessage(PasswordNotOKMessage Message)
+        {
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="Message"></param>
@@ -741,6 +765,19 @@ namespace Meridian59.Client
                 MeridianExeCRCs.NEWCLIENTDETECT,
                 1024, 768, 0, 0, 32, 30, 0);
             
+            // send/enqueue it (async)
+            ServerConnection.SendQueue.Enqueue(message);
+        }
+
+        /// <summary>
+        /// Requests to change user's password
+        /// </summary>
+        /// <param name="PasswordOld"></param>
+        /// <param name="PasswordNew"></param>
+        public virtual void SendReqChangePassword(string PasswordOld, string PasswordNew)
+        {
+            ChangePasswordMessage message = new ChangePasswordMessage(PasswordOld, PasswordNew);
+
             // send/enqueue it (async)
             ServerConnection.SendQueue.Enqueue(message);
         }

@@ -1343,7 +1343,10 @@ namespace Meridian59 { namespace Ogre
          static ::CEGUI::ToggleButton* TempSafe = nullptr;
          static ::CEGUI::ToggleButton* AutoLoot = nullptr;
          static ::CEGUI::ToggleButton* AutoCombine = nullptr;
-
+         static ::CEGUI::Editbox* OldPassword = nullptr;
+         static ::CEGUI::Editbox* NewPassword = nullptr;
+         static ::CEGUI::Editbox* ConfirmPassword = nullptr;
+         static ::CEGUI::PushButton* ChangePassword = nullptr;
          //
          static ::CEGUI::PushButton* LearnMoveForward = nullptr;
          static ::CEGUI::PushButton* LearnMoveBackward = nullptr;
@@ -2082,6 +2085,10 @@ namespace Meridian59 { namespace Ogre
          static bool OnGroupsSelectionChanged(const CEGUI::EventArgs& e);
          static bool OnLanguageChanged(const CEGUI::EventArgs& e);
          static bool OnPreferencesCheckboxClicked(const CEGUI::EventArgs& e);
+         static bool OnOldPasswordKeyUp(const CEGUI::EventArgs& e);
+         static bool OnNewPasswordKeyUp(const CEGUI::EventArgs& e);
+         static bool OnConfirmPasswordKeyUp(const CEGUI::EventArgs& e);
+         static bool OnChangePasswordClicked(const CEGUI::EventArgs& e);
       };
    };
 #pragma endregion

@@ -151,6 +151,10 @@ namespace Meridian59 { namespace Ogre
       TempSafe    = static_cast<CEGUI::ToggleButton*>(TabGamePlay->getChild(UI_NAME_OPTIONS_TABGAMEPLAY_TEMPSAFE));
       AutoLoot    = static_cast<CEGUI::ToggleButton*>(TabGamePlay->getChild(UI_NAME_OPTIONS_TABGAMEPLAY_AUTOLOOT));
       AutoCombine = static_cast<CEGUI::ToggleButton*>(TabGamePlay->getChild(UI_NAME_OPTIONS_TABGAMEPLAY_AUTOCOMBINE));
+      OldPassword = static_cast<CEGUI::Editbox*>(TabGamePlay->getChild(UI_NAME_OPTIONS_TABGAMEPLAY_OLDPASSWORD));
+      NewPassword = static_cast<CEGUI::Editbox*>(TabGamePlay->getChild(UI_NAME_OPTIONS_TABGAMEPLAY_NEWPASSWORD));
+      ConfirmPassword = static_cast<CEGUI::Editbox*>(TabGamePlay->getChild(UI_NAME_OPTIONS_TABGAMEPLAY_CONFIRMPASSWORD));
+      ChangePassword = static_cast<CEGUI::PushButton*>(TabGamePlay->getChild(UI_NAME_OPTIONS_TABGAMEPLAY_CHANGEPASSWORD));
 
       /******************************************************************************************************/
 
@@ -635,7 +639,12 @@ namespace Meridian59 { namespace Ogre
       TempSafe->subscribeEvent(CEGUI::ToggleButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnPreferencesCheckboxClicked));
       AutoLoot->subscribeEvent(CEGUI::ToggleButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnPreferencesCheckboxClicked));
       AutoCombine->subscribeEvent(CEGUI::ToggleButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnPreferencesCheckboxClicked));
-
+      
+      // change password boxes/button
+      OldPassword->subscribeEvent(CEGUI::Editbox::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnOldPasswordKeyUp));
+      NewPassword->subscribeEvent(CEGUI::Editbox::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnNewPasswordKeyUp));
+      ConfirmPassword->subscribeEvent(CEGUI::Editbox::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnConfirmPasswordKeyUp));
+      ChangePassword->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnChangePasswordClicked));
       /******************************************************************************************************/
 
       // hookup keylearn button events
@@ -2655,6 +2664,87 @@ namespace Meridian59 { namespace Ogre
       if (btn == ControllerUI::Options::Safety)
          OgreClient::Singleton->SendUserCommandSafetyMessage(btn->isSelected());
 #endif
+
+      return true;
+   };
+
+   bool UICallbacks::Options::OnOldPasswordKeyUp(const CEGUI::EventArgs& e)
+   {
+      const CEGUI::KeyEventArgs& args = (const CEGUI::KeyEventArgs&)e;
+      const CEGUI::Editbox* editbox = (const CEGUI::Editbox*)args.window;
+
+      if (args.scancode == ::CEGUI::Key::Scan::Tab)
+      {
+         ControllerUI::Options::NewPassword->activate();
+      }
+
+      return true;
+   };
+
+   bool UICallbacks::Options::OnNewPasswordKeyUp(const CEGUI::EventArgs& e)
+   {
+      const CEGUI::KeyEventArgs& args = (const CEGUI::KeyEventArgs&)e;
+      const CEGUI::Editbox* editbox = (const CEGUI::Editbox*)args.window;
+
+      if (args.scancode == ::CEGUI::Key::Scan::Tab)
+      {
+         ControllerUI::Options::ConfirmPassword->activate();
+      }
+
+      return true;
+   };
+
+   bool UICallbacks::Options::OnConfirmPasswordKeyUp(const CEGUI::EventArgs& e)
+   {
+      const CEGUI::KeyEventArgs& args = (const CEGUI::KeyEventArgs&)e;
+      const CEGUI::Editbox* editbox = (const CEGUI::Editbox*)args.window;
+
+      if (args.scancode == ::CEGUI::Key::Scan::Tab
+         && !ControllerUI::Options::ChangePassword->isDisabled())
+      {
+         ControllerUI::Options::ChangePassword->activate();
+      }
+
+      return true;
+   };
+
+   bool UICallbacks::Options::OnChangePasswordClicked(const CEGUI::EventArgs& e)
+   {
+      CLRString^ oldPassword = StringConvert::CEGUIToCLR(ControllerUI::Options::OldPassword->getText());
+      CLRString^ newPassword = StringConvert::CEGUIToCLR(ControllerUI::Options::NewPassword->getText());
+      CLRString^ confirmPassword = StringConvert::CEGUIToCLR(ControllerUI::Options::ConfirmPassword->getText());
+
+      if (oldPassword == "" || newPassword == "" || confirmPassword == "")
+      {
+         ControllerUI::ConfirmPopup::ShowOK("Please fill out all password fields.", 0);
+
+         return true;
+      }
+
+      if (oldPassword != OgreClient::Singleton->Config->SelectedConnectionInfo->Password)
+      {
+         ControllerUI::ConfirmPopup::ShowOK("Old password incorrect.", 0);
+
+         return true;
+      }
+
+      if (newPassword != confirmPassword)
+      {
+         ControllerUI::ConfirmPopup::ShowOK("New passwords do not match.", 0);
+
+         return true;
+      }
+
+      if (oldPassword == newPassword)
+      {
+         ControllerUI::ConfirmPopup::ShowOK("New password is same as old password.", 0);
+
+         return true;
+      }
+
+      OgreClient::Singleton->SendReqChangePassword(oldPassword, newPassword);
+
+      OgreClient::Singleton->Config->SelectedConnectionInfo->Password = newPassword;
 
       return true;
    };
