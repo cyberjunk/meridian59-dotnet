@@ -336,7 +336,7 @@ namespace Meridian59 { namespace Ogre
       ReadUILayout(UILayoutActionButtons, node, false);
 
       // actionbuttons visibility
-      node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_ACTIONBUTTONGRID);
+      node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_ACTIONBUTTONGRIDVISIBILITY);
       UIVisibilityActionButtons = (PARSE_BOOL_ATTRIB(node, XMLATTRIB_VALUE, val_bool)) ? val_bool : DEFAULTVAL_UI_VISIBILITYACTIONBUTTONGRID;
 
       // onlineplayers
