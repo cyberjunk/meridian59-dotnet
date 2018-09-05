@@ -629,7 +629,7 @@ namespace Meridian59 { namespace Ogre
       // avatar
       OgreClient::Singleton->Config->UILayoutAvatar->setPosition(Avatar::Window->getPosition());
       OgreClient::Singleton->Config->UILayoutAvatar->setSize(Avatar::Window->getSize());
-      OgreClient::Singleton->Config->UIVisibilityAvatar = Avatar::Window->isVisible();
+      OgreClient::Singleton->Config->UIVisibilityAvatar = true;
 
       // target
       OgreClient::Singleton->Config->UILayoutTarget->setPosition(Target::Window->getPosition());
@@ -644,7 +644,7 @@ namespace Meridian59 { namespace Ogre
       // roomenchantments
       OgreClient::Singleton->Config->UILayoutRoomEnchantments->setPosition(RoomEnchantments::Window->getPosition());
       OgreClient::Singleton->Config->UILayoutRoomEnchantments->setSize(RoomEnchantments::Window->getSize());
-      OgreClient::Singleton->Config->UIVisibilityRoomEnchantments = RoomEnchantments::Window->isVisible();
+      OgreClient::Singleton->Config->UIVisibilityRoomEnchantments = true;
 
       // chat
       OgreClient::Singleton->Config->UILayoutChat->setPosition(Chat::Window->getPosition());
@@ -679,17 +679,17 @@ namespace Meridian59 { namespace Ogre
       // mainbuttonsleft
       OgreClient::Singleton->Config->UILayoutMainButtonsLeft->setPosition(MainButtonsLeft::Window->getPosition());
       OgreClient::Singleton->Config->UILayoutMainButtonsLeft->setSize(MainButtonsLeft::Window->getSize());
-      OgreClient::Singleton->Config->UIVisibilityMainButtonsLeft = MainButtonsLeft::Window->isVisible();
+      OgreClient::Singleton->Config->UIVisibilityMainButtonsLeft = true;
 
       // mainbuttonsright
       OgreClient::Singleton->Config->UILayoutMainButtonsRight->setPosition(MainButtonsRight::Window->getPosition());
       OgreClient::Singleton->Config->UILayoutMainButtonsRight->setSize(MainButtonsRight::Window->getSize());
-      OgreClient::Singleton->Config->UIVisibilityMainButtonsRight = MainButtonsRight::Window->isVisible();
+      OgreClient::Singleton->Config->UIVisibilityMainButtonsRight = true;
 
       // actionbuttons
       OgreClient::Singleton->Config->UILayoutActionButtons->setPosition(ActionButtons::Window->getPosition());
       OgreClient::Singleton->Config->UILayoutActionButtons->setSize(ActionButtons::Window->getSize());
-      OgreClient::Singleton->Config->UIVisibilityActionButtons = ActionButtons::Window->isVisible();
+      OgreClient::Singleton->Config->UIVisibilityActionButtons = true;
 
       // onlineplayers
       OgreClient::Singleton->Config->UILayoutOnlinePlayers->setPosition(OnlinePlayers::Window->getPosition());
