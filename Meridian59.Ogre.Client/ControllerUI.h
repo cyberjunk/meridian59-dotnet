@@ -1279,6 +1279,7 @@ namespace Meridian59 { namespace Ogre
          static void Initialize();
          static void Destroy();
          static void ApplyLanguage();
+         static void AutoFocus();
       };
 
       /// <summary>

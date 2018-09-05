@@ -58,6 +58,30 @@ namespace Meridian59 { namespace Ogre
       Options->setText(GetLangLabel(LANGSTR::OPTIONS));
    };
 
+   void ControllerUI::Login::AutoFocus()
+   {
+      // see what is filled in already
+      bool hasHost = ControllerUI::Login::Server->getText() != "";
+      bool hasUser = ControllerUI::Login::Username->getText() != "";
+      bool hasPass = ControllerUI::Login::Password->getText() != "";
+
+      // focus connect if all are set
+      if (hasHost && hasUser && hasPass)
+         ControllerUI::Login::Connect->activate();
+
+      // focus password if host and user is set
+      else if (hasHost && hasUser)
+         ControllerUI::Login::Password->activate();
+
+      // focus user if host is set
+      else if (hasHost)
+         ControllerUI::Login::Username->activate();
+
+      // focus host selection if none is set
+      else
+         ControllerUI::Login::Server->activate();
+   }
+
    //////////////////////////////////////////////////////////////////////////////////////////////////////////
    //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -74,6 +98,8 @@ namespace Meridian59 { namespace Ogre
 
       ControllerUI::Login::Password->setText(
          StringConvert::CLRToCEGUI(OgreClient::Singleton->Config->SelectedConnectionInfo->Password));
+
+      ControllerUI::Login::AutoFocus();
 
       return true;
    };

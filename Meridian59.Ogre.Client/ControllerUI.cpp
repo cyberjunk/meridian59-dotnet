@@ -752,8 +752,14 @@ namespace Meridian59 { namespace Ogre
          Options::Window->setVisible(false);
          Stats::Window->setVisible(false);
 
+         /////////////////////////////////////////////////////////////////////////////////
+         // initial focus settings when changing modes
+
          if (mode == UIMode::AvatarSelection)
             ControllerUI::Welcome::Avatars->activate();
+
+         if (mode == UIMode::Login)
+            ControllerUI::Login::AutoFocus();
       }
    };
 
