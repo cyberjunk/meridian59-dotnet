@@ -238,8 +238,21 @@ void water_vs(
    const float3 SCALE = float3(0.012, 0.005, 0.03);
 
    uvw = p.xyz * SCALE;
-   uvw.xz += waveSpeed * time_0_X;
-   uvw.y += uvw.z + NOISESPEED * time_0_X;
+   
+   // floor water
+   if (normal.y != 0.0)
+   {
+      uvw.xz += waveSpeed * time_0_X;
+      uvw.y += uvw.z + NOISESPEED * time_0_X;
+   }
+   
+   // wall water
+   else
+   {
+      uvw.y += -waveSpeed * time_0_X;
+      uvw.xz += uvw.z + NOISESPEED * time_0_X;
+   }
+   
    vVec = p.xyz - eyePos;
    p = mul(wvpMat, p);
 }
