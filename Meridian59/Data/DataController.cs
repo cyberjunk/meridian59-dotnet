@@ -1701,13 +1701,27 @@ namespace Meridian59.Data
         #region Logging
         public void LogOutgoingPacket(GameMessage Message)
         {
-            if (LogOutgoingMessages && (LogPingMessages || !((MessageTypeGameMode)Message.PI == MessageTypeGameMode.Ping)))
+#if !VANILLA && !OPENMERIDIAN
+            bool isPing = 
+               (MessageTypeGameMode)Message.PI == MessageTypeGameMode.Ping || 
+               (MessageTypeGameMode)Message.PI == MessageTypeGameMode.UdpPing;
+#else
+            bool isPing = (MessageTypeGameMode)Message.PI == MessageTypeGameMode.Ping;
+#endif
+            if (LogOutgoingMessages && (LogPingMessages || !isPing))
                 GameMessageLog.Add(Message);
         }
 
         public void LogIncomingGameModeMessage(GameMessage Message)
         {
-            if (LogIncomingMessages && (LogPingMessages || !((MessageTypeGameMode)Message.PI == MessageTypeGameMode.EchoPing)))
+#if !VANILLA && !OPENMERIDIAN
+            bool isPing = 
+               (MessageTypeGameMode)Message.PI == MessageTypeGameMode.EchoPing || 
+               (MessageTypeGameMode)Message.PI == MessageTypeGameMode.EchoUdpPing;
+#else
+            bool isPing = (MessageTypeGameMode)Message.PI == MessageTypeGameMode.EchoPing;
+#endif
+            if (LogIncomingMessages && (LogPingMessages || !isPing))
                 GameMessageLog.Add(Message);
         }
 
