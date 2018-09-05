@@ -4115,7 +4115,7 @@
                </Window>
                
                <!-- Change -->
-               <Window type="TaharezLook/Button" name="Options.TabGamePlay.Change" >
+               <Window type="TaharezLook/Button" name="Options.TabGamePlay.ChangePassword" >
                   <Property name="Text" value="Change Password" />
                   <Property name="Area" value="{{0.5,-155},{0,400},{0.5,155},{0,420}}" />
                </Window>
