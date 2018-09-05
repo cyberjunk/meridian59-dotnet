@@ -416,7 +416,21 @@ namespace Meridian59.Data.Models
         /// The hotspot this is attached to in viewerview.
         /// </summary>
         public BgfBitmapHotspot ViewerHotspot { get; protected set; }
-
+      
+        /// <summary>
+        /// True if the suboverlay has an ANIMATION_ONCE attached that
+        /// has not finished playback yet.
+        /// </summary>
+        public bool HasUnfinishedAnimation 
+        {
+           get
+           {
+              return 
+                 animation != null && 
+                 animation.AnimationType == AnimationType.ONCE &&
+                 !((AnimationOnce)animation).Finished;
+           }
+        }
         #endregion
 
         #region Constructors

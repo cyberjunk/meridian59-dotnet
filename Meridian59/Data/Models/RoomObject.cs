@@ -638,7 +638,7 @@ namespace Meridian59.Data.Models
         {
             get
             {
-                if (isMoving) return motionSubOverlays;
+                if (isMoving && !HasUnfinishedAnimation) return motionSubOverlays;
                 else return subOverlays;
             }
         }
@@ -652,6 +652,20 @@ namespace Meridian59.Data.Models
             protected set { subSector = value; }
         }
 
+        /// <summary>
+        /// Returns true if the suboverlays contain an unfinished ONCE animation.
+        /// </summary>
+        public bool HasUnfinishedAnimation
+        {
+           get
+           {
+              foreach (SubOverlay ov in subOverlays)
+                 if (ov.HasUnfinishedAnimation)
+                    return true;
+
+              return false;
+           }
+        }
         #endregion
 
         #region Constructors
