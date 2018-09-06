@@ -105,11 +105,11 @@ void room_ps(
 }
 
 /********************************/
-/*     AMBIENT LIGHT SHADERS    */
+/*    OBJECT COMBINED SHADERS   */
 /********************************/
 
 // vertex
-void ambient_vs(
+void object_vs(
    inout   float4   p      : POSITION,
    inout   float2   uv     : TEXCOORD0,
    out     float4   wp     : TEXCOORD1,
@@ -134,7 +134,7 @@ void ambient_vs(
 }
 
 // pixel
-void ambient_ps(
+void object_ps(
    out     float4    pixel          : COLOR0,
    in      float2    uv             : TEXCOORD0,
    in      float4    wp             : TEXCOORD1,

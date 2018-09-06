@@ -34,11 +34,11 @@ vertex_program room_vs hlsl
     }
 }
 
-vertex_program ambient_vs hlsl
+vertex_program object_vs hlsl
 {
     source general.hlsl
     target vs_3_0
-    entry_point ambient_vs
+    entry_point object_vs
     optimisation_level 3
  
     default_params
@@ -112,11 +112,11 @@ fragment_program room_ps hlsl
     }
 }
 
-fragment_program ambient_ps hlsl
+fragment_program object_ps hlsl
 {
     source general.hlsl
     target ps_3_0
-    entry_point ambient_ps
+    entry_point object_ps
     optimisation_level 3
 	 
     default_params
@@ -249,11 +249,11 @@ material base_material
             illumination_stage ambient
 			max_lights 8
 			
-            vertex_program_ref ambient_vs
+            vertex_program_ref object_vs
             {
             }
  
-            fragment_program_ref ambient_ps
+            fragment_program_ref object_ps
             {
 				param_named colormodifier float4 1 1 1 1
             }
@@ -273,7 +273,7 @@ material base_material_black : base_material
     {
         pass
         {
-			fragment_program_ref ambient_ps
+			fragment_program_ref object_ps
 			{
 				param_named colormodifier float4 0 0 0 1
 			}
@@ -287,7 +287,7 @@ material base_material_target : base_material
     {
         pass
         {
-			fragment_program_ref ambient_ps
+			fragment_program_ref object_ps
 			{
 				param_named colormodifier float4 4 1.2 1.2 1
 			}
@@ -301,7 +301,7 @@ material base_material_mouseover : base_material
     {
         pass
         {
-			fragment_program_ref ambient_ps
+			fragment_program_ref object_ps
 			{
 				param_named colormodifier float4 1.2 4.0 1.2 1
 			}
