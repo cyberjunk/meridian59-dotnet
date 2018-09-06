@@ -1343,10 +1343,16 @@ namespace Meridian59 { namespace Ogre
          static ::CEGUI::ToggleButton* TempSafe = nullptr;
          static ::CEGUI::ToggleButton* AutoLoot = nullptr;
          static ::CEGUI::ToggleButton* AutoCombine = nullptr;
+         static ::CEGUI::Window* OldPasswordDescription = nullptr;
          static ::CEGUI::Editbox* OldPassword = nullptr;
+         static ::CEGUI::Window* NewPasswordDescription = nullptr;
          static ::CEGUI::Editbox* NewPassword = nullptr;
+         static ::CEGUI::Window* ConfirmPasswordDescription = nullptr;
          static ::CEGUI::Editbox* ConfirmPassword = nullptr;
          static ::CEGUI::PushButton* ChangePassword = nullptr;
+         static ::CEGUI::Window* ChangePasswordDisabledDescription = nullptr;
+         static ::CEGUI::Window* SettingsDisabledDescription = nullptr;
+
          //
          static ::CEGUI::PushButton* LearnMoveForward = nullptr;
          static ::CEGUI::PushButton* LearnMoveBackward = nullptr;

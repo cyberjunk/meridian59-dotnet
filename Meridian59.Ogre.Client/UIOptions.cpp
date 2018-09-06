@@ -151,10 +151,15 @@ namespace Meridian59 { namespace Ogre
       TempSafe    = static_cast<CEGUI::ToggleButton*>(TabGamePlay->getChild(UI_NAME_OPTIONS_TABGAMEPLAY_TEMPSAFE));
       AutoLoot    = static_cast<CEGUI::ToggleButton*>(TabGamePlay->getChild(UI_NAME_OPTIONS_TABGAMEPLAY_AUTOLOOT));
       AutoCombine = static_cast<CEGUI::ToggleButton*>(TabGamePlay->getChild(UI_NAME_OPTIONS_TABGAMEPLAY_AUTOCOMBINE));
+      OldPasswordDescription = static_cast<CEGUI::Window*>(TabGamePlay->getChild(UI_NAME_OPTIONS_TABGAMEPLAY_OLDPASSWORDDESC));
       OldPassword = static_cast<CEGUI::Editbox*>(TabGamePlay->getChild(UI_NAME_OPTIONS_TABGAMEPLAY_OLDPASSWORD));
+      NewPasswordDescription = static_cast<CEGUI::Window*>(TabGamePlay->getChild(UI_NAME_OPTIONS_TABGAMEPLAY_NEWPASSWORDDESC));
       NewPassword = static_cast<CEGUI::Editbox*>(TabGamePlay->getChild(UI_NAME_OPTIONS_TABGAMEPLAY_NEWPASSWORD));
+      ConfirmPasswordDescription = static_cast<CEGUI::Window*>(TabGamePlay->getChild(UI_NAME_OPTIONS_TABGAMEPLAY_CONFIRMPASSWORDDESC));
       ConfirmPassword = static_cast<CEGUI::Editbox*>(TabGamePlay->getChild(UI_NAME_OPTIONS_TABGAMEPLAY_CONFIRMPASSWORD));
       ChangePassword = static_cast<CEGUI::PushButton*>(TabGamePlay->getChild(UI_NAME_OPTIONS_TABGAMEPLAY_CHANGEPASSWORD));
+      SettingsDisabledDescription = static_cast<CEGUI::Window*>(TabGamePlay->getChild(UI_NAME_OPTIONS_TABGAMEPLAY_SETTINGSDISABLEDDESCRIPTION));
+      ChangePasswordDisabledDescription = static_cast<CEGUI::Window*>(TabGamePlay->getChild(UI_NAME_OPTIONS_TABGAMEPLAY_CHANGEPASSWORDDISABLEDDESCRIPTION));
 
       /******************************************************************************************************/
 
@@ -939,6 +944,24 @@ namespace Meridian59 { namespace Ogre
          NewMember->setVisible(mode == UIMode::Playing);
          ListGroups->setVisible(mode == UIMode::Playing);
          ListMembers->setVisible(mode == UIMode::Playing);
+
+         // switch the game options visibility
+         SettingsDisabledDescription->setVisible(mode != UIMode::Playing);
+         Safety->setVisible(mode == UIMode::Playing);
+         Grouping->setVisible(mode == UIMode::Playing);
+         SpellPower->setVisible(mode == UIMode::Playing);
+         ReagentBag->setVisible(mode == UIMode::Playing);
+         TempSafe->setVisible(mode == UIMode::Playing);
+         AutoLoot->setVisible(mode == UIMode::Playing);
+         AutoCombine->setVisible(mode == UIMode::Playing);
+         ChangePasswordDisabledDescription->setVisible(mode != UIMode::Playing);
+         OldPasswordDescription->setVisible(mode == UIMode::Playing);
+         OldPassword->setVisible(mode == UIMode::Playing);
+         NewPasswordDescription->setVisible(mode == UIMode::Playing);
+         NewPassword->setVisible(mode == UIMode::Playing);
+         ConfirmPasswordDescription->setVisible(mode == UIMode::Playing);
+         ConfirmPassword->setVisible(mode == UIMode::Playing);
+         ChangePassword->setVisible(mode == UIMode::Playing);
       }
    };
 
