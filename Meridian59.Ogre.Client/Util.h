@@ -744,6 +744,45 @@ namespace Meridian59 { namespace Ogre
          baseMaterial.setNull();
          matPtr.setNull();
       };
+
+      /// <summary>
+      /// Clones the base material to a new material and applies a texture.
+      /// Enables the brightness adjust over time (e.g. blinking effect)
+      /// </summary>
+      /// <param name="MaterialName">Name of new material</param>
+      /// <param name="TextureName">Name of texture to set on new material</param>
+      /// <param name="MaterialGroup">ResourceGroup of new material</param>
+      __forceinline static void CreateMaterialFlashing(
+         const ::Ogre::String& MaterialName,
+         const ::Ogre::String& TextureName,
+         const ::Ogre::String& MaterialGroup)
+      {
+         MaterialManager& matMan = MaterialManager::getSingleton();
+
+         // nothing to do if existant
+         if (matMan.resourceExists(MaterialName))
+            return;
+
+         // try to get existing base material
+         MaterialPtr baseMaterial = matMan.getByName(BASEMATERIALFLASHING, RESOURCEGROUPSHADER);
+
+         if (baseMaterial.isNull())
+            return;
+
+         // clone base material to different group
+         MaterialPtr matPtr = baseMaterial->clone(MaterialName, true, MaterialGroup);
+
+         // set the texture_unit part with name of the texture
+         AliasTextureNamePairList pairs = AliasTextureNamePairList();
+         pairs[TEXTUREUNITALIAS] = TextureName;
+
+         // apply texture name
+         matPtr->applyTextureAliases(pairs);
+
+         // cleanup
+         baseMaterial.setNull();
+         matPtr.setNull();
+      };
       #pragma endregion
 
       #pragma region Others	

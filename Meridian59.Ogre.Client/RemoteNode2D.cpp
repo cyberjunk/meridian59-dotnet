@@ -178,6 +178,10 @@ namespace Meridian59 { namespace Ogre
       else if (RoomObject->IsHighlighted)
          billboardSet->setMaterialName(*imageComposer->Image->MaterialNameMouseOver);
 
+      // FLASHING
+      else if (RoomObject->Flags->IsFlashing)
+         billboardSet->setMaterialName(*imageComposer->Image->MaterialNameFlashing);
+
       // TRANSLUCENT
       // 75%
       else if (RoomObject->Flags->Drawing == ObjectFlags::DrawingType::Translucent75)

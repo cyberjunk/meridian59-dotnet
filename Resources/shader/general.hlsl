@@ -144,10 +144,11 @@ void object_ps(
    uniform float4    lightPos[8],
    uniform float4    lightAtt[8],
    uniform float4    colormodifier,
+   uniform float     sintime,
    uniform sampler2D diffusetex     : TEXUNIT0)
 {
    // pixel from texture
-   const float4 texcol = tex2D(diffusetex, uv);
+   float4 texcol = tex2D(diffusetex, uv);
 
    // flip direction (ogre? also normaalize in ogre)
    //lightPos = -lightPos;
@@ -165,6 +166,9 @@ void object_ps(
       float lightScale = max(0.0, 1.0 - (dot(delta, delta) / (lightAtt[i].r * lightAtt[i].r)));
       light += lightCol[i] * lightScale;
    }
+   
+   // apply periodic brightness adjust (40-100%) over time (for some materials))
+   texcol.rgb *= (0.4 + 0.6 * abs(sintime));
    
    // output pixel
    pixel = float4(light * colormodifier.rgb * texcol.rgb, texcol.a * colormodifier.a);

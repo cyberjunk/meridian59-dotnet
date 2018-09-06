@@ -256,6 +256,7 @@ material base_material
             fragment_program_ref object_ps
             {
 				param_named colormodifier float4 1 1 1 1
+				param_named sintime float 1.0
             }
  
 			// set this in code with texture
@@ -276,6 +277,7 @@ material base_material_black : base_material
 			fragment_program_ref object_ps
 			{
 				param_named colormodifier float4 0 0 0 1
+				param_named sintime float 1.0
 			}
 		}
 	}
@@ -290,6 +292,7 @@ material base_material_target : base_material
 			fragment_program_ref object_ps
 			{
 				param_named colormodifier float4 4 1.2 1.2 1
+				param_named sintime float 1.0
 			}
 		}
 	}
@@ -304,6 +307,22 @@ material base_material_mouseover : base_material
 			fragment_program_ref object_ps
 			{
 				param_named colormodifier float4 1.2 4.0 1.2 1
+				param_named sintime float 1.0
+			}
+		}
+	}
+}
+
+material base_material_flashing: base_material
+{	
+	technique
+    {
+        pass
+        {
+			fragment_program_ref object_ps
+			{
+				param_named colormodifier float4 1.0 1.0 1.0 1
+				param_named_auto sintime sintime_0_2pi 2.0
 			}
 		}
 	}

@@ -18,11 +18,12 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 //
 
-#define BASEMATERIALLABEL        "base_material_label"
 #define BASEMATERIAL             "base_material"
+#define BASEMATERIALLABEL        "base_material_label"
 #define BASEMATERIALROOM         "base_material_room"
 #define BASEMATERIALINVISIBLE    "base_material_invisible"
 #define BASEMATERIALWATER        "base_material_water"
+#define BASEMATERIALFLASHING     "base_material_flashing"
 #define TRANSPARENTMATERIAL      "transparent"
 #define TEXTUREUNITALIAS         "diffuseMap"
 #define SHADERCOLORMODIFIER      "colormodifier"

@@ -16,6 +16,7 @@ namespace Meridian59 { namespace Ogre
       matMan.remove(*MaterialNameTranslucent50);
       matMan.remove(*MaterialNameTranslucent75);
       matMan.remove(*MaterialNameInvisible);
+      matMan.remove(*MaterialNameFlashing);
 
       // delete material strings
       delete MaterialNameDefault;
@@ -26,6 +27,7 @@ namespace Meridian59 { namespace Ogre
       delete MaterialNameTranslucent50;
       delete MaterialNameTranslucent75;
       delete MaterialNameInvisible;
+      delete MaterialNameFlashing;
 
       // remove texture
       texMan.remove(*TextureName);
@@ -60,6 +62,7 @@ namespace Meridian59 { namespace Ogre
       image->MaterialNameTranslucent75 = StringConvert::CLRToOgrePtr(PREFIX_REMOTENODE2D_MATERIAL + key + "/translucent75");
       image->MaterialNameInvisible     = StringConvert::CLRToOgrePtr(PREFIX_REMOTENODE2D_MATERIAL + key + "/invisible");
       image->MaterialNameMouseOver     = StringConvert::CLRToOgrePtr(PREFIX_REMOTENODE2D_MATERIAL + key + "/mouseover");
+      image->MaterialNameFlashing      = StringConvert::CLRToOgrePtr(PREFIX_REMOTENODE2D_MATERIAL + key + "/flashing");
       image->TextureName               = StringConvert::CLRToOgrePtr(PREFIX_REMOTENODE2D_TEXTURE + key);
 
       unsigned short width = System::Convert::ToUInt16(RenderInfo->Dimension.X);
@@ -115,6 +118,11 @@ namespace Meridian59 { namespace Ogre
       // create invisible material
       Util::CreateMaterialInvisible(
          *image->MaterialNameInvisible, *image->TextureName,
+         MATERIALGROUP_REMOTENODE2D);
+
+      // create flashing material
+      Util::CreateMaterialFlashing(
+         *image->MaterialNameFlashing, *image->TextureName,
          MATERIALGROUP_REMOTENODE2D);
    };
 
