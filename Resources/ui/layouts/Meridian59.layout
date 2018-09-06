@@ -2941,7 +2941,7 @@
          
          <!-- UI -->
          <Window type="TaharezLook/Button" name="Options.GamePlay" >
-            <Property name="Text" value="Gameplay" />                     
+            <Property name="Text" value="Game" />                     
             <Property name="Area" value="{{0,5},{0.5,-30},{0,100},{0.5,-5}}" />
          </Window>
          
@@ -4032,6 +4032,12 @@
                   <Property name="Font" value="Berenika-8-Bold" />
                </Window>
                
+               <!-- SettingsDisabledDescription -->
+               <Window type="TaharezLook/LabelWhite" name="Options.TabGamePlay.SettingsDisabledDescription" >
+                  <Property name="Area" value="{{0,15},{0,100},{1.0,-15},{0,255}}" />
+                  <Property name="Text" value="You must be logged in to modify settings." />
+               </Window>
+               
                <!-- Server saved settings -->
                <Window type="TaharezLook/Checkbox" name="Options.TabGamePlay.Safety" >
                   <Property name="Text" value="Safety" />
@@ -4076,6 +4082,12 @@
                   <Property name="HorzFormatting" value="WordWrapLeftAligned" />
                   <Property name="Text" value="Change Password" />
                   <Property name="Font" value="Berenika-8-Bold" />
+               </Window>
+               
+               <!-- ChangePasswordDisabledDescription -->
+               <Window type="TaharezLook/LabelWhite" name="Options.TabGamePlay.ChangePasswordDisabledDescription" >
+                  <Property name="Area" value="{{0,15},{0,255},{1.0,-15},{1.0,-15}}" />
+                  <Property name="Text" value="You must be logged in to change your password." />
                </Window>
                
                <!-- OldPassword -->
