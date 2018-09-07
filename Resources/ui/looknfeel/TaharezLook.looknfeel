@@ -605,6 +605,7 @@
         <PropertyDefinition name="InactiveSelectionColour" initialValue="FF888888" redrawOnWrite="true" type="ColourRect"/>
         <Property name="MouseCursorImage" value="TaharezLook/MouseTextBar" />
         <Property name="Size" value="{{0, 128}, {0, 32}}" />
+        <Property name="MaxTextLength" value="200000" />
         <NamedArea name="TextArea">
             <Area>
                 <Dim type="LeftEdge" ><AbsoluteDim value="5" /></Dim>
@@ -2325,6 +2326,7 @@
         <PropertyDefinition name="InactiveSelectionColour" initialValue="FF888888" redrawOnWrite="true" type="ColourRect"/>
         <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
         <Property name="Size" value="{{0, 256}, {0, 32}}" />
+        <Property name="MaxTextLength" value="200000" />
         <NamedArea name="TextArea">
             <Area>
                 <Dim type="LeftEdge" ><AbsoluteDim value="5" /></Dim>
@@ -3326,6 +3328,7 @@
         <Property name="MouseCursorImage" value="TaharezLook/MouseTextBar" />
         <Property name="SelectionBrushImage" value="TaharezLook/MultiLineEditboxSelectionBrush" />
         <Property name="Size" value="{{0, 256}, {0, 256}}" />
+        <Property name="MaxTextLength" value="200000" />
         <NamedArea name="TextArea">
             <Area>
                 <Dim type="LeftEdge" ><ImageDim name="TaharezLook/MultiLineEditboxLeft" dimension="Width" /></Dim>
