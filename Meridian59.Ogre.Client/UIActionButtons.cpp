@@ -322,10 +322,12 @@ namespace Meridian59 { namespace Ogre
       const CEGUI::GridLayoutContainer* gridInventory = ControllerUI::Inventory::List;
       const CEGUI::ItemListbox* listSpells            = ControllerUI::Spells::List;
       const CEGUI::ItemListbox* listActions           = ControllerUI::Actions::List;
+      const CEGUI::ItemListbox* listAliases           = ControllerUI::Options::ListAliases;
 
       ActionButtonList^ buttonModels       = OgreClient::Singleton->Data->ActionButtons;
       InventoryObjectList^ inventoryModels = OgreClient::Singleton->Data->InventoryObjects;
       SpellObjectList^ spellModels         = OgreClient::Singleton->Data->SpellObjects;
+      KeyValuePairStringList^ aliasModels  = OgreClient::Singleton->Config->Aliases;
 
       // find index of droptarget
       int indexbutton = (int)gridButtons->getIdxOfChild(args.window);
@@ -370,7 +372,14 @@ namespace Meridian59 { namespace Ogre
       }
 
       // from aliases
-      // TODO
+      else if (parent3 == listAliases)
+      {
+         // find index of dropsource
+         int index = (int)listAliases->getItemIndex((CEGUI::ItemEntry*)parent);
+
+         if (aliasModels->Count > index)
+            buttonModels[indexbutton]->SetToAlias(aliasModels[index]);
+      }
 
       return true;
    }

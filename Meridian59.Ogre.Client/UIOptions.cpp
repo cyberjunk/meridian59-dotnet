@@ -1045,9 +1045,19 @@ namespace Meridian59 { namespace Ogre
          UI_WINDOWTYPE_ALIASLISTBOXITEM);
 
       // get children
-      CEGUI::PushButton* del  = (CEGUI::PushButton*)widget->getChildAtIdx(UI_OPTIONS_CHILDINDEX_ALIAS_DELETE);
-      CEGUI::Editbox* key     = (CEGUI::Editbox*)widget->getChildAtIdx(UI_OPTIONS_CHILDINDEX_ALIAS_KEY);
-      CEGUI::Editbox* value   = (CEGUI::Editbox*)widget->getChildAtIdx(UI_OPTIONS_CHILDINDEX_ALIAS_VALUE);
+      CEGUI::DragContainer* drag = (CEGUI::DragContainer*)widget->getChildAtIdx(UI_OPTIONS_CHILDINDEX_ALIAS_DRAG);
+      CEGUI::PushButton* del     = (CEGUI::PushButton*)widget->getChildAtIdx(UI_OPTIONS_CHILDINDEX_ALIAS_DELETE);
+      CEGUI::Editbox* key        = (CEGUI::Editbox*)widget->getChildAtIdx(UI_OPTIONS_CHILDINDEX_ALIAS_KEY);
+      CEGUI::Editbox* value      = (CEGUI::Editbox*)widget->getChildAtIdx(UI_OPTIONS_CHILDINDEX_ALIAS_VALUE);
+
+      // set tooltip of dragable icon
+      drag->setTooltipText("Drag&Drop me on the Button Grid!");
+
+      // get image in dragger
+      CEGUI::Window* icon = drag->getChildAtIdx(0);
+
+      // set alias icon
+      icon->setProperty(UI_PROPNAME_IMAGE, UI_IMAGE_ALIAS_ICON);
 
       // set values
       key->setText(StringConvert::CLRToCEGUI(alias->Key));

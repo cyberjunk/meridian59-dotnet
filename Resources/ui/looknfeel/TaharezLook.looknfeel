@@ -6818,8 +6818,9 @@
                <UnifiedDim scale="0" offset="25" type="Height"/>
             </Dim>
          </Area>
-      </NamedArea>      
-      <Child type ="TaharezLook/Editbox" nameSuffix="__auto__editbox_key">
+      </NamedArea>
+      <!-- Icon -->
+      <Child type ="TaharezLook/DragImage" nameSuffix="__auto__image">
          <Area>
             <Dim type="LeftEdge">
                <UnifiedDim scale="0" offset="0" type="LeftEdge" />            
@@ -6828,7 +6829,24 @@
                <UnifiedDim scale="0" offset="2" type="TopEdge" />
             </Dim>
             <Dim type="Width">
-               <UnifiedDim scale="0" offset="75" type="Width" />
+               <UnifiedDim scale="0" offset="20" type="Width" />
+            </Dim>
+            <Dim type="Height">
+               <UnifiedDim scale="0" offset="20" type="Height"/>
+            </Dim>
+         </Area>
+         <Property name="MouseInputPropagationEnabled" value="True" />
+      </Child>      
+      <Child type ="TaharezLook/Editbox" nameSuffix="__auto__editbox_key">
+         <Area>
+            <Dim type="LeftEdge">
+               <UnifiedDim scale="0" offset="28" type="LeftEdge" />            
+            </Dim>
+            <Dim type="TopEdge">
+               <UnifiedDim scale="0" offset="2" type="TopEdge" />
+            </Dim>
+            <Dim type="Width">
+               <UnifiedDim scale="0" offset="47" type="Width" />
             </Dim>
             <Dim type="Height">
                <UnifiedDim scale="1" offset="-4" type="Height"/>
