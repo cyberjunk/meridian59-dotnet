@@ -248,6 +248,18 @@ namespace Meridian59.Data.Models
             Item.PropertyChanged += OnObjectPropertyChanged;
         }
 
+        public void SetToAlias(KeyValuePairString Item)
+        {
+            if (Item == null)
+                return;
+
+            RemoveListener();
+            buttonType = ActionButtonType.Alias;
+            name = Item.Key;
+            numOfSameName = 0;
+            Data = Item;
+        }
+
         private void OnObjectPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)

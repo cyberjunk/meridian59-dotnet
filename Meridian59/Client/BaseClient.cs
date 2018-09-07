@@ -284,6 +284,10 @@ namespace Meridian59.Client
                     case ActionButtonType.Spell:
                         SendReqCastMessage((SpellObject)button.Data);
                         break;
+
+                    case ActionButtonType.Alias:
+                        ExecChatCommand(((KeyValuePairString)button.Data).Value);
+                        break;
                 }
             }
         }
