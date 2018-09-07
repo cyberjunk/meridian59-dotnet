@@ -542,6 +542,9 @@ namespace Meridian59 { namespace Ogre
          size_t remain = maxlen - box->getText().length();
          clipText = Common::Util::Truncate(clipText, (int)remain);
 
+         // erase selected part
+         box->eraseText(box->getSelectionStartIndex(), box->getSelectionLength());
+
          // insert new text
          size_t caretindex = box->getCaretIndex();
          box->insertText(StringConvert::CLRToCEGUI(clipText), caretindex);
