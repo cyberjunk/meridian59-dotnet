@@ -636,11 +636,29 @@ namespace Meridian59 { namespace Ogre
                type = subchild->Attributes[ATTRIB_TYPE]->Value;
                name = subchild->Attributes[XMLATTRIB_NAME]->Value;
 
+               ActionButtonType btntype = GetButtonType(type);
+               Object^ data = nullptr;
+
+               // resolve the alias references
+               if (btntype == ActionButtonType::Alias)
+               {
+                  // try to find alias
+                  data = aliases->GetItemByKey(name);
+
+                  // if not found, reset button to unset
+                  if (data == nullptr)
+                  {
+                     btntype = ActionButtonType::Unset;
+                     name = "";
+                     numofsamename = 0;
+                  }
+               }
+
                buttonSet->Add(gcnew ActionButtonConfig(
                   num, 
-                  GetButtonType(type),
+                  btntype,
                   name,
-                  nullptr,
+                  data,
                   nullptr,
                   numofsamename));
             }
@@ -1279,6 +1297,9 @@ namespace Meridian59 { namespace Ogre
 
       else if (CLRString::Equals(ButtonType, BUTTONTYPE_ITEM))
          return ActionButtonType::Item;
+
+      else if (CLRString::Equals(ButtonType, BUTTONTYPE_ALIAS))
+         return ActionButtonType::Alias;
 
       else
          return ActionButtonType::Unset;

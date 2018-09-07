@@ -289,6 +289,12 @@ namespace Meridian59 { namespace Ogre
                }
             }
          }
+
+         else if (dataModel->ButtonType == ActionButtonType::Alias)
+         {
+            dragger->setMouseCursor(UI_MOUSECURSOR_HAND);
+            imgButton->setProperty(UI_PROPNAME_IMAGE, UI_IMAGE_ALIAS_ICON);
+         }
       }
    };
 
@@ -362,6 +368,9 @@ namespace Meridian59 { namespace Ogre
          buttonModels[indexbutton]->SetToAction(
             ActionButtonConfig::GetAction(StringConvert::CEGUIToCLR(actionStr)));
       }
+
+      // from aliases
+      // TODO
 
       return true;
    }

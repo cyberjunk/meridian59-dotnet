@@ -273,6 +273,7 @@
 #define UI_IMAGE_ACTION_TRADE       "TaharezLook/ActionTrade"
 #define UI_IMAGE_ACTION_ACTIVATE    "TaharezLook/ActionActivate"
 #define UI_IMAGE_ACTION_GUILDINVITE "TaharezLook/ActionGuildInvite"
+#define UI_IMAGE_ALIAS_ICON         "TaharezLook/AliasIcon"
 
 /* prefixe */
 #define UI_NAMEPREFIX_STATICICON    "CEGUI/StaticIcon/"
