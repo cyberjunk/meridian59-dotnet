@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -14,10 +13,10 @@ namespace Meridian59.Patcher
     /// </summary>
     public class Worker
     {      
-        protected readonly ConcurrentQueue<PatchFile> queue;
-        protected readonly ConcurrentQueue<PatchFile> queueHashed;
-        protected readonly ConcurrentQueue<PatchFile> queueFinished;
-        protected readonly ConcurrentQueue<PatchFile> queueErrors;
+        protected readonly PatchFileQueue queue;
+        protected readonly PatchFileQueue queueHashed;
+        protected readonly PatchFileQueue queueFinished;
+        protected readonly PatchFileQueue queueErrors;
 
         protected readonly Thread thread;
         protected readonly string baseFilePath;
@@ -41,10 +40,10 @@ namespace Meridian59.Patcher
         public Worker(
             string BaseFilePath, 
             string BaseUrl,
-            ConcurrentQueue<PatchFile> InputQueue,
-            ConcurrentQueue<PatchFile> HashedQueue,
-            ConcurrentQueue<PatchFile> FinishedQueue,
-            ConcurrentQueue<PatchFile> ErrorQueue)
+            PatchFileQueue InputQueue,
+            PatchFileQueue HashedQueue,
+            PatchFileQueue FinishedQueue,
+            PatchFileQueue ErrorQueue)
         {
             // keep references
             baseFilePath = BaseFilePath;
