@@ -31,13 +31,6 @@ namespace Meridian59.Patcher
         private const string CONFIRMCANCEL_EN = "Are you sure you want to cancel the client update?";
         private const string CONFIRMCANCEL_DE = "Möchtest du das Update wirklich abbrechen?";
 
-        private const string HASHCREATEERROR_EN = "Fatal error creating file hash checker. Ensure you have the latest " + 
-            ".NET Framework available for your Operating System installed from Microsoft. If this issue persists please " +
-            "report it in the forums at meridiannext.com/phpbb3.";
-        private const string HASHCREATEERROR_DE = "Schwerer Fehler beim Erstellen des Dateien Hash Prüfers. Überprüfe ob " +
-            "Du das neuste .NET Framework von Microsoft für Dein Bestriebssystem installiert hast. Sollte dieser Fehler " +
-            "weiterhin bestehen dann melde dies bitte im Forum auf meridiannext.com/phpbb3.";
-
         private const string CLIENTEXEMISSINGERROR_EN = "Fatal error finding the client executable. Try to disable your " + 
             "anti-virus software and repeat patching. If this issue persists please report it in the forums at meridiannext.com/phpbb3.";
         private const string CLIENTEXEMISSINGERROR_DE = "Schwerer Fehler beim Auffinden der Startdatei des Clients. Versuche deine " +
@@ -200,20 +193,6 @@ namespace Meridian59.Patcher
                         return CONFIRMCANCEL_DE;
                     default:
                         return CONFIRMCANCEL_EN;
-                }
-            }
-        }
-
-        public string HashCreateError
-        {
-            get
-            {
-                switch (languageIdentifier)
-                {
-                    case LanguageIdentifier.German:
-                        return HASHCREATEERROR_DE;
-                    default:
-                        return HASHCREATEERROR_EN;
                 }
             }
         }

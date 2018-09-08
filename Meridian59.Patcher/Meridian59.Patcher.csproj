@@ -78,6 +78,7 @@
     <Compile Include="ProgressBar\SafeNativeMethods.cs" />
     <Compile Include="ProgressBar\UnsafeNativeMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sha256.cs" />
     <Compile Include="UpdateStage.cs" />
     <Compile Include="WebClientGzip.cs">
       <SubType>Component</SubType>

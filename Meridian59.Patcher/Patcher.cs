@@ -201,37 +201,21 @@ namespace Meridian59.Patcher
             }
 
             ///////////////////////////////////////////////////////////////////////
-            // create and start workers here
-            try
-            {
-                // create worker-instances and start them
-                for (int i = 0; i < workers.Length; i++)
-                {
-                    workers[i] = new Worker(
-                        PATCHERPATH,
-                        baseUrl,
-                        queue,
-                        queueHashed,
-                        queueDone,
-                        queueErrors);
+            // create worker-instances and start them
 
-                    workers[i].Start();
-                }
-            }
-            catch (Exception)
+            for (int i = 0; i < workers.Length; i++)
             {
-                // Catch potential exception if the SHA256 hasher couldn't be created.
-                // Some installs of Win XP may have a bug in their .NET framework that
-                // will cause the hasher not to be found, unlikely we will hit this case
-                // but rather catch it than crash. On our single test XP SP3 system, we
-                // did not hit this exception.
-                UpdateStage = UpdateStage.Abort;
-                // Redraw status text because form will close immediately after messagebox closes.
-                form.Update();
-                MessageBox.Show(languageHandler.HashCreateError,
-                    languageHandler.ErrorText, MessageBoxButtons.OK);
-            }
+               workers[i] = new Worker(
+                  PATCHERPATH,
+                  baseUrl,
+                  queue,
+                  queueHashed,
+                  queueDone,
+                  queueErrors);
 
+               workers[i].Start();
+            }
+            
             ///////////////////////////////////////////////////////////////////////
             // start download of patchinfo.txt
 
