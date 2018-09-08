@@ -286,7 +286,11 @@ namespace Meridian59.Client
                         break;
 
                     case ActionButtonType.Alias:
-                        ExecChatCommand(((KeyValuePairString)button.Data).Value);
+                        if (GameTick.CanAlias())
+                        {
+                           ExecChatCommand(((KeyValuePairString)button.Data).Value);
+                           GameTick.DidAlias();
+                        }
                         break;
                 }
             }

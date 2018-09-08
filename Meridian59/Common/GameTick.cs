@@ -32,6 +32,7 @@ namespace Meridian59.Common
         public double INTERVALREQACTION      = 500.0;
         public double INTERVALSAY            = 0.0;
         public double INTERVALBROADCAST      = 0.0;
+        public double INTERVALALIAS          = 500.0;
 
 #if VANILLA
         public double INTERVALREQMOVE   = 1000.0;
@@ -129,6 +130,11 @@ namespace Meridian59.Common
         public double Broadcast { get; protected set; }
 
         /// <summary>
+        /// Tick we last used an alias command
+        /// </summary>
+        public double Alias { get; protected set; }
+
+        /// <summary>
         /// Ticks we last sent an interaction with an ID, like
         /// BP_REQ_USE, BP_REQ_APPLY, BP_REQ_UNUSE, BP_REQ_LOOK and others.
         /// </summary>
@@ -201,6 +207,12 @@ namespace Meridian59.Common
         /// Calculated on-the-fly.
         /// </summary>
         public double SpanBroadcast { get { return Current - Broadcast; } }
+
+        /// <summary>
+        /// Milliseconds elapsed since last alias was used.
+        /// Calculated on-the-fly.
+        /// </summary>
+        public double SpanAlias { get { return Current - Alias; } }
 
         #endregion
 
@@ -354,6 +366,15 @@ namespace Meridian59.Common
         {
             return SpanBroadcast >= INTERVALBROADCAST;
         }
+
+        /// <summary>
+        /// Call this to know if you can use an alias command.
+        /// </summary>
+        /// <returns></returns>
+        public bool CanAlias()
+        {
+            return SpanAlias >= INTERVALALIAS;
+        }
         #endregion
 
         #region Did
@@ -435,6 +456,14 @@ namespace Meridian59.Common
         public void DidBroadcast()
         {
             Broadcast = Current;
+        }
+
+        /// <summary>
+        /// Call this when you used an alias
+        /// </summary>
+        public void DidAlias()
+        {
+            Alias = Current;
         }
 
         /// <summary>
