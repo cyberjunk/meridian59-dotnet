@@ -62,8 +62,8 @@ namespace Meridian59.Patcher
         private static readonly string CLIENTPATHX64  = Path.Combine(PATCHERPATH, FOLDERX64);
         private static readonly string CLIENTEXE86    = Path.Combine(CLIENTPATHX86, CLIENTEXENAME);
         private static readonly string CLIENTEXE64    = Path.Combine(CLIENTPATHX64, CLIENTEXENAME);
-        private static readonly string CLIENTEXEAUTO  = Environment.Is64BitOperatingSystem ? CLIENTEXE64 : CLIENTEXE86;
-        private static readonly string CLIENTPATHAUTO = Environment.Is64BitOperatingSystem ? CLIENTPATHX64 : CLIENTPATHX86;
+        private static readonly string CLIENTEXEAUTO  = (IntPtr.Size == 8) ? CLIENTEXE64 : CLIENTEXE86;
+        private static readonly string CLIENTPATHAUTO = (IntPtr.Size == 8) ? CLIENTPATHX64 : CLIENTPATHX86;
         
         private static readonly WindowsIdentity identity   = WindowsIdentity.GetCurrent();
         private static readonly WindowsPrincipal principal = new WindowsPrincipal(identity);
