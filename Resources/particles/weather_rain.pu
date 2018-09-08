@@ -19,10 +19,10 @@ system Weather/Rain
             angle                               1
             time_to_live                        1
             velocity                            75
-            position                            0 0 0
+            position                            0 32 0
             direction                           0.2 -1 0
             box_width                           128
-            box_height                          32
+            box_height                          16
             box_depth                           128
         }
         // this observer is manipulated in code

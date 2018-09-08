@@ -84,6 +84,7 @@
 #define AVATARCAMNODE         "AvatarCameraNode"
 #define NAME_AVATARLIGHT      "AvatarLight"
 #define NAME_ROOMNODE         "RoomNode"
+#define NAME_WEATHERNODE      "WeatherNode"
 #define NAME_ROOMDECORATION   "RoomDecoration"
 #define NAME_ROOM             "Room"
 
@@ -101,6 +102,8 @@
 
 #define PARTICLES_SNOW_TEMPLATE		"Weather/Snow"
 #define PARTICLES_SNOW_NAME			"ParticleSysSnow"
+#define PARTICLES_RAIN_TEMPLATE		"Weather/Rain"
+#define PARTICLES_RAIN_NAME			"ParticleSysRain"
 
 /**********************************************************************************************
                                     CEGUI

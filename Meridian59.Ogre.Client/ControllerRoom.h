@@ -72,10 +72,9 @@ namespace Meridian59 { namespace Ogre
       literal CLRString^ MODULENAME    = "ControllerRoom";
       literal float SCALE              = 0.0625f;
 
-      literal ::Ogre::Real PARTICLESYSCAMERAOFFSET = (::Ogre::Real)200.f;
-
       static ManualObject*                           roomDecoration;
       static SceneNode*                              roomNode;
+      static SceneNode*                              weatherNode;
       static ManualObject*                           roomManObj;
       static CaelumSystem*                           caelumSystem;
       static RemoteNode^                             avatarObject;
@@ -85,6 +84,7 @@ namespace Meridian59 { namespace Ogre
       static List<CLRString^>^                       waterTextures;
       
       static ::ParticleUniverse::ParticleSystem*                       particleSysSnow;
+      static ::ParticleUniverse::ParticleSystem*                       particleSysRain;
       static ::std::vector<::ParticleUniverse::ParticleEventHandler*>* customParticleHandlers;
 
       /// <summary>
@@ -261,6 +261,13 @@ namespace Meridian59 { namespace Ogre
       /// <param name="sender"></param>
       /// <param name="e"></param>
       static void OnEffectSnowingPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
+
+      /// <summary>
+      /// Handles changes in the Raining effect datamodel
+      /// </summary>
+      /// <param name="sender"></param>
+      /// <param name="e"></param>
+      static void OnEffectRainingPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
 
    public:
       /// <summary>

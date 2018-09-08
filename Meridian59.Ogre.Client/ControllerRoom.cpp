@@ -7,12 +7,14 @@ namespace Meridian59 { namespace Ogre
       roomDecoration          = nullptr;
       roomNode                = nullptr;
       roomManObj              = nullptr;
+      weatherNode             = nullptr;
       grassMaterials          = nullptr;
       grassPoints             = nullptr;
       waterTextures           = nullptr;
       caelumSystem            = nullptr;
       avatarObject            = nullptr;
       particleSysSnow         = nullptr;
+      particleSysRain         = nullptr;
       customParticleHandlers  = nullptr;
       recreatequeue           = nullptr;
       verticesProcessed       = 0;
@@ -59,6 +61,11 @@ namespace Meridian59 { namespace Ogre
       roomNode->attachObject(roomDecoration);
       roomNode->setInitialState();
 
+      // create rootnode for weather effects
+      weatherNode = SceneManager->getRootSceneNode()->createChildSceneNode(NAME_WEATHERNODE);
+      weatherNode->setPosition(::Ogre::Vector3(0, 0, 0));
+      weatherNode->setInitialState();
+
       // create decoration mapping
       LoadImproveData();
 
@@ -85,12 +92,14 @@ namespace Meridian59 { namespace Ogre
       // effects listeners
       OgreClient::Singleton->Data->Effects->Snowing->PropertyChanged +=
          gcnew PropertyChangedEventHandler(&ControllerRoom::OnEffectSnowingPropertyChanged);
+      OgreClient::Singleton->Data->Effects->Raining->PropertyChanged +=
+         gcnew PropertyChangedEventHandler(&ControllerRoom::OnEffectRainingPropertyChanged);
 
       /******************************************************************/
 
-         // add existing objects to scene
-         for each (RoomObject^ roomObject in OgreClient::Singleton->Data->RoomObjects)
-            RoomObjectAdd(roomObject);
+      // add existing objects to scene
+      for each (RoomObject^ roomObject in OgreClient::Singleton->Data->RoomObjects)
+         RoomObjectAdd(roomObject);
 
       // add existing projectiles to scene
       for each (Projectile^ projectile in OgreClient::Singleton->Data->Projectiles)
@@ -188,6 +197,9 @@ namespace Meridian59 { namespace Ogre
       particleSysSnow = particleMan->createParticleSystem(
          PARTICLES_SNOW_NAME, PARTICLES_SNOW_TEMPLATE, SceneManager);
 
+      particleSysRain = particleMan->createParticleSystem(
+         PARTICLES_RAIN_NAME, PARTICLES_RAIN_TEMPLATE, SceneManager);
+
       // setup particle system: snow
       if (particleSysSnow->getNumTechniques() > 0)
       {
@@ -197,7 +209,7 @@ namespace Meridian59 { namespace Ogre
          if (technique->getNumObservers() > 0)
          {
             ::ParticleUniverse::OnPositionObserver* observer = (::ParticleUniverse::OnPositionObserver*)
-            technique->getObserver(0);
+               technique->getObserver(0);
 
             if (observer)
             {
@@ -222,9 +234,49 @@ namespace Meridian59 { namespace Ogre
          if (technique->getNumEmitters() > 0)
          {
             ::ParticleUniverse::DynamicAttributeFixed* val = (::ParticleUniverse::DynamicAttributeFixed*)
-            technique->getEmitter(0)->getDynEmissionRate();
+               technique->getEmitter(0)->getDynEmissionRate();
 
             val->setValue((::ParticleUniverse::Real)(OgreClient::Singleton->Config->WeatherParticles / 10));
+         }
+      }
+
+      // setup particle system: rain
+      if (particleSysRain->getNumTechniques() > 0)
+      {
+         ::ParticleUniverse::ParticleTechnique* technique =
+            particleSysRain->getTechnique(0);
+
+         if (technique->getNumObservers() > 0)
+         {
+            ::ParticleUniverse::OnPositionObserver* observer = (::ParticleUniverse::OnPositionObserver*)
+               technique->getObserver(0);
+
+            if (observer)
+            {
+               // create custom handler for OnPosition
+               // this will track the position and adjust
+               WeatherParticleEventHandler* posHandler =
+                  new WeatherParticleEventHandler();
+
+               observer->addEventHandler(
+                  (::ParticleUniverse::ParticleEventHandler*)posHandler);
+
+               // save reference for cleanup
+               customParticleHandlers->push_back(
+                  (::ParticleUniverse::ParticleEventHandler*)posHandler);
+            }
+         }
+
+         // set particles count from config
+         technique->setVisualParticleQuota(OgreClient::Singleton->Config->WeatherParticles);
+
+         // adjust emission rate to 1/10 of max quota
+         if (technique->getNumEmitters() > 0)
+         {
+            ::ParticleUniverse::DynamicAttributeFixed* val = (::ParticleUniverse::DynamicAttributeFixed*)
+               technique->getEmitter(0)->getDynEmissionRate();
+
+            val->setValue((::ParticleUniverse::Real)(OgreClient::Singleton->Config->WeatherParticles / 5));
          }
       }
    };
@@ -235,10 +287,13 @@ namespace Meridian59 { namespace Ogre
          return;
 
       ::ParticleUniverse::ParticleSystemManager* particleMan =
-      ::ParticleUniverse::ParticleSystemManager::getSingletonPtr();
+         ::ParticleUniverse::ParticleSystemManager::getSingletonPtr();
 
       if (particleSysSnow)
          particleMan->destroyParticleSystem(particleSysSnow, SceneManager);
+
+      if (particleSysRain)
+         particleMan->destroyParticleSystem(particleSysRain, SceneManager);
 
       if (customParticleHandlers)
       {
@@ -253,6 +308,7 @@ namespace Meridian59 { namespace Ogre
       }
 
       particleSysSnow = nullptr;
+      particleSysRain = nullptr;
    };
 
    void ControllerRoom::DestroyCaelum()
@@ -295,11 +351,16 @@ namespace Meridian59 { namespace Ogre
       // remove effects listeners
       OgreClient::Singleton->Data->Effects->Snowing->PropertyChanged -=
          gcnew PropertyChangedEventHandler(&OnEffectSnowingPropertyChanged);
+      OgreClient::Singleton->Data->Effects->Raining->PropertyChanged -=
+         gcnew PropertyChangedEventHandler(&OnEffectRainingPropertyChanged);
 
       /******************************************************************/
 
       if (SceneManager->hasSceneNode(NAME_ROOMNODE))
          SceneManager->destroySceneNode(NAME_ROOMNODE);
+
+      if (SceneManager->hasSceneNode(NAME_WEATHERNODE))
+         SceneManager->destroySceneNode(NAME_WEATHERNODE);
 
       if (SceneManager->hasManualObject(NAME_ROOMDECORATION))
          SceneManager->destroyManualObject(NAME_ROOMDECORATION);
@@ -319,6 +380,7 @@ namespace Meridian59 { namespace Ogre
       roomDecoration    = nullptr;
       roomNode          = nullptr;
       roomManObj        = nullptr;
+      weatherNode       = nullptr;
       caelumSystem      = nullptr;
       grassMaterials    = nullptr;
       grassPoints       = nullptr;
@@ -442,6 +504,13 @@ namespace Meridian59 { namespace Ogre
 
          if (particleSysSnow->isAttached())
             particleSysSnow->detachFromParent();
+      }
+      if (particleSysRain)
+      {
+         particleSysRain->stop();
+
+         if (particleSysRain->isAttached())
+            particleSysRain->detachFromParent();
       }
 
       // childnodes/room elements
@@ -1128,40 +1197,28 @@ namespace Meridian59 { namespace Ogre
       
       else if (CLRString::Equals(e->PropertyName, DataController::PROPNAME_VIEWERPOSITION))
       {
-         // move particle systems with viewer position
+         // move weathernode to camera position
+         weatherNode->setPosition(Util::ToOgre(
+            OgreClient::Singleton->Data->ViewerPosition));
+
+         // make sure snow particle system is started
          if (particleSysSnow &&
             OgreClient::Singleton->Data->Effects->Snowing &&
-            !OgreClient::Singleton->Config->DisableWeatherEffects &&
-            particleSysSnow->getNumTechniques() > 0)
+            !OgreClient::Singleton->Config->DisableWeatherEffects)
          {
-            // get technique
-            ::ParticleUniverse::ParticleTechnique* technique = 
-               particleSysSnow->getTechnique(0);
-
-            // get new camera position
-            ::Ogre::Vector3 newPos = Util::ToOgre(
-               OgreClient::Singleton->Data->ViewerPosition);
-
-            // squared distance to current particle sys location
-            ::Ogre::Real dist2 = (technique->position - newPos).squaredLength();
-
-            // set particlesystem position above camera
-            technique->position = newPos;
-            technique->position.y += PARTICLESYSCAMERAOFFSET;
-            technique->latestPosition = technique->position;
-
             // start it if it's not yet started
             if (particleSysSnow->getState() == ::ParticleUniverse::ParticleSystem::ParticleSystemState::PSS_STOPPED)
                particleSysSnow->start();
+         }
 
-            // if the new position is far away from the last
-            // do a fast forward to create particles
-            if (dist2 > 100000.0f)
-            {
-               particleSysSnow->setFastForward(5.0f, 1.0f);
-               particleSysSnow->fastForward();
-               particleSysSnow->setFastForward(0.0f, 1.0f);
-            }
+         // make sure rain particle system is started
+         if (particleSysRain &&
+            OgreClient::Singleton->Data->Effects->Raining &&
+            !OgreClient::Singleton->Config->DisableWeatherEffects)
+         {
+            // start it if it's not yet started
+            if (particleSysRain->getState() == ::ParticleUniverse::ParticleSystem::ParticleSystemState::PSS_STOPPED)
+               particleSysRain->start();
          }
       }
    };
@@ -1179,7 +1236,7 @@ namespace Meridian59 { namespace Ogre
          {
             // possibly attach to roomnode
             if (!particleSysSnow->isAttached())
-               SceneManager->getRootSceneNode()->attachObject(particleSysSnow);
+               weatherNode->attachObject(particleSysSnow);
 
             if (particleSysSnow->getNumTechniques() > 0)
             {
@@ -1207,14 +1264,6 @@ namespace Meridian59 { namespace Ogre
                      observer->setPositionYThreshold(max.y + 5.0f);
                   }
                }
-
-               // set particle system to camera
-               technique->position = Util::ToOgre(
-                  OgreClient::Singleton->Data->ViewerPosition);
-
-               // but place it above...
-               technique->position.y += PARTICLESYSCAMERAOFFSET;
-               technique->latestPosition = technique->position;
             }
          }
          else
@@ -1224,6 +1273,60 @@ namespace Meridian59 { namespace Ogre
             // possibly detach from parent
             if (particleSysSnow->isAttached())
                particleSysSnow->detachFromParent();
+         }
+      }
+   };
+
+   void ControllerRoom::OnEffectRainingPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
+   {
+      if (!IsInitialized || !particleSysRain || !Room)
+         return;
+
+      if (CLRString::Equals(e->PropertyName, EffectRaining::PROPNAME_ISACTIVE) &&
+         !OgreClient::Singleton->Config->DisableWeatherEffects)
+      {
+         // start or stop rain weather
+         if (OgreClient::Singleton->Data->Effects->Raining->IsActive)
+         {
+            // possibly attach to roomnode
+            if (!particleSysRain->isAttached())
+               weatherNode->attachObject(particleSysRain);
+
+            if (particleSysRain->getNumTechniques() > 0)
+            {
+               // get technique
+               ::ParticleUniverse::ParticleTechnique* technique =
+                  particleSysRain->getTechnique(0);
+
+               // modify observer 0
+               // setup observer threshold, start observing particles
+               // once they entered the roomboundingbox height
+               if (technique->getNumObservers() > 0)
+               {
+                  ::ParticleUniverse::OnPositionObserver* observer = (::ParticleUniverse::OnPositionObserver*)
+                     technique->getObserver(0);
+
+                  if (observer)
+                  {
+                     // get room bounding box
+                     BoundingBox3D^ bBox = Room->GetBoundingBox3D(true);
+
+                     // turn max into ogre world (scale, flip)
+                     ::Ogre::Vector3 max = Util::ToOgreYZFlipped(bBox->Max) * SCALE;
+
+                     // set threshold
+                     observer->setPositionYThreshold(max.y + 5.0f);
+                  }
+               }
+            }
+         }
+         else
+         {
+            particleSysRain->stop();
+
+            // possibly detach from parent
+            if (particleSysRain->isAttached())
+               particleSysRain->detachFromParent();
          }
       }
    };

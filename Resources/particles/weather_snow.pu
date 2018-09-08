@@ -18,7 +18,7 @@ system Weather/Snow
                 min                             5
                 max                             40
             }
-            time_to_live                        9000000
+            time_to_live                        10
             velocity                            dyn_random
             {
                 min                             40.0
@@ -29,10 +29,10 @@ system Weather/Snow
                 min                             3.0
                 max                             4.0
             }
-            position                            0 9 0
+            position                            0 192 0
             direction                           0 -1 0
             box_width                           3072
-            box_height                          1
+            box_height                          64
             box_depth                           3072
         }
         affector                                LinearForce WindLeft
