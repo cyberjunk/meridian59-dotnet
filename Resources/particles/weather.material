@@ -16,3 +16,21 @@ material PU/Weather/Snow
         }
     }
 }
+
+material PU/Weather/Rain
+{
+    technique
+    {
+        pass
+        {
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture weather_rain.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}

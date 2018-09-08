@@ -1,0 +1,35 @@
+system Weather/Rain
+{
+    fast_forward                                1 1
+    category                                    Nature
+    technique 
+    {
+        visual_particle_quota                   5000
+        material                                PU/Weather/Rain
+        default_particle_width                  0.06
+        default_particle_height                 3
+        renderer                                Billboard
+        {
+            billboard_type                      oriented_self
+            billboard_origin                    top_center
+        }
+        emitter                                 Box 
+        {
+            emission_rate                       500
+            angle                               1
+            time_to_live                        1
+            velocity                            75
+            position                            0 0 0
+            direction                           0.2 -1 0
+            box_width                           128
+            box_height                          32
+            box_depth                           128
+        }
+        // this observer is manipulated in code
+        // and will delete the particle
+        observer                                OnPosition 
+        {
+            position_y                          less_than 0.0
+        }
+    }
+}
