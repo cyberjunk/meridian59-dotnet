@@ -22,7 +22,7 @@ namespace Meridian59.Patcher
         protected readonly string baseFilePath;
         protected readonly string baseUrl;
         protected readonly WebClientGzip webClient;
-        protected readonly SHA256CryptoServiceProvider sha256;
+        protected readonly SHA256Cng sha256;
         protected readonly SynchronizationContext eventContext;
 
         protected volatile bool isDownloading;
@@ -54,7 +54,7 @@ namespace Meridian59.Patcher
             queueErrors = ErrorQueue;
 
             // get sha256 creator for this worker
-            sha256 = new SHA256CryptoServiceProvider();
+            sha256 = new SHA256Cng();
             sha256.Initialize();
 
             // create webclient for downloads

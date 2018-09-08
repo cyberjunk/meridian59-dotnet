@@ -38,6 +38,12 @@ namespace Meridian59.Patcher
             "Du das neuste .NET Framework von Microsoft für Dein Bestriebssystem installiert hast. Sollte dieser Fehler " +
             "weiterhin bestehen dann melde dies bitte im Forum auf meridiannext.com/phpbb3.";
 
+        private const string CLIENTEXEMISSINGERROR_EN = "Fatal error finding the client executable. Try to disable your " + 
+            "anti-virus software and repeat patching. If this issue persists please report it in the forums at meridiannext.com/phpbb3.";
+        private const string CLIENTEXEMISSINGERROR_DE = "Schwerer Fehler beim Auffinden der Startdatei des Clients. Versuche deine " +
+            "Anti-Viren Software zu deaktivieren und das Patchen zu wiederholen. Sollte dieser Fehler weiterhin bestehen, dann " +
+            "melde dies bitte im Forum auf meridiannext.com/phpbb3.";
+
         private const string URLINFOMISSING_EN = "Patch information from file {0} is missing. You may be " +
             "able to obtain this file automatically by using the game client to connect to a valid server. " +
             "If you are unable to do this, you will need to run the client installer again.";
@@ -366,6 +372,20 @@ namespace Meridian59.Patcher
             }
         }
   
+        public string ClientExecutableMissing
+        {
+            get
+            {
+                switch (languageIdentifier)
+                {
+                    case LanguageIdentifier.German:
+                        return CLIENTEXEMISSINGERROR_DE;
+                    default:
+                        return CLIENTEXEMISSINGERROR_EN;
+                }
+            }
+        }
+
         public string ClientUpToDate
         {
             get

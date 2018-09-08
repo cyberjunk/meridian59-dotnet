@@ -318,19 +318,28 @@ namespace Meridian59.Patcher
             // in case patching went well
             if (updateStage != UpdateStage.Abort)
             {
-                ProcessStartInfo pi;
-                Process process;
+                // make sure the client executable really exists
+                if (File.Exists(Path.Combine(clientPath, clientExecutable)))
+                { 
+                   ProcessStartInfo pi;
+                   Process process;
 
-                // start client
-                pi                  = new ProcessStartInfo();
-                pi.FileName         = clientExecutable;
-                pi.Arguments        = "";
-                pi.UseShellExecute  = true;
-                pi.WorkingDirectory = clientPath;
+                   // start client
+                   pi                  = new ProcessStartInfo();
+                   pi.FileName         = clientExecutable;
+                   pi.Arguments        = "";
+                   pi.UseShellExecute  = true;
+                   pi.WorkingDirectory = clientPath;
 
-                process = new Process();
-                process.StartInfo = pi;
-                process.Start();
+                   process = new Process();
+                   process.StartInfo = pi;
+                   process.Start();
+                }
+                else
+                {
+                   MessageBox.Show(languageHandler.ClientExecutableMissing,
+                      languageHandler.ErrorText, MessageBoxButtons.OK);
+                }
             }
         }
 
