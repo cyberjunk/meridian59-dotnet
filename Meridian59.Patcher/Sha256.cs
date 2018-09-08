@@ -7,7 +7,7 @@ using System.IO;
 namespace Meridian59.Patcher
 {
    /// <summary>
-   /// TODO: Change so that a class instance can calculate several SHA256 (reset) without needing to create a new instance
+   /// Custom SHA256 implementation
    /// </summary>
    public class Sha256
    {
@@ -20,6 +20,10 @@ namespace Meridian59.Patcher
             0xA2BFE8A1, 0xA81A664B, 0xC24B8B70, 0xC76C51A3, 0xD192E819, 0xD6990624, 0xF40E3585, 0x106AA070,
             0x19A4C116, 0x1E376C08, 0x2748774C, 0x34B0BCB5, 0x391C0CB3, 0x4ED8AA4A, 0x5B9CCA4F, 0x682E6FF3,
             0x748F82EE, 0x78A5636F, 0x84C87814, 0x8CC70208, 0x90BEFFFA, 0xA4506CEB, 0xBEF9A3F7, 0xC67178F2
+        };
+
+      private static readonly UInt32[] SEED = new UInt32[8] {
+            0x6A09E667, 0xBB67AE85, 0x3C6EF372, 0xA54FF53A, 0x510E527F, 0x9B05688C, 0x1F83D9AB, 0x5BE0CD19
         };
 
       //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -35,19 +39,35 @@ namespace Meridian59.Patcher
 
       //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-      private UInt32[] H = new UInt32[8] {
-            0x6A09E667, 0xBB67AE85, 0x3C6EF372, 0xA54FF53A, 0x510E527F, 0x9B05688C, 0x1F83D9AB, 0x5BE0CD19
-        };
-
+      private UInt32[] H = new UInt32[8];
       private byte[] pending_block = new byte[64];
-      private uint pending_block_off = 0;
       private UInt32[] uint_buffer = new UInt32[16];
-      private UInt64 bits_processed = 0;
-      private bool closed = false;
+      private uint pending_block_off;
+      private UInt64 bits_processed;
+      private byte[] buf = new byte[8192];
 
       //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-      private void processBlock(UInt32[] M)
+      /// <summary>
+      /// Constructor
+      /// </summary>
+      public Sha256()
+      {
+         Reset();
+      }
+
+      /// <summary>
+      /// Reset the instance to calculate the next SHA256
+      /// </summary>
+      private void Reset()
+      {
+         Array.Copy(SEED, H, H.Length);
+         Array.Clear(pending_block, 0, pending_block.Length);
+         pending_block_off = 0;
+         bits_processed = 0;
+      }
+
+      private void ProcessBlock(UInt32[] M)
       {
          Debug.Assert(M.Length == 16);
 
@@ -99,11 +119,8 @@ namespace Meridian59.Patcher
          H[7] = h + H[7];
       }
 
-      public void AddData(byte[] data, uint offset, uint len)
+      private void AddData(byte[] data, uint offset, uint len)
       {
-         if (closed)
-            throw new InvalidOperationException("Adding data to a closed hasher.");
-
          if (len == 0)
             return;
 
@@ -133,47 +150,69 @@ namespace Meridian59.Patcher
             if (pending_block_off == 64)
             {
                toUintArray(pending_block, uint_buffer);
-               processBlock(uint_buffer);
+               ProcessBlock(uint_buffer);
                pending_block_off = 0;
             }
          }
       }
 
-      public byte[] GetHash()
+      private byte[] GetHash()
       {
          return toByteArray(GetHashUInt32());
       }
 
-      public ReadOnlyCollection<UInt32> GetHashUInt32()
+      private ReadOnlyCollection<UInt32> GetHashUInt32()
       {
-         if (!closed)
+         UInt64 size_temp = bits_processed;
+
+         AddData(new byte[1] { 0x80 }, 0, 1);
+
+         uint available_space = 64 - pending_block_off;
+
+         if (available_space < 8)
+            available_space += 64;
+
+         // 0-initialized
+         byte[] padding = new byte[available_space];
+         // Insert lenght uint64
+         for (uint i = 1; i <= 8; ++i)
          {
-            UInt64 size_temp = bits_processed;
-
-            AddData(new byte[1] { 0x80 }, 0, 1);
-
-            uint available_space = 64 - pending_block_off;
-
-            if (available_space < 8)
-               available_space += 64;
-
-            // 0-initialized
-            byte[] padding = new byte[available_space];
-            // Insert lenght uint64
-            for (uint i = 1; i <= 8; ++i)
-            {
-               padding[padding.Length - i] = (byte)size_temp;
-               size_temp >>= 8;
-            }
-
-            AddData(padding, 0u, (uint)padding.Length);
-
-            Debug.Assert(pending_block_off == 0);
-
-            closed = true;
+            padding[padding.Length - i] = (byte)size_temp;
+            size_temp >>= 8;
          }
 
+         AddData(padding, 0u, (uint)padding.Length);
+
+         Debug.Assert(pending_block_off == 0);
+
          return Array.AsReadOnly(H);
+      }
+
+      /// <summary>
+      /// Calculate SHA256 of a stream
+      /// </summary>
+      /// <param name="fs"></param>
+      /// <returns></returns>
+      public byte[] ComputeHash(Stream fs)
+      {
+         uint bytes_read;
+
+         do
+         {
+            bytes_read = (uint)fs.Read(buf, 0, buf.Length);
+
+            if (bytes_read == 0)
+               break;
+
+            AddData(buf, 0, bytes_read);
+         }
+         while (bytes_read == 8192);
+
+         byte[] hash = GetHash();
+
+         Reset();
+
+         return hash;
       }
 
       //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -200,25 +239,6 @@ namespace Meridian59.Patcher
          }
 
          return dest;
-      }
-
-      public static byte[] ComputeHash(Stream fs)
-      {
-         Sha256 sha = new Sha256();
-         byte[] buf = new byte[8192];
-
-         uint bytes_read;
-         do
-         {
-            bytes_read = (uint)fs.Read(buf, 0, buf.Length);
-            if (bytes_read == 0)
-               break;
-
-            sha.AddData(buf, 0, bytes_read);
-         }
-         while (bytes_read == 8192);
-
-         return sha.GetHash();
       }
    }
 }

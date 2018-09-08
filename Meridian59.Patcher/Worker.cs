@@ -18,6 +18,7 @@ namespace Meridian59.Patcher
         protected readonly PatchFileQueue queueErrors;
 
         protected readonly Thread thread;
+        protected readonly Sha256 sha256;
         protected readonly string baseFilePath;
         protected readonly string baseUrl;
         protected readonly WebClientGzip webClient;
@@ -50,6 +51,9 @@ namespace Meridian59.Patcher
             queueHashed = HashedQueue;
             queueFinished = FinishedQueue;
             queueErrors = ErrorQueue;
+
+            // create sha256 hasher
+            sha256 = new Sha256();
 
             // create webclient for downloads
             webClient = new WebClientGzip();
@@ -164,7 +168,7 @@ namespace Meridian59.Patcher
             }
 
             // otherwise compute and compare sha256
-            byte[] sha256Fil = Sha256.ComputeHash(fs);
+            byte[] sha256Fil = sha256.ComputeHash(fs);
             byte[] sha256Onl = StringToByteArray(file.MyHash);
             bool areEqual = sha256Fil.SequenceEqual<byte>(sha256Onl);
 
