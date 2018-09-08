@@ -218,7 +218,7 @@ namespace Meridian59.Patcher
                     workers[i].Start();
                 }
             }
-            catch (TargetInvocationException)
+            catch (Exception)
             {
                 // Catch potential exception if the SHA256 hasher couldn't be created.
                 // Some installs of Win XP may have a bug in their .NET framework that
