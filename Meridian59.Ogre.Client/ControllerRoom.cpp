@@ -1203,7 +1203,7 @@ namespace Meridian59 { namespace Ogre
 
          // make sure snow particle system is started
          if (particleSysSnow &&
-            OgreClient::Singleton->Data->Effects->Snowing &&
+            OgreClient::Singleton->Data->Effects->Snowing->IsActive &&
             !OgreClient::Singleton->Config->DisableWeatherEffects)
          {
             // start it if it's not yet started
@@ -1213,7 +1213,7 @@ namespace Meridian59 { namespace Ogre
 
          // make sure rain particle system is started
          if (particleSysRain &&
-            OgreClient::Singleton->Data->Effects->Raining &&
+            OgreClient::Singleton->Data->Effects->Raining->IsActive &&
             !OgreClient::Singleton->Config->DisableWeatherEffects)
          {
             // start it if it's not yet started
