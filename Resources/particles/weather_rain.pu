@@ -29,6 +29,7 @@ system Weather/Rain
         // and will delete the particle
         observer                                OnPosition 
         {
+            observe_interval                    0
             position_y                          less_than 0.0
         }
     }
