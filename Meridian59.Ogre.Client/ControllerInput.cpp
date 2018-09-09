@@ -814,7 +814,7 @@ namespace Meridian59 { namespace Ogre
 
          // 3. ZOOM
          CLRReal zDelta = cameraZoom - camera->getPosition().z;
-         if (zDelta != 0.0f)
+         if (abs(zDelta) > 0.01f)
          {
             // limit stepsize
             CLRReal zD = (zDelta > 0.0f) ?
