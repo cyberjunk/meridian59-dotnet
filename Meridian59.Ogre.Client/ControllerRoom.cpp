@@ -1198,29 +1198,6 @@ namespace Meridian59 { namespace Ogre
          if (avatar)
             RoomObjectAdd(avatar);
       }
-      
-      else if (CLRString::Equals(e->PropertyName, DataController::PROPNAME_VIEWERPOSITION))
-      {
-         // make sure snow particle system is started
-         if (particleSysSnow &&
-            OgreClient::Singleton->Data->Effects->Snowing->IsActive &&
-            !OgreClient::Singleton->Config->DisableWeatherEffects)
-         {
-            // start it if it's not yet started
-            if (particleSysSnow->getState() == ::ParticleUniverse::ParticleSystem::ParticleSystemState::PSS_STOPPED)
-               particleSysSnow->start();
-         }
-
-         // make sure rain particle system is started
-         if (particleSysRain &&
-            OgreClient::Singleton->Data->Effects->Raining->IsActive &&
-            !OgreClient::Singleton->Config->DisableWeatherEffects)
-         {
-            // start it if it's not yet started
-            if (particleSysRain->getState() == ::ParticleUniverse::ParticleSystem::ParticleSystemState::PSS_STOPPED)
-               particleSysRain->start();
-         }
-      }
    };
 
    void ControllerRoom::OnEffectSnowingPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
@@ -1265,10 +1242,14 @@ namespace Meridian59 { namespace Ogre
                   }
                }
             }
+
+            // start it
+            particleSysSnow->start();
          }
          else
          {
-            particleSysSnow->stop();
+            // fade stop it so it can be restarted without all particles deleted
+            particleSysSnow->stopFade();
 
             // possibly detach from parent
             if (particleSysSnow->isAttached())
@@ -1319,10 +1300,14 @@ namespace Meridian59 { namespace Ogre
                   }
                }
             }
+
+            // start it
+            particleSysRain->start();
          }
          else
          {
-            particleSysRain->stop();
+            // fade stop it so it can be restarted without all particles deleted
+            particleSysRain->stopFade();
 
             // possibly detach from parent
             if (particleSysRain->isAttached())
