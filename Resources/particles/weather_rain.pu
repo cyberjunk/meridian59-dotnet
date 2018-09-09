@@ -6,8 +6,8 @@ system Weather/Rain
     {
         visual_particle_quota                   5000
         material                                PU/Weather/Rain
-        default_particle_width                  0.24
-        default_particle_height                 12
+        default_particle_width                  0.12
+        default_particle_height                 6
         renderer                                Billboard
         {
             billboard_type                      oriented_self
@@ -19,11 +19,11 @@ system Weather/Rain
             angle                               1
             time_to_live                        2
             velocity                            75
-            position                            0 48 0
+            position                            0 16 0
             direction                           0.2 -1 0
-            box_width                           1024
+            box_width                           512
             box_height                          16
-            box_depth                           1024
+            box_depth                           512
         }
         // this observer is manipulated in code
         // and will delete the particle
