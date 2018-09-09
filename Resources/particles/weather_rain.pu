@@ -2,9 +2,10 @@ system Weather/Rain
 {
     fast_forward                                1 1
     category                                    Nature
-	local_space                                 true
+    keep_local                                  true
     technique 
     {
+        keep_local                              true
         visual_particle_quota                   5000
         material                                PU/Weather/Rain
         default_particle_width                  0.12
@@ -12,19 +13,20 @@ system Weather/Rain
         renderer                                Billboard
         {
             billboard_type                      oriented_self
-            billboard_origin                    top_center
+            billboard_origin                    bottom_center
         }
         emitter                                 Box 
         {
+            keep_local                          true
             emission_rate                       500
             angle                               1
             time_to_live                        1
             velocity                            75
-            position                            0 0 0
+            position                            0 32 0
             direction                           0.2 -1 0
-            box_width                           512
-            box_height                          32
-            box_depth                           512
+            box_width                           256
+            box_height                          1
+            box_depth                           256
         }
         // this observer is manipulated in code
         // and will delete the particle
