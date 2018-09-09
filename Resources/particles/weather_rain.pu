@@ -2,6 +2,7 @@ system Weather/Rain
 {
     fast_forward                                1 1
     category                                    Nature
+	local_space                                 true
     technique 
     {
         visual_particle_quota                   5000
@@ -17,12 +18,12 @@ system Weather/Rain
         {
             emission_rate                       500
             angle                               1
-            time_to_live                        2
+            time_to_live                        1
             velocity                            75
-            position                            0 16 0
+            position                            0 0 0
             direction                           0.2 -1 0
             box_width                           512
-            box_height                          16
+            box_height                          32
             box_depth                           512
         }
         // this observer is manipulated in code

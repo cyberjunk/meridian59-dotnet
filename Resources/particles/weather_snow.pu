@@ -2,6 +2,7 @@ system Weather/Snow
 {
     fast_forward                                1 1
     category                                    Nature
+    local_space                                 false
     technique
     {
         visual_particle_quota                   5000
