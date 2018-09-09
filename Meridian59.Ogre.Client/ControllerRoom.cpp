@@ -62,7 +62,7 @@ namespace Meridian59 { namespace Ogre
       roomNode->setInitialState();
 
       // create rootnode for weather effects
-      weatherNode = SceneManager->getRootSceneNode()->createChildSceneNode(NAME_WEATHERNODE);
+      weatherNode = OgreClient::Singleton->CameraNodeOrbit->createChildSceneNode(NAME_WEATHERNODE);
       weatherNode->setPosition(::Ogre::Vector3(0, 0, 0));
       weatherNode->setInitialState();
 
@@ -620,6 +620,10 @@ namespace Meridian59 { namespace Ogre
    {
       if (!IsInitialized)
          return;
+
+      // fix weathernode getting hidden when going into first person
+      if (weatherNode)
+         weatherNode->setVisible(true);
 
       // process the queued subsections for recreation
       for each(CLRString^ s in recreatequeue)
@@ -1197,10 +1201,6 @@ namespace Meridian59 { namespace Ogre
       
       else if (CLRString::Equals(e->PropertyName, DataController::PROPNAME_VIEWERPOSITION))
       {
-         // move weathernode to camera position
-         weatherNode->setPosition(Util::ToOgre(
-            OgreClient::Singleton->Data->ViewerPosition));
-
          // make sure snow particle system is started
          if (particleSysSnow &&
             OgreClient::Singleton->Data->Effects->Snowing->IsActive &&

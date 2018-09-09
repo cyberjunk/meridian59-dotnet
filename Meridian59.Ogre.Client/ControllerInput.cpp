@@ -733,10 +733,11 @@ namespace Meridian59 { namespace Ogre
       /*      Apply frame-based smooth camera pitch/yaw     */
       /******************************************************/
 
-      SceneNode* cameraNode = OgreClient::Singleton->CameraNode;
-      Camera*    camera     = OgreClient::Singleton->Camera;
+      SceneNode* cameraNode      = OgreClient::Singleton->CameraNode;
+      SceneNode* cameraNodeOrbit = OgreClient::Singleton->CameraNodeOrbit;
+      Camera*    camera          = OgreClient::Singleton->Camera;
 
-      if (cameraNode && camera)
+      if (cameraNodeOrbit && cameraNode && camera)
       {
          // get cameranode orientation
          const Quaternion& orientation = cameraNode->getOrientation();
@@ -813,7 +814,7 @@ namespace Meridian59 { namespace Ogre
          }
 
          // 3. ZOOM
-         CLRReal zDelta = cameraZoom - camera->getPosition().z;
+         CLRReal zDelta = cameraZoom - cameraNodeOrbit->getPosition().z;
          if (abs(zDelta) > 0.01f)
          {
             // limit stepsize
@@ -826,11 +827,11 @@ namespace Meridian59 { namespace Ogre
                CAMERAZOOMSTEPFACT * zD * (CLRReal)OgreClient::Singleton->GameTick->Span;
 
             // apply the move
-            camera->moveRelative(::Ogre::Vector3(0.0f, 0.0f, cameraZStep));
+            cameraNodeOrbit->translate(::Ogre::Vector3(0.0f, 0.0f, cameraZStep));
             camera->_notifyMoved();
 
             // flip first person mode
-            if (camera->getPosition().z > 0.1f)
+            if (cameraNodeOrbit->getPosition().z > 0.1f)
             {
                // mark as 3. person camera mode
                IsCameraFirstPerson = false;
@@ -841,7 +842,7 @@ namespace Meridian59 { namespace Ogre
             else
             {
                // move fully to origin
-               camera->setPosition(0.0f, 0.0f, 0.0f);
+               cameraNodeOrbit->resetToInitialState();
                camera->_notifyMoved();
 
                // mark as 1. person camera mode

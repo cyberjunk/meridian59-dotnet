@@ -82,6 +82,7 @@
 
 #define CAMERANAME            "AvatarCamera"
 #define AVATARCAMNODE         "AvatarCameraNode"
+#define AVATARCAMNODEORBIT    "AvatarCameraNodeOrbit"
 #define NAME_AVATARLIGHT      "AvatarLight"
 #define NAME_ROOMNODE         "RoomNode"
 #define NAME_WEATHERNODE      "WeatherNode"

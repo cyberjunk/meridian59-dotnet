@@ -128,10 +128,20 @@ namespace Meridian59 { namespace Ogre
       camera->setNearClipDistance(1.0f);
       camera->setUseRenderingDistance(false);
 
-      // create camera node
+      // create camera node (this is placed at the avatar roughly at eye height)
       cameraNode = sceneManager->createSceneNode(AVATARCAMNODE);
-      cameraNode->attachObject(camera);
+      cameraNode->setPosition(::Ogre::Vector3(0, 0, 0));
       cameraNode->setFixedYawAxis(true);
+      cameraNode->setInitialState();
+
+      // create camera node in orbit (this is where the actual camera is, with z offset)
+      cameraNodeOrbit = cameraNode->createChildSceneNode(AVATARCAMNODEORBIT);
+      cameraNodeOrbit->setPosition(::Ogre::Vector3(0, 0, 0));
+      cameraNodeOrbit->setFixedYawAxis(true);
+      cameraNodeOrbit->setInitialState();
+
+      // attach camera
+      cameraNodeOrbit->attachObject(camera);
 
       /********************************************************************************************************/
       /*                                       INVIS EFFECT RTT                                               */
@@ -519,6 +529,10 @@ namespace Meridian59 { namespace Ogre
       if (sceneManager->hasCamera(CAMERANAME))
          sceneManager->destroyCamera(camera);
 
+      // cleanup cameranode in orbit
+      if (sceneManager->hasSceneNode(AVATARCAMNODEORBIT))
+         sceneManager->destroySceneNode(AVATARCAMNODEORBIT);
+
       // cleanup cameranode
       if (sceneManager->hasSceneNode(AVATARCAMNODE))
          sceneManager->destroySceneNode(AVATARCAMNODE);
@@ -542,6 +556,7 @@ namespace Meridian59 { namespace Ogre
       cameraListener = nullptr;
       camera = nullptr;
       cameraNode = nullptr;
+      cameraNodeOrbit = nullptr;
       viewport = nullptr;
       viewportInvis = nullptr;
       sceneManager = nullptr;
@@ -1156,8 +1171,11 @@ namespace Meridian59 { namespace Ogre
       ControllerRoom::UnloadRoom();
       Data->RoomObjects->Clear();
 
+      sceneManager->getRootSceneNode()->removeChild(CameraNode);
+
       Camera->setPosition(::Ogre::Vector3(0.0f, 0.0f, 0.0f));
       CameraNode->resetToInitialState();
+      CameraNodeOrbit->resetToInitialState();
    };
 
    void OgreClient::DemoSceneLoadBrax()
@@ -1174,6 +1192,8 @@ namespace Meridian59 { namespace Ogre
       ControllerRoom::LoadRoom();
 
       IsCameraListenerEnabled = true;
+      sceneManager->getRootSceneNode()->addChild(CameraNode);
+
       CameraNode->setPosition(1266, 460, 1344);
       CameraNode->rotate(::Ogre::Vector3::UNIT_Y, ::Ogre::Radian(-0.55f));
 

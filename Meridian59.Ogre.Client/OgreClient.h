@@ -87,6 +87,7 @@ namespace Meridian59 { namespace Ogre
       ::Ogre::D3D9RenderSystem*     renderSystem;
       ::Ogre::OctreeCamera*         camera;
       ::Ogre::SceneNode*            cameraNode;
+      ::Ogre::SceneNode*            cameraNodeOrbit;
       ::Ogre::Viewport*             viewport;
       ::Ogre::Viewport*             viewportInvis;
       ::Ogre::OctreeSceneManager*   sceneManager;
@@ -314,6 +315,12 @@ namespace Meridian59 { namespace Ogre
       { 
          public: ::Ogre::SceneNode* get() { return cameraNode; } 
          protected: void set(Ogre::SceneNode* value) { cameraNode = value; }
+      };
+
+      property ::Ogre::SceneNode* CameraNodeOrbit
+      {
+         public: ::Ogre::SceneNode* get() { return cameraNodeOrbit; }
+         protected: void set(Ogre::SceneNode* value) { cameraNodeOrbit = value; }
       };
 
       property ::Ogre::Viewport* Viewport 

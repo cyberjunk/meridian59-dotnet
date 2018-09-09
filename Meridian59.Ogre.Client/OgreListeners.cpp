@@ -46,17 +46,18 @@ namespace Meridian59 { namespace Ogre
 
    void CameraListener::objectMoved(MovableObject* obj)
    {
-      Camera*           camera     = OgreClient::Singleton->Camera;
-      SceneNode*        cameraNode = OgreClient::Singleton->CameraNode;
-      RooFile^          room       = OgreClient::Singleton->CurrentRoom;
-      OgreClientConfig^ config     = OgreClient::Singleton->Config;
-      CaelumSystem*     caelum     = ControllerRoom::CaelumSystem;
+      Camera*           camera          = OgreClient::Singleton->Camera;
+      SceneNode*        cameraNode      = OgreClient::Singleton->CameraNode;
+      SceneNode*        cameraNodeOrbit = OgreClient::Singleton->CameraNodeOrbit;
+      RooFile^          room            = OgreClient::Singleton->CurrentRoom;
+      OgreClientConfig^ config          = OgreClient::Singleton->Config;
+      CaelumSystem*     caelum          = ControllerRoom::CaelumSystem;
 
-      if (!camera || !cameraNode || !room)
+      if (!camera || !cameraNode || !cameraNodeOrbit || !room)
          return;
 
       // get camera position in world
-      const ::Ogre::Vector3& posCam  = camera->getDerivedPosition();
+      const ::Ogre::Vector3& posCam  = cameraNodeOrbit->_getDerivedPosition();
       const ::Ogre::Vector3& posNode = cameraNode->_getDerivedPosition();
 
       // sanity check, would kill
@@ -101,7 +102,7 @@ namespace Meridian59 { namespace Ogre
          len = (::Ogre::Real)CLRMath::Max((CLRReal)len - OFFSET, (CLRReal)0.0f);
 
          // set camera to intersection (internal space)
-         camera->setPosition(0.0f, 0.0f, len);
+         cameraNodeOrbit->setPosition(0.0f, 0.0f, len-1);
       }
       else
          newPos = Util::ToV3(posCam);
