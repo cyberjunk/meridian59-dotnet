@@ -583,7 +583,6 @@ namespace Meridian59 { namespace Ogre
       /// <param name="MaterialName">Name of new material</param>
       /// <param name="TextureName">Name of texture to set on new material</param>
       /// <param name="MaterialGroup">ResourceGroup of new material</param>
-      /// <param name="ScrollSpeed">NULL (default) or texture scrolling speed</param>
       /// <param name="ColorModifier">NULL (= 1 1 1 1) or a vector which components get multiplied with light components</param>
       __forceinline static void CreateMaterialLabel(
          const ::Ogre::String& MaterialName,
@@ -622,18 +621,17 @@ namespace Meridian59 { namespace Ogre
       /// Clones the base material to a new material and applies a texture.
       /// Only if there is no material with that name yet.
       /// </summary>
+      /// <param name="BaseMaterialName">Base Material to clone</param>
       /// <param name="MaterialName">Name of new material</param>
       /// <param name="TextureName">Name of texture to set on new material</param>
       /// <param name="MaterialGroup">ResourceGroup of new material</param>
-      /// <param name="ScrollSpeed">NULL (default) or texture scrolling speed</param>
       /// <param name="ColorModifier">NULL (= 1 1 1 1) or a vector which components get multiplied with light components</param>
-      __forceinline static void CreateMaterial(
+      __forceinline static void CreateMaterialObject(
+         const ::Ogre::String& BaseMaterialName,
          const ::Ogre::String& MaterialName, 
          const ::Ogre::String& TextureName, 
          const ::Ogre::String& MaterialGroup, 
-         const ::Ogre::Vector2* ScrollSpeed, 
-         const ::Ogre::Vector4* ColorModifier,
-         const bool IsRoomMaterial)
+         const ::Ogre::Vector4* ColorModifier)
       {
          MaterialManager& matMan = MaterialManager::getSingleton();
 
@@ -642,7 +640,7 @@ namespace Meridian59 { namespace Ogre
             return;
 
          // try to get existing base material
-         MaterialPtr baseMaterial =  matMan.getByName(IsRoomMaterial ? BASEMATERIALROOM : BASEMATERIAL, RESOURCEGROUPSHADER);
+         MaterialPtr baseMaterial =  matMan.getByName(BaseMaterialName, RESOURCEGROUPSHADER);
 
          // something wrong here, base material missing...
          if (baseMaterial.isNull())
@@ -658,21 +656,16 @@ namespace Meridian59 { namespace Ogre
          // apply texture name
          matPtr->applyTextureAliases(pairs);
 
-         // get shader passes (0 = ambient, 1 = diffuse pointlights)
-         Pass* ambientPass = matPtr->getTechnique(0)->getPass(0);
+         // get shader pass
+         Pass* pass = matPtr->getTechnique(0)->getPass(0);
          
          // get fragment shader parameters from ambient pass
-         const GpuProgramParametersSharedPtr paramsAmbient = 
-            ambientPass->getFragmentProgramParameters();
+         const GpuProgramParametersSharedPtr params = pass->getFragmentProgramParameters();
 
          // apply a custom color modifier on the shaders
          // its components get multiplied with the color components
          if (ColorModifier != nullptr)
-            paramsAmbient->setNamedConstant(SHADERCOLORMODIFIER, *ColorModifier);
-
-         // apply a scrolling if set
-         if (ScrollSpeed != nullptr)
-            ambientPass->getTextureUnitState(0)->setScrollAnimation(ScrollSpeed->x, ScrollSpeed->y);
+            params->setNamedConstant(SHADERCOLORMODIFIER, *ColorModifier);
 
          // cleanup
          baseMaterial.setNull();
@@ -779,45 +772,6 @@ namespace Meridian59 { namespace Ogre
 
          // set opaque values
          //paramsAmbient->setNamedConstant(SHADEROPAQUE, Opaque);
-
-         // cleanup
-         baseMaterial.setNull();
-         matPtr.setNull();
-      };
-
-      /// <summary>
-      /// Clones the base material to a new material and applies a texture.
-      /// Enables the brightness adjust over time (e.g. blinking effect)
-      /// </summary>
-      /// <param name="MaterialName">Name of new material</param>
-      /// <param name="TextureName">Name of texture to set on new material</param>
-      /// <param name="MaterialGroup">ResourceGroup of new material</param>
-      __forceinline static void CreateMaterialFlashing(
-         const ::Ogre::String& MaterialName,
-         const ::Ogre::String& TextureName,
-         const ::Ogre::String& MaterialGroup)
-      {
-         MaterialManager& matMan = MaterialManager::getSingleton();
-
-         // nothing to do if existant
-         if (matMan.resourceExists(MaterialName))
-            return;
-
-         // try to get existing base material
-         MaterialPtr baseMaterial = matMan.getByName(BASEMATERIALFLASHING, RESOURCEGROUPSHADER);
-
-         if (baseMaterial.isNull())
-            return;
-
-         // clone base material to different group
-         MaterialPtr matPtr = baseMaterial->clone(MaterialName, true, MaterialGroup);
-
-         // set the texture_unit part with name of the texture
-         AliasTextureNamePairList pairs = AliasTextureNamePairList();
-         pairs[TEXTUREUNITALIAS] = TextureName;
-
-         // apply texture name
-         matPtr->applyTextureAliases(pairs);
 
          // cleanup
          baseMaterial.setNull();
