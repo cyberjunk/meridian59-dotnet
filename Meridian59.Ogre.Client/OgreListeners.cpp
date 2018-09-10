@@ -102,7 +102,7 @@ namespace Meridian59 { namespace Ogre
          len = (::Ogre::Real)CLRMath::Max((CLRReal)len - OFFSET, (CLRReal)0.0f);
 
          // set camera to intersection (internal space)
-         cameraNodeOrbit->setPosition(0.0f, 0.0f, len-1);
+         cameraNodeOrbit->setPosition(0.0f, 0.0f, len - 0.1f);
       }
       else
          newPos = Util::ToV3(posCam);
