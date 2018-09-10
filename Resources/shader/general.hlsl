@@ -141,11 +141,8 @@ void object_ps(
    // pixel from texture
    float4 texcol = tex2D(diffusetex, uv);
 
-   // flip direction (ogre? also normaalize in ogre)
-   //lightPos = -lightPos;
-
    // represents how much this pixel should be affected by directional light
-   float angle = max(dot(lightPos[0].xyz, normal), 0);
+   const float angle = max(dot(lightPos[0].xyz, normal), 0);
 
    // combine ambient and directional light with weights
    float3 light = (0.5 * angle * lightCol[0]) + (0.5 * ambient);
@@ -153,8 +150,8 @@ void object_ps(
    [unroll(8)]
    for(uint i = 1; i < 8; i++)
    {
-      float3 delta = lightPos[i] - wp;
-      float lightScale = max(0.0, 1.0 - (dot(delta, delta) / (lightAtt[i].r * lightAtt[i].r)));
+      const float3 delta = lightPos[i] - wp;
+      const float lightScale = max(0.0, 1.0 - (dot(delta, delta) / (lightAtt[i].r * lightAtt[i].r)));
       light += lightCol[i] * lightScale;
    }
    
