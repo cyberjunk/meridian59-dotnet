@@ -630,6 +630,9 @@ namespace Meridian59.Client
                rooFile.ResolveResources(ResourceManager);
                rooFile.UncompressAll();
             }
+
+            // trigger a maximum garbage collection after room load
+            Util.ForceMaximumGC();
         }
 
         /// <summary>
