@@ -191,7 +191,7 @@ namespace Meridian59.Data.Models
         protected int maxVolume;
 
         protected string resourceName;
-        protected Tuple<IntPtr, uint> resource;
+        protected string resource;
         #endregion
 
         #region Properties
@@ -291,7 +291,7 @@ namespace Meridian59.Data.Models
                 }
             }
         }
-        public Tuple<IntPtr, uint> Resource
+        public string Resource
         {
             get { return resource; }
             set

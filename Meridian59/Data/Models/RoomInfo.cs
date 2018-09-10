@@ -321,7 +321,7 @@ namespace Meridian59.Data.Models
         protected string backgroundFile;
         protected string wadingSoundFile;
         protected RooFile resourceRoom;
-        protected Tuple<IntPtr, uint> resourceWadingSound;
+        protected string resourceWadingSound;
         #endregion
 
         #region Properties
@@ -591,7 +591,7 @@ namespace Meridian59.Data.Models
                 }
             }
         }
-        public Tuple<IntPtr, uint> ResourceWadingSound
+        public string ResourceWadingSound
         {
             get { return resourceWadingSound; }
             set
@@ -846,7 +846,7 @@ namespace Meridian59.Data.Models
            }
 
            // try find the wading sound file and load it
-           Tuple<IntPtr, uint> sound = M59ResourceManager.GetWavFile(wadingSoundFile);
+           string sound = M59ResourceManager.GetWavFile(wadingSoundFile);
 
            if (RaiseChangedEvent)
            {

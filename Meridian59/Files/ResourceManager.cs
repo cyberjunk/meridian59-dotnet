@@ -55,8 +55,8 @@ namespace Meridian59.Files
         protected readonly LockingDictionary<string, BgfFile> objects = new LockingDictionary<string, BgfFile>(StringComparer.OrdinalIgnoreCase);
         protected readonly LockingDictionary<string, BgfFile> roomTextures = new LockingDictionary<string, BgfFile>(StringComparer.OrdinalIgnoreCase);
         protected readonly LockingDictionary<string, RooFile> rooms = new LockingDictionary<string, RooFile>(StringComparer.OrdinalIgnoreCase);
-        protected readonly LockingDictionary<string, Tuple<IntPtr, uint>> sounds = new LockingDictionary<string, Tuple<IntPtr, uint>>(StringComparer.OrdinalIgnoreCase);
-        protected readonly LockingDictionary<string, Tuple<IntPtr, uint>> music = new LockingDictionary<string, Tuple<IntPtr, uint>>(StringComparer.OrdinalIgnoreCase);
+        protected readonly LockingDictionary<string, string> sounds = new LockingDictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        protected readonly LockingDictionary<string, string> music = new LockingDictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         protected readonly MailList mails = new MailList(200);
 
         protected readonly LockingQueue<string> queueAsyncFilesLoaded = new LockingQueue<string>();
@@ -103,12 +103,12 @@ namespace Meridian59.Files
         /// <summary>
         /// WAV soundfiles
         /// </summary>
-        public LockingDictionary<string, Tuple<IntPtr, uint>> Wavs { get { return sounds; } }
+        public LockingDictionary<string, string> Wavs { get { return sounds; } }
 
         /// <summary>
         /// Music
         /// </summary>
-        public LockingDictionary<string, Tuple<IntPtr, uint>> Music { get { return music; } }
+        public LockingDictionary<string, string> Music { get { return music; } }
 
         /// <summary>
         /// The mail objects.
@@ -321,26 +321,26 @@ namespace Meridian59.Files
         /// </summary>
         /// <param name="File"></param>
         /// <returns></returns>
-        public Tuple<IntPtr, uint> GetWavFile(string File)
+        public string GetWavFile(string File)
         {
-            Tuple<IntPtr, uint> wavData = null;
+            string filename = null;
 
             // if the file is known
-            if (Wavs.TryGetValue(File, out wavData))
+            if (Wavs.TryGetValue(File, out filename))
             {
                 // haven't loaded it yet?
-                if (wavData == null)
+                if (filename == null)
                 {
                     // load it
-                    wavData = Util.LoadFileToUnmanagedMem(WavFolder + "/" + File);
+                    filename = Path.Combine(WavFolder, File);
 
                     // update the registry
-                    if (Wavs.TryUpdate(File, wavData, null))
+                    if (Wavs.TryUpdate(File, filename, null))
                         numLoadedWavs++;
                 }
             }
 
-            return wavData;
+            return filename;
         }
 
         /// <summary>
@@ -349,26 +349,26 @@ namespace Meridian59.Files
         /// </summary>
         /// <param name="File"></param>
         /// <returns></returns>
-        public Tuple<IntPtr, uint> GetMusicFile(string File)
+        public string GetMusicFile(string File)
         {
-            Tuple<IntPtr, uint> musicData = null;
+            string filename = null;
 
             // if the file is known
-            if (Music.TryGetValue(File, out musicData))
+            if (Music.TryGetValue(File, out filename))
             {
                 // haven't loaded it yet?
-                if (musicData == null)
+                if (filename == null)
                 {
                     // load it
-                    musicData = Util.LoadFileToUnmanagedMem(MusicFolder + "/" + File);
+                    filename =  Path.Combine(MusicFolder, File);
 
                     // update the registry
-                    if (Music.TryUpdate(File, musicData, null))
+                    if (Music.TryUpdate(File, filename, null))
                         numLoadedMusic++;
                 }
             }
 
-            return musicData;
+            return filename;
         }
 
         /// <summary>
@@ -739,17 +739,16 @@ namespace Meridian59.Files
         /// </summary>
         protected void LoadThreadSounds()
         {
-            IEnumerator<KeyValuePair<string, Tuple<IntPtr, uint>>> it = Wavs.GetEnumerator();
-            Tuple<IntPtr, uint> wavData = null;
+            IEnumerator<KeyValuePair<string, string>> it = Wavs.GetEnumerator();
+            string filename = null;
 
             while (it.MoveNext())
             {
                 // load it
-                wavData = Util.LoadFileToUnmanagedMem(
-                    Path.Combine(WavFolder, it.Current.Key));
+                filename = Path.Combine(WavFolder, it.Current.Key);
 
                 // update
-                Wavs.TryUpdate(it.Current.Key, wavData, null);
+                Wavs.TryUpdate(it.Current.Key, filename, null);
                 numLoadedWavs++;
 
                 queueAsyncFilesLoaded.Enqueue(it.Current.Key);
@@ -761,17 +760,16 @@ namespace Meridian59.Files
         /// </summary>
         protected void LoadThreadMusic()
         {
-            IEnumerator<KeyValuePair<string, Tuple<IntPtr, uint>>> it = Music.GetEnumerator();
-            Tuple<IntPtr, uint> mp3Data = null;
+            IEnumerator<KeyValuePair<string, string>> it = Music.GetEnumerator();
+            string filename = null;
 
             while (it.MoveNext())
             {
                 // load it
-                mp3Data = Util.LoadFileToUnmanagedMem(
-                    Path.Combine(MusicFolder, it.Current.Key));
+                filename = Path.Combine(MusicFolder, it.Current.Key);
 
                 // update
-                Music.TryUpdate(it.Current.Key, mp3Data, null);
+                Music.TryUpdate(it.Current.Key, filename, null);
                 numLoadedMusic++;
 
                 queueAsyncFilesLoaded.Enqueue(it.Current.Key);
