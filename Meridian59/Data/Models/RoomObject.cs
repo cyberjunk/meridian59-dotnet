@@ -638,10 +638,15 @@ namespace Meridian59.Data.Models
         {
             get
             {
-                if (isMoving && !HasUnfinishedAnimation) return motionSubOverlays;
+                if (UseMotionAnimation) return motionSubOverlays;
                 else return subOverlays;
             }
         }
+
+        /// <summary>
+        /// True if Motion animation should be used in stead of normal
+        /// </summary>
+        public bool UseMotionAnimation { get { return isMoving && !HasUnfinishedAnimation; } }
 
         /// <summary>
         /// The Roo SubSector this object is contained in or NULL
@@ -1586,7 +1591,7 @@ namespace Meridian59.Data.Models
             hash.Step((uint)overlayFileRID);
             //hash.Step((uint)flags.Flags);
 
-            if (isMoving)
+            if (UseMotionAnimation)
             {
                 hash.Step((uint)motionColorTranslation);
 
@@ -1622,7 +1627,7 @@ namespace Meridian59.Data.Models
             hash.Step((uint)overlayFileRID);
             //hash.Step((uint)flags.Flags);
 
-            if (isMoving)
+            if (UseMotionAnimation)
             {
                 hash.Step((uint)motionColorTranslation);
 
@@ -1708,7 +1713,7 @@ namespace Meridian59.Data.Models
 
             if (resource != null)
             {
-                if (!isMoving)
+                if (!UseMotionAnimation)
                 {
                     FrontFrameIndex = resource.GetFrameIndex(Animation.CurrentGroup, ObjectBase.DEFAULTANGLE);
                     ViewerFrameIndex = resource.GetFrameIndex(Animation.CurrentGroup, viewerAngle);
