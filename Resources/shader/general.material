@@ -108,7 +108,6 @@ fragment_program room_ps hlsl
         param_named_auto lightCol light_diffuse_colour_array 48
 		param_named_auto lightPos light_position_array 48
         param_named_auto lightAtt light_attenuation_array 48
-		param_named colormodifier float4 1 1 1 1
     }
 }
 

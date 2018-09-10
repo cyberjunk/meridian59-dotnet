@@ -77,17 +77,13 @@ void room_ps(
    uniform float3    lightCol[48],
    uniform float4    lightPos[48],
    uniform float4    lightAtt[48],
-   uniform float4    colormodifier,
    uniform sampler2D diffusetex     : TEXUNIT0)
 {
    // pixel from texture
    const float4 texcol = tex2D(diffusetex, uv);
 
-   // flip direction (ogre? also normaalize in ogre)
-   //lightPos[0] = -lightPos[0];
-
    // represents how much this pixel should be affected by directional light
-   float angle = max(dot(lightPos[0].xyz, normal), 0);
+   const float angle = max(dot(lightPos[0].xyz, normal), 0);
 
    // combine ambient and directional light with weights
    float3 light = (0.4 * angle * lightCol[0]) + (0.6 * ambient);
@@ -95,13 +91,13 @@ void room_ps(
    [unroll(48)]
    for(uint i = 1; i < 48; i++)
    {
-      float3 delta = lightPos[i] - wp;
-      float lightScale = max(0.0, 1.0 - (dot(delta, delta) / (lightAtt[i].r * lightAtt[i].r)));
+      const float3 delta = lightPos[i] - wp;
+      const float lightScale = max(0.0, 1.0 - (dot(delta, delta) / (lightAtt[i].r * lightAtt[i].r)));
       light += lightCol[i] * lightScale;
    }
    
    // output pixel
-   pixel = float4(light * colormodifier.rgb * texcol.rgb, texcol.a * colormodifier.a);
+   pixel = float4(light * texcol.rgb, texcol.a);
 }
 
 /********************************/

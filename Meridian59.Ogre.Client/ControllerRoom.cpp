@@ -1005,14 +1005,12 @@ namespace Meridian59 { namespace Ogre
       ::Ogre::String& ostr_matname = StringConvert::CLRToOgre(MaterialName);
 
       // possibly create texture
-         Util::CreateTextureA8R8G8B8(Texture, ostr_texname, TEXTUREGROUP_ROOLOADER, MIP_DEFAULT);
+      Util::CreateTextureA8R8G8B8(Texture, ostr_texname, TEXTUREGROUP_ROOLOADER, MIP_DEFAULT);
         
       // scrolling texture data
-      Vector2* scrollSpeed = nullptr;
+      Vector2* scrollSpeed = &Util::ToOgre(ScrollSpeed);
 
-      //if (TextureInfo->ScrollSpeed != nullptr)
-      scrollSpeed = &Util::ToOgre(ScrollSpeed);
-
+      // possibly create material
       if (waterTextures->Contains(TextureName))
       {
          Util::CreateMaterialWater(
@@ -1020,12 +1018,13 @@ namespace Meridian59 { namespace Ogre
             MATERIALGROUP_ROOLOADER,
             scrollSpeed);
       }
-      // possibly create material
       else
-         Util::CreateMaterial(
-            ostr_matname, ostr_texname, 
+      {
+         Util::CreateMaterialRoom(
+            ostr_matname, ostr_texname,
             MATERIALGROUP_ROOLOADER,
-            scrollSpeed, nullptr, true);
+            scrollSpeed);
+      }
    };
 
    void ControllerRoom::OnRooFileWallTextureChanged(System::Object^ sender, WallTextureChangedEventArgs^ e)
