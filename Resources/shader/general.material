@@ -289,7 +289,7 @@ material base_material_target : base_material
         {
 			fragment_program_ref object_ps
 			{
-				param_named colormodifier float4 4 1.2 1.2 1
+				param_named colormodifier float4 5 3 3 1
 				param_named sintime float 1.0
 			}
 		}
@@ -304,7 +304,7 @@ material base_material_mouseover : base_material
         {
 			fragment_program_ref object_ps
 			{
-				param_named colormodifier float4 1.2 4.0 1.2 1
+				param_named colormodifier float4 3 5 3 1
 				param_named sintime float 1.0
 			}
 		}
