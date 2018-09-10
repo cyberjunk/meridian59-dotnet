@@ -588,8 +588,7 @@ namespace Meridian59 { namespace Ogre
       __forceinline static void CreateMaterialLabel(
          const ::Ogre::String& MaterialName,
          const ::Ogre::String& TextureName,
-         const ::Ogre::String& MaterialGroup,
-         const ::Ogre::Vector4* ColorModifier)
+         const ::Ogre::String& MaterialGroup)
       {
          MaterialManager& matMan = MaterialManager::getSingleton();
 
@@ -613,18 +612,6 @@ namespace Meridian59 { namespace Ogre
 
          // apply texture name
          matPtr->applyTextureAliases(pairs);
-
-         // get shader passes (0 = ambient, 1 = diffuse pointlights)
-         Pass* ambientPass = matPtr->getTechnique(0)->getPass(0);
-
-         // get fragment shader parameters from ambient pass
-         const GpuProgramParametersSharedPtr paramsAmbient =
-            ambientPass->getFragmentProgramParameters();
-
-         // apply a custom color modifier on the shaders
-         // its components get multiplied with the color components
-         if (ColorModifier != nullptr)
-            paramsAmbient->setNamedConstant(SHADERCOLORMODIFIER, *ColorModifier);
 
          // cleanup
          baseMaterial.setNull();

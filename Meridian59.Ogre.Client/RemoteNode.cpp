@@ -270,7 +270,7 @@ namespace Meridian59 { namespace Ogre
             delete bitmap;
          }
 
-         Util::CreateMaterialLabel(matName, texName, MATERIALGROUP_MOVABLETEXT, nullptr);
+         Util::CreateMaterialLabel(matName, texName, MATERIALGROUP_MOVABLETEXT);
 
          // set material
          billboardSetName->setMaterialName(matName);

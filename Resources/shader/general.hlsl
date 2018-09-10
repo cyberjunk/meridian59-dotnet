@@ -38,14 +38,9 @@ void label_vs(
 void label_ps(
    out     float4    pixel          : COLOR0,
    in      float2    uv             : TEXCOORD0,
-   uniform float4    colormodifier,
    uniform sampler2D diffusetex     : TEXUNIT0)
 {
-   // pixel from texture
-   const float4 texcol = tex2D(diffusetex, uv);
-
-   // output pixel
-   pixel = float4(texcol) * colormodifier;
+   pixel = tex2D(diffusetex, uv);
 }
 
 /********************************/

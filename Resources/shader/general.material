@@ -90,8 +90,7 @@ fragment_program label_ps hlsl
     optimisation_level 3
 	 
     default_params
-    {
-		param_named colormodifier float4 1 1 1 1			
+    {		
     }
 }
 
