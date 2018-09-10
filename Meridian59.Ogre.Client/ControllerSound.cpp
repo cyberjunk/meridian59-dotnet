@@ -373,11 +373,13 @@ namespace Meridian59 { namespace Ogre
 
    void ControllerSound::StartSound(PlaySound^ Info)
    {
-      if (!IsInitialized || !soundEngine || !Info || !Info->Resource || !Info->ResourceName)
+      if (!IsInitialized || !soundEngine || !Info || !Info->ResourceName)
          return;
 
       if (Info->PlayFlags->IsLoop && OgreClient::Singleton->Config->DisableLoopSounds)
          return;
+
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
       // if source is a object, we save it here
       RemoteNode^ attachNode = nullptr;
@@ -444,35 +446,24 @@ namespace Meridian59 { namespace Ogre
          }
       }
 
-      // get resource name of wav file
-      CLRString^ sourcename = Info->ResourceName->ToLower();
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-      // native string
-      ::Ogre::String& o_str = StringConvert::CLRToOgre(sourcename);
-      const char* c_str = o_str.c_str();
-
-      // check if sound is known to irrklang
-      ISoundSource* soundsrc = soundEngine->getSoundSource(c_str, false);
-
-      // add it if not
-      if (!soundsrc)
-      {
-         // memory info for wav data
-         System::IntPtr ptr = Info->Resource->Item1;
-         unsigned int len = Info->Resource->Item2;
-
-         // add as playback from raw ptr
-         if (len > 0 && ptr != ::System::IntPtr::Zero)
-            soundsrc = soundEngine->addSoundSourceFromMemory(ptr.ToPointer(), len, c_str, false);
-      }
-
-      if (!soundsrc)
-         return;
+      // native strings
+      const ::Ogre::String& o_strPath = StringConvert::CLRToOgre(OgreClient::Singleton->ResourceManager->WavFolder);
+      const ::Ogre::String& o_strFile = StringConvert::CLRToOgre(Info->ResourceName);
+      const ::Ogre::String& o_StrFull = (o_strPath + '/' + o_strFile);
 
       // try start 3D playback
-      ISound* sound = soundEngine->play3D(soundsrc,
-         vec3df(x, y, z), Info->PlayFlags->IsLoop, true, true, false);
+      ISound* sound = soundEngine->play3D(
+         o_StrFull.c_str(),
+         vec3df(x, y, z), 
+         Info->PlayFlags->IsLoop, 
+         true, 
+         true, 
+         ::irrklang::E_STREAM_MODE::ESM_AUTO_DETECT, 
+         false);
 
+      // success
       if (sound)
       {
          // set volume
@@ -493,29 +484,22 @@ namespace Meridian59 { namespace Ogre
 
    void ControllerSound::StartMusic(PlayMusic^ Info)
    {
-      if (!IsInitialized || !soundEngine || !Info || !Info->Resource || !Info->ResourceName)
+      if (!IsInitialized || !soundEngine || !Info || !Info->ResourceName)
          return;
 
       if (OgreClient::Singleton->Config->MusicVolume > 0.0f)
       {
-         // native string
-         ::Ogre::String& o_str = StringConvert::CLRToOgre(Info->ResourceName);
-         const char* c_str = o_str.c_str();
+         // native strings
+         const ::Ogre::String& o_strPath = StringConvert::CLRToOgre(OgreClient::Singleton->ResourceManager->MusicFolder);
+         const ::Ogre::String& o_strFile = StringConvert::CLRToOgre(Info->ResourceName);
+         const ::Ogre::String& o_StrFull = (o_strPath + '/' + o_strFile);
 
          // check if sound is already known to irrklang
-         ISoundSource* soundsrc = soundEngine->getSoundSource(c_str, false);
+         ISoundSource* soundsrc = soundEngine->getSoundSource(o_strFile.c_str(), false);
 
-         // try add it if not
+         // try add it if not existant
          if (!soundsrc)
-         {
-            // memory info for mp3 data
-            System::IntPtr ptr	= Info->Resource->Item1;
-            unsigned int len	= Info->Resource->Item2;
-
-            // add as playback from raw ptr
-            if (len > 0 && ptr != ::System::IntPtr::Zero)				
-               soundsrc = soundEngine->addSoundSourceFromMemory(ptr.ToPointer(), len, c_str, false);
-         }
+            soundsrc = soundEngine->addSoundSourceFromFile(o_StrFull.c_str());
 
          if (!soundsrc)
             return;
