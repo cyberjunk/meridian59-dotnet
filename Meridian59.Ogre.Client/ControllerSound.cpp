@@ -373,7 +373,7 @@ namespace Meridian59 { namespace Ogre
 
    void ControllerSound::StartSound(PlaySound^ Info)
    {
-      if (!IsInitialized || !soundEngine || !Info || !Info->ResourceName)
+      if (!IsInitialized || !soundEngine || !Info || !Info->ResourceName || !Info->Resource)
          return;
 
       if (Info->PlayFlags->IsLoop && OgreClient::Singleton->Config->DisableLoopSounds)
@@ -449,9 +449,7 @@ namespace Meridian59 { namespace Ogre
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
       // native strings
-      const ::Ogre::String& o_strPath = StringConvert::CLRToOgre(OgreClient::Singleton->ResourceManager->WavFolder);
-      const ::Ogre::String& o_strFile = StringConvert::CLRToOgre(Info->ResourceName);
-      const ::Ogre::String& o_StrFull = (o_strPath + '/' + o_strFile);
+      const ::Ogre::String& o_StrFull = StringConvert::CLRToOgre(Info->Resource);
 
       // try start 3D playback
       ISound* sound = soundEngine->play3D(
@@ -484,30 +482,18 @@ namespace Meridian59 { namespace Ogre
 
    void ControllerSound::StartMusic(PlayMusic^ Info)
    {
-      if (!IsInitialized || !soundEngine || !Info || !Info->ResourceName)
+      if (!IsInitialized || !soundEngine || !Info || !Info->ResourceName || !Info->Resource)
          return;
 
       if (OgreClient::Singleton->Config->MusicVolume > 0.0f)
       {
-         // native strings
-         const ::Ogre::String& o_strPath = StringConvert::CLRToOgre(OgreClient::Singleton->ResourceManager->MusicFolder);
-         const ::Ogre::String& o_strFile = StringConvert::CLRToOgre(Info->ResourceName);
-         const ::Ogre::String& o_StrFull = (o_strPath + '/' + o_strFile);
-
-         // check if sound is already known to irrklang
-         ISoundSource* soundsrc = soundEngine->getSoundSource(o_strFile.c_str(), false);
-
-         // try add it if not existant
-         if (!soundsrc)
-            soundsrc = soundEngine->addSoundSourceFromFile(o_StrFull.c_str());
-
-         if (!soundsrc)
-            return;
+         const ::Ogre::String& name = StringConvert::CLRToOgre(Info->Resource);
 
          // no current background music
          if (!backgroundMusic)
          {
-            backgroundMusic = soundEngine->play2D(soundsrc, true, true, true, false);
+            backgroundMusic = soundEngine->play2D(
+               name.c_str(), true, true, true, ::irrklang::E_STREAM_MODE::ESM_AUTO_DETECT, false);
 
             if (backgroundMusic)
             {
@@ -517,12 +503,13 @@ namespace Meridian59 { namespace Ogre
          }
 
          // stop old background music if another one is to be played
-         else if (soundsrc != backgroundMusic->getSoundSource())
+         else if (name != backgroundMusic->getSoundSource()->getName())
          {
             backgroundMusic->stop();
             backgroundMusic->drop();
 
-            backgroundMusic = soundEngine->play2D(soundsrc, true, true, true, false);
+            backgroundMusic = soundEngine->play2D(
+               name.c_str(), true, true, true, ::irrklang::E_STREAM_MODE::ESM_AUTO_DETECT, false);
 
             if (backgroundMusic)
             {
