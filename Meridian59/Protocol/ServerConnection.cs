@@ -62,6 +62,11 @@ namespace Meridian59.Protocol
         /// Time in ms to sleep after call to disconnect to let netthread end
         /// </summary>
         protected const int DISCONNECTSLEEP = 200;
+
+        /// <summary>
+        /// Maximum bytes the sendbuffer (=outgoing message) can have
+        /// </summary>
+        protected const int SENDBUFFERSIZE = 8192;
         #endregion
 
         #region Fields
@@ -108,7 +113,7 @@ namespace Meridian59.Protocol
         /// <summary>
         /// 
         /// </summary>
-		protected StringDictionary stringResources;
+        protected StringDictionary stringResources;
 
         /// <summary>
         /// Timer for regularly sending pings in Game ProtocolMode
@@ -144,6 +149,11 @@ namespace Meridian59.Protocol
         /// True if the client is using UDP for some transmissions.
         /// </summary>
         protected bool useUdp;
+
+        /// <summary>
+        /// Messagebuffer for outgoing message
+        /// </summary>
+        protected readonly byte[] sendBuffer = new byte[SENDBUFFERSIZE];
         #endregion
 
         #region Properties
@@ -195,7 +205,7 @@ namespace Meridian59.Protocol
         /// Constructor.
         /// </summary>
         /// <param name="StringResources">The StringResources to use.</param>
-		public ServerConnection(StringDictionary StringResources)
+        public ServerConnection(StringDictionary StringResources)
         {           
             // init the queues (receive, send, logs, exceptions)
             ReceiveQueue = new LockingQueue<GameMessage>();
@@ -319,32 +329,42 @@ namespace Meridian59.Protocol
                 // create UDP header (don't care about existing)
                 Message.Header = new MessageHeader.Udp();
 
-                // use MessageController to sign the message with valid CRC and SS
-                messageController.SignMessage(Message);
+                // get size of message in bytes
+                int byteLength = Message.ByteLength;
+                if (byteLength > 0 && byteLength <= SENDBUFFERSIZE)
+                {
+                    // use MessageController to sign the message with valid CRC and SS
+                    messageController.SignMessage(Message);
 
-                // serialize message to bytes
-                byte[] MessageBytes = Message.Bytes;
+                    // serialize
+                    Message.WriteTo(sendBuffer, 0);
 
-                // write the message bytes to stream
-                socketUDP.SendTo(MessageBytes, socket.RemoteEndPoint);
+                    // write the message bytes to stream
+                    socketUDP.SendTo(sendBuffer, 0, byteLength, SocketFlags.None, socket.RemoteEndPoint);
+               }
             }
             else
             {
                 // create TCP header (don't care about existing)
                 Message.Header = new MessageHeader.Tcp();
 
-                // use MessageController to sign the message with valid CRC and SS
-                messageController.SignMessage(Message);
+                // get size of message in bytes
+                int byteLength = Message.ByteLength;
+                if (byteLength > 0 && byteLength <= SENDBUFFERSIZE)
+                { 
+                   // use MessageController to sign the message with valid CRC and SS
+                   messageController.SignMessage(Message);
 
-                // serialize message to bytes
-                byte[] MessageBytes = Message.Bytes;
+                   //serialize
+                   Message.WriteTo(sendBuffer, 0);
 
-                // write the message bytes to stream
-                tcpStream.Write(MessageBytes, 0, MessageBytes.Length);
+                   // write the message bytes to stream
+                   tcpStream.Write(sendBuffer, 0, byteLength);
 
-                // only flush if we should do so
-                if (Flush)
-                    tcpStream.Flush();
+                   // only flush if we should do so
+                   if (Flush)
+                      tcpStream.Flush();
+                }
             }
 
             // track sending of UseCharacter message
