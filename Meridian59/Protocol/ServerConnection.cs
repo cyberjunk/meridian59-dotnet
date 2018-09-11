@@ -385,8 +385,13 @@ namespace Meridian59.Protocol
             }
 
             // loop back game message for logging purposes
+            // whoever handles the log has to deal with pooled ones
             if (IsOutgoingPacketLogEnabled)
-                OutgoingPacketLog.Enqueue(Message);                       
+                OutgoingPacketLog.Enqueue(Message);
+
+            // possibly push back pooled ones
+            else
+               MessagePool.PushFree(Message);
         }
 
         /// <summary>

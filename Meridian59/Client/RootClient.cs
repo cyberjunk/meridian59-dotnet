@@ -24,6 +24,7 @@ using Meridian59.Data;
 using Meridian59.Drawing2D;
 using Meridian59.Files;
 using Meridian59.Files.ROO;
+using Meridian59.Protocol;
 using Meridian59.Protocol.GameMessages;
 
 namespace Meridian59.Client
@@ -263,6 +264,10 @@ namespace Meridian59.Client
                     // just for logging purposes
                     Data.HandleIncomingGenericGameMessage(Message);
                 }
+
+               // possibly push message back to pool (if logging not enabled)
+               if (!Data.LogIncomingMessages)
+                  MessagePool.PushFree(Message);
             }
         }
 

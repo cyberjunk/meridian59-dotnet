@@ -1634,8 +1634,8 @@ namespace Meridian59.Client
             // check for updaterate limit or override flag
             if ((ForceSend && GameTick.SpanReqMove > 0) || GameTick.CanReqMove())
             {
-                // create message instance
-                ReqMoveMessage message = new ReqMoveMessage(
+                // get message instance
+                ReqMoveMessage message = MessagePool.PopReqMove(
                     X, Y, Speed, Data.RoomInformation.RoomID, Angle);
 
                 // send/enqueue it (async)

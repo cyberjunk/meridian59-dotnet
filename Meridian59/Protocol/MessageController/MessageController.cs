@@ -15,6 +15,7 @@
 */
 
 using System;
+using Meridian59.Protocol;
 using Meridian59.Protocol.GameMessages;
 using Meridian59.Protocol.Events;
 using Meridian59.Protocol.Enums;
@@ -806,11 +807,11 @@ namespace Meridian59.Protocol
                         break;
 
                     case MessageTypeGameMode.Move:                                            // PI: 200
-                        TypedMessage = new MoveMessage(ref pMessage);
+                        TypedMessage = MessagePool.PopMove(ref pMessage);
                         break;
 
                     case MessageTypeGameMode.Turn:                                            // PI: 201
-                        TypedMessage = new TurnMessage(ref pMessage);
+                        TypedMessage = MessagePool.PopTurn(ref pMessage);
                         break;
 
                     case MessageTypeGameMode.Shoot:                                           // PI: 202

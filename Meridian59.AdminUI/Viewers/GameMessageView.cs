@@ -18,6 +18,7 @@ using System;
 using System.ComponentModel;
 using System.Windows.Forms;
 using Meridian59.Data.Lists;
+using Meridian59.Protocol;
 using Meridian59.Protocol.GameMessages;
 using Meridian59.Protocol.Events;
 using Meridian59.AdminUI.Events;
@@ -180,6 +181,11 @@ namespace Meridian59.AdminUI.Viewers
 
         protected void OnClearClick(object sender, EventArgs e)
         {
+            // add some back to message pool
+            foreach(GameMessage msg in DataSource)
+               MessagePool.PushFree(msg);
+
+            // now clear
             DataSource.Clear();
         }
     }

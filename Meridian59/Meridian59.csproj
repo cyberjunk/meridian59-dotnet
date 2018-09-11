@@ -591,6 +591,7 @@
     <Compile Include="Protocol\MessageController\MessageControllerHook.cs" />
     <Compile Include="Protocol\MessageController\MessageParser.cs" />
     <Compile Include="Protocol\DownloadHandler.cs" />
+    <Compile Include="Protocol\MessagePool.cs" />
     <Compile Include="Protocol\SubMessage\SubMessage.cs" />
     <Compile Include="Protocol\SubMessage\SubMessageGeneric.cs" />
     <Compile Include="Protocol\SubMessage\SubMessageNewCharInfo.cs" />
