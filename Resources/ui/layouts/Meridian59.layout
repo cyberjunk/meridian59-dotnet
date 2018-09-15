@@ -4366,7 +4366,7 @@
                      </Window>   
                      
                      <!-- Distributors -->
-                     <Window type="TaharezLook/LabelWhite" name="Options.TabAbout.TabGeneral.Distributors" >
+                     <Window type="TaharezLook/Label" name="Options.TabAbout.TabGeneral.Distributors" >
                         <Property name="Area" value="{{0,10},{0,275},{1,-10},{0,315}}" />         
                         <Property name="HorzFormatting" value="WordWrapLeftAligned" />
                         <Property name="VertFormatting" value="TopAligned" />

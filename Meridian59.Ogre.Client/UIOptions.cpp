@@ -604,8 +604,8 @@ namespace Meridian59 { namespace Ogre
       TabAboutTabGeneralDistributors->setText(
          "Server 103 | US | openmeridian.org"););
 #else
-      TabAboutTabGeneralDistributors->setText(
-         "Unknown Distributor (Custom Version)");
+      TabAboutTabGeneralDistributors->setText("Unknown Distributor\nCustom Version");
+      TabAboutTabGeneralDistributors->setProperty(UI_PROPNAME_NORMALTEXTCOLOUR, UI_COLOR_RED);
 #endif
 
       /******************************************************************************************************/
