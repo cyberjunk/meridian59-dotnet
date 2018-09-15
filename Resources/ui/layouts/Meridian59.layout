@@ -431,16 +431,9 @@
          
          <!-- Meridian59 -->
          <Window type="TaharezLook/LabelWhite" name="LoadingBar.Meridian59" >
-            <Property name="Text" value="Meridian59" />
-            <Property name="Area" value="{{0,0},{0.1,0},{1,0},{0.1,80}}" />
+            <Property name="Text" value="Meridian 59" />
+            <Property name="Area" value="{{0,0},{0.4,0},{1,0},{0.4,80}}" />
             <Property name="Font" value="Berenika-48-Bold" />
-         </Window>
-
-         <!-- Subtitle -->
-         <Window type="TaharezLook/LabelRed" name="LoadingBar.Subtitle" >
-            <Property name="Text" value="- Resurgence -" />
-            <Property name="Area" value="{{0,0},{0.1,80},{1,0},{0.1,130}}" />
-            <Property name="Font" value="Berenika-20-Bold" />
          </Window>
 
          <!-- Title -->
