@@ -1,11 +1,4 @@
-﻿using IrcDotNet;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Meridian59.Bot.IRC
+﻿namespace Meridian59.Bot.IRC
 {
     public abstract class IRCAdminBotCommand
     {

@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using IrcDotNet;
-
-namespace Meridian59.Bot.IRC
+﻿namespace Meridian59.Bot.IRC
 {
     public class IRCAdminBotCommandAdd : IRCAdminBotCommand
     {
@@ -27,11 +20,11 @@ namespace Meridian59.Bot.IRC
             if (!Bot.Config.AllowedUsers.Contains(Command))
             {
                 Bot.Config.AllowedUsers.Add(Command);
-                Bot.IrcClient.LocalUser.SendMessage(Admin, "Added " + Command + " as a bot user.");
+                Bot.SendIRCMessage(Admin, "Added " + Command + " as a bot user.");
             }
             else
             {
-                Bot.IrcClient.LocalUser.SendMessage(Admin, Command + " is already on the bot user list.");
+                Bot.SendIRCMessage(Admin, Command + " is already on the bot user list.");
             }
 
             return true;

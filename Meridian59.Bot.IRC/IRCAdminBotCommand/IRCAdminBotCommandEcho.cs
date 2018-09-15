@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using IrcDotNet;
-
-namespace Meridian59.Bot.IRC
+﻿namespace Meridian59.Bot.IRC
 {
     public class IRCAdminBotCommandEcho : IRCAdminBotCommand
     {
@@ -29,27 +22,27 @@ namespace Meridian59.Bot.IRC
                 case "on":
                     if (Bot.DisplayMessages)
                     {
-                        Bot.IrcClient.LocalUser.SendMessage(Admin, "IRC echo is already on!.");
+                        Bot.SendIRCMessage(Admin, "IRC echo is already on!.");
                     }
                     else
                     {
                         Bot.DisplayMessages = true;
-                        Bot.IrcClient.LocalUser.SendMessage(Admin, "Set IRC echo on.");
+                        Bot.SendIRCMessage(Admin, "Set IRC echo on.");
                     }
                     break;
                 case "off":
                     if (!Bot.DisplayMessages)
                     {
-                        Bot.IrcClient.LocalUser.SendMessage(Admin, "IRC echo is already off!.");
+                        Bot.SendIRCMessage(Admin, "IRC echo is already off!.");
                     }
                     else
                     {
                         Bot.DisplayMessages = false;
-                        Bot.IrcClient.LocalUser.SendMessage(Admin, "Set IRC echo off.");
+                        Bot.SendIRCMessage(Admin, "Set IRC echo off.");
                     }
                     break;
                 default:
-                    Bot.IrcClient.LocalUser.SendMessage(Admin, "Echo is currently " + (Bot.DisplayMessages ? "on" : "off"));
+                    Bot.SendIRCMessage(Admin, "Echo is currently " + (Bot.DisplayMessages ? "on" : "off"));
                     break;
             }
 

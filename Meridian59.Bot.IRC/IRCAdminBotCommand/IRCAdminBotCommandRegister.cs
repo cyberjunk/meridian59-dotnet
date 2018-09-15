@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using IrcDotNet;
-
-namespace Meridian59.Bot.IRC
+﻿namespace Meridian59.Bot.IRC
 {
     public class IRCAdminBotCommandRegister : IRCAdminBotCommand
     {
@@ -25,7 +18,7 @@ namespace Meridian59.Bot.IRC
         public override bool PerformCommand(string Admin, string Command, IRCBotClient Bot)
         {
             Bot.UserRegCheck(Command);
-            Bot.IrcClient.LocalUser.SendMessage(Admin, "Performing reg check on " + Command);
+            Bot.SendIRCMessage(Admin, "Performing reg check on " + Command);
 
             return true;
         }
