@@ -202,6 +202,7 @@ namespace Meridian59 { namespace Ogre
       {
       public:
          static ::CEGUI::Window* Logo = nullptr;
+         static ::CEGUI::Window* Text = nullptr;
 
          static void Initialize();
          static void Destroy();

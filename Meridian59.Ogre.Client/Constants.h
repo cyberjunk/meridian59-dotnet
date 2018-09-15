@@ -292,6 +292,7 @@
 #define UI_NAME_LOADINGBAR_GROUP          "LoadingBar.Group"
 #define UI_NAME_LOADINGBAR_CONTENT        "LoadingBar.Content"
 #define UI_NAME_BRANDINGLOGO_WINDOW       "BrandingLogo"
+#define UI_NAME_BRANDINGLOGO_TEXT         "BrandingText"
 #define UI_NAME_DOWNLOADBAR_WINDOW        "DownloadBar"
 #define UI_NAME_DOWNLOADBAR_CONTENT       "DownloadBar.Content"
 #define UI_NAME_WELCOME_WINDOW            "Welcome"
@@ -878,3 +879,9 @@
 #define UI_TOOLTIPTEXT_MPBAR           "Your manapoints. Find mana nodes to get more powerful."
 #define UI_TOOLTIPTEXT_VIGBAR          "Your vigor. Eat or rest to refill."
 #define UI_TOOLTIPTEXT_TOUGHERCHANCE   "Your chance to get a tougher next kill."
+
+#if DEBUG
+#define UI_BUILDTYPE "Debug"
+#else
+#define UI_BUILDTYPE "Release"
+#endif

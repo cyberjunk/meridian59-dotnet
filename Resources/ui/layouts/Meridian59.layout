@@ -472,6 +472,12 @@
          <Property name="BackgroundEnabled" value="False" />
       </Window>
       
+      <!-- BrandingText -->
+      <Window type="TaharezLook/Label" name="BrandingText" >
+        <Property name="Text" value="" />
+        <Property name="Area" value="{{0,0},{1,-64},{0,128},{1,0}}" />
+      </Window>
+         
       <!-- DownloadBar -->
       <Window type="TaharezLook/StaticImage" name="DownloadBar" >
          <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
