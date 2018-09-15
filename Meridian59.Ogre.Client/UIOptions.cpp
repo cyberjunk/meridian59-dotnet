@@ -193,6 +193,7 @@ namespace Meridian59 { namespace Ogre
 
       // tababout - tabgeneral
       TabAboutTabGeneralVersion = static_cast<CEGUI::Window*>(TabAboutTabGeneral->getChild(UI_NAME_OPTIONS_TABABOUT_TABGENERAL_VERSION));
+      TabAboutTabGeneralDistributors = static_cast<CEGUI::Window*>(TabAboutTabGeneral->getChild(UI_NAME_OPTIONS_TABABOUT_TABGENERAL_DISTRIBUTORS));
 
       // tababout - tabhistory
       TabAboutTabHistoryTabControl = static_cast<CEGUI::TabControl*>(TabAboutTabHistory->getChild(UI_NAME_OPTIONS_TABABOUT_TABHISTORY_TABCONTROL));
@@ -588,8 +589,24 @@ namespace Meridian59 { namespace Ogre
       /*                                  PREPARE / SET: ABOUT                                              */
       /******************************************************************************************************/
 
+      // set version from assembly data
       TabAboutTabGeneralVersion->setText("OgreClient " + StringConvert::CLRToCEGUI(
          ::System::Reflection::Assembly::GetExecutingAssembly()->GetName()->Version->ToString()));
+
+      // set distributor of this binary
+#if DISTRIBUTOR_MERIDIANNEXT
+      TabAboutTabGeneralDistributors->setText(
+         "Server 105 | US | meridiannext.com\nServer 112 | EU | meridian59.de");
+#elif DISTRIBUTOR_VANILLA
+      TabAboutTabGeneralDistributors->setText(
+         "Server 101 | US | meridian59.com\nServer 102 | US | meridian59.com");
+#elif DISTRIBUTOR_OPENMERIDIAN
+      TabAboutTabGeneralDistributors->setText(
+         "Server 103 | US | openmeridian.org"););
+#else
+      TabAboutTabGeneralDistributors->setText(
+         "Unknown distributor");
+#endif
 
       /******************************************************************************************************/
       /*                                       SET CEGUI EVENTS                                             */

@@ -4311,7 +4311,7 @@
                      <Window type="TaharezLook/LabelWhite" name="Options.TabAbout.TabGeneral.Contributors" >
                         <Property name="Area" value="{{0,10},{0,95},{1,-10},{0,145}}" />         
                         <Property name="HorzFormatting" value="WordWrapLeftAligned" />
-                        <Property name="Text" value="Florian Neuner, Mario Moser, the OpenMeridian developers and all the kind folks out there providing free game resources." />                  
+                        <Property name="Text" value="Delerium, Florian Neuner, Mario Moser, all Meridian 59 developers and all the kind folks out there providing free game resources." />                  
                      </Window>
 
                      <!-- Disclaimer3Description -->
@@ -4349,9 +4349,25 @@
                         <Property name="TooltipText" value="IrrKlang - http://ambiera.com/irrklang" />
                      </Window>   
 
+                     <!-- DistributorsDescription -->
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabAbout.TabGeneral.DistributorsDescription" >
+                        <Property name="Area" value="{{0,10},{0,250},{0,150},{0,270}}" />         
+                        <Property name="Text" value="Distributed by" />
+                        <Property name="Font" value="Berenika-8-Bold" />
+                        <Property name="HorzFormatting" value="WordWrapLeftAligned" />                  
+                     </Window>   
+                     
+                     <!-- Distributors -->
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabAbout.TabGeneral.Distributors" >
+                        <Property name="Area" value="{{0,10},{0,275},{1,-10},{0,315}}" />         
+                        <Property name="HorzFormatting" value="WordWrapLeftAligned" />
+                        <Property name="VertFormatting" value="TopAligned" />
+                        <Property name="Text" value="" />                  
+                     </Window>
+
                      <!-- Disclaimer2Description -->
                      <Window type="TaharezLook/LabelWhite" name="Options.TabAbout.TabGeneral.Disclaimer2Desc" >
-                        <Property name="Area" value="{{0,10},{0,270},{0,150},{0,290}}" />         
+                        <Property name="Area" value="{{0,10},{0,320},{0,150},{0,340}}" />         
                         <Property name="Text" value="Meridian 59" />
                         <Property name="Font" value="Berenika-8-Bold" />
                         <Property name="HorzFormatting" value="WordWrapLeftAligned" />                  
@@ -4359,7 +4375,7 @@
 
                      <!-- Disclaimer2 -->
                      <Window type="TaharezLook/LabelWhite" name="Options.TabAbout.TabGeneral.Disclaimer2" >
-                        <Property name="Area" value="{{0,10},{0,295},{1,-10},{0,340}}" />         
+                        <Property name="Area" value="{{0,10},{0,345},{1,-10},{0,390}}" />         
                         <Property name="HorzFormatting" value="WordWrapLeftAligned" />
                         <Property name="Text" value="Copyright © 1994-2018 Andrew and Christopher Kirmse.
 Meridian 59 is a registered trademark." />                  
@@ -4367,7 +4383,7 @@ Meridian 59 is a registered trademark." />
 
                      <!-- Disclaimer1Description -->
                      <Window type="TaharezLook/LabelWhite" name="Options.TabAbout.TabGeneral.ThanksKirmses" >
-                        <Property name="Area" value="{{0,10},{0,350},{1,-10},{0,370}}" />         
+                        <Property name="Area" value="{{0,10},{0,400},{1,-10},{0,420}}" />         
                         <Property name="Text" value="Thanks to you for making this game open-source." />
                         <Property name="Font" value="LiberationSans-10-Italic" />
                         <Property name="HorzFormatting" value="WordWrapLeftAligned" />                     

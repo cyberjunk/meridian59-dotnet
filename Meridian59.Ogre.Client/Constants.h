@@ -727,6 +727,7 @@
 #define UI_NAME_OPTIONS_TABABOUT_TABCONTROL              "Options.TabAbout.TabControl"
 #define UI_NAME_OPTIONS_TABABOUT_TABGENERAL              "Options.TabAbout.TabGeneral"
 #define UI_NAME_OPTIONS_TABABOUT_TABGENERAL_VERSION      "Options.TabAbout.TabGeneral.Disclaimer1Desc"
+#define UI_NAME_OPTIONS_TABABOUT_TABGENERAL_DISTRIBUTORS "Options.TabAbout.TabGeneral.Distributors"
 #define UI_NAME_OPTIONS_TABABOUT_TABHISTORY                    "Options.TabAbout.TabHistory"
 #define UI_NAME_OPTIONS_TABABOUT_TABHISTORY_TABCONTROL         "Options.TabAbout.TabHistory.TabControl"
 #define UI_NAME_OPTIONS_TABABOUT_TABHISTORY_TABEVOLUTION       "Options.TabAbout.TabHistory.TabEvolution"
