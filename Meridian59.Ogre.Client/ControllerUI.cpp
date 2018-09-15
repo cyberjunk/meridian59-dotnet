@@ -715,8 +715,8 @@ namespace Meridian59 { namespace Ogre
 
          // set controls to default visibility for this mode
          LoadingBar::Window->setVisible(mode == UIMode::LoadingBar);
-         Branding::Logo->setVisible(mode == UIMode::LoadingBar || mode == UIMode::Login || mode == UIMode::AvatarSelection || mode == UIMode::AvatarCreation);
-         Branding::Text->setVisible(mode == UIMode::LoadingBar || mode == UIMode::Login || mode == UIMode::AvatarSelection || mode == UIMode::AvatarCreation);
+         Branding::Logo->setVisible(mode == UIMode::Login || mode == UIMode::AvatarSelection || mode == UIMode::AvatarCreation);
+         Branding::Text->setVisible(mode == UIMode::Login || mode == UIMode::AvatarSelection || mode == UIMode::AvatarCreation);
          DownloadBar::Window->setVisible(mode == UIMode::Download);
          Welcome::Window->setVisible(mode == UIMode::AvatarSelection);
          StatusBar::Window->setVisible(mode == UIMode::Playing);
