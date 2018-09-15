@@ -594,13 +594,13 @@ namespace Meridian59 { namespace Ogre
          ::System::Reflection::Assembly::GetExecutingAssembly()->GetName()->Version->ToString()));
 
       // set distributor of this binary
-#if DISTRIBUTOR_MERIDIANNEXT
+#if DISTRIBUTOR_MERIDIANNEXT && !VANILLA && !OPENMERIDIAN
       TabAboutTabGeneralDistributors->setText(
          "Server 105 | US | meridiannext.com\nServer 112 | EU | meridian59.de");
-#elif DISTRIBUTOR_VANILLA
+#elif DISTRIBUTOR_VANILLA && VANILLA
       TabAboutTabGeneralDistributors->setText(
          "Server 101 | US | meridian59.com\nServer 102 | US | meridian59.com");
-#elif DISTRIBUTOR_OPENMERIDIAN
+#elif DISTRIBUTOR_OPENMERIDIAN && OPENMERIDIAN
       TabAboutTabGeneralDistributors->setText(
          "Server 103 | US | openmeridian.org"););
 #else
