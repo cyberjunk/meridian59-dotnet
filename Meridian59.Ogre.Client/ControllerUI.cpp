@@ -113,6 +113,7 @@ namespace Meridian59 { namespace Ogre
 
       // setup children
       LoadingBar::Initialize();
+      Branding::Initialize();
       DownloadBar::Initialize();
       Welcome::Initialize();
       StatusBar::Initialize();
@@ -182,6 +183,7 @@ namespace Meridian59 { namespace Ogre
 
       // destroy children
       LoadingBar::Destroy();
+      Branding::Destroy();
       DownloadBar::Destroy();
       Welcome::Destroy();
       StatusBar::Destroy();
@@ -713,6 +715,7 @@ namespace Meridian59 { namespace Ogre
 
          // set controls to default visibility for this mode
          LoadingBar::Window->setVisible(mode == UIMode::LoadingBar);
+         Branding::Logo->setVisible(mode == UIMode::LoadingBar || mode == UIMode::Login || mode == UIMode::AvatarSelection || mode == UIMode::AvatarCreation);
          DownloadBar::Window->setVisible(mode == UIMode::Download);
          Welcome::Window->setVisible(mode == UIMode::AvatarSelection);
          StatusBar::Window->setVisible(mode == UIMode::Playing);

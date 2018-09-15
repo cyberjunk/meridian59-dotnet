@@ -329,6 +329,7 @@
    <Image height="50" name="LogoOgre3D"   width="125" xPos="1" yPos="433" />
    <Image height="90" name="LogoCEGUI"      width="199" xPos="1" yPos="484" />
    <Image height="55" name="LogoIrrKlang"   width="190" xPos="1" yPos="576" />
+   <Image height="76" name="LogoBrandingMeridianNext"   width="198" xPos="1" yPos="634" />
    <Image height="5" name="ListboxLegacyTopLeft" width="5" xPos="225" yPos="195" />
    <Image height="5" name="ListboxLegacyTop" width="5" xPos="235" yPos="195" />
    <Image height="5" name="ListboxLegacyTopRight" width="5" xPos="245" yPos="195" />

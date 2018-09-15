@@ -281,7 +281,9 @@
 #define UI_IMAGE_ACTION_ACTIVATE    "TaharezLook/ActionActivate"
 #define UI_IMAGE_ACTION_GUILDINVITE "TaharezLook/ActionGuildInvite"
 #define UI_IMAGE_ALIAS_ICON         "TaharezLook/AliasIcon"
-
+#define UI_IMAGE_BRANDING_MERIDIANNEXT "TaharezLook/LogoBrandingMeridianNext"
+#define UI_IMAGE_BRANDING_VANILLA      ""
+#define UI_IMAGE_BRANDING_OPENMERIDIAN ""
 /* prefixe */
 #define UI_NAMEPREFIX_STATICICON    "CEGUI/StaticIcon/"
 
@@ -289,6 +291,7 @@
 #define UI_NAME_LOADINGBAR_WINDOW         "LoadingBar"
 #define UI_NAME_LOADINGBAR_GROUP          "LoadingBar.Group"
 #define UI_NAME_LOADINGBAR_CONTENT        "LoadingBar.Content"
+#define UI_NAME_BRANDINGLOGO_WINDOW       "BrandingLogo"
 #define UI_NAME_DOWNLOADBAR_WINDOW        "DownloadBar"
 #define UI_NAME_DOWNLOADBAR_CONTENT       "DownloadBar.Content"
 #define UI_NAME_WELCOME_WINDOW            "Welcome"

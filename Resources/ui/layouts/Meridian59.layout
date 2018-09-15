@@ -463,6 +463,15 @@
          </Window>
       </Window>
       
+      <!-- BrandingLogo -->
+      <Window type="TaharezLook/StaticImage" name="BrandingLogo" >
+         <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+         <Property name="Size" value="{{0,198},{0,78}}" />
+         <Property name="Position" value="{{0,24},{0,24}}" />
+         <Property name="FrameEnabled" value="False" />
+         <Property name="BackgroundEnabled" value="False" />
+      </Window>
+      
       <!-- DownloadBar -->
       <Window type="TaharezLook/StaticImage" name="DownloadBar" >
          <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />

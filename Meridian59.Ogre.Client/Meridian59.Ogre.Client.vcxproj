@@ -318,6 +318,7 @@
     <ClCompile Include="UIAttributes.cpp" />
     <ClCompile Include="UIAvatar.cpp" />
     <ClCompile Include="UIAvatarCreateWizard.cpp" />
+    <ClCompile Include="UIBranding.cpp" />
     <ClCompile Include="UIBuy.cpp" />
     <ClCompile Include="UIChat.cpp" />
     <ClCompile Include="UIConfirmPopup.cpp" />

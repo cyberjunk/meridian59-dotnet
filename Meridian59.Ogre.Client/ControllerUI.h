@@ -196,6 +196,18 @@ namespace Meridian59 { namespace Ogre
       };
 
       /// <summary>
+      /// Branding logo and textbox
+      /// </summary>
+      ref class Branding abstract sealed
+      {
+      public:
+         static ::CEGUI::Window* Logo = nullptr;
+
+         static void Initialize();
+         static void Destroy();
+      };
+
+      /// <summary>
       /// DownloadBar window
       /// </summary>
       ref class DownloadBar abstract sealed
