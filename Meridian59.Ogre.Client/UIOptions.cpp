@@ -605,7 +605,7 @@ namespace Meridian59 { namespace Ogre
          "Server 103 | US | openmeridian.org"););
 #else
       TabAboutTabGeneralDistributors->setText(
-         "Unknown distributor");
+         "Unknown Distributor (Custom Version)");
 #endif
 
       /******************************************************************************************************/
