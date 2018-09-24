@@ -634,7 +634,6 @@ namespace Meridian59 { namespace Ogre
       // avatar
       OgreClient::Singleton->Config->UILayoutAvatar->setPosition(Avatar::Window->getPosition());
       OgreClient::Singleton->Config->UILayoutAvatar->setSize(Avatar::Window->getSize());
-      OgreClient::Singleton->Config->UIVisibilityAvatar = true;
 
       // target
       OgreClient::Singleton->Config->UILayoutTarget->setPosition(Target::Window->getPosition());
@@ -649,7 +648,6 @@ namespace Meridian59 { namespace Ogre
       // roomenchantments
       OgreClient::Singleton->Config->UILayoutRoomEnchantments->setPosition(RoomEnchantments::Window->getPosition());
       OgreClient::Singleton->Config->UILayoutRoomEnchantments->setSize(RoomEnchantments::Window->getSize());
-      OgreClient::Singleton->Config->UIVisibilityRoomEnchantments = true;
 
       // chat
       OgreClient::Singleton->Config->UILayoutChat->setPosition(Chat::Window->getPosition());
@@ -684,17 +682,14 @@ namespace Meridian59 { namespace Ogre
       // mainbuttonsleft
       OgreClient::Singleton->Config->UILayoutMainButtonsLeft->setPosition(MainButtonsLeft::Window->getPosition());
       OgreClient::Singleton->Config->UILayoutMainButtonsLeft->setSize(MainButtonsLeft::Window->getSize());
-      OgreClient::Singleton->Config->UIVisibilityMainButtonsLeft = true;
 
       // mainbuttonsright
       OgreClient::Singleton->Config->UILayoutMainButtonsRight->setPosition(MainButtonsRight::Window->getPosition());
       OgreClient::Singleton->Config->UILayoutMainButtonsRight->setSize(MainButtonsRight::Window->getSize());
-      OgreClient::Singleton->Config->UIVisibilityMainButtonsRight = true;
 
       // actionbuttons
       OgreClient::Singleton->Config->UILayoutActionButtons->setPosition(ActionButtons::Window->getPosition());
       OgreClient::Singleton->Config->UILayoutActionButtons->setSize(ActionButtons::Window->getSize());
-      OgreClient::Singleton->Config->UIVisibilityActionButtons = true;
 
       // onlineplayers
       OgreClient::Singleton->Config->UILayoutOnlinePlayers->setPosition(OnlinePlayers::Window->getPosition());
@@ -723,13 +718,13 @@ namespace Meridian59 { namespace Ogre
          OnlinePlayers::Window->setVisible(mode == UIMode::Playing && OgreClient::Singleton->Config->UIVisibilityOnlinePlayers);
          RoomObjects::Window->setVisible(mode == UIMode::Playing && OgreClient::Singleton->Config->UIVisibilityRoomObjects);
          Chat::Window->setVisible(mode == UIMode::Playing && OgreClient::Singleton->Config->UIVisibilityChat);
-         Avatar::Window->setVisible(mode == UIMode::Playing && OgreClient::Singleton->Config->UIVisibilityAvatar);
+         Avatar::Window->setVisible(mode == UIMode::Playing);
          ObjectDetails::Window->setVisible(false);
          PlayerDetails::Window->setVisible(false);
          SpellDetails::Window->setVisible(false);
          SkillDetails::Window->setVisible(false);
          Target::Window->setVisible(false);
-         RoomEnchantments::Window->setVisible(mode == UIMode::Playing && OgreClient::Singleton->Config->UIVisibilityRoomEnchantments);
+         RoomEnchantments::Window->setVisible(mode == UIMode::Playing);
          MiniMap::Window->setVisible(mode == UIMode::Playing && OgreClient::Singleton->Config->UIVisibilityMiniMap);
          Buy::Window->setVisible(false);
          Attributes::Window->setVisible(mode == UIMode::Playing && OgreClient::Singleton->Config->UIVisibilityAttributes);
@@ -738,11 +733,11 @@ namespace Meridian59 { namespace Ogre
          Skills::Window->setVisible(mode == UIMode::Playing && OgreClient::Singleton->Config->UIVisibilitySkills);
          Quests::Window->setVisible(false);
          Inventory::Window->setVisible(mode == UIMode::Playing && OgreClient::Singleton->Config->UIVisibilityInventory);
-         MainButtonsLeft::Window->setVisible(mode == UIMode::Playing && OgreClient::Singleton->Config->UIVisibilityMainButtonsLeft);
-         MainButtonsRight::Window->setVisible(mode == UIMode::Playing && OgreClient::Singleton->Config->UIVisibilityMainButtonsRight);
+         MainButtonsLeft::Window->setVisible(mode == UIMode::Playing);
+         MainButtonsRight::Window->setVisible(mode == UIMode::Playing);
          Amount::Window->setVisible(false);
          Trade::Window->setVisible(false);
-         ActionButtons::Window->setVisible(mode == UIMode::Playing && OgreClient::Singleton->Config->UIVisibilityActionButtons);
+         ActionButtons::Window->setVisible(mode == UIMode::Playing);
          NewsGroup::Window->setVisible(false);
          NewsGroupCompose::Window->setVisible(false);
          Mail::Window->setVisible(false);

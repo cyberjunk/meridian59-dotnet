@@ -124,19 +124,14 @@ namespace Meridian59 { namespace Ogre
       literal CLRString^ TAG_ACTIONBUTTONGRID = "actionbuttongrid";
       literal CLRString^ TAG_ONLINEPLAYERS = "onlineplayers";
       literal CLRString^ TAG_ROOMOBJECTS = "roomobjects";
-      literal CLRString^ TAG_AVATARVISIBILITY = "avatarvisibility";
       literal CLRString^ TAG_TARGETVISIBILITY = "targetvisibility";
       literal CLRString^ TAG_MINIMAPVISIBILITY = "minimapvisibility";
-      literal CLRString^ TAG_ROOMENCHANTMENTSVISIBILITY = "roomenchantmentsvisibility";
       literal CLRString^ TAG_CHATVISIBILITY = "chatvisibility";
       literal CLRString^ TAG_INVENTORYVISIBILITY = "inventoryvisibility";
       literal CLRString^ TAG_SPELLSVISIBILITY = "spellsvisibility";
       literal CLRString^ TAG_SKILLSVISIBILITY = "skillsvisibility";
       literal CLRString^ TAG_ACTIONSVISIBILITY = "actionsvisibility";
       literal CLRString^ TAG_ATTRIBUTESVISIBILITY = "attributesvisibility";
-      literal CLRString^ TAG_MAINBUTTONSLEFTVISIBILITY = "mainbuttonsleftvisibility";
-      literal CLRString^ TAG_MAINBUTTONSRIGHTVISIBILITY = "mainbuttonsrightvisibility";
-      literal CLRString^ TAG_ACTIONBUTTONGRIDVISIBILITY = "actionbuttongridvisibility";
       literal CLRString^ TAG_ONLINEPLAYERSVISIBILITY = "onlineplayersvisibility";
       literal CLRString^ TAG_ROOMOBJECTSVISIBILITY = "roomobjectsvisibility";
       literal CLRString^ TAG_INPUT = "input";
@@ -266,19 +261,14 @@ namespace Meridian59 { namespace Ogre
 
       bool UILocked;
 
-      bool UIVisibilityAvatar;
       bool UIVisibilityTarget;
       bool UIVisibilityMiniMap;
-      bool UIVisibilityRoomEnchantments;
       bool UIVisibilityChat;
       bool UIVisibilityInventory;
       bool UIVisibilitySpells;
       bool UIVisibilitySkills;
       bool UIVisibilityActions;
       bool UIVisibilityAttributes;
-      bool UIVisibilityMainButtonsLeft;
-      bool UIVisibilityMainButtonsRight;
-      bool UIVisibilityActionButtons;
       bool UIVisibilityOnlinePlayers;
       bool UIVisibilityRoomObjects;
 

@@ -239,10 +239,6 @@ namespace Meridian59 { namespace Ogre
       node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_AVATAR);
       ReadUILayout(UILayoutAvatar, node, false);
 
-      // avatar visibility
-      node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_AVATARVISIBILITY);
-      UIVisibilityAvatar = (PARSE_BOOL_ATTRIB(node, XMLATTRIB_VALUE, val_bool)) ? val_bool : DEFAULTVAL_UI_VISIBILITYAVATAR;
-
       // target
       node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_TARGET);
       ReadUILayout(UILayoutTarget, node, false);
@@ -262,10 +258,6 @@ namespace Meridian59 { namespace Ogre
       // roomenchantments
       node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_ROOMENCHANTMENTS);
       ReadUILayout(UILayoutRoomEnchantments, node, false);
-
-      // roomenchantments visibility
-      node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_ROOMENCHANTMENTSVISIBILITY);
-      UIVisibilityRoomEnchantments = (PARSE_BOOL_ATTRIB(node, XMLATTRIB_VALUE, val_bool)) ? val_bool : DEFAULTVAL_UI_VISIBILITYROOMENCHANTMENTS;
 
       // chat
       node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_CHAT);
@@ -319,25 +311,13 @@ namespace Meridian59 { namespace Ogre
       node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_MAINBUTTONSLEFT);
       ReadUILayout(UILayoutMainButtonsLeft, node, false);
 
-      // mainbuttonsleft visibility
-      node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_MAINBUTTONSLEFTVISIBILITY);
-      UIVisibilityMainButtonsLeft = (PARSE_BOOL_ATTRIB(node, XMLATTRIB_VALUE, val_bool)) ? val_bool : DEFAULTVAL_UI_VISIBILITYMAINBUTTONSLEFT;
-
       // mainbuttonsright
       node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_MAINBUTTONSRIGHT);
       ReadUILayout(UILayoutMainButtonsRight, node, false);
 
-      // mainbuttonsright visibility
-      node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_MAINBUTTONSRIGHTVISIBILITY);
-      UIVisibilityMainButtonsRight = (PARSE_BOOL_ATTRIB(node, XMLATTRIB_VALUE, val_bool)) ? val_bool : DEFAULTVAL_UI_VISIBILITYMAINBUTTONSRIGHT;
-
       // actionbuttons
       node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_ACTIONBUTTONGRID);
       ReadUILayout(UILayoutActionButtons, node, false);
-
-      // actionbuttons visibility
-      node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_ACTIONBUTTONGRIDVISIBILITY);
-      UIVisibilityActionButtons = (PARSE_BOOL_ATTRIB(node, XMLATTRIB_VALUE, val_bool)) ? val_bool : DEFAULTVAL_UI_VISIBILITYACTIONBUTTONGRID;
 
       // onlineplayers
       node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_UI + "/" + TAG_LAYOUT + "/" + TAG_ONLINEPLAYERS);
@@ -778,11 +758,6 @@ namespace Meridian59 { namespace Ogre
       Writer->WriteAttributeString(XMLATTRIB_HABS, UILayoutAvatar->getSize().d_height.d_offset.ToString(Config::NumberFormatInfo));
       Writer->WriteEndElement();
 
-      // avatar visibility
-      Writer->WriteStartElement(TAG_AVATARVISIBILITY);
-      Writer->WriteAttributeString(XMLATTRIB_VALUE, UIVisibilityAvatar.ToString()->ToLower());
-      Writer->WriteEndElement();
-
       // target
       Writer->WriteStartElement(TAG_TARGET);
       Writer->WriteAttributeString(XMLATTRIB_XREL, UILayoutTarget->getPosition().d_x.d_scale.ToString(Config::NumberFormatInfo));
@@ -827,11 +802,6 @@ namespace Meridian59 { namespace Ogre
       Writer->WriteAttributeString(XMLATTRIB_WABS, UILayoutRoomEnchantments->getSize().d_width.d_offset.ToString(Config::NumberFormatInfo));
       Writer->WriteAttributeString(XMLATTRIB_HREL, UILayoutRoomEnchantments->getSize().d_height.d_scale.ToString(Config::NumberFormatInfo));
       Writer->WriteAttributeString(XMLATTRIB_HABS, UILayoutRoomEnchantments->getSize().d_height.d_offset.ToString(Config::NumberFormatInfo));
-      Writer->WriteEndElement();
-
-      // roomenchantments visibility
-      Writer->WriteStartElement(TAG_ROOMENCHANTMENTSVISIBILITY);
-      Writer->WriteAttributeString(XMLATTRIB_VALUE, UIVisibilityRoomEnchantments.ToString()->ToLower());
       Writer->WriteEndElement();
 
       // chat
@@ -948,11 +918,6 @@ namespace Meridian59 { namespace Ogre
       Writer->WriteAttributeString(XMLATTRIB_HABS, UILayoutMainButtonsLeft->getSize().d_height.d_offset.ToString(Config::NumberFormatInfo));
       Writer->WriteEndElement();
 
-      // mainbuttonsleft visibility
-      Writer->WriteStartElement(TAG_MAINBUTTONSLEFTVISIBILITY);
-      Writer->WriteAttributeString(XMLATTRIB_VALUE, UIVisibilityMainButtonsLeft.ToString()->ToLower());
-      Writer->WriteEndElement();
-
       // mainbuttonsright
       Writer->WriteStartElement(TAG_MAINBUTTONSRIGHT);
       Writer->WriteAttributeString(XMLATTRIB_XREL, UILayoutMainButtonsRight->getPosition().d_x.d_scale.ToString(Config::NumberFormatInfo));
@@ -965,11 +930,6 @@ namespace Meridian59 { namespace Ogre
       Writer->WriteAttributeString(XMLATTRIB_HABS, UILayoutMainButtonsRight->getSize().d_height.d_offset.ToString(Config::NumberFormatInfo));
       Writer->WriteEndElement();
 
-      // mainbuttonsright visibility
-      Writer->WriteStartElement(TAG_MAINBUTTONSRIGHTVISIBILITY);
-      Writer->WriteAttributeString(XMLATTRIB_VALUE, UIVisibilityMainButtonsRight.ToString()->ToLower());
-      Writer->WriteEndElement();
-
       // actionbuttons
       Writer->WriteStartElement(TAG_ACTIONBUTTONGRID);
       Writer->WriteAttributeString(XMLATTRIB_XREL, UILayoutActionButtons->getPosition().d_x.d_scale.ToString(Config::NumberFormatInfo));
@@ -980,11 +940,6 @@ namespace Meridian59 { namespace Ogre
       Writer->WriteAttributeString(XMLATTRIB_WABS, UILayoutActionButtons->getSize().d_width.d_offset.ToString(Config::NumberFormatInfo));
       Writer->WriteAttributeString(XMLATTRIB_HREL, UILayoutActionButtons->getSize().d_height.d_scale.ToString(Config::NumberFormatInfo));
       Writer->WriteAttributeString(XMLATTRIB_HABS, UILayoutActionButtons->getSize().d_height.d_offset.ToString(Config::NumberFormatInfo));
-      Writer->WriteEndElement();
-
-      // actionbuttons visibility
-      Writer->WriteStartElement(TAG_ACTIONBUTTONGRIDVISIBILITY);
-      Writer->WriteAttributeString(XMLATTRIB_VALUE, UIVisibilityActionButtons.ToString()->ToLower());
       Writer->WriteEndElement();
 
       // onlineplayers
