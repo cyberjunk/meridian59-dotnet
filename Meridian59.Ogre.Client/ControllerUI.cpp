@@ -321,6 +321,9 @@ namespace Meridian59 { namespace Ogre
          StatusBar::Lock->setProperty(UI_PROPNAME_HOVERIMAGE, UI_IMAGE_LOCKBUTTON_LOCKED_HOVER);
          StatusBar::Lock->setProperty(UI_PROPNAME_PUSHEDIMAGE, UI_IMAGE_LOCKBUTTON_LOCKED_NORMAL);
 
+         // update tooltip
+         StatusBar::Lock->setTooltipText("Interface is currently locked. \n You can't move or resize windows. \n Click to unlock.");
+
          // disable dragging of actionbuttons
          for (size_t i = 0; i < ACTIONBUTTONS; i++)
             ((CEGUI::DragContainer*)ActionButtons::Grid->getChildAtIdx(i))->setDraggingEnabled(false);
@@ -354,6 +357,9 @@ namespace Meridian59 { namespace Ogre
          StatusBar::Lock->setProperty(UI_PROPNAME_NORMALIMAGE, UI_IMAGE_LOCKBUTTON_UNLOCKED_NORMAL);
          StatusBar::Lock->setProperty(UI_PROPNAME_HOVERIMAGE, UI_IMAGE_LOCKBUTTON_UNLOCKED_HOVER);
          StatusBar::Lock->setProperty(UI_PROPNAME_PUSHEDIMAGE, UI_IMAGE_LOCKBUTTON_UNLOCKED_NORMAL);
+
+         // update tooltip
+         StatusBar::Lock->setTooltipText("Interface is currently unlocked. \n You can move or resize windows. \n Click to lock.");
 
          // enable dragging of actionbuttons
          for (size_t i = 0; i < ACTIONBUTTONS; i++)
