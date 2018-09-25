@@ -317,9 +317,9 @@ namespace Meridian59 { namespace Ogre
          RoomEnchantments::Window->setMouseCursor(UI_DEFAULTARROW);
 
          // switch lock image
-         StatusBar::Lock->setProperty(UI_PROPNAME_NORMALIMAGE, "TaharezLook/WindowLockButtonPushed");
-         StatusBar::Lock->setProperty(UI_PROPNAME_HOVERIMAGE, "TaharezLook/WindowLockButtonHover");
-         StatusBar::Lock->setProperty(UI_PROPNAME_PUSHEDIMAGE, "TaharezLook/WindowLockButtonNormal");
+         StatusBar::Lock->setProperty(UI_PROPNAME_NORMALIMAGE, UI_IMAGE_LOCKBUTTON_LOCKED_NORMAL);
+         StatusBar::Lock->setProperty(UI_PROPNAME_HOVERIMAGE, UI_IMAGE_LOCKBUTTON_LOCKED_HOVER);
+         StatusBar::Lock->setProperty(UI_PROPNAME_PUSHEDIMAGE, UI_IMAGE_LOCKBUTTON_LOCKED_NORMAL);
 
          // disable dragging of actionbuttons
          for (size_t i = 0; i < ACTIONBUTTONS; i++)
@@ -351,9 +351,9 @@ namespace Meridian59 { namespace Ogre
          RoomEnchantments::Window->setMouseCursor(UI_MOUSECURSOR_DRAG);
 
          // switch lock image
-         StatusBar::Lock->setProperty(UI_PROPNAME_NORMALIMAGE, "TaharezLook/WindowLockButtonNormal");
-         StatusBar::Lock->setProperty(UI_PROPNAME_HOVERIMAGE, "TaharezLook/WindowLockButtonHover");
-         StatusBar::Lock->setProperty(UI_PROPNAME_PUSHEDIMAGE, "TaharezLook/WindowLockButtonPushed");
+         StatusBar::Lock->setProperty(UI_PROPNAME_NORMALIMAGE, UI_IMAGE_LOCKBUTTON_UNLOCKED_NORMAL);
+         StatusBar::Lock->setProperty(UI_PROPNAME_HOVERIMAGE, UI_IMAGE_LOCKBUTTON_UNLOCKED_HOVER);
+         StatusBar::Lock->setProperty(UI_PROPNAME_PUSHEDIMAGE, UI_IMAGE_LOCKBUTTON_UNLOCKED_NORMAL);
 
          // enable dragging of actionbuttons
          for (size_t i = 0; i < ACTIONBUTTONS; i++)

@@ -284,6 +284,11 @@
 #define UI_IMAGE_BRANDING_MERIDIANNEXT "TaharezLook/LogoBrandingMeridianNext"
 #define UI_IMAGE_BRANDING_VANILLA      ""
 #define UI_IMAGE_BRANDING_OPENMERIDIAN ""
+#define UI_IMAGE_LOCKBUTTON_UNLOCKED_NORMAL "TaharezLook/WindowLockButtonUnlockedNormal"
+#define UI_IMAGE_LOCKBUTTON_UNLOCKED_HOVER  "TaharezLook/WindowLockButtonUnlockedHover"
+#define UI_IMAGE_LOCKBUTTON_LOCKED_NORMAL   "TaharezLook/WindowLockButtonLockedNormal"
+#define UI_IMAGE_LOCKBUTTON_LOCKED_HOVER    "TaharezLook/WindowLockButtonLockedHover"
+
 /* prefixe */
 #define UI_NAMEPREFIX_STATICICON    "CEGUI/StaticIcon/"
 
