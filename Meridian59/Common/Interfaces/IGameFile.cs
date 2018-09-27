@@ -21,7 +21,7 @@ namespace Meridian59.Common.Interfaces
     /// </summary>
     public interface IGameFile
     {
-        void Load(string FilePath);
+        void Load(string FilePath, byte[] Buffer = null);
         void Save(string FilePath);
         string Filename { get; set; }
     }

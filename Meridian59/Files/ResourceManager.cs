@@ -18,6 +18,8 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Collections.Concurrent;
+using System.Threading;
 using Meridian59.Common;
 using Meridian59.Common.Constants;
 using Meridian59.Files.BGF;
@@ -25,7 +27,6 @@ using Meridian59.Files.ROO;
 using Meridian59.Files.RSB;
 using Meridian59.Data.Lists;
 using Meridian59.Data.Models;
-using System.Threading;
 using Meridian59.Common.Enums;
 using Meridian59.Common.Events;
 
@@ -37,6 +38,9 @@ namespace Meridian59.Files
     public class ResourceManager
     {
         #region Constants
+        protected const int FILEBUFFERSIZE = 12 * 1024 * 1024;
+        protected const int FILEBUFFERINIT = 3;
+        public const string MODULENAME = "ResourceManager";
         protected const string NOTFOUND = "Error: StringResources file or Bgf/Roo/Wav/Music folder not found.";
         protected const string DEFAULTSTRINGFILE = "rsc0000.rsb";
 
@@ -60,6 +64,7 @@ namespace Meridian59.Files
         protected readonly MailList mails = new MailList(200);
 
         protected readonly LockingQueue<string> queueAsyncFilesLoaded = new LockingQueue<string>();
+        protected readonly ConcurrentStack<byte[]> fileBuffers = new ConcurrentStack<byte[]>();
 
         protected int numLoadedObjects;
         protected int numLoadedRoomTextures;
@@ -232,12 +237,27 @@ namespace Meridian59.Files
                 // haven't loaded it yet?
                 if (bgfFile == null)
                 {
-                    // load it
-                    bgfFile = new BgfFile(ObjectsFolder + "/" + File);
+                    byte[] buffer;
 
-                    // update the registry
-                    if (Objects.TryUpdate(File, bgfFile, null))
-                        numLoadedObjects++;
+                    // get file byte buffer
+                    if (!fileBuffers.TryPop(out buffer))
+                      buffer = new byte[FILEBUFFERSIZE];
+
+                    string file = ObjectsFolder + "/" + File;
+
+                    // load to mem
+                    if (Util.LoadFileToBuffer(file, buffer))
+                    {
+                       bgfFile = new BgfFile(file, buffer);
+                    
+                       // update the registry
+                       if (Objects.TryUpdate(File, bgfFile, null))
+                           numLoadedObjects++;
+                    }
+                    else
+                      Logger.Log(MODULENAME, LogType.Error, "Failed to load file (possibly too big?): " + File);
+
+                    fileBuffers.Push(buffer);
                 }
             }
 
@@ -259,16 +279,31 @@ namespace Meridian59.Files
             {
                 // haven't loaded it yet?
                 if (rooFile == null)
-                {                  
-                    // load it
-                    rooFile = new RooFile(RoomsFolder + "/" + File);
+                {
+                   byte[] buffer;
 
-                    // resolve resource references (may load texture bgfs)
-                    rooFile.ResolveResources(this);
+                   // get file byte buffer
+                   if (!fileBuffers.TryPop(out buffer))
+                      buffer = new byte[FILEBUFFERSIZE];
 
-                    // update the registry
-                    if (Rooms.TryUpdate(File, rooFile, null))
-                        numLoadedRooms++;
+                   string file = RoomsFolder + "/" + File;
+
+                   // load to mem
+                   if (Util.LoadFileToBuffer(file, buffer))
+                   {
+                      rooFile = new RooFile(file, buffer);
+
+                      // resolve resource references (may load texture bgfs)
+                      rooFile.ResolveResources(this);
+
+                      // update the registry
+                      if (Rooms.TryUpdate(File, rooFile, null))
+                         numLoadedRooms++;
+                   }
+                   else
+                      Logger.Log(MODULENAME, LogType.Error, "Failed to load file (possibly too big?): " + File);
+
+                   fileBuffers.Push(buffer);
                 }
             }
 
@@ -291,12 +326,28 @@ namespace Meridian59.Files
                 // haven't loaded it yet?
                 if (bgfFile == null)
                 {
-                    // load it
-                    bgfFile = new BgfFile(RoomTexturesFolder + "/" + File);
+                   byte[] buffer;
 
-                    // update the registry
-                    if (RoomTextures.TryUpdate(File, bgfFile, null))
-                        numLoadedRoomTextures++;
+                   // get file byte buffer
+                   if (!fileBuffers.TryPop(out buffer))
+                      buffer = new byte[FILEBUFFERSIZE];
+
+                   string file = RoomTexturesFolder + "/" + File;
+
+                   // load to mem
+                   if (Util.LoadFileToBuffer(file, buffer))
+                   {
+                      // load it
+                      bgfFile = new BgfFile(file, buffer);
+
+                      // update the registry
+                      if (RoomTextures.TryUpdate(File, bgfFile, null))
+                         numLoadedRoomTextures++;
+                   }
+                   else
+                      Logger.Log(MODULENAME, LogType.Error, "Failed to load file (possibly too big?): " + File);
+
+                   fileBuffers.Push(buffer);
                 }
             }
 
@@ -782,6 +833,8 @@ namespace Meridian59.Files
         /// </summary>
         public ResourceManager()
         {
+           for (int i = 0; i < FILEBUFFERINIT; i++)
+              fileBuffers.Push(new byte[FILEBUFFERSIZE]);
         }
 
         /// <summary>

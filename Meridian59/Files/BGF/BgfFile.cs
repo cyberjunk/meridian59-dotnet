@@ -211,14 +211,18 @@ namespace Meridian59.Files.BGF
         /// Load a file from disk
         /// </summary>
         /// <param name="Filename">Full path and filename of file to load</param>
-        public void Load(string Filename)
+        /// <param name="Buffer">All bytes of the file to load, if null will load from disk</param>
+        public void Load(string Filename, byte[] Buffer = null)
         {
             // save raw filename without path or extensions
             this.Filename = Path.GetFileNameWithoutExtension(Filename);
-            
-            // read all bytes at once to memory, then parse
-            byte[] fileBytes = File.ReadAllBytes(Filename);
-            ReadFrom(fileBytes, 0);
+
+            // read all bytes at once to memory if not provided
+            if (Buffer == null)
+               Buffer = File.ReadAllBytes(Filename);
+
+            // parse
+            ReadFrom(Buffer, 0);
         }
 
         /// <summary>
@@ -371,18 +375,20 @@ namespace Meridian59.Files.BGF
         /// Constructor from file
         /// </summary>
         /// <param name="Filename"></param>
-        public BgfFile(string Filename)
+        /// <param name="Buffer"></param>
+        public BgfFile(string Filename, byte[] Buffer = null)
         {
             // get extension of filename
             string extension = Path.GetExtension(Filename).ToLower();
 
             // if it's .bgf load it
             if (extension == FileExtensions.BGF)
-                Load(Filename);
+                Load(Filename, Buffer);
 
             else
                 throw new Exception(ERRORFILEFORMAT);   
         }
+
         #endregion
 
         #region Methods

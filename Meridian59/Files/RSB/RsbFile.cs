@@ -182,13 +182,16 @@ namespace Meridian59.Files.RSB
         /// Load string resources from file
         /// </summary>
         /// <param name="Filename">Full path and filename of string resource file</param>
-        public void Load(string Filename)
+        /// <param name="Buffer">All bytes of the file to load, if null will load from disk</param>
+        public void Load(string Filename, byte[] Buffer = null)
         {
             // save raw filename without path or extensions
             this.Filename = Path.GetFileNameWithoutExtension(Filename);
           
-            byte[] fileBytes = File.ReadAllBytes(Filename);
-            ReadFrom(fileBytes, 0);           
+            if (Buffer == null)
+               Buffer = File.ReadAllBytes(Filename);
+
+            ReadFrom(Buffer, 0);           
         }
 
         /// <summary>

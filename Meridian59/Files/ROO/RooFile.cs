@@ -894,13 +894,15 @@ namespace Meridian59.Files.ROO
         #endregion
 
         #region IGameFile
-        public unsafe void Load(string FilePath)
+        public unsafe void Load(string FilePath, byte[] Buffer = null)
         {
             Filename = Path.GetFileNameWithoutExtension(FilePath);
-            byte[] FileBytes = File.ReadAllBytes(FilePath);
+
+            if (Buffer == null)
+               Buffer = File.ReadAllBytes(FilePath);
             
             //ReadFrom(FileBytes, 0);
-            fixed (byte* ptrBytes = FileBytes)
+            fixed (byte* ptrBytes = Buffer)
             {
                 byte* ptr = ptrBytes;
                 ReadFrom(ref ptr);
@@ -1115,9 +1117,10 @@ namespace Meridian59.Files.ROO
         /// Constructor by file
         /// </summary>
         /// <param name="FilePath"></param>
-        public RooFile(string FilePath)
+        /// <param name="Buffer"></param>
+        public RooFile(string FilePath, byte[] Buffer = null)
         {
-            Load(FilePath);
+            Load(FilePath, Buffer);
         }
         #endregion
         

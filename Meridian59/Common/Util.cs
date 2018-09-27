@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Runtime;
 using System.Text;
+using System.IO;
 using Meridian59.Native;
 
 namespace Meridian59.Common
@@ -67,6 +68,29 @@ namespace Meridian59.Common
 
             // return info
             return new Tuple<IntPtr, uint>(ptr, len);
+        }
+
+        public static bool LoadFileToBuffer(string File, byte[] Buffer)
+        {
+           // open file
+           FileStream st = new FileStream(File, FileMode.Open, FileAccess.Read, FileShare.Read, 8192, FileOptions.SequentialScan);
+
+           // determine filesize
+           long streamlen = st.Length;
+           bool returnVal = false;
+
+           // make sure it fits into buffer
+           if (streamlen <= Buffer.Length)
+           {
+              // read whole file
+              int read = st.Read(Buffer, 0, (int)streamlen);
+              returnVal = (read == streamlen);
+           }
+
+           st.Close();
+           st.Dispose();
+
+           return returnVal;
         }
 
         /// <summary>

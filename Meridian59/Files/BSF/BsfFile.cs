@@ -112,15 +112,16 @@ namespace Meridian59.Files
         #endregion
 
         #region IGameFile implementation
-        public void Load(string FilePath)
+        public void Load(string FilePath, byte[] Buffer = null)
         {
             // save raw filename without path or extensions
             this.Filename = Path.GetFileNameWithoutExtension(FilePath);
 
             if (File.Exists(FilePath))
             {
-                byte[] FileBytes = File.ReadAllBytes(FilePath);
-                ReadFrom(FileBytes, 0);
+                if (Buffer == null)
+                  Buffer = File.ReadAllBytes(FilePath);
+                ReadFrom(Buffer, 0);
             }
             else
                 throw new FileNotFoundException();
@@ -144,7 +145,7 @@ namespace Meridian59.Files
         {
         }
 
-        public BsfFile(string Filename)
+        public BsfFile(string Filename, byte[] Buffer = null)
         {
             Load(Filename);
         }
