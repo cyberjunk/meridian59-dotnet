@@ -104,6 +104,7 @@ namespace Meridian59.Drawing2D
             UseViewerFrame = true;
             IsCustomShrink = false;
             CustomShrink = 1.0f;
+            RenderInfo = new RenderInfo();
         }
 
         /// <summary>
@@ -232,8 +233,8 @@ namespace Meridian59.Drawing2D
             if (Data is RoomObject)
             {
                 // get new renderinfo for RoomObject
-                RenderInfo = ((RoomObject)Data).GetRenderInfo(UseViewerFrame,
-                    Quality, ApplyYOffset, HotspotIndex, IsScalePow2, Width, Height, CenterVertical, CenterHorizontal, IsCustomShrink, CustomShrink);
+                RenderInfo.Refresh(((RoomObject)Data), UseViewerFrame, ApplyYOffset,
+                    HotspotIndex, Quality, IsScalePow2, Width, Height, CenterVertical, CenterHorizontal, IsCustomShrink, CustomShrink);
 
                 // use hashbase
                 apphash = UseViewerFrame ? ((RoomObject)Data).ViewerAppearanceHash : Data.AppearanceHash;
@@ -249,8 +250,8 @@ namespace Meridian59.Drawing2D
                     drawBackground = false;
 
                 // get new renderinfo for ObjectBase
-                RenderInfo = Data.GetRenderInfo(
-                    Quality, ApplyYOffset, HotspotIndex, IsScalePow2, Width, Height, CenterVertical, CenterHorizontal, IsCustomShrink, CustomShrink);
+                RenderInfo.Refresh(Data, ApplyYOffset, 
+                   HotspotIndex, Quality, IsScalePow2, Width, Height, CenterVertical, CenterHorizontal, IsCustomShrink, CustomShrink);
 
                 // use hashbase
                 apphash = Data.AppearanceHash;
