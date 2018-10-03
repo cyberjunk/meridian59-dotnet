@@ -279,7 +279,7 @@ namespace Meridian59 { namespace Ogre
                // reget TexPtr (no return from function works, ugh..)
                TexturePtr texPtr = texMan.getByName(oStrName);
 
-               if (!texPtr.isNull())
+               if (texPtr)
                {
                   // possibly create cegui wrap around it
                   Util::CreateCEGUITextureFromOgre(ControllerUI::Renderer, texPtr);

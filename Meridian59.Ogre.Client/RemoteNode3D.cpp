@@ -147,7 +147,7 @@ namespace Meridian59 { namespace Ogre
             }
 
             // dispose pointer to old material
-            oldMaterial.setNull();
+            oldMaterial.reset();
          }
       }
    };

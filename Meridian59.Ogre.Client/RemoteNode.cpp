@@ -276,8 +276,8 @@ namespace Meridian59 { namespace Ogre
          billboardSetName->setMaterialName(matName);
 
          // get size from texture
-         TexturePtr texPtr = texMan.createOrRetrieve(
-            texName, TEXTUREGROUP_MOVABLETEXT).first.staticCast<Texture>();
+         TexturePtr texPtr = Ogre::static_pointer_cast<Ogre::Texture>(
+            texMan.createOrRetrieve(texName, TEXTUREGROUP_MOVABLETEXT).first);
 
          nameTextureWidth = (float)texPtr->getWidth();
          nameTextureHeight = (float)texPtr->getHeight();
@@ -288,7 +288,7 @@ namespace Meridian59 { namespace Ogre
          // update position of name
          UpdateNamePosition();
 
-         texPtr.setNull();
+         texPtr.reset();
       }
 
       else if (billboardSetName != nullptr)
@@ -334,7 +334,7 @@ namespace Meridian59 { namespace Ogre
       MaterialManager& matMan = MaterialManager::getSingleton();
       MaterialPtr matPtr = matMan.getByName(matName);
 
-      if (matPtr.isNull())
+      if (!matPtr)
          return;
 
       Pass* pass = matPtr->getTechnique(0)->getPass(0);

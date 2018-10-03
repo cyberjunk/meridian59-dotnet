@@ -293,7 +293,7 @@ namespace Meridian59 { namespace Ogre
          TexturePtr texPtr = texMan.getByName(TextureName, TextureGroup);
 
          // nothing to do if it exists already
-         if (!texPtr.isNull())
+         if (texPtr)
             return;
 
          // create texture
@@ -342,7 +342,7 @@ namespace Meridian59 { namespace Ogre
          TexturePtr texPtr = texMan.getByName(TextureName, TextureGroup);
 
          // if the texture exists, nothing to do
-         if (!texPtr.isNull())
+         if (texPtr)
             return;
 
          unsigned short width, height;
@@ -373,8 +373,8 @@ namespace Meridian59 { namespace Ogre
          pixPtr->unlock();
 
          // cleanup
-         pixPtr.setNull();
-         texPtr.setNull();
+         pixPtr.reset();
+         texPtr.reset();
       };
 
       /// <summary>
@@ -399,7 +399,7 @@ namespace Meridian59 { namespace Ogre
          TexturePtr texPtr = texMan.getByName(TextureName, TextureGroup);
 
          // nothing to do if the texture exists
-         if (!texPtr.isNull())
+         if (texPtr)
             return;
 
          unsigned short width, height;
@@ -430,8 +430,8 @@ namespace Meridian59 { namespace Ogre
          pixPtr->unlock();
 
          // cleanup
-         pixPtr.setNull();
-         texPtr.setNull();
+         pixPtr.reset();
+         texPtr.reset();
       };
 
       /// <summary>
@@ -488,8 +488,8 @@ namespace Meridian59 { namespace Ogre
          Bitmap->UnlockBits(bmpData);
 
          // cleanup
-         pixPtr.setNull();
-         texPtr.setNull();
+         pixPtr.reset();
+         texPtr.reset();
       };
 
       /// <summary>
@@ -499,7 +499,7 @@ namespace Meridian59 { namespace Ogre
       /// <param name="OgreTexture"></param>
       __forceinline static void CreateCEGUITextureFromOgre(CEGUI::OgreRenderer* OgreRenderer, TexturePtr OgreTexture)
       {
-         if (OgreTexture.isNull() || OgreRenderer == nullptr)
+         if (!OgreTexture || OgreRenderer == nullptr)
             return;
 
          // get name of texture
@@ -548,7 +548,7 @@ namespace Meridian59 { namespace Ogre
          MaterialPtr baseMaterial = matMan.getByName(BASEMATERIALROOM, RESOURCEGROUPSHADER);
 
          // something wrong here, base material missing...
-         if (baseMaterial.isNull())
+         if (!baseMaterial)
             return;
 
          // clone base material to different group
@@ -572,8 +572,8 @@ namespace Meridian59 { namespace Ogre
             pass->getTextureUnitState(0)->setScrollAnimation(ScrollSpeed->x, ScrollSpeed->y);
 
          // cleanup
-         baseMaterial.setNull();
-         matPtr.setNull();
+         baseMaterial.reset();
+         matPtr.reset();
       };
 
       /// <summary>
@@ -599,7 +599,7 @@ namespace Meridian59 { namespace Ogre
          MaterialPtr baseMaterial = matMan.getByName(BASEMATERIALLABEL, RESOURCEGROUPSHADER);
 
          // something wrong here, base material missing...
-         if (baseMaterial.isNull())
+         if (!baseMaterial)
             return;
 
          // clone base material to different group
@@ -613,8 +613,8 @@ namespace Meridian59 { namespace Ogre
          matPtr->applyTextureAliases(pairs);
 
          // cleanup
-         baseMaterial.setNull();
-         matPtr.setNull();
+         baseMaterial.reset();
+         matPtr.reset();
       };
 
       /// <summary>
@@ -643,7 +643,7 @@ namespace Meridian59 { namespace Ogre
          MaterialPtr baseMaterial =  matMan.getByName(BaseMaterialName, RESOURCEGROUPSHADER);
 
          // something wrong here, base material missing...
-         if (baseMaterial.isNull())
+         if (!baseMaterial)
             return;
 
          // clone base material to different group
@@ -668,8 +668,8 @@ namespace Meridian59 { namespace Ogre
             params->setNamedConstant(SHADERCOLORMODIFIER, *ColorModifier);
 
          // cleanup
-         baseMaterial.setNull();
-         matPtr.setNull();
+         baseMaterial.reset();
+         matPtr.reset();
       };
 
       /// <summary>
@@ -695,7 +695,7 @@ namespace Meridian59 { namespace Ogre
          // try to get existing base material
          MaterialPtr baseMaterial = matMan.getByName(BASEMATERIALWATER, RESOURCEGROUPSHADER);
 
-         if (baseMaterial.isNull())
+         if (!baseMaterial)
             return;
 
          // clone base material to different group
@@ -725,8 +725,8 @@ namespace Meridian59 { namespace Ogre
             paramsAmbient->setNamedConstant("waveSpeed", 0.3f * -(*ScrollSpeed));
 
          // cleanup
-         baseMaterial.setNull();
-         matPtr.setNull();
+         baseMaterial.reset();
+         matPtr.reset();
       };
 
       /// <summary>
@@ -750,7 +750,7 @@ namespace Meridian59 { namespace Ogre
          // try to get existing base material
          MaterialPtr baseMaterial = matMan.getByName(BASEMATERIALINVISIBLE, RESOURCEGROUPSHADER);
 
-         if (baseMaterial.isNull())
+         if (!baseMaterial)
             return;
 
          // clone base material to different group
@@ -774,8 +774,8 @@ namespace Meridian59 { namespace Ogre
          //paramsAmbient->setNamedConstant(SHADEROPAQUE, Opaque);
 
          // cleanup
-         baseMaterial.setNull();
-         matPtr.setNull();
+         baseMaterial.reset();
+         matPtr.reset();
       };
       #pragma endregion
 

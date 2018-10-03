@@ -127,7 +127,7 @@ namespace Meridian59 { namespace Ogre
       TexturePtr texPtr = texMan.getByName(UI_MINIMAP_TEXNAME, UI_RESGROUP_IMAGESETS);
 
       // must create or recreate texture because window size was changed
-      if (texPtr.isNull() ||
+      if (!texPtr ||
          texPtr->getWidth() != (uint32)size.d_width.d_offset ||
          texPtr->getHeight() != (uint32)size.d_height.d_offset)
       {
@@ -161,7 +161,7 @@ namespace Meridian59 { namespace Ogre
             TU_DYNAMIC_WRITE_ONLY_DISCARDABLE, 0, false, 0);
 
          // make ogre texture available as texture & image in CEGUI
-         if (!texPtr.isNull())
+         if (texPtr)
             Util::CreateCEGUITextureFromOgre(ControllerUI::Renderer, texPtr);
       }
 
@@ -169,7 +169,7 @@ namespace Meridian59 { namespace Ogre
       if (queueOut->TryDequeue(token))
       {
          // only use tokens if matches our texture
-         if (!texPtr.isNull() &&
+         if (texPtr &&
              (uint32)token->width  == texPtr->getWidth() &&
              (uint32)token->height == texPtr->getHeight())
          {

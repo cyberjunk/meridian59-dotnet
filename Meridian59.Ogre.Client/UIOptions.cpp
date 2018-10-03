@@ -230,7 +230,7 @@ namespace Meridian59 { namespace Ogre
             Util::CreateTextureA8R8G8B8(aboutBgf->Frames[0], oStrName, UI_RESGROUP_IMAGESETS, 0);
             TexturePtr texPtr = texMan.getByName(oStrName);
 
-            if (!texPtr.isNull())
+            if (texPtr)
             {
                Util::CreateCEGUITextureFromOgre(ControllerUI::Renderer, texPtr);
                TabAboutTabHistoryImageEvolution->setProperty(UI_PROPNAME_IMAGE, oStrName);
@@ -245,7 +245,7 @@ namespace Meridian59 { namespace Ogre
             Util::CreateTextureA8R8G8B8(aboutBgf->Frames[1], oStrName, UI_RESGROUP_IMAGESETS, 0);
             TexturePtr texPtr = texMan.getByName(oStrName);
 
-            if (!texPtr.isNull())
+            if (texPtr)
             {
                Util::CreateCEGUITextureFromOgre(ControllerUI::Renderer, texPtr);
                TabAboutTabHistoryImageResurrection->setProperty(UI_PROPNAME_IMAGE, oStrName);
@@ -260,7 +260,7 @@ namespace Meridian59 { namespace Ogre
             Util::CreateTextureA8R8G8B8(aboutBgf->Frames[2], oStrName, UI_RESGROUP_IMAGESETS, 0);
             TexturePtr texPtr = texMan.getByName(oStrName);
 
-            if (!texPtr.isNull())
+            if (texPtr)
             {
                Util::CreateCEGUITextureFromOgre(ControllerUI::Renderer, texPtr);
                TabAboutTabHistoryImageDarkAuspices->setProperty(UI_PROPNAME_IMAGE, oStrName);
@@ -275,7 +275,7 @@ namespace Meridian59 { namespace Ogre
             Util::CreateTextureA8R8G8B8(aboutBgf->Frames[3], oStrName, UI_RESGROUP_IMAGESETS, 0);
             TexturePtr texPtr = texMan.getByName(oStrName);
 
-            if (!texPtr.isNull())
+            if (texPtr)
             {
                Util::CreateCEGUITextureFromOgre(ControllerUI::Renderer, texPtr);
                TabAboutTabHistoryImageInsurrection->setProperty(UI_PROPNAME_IMAGE, oStrName);
@@ -290,7 +290,7 @@ namespace Meridian59 { namespace Ogre
             Util::CreateTextureA8R8G8B8(aboutBgf->Frames[4], oStrName, UI_RESGROUP_IMAGESETS, 0);
             TexturePtr texPtr = texMan.getByName(oStrName);
 
-            if (!texPtr.isNull())
+            if (texPtr)
             {
                Util::CreateCEGUITextureFromOgre(ControllerUI::Renderer, texPtr);
                TabAboutTabHistoryImageRenaissance->setProperty(UI_PROPNAME_IMAGE, oStrName);
@@ -305,7 +305,7 @@ namespace Meridian59 { namespace Ogre
             Util::CreateTextureA8R8G8B8(aboutBgf->Frames[5], oStrName, UI_RESGROUP_IMAGESETS, 0);
             TexturePtr texPtr = texMan.getByName(oStrName);
 
-            if (!texPtr.isNull())
+            if (texPtr)
             {
                Util::CreateCEGUITextureFromOgre(ControllerUI::Renderer, texPtr);
                TabAboutTabHistoryImageRevelation->setProperty(UI_PROPNAME_IMAGE, oStrName);
@@ -320,7 +320,7 @@ namespace Meridian59 { namespace Ogre
             Util::CreateTextureA8R8G8B8(aboutBgf->Frames[6], oStrName, UI_RESGROUP_IMAGESETS, 0);
             TexturePtr texPtr = texMan.getByName(oStrName);
 
-            if (!texPtr.isNull())
+            if (texPtr)
             {
                Util::CreateCEGUITextureFromOgre(ControllerUI::Renderer, texPtr);
                TabAboutTabHistoryImageValeOfSorrow->setProperty(UI_PROPNAME_IMAGE, oStrName);
@@ -335,7 +335,7 @@ namespace Meridian59 { namespace Ogre
             Util::CreateTextureA8R8G8B8(aboutBgf->Frames[7], oStrName, UI_RESGROUP_IMAGESETS, 0);
             TexturePtr texPtr = texMan.getByName(oStrName);
 
-            if (!texPtr.isNull())
+            if (texPtr)
             {
                Util::CreateCEGUITextureFromOgre(ControllerUI::Renderer, texPtr);
                TabAboutTabHistoryImageTheInternetQuestBegins->setProperty(UI_PROPNAME_IMAGE, oStrName);
