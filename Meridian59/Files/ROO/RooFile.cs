@@ -68,7 +68,7 @@ namespace Meridian59.Files.ROO
         /// Stores intermediate information about 2D intersections
         /// wich must be evaluated later
         /// </summary>
-        public class IntersectInfo
+        public struct IntersectInfo
         {
             public RooSector  SectorS;
             public RooSector  SectorE;
@@ -79,7 +79,7 @@ namespace Meridian59.Files.ROO
             public Real       FloorHeight;
             public Real       Distance2;
 
-            public IntersectInfo(
+            public void Set(
                 RooSector SectorS,
                 RooSector SectorE,
                 RooSideDef SideS,
@@ -97,6 +97,11 @@ namespace Meridian59.Files.ROO
                 this.Q = Q;
                 this.FloorHeight = FloorHeight;
                 this.Distance2 = Distance2;
+            }
+
+            public void CalcDist2(ref V2 S)
+            {
+               this.Distance2 = (Q - S).LengthSquared;
             }
         }
 
@@ -120,6 +125,7 @@ namespace Meridian59.Files.ROO
         public static byte[] PASSWORDV12 = new byte[] { 0x6F, 0xCA, 0x54, 0xB7, 0xEC, 0x64, 0xB7, 0x00 };
         public static byte[] PASSWORDV10 = new byte[] { 0x15, 0x20, 0x53, 0x01, 0xFC, 0xAA, 0x64, 0x00 };
         public static readonly int[] SectorDepths = new int[] { DEFAULTDEPTH0, DEFAULTDEPTH1, DEFAULTDEPTH2, DEFAULTDEPTH3 };     
+        public const int MAXINTERSECTIONS = 16;
         #endregion
 
         #region Events
@@ -930,7 +936,8 @@ namespace Meridian59.Files.ROO
         protected readonly List<RooSideDef> sideDefs = new List<RooSideDef>();
         protected readonly List<RooSector> sectors = new List<RooSector>();
         protected readonly List<RooThing> things = new List<RooThing>();
-        protected readonly List<IntersectInfo> intersections = new List<IntersectInfo>();
+        protected readonly IntersectInfo[] intersections = new IntersectInfo[MAXINTERSECTIONS];
+        protected int intersectionsCount = 0;
         #endregion
 
         #region Properties
@@ -1597,30 +1604,29 @@ namespace Meridian59.Files.ROO
         /// <summary>
         /// QuickSorts the intersections list based on Distance2
         /// </summary>
-        /// <param name="arr"></param>
         /// <param name="beg"></param>
         /// <param name="end"></param>
-        protected void IntersectionsSort(List<IntersectInfo> arr, int beg, int end)
+        protected void IntersectionsSort(int beg, int end)
         {
             // Recursive QuickSort implementation
             // sorting (potential) intersections by squared distance from start
 
             if (end > beg + 1)
             {
-               IntersectInfo piv = arr[beg];
+               IntersectInfo piv = intersections[beg];
                int l = beg + 1, r = end;
                while (l < r)
                {
-                  if (arr[l].Distance2 < piv.Distance2
-                       || (arr[l].Distance2 == piv.Distance2
-                           && arr[l].FloorHeight < piv.FloorHeight))
+                  if (intersections[l].Distance2 < piv.Distance2
+                       || (intersections[l].Distance2 == piv.Distance2
+                           && intersections[l].FloorHeight < piv.FloorHeight))
                      l++;
                   else
                      IntersectionsSwap(l, --r);
                }
                IntersectionsSwap(--l, beg);
-               IntersectionsSort(arr, beg, l);
-               IntersectionsSort(arr, r, end);
+               IntersectionsSort(beg, l);
+               IntersectionsSort(r, end);
             }
         }
 
@@ -1652,9 +1658,15 @@ namespace Meridian59.Files.ROO
             // get floor height at start
             Real hFloorS = (SectorS != null) ? SectorS.CalculateFloorHeight(Q.X, Q.Y, true) : 0.0f;
 
+            if (intersectionsCount >= MAXINTERSECTIONS)
+            {
+               Logger.Log("RooFile", LogType.Error, "Too many intersections in CanMoveInRoomTree3DInternal");
+               return true;
+            }
+
             // must evaluate heights at transition later
-            intersections.Add(new IntersectInfo(
-               SectorS, SectorE, SideS, SideE, Wall, Q, hFloorS, 0.0f));
+            intersections[intersectionsCount].Set(SectorS, SectorE, SideS, SideE, Wall, Q, hFloorS, 0.0f);
+            intersectionsCount++;
 
             return true;
         }
@@ -1848,25 +1860,25 @@ namespace Meridian59.Files.ROO
         public bool CanMoveInRoom(ref V2 S, ref V2 E, Real Height, Real Speed, out RooWall BlockWall)
         {
            // clear old intersections
-           intersections.Clear();
+           intersectionsCount = 0;
 
            if (!CanMoveInRoomTree(BSPTreeNodes[0], ref S, ref E, out BlockWall))
               return false;
 
            // but still got to validate height transitions list
            // calculate the squared distances
-           foreach (IntersectInfo info in intersections)
-              info.Distance2 = (info.Q - S).LengthSquared;
-
+           for (int i = 0; i < intersectionsCount; i++)
+              intersections[i].CalcDist2(ref S);
+            
            // sort the potential intersections by squared distance from start
-           IntersectionsSort(intersections, 0, intersections.Count);
+           IntersectionsSort(0, intersectionsCount);
 
            // iterate from intersection to intersection, starting and start and ending at end
            // check the transition data for each one, use intersection point q
            Real distanceDone = 0.0f;
            Real heightModified = Height;
            V2 p = S;
-           for (int i = 0; i < intersections.Count; i++)
+           for (int i = 0; i < intersectionsCount; i++)
            {
               IntersectInfo transit = intersections[i];
 
