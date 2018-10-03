@@ -43,7 +43,11 @@ namespace Meridian59.Data.Models
         #region Constants
 
         protected const uint HEALTHSTATUSRESETDELAY = 5000;
-
+#if !VANILLA
+        protected const Real INTERPOLATIONTELEPORTOFFSET = (2.5f * GeometryConstants.KOD_FINENESS);
+#else
+        protected const Real INTERPOLATIONTELEPORTOFFSET = (7.5f * GeometryConstants.KOD_FINENESS);
+#endif
         public const string PROPNAME_COORDINATEY = "CoordinateY";
         public const string PROPNAME_COORDINATEX = "CoordinateX";
         public const string PROPNAME_POSITION3D = "Position3D";
@@ -1219,8 +1223,8 @@ namespace Meridian59.Data.Models
             Real lenMoveReal = moveNew.Length;
 
             // teleport (super high speed so that next tick moves there)
-            // anything for speed 0 or steps bigger 2.5 big rows/cols
-            if (lenMoveReal > (2.5f * 64.0f))
+            // if distance is too big to interpolate
+            if (lenMoveReal > INTERPOLATIONTELEPORTOFFSET)
             {
                 Speed = 0;
                 MoveSpeedFactor = 1.0f;
