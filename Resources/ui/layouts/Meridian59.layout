@@ -3437,26 +3437,26 @@
 						<Property name="Font" value="Berenika-8-Bold" />
 					 </Window>
 			   		  
-                     <!-- Key rotate speed -->
-                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabGeneral.KeyRotateSpeedDescription" >
-                        <Property name="Text" value="Key rotate speed" />
-                        <Property name="Area" value="{{0,30},{0,370},{0,160},{0,390}}" />
-                        <Property name="HorzFormatting" value="LeftAligned" />
-                     </Window>
-                     <Window type="TaharezLook/Slider" name="Options.TabInput.TabGeneral.KeyRotateSpeed" >
-                        <Property name="Area" value="{{0,165},{0,375},{0,360},{0,385}}" />                        
-                     </Window>
- 
                      <!-- RightClickAction -->
                      <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabGeneral.RightClickActionDescription" >
                         <Property name="Text" value="Right Click" />
-                        <Property name="Area" value="{{0,30},{0,395},{0,120},{0,415}}" />
+                        <Property name="Area" value="{{0,30},{0,370},{0,120},{0,395}}" />
                         <Property name="HorzFormatting" value="LeftAligned" />
                      </Window>
                      <Window type="TaharezLook/Combobox" name="Options.TabInput.TabGeneral.RightClickAction" >
-                        <Property name="Area" value="{{0,165},{0,395},{0,260},{0,415}}" />
+                        <Property name="Area" value="{{0,165},{0,375},{0,260},{0,445}}" />
                         <Property name="ClippedByParent" value="False" />
                         <Property name="ReadOnly" value="True" />
+                     </Window>
+
+                     <!-- Key rotate speed -->
+                     <Window type="TaharezLook/LabelWhite" name="Options.TabInput.TabGeneral.KeyRotateSpeedDescription" >
+                        <Property name="Text" value="Key rotate speed" />
+                        <Property name="Area" value="{{0,30},{0,395},{0,160},{0,415}}" />
+                        <Property name="HorzFormatting" value="LeftAligned" />
+                     </Window>
+                     <Window type="TaharezLook/Slider" name="Options.TabInput.TabGeneral.KeyRotateSpeed" >
+                        <Property name="Area" value="{{0,165},{0,402},{0,360},{0,412}}" />
                      </Window>
 
                   </Window>
