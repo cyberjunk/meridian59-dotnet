@@ -45,6 +45,12 @@ namespace Meridian59 { namespace Ogre
 
          else if (RoomObject.Flags->IsMinimapAggroOther)
             Token->gdi->FillEllipse(brushAggroOther, x, y, width, width);
+
+         else if (RoomObject.Flags->IsMinimapNPCCurrentQuest)
+            Token->gdi->FillEllipse(brushFriend, x, y, width, width);
+
+         else if (RoomObject.Flags->IsMinimapNPCHasQuest)
+            Token->gdi->FillEllipse(brushGuildMate, x, y, width, width);
       }
 #endif
    };
@@ -74,6 +80,9 @@ namespace Meridian59 { namespace Ogre
 
       else if (RoomObject.Flags->IsMinimapMercenary)
          Token->gdi->FillEllipse(brushMercenary, x, y, width, width);
+
+      else if (RoomObject.Flags->IsMinimapMobKillQuest)
+         Token->gdi->FillEllipse(brushMobQuest, x, y, width, width);
 
       else if (RoomObject.Flags->IsMinimapMonster)
          Token->gdi->FillEllipse(brushObject, x, y, width, width);

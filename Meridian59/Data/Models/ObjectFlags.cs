@@ -109,6 +109,9 @@ namespace Meridian59.Data.Models
         private const uint MM_AGGRO_SELF    = 0x00004000; // Set if monster has aggro on the player.
         private const uint MM_AGGRO_OTHER   = 0x00008000; // Set if monster has aggro on another player.
         private const uint MM_MERCENARY     = 0x00010000; // Set if monster is our mercenary.
+        private const uint MM_NPCHASQUEST   = 0x00020000; // Set if NPC has a quest for us
+        private const uint MM_NPCCURRENTQUEST = 0x00040000; // Set if NPC is destination of an active quest
+        private const uint MM_MOBKILLQUEST  = 0x00080000; // Set if monster is part of a kill quest
         #endregion
 
         #region Enums
@@ -961,6 +964,51 @@ namespace Meridian59.Data.Models
             {
                 if (value) minimap |= MM_MERCENARY;
                 else minimap &= ~MM_MERCENARY;
+
+                RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
+            }
+        }
+
+        /// <summary>
+        /// Set if NPC is destination for current quest.
+        /// </summary>
+        public bool IsMinimapNPCCurrentQuest
+        {
+            get { return (minimap & MM_NPCCURRENTQUEST) == MM_NPCCURRENTQUEST; }
+            set
+            {
+                if (value) minimap |= MM_NPCCURRENTQUEST;
+                else minimap &= ~MM_NPCCURRENTQUEST;
+
+                RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
+            }
+        }
+
+        /// <summary>
+        /// Set if NPC has at least one quest available for user to start.
+        /// </summary>
+        public bool IsMinimapNPCHasQuest
+        {
+            get { return (minimap & MM_NPCHASQUEST) == MM_NPCHASQUEST; }
+            set
+            {
+                if (value) minimap |= MM_NPCHASQUEST;
+                else minimap &= ~MM_NPCHASQUEST;
+
+                RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
+            }
+        }
+
+        /// <summary>
+        /// Set if monster is target of user's quest.
+        /// </summary>
+        public bool IsMinimapMobKillQuest
+        {
+            get { return (minimap & MM_MOBKILLQUEST) == MM_MOBKILLQUEST; }
+            set
+            {
+                if (value) minimap |= MM_MOBKILLQUEST;
+                else minimap &= ~MM_MOBKILLQUEST;
 
                 RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
             }
