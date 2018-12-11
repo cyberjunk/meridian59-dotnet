@@ -50,6 +50,11 @@ namespace Meridian59 { namespace Ogre
       float                   nameTextureWidth;
       float                   nameTextureHeight;
       float                   lastNameOffset = 0.0f;
+      ::Ogre::Billboard*      billboardQuestMarker;
+      ::Ogre::BillboardSet*   billboardSetQuestMarker;
+      float                   questMarkerTextureWidth;
+      float                   questMarkerTextureHeight;
+      float                   lastQuestMarkerOffset = 0.0f;
       std::list<::irrklang::ISound*>* sounds;
       RoomObject^             roomObject;
 
@@ -59,6 +64,9 @@ namespace Meridian59 { namespace Ogre
       void DestroyLight();
       void CreateName();
       void UpdateName();
+      void CreateQuestMarker();
+      void UpdateQuestMarker();
+      void UpdateQuestMarkerPosition();
       void UpdateNamePosition();
       void UpdateCameraPosition();
       virtual void UpdateMaterial();

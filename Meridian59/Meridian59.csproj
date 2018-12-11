@@ -372,6 +372,7 @@
     <Compile Include="Drawing2D\MiniMap.cs" />
     <Compile Include="Drawing2D\NameColors.cs" />
     <Compile Include="Drawing2D\PalettesGDI.cs" />
+    <Compile Include="Drawing2D\QuestMarkerColors.cs" />
     <Compile Include="Files\BGF\BgfBitmap.cs" />
     <Compile Include="Files\BGF\BgfBitmapHotspot.cs" />
     <Compile Include="Files\BGF\BgfFile.cs" />

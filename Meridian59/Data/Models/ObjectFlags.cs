@@ -66,6 +66,9 @@ namespace Meridian59.Data.Models
         private const uint OF_FLICKERING        = 0x00020000;    // For players or objects if holding a flickering light.
         private const uint OF_FLASHING          = 0x00040000;    // For players or objects if flashing with light.
         private const uint OF_PHASING           = 0x00080000;    // For players or objects if phasing translucent/solid.
+        private const uint OF_NPCHASQUESTS      = 0x00100000;
+        private const uint OF_NPCACTIVEQUEST    = 0x00200000;
+        private const uint OF_MOBKILLQUEST      = 0x00400000;
 
         // DEDICATED BYTE - ENUM (Player Type)
         private const uint OT_NONE              = 0x00000000;    // Default for most objects.
@@ -710,6 +713,51 @@ namespace Meridian59.Data.Models
             {
                 if (value) flags |= OF_PHASING;
                 else flags &= ~OF_PHASING;
+
+                RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
+            }
+        }
+
+        /// <summary>
+        /// True if the object is an NPC with available quests.
+        /// </summary>
+        public bool IsNPCHasQuests
+        {
+            get { return (flags & OF_NPCHASQUESTS) == OF_NPCHASQUESTS; }
+            set
+            {
+                if (value) flags |= OF_NPCHASQUESTS;
+                else flags &= ~OF_NPCHASQUESTS;
+
+                RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
+            }
+        }
+
+        /// <summary>
+        /// True if the object is an NPC that is the destination of an active quest.
+        /// </summary>
+        public bool IsNPCActiveQuest
+        {
+            get { return (flags & OF_NPCACTIVEQUEST) == OF_NPCACTIVEQUEST; }
+            set
+            {
+                if (value) flags |= OF_NPCACTIVEQUEST;
+                else flags &= ~OF_NPCACTIVEQUEST;
+
+                RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
+            }
+        }
+
+        /// <summary>
+        /// True if the object is a monster that is the target of a kill quest.
+        /// </summary>
+        public bool IsMobKillQuest
+        {
+            get { return (flags & OF_MOBKILLQUEST) == OF_MOBKILLQUEST; }
+            set
+            {
+                if (value) flags |= OF_MOBKILLQUEST;
+                else flags &= ~OF_MOBKILLQUEST;
 
                 RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
             }

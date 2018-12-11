@@ -57,6 +57,7 @@ namespace Meridian59 { namespace Ogre
 
       // update name position, this needs created image!
       UpdateNamePosition();
+      UpdateQuestMarkerPosition();
    };
 
    RemoteNode2D::~RemoteNode2D()
@@ -124,8 +125,9 @@ namespace Meridian59 { namespace Ogre
       // set bbox
       billboardSet->setBounds(bbBox, 0.0f);
 
-      // update possible attached name label
+      // update possible attached name label and quest marker
       UpdateNamePosition();
+      UpdateQuestMarkerPosition();
 
       // update camera position (might be different now)
       UpdateCameraPosition();

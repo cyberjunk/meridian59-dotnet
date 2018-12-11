@@ -20,6 +20,7 @@
 
 #define BASEMATERIAL             "base_material"
 #define BASEMATERIALLABEL        "base_material_label"
+#define BASEMATERIALQUESTMARKER  "base_material_questmarker"
 #define BASEMATERIALROOM         "base_material_room"
 #define BASEMATERIALBLACK        "base_material_black"
 #define BASEMATERIALTARGET       "base_material_target"
@@ -73,6 +74,9 @@
 #define PREFIX_NAMETEXT_MATERIAL       "NT/M/"
 #define PREFIX_NAMETEXT_TEXTURE        "NT/T/"
 #define PREFIX_NAMETEXT_BILLBOARD      "NT/BS/"
+#define PREFIX_QUESTMARKER_MATERIAL    "QM/M/"
+#define PREFIX_QUESTMARKER_TEXTURE     "QM/T/"
+#define PREFIX_QUESTMARKER_BILLBOARD   "QM/BS/"
 #define PREFIX_PROJECTILE2D_TEXTURE    "P2D/T/"
 #define PREFIX_PROJECTILE2D_MATERIAL   "P2D/M/"
 #define PREFIX_PROJECTILE2D_SCENENODE  "P2D/SN/"

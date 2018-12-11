@@ -59,8 +59,9 @@ namespace Meridian59 { namespace Ogre
       RoomObject->PropertyChanged +=
          gcnew PropertyChangedEventHandler(this, &RemoteNode::OnRoomObjectPropertyChanged);
 
-      // possibly create a name
+      // possibly create a name and quest marker
       UpdateName();
+      UpdateQuestMarker();
    };
 
    RemoteNode::~RemoteNode()
@@ -96,6 +97,14 @@ namespace Meridian59 { namespace Ogre
          SceneManager->destroyBillboardSet(billboardSetName);
       }
 
+      // cleanup attached quest marker
+      if (billboardSetQuestMarker)
+      {
+         billboardSetQuestMarker->clear();
+         billboardSetQuestMarker->detachFromParent();
+         SceneManager->destroyBillboardSet(billboardSetQuestMarker);
+      }
+
       // cleanup scenenode
       if (SceneManager->hasSceneNode(ostr_nodeid))
          SceneManager->destroySceneNode(ostr_nodeid);
@@ -118,6 +127,8 @@ namespace Meridian59 { namespace Ogre
       sounds            = nullptr;
       billboardSetName  = nullptr;
       billboardName     = nullptr;
+      billboardSetQuestMarker = nullptr;
+      billboardQuestMarker = nullptr;
       sceneManager      = nullptr;
    };
 
@@ -147,11 +158,14 @@ namespace Meridian59 { namespace Ogre
       else if (CLRString::Equals(e->PropertyName, Data::Models::RoomObject::PROPNAME_NAME))
       {
          UpdateName();
+         // might have to move quest marker
+         UpdateQuestMarker();
       }
 
       else if (CLRString::Equals(e->PropertyName, Data::Models::RoomObject::PROPNAME_FLAGS))
       {
          UpdateName();
+         UpdateQuestMarker();
          UpdateMaterial();
       }
 
@@ -298,6 +312,97 @@ namespace Meridian59 { namespace Ogre
       }
    };
 
+   void RemoteNode::CreateQuestMarker()
+   {
+      ::Ogre::String& ostr_billboard = PREFIX_QUESTMARKER_BILLBOARD + ::Ogre::StringConverter::toString(roomObject->ID);
+
+      // create BillboardSet for quest marker
+      billboardSetQuestMarker = sceneManager->createBillboardSet(ostr_billboard, 1);
+      billboardSetQuestMarker->setBillboardOrigin(BillboardOrigin::BBO_BOTTOM_CENTER);
+      billboardSetQuestMarker->setBillboardType(BillboardType::BBT_POINT);
+      billboardSetQuestMarker->setUseAccurateFacing(false);
+      billboardSetQuestMarker->setAutoextend(false);
+
+      // no boundingbox for billboardset (we don't wanna catch rays with quest marker)
+      billboardSetQuestMarker->setBounds(AxisAlignedBox::BOX_NULL, 0.0f);
+
+      // create Billboard
+      billboardQuestMarker = billboardSetQuestMarker->createBillboard(::Ogre::Vector3::ZERO);
+      billboardQuestMarker->setColour(ColourValue::ZERO);
+
+      // attach quest marker billboardset to object
+      SceneNode->attachObject(billboardSetQuestMarker);
+   };
+
+   void RemoteNode::UpdateQuestMarker()
+   {
+      bool showQuestMarker = (RoomObject->Flags->IsNPCActiveQuest || RoomObject->Flags->IsNPCHasQuests || RoomObject->Flags->IsMobKillQuest);
+
+      if (showQuestMarker &&
+         !(RoomObject->Flags->Drawing == ObjectFlags::DrawingType::Invisible) &&
+         !(RoomObject->IsAvatar && ControllerInput::IsCameraFirstPerson))
+      {
+         // create or reactivate quest marker text
+         if (billboardSetQuestMarker == nullptr)
+            CreateQuestMarker();
+
+         else
+            billboardSetQuestMarker->setVisible(true);
+
+         // start update
+         CLRString^ strTex = PREFIX_QUESTMARKER_TEXTURE +
+            QuestMarkerColors::GetColorFor(RoomObject->Flags).ToString();
+
+         CLRString^ strMat = PREFIX_QUESTMARKER_MATERIAL +
+            QuestMarkerColors::GetColorFor(RoomObject->Flags).ToString();
+
+         ::Ogre::String& texName = StringConvert::CLRToOgre(strTex);
+         ::Ogre::String& matName = StringConvert::CLRToOgre(strMat);
+
+         // create Texture and material
+         TextureManager& texMan = TextureManager::getSingleton();
+
+         if (!texMan.resourceExists(texName))
+         {
+            // create bitmap to draw on
+            System::Drawing::Bitmap^ bitmap =
+               Meridian59::Drawing2D::ImageComposerGDI<Data::Models::ObjectBase^>::QuestMarkerBitmap::Get(RoomObject);
+
+            // create texture from bitmap
+            Util::CreateTexture(bitmap, texName, TEXTUREGROUP_MOVABLETEXT);
+
+            // cleanup
+            delete bitmap;
+         }
+
+         Util::CreateMaterialQuestMarker(matName, texName, MATERIALGROUP_MOVABLETEXT);
+
+         // set material
+         billboardSetQuestMarker->setMaterialName(matName);
+
+         // get size from texture
+         TexturePtr texPtr = Ogre::static_pointer_cast<Ogre::Texture>(
+            texMan.createOrRetrieve(texName, TEXTUREGROUP_MOVABLETEXT).first);
+
+         questMarkerTextureWidth = (float)texPtr->getWidth();
+         questMarkerTextureHeight = (float)texPtr->getHeight();
+
+         billboardSetQuestMarker->setDefaultDimensions(questMarkerTextureWidth, questMarkerTextureHeight);
+         billboardSetQuestMarker->setBounds(AxisAlignedBox::BOX_NULL, 0.0f);
+
+         // update quest marker position
+         UpdateQuestMarkerPosition();
+
+         texPtr.reset();
+      }
+
+      else if (billboardSetQuestMarker != nullptr)
+      {
+         // hide it
+         billboardSetQuestMarker->setVisible(false);
+      }
+   };
+
    void RemoteNode::UpdateCameraPosition()
    {
       ::Ogre::SceneNode* cameraNode = OgreClient::Singleton->CameraNode;
@@ -318,6 +423,45 @@ namespace Meridian59 { namespace Ogre
       // ignore small differences, otherwise adjust camera to top of image
       if (abs(diff) > 16.0f)
          cameraNode->setPosition(0.0f, height, 0.0f);
+   };
+
+   void RemoteNode::UpdateQuestMarkerPosition()
+   {
+      if (sceneNode == nullptr || billboardSetQuestMarker == nullptr || billboardQuestMarker == nullptr)
+         return;
+      if (!(RoomObject->Flags->IsNPCActiveQuest || RoomObject->Flags->IsNPCHasQuests || RoomObject->Flags->IsMobKillQuest))
+         return;
+
+      CLRString^ strMat = PREFIX_QUESTMARKER_MATERIAL + 
+         QuestMarkerColors::GetColorFor(RoomObject->Flags).ToString();
+
+      ::Ogre::String& matName = StringConvert::CLRToOgre(strMat);
+
+      // create Texture and material
+      MaterialManager& matMan = MaterialManager::getSingleton();
+      MaterialPtr matPtr = matMan.getByName(matName);
+
+      if (!matPtr)
+         return;
+
+      Pass* pass = matPtr->getTechnique(0)->getPass(0);
+
+      // get fragment shader parameters from ambient pass
+      const GpuProgramParametersSharedPtr paramsPass =
+         pass->getVertexProgramParameters();
+
+      // determine height to place label
+      float h = Util::GetSceneNodeHeight(sceneNode) + 3.0f;
+
+      // get change
+      float diff = h - lastQuestMarkerOffset;
+
+      // ignore small changes (due to animations)
+      if (abs(diff) > 16.0f)
+      {
+         paramsPass->setNamedConstant("offset", h);
+         lastQuestMarkerOffset = h;
+      }
    };
 
    void RemoteNode::UpdateNamePosition()
@@ -406,8 +550,9 @@ namespace Meridian59 { namespace Ogre
          if (light != nullptr)
             light->setVisible(true);
 
-         // update name
+         // update name and quest marker
          UpdateName();
+         UpdateQuestMarker();
       }
    }
 
