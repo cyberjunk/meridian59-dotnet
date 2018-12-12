@@ -1727,9 +1727,15 @@ namespace Meridian59.Files.ROO
                      RooWall wall = line.Wall;
                      while (wall != null)
                      {
-                        // infinite intersection point must also be in bbox of wall
+                        // OLD: infinite intersection point must also be in bbox of wall
                         // otherwise no intersect
-                        if (!wall.IsInsideBoundingBox(ref q, 0.1f))
+                        //if (!wall.IsInsideBoundingBox(ref q, 0.1f))
+                        // NEW: Check if the line of the wall intersects a circle consisting
+                        // of player x, y and radius of min distance allowed to walls. Intersection
+                        // includes the wall being totally inside the circle.
+                        V2 p1 = wall.P1;
+                        V2 p2 = wall.P2;
+                        if (!MathUtil.IntersectOrInsideLineCircle(ref p1, ref p2, ref q, GeometryConstants.WALLMINDISTANCE))
                         {
                            wall = wall.NextWallInPlane;
                            continue;
@@ -1917,6 +1923,13 @@ namespace Meridian59.Files.ROO
 
                  // apply fallheight
                  heightModified += stepFall;
+              }
+
+              // too far below sector
+              else if (heightModified < (hFloorSP - GeometryConstants.MAXSTEPHEIGHT))
+              {
+                 BlockWall = transit.Wall;
+                 return false;
               }
 
               // make sure we're at least at startsector's groundheight at Q when we reach Q from P

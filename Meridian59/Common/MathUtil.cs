@@ -646,6 +646,40 @@ namespace Meridian59.Common
         }
 
         /// <summary>
+        /// Checks for intersection of finite line segment and a circle.
+        /// Returns true if there is an intersection, or if line is fully inside circle.
+        /// </summary>
+        /// <remarks>
+        /// http://stackoverflow.com/questions/1073336/circle-line-collision-detection
+        /// </remarks>
+        /// <param name="LineStart"></param>
+        /// <param name="LineEnd"></param>
+        /// <param name="CircleCenter"></param>
+        /// <param name="Radius"></param>
+        /// <returns>True if interesction, false if none.</returns>
+        public static bool IntersectOrInsideLineCircle(ref V2 LineStart, ref V2 LineEnd, ref V2 CircleCenter, Real Radius)
+        {
+            V2 d = LineEnd - LineStart;
+            V2 f = LineStart - CircleCenter;
+
+            Real a = d * d;
+            Real b = 2 * (f * d);
+            Real c = (f * f) - (Radius * Radius);
+            Real discriminant = b * b - 4 * a * c;
+
+            if (discriminant <= 0 || a == 0)
+                return false;
+
+            discriminant = (Real)Math.Sqrt(discriminant);
+            Real t1 = (-b - discriminant) / (2 * a);
+            Real t2 = (-b + discriminant) / (2 * a);
+
+            return ((t1 >= 0 && t1 <= 1)
+                || (t2 >= 0 && t2 <= 1)
+                || (t1 <= 0 && t2 >= 1));
+        }
+
+        /// <summary>
         /// Converts radian angle to V2 direction
         /// </summary>
         /// <param name="Angle">Direction in angle 0-2pi</param>
