@@ -1044,8 +1044,8 @@
       <!-- Target -->
       <Window type="TaharezLook/StaticImage" name="Target" >
          <Property name="AutoRenderingSurface" value="True" />
-         <Property name="MinSize" value="{{0,250},{0,90}}" />
-         <Property name="MaxSize" value="{{0,250},{0,90}}" />
+         <Property name="MinSize" value="{{0,275},{0,90}}" />
+         <Property name="MaxSize" value="{{0,275},{0,90}}" />
          <Property name="FrameEnabled" value="False" />
          <Property name="BackgroundEnabled" value="False" />
          <Property name="Image" value="TaharezLook/TargetBackground" />
@@ -1068,7 +1068,7 @@
             
          <!-- Buttons -->
          <Window type="HorizontalLayoutContainer" name="Target.Layout" >
-            <Property name="Area" value="{{0,97},{0,59},{0,241},{0,83}}" />
+            <Property name="Area" value="{{0,97},{0,59},{0,265},{0,83}}" />
             
             <!-- Inspect -->
             <Window type="TaharezLook/ImageButton" name="Target.Inspect" >
@@ -1133,6 +1133,17 @@
                <Property name="PushedImage" value="TaharezLook/ActionLoot" />
                <Property name="DisabledImage" value="TaharezLook/ActionLootDisabled" />
                <Property name="TooltipText" value="Loot" />
+               <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
+            </Window>
+            
+            <!-- Quest -->
+            <Window type="TaharezLook/ImageButton" name="Target.Quest" >
+               <Property name="Size" value="{{0,24},{0,24}}" />
+               <Property name="NormalImage" value="TaharezLook/ActionQuest" />
+               <Property name="HoverImage" value="TaharezLook/ActionQuest" />
+               <Property name="PushedImage" value="TaharezLook/ActionQuest" />
+               <Property name="DisabledImage" value="TaharezLook/ActionQuestDisabled" />
+               <Property name="TooltipText" value="Quest" />
                <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
             </Window>
          </Window>

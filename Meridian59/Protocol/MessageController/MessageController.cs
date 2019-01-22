@@ -515,6 +515,10 @@ namespace Meridian59.Protocol
                         TypedMessage = new ActionMessage(e.MessageBuffer);
                         break;
 
+                    case MessageTypeGameMode.ReqNPCQuests:                                    // PI: 99
+                        TypedMessage = new ReqNPCQuestsMessage(e.MessageBuffer);
+                        break;
+
                     case MessageTypeGameMode.ReqMove:                                         // PI: 100
                         TypedMessage = new ReqMoveMessage(e.MessageBuffer, 0, e.IsTCP);
                         break;

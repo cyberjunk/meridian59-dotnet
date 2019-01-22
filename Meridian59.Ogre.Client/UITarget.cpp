@@ -18,6 +18,7 @@ namespace Meridian59 { namespace Ogre
       Buy      = static_cast<CEGUI::PushButton*>(Layout->getChild(UI_NAME_TARGET_BUY));
       Trade    = static_cast<CEGUI::PushButton*>(Layout->getChild(UI_NAME_TARGET_TRADE));
       Loot     = static_cast<CEGUI::PushButton*>(Layout->getChild(UI_NAME_TARGET_LOOT));
+      Quest    = static_cast<CEGUI::PushButton*>(Layout->getChild(UI_NAME_TARGET_QUEST));
 
       // set window layout from config
       Window->setPosition(OgreClient::Singleton->Config->UILayoutTarget->getPosition());
@@ -46,6 +47,7 @@ namespace Meridian59 { namespace Ogre
       Buy->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Target::OnBuyMouseClick));
       Trade->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Target::OnTradeMouseClick));
       Loot->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Target::OnLootMouseClick));
+      Quest->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Target::OnQuestMouseClick));
 
       // subscribe mouse events
       Window->subscribeEvent(CEGUI::Window::EventMouseButtonDown, CEGUI::Event::Subscriber(UICallbacks::Target::OnMouseDown));
@@ -131,6 +133,17 @@ namespace Meridian59 { namespace Ogre
       {
          Loot->setEnabled(false);
          Loot->setMouseCursor(UI_DEFAULTARROW);
+      }
+
+      if (targetObject->Flags->IsNPCActiveQuest || targetObject->Flags->IsNPCHasQuests)
+      {
+         Quest->setEnabled(true);
+         Quest->setMouseCursor(UI_MOUSECURSOR_HAND);
+      }
+      else
+      {
+         Quest->setEnabled(false);
+         Quest->setMouseCursor(UI_DEFAULTARROW);
       }
    };
 
@@ -295,6 +308,16 @@ namespace Meridian59 { namespace Ogre
 
       // request to buy from current target
       OgreClient::Singleton->SendReqGetMessage();
+
+      return true;
+   };
+
+   bool UICallbacks::Target::OnQuestMouseClick(const CEGUI::EventArgs& e)
+   {
+      const CEGUI::MouseEventArgs& args = static_cast<const CEGUI::MouseEventArgs&>(e);
+
+      // request quests from current target
+      OgreClient::Singleton->SendReqNPCQuestsMessage();
 
       return true;
    };

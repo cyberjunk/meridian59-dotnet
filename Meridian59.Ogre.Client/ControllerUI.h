@@ -507,6 +507,7 @@ namespace Meridian59 { namespace Ogre
          static ::CEGUI::PushButton* Buy = nullptr;
          static ::CEGUI::PushButton* Trade = nullptr;
          static ::CEGUI::PushButton* Loot = nullptr;
+         static ::CEGUI::PushButton* Quest = nullptr;
 
          static void Initialize();
          static void Destroy();
@@ -1700,6 +1701,7 @@ namespace Meridian59 { namespace Ogre
          static bool OnBuyMouseClick(const CEGUI::EventArgs& e);
          static bool OnTradeMouseClick(const CEGUI::EventArgs& e);
          static bool OnLootMouseClick(const CEGUI::EventArgs& e);
+         static bool OnQuestMouseClick(const CEGUI::EventArgs& e);
          static bool OnKeyUp(const CEGUI::EventArgs& e);
       };
 

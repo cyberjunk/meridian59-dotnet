@@ -386,6 +386,7 @@
 #define UI_NAME_TARGET_BUY                "Target.Buy"
 #define UI_NAME_TARGET_TRADE              "Target.Trade"
 #define UI_NAME_TARGET_LOOT               "Target.Loot"
+#define UI_NAME_TARGET_QUEST              "Target.Quest"
 #define UI_NAME_SPLASHNOTIFIER_WINDOW     "SplashNotifier"
 #define UI_NAME_MINIMAP_WINDOW            "MiniMap"
 #define UI_NAME_MINIMAP_DRAWSURFACE       "MiniMap.DrawSurface"

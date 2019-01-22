@@ -396,6 +396,7 @@
     <Compile Include="Protocol\GameMessages\GameMode\MovementSpeedPercentMessage.cs" />
     <Compile Include="Protocol\GameMessages\GameMode\LookSkillMessage.cs" />
     <Compile Include="Protocol\GameMessages\GameMode\LookSpellMessage.cs" />
+    <Compile Include="Protocol\GameMessages\GameMode\ReqNPCQuestsMessage.cs" />
     <Compile Include="Protocol\GameMessages\GameMode\RoomContentsFlagsMessage.cs" />
     <Compile Include="Protocol\GameMessages\GameMode\SectorChangeMessage.cs" />
     <Compile Include="Protocol\GameMessages\GameMode\StopWaveMessage.cs" />
