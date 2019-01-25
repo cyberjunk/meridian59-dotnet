@@ -11,21 +11,32 @@ namespace Meridian59 { namespace Ogre
       Yes       = static_cast<CEGUI::PushButton*>(SubWindow->getChild(UI_NAME_CONFIRMPOPUP_YES));
       No        = static_cast<CEGUI::PushButton*>(SubWindow->getChild(UI_NAME_CONFIRMPOPUP_NO));
       OK        = static_cast<CEGUI::PushButton*>(SubWindow->getChild(UI_NAME_CONFIRMPOPUP_OK));
+      LargeSubWindow = static_cast<CEGUI::FrameWindow*>(Window->getChild(UI_NAME_CONFIRMPOPUP_LARGESUBWINDOW));
+      LargeText = static_cast<CEGUI::Window*>(LargeSubWindow->getChild(UI_NAME_CONFIRMPOPUP_LARGETEXT));
+      LargeYes = static_cast<CEGUI::PushButton*>(LargeSubWindow->getChild(UI_NAME_CONFIRMPOPUP_LARGEYES));
+      LargeNo = static_cast<CEGUI::PushButton*>(LargeSubWindow->getChild(UI_NAME_CONFIRMPOPUP_LARGENO));
+      LargeOK = static_cast<CEGUI::PushButton*>(LargeSubWindow->getChild(UI_NAME_CONFIRMPOPUP_LARGEOK));
 
       // subscribe key event
       Yes->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::ConfirmPopup::OnYesClicked));
+      LargeYes->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::ConfirmPopup::OnYesClicked));
 
       // subscribe No button
       No->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::ConfirmPopup::OnNoClicked));
+      LargeNo->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::ConfirmPopup::OnNoClicked));
 
       // subscribe OK button (uses Yes/Confirmed button handler)
       OK->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::ConfirmPopup::OnYesClicked));
+      LargeOK->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::ConfirmPopup::OnYesClicked));
 
       // subscribe key up to trigger yes/no based on focused window
       Window->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::ConfirmPopup::OnKeyUp));
       Yes->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::ConfirmPopup::OnKeyUp));
+      LargeYes->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::ConfirmPopup::OnKeyUp));
       No->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::ConfirmPopup::OnKeyUp));
+      LargeNo->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::ConfirmPopup::OnKeyUp));
       OK->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::ConfirmPopup::OnKeyUp));
+      LargeOK->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::ConfirmPopup::OnKeyUp));
 
       // subscribe close button
       Window->subscribeEvent(CEGUI::FrameWindow::EventCloseClicked, CEGUI::Event::Subscriber(UICallbacks::OnWindowClosed));
@@ -43,6 +54,10 @@ namespace Meridian59 { namespace Ogre
    {
       Mode = ConfirmPopup::DialogMode::YesNo;
 
+      // hide large UI elements, show small elements
+      LargeSubWindow->hide();
+      SubWindow->show();
+
       // set text
       Text->setText(text);
 
@@ -53,6 +68,7 @@ namespace Meridian59 { namespace Ogre
       Yes->setVisible(true);
       No->setVisible(true);
       OK->setVisible(false);
+
 
       // show popup
       Window->show();
@@ -65,6 +81,10 @@ namespace Meridian59 { namespace Ogre
    void ControllerUI::ConfirmPopup::ShowOK(const ::CEGUI::String& text, uint id)
    {
       Mode = ConfirmPopup::DialogMode::Confirm;
+
+      // hide large UI elements, show small elements
+      LargeSubWindow->hide();
+      SubWindow->show();
 
       // set text
       Text->setText(text);
@@ -83,6 +103,61 @@ namespace Meridian59 { namespace Ogre
 
       // set button active
       OK->activate();
+   };
+
+   void ControllerUI::ConfirmPopup::ShowChoiceLarge(const ::CEGUI::String& text, uint id)
+   {
+      Mode = ConfirmPopup::DialogMode::YesNo;
+
+      // hide small UI elements, show large elements
+      SubWindow->hide();
+      LargeSubWindow->show();
+
+      // set text
+      Text->setText(text);
+
+      // set ID
+      ID = id;
+
+      // set buttons
+      LargeYes->setVisible(true);
+      LargeNo->setVisible(true);
+      LargeOK->setVisible(false);
+
+
+      // show popup
+      Window->show();
+      Window->moveToFront();
+
+      // set no active by default
+      LargeNo->activate();
+   };
+
+   void ControllerUI::ConfirmPopup::ShowOKLarge(const ::CEGUI::String& text, uint id)
+   {
+      Mode = ConfirmPopup::DialogMode::Confirm;
+
+      // hide small UI elements, show large elements
+      SubWindow->hide();
+      LargeSubWindow->show();
+
+      // set text
+      LargeText->setText(text);
+
+      // set ID
+      ID = id;
+
+      // set buttons
+      LargeOK->setVisible(true);
+      LargeYes->setVisible(false);
+      LargeNo->setVisible(false);
+
+      // show popup
+      Window->show();
+      Window->moveToFront();
+
+      // set button active
+      LargeOK->activate();
    };
 
    void ControllerUI::ConfirmPopup::_RaiseConfirm()

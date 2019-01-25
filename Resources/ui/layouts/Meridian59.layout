@@ -1041,6 +1041,91 @@
          </Window>
       </Window>
       
+      <!-- QuestUI -->
+      <Window type="TaharezLook/FrameWindow" name="QuestUI" >
+         <Property name="Text" value="Quests" />
+         <Property name="Area" value="{{0,0},{0,24},{1,0},{1,0}}" />
+         <Property name="Size" value="{{0,600},{0,468}}" />
+         <Property name="MinSize" value="{{0,600},{0,468}}" />
+         <Property name="MaxSize" value="{{1,0},{1,0}}" />
+         <Property name="SizingEnabled" value="FALSE" />
+         <Property name="Position" value="{{0.5,-300},{0.5,-234}}" />
+         
+         <!-- Name -->
+         <Window type="TaharezLook/Label" name="QuestUI.Name" >
+            <Property name="Area" value="{{0,240},{0,10},{1,-5},{0,60}}" />
+            <Property name="Font" value="Berenika-12-Bold" />
+            <Property name="NormalTextColour" value="FFFFFFFF" />
+            <Property name="HorzFormatting" value="WordWrapCentreAligned" />
+         </Window>
+         
+         <!-- Image -->
+         <Window type="TaharezLook/StaticImage" name="QuestUI.Image" >
+            <Property name="Area" value="{{0,5},{1,-240},{0,220},{1,-10}}" />
+            <Property name="FrameEnabled" value="False" />
+            <Property name="BackgroundEnabled" value="False" />
+         </Window>
+         
+         <!-- QuestList -->
+         <Window type="TaharezLook/ItemListbox" name="QuestUI.QuestList" >
+            <Property name="Area" value="{{0,5},{0,10},{0,220},{0,180}}" />
+         </Window>
+         
+         <!-- DescriptionLabel -->
+         <Window type="TaharezLook/Label" name="QuestUI.DescriptionLabel" >
+            <Property name="Text" value="Description:" />
+            <Property name="Area" value="{{0,240},{0,70},{1,-5},{0,84}}" />
+            <Property name="Font" value="Berenika-8-Bold" />
+            <Property name="HorzFormatting" value="WordWrapLeftAligned" />
+         </Window>
+         
+         <!-- Description -->
+         <Window type="TaharezLook/StaticTextSmallFrame" name="QuestUI.Description" >
+            <Property name="Text" value="" />
+            <Property name="VertScrollbar" value="True" />
+            <Property name="VertFormatting" value="TopAligned" />
+            <Property name="HorzFormatting" value="WordWrapLeftAligned" />
+            <Property name="Area" value="{{0,240},{0,90},{1,-5},{0,240}}" />
+            <Property name="BackgroundColours" value="tl:FF000000 tr:FF000000 bl:FF000000 br:FF000000" />
+         </Window>
+         
+         <!-- RequirementsLabel -->
+         <Window type="TaharezLook/Label" name="QuestUI.RequirementsLabel" >
+            <Property name="Text" value="Requirements:" />
+            <Property name="Area" value="{{0,240},{0,250},{1,-5},{0,264}}" />
+            <Property name="Font" value="Berenika-8-Bold" />
+            <Property name="HorzFormatting" value="WordWrapLeftAligned" />
+         </Window>
+         
+         <!-- Requirements -->
+         <Window type="TaharezLook/StaticTextSmallFrame" name="QuestUI.Requirements" >
+            <Property name="Text" value="" />
+            <Property name="VertScrollbar" value="True" />
+            <Property name="VertFormatting" value="TopAligned" />
+            <Property name="HorzFormatting" value="WordWrapLeftAligned" />
+            <Property name="Area" value="{{0,240},{0,270},{1,-5},{0,400}}" />
+            <Property name="BackgroundColours" value="tl:FF000000 tr:FF000000 bl:FF000000 br:FF000000" />
+         </Window> 
+         
+         <!-- Accept button -->
+         <Window type="TaharezLook/Button" name="QuestUI.Accept" >
+            <Property name="Text" value="Accept" />
+            <Property name="Area" value="{{1,-300},{1,-25},{1,-209},{1,-10}}" />
+         </Window>
+         
+         <!-- Help button -->
+         <Window type="TaharezLook/Button" name="QuestUI.Help" >
+            <Property name="Text" value="?" />
+            <Property name="Area" value="{{1,-182},{1,-25},{1,-164},{1,-10}}" />
+         </Window>
+         
+         <!-- Close button -->
+         <Window type="TaharezLook/Button" name="QuestUI.Close" >
+            <Property name="Text" value="Close" />
+            <Property name="Area" value="{{1,-137},{1,-25},{1,-46},{1,-10}}" />
+         </Window>
+      </Window>
+      
       <!-- Target -->
       <Window type="TaharezLook/StaticImage" name="Target" >
          <Property name="AutoRenderingSurface" value="True" />
@@ -2801,6 +2886,55 @@
             <!-- No -->
             <Window type="TaharezLook/Button" name="ConfirmPopup.No" >
                <Property name="Area" value="{{0.75,-60},{0,105},{0.75,40},{0,130}}" />
+               <Property name="Font" value="" />
+               <Property name="Text" value="No" />
+               <Property name="Visible" value="false" />
+               <Property name="MouseCursorImage" value="TaharezLook/MouseArrow" />
+            </Window>
+         </Window>
+         
+         <!-- LargeWindow -->
+         <Window type="TaharezLook/FrameWindowOrnamental" name="ConfirmPopup.LargeWindow" >
+            <Property name="Area" value="{{0.5,-200},{0.5,-250},{0.5,200},{0.5,250}}" />
+            <Property name="Text" value="Confirm" />
+            <Property name="AlwaysOnTop" value="true" />
+            <Property name="RollUpEnabled" value="false" />
+            <Property name="SizingEnabled" value="false" />
+            <Property name="DragMovingEnabled" value="false" />
+            <Property name="TitlebarEnabled" value="False" />
+            <Property name="CloseButtonEnabled" value="false" />
+            
+            <!-- LargeText -->
+            <Window type="TaharezLook/StaticText" name="ConfirmPopup.LargeText" >
+               <Property name="Area" value="{{0.5,-180},{0,5},{0.5,180},{1,-75}}" />
+               <Property name="Text" value="Are you absolutely sure?" />
+               <Property name="HorzFormatting" value="WordWrapCentreAligned" />
+               <Property name="FrameEnabled" value="false" />
+               <Property name="BackgroundEnabled" value="false" />
+            </Window>
+            
+            <!-- LargeYes -->
+            <Window type="TaharezLook/Button" name="ConfirmPopup.LargeYes" >
+               <Property name="Area" value="{{0.25,-40},{1,-50},{0.25,60},{1,-25}}" />
+               <Property name="Font" value="" />
+               <Property name="Text" value="Yes" />
+               <Property name="MaxSize" value="{{1,0},{1,0}}" />
+               <Property name="Visible" value="false" />
+               <Property name="MouseCursorImage" value="TaharezLook/MouseArrow" />
+            </Window>
+            
+            <!-- LargeOK -->
+            <Window type="TaharezLook/Button" name="ConfirmPopup.LargeOK" >
+               <Property name="Area" value="{{0.5,-50},{1,-50},{0.5,50},{1,-25}}" />
+               <Property name="Font" value="" />
+               <Property name="Text" value="OK" />
+               <Property name="Visible" value="false" />
+               <Property name="MouseCursorImage" value="TaharezLook/MouseArrow" />
+            </Window>
+            
+            <!-- LargeNo -->
+            <Window type="TaharezLook/Button" name="ConfirmPopup.LargeNo" >
+               <Property name="Area" value="{{0.75,-60},{1,-50},{0.75,40},{1,-25}}" />
                <Property name="Font" value="" />
                <Property name="Text" value="No" />
                <Property name="Visible" value="false" />

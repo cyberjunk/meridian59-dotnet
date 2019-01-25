@@ -84,6 +84,7 @@ namespace Meridian59.Protocol.Enums
         ReqLookupNames      = 88,
         Action              = 90,
 
+        ReqTriggerQuest     = 98,
         ReqNPCQuests        = 99,
         ReqMove             = 100,
         ReqTurn             = 101,
@@ -170,6 +171,7 @@ namespace Meridian59.Protocol.Enums
         LookSpell           = 191,
         LookSkill           = 192,
 
+        QuestUIList         = 199,
         Move                = 200,
         Turn                = 201,
         Shoot               = 202,

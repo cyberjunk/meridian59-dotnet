@@ -2093,6 +2093,20 @@ namespace Meridian59.Client
         }
 
         /// <summary>
+        /// Requests to trigger a quest for an NPC
+        /// </summary>
+        /// <param name="NPCID"></param>
+        /// <param name="QuestID"></param>
+        public virtual void SendReqTriggerQuestMessage(ObjectID NPCID, ObjectID QuestID)
+        {
+            // create message instance
+            ReqTriggerQuestMessage message = new ReqTriggerQuestMessage(NPCID, QuestID);
+
+            // send/enqueue it (async)
+            ServerConnection.SendQueue.Enqueue(message);
+        }
+
+        /// <summary>
         /// Requests to get the quests for an object (NPC)
         /// </summary>
         /// <param name="Target"></param>

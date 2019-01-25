@@ -77,6 +77,7 @@
 	<FalagardMapping windowType="TaharezLook/AvatarSpellItem" 			targetType="CEGUI/ItemEntry"   	renderer="Core/ItemEntry"   	lookNFeel="TaharezLook/AvatarSpellItem" />
 	<FalagardMapping windowType="TaharezLook/AvatarSkillItem" 			targetType="CEGUI/ItemEntry"   	renderer="Core/ItemEntry"   	lookNFeel="TaharezLook/AvatarSkillItem" />
 	<FalagardMapping windowType="TaharezLook/AvatarQuestItem" 			targetType="CEGUI/ItemEntry"   	renderer="Core/ItemEntry"   	lookNFeel="TaharezLook/AvatarQuestItem" />
+	<FalagardMapping windowType="TaharezLook/QuestListItem" 			targetType="CEGUI/ItemEntry"   	renderer="Core/ItemEntry"   	lookNFeel="TaharezLook/QuestListItem" />
 	<FalagardMapping windowType="TaharezLook/ActionItem" 				targetType="CEGUI/ItemEntry"   	renderer="Core/ItemEntry"   	lookNFeel="TaharezLook/ActionItem" />
 	<FalagardMapping windowType="TaharezLook/TradeListboxItem" 			targetType="CEGUI/ItemEntry"   	renderer="Core/ItemEntry"   	lookNFeel="TaharezLook/TradeListboxItem" />
 	<FalagardMapping windowType="TaharezLook/CharacterListboxItem" 		targetType="CEGUI/ItemEntry"   	renderer="Core/ItemEntry"   	lookNFeel="TaharezLook/CharacterListboxItem" />
@@ -94,5 +95,6 @@
 	<FalagardMapping windowType="TaharezLook/ZeroTabContentPane"    		targetType="DefaultWindow"    	renderer="Core/Default"    		lookNFeel="TaharezLook/ZeroTabContentPane" />
 	<FalagardMapping windowType="TaharezLook/MiniButton"      				targetType="CEGUI/PushButton"  	renderer="Core/Button"       	lookNFeel="TaharezLook/MiniButton" />
 	<FalagardMapping windowType="TaharezLook/FrameWindowOrnamental"  				targetType="CEGUI/FrameWindow" 	renderer="Core/FrameWindow"  	lookNFeel="TaharezLook/FrameWindowOrnamental" />
+	<FalagardMapping windowType="TaharezLook/StaticTextSmallFrame"  				targetType="DefaultWindow" 		renderer="Core/StaticText"  	lookNFeel="TaharezLook/StaticTextSmallFrame" />
 </GUIScheme>
 

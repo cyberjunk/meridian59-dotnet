@@ -89,6 +89,23 @@ const char* EN_CHARINFONOTOKERROR_OKDIALOG[] =
    "You must select either male or female when creating your character."                                                                                                          // 13
 };
 
+const char* EN_NPCQUESTUI[] =
+{
+   "Description:",                                                                                             // 0
+   "Requirements:",                                                                                            // 1
+   "Instructions:",                                                                                            // 2
+   "Accept",                                                                                                   // 3
+   "Continue",                                                                                                 // 4
+   "Close",                                                                                                    // 5
+   "Help - Quests",                                                                                            // 6
+   "Click on a quest in the quest list to view its description.\n\nIf you meet the requirements to start a quest, it will be shown in "
+   "yellow in the quest list. Currently active Quests are shown in green if this NPC is the destination for the quest. Quests are shown "
+   "in white if you do not meet all the requirements.\n\nRequirements are shown under the description on the right-hand side of the UI, "
+   "with met requirements shown in green and unmet ones in red.\n\nClick 'Accept'/'Continue' to start a new quest or progress an existing one. "
+   "Completing a Quest where the NPC requires an item will give that item to the NPC. If you have multiple copies of an item, the last one in your "
+   "inventory will be given.\n\nCheck your own Quest Log for information on current and completed quests."     // 7
+};
+
 /**************************************************************************************/
 /***************************      GERMAN      *****************************************/
 /**************************************************************************************/
@@ -189,6 +206,25 @@ const char* DE_CHARINFONOTOKERROR_OKDIALOG[] =
    "Du musst ein Geschlecht für deinen Charakter wählen."                                                                                                                                                                                              // 13
 };
 
+const char* DE_NPCQUESTUI[] =
+{
+   "Beschreibung:",                                // 0
+   "Voraussetzungen:",                             // 1
+   "Anleitung:",                                   // 2
+   "Akzeptieren",                                  // 3
+   "Fortsetzen",                                   // 4
+   "Schließen",                                    // 5
+   "Quest - Hilfe",                                // 6
+   "Klicke in der Übersicht auf eine Quest, um dessen Beschreibung anzuzeigen.\n\nWenn du alle Anforderungen erfüllst um eine Quest zu starten, "
+   "wird diese in der Übersicht mit Gelb markiert. Aktuell laufende und aktive Quests werden in Grün angezeigt, vorausgesetzt der jeweilige NPC ist "
+   "das richtige Ziel. Wird jedoch eine Quest in Weiß angezeigt, erfüllst du nicht alle Voraussetzungen.\n\nDie Voraussetzungen werden unter der "
+   "Beschreibung der jeweiligen Quest angezeigt. Wobei die erfüllten Anforderungen in Grün und die nicht erfüllten in Rot angezeigt werden.\n\nKlicke auf "
+   "'Akzeptieren' oder 'Fortsetzen' um eine neue Quest zu starten oder eine aktive Quest fortzusetzen. Wenn du eine Quest abschließen solltest, bei der ein NPC "
+   "einen Gegenstand benötigt, wird dieser mit einem Klick auf die Buttons automatisch übergeben. Wenn du im Besitz von mehreren Exemplaren dieses Gegenstandes "
+   "sein solltest, wird immer der letzte aus deinem Inventar abgegeben.\n\nTipp: Behalte immer deinen Quest-Log im Auge, um weitere Informationen rund um aktiven "
+   "oder abgeschlossenen Quests zu erhalten.\n"    // 7
+};
+
 /**************************************************************************************/
 /**************************************************************************************/
 
@@ -273,5 +309,17 @@ const char* GetCharInfoNotOKErrorOkDialog(const LANGSTR_CHARINFONOTOKERROR_OKDIA
    {
    case LanguageCode::German: return DE_CHARINFONOTOKERROR_OKDIALOG[ID];
    default:                   return EN_CHARINFONOTOKERROR_OKDIALOG[ID];
+   }
+};
+
+const char* GetLangNPCQuestUI(const LANGSTR_NPCQUESTUI::Enum ID)
+{
+   using ::Meridian59::Ogre::OgreClient;
+   using ::Meridian59::Common::Enums::LanguageCode;
+
+   switch (OgreClient::Singleton->Config->Language)
+   {
+   case LanguageCode::German: return DE_NPCQUESTUI[ID];
+   default:                   return EN_NPCQUESTUI[ID];
    }
 };

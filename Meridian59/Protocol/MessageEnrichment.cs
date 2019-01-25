@@ -239,6 +239,10 @@ namespace Meridian59.Protocol
                     HandleLookSkillMessage((LookSkillMessage)Message);
                     break;
 
+                case MessageTypeGameMode.QuestUIList:                           // 199
+                    HandleQuestUIListMessage((QuestUIListMessage)Message);
+                    break;
+
                 case MessageTypeGameMode.Shoot:                                 // 202
                     HandleShootMessage((ShootMessage)Message);
                     break;
@@ -536,6 +540,18 @@ namespace Meridian59.Protocol
             {
                 obj.ResolveResources(resourceManager, false);
                 obj.DecompressResources();
+            }
+        }
+
+        protected virtual void HandleQuestUIListMessage(QuestUIListMessage Message)
+        {
+            Message.QuestGiver.ResolveResources(resourceManager, false);
+            Message.QuestGiver.DecompressResources();
+
+            foreach (QuestObjectInfo obj in Message.Quests)
+            {
+                obj.ObjectBase.ResolveResources(resourceManager, false);
+                obj.ObjectBase.DecompressResources();
             }
         }
 

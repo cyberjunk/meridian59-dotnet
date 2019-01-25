@@ -79,6 +79,9 @@ namespace Meridian59.Data.Models
         private const uint OT_SUPER             = 0x00000005;    // Set if object is a "super DM"
         private const uint OT_MODERATOR         = 0x00000006;    // Set if object is a "moderator"
         private const uint OT_EVENTCHAR         = 0x00000007;    // Set if object is an event character
+        private const uint OT_QUESTACTIVE       = 0x00000008;    // Set if object is a quest in progress
+        private const uint OT_QUESTVALID        = 0x00000009;    // Set if object is a quest that can be started
+        private const uint OT_QUESTINVALID      = 0x0000000A;    // Set if object is a quest that cannot be started
 
         // DEDICATED BYTE - ENUM (Drawing Type)
         private const uint DRAWFX_DRAW_PLAIN    = 0x00000000;    // No special drawing effects
@@ -141,7 +144,11 @@ namespace Meridian59.Data.Models
             Creator         = OT_CREATOR,
             SuperDM         = OT_SUPER,
             Moderator       = OT_MODERATOR,
-            EventChar       = OT_EVENTCHAR
+            EventChar       = OT_EVENTCHAR,
+            // TODO: Not exactly 'player types', should we rename the enum/property?
+            QuestActive     = OT_QUESTACTIVE,
+            QuestValid      = OT_QUESTVALID,
+            QuestInvalid    = OT_QUESTINVALID,
         }
 
         /// <summary>
