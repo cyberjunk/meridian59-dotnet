@@ -503,8 +503,10 @@ namespace Meridian59 { namespace Ogre
          static ::CEGUI::ItemListbox* QuestList = nullptr;
          static ::CEGUI::Window* DescriptionLabel = nullptr;
          static ::CEGUI::Window* Description = nullptr;
+         static ::CEGUI::MultiLineEditbox* DescriptionPlain = nullptr;
          static ::CEGUI::Window* RequirementsLabel = nullptr;
          static ::CEGUI::Window* Requirements = nullptr;
+         static ::CEGUI::MultiLineEditbox* RequirementsPlain = nullptr;
          static ::CEGUI::PushButton* Accept = nullptr;
          static ::CEGUI::PushButton* Help = nullptr;
          static ::CEGUI::PushButton* Close = nullptr;
@@ -1792,6 +1794,8 @@ namespace Meridian59 { namespace Ogre
       {
       public:
          static bool OnListSelectionChanged(const CEGUI::EventArgs& e);
+         static bool OnDescriptionTextClicked(const CEGUI::EventArgs& e);
+         static bool OnRequirementsTextClicked(const CEGUI::EventArgs& e);
          static bool OnAcceptClicked(const CEGUI::EventArgs& e);
          static bool OnHelpClicked(const CEGUI::EventArgs& e);
          static bool OnCloseClicked(const CEGUI::EventArgs& e);

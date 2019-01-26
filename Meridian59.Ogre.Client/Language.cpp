@@ -103,7 +103,8 @@ const char* EN_NPCQUESTUI[] =
    "in white if you do not meet all the requirements.\n\nRequirements are shown under the description on the right-hand side of the UI, "
    "with met requirements shown in green and unmet ones in red.\n\nClick 'Accept'/'Continue' to start a new quest or progress an existing one. "
    "Completing a Quest where the NPC requires an item will give that item to the NPC. If you have multiple copies of an item, the last one in your "
-   "inventory will be given.\n\nCheck your own Quest Log for information on current and completed quests."     // 7
+   "inventory will be given.\n\nCheck your own Quest Log for information on current and completed quests.\n\nRight-click the Description and "
+   "Requirements text boxes to switch to 'copy' mode where text can be copied from the box. "                  // 7
 };
 
 /**************************************************************************************/
@@ -222,7 +223,8 @@ const char* DE_NPCQUESTUI[] =
    "'Akzeptieren' oder 'Fortsetzen' um eine neue Quest zu starten oder eine aktive Quest fortzusetzen. Wenn du eine Quest abschließen solltest, bei der ein NPC "
    "einen Gegenstand benötigt, wird dieser mit einem Klick auf die Buttons automatisch übergeben. Wenn du im Besitz von mehreren Exemplaren dieses Gegenstandes "
    "sein solltest, wird immer der letzte aus deinem Inventar abgegeben.\n\nTipp: Behalte immer deinen Quest-Log im Auge, um weitere Informationen rund um aktiven "
-   "oder abgeschlossenen Quests zu erhalten.\n"    // 7
+   "oder abgeschlossenen Quests zu erhalten.\n\nDrücke die rechte Maustaste in den Textfeldern mit den Beschreibungen oder Voraussetzungen. Damit gelangst du in "
+   "den 'Kopier-Modus' und hast die Möglichkeit, diese zu Kopieren."    // 7
 };
 
 /**************************************************************************************/

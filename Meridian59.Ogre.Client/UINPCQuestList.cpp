@@ -12,14 +12,20 @@ namespace Meridian59 {
          QuestList = static_cast<CEGUI::ItemListbox*>(Window->getChild(UI_NAME_NPCQUESTLIST_QUESTLIST));
          DescriptionLabel = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_NPCQUESTLIST_DESCLABEL));
          Description = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_NPCQUESTLIST_DESC));
+         DescriptionPlain = static_cast<CEGUI::MultiLineEditbox*>(Window->getChild(UI_NAME_NPCQUESTLIST_DESCPLAIN));
          RequirementsLabel = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_NPCQUESTLIST_REQLABEL));
          Requirements = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_NPCQUESTLIST_REQ));
+         RequirementsPlain = static_cast<CEGUI::MultiLineEditbox*>(Window->getChild(UI_NAME_NPCQUESTLIST_REQPLAIN));
          Accept = static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_NPCQUESTLIST_ACCEPT));
          Help = static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_NPCQUESTLIST_HELP));
          Close = static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_NPCQUESTLIST_CLOSE));
 
          // set multiselect
          QuestList->setMultiSelectEnabled(false);
+         
+         // disable caret on plain info boxes
+         DescriptionPlain->setEnsureCaretVisible(false);
+         RequirementsPlain->setEnsureCaretVisible(false);
 
          // init imagecomposers list for questlist icons
          imageComposers = gcnew ::System::Collections::Generic::List<ImageComposerCEGUI<ObjectBase^>^>();
@@ -45,6 +51,16 @@ namespace Meridian59 {
 
          // subscribe selection change
          QuestList->subscribeEvent(CEGUI::ItemListbox::EventSelectionChanged, CEGUI::Event::Subscriber(UICallbacks::NPCQuestList::OnListSelectionChanged));
+
+         // subscribe clicks for window toggles
+         Description->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::NPCQuestList::OnDescriptionTextClicked));
+         DescriptionPlain->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::NPCQuestList::OnDescriptionTextClicked));
+         Requirements->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::NPCQuestList::OnRequirementsTextClicked));
+         RequirementsPlain->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::NPCQuestList::OnRequirementsTextClicked));
+
+         // subscripe copy paste handlers on plain infobox text
+         DescriptionPlain->subscribeEvent(CEGUI::Window::EventKeyDown, CEGUI::Event::Subscriber(UICallbacks::OnCopyPasteKeyDown));
+         RequirementsPlain->subscribeEvent(CEGUI::Window::EventKeyDown, CEGUI::Event::Subscriber(UICallbacks::OnCopyPasteKeyDown));
 
          // subscribe buttons
          Accept->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::NPCQuestList::OnAcceptClicked));
@@ -237,9 +253,17 @@ namespace Meridian59 {
             // set description, use fullstring to strip any kod styling/colors
             // shouldn't be any in a description, but do it anyway for consistency in case there is
             Description->setText(StringConvert::CLRToCEGUI(obj->Description->FullString));
+            DescriptionPlain->setText(StringConvert::CLRToCEGUI(obj->Description->FullString));
 
             // set requirements or instructions, use kod styling/colors to differentiate met requirements vs unmet ones
             Requirements->setText(GetChatString(obj->Requirements));
+            RequirementsPlain->setText(StringConvert::CLRToCEGUI(obj->Requirements->FullString));
+
+            // reset text boxes to the non-plain version
+            Description->setVisible(true);
+            DescriptionPlain->setVisible(false);
+            Requirements->setVisible(true);
+            RequirementsPlain->setVisible(false);
 
             // change UI text depending on whether selected quest can be started/continued
             if (obj->ObjectBase->Flags->Player == ObjectFlags::PlayerType::QuestActive)
@@ -336,6 +360,36 @@ namespace Meridian59 {
       {
          // have to set title/desc/req to quest details
          ControllerUI::NPCQuestList::SetQuestText();
+
+         return true;
+      };
+
+      bool UICallbacks::NPCQuestList::OnDescriptionTextClicked(const CEGUI::EventArgs& e)
+      {
+         const CEGUI::MouseEventArgs& e2 = static_cast<const CEGUI::MouseEventArgs&>(e);
+
+         // only for right mousebutton
+         if (e2.button != ::CEGUI::MouseButton::RightButton)
+            return true;
+
+         // toggle windows
+         ControllerUI::NPCQuestList::Description->setVisible(!ControllerUI::NPCQuestList::Description->isVisible());
+         ControllerUI::NPCQuestList::DescriptionPlain->setVisible(!ControllerUI::NPCQuestList::DescriptionPlain->isVisible());
+
+         return true;
+      };
+
+      bool UICallbacks::NPCQuestList::OnRequirementsTextClicked(const CEGUI::EventArgs& e)
+      {
+         const CEGUI::MouseEventArgs& e2 = static_cast<const CEGUI::MouseEventArgs&>(e);
+
+         // only for right mousebutton
+         if (e2.button != ::CEGUI::MouseButton::RightButton)
+            return true;
+
+         // toggle windows
+         ControllerUI::NPCQuestList::Requirements->setVisible(!ControllerUI::NPCQuestList::Requirements->isVisible());
+         ControllerUI::NPCQuestList::RequirementsPlain->setVisible(!ControllerUI::NPCQuestList::RequirementsPlain->isVisible());
 
          return true;
       };

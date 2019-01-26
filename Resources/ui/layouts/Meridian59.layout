@@ -1089,6 +1089,13 @@
             <Property name="BackgroundColours" value="tl:FF000000 tr:FF000000 bl:FF000000 br:FF000000" />
          </Window>
          
+         <!-- DescriptionPlain -->
+         <Window type="TaharezLook/MultiLineEditbox" name="QuestUI.DescriptionPlain" >
+            <Property name="ReadOnly" value="True" />
+            <Property name="Visible" value="False" />
+            <Property name="Area" value="{{0,240},{0,90},{1,-5},{0,240}}" />
+         </Window>
+         
          <!-- RequirementsLabel -->
          <Window type="TaharezLook/Label" name="QuestUI.RequirementsLabel" >
             <Property name="Text" value="Requirements:" />
@@ -1105,7 +1112,14 @@
             <Property name="HorzFormatting" value="WordWrapLeftAligned" />
             <Property name="Area" value="{{0,240},{0,270},{1,-5},{0,400}}" />
             <Property name="BackgroundColours" value="tl:FF000000 tr:FF000000 bl:FF000000 br:FF000000" />
-         </Window> 
+         </Window>
+         
+         <!-- RequirementsPlain -->
+         <Window type="TaharezLook/MultiLineEditbox" name="QuestUI.RequirementsPlain" >
+            <Property name="ReadOnly" value="True" />
+            <Property name="Visible" value="False" />
+            <Property name="Area" value="{{0,240},{0,270},{1,-5},{0,400}}" />
+         </Window>
          
          <!-- Accept button -->
          <Window type="TaharezLook/Button" name="QuestUI.Accept" >
@@ -2895,7 +2909,7 @@
          
          <!-- LargeWindow -->
          <Window type="TaharezLook/FrameWindowOrnamental" name="ConfirmPopup.LargeWindow" >
-            <Property name="Area" value="{{0.5,-200},{0.5,-250},{0.5,200},{0.5,250}}" />
+            <Property name="Area" value="{{0.5,-200},{0.5,-240},{0.5,200},{0.5,240}}" />
             <Property name="Text" value="Confirm" />
             <Property name="AlwaysOnTop" value="true" />
             <Property name="RollUpEnabled" value="false" />
@@ -2906,16 +2920,17 @@
             
             <!-- LargeText -->
             <Window type="TaharezLook/StaticText" name="ConfirmPopup.LargeText" >
-               <Property name="Area" value="{{0.5,-180},{0,5},{0.5,180},{1,-75}}" />
+               <Property name="Area" value="{{0.5,-185},{0,5},{0.5,185},{1,-60}}" />
                <Property name="Text" value="Are you absolutely sure?" />
                <Property name="HorzFormatting" value="WordWrapCentreAligned" />
+               <Property name="VertScrollbar" value="True" />
                <Property name="FrameEnabled" value="false" />
                <Property name="BackgroundEnabled" value="false" />
             </Window>
             
             <!-- LargeYes -->
             <Window type="TaharezLook/Button" name="ConfirmPopup.LargeYes" >
-               <Property name="Area" value="{{0.25,-40},{1,-50},{0.25,60},{1,-25}}" />
+               <Property name="Area" value="{{0.25,-40},{1,-40},{0.25,60},{1,-15}}" />
                <Property name="Font" value="" />
                <Property name="Text" value="Yes" />
                <Property name="MaxSize" value="{{1,0},{1,0}}" />
@@ -2925,7 +2940,7 @@
             
             <!-- LargeOK -->
             <Window type="TaharezLook/Button" name="ConfirmPopup.LargeOK" >
-               <Property name="Area" value="{{0.5,-50},{1,-50},{0.5,50},{1,-25}}" />
+               <Property name="Area" value="{{0.5,-50},{1,-40},{0.5,50},{1,-15}}" />
                <Property name="Font" value="" />
                <Property name="Text" value="OK" />
                <Property name="Visible" value="false" />
@@ -2934,7 +2949,7 @@
             
             <!-- LargeNo -->
             <Window type="TaharezLook/Button" name="ConfirmPopup.LargeNo" >
-               <Property name="Area" value="{{0.75,-60},{1,-50},{0.75,40},{1,-25}}" />
+               <Property name="Area" value="{{0.75,-60},{1,-40},{0.75,40},{1,-15}}" />
                <Property name="Font" value="" />
                <Property name="Text" value="No" />
                <Property name="Visible" value="false" />
