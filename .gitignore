@@ -8,6 +8,9 @@
 *.VC.db
 .vs
 
+# NuGet packages
+/packages
+
 # Other generic exclusions
 *.log
 
