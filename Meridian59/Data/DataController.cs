@@ -126,6 +126,7 @@ namespace Meridian59.Data
         protected readonly AdminInfo adminInfo;
         protected readonly TradeInfo tradeInfo;
         protected readonly BuyInfo buyInfo;
+        protected readonly QuestUIInfo questUIInfo;
         protected readonly WelcomeInfo welcomeInfo;
         protected readonly CharCreationInfo charCreationInfo;
         protected readonly StatChangeInfo statChangeInfo;
@@ -320,6 +321,11 @@ namespace Meridian59.Data
         /// Info about a possibly active Buy (from NPC) window
         /// </summary>
         public BuyInfo Buy { get { return buyInfo; } }
+
+        /// <summary>
+        /// Info about a possibly active quest (from NPC) window
+        /// </summary>
+        public QuestUIInfo QuestUIInfo { get { return questUIInfo; } }
 
         /// <summary>
         /// Stores the welcome info transferred at login, containing selectable
@@ -931,6 +937,7 @@ namespace Meridian59.Data
             adminInfo = new AdminInfo();
             tradeInfo = new TradeInfo();
             buyInfo = new BuyInfo();
+            questUIInfo = new QuestUIInfo();
             welcomeInfo = new WelcomeInfo();
             charCreationInfo = new CharCreationInfo();
             statChangeInfo = new StatChangeInfo();
@@ -1026,6 +1033,7 @@ namespace Meridian59.Data
             NewsGroup.Clear(true);
             Trade.Clear(true);
             Buy.Clear(true);
+            QuestUIInfo.Clear(true);
             WelcomeInfo.Clear(true);
             CharCreationInfo.Clear(true);
             ObjectContents.Clear(true);
@@ -1117,6 +1125,10 @@ namespace Meridian59.Data
             // update lookskill
             if (LookSkill != null && LookSkill.ObjectBase != null)
                 LookSkill.ObjectBase.Tick(Tick, Span);
+
+            // update questuiinfo npc
+            if (QuestUIInfo != null && QuestUIInfo.QuestGiver != null)
+                QuestUIInfo.QuestGiver.Tick(Tick, Span);
 
             // update charcreation model
             if (CharCreationInfo != null && CharCreationInfo.ExampleModel != null)
@@ -1242,7 +1254,17 @@ namespace Meridian59.Data
             if (LookSkill.SkillLevel != null)
                 LookSkill.SkillLevel.BuildString(RaiseChangedEvent);
 
-            //
+            // questuiinfo
+            if (QuestUIInfo.QuestGiver != null)
+                QuestUIInfo.QuestGiver.ResolveStrings(Strings, RaiseChangedEvent);
+            foreach (QuestObjectInfo o in QuestUIInfo.QuestList)
+            {
+                o.ObjectBase.ResolveStrings(Strings, RaiseChangedEvent);
+                if (o.Description != null)
+                    o.Description.BuildString(RaiseChangedEvent);
+                if (o.Requirements != null)
+                    o.Requirements.BuildString(RaiseChangedEvent);
+            }
 
             RoomInformation.ResolveStrings(Strings, RaiseChangedEvent);
             BackgroundMusic.ResolveStrings(Strings, RaiseChangedEvent);
@@ -1916,6 +1938,10 @@ namespace Meridian59.Data
                     HandleLookSkill((LookSkillMessage)Message);
                     break;
 
+                case MessageTypeGameMode.QuestUIList:               // 199
+                    HandleQuestUIList((QuestUIListMessage)Message);
+                    break;
+
                 case MessageTypeGameMode.Move:                      // 200
                     HandleMove((MoveMessage)Message);
                     break;
@@ -2302,6 +2328,7 @@ namespace Meridian59.Data
             // clear trade & buyinfo (also hides)
             Trade.Clear(true);
             Buy.Clear(true);
+            QuestUIInfo.Clear(true);
             NewsGroup.Clear(true);
             LookObject.Clear(true);
             LookPlayer.Clear(true);
@@ -2908,6 +2935,30 @@ namespace Meridian59.Data
 
             // set visible
             Buy.IsVisible = true;
+        }
+
+        protected virtual void HandleQuestUIList(QuestUIListMessage Message)
+        {
+            // set quest NPC
+            QuestUIInfo.QuestGiver = Message.QuestGiver;
+
+            // clear old quest list
+            QuestUIInfo.QuestList.Clear();
+
+            // add new quests, in specific order (active, then valid, then invalid).
+            foreach (QuestObjectInfo entry in Message.Quests)
+                if (entry.ObjectBase.Flags.Player == ObjectFlags.PlayerType.QuestActive)
+                    QuestUIInfo.QuestList.Add(entry);
+            foreach (QuestObjectInfo entry in Message.Quests)
+                if (entry.ObjectBase.Flags.Player == ObjectFlags.PlayerType.QuestValid)
+                    QuestUIInfo.QuestList.Add(entry);
+            foreach (QuestObjectInfo entry in Message.Quests)
+                if (entry.ObjectBase.Flags.Player != ObjectFlags.PlayerType.QuestActive
+                    && entry.ObjectBase.Flags.Player != ObjectFlags.PlayerType.QuestValid)
+                    QuestUIInfo.QuestList.Add(entry);
+
+            // set visible
+            QuestUIInfo.IsVisible = true;
         }
         #endregion  
     }

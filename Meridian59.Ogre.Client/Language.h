@@ -120,6 +120,21 @@ namespace LANGSTR_CHARINFONOTOKERROR_OKDIALOG
    };
 }
 
+namespace LANGSTR_NPCQUESTUI
+{
+   enum Enum
+   {
+      DESCRIPTION = 0,
+      REQUIREMENTS = 1,
+      INSTRUCTIONS = 2,
+      ACCEPT = 3,
+      CONTINUE = 4,
+      CLOSE = 5,
+      HELPTITLE = 6,
+      HELPTEXT = 7
+   };
+}
+
 const char* GetLangLabel(const LANGSTR::Enum ID);
 const char* GetLangWindowTitle(const LANGSTR_WINDOW_TITLE::Enum ID);
 const char* GetLangTooltipMood(const LANGSTR_TOOLTIP_MOOD::Enum ID);
@@ -127,3 +142,4 @@ const char* GetLangTooltipOnlinePlayer(const LANGSTR_TOOLTIP_ONLINEPLAYER::Enum 
 const char* GetLangTooltipStatusBar(const LANGSTR_TOOLTIP_STATUSBAR::Enum ID);
 const char* GetLangDescriptionStatusBar(const LANGSTR_DESCRIPTION_STATUSBAR::Enum ID);
 const char* GetCharInfoNotOKErrorOkDialog(const LANGSTR_CHARINFONOTOKERROR_OKDIALOG::Enum ID);
+const char* GetLangNPCQuestUI(const LANGSTR_NPCQUESTUI::Enum ID);

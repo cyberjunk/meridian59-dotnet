@@ -488,6 +488,44 @@ namespace Meridian59 { namespace Ogre
       };
 
       /// <summary>
+      /// QuestUI window
+      /// </summary>
+      ref class NPCQuestList abstract sealed
+      {
+      protected:
+         static ImageComposerCEGUI<ObjectBase^>^ imageComposerNPC;
+         static ::System::Collections::Generic::List<ImageComposerCEGUI<ObjectBase^>^>^ imageComposers;
+
+      public:
+         static ::CEGUI::FrameWindow* Window = nullptr;
+         static ::CEGUI::Window* Name = nullptr;
+         static ::CEGUI::Window* Image = nullptr;
+         static ::CEGUI::ItemListbox* QuestList = nullptr;
+         static ::CEGUI::Window* DescriptionLabel = nullptr;
+         static ::CEGUI::Window* Description = nullptr;
+         static ::CEGUI::MultiLineEditbox* DescriptionPlain = nullptr;
+         static ::CEGUI::Window* RequirementsLabel = nullptr;
+         static ::CEGUI::Window* Requirements = nullptr;
+         static ::CEGUI::MultiLineEditbox* RequirementsPlain = nullptr;
+         static ::CEGUI::PushButton* Accept = nullptr;
+         static ::CEGUI::PushButton* Help = nullptr;
+         static ::CEGUI::PushButton* Close = nullptr;
+
+         static void Initialize();
+         static void Destroy();
+         static void ApplyLanguage();
+         static void OnNPCQuestListPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
+         static void OnQuestListChanged(Object^ sender, ListChangedEventArgs^ e);
+         static void OnNewNPCImageAvailable(Object^ sender, ::System::EventArgs^ e);
+         static void OnNewQuestListImageAvailable(Object^ sender, ::System::EventArgs^ e);
+         static void QuestItemAdd(int Index);
+         static void QuestItemRemove(int Index);
+         static void OnHelpOKConfirmed(Object^ sender, ::System::EventArgs^ e);
+         static void SetQuestText();
+         static ::CEGUI::String GetChatString(ServerString^ ChatMessage);
+      };
+      
+      /// <summary>
       /// Target window
       /// </summary>
       ref class Target abstract sealed
@@ -507,6 +545,7 @@ namespace Meridian59 { namespace Ogre
          static ::CEGUI::PushButton* Buy = nullptr;
          static ::CEGUI::PushButton* Trade = nullptr;
          static ::CEGUI::PushButton* Loot = nullptr;
+         static ::CEGUI::PushButton* Quest = nullptr;
 
          static void Initialize();
          static void Destroy();
@@ -1187,6 +1226,11 @@ namespace Meridian59 { namespace Ogre
          static ::CEGUI::PushButton* Yes = nullptr;
          static ::CEGUI::PushButton* No = nullptr;
          static ::CEGUI::PushButton* OK = nullptr;
+         static ::CEGUI::FrameWindow* LargeSubWindow = nullptr;
+         static ::CEGUI::Window* LargeText = nullptr;
+         static ::CEGUI::PushButton* LargeYes = nullptr;
+         static ::CEGUI::PushButton* LargeNo = nullptr;
+         static ::CEGUI::PushButton* LargeOK = nullptr;
          static uint ID = 0;
          static DialogMode Mode;
 
@@ -1195,6 +1239,8 @@ namespace Meridian59 { namespace Ogre
          static void ApplyLanguage();
          static void ShowChoice(const ::CEGUI::String& text, uint id);
          static void ShowOK(const ::CEGUI::String& text, uint id);
+         static void ShowChoiceLarge(const ::CEGUI::String& text, uint id);
+         static void ShowOKLarge(const ::CEGUI::String& text, uint id);
          static void _RaiseConfirm();
          static void _RaiseCancel();
       };
@@ -1700,6 +1746,7 @@ namespace Meridian59 { namespace Ogre
          static bool OnBuyMouseClick(const CEGUI::EventArgs& e);
          static bool OnTradeMouseClick(const CEGUI::EventArgs& e);
          static bool OnLootMouseClick(const CEGUI::EventArgs& e);
+         static bool OnQuestMouseClick(const CEGUI::EventArgs& e);
          static bool OnKeyUp(const CEGUI::EventArgs& e);
       };
 
@@ -1736,6 +1783,22 @@ namespace Meridian59 { namespace Ogre
          static bool OnListSelectionChanged(const CEGUI::EventArgs& e);
          static bool OnItemClicked(const CEGUI::EventArgs& e);
          static bool OnOKClicked(const CEGUI::EventArgs& e);
+         static bool OnWindowKeyUp(const CEGUI::EventArgs& e);
+         static bool OnWindowClosed(const CEGUI::EventArgs& e);
+      };
+
+      /// <summary>
+      /// NPC quest list event handlers
+      /// </summary>
+      class NPCQuestList
+      {
+      public:
+         static bool OnListSelectionChanged(const CEGUI::EventArgs& e);
+         static bool OnDescriptionTextClicked(const CEGUI::EventArgs& e);
+         static bool OnRequirementsTextClicked(const CEGUI::EventArgs& e);
+         static bool OnAcceptClicked(const CEGUI::EventArgs& e);
+         static bool OnHelpClicked(const CEGUI::EventArgs& e);
+         static bool OnCloseClicked(const CEGUI::EventArgs& e);
          static bool OnWindowKeyUp(const CEGUI::EventArgs& e);
          static bool OnWindowClosed(const CEGUI::EventArgs& e);
       };

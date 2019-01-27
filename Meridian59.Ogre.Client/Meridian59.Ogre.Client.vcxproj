@@ -337,6 +337,7 @@
     <ClCompile Include="UIMiniMap.cpp" />
     <ClCompile Include="UINewsGroup.cpp" />
     <ClCompile Include="UINewsGroupCompose.cpp" />
+    <ClCompile Include="UINPCQuestList.cpp" />
     <ClCompile Include="UIObjectContents.cpp" />
     <ClCompile Include="UIObjectDetails.cpp" />
     <ClCompile Include="UIOnlinePlayers.cpp" />

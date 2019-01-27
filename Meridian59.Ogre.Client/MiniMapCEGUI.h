@@ -236,6 +236,7 @@ namespace Meridian59 { namespace Ogre
       literal uint COLOR_MAP_AGGRO_SELF   = 0xFF000000; //PALETTERGB(0, 0, 0)      // Black
       literal uint COLOR_MAP_AGGRO_OTHER  = 0xFFFFFFFF; //PALETTERGB(255,255,255)  // White
       literal uint COLOR_MAP_MERCENARY    = 0xFFFFA91B; //PALETTERGB(255, 169, 27) // Gold
+      literal uint COLOR_MAP_MOBQUEST     = 0xFFB300B3; //PALETTERGB(179, 0, 179)  // Brighter purple
 #endif
 
       literal int       MAXWALLS       = 2048;
@@ -283,6 +284,7 @@ namespace Meridian59 { namespace Ogre
       static SolidBrush^ brushAggroSelf   = gcnew SolidBrush(Color::FromArgb(COLOR_MAP_AGGRO_SELF));
       static SolidBrush^ brushAggroOther  = gcnew SolidBrush(Color::FromArgb(COLOR_MAP_AGGRO_OTHER));
       static SolidBrush^ brushMercenary   = gcnew SolidBrush(Color::FromArgb(COLOR_MAP_MERCENARY));
+      static SolidBrush^ brushMobQuest    = gcnew SolidBrush(Color::FromArgb(COLOR_MAP_MOBQUEST));
 #endif
 
       static void ThreadProc();

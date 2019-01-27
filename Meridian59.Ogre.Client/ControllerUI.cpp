@@ -126,6 +126,7 @@ namespace Meridian59 { namespace Ogre
       SpellDetails::Initialize();
       SkillDetails::Initialize();
       Target::Initialize();
+      NPCQuestList::Initialize();
       SplashNotifier::Initialize();
       MiniMap::Initialize();
       RoomEnchantments::Initialize();
@@ -196,6 +197,7 @@ namespace Meridian59 { namespace Ogre
       SpellDetails::Destroy();
       SkillDetails::Destroy();
       Target::Destroy();
+      NPCQuestList::Destroy();
       SplashNotifier::Destroy();
       MiniMap::Destroy();
       RoomEnchantments::Destroy();
@@ -268,6 +270,7 @@ namespace Meridian59 { namespace Ogre
       SpellDetails::ApplyLanguage();
       SkillDetails::ApplyLanguage();
       Target::ApplyLanguage();
+      NPCQuestList::ApplyLanguage();
       SplashNotifier::ApplyLanguage();
       MiniMap::ApplyLanguage();
       RoomEnchantments::ApplyLanguage();
@@ -730,6 +733,7 @@ namespace Meridian59 { namespace Ogre
          SpellDetails::Window->setVisible(false);
          SkillDetails::Window->setVisible(false);
          Target::Window->setVisible(false);
+         NPCQuestList::Window->setVisible(false);
          RoomEnchantments::Window->setVisible(mode == UIMode::Playing);
          MiniMap::Window->setVisible(mode == UIMode::Playing && OgreClient::Singleton->Config->UIVisibilityMiniMap);
          Buy::Window->setVisible(false);

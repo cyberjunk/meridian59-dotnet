@@ -515,6 +515,14 @@ namespace Meridian59.Protocol
                         TypedMessage = new ActionMessage(e.MessageBuffer);
                         break;
 
+                    case MessageTypeGameMode.ReqTriggerQuest:                                 // PI: 98
+                        TypedMessage = new ReqTriggerQuestMessage(e.MessageBuffer);
+                        break;
+
+                    case MessageTypeGameMode.ReqNPCQuests:                                    // PI: 99
+                        TypedMessage = new ReqNPCQuestsMessage(e.MessageBuffer);
+                        break;
+
                     case MessageTypeGameMode.ReqMove:                                         // PI: 100
                         TypedMessage = new ReqMoveMessage(e.MessageBuffer, 0, e.IsTCP);
                         break;
@@ -806,6 +814,11 @@ namespace Meridian59.Protocol
                         HandleLookSkill((LookSkillMessage)TypedMessage);
                         break;
 
+                    case MessageTypeGameMode.QuestUIList:                                     // PI: 199
+                        TypedMessage = new QuestUIListMessage(stringResources, e.MessageBuffer);
+                        HandleQuestUIList((QuestUIListMessage)TypedMessage);
+                        break;
+
                     case MessageTypeGameMode.Move:                                            // PI: 200
                         TypedMessage = MessagePool.PopMove(ref pMessage);
                         break;
@@ -1048,6 +1061,14 @@ namespace Meridian59.Protocol
 
             foreach (TradeOfferObject obj in Message.OfferedItems)
                 obj.ResolveStrings(stringResources, false);    
+        }
+
+        protected void HandleQuestUIList(QuestUIListMessage Message)
+        {
+            Message.QuestGiver.ResolveStrings(stringResources, false);
+
+            foreach (QuestObjectInfo obj in Message.Quests)
+                obj.ObjectBase.ResolveStrings(stringResources, false);
         }
 
         protected void HandleOffered(OfferedMessage Message)

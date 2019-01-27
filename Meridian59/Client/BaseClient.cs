@@ -2093,6 +2093,47 @@ namespace Meridian59.Client
         }
 
         /// <summary>
+        /// Requests to trigger a quest for an NPC
+        /// </summary>
+        /// <param name="NPCID"></param>
+        /// <param name="QuestID"></param>
+        public virtual void SendReqTriggerQuestMessage(ObjectID NPCID, ObjectID QuestID)
+        {
+            // create message instance
+            ReqTriggerQuestMessage message = new ReqTriggerQuestMessage(NPCID, QuestID);
+
+            // send/enqueue it (async)
+            ServerConnection.SendQueue.Enqueue(message);
+        }
+
+        /// <summary>
+        /// Requests to get the quests for an object (NPC)
+        /// </summary>
+        /// <param name="Target"></param>
+        public virtual void SendReqNPCQuestsMessage(ObjectID Target)
+        {
+            if (GameTick.CanInteract(Target.ID))
+            {
+                // create message instance
+                ReqNPCQuestsMessage message = new ReqNPCQuestsMessage(Target);
+
+                // send/enqueue it (async)
+                ServerConnection.SendQueue.Enqueue(message);
+
+                GameTick.DidInteract(Target.ID);
+            }
+        }
+
+        /// <summary>
+        /// Requests to get the quests for current target object
+        /// </summary>
+        public virtual void SendReqNPCQuestsMessage()
+        {
+            if (ObjectID.IsValid(Data.TargetID))
+                SendReqNPCQuestsMessage(new ObjectID(Data.TargetID));
+        }
+
+        /// <summary>
         /// Requests admin access in login protocol mode (AP_REQ_ADMIN)
         /// </summary>
         public virtual void SendReqAdminMessageLoginMode()

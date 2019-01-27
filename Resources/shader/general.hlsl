@@ -44,6 +44,42 @@ void label_ps(
 }
 
 /********************************/
+/*  QUEST MARKER LABEL SHADERS  */
+/********************************/
+
+// vertex
+void questmarker_vs(
+   inout   float4   p      : POSITION,
+   inout   float2   uv     : TEXCOORD0,
+   out     float4   wp     : TEXCOORD1,
+   uniform float4x4 wMat,
+   uniform float4x4 wvpMat,
+   uniform float4x4 texMat,
+   uniform float3   eyePos,
+   uniform float    offset)
+{
+   // scale down the vertex position so the difference 
+   // in distance from each vertex to camera is minimized
+   p *= float4(0.001, 0.001, 0.001, 1);
+   
+   // now transform to world space and apply offset
+   wp = mul(wMat, p);
+   wp.y += offset;
+   
+   // scale in worldspace based on the distance to camera
+   // bounds min and max sizes for label
+   float scale = clamp(length(eyePos - wp), 10.0, 2000.0);
+   
+   // apply scale and offset
+   p *= float4(scale, scale, scale, 1);   
+   p.y += clamp((offset + (scale / 70.0)), 0.0, 300.0);
+
+   // final transform and create uv
+   p = mul(wvpMat, p);
+   uv = mul(texMat, float4(uv, 0, 1)).xy;
+}
+
+/********************************/
 /*     ROOM COMBINED SHADERS    */
 /********************************/
 

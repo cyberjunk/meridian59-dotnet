@@ -32,6 +32,7 @@ namespace Meridian59 { namespace Ogre
          RefreshPosition();
          RefreshOrientation();
          UpdateNamePosition();
+         UpdateQuestMarkerPosition();
       }
    };
 

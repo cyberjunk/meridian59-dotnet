@@ -351,6 +351,83 @@ namespace Meridian59.Drawing2D
                 return bitmap;
             }
         }
+
+        /// <summary>
+        /// Provides bitmaps with quest markers drawn into
+        /// </summary>
+        public static class QuestMarkerBitmap
+        {
+            /// <summary>
+            /// The font used to draw quest markers
+            /// </summary>
+            private static readonly Font FONT = new Font(
+                FontFamily.GenericSansSerif, 42, FontStyle.Regular, GraphicsUnit.Pixel);
+
+            /// <summary>
+            /// Dummy to get a Graphics instance to text measuring
+            /// </summary>
+            private static readonly Bitmap DUMMY = new Bitmap(1, 1, PixelFormat.Format32bppArgb);
+
+            /// <summary>
+            /// Graphics instance for text size measuring
+            /// </summary>
+            private static readonly Graphics MEASURE = Graphics.FromImage(DUMMY);
+
+            /// <summary>
+            /// String alignment
+            /// </summary>
+            private static readonly StringFormat STRINGFORMAT = new StringFormat();
+
+            /// <summary>
+            /// Static constructor
+            /// </summary>
+            static QuestMarkerBitmap()
+            {
+                STRINGFORMAT.Alignment = StringAlignment.Center;
+                STRINGFORMAT.LineAlignment = StringAlignment.Far;
+            }
+
+            /// <summary>
+            /// Returns a A8R8G8B8 (pow2 sized) bitmap with the name of the object drawn in it.
+            /// </summary>
+            /// <param name="Object"></param>
+            /// <returns></returns>
+            public static Bitmap Get(ObjectBase Object)
+            {
+                // calculate size of object name
+                SizeF textSize = MEASURE.MeasureString("!", FONT);
+
+                // get to next greater power of two
+                int width = (int)MathUtil.NextPowerOf2((uint)Math.Ceiling(textSize.Width));
+                int height = (int)MathUtil.NextPowerOf2((uint)Math.Ceiling(textSize.Height));
+
+                // get color to use for quest marker based on objectflags
+                Color color = Color.FromArgb((int)QuestMarkerColors.GetColorFor(Object.Flags));
+
+                // create bitmap to draw on
+                Bitmap bitmap = new Bitmap(width, height, PixelFormat.Format32bppArgb);
+
+                // draw name into bitmap
+                using (Graphics g = Graphics.FromImage(bitmap))
+                {
+                    // currently tuned for performance
+                    g.InterpolationMode = InterpolationMode.NearestNeighbor;
+                    g.PixelOffsetMode = PixelOffsetMode.Half;
+                    g.SmoothingMode = SmoothingMode.HighSpeed;
+                    g.CompositingMode = CompositingMode.SourceOver;
+                    g.CompositingQuality = CompositingQuality.HighSpeed;
+                    g.TextRenderingHint = TextRenderingHint.SystemDefault;
+
+                    // draw text
+                    using (SolidBrush brush = new SolidBrush(color))
+                    {
+                        g.DrawString("!", FONT, brush, new RectangleF(0, 0, width, height), STRINGFORMAT);
+                    }
+                }
+
+                return bitmap;
+            }
+        }
     }
 }
 #endif

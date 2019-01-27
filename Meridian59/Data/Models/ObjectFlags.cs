@@ -66,6 +66,9 @@ namespace Meridian59.Data.Models
         private const uint OF_FLICKERING        = 0x00020000;    // For players or objects if holding a flickering light.
         private const uint OF_FLASHING          = 0x00040000;    // For players or objects if flashing with light.
         private const uint OF_PHASING           = 0x00080000;    // For players or objects if phasing translucent/solid.
+        private const uint OF_NPCHASQUESTS      = 0x00100000;
+        private const uint OF_NPCACTIVEQUEST    = 0x00200000;
+        private const uint OF_MOBKILLQUEST      = 0x00400000;
 
         // DEDICATED BYTE - ENUM (Player Type)
         private const uint OT_NONE              = 0x00000000;    // Default for most objects.
@@ -76,6 +79,9 @@ namespace Meridian59.Data.Models
         private const uint OT_SUPER             = 0x00000005;    // Set if object is a "super DM"
         private const uint OT_MODERATOR         = 0x00000006;    // Set if object is a "moderator"
         private const uint OT_EVENTCHAR         = 0x00000007;    // Set if object is an event character
+        private const uint OT_QUESTACTIVE       = 0x00000008;    // Set if object is a quest in progress
+        private const uint OT_QUESTVALID        = 0x00000009;    // Set if object is a quest that can be started
+        private const uint OT_QUESTINVALID      = 0x0000000A;    // Set if object is a quest that cannot be started
 
         // DEDICATED BYTE - ENUM (Drawing Type)
         private const uint DRAWFX_DRAW_PLAIN    = 0x00000000;    // No special drawing effects
@@ -109,6 +115,9 @@ namespace Meridian59.Data.Models
         private const uint MM_AGGRO_SELF    = 0x00004000; // Set if monster has aggro on the player.
         private const uint MM_AGGRO_OTHER   = 0x00008000; // Set if monster has aggro on another player.
         private const uint MM_MERCENARY     = 0x00010000; // Set if monster is our mercenary.
+        private const uint MM_NPCHASQUEST   = 0x00020000; // Set if NPC has a quest for us
+        private const uint MM_NPCCURRENTQUEST = 0x00040000; // Set if NPC is destination of an active quest
+        private const uint MM_MOBKILLQUEST  = 0x00080000; // Set if monster is part of a kill quest
         #endregion
 
         #region Enums
@@ -135,7 +144,11 @@ namespace Meridian59.Data.Models
             Creator         = OT_CREATOR,
             SuperDM         = OT_SUPER,
             Moderator       = OT_MODERATOR,
-            EventChar       = OT_EVENTCHAR
+            EventChar       = OT_EVENTCHAR,
+            // TODO: Not exactly 'player types', should we rename the enum/property?
+            QuestActive     = OT_QUESTACTIVE,
+            QuestValid      = OT_QUESTVALID,
+            QuestInvalid    = OT_QUESTINVALID,
         }
 
         /// <summary>
@@ -711,6 +724,51 @@ namespace Meridian59.Data.Models
                 RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
             }
         }
+
+        /// <summary>
+        /// True if the object is an NPC with available quests.
+        /// </summary>
+        public bool IsNPCHasQuests
+        {
+            get { return (flags & OF_NPCHASQUESTS) == OF_NPCHASQUESTS; }
+            set
+            {
+                if (value) flags |= OF_NPCHASQUESTS;
+                else flags &= ~OF_NPCHASQUESTS;
+
+                RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
+            }
+        }
+
+        /// <summary>
+        /// True if the object is an NPC that is the destination of an active quest.
+        /// </summary>
+        public bool IsNPCActiveQuest
+        {
+            get { return (flags & OF_NPCACTIVEQUEST) == OF_NPCACTIVEQUEST; }
+            set
+            {
+                if (value) flags |= OF_NPCACTIVEQUEST;
+                else flags &= ~OF_NPCACTIVEQUEST;
+
+                RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
+            }
+        }
+
+        /// <summary>
+        /// True if the object is a monster that is the target of a kill quest.
+        /// </summary>
+        public bool IsMobKillQuest
+        {
+            get { return (flags & OF_MOBKILLQUEST) == OF_MOBKILLQUEST; }
+            set
+            {
+                if (value) flags |= OF_MOBKILLQUEST;
+                else flags &= ~OF_MOBKILLQUEST;
+
+                RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
+            }
+        }
         #endregion
 
         #region Bools - Minimap
@@ -961,6 +1019,51 @@ namespace Meridian59.Data.Models
             {
                 if (value) minimap |= MM_MERCENARY;
                 else minimap &= ~MM_MERCENARY;
+
+                RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
+            }
+        }
+
+        /// <summary>
+        /// Set if NPC is destination for current quest.
+        /// </summary>
+        public bool IsMinimapNPCCurrentQuest
+        {
+            get { return (minimap & MM_NPCCURRENTQUEST) == MM_NPCCURRENTQUEST; }
+            set
+            {
+                if (value) minimap |= MM_NPCCURRENTQUEST;
+                else minimap &= ~MM_NPCCURRENTQUEST;
+
+                RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
+            }
+        }
+
+        /// <summary>
+        /// Set if NPC has at least one quest available for user to start.
+        /// </summary>
+        public bool IsMinimapNPCHasQuest
+        {
+            get { return (minimap & MM_NPCHASQUEST) == MM_NPCHASQUEST; }
+            set
+            {
+                if (value) minimap |= MM_NPCHASQUEST;
+                else minimap &= ~MM_NPCHASQUEST;
+
+                RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
+            }
+        }
+
+        /// <summary>
+        /// Set if monster is target of user's quest.
+        /// </summary>
+        public bool IsMinimapMobKillQuest
+        {
+            get { return (minimap & MM_MOBKILLQUEST) == MM_MOBKILLQUEST; }
+            set
+            {
+                if (value) minimap |= MM_MOBKILLQUEST;
+                else minimap &= ~MM_MOBKILLQUEST;
 
                 RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
             }
