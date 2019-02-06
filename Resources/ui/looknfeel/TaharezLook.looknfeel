@@ -6640,7 +6640,7 @@
                <UnifiedDim scale="0" offset="120" type="Height"/>
             </Dim>
          </Area>
-         <Property name="ClippedByParent" value="True" />
+         <Property name="ClippedByParent" value="False" />
          <Property name="ReadOnly" value="True" />
       </Child>
       <ImagerySection name="selection">
