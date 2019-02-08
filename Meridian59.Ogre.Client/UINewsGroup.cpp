@@ -210,11 +210,11 @@ namespace Meridian59 { namespace Ogre
          if (articles->Count > (int)index)
          {
             ArticleHead^ article = articles[index];
-
+            bool addReply = !(article->Title->StartsWith("Re:") || article->Title->StartsWith("Aw:"));
             CLRString^ newTitle = Common::Util::Truncate(
-               "Re: " + article->Title, BlakservStringLengths::NEWS_POSTING_MAX_SUBJECT_LENGTH);
+               (addReply ? "Re: " : "") + article->Title, BlakservStringLengths::NEWS_POSTING_MAX_SUBJECT_LENGTH);
 
-               // show prefilled compose window
+            // show prefilled compose window
             ControllerUI::NewsGroupCompose::HeadLine->setText(
                StringConvert::CLRToCEGUI(newTitle));
 

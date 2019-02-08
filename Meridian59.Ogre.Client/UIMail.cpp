@@ -188,8 +188,9 @@ namespace Meridian59 { namespace Ogre
             Data::Models::Mail^ mail = mails[index];
 
             // set title
+            bool addReply = !(mail->Title->StartsWith("Re:") || mail->Title->StartsWith("Aw:"));
             ControllerUI::MailCompose::HeadLine->setText(
-               StringConvert::CLRToCEGUI("Re: " + mail->Title));
+               StringConvert::CLRToCEGUI((addReply ? "Re: " : "") + mail->Title));
 
             // set sender as recipient
             ControllerUI::MailCompose::Recipients->setText(
