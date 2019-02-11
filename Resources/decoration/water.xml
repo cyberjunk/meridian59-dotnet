@@ -16,8 +16,7 @@
 	<texture name="grd08912-0.png" /> <!-- water -->
 	<texture name="grd08913-0.png" /> <!-- water -->
 	<texture name="grd08914-0.png" /> <!-- water -->
-
 	<texture name="grd09083-0.png" /> <!-- ocean kocatan -->
 	<texture name="grd09084-0.png" /> <!-- ocean kocatan -->
-
+	<texture name="grd61018-0.png" /> <!-- green water -->
 </water>
