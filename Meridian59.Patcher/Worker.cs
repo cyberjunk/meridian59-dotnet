@@ -157,7 +157,7 @@ namespace Meridian59.Patcher
                 return false;
 
             // create filestream
-            FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
 
             // different length = not equal (no md5 needed)
             if (file.Length != fs.Length)
