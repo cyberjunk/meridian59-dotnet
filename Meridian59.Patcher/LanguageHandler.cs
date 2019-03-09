@@ -62,10 +62,11 @@ namespace Meridian59.Patcher
         private const string RETRYINGFILE_DE = "Download der Datei {0} ist fehlgeschlagen, neuer Versuch...\n";
 
         private const string FILEFAILED_EN = "Download of file {0} failed. This could be due to an " +
-            "internet connection issue or patch server issues. Please try again later.";
-        private const string FILEFAILED_DE = "Download der Datei {0} ist fehlgeschlagen. Dies kann an " +
-            "einem Problem mit deiner Internetverbindung oder dem Patch-Server zusammenhängen. " +
-            "Bitte versuche es später erneut.";
+            "open client blocking the file from being patched, no internet connection or patch server " +
+            "issues. Please try again later.";
+        private const string FILEFAILED_DE = "Download der Datei {0} ist fehlgeschlagen. Dies kann daran liegen " +
+            "das ein weiterer Client geöffnet ist und dadurch die Datei geblockt wird, es ein Problem mit deiner " +
+            "Internetverbindung gibt oder einem Fehler mit dem Patch-Server. Bitte versuche es später erneut.";
 
         private const string PATCHDOWNLOADFAILED_EN = "Patch information download failed!\n";
         private const string PATCHDOWNLOADFAILED_DE = "Herunterladen der Patch-Informationen fehlgeschlagen!\n";
