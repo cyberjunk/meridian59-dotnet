@@ -82,8 +82,6 @@ namespace Meridian59.Data.Models
             cursor += objectBase.WriteTo(Buffer, cursor);
             cursor += schoolName.WriteTo(Buffer, cursor);
             cursor += skillLevel.WriteTo(Buffer, cursor);
-            cursor += manaCost.WriteTo(Buffer, cursor);
-            cursor += vigorCost.WriteTo(Buffer, cursor);
             cursor += message.WriteTo(Buffer, cursor);
 
             return cursor - StartIndex;
@@ -105,8 +103,6 @@ namespace Meridian59.Data.Models
         protected ServerString message;
         protected ServerString schoolName;
         protected ServerString skillLevel;
-        protected ServerString manaCost;
-        protected ServerString vigorCost;
         protected bool isVisible;
 
         protected StringDictionary stringResources;
