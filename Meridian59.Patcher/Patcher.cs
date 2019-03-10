@@ -404,7 +404,7 @@ namespace Meridian59.Patcher
                 {
                     if (!isHeadless)
                     {
-                        MessageBox.Show(String.Format(languageHandler.FileFailed + file.Filename),
+                        MessageBox.Show(String.Format(languageHandler.FileFailed, file.Filename),
                             languageHandler.ErrorText, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
 
@@ -506,7 +506,7 @@ namespace Meridian59.Patcher
             {
                 if (!isHeadless)
                 {
-                    MessageBox.Show(String.Format(languageHandler.UrlInfoMissing + DOTNETURLDATAFILE),
+                    MessageBox.Show(String.Format(languageHandler.UrlInfoMissing, DOTNETURLDATAFILE),
                         languageHandler.ErrorText, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
@@ -543,7 +543,7 @@ namespace Meridian59.Patcher
             {
                 if (!isHeadless)
                 {
-                    MessageBox.Show(String.Format(languageHandler.UrlInfoMissing + CLASSICURLDATAFILE),
+                    MessageBox.Show(String.Format(languageHandler.UrlInfoMissing, CLASSICURLDATAFILE),
                         languageHandler.ErrorText, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 

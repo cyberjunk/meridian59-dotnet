@@ -1424,6 +1424,13 @@ namespace Meridian59.Files.BGF
             // based on pixelformat
             if (Bitmap.PixelFormat == PixelFormat.Format8bppIndexed)
             {
+                // Get palette colors without alpha.
+                uint[] palette = new uint[Bitmap.Palette.Entries.Length];
+                for (uint pal_idx = 0; pal_idx < Bitmap.Palette.Entries.Length; ++pal_idx)
+                {
+                    palette[pal_idx] = (uint)(Bitmap.Palette.Entries[pal_idx].ToArgb() & 0x00FFFFFF);
+                }
+
                 byte* readoffset = (byte*)pixelData.Scan0.ToPointer();
                 int writeoffset = 0;
                 for (uint i = 0; i < Bitmap.Height; i++)
@@ -1432,14 +1439,13 @@ namespace Meridian59.Files.BGF
                     {
                         // get pixels color index and color for index
                         byte idx = *readoffset;
-                        uint color = (uint)Bitmap.Palette.Entries[idx].ToArgb();
-                        uint noalpha = color & 0x00FFFFFF;
+                        uint color = palette[idx];
 
                         // use m59 transparency for cyan
-                        bool usetransp = (noalpha == 0x0000FFFF);
+                        bool usetransp = (color == 0x0000FFFF);
                         
                         pixels[writeoffset] = (usetransp) ? (byte)254 : 
-                            (byte)ColorTransformation.GetClosestPaletteIndex(ColorTransformation.DefaultPalette, noalpha);
+                            (byte)ColorTransformation.GetClosestPaletteIndex(ColorTransformation.DefaultPalette, color);
 
                         readoffset++;
                         writeoffset++;
