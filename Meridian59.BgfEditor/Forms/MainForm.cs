@@ -599,7 +599,7 @@ namespace Meridian59.BgfEditor
 
         protected void OnMenuConverFromValeColors(object sender, EventArgs e)
         {
-            if (Program.CurrentFile == null)
+            if (Program.CurrentFile.Frames.Count == 0)
                 return;
 
             Program.HasFileChanged = true;
