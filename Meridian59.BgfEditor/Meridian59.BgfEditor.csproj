@@ -74,6 +74,7 @@
     <Compile Include="Controls\PictureBoxes.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ImageLoaderWorker.cs" />
     <Compile Include="Forms\AboutBox.cs">
       <SubType>Form</SubType>
     </Compile>

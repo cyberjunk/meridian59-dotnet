@@ -862,6 +862,7 @@
             // fdAddFrame
             // 
             this.fdAddFrame.Filter = "Images|*.png;*.jpg;*.bmp";
+            this.fdAddFrame.Multiselect = true;
             this.fdAddFrame.FileOk += new System.ComponentModel.CancelEventHandler(this.OnFileDialogAddFrameFileOk);
             // 
             // fdOpenFile

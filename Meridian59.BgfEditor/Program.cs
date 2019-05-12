@@ -26,6 +26,7 @@ using Meridian59.Data.Models;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using Meridian59.BgfEditor.Forms;
+using Meridian59.Common;
 
 namespace Meridian59.BgfEditor
 {
@@ -42,6 +43,11 @@ namespace Meridian59.BgfEditor
 
         private static Stopwatch stopWatch;
         private static long MSTICKDIVISOR = Stopwatch.Frequency / 1000;
+
+        // Queue for image files to load in worker threads.
+        public static LockingQueue<string> BitmapFileQueue = new LockingQueue<string>();
+        // Queue for BgfBitmap objects to load into form.
+        public static LockingQueue<BgfBitmap> BgfBitmapQueue = new LockingQueue<BgfBitmap>();
 
         /// <summary>
         /// Main entry
@@ -106,6 +112,12 @@ namespace Meridian59.BgfEditor
 
                 // process window messages / events
                 Application.DoEvents();
+
+                while (BgfBitmapQueue.TryDequeue(out BgfBitmap bgfBitmap))
+                {
+                    bgfBitmap.Num = (uint)CurrentFile.Frames.Count + 1;
+                    CurrentFile.Frames.Add(bgfBitmap);
+                }
 
                 // sleep
                 Thread.Sleep(1);
@@ -263,6 +275,15 @@ namespace Meridian59.BgfEditor
         private static void OnMainFormFormClosed(object sender, FormClosedEventArgs e)
         {
             IsRunning = false;
+        }
+
+        /// <summary>
+        /// Returns true if images are being loaded into the bgf.
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsLoadingImages()
+        {
+            return BgfBitmapQueue.Count > 0 || BitmapFileQueue.Count > 0;
         }
     }
 }
