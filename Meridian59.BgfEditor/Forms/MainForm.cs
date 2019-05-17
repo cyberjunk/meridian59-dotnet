@@ -16,6 +16,12 @@ namespace Meridian59.BgfEditor
         public const string STR_REMOVEGROUP = "Remove group";
         public const string STR_REMOVEFRAME = "Remove frame";
         public const string STR_ERRORSTILLINKED = "Can't remove. Still linked in a group!";
+        public const string STR_LOADINGFILEOPEN = "Can't open a file while loading images.";
+        public const string STR_LOADINGFILESAVE = "Can't save a file while loading images.";
+        public const string STR_LOADINGFILENEW = "Can't create a new file while loading images.";
+
+        private const int NUMWORKERS = 4;
+        private static readonly ImageLoaderWorker[] imageLoaderWorkers = new ImageLoaderWorker[NUMWORKERS];
 
         public BgfBitmap SelectedFrame
         {
@@ -401,16 +407,39 @@ namespace Meridian59.BgfEditor
 
         protected void OnMenuNewClick(object sender, EventArgs e)
         {
+            if (Program.IsLoadingImages())
+            {
+                MessageBox.Show(STR_LOADINGFILENEW, "Info", MessageBoxButtons.OK,
+                                MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+
+                return;
+            }
             Program.New();
         }
 
         protected void OnMenuOpenClick(object sender, EventArgs e)
         {
+            if (Program.IsLoadingImages())
+            {
+                MessageBox.Show(STR_LOADINGFILEOPEN, "Info", MessageBoxButtons.OK,
+                                MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+
+                return;
+            }
+
             fdOpenFile.ShowDialog();
         }
 
         protected void OnMenuSaveAsClick(object sender, EventArgs e)
         {
+            if (Program.IsLoadingImages())
+            {
+                MessageBox.Show(STR_LOADINGFILESAVE, "Info", MessageBoxButtons.OK,
+                                MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+
+                return;
+            }
+
             fdSaveFile.FileName = Program.CurrentFile.Filename;
             fdSaveFile.ShowDialog();
         }
@@ -495,30 +524,15 @@ namespace Meridian59.BgfEditor
 
         protected void OnFileDialogAddFrameFileOk(object sender, CancelEventArgs e)
         {
-            // load bitmap from file
-            Bitmap bitmap = new Bitmap(fdAddFrame.FileName);
-
-            // get pixels
-            byte[] pixelData = BgfBitmap.BitmapToPixelData(bitmap);
-
-            // create BgfBitmap
-            BgfBitmap bgfBitmap = new BgfBitmap(
-                (uint)Program.CurrentFile.Frames.Count + 1,
-                Program.CurrentFile.Version,
-                (uint)bitmap.Width,
-                (uint)bitmap.Height,
-                0,
-                0,
-                new BgfBitmapHotspot[0],
-                false,
-                0,
-                pixelData);
-
-            // cleanp temporary bitmap
-            bitmap.Dispose();
-
-            // add to frames
-            Program.CurrentFile.Frames.Add(bgfBitmap);
+            foreach (string file in fdAddFrame.FileNames)
+            {
+                Program.BitmapFileQueue.Enqueue(file);
+            }
+            for (int i = 0; i < NUMWORKERS; ++i)
+            {
+                imageLoaderWorkers[i] = new ImageLoaderWorker();
+                imageLoaderWorkers[i].Start();
+            }
         }
 
         protected void OnFileDialogSaveFileOk(object sender, CancelEventArgs e)
