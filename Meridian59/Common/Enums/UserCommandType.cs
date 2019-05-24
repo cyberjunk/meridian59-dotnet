@@ -68,6 +68,9 @@ namespace Meridian59.Common.Enums
         Deposit             = 35,
         WithDraw            = 36,
         Balance             = 37,
+#if !VANILLA && !OPENMERIDIAN
+        GuildShieldError    = 38,
+#endif
 
         Appeal              = 40,
         ReqRescue           = 41,

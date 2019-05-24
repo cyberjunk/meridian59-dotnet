@@ -214,7 +214,11 @@ namespace Meridian59.Data.Models
                 case UserCommandType.Balance:                                                           // 37
                     returnValue = new UserCommandBalance(Buffer, StartIndex);
                     break;
-
+#if !VANILLA && !OPENMERIDIAN
+                case UserCommandType.GuildShieldError:                                                  // 38
+                    returnValue = new UserCommandGuildShieldError(StringResources, Buffer, StartIndex);
+                    break;
+#endif
                 case UserCommandType.Appeal:                                                            // 40
                     returnValue = new UserCommandAppeal(Buffer, StartIndex);
                     break;

@@ -1005,6 +1005,7 @@ namespace Meridian59 { namespace Ogre
          static void OnExileConfirmed(Object^ sender, ::System::EventArgs^ e);
          static void OnRenounceConfirmed(Object^ sender, ::System::EventArgs^ e);
          static void OnAbdicateConfirmed(Object^ sender, ::System::EventArgs^ e);
+         static void OnOKClicked(Object ^ sender, ::System::EventArgs ^ e);
          static void OnAbandonHallConfirmed(Object^ sender, ::System::EventArgs^ e);
          static void MemberAdd(int Index);
          static void MemberRemove(int Index);

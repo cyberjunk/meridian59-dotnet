@@ -2696,6 +2696,11 @@ namespace Meridian59.Data
                     ClientPreferences.UpdateFromModel(((UserCommandReceivePreferences)Message.Command).ClientPreferences, true);
                     ClientPreferences.Enabled = true;
                     break;
+#if !OPENMERIDIAN
+                case UserCommandType.GuildShieldError:
+                    GuildShieldInfo.GuildShieldError = ((UserCommandGuildShieldError)Message.Command).ShieldError;
+                    break;
+#endif
 #endif
                 case UserCommandType.GuildShield:
                     // this can either be GuildShieldInfo or GuildshieldInfoReq
