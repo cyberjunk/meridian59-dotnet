@@ -238,7 +238,11 @@ namespace Meridian59 { namespace Ogre
       // GuildName
       else if (CLRString::Equals(e->PropertyName, Data::Models::GuildShieldInfo::PROPNAME_GUILDNAME))
       {
-         ShieldClaimedBy->setText(StringConvert::CLRToCEGUI(shieldInfo->GuildName));
+         CLRString^ guildNameStr = shieldInfo->GuildName;
+         ShieldClaimedBy->setText(StringConvert::CLRToCEGUI(guildNameStr));
+
+         // Only enable the 'shield claim' button if the shield doesn't have a guild name attached.
+         guildNameStr->Equals("") ? ShieldClaim->enable() : ShieldClaim->disable();
       }
 
       // GuildID
@@ -251,6 +255,16 @@ namespace Meridian59 { namespace Ogre
       {
          // designvalue is 1-based, slider is 0-based
          ShieldDesign->setMaxValue((float)shieldInfo->Shields->Length - 1.0f);
+      }
+
+      // Guild shield error
+      else if (CLRString::Equals(e->PropertyName, Data::Models::GuildShieldInfo::PROPNAME_GUILDSHIELDERROR))
+      {
+         // Error while claiming a guild shield, show a popup with the error string received.
+         // String is empty if an error is cleared, or no error present.
+         CLRString^ guildShieldErrorStr = shieldInfo->GuildShieldError->FullString;
+         if (!guildShieldErrorStr->Equals(""))
+            ControllerUI::ConfirmPopup::ShowOK(StringConvert::CLRToCEGUI(guildShieldErrorStr), 0);
       }
    };
 
@@ -621,6 +635,13 @@ namespace Meridian59 { namespace Ogre
 
       return;
    }
+
+   void ControllerUI::Guild::OnOKClicked(Object ^sender, ::System::EventArgs ^e)
+   {
+      GuildShieldInfo^ shieldInfo = OgreClient::Singleton->Data->GuildShieldInfo;
+      // Reset error.
+      shieldInfo->GuildShieldError->Clear(true);
+   };
 
    //////////////////////////////////////////////////////////////////////////////////////////////////////////
    //////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -41,6 +41,7 @@ namespace Meridian59.Data.Models
         public const string PROPNAME_DESIGN         = "Design";
         public const string PROPNAME_SHIELDS        = "Shields";
         public const string PROPNAME_EXAMPLEMODEL   = "ExampleModel";
+        public const string PROPNAME_GUILDSHIELDERROR = "GuildShieldError";
         #endregion
 
         #region INotifyPropertyChanged
@@ -129,6 +130,7 @@ namespace Meridian59.Data.Models
         protected byte design;
         protected ResourceIDBGF[] shields;
         protected ObjectBase exampleModel;
+        protected ServerString guildShieldError;
         #endregion
 
         #region Properties
@@ -283,6 +285,22 @@ namespace Meridian59.Data.Models
                 }
             }
         }
+
+        /// <summary>
+        /// Set when an error ServerString is received for the shield UI.
+        /// </summary>
+        public ServerString GuildShieldError
+        {
+            get { return guildShieldError; }
+            set
+            {
+                if (guildShieldError != value)
+                {
+                    guildShieldError = value;
+                    RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_GUILDSHIELDERROR));
+                }
+            }
+        }
         #endregion
 
         #region Constructors
@@ -302,12 +320,14 @@ namespace Meridian59.Data.Models
             color1 = Color1;
             color2 = Color2;
             design = Design;
+            guildShieldError = new ServerString();
         }
 
         public GuildShieldInfo(byte[] Buffer, int StartIndex = 0)
         {
             ExampleModel = new ObjectBase();
-            
+            GuildShieldError = new ServerString();
+
             ReadFrom(Buffer, StartIndex);
         }
         #endregion
@@ -322,6 +342,7 @@ namespace Meridian59.Data.Models
                 Color1 = WHITECOLOR;
                 Color2 = WHITECOLOR;
                 Design = 1;
+                GuildShieldError = new ServerString();
             }
             else
             {
@@ -330,7 +351,7 @@ namespace Meridian59.Data.Models
                 color1 = WHITECOLOR;
                 color2 = WHITECOLOR;
                 design = 1;
-
+                guildShieldError = new ServerString();
                 // update examplemodel
                 exampleModel.ColorTranslation = ColorTransformation.GetGuildShieldColor(color1, color2);
                 
@@ -354,6 +375,7 @@ namespace Meridian59.Data.Models
                 Color1 = Model.Color1;
                 Color2 = Model.Color2;
                 Design = Model.Design;
+                GuildShieldError = Model.GuildShieldError;
             }
             else
             {
@@ -362,6 +384,7 @@ namespace Meridian59.Data.Models
                 color1 = Model.Color1;
                 color2 = Model.Color2;
                 design = Model.Design;
+                guildShieldError = Model.GuildShieldError;
 
                 // update examplemodel
                 exampleModel.ColorTranslation = ColorTransformation.GetGuildShieldColor(color1, color2);
