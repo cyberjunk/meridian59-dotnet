@@ -514,6 +514,10 @@ namespace Meridian59.Protocol
                     case MessageTypeGameMode.Action:                                          // PI: 90
                         TypedMessage = new ActionMessage(e.MessageBuffer);
                         break;
+#if !VANILLA && !OPENMERIDIAN
+                    case MessageTypeGameMode.ReqPerform:                                      // PI: 97
+                        TypedMessage = new ReqPerformMessage(e.MessageBuffer);
+                        break;
 
                     case MessageTypeGameMode.ReqTriggerQuest:                                 // PI: 98
                         TypedMessage = new ReqTriggerQuestMessage(e.MessageBuffer);
@@ -522,7 +526,7 @@ namespace Meridian59.Protocol
                     case MessageTypeGameMode.ReqNPCQuests:                                    // PI: 99
                         TypedMessage = new ReqNPCQuestsMessage(e.MessageBuffer);
                         break;
-
+#endif
                     case MessageTypeGameMode.ReqMove:                                         // PI: 100
                         TypedMessage = new ReqMoveMessage(e.MessageBuffer, 0, e.IsTCP);
                         break;

@@ -84,6 +84,9 @@ namespace Meridian59.Protocol.Enums
         ReqLookupNames      = 88,
         Action              = 90,
 
+#if !VANILLA && !OPENMERIDIAN
+        ReqPerform          = 97,
+#endif
         ReqTriggerQuest     = 98,
         ReqNPCQuests        = 99,
         ReqMove             = 100,

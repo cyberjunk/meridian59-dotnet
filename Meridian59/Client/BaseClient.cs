@@ -1801,7 +1801,141 @@ namespace Meridian59.Client
             if (Data.IsNextAttackApplyCastOnHighlightedObject)
                 Data.IsNextAttackApplyCastOnHighlightedObject = false;
         }
-        
+
+        /// <summary>
+        /// Requests to perform a skill on your current targets,
+        /// or on yourself depending on datacontroller values.
+        /// </summary>
+        /// <param name="SkillID">The SkillID to cast</param>
+        public virtual void SendReqPerformMessage(uint SkillID)
+        {
+            // try get spellobject for ID
+            SkillObject skillObject =
+                Data.SkillObjects.GetItemByID(SkillID);
+
+            if (skillObject != null)
+                SendReqPerformMessage(skillObject);
+        }
+
+        /// <summary>
+        /// Requests to perform a skill on your current targets,
+        /// or on yourself depending on datacontroller values.
+        /// </summary>
+        /// <param name="Skill">The SkillObject to cast</param>
+        public virtual void SendReqPerformMessage(SkillObject Skill)
+        {
+            ObjectBase[] targetIDs = null;
+
+            // Can only perform active skills.
+            if (!Skill.IsActiveSkill)
+            {
+                // TODO: uses attack timer server-side, not sure if needs its own CanReqX method.
+                if (GameTick.CanReqAttack())
+                {
+                    Data.ChatMessages.Add(ServerString.GetServerStringForString(
+                        $"The {Skill.Name} skill grants a passive bonus and can't be actively performed."));
+                    GameTick.DidReqAttack();
+                }
+
+                return;
+            }
+
+            // if the spell requires (at least) one target
+            if (Skill.TargetsCount > 0)
+            {
+                // target: highlighted
+                if (Data.IsNextAttackApplyCastOnHighlightedObject)
+                {
+                    targetIDs = new ObjectBase[1];
+                    targetIDs[0] = Data.RoomObjects.GetHighlightedItem();
+                }
+
+                // target: self
+                else if (Data.SelfTarget)
+                {
+                    targetIDs = new ObjectBase[1];
+                    targetIDs[0] = Data.AvatarObject;
+                }
+
+                // target: target (default)
+                else if (Data.TargetObject != null)
+                {
+                    targetIDs = new ObjectBase[1];
+                    targetIDs[0] = Data.TargetObject;
+                }
+            }
+
+            // room enchantments for example don't require a target
+            else
+                targetIDs = new ObjectBase[0];
+
+            // if we have proper target(s) for this skill
+            if (targetIDs != null)
+            {
+                if (GameTick.CanReqAttack())
+                {
+                    // send by default
+                    bool send = true;
+
+                    // if no non-target spell, verify view for roomobjects
+                    if (targetIDs.Length > 0)
+                    {
+                        // src is our avatar
+                        RoomObject src = Data.AvatarObject;
+
+                        if (targetIDs[0] != null)
+                        {
+                            // verify the object is visible
+                            if (targetIDs[0] is RoomObject)
+                            {
+                                V3 pos3D = src.Position3D;
+                                send = ((RoomObject)targetIDs[0]).IsVisibleFrom(ref pos3D, CurrentRoom);
+                            }
+
+                            // other objects are "always visible", e.g. inventory
+                            else
+                                send = true;
+                        }
+                        else
+                            send = false;
+                    }
+
+                    // send or not to send
+                    if (send)
+                    {
+                        ObjectID[] plainIDs = new ObjectID[targetIDs.Length];
+                        for (int i = 0; i < targetIDs.Length; i++)
+                            plainIDs[i] = new ObjectID(targetIDs[i].ID);
+
+                        // create message instance
+                        ReqPerformMessage message = new ReqPerformMessage(Skill.ID, plainIDs);
+
+                        // send/enqueue it (async)
+                        ServerConnection.SendQueue.Enqueue(message);
+
+                        // save tick we last sent an update
+                        GameTick.DidReqAttack();
+                    }
+                }
+            }
+            else
+            {
+                // don't spam feedback so
+                // create a delay like a cast
+                if (GameTick.CanReqAttack())
+                {
+                    Data.ChatMessages.Add(ServerString.GetServerStringForString(
+                        "This skill requires a target."));
+
+                    GameTick.DidReqAttack();
+                }
+            }
+
+            // reset highlighted attack marker
+            if (Data.IsNextAttackApplyCastOnHighlightedObject)
+                Data.IsNextAttackApplyCastOnHighlightedObject = false;
+        }
+
         /// <summary>
         /// Sends chatmessage as say, yell, broadcast, ...
         /// </summary>
@@ -3029,6 +3163,11 @@ namespace Meridian59.Client
                     case ChatCommandType.Invite:
                         ChatCommandInvite chatCommandInvite = (ChatCommandInvite)chatCommand;
                         SendUserCommandGuildInvite(chatCommandInvite.TargetID);
+                        break;
+
+                    case ChatCommandType.Perform:
+                        ChatCommandPerform chatCommandPerform = (ChatCommandPerform)chatCommand;
+                        SendReqPerformMessage(chatCommandPerform.Skill);
                         break;
 #endif
 #endif
