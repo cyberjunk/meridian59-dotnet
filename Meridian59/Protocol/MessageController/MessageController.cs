@@ -698,10 +698,12 @@ namespace Meridian59.Protocol
 
                     case MessageTypeGameMode.Skills:                                          // PI: 144
                         TypedMessage = new SkillsMessage(ref pMessage);
+                        HandleSkills((SkillsMessage)TypedMessage);
                         break;
 
                     case MessageTypeGameMode.SkillAdd:                                        // PI: 145
                         TypedMessage = new SkillAddMessage(e.MessageBuffer);
+                        HandleSkillAdd((SkillAddMessage)TypedMessage);
                         break;
 
                     case MessageTypeGameMode.SkillRemove:                                     // PI: 146
@@ -1189,6 +1191,17 @@ namespace Meridian59.Protocol
         protected void HandleSpellAdd(SpellAddMessage Message)
         {
             Message.NewSpellObject.ResolveStrings(stringResources, false);
+        }
+
+        protected void HandleSkills(SkillsMessage Message)
+        {
+            foreach (SkillObject obj in Message.SkillObjects)
+                obj.ResolveStrings(stringResources, false);
+        }
+
+        protected void HandleSkillAdd(SkillAddMessage Message)
+        {
+            Message.NewSkillObject.ResolveStrings(stringResources, false);
         }
 
         protected void HandleUserCommand(UserCommandMessage Message)

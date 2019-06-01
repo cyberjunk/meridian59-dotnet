@@ -27,6 +27,10 @@ namespace Meridian59.Common.Enums
         Faren = 0x04,
         Riija = 0x05,
         Jala = 0x06,
-        DM = 0x07
+        DM = 0x07,
+
+        WeaponCraft = 0xA,
+        DMSkills = 0xB,
+        RogueCraft = 0xC
     }
 }

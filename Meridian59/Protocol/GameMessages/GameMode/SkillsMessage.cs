@@ -31,7 +31,7 @@ namespace Meridian59.Protocol.GameMessages
             {
                 int len = base.ByteLength + TypeSizes.SHORT;
 
-                foreach (ObjectBase obj in Skills)
+                foreach (SkillObject obj in SkillObjects)
                     len += obj.ByteLength;
 
                 return len;
@@ -44,10 +44,10 @@ namespace Meridian59.Protocol.GameMessages
 
             cursor += base.WriteTo(Buffer, cursor);
 
-            Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(Skills.Length)), 0, Buffer, cursor, TypeSizes.SHORT);
+            Array.Copy(BitConverter.GetBytes(Convert.ToUInt16(SkillObjects.Length)), 0, Buffer, cursor, TypeSizes.SHORT);
             cursor += TypeSizes.SHORT;
 
-            foreach (ObjectBase skillObject in Skills)
+            foreach (SkillObject skillObject in SkillObjects)
                 cursor += skillObject.WriteTo(Buffer, cursor);
             
             return cursor - StartIndex;
@@ -62,11 +62,11 @@ namespace Meridian59.Protocol.GameMessages
             ushort len = BitConverter.ToUInt16(Buffer, cursor);
             cursor += TypeSizes.SHORT;
 
-            Skills = new ObjectBase[len];
+            SkillObjects = new SkillObject[len];
             for (int i = 0; i < len; i++)
             {
-                Skills[i] = new ObjectBase(true, Buffer, cursor);
-                cursor += Skills[i].ByteLength;
+                SkillObjects[i] = new SkillObject(Buffer, cursor);
+                cursor += SkillObjects[i].ByteLength;
             }
 
             return cursor - StartIndex;
@@ -76,10 +76,10 @@ namespace Meridian59.Protocol.GameMessages
         {
             base.WriteTo(ref Buffer);
 
-            *((ushort*)Buffer) = (ushort)Skills.Length;
+            *((ushort*)Buffer) = (ushort)SkillObjects.Length;
             Buffer += TypeSizes.SHORT;
 
-            foreach (ObjectBase obj in Skills)
+            foreach (SkillObject obj in SkillObjects)
                 obj.WriteTo(ref Buffer);
         }
 
@@ -90,19 +90,19 @@ namespace Meridian59.Protocol.GameMessages
             ushort len = *((ushort*)Buffer);
             Buffer += TypeSizes.SHORT;
 
-            Skills = new ObjectBase[len];
+            SkillObjects = new SkillObject[len];
             for (int i = 0; i < len; i++)
-                Skills[i] = new ObjectBase(true, ref Buffer);
+                SkillObjects[i] = new SkillObject(ref Buffer);
 
         }
         #endregion
 
-        public ObjectBase[] Skills { get; set; }
+        public SkillObject[] SkillObjects { get; set; }
 
-        public SkillsMessage(ObjectBase[] Skills) 
+        public SkillsMessage(SkillObject[] SkillObjects) 
             : base(MessageTypeGameMode.Skills)
         {           
-            this.Skills = Skills;
+            this.SkillObjects = SkillObjects;
         }
 
         public SkillsMessage(byte[] Buffer, int StartIndex = 0) 

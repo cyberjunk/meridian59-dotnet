@@ -175,6 +175,27 @@ namespace Meridian59.Data.Lists
             return returnValue;
         }
 
+        /// <summary>
+        /// Removes an ability and sets Num properties in list
+        /// to the new correct values to match the server. Old
+        /// method of doing this was server resending the whole
+        /// list on adding or removing a spell/skill.
+        /// </summary>
+        /// <param name="ID"></param>
+        public void RemoveAbilityByID(uint ID)
+        {
+            StatList item = this.GetItemByID(ID);
+            if (item != null)
+            {
+                this.RemoveByNum(item.Num);
+
+                // Renumber Num properties in list items.
+                foreach (StatList entry in this)
+                    if (entry.Num > item.Num)
+                        entry.Num--;
+            }
+        }
+
         public override void ApplySort(PropertyDescriptor Property, ListSortDirection Direction)
         {
             base.ApplySort(Property, Direction);
@@ -213,6 +234,23 @@ namespace Meridian59.Data.Lists
 
                 base.Insert(Index, Item);
             }
+        }
+
+        /// <summary>
+        /// Inserts an ability and sets Num properties in list
+        /// to the new correct values to match the server. Old
+        /// method of doing this was server resending the whole
+        /// list on adding or removing a spell/skill.
+        /// </summary>
+        public void InsertAbility(StatList Item)
+        {
+            // Renumber Num properties in list items.
+            foreach (StatList entry in this)
+                if (entry.Num >= Item.Num)
+                    entry.Num++;
+
+            // Insert, Num properties are 1-based.
+            this.Insert(Item.Num - 1, Item);
         }
 
         public void SortByNum()

@@ -195,6 +195,14 @@ namespace Meridian59.Protocol
                     HandleSpellAddMessage((SpellAddMessage)Message);
                     break;
 
+                case MessageTypeGameMode.Skills:                                // 144
+                    HandleSkillsMessage((SkillsMessage)Message);
+                    break;
+
+                case MessageTypeGameMode.SkillAdd:                              // 145
+                    HandleSkillAddMessage((SkillAddMessage)Message);
+                    break;
+
                 case MessageTypeGameMode.AddEnchantment:                        // 147
                     HandleAddEnchantmentMessage((AddEnchantmentMessage)Message);
                     break;
@@ -374,7 +382,30 @@ namespace Meridian59.Protocol
             {
                 Message.NewSpellObject.ResolveResources(resourceManager, false);
                 Message.NewSpellObject.DecompressResources();
-            }            
+            }
+        }
+
+        protected virtual void HandleSkillsMessage(SkillsMessage Message)
+        {
+            double tick = GameTick.GetUpdatedTick();
+
+            foreach (SkillObject obj in Message.SkillObjects)
+            {
+                obj.ResolveResources(resourceManager, false);
+                obj.DecompressResources();
+            }
+
+            double span = GameTick.GetUpdatedTick() - tick;
+            Logger.Log(MODULENAME, LogType.Info, "Loaded BP_SKILLS: " + span.ToString() + " ms");
+        }
+
+        protected virtual void HandleSkillAddMessage(SkillAddMessage Message)
+        {
+            if (Message.NewSkillObject != null)
+            {
+                Message.NewSkillObject.ResolveResources(resourceManager, false);
+                Message.NewSkillObject.DecompressResources();
+            }
         }
 
         protected virtual void HandleAddEnchantmentMessage(AddEnchantmentMessage Message)

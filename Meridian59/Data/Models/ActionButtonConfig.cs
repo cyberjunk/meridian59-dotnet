@@ -233,6 +233,22 @@ namespace Meridian59.Data.Models
             Spell.PropertyChanged += OnObjectPropertyChanged;
         }
 
+        public void SetToSkill(SkillObject Skill)
+        {
+            if (Skill == null)
+                return;
+
+            // remove attached listener
+            RemoveListener();
+
+            buttonType = ActionButtonType.Skill;
+            name = Skill.Name;
+            numOfSameName = 0;
+
+            Data = Skill;
+            Skill.PropertyChanged += OnObjectPropertyChanged;
+        }
+
         public void SetToItem(InventoryObject Item)
         {
             if (Item == null)

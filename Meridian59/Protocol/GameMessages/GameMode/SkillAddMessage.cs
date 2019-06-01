@@ -28,7 +28,7 @@ namespace Meridian59.Protocol.GameMessages
         {
             get
             {
-                return base.ByteLength + Skill.ByteLength;
+                return base.ByteLength + NewSkillObject.ByteLength;
             }
         }
 
@@ -37,7 +37,7 @@ namespace Meridian59.Protocol.GameMessages
             int cursor = StartIndex;
 
             cursor += base.WriteTo(Buffer, cursor);
-            cursor += Skill.WriteTo(Buffer, cursor);
+            cursor += NewSkillObject.WriteTo(Buffer, cursor);
 
             return cursor - StartIndex;
         }
@@ -48,19 +48,19 @@ namespace Meridian59.Protocol.GameMessages
 
             cursor += base.ReadFrom(Buffer, cursor);
 
-            Skill = new ObjectBase(true, Buffer, cursor);
-            cursor += Skill.ByteLength;
+            NewSkillObject = new SkillObject(Buffer, cursor);
+            cursor += NewSkillObject.ByteLength;
 
             return cursor - StartIndex;
         }
         #endregion
 
-        public ObjectBase Skill { get; set; }
+        public SkillObject NewSkillObject { get; set; }
         
-        public SkillAddMessage(ObjectBase Skill) 
+        public SkillAddMessage(SkillObject skillObject) 
             : base(MessageTypeGameMode.SkillAdd)
         {         
-            this.Skill = Skill;                      
+            this.NewSkillObject = skillObject;                      
         }
 
         public SkillAddMessage(byte[] Buffer, int StartIndex = 0) 
