@@ -290,6 +290,47 @@ namespace Meridian59 { namespace Ogre
             }
          }
 
+         else if (dataModel->ButtonType == ActionButtonType::Skill)
+         {
+            dragger->setMouseCursor(UI_MOUSECURSOR_HAND);
+
+            //imageComposers[Index]->DataSource = (SkillObject^)dataModel->Data;
+
+            // hack: use higher resolution if available
+            // instead of attaching skillobject to imagecomposer
+            SkillObject^ skillObject = (SkillObject^)dataModel->Data;
+
+            // set image if available
+            if (skillObject != nullptr && skillObject->Resource != nullptr && skillObject->Resource->Frames->Count > 0)
+            {
+               int index = (skillObject->Resource->Frames->Count > 1) ? 1 : 0;
+
+               Ogre::TextureManager& texMan = Ogre::TextureManager::getSingleton();
+
+               // build name
+               const ::Ogre::String& oStrName =
+                  StringConvert::CLRToOgre(UI_NAMEPREFIX_STATICICON + skillObject->OverlayFile + "/" + index.ToString());
+
+               // possibly create texture
+               Util::CreateTextureA8R8G8B8(
+                  skillObject->Resource->Frames[index], oStrName,
+                  UI_RESGROUP_IMAGESETS,
+                  MIP_DEFAULT);
+
+               // reget TexPtr (no return from function works, ugh..)
+               TexturePtr texPtr = texMan.getByName(oStrName);
+
+               if (texPtr)
+               {
+                  // possibly create cegui wrap around it
+                  Util::CreateCEGUITextureFromOgre(ControllerUI::Renderer, texPtr);
+
+                  // set image
+                  imgButton->setProperty(UI_PROPNAME_IMAGE, oStrName);
+               }
+            }
+         }
+
          else if (dataModel->ButtonType == ActionButtonType::Alias)
          {
             dragger->setMouseCursor(UI_MOUSECURSOR_HAND);
@@ -321,12 +362,14 @@ namespace Meridian59 { namespace Ogre
       const CEGUI::GridLayoutContainer* gridButtons   = ControllerUI::ActionButtons::Grid;
       const CEGUI::GridLayoutContainer* gridInventory = ControllerUI::Inventory::List;
       const CEGUI::ItemListbox* listSpells            = ControllerUI::Spells::List;
+      const CEGUI::ItemListbox* listSkills            = ControllerUI::Skills::List;
       const CEGUI::ItemListbox* listActions           = ControllerUI::Actions::List;
       const CEGUI::ItemListbox* listAliases           = ControllerUI::Options::ListAliases;
 
       ActionButtonList^ buttonModels       = OgreClient::Singleton->Data->ActionButtons;
       InventoryObjectList^ inventoryModels = OgreClient::Singleton->Data->InventoryObjects;
       SpellObjectList^ spellModels         = OgreClient::Singleton->Data->SpellObjects;
+      SkillObjectList^ skillModels         = OgreClient::Singleton->Data->SkillObjects;
       KeyValuePairStringList^ aliasModels  = OgreClient::Singleton->Config->Aliases;
 
       // find index of droptarget
@@ -355,6 +398,16 @@ namespace Meridian59 { namespace Ogre
 
          if (spellModels->Count > indexitem)
             buttonModels[indexbutton]->SetToSpell(spellModels[indexitem]);
+      }
+
+      // from skills
+      else if (parent3 == listSkills)
+      {
+         // find index of dropsource
+         int indexitem = (int)listSkills->getItemIndex((CEGUI::ItemEntry*)parent);
+
+         if (skillModels->Count > indexitem)
+            buttonModels[indexbutton]->SetToSkill(skillModels[indexitem]);
       }
 
       // from actions

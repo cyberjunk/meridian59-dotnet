@@ -5804,7 +5804,7 @@
    <WidgetLook name="TaharezLook/AvatarSkillItem">
       <PropertyDefinition name="SelectionBrush" initialValue="TaharezLook/ListboxSelectionBrush" redrawOnWrite="true" />
       <PropertyDefinition name="SelectionColour" initialValue="FF444444" redrawOnWrite="true" />
-      <Property name="Selectable" value="False" />
+      <Property name="Selectable" value="True" />
       <Property name="MouseInputPropagationEnabled" value="True" />
       <Property name="MouseCursorImage" value="TaharezLook/MouseHand" />
       <NamedArea name="ContentSize">

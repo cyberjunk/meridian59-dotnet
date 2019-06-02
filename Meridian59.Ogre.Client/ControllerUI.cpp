@@ -406,7 +406,8 @@ namespace Meridian59 { namespace Ogre
          }
 
          // 2) A subwindow is selected which consumes all input
-         else if (IsRecursiveChildOf(focusedControl, Spells::Window))
+         else if (IsRecursiveChildOf(focusedControl, Spells::Window)
+            || IsRecursiveChildOf(focusedControl, Skills::Window))
             processingInput = true;
 
          // 3) Specifi UI elements always consume all input (like textboxes)

@@ -285,6 +285,10 @@ namespace Meridian59.Client
                         SendReqCastMessage((SpellObject)button.Data);
                         break;
 
+                    case ActionButtonType.Skill:
+                        SendReqPerformMessage((SkillObject)button.Data);
+                        break;
+
                     case ActionButtonType.Alias:
                         if (GameTick.CanAlias())
                         {

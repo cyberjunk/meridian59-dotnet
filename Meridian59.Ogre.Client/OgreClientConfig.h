@@ -80,6 +80,7 @@ namespace Meridian59 { namespace Ogre
       literal bool         DEFAULTVAL_UI_VISIBILITYROOMOBJECTS       = false;
 
       literal CLRString^ BUTTONTYPE_SPELL = "spell";
+      literal CLRString^ BUTTONTYPE_SKILL = "skill";
       literal CLRString^ BUTTONTYPE_ACTION = "action";
       literal CLRString^ BUTTONTYPE_ITEM = "item";
       literal CLRString^ BUTTONTYPE_ALIAS = "alias";

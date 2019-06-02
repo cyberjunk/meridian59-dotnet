@@ -1247,6 +1247,9 @@ namespace Meridian59 { namespace Ogre
       if (CLRString::Equals(ButtonType, BUTTONTYPE_SPELL))
          return ActionButtonType::Spell;
 
+      if (CLRString::Equals(ButtonType, BUTTONTYPE_SKILL))
+         return ActionButtonType::Skill;
+
       else if (CLRString::Equals(ButtonType, BUTTONTYPE_ACTION))
          return ActionButtonType::Action;
 
