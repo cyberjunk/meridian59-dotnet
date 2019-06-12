@@ -650,7 +650,7 @@ namespace Meridian59 { namespace Ogre
          gcnew System::EventHandler(this, &OgreClient::OnLoginErrorConfirmed);
 
       // tell user about failed connection
-      ControllerUI::ConfirmPopup::ShowOK("Connection failed", 0);
+      ControllerUI::ConfirmPopup::ShowOK("Connection failed", 0, false);
    };
 
    void OgreClient::InitResources()
@@ -892,7 +892,7 @@ namespace Meridian59 { namespace Ogre
          gcnew System::EventHandler(this, &OgreClient::OnLoginErrorConfirmed);
 
       // tell user about wrong credentials
-      ControllerUI::ConfirmPopup::ShowOK("Your account credentials are not correct.", 0);
+      ControllerUI::ConfirmPopup::ShowOK("Your account credentials are not correct.", 0, false);
    };
 
    void OgreClient::HandleNoCharactersMessage(NoCharactersMessage^ Message)
@@ -905,7 +905,7 @@ namespace Meridian59 { namespace Ogre
          gcnew System::EventHandler(this, &OgreClient::OnLoginErrorConfirmed);
 
       // tell user about no characters
-      ControllerUI::ConfirmPopup::ShowOK("Your account doesn't have any character slots.", 0);
+      ControllerUI::ConfirmPopup::ShowOK("Your account doesn't have any character slots.", 0, false);
    };
 
    void OgreClient::HandleLoginModeMessageMessage(LoginModeMessageMessage^ Message)
@@ -915,7 +915,7 @@ namespace Meridian59 { namespace Ogre
          gcnew System::EventHandler(this, &OgreClient::OnLoginErrorConfirmed);
 
       // tell user about wrong credentials
-      ControllerUI::ConfirmPopup::ShowOK(StringConvert::CLRToCEGUI(Message->Message), 0);
+      ControllerUI::ConfirmPopup::ShowOK(StringConvert::CLRToCEGUI(Message->Message), 0, false);
    };
 
    void OgreClient::HandleGetClientMessage(GetClientMessage^ Message)
@@ -924,7 +924,7 @@ namespace Meridian59 { namespace Ogre
       ControllerUI::ConfirmPopup::Confirmed +=
          gcnew System::EventHandler(this, &OgreClient::OnLoginErrorConfirmed);
       // tell user about mismatching major/minor version
-      ControllerUI::ConfirmPopup::ShowOK("Your major/minor versions don't match the server.", 0);
+      ControllerUI::ConfirmPopup::ShowOK("Your major/minor versions don't match the server.", 0, false);
    };
 
    void OgreClient::HandleDownloadMessage(DownloadMessage^ Message)
@@ -935,7 +935,7 @@ namespace Meridian59 { namespace Ogre
       ControllerUI::ConfirmPopup::Confirmed +=
          gcnew System::EventHandler(this, &OgreClient::OnLoginErrorConfirmed);
       // tell user about mismatching resources version
-      ControllerUI::ConfirmPopup::ShowOK("Resources mismatch", 0);
+      ControllerUI::ConfirmPopup::ShowOK("Resources mismatch", 0, false);
    };
 
    void OgreClient::OnLoginErrorConfirmed(Object ^sender, ::System::EventArgs ^e)
@@ -1067,19 +1067,19 @@ namespace Meridian59 { namespace Ogre
          gcnew System::EventHandler(this, &OgreClient::OnSuicideConfirmed);
 
       // show a yes/no dialog
-      ControllerUI::ConfirmPopup::ShowChoice("Are you sure?", 0);
+      ControllerUI::ConfirmPopup::ShowChoice("Are you sure?", 0, false);
    };
 
    void OgreClient::HandlePasswordOKMessage(PasswordOKMessage^ Message)
    {
       // tell user about the change and close the password window
-      ControllerUI::ConfirmPopup::ShowOK("Password changed successfully.", 0);
+      ControllerUI::ConfirmPopup::ShowOK("Password changed successfully.", 0, false);
    };
 
    void OgreClient::HandlePasswordNotOKMessage(PasswordNotOKMessage^ Message)
    {
       // tell user about the change and close the password window
-      ControllerUI::ConfirmPopup::ShowOK("The server did not accept your new password.", 0);
+      ControllerUI::ConfirmPopup::ShowOK("The server did not accept your new password.", 0, false);
    };
 
    void OgreClient::ShowAdminForm()

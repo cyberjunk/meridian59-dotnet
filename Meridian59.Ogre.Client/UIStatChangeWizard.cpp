@@ -418,7 +418,7 @@ namespace Meridian59 { namespace Ogre
       if (statsInfo->Intellect < statsInfo->IntellectNeeded)
       {
          // show (should be OK button)
-         ControllerUI::ConfirmPopup::ShowOK("Invalid intellect for number of schools!", 0);
+         ControllerUI::ConfirmPopup::ShowOK("Invalid intellect for number of schools!", 0, true);
       }
       else
       {
@@ -426,7 +426,7 @@ namespace Meridian59 { namespace Ogre
          ControllerUI::ConfirmPopup::Confirmed += gcnew System::EventHandler(ControllerUI::StatChangeWizard::OnStatChangeConfirmed);
 
          // show
-         ControllerUI::ConfirmPopup::ShowChoice("Are you sure you want to change your stats?", 0);
+         ControllerUI::ConfirmPopup::ShowChoice("Are you sure you want to change your stats?", 0, true);
       }
 
       return true;

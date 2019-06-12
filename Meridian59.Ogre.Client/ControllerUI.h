@@ -1234,16 +1234,18 @@ namespace Meridian59 { namespace Ogre
          static ::CEGUI::PushButton* LargeOK = nullptr;
          static uint ID = 0;
          static DialogMode Mode;
+         static bool CloseOnInvalidate;
 
          static void Initialize();
          static void Destroy();
          static void ApplyLanguage();
-         static void ShowChoice(const ::CEGUI::String& text, uint id);
-         static void ShowOK(const ::CEGUI::String& text, uint id);
-         static void ShowChoiceLarge(const ::CEGUI::String& text, uint id);
-         static void ShowOKLarge(const ::CEGUI::String& text, uint id);
+         static void ShowChoice(const ::CEGUI::String& text, uint id, bool closeOnInvalidate);
+         static void ShowOK(const ::CEGUI::String& text, uint id, bool closeOnInvalidate);
+         static void ShowChoiceLarge(const ::CEGUI::String& text, uint id, bool closeOnInvalidate);
+         static void ShowOKLarge(const ::CEGUI::String& text, uint id, bool closeOnInvalidate);
          static void _RaiseConfirm();
          static void _RaiseCancel();
+         static void DataInvalidated();
       };
 
       /// <summary>

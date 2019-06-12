@@ -264,7 +264,7 @@ namespace Meridian59 { namespace Ogre
          // String is empty if an error is cleared, or no error present.
          CLRString^ guildShieldErrorStr = shieldInfo->GuildShieldError->FullString;
          if (!guildShieldErrorStr->Equals(""))
-            ControllerUI::ConfirmPopup::ShowOK(StringConvert::CLRToCEGUI(guildShieldErrorStr), 0);
+            ControllerUI::ConfirmPopup::ShowOK(StringConvert::CLRToCEGUI(guildShieldErrorStr), 0, true);
       }
    };
 
@@ -736,7 +736,7 @@ namespace Meridian59 { namespace Ogre
             ControllerUI::ConfirmPopup::Confirmed += gcnew System::EventHandler(ControllerUI::Guild::OnAbdicateConfirmed);
             ControllerUI::ConfirmPopup::ShowChoice(
                "Are you sure you want to abdicate to " + StringConvert::CLRToCEGUI(member->Name) + "?",
-               member->ID);
+               member->ID, true);
          }
 
          // reset value
@@ -862,7 +862,7 @@ namespace Meridian59 { namespace Ogre
    {
       // attach yes listener to confirm popup
       ControllerUI::ConfirmPopup::Confirmed += gcnew System::EventHandler(ControllerUI::Guild::OnAbandonHallConfirmed);
-      ControllerUI::ConfirmPopup::ShowChoice("Are you sure you want to abandon your hall?", 0);
+      ControllerUI::ConfirmPopup::ShowChoice("Are you sure you want to abandon your hall?", 0, true);
 
       return true;
    };
@@ -875,13 +875,13 @@ namespace Meridian59 { namespace Ogre
       {
          // attach yes listener to confirm popup
          ControllerUI::ConfirmPopup::Confirmed += gcnew System::EventHandler(ControllerUI::Guild::OnRenounceConfirmed);
-         ControllerUI::ConfirmPopup::ShowChoice("Are you sure you want to leave your guild?", 0);
+         ControllerUI::ConfirmPopup::ShowChoice("Are you sure you want to leave your guild?", 0, true);
       }
       else if (guildInfo->Flags->IsDisband)
       {
          // attach yes listener to confirm popup
          ControllerUI::ConfirmPopup::Confirmed += gcnew System::EventHandler(ControllerUI::Guild::OnRenounceConfirmed);
-         ControllerUI::ConfirmPopup::ShowChoice("Are you sure you want to disband your guild?", 0);
+         ControllerUI::ConfirmPopup::ShowChoice("Are you sure you want to disband your guild?", 0, true);
       }
 
       return true;
@@ -903,7 +903,7 @@ namespace Meridian59 { namespace Ogre
          ControllerUI::ConfirmPopup::Confirmed += gcnew System::EventHandler(ControllerUI::Guild::OnExileConfirmed);
          ControllerUI::ConfirmPopup::ShowChoice(
             "Are you sure you want to exile " + StringConvert::CLRToCEGUI(member->Name) + "?",
-            member->ID);
+            member->ID, true);
       }
 
       return true;
