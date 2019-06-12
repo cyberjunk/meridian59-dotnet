@@ -216,6 +216,10 @@ namespace Meridian59 { namespace Ogre
          // convert to CLR
          CLRString^ clrDesc = StringConvert::CEGUIToCLR(description);
 
+         // Remove ending newline added by CEGUI.
+         if (clrDesc->EndsWith("\n"))
+            clrDesc = clrDesc->Remove(clrDesc->Length - 1);
+
          // if text differs, send update to server
          if (!CLRString::Equals(lookInfo->Message->FullString, clrDesc))
             OgreClient::Singleton->SendChangeDescription(clrDesc);
@@ -226,6 +230,10 @@ namespace Meridian59 { namespace Ogre
 
          // convert to CLR
          CLRString^ clrWebsite = StringConvert::CEGUIToCLR(website);
+
+         // Remove ending newline added by CEGUI.
+         if (clrWebsite->EndsWith("\n"))
+            clrWebsite = clrWebsite->Remove(clrWebsite->Length - 1);
 
          // if website differs, send update to server
          if (!CLRString::Equals(lookInfo->Website, clrWebsite))
