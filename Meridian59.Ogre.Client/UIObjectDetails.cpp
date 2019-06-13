@@ -243,8 +243,12 @@ namespace Meridian59 { namespace Ogre
       // convert to CLR
       CLRString^ clrInsc = StringConvert::CEGUIToCLR(inscription);
 
+      // Remove ending newline added by CEGUI.
+      if (clrInsc->EndsWith("\n"))
+         clrInsc = clrInsc->Remove(clrInsc->Length - 1);
+
       // if text differs, send update to server
-      if (!CLRString::Equals(lookInfo->Message->FullString, clrInsc))
+      if (!CLRString::Equals(lookInfo->Inscription->FullString, clrInsc))
          OgreClient::Singleton->SendChangeDescription(lookObj->ID, clrInsc);
 
       // hide
