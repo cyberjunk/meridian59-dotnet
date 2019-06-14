@@ -4,9 +4,6 @@ namespace Meridian59 { namespace Ogre
 {
    void ControllerUI::Inventory::Initialize()
    {
-      // get windowmanager
-      CEGUI::WindowManager& wndMgr = CEGUI::WindowManager::getSingleton();
-
       // setup references to children from xml nodes
       Window   = static_cast<CEGUI::FrameWindow*>(guiRoot->getChild(UI_NAME_INVENTORY_WINDOW));
       Pane     = static_cast<CEGUI::ScrollablePane*>(Window->getChild(UI_NAME_INVENTORY_PANE));
@@ -19,62 +16,16 @@ namespace Meridian59 { namespace Ogre
       // attach listener to inventory
       OgreClient::Singleton->Data->InventoryObjects->ListChanged += 
          gcnew ListChangedEventHandler(OnInventoryListChanged);
+ 
+      // create image composers list for inventory slots
+      imageComposers = gcnew ::System::Collections::Generic::List<ImageComposerCEGUI<InventoryObject^>^>();
 
-      // amount of entries the buffgrid can hold
-      const int entries = UI_INVENTORY_COLS * UI_INVENTORY_ROWS;
+      // Init row counter to 0.
+      currentInventoryRows = 0;
 
-      // set dimension (no. of items per row and no. of cols)
-      List->setGridDimensions(UI_INVENTORY_COLS, UI_INVENTORY_ROWS);
-
-      // create image composers for slots
-      imageComposers = gcnew array<ImageComposerCEGUI<InventoryObject^>^>(entries);
-
-      for(int i = 0; i < entries; i++)
-      {
-         imageComposers[i] = gcnew ImageComposerCEGUI<InventoryObject^>();
-         imageComposers[i]->ApplyYOffset = false;
-         imageComposers[i]->HotspotIndex = 0;
-         imageComposers[i]->IsScalePow2 = false;
-         imageComposers[i]->UseViewerFrame = false;
-         imageComposers[i]->Width = UI_INVENTORYICON_WIDTH;
-         imageComposers[i]->Height = UI_INVENTORYICON_HEIGHT;
-         imageComposers[i]->CenterHorizontal = true;
-         imageComposers[i]->CenterVertical = true;
-         imageComposers[i]->NewImageAvailable += gcnew ::System::EventHandler(OnNewImageAvailable);
-      }
-
-      // create imagebuttons in slots
-      for(int i = 0; i < entries; i++)
-      {
-         // create widget
-         CEGUI::DragContainer* dragger = (CEGUI::DragContainer*)wndMgr.createWindow(UI_WINDOWTYPE_INVENTORYICON);
-         CEGUI::Window* widget = dragger->getChildAtIdx(0);
-
-         // size of elements
-         CEGUI::USize size = CEGUI::USize(
-            CEGUI::UDim(0, UI_INVENTORYICON_WIDTH + 12), 
-            CEGUI::UDim(0, UI_INVENTORYICON_HEIGHT + 12));
-
-         // some settings
-         dragger->setSize(size);
-         dragger->setMouseInputPropagationEnabled(true);
-         dragger->setMouseCursor(UI_DEFAULTARROW);
-         dragger->setWantsMultiClickEvents(false);
-         dragger->setDraggingEnabled(false);
-
-         widget->setSize(size);
-         widget->setFont(UI_FONT_LIBERATIONSANS10B);
-         widget->setProperty(UI_PROPNAME_FRAMEENABLED, "True");
-         widget->setProperty(UI_PROPNAME_BACKGROUNDENABLED, "True");
-
-         // subscribe events
-         dragger->subscribeEvent(CEGUI::DragContainer::EventDragEnded, CEGUI::Event::Subscriber(UICallbacks::Inventory::OnDragEnded));
-         dragger->subscribeEvent(CEGUI::DragContainer::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Inventory::OnItemClicked));
-         dragger->subscribeEvent(CEGUI::DragContainer::EventDragStarted, CEGUI::Event::Subscriber(UICallbacks::Inventory::OnDragStarted));
-
-         // add
-         List->addChild(dragger);
-      }
+      // start with minimum row number
+      for(unsigned int i = 0; i < UI_INVENTORY_MIN_ROWS; i++)
+         AddInventoryRow();
 
       // subscribe close button
       Window->subscribeEvent(CEGUI::FrameWindow::EventCloseClicked, CEGUI::Event::Subscriber(UICallbacks::OnWindowClosed));
@@ -89,8 +40,8 @@ namespace Meridian59 { namespace Ogre
       OgreClient::Singleton->Data->InventoryObjects->ListChanged -= 
          gcnew ListChangedEventHandler(OnInventoryListChanged);
 
-         // amount of entries the buffgrid can hold
-      const int entries = UI_INVENTORY_COLS * UI_INVENTORY_ROWS;
+      // amount of entries the inventory grid can hold
+      const int entries = UI_INVENTORY_COLS * currentInventoryRows;
 
       for(int i = 0; i < entries; i++)
          imageComposers[i]->NewImageAvailable -= gcnew ::System::EventHandler(OnNewImageAvailable);
@@ -104,7 +55,7 @@ namespace Meridian59 { namespace Ogre
    void ControllerUI::Inventory::OnNewImageAvailable(Object^ sender, ::System::EventArgs^ e)
    {
       ImageComposerCEGUI<InventoryObject^>^ imageComposer = (ImageComposerCEGUI<InventoryObject^>^)sender;
-      int index = ::System::Array::IndexOf(imageComposers, imageComposer);
+      int index = imageComposers->IndexOf(imageComposer);
 
       if ((int)List->getChildCount() > index)
       {
@@ -133,14 +84,114 @@ namespace Meridian59 { namespace Ogre
       }
    };
 
+   void ControllerUI::Inventory::AddInventoryRow()
+   {
+      // Don't modify inventory grid while rearranging items.
+      if (IsRearrangingInventory)
+         return;
+
+      // get windowmanager
+      CEGUI::WindowManager& wndMgr = CEGUI::WindowManager::getSingleton();
+
+      // Increment number of rows.
+      ++currentInventoryRows;
+
+      // Resize grid dimensions.
+      List->setGridDimensions(UI_INVENTORY_COLS, currentInventoryRows);
+
+      for (int i = 0; i < UI_INVENTORY_COLS; ++i)
+      {
+         // create image composer for slot
+         ImageComposerCEGUI<InventoryObject^>^ imageComposer = gcnew ImageComposerCEGUI<InventoryObject^>();
+         imageComposer->ApplyYOffset = false;
+         imageComposer->HotspotIndex = 0;
+         imageComposer->IsScalePow2 = false;
+         imageComposer->UseViewerFrame = false;
+         imageComposer->Width = UI_INVENTORYICON_WIDTH;
+         imageComposer->Height = UI_INVENTORYICON_HEIGHT;
+         imageComposer->CenterHorizontal = true;
+         imageComposer->CenterVertical = true;
+         imageComposer->NewImageAvailable += gcnew ::System::EventHandler(OnNewImageAvailable);
+         // Add to list
+         imageComposers->Add(imageComposer);
+
+         // create imagebuttons in slots
+         // create widget
+         CEGUI::DragContainer* dragger = (CEGUI::DragContainer*)wndMgr.createWindow(UI_WINDOWTYPE_INVENTORYICON);
+         CEGUI::Window* widget = dragger->getChildAtIdx(0);
+
+         // size of elements
+         CEGUI::USize size = CEGUI::USize(
+            CEGUI::UDim(0, UI_INVENTORYICON_WIDTH + 12),
+            CEGUI::UDim(0, UI_INVENTORYICON_HEIGHT + 12));
+
+         // some settings
+         dragger->setSize(size);
+         dragger->setMouseInputPropagationEnabled(true);
+         dragger->setMouseCursor(UI_DEFAULTARROW);
+         dragger->setWantsMultiClickEvents(false);
+         dragger->setDraggingEnabled(false);
+
+         widget->setSize(size);
+         widget->setFont(UI_FONT_LIBERATIONSANS10B);
+         widget->setProperty(UI_PROPNAME_FRAMEENABLED, "True");
+         widget->setProperty(UI_PROPNAME_BACKGROUNDENABLED, "True");
+
+         // subscribe events
+         dragger->subscribeEvent(CEGUI::DragContainer::EventDragEnded, CEGUI::Event::Subscriber(UICallbacks::Inventory::OnDragEnded));
+         dragger->subscribeEvent(CEGUI::DragContainer::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Inventory::OnItemClicked));
+         dragger->subscribeEvent(CEGUI::DragContainer::EventDragStarted, CEGUI::Event::Subscriber(UICallbacks::Inventory::OnDragStarted));
+
+         // add to grid (0-based so rows - 1)
+         List->addChildToPosition(dragger, i, currentInventoryRows - 1);
+      }
+   };
+
+   void ControllerUI::Inventory::RemoveInventoryRow()
+   {
+      // Don't modify inventory grid while rearranging items,
+      // and don't lower beyond min rows (even if grid is empty).
+      if (IsRearrangingInventory || currentInventoryRows <= UI_INVENTORY_MIN_ROWS)
+         return;
+
+      // get windowmanager
+      CEGUI::WindowManager& wndMgr = CEGUI::WindowManager::getSingleton();
+
+      // Lower numRows here first, makes indexing easier.
+      currentInventoryRows--;
+
+      for (int i = UI_INVENTORY_COLS - 1; i >= 0; --i)
+      {
+         imageComposers[currentInventoryRows * UI_INVENTORY_COLS + i]->NewImageAvailable -=
+            gcnew ::System::EventHandler(OnNewImageAvailable);
+
+         // Clean up dragger window/events.
+         CEGUI::DragContainer* dragger =
+            (CEGUI::DragContainer*) List->getChildAtIdx(currentInventoryRows * UI_INVENTORY_COLS + i);
+         List->removeChild(dragger);
+         dragger->removeAllEvents();
+         wndMgr.destroyWindow(dragger);
+      }
+
+      imageComposers->RemoveRange(currentInventoryRows * UI_INVENTORY_COLS, 5);
+
+      // Resets grid dimensions.
+      List->setGridDimensions(UI_INVENTORY_COLS, currentInventoryRows);
+   };
+
    void ControllerUI::Inventory::InventoryAdd(int Index)
    {
       // get new datamodel entry
       InventoryObject^ obj = OgreClient::Singleton->Data->InventoryObjects[Index];
 
+      if ((int)currentInventoryRows * UI_INVENTORY_COLS <= Index)
+      {
+         AddInventoryRow();
+      }
+
       // if we have that many slots..
       if ((int)List->getChildCount() > Index &&
-         imageComposers->Length > Index)
+         imageComposers->Count > Index)
       {
          // if not added at the end, rearrange by moving all forward once
          if (Index < OgreClient::Singleton->Data->InventoryObjects->Count - 1)
@@ -181,7 +232,7 @@ namespace Meridian59 { namespace Ogre
 
       // if we have that many slots..
       if (childcount > Index &&
-         imageComposers->Length > Index)
+         imageComposers->Count > Index)
       {
          // get dragcontainer
          CEGUI::DragContainer* dragger = (CEGUI::DragContainer*)List->getChildAtIdx(Index);
@@ -205,6 +256,13 @@ namespace Meridian59 { namespace Ogre
                List->getChildAtIdx(i+1));
 
             SwapImageComposers(i, i + 1);
+         }
+
+         // Delete the empty row if we have one.
+         if (OgreClient::Singleton->Data->InventoryObjects->Count <=
+            (int)(currentInventoryRows - 1) * UI_INVENTORY_COLS)
+         {
+            RemoveInventoryRow();
          }
 
          List->notifyScreenAreaChanged(true);
@@ -243,8 +301,8 @@ namespace Meridian59 { namespace Ogre
 
    void ControllerUI::Inventory::SwapImageComposers(unsigned int Index1, unsigned int Index2)
    {
-      if ((int)Index1 < imageComposers->Length && 
-          (int)Index2 < imageComposers->Length)
+      if ((int)Index1 < imageComposers->Count && 
+          (int)Index2 < imageComposers->Count)
       {
          // swap composers
          ImageComposerCEGUI<InventoryObject^>^ swap = imageComposers[Index1];
@@ -430,10 +488,15 @@ namespace Meridian59 { namespace Ogre
                      toIndex < 0 || toIndex >= dataModels->Count)
                      return true;
 
+                  // Set rearranging boolean so inventory doesn't modify rows.
+                  ControllerUI::Inventory::IsRearrangingInventory = true;
                   // remove and reinsert at position
                   InventoryObject^ obj = dataModels[fromIndex];
                   dataModels->RemoveAt(fromIndex);
                   dataModels->Insert(toIndex, obj);
+
+                  // Unset after inventory item move complete.
+                  ControllerUI::Inventory::IsRearrangingInventory = false;
 
                   // tell server
                   OgreClient::Singleton->SendReqInventoryMoveMessage(

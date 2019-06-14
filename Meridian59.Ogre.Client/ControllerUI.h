@@ -736,7 +736,9 @@ namespace Meridian59 { namespace Ogre
       ref class Inventory abstract sealed
       {
       protected:
-         static array<ImageComposerCEGUI<InventoryObject^>^>^ imageComposers;
+         static ::System::Collections::Generic::List<ImageComposerCEGUI<InventoryObject^>^>^ imageComposers;
+         // Number of rows currently displayed in the inventory.
+         static unsigned int currentInventoryRows;
 
       public:
          static ::CEGUI::FrameWindow* Window = nullptr;
@@ -745,12 +747,16 @@ namespace Meridian59 { namespace Ogre
 
          static bool DoClick;
          static InventoryObject^ ClickObject;
+         // True when an inventory item is being moved to another spot.
+         static bool IsRearrangingInventory;
 
          static void Initialize();
          static void Destroy();
          static void ApplyLanguage();
          static void OnNewImageAvailable(Object^ sender, ::System::EventArgs^ e);
          static void OnInventoryListChanged(Object^ sender, ListChangedEventArgs^ e);
+         static void AddInventoryRow();
+         static void RemoveInventoryRow();
          static void InventoryAdd(int Index);
          static void InventoryRemove(int Index);
          static void InventoryChange(int Index);

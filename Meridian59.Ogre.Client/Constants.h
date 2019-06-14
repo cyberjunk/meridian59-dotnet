@@ -844,6 +844,7 @@
 #define UI_ROOMENCHANTMENTS_ROWS     1
 #define UI_INVENTORY_COLS            5
 #define UI_INVENTORY_ROWS           40
+#define UI_INVENTORY_MIN_ROWS        6
 #define UI_ACTIONBUTTONS_COLS       12
 #define UI_ACTIONBUTTONS_ROWS        4
 
