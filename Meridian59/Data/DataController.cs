@@ -995,7 +995,7 @@ namespace Meridian59.Data
         /// Invalidates all data not valid anymore
         /// after server-save cycle
         /// </summary>
-        protected virtual void Invalidate()
+        public virtual void Invalidate()
         {
             // clear lists
             RoomObjects.Clear();

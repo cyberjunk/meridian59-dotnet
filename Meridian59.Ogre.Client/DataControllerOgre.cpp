@@ -64,7 +64,8 @@ namespace Meridian59 { namespace Ogre {
       double tick2 = OgreClient::Singleton->GameTick->GetUpdatedTick();
       double span = tick2 - tick1;
 
-      ControllerUI::ConfirmPopup::DataInvalidated();
+      if (ControllerUI::IsInitialized)
+         ControllerUI::ConfirmPopup::DataInvalidated();
 
       Logger::Log("DataControllerOgre", LogType::Info, "INVALIDATE: " + span.ToString() + " ms");
    };
