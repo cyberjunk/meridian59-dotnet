@@ -56,4 +56,16 @@ namespace Meridian59 { namespace Ogre {
 
       Logger::Log("DataControllerOgre", LogType::Info, "BP_ARTICLES: " + span.ToString() + " ms");
    };
+
+   void DataControllerOgre::Invalidate()
+   {
+      double tick1 = OgreClient::Singleton->GameTick->GetUpdatedTick();
+      DataController::Invalidate();
+      double tick2 = OgreClient::Singleton->GameTick->GetUpdatedTick();
+      double span = tick2 - tick1;
+
+      ControllerUI::ConfirmPopup::DataInvalidated();
+
+      Logger::Log("DataControllerOgre", LogType::Info, "INVALIDATE: " + span.ToString() + " ms");
+   };
 };};

@@ -50,7 +50,7 @@ namespace Meridian59 { namespace Ogre
    {
    };
 
-   void ControllerUI::ConfirmPopup::ShowChoice(const ::CEGUI::String& text, uint id)
+   void ControllerUI::ConfirmPopup::ShowChoice(const ::CEGUI::String& text, uint id, bool closeOnInvalidate)
    {
       Mode = ConfirmPopup::DialogMode::YesNo;
 
@@ -63,6 +63,9 @@ namespace Meridian59 { namespace Ogre
 
       // set ID
       ID = id;
+
+      // set CloseOnInvalidate (whether system save causes this popup to close/clear data)
+      CloseOnInvalidate = closeOnInvalidate;
 
       // set buttons
       Yes->setVisible(true);
@@ -78,7 +81,7 @@ namespace Meridian59 { namespace Ogre
       No->activate();
    };
 
-   void ControllerUI::ConfirmPopup::ShowOK(const ::CEGUI::String& text, uint id)
+   void ControllerUI::ConfirmPopup::ShowOK(const ::CEGUI::String& text, uint id, bool closeOnInvalidate)
    {
       Mode = ConfirmPopup::DialogMode::Confirm;
 
@@ -91,6 +94,9 @@ namespace Meridian59 { namespace Ogre
 
       // set ID
       ID = id;
+
+      // set CloseOnInvalidate (whether system save causes this popup to close/clear data)
+      CloseOnInvalidate = closeOnInvalidate;
 
       // set buttons
       OK->setVisible(true);
@@ -105,7 +111,7 @@ namespace Meridian59 { namespace Ogre
       OK->activate();
    };
 
-   void ControllerUI::ConfirmPopup::ShowChoiceLarge(const ::CEGUI::String& text, uint id)
+   void ControllerUI::ConfirmPopup::ShowChoiceLarge(const ::CEGUI::String& text, uint id, bool closeOnInvalidate)
    {
       Mode = ConfirmPopup::DialogMode::YesNo;
 
@@ -118,6 +124,9 @@ namespace Meridian59 { namespace Ogre
 
       // set ID
       ID = id;
+
+      // set CloseOnInvalidate (whether system save causes this popup to close/clear data)
+      CloseOnInvalidate = closeOnInvalidate;
 
       // set buttons
       LargeYes->setVisible(true);
@@ -133,7 +142,7 @@ namespace Meridian59 { namespace Ogre
       LargeNo->activate();
    };
 
-   void ControllerUI::ConfirmPopup::ShowOKLarge(const ::CEGUI::String& text, uint id)
+   void ControllerUI::ConfirmPopup::ShowOKLarge(const ::CEGUI::String& text, uint id, bool closeOnInvalidate)
    {
       Mode = ConfirmPopup::DialogMode::Confirm;
 
@@ -146,6 +155,9 @@ namespace Meridian59 { namespace Ogre
 
       // set ID
       ID = id;
+
+      // set CloseOnInvalidate (whether system save causes this popup to close/clear data)
+      CloseOnInvalidate = closeOnInvalidate;
 
       // set buttons
       LargeOK->setVisible(true);
@@ -182,6 +194,23 @@ namespace Meridian59 { namespace Ogre
       _confirmed = nullptr;
       _cancelled = nullptr;
       ID = 0;
+   };
+
+   void ControllerUI::ConfirmPopup::DataInvalidated()
+   {
+      if (CloseOnInvalidate)
+      {
+         // hide window
+         ControllerUI::ConfirmPopup::Window->hide();
+
+         // mark GUIroot active
+         ControllerUI::ActivateRoot();
+
+         // remove handler(s)
+         _confirmed = nullptr;
+         _cancelled = nullptr;
+         ID = 0;
+      }
    };
 
    //////////////////////////////////////////////////////////////////////////////////////////////////////////

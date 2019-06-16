@@ -2766,28 +2766,28 @@ namespace Meridian59 { namespace Ogre
 
       if (oldPassword == "" || newPassword == "" || confirmPassword == "")
       {
-         ControllerUI::ConfirmPopup::ShowOK("Please fill out all password fields.", 0);
+         ControllerUI::ConfirmPopup::ShowOK("Please fill out all password fields.", 0, false);
 
          return true;
       }
 
       if (oldPassword != OgreClient::Singleton->Config->SelectedConnectionInfo->Password)
       {
-         ControllerUI::ConfirmPopup::ShowOK("Old password incorrect.", 0);
+         ControllerUI::ConfirmPopup::ShowOK("Old password incorrect.", 0, false);
 
          return true;
       }
 
       if (newPassword != confirmPassword)
       {
-         ControllerUI::ConfirmPopup::ShowOK("New passwords do not match.", 0);
+         ControllerUI::ConfirmPopup::ShowOK("New passwords do not match.", 0, false);
 
          return true;
       }
 
       if (oldPassword == newPassword)
       {
-         ControllerUI::ConfirmPopup::ShowOK("New password is same as old password.", 0);
+         ControllerUI::ConfirmPopup::ShowOK("New password is same as old password.", 0, false);
 
          return true;
       }

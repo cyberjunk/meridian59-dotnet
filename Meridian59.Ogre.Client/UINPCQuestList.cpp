@@ -422,7 +422,7 @@ namespace Meridian59 {
       {
          // callback needed to reactivate quest UI window
          ControllerUI::ConfirmPopup::Confirmed += gcnew System::EventHandler(ControllerUI::NPCQuestList::OnHelpOKConfirmed);
-         ControllerUI::ConfirmPopup::ShowOKLarge(GetLangNPCQuestUI(LANGSTR_NPCQUESTUI::HELPTEXT), 0);
+         ControllerUI::ConfirmPopup::ShowOKLarge(GetLangNPCQuestUI(LANGSTR_NPCQUESTUI::HELPTEXT), 0, true);
 
          return true;
       };

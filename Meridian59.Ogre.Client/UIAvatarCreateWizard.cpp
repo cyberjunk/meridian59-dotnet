@@ -458,7 +458,7 @@ namespace Meridian59 { namespace Ogre
             break;
          }
 
-         ControllerUI::ConfirmPopup::ShowOK(GetCharInfoNotOKErrorOkDialog(err) , 0);
+         ControllerUI::ConfirmPopup::ShowOK(GetCharInfoNotOKErrorOkDialog(err) , 0, true);
       }
    };
 
