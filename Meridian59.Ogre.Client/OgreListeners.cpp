@@ -124,7 +124,7 @@ namespace Meridian59 { namespace Ogre
       const OIS::MouseState& mouseState = ControllerInput::OISMouse->getMouseState();
 
       // perform mouseover
-      ControllerInput::PerformMouseOver(mouseState.X.abs, mouseState.Y.abs, false);
+      ControllerInput::PerformMouseOver(mouseState.X.abs, mouseState.Y.abs, 0);
    };
 
    ////////////////////////////////////////////

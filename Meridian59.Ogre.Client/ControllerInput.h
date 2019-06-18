@@ -59,6 +59,7 @@ namespace Meridian59 { namespace Ogre
       static LPPOINT mouseDownWindowsPosition;
       static double tickMouseDownLeft;
       static double tickMouseDownRight;
+      static double tickMouseClickedLeft;
       static bool isCameraFirstPerson;
       static bool isInitialized;		
       static bool isMouseInWindow;
@@ -328,7 +329,7 @@ namespace Meridian59 { namespace Ogre
       /// <summary>
       /// Performs rayquery to do a click or a mouseover effect.
       /// </summary>
-      static void PerformMouseOver(int MouseX, int MouseY, bool IsClick);
+      static void PerformMouseOver(int MouseX, int MouseY, int Clicks);
 
       /// <summary>
       /// Cleanup

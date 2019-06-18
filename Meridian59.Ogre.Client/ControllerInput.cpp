@@ -12,6 +12,7 @@ namespace Meridian59 { namespace Ogre
 
       tickMouseDownLeft    = 0;
       tickMouseDownRight   = 0;
+      tickMouseClickedLeft = 0;
 
       isCameraFirstPerson  = true;
       isInitialized        = false;
@@ -104,6 +105,7 @@ namespace Meridian59 { namespace Ogre
 
       tickMouseDownLeft  = 0;
       tickMouseDownRight = 0;
+      tickMouseClickedLeft = 0;
 
       isCameraFirstPerson  = true;
       isInitialized        = false;
@@ -138,7 +140,7 @@ namespace Meridian59 { namespace Ogre
       return OgreClient::Singleton->Config->KeyBinding;
    };
 
-   void ControllerInput::PerformMouseOver(int MouseX, int MouseY, bool IsClick)
+   void ControllerInput::PerformMouseOver(int MouseX, int MouseY, int Clicks)
    {
       // normalise mouse coordinates to [0,1]
       float scrx = (float)MouseX / (float)OgreClient::Singleton->Viewport->getActualWidth();
@@ -159,6 +161,9 @@ namespace Meridian59 { namespace Ogre
       {
          List<unsigned int>^ objectIDs = gcnew List<unsigned int>((int)result.size());
 
+         // Double-click action requires a targeted object.
+         unsigned int targetObjectID = 0;
+
          // iterate hits
          for(unsigned int i=0; i<result.size();i++)
          {
@@ -178,39 +183,63 @@ namespace Meridian59 { namespace Ogre
                // try parse an id out of name string
                unsigned int objectid;
                System::UInt32::TryParse(s->Substring(s->LastIndexOf('/') + 1), objectid);
+               if (objectid == 0)
+                  continue;
 
-               if (objectid > 0)	
+               RoomObject^ obj = OgreClient::Singleton->Data->RoomObjects->GetItemByID(objectid);
+               if (obj == nullptr)
+                  continue;
+
+               // If double-clicked we want to only handle the case where 2nd click
+               // is on our existing target (clicked once already). Don't need to
+               // handle double-clicks on non-activatable objects.
+               if (Clicks == 2
+                  && obj->IsTarget
+                  && (obj->Flags->IsActivatable || obj->Flags->IsContainer))
                {
-                  RoomObject^ obj = OgreClient::Singleton->Data->RoomObjects->GetItemByID(objectid);
+                  targetObjectID = objectid;
 
-                  // don't select own avatar or already selected target
-                  if (obj != nullptr && !obj->IsAvatar && !obj->IsTarget)
-                  {
-                     objectIDs->Add(objectid);
+                  break;
+               }
 
-                     // for mouseover we just need the first hit
-                     if (!IsClick)
-                        break;
-                  }
+               // don't select own avatar or already selected target
+               if (!obj->IsAvatar && !obj->IsTarget)
+               {
+                  objectIDs->Add(objectid);
+
+                  // for mouseover we just need the first hit
+                  if (!Clicks)
+                     break;
                }
             }
          }
 
          // reset mouseover object
-         if (!IsClick)
+         if (!Clicks)
             OgreClient::Singleton->Data->RoomObjects->ResetHighlighted();
 
          // execute target clicker or mouseover
-         if (objectIDs->Count > 0)
+         // Double-clicked on activatable target.
+         if (Clicks == 2 && targetObjectID > 0)
+         {
+            ControllerUI::MouseCursor->setImage(UI_MOUSECURSOR_TARGET);
+            OgreClient::Singleton->Data->RoomObjects->HighlightObject(targetObjectID);
+
+            // send activate action (parses object flags and chooses activate or 'look inside')
+            OgreClient::Singleton->ExecAction(AvatarAction::Activate);
+         }
+         // Mouse over without click, single-clicked an object, or double-clicked
+         // but 2nd click wasn't on same object as 1st click.
+         else if (objectIDs->Count > 0)
          {
             ControllerUI::MouseCursor->setImage(UI_MOUSECURSOR_TARGET);
 
-            if (IsClick)
+            if (Clicks > 0)
                OgreClient::Singleton->Data->ClickTarget(objectIDs, !IsSelfTargetDown);
-
             else
                OgreClient::Singleton->Data->RoomObjects->HighlightObject(objectIDs[0]);
          }
+         // Mouse over or click but not on any object.
          else
          {
             ControllerUI::MouseCursor->setImage(UI_DEFAULTARROW);
@@ -262,8 +291,22 @@ namespace Meridian59 { namespace Ogre
          !IsRightMouseDown &&
          (OgreClient::Singleton->GameTick->Current - tickMouseDownLeft < MOUSECLICKMAXDELAY))
       {
-         // actually perform this click
-         PerformMouseOver(arg.state.X.abs, arg.state.Y.abs, true);
+         // Double-click - try activate our targeted object (e.g. lever, mana node)
+         if (OgreClient::Singleton->GameTick->Current - tickMouseClickedLeft < MOUSECLICKMAXDELAY)
+         {
+            // Reset click time.
+            tickMouseClickedLeft = 0;
+            PerformMouseOver(arg.state.X.abs, arg.state.Y.abs, 2);
+         }
+         // Single click
+         else
+         {
+            // Save click time to handle double left-click.
+            tickMouseClickedLeft = OgreClient::Singleton->GameTick->Current;
+
+            // actually perform this click
+            PerformMouseOver(arg.state.X.abs, arg.state.Y.abs, 1);
+         }
       }
 
       // perform rightclick action
@@ -280,7 +323,7 @@ namespace Meridian59 { namespace Ogre
       }
 
       if (ControllerUI::IgnoreTopControlForMouseInput)
-         PerformMouseOver(arg.state.X.abs, arg.state.Y.abs, false);
+         PerformMouseOver(arg.state.X.abs, arg.state.Y.abs, 0);
 
       isMouseWentDownOnUI = false;
 
@@ -479,7 +522,7 @@ namespace Meridian59 { namespace Ogre
       }
 
       if (!isAiming && ControllerUI::IgnoreTopControlForMouseInput && OgreClient::Singleton->Data->AvatarObject != nullptr)
-         PerformMouseOver(arg.state.X.abs, arg.state.Y.abs, false);
+         PerformMouseOver(arg.state.X.abs, arg.state.Y.abs, 0);
 
       return true;
    };
