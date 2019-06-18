@@ -129,6 +129,7 @@
 #define UI_FILE_LAYOUT                 "Meridian59.layout"
 #define UI_FILE_ANIMATIONS             "animations.xml"
 #define UI_DEFAULTPADDING              5
+#define UI_DESCRIPTIONPADDING          7
 #define UI_MINIMAP_TEXNAME             "CEGUI/MiniMap"
 #define UI_MOUSE_SINGLECLICKTIMEOUT    1.0f
 #define UI_AVATARNAME_FOR_UNSET        "<< EMPTY >>"

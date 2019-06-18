@@ -103,7 +103,15 @@ namespace Meridian59 { namespace Ogre
          ServerString^ text = OgreClient::Singleton->Data->LookObject->Message;
 
          if (text != nullptr)
+         {
             Description->setText(StringConvert::CLRToCEGUI(text->FullString));
+            // possibly resize window to new text
+            if (!OgreClient::Singleton->Data->LookObject->LookType->IsInscribed
+               && !OgreClient::Singleton->Data->LookObject->LookType->IsEditable)
+            {
+               Window->setHeight(CEGUI::UDim(0, ControllerUI::GetAdjustedWindowHeightWithMLEB(Window, Description)));
+            }
+         }
       }
 
       // inscription
@@ -157,7 +165,7 @@ namespace Meridian59 { namespace Ogre
             CEGUI::UDim(1.0f, -val2 - (float)UI_DEFAULTPADDING));
 
          OK->setVisible(false);
-         Window->setHeight(CEGUI::UDim(0, 230.0f));
+         Window->setHeight(CEGUI::UDim(0, ControllerUI::GetAdjustedWindowHeightWithMLEB(Window, Description)));
       }
 
       // non editable inscription
