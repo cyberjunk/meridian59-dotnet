@@ -100,7 +100,10 @@ namespace Meridian59 { namespace Ogre
          ServerString^ text = OgreClient::Singleton->Data->LookSkill->Message;
 
          if (text != nullptr)
+         {
             Description->setText(StringConvert::CLRToCEGUI(text->FullString));
+            Window->setHeight(CEGUI::UDim(0, ControllerUI::GetAdjustedWindowHeightWithMLEB(Window, Description)));
+         }
       }
 
       // isvisible

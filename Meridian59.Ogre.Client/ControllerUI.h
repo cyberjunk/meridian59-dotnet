@@ -81,6 +81,7 @@ namespace Meridian59 { namespace Ogre
       static void InjectChar(::CEGUI::Key::Scan Key);
       static void SetVUMeterColorFromProgress(::CEGUI::ProgressBar* VUMeter);
       static void BuildIconAtlas();
+      static float GetAdjustedWindowHeightWithMLEB(::CEGUI::Window* Window, ::CEGUI::MultiLineEditbox* MLEditbox);
 
       static property ::CEGUI::OgreRenderer* Renderer 
       {

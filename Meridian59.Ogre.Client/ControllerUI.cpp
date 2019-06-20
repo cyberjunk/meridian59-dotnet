@@ -879,6 +879,39 @@ namespace Meridian59 { namespace Ogre
       pixPtr->unlock();
    };
 
+   /// <summary>
+   /// Calculates the adjusted height of a window containing a MultiLineEditbox
+   /// with some text that may not fit inside the box. Useful to resize windows
+   /// like object/skill/spell descriptions that have variable text length.
+   /// </summary>
+   /// <param name="Window">Parent window of the MultiLineEditbox (MLEB)</param>
+   /// <param name="MLEditbox">MultiLineEditbox window</param>
+   float ControllerUI::GetAdjustedWindowHeightWithMLEB(
+      ::CEGUI::Window* Window,
+      ::CEGUI::MultiLineEditbox* MLEditbox)
+   {
+      // Height of entire window (e.g. object inspection window).
+      float heightWindow = Window->getHeight().d_offset;
+
+      // Get the text that was added to the editbox as a list of lines.
+      const ::CEGUI::MultiLineEditbox::LineList& textLines = MLEditbox->getFormattedLines();
+
+      // Height of each line of text in the editbox (NOTE: at 1.0f scaling).
+      float heightLine = MLEditbox->getFont()->getLineSpacing();
+
+      // Current height of the editbox.
+      float heightMLEditbox = MLEditbox->getInnerRectClipper().getHeight();
+
+      // Calculate new height required for editbox.
+      float newHeightMLEditbox = textLines.size() * heightLine;
+
+      // Extra padding required to avoid placing scrollbar when it isn't needed.
+      float newWindowHeight = heightWindow + newHeightMLEditbox - heightMLEditbox + UI_DESCRIPTIONPADDING * 2;
+
+      // Bound at reasonable min/max.
+      return CLRMath::Min(CLRMath::Max(newWindowHeight, 230.0f), 512.0f);
+   };
+
 #pragma region Input injection
 
    void ControllerUI::InjectMousePosition(float x, float y)
