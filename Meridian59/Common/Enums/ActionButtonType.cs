@@ -21,6 +21,6 @@ namespace Meridian59.Common.Enums
     /// </summary>
     public enum ActionButtonType
     {
-        Spell, Action, Item, Alias, Unset
+        Spell, Action, Item, Alias, Unset, Skill
     }
 }

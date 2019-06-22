@@ -104,6 +104,7 @@ namespace Meridian59.Data
         protected readonly ObjectBaseList<ObjectBase> roomBuffs;
         protected readonly ObjectBaseList<ObjectBase> avatarBuffs;
         protected readonly SpellObjectList spellObjects;
+        protected readonly SkillObjectList skillObjects;
         protected readonly BackgroundOverlayList backgroundOverlays;
         protected readonly ObjectBaseList<PlayerOverlay> playerOverlays;
         protected readonly BaseList<ServerString> chatMessages;
@@ -213,6 +214,11 @@ namespace Meridian59.Data
         /// Your known spells
         /// </summary>
         public SpellObjectList SpellObjects { get { return spellObjects; } }
+
+        /// <summary>
+        /// Your known skills
+        /// </summary>
+        public SkillObjectList SkillObjects { get { return skillObjects; } }
 
         /// <summary>
         /// List of background overlays (like sun)
@@ -896,6 +902,7 @@ namespace Meridian59.Data
             roomBuffs = new ObjectBaseList<ObjectBase>(30);
             avatarBuffs = new ObjectBaseList<ObjectBase>(30);
             spellObjects = new SpellObjectList(100);
+            skillObjects = new SkillObjectList(100);
             backgroundOverlays = new BackgroundOverlayList(5);
             playerOverlays = new ObjectBaseList<PlayerOverlay>(10);            
             chatMessages = new BaseList<ServerString>(201);
@@ -924,6 +931,7 @@ namespace Meridian59.Data
             AvatarSkills.SortByResourceName();
             AvatarSpells.SortByResourceName();
             SpellObjects.SortByName();
+            SkillObjects.SortByName();
             Groups.SortByName();
 
             // create single data objects
@@ -1010,6 +1018,7 @@ namespace Meridian59.Data
             AvatarQuests.Clear();
             RoomBuffs.Clear();
             SpellObjects.Clear();
+            SkillObjects.Clear();
             BackgroundOverlays.Clear();
             PlayerOverlays.Clear();
             VisitedTargets.Clear();
@@ -1187,6 +1196,9 @@ namespace Meridian59.Data
             foreach (SpellObject o in spellObjects)
                 o.ResolveStrings(Strings, RaiseChangedEvent);
 
+            foreach (SkillObject o in skillObjects)
+                o.ResolveStrings(Strings, RaiseChangedEvent);
+
             foreach (BackgroundOverlay o in backgroundOverlays)
                 o.ResolveStrings(Strings, RaiseChangedEvent);
 
@@ -1201,6 +1213,7 @@ namespace Meridian59.Data
             AvatarSkills.SortByResourceName();
             AvatarSpells.SortByResourceName();
             SpellObjects.SortByName();
+            SkillObjects.SortByName();
 
             // lookobject
             if (LookObject.ObjectBase != null)
@@ -1874,6 +1887,18 @@ namespace Meridian59.Data
                     HandleSpellRemove((SpellRemoveMessage)Message);
                     break;
 
+                case MessageTypeGameMode.Skills:                    // 144
+                    HandleSkills((SkillsMessage)Message);
+                    break;
+
+                case MessageTypeGameMode.SkillAdd:                  // 145
+                    HandleSkillAdd((SkillAddMessage)Message);
+                    break;
+
+                case MessageTypeGameMode.SkillRemove:               // 146
+                    HandleSkillRemove((SkillRemoveMessage)Message);
+                    break;
+
                 case MessageTypeGameMode.AddEnchantment:            // 147
                     HandleAddEnchantment((AddEnchantmentMessage)Message);
                     break;
@@ -2497,7 +2522,7 @@ namespace Meridian59.Data
         }
 
         protected virtual void HandleSpellAdd(SpellAddMessage Message)
-        {           
+        {
             SpellObjects.Add(Message.NewSpellObject);
 
             // look up buttons which are assigned to this spell
@@ -2513,7 +2538,49 @@ namespace Meridian59.Data
 
         protected virtual void HandleSpellRemove(SpellRemoveMessage Message)
         {
+            AvatarSpells.RemoveAbilityByID(Message.ID.ID);
             SpellObjects.RemoveByID(Message.ID.ID);
+        }
+
+        protected virtual void HandleSkills(SkillsMessage Message)
+        {
+            SkillObjects.Clear();
+
+            foreach (SkillObject skill in Message.SkillObjects)
+            {
+                SkillObjects.Add(skill);
+
+                // look up buttons which are assigned to this skill
+                foreach (ActionButtonConfig button in ActionButtons)
+                {
+                    if (button.ButtonType == ActionButtonType.Skill &&
+                        button.Name.ToLower() == skill.Name.ToLower())
+                    {
+                        button.SetToSkill(skill);
+                    }
+                }
+            }
+        }
+
+        protected virtual void HandleSkillAdd(SkillAddMessage Message)
+        {
+            SkillObjects.Add(Message.NewSkillObject);
+
+            // look up buttons which are assigned to this skill
+            foreach (ActionButtonConfig button in ActionButtons)
+            {
+                if (button.ButtonType == ActionButtonType.Skill &&
+                    button.Name.ToLower() == Message.NewSkillObject.Name.ToLower())
+                {
+                    button.SetToSkill(Message.NewSkillObject);
+                }
+            }
+        }
+
+        protected virtual void HandleSkillRemove(SkillRemoveMessage Message)
+        {
+            AvatarSkills.RemoveAbilityByID(Message.ID.ID);
+            SkillObjects.RemoveByID(Message.ID.ID);
         }
 
         protected virtual void HandleStatGroup(StatGroupMessage Message)
@@ -2585,20 +2652,38 @@ namespace Meridian59.Data
 
                 case StatGroup.Skills:
                     newSkillEntry = (StatList)Message.Stat;
-                    oldSkillEntry = AvatarSkills.GetItemByNum(newSkillEntry.Num);
+                    // May be adding a new entry, so search by ObjectID which is unique
+                    // rather than by Num which may not be.
+                    oldSkillEntry = AvatarSkills.GetItemByID(newSkillEntry.ObjectID);
                     if (oldSkillEntry != null)
                     {
                         oldSkillEntry.UpdateFromModel(newSkillEntry, true);
                     }
+#if !VANILLA && !OPENMERIDIAN
+                    else
+                    {
+                        // New skill, insert.
+                        AvatarSkills.InsertAbility(newSkillEntry);
+                    }
+#endif
                     break;
 
                 case StatGroup.Spells:
                     newSkillEntry = (StatList)Message.Stat;
-                    oldSkillEntry = AvatarSpells.GetItemByNum(newSkillEntry.Num);
+                    // May be adding a new entry, so search by ObjectID which is unique
+                    // rather than by Num which may not be.
+                    oldSkillEntry = AvatarSpells.GetItemByID(newSkillEntry.ObjectID);
                     if (oldSkillEntry != null)
                     {
                         oldSkillEntry.UpdateFromModel(newSkillEntry, true);
                     }
+#if !VANILLA && !OPENMERIDIAN
+                    else
+                    {
+                        // New skill, insert.
+                        AvatarSpells.InsertAbility(newSkillEntry);
+                    }
+#endif
                     break;
 #if !VANILLA
                 case StatGroup.Quests:

@@ -302,6 +302,14 @@ namespace Meridian59.Data.Models
                 case ChatCommandInvite.KEY3:
                     returnValue = ParseInvite(splitted, lower, DataController);
                     break;
+
+                case ChatCommandPerform.KEY1:
+                case ChatCommandPerform.KEY2:
+                case ChatCommandPerform.KEY3:
+                case ChatCommandPerform.KEY4:
+                case ChatCommandPerform.KEY5:
+                    returnValue = ParsePerform(splitted, lower, DataController);
+                    break;
 #endif
 #endif
             }
@@ -1008,6 +1016,86 @@ namespace Meridian59.Data.Models
                 {
                     Data.ChatMessages.Add(ServerString.GetServerStringForString(
                         "No player with prefix: " + prefix));
+                }
+            }
+
+            return command;
+        }
+
+        /// <summary>
+        /// Almost exactly like ParseGoPlayer (copied from ParseCast)
+        /// </summary>
+        /// <param name="Words"></param>
+        /// <param name="Text"></param>
+        /// <param name="Data"></param>
+        /// <returns></returns>
+        protected static ChatCommandPerform ParsePerform(string[] Words, string Text, DataController Data)
+        {
+            Tuple<int, int, string> quote = null;
+            ChatCommandPerform command = null;
+            SkillObject skill = null;
+            string prefix = null;
+            List<SkillObject> list = null;
+            int num = 0;
+
+            if (Words == null || Words.Length < 2)
+                return null;
+
+            // extract quoted name if second word starts with "          
+            // this is necessary to not care about quoted text (t someone "yes yes")
+            // but only for quoted names (t "mister x" hello!)
+            if (Words[1].Length > 0 && Words[1][0] == QUOTECHAR)
+                quote = Text.GetQuote();
+
+            /********* QUOTED NAME *********/
+            if (quote != null)
+            {
+                // try get exact match for quoted name
+                skill = Data.SkillObjects.GetItemByName(quote.Item3, false);
+
+                if (skill != null)
+                    command = new ChatCommandPerform(skill);
+
+                // no skill with that name
+                else
+                {
+                    Data.ChatMessages.Add(ServerString.GetServerStringForString(
+                        "No skill with name: " + quote.Item3));
+                }
+            }
+
+            /********* UNQUOTED NAME *********/
+            else
+            {
+                prefix = Words[1];
+                list = Data.SkillObjects.GetItemsByNamePrefix(prefix);
+
+                // extend prefix with more words
+                // until there is only one or zero matches found
+                // or until there is only one more word left (supposed minimal text)
+                num = 2;
+                while (list.Count > 1 && num < Words.Length)
+                {
+                    prefix += DELIMITER + Words[num];
+                    list = Data.SkillObjects.GetItemsByNamePrefix(prefix);
+                    num++;
+                }
+
+                if (list.Count == 1)
+                    command = new ChatCommandPerform(list[0]);
+
+                // still more than one skill with max. prefix
+                else if (list.Count > 1)
+                {
+                    Data.ChatMessages.Add(ServerString.GetServerStringForString(
+                        "More than one skill with prefix: " + prefix));
+                }
+
+                // no skill with that prefix
+                else
+                {
+                    Data.ChatMessages.Add(ServerString.GetServerStringForString(
+                        "No skill with prefix: " + prefix));
                 }
             }
 

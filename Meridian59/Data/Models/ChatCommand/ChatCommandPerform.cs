@@ -14,24 +14,31 @@
  If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Meridian59.Common.Enums
+using System;
+using Meridian59.Common.Enums;
+
+namespace Meridian59.Data.Models
 {
-    /// <summary>
-    /// Different types of chatcommands
-    /// </summary>
-    public enum ChatCommandType
+    [Serializable]
+    public class ChatCommandPerform : ChatCommand
     {
-        Say, Emote, Yell, Broadcast, Tell, Guild, Cast, DM, Go, GoPlayer, GetPlayer,
-        WithDraw, Deposit, Suicide, Rest, Stand, Quit, Balance, Appeal, Dance, Point,
-        Wave
+        public const string KEY1 = "perform";
+        public const string KEY2 = "p";
+        public const string KEY3 = "pe";
+        public const string KEY4 = "ausführen";
+        public const string KEY5 = "a";
 
-#if !VANILLA
-        , TempSafe, Grouping, AutoLoot, AutoCombine, ReagentBag, SpellPower, Time
+        public override ChatCommandType CommandType { get { return ChatCommandType.Perform; } }
+        public SkillObject Skill { get; set; }
 
-#if !OPENMERIDIAN
-        , Invite, Perform
-#endif
+        public ChatCommandPerform()
+        {
+            Skill = new SkillObject();
+        }
 
-#endif
+        public ChatCommandPerform(SkillObject Skill)
+        {
+            this.Skill = Skill;
+        }
     }
 }

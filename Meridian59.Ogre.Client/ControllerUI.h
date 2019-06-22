@@ -1821,7 +1821,11 @@ namespace Meridian59 { namespace Ogre
       class Skills
       {
       public:
+         static bool OnKeyUp(const CEGUI::EventArgs& e);
          static bool OnItemClicked(const CEGUI::EventArgs& e);
+         static bool OnItemDoubleClicked(const CEGUI::EventArgs& e);
+         static bool OnDragStarted(const CEGUI::EventArgs& e);
+         static bool OnDragEnded(const CEGUI::EventArgs& e);
       };
 
       /// <summary>
