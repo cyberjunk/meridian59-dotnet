@@ -893,7 +893,7 @@ namespace Meridian59.Data
             roomObjectsLoot = new LootInfo(roomObjects);
             projectiles = new ProjectileList(50);
             onlinePlayers = new OnlinePlayerList(200);
-            inventoryObjects = new InventoryObjectList(100);
+            inventoryObjects = new InventoryObjectList();
             avatarCondition = new StatNumericList(5);
             avatarAttributes = new StatNumericList(10);
             avatarSkills = new SkillList(100);
