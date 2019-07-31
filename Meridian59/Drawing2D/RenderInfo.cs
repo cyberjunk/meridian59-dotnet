@@ -312,9 +312,14 @@ namespace Meridian59.Drawing2D
 
                 // used to calculate the boundingbox
                 V2 min = new V2(Origin.X, Origin.Y);
-                V2 max = (ApplyYOffset) ? 
-                    new V2(Size.X, Size.Y) : 
-                    new V2(Origin.X + Size.X, Origin.Y + Size.Y);
+                V2 max = new V2(Size.X, Size.Y);
+                if (ApplyYOffset)
+                {
+                    if (origin.X > 0.0f) max.X += origin.X;
+                    if (origin.Y > 0.0f) max.Y += origin.Y;
+                }
+                else
+                  max += origin;
 
                 Real x, y;
 
@@ -506,8 +511,8 @@ namespace Meridian59.Drawing2D
                     {
                         // get next power of 2 size
                         V2 pow2Size = new V2(
-                            MathUtil.NextPowerOf2((uint)dimension.X),
-                            MathUtil.NextPowerOf2((uint)dimension.Y));
+                            MathUtil.NextPowerOf2((uint)System.Math.Ceiling(dimension.X)),
+                            MathUtil.NextPowerOf2((uint)System.Math.Ceiling(dimension.Y)));
 
                         // scale so we use at least all pixels either from upscaled width or height
                         ScaleToBox(pow2Size, CenterHorizontal, CenterVertical, !IsCustomShrink);
