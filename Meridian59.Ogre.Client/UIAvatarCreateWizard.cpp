@@ -235,61 +235,81 @@ namespace Meridian59 { namespace Ogre
       // haircolors
       if (CLRString::Equals(e->PropertyName, CharCreationInfo::PROPNAME_HAIRCOLORS))
       {
-         HairColor->setMaxValue((float)CLRMath::Max(creationInfo->HairColors->Length - 1, 0));
+         if (creationInfo->HairColors->Length > 0)
+            HairColor->setMaxValue((float)CLRMath::Max(creationInfo->HairColors->Length - 1, 0));
+         HairColor->setCurrentValue(0.0f);
       }
 
       // skincolors
       else if (CLRString::Equals(e->PropertyName, CharCreationInfo::PROPNAME_SKINCOLORS))
       {
-         SkinColor->setMaxValue((float)CLRMath::Max(creationInfo->SkinColors->Length - 1, 0));
+         if (creationInfo->SkinColors->Length > 0)
+            SkinColor->setMaxValue((float)CLRMath::Max(creationInfo->SkinColors->Length - 1, 0));
+         SkinColor->setCurrentValue(0.0f);
       }
 
       // hairids (male/female)
       else if (CLRString::Equals(e->PropertyName, CharCreationInfo::PROPNAME_MALEHAIRIDS) &&
          GenderMale->isSelected())
       {
-         Hair->setMaxValue((float)CLRMath::Max(creationInfo->MaleHairIDs->Length - 1, 0));
+         if (creationInfo->MaleHairIDs->Length > 0)
+            Hair->setMaxValue((float)CLRMath::Max(creationInfo->MaleHairIDs->Length - 1, 0));
+         Hair->setCurrentValue(0.0f);
       }
       else if (CLRString::Equals(e->PropertyName, CharCreationInfo::PROPNAME_FEMALEHAIRIDS) &&
          !GenderMale->isSelected())
       {
-         Hair->setMaxValue((float)CLRMath::Max(creationInfo->FemaleHairIDs->Length - 1, 0));
+         if (creationInfo->FemaleHairIDs->Length > 0)
+            Hair->setMaxValue((float)CLRMath::Max(creationInfo->FemaleHairIDs->Length - 1, 0));
+         Hair->setCurrentValue(0.0f);
       }
 
       // eyeids (male/female)
       else if (CLRString::Equals(e->PropertyName, CharCreationInfo::PROPNAME_MALEEYEIDS) &&
          GenderMale->isSelected())
       {
-         Eyes->setMaxValue((float)CLRMath::Max(creationInfo->MaleEyeIDs->Length - 1, 0));
+         if (creationInfo->MaleEyeIDs->Length > 0)
+            Eyes->setMaxValue((float)CLRMath::Max(creationInfo->MaleEyeIDs->Length - 1, 0));
+         Eyes->setCurrentValue(0.0f);
       }
       else if (CLRString::Equals(e->PropertyName, CharCreationInfo::PROPNAME_FEMALEEYEIDS) &&
          !GenderMale->isSelected())
       {
-         Eyes->setMaxValue((float)CLRMath::Max(creationInfo->FemaleEyeIDs->Length - 1, 0));
+         if (creationInfo->FemaleEyeIDs->Length > 0)
+            Eyes->setMaxValue((float)CLRMath::Max(creationInfo->FemaleEyeIDs->Length - 1, 0));
+         Eyes->setCurrentValue(0.0f);
       }
 
       // noseids (male/female)
       else if (CLRString::Equals(e->PropertyName, CharCreationInfo::PROPNAME_MALENOSEIDS) &&
          GenderMale->isSelected())
       {
-         Nose->setMaxValue((float)CLRMath::Max(creationInfo->MaleNoseIDs->Length - 1, 0));
+         if (creationInfo->MaleNoseIDs->Length > 0)
+            Nose->setMaxValue((float)CLRMath::Max(creationInfo->MaleNoseIDs->Length - 1, 0));
+         Nose->setCurrentValue(0.0f);
       }
       else if (CLRString::Equals(e->PropertyName, CharCreationInfo::PROPNAME_FEMALENOSEIDS) &&
          !GenderMale->isSelected())
       {
-         Nose->setMaxValue((float)CLRMath::Max(creationInfo->FemaleNoseIDs->Length - 1, 0));
+         if (creationInfo->FemaleNoseIDs->Length > 0)
+            Nose->setMaxValue((float)CLRMath::Max(creationInfo->FemaleNoseIDs->Length - 1, 0));
+         Nose->setCurrentValue(0.0f);
       }
 
       // mouthids (male/female)
       else if (CLRString::Equals(e->PropertyName, CharCreationInfo::PROPNAME_MALEMOUTHIDS) &&
          GenderMale->isSelected())
       {
-         Mouth->setMaxValue((float)CLRMath::Max(creationInfo->MaleMouthIDs->Length - 1, 0));
+         if (creationInfo->MaleMouthIDs->Length > 0)
+            Mouth->setMaxValue((float)CLRMath::Max(creationInfo->MaleMouthIDs->Length - 1, 0));
+         Mouth->setCurrentValue(0.0f);
       }
       else if (CLRString::Equals(e->PropertyName, CharCreationInfo::PROPNAME_FEMALEMOUTHIDS) &&
          !GenderMale->isSelected())
       {
-         Mouth->setMaxValue((float)CLRMath::Max(creationInfo->FemaleMouthIDs->Length - 1, 0));
+         if (creationInfo->FemaleMouthIDs->Length > 0)
+            Mouth->setMaxValue((float)CLRMath::Max(creationInfo->FemaleMouthIDs->Length - 1, 0));
+         Mouth->setCurrentValue(0.0f);
       }
 
       // name
