@@ -2776,47 +2776,55 @@
                <!-- Skills -->
                <Window type="TaharezLook/LabelWhite" name="AvatarCreateWizard.SkillsDescription" >
                   <Property name="Text" value="Skills" />
-                  <Property name="Area" value="{{0,5},{0,5},{0.5,-5},{0,30}}" />
+                  <Property name="Area" value="{{0,5},{0,5},{0.5,-5},{0,25}}" />
                   <Property name="Font" value="Berenika-8-Bold" />
-                  <Property name="HorzFormatting" value="CentreAligned" />           
+                  <Property name="HorzFormatting" value="CentreAligned" />
                </Window>
                <Window type="TaharezLook/ItemListbox" name="AvatarCreateWizard.Skills" >
-                  <Property name="Area" value="{{0,5},{0,35},{0.5,-5},{0.6,-15}}" />
+                  <Property name="Area" value="{{0,5},{0,28},{0.5,-5},{0.6,-22}}" />
                </Window>
                <Window type="TaharezLook/LabelWhite" name="AvatarCreateWizard.SelectedSkillsDescription" >
                   <Property name="Text" value="Selected" />
-                  <Property name="Area" value="{{0,5},{0.6,-5},{0.5,-5},{0.6,20}}" />
+                  <Property name="Area" value="{{0,5},{0.6,-18},{0.5,-5},{0.6,2}}" />
                   <Property name="Font" value="Berenika-8-Bold" />
-                  <Property name="HorzFormatting" value="CentreAligned" />             
+                  <Property name="HorzFormatting" value="CentreAligned" />
                </Window>
                <Window type="TaharezLook/ItemListbox" name="AvatarCreateWizard.SelectedSkills" >
-                  <Property name="Area" value="{{0,5},{0.6,25},{0.5,-5},{1,-50}}" />
+                  <Property name="Area" value="{{0,5},{0.6,5},{0.5,-5},{1,-70}}" />
                </Window>
                
                <!-- Spells -->
                <Window type="TaharezLook/LabelWhite" name="AvatarCreateWizard.SpellsDescription" >
                   <Property name="Text" value="Spells" />
-                  <Property name="Area" value="{{0.5,5},{0,10},{1,-5},{0,30}}" />
+                  <Property name="Area" value="{{0.5,5},{0,10},{1,-5},{0,25}}" />
                   <Property name="Font" value="Berenika-8-Bold" />
-                  <Property name="HorzFormatting" value="CentreAligned" />            
+                  <Property name="HorzFormatting" value="CentreAligned" />
                </Window>
                <Window type="TaharezLook/ItemListbox" name="AvatarCreateWizard.Spells" >
-                  <Property name="Area" value="{{0.5,5},{0,35},{1,-5},{0.6,-15}}" />                  
+                  <Property name="Area" value="{{0.5,5},{0,28},{1,-5},{0.6,-22}}" />
                </Window>
                <Window type="TaharezLook/LabelWhite" name="AvatarCreateWizard.SelectedSpellsDescription" >
                   <Property name="Text" value="Selected" />
-                  <Property name="Area" value="{{0.5,5},{0.6,-5},{1,-5},{0.6,20}}" />
+                  <Property name="Area" value="{{0.5,5},{0.6,-18},{1,-5},{0.6,2}}" />
                   <Property name="Font" value="Berenika-8-Bold" />
-                  <Property name="HorzFormatting" value="CentreAligned" />            
+                  <Property name="HorzFormatting" value="CentreAligned" />
                </Window>
                <Window type="TaharezLook/ItemListbox" name="AvatarCreateWizard.SelectedSpells" >
-                  <Property name="Area" value="{{0.5,5},{0.6,25},{1,-5},{1,-50}}" />
+                  <Property name="Area" value="{{0.5,5},{0.6,5},{1,-5},{1,-70}}" />
                </Window>
-               
+
+               <!-- SpellsSkillsDisclaimer -->
+               <Window type="TaharezLook/Label" name="AvatarCreateWizard.SpellsSkillsDisclaimer" >
+                  <Property name="Text" value="To unlock a school's second rank of abilities, choose two or more abilities of the first rank.  The schools of Shal'ille (good) and Qor (evil) are natural anta- gonists and, thus, mutually exclusive." />
+                  <Property name="Area" value="{{0,5},{1,-68},{1,-5},{1,-22}}" />
+                  <Property name="VertFormatting" value="TopAligned" />  
+                  <Property name="HorzFormatting" value="WordWrapJustified" />
+               </Window>
+
                <!-- SkillsAvailable -->
                <Window type="TaharezLook/VUMeterNumeric" name="AvatarCreateWizard.SkillPointsAvailable" >
                   <Property name="Text" value="45/45" />
-                  <Property name="Area" value="{{0,5},{1,-21},{1,-5},{1,-5}}" />                                 
+                  <Property name="Area" value="{{0,5},{1,-21},{1,-5},{1,-5}}" />
                </Window>
             </Window>
          </Window>
@@ -4685,6 +4693,5 @@ Meridian 59 is a registered trademark." />
             </Window>
          </Window>
       </Window>
-      
    </Window>
 </GUILayout>
