@@ -125,12 +125,14 @@
     <Compile Include="Common\Outfitter.cs" />
     <Compile Include="Common\Polygon.cs" />
     <Compile Include="Common\Util.cs" />
+    <Compile Include="Data\Lists\AvatarCreatorSkillObjectList.cs" />
     <Compile Include="Data\Lists\GroupMemberList.cs" />
     <Compile Include="Data\Lists\GroupList.cs" />
     <Compile Include="Data\Lists\KeyValuePairStringList.cs" />
     <Compile Include="Data\Lists\MailList.cs" />
     <Compile Include="Data\Lists\RoomObjectListFiltered.cs" />
     <Compile Include="Data\Lists\SkillObjectList.cs" />
+    <Compile Include="Data\Lists\AvatarCreatorSpellObjectList.cs" />
     <Compile Include="Data\Models\AdminInfoProperty.cs" />
     <Compile Include="Data\Models\AdminInfoObject.cs" />
     <Compile Include="Data\Models\AdminInfo.cs" />

@@ -225,6 +225,11 @@ namespace Meridian59.Data.Models
                 }
             }
         }
+
+        public string SkillListDescription
+        {
+            get { return SchoolType.WeaponCraft.ToString() + (SkillCost == 10 ? " 1: " : " 2: ") + skillName; }
+        }
         #endregion
 
         #region Constructors

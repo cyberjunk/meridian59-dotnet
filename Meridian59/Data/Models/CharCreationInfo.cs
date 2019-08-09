@@ -39,7 +39,11 @@ namespace Meridian59.Data.Models
         public const uint ATTRIBUTE_MAXVALUE                = 50; 
         public const uint ATTRIBUTE_DEFAULT                 = 25;        
         public const uint ATTRIBUTE_MAXSUM                  = 200;
+#if VANILLA || OPENMERIDIAN
         public const uint SKILLPOINTS_MAXSUM                = 45;
+#else
+        public const uint SKILLPOINTS_MAXSUM                = 125;
+#endif
         public const uint SLOTID_DEFAULT                    = 0;
         public const byte HAIRCOLOR_DEFAULT                 = 0;
         public const byte SKINCOLOR_DEFAULT                 = 0;
@@ -384,10 +388,10 @@ namespace Meridian59.Data.Models
         protected ResourceIDBGF[] femaleEyeIDs;
         protected ResourceIDBGF[] femaleNoseIDs;
         protected ResourceIDBGF[] femaleMouthIDs;
-        protected readonly BaseList<AvatarCreatorSpellObject> spells = new BaseList<AvatarCreatorSpellObject>(30);
-        protected readonly BaseList<AvatarCreatorSkillObject> skills = new BaseList<AvatarCreatorSkillObject>(30);
-        protected readonly BaseList<AvatarCreatorSpellObject> selectedSpells = new BaseList<AvatarCreatorSpellObject>(5);
-        protected readonly BaseList<AvatarCreatorSkillObject> selectedSkills = new BaseList<AvatarCreatorSkillObject>(5);
+        protected readonly AvatarCreatorSpellObjectList spells = new AvatarCreatorSpellObjectList(30);
+        protected readonly AvatarCreatorSkillObjectList skills = new AvatarCreatorSkillObjectList(30);
+        protected readonly AvatarCreatorSpellObjectList selectedSpells = new AvatarCreatorSpellObjectList(5);
+        protected readonly AvatarCreatorSkillObjectList selectedSkills = new AvatarCreatorSkillObjectList(5);
         protected ObjectBase exampleModel;
         protected uint might = ATTRIBUTE_DEFAULT;
         protected uint intellect = ATTRIBUTE_DEFAULT;
@@ -561,22 +565,22 @@ namespace Meridian59.Data.Models
             }
         }
 
-        public BaseList<AvatarCreatorSpellObject> Spells
+        public AvatarCreatorSpellObjectList Spells
         {
             get { return spells; }           
         }
 
-        public BaseList<AvatarCreatorSkillObject> Skills
+        public AvatarCreatorSkillObjectList Skills
         {
             get { return skills; }            
         }
 
-        public BaseList<AvatarCreatorSpellObject> SelectedSpells
+        public AvatarCreatorSpellObjectList SelectedSpells
         {
             get { return selectedSpells; }            
         }
 
-        public BaseList<AvatarCreatorSkillObject> SelectedSkills
+        public AvatarCreatorSkillObjectList SelectedSkills
         {
             get { return selectedSkills; }           
         }
@@ -824,6 +828,11 @@ namespace Meridian59.Data.Models
         {
             ExampleModel = new ObjectBase();
 
+            spells.SortBySchoolAndName();
+            skills.SortBySchoolAndName();
+            selectedSkills.SortBySchoolAndName();
+            selectedSpells.SortBySchoolAndName();
+
             Clear(false);
         }
 
@@ -875,6 +884,11 @@ namespace Meridian59.Data.Models
             femaleNoseIDs = FemaleNoseIDs;
             femaleMouthIDs = FemaleMouthIDs;
 
+            spells.SortBySchoolAndName();
+            skills.SortBySchoolAndName();
+            selectedSkills.SortBySchoolAndName();
+            selectedSpells.SortBySchoolAndName();
+
             spells.AddRange(Spells);
             skills.AddRange(Skills);       
         }
@@ -887,6 +901,11 @@ namespace Meridian59.Data.Models
         public CharCreationInfo(byte[] Buffer, int StartIndex = 0)
         {
             ExampleModel = new ObjectBase();
+
+            spells.SortBySchoolAndName();
+            skills.SortBySchoolAndName();
+            selectedSkills.SortBySchoolAndName();
+            selectedSpells.SortBySchoolAndName();
 
             ReadFrom(Buffer, StartIndex); 
         }
