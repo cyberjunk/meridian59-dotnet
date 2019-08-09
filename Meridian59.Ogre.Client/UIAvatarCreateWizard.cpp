@@ -948,7 +948,24 @@ namespace Meridian59 { namespace Ogre
       const CEGUI::ItemEntry* itm       = (CEGUI::ItemEntry*)args.window;
 
       // select spell
-      OgreClient::Singleton->Data->CharCreationInfo->SelectSpell(itm->getID());
+      CharSelectAbilityError ret =
+         OgreClient::Singleton->Data->CharCreationInfo->SelectSpell(itm->getID());
+
+      switch (ret)
+      {
+      case CharSelectAbilityError::AlreadyHaveQorError:
+         ControllerUI::ConfirmPopup::ShowOK(GetLangCharSelectAbilityError(LANGSTR_CHARSSELECTABILITYERROR::ALREADYHAVEQORERROR), 0, true);
+         break;
+      case CharSelectAbilityError::AlreadyHaveShalilleError:
+         ControllerUI::ConfirmPopup::ShowOK(GetLangCharSelectAbilityError(LANGSTR_CHARSSELECTABILITYERROR::ALREADYHAVESHALILLEERROR), 0, true);
+         break;
+      case CharSelectAbilityError::NoPointsLeftError:
+         ControllerUI::ConfirmPopup::ShowOK(GetLangCharSelectAbilityError(LANGSTR_CHARSSELECTABILITYERROR::NOPOINTSLEFTERROR), 0, true);
+         break;
+      case CharSelectAbilityError::NotEnoughLevelOneError:
+         ControllerUI::ConfirmPopup::ShowOK(GetLangCharSelectAbilityError(LANGSTR_CHARSSELECTABILITYERROR::NOTENOUGHLEVELONEERROR), 0, true);
+         break;
+      }
 
       return true;
    };
@@ -958,8 +975,19 @@ namespace Meridian59 { namespace Ogre
       const CEGUI::MouseEventArgs& args = (const CEGUI::MouseEventArgs&)e;
       const CEGUI::ItemEntry* itm       = (CEGUI::ItemEntry*)args.window;
 
-      // select skill	
-      OgreClient::Singleton->Data->CharCreationInfo->SelectSkill(itm->getID());
+      // select skill
+      CharSelectAbilityError ret = 
+         OgreClient::Singleton->Data->CharCreationInfo->SelectSkill(itm->getID());
+
+      switch (ret)
+      {
+      case CharSelectAbilityError::NoPointsLeftError:
+         ControllerUI::ConfirmPopup::ShowOK(GetLangCharSelectAbilityError(LANGSTR_CHARSSELECTABILITYERROR::NOPOINTSLEFTERROR), 0, true);
+         break;
+      case CharSelectAbilityError::NotEnoughLevelOneError:
+         ControllerUI::ConfirmPopup::ShowOK(GetLangCharSelectAbilityError(LANGSTR_CHARSSELECTABILITYERROR::NOTENOUGHLEVELONEERROR), 0, true);
+         break;
+      }
 
       return true;
    };

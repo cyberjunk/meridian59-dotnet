@@ -88,6 +88,14 @@ const char* EN_CHARINFONOTOKERROR_OKDIALOG[] =
    "Player descriptions cannot be more than 1000 characters.",                                                                                                                    // 12
    "You must select either male or female when creating your character."                                                                                                          // 13
 };
+const char* EN_CHARSSELECTABILITYERROR[] =
+{
+   "No error.",                                                                                                // 0
+   "You don't have any ability points left to spend!",                                                         // 1
+   "You have already selected a Shal'ille spell, a school diametrically opposed to Qor.",                      // 2
+   "You have already selected a Qor spell, a school diametrically opposed to Shal'ille.",                      // 3
+   "You have to select at least two first level abilities in a school to unlock its second level."             // 4
+};
 
 const char* EN_NPCQUESTUI[] =
 {
@@ -207,6 +215,15 @@ const char* DE_CHARINFONOTOKERROR_OKDIALOG[] =
    "Du musst ein Geschlecht für deinen Charakter wählen."                                                                                                                                                                                              // 13
 };
 
+const char* DE_CHARSSELECTABILITYERROR[] =
+{
+   "Kein Fehler.",                                                                                                                                 // 0
+   "Du hast keine weiteren Fähigkeitspunkte übrig, die du noch vergeben könntest.",                                                                // 1
+   "Du hast bereits einen Zauber der Schule von Shal'ille gewählt, die in direktem Gegensatz zu Qor steht.",                                       // 2
+   "Du hast bereits einen Zauber der Schule von Qor gewählt, die in direktem Gegensatz zu Shal'ille steht.",                                       // 3
+   "Du musst mindestens zwei Fähigkeiten des ersten Ranges einer Schule ausgewählt haben, um Fähigkeiten des zweiten Ranges auswählen zu können."  // 4
+};
+
 const char* DE_NPCQUESTUI[] =
 {
    "Beschreibung:",                                // 0
@@ -311,6 +328,18 @@ const char* GetCharInfoNotOKErrorOkDialog(const LANGSTR_CHARINFONOTOKERROR_OKDIA
    {
    case LanguageCode::German: return DE_CHARINFONOTOKERROR_OKDIALOG[ID];
    default:                   return EN_CHARINFONOTOKERROR_OKDIALOG[ID];
+   }
+};
+
+const char* GetLangCharSelectAbilityError(const LANGSTR_CHARSSELECTABILITYERROR::Enum ID)
+{
+   using ::Meridian59::Ogre::OgreClient;
+   using ::Meridian59::Common::Enums::LanguageCode;
+
+   switch (OgreClient::Singleton->Config->Language)
+   {
+   case LanguageCode::German: return DE_CHARSSELECTABILITYERROR[ID];
+   default:                   return EN_CHARSSELECTABILITYERROR[ID];
    }
 };
 

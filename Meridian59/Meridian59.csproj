@@ -101,6 +101,7 @@
     <Compile Include="Common\Constants\ChatSubStrings.cs" />
     <Compile Include="Common\Constants\ResourceStrings.cs" />
     <Compile Include="Common\Crush32.cs" />
+    <Compile Include="Common\Enums\CharSelectAbilityError.cs" />
     <Compile Include="Common\Enums\CharInfoNotOkError.cs" />
     <Compile Include="Common\Enums\KnownHotspot.cs" />
     <Compile Include="Common\Enums\HealthStatus.cs" />

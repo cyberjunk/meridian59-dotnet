@@ -120,6 +120,18 @@ namespace LANGSTR_CHARINFONOTOKERROR_OKDIALOG
    };
 }
 
+namespace LANGSTR_CHARSSELECTABILITYERROR
+{
+   enum Enum
+   {
+      NOCHARSELECTERROR = 0,
+      NOPOINTSLEFTERROR = 1,
+      ALREADYHAVESHALILLEERROR = 2,
+      ALREADYHAVEQORERROR = 3,
+      NOTENOUGHLEVELONEERROR = 4
+   };
+}
+
 namespace LANGSTR_NPCQUESTUI
 {
    enum Enum
@@ -142,4 +154,5 @@ const char* GetLangTooltipOnlinePlayer(const LANGSTR_TOOLTIP_ONLINEPLAYER::Enum 
 const char* GetLangTooltipStatusBar(const LANGSTR_TOOLTIP_STATUSBAR::Enum ID);
 const char* GetLangDescriptionStatusBar(const LANGSTR_DESCRIPTION_STATUSBAR::Enum ID);
 const char* GetCharInfoNotOKErrorOkDialog(const LANGSTR_CHARINFONOTOKERROR_OKDIALOG::Enum ID);
+const char* GetLangCharSelectAbilityError(const LANGSTR_CHARSSELECTABILITYERROR::Enum ID);
 const char* GetLangNPCQuestUI(const LANGSTR_NPCQUESTUI::Enum ID);
