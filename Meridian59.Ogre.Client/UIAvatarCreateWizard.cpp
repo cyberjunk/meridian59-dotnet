@@ -586,14 +586,12 @@ namespace Meridian59 { namespace Ogre
          CEGUI::ItemEntry::EventMouseClick, 
          CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnSpellClicked));
 
-      if (widget->getChildCount() > 2)
+      if (widget->getChildCount() > 1)
       {
-         CEGUI::Window* name		= (CEGUI::Window*)widget->getChildAtIdx(UI_AVATARCREATOR_CHILDINDEX_SPELLS_NAME);
-         CEGUI::Window* school	= (CEGUI::Window*)widget->getChildAtIdx(UI_AVATARCREATOR_CHILDINDEX_SPELLS_SCHOOL);
-         CEGUI::Window* points	= (CEGUI::Window*)widget->getChildAtIdx(UI_AVATARCREATOR_CHILDINDEX_SPELLS_POINTS);
+         CEGUI::Window* info = (CEGUI::Window*)widget->getChildAtIdx(UI_AVATARCREATOR_CHILDINDEX_ABILITY_INFO);
+         CEGUI::Window* points = (CEGUI::Window*)widget->getChildAtIdx(UI_AVATARCREATOR_CHILDINDEX_ABILITY_POINTS);
 
-         name->setText(StringConvert::CLRToCEGUI(obj->SpellName));
-         school->setText(StringConvert::CLRToCEGUI(obj->SchoolType.ToString()));
+         info->setText(StringConvert::CLRToCEGUI(obj->SpellListDescription));
          points->setText(CEGUI::PropertyHelper<unsigned int>::toString(obj->SpellCost));
       }
 
@@ -634,10 +632,10 @@ namespace Meridian59 { namespace Ogre
 
       if (widget->getChildCount() > 1)
       {
-         CEGUI::Window* name   = (CEGUI::Window*)widget->getChildAtIdx(UI_AVATARCREATOR_CHILDINDEX_SKILLS_NAME);
-         CEGUI::Window* points = (CEGUI::Window*)widget->getChildAtIdx(UI_AVATARCREATOR_CHILDINDEX_SKILLS_POINTS);
+         CEGUI::Window* info = (CEGUI::Window*)widget->getChildAtIdx(UI_AVATARCREATOR_CHILDINDEX_ABILITY_INFO);
+         CEGUI::Window* points = (CEGUI::Window*)widget->getChildAtIdx(UI_AVATARCREATOR_CHILDINDEX_ABILITY_POINTS);
 
-         name->setText(StringConvert::CLRToCEGUI(obj->SkillName));
+         info->setText(StringConvert::CLRToCEGUI(obj->SkillListDescription));
          points->setText(CEGUI::PropertyHelper<unsigned int>::toString(obj->SkillCost));
       }
 
@@ -676,14 +674,12 @@ namespace Meridian59 { namespace Ogre
          CEGUI::ItemEntry::EventMouseClick, 
          CEGUI::Event::Subscriber(UICallbacks::AvatarCreateWizard::OnSelectedSpellClicked));
 
-      if (widget->getChildCount() > 2)
+      if (widget->getChildCount() > 1)
       {
-         CEGUI::Window* name		= (CEGUI::Window*)widget->getChildAtIdx(UI_AVATARCREATOR_CHILDINDEX_SPELLS_NAME);
-         CEGUI::Window* school	= (CEGUI::Window*)widget->getChildAtIdx(UI_AVATARCREATOR_CHILDINDEX_SPELLS_SCHOOL);
-         CEGUI::Window* points	= (CEGUI::Window*)widget->getChildAtIdx(UI_AVATARCREATOR_CHILDINDEX_SPELLS_POINTS);
+         CEGUI::Window* info = (CEGUI::Window*)widget->getChildAtIdx(UI_AVATARCREATOR_CHILDINDEX_ABILITY_INFO);
+         CEGUI::Window* points = (CEGUI::Window*)widget->getChildAtIdx(UI_AVATARCREATOR_CHILDINDEX_ABILITY_POINTS);
 
-         name->setText(StringConvert::CLRToCEGUI(obj->SpellName));
-         school->setText(StringConvert::CLRToCEGUI(obj->SchoolType.ToString()));
+         info->setText(StringConvert::CLRToCEGUI(obj->SpellListDescription));
          points->setText(CEGUI::PropertyHelper<unsigned int>::toString(obj->SpellCost));
       }
 
@@ -724,10 +720,10 @@ namespace Meridian59 { namespace Ogre
 
       if (widget->getChildCount() > 1)
       {
-         CEGUI::Window* name		= (CEGUI::Window*)widget->getChildAtIdx(UI_AVATARCREATOR_CHILDINDEX_SKILLS_NAME);
-         CEGUI::Window* points	= (CEGUI::Window*)widget->getChildAtIdx(UI_AVATARCREATOR_CHILDINDEX_SKILLS_POINTS);
+         CEGUI::Window* info = (CEGUI::Window*)widget->getChildAtIdx(UI_AVATARCREATOR_CHILDINDEX_ABILITY_INFO);
+         CEGUI::Window* points = (CEGUI::Window*)widget->getChildAtIdx(UI_AVATARCREATOR_CHILDINDEX_ABILITY_POINTS);
 
-         name->setText(StringConvert::CLRToCEGUI(obj->SkillName));
+         info->setText(StringConvert::CLRToCEGUI(obj->SkillListDescription));
          points->setText(CEGUI::PropertyHelper<unsigned int>::toString(obj->SkillCost));
       }
 
@@ -952,7 +948,24 @@ namespace Meridian59 { namespace Ogre
       const CEGUI::ItemEntry* itm       = (CEGUI::ItemEntry*)args.window;
 
       // select spell
-      OgreClient::Singleton->Data->CharCreationInfo->SelectSpell(itm->getID());
+      CharSelectAbilityError ret =
+         OgreClient::Singleton->Data->CharCreationInfo->SelectSpell(itm->getID());
+
+      switch (ret)
+      {
+      case CharSelectAbilityError::AlreadyHaveQorError:
+         ControllerUI::ConfirmPopup::ShowOK(GetLangCharSelectAbilityError(LANGSTR_CHARSSELECTABILITYERROR::ALREADYHAVEQORERROR), 0, true);
+         break;
+      case CharSelectAbilityError::AlreadyHaveShalilleError:
+         ControllerUI::ConfirmPopup::ShowOK(GetLangCharSelectAbilityError(LANGSTR_CHARSSELECTABILITYERROR::ALREADYHAVESHALILLEERROR), 0, true);
+         break;
+      case CharSelectAbilityError::NoPointsLeftError:
+         ControllerUI::ConfirmPopup::ShowOK(GetLangCharSelectAbilityError(LANGSTR_CHARSSELECTABILITYERROR::NOPOINTSLEFTERROR), 0, true);
+         break;
+      case CharSelectAbilityError::NotEnoughLevelOneError:
+         ControllerUI::ConfirmPopup::ShowOK(GetLangCharSelectAbilityError(LANGSTR_CHARSSELECTABILITYERROR::NOTENOUGHLEVELONEERROR), 0, true);
+         break;
+      }
 
       return true;
    };
@@ -962,8 +975,19 @@ namespace Meridian59 { namespace Ogre
       const CEGUI::MouseEventArgs& args = (const CEGUI::MouseEventArgs&)e;
       const CEGUI::ItemEntry* itm       = (CEGUI::ItemEntry*)args.window;
 
-      // select skill	
-      OgreClient::Singleton->Data->CharCreationInfo->SelectSkill(itm->getID());
+      // select skill
+      CharSelectAbilityError ret = 
+         OgreClient::Singleton->Data->CharCreationInfo->SelectSkill(itm->getID());
+
+      switch (ret)
+      {
+      case CharSelectAbilityError::NoPointsLeftError:
+         ControllerUI::ConfirmPopup::ShowOK(GetLangCharSelectAbilityError(LANGSTR_CHARSSELECTABILITYERROR::NOPOINTSLEFTERROR), 0, true);
+         break;
+      case CharSelectAbilityError::NotEnoughLevelOneError:
+         ControllerUI::ConfirmPopup::ShowOK(GetLangCharSelectAbilityError(LANGSTR_CHARSSELECTABILITYERROR::NOTENOUGHLEVELONEERROR), 0, true);
+         break;
+      }
 
       return true;
    };

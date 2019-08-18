@@ -255,6 +255,11 @@ namespace Meridian59.Data.Models
                 }
             }
         }
+
+        public string SpellListDescription
+        {
+            get { return schoolType.ToString() + (SpellCost == 10 ? " 1: " : " 2: ") + spellName; }
+        }
         #endregion
 
         #region Constructors

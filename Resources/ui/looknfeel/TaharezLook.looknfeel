@@ -6817,26 +6817,7 @@
                <UnifiedDim scale="0" offset="0" type="TopEdge" />
             </Dim>
             <Dim type="Width">
-               <UnifiedDim scale="0.5" offset="-5" type="Width" />
-            </Dim>
-            <Dim type="Height">
-               <UnifiedDim scale="0" offset="20" type="Height"/>
-            </Dim>
-         </Area>
-         <Property name="HorzFormatting" value="LeftAligned" />
-         <Property name="MousePassThroughEnabled" value="True" />
-      </Child>
-      <!-- School -->
-      <Child type ="TaharezLook/Label" nameSuffix="__auto__label2">
-         <Area>
-            <Dim type="LeftEdge">
-               <UnifiedDim scale="0.5" offset="5" type="LeftEdge" />
-            </Dim>
-            <Dim type="TopEdge">
-               <UnifiedDim scale="0" offset="0" type="TopEdge" />
-            </Dim>
-            <Dim type="Width">
-               <UnifiedDim scale="0.4" offset="-5" type="Width" />
+               <UnifiedDim scale="0.9" offset="-5" type="Width" />
             </Dim>
             <Dim type="Height">
                <UnifiedDim scale="0" offset="20" type="Height"/>
@@ -6846,7 +6827,7 @@
          <Property name="MousePassThroughEnabled" value="True" />
       </Child>
       <!-- Points -->
-      <Child type ="TaharezLook/Label" nameSuffix="__auto__label3">
+      <Child type ="TaharezLook/Label" nameSuffix="__auto__label2">
          <Area>
             <Dim type="LeftEdge">
                <UnifiedDim scale="0.9" offset="5" type="LeftEdge" />

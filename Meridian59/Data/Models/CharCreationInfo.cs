@@ -39,7 +39,11 @@ namespace Meridian59.Data.Models
         public const uint ATTRIBUTE_MAXVALUE                = 50; 
         public const uint ATTRIBUTE_DEFAULT                 = 25;        
         public const uint ATTRIBUTE_MAXSUM                  = 200;
+#if VANILLA || OPENMERIDIAN
         public const uint SKILLPOINTS_MAXSUM                = 45;
+#else
+        public const uint SKILLPOINTS_MAXSUM                = 125;
+#endif
         public const uint SLOTID_DEFAULT                    = 0;
         public const byte HAIRCOLOR_DEFAULT                 = 0;
         public const byte SKINCOLOR_DEFAULT                 = 0;
@@ -384,10 +388,10 @@ namespace Meridian59.Data.Models
         protected ResourceIDBGF[] femaleEyeIDs;
         protected ResourceIDBGF[] femaleNoseIDs;
         protected ResourceIDBGF[] femaleMouthIDs;
-        protected readonly BaseList<AvatarCreatorSpellObject> spells = new BaseList<AvatarCreatorSpellObject>(30);
-        protected readonly BaseList<AvatarCreatorSkillObject> skills = new BaseList<AvatarCreatorSkillObject>(30);
-        protected readonly BaseList<AvatarCreatorSpellObject> selectedSpells = new BaseList<AvatarCreatorSpellObject>(5);
-        protected readonly BaseList<AvatarCreatorSkillObject> selectedSkills = new BaseList<AvatarCreatorSkillObject>(5);
+        protected readonly AvatarCreatorSpellObjectList spells = new AvatarCreatorSpellObjectList(30);
+        protected readonly AvatarCreatorSkillObjectList skills = new AvatarCreatorSkillObjectList(30);
+        protected readonly AvatarCreatorSpellObjectList selectedSpells = new AvatarCreatorSpellObjectList(5);
+        protected readonly AvatarCreatorSkillObjectList selectedSkills = new AvatarCreatorSkillObjectList(5);
         protected ObjectBase exampleModel;
         protected uint might = ATTRIBUTE_DEFAULT;
         protected uint intellect = ATTRIBUTE_DEFAULT;
@@ -561,22 +565,22 @@ namespace Meridian59.Data.Models
             }
         }
 
-        public BaseList<AvatarCreatorSpellObject> Spells
+        public AvatarCreatorSpellObjectList Spells
         {
             get { return spells; }           
         }
 
-        public BaseList<AvatarCreatorSkillObject> Skills
+        public AvatarCreatorSkillObjectList Skills
         {
             get { return skills; }            
         }
 
-        public BaseList<AvatarCreatorSpellObject> SelectedSpells
+        public AvatarCreatorSpellObjectList SelectedSpells
         {
             get { return selectedSpells; }            
         }
 
-        public BaseList<AvatarCreatorSkillObject> SelectedSkills
+        public AvatarCreatorSkillObjectList SelectedSkills
         {
             get { return selectedSkills; }           
         }
@@ -824,6 +828,11 @@ namespace Meridian59.Data.Models
         {
             ExampleModel = new ObjectBase();
 
+            spells.SortBySchoolAndName();
+            skills.SortBySchoolAndName();
+            selectedSkills.SortBySchoolAndName();
+            selectedSpells.SortBySchoolAndName();
+
             Clear(false);
         }
 
@@ -875,6 +884,11 @@ namespace Meridian59.Data.Models
             femaleNoseIDs = FemaleNoseIDs;
             femaleMouthIDs = FemaleMouthIDs;
 
+            spells.SortBySchoolAndName();
+            skills.SortBySchoolAndName();
+            selectedSkills.SortBySchoolAndName();
+            selectedSpells.SortBySchoolAndName();
+
             spells.AddRange(Spells);
             skills.AddRange(Skills);       
         }
@@ -887,6 +901,11 @@ namespace Meridian59.Data.Models
         public CharCreationInfo(byte[] Buffer, int StartIndex = 0)
         {
             ExampleModel = new ObjectBase();
+
+            spells.SortBySchoolAndName();
+            skills.SortBySchoolAndName();
+            selectedSkills.SortBySchoolAndName();
+            selectedSpells.SortBySchoolAndName();
 
             ReadFrom(Buffer, StartIndex); 
         }
@@ -1171,12 +1190,136 @@ namespace Meridian59.Data.Models
                     obj.Resource.DecompressAll();
         }
 
-        public void SelectSkill(uint ExtraID)
+        public bool KarmaSchoolCheck(AvatarCreatorSpellObject Spell)
+        {
+            if (Spell.SchoolType != SchoolType.Qor && Spell.SchoolType != SchoolType.Shalille)
+                return true;
+
+            foreach (AvatarCreatorSpellObject obj in SelectedSpells)
+            {
+                if ((obj.SchoolType == SchoolType.Qor && Spell.SchoolType == SchoolType.Shalille)
+                    || (obj.SchoolType == SchoolType.Shalille && Spell.SchoolType == SchoolType.Qor))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        public bool LevelOneCountCheck(AvatarCreatorSpellObject Spell)
+        {
+            // Fine if we're adding a level 1 spell.
+            if (Spell.SpellCost == 10)
+                return true;
+
+            // Else we need 2 level 1 spells in that school already.
+            int count = 0;
+            foreach (AvatarCreatorSpellObject obj in SelectedSpells)
+            {
+                if (obj.SpellCost == 10 && obj.SchoolType == Spell.SchoolType)
+                {
+                    ++count;
+                }
+            }
+
+            return count > 1;
+        }
+
+        public bool LevelOneCountCheck(AvatarCreatorSkillObject Skill)
+        {
+            // Fine if we're adding a level 1 skill.
+            if (Skill.SkillCost == 10)
+                return true;
+
+            // Else we need 2 level 1 skills already.
+            int count = 0;
+            foreach (AvatarCreatorSkillObject obj in SelectedSkills)
+            {
+                if (obj.SkillCost == 10)
+                {
+                    ++count;
+                }
+            }
+
+            return count > 1;
+        }
+
+        public void RemainingLevelOneCheck(AvatarCreatorSkillObject Skill)
+        {
+            // Don't need to remove any others if removing a level 2 skill.
+            if (Skill.SkillCost == 25)
+                return;
+
+            // Fine if we still have more than one level 1 skill.
+            int count = 0;
+            foreach (AvatarCreatorSkillObject obj in SelectedSkills)
+            {
+                if (obj.SkillCost == 10)
+                {
+                    ++count;
+                }
+            }
+
+            // Don't have enough level 1s, remove any other level 2 skills.
+            if (count < 2)
+            {
+                for (int i = SelectedSkills.Count - 1; i >= 0; --i)
+                {
+                    if (SelectedSkills[i].SkillCost == 25)
+                    {
+                        SelectedSkills.RemoveAt(i);
+                    }
+                }
+            }
+
+            return;
+        }
+
+        public void RemainingLevelOneCheck(AvatarCreatorSpellObject Spell)
+        {
+            // Don't need to remove any others if removing a level 2 spell.
+            if (Spell.SpellCost == 25)
+                return;
+
+            // Fine if we still have more than one level 1 spell in the same school.
+            int count = 0;
+            foreach (AvatarCreatorSpellObject obj in SelectedSpells)
+            {
+                if (obj.SpellCost == 10 && obj.SchoolType == Spell.SchoolType)
+                {
+                    ++count;
+                }
+            }
+
+            // Don't have enough level 1s in the same school, remove any other
+            // level 2 spells in the same school.
+            if (count < 2)
+            {
+                for (int i = SelectedSpells.Count - 1; i >= 0; --i)
+                {
+                    if (SelectedSpells[i].SpellCost == 25 && SelectedSpells[i].SchoolType == Spell.SchoolType)
+                    {
+                        SelectedSpells.RemoveAt(i);
+                    }
+                }
+            }
+
+            return;
+        }
+
+        public CharSelectAbilityError SelectSkill(uint ExtraID)
         {
             foreach (AvatarCreatorSkillObject obj in Skills)
             {
-                if (obj.ExtraID == ExtraID && (obj.SkillCost <= SkillPointsAvailable))
+                if (obj.ExtraID == ExtraID)
                 {
+                    if (obj.SkillCost > SkillPointsAvailable)
+                        return CharSelectAbilityError.NoPointsLeftError;
+                    // Require at least two level 1 skills to select a level 2 one.
+                    if (!LevelOneCountCheck(obj))
+                        return CharSelectAbilityError.NotEnoughLevelOneError;
+
                     // move from spells to selectespells
                     Skills.Remove(obj);
                     SelectedSkills.Add(obj);
@@ -1188,6 +1331,8 @@ namespace Meridian59.Data.Models
                     break;
                 }
             }
+
+            return CharSelectAbilityError.NoError;
         }
 
         public void DeselectSkill(uint ExtraID)
@@ -1204,17 +1349,30 @@ namespace Meridian59.Data.Models
                     RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_SKILLPOINTSCURRENT));
                     RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_SKILLPOINTSAVAILABLE));
 
+                    RemainingLevelOneCheck(obj);
                     break;
                 }
             }
         }
 
-        public void SelectSpell(uint ExtraID)
+        public CharSelectAbilityError SelectSpell(uint ExtraID)
         {
             foreach (AvatarCreatorSpellObject obj in Spells)
             {
-                if (obj.ExtraID == ExtraID && (obj.SpellCost <= SkillPointsAvailable))
+                if (obj.ExtraID == ExtraID)
                 {
+                    if (obj.SpellCost > SkillPointsAvailable)
+                        return CharSelectAbilityError.NoPointsLeftError;
+
+                    // Check karma - can't have Qor and Shal'ille together.
+                    if (!KarmaSchoolCheck(obj))
+                        return obj.SchoolType == SchoolType.Qor ?
+                            CharSelectAbilityError.AlreadyHaveShalilleError
+                            : CharSelectAbilityError.AlreadyHaveQorError;
+                    // Require at least two level 1 spells to select a level 2 one.
+                    if (!LevelOneCountCheck(obj))
+                        return CharSelectAbilityError.NotEnoughLevelOneError;
+
                     // move from spells to selectespells
                     Spells.Remove(obj);
                     SelectedSpells.Add(obj);
@@ -1226,6 +1384,7 @@ namespace Meridian59.Data.Models
                     break;
                 }
             }
+            return CharSelectAbilityError.NoError;
         }
 
         public void DeselectSpell(uint ExtraID)
@@ -1242,6 +1401,7 @@ namespace Meridian59.Data.Models
                     RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_SKILLPOINTSCURRENT));
                     RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_SKILLPOINTSAVAILABLE));
 
+                    RemainingLevelOneCheck(obj);
                     break;
                 }
             }
