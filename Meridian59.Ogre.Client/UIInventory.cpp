@@ -196,7 +196,8 @@ namespace Meridian59 { namespace Ogre
          // if not added at the end, rearrange by moving all forward once
          if (Index < OgreClient::Singleton->Data->InventoryObjects->Count - 1)
          {
-            for (int i = OgreClient::Singleton->Data->InventoryObjects->Count - 1; i >= Index; i--)
+            // Use Count - 2 since the swap is with the next element.
+            for (int i = OgreClient::Singleton->Data->InventoryObjects->Count - 2; i >= Index; i--)
             {
                // swap views
                List->swapChildren(
