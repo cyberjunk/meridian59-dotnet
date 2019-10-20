@@ -614,5 +614,38 @@ namespace Meridian59.BgfEditor
             v.DataSource = Program.RoomObject;
             v.Show();
         }
+
+        // Four grayscale algorithms, affects all frames.
+        private void OnMenuGrayScaleByShade(object sender, EventArgs e)
+        {
+            Program.CurrentFile.GrayScaleByShade();
+            OnFramesSelectionChanged(this, null);
+        }
+
+        private void OnMenuGrayScaleWeightedSum(object sender, EventArgs e)
+        {
+            Program.CurrentFile.GrayScaleWeightedSum();
+            OnFramesSelectionChanged(this, null);
+        }
+
+        private void OnMenuGrayScaleDesaturate(object sender, EventArgs e)
+        {
+            Program.CurrentFile.GrayScaleDesaturate();
+            OnFramesSelectionChanged(this, null);
+        }
+
+        private void OnMenuGrayScaleDecompose(object sender, EventArgs e)
+        {
+            Program.CurrentFile.GrayScaleDecompose();
+            OnFramesSelectionChanged(this, null);
+        }
+
+        // Reverts all frames to original pixels.
+        private void OnMenuGrayScaleRevert(object server, EventArgs e)
+        {
+            Program.CurrentFile.RevertPixelDataToOriginal();
+            OnFramesSelectionChanged(this, null);
+        }
+
     }
 }

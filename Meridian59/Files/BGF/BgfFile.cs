@@ -573,6 +573,51 @@ namespace Meridian59.Files.BGF
         {
             Parallel.ForEach<BgfBitmap>(frames, frame => { frame.Cut(); });
         }
+
+        /// <summary>
+        /// Calls GrayScaleByShade() on all existing BgfBitmap instances
+        /// using Parallel looping.
+        /// </summary>
+        public void GrayScaleByShade()
+        {
+            Parallel.ForEach<BgfBitmap>(frames, frame => { frame.GrayScaleByShade(); });
+        }
+
+        /// <summary>
+        /// Calls GrayScaleWeightedSum() on all existing BgfBitmap instances
+        /// using Parallel looping.
+        /// </summary>
+        public void GrayScaleWeightedSum()
+        {
+            Parallel.ForEach<BgfBitmap>(frames, frame => { frame.GrayScaleWeightedSum(); });
+        }
+
+        /// <summary>
+        /// Calls GrayScaleDesaturate() on all existing BgfBitmap instances
+        /// using Parallel looping.
+        /// </summary>
+        public void GrayScaleDesaturate()
+        {
+            Parallel.ForEach<BgfBitmap>(frames, frame => { frame.GrayScaleDesaturate(); });
+        }
+
+        /// <summary>
+        /// Calls GrayScaleDecompose() on all existing BgfBitmap instances
+        /// using Parallel looping.
+        /// </summary>
+        public void GrayScaleDecompose()
+        {
+            Parallel.ForEach<BgfBitmap>(frames, frame => { frame.GrayScaleDecompose(); });
+        }
+
+        /// <summary>
+        /// Calls RevertPixelDataToOriginal() on all existing BgfBitmap instances
+        /// using Parallel looping.
+        /// </summary>
+        public void RevertPixelDataToOriginal()
+        {
+            Parallel.ForEach<BgfBitmap>(frames, frame => { frame.RevertPixelDataToOriginal(); });
+        }
         #region BUILDDEPENDENT
 
 #if DRAWING

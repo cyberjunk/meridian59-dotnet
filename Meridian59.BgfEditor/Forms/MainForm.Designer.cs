@@ -46,8 +46,14 @@
             this.menuConvertAllToV9 = new System.Windows.Forms.ToolStripMenuItem();
             this.convertFromValeColorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuComparePalettes = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.cutTransparencyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openAnimationViewerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.grayscaleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.scaleByShadeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.scaleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.desaturateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.decomposeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.revertToOriginalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.menuAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.tabMain = new System.Windows.Forms.TabControl();
@@ -209,9 +215,10 @@
             this.menuConvertAllToV9,
             this.convertFromValeColorsToolStripMenuItem,
             this.menuComparePalettes,
-            this.toolStripMenuItem2,
+            this.cutTransparencyToolStripMenuItem,
             this.openAnimationViewerToolStripMenuItem,
-            this.openRoomTexturesListToolStripMenuItem});
+            this.openRoomTexturesListToolStripMenuItem,
+            this.grayscaleToolStripMenuItem});
             this.menuTasks.Name = "menuTasks";
             this.menuTasks.Size = new System.Drawing.Size(47, 20);
             this.menuTasks.Text = "Tools";
@@ -265,12 +272,12 @@
             this.menuComparePalettes.Text = "Compare palettes";
             this.menuComparePalettes.Click += new System.EventHandler(this.OnMenuComparePalettesClick);
             // 
-            // toolStripMenuItem2
+            // cutTransparencyToolStripMenuItem
             // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(249, 22);
-            this.toolStripMenuItem2.Text = "Cut transparency";
-            this.toolStripMenuItem2.Click += new System.EventHandler(this.OnMenuCutTransparency);
+            this.cutTransparencyToolStripMenuItem.Name = "cutTransparencyToolStripMenuItem";
+            this.cutTransparencyToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
+            this.cutTransparencyToolStripMenuItem.Text = "Cut transparency";
+            this.cutTransparencyToolStripMenuItem.Click += new System.EventHandler(this.OnMenuCutTransparency);
             // 
             // openAnimationViewerToolStripMenuItem
             // 
@@ -278,6 +285,53 @@
             this.openAnimationViewerToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
             this.openAnimationViewerToolStripMenuItem.Text = "Open Animation Viewer";
             this.openAnimationViewerToolStripMenuItem.Click += new System.EventHandler(this.OnMenuOpenAnimationViewer);
+            // 
+            // grayscaleToolStripMenuItem
+            // 
+            this.grayscaleToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.scaleByShadeToolStripMenuItem,
+            this.scaleToolStripMenuItem,
+            this.desaturateToolStripMenuItem,
+            this.decomposeToolStripMenuItem,
+            this.revertToOriginalToolStripMenuItem});
+            this.grayscaleToolStripMenuItem.Name = "grayscaleToolStripMenuItem";
+            this.grayscaleToolStripMenuItem.Size = new System.Drawing.Size(361, 30);
+            this.grayscaleToolStripMenuItem.Text = "Grayscale Frames";
+            // 
+            // scaleByShadeToolStripMenuItem
+            // 
+            this.scaleByShadeToolStripMenuItem.Name = "scaleByShadeToolStripMenuItem";
+            this.scaleByShadeToolStripMenuItem.Size = new System.Drawing.Size(265, 30);
+            this.scaleByShadeToolStripMenuItem.Text = "Match shade";
+            this.scaleByShadeToolStripMenuItem.Click += new System.EventHandler(this.OnMenuGrayScaleByShade);
+            // 
+            // scaleToolStripMenuItem
+            // 
+            this.scaleToolStripMenuItem.Name = "scaleToolStripMenuItem";
+            this.scaleToolStripMenuItem.Size = new System.Drawing.Size(265, 30);
+            this.scaleToolStripMenuItem.Text = "Weighted Sum (GIMP Grayscale algo)";
+            this.scaleToolStripMenuItem.Click += new System.EventHandler(this.OnMenuGrayScaleWeightedSum);
+            // 
+            // desaturateToolStripMenuItem
+            // 
+            this.desaturateToolStripMenuItem.Name = "desaturateToolStripMenuItem";
+            this.desaturateToolStripMenuItem.Size = new System.Drawing.Size(265, 30);
+            this.desaturateToolStripMenuItem.Text = "Desaturate";
+            this.desaturateToolStripMenuItem.Click += new System.EventHandler(this.OnMenuGrayScaleDesaturate);
+            // 
+            // decomposeToolStripMenuItem
+            // 
+            this.decomposeToolStripMenuItem.Name = "decomposeToolStripMenuItem";
+            this.decomposeToolStripMenuItem.Size = new System.Drawing.Size(265, 30);
+            this.decomposeToolStripMenuItem.Text = "Decompose";
+            this.decomposeToolStripMenuItem.Click += new System.EventHandler(this.OnMenuGrayScaleDecompose);
+            // 
+            // revertToOriginalToolStripMenuItem
+            // 
+            this.revertToOriginalToolStripMenuItem.Name = "revertToOriginalToolStripMenuItem";
+            this.revertToOriginalToolStripMenuItem.Size = new System.Drawing.Size(265, 30);
+            this.revertToOriginalToolStripMenuItem.Text = "Revert to original";
+            this.revertToOriginalToolStripMenuItem.Click += new System.EventHandler(this.OnMenuGrayScaleRevert);
             // 
             // menuHelp
             // 
@@ -1015,9 +1069,14 @@
         private System.Windows.Forms.ToolStripMenuItem convertFromValeColorsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem convertAllToV10zlibFromValeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cutTransparencyToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem openAnimationViewerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openRoomTexturesListToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem grayscaleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem scaleByShadeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem scaleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem desaturateToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem decomposeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem revertToOriginalToolStripMenuItem;
     }
 }
 

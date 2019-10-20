@@ -227,6 +227,7 @@ namespace Meridian59.Files.BGF
         protected uint multiple4width;
         protected readonly BaseList<BgfBitmapHotspot> hotspots = new BaseList<BgfBitmapHotspot>();
         protected byte[] pixeldata;
+        protected byte[] originalpixeldata;
         #endregion
 
         #region Properties
@@ -1282,6 +1283,161 @@ namespace Meridian59.Files.BGF
 
                 // notify about changed pixeldata
                 RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_PIXELDATA));
+            }
+        }
+
+        /// <summary>
+        /// Save a copy of the bitmap's pixeldata, for reversing a grayscale operation.
+        /// </summary>
+        private void SaveOriginalPixelData()
+        {
+            if (originalpixeldata == null)
+            {
+                originalpixeldata = new byte[pixeldata.Length];
+                Array.Copy(pixeldata, 0, originalpixeldata, 0, pixeldata.Length);
+            }
+        }
+
+        /// <summary>
+        /// Reverts pixeldata to the stored original, if one exists.
+        /// </summary>
+        public void RevertPixelDataToOriginal()
+        {
+            if (originalpixeldata != null)
+                Array.Copy(originalpixeldata, 0, pixeldata, 0, pixeldata.Length);
+        }
+
+        /// <summary>
+        /// Converts pixeldata to grayscale, by exchanging the shade for the matching grey ramp shade.
+        /// Handles non-ramped pixels using GIMP's weighted sum algorithm.
+        /// </summary>
+        public void GrayScaleByShade()
+        {
+            SaveOriginalPixelData();
+
+            for (uint i = 0; i < PixelData.Length; i++)
+            {
+                // skip transparent pixels
+                if (PixelData[i] == 254)
+                    continue;
+
+                int ramp = 0xF0 & PixelData[i];
+
+                // 1st and last ramps, plus the yellow/purple/green/pink one.
+                if (ramp == 0x00 || ramp == 0xB || ramp == 0xE)
+                {
+                    uint color = ColorTransformation.DefaultPalette[PixelData[i]];
+                    double r = (((color & 0xFF0000) >> 16) / 255.0) * 0.3;
+                    double g = (((color & 0x00FF00) >> 8) / 255.0) * 0.59;
+                    double b = ((color & 0x0000FF) / 255.0) * 0.11;
+
+                    uint gray = (uint)Math.Round((r + g + b) * 255.0);
+                    // Gray translate only works within this range.
+                    if (gray < 36) gray = 36;
+                    if (gray > 231) gray = 231;
+                    uint newColor = (gray << 16) + (gray << 8) + gray;
+                    byte idx = (byte)ColorTransformation.GetClosestPaletteIndex(ColorTransformation.DefaultPalette, newColor);
+                    PixelData[i] = idx;
+                }
+                else
+                {
+                    // 208 is start of gray ramp
+                    PixelData[i] = (byte)((PixelData[i] % 16) + 208);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Converts pixeldata to grayscale, using GIMP's weighted sum grayscale algorithm.
+        ///  https://www.linuxtopia.org/online_books/graphics_tools/gimp_advanced_guide/gimp_guide_node54.html
+        /// </summary>
+        public void GrayScaleWeightedSum()
+        {
+            SaveOriginalPixelData();
+
+            for (uint i = 0; i < PixelData.Length; i++)
+            {
+                // skip transparent pixels
+                if (PixelData[i] == 254)
+                    continue;
+
+                // Convert to RGB
+                uint color = ColorTransformation.DefaultPalette[PixelData[i]];
+
+                // GIMP's grayscale algorithm: Y = 0.3R + 0.59G + 0.11B.
+                double r = (((color & 0xFF0000) >> 16) / 255.0) * 0.3;
+                double g = (((color & 0x00FF00) >> 8) / 255.0) * 0.59;
+                double b = ((color & 0x0000FF) / 255.0) * 0.11;
+
+                uint gray = (uint)Math.Round((r + g + b) * 255.0);
+                // Gray translate only works within this range.
+                if (gray < 36) gray = 36;
+                if (gray > 231) gray = 231;
+                uint newColor = (gray << 16) + (gray << 8) + gray;
+                byte idx = (byte)ColorTransformation.GetClosestPaletteIndex(ColorTransformation.DefaultPalette, newColor);
+                PixelData[i] = idx;
+            }
+        }
+
+        /// <summary>
+        /// Converts pixeldata to grayscale, using GIMP's desaturate algorithm.
+        /// Uses (max(r,g,b) + min(r,g,b)) / 2 to convert to grayscale.
+        /// </summary>
+        public void GrayScaleDesaturate()
+        {
+            SaveOriginalPixelData();
+
+            for (uint i = 0; i < PixelData.Length; i++)
+            {
+                // check for non-transparent
+                if (PixelData[i] != 254)
+                {
+                    // Convert to RGB
+                    uint color = ColorTransformation.DefaultPalette[PixelData[i]];
+                    //  Y = 0.3R + 0.59G + 0.11B
+                    uint r = (color & 0xFF0000) >> 16;
+                    uint g = (color & 0x00FF00) >> 8;
+                    uint b = color & 0x0000FF;
+
+                    uint gray = (Math.Max(r, Math.Max(g, b)) + Math.Min(r, Math.Min(g, b))) / 2;
+                    // Gray translate only works within this range.
+                    if (gray < 36) gray = 36;
+                    if (gray > 231) gray = 231;
+                    uint newColor = (gray << 16) + (gray << 8) + gray;
+                    byte idx = (byte)ColorTransformation.GetClosestPaletteIndex(ColorTransformation.DefaultPalette, newColor);
+                    PixelData[i] = idx;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Converts pixeldata to grayscale, using GIMP's decompose algorithm.
+        /// Uses max(r,g,b) to convert to grayscale.
+        /// </summary>
+        public void GrayScaleDecompose()
+        {
+            SaveOriginalPixelData();
+
+            for (uint i = 0; i < PixelData.Length; i++)
+            {
+                // check for non-transparent
+                if (PixelData[i] != 254)
+                {
+                    // Convert to RGB
+                    uint color = ColorTransformation.DefaultPalette[PixelData[i]];
+                    //  Y = 0.3R + 0.59G + 0.11B
+                    uint r = (color & 0xFF0000) >> 16;
+                    uint g = (color & 0x00FF00) >> 8;
+                    uint b = color & 0x0000FF;
+
+                    uint gray = Math.Max(r, Math.Max(g, b));
+                    // Gray translate only works within this range.
+                    if (gray < 36) gray = 36;
+                    if (gray > 231) gray = 231;
+                    uint newColor = (gray << 16) + (gray << 8) + gray;
+                    byte idx = (byte)ColorTransformation.GetClosestPaletteIndex(ColorTransformation.DefaultPalette, newColor);
+                    PixelData[i] = idx;
+                }
             }
         }
 
