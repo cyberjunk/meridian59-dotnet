@@ -21,7 +21,11 @@ namespace Meridian59.BgfEditor
         public const string STR_LOADINGFILEOPEN = "Can't open a file while loading images.";
         public const string STR_LOADINGFILESAVE = "Can't save a file while loading images.";
         public const string STR_LOADINGFILEEXPORT = "Can't export a storyboard while loading images.";
+        public const string STR_LOADINGFILEIMPORT = "Can't import a storyboard while loading images.";
         public const string STR_LOADINGFILENEW = "Can't create a new file while loading images.";
+        public const string STR_NOXMLFILE = "Must have a matching XML file to import a storyboard!";
+        public const string STR_FAILEDIMPORT = "Failed to import storyboard, ensure the bmp and frame "
+                                             + "sizes match the values in the storyboard xml file.";
 
         private const int NUMWORKERS = 4;
         private static readonly ImageLoaderWorker[] imageLoaderWorkers = new ImageLoaderWorker[NUMWORKERS];
@@ -486,6 +490,22 @@ namespace Meridian59.BgfEditor
             fdSaveStoryboardFile.ShowDialog();
         }
 
+        protected void OnMenuImportStoryboardClick(object sender, EventArgs e)
+        {
+            if (Program.IsLoadingImages())
+            {
+                MessageBox.Show(STR_LOADINGFILEIMPORT, "Info", MessageBoxButtons.OK,
+                                MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+
+                return;
+            }
+
+            // Default filename: filename-storyboard.bmp
+            string filename = Path.Combine(Path.GetFileNameWithoutExtension(Program.CurrentFile.Filename) + "-storyboard" + FileExtensions.BMP);
+            fdOpenStoryboardFile.FileName = filename;
+            fdOpenStoryboardFile.ShowDialog();
+        }
+
         protected void OnMenuSetShrinkClick(object sender, EventArgs e)
         {
             Program.SettingsForm.Show();
@@ -567,6 +587,27 @@ namespace Meridian59.BgfEditor
         {
             // save to file
             Program.CurrentFile.WriteStoryboard(fdSaveStoryboardFile.FileName);
+        }
+
+        protected void OnFileDialogOpenStoryboardOk(object sender, CancelEventArgs e)
+        {
+            string xmlFile = Path.GetFileNameWithoutExtension(fdOpenStoryboardFile.FileName);
+            string path = Path.GetDirectoryName(fdOpenStoryboardFile.FileName);
+
+            if (!File.Exists(Path.Combine(path, xmlFile) + FileExtensions.XML))
+            {
+                MessageBox.Show(STR_NOXMLFILE, "Info", MessageBoxButtons.OK,
+                                MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+
+                return;
+            }
+
+            // Clear existing data.
+            Program.New();
+
+            if (!Program.CurrentFile.ImportStoryboard(fdOpenStoryboardFile.FileName))
+                MessageBox.Show(STR_FAILEDIMPORT, "Info", MessageBoxButtons.OK,
+                    MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
         }
 
         protected void OnFramesSelectionChanged(object sender, EventArgs e)

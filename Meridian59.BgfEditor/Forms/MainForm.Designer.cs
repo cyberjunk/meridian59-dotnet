@@ -42,6 +42,7 @@
             this.menuExportAllBGFToXML = new System.Windows.Forms.ToolStripMenuItem();
             this.menuDecompressAllBGF = new System.Windows.Forms.ToolStripMenuItem();
             this.menuExportStoryboard = new System.Windows.Forms.ToolStripMenuItem();
+            this.importStoryboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuConvertAllToV10 = new System.Windows.Forms.ToolStripMenuItem();
             this.convertAllToV10zlibFromValeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuConvertAllToV9 = new System.Windows.Forms.ToolStripMenuItem();
@@ -109,6 +110,7 @@
             this.fdOpenFile = new System.Windows.Forms.OpenFileDialog();
             this.fdSaveFile = new System.Windows.Forms.SaveFileDialog();
             this.fdSaveStoryboardFile = new System.Windows.Forms.SaveFileDialog();
+            this.fdOpenStoryboardFile = new System.Windows.Forms.OpenFileDialog();
             this.menuStrip.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tabFrames.SuspendLayout();
@@ -213,6 +215,7 @@
             this.menuExportAllBGFToXML,
             this.menuDecompressAllBGF,
             this.menuExportStoryboard,
+            this.importStoryboardToolStripMenuItem,
             this.menuConvertAllToV10,
             this.convertAllToV10zlibFromValeToolStripMenuItem,
             this.menuConvertAllToV9,
@@ -246,6 +249,13 @@
             this.menuExportStoryboard.Size = new System.Drawing.Size(152, 22);
             this.menuExportStoryboard.Text = "Export Storyboard";
             this.menuExportStoryboard.Click += new System.EventHandler(this.OnMenuExportStoryboardClick);
+            // 
+            // importStoryboardToolStripMenuItem
+            // 
+            this.importStoryboardToolStripMenuItem.Name = "importStoryboardToolStripMenuItem";
+            this.importStoryboardToolStripMenuItem.Size = new System.Drawing.Size(361, 30);
+            this.importStoryboardToolStripMenuItem.Text = "Import Storyboard";
+            this.importStoryboardToolStripMenuItem.Click += new System.EventHandler(this.OnMenuImportStoryboardClick);
             // 
             // menuConvertAllToV10
             // 
@@ -939,6 +949,11 @@
             this.fdSaveFile.Filter = "BGF-File|*.bgf|XML-File|*.xml";
             this.fdSaveFile.FileOk += new System.ComponentModel.CancelEventHandler(this.OnFileDialogSaveFileOk);
             // 
+            // fdOpenStoryboardFile
+            // 
+            this.fdOpenStoryboardFile.Filter = "BMP storyboard |*.bmp";
+            this.fdOpenStoryboardFile.FileOk += new System.ComponentModel.CancelEventHandler(this.OnFileDialogOpenStoryboardOk);
+            // 
             // fdSaveStoryboardFile
             // 
             this.fdSaveStoryboardFile.Filter = "BMP File|*.bmp";
@@ -1042,6 +1057,7 @@
         private System.Windows.Forms.OpenFileDialog fdOpenFile;
         private System.Windows.Forms.SaveFileDialog fdSaveFile;
         private System.Windows.Forms.SaveFileDialog fdSaveStoryboardFile;
+        private System.Windows.Forms.OpenFileDialog fdOpenStoryboardFile;
         private System.Windows.Forms.DataGridView dgFrames;
         private System.Windows.Forms.DataGridView dgHotspots;
         private System.Windows.Forms.DataGridViewTextBoxColumn colIndex;
@@ -1072,6 +1088,7 @@
         private System.Windows.Forms.ToolStripMenuItem menuExportAllBGFToXML;
         private System.Windows.Forms.ToolStripMenuItem menuDecompressAllBGF;
         private System.Windows.Forms.ToolStripMenuItem menuExportStoryboard;
+        private System.Windows.Forms.ToolStripMenuItem importStoryboardToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem menuSetShrink;
         private System.Windows.Forms.GroupBox groupFrameImage;
         private System.Windows.Forms.ToolStripMenuItem menuConvertAllToV10;

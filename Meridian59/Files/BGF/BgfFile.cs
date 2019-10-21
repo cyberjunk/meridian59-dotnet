@@ -29,6 +29,7 @@ using Meridian59.Properties;
 
 #if DRAWING
 using System.Drawing;
+using Meridian59.Native;
 #endif
 
 // Switch FP precision based on architecture
@@ -631,9 +632,6 @@ namespace Meridian59.Files.BGF
             uint width = 0;
             uint height = 0;
 
-            // Output XML for this BGF.
-            WriteXmlData(Filename, true, height, width);
-
             // Calculate total height and largest width.
             foreach (BgfBitmap f in Frames)
             {
@@ -641,6 +639,10 @@ namespace Meridian59.Files.BGF
                     width = f.Multiple4Width;
                 height += f.Height;
             }
+
+            // Output XML for this BGF.
+            WriteXmlData(Filename, true, height, width);
+
             uint pixeldatasize = width * height;
             uint pixelsOffset = (uint)(BgfBitmap.BMPHEADERLEN + BgfBitmap.DIBHEADERLEN + Resources.BitmapColorTable.Length);
             uint filesize = pixelsOffset + pixeldatasize;
@@ -708,6 +710,126 @@ namespace Meridian59.Files.BGF
             }
 
             File.WriteAllBytes(Filename, bitmapBytes);
+        }
+
+        /// <summary>
+        /// Import a storyboard given a full path to the storyboard bmp. The XML file for
+        /// the storyboard must have a matching filename with the XML extension, and be in
+        /// the same directory.
+        /// </summary>
+        /// <param name="Filename"></param>
+        /// <returns></returns>
+        public bool ImportStoryboard(string Filename)
+        {
+            string path = Path.GetDirectoryName(Filename);
+            // raw filename without path or extensions
+            string xmlFilename = Path.GetFileNameWithoutExtension(Filename);
+
+            // index for reading bmp data, incremented as we split the giant bmp
+            uint readoffset = 0;
+
+            // open bmp into one giant bitmap
+            Bitmap bmp = (Bitmap)Image.FromFile(Filename);
+            uint totalWidth = (uint)bmp.Width;
+            uint totalHeight = (uint)bmp.Height;
+            byte[] pixelData = BgfBitmap.BitmapToPixelData(bmp);
+
+            // cleanp temporary bitmap
+            bmp.Dispose();
+
+            // init XML reader
+            XmlReader reader = XmlReader.Create(Path.Combine(path, xmlFilename) + FileExtensions.XML);
+
+            // read in xml file
+            // rootnode
+            reader.ReadToFollowing("bgf");
+            uint version = Convert.ToUInt32(reader["version"]);
+            if (version >= BgfFile.VERSION9)
+            {
+                ShrinkFactor = Convert.ToUInt32(reader["shrink"]);
+
+                // skip maxindices, we use dynamic getter
+                // MaxIndices = Convert.ToUInt32(reader["maxindices"]);
+
+                // frames
+                reader.ReadToFollowing("frames");
+                int FrameCount = Convert.ToInt32(reader["count"]);
+                uint savedTotalHeight = Convert.ToUInt32(reader["totalheight"]);
+                uint savedTotalWidth = Convert.ToUInt32(reader["totalwidth"]);
+                // Saved dimensions must match those loaded for the storyboard bmp.
+                if (savedTotalWidth != totalWidth || savedTotalHeight != totalHeight)
+                    return false;
+
+                Frames.Capacity = FrameCount;
+                for (int i = 0; i < FrameCount; i++)
+                {
+                    reader.ReadToFollowing("frame");
+                    uint width = Convert.ToUInt32(reader["width"]);
+                    uint height = Convert.ToUInt32(reader["height"]);
+                    int xoffset = Convert.ToInt32(reader["xoffset"]);
+                    int yoffset = Convert.ToInt32(reader["yoffset"]);
+
+                    // hotspots
+                    reader.ReadToFollowing("hotspots");
+                    byte hotspotcount = Convert.ToByte(reader["count"]);
+                    List<BgfBitmapHotspot> hotspots = new List<BgfBitmapHotspot>(hotspotcount);
+                    for (int j = 0; j < hotspotcount; j++)
+                    {
+                        reader.ReadToFollowing("hotspot");
+                        sbyte index = Convert.ToSByte(reader["index"]);
+                        int x = Convert.ToInt32(reader["x"]);
+                        int y = Convert.ToInt32(reader["y"]);
+
+                        BgfBitmapHotspot hotspot = new BgfBitmapHotspot(index, x, y);
+                        hotspots.Add(hotspot);
+                    }
+
+                    // get pixels for this frame from the single bmp
+                    byte[] pixels = new byte[height * width];
+                    uint writeoffset = 0;
+                    for (int j = 0; j < height; ++j)
+                    {
+                        Wrapper.CopyMem(pixelData, (int)readoffset, pixels, (int)writeoffset, width);
+                        readoffset += totalWidth;
+                        writeoffset += width;
+                    }
+
+                    BgfBitmap bgfBitmap = new BgfBitmap(
+                        (uint)i + 1,
+                        version,
+                        width,
+                        height,
+                        xoffset,
+                        yoffset,
+                        hotspots,
+                        false,
+                        0,
+                        pixels);
+
+                    Frames.Add(bgfBitmap);
+                }
+
+                // framesets
+                reader.ReadToFollowing("framesets");
+                int FrameSetCount = Convert.ToInt32(reader["count"]);
+                FrameSets.Capacity = FrameSetCount;
+                for (int i = 0; i < FrameSetCount; i++)
+                {
+                    reader.ReadToFollowing("frameset");
+                    string[] indices = reader["indices"].Split(' ');
+                    List<int> intIndices = new List<int>();
+                    foreach (string index in indices)
+                        intIndices.Add(Convert.ToInt32(index));
+
+                    BgfFrameSet bgfFrameSet = new BgfFrameSet((uint)i + 1, intIndices);
+
+                    FrameSets.Add(bgfFrameSet);
+                }
+            }
+            else
+                throw new Exception("Wrong format version: " + version + " (expected " + BgfFile.VERSION9 + ").");
+
+            return true;
         }
         #region BUILDDEPENDENT
 
