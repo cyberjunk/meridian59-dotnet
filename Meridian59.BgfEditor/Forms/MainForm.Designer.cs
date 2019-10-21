@@ -41,6 +41,7 @@
             this.menuTasks = new System.Windows.Forms.ToolStripMenuItem();
             this.menuExportAllBGFToXML = new System.Windows.Forms.ToolStripMenuItem();
             this.menuDecompressAllBGF = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuExportStoryboard = new System.Windows.Forms.ToolStripMenuItem();
             this.menuConvertAllToV10 = new System.Windows.Forms.ToolStripMenuItem();
             this.convertAllToV10zlibFromValeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuConvertAllToV9 = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,6 +49,7 @@
             this.menuComparePalettes = new System.Windows.Forms.ToolStripMenuItem();
             this.cutTransparencyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openAnimationViewerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openRoomTexturesListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.grayscaleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.scaleByShadeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.scaleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -106,7 +108,7 @@
             this.fdAddFrame = new System.Windows.Forms.OpenFileDialog();
             this.fdOpenFile = new System.Windows.Forms.OpenFileDialog();
             this.fdSaveFile = new System.Windows.Forms.SaveFileDialog();
-            this.openRoomTexturesListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fdSaveStoryboardFile = new System.Windows.Forms.SaveFileDialog();
             this.menuStrip.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tabFrames.SuspendLayout();
@@ -210,6 +212,7 @@
             this.menuTasks.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuExportAllBGFToXML,
             this.menuDecompressAllBGF,
+            this.menuExportStoryboard,
             this.menuConvertAllToV10,
             this.convertAllToV10zlibFromValeToolStripMenuItem,
             this.menuConvertAllToV9,
@@ -236,6 +239,13 @@
             this.menuDecompressAllBGF.Size = new System.Drawing.Size(249, 22);
             this.menuDecompressAllBGF.Text = "Decompress all BGF";
             this.menuDecompressAllBGF.Click += new System.EventHandler(this.OnMenuDecompressAllBGFClick);
+            // 
+            // menuExportStoryboard
+            // 
+            this.menuExportStoryboard.Name = "menuExportStoryboard";
+            this.menuExportStoryboard.Size = new System.Drawing.Size(152, 22);
+            this.menuExportStoryboard.Text = "Export Storyboard";
+            this.menuExportStoryboard.Click += new System.EventHandler(this.OnMenuExportStoryboardClick);
             // 
             // menuConvertAllToV10
             // 
@@ -929,6 +939,11 @@
             this.fdSaveFile.Filter = "BGF-File|*.bgf|XML-File|*.xml";
             this.fdSaveFile.FileOk += new System.ComponentModel.CancelEventHandler(this.OnFileDialogSaveFileOk);
             // 
+            // fdSaveStoryboardFile
+            // 
+            this.fdSaveStoryboardFile.Filter = "BMP File|*.bmp";
+            this.fdSaveStoryboardFile.FileOk += new System.ComponentModel.CancelEventHandler(this.OnFileDialogSaveStoryboardOk);
+            // 
             // openRoomTexturesListToolStripMenuItem
             // 
             this.openRoomTexturesListToolStripMenuItem.Name = "openRoomTexturesListToolStripMenuItem";
@@ -1026,6 +1041,7 @@
         private System.Windows.Forms.OpenFileDialog fdAddFrame;
         private System.Windows.Forms.OpenFileDialog fdOpenFile;
         private System.Windows.Forms.SaveFileDialog fdSaveFile;
+        private System.Windows.Forms.SaveFileDialog fdSaveStoryboardFile;
         private System.Windows.Forms.DataGridView dgFrames;
         private System.Windows.Forms.DataGridView dgHotspots;
         private System.Windows.Forms.DataGridViewTextBoxColumn colIndex;
@@ -1055,6 +1071,7 @@
         private System.Windows.Forms.ToolStripMenuItem menuAbout;
         private System.Windows.Forms.ToolStripMenuItem menuExportAllBGFToXML;
         private System.Windows.Forms.ToolStripMenuItem menuDecompressAllBGF;
+        private System.Windows.Forms.ToolStripMenuItem menuExportStoryboard;
         private System.Windows.Forms.ToolStripMenuItem menuSetShrink;
         private System.Windows.Forms.GroupBox groupFrameImage;
         private System.Windows.Forms.ToolStripMenuItem menuConvertAllToV10;

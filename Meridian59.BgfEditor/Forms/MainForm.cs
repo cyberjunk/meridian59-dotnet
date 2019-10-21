@@ -7,6 +7,8 @@ using Meridian59.Data.Models;
 using Meridian59.Drawing2D;
 using Meridian59.Common.Enums;
 using Meridian59.BgfEditor.Forms;
+using System.IO;
+using Meridian59.Common.Constants;
 
 namespace Meridian59.BgfEditor
 {
@@ -18,6 +20,7 @@ namespace Meridian59.BgfEditor
         public const string STR_ERRORSTILLINKED = "Can't remove. Still linked in a group!";
         public const string STR_LOADINGFILEOPEN = "Can't open a file while loading images.";
         public const string STR_LOADINGFILESAVE = "Can't save a file while loading images.";
+        public const string STR_LOADINGFILEEXPORT = "Can't export a storyboard while loading images.";
         public const string STR_LOADINGFILENEW = "Can't create a new file while loading images.";
 
         private const int NUMWORKERS = 4;
@@ -464,6 +467,25 @@ namespace Meridian59.BgfEditor
             frm.Show();
         }
 
+        protected void OnMenuExportStoryboardClick(object sender, EventArgs e)
+        {
+            if (Program.CurrentFile.Frames.Count == 0)
+                return;
+
+            if (Program.IsLoadingImages())
+            {
+                MessageBox.Show(STR_LOADINGFILEEXPORT, "Info", MessageBoxButtons.OK,
+                                MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+
+                return;
+            }
+
+            // Default filename: filename-storyboard.bmp
+            string filename = Path.Combine(Path.GetFileNameWithoutExtension(Program.CurrentFile.Filename) + "-storyboard" + FileExtensions.BMP);
+            fdSaveStoryboardFile.FileName = filename;
+            fdSaveStoryboardFile.ShowDialog();
+        }
+
         protected void OnMenuSetShrinkClick(object sender, EventArgs e)
         {
             Program.SettingsForm.Show();
@@ -539,6 +561,12 @@ namespace Meridian59.BgfEditor
         {
             // save to file
             Program.Save(fdSaveFile.FileName);
+        }
+
+        protected void OnFileDialogSaveStoryboardOk(object sender, CancelEventArgs e)
+        {
+            // save to file
+            Program.CurrentFile.WriteStoryboard(fdSaveStoryboardFile.FileName);
         }
 
         protected void OnFramesSelectionChanged(object sender, EventArgs e)

@@ -25,6 +25,7 @@ using Meridian59.Common.Constants;
 using Meridian59.Data.Lists;
 using Meridian59.Common;
 using System.Xml;
+using Meridian59.Properties;
 
 #if DRAWING
 using System.Drawing;
@@ -618,6 +619,96 @@ namespace Meridian59.Files.BGF
         {
             Parallel.ForEach<BgfBitmap>(frames, frame => { frame.RevertPixelDataToOriginal(); });
         }
+
+        /// <summary>
+        /// Outputs a 'storyboard' of the BgfFile's frames. A storyboard is a single bmp containing
+        /// all the frames in order vertically, with width == widest frame. BMP output code (header)
+        /// adapted from BgfBitmap.PixelDataToBitmapBytes.
+        /// </summary>
+        /// <param name="Filename"></param>
+        public void WriteStoryboard(string Filename)
+        {
+            uint width = 0;
+            uint height = 0;
+
+            // Output XML for this BGF.
+            WriteXmlData(Filename, true, height, width);
+
+            // Calculate total height and largest width.
+            foreach (BgfBitmap f in Frames)
+            {
+                if (f.Multiple4Width > width)
+                    width = f.Multiple4Width;
+                height += f.Height;
+            }
+            uint pixeldatasize = width * height;
+            uint pixelsOffset = (uint)(BgfBitmap.BMPHEADERLEN + BgfBitmap.DIBHEADERLEN + Resources.BitmapColorTable.Length);
+            uint filesize = pixelsOffset + pixeldatasize;
+
+            // allocate a byte[] to store the bitmap
+            byte[] bitmapBytes = new byte[filesize];
+            int cursor = 0;
+
+            // --- BMP HEADER --- 
+            Array.Copy(BitConverter.GetBytes(BgfBitmap.BMPSIGNATURE), 0, bitmapBytes, cursor, TypeSizes.SHORT);
+            cursor += TypeSizes.SHORT;
+
+            Array.Copy(BitConverter.GetBytes(filesize), 0, bitmapBytes, cursor, TypeSizes.INT);
+            cursor += TypeSizes.INT;
+
+            // skip 4 bytes value
+            cursor += TypeSizes.INT;
+
+            Array.Copy(BitConverter.GetBytes(pixelsOffset), 0, bitmapBytes, cursor, TypeSizes.INT);
+            cursor += TypeSizes.INT;
+
+            // --- DIB HEADER ---
+            Array.Copy(BitConverter.GetBytes(BgfBitmap.DIBHEADERLEN), 0, bitmapBytes, cursor, TypeSizes.INT);
+            cursor += TypeSizes.INT;
+
+            Array.Copy(BitConverter.GetBytes(width), 0, bitmapBytes, cursor, TypeSizes.INT);
+            cursor += TypeSizes.INT;
+
+            Array.Copy(BitConverter.GetBytes(height), 0, bitmapBytes, cursor, TypeSizes.INT);
+            cursor += TypeSizes.INT;
+
+            Array.Copy(BitConverter.GetBytes(BgfBitmap.BMPCOLORPLANES), 0, bitmapBytes, cursor, TypeSizes.SHORT);
+            cursor += TypeSizes.SHORT;
+
+            Array.Copy(BitConverter.GetBytes(BgfBitmap.BMPBPP), 0, bitmapBytes, cursor, TypeSizes.SHORT);
+            cursor += TypeSizes.SHORT;
+
+            Array.Copy(BitConverter.GetBytes(BgfBitmap.BMPCOMPRESSION), 0, bitmapBytes, cursor, TypeSizes.INT);
+            cursor += TypeSizes.INT;
+
+            Array.Copy(BitConverter.GetBytes(width * height), 0, bitmapBytes, cursor, TypeSizes.INT);
+            cursor += TypeSizes.INT;
+
+            Array.Copy(BitConverter.GetBytes(BgfBitmap.BMPPPMHORIZ), 0, bitmapBytes, cursor, TypeSizes.INT);
+            cursor += TypeSizes.INT;
+
+            Array.Copy(BitConverter.GetBytes(BgfBitmap.BMPPPMVERTIC), 0, bitmapBytes, cursor, TypeSizes.INT);
+            cursor += TypeSizes.INT;
+
+            Array.Copy(BitConverter.GetBytes(BgfBitmap.BMPCOLORSPALETTE), 0, bitmapBytes, cursor, TypeSizes.INT);
+            cursor += TypeSizes.INT;
+
+            Array.Copy(BitConverter.GetBytes(BgfBitmap.BMPNUMIMPORTANTCOLORS), 0, bitmapBytes, cursor, TypeSizes.INT);
+            cursor += TypeSizes.INT;
+
+            // --- COLORTABLE ---
+            Array.Copy(Resources.BitmapColorTable, 0, bitmapBytes, cursor, Resources.BitmapColorTable.Length);
+            cursor += Resources.BitmapColorTable.Length;
+
+            // --- PIXELS ---
+            for (int i = Frames.Count - 1; i >= 0; i--)
+            {
+                Frames[i].FillPixelDataTo(bitmapBytes, pixelsOffset, true, width);
+                pixelsOffset += Frames[i].Height * width;
+            }
+
+            File.WriteAllBytes(Filename, bitmapBytes);
+        }
         #region BUILDDEPENDENT
 
 #if DRAWING
@@ -717,17 +808,16 @@ namespace Meridian59.Files.BGF
         }
 
         /// <summary>
-        /// Exports this BgfFile instance to XML/BMP
+        /// Exports this BgfFile instance to XML
         /// </summary>
         /// <param name="Filename"></param>
-        public void WriteXml(string Filename)
+        /// <param name="IsStoryboard"></param>
+        /// <param name="TotalHeight"></param>
+        /// <param name="TotalWidth"></param>
+        private void WriteXmlData(string Filename, bool IsStoryboard = false, uint TotalHeight = 0, uint TotalWidth = 0)
         {
             string path = Path.GetDirectoryName(Filename);
             string filename = Path.GetFileNameWithoutExtension(Filename);
-
-            // export BMPs
-            for (int i = 0; i < Frames.Count; i++)
-                File.WriteAllBytes(Path.Combine(path, filename + "-" + i + FileExtensions.BMP), Frames[i].PixelDataToBitmapBytes());
 
             // start writing XML
             XmlWriterSettings settings = new XmlWriterSettings();
@@ -747,6 +837,12 @@ namespace Meridian59.Files.BGF
             writer.WriteStartElement("frames");
             writer.WriteAttributeString("count", Frames.Count.ToString());
             writer.WriteAttributeString("imageformat", "bmp");
+            if (IsStoryboard)
+            {
+                writer.WriteAttributeString("totalheight", TotalHeight.ToString());
+                writer.WriteAttributeString("totalwidth", TotalWidth.ToString());
+            }
+
             for (int i = 0; i < Frames.Count; i++)
             {
                 writer.WriteStartElement("frame");
@@ -755,7 +851,8 @@ namespace Meridian59.Files.BGF
                 writer.WriteAttributeString("xoffset", Frames[i].XOffset.ToString());
                 writer.WriteAttributeString("yoffset", Frames[i].YOffset.ToString());
 
-                writer.WriteAttributeString("file", Filename + "-" + i.ToString() + FileExtensions.BMP);
+                if (!IsStoryboard)
+                    writer.WriteAttributeString("file", Filename + "-" + i.ToString() + FileExtensions.BMP);
 
                 // hotspots
                 writer.WriteStartElement("hotspots");
@@ -795,6 +892,22 @@ namespace Meridian59.Files.BGF
             writer.WriteEndDocument();
 
             writer.Close();
+        }
+
+        /// <summary>
+        /// Exports this BgfFile instance to XML/BMP
+        /// </summary>
+        /// <param name="Filename"></param>
+        public void WriteXmlAndBMPs(string Filename)
+        {
+            string path = Path.GetDirectoryName(Filename);
+            string filename = Path.GetFileNameWithoutExtension(Filename);
+
+            // export BMPs
+            for (int i = 0; i < Frames.Count; i++)
+                File.WriteAllBytes(Path.Combine(path, filename + "-" + i + FileExtensions.BMP), Frames[i].PixelDataToBitmapBytes());
+
+            WriteXmlData(Filename);
         }
 #endif
 

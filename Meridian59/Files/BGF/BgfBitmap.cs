@@ -45,16 +45,16 @@ namespace Meridian59.Files.BGF
         protected const string ERRORIMAGEFORMAT         = "Invalid Bitmap. Either not BMP or not 8bppIndexed.";
         protected const string ERRORCRUSHPLATFORM       = "Crusher is only supported in x86 builds on Windows.";        
         protected const int COMPRESSEDLENFORUNCOMPRESSED = 0;
-        protected const ushort BMPSIGNATURE             = 0x4D42;
-        protected const ushort BMPCOLORPLANES           = 1;
-        protected const ushort BMPBPP                   = 8;
-        protected const uint BMPCOMPRESSION             = 0;
-        protected const uint BMPPPMHORIZ                = 0;
-        protected const uint BMPPPMVERTIC               = 0;
-        protected const uint BMPCOLORSPALETTE           = 0;
-        protected const uint BMPNUMIMPORTANTCOLORS      = 0;
-        protected const int BMPHEADERLEN                = 14;
-        protected const int DIBHEADERLEN                = 40;
+        public const ushort BMPSIGNATURE                = 0x4D42;
+        public const ushort BMPCOLORPLANES              = 1;
+        public const ushort BMPBPP                      = 8;
+        public const uint BMPCOMPRESSION                = 0;
+        public const uint BMPPPMHORIZ                   = 0;
+        public const uint BMPPPMVERTIC                  = 0;
+        public const uint BMPCOLORSPALETTE              = 0;
+        public const uint BMPNUMIMPORTANTCOLORS         = 0;
+        public const int BMPHEADERLEN                   = 14;
+        public const int DIBHEADERLEN                   = 40;
 
         public const string PROPNAME_NUM                = "Num";
         public const string PROPNAME_VERSION            = "Version";
@@ -778,6 +778,65 @@ namespace Meridian59.Files.BGF
             cursor += (int)pixeldatasize;
 
             return bitmapBytes;
+        }
+
+        /// <summary>
+        /// Writes the default 8-Bit PixelData (indices) to a target byte[],
+        /// adding stride zeros and can flip the rows. Allows for a buffer
+        /// (i.e. for an output bmp) width larger than the pixeldata width.
+        /// </summary>
+        /// <param name="Target">Array to write to</param>
+        /// <param name="StartIndex">Index to start writing in Target argument</param>
+        /// <param name="FlipRows">Whether to make first pixelrow the last</param>
+        /// <param name="TotalWidth">Total width of the target (bmp) buffer</param>
+        public void FillPixelDataTo(byte[] Target, uint StartIndex, bool FlipRows, uint TotalWidth)
+        {
+            // possibly decompress first
+            if (IsCompressed)
+                IsCompressed = false;
+
+            // define offsets
+            uint lastoffset = StartIndex + (TotalWidth * Height);
+            uint readoffset = 0;
+
+            // Bytes for padding.
+            byte[] padbytes = (TotalWidth > Width) ? new byte[TotalWidth - Width] : new byte[0];
+
+            if (FlipRows)
+            {
+                // set target for first loop to first pixel of last row
+                StartIndex = lastoffset - TotalWidth;
+
+                // loop through rows
+                for (int i = 0; i < Height; i++)
+                {
+                    // copy the pixelrow
+                    Wrapper.CopyMem(PixelData, (int)readoffset, Target, (int)StartIndex, Width);
+                    // If TotalWidth is larger, pad rest of row with 0s.
+                    if (TotalWidth > Width)
+                        Wrapper.CopyMem(padbytes, 0, Target, (int)(StartIndex + Width), TotalWidth - Width);
+
+                    // move cursors to new rowstarts
+                    readoffset += Width;
+                    StartIndex -= TotalWidth;
+                }
+            }
+            else
+            {
+                // loop through rows
+                for (int i = 0; i < Height; i++)
+                {
+                    // copy the pixelrow
+                    Wrapper.CopyMem(PixelData, (int)readoffset, Target, (int)StartIndex, Width);
+                    // If TotalWidth is larger, pad rest of row with 0s.
+                    if (TotalWidth > Width)
+                        Wrapper.CopyMem(padbytes, 0, Target, (int)(StartIndex + Width), TotalWidth - Width);
+
+                    // move cursors to new rowstarts
+                    readoffset += Width;
+                    StartIndex += TotalWidth;
+                }
+            }
         }
 
         /// <summary>
