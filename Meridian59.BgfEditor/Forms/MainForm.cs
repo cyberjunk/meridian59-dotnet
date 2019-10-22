@@ -86,6 +86,12 @@ namespace Meridian59.BgfEditor
             fdAddFrame.ShowDialog();
         }
 
+        protected void OnFrameChangeImageClick(object server, EventArgs e)
+        {
+            if (SelectedFrame != null)
+                fdChangeFrame.ShowDialog();
+        }
+
         protected void OnFrameRemoveClick(object sender, EventArgs e)
         {
             BgfBitmap bgfBitmap = SelectedFrame;
@@ -533,6 +539,54 @@ namespace Meridian59.BgfEditor
                 imageLoaderWorkers[i] = new ImageLoaderWorker();
                 imageLoaderWorkers[i].Start();
             }
+        }
+
+        /// <summary>
+        /// Swaps in a new image for a given frame, keeping offets, hotspots and group data.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void OnFileDialogChangeFrameFileOk(object sender, CancelEventArgs e)
+        {
+            // Must have a valid frame selected.
+            if (SelectedFrame == null)
+                return;
+            int selected_index = (int)SelectedFrame.Num - 1;
+            if (selected_index < 0)
+                return;
+
+            BgfBitmap item = Program.CurrentFile.Frames[selected_index];
+
+            // load bitmap from file
+            Bitmap bitmap = new Bitmap(fdChangeFrame.FileName);
+
+            // get pixels
+            byte[] pixelData = BgfBitmap.BitmapToPixelData(bitmap);
+
+            // create BgfBitmap
+            BgfBitmap bgfBitmap = new BgfBitmap(
+                item.Num,
+                Program.CurrentFile.Version,
+                (uint)bitmap.Width,
+                (uint)bitmap.Height,
+                item.XOffset,
+                item.YOffset,
+                new BgfBitmapHotspot[0],
+                false,
+                0,
+                pixelData);
+
+            // cleanp temporary bitmap
+            bitmap.Dispose();
+
+            foreach (BgfBitmapHotspot h in item.HotSpots)
+            {
+                bgfBitmap.HotSpots.Add(h);
+            }
+            Program.CurrentFile.Frames.RemoveAt(selected_index);
+            Program.CurrentFile.Frames.Insert(selected_index, bgfBitmap);
+            dgFrames.Rows[selected_index].Selected = true;
+            UpdateFrameSetFlow();
         }
 
         protected void OnFileDialogSaveFileOk(object sender, CancelEventArgs e)
