@@ -42,6 +42,7 @@ namespace Meridian59.BgfEditor
                 cbFrames.SelectedItem is BgfBitmap &&
                 Program.CurrentFile.FrameSets.Count > CurrentFrameSetIndex)
             {
+                Program.HasFileChanged = true;
                 Program.CurrentFile.FrameSets[CurrentFrameSetIndex].FrameIndices.Add(cbFrames.SelectedIndex);
 
                 Program.MainForm.UpdateFrameNums();

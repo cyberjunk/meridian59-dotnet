@@ -52,12 +52,14 @@ namespace Meridian59.BgfEditor
         protected override void OnClosing(CancelEventArgs e)
         {
             // cancel close and hide instead
+            Program.HasFileChanged = true;
             e.Cancel = true;
             Hide();
         }
 
         protected void btnOK_Click(object sender, EventArgs e)
-        {           
+        {
+            Program.HasFileChanged = true;
             Hide();
         }
     }
