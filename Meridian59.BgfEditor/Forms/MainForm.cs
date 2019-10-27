@@ -7,6 +7,8 @@ using Meridian59.Data.Models;
 using Meridian59.Drawing2D;
 using Meridian59.Common.Enums;
 using Meridian59.BgfEditor.Forms;
+using System.IO;
+using Meridian59.Common.Constants;
 
 namespace Meridian59.BgfEditor
 {
@@ -18,7 +20,12 @@ namespace Meridian59.BgfEditor
         public const string STR_ERRORSTILLINKED = "Can't remove. Still linked in a group!";
         public const string STR_LOADINGFILEOPEN = "Can't open a file while loading images.";
         public const string STR_LOADINGFILESAVE = "Can't save a file while loading images.";
+        public const string STR_LOADINGFILEEXPORT = "Can't export a storyboard while loading images.";
+        public const string STR_LOADINGFILEIMPORT = "Can't import a storyboard while loading images.";
         public const string STR_LOADINGFILENEW = "Can't create a new file while loading images.";
+        public const string STR_NOXMLFILE = "Must have a matching XML file to import a storyboard!";
+        public const string STR_FAILEDIMPORT = "Failed to import storyboard, ensure the bmp and frame "
+                                             + "sizes match the values in the storyboard xml file.";
 
         private const int NUMWORKERS = 4;
         private static readonly ImageLoaderWorker[] imageLoaderWorkers = new ImageLoaderWorker[NUMWORKERS];
@@ -464,6 +471,41 @@ namespace Meridian59.BgfEditor
             frm.Show();
         }
 
+        protected void OnMenuExportStoryboardClick(object sender, EventArgs e)
+        {
+            if (Program.CurrentFile.Frames.Count == 0)
+                return;
+
+            if (Program.IsLoadingImages())
+            {
+                MessageBox.Show(STR_LOADINGFILEEXPORT, "Info", MessageBoxButtons.OK,
+                                MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+
+                return;
+            }
+
+            // Default filename: filename-storyboard.bmp
+            string filename = Path.Combine(Path.GetFileNameWithoutExtension(Program.CurrentFile.Filename) + "-storyboard" + FileExtensions.BMP);
+            fdSaveStoryboardFile.FileName = filename;
+            fdSaveStoryboardFile.ShowDialog();
+        }
+
+        protected void OnMenuImportStoryboardClick(object sender, EventArgs e)
+        {
+            if (Program.IsLoadingImages())
+            {
+                MessageBox.Show(STR_LOADINGFILEIMPORT, "Info", MessageBoxButtons.OK,
+                                MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+
+                return;
+            }
+
+            // Default filename: filename-storyboard.bmp
+            string filename = Path.Combine(Path.GetFileNameWithoutExtension(Program.CurrentFile.Filename) + "-storyboard" + FileExtensions.BMP);
+            fdOpenStoryboardFile.FileName = filename;
+            fdOpenStoryboardFile.ShowDialog();
+        }
+
         protected void OnMenuSetShrinkClick(object sender, EventArgs e)
         {
             Program.SettingsForm.Show();
@@ -541,6 +583,33 @@ namespace Meridian59.BgfEditor
             Program.Save(fdSaveFile.FileName);
         }
 
+        protected void OnFileDialogSaveStoryboardOk(object sender, CancelEventArgs e)
+        {
+            // save to file
+            Program.CurrentFile.WriteStoryboard(fdSaveStoryboardFile.FileName);
+        }
+
+        protected void OnFileDialogOpenStoryboardOk(object sender, CancelEventArgs e)
+        {
+            string xmlFile = Path.GetFileNameWithoutExtension(fdOpenStoryboardFile.FileName);
+            string path = Path.GetDirectoryName(fdOpenStoryboardFile.FileName);
+
+            if (!File.Exists(Path.Combine(path, xmlFile) + FileExtensions.XML))
+            {
+                MessageBox.Show(STR_NOXMLFILE, "Info", MessageBoxButtons.OK,
+                                MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+
+                return;
+            }
+
+            // Clear existing data.
+            Program.New();
+
+            if (!Program.CurrentFile.ImportStoryboard(fdOpenStoryboardFile.FileName))
+                MessageBox.Show(STR_FAILEDIMPORT, "Info", MessageBoxButtons.OK,
+                    MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+        }
+
         protected void OnFramesSelectionChanged(object sender, EventArgs e)
         {
             BgfBitmap bgfBitmap = SelectedFrame;
@@ -614,5 +683,38 @@ namespace Meridian59.BgfEditor
             v.DataSource = Program.RoomObject;
             v.Show();
         }
+
+        // Four grayscale algorithms, affects all frames.
+        private void OnMenuGrayScaleByShade(object sender, EventArgs e)
+        {
+            Program.CurrentFile.GrayScaleByShade();
+            OnFramesSelectionChanged(this, null);
+        }
+
+        private void OnMenuGrayScaleWeightedSum(object sender, EventArgs e)
+        {
+            Program.CurrentFile.GrayScaleWeightedSum();
+            OnFramesSelectionChanged(this, null);
+        }
+
+        private void OnMenuGrayScaleDesaturate(object sender, EventArgs e)
+        {
+            Program.CurrentFile.GrayScaleDesaturate();
+            OnFramesSelectionChanged(this, null);
+        }
+
+        private void OnMenuGrayScaleDecompose(object sender, EventArgs e)
+        {
+            Program.CurrentFile.GrayScaleDecompose();
+            OnFramesSelectionChanged(this, null);
+        }
+
+        // Reverts all frames to original pixels.
+        private void OnMenuGrayScaleRevert(object server, EventArgs e)
+        {
+            Program.CurrentFile.RevertPixelDataToOriginal();
+            OnFramesSelectionChanged(this, null);
+        }
+
     }
 }

@@ -51,7 +51,7 @@ namespace Meridian59.BgfEditor
                             try
                             {
                                 BgfFile bgf = new BgfFile(file);
-                                bgf.WriteXml(txtTarget.Text + "\\" + bgf.Filename);
+                                bgf.WriteXmlAndBMPs(txtTarget.Text + "\\" + bgf.Filename);
 
                                 txtLog.Text += "Extracted " + bgf.Filename + ".bgf" + Environment.NewLine;
                             }

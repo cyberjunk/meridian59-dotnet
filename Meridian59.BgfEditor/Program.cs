@@ -182,7 +182,7 @@ namespace Meridian59.BgfEditor
                     break;
 
                 case FileExtensions.XML:
-                    CurrentFile.WriteXml(Filename);
+                    CurrentFile.WriteXmlAndBMPs(Filename);
                     break;
             }
         }

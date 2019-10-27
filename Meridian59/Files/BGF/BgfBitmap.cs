@@ -45,16 +45,16 @@ namespace Meridian59.Files.BGF
         protected const string ERRORIMAGEFORMAT         = "Invalid Bitmap. Either not BMP or not 8bppIndexed.";
         protected const string ERRORCRUSHPLATFORM       = "Crusher is only supported in x86 builds on Windows.";        
         protected const int COMPRESSEDLENFORUNCOMPRESSED = 0;
-        protected const ushort BMPSIGNATURE             = 0x4D42;
-        protected const ushort BMPCOLORPLANES           = 1;
-        protected const ushort BMPBPP                   = 8;
-        protected const uint BMPCOMPRESSION             = 0;
-        protected const uint BMPPPMHORIZ                = 0;
-        protected const uint BMPPPMVERTIC               = 0;
-        protected const uint BMPCOLORSPALETTE           = 0;
-        protected const uint BMPNUMIMPORTANTCOLORS      = 0;
-        protected const int BMPHEADERLEN                = 14;
-        protected const int DIBHEADERLEN                = 40;
+        public const ushort BMPSIGNATURE                = 0x4D42;
+        public const ushort BMPCOLORPLANES              = 1;
+        public const ushort BMPBPP                      = 8;
+        public const uint BMPCOMPRESSION                = 0;
+        public const uint BMPPPMHORIZ                   = 0;
+        public const uint BMPPPMVERTIC                  = 0;
+        public const uint BMPCOLORSPALETTE              = 0;
+        public const uint BMPNUMIMPORTANTCOLORS         = 0;
+        public const int BMPHEADERLEN                   = 14;
+        public const int DIBHEADERLEN                   = 40;
 
         public const string PROPNAME_NUM                = "Num";
         public const string PROPNAME_VERSION            = "Version";
@@ -227,6 +227,7 @@ namespace Meridian59.Files.BGF
         protected uint multiple4width;
         protected readonly BaseList<BgfBitmapHotspot> hotspots = new BaseList<BgfBitmapHotspot>();
         protected byte[] pixeldata;
+        protected byte[] originalpixeldata;
         #endregion
 
         #region Properties
@@ -781,6 +782,65 @@ namespace Meridian59.Files.BGF
 
         /// <summary>
         /// Writes the default 8-Bit PixelData (indices) to a target byte[],
+        /// adding stride zeros and can flip the rows. Allows for a buffer
+        /// (i.e. for an output bmp) width larger than the pixeldata width.
+        /// </summary>
+        /// <param name="Target">Array to write to</param>
+        /// <param name="StartIndex">Index to start writing in Target argument</param>
+        /// <param name="FlipRows">Whether to make first pixelrow the last</param>
+        /// <param name="TotalWidth">Total width of the target (bmp) buffer</param>
+        public void FillPixelDataTo(byte[] Target, uint StartIndex, bool FlipRows, uint TotalWidth)
+        {
+            // possibly decompress first
+            if (IsCompressed)
+                IsCompressed = false;
+
+            // define offsets
+            uint lastoffset = StartIndex + (TotalWidth * Height);
+            uint readoffset = 0;
+
+            // Bytes for padding.
+            byte[] padbytes = (TotalWidth > Width) ? new byte[TotalWidth - Width] : new byte[0];
+
+            if (FlipRows)
+            {
+                // set target for first loop to first pixel of last row
+                StartIndex = lastoffset - TotalWidth;
+
+                // loop through rows
+                for (int i = 0; i < Height; i++)
+                {
+                    // copy the pixelrow
+                    Wrapper.CopyMem(PixelData, (int)readoffset, Target, (int)StartIndex, Width);
+                    // If TotalWidth is larger, pad rest of row with 0s.
+                    if (TotalWidth > Width)
+                        Wrapper.CopyMem(padbytes, 0, Target, (int)(StartIndex + Width), TotalWidth - Width);
+
+                    // move cursors to new rowstarts
+                    readoffset += Width;
+                    StartIndex -= TotalWidth;
+                }
+            }
+            else
+            {
+                // loop through rows
+                for (int i = 0; i < Height; i++)
+                {
+                    // copy the pixelrow
+                    Wrapper.CopyMem(PixelData, (int)readoffset, Target, (int)StartIndex, Width);
+                    // If TotalWidth is larger, pad rest of row with 0s.
+                    if (TotalWidth > Width)
+                        Wrapper.CopyMem(padbytes, 0, Target, (int)(StartIndex + Width), TotalWidth - Width);
+
+                    // move cursors to new rowstarts
+                    readoffset += Width;
+                    StartIndex += TotalWidth;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Writes the default 8-Bit PixelData (indices) to a target byte[],
         /// adding stride zeros and can flip the rows.
         /// </summary>
         /// <param name="Target">Array to write to</param>
@@ -1282,6 +1342,161 @@ namespace Meridian59.Files.BGF
 
                 // notify about changed pixeldata
                 RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_PIXELDATA));
+            }
+        }
+
+        /// <summary>
+        /// Save a copy of the bitmap's pixeldata, for reversing a grayscale operation.
+        /// </summary>
+        private void SaveOriginalPixelData()
+        {
+            if (originalpixeldata == null)
+            {
+                originalpixeldata = new byte[pixeldata.Length];
+                Array.Copy(pixeldata, 0, originalpixeldata, 0, pixeldata.Length);
+            }
+        }
+
+        /// <summary>
+        /// Reverts pixeldata to the stored original, if one exists.
+        /// </summary>
+        public void RevertPixelDataToOriginal()
+        {
+            if (originalpixeldata != null)
+                Array.Copy(originalpixeldata, 0, pixeldata, 0, pixeldata.Length);
+        }
+
+        /// <summary>
+        /// Converts pixeldata to grayscale, by exchanging the shade for the matching grey ramp shade.
+        /// Handles non-ramped pixels using GIMP's weighted sum algorithm.
+        /// </summary>
+        public void GrayScaleByShade()
+        {
+            SaveOriginalPixelData();
+
+            for (uint i = 0; i < PixelData.Length; i++)
+            {
+                // skip transparent pixels
+                if (PixelData[i] == 254)
+                    continue;
+
+                int ramp = 0xF0 & PixelData[i];
+
+                // 1st and last ramps, plus the yellow/purple/green/pink one.
+                if (ramp == 0x00 || ramp == 0xB || ramp == 0xE)
+                {
+                    uint color = ColorTransformation.DefaultPalette[PixelData[i]];
+                    double r = (((color & 0xFF0000) >> 16) / 255.0) * 0.3;
+                    double g = (((color & 0x00FF00) >> 8) / 255.0) * 0.59;
+                    double b = ((color & 0x0000FF) / 255.0) * 0.11;
+
+                    uint gray = (uint)Math.Round((r + g + b) * 255.0);
+                    // Gray translate only works within this range.
+                    if (gray < 36) gray = 36;
+                    if (gray > 231) gray = 231;
+                    uint newColor = (gray << 16) + (gray << 8) + gray;
+                    byte idx = (byte)ColorTransformation.GetClosestPaletteIndex(ColorTransformation.DefaultPalette, newColor);
+                    PixelData[i] = idx;
+                }
+                else
+                {
+                    // 208 is start of gray ramp
+                    PixelData[i] = (byte)((PixelData[i] % 16) + 208);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Converts pixeldata to grayscale, using GIMP's weighted sum grayscale algorithm.
+        ///  https://www.linuxtopia.org/online_books/graphics_tools/gimp_advanced_guide/gimp_guide_node54.html
+        /// </summary>
+        public void GrayScaleWeightedSum()
+        {
+            SaveOriginalPixelData();
+
+            for (uint i = 0; i < PixelData.Length; i++)
+            {
+                // skip transparent pixels
+                if (PixelData[i] == 254)
+                    continue;
+
+                // Convert to RGB
+                uint color = ColorTransformation.DefaultPalette[PixelData[i]];
+
+                // GIMP's grayscale algorithm: Y = 0.3R + 0.59G + 0.11B.
+                double r = (((color & 0xFF0000) >> 16) / 255.0) * 0.3;
+                double g = (((color & 0x00FF00) >> 8) / 255.0) * 0.59;
+                double b = ((color & 0x0000FF) / 255.0) * 0.11;
+
+                uint gray = (uint)Math.Round((r + g + b) * 255.0);
+                // Gray translate only works within this range.
+                if (gray < 36) gray = 36;
+                if (gray > 231) gray = 231;
+                uint newColor = (gray << 16) + (gray << 8) + gray;
+                byte idx = (byte)ColorTransformation.GetClosestPaletteIndex(ColorTransformation.DefaultPalette, newColor);
+                PixelData[i] = idx;
+            }
+        }
+
+        /// <summary>
+        /// Converts pixeldata to grayscale, using GIMP's desaturate algorithm.
+        /// Uses (max(r,g,b) + min(r,g,b)) / 2 to convert to grayscale.
+        /// </summary>
+        public void GrayScaleDesaturate()
+        {
+            SaveOriginalPixelData();
+
+            for (uint i = 0; i < PixelData.Length; i++)
+            {
+                // check for non-transparent
+                if (PixelData[i] != 254)
+                {
+                    // Convert to RGB
+                    uint color = ColorTransformation.DefaultPalette[PixelData[i]];
+                    //  Y = 0.3R + 0.59G + 0.11B
+                    uint r = (color & 0xFF0000) >> 16;
+                    uint g = (color & 0x00FF00) >> 8;
+                    uint b = color & 0x0000FF;
+
+                    uint gray = (Math.Max(r, Math.Max(g, b)) + Math.Min(r, Math.Min(g, b))) / 2;
+                    // Gray translate only works within this range.
+                    if (gray < 36) gray = 36;
+                    if (gray > 231) gray = 231;
+                    uint newColor = (gray << 16) + (gray << 8) + gray;
+                    byte idx = (byte)ColorTransformation.GetClosestPaletteIndex(ColorTransformation.DefaultPalette, newColor);
+                    PixelData[i] = idx;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Converts pixeldata to grayscale, using GIMP's decompose algorithm.
+        /// Uses max(r,g,b) to convert to grayscale.
+        /// </summary>
+        public void GrayScaleDecompose()
+        {
+            SaveOriginalPixelData();
+
+            for (uint i = 0; i < PixelData.Length; i++)
+            {
+                // check for non-transparent
+                if (PixelData[i] != 254)
+                {
+                    // Convert to RGB
+                    uint color = ColorTransformation.DefaultPalette[PixelData[i]];
+                    //  Y = 0.3R + 0.59G + 0.11B
+                    uint r = (color & 0xFF0000) >> 16;
+                    uint g = (color & 0x00FF00) >> 8;
+                    uint b = color & 0x0000FF;
+
+                    uint gray = Math.Max(r, Math.Max(g, b));
+                    // Gray translate only works within this range.
+                    if (gray < 36) gray = 36;
+                    if (gray > 231) gray = 231;
+                    uint newColor = (gray << 16) + (gray << 8) + gray;
+                    byte idx = (byte)ColorTransformation.GetClosestPaletteIndex(ColorTransformation.DefaultPalette, newColor);
+                    PixelData[i] = idx;
+                }
             }
         }
 
