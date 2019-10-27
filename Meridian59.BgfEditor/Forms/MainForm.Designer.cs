@@ -64,6 +64,7 @@
             this.splitFramesMain = new System.Windows.Forms.SplitContainer();
             this.splitFramesLeftInner = new System.Windows.Forms.SplitContainer();
             this.groupFrameActions = new System.Windows.Forms.GroupBox();
+            this.btnFrameChangeImage = new System.Windows.Forms.Button();
             this.btnFrameAdd = new System.Windows.Forms.Button();
             this.btnFrameRemove = new System.Windows.Forms.Button();
             this.btnFrameUp = new System.Windows.Forms.Button();
@@ -106,6 +107,7 @@
             this.btnFrameIndexUp = new System.Windows.Forms.Button();
             this.btnFrameIndexDown = new System.Windows.Forms.Button();
             this.listFrameNums = new System.Windows.Forms.ListBox();
+            this.fdChangeFrame = new System.Windows.Forms.OpenFileDialog();
             this.fdAddFrame = new System.Windows.Forms.OpenFileDialog();
             this.fdOpenFile = new System.Windows.Forms.OpenFileDialog();
             this.fdSaveFile = new System.Windows.Forms.SaveFileDialog();
@@ -434,6 +436,7 @@
             this.groupFrameActions.Controls.Add(this.btnFrameRemove);
             this.groupFrameActions.Controls.Add(this.btnFrameUp);
             this.groupFrameActions.Controls.Add(this.btnFrameDown);
+            this.groupFrameActions.Controls.Add(this.btnFrameChangeImage);
             this.groupFrameActions.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupFrameActions.Location = new System.Drawing.Point(0, 0);
             this.groupFrameActions.Name = "groupFrameActions";
@@ -445,9 +448,9 @@
             // btnFrameAdd
             // 
             this.btnFrameAdd.Image = global::Meridian59.BgfEditor.Properties.Resources.Add;
-            this.btnFrameAdd.Location = new System.Drawing.Point(28, 16);
+            this.btnFrameAdd.Location = new System.Drawing.Point(12, 16);
             this.btnFrameAdd.Name = "btnFrameAdd";
-            this.btnFrameAdd.Size = new System.Drawing.Size(75, 23);
+            this.btnFrameAdd.Size = new System.Drawing.Size(70, 23);
             this.btnFrameAdd.TabIndex = 0;
             this.btnFrameAdd.UseVisualStyleBackColor = true;
             this.btnFrameAdd.Click += new System.EventHandler(this.OnFrameAddClick);
@@ -455,9 +458,9 @@
             // btnFrameRemove
             // 
             this.btnFrameRemove.Image = global::Meridian59.BgfEditor.Properties.Resources.Delete;
-            this.btnFrameRemove.Location = new System.Drawing.Point(109, 16);
+            this.btnFrameRemove.Location = new System.Drawing.Point(88, 16);
             this.btnFrameRemove.Name = "btnFrameRemove";
-            this.btnFrameRemove.Size = new System.Drawing.Size(75, 23);
+            this.btnFrameRemove.Size = new System.Drawing.Size(70, 23);
             this.btnFrameRemove.TabIndex = 1;
             this.btnFrameRemove.UseVisualStyleBackColor = true;
             this.btnFrameRemove.Click += new System.EventHandler(this.OnFrameRemoveClick);
@@ -465,9 +468,9 @@
             // btnFrameUp
             // 
             this.btnFrameUp.Image = global::Meridian59.BgfEditor.Properties.Resources.Up;
-            this.btnFrameUp.Location = new System.Drawing.Point(190, 16);
+            this.btnFrameUp.Location = new System.Drawing.Point(164, 16);
             this.btnFrameUp.Name = "btnFrameUp";
-            this.btnFrameUp.Size = new System.Drawing.Size(75, 23);
+            this.btnFrameUp.Size = new System.Drawing.Size(70, 23);
             this.btnFrameUp.TabIndex = 2;
             this.btnFrameUp.UseVisualStyleBackColor = true;
             this.btnFrameUp.Click += new System.EventHandler(this.OnFrameUpClick);
@@ -475,12 +478,22 @@
             // btnFrameDown
             // 
             this.btnFrameDown.Image = global::Meridian59.BgfEditor.Properties.Resources.Down;
-            this.btnFrameDown.Location = new System.Drawing.Point(271, 16);
+            this.btnFrameDown.Location = new System.Drawing.Point(240, 16);
             this.btnFrameDown.Name = "btnFrameDown";
-            this.btnFrameDown.Size = new System.Drawing.Size(75, 23);
+            this.btnFrameDown.Size = new System.Drawing.Size(70, 23);
             this.btnFrameDown.TabIndex = 3;
             this.btnFrameDown.UseVisualStyleBackColor = true;
             this.btnFrameDown.Click += new System.EventHandler(this.OnFrameDownClick);
+            // 
+            // btnFrameChangeImage
+            // 
+            this.btnFrameChangeImage.Image = global::Meridian59.BgfEditor.Properties.Resources.Change;
+            this.btnFrameChangeImage.Location = new System.Drawing.Point(322, 16);
+            this.btnFrameChangeImage.Name = "btnFrameChangeImage";
+            this.btnFrameChangeImage.Size = new System.Drawing.Size(54, 23);
+            this.btnFrameChangeImage.TabIndex = 4;
+            this.btnFrameChangeImage.UseVisualStyleBackColor = true;
+            this.btnFrameChangeImage.Click += new System.EventHandler(this.OnFrameChangeImageClick);
             // 
             // dgFrames
             // 
@@ -933,6 +946,12 @@
             this.listFrameNums.Size = new System.Drawing.Size(220, 350);
             this.listFrameNums.TabIndex = 0;
             // 
+            // fdChangeFrame
+            // 
+            this.fdChangeFrame.Filter = "Images|*.png;*.jpg;*.bmp";
+            this.fdChangeFrame.Multiselect = false;
+            this.fdChangeFrame.FileOk += new System.ComponentModel.CancelEventHandler(this.OnFileDialogChangeFrameFileOk);
+            // 
             // fdAddFrame
             // 
             this.fdAddFrame.Filter = "Images|*.png;*.jpg;*.bmp";
@@ -1053,6 +1072,7 @@
         private System.Windows.Forms.GroupBox groupHotspotActions;
         private System.Windows.Forms.Button btnHotspotAdd;
         private System.Windows.Forms.Button btnHotspotRemove;
+        private System.Windows.Forms.OpenFileDialog fdChangeFrame;
         private System.Windows.Forms.OpenFileDialog fdAddFrame;
         private System.Windows.Forms.OpenFileDialog fdOpenFile;
         private System.Windows.Forms.SaveFileDialog fdSaveFile;
@@ -1068,6 +1088,7 @@
         private System.Windows.Forms.SplitContainer splitFrameSetsMain;
         private System.Windows.Forms.SplitContainer splitFrameSetsLeftInner;
         private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Button btnFrameChangeImage;
         private System.Windows.Forms.Button btnFrameSetAdd;
         private System.Windows.Forms.Button btnFrameSetRemove;
         private System.Windows.Forms.Button btnFrameSetUp;
