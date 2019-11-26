@@ -565,9 +565,12 @@ namespace Meridian59.Files.BGF
         /// <param name="Data"></param>
         /// <returns></returns>
         public byte[] Compress(byte[] Data)
-        {           
+        {
+            // Min 64 bytes - found one case where input bgf is 36 bytes (6x6) and
+            // compresses to 38 bytes.
+            int bufferSize = Math.Max(UncompressedLength, 64);
             // allocate a buffer with uncompressed length to write compressed stream to
-            byte[] tempBuffer = new byte[UncompressedLength];           
+            byte[] tempBuffer = new byte[bufferSize];
             int compressedLength;
 
             // ZLIB
