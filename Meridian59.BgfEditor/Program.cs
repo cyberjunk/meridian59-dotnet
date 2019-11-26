@@ -149,16 +149,24 @@ namespace Meridian59.BgfEditor
                         break;
                 }
 
-                // set input controls in 'settings' window to values from file
-                SettingsForm.ShrinkFactor = CurrentFile.ShrinkFactor;
-                SettingsForm.Version = CurrentFile.Version;
-                SettingsForm.BgfName = CurrentFile.Name;
-
-                // set mainoverlay resource to loaded file
-                RoomObject.OverlayFile = CurrentFile.Filename + ".bgf";
-                RoomObject.Resource = CurrentFile;
+                SetLoadedBgfProperties();
                 HasFileChanged = false;
             }
+        }
+
+        /// <summary>
+        /// Sets some form and object properties from the newly loaded file.
+        /// </summary>
+        public static void SetLoadedBgfProperties()
+        {
+            // set input controls in 'settings' window to values from file
+            SettingsForm.ShrinkFactor = CurrentFile.ShrinkFactor;
+            SettingsForm.Version = CurrentFile.Version;
+            SettingsForm.BgfName = CurrentFile.Name;
+
+            // set mainoverlay resource to loaded file
+            RoomObject.OverlayFile = CurrentFile.Filename + ".bgf";
+            RoomObject.Resource = CurrentFile;
         }
 
         /// <summary>

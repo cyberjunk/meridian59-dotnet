@@ -721,9 +721,16 @@ namespace Meridian59.BgfEditor
             // Clear existing data.
             Program.New();
 
-            if (!Program.CurrentFile.ImportStoryboard(fdOpenStoryboardFile.FileName))
+            if (Program.CurrentFile.ImportStoryboard(fdOpenStoryboardFile.FileName))
+            {
+                // Set bgf properties in forms/program objects.
+                Program.SetLoadedBgfProperties();
+            }
+            else
+            {
                 MessageBox.Show(STR_FAILEDIMPORT, "Info", MessageBoxButtons.OK,
                     MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+            }
         }
 
         protected void OnFramesSelectionChanged(object sender, EventArgs e)
