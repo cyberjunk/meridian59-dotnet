@@ -842,9 +842,6 @@ namespace Meridian59.Files.BGF
         {
             string path = Path.GetDirectoryName(Filename);
 
-            // save raw filename without path or extensions
-            Filename = Path.GetFileNameWithoutExtension(Filename);
-
             // init XML reader
             XmlReader reader = XmlReader.Create(Filename);
 
