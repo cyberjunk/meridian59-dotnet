@@ -15,6 +15,8 @@ namespace Meridian59.BgfEditor
     public partial class MainForm : Form
     {
         public const string STR_AREYOUSURE = "Are you sure?";
+        public const string STR_SAVEFILE = "Save file \"{0}\"?";
+        public const string STR_SAVE = "Save";
         public const string STR_REMOVEGROUP = "Remove group";
         public const string STR_REMOVEFRAME = "Remove frame";
         public const string STR_ERRORSTILLINKED = "Can't remove. Still linked in a group!";
@@ -80,6 +82,15 @@ namespace Meridian59.BgfEditor
             listFrameSets.DataSource = Program.CurrentFile.FrameSets;
         }
 
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            // check if user wants to save file
+            if (CloseFileSaveCheck())
+                base.OnClosing(e);
+            else
+                e.Cancel = true;
+        }
+
         protected void OnResizeEnd(object sender, EventArgs e)
         {
             BgfBitmap bgfBitmap = SelectedFrame;
@@ -119,6 +130,7 @@ namespace Meridian59.BgfEditor
                         }
                         else
                         {
+                            Program.HasFileChanged = true;
                             Program.CurrentFile.Frames.Remove(bgfBitmap);
 
                             // adjust nums for rest
@@ -140,6 +152,7 @@ namespace Meridian59.BgfEditor
 
                 if (index > 0)
                 {
+                    Program.HasFileChanged = true;
                     // swap listitems
                     BgfBitmap temp = Program.CurrentFile.Frames[index - 1];
                     Program.CurrentFile.Frames[index - 1] = bgfBitmap;
@@ -171,6 +184,7 @@ namespace Meridian59.BgfEditor
 
                 if (index < dgFrames.Rows.Count - 1)
                 {
+                    Program.HasFileChanged = true;
                     // swap listitems
                     BgfBitmap temp = Program.CurrentFile.Frames[index + 1];
                     Program.CurrentFile.Frames[index + 1] = bgfBitmap;
@@ -198,6 +212,7 @@ namespace Meridian59.BgfEditor
 
             if (bgfBitmap != null)
             {
+                Program.HasFileChanged = true;
                 bgfBitmap.HotSpots.Add(new BgfBitmapHotspot());
             }
         }
@@ -215,6 +230,7 @@ namespace Meridian59.BgfEditor
                     DialogResult = MessageBox.Show("Are you sure?", "Remove hotspot", MessageBoxButtons.YesNo);
                     if (DialogResult == DialogResult.Yes)
                     {
+                        Program.HasFileChanged = true;
                         SelectedFrame.HotSpots.Remove(bgfHotspot);
                     }
                 }
@@ -231,6 +247,7 @@ namespace Meridian59.BgfEditor
 
                 if (index > 0)
                 {
+                    Program.HasFileChanged = true;
                     BgfBitmap bgfBitmap = SelectedFrame;
 
                     // swap listitems
@@ -259,6 +276,7 @@ namespace Meridian59.BgfEditor
                     // swap listitems
                     if (bgfBitmap != null)
                     {
+                        Program.HasFileChanged = true;
                         BgfBitmapHotspot temp = bgfBitmap.HotSpots[index + 1];
                         bgfBitmap.HotSpots[index + 1] = bgfHotspot;
                         bgfBitmap.HotSpots[index] = temp;
@@ -273,7 +291,7 @@ namespace Meridian59.BgfEditor
         protected void OnFrameSetAddClick(object sender, EventArgs e)
         {
             Program.CurrentFile.AddFrameSet();
-
+            Program.HasFileChanged = true;
             if (listFrameSets.Items.Count > 0)
                 listFrameSets.SelectedIndex = listFrameSets.Items.Count - 1;
         }
@@ -289,6 +307,7 @@ namespace Meridian59.BgfEditor
                 DialogResult = MessageBox.Show(STR_AREYOUSURE, STR_REMOVEGROUP, MessageBoxButtons.YesNo);
                 if (DialogResult == DialogResult.Yes)
                 {
+                    Program.HasFileChanged = true;
                     Program.CurrentFile.FrameSets.Remove(bgfFrameSet);
 
                     // adjust nums for rest
@@ -310,6 +329,7 @@ namespace Meridian59.BgfEditor
 
                 if (index > 0)
                 {
+                    Program.HasFileChanged = true;
                     // swap listitems
                     BgfFrameSet temp = Program.CurrentFile.FrameSets[index - 1];
                     Program.CurrentFile.FrameSets[index - 1] = bgfFrameSet;
@@ -334,6 +354,7 @@ namespace Meridian59.BgfEditor
                 index > -1 &&
                 index < listFrameSets.Items.Count - 1)
             {
+                Program.HasFileChanged = true;
                 // swap listitems
                 BgfFrameSet temp = Program.CurrentFile.FrameSets[index + 1];
                 Program.CurrentFile.FrameSets[index + 1] = bgfFrameSet;
@@ -362,6 +383,7 @@ namespace Meridian59.BgfEditor
 
                 if (bgfFrameSet != null)
                 {
+                    Program.HasFileChanged = true;
                     bgfFrameSet.FrameIndices.RemoveAt(listFrameNums.SelectedIndex);
 
                     UpdateFrameNums();
@@ -378,6 +400,7 @@ namespace Meridian59.BgfEditor
 
                 if (bgfFrameSet != null)
                 {
+                    Program.HasFileChanged = true;
                     int index = listFrameNums.SelectedIndex;
 
                     // swap listitems
@@ -402,6 +425,7 @@ namespace Meridian59.BgfEditor
 
                 if (bgfFrameSet != null)
                 {
+                    Program.HasFileChanged = true;
                     int index = listFrameNums.SelectedIndex;
 
                     // swap listitems
@@ -418,6 +442,29 @@ namespace Meridian59.BgfEditor
             }
         }
 
+        /// <summary>
+        /// Checks if any current file needs saving before opening a new file/storyboard
+        /// or closing the editor. Returns true if the caller should continue its function
+        /// or false if it should cancel the operation.
+        /// </summary>
+        /// <returns></returns>
+        private bool CloseFileSaveCheck()
+        {
+            if (!Program.HasFileChanged)
+                return true;
+
+            string filename = Path.Combine(Path.GetFileNameWithoutExtension(Program.CurrentFile.Filename) + FileExtensions.BGF);
+            DialogResult = MessageBox.Show(String.Format(STR_SAVEFILE, filename), STR_SAVE, MessageBoxButtons.YesNoCancel);
+            if (DialogResult == DialogResult.Yes)
+            {
+                fdSaveFile.FileName = Program.CurrentFile.Filename;
+                DialogResult = fdSaveFile.ShowDialog();
+            }
+
+            // True unless either dialog was cancelled.
+            return DialogResult != DialogResult.Cancel;
+        }
+
         protected void OnMenuNewClick(object sender, EventArgs e)
         {
             if (Program.IsLoadingImages())
@@ -427,7 +474,13 @@ namespace Meridian59.BgfEditor
 
                 return;
             }
-            Program.New();
+
+            if (Program.CurrentFile.Frames.Count != 0)
+            {
+                // check if user wants to save file
+                if (CloseFileSaveCheck())
+                    Program.New();
+            }
         }
 
         protected void OnMenuOpenClick(object sender, EventArgs e)
@@ -440,7 +493,9 @@ namespace Meridian59.BgfEditor
                 return;
             }
 
-            fdOpenFile.ShowDialog();
+            // check if user wants to save file
+            if (CloseFileSaveCheck())
+                fdOpenFile.ShowDialog();
         }
 
         protected void OnMenuSaveAsClick(object sender, EventArgs e)
@@ -506,10 +561,14 @@ namespace Meridian59.BgfEditor
                 return;
             }
 
-            // Default filename: filename-storyboard.bmp
-            string filename = Path.Combine(Path.GetFileNameWithoutExtension(Program.CurrentFile.Filename) + "-storyboard" + FileExtensions.BMP);
-            fdOpenStoryboardFile.FileName = filename;
-            fdOpenStoryboardFile.ShowDialog();
+            // check if user wants to save file
+            if (CloseFileSaveCheck())
+            {
+                // Default filename: filename-storyboard.bmp
+                string filename = Path.Combine(Path.GetFileNameWithoutExtension(Program.CurrentFile.Filename) + "-storyboard" + FileExtensions.BMP);
+                fdOpenStoryboardFile.FileName = filename;
+                fdOpenStoryboardFile.ShowDialog();
+            }
         }
 
         protected void OnMenuSetShrinkClick(object sender, EventArgs e)
@@ -540,9 +599,10 @@ namespace Meridian59.BgfEditor
 
         protected void OnMenuConverFromValeColors(object sender, EventArgs e)
         {
-            if (Program.CurrentFile == null)
+            if (Program.CurrentFile.Frames.Count == 0)
                 return;
 
+            Program.HasFileChanged = true;
             foreach (BgfBitmap bmp in Program.CurrentFile.Frames)
                 bmp.ConvertFromVale();
 
@@ -625,6 +685,8 @@ namespace Meridian59.BgfEditor
             {
                 bgfBitmap.HotSpots.Add(h);
             }
+            Program.HasFileChanged = true;
+
             Program.CurrentFile.Frames.RemoveAt(selected_index);
             Program.CurrentFile.Frames.Insert(selected_index, bgfBitmap);
             dgFrames.Rows[selected_index].Selected = true;
@@ -659,9 +721,16 @@ namespace Meridian59.BgfEditor
             // Clear existing data.
             Program.New();
 
-            if (!Program.CurrentFile.ImportStoryboard(fdOpenStoryboardFile.FileName))
+            if (Program.CurrentFile.ImportStoryboard(fdOpenStoryboardFile.FileName))
+            {
+                // Set bgf properties in forms/program objects.
+                Program.SetLoadedBgfProperties();
+            }
+            else
+            {
                 MessageBox.Show(STR_FAILEDIMPORT, "Info", MessageBoxButtons.OK,
                     MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+            }
         }
 
         protected void OnFramesSelectionChanged(object sender, EventArgs e)
@@ -728,6 +797,7 @@ namespace Meridian59.BgfEditor
 
         private void OnMenuCutTransparency(object sender, EventArgs e)
         {
+            Program.HasFileChanged = true;
             Program.CurrentFile.CutParallel();
         }
 
@@ -741,24 +811,28 @@ namespace Meridian59.BgfEditor
         // Four grayscale algorithms, affects all frames.
         private void OnMenuGrayScaleByShade(object sender, EventArgs e)
         {
+            Program.HasFileChanged = true;
             Program.CurrentFile.GrayScaleByShade();
             OnFramesSelectionChanged(this, null);
         }
 
         private void OnMenuGrayScaleWeightedSum(object sender, EventArgs e)
         {
+            Program.HasFileChanged = true;
             Program.CurrentFile.GrayScaleWeightedSum();
             OnFramesSelectionChanged(this, null);
         }
 
         private void OnMenuGrayScaleDesaturate(object sender, EventArgs e)
         {
+            Program.HasFileChanged = true;
             Program.CurrentFile.GrayScaleDesaturate();
             OnFramesSelectionChanged(this, null);
         }
 
         private void OnMenuGrayScaleDecompose(object sender, EventArgs e)
         {
+            Program.HasFileChanged = true;
             Program.CurrentFile.GrayScaleDecompose();
             OnFramesSelectionChanged(this, null);
         }
@@ -766,6 +840,7 @@ namespace Meridian59.BgfEditor
         // Reverts all frames to original pixels.
         private void OnMenuGrayScaleRevert(object server, EventArgs e)
         {
+            Program.HasFileChanged = true;
             Program.CurrentFile.RevertPixelDataToOriginal();
             OnFramesSelectionChanged(this, null);
         }

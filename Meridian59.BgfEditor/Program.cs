@@ -36,6 +36,7 @@ namespace Meridian59.BgfEditor
         //public static bool IsPlaying { get; set; }
         public static long Tick { get; private set; }
         public static BgfFile CurrentFile { get; private set; }
+        public static bool HasFileChanged { get; set; }
         public static MainForm MainForm { get; private set; }
         public static SettingsForm SettingsForm { get; private set; }
         public static AddFrameSetIndexForm AddFrameSetIndexForm { get; private set; }
@@ -89,7 +90,9 @@ namespace Meridian59.BgfEditor
 
             // set running
             IsRunning = true;
-            
+
+            HasFileChanged = false;
+
             string[] args = Environment.GetCommandLineArgs();
 
             // load file passed by arguments
@@ -146,15 +149,24 @@ namespace Meridian59.BgfEditor
                         break;
                 }
 
-                // set input controls in 'settings' window to values from file
-                SettingsForm.ShrinkFactor = CurrentFile.ShrinkFactor;
-                SettingsForm.Version = CurrentFile.Version;
-                SettingsForm.BgfName = CurrentFile.Name;
-
-                // set mainoverlay resource to loaded file
-                RoomObject.OverlayFile = CurrentFile.Filename + ".bgf";
-                RoomObject.Resource = CurrentFile;
+                SetLoadedBgfProperties();
+                HasFileChanged = false;
             }
+        }
+
+        /// <summary>
+        /// Sets some form and object properties from the newly loaded file.
+        /// </summary>
+        public static void SetLoadedBgfProperties()
+        {
+            // set input controls in 'settings' window to values from file
+            SettingsForm.ShrinkFactor = CurrentFile.ShrinkFactor;
+            SettingsForm.Version = CurrentFile.Version;
+            SettingsForm.BgfName = CurrentFile.Name;
+
+            // set mainoverlay resource to loaded file
+            RoomObject.OverlayFile = CurrentFile.Filename + ".bgf";
+            RoomObject.Resource = CurrentFile;
         }
 
         /// <summary>
@@ -169,7 +181,7 @@ namespace Meridian59.BgfEditor
             CurrentFile.Name = SettingsForm.BgfName;
 
             string extension = Path.GetExtension(Filename);
-
+            HasFileChanged = false;
             switch (extension)
             {
                 case FileExtensions.BGF:
@@ -198,7 +210,7 @@ namespace Meridian59.BgfEditor
             SettingsForm.ShrinkFactor = CurrentFile.ShrinkFactor;
             SettingsForm.Version = CurrentFile.Version;
             SettingsForm.BgfName = CurrentFile.Name;
-
+            HasFileChanged = false;
             // unset current imageboxes
             ShowFrame(true, null, MainForm.picFrameImage);
             //ShowFrame(true, null, MainForm.picAnimation);

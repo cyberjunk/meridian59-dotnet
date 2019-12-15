@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -113,6 +114,7 @@
             this.fdSaveFile = new System.Windows.Forms.SaveFileDialog();
             this.fdSaveStoryboardFile = new System.Windows.Forms.SaveFileDialog();
             this.fdOpenStoryboardFile = new System.Windows.Forms.OpenFileDialog();
+            this.toolTips = new System.Windows.Forms.ToolTip(this.components);
             this.menuStrip.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tabFrames.SuspendLayout();
@@ -189,6 +191,7 @@
             this.menuNew.Size = new System.Drawing.Size(152, 22);
             this.menuNew.Text = "New";
             this.menuNew.Click += new System.EventHandler(this.OnMenuNewClick);
+            this.menuNew.ToolTipText = "Create a new, empty bgf";
             // 
             // menuOpen
             // 
@@ -196,6 +199,7 @@
             this.menuOpen.Size = new System.Drawing.Size(152, 22);
             this.menuOpen.Text = "Open";
             this.menuOpen.Click += new System.EventHandler(this.OnMenuOpenClick);
+            this.menuOpen.ToolTipText = "Open a new bgf file";
             // 
             // menuSaveAs
             // 
@@ -237,6 +241,7 @@
             this.menuExportAllBGFToXML.Size = new System.Drawing.Size(249, 22);
             this.menuExportAllBGFToXML.Text = "Export all BGF to XML/BMP";
             this.menuExportAllBGFToXML.Click += new System.EventHandler(this.OnMenuExportAllBGFToXMLClick);
+            this.menuExportAllBGFToXML.ToolTipText = "Export all bgfs in a target folder to bmp frames + xml file";
             // 
             // menuDecompressAllBGF
             // 
@@ -244,6 +249,7 @@
             this.menuDecompressAllBGF.Size = new System.Drawing.Size(249, 22);
             this.menuDecompressAllBGF.Text = "Decompress all BGF";
             this.menuDecompressAllBGF.Click += new System.EventHandler(this.OnMenuDecompressAllBGFClick);
+            this.menuDecompressAllBGF.ToolTipText = "Decompress all bgfs in a target folder";
             // 
             // menuExportStoryboard
             // 
@@ -251,6 +257,7 @@
             this.menuExportStoryboard.Size = new System.Drawing.Size(152, 22);
             this.menuExportStoryboard.Text = "Export Storyboard";
             this.menuExportStoryboard.Click += new System.EventHandler(this.OnMenuExportStoryboardClick);
+            this.menuExportStoryboard.ToolTipText = "Export current bgf frames to a storyboard bmp / xml";
             // 
             // importStoryboardToolStripMenuItem
             // 
@@ -258,6 +265,7 @@
             this.importStoryboardToolStripMenuItem.Size = new System.Drawing.Size(361, 30);
             this.importStoryboardToolStripMenuItem.Text = "Import Storyboard";
             this.importStoryboardToolStripMenuItem.Click += new System.EventHandler(this.OnMenuImportStoryboardClick);
+            this.importStoryboardToolStripMenuItem.ToolTipText = "Import storyboard bmp / xml as a new bgf";
             // 
             // menuConvertAllToV10
             // 
@@ -265,6 +273,7 @@
             this.menuConvertAllToV10.Size = new System.Drawing.Size(249, 22);
             this.menuConvertAllToV10.Text = "Convert all to V10 (zlib)";
             this.menuConvertAllToV10.Click += new System.EventHandler(this.OnMenuConvertAllToV10Click);
+            this.menuConvertAllToV10.ToolTipText = "Convert all bgfs in a target folder to bgf version 10";
             // 
             // convertAllToV10zlibFromValeToolStripMenuItem
             // 
@@ -272,6 +281,7 @@
             this.convertAllToV10zlibFromValeToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
             this.convertAllToV10zlibFromValeToolStripMenuItem.Text = "Convert all to V10 (zlib) from Vale";
             this.convertAllToV10zlibFromValeToolStripMenuItem.Click += new System.EventHandler(this.OnMenuConvertAllToV10FromValeClick);
+            this.convertAllToV10zlibFromValeToolStripMenuItem.ToolTipText = "Convert all bgfs in a target folder from vale format to bgf version 10";
             // 
             // menuConvertAllToV9
             // 
@@ -279,6 +289,7 @@
             this.menuConvertAllToV9.Size = new System.Drawing.Size(249, 22);
             this.menuConvertAllToV9.Text = "Convert all to V9 (crush32)";
             this.menuConvertAllToV9.Click += new System.EventHandler(this.OnMenuConvertAllToV9Click);
+            this.menuConvertAllToV9.ToolTipText = "Convert all bgfs in a target folder to bgf version 9";
             // 
             // convertFromValeColorsToolStripMenuItem
             // 
@@ -286,6 +297,7 @@
             this.convertFromValeColorsToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
             this.convertFromValeColorsToolStripMenuItem.Text = "Convert this from Vale colors";
             this.convertFromValeColorsToolStripMenuItem.Click += new System.EventHandler(this.OnMenuConverFromValeColors);
+            this.convertFromValeColorsToolStripMenuItem.ToolTipText = "Convert all frames in current bgf from vale colors";
             // 
             // menuComparePalettes
             // 
@@ -293,6 +305,7 @@
             this.menuComparePalettes.Size = new System.Drawing.Size(249, 22);
             this.menuComparePalettes.Text = "Compare palettes";
             this.menuComparePalettes.Click += new System.EventHandler(this.OnMenuComparePalettesClick);
+            this.menuComparePalettes.ToolTipText = "A tool for comparing the color changes in Meridian 59 palettes";
             // 
             // cutTransparencyToolStripMenuItem
             // 
@@ -300,6 +313,7 @@
             this.cutTransparencyToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
             this.cutTransparencyToolStripMenuItem.Text = "Cut transparency";
             this.cutTransparencyToolStripMenuItem.Click += new System.EventHandler(this.OnMenuCutTransparency);
+            this.cutTransparencyToolStripMenuItem.ToolTipText = "Remove some of the transparent borders around all frames in the current bgf";
             // 
             // openAnimationViewerToolStripMenuItem
             // 
@@ -307,6 +321,7 @@
             this.openAnimationViewerToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
             this.openAnimationViewerToolStripMenuItem.Text = "Open Animation Viewer";
             this.openAnimationViewerToolStripMenuItem.Click += new System.EventHandler(this.OnMenuOpenAnimationViewer);
+            this.openAnimationViewerToolStripMenuItem.ToolTipText = "View group animations and palette effects on the current bgf";
             // 
             // grayscaleToolStripMenuItem
             // 
@@ -319,6 +334,7 @@
             this.grayscaleToolStripMenuItem.Name = "grayscaleToolStripMenuItem";
             this.grayscaleToolStripMenuItem.Size = new System.Drawing.Size(361, 30);
             this.grayscaleToolStripMenuItem.Text = "Grayscale Frames";
+            this.grayscaleToolStripMenuItem.ToolTipText = "Various grayscale effects on all frames in the current bgf";
             // 
             // scaleByShadeToolStripMenuItem
             // 
@@ -326,6 +342,7 @@
             this.scaleByShadeToolStripMenuItem.Size = new System.Drawing.Size(265, 30);
             this.scaleByShadeToolStripMenuItem.Text = "Match shade";
             this.scaleByShadeToolStripMenuItem.Click += new System.EventHandler(this.OnMenuGrayScaleByShade);
+            this.scaleByShadeToolStripMenuItem.ToolTipText = "Convert to grayscale by matching closest shade of gray";
             // 
             // scaleToolStripMenuItem
             // 
@@ -333,6 +350,7 @@
             this.scaleToolStripMenuItem.Size = new System.Drawing.Size(265, 30);
             this.scaleToolStripMenuItem.Text = "Weighted Sum (GIMP Grayscale algo)";
             this.scaleToolStripMenuItem.Click += new System.EventHandler(this.OnMenuGrayScaleWeightedSum);
+            this.scaleToolStripMenuItem.ToolTipText = "Convert to grayscale using GIMP's weighted sum grayscale algorithm";
             // 
             // desaturateToolStripMenuItem
             // 
@@ -340,6 +358,7 @@
             this.desaturateToolStripMenuItem.Size = new System.Drawing.Size(265, 30);
             this.desaturateToolStripMenuItem.Text = "Desaturate";
             this.desaturateToolStripMenuItem.Click += new System.EventHandler(this.OnMenuGrayScaleDesaturate);
+            this.desaturateToolStripMenuItem.ToolTipText = "Convert to grayscale using GIMP's desaturate algorithm";
             // 
             // decomposeToolStripMenuItem
             // 
@@ -347,6 +366,7 @@
             this.decomposeToolStripMenuItem.Size = new System.Drawing.Size(265, 30);
             this.decomposeToolStripMenuItem.Text = "Decompose";
             this.decomposeToolStripMenuItem.Click += new System.EventHandler(this.OnMenuGrayScaleDecompose);
+            this.decomposeToolStripMenuItem.ToolTipText = "Convert to grayscale using GIMP's decompose algorithm";
             // 
             // revertToOriginalToolStripMenuItem
             // 
@@ -354,6 +374,7 @@
             this.revertToOriginalToolStripMenuItem.Size = new System.Drawing.Size(265, 30);
             this.revertToOriginalToolStripMenuItem.Text = "Revert to original";
             this.revertToOriginalToolStripMenuItem.Click += new System.EventHandler(this.OnMenuGrayScaleRevert);
+            this.revertToOriginalToolStripMenuItem.ToolTipText = "Revert all frames to their original colors";
             // 
             // menuHelp
             // 
@@ -984,6 +1005,28 @@
             this.openRoomTexturesListToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
             this.openRoomTexturesListToolStripMenuItem.Text = "Open Room Textures List";
             this.openRoomTexturesListToolStripMenuItem.Click += new System.EventHandler(this.OnMenuRoomTextureListClick);
+            this.openRoomTexturesListToolStripMenuItem.ToolTipText = "Compare bgf and png room textures";
+            //
+            // toolTips
+            //
+            this.toolTips.SetToolTip(btnFrameAdd, "Add a frame to bgf");
+            this.toolTips.SetToolTip(btnFrameRemove, "Remove a frame from bgf");
+            this.toolTips.SetToolTip(btnFrameUp, "Move frame up");
+            this.toolTips.SetToolTip(btnFrameDown, "Move frame down");
+            this.toolTips.SetToolTip(btnFrameChangeImage, "Swap selected frame with a new image");
+            this.toolTips.SetToolTip(btnHotspotAdd,"Add a hotspot to the selected frame");
+            this.toolTips.SetToolTip(btnHotspotRemove,"Remove the selected hotspot");
+            this.toolTips.SetToolTip(btnHotspotUp,"Move the selected hotspot up in the list");
+            this.toolTips.SetToolTip(btnHotspotDown,"Move the selected hotspot down in the list");
+            this.toolTips.SetToolTip(btnFrameSetAdd,"Create a new group");
+            this.toolTips.SetToolTip(btnFrameSetRemove,"Remove the selected group");
+            this.toolTips.SetToolTip(btnFrameSetUp,"Move the selected group up in the list (changes group number)");
+            this.toolTips.SetToolTip(btnFrameSetDown,"Move the selected group down in the list (changes group number)");
+            this.toolTips.SetToolTip(btnFrameIndexAdd, "Add a single frame to group");
+            this.toolTips.SetToolTip(btnFrameIndexRemove, "Remove a single frame from group");
+            this.toolTips.SetToolTip(btnFrameIndexUp, "Move this frame up");
+            this.toolTips.SetToolTip(btnFrameIndexDown, "Move this frame down");
+
             // 
             // MainForm
             // 
@@ -1132,6 +1175,7 @@
         private System.Windows.Forms.ToolStripMenuItem desaturateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem decomposeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem revertToOriginalToolStripMenuItem;
+        private System.Windows.Forms.ToolTip toolTips;
     }
 }
 
