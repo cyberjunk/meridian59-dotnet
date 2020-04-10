@@ -733,6 +733,7 @@
 #define UI_NAME_OPTIONS_TABENGINE_DISABLE3DMODELS        "Options.TabEngine.Disable3DModels"
 #define UI_NAME_OPTIONS_TABENGINE_DISABLENEWSKY          "Options.TabEngine.DisableNewSky"
 #define UI_NAME_OPTIONS_TABENGINE_DISABLEWEATHER         "Options.TabEngine.DisableWeather"
+#define UI_NAME_OPTIONS_TABENGINE_BRIGHTNESS             "Options.TabEngine.Brightness"
 #define UI_NAME_OPTIONS_TABENGINE_PARTICLES              "Options.TabEngine.Particles"
 #define UI_NAME_OPTIONS_TABENGINE_DECORATION             "Options.TabEngine.Decoration"
 #define UI_NAME_OPTIONS_TABENGINE_MUSICVOLUME            "Options.TabEngine.MusicVolume"

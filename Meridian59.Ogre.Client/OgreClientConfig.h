@@ -51,6 +51,7 @@ namespace Meridian59 { namespace Ogre
       literal bool         DEFAULTVAL_ENGINE_DISABLE3DMODELS         = false;
       literal bool         DEFAULTVAL_ENGINE_DISABLENEWSKY           = false;
       literal bool         DEFAULTVAL_ENGINE_DISABLEWEATHEREFFECTS   = false;
+      literal float        DEFAULTVAL_ENGINE_BRIGHTNESSFACTOR        = 0.0f;
       literal int          DEFAULTVAL_ENGINE_WEATHERPARTICLES        = 5000;
       literal int          DEFAULTVAL_ENGINE_MUSICVOLUME             = 4;
       literal int          DEFAULTVAL_ENGINE_SOUNDVOLUME             = 10;
@@ -104,6 +105,7 @@ namespace Meridian59 { namespace Ogre
       literal CLRString^ TAG_DISABLENEWSKY = "disablenewsky";
       literal CLRString^ TAG_DISABLE3DMODELS = "disable3dmodels";
       literal CLRString^ TAG_DISABLEWEATHEREFFECTS = "disableweathereffects";
+      literal CLRString^ TAG_BRIGHTNESSFACTOR = "brightnessfactor";
       literal CLRString^ TAG_WEATHERPARTICLES = "weatherparticles";
       literal CLRString^ TAG_MUSICVOLUME = "musicvolume";
       literal CLRString^ TAG_SOUNDVOLUME = "soundvolume";
@@ -247,6 +249,7 @@ namespace Meridian59 { namespace Ogre
       bool Disable3DModels;
       bool DisableNewSky;
       bool DisableWeatherEffects;
+      float BrightnessFactor;
       int WeatherParticles;
       float MusicVolume;
       float SoundVolume;

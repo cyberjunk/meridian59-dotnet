@@ -3291,24 +3291,34 @@
                
                <!-- -->
                
+               <!-- Brightness -->
+               <Window type="TaharezLook/LabelWhite" name="Options.TabEngine.BrightDescription" >
+                  <Property name="Text" value="Brightness" />
+                  <Property name="Area" value="{{0,20},{0,235},{0,110},{0,255}}" />
+                  <Property name="HorzFormatting" value="LeftAligned" />
+               </Window>
+               <Window type="TaharezLook/Slider" name="Options.TabEngine.Brightness" >
+                  <Property name="Area" value="{{0,115},{0,240},{0,360},{0,250}}" />
+               </Window>
+               
                <!-- Particles -->
                <Window type="TaharezLook/LabelWhite" name="Options.TabEngine.ParticlesDescription" >
                   <Property name="Text" value="Particles" />
-                  <Property name="Area" value="{{0,20},{0,240},{0,110},{0,260}}" />
+                  <Property name="Area" value="{{0,20},{0,260},{0,110},{0,280}}" />
                   <Property name="HorzFormatting" value="LeftAligned" />
                </Window>
                <Window type="TaharezLook/Slider" name="Options.TabEngine.Particles" >
-                  <Property name="Area" value="{{0,115},{0,245},{0,360},{0,255}}" />                        
+                  <Property name="Area" value="{{0,115},{0,265},{0,360},{0,275}}" />                        
                </Window>
                
                <!-- Decoration -->
                <Window type="TaharezLook/LabelWhite" name="Options.TabEngine.DecorationDescription" >
                   <Property name="Text" value="Decoration" />
-                  <Property name="Area" value="{{0,20},{0,265},{0,110},{0,285}}" />
+                  <Property name="Area" value="{{0,20},{0,285},{0,110},{0,305}}" />
                   <Property name="HorzFormatting" value="LeftAligned" />
                </Window>
                <Window type="TaharezLook/Slider" name="Options.TabEngine.Decoration" >
-                  <Property name="Area" value="{{0,115},{0,270},{0,360},{0,280}}" />                        
+                  <Property name="Area" value="{{0,115},{0,290},{0,360},{0,300}}" />                        
                </Window>
                
                <!-- -->
@@ -3316,58 +3326,58 @@
                <!-- MusicVolume -->
                <Window type="TaharezLook/LabelWhite" name="Options.TabEngine.MusicVolumeDescription" >
                   <Property name="Text" value="Music Volume" />
-                  <Property name="Area" value="{{0,20},{0,300},{0,110},{0,320}}" />
+                  <Property name="Area" value="{{0,20},{0,320},{0,110},{0,340}}" />
                   <Property name="HorzFormatting" value="LeftAligned" />
                </Window>
                <Window type="TaharezLook/Slider" name="Options.TabEngine.MusicVolume" >
-                  <Property name="Area" value="{{0,115},{0,305},{0,360},{0,315}}" />                        
+                  <Property name="Area" value="{{0,115},{0,325},{0,360},{0,335}}" />                        
                </Window>
                
                <!-- SoundVolume -->
                <Window type="TaharezLook/LabelWhite" name="Options.TabEngine.SoundVolumeDescription" >
                   <Property name="Text" value="Sound Volume" />
-                  <Property name="Area" value="{{0,20},{0,325},{0,110},{0,345}}" />
+                  <Property name="Area" value="{{0,20},{0,345},{0,110},{0,365}}" />
                   <Property name="HorzFormatting" value="LeftAligned" />
                </Window>
                <Window type="TaharezLook/Slider" name="Options.TabEngine.SoundVolume" >
-                  <Property name="Area" value="{{0,115},{0,330},{0,360},{0,340}}" />                        
+                  <Property name="Area" value="{{0,115},{0,350},{0,360},{0,360}}" />                        
                </Window>
                
                <!-- DisableLoopingSounds -->
                <Window type="TaharezLook/Checkbox" name="Options.TabEngine.DisableLoopSounds" >
                   <Property name="Text" value="Disable Loop Sounds" />
-                  <Property name="Area" value="{{0,125},{0,350},{0,290},{0,370}}" />               
+                  <Property name="Area" value="{{0,125},{0,370},{0,290},{0,390}}" />               
                </Window>
                
                <!-- Preloading -->
                <Window type="TaharezLook/LabelWhite" name="Options.TabEngine.PreloadDescription" >
                   <Property name="Text" value="Preload" />
-                  <Property name="Area" value="{{0,20},{0,390},{0,120},{0,410}}" />
+                  <Property name="Area" value="{{0,20},{0,410},{0,120},{0,430}}" />
                   <Property name="HorzFormatting" value="LeftAligned" />
                </Window>
                <Window type="TaharezLook/Checkbox" name="Options.TabEngine.PreloadRooms" >
                   <Property name="Text" value="Rooms" />
-                  <Property name="Area" value="{{0,125},{0,390},{0,200},{0,410}}" />
+                  <Property name="Area" value="{{0,125},{0,410},{0,200},{0,430}}" />
                   <Property name="TooltipText" value="Restart required." />
                </Window>
                <Window type="TaharezLook/Checkbox" name="Options.TabEngine.PreloadRoomTextures" >
                   <Property name="Text" value="Room Textures" />
-                  <Property name="Area" value="{{0,205},{0,390},{0,360},{0,410}}" />
+                  <Property name="Area" value="{{0,205},{0,410},{0,360},{0,430}}" />
                   <Property name="TooltipText" value="Restart required." />
                </Window>
                <Window type="TaharezLook/Checkbox" name="Options.TabEngine.PreloadObjects" >
                   <Property name="Text" value="Objects" />
-                  <Property name="Area" value="{{0,125},{0,415},{0,200},{0,435}}" />
+                  <Property name="Area" value="{{0,125},{0,435},{0,200},{0,455}}" />
                   <Property name="TooltipText" value="Restart required." />
                </Window>
                <Window type="TaharezLook/Checkbox" name="Options.TabEngine.PreloadSounds" >
                   <Property name="Text" value="Sounds" />
-                  <Property name="Area" value="{{0,205},{0,415},{0,280},{0,435}}" />
+                  <Property name="Area" value="{{0,205},{0,435},{0,280},{0,455}}" />
                   <Property name="TooltipText" value="Restart required." />
                </Window>
                <Window type="TaharezLook/Checkbox" name="Options.TabEngine.PreloadMusic" >
                   <Property name="Text" value="Music" />
-                  <Property name="Area" value="{{0,285},{0,415},{0,360},{0,435}}" />
+                  <Property name="Area" value="{{0,285},{0,435},{0,360},{0,455}}" />
                   <Property name="TooltipText" value="Restart required." />               
                </Window>
             </Window>

@@ -1415,8 +1415,11 @@ namespace Meridian59 { namespace Ogre
       // simply use the maximum of avatarlight (nightvision..) and ambientlight for ambientlight
       unsigned char max = System::Math::Max(ambient, avatar);
 
-      // adjust ambientlight        
-      SceneManager->setAmbientLight(Util::LightIntensityToOgreRGB(max));
+      // allow user to alter the client's ambient and directional light
+      float brightnessFactor = Math::Clamp(OgreClient::Singleton->Config->BrightnessFactor + 1.0f, 1.0f, 1.8f);
+
+      // adjust ambientlight
+      SceneManager->setAmbientLight(brightnessFactor * Util::LightIntensityToOgreRGB(max));
 
       // log
       Logger::Log(MODULENAME, LogType::Info,
@@ -1428,7 +1431,7 @@ namespace Meridian59 { namespace Ogre
          ::Caelum::BaseSkyLight* sun  = caelumSystem->getSun();
          ::Caelum::BaseSkyLight* moon = caelumSystem->getMoon();
 
-         ::Ogre::ColourValue color = 3.0f * Util::LightIntensityToOgreRGB(directional);
+         ::Ogre::ColourValue color = brightnessFactor * 3.0f * Util::LightIntensityToOgreRGB(directional);
 
          if (sun)
          {
