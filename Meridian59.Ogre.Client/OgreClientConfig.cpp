@@ -211,6 +211,10 @@ namespace Meridian59 { namespace Ogre
       node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_ENGINE + "/" + TAG_DISABLEWEATHEREFFECTS);
       DisableWeatherEffects = (PARSE_BOOL_ATTRIB(node, XMLATTRIB_VALUE, val_bool)) ? val_bool : DEFAULTVAL_ENGINE_DISABLEWEATHEREFFECTS;
 
+      // BrightnessFactor
+      node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_ENGINE + "/" + TAG_BRIGHTNESSFACTOR);
+      BrightnessFactor = (PARSE_FLOAT_ATTRIB(node, XMLATTRIB_VALUE, val_float)) ? val_float : DEFAULTVAL_ENGINE_BRIGHTNESSFACTOR;
+
       // WeatherParticles
       node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_ENGINE + "/" + TAG_WEATHERPARTICLES);
       WeatherParticles = (PARSE_INT32_ATTRIB(node, XMLATTRIB_VALUE, val_int)) ? val_int : DEFAULTVAL_ENGINE_WEATHERPARTICLES;
@@ -719,6 +723,10 @@ namespace Meridian59 { namespace Ogre
 
       Writer->WriteStartElement(TAG_DISABLEWEATHEREFFECTS);
       Writer->WriteAttributeString(XMLATTRIB_VALUE, DisableWeatherEffects.ToString()->ToLower());
+      Writer->WriteEndElement();
+
+      Writer->WriteStartElement(TAG_BRIGHTNESSFACTOR);
+      Writer->WriteAttributeString(XMLATTRIB_VALUE, BrightnessFactor.ToString()->ToLower());
       Writer->WriteEndElement();
 
       Writer->WriteStartElement(TAG_WEATHERPARTICLES);

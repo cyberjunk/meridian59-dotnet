@@ -1392,6 +1392,7 @@ namespace Meridian59 { namespace Ogre
          static ::CEGUI::ToggleButton* Disable3DModels = nullptr;
          static ::CEGUI::ToggleButton* DisableNewSky = nullptr;
          static ::CEGUI::ToggleButton* DisableWeather = nullptr;
+         static ::CEGUI::Slider* Brightness = nullptr;
          static ::CEGUI::Slider* Particles = nullptr;
          static ::CEGUI::Slider* Decoration = nullptr;
          static ::CEGUI::Slider* MusicVolume = nullptr;
@@ -2155,6 +2156,7 @@ namespace Meridian59 { namespace Ogre
          static bool OnDisable3DModelsChanged(const CEGUI::EventArgs& e);
          static bool OnDisableNewSkyChanged(const CEGUI::EventArgs& e);
          static bool OnDisableWeatherEffectsChanged(const CEGUI::EventArgs& e);
+         static bool OnBrightnessChanged(const CEGUI::EventArgs& e);
          static bool OnParticlesChanged(const CEGUI::EventArgs& e);
          static bool OnDecorationChanged(const CEGUI::EventArgs& e);
          static bool OnMusicVolumeChanged(const CEGUI::EventArgs& e);

@@ -99,7 +99,6 @@ namespace Meridian59 { namespace Ogre
       static void HandleBackground(BackgroundMessage^ Message);
 
       static void AdjustOctree();
-      static void AdjustAmbientLight();
       static int GetRoomSectionByMaterial(const ::Ogre::String& Name);
       static int GetDecorationSectionByMaterial(const ::Ogre::String& Name);
 
@@ -341,6 +340,11 @@ namespace Meridian59 { namespace Ogre
       /// Refreshs the sky after a change between legacy/caelum
       /// </summary>
       static void UpdateSky();
+
+      /// <summary>
+      /// Updates light for the current room
+      /// </summary>
+      static void AdjustAmbientLight();
 
       /// <summary>
       /// Loads the current room

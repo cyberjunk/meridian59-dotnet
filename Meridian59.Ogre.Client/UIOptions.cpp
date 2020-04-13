@@ -128,6 +128,7 @@ namespace Meridian59 { namespace Ogre
       Disable3DModels   = static_cast<CEGUI::ToggleButton*>(TabEngine->getChild(UI_NAME_OPTIONS_TABENGINE_DISABLE3DMODELS));
       DisableNewSky     = static_cast<CEGUI::ToggleButton*>(TabEngine->getChild(UI_NAME_OPTIONS_TABENGINE_DISABLENEWSKY));
       DisableWeather    = static_cast<CEGUI::ToggleButton*>(TabEngine->getChild(UI_NAME_OPTIONS_TABENGINE_DISABLEWEATHER));
+      Brightness        = static_cast<CEGUI::Slider*>(TabEngine->getChild(UI_NAME_OPTIONS_TABENGINE_BRIGHTNESS));
       Particles         = static_cast<CEGUI::Slider*>(TabEngine->getChild(UI_NAME_OPTIONS_TABENGINE_PARTICLES));
       Decoration        = static_cast<CEGUI::Slider*>(TabEngine->getChild(UI_NAME_OPTIONS_TABENGINE_DECORATION));
       MusicVolume       = static_cast<CEGUI::Slider*>(TabEngine->getChild(UI_NAME_OPTIONS_TABENGINE_MUSICVOLUME));
@@ -369,7 +370,8 @@ namespace Meridian59 { namespace Ogre
       TextureQuality->addItem(new::CEGUI::ListboxTextItem("Default"));
       TextureQuality->addItem(new::CEGUI::ListboxTextItem("High"));
 
-      // maxvalues for particles & decoration sliders
+      // maxvalues for options sliders
+      Brightness->setMaxValue(0.8f);
       Particles->setMaxValue(50000.0f);
       Decoration->setMaxValue(100.0f);
       MusicVolume->setMaxValue(10.0f);
@@ -433,6 +435,7 @@ namespace Meridian59 { namespace Ogre
       DisableNewSky->setSelected(!OgreClient::Singleton->Config->DisableNewSky);
       DisableWeather->setSelected(!OgreClient::Singleton->Config->DisableWeatherEffects);
 
+      Brightness->setCurrentValue((float)OgreClient::Singleton->Config->BrightnessFactor);
       Particles->setCurrentValue((float)OgreClient::Singleton->Config->WeatherParticles);
       Decoration->setCurrentValue((float)OgreClient::Singleton->Config->DecorationIntensity);
       MusicVolume->setCurrentValue(OgreClient::Singleton->Config->MusicVolume);
@@ -637,6 +640,7 @@ namespace Meridian59 { namespace Ogre
       Disable3DModels->subscribeEvent(CEGUI::ToggleButton::EventSelectStateChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnDisable3DModelsChanged));
       DisableNewSky->subscribeEvent(CEGUI::ToggleButton::EventSelectStateChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnDisableNewSkyChanged));
       DisableWeather->subscribeEvent(CEGUI::ToggleButton::EventSelectStateChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnDisableWeatherEffectsChanged));
+      Brightness->subscribeEvent(CEGUI::Slider::EventValueChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnBrightnessChanged));
       Particles->subscribeEvent(CEGUI::Slider::EventValueChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnParticlesChanged));
       Decoration->subscribeEvent(CEGUI::Slider::EventValueChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnDecorationChanged));
       MusicVolume->subscribeEvent(CEGUI::Slider::EventValueChanged, CEGUI::Event::Subscriber(UICallbacks::Options::OnMusicVolumeChanged));
@@ -2210,6 +2214,17 @@ namespace Meridian59 { namespace Ogre
 
       OgreClient::Singleton->Config->DisableWeatherEffects = newval;
       // todo
+
+      return true;
+   };
+
+   bool UICallbacks::Options::OnBrightnessChanged(const CEGUI::EventArgs& e)
+   {
+      const CEGUI::WindowEventArgs& args = (const CEGUI::WindowEventArgs&)e;
+      const CEGUI::Slider* slider = (const CEGUI::Slider*)args.window;
+
+      OgreClient::Singleton->Config->BrightnessFactor = (float)slider->getCurrentValue();
+      ControllerRoom::AdjustAmbientLight();
 
       return true;
    };
