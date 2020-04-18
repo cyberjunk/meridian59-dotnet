@@ -79,7 +79,7 @@ namespace Meridian59 { namespace Ogre
       widget->setName(UI_PLAYEROVERLAY_WIDGETPREFIX + ::CEGUI::PropertyHelper<::CEGUI::uint32>::toString(obj->ID));
       widget->releaseInput();
       widget->setDisabled(true);
-      widget->setZOrderingEnabled(false);
+      widget->setZOrderingEnabled(true);
 
       // add window to own list
       overlayWindows->push_back(widget);
@@ -114,7 +114,10 @@ namespace Meridian59 { namespace Ogre
       imageComposer->DataSource = obj;
 
       // don't show if we're not in 1. person
-      if (!ControllerInput::IsCameraFirstPerson)
+      if (ControllerInput::IsCameraFirstPerson)
+         widget->moveToBack();
+      // set z-ordering so overlays are behind UI elements
+      else
          widget->hide();
    };
 
