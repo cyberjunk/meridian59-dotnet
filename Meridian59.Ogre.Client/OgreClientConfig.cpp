@@ -726,7 +726,7 @@ namespace Meridian59 { namespace Ogre
       Writer->WriteEndElement();
 
       Writer->WriteStartElement(TAG_BRIGHTNESSFACTOR);
-      Writer->WriteAttributeString(XMLATTRIB_VALUE, BrightnessFactor.ToString()->ToLower());
+      Writer->WriteAttributeString(XMLATTRIB_VALUE, BrightnessFactor.ToString(Config::NumberFormatInfo));
       Writer->WriteEndElement();
 
       Writer->WriteStartElement(TAG_WEATHERPARTICLES);
