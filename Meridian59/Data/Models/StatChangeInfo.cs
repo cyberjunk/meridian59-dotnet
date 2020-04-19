@@ -601,6 +601,41 @@ namespace Meridian59.Data.Models
             }
         }
 
+        // Stat reset intellect functions.
+        // Level calculations are done using a points system server-side, with a base
+        // level of 16 points, and a max (at 50 int) of 36 points. Each multiple of 5
+        // int adds 2 points. Point list used server-side is in GetLevelLearnPoints.
+
+        /// <summary>
+        /// Returns the points required to learn a specific level.
+        /// </summary>
+        /// <param name="Level"></param>
+        /// <returns></returns>
+        public int GetLevelLearnPoints(int Level)
+        {
+            // Mirrors the server's points list [1, 2, 4, 6, 8, 10]
+            int levelLearnPoints = (Level <= 2) ? Level : Level * 2 - 2;
+
+            return Math.Max(0, levelLearnPoints);
+        }
+
+        /// <summary>
+        /// Returns the total 'learn points' for the character's schools.
+        /// </summary>
+        public int TotalLearnPoints
+        {
+            get
+            {
+                return GetLevelLearnPoints(LevelSha)
+                    + GetLevelLearnPoints(LevelQor)
+                    + GetLevelLearnPoints(LevelFaren)
+                    + GetLevelLearnPoints(LevelKraanan)
+                    + GetLevelLearnPoints(LevelRiija)
+                    + GetLevelLearnPoints(LevelJala)
+                    + GetLevelLearnPoints(LevelWC);
+            }
+        }
+
         /// <summary>
         /// Returns the amount of intellect needed for the schools
         /// and levels we have set.
@@ -609,7 +644,10 @@ namespace Meridian59.Data.Models
         {
             get
             {
-                return (TotalLevels <= 8) ? 1 : (TotalLevels - SchoolCount - 8) * 5;
+                int intellectNeeded = (TotalLearnPoints - 16) * 5 / 2;
+
+                return Math.Max(1, intellectNeeded);
+
             }
         }
         #endregion
