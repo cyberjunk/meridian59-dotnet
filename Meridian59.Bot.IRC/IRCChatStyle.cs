@@ -175,7 +175,7 @@ namespace Meridian59.Bot.IRC
                         break;
 
                     case ChatColor.Red:
-                    case ChatColor.BrightRed: // no IRC match
+                    case ChatColor.Fire: // no IRC match
                         s += IRCCOLOR_RED + "," + IRCCOLOR_GREY;;
                         break;
 
@@ -183,7 +183,7 @@ namespace Meridian59.Bot.IRC
                         s += IRCCOLOR_WHITE + "," + IRCCOLOR_GREY;;
                         break;
 
-                    case ChatColor.LightGreen:
+                    case ChatColor.ToxicGreen:
                         s += IRCCOLOR_LIGHTGREEN + "," + IRCCOLOR_GREY; ;
                         break;
 
@@ -205,11 +205,11 @@ namespace Meridian59.Bot.IRC
                         s += IRCCOLOR_LIGHTCYAN + "," + IRCCOLOR_GREY; ;
                         break;
 
-                    case ChatColor.Teal:
+                    case ChatColor.Steel:
                         s += IRCCOLOR_TEAL + "," + IRCCOLOR_GREY; ;
                         break;
 
-                    case ChatColor.DarkGrey: // no IRC match
+                    case ChatColor.Gray1: // no IRC match
                         s += IRCCOLOR_LIGHTGREY + "," + IRCCOLOR_GREY; ;
                         break;
                 }
