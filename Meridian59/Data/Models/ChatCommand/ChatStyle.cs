@@ -31,28 +31,9 @@ namespace Meridian59.Data.Models
         public const char STYLECURSIVE      = 'I';
         public const char STYLEUNDERLINE    = 'U';
         public const char STYLENORMAL       = 'n';
-        public const char STYLEBLACK        = 'k';
-        public const char STYLEWHITE        = 'w';
-        public const char STYLERED          = 'r';
-        public const char STYLEBLUE         = 'b';
-        public const char STYLEGREEN        = 'g';
-        public const char STYLEPURPLE       = 'q';
-#if !VANILLA
-        public const char STYLEBRIGHTRED    = 'f';
-        public const char STYLELIGHTGREEN   = 'l';
-        public const char STYLEYELLOW       = 'y';
-        public const char STYLEPINK         = 'p';
-        public const char STYLEORANGE       = 'o';
-        public const char STYLEAQUAMARINE   = 'a';
-        public const char STYLECYAN         = 'c';
-        public const char STYLETEAL         = 't';
-        public const char STYLEDARKGREY     = 's';
-        public const char STYLEVIOLET       = 'v';
-        public const char STYLEMAGENTA      = 'm';
-#if !OPENMERIDIAN
+#if !VANILLA && !OPENMERIDIAN
         public const char STYLESTRIKEOUT    = 'S';
         public const char STYLELINK         = 'L';
-#endif
 #endif
 
         public int StartIndex { get; set; }
@@ -96,79 +77,15 @@ namespace Meridian59.Data.Models
         /// <param name="MessageType"></param>
         public void ProcessStyleCharacter(char StyleCharacter, ChatMessageType MessageType)
         {
+            // Colors
+            if (Enum.IsDefined(typeof(ChatColor), (int)StyleCharacter))
+            {
+                Color = (ChatColor)StyleCharacter;
+                return;
+            }
+
             switch (StyleCharacter)
             {
-                // colors
-                case STYLEBLACK:
-                    Color = ChatColor.Black;
-                    break;
-
-                case STYLEWHITE:
-                    Color = ChatColor.White;
-                    break;
-
-                case STYLERED:
-                    Color = ChatColor.Red;
-                    break;
-
-                case STYLEGREEN:
-                    Color = ChatColor.Green;
-                    break;
-
-                case STYLEBLUE:
-                    Color = ChatColor.Blue;
-                    break;
-
-                case STYLEPURPLE:
-                    Color = ChatColor.Purple;
-                    break;
-
-#if !VANILLA
-                case STYLEBRIGHTRED:
-                    Color = ChatColor.BrightRed;
-                    break;
-
-                case STYLELIGHTGREEN:
-                    Color = ChatColor.LightGreen;
-                    break;
-
-                case STYLEYELLOW:
-                    Color = ChatColor.Yellow;
-                    break;
-
-                case STYLEPINK:
-                    Color = ChatColor.Pink;
-                    break;
-
-                case STYLEORANGE:
-                    Color = ChatColor.Orange;
-                    break;
-
-                case STYLEAQUAMARINE:
-                    Color = ChatColor.Aquamarine;
-                    break;
-
-                case STYLECYAN:
-                    Color = ChatColor.Cyan;
-                    break;
-
-                case STYLETEAL:
-                    Color = ChatColor.Teal;
-                    break;
-
-                case STYLEDARKGREY:
-                    Color = ChatColor.DarkGrey;
-                    break;
-
-                case STYLEVIOLET:
-                    Color = ChatColor.Violet;
-                    break;
-
-                case STYLEMAGENTA:
-                    Color = ChatColor.Magenta;
-                    break;
-#endif
-
                 // modifiers
                 case STYLEBOLD:
                     IsBold = !IsBold;
@@ -261,38 +178,20 @@ namespace Meridian59.Data.Models
         /// <returns></returns>
         public static bool IsStyleChar(char Character)
         {
+            // Colors
+            if (Enum.IsDefined(typeof(ChatColor), (int)Character))
+                return true;
+
             if (Character == STYLEBOLD ||
                 Character == STYLECURSIVE ||
                 Character == STYLEUNDERLINE ||
-                Character == STYLENORMAL ||
-                Character == STYLEBLACK ||
-                Character == STYLEWHITE ||
-                Character == STYLERED ||
-                Character == STYLEGREEN ||
-                Character == STYLEBLUE ||
-                Character == STYLEPURPLE
-#if VANILLA
-                )
-#else
-                || 
-                Character == STYLEBRIGHTRED ||
-                Character == STYLELIGHTGREEN ||
-                Character == STYLEYELLOW ||
-                Character == STYLEPINK ||
-                Character == STYLEORANGE ||
-                Character == STYLEAQUAMARINE ||
-                Character == STYLECYAN ||
-                Character == STYLETEAL ||
-                Character == STYLEDARKGREY ||
-                Character == STYLEVIOLET ||
-                Character == STYLEMAGENTA
-#if OPENMERIDIAN
+                Character == STYLENORMAL
+#if VANILLA || OPENMERIDIAN
                 )
 #else
                 ||
                 Character == STYLESTRIKEOUT ||
                 Character == STYLELINK)
-#endif
 #endif
 
                 return true;
@@ -335,34 +234,22 @@ namespace Meridian59.Data.Models
         {
             string s = Text;
 
+            // replace colors using marker1 and marker2
+            foreach (ChatColor chatColor in Enum.GetValues(typeof(ChatColor)))
+            {
+                s = s.Replace(new string(new char[] { MARKER1, (char)chatColor }), String.Empty);
+                s = s.Replace(new string(new char[] { MARKER2, (char)chatColor }), String.Empty);
+            }
+
             // replace marker1 + style
-            
+
             s = s.Replace(new string(new char[] { MARKER1, STYLEBOLD }), String.Empty);
             s = s.Replace(new string(new char[] { MARKER1, STYLECURSIVE }), String.Empty);
             s = s.Replace(new string(new char[] { MARKER1, STYLEUNDERLINE }), String.Empty);
             s = s.Replace(new string(new char[] { MARKER1, STYLENORMAL }), String.Empty);
-            s = s.Replace(new string(new char[] { MARKER1, STYLEWHITE }), String.Empty);
-            s = s.Replace(new string(new char[] { MARKER1, STYLEBLACK }), String.Empty);
-            s = s.Replace(new string(new char[] { MARKER1, STYLERED }), String.Empty);
-            s = s.Replace(new string(new char[] { MARKER1, STYLEGREEN }), String.Empty);
-            s = s.Replace(new string(new char[] { MARKER1, STYLEBLUE }), String.Empty);
-            s = s.Replace(new string(new char[] { MARKER1, STYLEPURPLE }), String.Empty);
-#if !VANILLA
-            s = s.Replace(new string(new char[] { MARKER1, STYLEBRIGHTRED }), String.Empty);
-            s = s.Replace(new string(new char[] { MARKER1, STYLELIGHTGREEN }), String.Empty);
-            s = s.Replace(new string(new char[] { MARKER1, STYLEYELLOW }), String.Empty);
-            s = s.Replace(new string(new char[] { MARKER1, STYLEPINK }), String.Empty);
-            s = s.Replace(new string(new char[] { MARKER1, STYLEORANGE }), String.Empty);
-            s = s.Replace(new string(new char[] { MARKER1, STYLEAQUAMARINE }), String.Empty);
-            s = s.Replace(new string(new char[] { MARKER1, STYLECYAN }), String.Empty);
-            s = s.Replace(new string(new char[] { MARKER1, STYLETEAL }), String.Empty);
-            s = s.Replace(new string(new char[] { MARKER1, STYLEDARKGREY }), String.Empty);
-            s = s.Replace(new string(new char[] { MARKER1, STYLEVIOLET }), String.Empty);
-            s = s.Replace(new string(new char[] { MARKER1, STYLEMAGENTA }), String.Empty);
-#if !OPENMERIDIAN
+#if !VANILLA && !OPENMERIDIAN
             s = s.Replace(new string(new char[] { MARKER1, STYLESTRIKEOUT }), String.Empty);
             s = s.Replace(new string(new char[] { MARKER1, STYLELINK }), String.Empty);
-#endif
 #endif
             // replace marker2 + style
 
@@ -370,28 +257,10 @@ namespace Meridian59.Data.Models
             s = s.Replace(new string(new char[] { MARKER2, STYLECURSIVE }), String.Empty);
             s = s.Replace(new string(new char[] { MARKER2, STYLEUNDERLINE }), String.Empty);
             s = s.Replace(new string(new char[] { MARKER2, STYLENORMAL }), String.Empty);
-            s = s.Replace(new string(new char[] { MARKER2, STYLEWHITE }), String.Empty);
-            s = s.Replace(new string(new char[] { MARKER2, STYLEBLACK }), String.Empty);
-            s = s.Replace(new string(new char[] { MARKER2, STYLERED }), String.Empty);
-            s = s.Replace(new string(new char[] { MARKER2, STYLEGREEN }), String.Empty);
-            s = s.Replace(new string(new char[] { MARKER2, STYLEBLUE }), String.Empty);
-            s = s.Replace(new string(new char[] { MARKER2, STYLEPURPLE }), String.Empty);
-#if !VANILLA
-            s = s.Replace(new string(new char[] { MARKER2, STYLEBRIGHTRED }), String.Empty);
-            s = s.Replace(new string(new char[] { MARKER2, STYLELIGHTGREEN }), String.Empty);
-            s = s.Replace(new string(new char[] { MARKER2, STYLEYELLOW }), String.Empty);
-            s = s.Replace(new string(new char[] { MARKER2, STYLEPINK }), String.Empty);
-            s = s.Replace(new string(new char[] { MARKER2, STYLEORANGE }), String.Empty);
-            s = s.Replace(new string(new char[] { MARKER2, STYLEAQUAMARINE }), String.Empty);
-            s = s.Replace(new string(new char[] { MARKER2, STYLECYAN }), String.Empty);
-            s = s.Replace(new string(new char[] { MARKER2, STYLETEAL }), String.Empty);
-            s = s.Replace(new string(new char[] { MARKER2, STYLEDARKGREY }), String.Empty);
-            s = s.Replace(new string(new char[] { MARKER2, STYLEVIOLET }), String.Empty);
-            s = s.Replace(new string(new char[] { MARKER2, STYLEMAGENTA }), String.Empty);
-#if !OPENMERIDIAN
+
+#if !VANILLA && !OPENMERIDIAN
             s = s.Replace(new string(new char[] { MARKER2, STYLESTRIKEOUT }), String.Empty);
             s = s.Replace(new string(new char[] { MARKER2, STYLELINK }), String.Empty);
-#endif
 #endif
 
             return s;

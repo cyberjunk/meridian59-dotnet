@@ -44,7 +44,7 @@ namespace Meridian59 { namespace Ogre
             // sound engine properties
             soundEngine->setDefault3DSoundMaxDistance(2000.0f);
             soundEngine->setDefault3DSoundMinDistance(0.0f);
-            soundEngine->setRolloffFactor(0.005f);
+            soundEngine->setRolloffFactor(0.002f);
          }
       }
       else

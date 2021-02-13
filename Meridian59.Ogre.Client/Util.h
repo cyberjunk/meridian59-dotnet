@@ -39,6 +39,7 @@ namespace Meridian59 { namespace Ogre
    using namespace System::IO;
    using namespace System::Drawing;
    using namespace Meridian59::Common;
+   using namespace Meridian59::Common::Enums;
    using namespace Meridian59::Common::Constants;
    using namespace Meridian59::Common::Interfaces;
 
@@ -865,6 +866,98 @@ namespace Meridian59 { namespace Ogre
          }
 
          return maxheight;
+      };
+
+      static ::CEGUI::String GetChatString(ServerString^ ChatMessage, bool PlainMode)
+      {
+         if (PlainMode)
+            return StringConvert::CLRToCEGUI(ChatMessage->FullString + ::System::Environment::NewLine);
+
+         // text with CEGUI markup and escapes
+         CLRString^ text = CLRString::Empty;
+
+         // walk style definitions
+         for each (ChatStyle^ style in ChatMessage->Styles)
+         {
+            // add fontselection
+            // normal
+            if (!style->IsBold && !style->IsCursive)
+               text += UI_TAGFONT_NORMAL;
+
+            // bold not italic
+            else if (style->IsBold && !style->IsCursive)
+               text += UI_TAGFONT_BOLD;
+
+            // not bold but italic
+            else if (!style->IsBold && style->IsCursive)
+               text += UI_TAGFONT_ITALIC;
+
+            // bold and italic
+            else if (style->IsBold && style->IsCursive)
+               text += UI_TAGFONT_BOLDITALIC;
+
+            // add color
+            switch (style->Color)
+            {
+            case ChatColor::Black: text += UI_TAGCOLOR_BLACK; break;
+            case ChatColor::Blue: text += UI_TAGCOLOR_BLUE; break;
+            case ChatColor::Green: text += UI_TAGCOLOR_CHATGREEN; break;
+            case ChatColor::Purple: text += UI_TAGCOLOR_CHATPURPLE; break;
+            case ChatColor::Red: text += UI_TAGCOLOR_CHATRED; break;
+            case ChatColor::White: text += UI_TAGCOLOR_WHITE; break;
+#ifndef VANILLA
+            case ChatColor::Aquamarine: text += UI_TAGCOLOR_CHATAQUAMARINE; break;
+            case ChatColor::Cyan: text += UI_TAGCOLOR_CHATCYAN; break;
+            case ChatColor::Drab: text += UI_TAGCOLOR_CHATDRAB; break;
+            case ChatColor::Emerald: text += UI_TAGCOLOR_CHATEMERALD; break;
+            case ChatColor::Fire: text += UI_TAGCOLOR_CHATFIRE; break;
+            case ChatColor::Champagne: text += UI_TAGCOLOR_CHATCHAMPAGNE; break;
+            case ChatColor::ImperialBlue: text += UI_TAGCOLOR_CHATIMPERIALBLUE; break;
+            case ChatColor::Jonquil: text += UI_TAGCOLOR_CHATJONQUIL; break;
+            case ChatColor::Lime: text += UI_TAGCOLOR_CHATLIME; break;
+            case ChatColor::Magenta: text += UI_TAGCOLOR_CHATMAGENTA; break;
+            case ChatColor::Orange: text += UI_TAGCOLOR_CHATORANGE; break;
+            case ChatColor::Pink: text += UI_TAGCOLOR_CHATPINK; break;
+            case ChatColor::Steel: text += UI_TAGCOLOR_CHATSTEEL; break;
+            case ChatColor::ToxicGreen: text += UI_TAGCOLOR_CHATTOXICGREEN; break;
+            case ChatColor::OffWhite: text += UI_TAGCOLOR_CHATOFFWHITE; break;
+            case ChatColor::Violet: text += UI_TAGCOLOR_CHATVIOLET; break;
+            case ChatColor::Golden: text += UI_TAGCOLOR_CHATGOLDEN; break;
+            case ChatColor::Yellow: text += UI_TAGCOLOR_CHATYELLOW; break;
+            case ChatColor::Bronze: text += UI_TAGCOLOR_CHATBRONZE; break;
+            case ChatColor::Gray1: text += UI_TAGCOLOR_CHATGRAY1; break;
+            case ChatColor::Gray2: text += UI_TAGCOLOR_CHATGRAY2; break;
+            case ChatColor::Gray3: text += UI_TAGCOLOR_CHATGRAY3; break;
+            case ChatColor::Gray4: text += UI_TAGCOLOR_CHATGRAY4; break;
+            case ChatColor::Gray5: text += UI_TAGCOLOR_CHATGRAY5; break;
+            case ChatColor::Gray6: text += UI_TAGCOLOR_CHATGRAY6; break;
+            case ChatColor::Gray7: text += UI_TAGCOLOR_CHATGRAY7; break;
+            case ChatColor::Gray8: text += UI_TAGCOLOR_CHATGRAY8; break;
+            case ChatColor::Gray9: text += UI_TAGCOLOR_CHATGRAY9; break;
+            case ChatColor::Gray10: text += UI_TAGCOLOR_CHATGRAY10; break;
+            case ChatColor::QuestGreen: text += UI_TAGCOLOR_CHATQUESTGREEN; break;
+            case ChatColor::QuestRed: text += UI_TAGCOLOR_CHATQUESTRED; break;
+            case ChatColor::MercenaryColor: text += UI_TAGCOLOR_CHATMERCENARY; break;
+#endif
+            }
+
+            // get substring for this style
+            CLRString^ str = ChatMessage->FullString->Substring(style->StartIndex, style->Length);
+
+            // replace "\" with "\\"
+            // and "[" with "\["
+            str = str->Replace("\\", "\\\\");
+            str = str->Replace("[", "\\[");
+
+            // add textpart
+            text += str;
+         }
+
+         // append line break
+         text += ::System::Environment::NewLine;
+
+         // return as CEGUI string
+         return StringConvert::CLRToCEGUI(text);
       };
       #pragma endregion
 

@@ -21,26 +21,47 @@ namespace Meridian59.Common.Enums
     /// </summary>
     public enum ChatColor
     {
-        Black, 
-        White, 
-        Red, 
-        Green, 
-        Blue, 
-        Purple
+        Black  = 'k',
+        White  = 'w',
+        Red    = 'r',
+        Green  = 'g',
+        Blue   = 'b',
+        Purple = 'q'
 
 #if !VANILLA
         ,
-        BrightRed, 
-        LightGreen, 
-        Yellow, 
-        Pink, 
-        Orange, 
-        Aquamarine,
-        Cyan,
-        Teal,
-        DarkGrey,
-        Violet,
-        Magenta
+        Aquamarine = 'a',
+        Cyan = 'c',
+        Drab = 'd',
+        Emerald = 'e',
+        Fire = 'f',
+        Champagne = 'h',
+        ImperialBlue = 'i',
+        Jonquil = 'j',
+        Lime = 'l',
+        Magenta = 'm',
+        Orange = 'o',
+        Pink = 'p',
+        Steel = 's',
+        ToxicGreen = 't',
+        OffWhite = 'u',
+        Violet = 'v',
+        Golden = 'x',
+        Yellow = 'y',
+        Bronze = 'z',
+        Gray1 = '0',
+        Gray2 = '1',
+        Gray3 = '2',
+        Gray4 = '3',
+        Gray5 = '4',
+        Gray6 = '5',
+        Gray7 = '6',
+        Gray8 = '7',
+        Gray9 = '8',
+        Gray10 = '9',
+        QuestGreen = 'G',
+        QuestRed = 'R',
+        MercenaryColor = 'M'
 #endif
     }
 }

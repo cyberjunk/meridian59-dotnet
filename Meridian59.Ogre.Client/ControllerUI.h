@@ -353,7 +353,6 @@ namespace Meridian59 { namespace Ogre
          static void Destroy();
          static void ApplyLanguage();
          static void Tick(double Tick, double Span);
-         static ::CEGUI::String GetChatString(ServerString^ ChatMessage);	
          static void OnChatMessagesListChanged(Object^ sender, ListChangedEventArgs^ e);
       };
 
@@ -523,7 +522,6 @@ namespace Meridian59 { namespace Ogre
          static void QuestItemRemove(int Index);
          static void OnHelpOKConfirmed(Object^ sender, ::System::EventArgs^ e);
          static void SetQuestText();
-         static ::CEGUI::String GetChatString(ServerString^ ChatMessage);
       };
       
       /// <summary>

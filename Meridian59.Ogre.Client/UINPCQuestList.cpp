@@ -256,7 +256,7 @@ namespace Meridian59 {
             DescriptionPlain->setText(StringConvert::CLRToCEGUI(obj->Description->FullString));
 
             // set requirements or instructions, use kod styling/colors to differentiate met requirements vs unmet ones
-            Requirements->setText(GetChatString(obj->Requirements));
+            Requirements->setText(Util::GetChatString(obj->Requirements, false));
             RequirementsPlain->setText(StringConvert::CLRToCEGUI(obj->Requirements->FullString));
 
             // reset text boxes to the non-plain version
@@ -283,74 +283,6 @@ namespace Meridian59 {
                   Accept->enable();
             }
          }
-      };
-
-      ::CEGUI::String ControllerUI::NPCQuestList::GetChatString(ServerString^ ChatMessage)
-      {
-         // text with CEGUI markup and escapes
-         CLRString^ text = CLRString::Empty;
-
-         // walk style definitions
-         for each (ChatStyle^ style in ChatMessage->Styles)
-         {
-            // add fontselection
-            // normal
-            if (!style->IsBold && !style->IsCursive)
-               text += UI_TAGFONT_NORMAL;
-
-            // bold not italic
-            else if (style->IsBold && !style->IsCursive)
-               text += UI_TAGFONT_BOLD;
-
-            // not bold but italic
-            else if (!style->IsBold && style->IsCursive)
-               text += UI_TAGFONT_ITALIC;
-
-            // bold and italic
-            else if (style->IsBold && style->IsCursive)
-               text += UI_TAGFONT_BOLDITALIC;
-
-            // add color
-            switch (style->Color)
-            {
-            case ChatColor::Black: text += UI_TAGCOLOR_BLACK; break;
-            case ChatColor::Blue: text += UI_TAGCOLOR_BLUE; break;
-            case ChatColor::Green: text += UI_TAGCOLOR_CHATGREEN; break;
-            case ChatColor::Purple: text += UI_TAGCOLOR_CHATPURPLE; break;
-            case ChatColor::Red: text += UI_TAGCOLOR_CHATRED; break;
-            case ChatColor::White: text += UI_TAGCOLOR_WHITE; break;
-#ifndef VANILLA
-            case ChatColor::BrightRed: text += UI_TAGCOLOR_CHATBRIGHTRED; break;
-            case ChatColor::LightGreen: text += UI_TAGCOLOR_CHATLIGHTGREEN; break;
-            case ChatColor::Yellow: text += UI_TAGCOLOR_CHATYELLOW; break;
-            case ChatColor::Pink: text += UI_TAGCOLOR_CHATPINK; break;
-            case ChatColor::Orange: text += UI_TAGCOLOR_CHATORANGE; break;
-            case ChatColor::Aquamarine: text += UI_TAGCOLOR_CHATAQUAMARINE; break;
-            case ChatColor::Cyan: text += UI_TAGCOLOR_CHATCYAN; break;
-            case ChatColor::Teal: text += UI_TAGCOLOR_CHATTEAL; break;
-            case ChatColor::DarkGrey: text += UI_TAGCOLOR_CHATDARKGREY; break;
-            case ChatColor::Violet: text += UI_TAGCOLOR_CHATVIOLET; break;
-            case ChatColor::Magenta: text += UI_TAGCOLOR_CHATMAGENTA; break;
-#endif
-            }
-
-            // get substring for this style
-            CLRString^ str = ChatMessage->FullString->Substring(style->StartIndex, style->Length);
-
-            // replace "\" with "\\"
-            // and "[" with "\["
-            str = str->Replace("\\", "\\\\");
-            str = str->Replace("[", "\\[");
-
-            // add textpart
-            text += str;
-         }
-
-         // append line break
-         text += ::System::Environment::NewLine;
-
-         // return as CEGUI string
-         return StringConvert::CLRToCEGUI(text);
       };
 
       //////////////////////////////////////////////////////////////////////////////////////////////////////////
