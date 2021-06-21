@@ -27,10 +27,11 @@
         // create routes
         Route rList = new Route("list", routeList);
         Route rPalette = new Route("palette/{num}/{format}", routePalette);
-        Route rFile1 = new Route("file/{file}/{req}/{parm1}/{parm2}/{parm3}", routeFile);
-        Route rFile2 = new Route("file/{file}/{req}/{parm1}/{parm2}", routeFile);
-        Route rFile3 = new Route("file/{file}/{req}/{parm1}", routeFile);
-        Route rFile4 = new Route("file/{file}/{req}", routeFile);
+        Route rFile1 = new Route("file/{file}/{req}/{parm1}/{parm2}/{parm3}/{parm4}", routeFile);
+        Route rFile2 = new Route("file/{file}/{req}/{parm1}/{parm2}/{parm3}", routeFile);
+        Route rFile3 = new Route("file/{file}/{req}/{parm1}/{parm2}", routeFile);
+        Route rFile4 = new Route("file/{file}/{req}/{parm1}", routeFile);
+        Route rFile5 = new Route("file/{file}/{req}", routeFile);
         Route rObject = new Route("object/{scale}/{file}/{group}/{palette}/{angle}", routeObject);
         Route rRender = new Route("render/{width}/{height}/{scale}/{file}/{anim}/{palette}/{angle}", routeRender);
 
@@ -41,6 +42,7 @@
         RouteTable.Routes.Add(rFile2);
         RouteTable.Routes.Add(rFile3);
         RouteTable.Routes.Add(rFile4);
+        RouteTable.Routes.Add(rFile5);
         RouteTable.Routes.Add(rObject);
         RouteTable.Routes.Add(rRender);
     }

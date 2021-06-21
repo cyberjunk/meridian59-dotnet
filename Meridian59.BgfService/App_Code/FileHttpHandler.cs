@@ -5,6 +5,7 @@ using System.Web.Routing;
 using System.Drawing;
 using System.Drawing.Imaging;
 using Meridian59.Files.BGF;
+using Meridian59.Common.Constants;
 
 namespace Meridian59.BgfService
 {
@@ -47,6 +48,7 @@ namespace Meridian59.BgfService
             string parm1 = parms.ContainsKey("parm1") ? (string)parms["parm1"] : null;
             string parm2 = parms.ContainsKey("parm2") ? (string)parms["parm2"] : null;
             string parm3 = parms.ContainsKey("parm3") ? (string)parms["parm3"] : null;
+            string parm4 = parms.ContainsKey("parm4") ? (string)parms["parm4"] : null;
 
             BgfCache.Entry entry;
 
@@ -115,7 +117,77 @@ namespace Meridian59.BgfService
                 else
                     context.Response.StatusCode = 404;
             }
+            // --------------------------------------------------------------------------------------------
+            // IMAGE FROM SPECIFIED GROUP
+            // --------------------------------------------------------------------------------------------
+            else if (parmReq == "group")
+            {
+                ushort groupIndex, angle = 0;
+                byte palette = 0;
+                Byte.TryParse(parm4, out palette);
 
+                // try to parse index and palette and validate range
+                if (!UInt16.TryParse(parm2, out groupIndex) || groupIndex > entry.Bgf.FrameSets.Count)
+                {
+                    context.Response.StatusCode = 404;
+                    return;
+                }
+
+                // try to parse angle validate range
+                UInt16.TryParse(parm3, out angle);
+                if (angle > 7)
+                {
+                    context.Response.StatusCode = 404;
+                    return;
+                }
+
+                // multiply by 512 and remove full periods from angle
+                angle = (ushort)((angle << 9) % GeometryConstants.MAXANGLE);
+
+                // Get the appropriate frame index from the group and check validity
+                int index = entry.Bgf.GetFrameIndex(groupIndex, angle);
+                if (index < 0)
+                {
+                    context.Response.StatusCode = 404;
+                    return;
+                }
+
+                // create BMP (256 col) or PNG (32-bit) or return raw pixels (8bit indices)
+                if (parm1 == "bmp")
+                {
+                    response.ContentType = "image/bmp";
+                    response.AddHeader(
+                        "Content-Disposition",
+                        "inline; filename=" + entry.Bgf.Filename + "-" + index.ToString() + ".bmp");
+
+                    Bitmap bmp = entry.Bgf.Frames[index].GetBitmap(palette);
+                    bmp.Save(context.Response.OutputStream, ImageFormat.Bmp);
+                    bmp.Dispose();
+                }
+                else if (parm1 == "png")
+                {
+                    response.ContentType = "image/png";
+                    response.AddHeader(
+                        "Content-Disposition",
+                        "inline; filename=" + entry.Bgf.Filename + "-" + index.ToString() + ".png");
+
+                    Bitmap bmp = entry.Bgf.Frames[index].GetBitmapA8R8G8B8(palette);
+                    bmp.Save(context.Response.OutputStream, ImageFormat.Png);
+                    bmp.Dispose();
+                }
+                else if (parm1 == "bin")
+                {
+                    response.ContentType = "application/octet-stream";
+                    response.AddHeader(
+                        "Content-Disposition",
+                        "attachment; filename=" + entry.Bgf.Filename + "-" + index.ToString() + ".bin");
+
+                    byte[] pixels = entry.Bgf.Frames[index].PixelData;
+                    context.Response.OutputStream.Write(pixels, 0, pixels.Length);
+                }
+                else
+                    context.Response.StatusCode = 404;
+            }
             // --------------------------------------------------------------------------------------------
             // JSON META DATA
             // --------------------------------------------------------------------------------------------
