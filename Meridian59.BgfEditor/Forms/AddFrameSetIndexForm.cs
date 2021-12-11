@@ -21,6 +21,10 @@ namespace Meridian59.BgfEditor
 
             cbFrames.DataSource = Program.CurrentFile.Frames;
             cbFrames.DisplayMember = BgfBitmap.PROPNAME_NUM;
+
+            cbFramesMax.BindingContext = new BindingContext();
+            cbFramesMax.DataSource = Program.CurrentFile.Frames;
+            cbFramesMax.DisplayMember = BgfBitmap.PROPNAME_NUM;
         }
 
         protected void OnFramesSelectedIndexChanged(object sender, EventArgs e)
@@ -33,20 +37,40 @@ namespace Meridian59.BgfEditor
             }
         }
 
+        protected void OnFramesMaxSelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbFramesMax.SelectedItem != null && cbFramesMax.SelectedItem is BgfBitmap)
+            {
+                BgfBitmap bgfBitmap = (BgfBitmap)cbFramesMax.SelectedItem;
+
+                Program.ShowFrame(true, bgfBitmap.GetBitmap(), picBox2);
+            }
+        }
+
         protected void OnOK_Click(object sender, EventArgs e)
         {
             Hide();
 
             // add selected frame
-            if (cbFrames.SelectedItem != null &&
-                cbFrames.SelectedItem is BgfBitmap &&
-                Program.CurrentFile.FrameSets.Count > CurrentFrameSetIndex)
+            if (
+                    cbFrames.SelectedItem != null &&
+                    cbFrames.SelectedItem is BgfBitmap &&
+                    Program.CurrentFile.FrameSets.Count > CurrentFrameSetIndex &&
+                    cbFramesMax.SelectedItem != null &&
+                    cbFramesMax.SelectedItem is BgfBitmap &&
+                    Program.CurrentFile.FrameSets.Count > CurrentFrameSetIndex &&
+                    cbFrames.SelectedIndex <= cbFramesMax.SelectedIndex
+                )
             {
                 Program.HasFileChanged = true;
-                Program.CurrentFile.FrameSets[CurrentFrameSetIndex].FrameIndices.Add(cbFrames.SelectedIndex);
 
-                Program.MainForm.UpdateFrameNums();
-                Program.MainForm.UpdateFrameSetFlow();
+                for (int x = cbFrames.SelectedIndex; x <= cbFramesMax.SelectedIndex; x++)
+                {
+                    Program.CurrentFile.FrameSets[CurrentFrameSetIndex].FrameIndices.Add(x);
+
+                    Program.MainForm.UpdateFrameNums();
+                    Program.MainForm.UpdateFrameSetFlow();
+                }
             }
         }
 
@@ -54,6 +78,11 @@ namespace Meridian59.BgfEditor
         {
             e.Cancel = true;
             Hide();
+        }
+
+        private void AddFrameSetIndexForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
