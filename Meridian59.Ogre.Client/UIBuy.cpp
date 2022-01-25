@@ -69,16 +69,19 @@ namespace Meridian59 { namespace Ogre
 
    void ControllerUI::Buy::OnBuyListChanged(Object^ sender, ListChangedEventArgs^ e)
    {
-      switch(e->ListChangedType)
+	  switch(e->ListChangedType)
       {
       case ::System::ComponentModel::ListChangedType::ItemAdded:
          BuyItemAdd(e->NewIndex);
          break;
-
       case ::System::ComponentModel::ListChangedType::ItemDeleted:
          BuyItemRemove(e->NewIndex);
          break;
-      }
+	  case ::System::ComponentModel::ListChangedType::ItemChanged:
+		 BuyItemRemove(e->NewIndex);
+		 BuyItemAdd(e->NewIndex);
+		 break;
+	  }
    };
 
    void ControllerUI::Buy::BuyItemAdd(int Index)
@@ -308,7 +311,11 @@ namespace Meridian59 { namespace Ogre
          OgreClient::Singleton->Data->Buy->IsVisible = false;
          OgreClient::Singleton->Data->Buy->Clear(true);
       }
-
+	  // sort by kind of item and name
+	  else if (args.scancode == CEGUI::Key::PageDown)
+	  {
+		  OgreClient::Singleton->Data->Buy->Items->SortByName();
+	  }
       return UICallbacks::OnKeyUp(args);
    };
 

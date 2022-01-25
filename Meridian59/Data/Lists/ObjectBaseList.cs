@@ -171,7 +171,134 @@ namespace Meridian59.Data.Lists
         /// <returns></returns>
         protected int CompareByName(ObjectBase A, ObjectBase B)
         {
-            return sortDirectionValue * A.Name.CompareTo(B.Name);
+            // sort by kind of item first
+            int kA = GetKindValue(A);
+            int kB = GetKindValue(B);
+
+            // sort by name if both names share the same kind
+            if (kA == kB)
+            {
+                return sortDirectionValue * A.Name.CompareTo(B.Name);
+            }
+
+            // A has higher priority than B
+            if (kA < kB)
+            {
+                return sortDirectionValue * -1;
+            }
+            // A has lower priority than B
+            return sortDirectionValue * 1;
+        }
+
+        /// <summary>
+        /// Gets the kind of an item as a value which represents an order.
+        /// </summary>
+        /// <param name="O"></param>
+        /// <returns></returns>
+        public static int GetKindValue(ObjectBase O)
+        {
+            switch (O.Name)
+            {
+                // Reagent
+                case "blue dragon scale":
+                case "blue mushroom":
+                case "cyan mushroom":
+                case "dark angel feather":
+                case "dragonfly eye":
+                case "diamond":
+                case "elderberry":
+                case "emerald":
+                case "entroot berry":
+                case "fairy wing":
+                case "firesand":
+                case "gray mushroom":
+                case "green mushroom":
+                case "herb":
+                case "kriipa claw":
+                case "mushroom":
+                case "orc tooth":
+                case "polished seraphym":
+                case "purple mushroom":
+                case "rainbow fern":
+                case "red mushroom":
+                case "ruby":
+                case "sapphire":
+                case "shaman blood":
+                case "uncut seraphym":
+                case "vial of solagh":
+                case "web moss":
+                case "yellow mushroom":
+                case "yrxl sap":
+                    return 0;
+                // Armors
+                case "chain armor":
+                case "leather armor":
+                case "light robes":
+                case "long skirt":
+                case "gauntlets":
+                case "nerudite armor":
+                case "plate armor":
+                case "robes":
+                case "robes of the disciple":
+                case "scale armor":
+                case "short skirt":
+                    return 1;
+                // Shields
+                case "gold round shield":
+                case "herald shield":
+                case "knight's shield":
+                case "small round shield":
+                case "orc shield":
+                case "soldier's shield":
+                case "torch":
+                case "wooden shield":
+                    return 2;
+                // Helms
+                case "ant mask":
+                case "circlet":
+                case "cow mask":
+                case "daemon helm":
+                case "daemon skeleton mask":
+                case "dusk rat mask":
+                case "fey mask":
+                case "helm":
+                case "ivy circlet":
+                case "kriipa mask":
+                case "magic spirit helmet":
+                case "mummy mask":
+                case "qormas helm":
+                case "rat mask":
+                case "shrunken head mask":
+                case "skull mask":
+                case "stone troll mask":
+                case "troll mask":
+                case "xeochicatl mask":
+                    return 3;
+                // Weapons
+                case "axe":
+                case "battle bow":
+                case "black dagger":
+                case "gold sword":
+                case "hammer":
+                case "Jewel of Froz":
+                case "long bow":
+                case "long sword":
+                case "mace":
+                case "magic bow":
+                case "mystic sword":
+                case "nerudite bow":
+                case "nerudite sword":
+                case "practice bow":
+                case "sword of Riija":
+                case "scimitar":
+                case "short sword":
+                case "spiritual hammer":
+                case "snowball":
+                    return 4;
+                // Others
+                default:
+                    return 5;
+            }
         }
 
         /// <summary>

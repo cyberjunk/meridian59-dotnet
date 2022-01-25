@@ -298,7 +298,11 @@ namespace Meridian59 { namespace Ogre
          // mark GUIroot active
          ControllerUI::ActivateRoot();
       }
-
+	  // sort by kind of item and name
+	  else if (args.scancode == CEGUI::Key::PageDown)
+	  {
+		  OgreClient::Singleton->Data->ObjectContents->Items->SortByName();
+	  }
       return true;
    };
 
