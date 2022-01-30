@@ -945,6 +945,7 @@
 #define UI_NOTIFICATION_PARALYZED   "PARALYZED"
 #define UI_NOTIFICATION_SAVING      "SAVING"
 #define UI_NOTIFICATION_PRESSAKEY   "PRESS A KEY"
+#define UI_NOTIFICATION_PHASED		"PHASED"
 
 #define UI_TOOLTIPTEXT_HPBAR           "Your hitpoints. Fight monsters to get tougher."
 #define UI_TOOLTIPTEXT_MPBAR           "Your manapoints. Find mana nodes to get more powerful."

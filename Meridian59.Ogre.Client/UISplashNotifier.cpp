@@ -104,6 +104,27 @@ namespace Meridian59 { namespace Ogre
 
          UpdateNotification();
       }
+
+	  // check buffs for phase
+	  Meridian59::Data::Lists::ObjectBaseList<Meridian59::Data::Models::ObjectBase^>^ buffs = OgreClient::Singleton->Data->AvatarBuffs;
+	  bool isPhased = false;
+	  for (int i = 0; i < buffs->Count; i++)
+	  {
+		  if (buffs[i]->Name == "phase" || buffs[i]->Name == "Ausstieg")
+		  {
+			  isPhased = true;
+		  }
+	  }
+	  if (isPhased)
+	  {
+		  if (!notifications->Contains(UI_NOTIFICATION_PHASED))
+			  notifications->Add(UI_NOTIFICATION_PHASED);
+	  }
+	  else {
+		  if (notifications->Contains(UI_NOTIFICATION_PHASED))
+			  notifications->Remove(UI_NOTIFICATION_PHASED);
+	  }
+	  UpdateNotification();
    };
 
    void ControllerUI::SplashNotifier::OnParalyzePropertyChanged(Object^ sender, PropertyChangedEventArgs^ e)
