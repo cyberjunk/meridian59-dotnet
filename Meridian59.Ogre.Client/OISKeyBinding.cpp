@@ -101,6 +101,19 @@ namespace Meridian59 { namespace Ogre
       defaultBinding->ActionButton47 = ::OIS::KeyCode::KC_GRAVE;
       defaultBinding->ActionButton48 = ::OIS::KeyCode::KC_UNASSIGNED;
 
+      defaultBinding->ActionButton49 = ::OIS::KeyCode::KC_UNASSIGNED;
+      defaultBinding->ActionButton50 = ::OIS::KeyCode::KC_UNASSIGNED;
+      defaultBinding->ActionButton51 = ::OIS::KeyCode::KC_UNASSIGNED;
+      defaultBinding->ActionButton52 = ::OIS::KeyCode::KC_UNASSIGNED;
+      defaultBinding->ActionButton53 = ::OIS::KeyCode::KC_UNASSIGNED;
+      defaultBinding->ActionButton54 = ::OIS::KeyCode::KC_UNASSIGNED;
+      defaultBinding->ActionButton55 = ::OIS::KeyCode::KC_UNASSIGNED;
+      defaultBinding->ActionButton56 = ::OIS::KeyCode::KC_UNASSIGNED;
+      defaultBinding->ActionButton57 = ::OIS::KeyCode::KC_UNASSIGNED;
+      defaultBinding->ActionButton58 = ::OIS::KeyCode::KC_UNASSIGNED;
+      defaultBinding->ActionButton59 = ::OIS::KeyCode::KC_UNASSIGNED;
+      defaultBinding->ActionButton60 = ::OIS::KeyCode::KC_UNASSIGNED;
+
       return defaultBinding;
    };
 };};

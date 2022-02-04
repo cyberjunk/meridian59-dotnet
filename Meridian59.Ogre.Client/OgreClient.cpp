@@ -1048,6 +1048,18 @@ namespace Meridian59 { namespace Ogre
          foundset[45]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton46));
          foundset[46]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton47));
          foundset[47]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton48));
+         foundset[48]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton49));
+         foundset[49]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton50));
+         foundset[50]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton51));
+         foundset[51]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton52));
+         foundset[52]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton53));
+         foundset[53]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton54));
+         foundset[54]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton55));
+         foundset[55]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton56));
+         foundset[56]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton57));
+         foundset[57]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton58));
+         foundset[58]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton59));
+         foundset[59]->Label = StringConvert::OgreToCLR(keyboard->getAsString(keybinding->ActionButton60));
       }
    };
 
