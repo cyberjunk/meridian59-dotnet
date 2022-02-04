@@ -43,8 +43,8 @@ namespace Meridian59 { namespace Ogre
          ::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 175.0f), ::CEGUI::UDim(0.0f, 30.0f)));
 
       UILayoutActionButtons = new ::CEGUI::URect(
-         ::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.5f, -174.0f), ::CEGUI::UDim(1.0f, -150.0f)),
-         ::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 349.0f), ::CEGUI::UDim(0.0f, 117.0f)));
+         ::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.5f, -174.0f), ::CEGUI::UDim(1.0f, -174.0f)),
+         ::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 349.0f), ::CEGUI::UDim(0.0f, 146.0f)));
 
       UILayoutChat = new ::CEGUI::URect(
          ::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.0f, 2.0f), ::CEGUI::UDim(1.0f, -186.0f)),
@@ -587,7 +587,43 @@ namespace Meridian59 { namespace Ogre
       if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
          KeyBinding->ActionButton48 = (::OIS::KeyCode)val_uint;
 
-      /******************************************************************************/
+	  node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION49);
+	  if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+		  KeyBinding->ActionButton49 = (::OIS::KeyCode)val_uint;
+	  node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION50);
+	  if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+		  KeyBinding->ActionButton50 = (::OIS::KeyCode)val_uint;
+	  node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION51);
+	  if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+		  KeyBinding->ActionButton51 = (::OIS::KeyCode)val_uint;
+	  node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION52);
+	  if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+		  KeyBinding->ActionButton52 = (::OIS::KeyCode)val_uint;
+	  node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION53);
+	  if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+		  KeyBinding->ActionButton53 = (::OIS::KeyCode)val_uint;
+	  node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION54);
+	  if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+		  KeyBinding->ActionButton54 = (::OIS::KeyCode)val_uint;
+	  node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION55);
+	  if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+		  KeyBinding->ActionButton55 = (::OIS::KeyCode)val_uint;
+	  node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION56);
+	  if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+		  KeyBinding->ActionButton56 = (::OIS::KeyCode)val_uint;
+	  node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION57);
+	  if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+		  KeyBinding->ActionButton57 = (::OIS::KeyCode)val_uint;
+	  node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION58);
+	  if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+		  KeyBinding->ActionButton58 = (::OIS::KeyCode)val_uint;
+	  node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION59);
+	  if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+		  KeyBinding->ActionButton59 = (::OIS::KeyCode)val_uint;
+	  node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_KEYBINDING + "/" + TAG_ACTION60);
+	  if (PARSE_UINT32_ATTRIB(node, XMLATTRIB_KEY, val_uint))
+		  KeyBinding->ActionButton60 = (::OIS::KeyCode)val_uint;
+	  /******************************************************************************/
 
       node = Document->DocumentElement->SelectSingleNode("/" + XMLTAG_CONFIGURATION + "/" + TAG_INPUT + "/" + TAG_ACTIONBUTTONSETS);
 
@@ -1211,6 +1247,43 @@ namespace Meridian59 { namespace Ogre
       Writer->WriteStartElement(TAG_ACTION48);
       Writer->WriteAttributeString(XMLATTRIB_KEY, ((unsigned int)KeyBinding->ActionButton48).ToString());
       Writer->WriteEndElement();
+
+	  Writer->WriteStartElement(TAG_ACTION49);
+	  Writer->WriteAttributeString(XMLATTRIB_KEY, ((unsigned int)KeyBinding->ActionButton49).ToString());
+	  Writer->WriteEndElement();
+	  Writer->WriteStartElement(TAG_ACTION50);
+	  Writer->WriteAttributeString(XMLATTRIB_KEY, ((unsigned int)KeyBinding->ActionButton50).ToString());
+	  Writer->WriteEndElement();
+	  Writer->WriteStartElement(TAG_ACTION51);
+	  Writer->WriteAttributeString(XMLATTRIB_KEY, ((unsigned int)KeyBinding->ActionButton51).ToString());
+	  Writer->WriteEndElement();
+	  Writer->WriteStartElement(TAG_ACTION52);
+	  Writer->WriteAttributeString(XMLATTRIB_KEY, ((unsigned int)KeyBinding->ActionButton52).ToString());
+	  Writer->WriteEndElement();
+	  Writer->WriteStartElement(TAG_ACTION53);
+	  Writer->WriteAttributeString(XMLATTRIB_KEY, ((unsigned int)KeyBinding->ActionButton53).ToString());
+	  Writer->WriteEndElement();
+	  Writer->WriteStartElement(TAG_ACTION54);
+	  Writer->WriteAttributeString(XMLATTRIB_KEY, ((unsigned int)KeyBinding->ActionButton54).ToString());
+	  Writer->WriteEndElement();
+	  Writer->WriteStartElement(TAG_ACTION55);
+	  Writer->WriteAttributeString(XMLATTRIB_KEY, ((unsigned int)KeyBinding->ActionButton55).ToString());
+	  Writer->WriteEndElement();
+	  Writer->WriteStartElement(TAG_ACTION56);
+	  Writer->WriteAttributeString(XMLATTRIB_KEY, ((unsigned int)KeyBinding->ActionButton56).ToString());
+	  Writer->WriteEndElement();
+	  Writer->WriteStartElement(TAG_ACTION57);
+	  Writer->WriteAttributeString(XMLATTRIB_KEY, ((unsigned int)KeyBinding->ActionButton57).ToString());
+	  Writer->WriteEndElement();
+	  Writer->WriteStartElement(TAG_ACTION58);
+	  Writer->WriteAttributeString(XMLATTRIB_KEY, ((unsigned int)KeyBinding->ActionButton58).ToString());
+	  Writer->WriteEndElement();
+	  Writer->WriteStartElement(TAG_ACTION59);
+	  Writer->WriteAttributeString(XMLATTRIB_KEY, ((unsigned int)KeyBinding->ActionButton59).ToString());
+	  Writer->WriteEndElement();
+	  Writer->WriteStartElement(TAG_ACTION60);
+	  Writer->WriteAttributeString(XMLATTRIB_KEY, ((unsigned int)KeyBinding->ActionButton60).ToString());
+	  Writer->WriteEndElement();
 
       // keybinding end
       Writer->WriteEndElement();

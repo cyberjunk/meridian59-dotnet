@@ -206,7 +206,21 @@ namespace Meridian59 { namespace Ogre
       literal CLRString^ TAG_ACTION46 = "action46";
       literal CLRString^ TAG_ACTION47 = "action47";
       literal CLRString^ TAG_ACTION48 = "action48";
-      literal CLRString^ TAG_ACTIONBUTTONSETS = "actionbuttonsets";
+	  
+	  literal CLRString^ TAG_ACTION49 = "action49";
+	  literal CLRString^ TAG_ACTION50 = "action50";
+	  literal CLRString^ TAG_ACTION51 = "action51";
+	  literal CLRString^ TAG_ACTION52 = "action52";
+	  literal CLRString^ TAG_ACTION53 = "action53";
+	  literal CLRString^ TAG_ACTION54 = "action54";
+	  literal CLRString^ TAG_ACTION55 = "action55";
+	  literal CLRString^ TAG_ACTION56 = "action56";
+	  literal CLRString^ TAG_ACTION57 = "action57";
+	  literal CLRString^ TAG_ACTION58 = "action58";
+	  literal CLRString^ TAG_ACTION59 = "action59";
+	  literal CLRString^ TAG_ACTION60 = "action60";
+
+	  literal CLRString^ TAG_ACTIONBUTTONSETS = "actionbuttonsets";
       literal CLRString^ TAG_ACTIONBUTTONS = "actionbuttons";
       literal CLRString^ TAG_ACTIONBUTTON = "actionbutton";
 

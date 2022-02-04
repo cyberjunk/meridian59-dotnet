@@ -34,7 +34,8 @@ namespace Meridian59 { namespace Ogre
       TabInputTabControl = static_cast<CEGUI::TabControl*>(TabInput->getChild(UI_NAME_OPTIONS_TABINPUT_TABCONTROL));
       TabInputTabGeneral = static_cast<CEGUI::Window*>(TabInputTabControl->getChild(UI_NAME_OPTIONS_TABINPUT_TABGENERAL));
       TabInputTabActionButtons1 = static_cast<CEGUI::Window*>(TabInputTabControl->getChild(UI_NAME_OPTIONS_TABINPUT_TABACTIONBUTTONS1));
-      TabInputTabActionButtons2 = static_cast<CEGUI::Window*>(TabInputTabControl->getChild(UI_NAME_OPTIONS_TABINPUT_TABACTIONBUTTONS2));
+	  TabInputTabActionButtons2 = static_cast<CEGUI::Window*>(TabInputTabControl->getChild(UI_NAME_OPTIONS_TABINPUT_TABACTIONBUTTONS2));
+	  TabInputTabActionButtons3 = static_cast<CEGUI::Window*>(TabInputTabControl->getChild(UI_NAME_OPTIONS_TABINPUT_TABACTIONBUTTONS3));
 
       // tabinput - tabgeneral
       LearnMoveForward  = static_cast<CEGUI::PushButton*>(TabInputTabGeneral->getChild(UI_NAME_OPTIONS_TABINPUT_TABGENERAL_MOVEFORWARD));
@@ -110,6 +111,20 @@ namespace Meridian59 { namespace Ogre
       LearnAction47 = static_cast<CEGUI::PushButton*>(TabInputTabActionButtons2->getChild(UI_NAME_OPTIONS_TABINPUT_TABACTIONBUTTONS2_BUTTON47));
       LearnAction48 = static_cast<CEGUI::PushButton*>(TabInputTabActionButtons2->getChild(UI_NAME_OPTIONS_TABINPUT_TABACTIONBUTTONS2_BUTTON48));
 
+	  // tabinput - tabactionbuttons3
+	  LearnAction49 = static_cast<CEGUI::PushButton*>(TabInputTabActionButtons3->getChild(UI_NAME_OPTIONS_TABINPUT_TABACTIONBUTTONS3_BUTTON49));
+	  LearnAction50 = static_cast<CEGUI::PushButton*>(TabInputTabActionButtons3->getChild(UI_NAME_OPTIONS_TABINPUT_TABACTIONBUTTONS3_BUTTON50));
+	  LearnAction51 = static_cast<CEGUI::PushButton*>(TabInputTabActionButtons3->getChild(UI_NAME_OPTIONS_TABINPUT_TABACTIONBUTTONS3_BUTTON51));
+	  LearnAction52 = static_cast<CEGUI::PushButton*>(TabInputTabActionButtons3->getChild(UI_NAME_OPTIONS_TABINPUT_TABACTIONBUTTONS3_BUTTON52));
+	  LearnAction53 = static_cast<CEGUI::PushButton*>(TabInputTabActionButtons3->getChild(UI_NAME_OPTIONS_TABINPUT_TABACTIONBUTTONS3_BUTTON53));
+	  LearnAction54 = static_cast<CEGUI::PushButton*>(TabInputTabActionButtons3->getChild(UI_NAME_OPTIONS_TABINPUT_TABACTIONBUTTONS3_BUTTON54));
+	  LearnAction55 = static_cast<CEGUI::PushButton*>(TabInputTabActionButtons3->getChild(UI_NAME_OPTIONS_TABINPUT_TABACTIONBUTTONS3_BUTTON55));
+	  LearnAction56 = static_cast<CEGUI::PushButton*>(TabInputTabActionButtons3->getChild(UI_NAME_OPTIONS_TABINPUT_TABACTIONBUTTONS3_BUTTON56));
+	  LearnAction57 = static_cast<CEGUI::PushButton*>(TabInputTabActionButtons3->getChild(UI_NAME_OPTIONS_TABINPUT_TABACTIONBUTTONS3_BUTTON57));
+	  LearnAction58 = static_cast<CEGUI::PushButton*>(TabInputTabActionButtons3->getChild(UI_NAME_OPTIONS_TABINPUT_TABACTIONBUTTONS3_BUTTON58));
+	  LearnAction59 = static_cast<CEGUI::PushButton*>(TabInputTabActionButtons3->getChild(UI_NAME_OPTIONS_TABINPUT_TABACTIONBUTTONS3_BUTTON59));
+	  LearnAction60 = static_cast<CEGUI::PushButton*>(TabInputTabActionButtons3->getChild(UI_NAME_OPTIONS_TABINPUT_TABACTIONBUTTONS3_BUTTON60));
+	 
       /******************************************************************************************************/
 
       // tabengine
@@ -500,7 +515,7 @@ namespace Meridian59 { namespace Ogre
       for (int i = 1; i < 10; i++)
          RightClickAction->addItem(new ::CEGUI::ListboxTextItem("Action 0" + ::CEGUI::PropertyHelper<int>::toString(i), i));
 
-      for (int i = 10; i <= 48; i++)
+      for (int i = 10; i <= 60; i++)
          RightClickAction->addItem(new ::CEGUI::ListboxTextItem("Action " + ::CEGUI::PropertyHelper<int>::toString(i), i));
 
       /******************************************************************************************************/
@@ -569,6 +584,19 @@ namespace Meridian59 { namespace Ogre
       LearnAction46->setText(keybinding->ActionButton46 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton46));
       LearnAction47->setText(keybinding->ActionButton47 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton47));
       LearnAction48->setText(keybinding->ActionButton48 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton48));
+
+	  LearnAction49->setText(keybinding->ActionButton49 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton49));
+	  LearnAction50->setText(keybinding->ActionButton50 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton50));
+	  LearnAction51->setText(keybinding->ActionButton51 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton51));
+	  LearnAction52->setText(keybinding->ActionButton52 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton52));
+	  LearnAction53->setText(keybinding->ActionButton53 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton53));
+	  LearnAction54->setText(keybinding->ActionButton54 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton54));
+	  LearnAction55->setText(keybinding->ActionButton55 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton55));
+	  LearnAction56->setText(keybinding->ActionButton56 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton56));
+	  LearnAction57->setText(keybinding->ActionButton57 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton57));
+	  LearnAction58->setText(keybinding->ActionButton58 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton58));
+	  LearnAction59->setText(keybinding->ActionButton59 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton59));
+	  LearnAction60->setText(keybinding->ActionButton50 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton60));
 
       MouseAimSpeed->setCurrentValue((float)OgreClient::Singleton->Config->MouseAimSpeed);
       MouseAimDistance->setCurrentValue((float)OgreClient::Singleton->Config->MouseAimDistance);
@@ -735,7 +763,20 @@ namespace Meridian59 { namespace Ogre
       LearnAction47->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
       LearnAction48->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
 
-      LearnMoveForward->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+	  LearnAction49->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+	  LearnAction50->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+	  LearnAction51->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+	  LearnAction52->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+	  LearnAction53->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+	  LearnAction54->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+	  LearnAction55->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+	  LearnAction56->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+	  LearnAction57->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+	  LearnAction58->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+	  LearnAction59->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+	  LearnAction60->subscribeEvent(CEGUI::PushButton::EventMouseClick, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonClicked));
+	  
+	  LearnMoveForward->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
       LearnMoveBackward->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
       LearnMoveLeft->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
       LearnMoveRight->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
@@ -796,7 +837,20 @@ namespace Meridian59 { namespace Ogre
       LearnAction47->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
       LearnAction48->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
 
-      LearnMoveForward->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+	  LearnAction49->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+	  LearnAction50->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+	  LearnAction51->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+	  LearnAction52->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+	  LearnAction53->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+	  LearnAction54->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+	  LearnAction55->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+	  LearnAction56->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+	  LearnAction57->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+	  LearnAction58->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+	  LearnAction59->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+	  LearnAction60->subscribeEvent(CEGUI::PushButton::EventKeyUp, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnKeyUp));
+	  
+	  LearnMoveForward->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
       LearnMoveBackward->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
       LearnMoveLeft->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
       LearnMoveRight->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
@@ -857,7 +911,20 @@ namespace Meridian59 { namespace Ogre
       LearnAction47->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
       LearnAction48->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
 
-      /******************************************************************************************************/
+	  LearnAction49->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+	  LearnAction50->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+	  LearnAction51->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+	  LearnAction52->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+	  LearnAction53->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+	  LearnAction54->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+	  LearnAction55->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+	  LearnAction56->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+	  LearnAction57->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+	  LearnAction58->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+	  LearnAction59->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+	  LearnAction60->subscribeEvent(CEGUI::PushButton::EventDeactivated, CEGUI::Event::Subscriber(UICallbacks::Options::OnKeyLearnButtonDeactivated));
+	  
+	  /******************************************************************************************************/
       // groups events
 
       AddGroup->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::Options::OnGroupAddClicked));
@@ -1563,7 +1630,68 @@ namespace Meridian59 { namespace Ogre
          ControllerUI::Options::LearnAction48->setText(keystr);
       }
 
-      // deactivate focus
+	  else if (btn == ControllerUI::Options::LearnAction49)
+	  {
+	  keybinding->ActionButton49 = (::OIS::KeyCode)args.scancode;
+	  ControllerUI::Options::LearnAction49->setText(keystr);
+	  }
+	  else if (btn == ControllerUI::Options::LearnAction50)
+	  {
+	  keybinding->ActionButton50 = (::OIS::KeyCode)args.scancode;
+	  ControllerUI::Options::LearnAction50->setText(keystr);
+	  }
+	  else if (btn == ControllerUI::Options::LearnAction51)
+	  {
+	  keybinding->ActionButton51 = (::OIS::KeyCode)args.scancode;
+	  ControllerUI::Options::LearnAction51->setText(keystr);
+	  }
+	  else if (btn == ControllerUI::Options::LearnAction52)
+	  {
+	  keybinding->ActionButton52 = (::OIS::KeyCode)args.scancode;
+	  ControllerUI::Options::LearnAction52->setText(keystr);
+	  }
+	  else if (btn == ControllerUI::Options::LearnAction53)
+	  {
+	  keybinding->ActionButton53 = (::OIS::KeyCode)args.scancode;
+	  ControllerUI::Options::LearnAction53->setText(keystr);
+	  }
+	  else if (btn == ControllerUI::Options::LearnAction54)
+	  {
+	  keybinding->ActionButton54 = (::OIS::KeyCode)args.scancode;
+	  ControllerUI::Options::LearnAction54->setText(keystr);
+	  }
+	  else if (btn == ControllerUI::Options::LearnAction55)
+	  {
+	  keybinding->ActionButton55 = (::OIS::KeyCode)args.scancode;
+	  ControllerUI::Options::LearnAction55->setText(keystr);
+	  }
+	  else if (btn == ControllerUI::Options::LearnAction56)
+	  {
+	  keybinding->ActionButton56 = (::OIS::KeyCode)args.scancode;
+	  ControllerUI::Options::LearnAction56->setText(keystr);
+	  }
+	  else if (btn == ControllerUI::Options::LearnAction57)
+	  {
+	  keybinding->ActionButton57 = (::OIS::KeyCode)args.scancode;
+	  ControllerUI::Options::LearnAction57->setText(keystr);
+	  }
+	  else if (btn == ControllerUI::Options::LearnAction58)
+	  {
+	  keybinding->ActionButton58 = (::OIS::KeyCode)args.scancode;
+	  ControllerUI::Options::LearnAction58->setText(keystr);
+	  }
+	  else if (btn == ControllerUI::Options::LearnAction59)
+	  {
+	  keybinding->ActionButton59 = (::OIS::KeyCode)args.scancode;
+	  ControllerUI::Options::LearnAction59->setText(keystr);
+	  }
+	  else if (btn == ControllerUI::Options::LearnAction60)
+	  {
+	  keybinding->ActionButton60 = (::OIS::KeyCode)args.scancode;
+	  ControllerUI::Options::LearnAction60->setText(keystr);
+	  }
+	  
+	  // deactivate focus
       btn->deactivate();
 
       return true;
@@ -1888,7 +2016,68 @@ namespace Meridian59 { namespace Ogre
             keybinding->ActionButton48 = ::OIS::KeyCode::KC_UNASSIGNED;
             ControllerUI::Options::LearnAction48->setText(STRINGEMPTY);
          }
-      }
+		 
+		 else if (btn == ControllerUI::Options::LearnAction49)
+		 {
+			keybinding->ActionButton49 = ::OIS::KeyCode::KC_UNASSIGNED;
+			ControllerUI::Options::LearnAction49->setText(STRINGEMPTY);
+		 }
+		 else if (btn == ControllerUI::Options::LearnAction50)
+		 {
+			keybinding->ActionButton50 = ::OIS::KeyCode::KC_UNASSIGNED;
+			ControllerUI::Options::LearnAction50->setText(STRINGEMPTY);
+		 }
+		 else if (btn == ControllerUI::Options::LearnAction51)
+		 {
+			keybinding->ActionButton51 = ::OIS::KeyCode::KC_UNASSIGNED;
+			ControllerUI::Options::LearnAction51->setText(STRINGEMPTY);
+		 }
+		 else if (btn == ControllerUI::Options::LearnAction52)
+		 {
+			keybinding->ActionButton52 = ::OIS::KeyCode::KC_UNASSIGNED;
+			ControllerUI::Options::LearnAction52->setText(STRINGEMPTY);
+		 }
+		 else if (btn == ControllerUI::Options::LearnAction53)
+		 {
+			keybinding->ActionButton53 = ::OIS::KeyCode::KC_UNASSIGNED;
+			ControllerUI::Options::LearnAction53->setText(STRINGEMPTY);
+		 }
+		 else if (btn == ControllerUI::Options::LearnAction54)
+		 {
+			keybinding->ActionButton54 = ::OIS::KeyCode::KC_UNASSIGNED;
+			ControllerUI::Options::LearnAction54->setText(STRINGEMPTY);
+		 }
+		 else if (btn == ControllerUI::Options::LearnAction55)
+		 {
+			keybinding->ActionButton55 = ::OIS::KeyCode::KC_UNASSIGNED;
+			ControllerUI::Options::LearnAction55->setText(STRINGEMPTY);
+		 }
+		 else if (btn == ControllerUI::Options::LearnAction56)
+		 {
+			keybinding->ActionButton56 = ::OIS::KeyCode::KC_UNASSIGNED;
+			ControllerUI::Options::LearnAction56->setText(STRINGEMPTY);
+		 }
+		 else if (btn == ControllerUI::Options::LearnAction57)
+		 {
+			keybinding->ActionButton57 = ::OIS::KeyCode::KC_UNASSIGNED;
+			ControllerUI::Options::LearnAction57->setText(STRINGEMPTY);
+		 }
+		 else if (btn == ControllerUI::Options::LearnAction58)
+		 {
+			keybinding->ActionButton58 = ::OIS::KeyCode::KC_UNASSIGNED;
+			ControllerUI::Options::LearnAction58->setText(STRINGEMPTY);
+		 }
+		 else if (btn == ControllerUI::Options::LearnAction59)
+		 {
+			 keybinding->ActionButton59 = ::OIS::KeyCode::KC_UNASSIGNED;
+			 ControllerUI::Options::LearnAction59->setText(STRINGEMPTY);
+		 }
+		 else if (btn == ControllerUI::Options::LearnAction60)
+		 {
+			 keybinding->ActionButton60 = ::OIS::KeyCode::KC_UNASSIGNED;
+			 ControllerUI::Options::LearnAction60->setText(STRINGEMPTY);
+		 }
+	  }
 
       return true;
    };
