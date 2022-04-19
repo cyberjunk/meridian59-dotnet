@@ -61,7 +61,7 @@ namespace Meridian59.Data.Models
         private const uint OF_ACTIVATABLE       = 0x00000800;    // Set if object can be activated
         private const uint OF_APPLYABLE         = 0x00001000;    // Set if object can be applied to another object
         private const uint OF_NPC               = 0x00002000;    // Set if object is an NPC (not necessarily offerable/buyable)
-
+        private const uint OF_EQUIPPED          = 0x00004000;    // Set if object is equipped by player or monster
         private const uint OF_BOUNCING          = 0x00010000;    // If both flags on then object is bouncing
         private const uint OF_FLICKERING        = 0x00020000;    // For players or objects if holding a flickering light.
         private const uint OF_FLASHING          = 0x00040000;    // For players or objects if flashing with light.
@@ -659,6 +659,21 @@ namespace Meridian59.Data.Models
             {
                 if (value) flags |= OF_NPC;
                 else flags &= ~OF_NPC;
+
+                RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
+            }
+        }
+
+        /// <summary>
+        /// True if the object is equipped by a player or monster.
+        /// </summary>
+        public bool IsEquipped
+        {
+            get { return (flags & OF_EQUIPPED) == OF_EQUIPPED; }
+            set
+            {
+                if (value) flags |= OF_EQUIPPED;
+                else flags &= ~OF_EQUIPPED;
 
                 RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_FLAGS));
             }

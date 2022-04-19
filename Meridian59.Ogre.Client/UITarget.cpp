@@ -72,6 +72,22 @@ namespace Meridian59 { namespace Ogre
 
    void ControllerUI::Target::ApplyLanguage()
    {
+      SetTooltips();
+   };
+
+   void ControllerUI::Target::SetTooltips()
+   {
+      if (targetObject == nullptr || !targetObject->Flags->IsContainer)
+         Activate->setTooltipText(GetLangTooltipTarget(LANGSTR_TOOLTIP_TARGET::ACTIVATE));
+      else
+         Activate->setTooltipText(GetLangTooltipTarget(LANGSTR_TOOLTIP_TARGET::ITEMS));
+
+      Inspect->setTooltipText(GetLangTooltipTarget(LANGSTR_TOOLTIP_TARGET::INSPECT));
+      Attack->setTooltipText(GetLangTooltipTarget(LANGSTR_TOOLTIP_TARGET::ATTACK));
+      Buy->setTooltipText(GetLangTooltipTarget(LANGSTR_TOOLTIP_TARGET::BUY));
+      Trade->setTooltipText(GetLangTooltipTarget(LANGSTR_TOOLTIP_TARGET::TRADE));
+      Loot->setTooltipText(GetLangTooltipTarget(LANGSTR_TOOLTIP_TARGET::LOOT));
+      Quest->setTooltipText(GetLangTooltipTarget(LANGSTR_TOOLTIP_TARGET::QUEST));
    };
 
    void ControllerUI::Target::SetButtons()
@@ -190,6 +206,9 @@ namespace Meridian59 { namespace Ogre
 
             // set button availability
             SetButtons();
+
+            // possibly change tooltip text
+            SetTooltips();
 
             // show target window but don't give it input focus
             Window->show();

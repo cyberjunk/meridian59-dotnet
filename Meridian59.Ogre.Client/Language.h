@@ -147,6 +147,29 @@ namespace LANGSTR_NPCQUESTUI
    };
 }
 
+namespace LANGSTR_MISC
+{
+   enum Enum
+   {
+      EQUIPPED = 0
+   };
+}
+
+namespace LANGSTR_TOOLTIP_TARGET
+{
+   enum Enum
+   {
+      INSPECT = 0,
+      ATTACK = 1,
+      ACTIVATE = 2,
+      ITEMS = 3,
+      BUY = 4,
+      TRADE = 5,
+      LOOT = 6,
+      QUEST = 7
+   };
+}
+
 const char* GetLangLabel(const LANGSTR::Enum ID);
 const char* GetLangWindowTitle(const LANGSTR_WINDOW_TITLE::Enum ID);
 const char* GetLangTooltipMood(const LANGSTR_TOOLTIP_MOOD::Enum ID);
@@ -156,3 +179,5 @@ const char* GetLangDescriptionStatusBar(const LANGSTR_DESCRIPTION_STATUSBAR::Enu
 const char* GetCharInfoNotOKErrorOkDialog(const LANGSTR_CHARINFONOTOKERROR_OKDIALOG::Enum ID);
 const char* GetLangCharSelectAbilityError(const LANGSTR_CHARSSELECTABILITYERROR::Enum ID);
 const char* GetLangNPCQuestUI(const LANGSTR_NPCQUESTUI::Enum ID);
+const char* GetLangMisc(const LANGSTR_MISC::Enum ID);
+const char* GetLangTooltipTarget(const LANGSTR_TOOLTIP_TARGET::Enum ID);
