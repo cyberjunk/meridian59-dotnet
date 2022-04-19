@@ -1544,8 +1544,9 @@ namespace Meridian59.Data.Models
 
                             // either in front of us and within frontradius
                             // or behind of us and and within backradius
-                            bool infront = (angle < GeometryConstants.QUARTERMAXANGLE && dist2 <= frontradius2);
-                            bool behind = (angle >= GeometryConstants.QUARTERMAXANGLE && dist2 <= backradius2);
+                            // Assuming 135 degree FoV converted to kod angles / 2
+                            bool infront = (angle < GeometryConstants.HALFFOVANGLE && dist2 <= frontradius2);
+                            bool behind = (angle >= GeometryConstants.HALFFOVANGLE && dist2 <= backradius2);
 
                             // add it if also visible
                             if ((infront || behind) && obj.IsVisibleFrom(ref position3D, Room))
