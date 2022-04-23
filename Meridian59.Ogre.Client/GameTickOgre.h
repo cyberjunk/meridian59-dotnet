@@ -41,7 +41,7 @@ namespace Meridian59 { namespace Ogre
 
       GameTickOgre() : GameTick()
       {
-         INTERVALCHATUPDATE      = 500.0;
+         INTERVALCHATUPDATE      = 50.0;
          INTERVALKEYREPEAT       = 25.0;
          INTERVALKEYREPEATSTART  = 500.0;
          INTERVALINVENTORYCLICK  = 250.0;
