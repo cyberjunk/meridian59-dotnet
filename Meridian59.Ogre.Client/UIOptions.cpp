@@ -595,7 +595,7 @@ namespace Meridian59 { namespace Ogre
       LearnAction57->setText(keybinding->ActionButton57 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton57));
       LearnAction58->setText(keybinding->ActionButton58 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton58));
       LearnAction59->setText(keybinding->ActionButton59 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton59));
-      LearnAction60->setText(keybinding->ActionButton50 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton60));
+      LearnAction60->setText(keybinding->ActionButton60 == KC_UNASSIGNED ? STRINGEMPTY : keyboard->getAsString(keybinding->ActionButton60));
 
       MouseAimSpeed->setCurrentValue((float)OgreClient::Singleton->Config->MouseAimSpeed);
       MouseAimDistance->setCurrentValue((float)OgreClient::Singleton->Config->MouseAimDistance);

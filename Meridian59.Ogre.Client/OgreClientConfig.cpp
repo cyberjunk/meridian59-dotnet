@@ -681,6 +681,12 @@ namespace Meridian59 { namespace Ogre
                   nullptr,
                   numofsamename));
             }
+            // Fill up to expected number of items with unset action buttons.
+            while (buttonSet->Count < UI_ACTIONBUTTONS_COLS * UI_ACTIONBUTTONS_ROWS)
+            {
+               buttonSet->Add(gcnew ActionButtonConfig(buttonSet->Count,
+                  ActionButtonType::Unset, CLRString::Empty, nullptr, nullptr, 0));
+            }
 
             ActionButtonSets->Add(buttonSet);
          }
