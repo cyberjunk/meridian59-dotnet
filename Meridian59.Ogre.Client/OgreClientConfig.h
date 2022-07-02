@@ -302,5 +302,6 @@ namespace Meridian59 { namespace Ogre
 
       ActionButtonList^ GetActionButtonSetByName(CLRString^ Name);
       void AddOrUpdateActionButtonSet(ActionButtonList^ Buttons);
+      void ResetUIElements();
    };
 };};

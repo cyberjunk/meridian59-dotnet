@@ -22,6 +22,11 @@ namespace Meridian59 { namespace Ogre
 {
    OgreClientConfig::OgreClientConfig() : Config()
    {
+      ResetUIElements();
+   };
+
+   void OgreClientConfig::ResetUIElements()
+   {
       UILayoutAvatar = new ::CEGUI::URect(
          ::CEGUI::Vector2<::CEGUI::UDim>(::CEGUI::UDim(0.0f, 2.0f), ::CEGUI::UDim(0.0f, 25.0f)),
          ::CEGUI::Size   <::CEGUI::UDim>(::CEGUI::UDim(0.0f, 250.0f), ::CEGUI::UDim(0.0f, 141.0f)));

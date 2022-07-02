@@ -322,10 +322,11 @@ namespace Meridian59 { namespace Ogre
          // switch lock image
          StatusBar::Lock->setProperty(UI_PROPNAME_NORMALIMAGE, UI_IMAGE_LOCKBUTTON_LOCKED_NORMAL);
          StatusBar::Lock->setProperty(UI_PROPNAME_HOVERIMAGE, UI_IMAGE_LOCKBUTTON_LOCKED_HOVER);
-         StatusBar::Lock->setProperty(UI_PROPNAME_PUSHEDIMAGE, UI_IMAGE_LOCKBUTTON_LOCKED_NORMAL);
+         StatusBar::Lock->setProperty(UI_PROPNAME_PUSHEDIMAGE, UI_IMAGE_LOCKBUTTON_LOCKED_PUSHED);
 
-         // update tooltip
-         StatusBar::Lock->setTooltipText("Interface is currently locked. \n You can't move or resize windows. \n Click to unlock.");
+         // update tooltips
+         StatusBar::Lock->setTooltipText(GetLangTooltipStatusBar(LANGSTR_TOOLTIP_STATUSBAR::UILOCKED_TOOLTIP));
+         StatusBar::Reset->setTooltipText(GetLangTooltipStatusBar(LANGSTR_TOOLTIP_STATUSBAR::UIRESETLOCKED_TOOLTIP));
 
          // disable dragging of actionbuttons
          for (size_t i = 0; i < ACTIONBUTTONS; i++)
@@ -359,10 +360,11 @@ namespace Meridian59 { namespace Ogre
          // switch lock image
          StatusBar::Lock->setProperty(UI_PROPNAME_NORMALIMAGE, UI_IMAGE_LOCKBUTTON_UNLOCKED_NORMAL);
          StatusBar::Lock->setProperty(UI_PROPNAME_HOVERIMAGE, UI_IMAGE_LOCKBUTTON_UNLOCKED_HOVER);
-         StatusBar::Lock->setProperty(UI_PROPNAME_PUSHEDIMAGE, UI_IMAGE_LOCKBUTTON_UNLOCKED_NORMAL);
+         StatusBar::Lock->setProperty(UI_PROPNAME_PUSHEDIMAGE, UI_IMAGE_LOCKBUTTON_UNLOCKED_PUSHED);
 
-         // update tooltip
-         StatusBar::Lock->setTooltipText("Interface is currently unlocked. \n You can move or resize windows. \n Click to lock.");
+         // update tooltips
+         StatusBar::Lock->setTooltipText(GetLangTooltipStatusBar(LANGSTR_TOOLTIP_STATUSBAR::UIUNLOCKED_TOOLTIP));
+         StatusBar::Reset->setTooltipText(GetLangTooltipStatusBar(LANGSTR_TOOLTIP_STATUSBAR::UIRESET_TOOLTIP));
 
          // enable dragging of actionbuttons
          for (size_t i = 0; i < ACTIONBUTTONS; i++)
@@ -634,6 +636,71 @@ namespace Meridian59 { namespace Ogre
                mlbox->eraseSelectedText();
          }
       }
+   };
+
+   void ControllerUI::ResetLayout()
+   {
+      OgreClient::Singleton->Config->ResetUIElements();
+
+      // avatar
+      Avatar::Window->setPosition(OgreClient::Singleton->Config->UILayoutAvatar->getPosition());
+      Avatar::Window->setSize(OgreClient::Singleton->Config->UILayoutAvatar->getSize());
+
+      // target
+      Target::Window->setPosition(OgreClient::Singleton->Config->UILayoutTarget->getPosition());
+      Target::Window->setSize(OgreClient::Singleton->Config->UILayoutTarget->getSize());
+
+      // minimap
+      MiniMap::Window->setPosition(OgreClient::Singleton->Config->UILayoutMinimap->getPosition());
+      MiniMap::Window->setSize(OgreClient::Singleton->Config->UILayoutMinimap->getSize());
+
+      // roomenchantments
+      RoomEnchantments::Window->setPosition(OgreClient::Singleton->Config->UILayoutRoomEnchantments->getPosition());
+      RoomEnchantments::Window->setSize(OgreClient::Singleton->Config->UILayoutRoomEnchantments->getSize());
+
+      // chat
+      Chat::Window->setPosition(OgreClient::Singleton->Config->UILayoutChat->getPosition());
+      Chat::Window->setSize(OgreClient::Singleton->Config->UILayoutChat->getSize());
+
+      // inventory
+      Inventory::Window->setPosition(OgreClient::Singleton->Config->UILayoutInventory->getPosition());
+      Inventory::Window->setSize(OgreClient::Singleton->Config->UILayoutInventory->getSize());
+
+      // spells
+      Spells::Window->setPosition(OgreClient::Singleton->Config->UILayoutSpells->getPosition());
+      Spells::Window->setSize(OgreClient::Singleton->Config->UILayoutSpells->getSize());
+
+      // skills
+      Skills::Window->setPosition(OgreClient::Singleton->Config->UILayoutSkills->getPosition());
+      Skills::Window->setSize(OgreClient::Singleton->Config->UILayoutSkills->getSize());
+
+      // actions
+      Actions::Window->setPosition(OgreClient::Singleton->Config->UILayoutActions->getPosition());
+      Actions::Window->setSize(OgreClient::Singleton->Config->UILayoutActions->getSize());
+
+      // attributes
+      Attributes::Window->setPosition(OgreClient::Singleton->Config->UILayoutAttributes->getPosition());
+      Attributes::Window->setSize(OgreClient::Singleton->Config->UILayoutAttributes->getSize());
+
+      // mainbuttonsleft
+      MainButtonsLeft::Window->setPosition(OgreClient::Singleton->Config->UILayoutMainButtonsLeft->getPosition());
+      MainButtonsLeft::Window->setSize(OgreClient::Singleton->Config->UILayoutMainButtonsLeft->getSize());
+
+      // mainbuttonsright
+      MainButtonsRight::Window->setPosition(OgreClient::Singleton->Config->UILayoutMainButtonsRight->getPosition());
+      MainButtonsRight::Window->setSize(OgreClient::Singleton->Config->UILayoutMainButtonsRight->getSize());
+
+      // actionbuttons
+      ActionButtons::Window->setPosition(OgreClient::Singleton->Config->UILayoutActionButtons->getPosition());
+      ActionButtons::Window->setSize(OgreClient::Singleton->Config->UILayoutActionButtons->getSize());
+
+      // onlineplayers
+      OnlinePlayers::Window->setPosition(OgreClient::Singleton->Config->UILayoutOnlinePlayers->getPosition());
+      OnlinePlayers::Window->setSize(OgreClient::Singleton->Config->UILayoutOnlinePlayers->getSize());
+
+      // roomobjects
+      RoomObjects::Window->setPosition(OgreClient::Singleton->Config->UILayoutRoomObjects->getPosition());
+      RoomObjects::Window->setSize(OgreClient::Singleton->Config->UILayoutRoomObjects->getSize());
    };
 
    void ControllerUI::SaveLayoutToConfig()

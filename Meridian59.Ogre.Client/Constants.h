@@ -334,8 +334,13 @@
 #define UI_IMAGE_BRANDING_OPENMERIDIAN ""
 #define UI_IMAGE_LOCKBUTTON_UNLOCKED_NORMAL "TaharezLook/WindowLockButtonUnlockedNormal"
 #define UI_IMAGE_LOCKBUTTON_UNLOCKED_HOVER  "TaharezLook/WindowLockButtonUnlockedHover"
+#define UI_IMAGE_LOCKBUTTON_UNLOCKED_PUSHED "TaharezLook/WindowLockButtonUnlockedPushed"
 #define UI_IMAGE_LOCKBUTTON_LOCKED_NORMAL   "TaharezLook/WindowLockButtonLockedNormal"
 #define UI_IMAGE_LOCKBUTTON_LOCKED_HOVER    "TaharezLook/WindowLockButtonLockedHover"
+#define UI_IMAGE_LOCKBUTTON_LOCKED_PUSHED   "TaharezLook/WindowLockButtonLockedPushed"
+#define UI_IMAGE_RESETBUTTON_NORMAL         "TaharezLook/WindowResetButtonNormal"
+#define UI_IMAGE_RESETBUTTON_HOVER          "TaharezLook/WindowResetButtonHover"
+#define UI_IMAGE_RESETBUTTON_PUSHED         "TaharezLook/WindowResetButtonPushed"
 
 /* prefixe */
 #define UI_NAMEPREFIX_STATICICON    "CEGUI/StaticIcon/"
@@ -370,6 +375,7 @@
 #define UI_NAME_STATUSBAR_MTIMEVAL        "StatusBar.MTimeValue"
 #define UI_NAME_STATUSBAR_ROOMDESC        "StatusBar.RoomDescription"
 #define UI_NAME_STATUSBAR_ROOMVAL         "StatusBar.RoomValue"
+#define UI_NAME_STATUSBAR_RESET           "StatusBar.Reset"
 #define UI_NAME_STATUSBAR_LOCK            "StatusBar.Lock"
 #define UI_NAME_ONLINEPLAYERS_WINDOW      "OnlinePlayers"
 #define UI_NAME_ONLINEPLAYERS_LIST        "OnlinePlayers.List"

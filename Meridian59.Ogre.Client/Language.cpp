@@ -51,13 +51,17 @@ const char* EN_TOOLTIPS_ONLINEPLAYER[] =
 
 const char* EN_TOOLTIPS_STATUSBAR[] =
 {
-   "Frames per second - Higher is better (more fluid Gameplay).",                // 0
-   "Your Connectionspeed to the Server. Lower value means faster connection.",   // 1
-   "The number of players online. Click me to show the list of online Players.", // 2
-   "Shows the actual mood of your character.",                                   // 3
-   "If you change your safety to Off you can attack inocent players.",           // 4
-   "Here you can see the actual Meridian 59 time.",                              // 5
-   "This shows you the actual room / area name, in which you actually are."      // 6
+   "Frames per second - Higher is better (more fluid Gameplay).",                             // 0
+   "Your Connectionspeed to the Server. Lower value means faster connection.",                // 1
+   "The number of players online. Click me to show the list of online Players.",              // 2
+   "Shows the actual mood of your character.",                                                // 3
+   "If you change your safety to Off you can attack inocent players.",                        // 4
+   "Here you can see the actual Meridian 59 time.",                                           // 5
+   "This shows you the actual room / area name, in which you actually are.",                  // 6
+   "Interface is currently locked. \n You can't move or resize windows. \n Click to unlock.", // 7
+   "Interface is currently unlocked. \n You can move or resize windows. \n Click to lock.",   // 8
+   "Click to restore the UI layout to its default.",                                          // 9
+   "Unable to restore the UI layout to its default position while UI is locked."              // 10
 };
 
 const char* EN_DESCRIPTIONS_STATUSBAR[] =
@@ -200,7 +204,14 @@ const char* DE_TOOLTIPS_STATUSBAR[] =
    "Zeigt die aktuelle Stimmung Deines Characters an.",                                      // 3
    "Wenn Du Deine Sicherheit auf Aus stellst, kannst Du unschuldige Spieler angreifen",      // 4
    "Hier siehst Du die aktuelle Meridian 59 Zeit.",                                          // 5
-   "Zeigt Dir den aktuellen Raum / Bereich an, indem Du Dich befindest."                     // 6
+   "Zeigt Dir den aktuellen Raum / Bereich an, indem Du Dich befindest.",                    // 6
+   "Das Layout der Benutzeroberfläche ist momentan geschützt. \n Elemente können nicht " \
+   "verschoben oder angepasst werden. \n Klicken, um das Layout freizugeben.",               // 7
+   "Das Layout der Benutzeroberfläche ist momentan nicht geschützt. \n Elemente können " \
+   "verschoben und angepasst werden. \n Klicken, um das Layout zu schützen.",                // 8
+   "Klicken, um das ursprüngliche Layout der Benutzeroberfläche wiederherzustellen.",        // 9
+   "Das Layout der Benutzeroberfläche kann nicht zurückgesetzt werden, solange es " \
+   "geschützt ist."                                                                          // 10
 };
 
 const char* DE_DESCRIPTIONS_STATUSBAR[] =

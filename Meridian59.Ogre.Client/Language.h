@@ -75,13 +75,17 @@ namespace LANGSTR_TOOLTIP_STATUSBAR
 { 
    enum Enum
    {
-      FPS_TOOLTIP          = 0,
-      PING_TOOLTIP         = 1,
-      PLAYERCOUNT_TOOLTIP  = 2,
-      MOOD_TOOLTIP         = 3,
-      SAFETY_TOOLTIP       = 4,
-      TIME_TOOLTIP         = 5,
-      ROOM_TOOLTIP         = 6
+      FPS_TOOLTIP           = 0,
+      PING_TOOLTIP          = 1,
+      PLAYERCOUNT_TOOLTIP   = 2,
+      MOOD_TOOLTIP          = 3,
+      SAFETY_TOOLTIP        = 4,
+      TIME_TOOLTIP          = 5,
+      ROOM_TOOLTIP          = 6,
+      UILOCKED_TOOLTIP      = 7,
+      UIUNLOCKED_TOOLTIP    = 8,
+      UIRESET_TOOLTIP       = 9,
+      UIRESETLOCKED_TOOLTIP = 10
    };
 }
 
