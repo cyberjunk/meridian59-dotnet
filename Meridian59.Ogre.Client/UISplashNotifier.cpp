@@ -23,6 +23,10 @@ namespace Meridian59 { namespace Ogre
       // attach listener to paralyze effect
       OgreClient::Singleton->Data->Effects->Paralyze->PropertyChanged += 
          gcnew PropertyChangedEventHandler(OnParalyzePropertyChanged);
+
+      // attach listener to avatar buffs
+      OgreClient::Singleton->Data->AvatarBuffs->ListChanged +=
+         gcnew ListChangedEventHandler(OnAvatarBuffsListChanged);
    };
 
    void ControllerUI::SplashNotifier::Destroy()
@@ -34,6 +38,10 @@ namespace Meridian59 { namespace Ogre
       // detach listener from paralyze effect
       OgreClient::Singleton->Data->Effects->Paralyze->PropertyChanged -= 
          gcnew PropertyChangedEventHandler(OnParalyzePropertyChanged);
+
+      // detach listener to avatar buffs
+      OgreClient::Singleton->Data->AvatarBuffs->ListChanged -=
+         gcnew ListChangedEventHandler(OnAvatarBuffsListChanged);
    };
 
    void ControllerUI::SplashNotifier::ApplyLanguage()
@@ -113,7 +121,8 @@ namespace Meridian59 { namespace Ogre
       {
          if (OgreClient::Singleton->Data->Effects->Paralyze->IsActive)
          {
-            if (!notifications->Contains(UI_NOTIFICATION_PARALYZED))
+            if (!notifications->Contains(UI_NOTIFICATION_PARALYZED)
+               && !notifications->Contains(UI_NOTIFICATION_PHASED))
                notifications->Add(UI_NOTIFICATION_PARALYZED);
          }
          else
@@ -121,8 +130,43 @@ namespace Meridian59 { namespace Ogre
             if (notifications->Contains(UI_NOTIFICATION_PARALYZED))
                notifications->Remove(UI_NOTIFICATION_PARALYZED);
          }
-
          UpdateNotification();
+      }
+   };
+
+   void ControllerUI::SplashNotifier::OnAvatarBuffsListChanged(Object^ sender, ListChangedEventArgs^ e)
+   {
+      ObjectBase^ o;
+
+      // buff added/removed, only want to know about phase
+      switch (e->ListChangedType)
+      {
+      case ListChangedType::ItemAdded:
+         o = OgreClient::Singleton->Data->AvatarBuffs[e->NewIndex];
+         if (o->Name == "phase" || o->Name == "Ausstieg")
+         {
+            if (!notifications->Contains(UI_NOTIFICATION_PHASED))
+               notifications->Add(UI_NOTIFICATION_PHASED);
+         }
+         UpdateNotification();
+         break;
+
+      case ListChangedType::ItemDeleted:
+         o = OgreClient::Singleton->Data->AvatarBuffs->LastDeletedItem;
+         if (o->Name == "phase" || o->Name == "Ausstieg")
+         {
+            if (notifications->Contains(UI_NOTIFICATION_PHASED))
+               notifications->Remove(UI_NOTIFICATION_PHASED);
+
+            // Might still have paralyze active, display appropriate notification.
+            if (OgreClient::Singleton->Data->Effects->Paralyze->IsActive)
+            {
+               if (!notifications->Contains(UI_NOTIFICATION_PARALYZED))
+                  notifications->Add(UI_NOTIFICATION_PARALYZED);
+            }
+         }
+         UpdateNotification();
+         break;
       }
    };
 };};

@@ -995,6 +995,10 @@ namespace Meridian59.Data
             // reset waiting flag
             IsWaiting = false;
 
+            // Reset effects separately since Invalidate() won't do so
+            // (because effects don't get resent after a system save)
+            Effects.Clear(true);
+
             // reset others
             Invalidate();
         }
