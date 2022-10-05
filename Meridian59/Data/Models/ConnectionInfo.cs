@@ -50,7 +50,6 @@ namespace Meridian59.Data.Models
         public static readonly ConnectionInfo CON105 = new ConnectionInfo("105", "meridian105.meridiannext.com",5905, "rsc0000-105.rsb", "", "", "", null);
         public static readonly ConnectionInfo CON106 = new ConnectionInfo("106", "meridian106.meridiannext.com",5906, "rsc0000-106.rsb", "", "", "", null);
         public static readonly ConnectionInfo CON112 = new ConnectionInfo("112", "meridian112.meridian59.de",   5912, "rsc0000-112.rsb", "", "", "", null);
-        public static readonly ConnectionInfo CON200 = new ConnectionInfo("200", "meridian200.meridian59.de",   5900, "rsc0000-200.rsb", "", "", "", null);
 #endif
         #endregion
 

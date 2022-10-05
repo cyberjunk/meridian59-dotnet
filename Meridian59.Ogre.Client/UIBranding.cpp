@@ -29,7 +29,7 @@ namespace Meridian59 { namespace Ogre
       Text->setText(baseStr + "103");
 #else
       Logo->setProperty(UI_PROPNAME_IMAGE, UI_IMAGE_BRANDING_MERIDIANNEXT);
-      Text->setText(baseStr + "105 | 112 | 200");
+      Text->setText(baseStr + "105 | 112");
 #endif
    };
 
