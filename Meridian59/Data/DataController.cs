@@ -1501,10 +1501,16 @@ namespace Meridian59.Data
         {
             if (RoomInformation.ResourceRoom == null || AvatarObject == null)
                 return null;
-           
+
+            float behindDistance = 32.0f;
+            // Don't consider targets behind us at all for IsAttackable.
+            foreach (ObjectFlags flag in FilterFlags)
+                if (flag.IsAttackable)
+                    behindDistance = 0.0f;
+
             // get visible objects within distances
             List<RoomObject> candidates = avatarObject.GetObjectsWithinDistance(
-                RoomObjects, RoomInformation.ResourceRoom, 32.0f, 512.0f, false);
+                RoomObjects, RoomInformation.ResourceRoom, behindDistance, 512.0f, false);
 
             // get the closest
             Real mindist2 = Real.MaxValue;

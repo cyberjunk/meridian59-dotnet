@@ -87,6 +87,11 @@ namespace Meridian59.Common.Constants
         public const ushort QUARTERMAXANGLE = MAXANGLE / 4;
 
         /// <summary>
+        /// Corresponds to 135 degrees field of view
+        /// </summary>
+        public const ushort HALFFOVANGLE = 768;
+
+        /// <summary>
         /// From angle units to radian
         /// </summary>
         public const Real M59ANGLETORADQUOT = TWOPI / (Real)MAXANGLE;
