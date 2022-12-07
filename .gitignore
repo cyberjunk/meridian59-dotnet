@@ -55,3 +55,19 @@
 # Others
 /Meridian59.BgfService/Bin
 /Meridian59.Brain
+/Meridian59/Resources
+/Resources
+/Meridian59.BgfEditor/Properties/Resources.Designer.cs
+/Meridian59.BgfEditor/Properties/Settings.Designer.cs
+/patchurl.txt
+/Meridian59.Patcher.exe
+/Meridian59.Patcher/app.config
+/Meridian59.Patcher/Meridian59.Patcher.csproj
+/Meridian59.Patcher/Properties/Resources.Designer.cs
+/Meridian59.Patcher/Properties/Settings.Designer.cs
+/Meridian59.Ogre.Client/Meridian59.Ogre.Client.vcxproj
+/Meridian59.BgfEditor/Meridian59.BgfEditor.csproj
+/Meridian59.BgfEditor/app.config
+/Meridian59.BgfEditor/Properties/Resources.Designer.cs
+/Meridian59.BgfEditor/Properties/Settings.Designer.cs
+/configuration.xml
