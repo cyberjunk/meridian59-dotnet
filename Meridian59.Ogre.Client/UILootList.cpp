@@ -277,7 +277,7 @@ namespace Meridian59 { namespace Ogre
       }
 
       // hide
-      OgreClient::Singleton->Data->RoomObjectsLoot->IsVisible = false;
+      //OgreClient::Singleton->Data->RoomObjectsLoot->IsVisible = false;
 
       ControllerUI::ActivateRoot();
 
@@ -292,7 +292,7 @@ namespace Meridian59 { namespace Ogre
       OgreClient::Singleton->LootAll();
 
       // hide
-      OgreClient::Singleton->Data->RoomObjectsLoot->IsVisible = false;
+      //OgreClient::Singleton->Data->RoomObjectsLoot->IsVisible = false;
 
       // reactivate root
       ControllerUI::ActivateRoot();
