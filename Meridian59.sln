@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32002.261
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meridian59", "Meridian59\Meridian59.csproj", "{E8223F3F-3F18-4F4C-9A8F-D9102B067BE3}"
 EndProject
@@ -136,12 +136,10 @@ Global
 		{8A720E91-6344-4407-B9C4-2204AEE47595}.Release|x64.Build.0 = Release|x64
 		{8A720E91-6344-4407-B9C4-2204AEE47595}.Release|x86.ActiveCfg = Release|x86
 		{8A720E91-6344-4407-B9C4-2204AEE47595}.Release|x86.Build.0 = Release|x86
-		{D7C86C96-D59F-4969-A978-97E94FA7FA80}.Debug|x64.ActiveCfg = Debug|x86
-		{D7C86C96-D59F-4969-A978-97E94FA7FA80}.Debug|x64.Build.0 = Debug|x86
+		{D7C86C96-D59F-4969-A978-97E94FA7FA80}.Debug|x64.ActiveCfg = Debug|Any CPU
 		{D7C86C96-D59F-4969-A978-97E94FA7FA80}.Debug|x86.ActiveCfg = Debug|x86
 		{D7C86C96-D59F-4969-A978-97E94FA7FA80}.Debug|x86.Build.0 = Debug|x86
-		{D7C86C96-D59F-4969-A978-97E94FA7FA80}.Release|x64.ActiveCfg = Release|x86
-		{D7C86C96-D59F-4969-A978-97E94FA7FA80}.Release|x64.Build.0 = Release|x86
+		{D7C86C96-D59F-4969-A978-97E94FA7FA80}.Release|x64.ActiveCfg = Release|Any CPU
 		{D7C86C96-D59F-4969-A978-97E94FA7FA80}.Release|x86.ActiveCfg = Release|x86
 		{D7C86C96-D59F-4969-A978-97E94FA7FA80}.Release|x86.Build.0 = Release|x86
 		{1E2F2286-81D7-4F6A-A4D1-E2843482C7F8}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -153,5 +151,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {642D85D3-A2E0-43E9-835F-28AC6DB1F88D}
 	EndGlobalSection
 EndGlobal

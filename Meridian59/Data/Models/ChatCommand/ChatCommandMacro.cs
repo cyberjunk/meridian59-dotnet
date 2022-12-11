@@ -14,24 +14,29 @@
  If not, see http://www.gnu.org/licenses/.
 */
 
-namespace Meridian59.Common.Enums
+using System;
+using System.Text.RegularExpressions;
+using Meridian59.Common.Enums;
+
+namespace Meridian59.Data.Models
 {
-    /// <summary>
-    /// Different types of chatcommands
-    /// </summary>
-    public enum ChatCommandType
+    [Serializable]
+    public class ChatCommandMacro : ChatCommand
     {
-        Say, Emote, Yell, Broadcast, Tell, Guild, Cast, DM, Go, GoPlayer, GetPlayer,
-        WithDraw, Deposit, Suicide, Rest, Stand, Quit, Balance, Appeal, Dance, Point,
-        Wave, Macro
+        public const string KEY1 = "macro";
+        public const string KEY2 = "bot";
 
-#if !VANILLA
-        , TempSafe, Grouping, AutoLoot, AutoCombine, ReagentBag, SpellPower, Time
+        public override ChatCommandType CommandType { get { return ChatCommandType.Macro; } }
+        public string Text { get; set; }
 
-#if !OPENMERIDIAN
-        , Invite, Perform
-#endif
+        public ChatCommandMacro()
+        {
+            Text = String.Empty;
+        }
 
-#endif
+        public ChatCommandMacro(string Text)
+        {
+            this.Text = Text;
+        }
     }
 }
