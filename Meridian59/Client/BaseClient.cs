@@ -30,6 +30,7 @@ using Meridian59.Protocol.GameMessages;
 using Meridian59.Protocol.SubMessage;
 using Meridian59.Files;
 using Meridian59.Files.ROO;
+using System.Collections;
 
 // Switch FP precision based on architecture
 #if X64
@@ -66,6 +67,9 @@ namespace Meridian59.Client
         #endregion
 
         #region Fields
+        protected long ztime = 0;
+        protected long macronext = 0;
+        
         protected uint tpsCounter    = 0;
         protected double tpsSum      = 0.0f;
         protected double tickWorst   = 0.0f;
@@ -75,13 +79,14 @@ namespace Meridian59.Client
         protected ushort lastSentPositionY = 0;
         protected RooSector lastSentSector = null;
         #endregion
-      
+        
         #region Major components
         public ServerConnection ServerConnection { get; protected set; }
         public MessageEnrichment MessageEnrichment { get; protected set; }
         public DownloadHandler DownloadHandler { get; protected set; }
         #endregion
-
+        private Queue inputMacroQueue = new Queue();
+        private String macrolast = "";
         #region Constructors
         /// <summary>
         /// Constructor
@@ -194,6 +199,13 @@ namespace Meridian59.Client
 
             // possibly send a position update
             SendReqMoveMessage();
+
+            // relative clock for a RT macro sleep interval
+            ztime = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+
+            // macroHandler dequeues an object on the inputMacroQueue each interval
+            // and sends it to the ExecChatCommand function until it's empty
+            macroHandler();
         }
 
         /// <summary>
@@ -2799,6 +2811,52 @@ namespace Meridian59.Client
             RequestInfoAfterLogin();
         }
 
+
+        public virtual void macroHandler()
+        { 
+            if (macronext == 0) 
+            { 
+                macronext = DateTimeOffset.Now.ToUnixTimeMilliseconds(); 
+            }
+            if (inputMacroQueue.Count > 0)
+            {
+                // we can't be sure we'll get a tick precisely when our macro is due
+                // this is fuzzy "past the finish line" check that will trigger once each interval
+                if (ztime > macronext)
+                {
+                    String macrostr = (string)inputMacroQueue.Dequeue();
+                    // Default delay between actions 1/4 second 
+                    // this should probably be the floor for any sleep, and based off the
+                    // server flood detection interval.
+                    macronext = ztime + 250;
+                    String[] loopstring = macrostr.Split(new[]{" "}, StringSplitOptions.RemoveEmptyEntries);
+                    if ("loop" == loopstring[0])
+                    {
+                        // on the first instance of loop in a command
+                        // we restart the macro
+                        macrolast = "macro "+ macrolast;
+                        ExecChatCommand(macrolast);
+                        return;
+                    }
+                    else
+                    {
+                        if (macrostr.Contains(" "))
+                        {
+                            String[] mcstrings = macrostr.Split(new[]{" "}, StringSplitOptions.RemoveEmptyEntries);
+                            if ("sleep" == mcstrings[0])
+                            {
+                                long sleep = long.Parse(mcstrings[1]);
+                                macronext += sleep;
+                                // sleep instead of executing and return to mainloop
+                                return;
+                            }
+                        }
+                        ExecChatCommand(macrostr);
+                    } 
+                }
+            }
+        }
+
         /// <summary>
         /// Tries to move your avatar in the given 2D direction on the ground.
         /// Call this method each gametick (=threadloop) you want to process a movement.
@@ -3027,6 +3085,40 @@ namespace Meridian59.Client
                     case ChatCommandType.Say:
                         ChatCommandSay chatCommandSay = (ChatCommandSay)chatCommand;
                         SendSayToMessage(ChatTransmissionType.Normal, chatCommandSay.Text);
+                        break;
+
+                    case ChatCommandType.Macro:
+                        ChatCommandMacro chatCommandMacro = (ChatCommandMacro)chatCommand;
+                        // verify the queue is empty, otherwise ignore the command
+                        // or break out of loop
+                        if (inputMacroQueue.Count > 0)
+                        {
+                            // macro stop should halt any execution
+                            if (chatCommandMacro.Text == "stop") 
+                            {
+                                // just incase we somehow race this
+                                macrolast = "";
+                                // dump the queue and we should halt all execution
+                                inputMacroQueue.Clear();
+                                break;
+                            }
+                            break;
+                        }
+                        else
+                        {
+                            macrolast = chatCommandMacro.Text;
+                            String[] macrostrlist = chatCommandMacro.Text.Split(';');
+                            foreach (String s in macrostrlist)
+                            {
+                                inputMacroQueue.Enqueue(s);
+                                // if the string we just enqueued is loop, break out of the input loop
+                                // no point in processing commands we won't use
+                                if (s == "loop") 
+                                {
+                                    break;
+                                }
+                            }
+                        }
                         break;
 
                     case ChatCommandType.Emote:

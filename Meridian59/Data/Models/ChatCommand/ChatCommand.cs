@@ -100,6 +100,15 @@ namespace Meridian59.Data.Models
             // select command
             switch (command)
             {
+                case ChatCommandMacro.KEY1:
+                case ChatCommandMacro.KEY2:
+                    if (splitted.Length > 1)
+                    {
+                        text = String.Join(DELIMITER.ToString(), splitted, 1, splitted.Length - 1);
+                        returnValue = new ChatCommandMacro(text);
+                    }
+                    break;
+
                 case ChatCommandSay.KEY1:
                 case ChatCommandSay.KEY2:
                 case ChatCommandSay.KEY3:

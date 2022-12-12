@@ -147,6 +147,7 @@
     <Compile Include="Data\Models\ChatCommand\ChatCommandPoint.cs" />
     <Compile Include="Data\Models\ChatCommand\ChatCommandDance.cs" />
     <Compile Include="Data\Models\ChatCommand\ChatCommandTime.cs" />
+    <Compile Include="Data\Models\ChatCommand\ChatCommandMacro.cs" />
     <Compile Include="Data\Models\ClientPatchInfo.cs" />
     <Compile Include="Data\Models\GroupMember.cs" />
     <Compile Include="Data\Models\GuildHall.cs" />
