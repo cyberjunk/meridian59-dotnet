@@ -2829,10 +2829,12 @@ namespace Meridian59.Client
                     // this should probably be the floor for any sleep, and based off the
                     // server flood detection interval.
                     macronext = ztime + 250;
-                    if (macrostr == "loop")
+                    String[] loopstring = macrostr.Split(new[]{" "}, StringSplitOptions.RemoveEmptyEntries);
+                    if ("loop" == loopstring[0])
                     {
                         // on the first instance of loop in a command
                         // we restart the macro
+                        macrolast = "macro "+ macrolast;
                         ExecChatCommand(macrolast);
                         return;
                     }
