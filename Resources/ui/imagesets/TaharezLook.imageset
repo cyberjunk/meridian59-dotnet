@@ -286,7 +286,7 @@
    <Image height="141" name="AvatarBackground" width="250" xPos="259" yPos="2" />
    <Image height="90" name="TargetBackground" width="275" xPos="539" yPos="138" />
    <Image height="30" name="MainButtonsBackground" width="175" xPos="272" yPos="156" />
-   <Image height="117" name="ActionButtonsBackground" width="349" xPos="537" yPos="8" />
+   <Image height="146" name="ActionButtonsBackground" width="349" xPos="537" yPos="639" />
    <Image height="42" name="RoomEnchantsBackground" width="250" xPos="539" yPos="229" />
    <Image height="24" name="ActionActivate"          width="24" xPos="5" yPos="255" />
    <Image height="24" name="ActionActivateDisabled"    width="24" xPos="5" yPos="280" />

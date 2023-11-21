@@ -155,6 +155,19 @@ namespace Meridian59.Data.Lists
                 buttons.Add(new ActionButtonConfig(46, ActionButtonType.Spell, Common.Constants.ResourceStrings.Spells.Riija.PHASE));
                 buttons.Add(new ActionButtonConfig(47, ActionButtonType.Action, AvatarAction.Inspect.ToString().ToLower()));
 
+                buttons.Add(new ActionButtonConfig(48, ActionButtonType.Unset, String.Empty));
+                buttons.Add(new ActionButtonConfig(49, ActionButtonType.Unset, String.Empty));
+                buttons.Add(new ActionButtonConfig(50, ActionButtonType.Unset, String.Empty));
+                buttons.Add(new ActionButtonConfig(51, ActionButtonType.Unset, String.Empty));
+                buttons.Add(new ActionButtonConfig(52, ActionButtonType.Unset, String.Empty));
+                buttons.Add(new ActionButtonConfig(53, ActionButtonType.Unset, String.Empty));
+                buttons.Add(new ActionButtonConfig(54, ActionButtonType.Unset, String.Empty));
+                buttons.Add(new ActionButtonConfig(55, ActionButtonType.Unset, String.Empty));
+                buttons.Add(new ActionButtonConfig(56, ActionButtonType.Unset, String.Empty));
+                buttons.Add(new ActionButtonConfig(57, ActionButtonType.Unset, String.Empty));
+                buttons.Add(new ActionButtonConfig(58, ActionButtonType.Unset, String.Empty));
+                buttons.Add(new ActionButtonConfig(59, ActionButtonType.Unset, String.Empty));
+
                 return buttons;
             }
         }

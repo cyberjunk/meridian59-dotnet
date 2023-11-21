@@ -113,7 +113,12 @@ namespace Meridian59.Data.Models
             {
                 if (label != value)
                 {
-                    label = value;
+                    // Display nothing instead of Key_0, because Key_0
+                    // might be confusing for users.
+                    if (value.Equals("Key_0"))
+                        label = "";
+                    else
+                        label = value;
                     RaisePropertyChanged(new PropertyChangedEventArgs(PROPNAME_LABEL));
                 }
             }

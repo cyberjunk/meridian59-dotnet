@@ -100,6 +100,18 @@ namespace Meridian59 { namespace Ogre
       ::OIS::KeyCode ActionButton46;
       ::OIS::KeyCode ActionButton47;
       ::OIS::KeyCode ActionButton48;
+      ::OIS::KeyCode ActionButton49;
+      ::OIS::KeyCode ActionButton50;
+      ::OIS::KeyCode ActionButton51;
+      ::OIS::KeyCode ActionButton52;
+      ::OIS::KeyCode ActionButton53;
+      ::OIS::KeyCode ActionButton54;
+      ::OIS::KeyCode ActionButton55;
+      ::OIS::KeyCode ActionButton56;
+      ::OIS::KeyCode ActionButton57;
+      ::OIS::KeyCode ActionButton58;
+      ::OIS::KeyCode ActionButton59;
+      ::OIS::KeyCode ActionButton60;
 
       /// <summary>
       /// Constructor

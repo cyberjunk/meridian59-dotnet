@@ -1037,5 +1037,18 @@ namespace Meridian59 { namespace Ogre
       if (oisKeyboard->isKeyDown(ActiveKeyBinding->ActionButton46)) actionButtons[45]->Activate();
       if (oisKeyboard->isKeyDown(ActiveKeyBinding->ActionButton47)) actionButtons[46]->Activate();
       if (oisKeyboard->isKeyDown(ActiveKeyBinding->ActionButton48)) actionButtons[47]->Activate();
+      if (oisKeyboard->isKeyDown(ActiveKeyBinding->ActionButton49)) actionButtons[48]->Activate();
+      if (oisKeyboard->isKeyDown(ActiveKeyBinding->ActionButton50)) actionButtons[49]->Activate();
+      if (oisKeyboard->isKeyDown(ActiveKeyBinding->ActionButton51)) actionButtons[50]->Activate();
+      if (oisKeyboard->isKeyDown(ActiveKeyBinding->ActionButton52)) actionButtons[51]->Activate();
+      if (oisKeyboard->isKeyDown(ActiveKeyBinding->ActionButton53)) actionButtons[52]->Activate();
+      if (oisKeyboard->isKeyDown(ActiveKeyBinding->ActionButton54)) actionButtons[53]->Activate();
+      if (oisKeyboard->isKeyDown(ActiveKeyBinding->ActionButton55)) actionButtons[54]->Activate();
+      if (oisKeyboard->isKeyDown(ActiveKeyBinding->ActionButton56)) actionButtons[55]->Activate();
+      if (oisKeyboard->isKeyDown(ActiveKeyBinding->ActionButton57)) actionButtons[56]->Activate();
+      if (oisKeyboard->isKeyDown(ActiveKeyBinding->ActionButton58)) actionButtons[57]->Activate();
+      if (oisKeyboard->isKeyDown(ActiveKeyBinding->ActionButton59)) actionButtons[58]->Activate();
+      if (oisKeyboard->isKeyDown(ActiveKeyBinding->ActionButton60)) actionButtons[59]->Activate();
+
    };
 };};
