@@ -23,6 +23,7 @@ namespace Meridian59 { namespace Ogre
       MTimeValue        = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_STATUSBAR_MTIMEVAL));
       RoomDescription   = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_STATUSBAR_ROOMDESC));
       RoomValue         = static_cast<CEGUI::Window*>(Window->getChild(UI_NAME_STATUSBAR_ROOMVAL));
+      Reset             = static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_STATUSBAR_RESET));
       Lock              = static_cast<CEGUI::PushButton*>(Window->getChild(UI_NAME_STATUSBAR_LOCK));
 
       // attach listener to Data
@@ -53,6 +54,9 @@ namespace Meridian59 { namespace Ogre
       // subscribe players click
       PlayersValue->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::StatusBar::OnPlayersClicked));
 
+      // subscribe ui reset click
+      Reset->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::StatusBar::OnResetClicked));
+
       // subscribe ui lock click
       Lock->subscribeEvent(CEGUI::PushButton::EventClicked, CEGUI::Event::Subscriber(UICallbacks::StatusBar::OnLockClicked));
 
@@ -81,11 +85,13 @@ namespace Meridian59 { namespace Ogre
 
    void ControllerUI::StatusBar::ApplyLanguage()
    {
+      const bool LOCKED = OgreClient::Singleton->Config->UILocked;
+
       // Set Tooltips for selected language
       FPSDescription->setTooltipText(GetLangTooltipStatusBar(LANGSTR_TOOLTIP_STATUSBAR::FPS_TOOLTIP));
       FPSValue->setTooltipText(GetLangTooltipStatusBar(LANGSTR_TOOLTIP_STATUSBAR::FPS_TOOLTIP));
-      RTTDescription->setTooltipText(GetLangTooltipStatusBar(LANGSTR_TOOLTIP_STATUSBAR::FPS_TOOLTIP));
-      RTTValue->setTooltipText(GetLangTooltipStatusBar(LANGSTR_TOOLTIP_STATUSBAR::FPS_TOOLTIP));
+      RTTDescription->setTooltipText(GetLangTooltipStatusBar(LANGSTR_TOOLTIP_STATUSBAR::PING_TOOLTIP));
+      RTTValue->setTooltipText(GetLangTooltipStatusBar(LANGSTR_TOOLTIP_STATUSBAR::PING_TOOLTIP));
       PlayersDescription->setTooltipText(GetLangTooltipStatusBar(LANGSTR_TOOLTIP_STATUSBAR::PLAYERCOUNT_TOOLTIP));
       PlayersValue->setTooltipText(GetLangTooltipStatusBar(LANGSTR_TOOLTIP_STATUSBAR::PLAYERCOUNT_TOOLTIP));
       MoodDescription->setTooltipText(GetLangTooltipStatusBar(LANGSTR_TOOLTIP_STATUSBAR::MOOD_TOOLTIP));
@@ -100,6 +106,19 @@ namespace Meridian59 { namespace Ogre
       RoomDescription->setTooltipText(GetLangTooltipStatusBar(LANGSTR_TOOLTIP_STATUSBAR::ROOM_TOOLTIP));
       RoomValue->setTooltipText(GetLangTooltipStatusBar(LANGSTR_TOOLTIP_STATUSBAR::ROOM_TOOLTIP));
 
+      if (LOCKED)
+      {
+         Lock->setTooltipText(GetLangTooltipStatusBar(LANGSTR_TOOLTIP_STATUSBAR::UILOCKED_TOOLTIP));
+         Reset->setTooltipText(GetLangTooltipStatusBar(LANGSTR_TOOLTIP_STATUSBAR::UIRESETLOCKED_TOOLTIP));
+      }
+      else
+      {
+         Lock->setTooltipText(GetLangTooltipStatusBar(LANGSTR_TOOLTIP_STATUSBAR::UIUNLOCKED_TOOLTIP));
+         Reset->setTooltipText(GetLangTooltipStatusBar(LANGSTR_TOOLTIP_STATUSBAR::UIRESET_TOOLTIP));
+      }
+      
+      ControllerUI::StatusBar::Reset->setDisabled(LOCKED);
+      ControllerUI::ApplyLock();
       // Set Descriptions for selected language
       /*FPSDescription->setText(GetLangDescriptionStatusBar(LANGSTR_DESCRIPTION_STATUSBAR::FPS_DESCRIPTION));
       RTTDescription->setText(GetLangDescriptionStatusBar(LANGSTR_DESCRIPTION_STATUSBAR::PING_DESCRIPTION));
@@ -242,11 +261,20 @@ namespace Meridian59 { namespace Ogre
       return true;
    };
 
+   bool UICallbacks::StatusBar::OnResetClicked(const CEGUI::EventArgs& e)
+   {
+      ControllerUI::ResetLayout();
+
+      return true;
+   };
+
    bool UICallbacks::StatusBar::OnLockClicked(const CEGUI::EventArgs& e)
    {
       // flip lock in config
       OgreClient::Singleton->Config->UILocked = 
          !OgreClient::Singleton->Config->UILocked;
+
+      ControllerUI::StatusBar::Reset->setDisabled(OgreClient::Singleton->Config->UILocked);
 
       // update ui locking
       ControllerUI::ApplyLock();

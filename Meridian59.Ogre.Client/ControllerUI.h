@@ -71,6 +71,7 @@ namespace Meridian59 { namespace Ogre
       static void PasteFromClipboard(::CEGUI::Window* EditBox);
       static void CopyToClipboard(::CEGUI::Window* EditBox, bool Cut);
       static void SaveLayoutToConfig();
+      static void ResetLayout();
       static void OnDataPropertyChanged(Object^ sender, PropertyChangedEventArgs^ e);
       static void InjectMousePosition(float x, float y);
       static void InjectMouseWheelChange(float z);
@@ -273,6 +274,7 @@ namespace Meridian59 { namespace Ogre
          static ::CEGUI::Window* MTimeValue = nullptr;
          static ::CEGUI::Window* RoomDescription = nullptr;
          static ::CEGUI::Window* RoomValue = nullptr;
+         static ::CEGUI::PushButton* Reset = nullptr;
          static ::CEGUI::PushButton* Lock = nullptr;
 
          static void Initialize();
@@ -1645,6 +1647,7 @@ namespace Meridian59 { namespace Ogre
          static bool OnMoodAngryClicked(const CEGUI::EventArgs& e);
          static bool OnSafetyClicked(const CEGUI::EventArgs& e);
          static bool OnPlayersClicked(const CEGUI::EventArgs& e);
+         static bool OnResetClicked(const CEGUI::EventArgs& e);
          static bool OnLockClicked(const CEGUI::EventArgs& e);
          static bool OnFPSClicked(const CEGUI::EventArgs& e);
       };
